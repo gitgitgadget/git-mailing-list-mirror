@@ -1,56 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] prune: --expire=time
-Date: Mon, 22 Jan 2007 01:57:45 -0500
-Message-ID: <20070122065745.GA4669@spearce.org>
-References: <7vejpo39zg.fsf@assigned-by-dhcp.cox.net> <20070121220114.GA24729@coredump.intra.peff.net> <45B415B1.30407@midwinter.com> <20070122015252.GA26934@coredump.intra.peff.net> <7vwt3fx1am.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701211813410.14248@woody.osdl.org> <7virezwzpz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701211851310.14248@woody.osdl.org> <7v3b63wsh3.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701212137370.14248@woody.osdl.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] New files in git weren't being downloaded during CVS update
+Date: Mon, 22 Jan 2007 20:02:29 +1300
+Message-ID: <46a038f90701212302v458019fcxcde72a34aa46e7bd@mail.gmail.com>
+References: <200701211425.12971.andyparkins@gmail.com>
+	 <7vmz4bwzy4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 22 07:58:08 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Andy Parkins" <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 22 08:02:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8t81-00065X-SM
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 07:58:06 +0100
+	id 1H8tCN-0006yD-4F
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 08:02:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517AbXAVG5x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 01:57:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751528AbXAVG5x
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 01:57:53 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39685 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517AbXAVG5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 01:57:53 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H8t7j-0006NW-9f; Mon, 22 Jan 2007 01:57:47 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 16D5620FBAE; Mon, 22 Jan 2007 01:57:45 -0500 (EST)
-To: Linus Torvalds <torvalds@osdl.org>
+	id S1751528AbXAVHCc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 02:02:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbXAVHCc
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 02:02:32 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:15925 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751528AbXAVHCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 02:02:31 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1234802nfa
+        for <git@vger.kernel.org>; Sun, 21 Jan 2007 23:02:29 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QYZ7mqQh+hO/RC7x4kPnzuZkab1c2EWKJd0gy0Ec6pVQhOYriuC26bIEtb7M3OD50I4Q0YUZLwTOqRNM7U7DsoARY/naxn1ZJcUjich4WRWPZRXieUHKazuG9OcA8ou8me48gMwGhiwotDpKQPk5BCuOHB+PW/4naTa2BIDp1F8=
+Received: by 10.48.162.15 with SMTP id k15mr6153341nfe.1169449349405;
+        Sun, 21 Jan 2007 23:02:29 -0800 (PST)
+Received: by 10.49.35.7 with HTTP; Sun, 21 Jan 2007 23:02:29 -0800 (PST)
+To: "Junio C Hamano" <junkio@cox.net>
+In-Reply-To: <7vmz4bwzy4.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701212137370.14248@woody.osdl.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37400>
 
-Linus Torvalds <torvalds@osdl.org> wrote:
-> Add my sign-off on the patch as appropriate. I do think it's mergeable, 
-> but I'd _really_ like somebody else to double-check me here.
+On 1/22/07, Junio C Hamano <junkio@cox.net> wrote:
 
-Your patch looks right to me.  And I like the idea of reducing the
-output to only the really important stuff.  Nice work.
+> > This is in response to Simon Schubert's suggestion that T_ADDED is an
+> > inappropriate category for a remotely added file.  Instead this treats
+> > remotely added files the same as remotely changed files.
+>
+> Martin, I think this looks like a sane change.
 
--- 
-Shawn.
+It does -- sorry I've been offline for a few days and catching up with work.
+
+> I do not have anything other than the real CVS running on a
+> Linux box to try this change (most notably I do not do Eclipse
+> nor Tortoise) myself and I am reluctant to touch things I cannot
+> personally test at this stage near the release.
+
+Fair enough. I'll give it whirl later tonight. For a quick test, you can always
+
+export CVS_SERVER=/home/martin/src/git/git-cvsserver.perl
+cvs update
+
+> tested this for his own use in his environment, but I would
+> really appreciate a third party Ack from an environment
+> different from the originator of the patch.
+
+Yup. Will test later tonight.
+
+
+martin
