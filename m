@@ -1,66 +1,62 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Insert ACTIVESTATE_STRING in Git.pm
-Date: Mon, 22 Jan 2007 16:44:29 +0100
-Message-ID: <20070122154429.GG18276@pasky.or.cz>
-References: <81b0412b0701220632t50ad42c4ucb0ebae140a9706a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] config_set_multivar(): disallow newlines in keys
+Date: Mon, 22 Jan 2007 16:44:46 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701221643030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701150144.56793.jnareb@gmail.com>  <200701191310.32417.jnareb@gmail.com>
+  <Pine.LNX.4.63.0701191420000.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <200701192344.11972.jnareb@gmail.com>  <7v8xfyczxi.fsf@assigned-by-dhcp.cox.net>
+  <Pine.LNX.4.63.0701200224180.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <81b0412b0701220706w65ed0657h1d69819e7879ed40@mail.gmail.com> 
+ <Pine.LNX.4.63.0701221619110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <81b0412b0701220733j1002bd9dse8db491512c7a500@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Jan 22 16:44:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 22 16:46:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H91Lc-0002hR-R1
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 16:44:41 +0100
+	id 1H91Ml-00032c-FS
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 16:45:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751529AbXAVPoe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 10:44:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbXAVPoe
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 10:44:34 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:43883 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751529AbXAVPod (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 10:44:33 -0500
-Received: (qmail 19034 invoked by uid 2001); 22 Jan 2007 16:44:29 +0100
+	id S1751796AbXAVPot (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 10:44:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751813AbXAVPos
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 10:44:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55191 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751796AbXAVPor (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 10:44:47 -0500
+Received: (qmail invoked by alias); 22 Jan 2007 15:44:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp001) with SMTP; 22 Jan 2007 16:44:46 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 To: Alex Riesen <raa.lkml@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <81b0412b0701220632t50ad42c4ucb0ebae140a9706a@mail.gmail.com>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <81b0412b0701220733j1002bd9dse8db491512c7a500@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37420>
 
-On Mon, Jan 22, 2007 at 03:32:28PM CET, Alex Riesen wrote:
-> Also add "git" to the pipe parameters, otherwise it does not work at all, as
-> no git commands are usable out of git context.
+Hi,
+
+On Mon, 22 Jan 2007, Alex Riesen wrote:
+
+> On 1/22/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > BTW IMHO we will probably never libify git; too many too complicated cases
+> > exist already.
 > 
-> ---
-> 
-> This is not enough to make it work on ActiveState. It's just to
-> fix obvious TODOs, which should help someone to get it going.
-> The other problems are:
-> - tie refuses to bind a handle class activestate_pipe to a scalar $fh
->   (a patch follows)
-> - there are some unexplained warnings about uninitialized values
-> - cygwin-windows pathname conversion (not fixable at all)
-> 
-> perl/Git.pm |    7 ++++---
-> 1 files changed, 4 insertions(+), 3 deletions(-)
+> We probably don't need it libified completely. Just reading and writing of
+> the object database and tags/references and very simple revision walking
+> will be a very good start [...]
 
-Cool.
+... and even these use xmalloc(), which die()s on out-of-memory. Note that 
+it would be a really horrible work to libify that, since you basically 
+have to insert gazillions of free() calls at the right point, which we 
+don't have to, since exit() cleans up after us anyway.
 
-Acked-by: Petr Baudis <pasky@suse.cz>
-
-Perhaps ACPIPE could use some comment in the code but that's just vain
-nitpicking.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-The meaning of Stonehenge in Traflamadorian, when viewed from above, is:
-"Replacement part being rushed with all possible speed."
-		-- Kurt Vonnegut, Sirens from Titan
+Ciao,
+Dscho
