@@ -1,103 +1,254 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [Announce] GIT v1.5.0-rc2
-Date: Sun, 21 Jan 2007 22:25:41 -0800
-Message-ID: <7vk5zfvaqi.fsf@assigned-by-dhcp.cox.net>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
-	<7v3b6439uh.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@osdl.org>
+Subject: Re: [PATCH] prune: --expire=time
+Date: Sun, 21 Jan 2007 22:26:41 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701212137370.14248@woody.osdl.org>
+References: <7vy7o0klt1.fsf@assigned-by-dhcp.cox.net> <20070119034404.GA17521@spearce.org>
+ <20070119104935.GA5189@moooo.ath.cx> <7vfya6hll3.fsf@assigned-by-dhcp.cox.net>
+ <20070120111832.GA30368@moooo.ath.cx> <7vlkjw50nl.fsf@assigned-by-dhcp.cox.net>
+ <20070121103724.GA23256@moooo.ath.cx> <7vejpo39zg.fsf@assigned-by-dhcp.cox.net>
+ <20070121220114.GA24729@coredump.intra.peff.net> <45B415B1.30407@midwinter.com>
+ <20070122015252.GA26934@coredump.intra.peff.net> <7vwt3fx1am.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0701211813410.14248@woody.osdl.org> <7virezwzpz.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0701211851310.14248@woody.osdl.org> <7v3b63wsh3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 22 07:25:48 2007
+X-From: git-owner@vger.kernel.org Mon Jan 22 07:26:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8sck-0008Ob-1m
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 07:25:46 +0100
+	id 1H8sdl-0000Ch-Qj
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 07:26:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751125AbXAVGZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 01:25:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751087AbXAVGZn
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 01:25:43 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:52817 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751125AbXAVGZm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 01:25:42 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070122062542.DPTT15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 22 Jan 2007 01:25:42 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id E6Rz1W00i1kojtg0000000; Mon, 22 Jan 2007 01:26:00 -0500
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751087AbXAVG0r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 01:26:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXAVG0r
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 01:26:47 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:35598 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751087AbXAVG0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 01:26:46 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0M6QghB016833
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 21 Jan 2007 22:26:42 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0M6QfNt018429;
+	Sun, 21 Jan 2007 22:26:42 -0800
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v3b63wsh3.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.66 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
+X-MIMEDefang-Filter: osdl$Revision: 1.170 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37398>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->>    - Cloning and fetching _from_ a shallow clone are not
->>      supported (nor tested -- so they might work by accident but
->>      they are not expected to).
->
-> Maybe we should go the "restrict first, and loosen later" approach? I.e. 
-> forbid git-upload-pack to run if is_repository_shallow()?
->
->>    - Pushing from nor into a shallow clone are not expected to
->>      work.
->
-> Maybe forbid git-push and git-receive-pack to run if 
-> is_repository_shallow()?
->
-> (I _think_ git-push should be safe, but not git-receive-pack.)
 
-I think that is sensible.  Let's do this.
+On Sun, 21 Jan 2007, Junio C Hamano wrote:
+> 
+> I've been annoyed by those scary messages fsck-objects enough
+> and was wondering if we could make it less scary.  Especially
+> annoying is that the message about missing blobs and trees that
+> are only referred to by dangling commits.
 
--- >8 --
-[PATCH] shallow repository: disable unsupported operations for now.
+Yeah. Something like this, which really just changes the order in which we 
+print out the warnings, might be a good idea.
 
-We currently do not support fetching/cloning from a shallow repository
-nor pushing into one.  Make sure these are not attempted so that we
-do not have to worry about corrupting repositories needlessly.
+This patch does that, and also adds a lot of commentary on what it is 
+doing. It also splits out the "object unreachable" case from the reachable 
+case, since they end up being really really different. An unreachable 
+object we don't even care about broken links for etc.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+The diffstat says that it adds a lot more lines than it removed, but all 
+the really new lines are either just the added comments, or a result of 
+just splitting the object checking up into a few separate functions. The 
+actual code is largely the same (but with the improved semantics).
+
+I actually tested this a bit by trying to force a few corruption cases. 
+And the changes _look_ obvious, and yes, it improved reporting (I think). 
+At the same time, git-fsck-objects is too important to have just one pair 
+of eyes looking at it, so I would suggest others really double-check my 
+changes and the logic.
+
+(Btw, the "parsed but unparsed because it was in a pack-file" test should 
+probably be tightened up a bit. That part is not new code, it's the old 
+code in a new place with a newly added comment about what it is all about. 
+So it's not a regression, it's just something I thought I'd point out when 
+I looked at the code).
+
+Add my sign-off on the patch as appropriate. I do think it's mergeable, 
+but I'd _really_ like somebody else to double-check me here.
+
+NOTE! One of the new things is that it doesn't complain about missing 
+unreachable objects at all any more. It used to complain about missing 
+objects even if they were only missing because _another_ unreachable 
+object wanted to access them, which was obviously just useless noise (it 
+could happen if you ^C in the middle of a fetch, for example.
+
+Anyway, somebody should double- and triple-check me.
+
+		Linus
+
 ---
- receive-pack.c |    3 +++
- upload-pack.c  |    3 ++-
- 2 files changed, 5 insertions(+), 1 deletions(-)
 
-diff --git a/receive-pack.c b/receive-pack.c
-index c176d8f..6333f00 100644
---- a/receive-pack.c
-+++ b/receive-pack.c
-@@ -421,6 +421,9 @@ int main(int argc, char **argv)
- 	if (!enter_repo(dir, 0))
- 		die("'%s': unable to chdir or not a git archive", dir);
- 
-+	if (is_repository_shallow())
-+		die("attempt to push into a shallow repository");
-+
- 	setup_ident();
- 	/* don't die if gecos is empty */
- 	ignore_missing_committer_name();
-diff --git a/upload-pack.c b/upload-pack.c
-index 3a466c6..3648aae 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -672,7 +672,8 @@ int main(int argc, char **argv)
- 
- 	if (!enter_repo(dir, strict))
- 		die("'%s': unable to chdir or not a git archive", dir);
--
-+	if (is_repository_shallow())
-+		die("attempt to fetch/clone from a shallow repository");
- 	upload_pack();
- 	return 0;
+ fsck-objects.c |  133 ++++++++++++++++++++++++++++++++++++++++----------------
+ 1 files changed, 95 insertions(+), 38 deletions(-)
+
+diff --git a/fsck-objects.c b/fsck-objects.c
+index 81f00db..ecfb014 100644
+--- a/fsck-objects.c
++++ b/fsck-objects.c
+@@ -54,6 +54,99 @@ static int objwarning(struct object *obj, const char *err, ...)
+ 	return -1;
  }
--- 
-1.5.0.rc2
+ 
++/*
++ * Check a single reachable object
++ */
++static void check_reachable_object(struct object *obj)
++{
++	const struct object_refs *refs;
++
++	/*
++	 * We obviously want the object to be parsed,
++	 * except if it was in a pack-file and we didn't
++	 * do a full fsck
++	 */
++	if (!obj->parsed) {
++		if (has_sha1_file(obj->sha1))
++			return; /* it is in pack - forget about it */
++		printf("missing %s %s\n", typename(obj->type), sha1_to_hex(obj->sha1));
++		return;
++	}
++
++	/*
++	 * Check that everything that we try to reference is also good.
++	 */
++	refs = lookup_object_refs(obj);
++	if (refs) {
++		unsigned j;
++		for (j = 0; j < refs->count; j++) {
++			struct object *ref = refs->ref[j];
++			if (ref->parsed ||
++			    (has_sha1_file(ref->sha1)))
++				continue;
++			printf("broken link from %7s %s\n",
++			       typename(obj->type), sha1_to_hex(obj->sha1));
++			printf("              to %7s %s\n",
++			       typename(ref->type), sha1_to_hex(ref->sha1));
++		}
++	}
++}
++
++/*
++ * Check a single unreachable object
++ */
++static void check_unreachable_object(struct object *obj)
++{
++	/*
++	 * Missing unreachable object? Ignore it. It's not like
++	 * we miss it (since it can't be reached), nor do we want
++	 * to complain about it being unreachable (since it does
++	 * not exist).
++	 */
++	if (!obj->parsed)
++		return;
++
++	/*
++	 * Unreachable object that exists? Show it if asked to,
++	 * since this is something that is prunable.
++	 */
++	if (show_unreachable) {
++		printf("unreachable %s %s\n", typename(obj->type), sha1_to_hex(obj->sha1));
++		return;
++	}
++
++	/*
++	 * "!used" means that nothing at all points to it, including
++	 * other unreacahble objects. In other words, it's the "tip"
++	 * of some set of unreachable objects, usually a commit that
++	 * got dropped.
++	 *
++	 * Such starting points are more interesting than some random
++	 * set of unreachable objects, so we show them even if the user
++	 * hasn't asked for _all_ unreachable objects. If you have
++	 * deleted a branch by mistake, this is a prime candidate to
++	 * start looking at, for example.
++	 */
++	if (!obj->used) {
++		printf("dangling %s %s\n", typename(obj->type),
++		       sha1_to_hex(obj->sha1));
++		return;
++	}
++
++	/*
++	 * Otherwise? It's there, it's unreachable, and some other unreachable
++	 * object points to it. Ignore it - it's not interesting, and we showed
++	 * all the interesting cases above.
++	 */
++}
++
++static void check_object(struct object *obj)
++{
++	if (obj->flags & REACHABLE)
++		check_reachable_object(obj);
++	else
++		check_unreachable_object(obj);
++}
+ 
+ static void check_connectivity(void)
+ {
+@@ -62,46 +155,10 @@ static void check_connectivity(void)
+ 	/* Look up all the requirements, warn about missing objects.. */
+ 	max = get_max_object_index();
+ 	for (i = 0; i < max; i++) {
+-		const struct object_refs *refs;
+ 		struct object *obj = get_indexed_object(i);
+ 
+-		if (!obj)
+-			continue;
+-
+-		if (!obj->parsed) {
+-			if (has_sha1_file(obj->sha1))
+-				; /* it is in pack */
+-			else
+-				printf("missing %s %s\n",
+-				       typename(obj->type), sha1_to_hex(obj->sha1));
+-			continue;
+-		}
+-
+-		refs = lookup_object_refs(obj);
+-		if (refs) {
+-			unsigned j;
+-			for (j = 0; j < refs->count; j++) {
+-				struct object *ref = refs->ref[j];
+-				if (ref->parsed ||
+-				    (has_sha1_file(ref->sha1)))
+-					continue;
+-				printf("broken link from %7s %s\n",
+-				       typename(obj->type), sha1_to_hex(obj->sha1));
+-				printf("              to %7s %s\n",
+-				       typename(ref->type), sha1_to_hex(ref->sha1));
+-			}
+-		}
+-
+-		if (show_unreachable && !(obj->flags & REACHABLE)) {
+-			printf("unreachable %s %s\n",
+-			       typename(obj->type), sha1_to_hex(obj->sha1));
+-			continue;
+-		}
+-
+-		if (!obj->used) {
+-			printf("dangling %s %s\n", typename(obj->type),
+-			       sha1_to_hex(obj->sha1));
+-		}
++		if (obj)
++			check_object(obj);
+ 	}
+ }
+ 
