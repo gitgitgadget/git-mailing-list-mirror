@@ -1,82 +1,93 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] New files in git weren't being downloaded during CVS update
-Date: Mon, 22 Jan 2007 10:44:47 +0000
-Message-ID: <200701221044.49467.andyparkins@gmail.com>
-References: <200701211425.12971.andyparkins@gmail.com>
+Subject: [PATCH] New files in git weren't being downloaded during CVS update
+Date: Mon, 22 Jan 2007 10:46:12 +0000
+Message-ID: <200701221046.12795.andyparkins@gmail.com>
+References: <200701221044.49467.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jan 22 11:45:09 2007
+X-From: git-owner@vger.kernel.org Mon Jan 22 11:46:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8wfd-00052u-K1
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 11:45:01 +0100
+	id 1H8wgt-0005Jo-Ld
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 11:46:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519AbXAVKo5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 05:44:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751532AbXAVKo5
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 05:44:57 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:18937 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751529AbXAVKo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 05:44:56 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1016341uga
-        for <git@vger.kernel.org>; Mon, 22 Jan 2007 02:44:55 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=AT+i2rRR2pNup5UcZ9zgD5QFdiR0w8vw1ALMGqWcN4jqdv9pESoSJA8BJBgOYBZmi2HyaavU9wsfFiGDIBJ5rkzsiMy7XIKe+koSmPYG6OP4J4TV/KNNVVwHyXOh7gG9e7eIJXYIAIlewrqdMyrl7tPKw6Jh539nY0oSIJuzoa0=
-Received: by 10.67.29.12 with SMTP id g12mr7342962ugj.1169462695251;
-        Mon, 22 Jan 2007 02:44:55 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id o1sm5392772uge.2007.01.22.02.44.52;
-        Mon, 22 Jan 2007 02:44:52 -0800 (PST)
+	id S1751533AbXAVKqQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 05:46:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbXAVKqQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 05:46:16 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:61278 "EHLO
+	369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751533AbXAVKqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 05:46:16 -0500
+Received: from dvr.360vision.com ([192.189.1.65]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Mon, 22 Jan 2007 10:49:04 +0000
+Received: from localhost ([127.0.0.1])
+	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1H8wgo-0005g1-00
+	for <git@vger.kernel.org>; Mon, 22 Jan 2007 10:46:14 +0000
+In-Reply-To: <200701221044.49467.andyparkins@gmail.com>
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <200701211425.12971.andyparkins@gmail.com>
+X-TUID: 6586a7cca6ceaff4
+X-UID: 204
+X-Length: 2333
 Content-Disposition: inline
+X-OriginalArrivalTime: 22 Jan 2007 10:49:04.0843 (UTC) FILETIME=[EF4C31B0:01C73E12]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37405>
 
-On Sunday 2007 January 21 14:25, Andy Parkins wrote:
+If a repository was checked out via git-cvsserver and then later a new
+file is added to the git repository via some other method; a CVS update
+wasn't fetching the new file.
 
-> This is in response to Simon Schubert's suggestion that T_ADDED is an
-> inappropriate category for a remotely added file.  Instead this treats
-> remotely added files the same as remotely changed files.
+It would be reported as a new file as
+ A some/dir/newfile.c
+but would never appear in the directory.
 
-I'm still concerned that this fix is not right.  Having thought more about it, 
-I suspect that this breaks the other "added-file" case, where the file is 
-added locally but not remotely.
+The problem seems to be that git-cvsserver was treating these two cases
+identically, as "A" type results.
 
-There are three key cases:
- 1. File present locally and remotely.  Modified remotely.  Response "U"
- 2. File present locally only.  Response should be "A"
- 3. File present remotely only.  Response should be "U"
+1. New file in repository
+2. New file locally
 
-I think the real problem is that both 2 and 3 are being handled in the same 
-place.  Hence, my patch, which has fixed case 3; will have broken case 2.
+In fact, traditionally, case 1 is treated as a "U" result, and case 2
+only is treated as an "A" result.  "A", should just report that the file
+is added locally and then skip that file during an update as their is
+(of course) nothing to send.
 
-I need a bit of confirmation from Martin; but I suspect that the correct fix 
-is something like this:
+In both these cases there is no working revision, so the checking for
+"is there no working revision" will return true.  The test for case 2
+needs refining to say "if there is no working revision and no upstream
+revision".  This patch does just that, leaving case 1 to be handled by
+the normal "U" handler.
 
-    elsif ( (!defined($wrev) || $wrev == 0) && !defined($meta->{revision})
-    {
-        $log->info("Tell the client the file will be added");
+I've also updated the log message to more accurately describe the
+operation.  i.e. that "A" means that content is scheduled for addition;
+not that it actually has been added.
 
-If I'm correct, this would only run the added section when there is no 
-matching revision in the repository - this would be case 2.  Then case 3 
-would be handled as the else to this if, which handles every other case.
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ git-cvsserver.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-My testing of this works, but I'd like confirmation that I'm right in this 
-thinking?  Patch to follow...
-
-
-Andy
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index a33a876..2479f71 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -876,9 +876,9 @@ sub req_update
+                 print "MT newline\n";
+ 		next;
+ 	    }
+-	    elsif ( !defined($wrev) || $wrev == 0 )
++	    elsif ( (!defined($wrev) || $wrev == 0) && (!defined($meta->{revision}) || $meta->{revision} == 0) )
+ 	    {
+-	        $log->info("Tell the client the file will be added");
++	        $log->info("Tell the client the file is scheduled for addition");
+ 		print "MT text A \n";
+                 print "MT fname $filename\n";
+                 print "MT newline\n";
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+1.5.0.rc2.g3f8f2
