@@ -1,107 +1,97 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] New files in git weren't being downloaded during CVS update
-Date: Mon, 22 Jan 2007 10:56:27 +0000
-Message-ID: <200701221056.27599.andyparkins@gmail.com>
-References: <200701221044.49467.andyparkins@gmail.com>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] New files in git weren't being downloaded during CVS
+ update
+Date: Mon, 22 Jan 2007 12:08:18 +0100
+Message-ID: <45B49B22.6050806@fs.ei.tum.de>
+References: <200701221044.49467.andyparkins@gmail.com> <200701221056.27599.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Mon Jan 22 11:56:37 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigD71175DF88335CA2977643C4"
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 22 12:08:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8wqo-0007fd-D6
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 11:56:34 +0100
+	id 1H8x2K-00020d-RJ
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 12:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751614AbXAVK4a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 05:56:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751600AbXAVK4a
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 05:56:30 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:61456 "EHLO
-	369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751454AbXAVK4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 05:56:30 -0500
-Received: from dvr.360vision.com ([192.189.1.65]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
-	 Mon, 22 Jan 2007 10:59:19 +0000
-Received: from localhost ([127.0.0.1])
-	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1H8wqj-0005nq-00
-	for <git@vger.kernel.org>; Mon, 22 Jan 2007 10:56:29 +0000
-In-Reply-To: <200701221044.49467.andyparkins@gmail.com>
-To: git@vger.kernel.org
-X-TUID: 695aa06301ae535e
-X-UID: 205
-X-Length: 2662
-Content-Disposition: inline
-X-OriginalArrivalTime: 22 Jan 2007 10:59:19.0750 (UTC) FILETIME=[5DCF8E60:01C73E14]
+	id S1751648AbXAVLIZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 06:08:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751649AbXAVLIZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 06:08:25 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:41387 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751648AbXAVLIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 06:08:24 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id AB42128098;
+	Mon, 22 Jan 2007 12:08:22 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id dpY5jmT9i7kY; Mon, 22 Jan 2007 12:08:22 +0100 (CET)
+Received: from [192.168.10.124] (ppp-62-216-209-216.dynamic.mnet-online.de [62.216.209.216])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 276A828096;
+	Mon, 22 Jan 2007 12:08:22 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+To: Andy Parkins <andyparkins@gmail.com>
+In-Reply-To: <200701221056.27599.andyparkins@gmail.com>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37407>
 
-If a repository was checked out via git-cvsserver and then later a new
-file is added to the git repository via some other method; a CVS update
-wasn't fetching the new file.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigD71175DF88335CA2977643C4
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-It would be reported as a new file as
- A some/dir/newfile.c
-but would never appear in the directory.
+Andy Parkins wrote:
+> @@ -876,9 +876,9 @@ sub req_update
+>                  print "MT newline\n";
+>  		next;
+>  	    }
+> -	    elsif ( !defined($wrev) || $wrev =3D=3D 0 )
+> +	    elsif ( (!defined($wrev) || $wrev =3D=3D 0) && (!defined($meta->{=
+revision}) || $meta->{revision} =3D=3D 0) )
+>  	    {
+> -	        $log->info("Tell the client the file will be added");
+> +	        $log->info("Tell the client the file is scheduled for additio=
+n");
 
-The problem seems to be that git-cvsserver was treating these two cases
-identically, as "A" type results.
+This is nice but probably does not handle a collision (cvs output: file w=
+as added by a third party) well and will probably overwrite the locally a=
+dded file.  however it is a step in the right direction.  from skimming t=
+he code I couldn't find collision handling anyways.
 
-1. New file in repository
-2. New file locally
+cheers
+  simon
 
-In fact, traditionally, case 1 is treated as a "U" result, and case 2
-only is treated as an "A" result.  "A", should just report that the file
-is added locally and then skip that file during an update as there is
-(of course) nothing to send.
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
-In both these cases there is no working revision, so the checking for
-"is there no working revision" will return true.  The test for case 2
-needs refining to say "if there is no working revision and no upstream
-revision".  This patch does just that, leaving case 1 to be handled by
-the normal "U" handler.
 
-I've also updated the log message to more accurately describe the
-operation.  i.e. that "A" means that content is scheduled for addition;
-not that it actually has been added.
+--------------enigD71175DF88335CA2977643C4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-Apologies; this one is the real replacement.  The previous patch didn't
-include the correction to the update log message which would potentially
-use an undefined variable when adding new content.
+iD8DBQFFtJslr5S+dk6z85oRAsHTAJ4pTiSnnkpkzCuO3YDmLjm8zLM/bACgn5VO
+pjJbIQJAknnm7mXVs3xdZJA=
+=x0DY
+-----END PGP SIGNATURE-----
 
- git-cvsserver.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index a33a876..e18e901 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -876,9 +876,9 @@ sub req_update
-                 print "MT newline\n";
- 		next;
- 	    }
--	    elsif ( !defined($wrev) || $wrev == 0 )
-+	    elsif ( (!defined($wrev) || $wrev == 0) && (!defined($meta->{revision}) || $meta->{revision} == 0) )
- 	    {
--	        $log->info("Tell the client the file will be added");
-+	        $log->info("Tell the client the file is scheduled for addition");
- 		print "MT text A \n";
-                 print "MT fname $filename\n";
-                 print "MT newline\n";
-@@ -886,7 +886,7 @@ sub req_update
- 
- 	    }
- 	    else {
--                $log->info("Updating '$filename' $wrev");
-+                $log->info("Updating '$filename' to ".$meta->{revision});
-                 print "MT +updated\n";
-                 print "MT text U \n";
-                 print "MT fname $filename\n";
--- 
-1.5.0.rc2.g3f8f2
+--------------enigD71175DF88335CA2977643C4--
