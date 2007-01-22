@@ -1,66 +1,59 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: GIT 1.5.0-rc2 compiler warning
-Date: Mon, 22 Jan 2007 21:44:34 +0100
-Organization: Dewire
-Message-ID: <200701222144.34934.robin.rosenberg.lists@dewire.com>
-References: <45B40E7E.3030706@gmail.com> <7vy7nvyic4.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: modifying commit's author
+Date: Mon, 22 Jan 2007 12:48:27 -0800
+Message-ID: <7v8xfuss84.fsf@assigned-by-dhcp.cox.net>
+References: <20070122203734.GB23187@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: SungHyun Nam <goweol@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 22 21:44:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 22 21:48:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H961n-00069g-Hw
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 21:44:31 +0100
+	id 1H965r-0007LN-5O
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 21:48:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932507AbXAVUoQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 22 Jan 2007 15:44:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932509AbXAVUoQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 15:44:16 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:5738 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S932507AbXAVUoP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Jan 2007 15:44:15 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 568C0802E0C;
-	Mon, 22 Jan 2007 21:39:41 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 08987-09; Mon, 22 Jan 2007 21:39:41 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 04D36802651;
-	Mon, 22 Jan 2007 21:39:38 +0100 (CET)
-To: Junio C Hamano <junkio@cox.net>
-User-Agent: KMail/1.9.4
-In-Reply-To: <7vy7nvyic4.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S932622AbXAVUsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 15:48:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932606AbXAVUs3
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 15:48:29 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:57760 "EHLO
+	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932612AbXAVUs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 15:48:28 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao09.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070122204827.YJLJ18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 22 Jan 2007 15:48:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ELol1W00b1kojtg0000000; Mon, 22 Jan 2007 15:48:46 -0500
+To: "J. Bruce Fields" <bfields@fieldses.org>
+In-Reply-To: <20070122203734.GB23187@fieldses.org> (J. Bruce Fields's message
+	of "Mon, 22 Jan 2007 15:37:34 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37449>
 
-m=E5ndag 22 januari 2007 02:13 skrev Junio C Hamano:
-> I know.  Imported code.
->
-> I do not think we can do much on a platform where wchar_t is too
-> narrow and BMP only anyway.
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-What's wrong is the assumption that wchar_t corresponds to a complete u=
-nicode=20
-character. On windows, two wchar_t (code units) may me combined to enco=
-de a
-unicode character outside of the BMP.
+> If I got the author wrong on a commit, is there a quick way to fix it
+> (e.g. by passing the right arguments or environment variables to commit
+> --amend)?
 
-Without investigating further, I note that Java adds methods with an 'i=
-nt'=20
-argument to the Character utility class to handle code points, vs the=20
-original 'char' that represents a code unit. (unlike C, an int is alway=
-s=20
-32-bit in Java).
+I usually do "format-patch -$n; reset --hard HEAD~$n; edit
+00??-*.patch; am 00??-*.patch" myself when I got into that
+situation to rebuild the branch, and haven't personally felt
+need for an option to --amend, but it might make sense to teach
+git-commit --amend to allow --author option to override it; I
+think it currently ignores --author when given without erroring
+out.
 
--- robin
-=20
+It may become a question if we would want to allow updating the
+timestamp as well, but when people asked for --author I did not
+hear from anybody who wanted to have --authortime, so not being
+able to do so probably is Ok.
