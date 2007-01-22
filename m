@@ -1,62 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] prune: --expire=time
-Date: Mon, 22 Jan 2007 10:32:35 +0100
-Organization: At home
-Message-ID: <ep20a7$504$1@sea.gmane.org>
-References: <7vy7o0klt1.fsf@assigned-by-dhcp.cox.net> <20070119034404.GA17521@spearce.org> <20070119104935.GA5189@moooo.ath.cx> <7vfya6hll3.fsf@assigned-by-dhcp.cox.net> <20070120111832.GA30368@moooo.ath.cx> <7vlkjw50nl.fsf@assigned-by-dhcp.cox.net> <20070121103724.GA23256@moooo.ath.cx> <7vejpo39zg.fsf@assigned-by-dhcp.cox.net> <20070121220114.GA24729@coredump.intra.peff.net> <45B415B1.30407@midwinter.com> <20070122015252.GA26934@coredump.intra.peff.net> <7vwt3fx1am.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701211813410.14248@woody.osdl.org> <7virezwzpz.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701211851310.14248@woody.osdl.org> <7v3b63wsh3.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] New files in git weren't being downloaded during CVS update
+Date: Mon, 22 Jan 2007 10:44:47 +0000
+Message-ID: <200701221044.49467.andyparkins@gmail.com>
+References: <200701211425.12971.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-X-From: git-owner@vger.kernel.org Mon Jan 22 10:32:29 2007
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+X-From: git-owner@vger.kernel.org Mon Jan 22 11:45:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H8vXL-0005Uw-Ox
-	for gcvg-git@gmane.org; Mon, 22 Jan 2007 10:32:24 +0100
+	id 1H8wfd-00052u-K1
+	for gcvg-git@gmane.org; Mon, 22 Jan 2007 11:45:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039AbXAVJcT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 22 Jan 2007 04:32:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751125AbXAVJcT
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 04:32:19 -0500
-Received: from main.gmane.org ([80.91.229.2]:54044 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751039AbXAVJcS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 04:32:18 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H8vX2-0003sf-Ql
-	for git@vger.kernel.org; Mon, 22 Jan 2007 10:32:05 +0100
-Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Jan 2007 10:32:04 +0100
-Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 22 Jan 2007 10:32:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+	id S1751519AbXAVKo5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 05:44:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751532AbXAVKo5
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 05:44:57 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:18937 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751529AbXAVKo4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 05:44:56 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1016341uga
+        for <git@vger.kernel.org>; Mon, 22 Jan 2007 02:44:55 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=AT+i2rRR2pNup5UcZ9zgD5QFdiR0w8vw1ALMGqWcN4jqdv9pESoSJA8BJBgOYBZmi2HyaavU9wsfFiGDIBJ5rkzsiMy7XIKe+koSmPYG6OP4J4TV/KNNVVwHyXOh7gG9e7eIJXYIAIlewrqdMyrl7tPKw6Jh539nY0oSIJuzoa0=
+Received: by 10.67.29.12 with SMTP id g12mr7342962ugj.1169462695251;
+        Mon, 22 Jan 2007 02:44:55 -0800 (PST)
+Received: from davejones ( [194.70.53.227])
+        by mx.google.com with ESMTP id o1sm5392772uge.2007.01.22.02.44.52;
+        Mon, 22 Jan 2007 02:44:52 -0800 (PST)
 To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+User-Agent: KMail/1.9.5
+In-Reply-To: <200701211425.12971.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37404>
 
-Junio C Hamano wrote:
+On Sunday 2007 January 21 14:25, Andy Parkins wrote:
 
-> @@ -50,7 +62,6 @@ kept. =A0This defaults to 15 days.
-> =A0
-> =A0See Also
-> =A0--------
-> -gitlink:git-prune[1]
-> =A0gitlink:git-reflog[1]
-> =A0gitlink:git-repack[1]
-> =A0gitlink:git-rerere[1]
+> This is in response to Simon Schubert's suggestion that T_ADDED is an
+> inappropriate category for a remotely added file.  Instead this treats
+> remotely added files the same as remotely changed files.
 
-Huh?
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I'm still concerned that this fix is not right.  Having thought more about it, 
+I suspect that this breaks the other "added-file" case, where the file is 
+added locally but not remotely.
+
+There are three key cases:
+ 1. File present locally and remotely.  Modified remotely.  Response "U"
+ 2. File present locally only.  Response should be "A"
+ 3. File present remotely only.  Response should be "U"
+
+I think the real problem is that both 2 and 3 are being handled in the same 
+place.  Hence, my patch, which has fixed case 3; will have broken case 2.
+
+I need a bit of confirmation from Martin; but I suspect that the correct fix 
+is something like this:
+
+    elsif ( (!defined($wrev) || $wrev == 0) && !defined($meta->{revision})
+    {
+        $log->info("Tell the client the file will be added");
+
+If I'm correct, this would only run the added section when there is no 
+matching revision in the repository - this would be case 2.  Then case 3 
+would be handled as the else to this if, which handles every other case.
+
+My testing of this works, but I'd like confirmation that I'm right in this 
+thinking?  Patch to follow...
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
