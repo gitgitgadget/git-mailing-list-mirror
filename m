@@ -1,82 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: MinGW port - initial work uploaded
-Date: Tue, 23 Jan 2007 20:28:51 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701232025160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701192148.20206.johannes.sixt@telecom.at> 
- <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com> 
- <200701222127.09601.johannes.sixt@telecom.at> 
- <Pine.LNX.4.63.0701231227200.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
- <46d6db660701230512l571d8c35k24e475c3fe0933cf@mail.gmail.com> 
- <Pine.LNX.4.63.0701231517290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <46d6db660701231055u63259fave0f33e9b52fc9bff@mail.gmail.com>
- <Pine.LNX.4.63.0701232012440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Allexio Ju" <allexio.ju@gmail.com>
+Subject: A trivial question on GIT
+Date: Tue, 23 Jan 2007 11:45:14 -0800
+Message-ID: <a02278b00701231145l31e1be2dpff0930cbc9d6fb6c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 20:29:18 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 20:45:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9RKT-00024O-OO
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 20:29:14 +0100
+	id 1H9RaC-0007lq-Ai
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 20:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933118AbXAWT3E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 14:29:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933116AbXAWT3D
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 14:29:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44029 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933108AbXAWT3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 14:29:00 -0500
-Received: (qmail invoked by alias); 23 Jan 2007 19:28:52 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp053) with SMTP; 23 Jan 2007 20:28:52 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Christian MICHON <christian.michon@gmail.com>
-In-Reply-To: <Pine.LNX.4.63.0701232012440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+	id S964851AbXAWTpS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 14:45:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964927AbXAWTpR
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 14:45:17 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:48338 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964851AbXAWTpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 14:45:16 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1313789uga
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 11:45:14 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=B4BmkYOwjPYYS2N+kVCY7jmLcWvhSGusgUFiGFydW7ydyJtMdPe3L8cGRO/FCeYycy7TMNWTIc6QDUvmA1spAiq/ufkZ72VnUfajANCdUkcrJpVI+B2dljllU+QAvt7sFgD1r092MhmYaLjeVIUj2zZFnATAjbZvIqsQNjH6C7c=
+Received: by 10.78.204.7 with SMTP id b7mr608652hug.1169581514271;
+        Tue, 23 Jan 2007 11:45:14 -0800 (PST)
+Received: by 10.78.143.1 with HTTP; Tue, 23 Jan 2007 11:45:14 -0800 (PST)
+To: junkio@cox.net
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37560>
 
 Hi,
 
-On Tue, 23 Jan 2007, Johannes Schindelin wrote:
+I have trivial question on GIT.
+I've made local copy of Linus's linux-2.6.git repository with
+following git command,
+---
+# git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+linux-2.6.git
+---
 
-> On Tue, 23 Jan 2007, Christian MICHON wrote:
-> 
-> > On 1/23/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > maybe I'm stuck with windows at work, but I still use vim inside mingw.
-> > > 
-> > > I don't:
-> > > 
-> > > $ vi
-> > > m.AllocationBase 0x0, m.BaseAddress 0x715B0000, m.RegionSize 0x4D0000,
-> > > m.State 0x10000
-> > > C:\msys1\bin\vim.exe: *** Couldn't reserve space for cygwin's heap
-> > > (0x715B0000 <0xB10000>) in child, Win32 error 487
-> > 
-> > interesting. which version of msys are you using ?
-> > I'm using this snapshot successfully:
-> > msysCORE-1.0.11-2007.01.19-1
-> 
-> I cannot find that file.
+After this, I would like to know how to synchronize local copy and
+keep updated  with Linus's.
+I guess cloning everyday would be bad idea as it is heavy operation.
+Can someone guide me on how to?
 
-I finally found it. I did not look in "Snapshots", but in "Current" and 
-"Candidate".
 
-And I found the bug: I always extracted with MSYS' own tar in MSYS' own 
-rxvt. Windows is very challenged from time to time, for example when 
-replacing files which are in use, and this led to my bash never being 
-replaced.
+Thank you,
 
-Now, Windows executables are not so easily relocated, it seems, and the 
-old bash kept on nicely clashing with the new vim. It sounds horrible, 
-that one program can take away a memory range from another program, just 
-by being not relocatable. And it is.
-
-Ciao,
-Dscho
+Allexio
