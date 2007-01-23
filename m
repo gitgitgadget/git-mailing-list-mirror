@@ -1,65 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] Allow fetch-pack to decide keeping the fetched pack without exploding
-Date: Tue, 23 Jan 2007 18:22:43 +0100
-Organization: At home
-Message-ID: <ep5g7f$bok$1@sea.gmane.org>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <7v3b6439uh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vzm8ansrt.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701231129501.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0701230809440.32200@woody.linux-foundation.org> <87sle17lnm.fsf@morpheus.local> <Pine.LNX.4.63.0701231738460.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] Allow default core.logallrefupdates to be overridden with template's config
+Date: Tue, 23 Jan 2007 18:58:11 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070123175811.GA8070@cepheus>
+References: <81b0412b0701230754p3425ded4k1f37dd26500c1744@mail.gmail.com> <Pine.LNX.4.64.0701230827440.32200@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-X-From: git-owner@vger.kernel.org Tue Jan 23 18:22:25 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 23 18:58:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9PLl-0000eK-8V
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 18:22:25 +0100
+	id 1H9PuZ-0005iH-WA
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 18:58:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964999AbXAWRWN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 12:22:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965012AbXAWRWN
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 12:22:13 -0500
-Received: from main.gmane.org ([80.91.229.2]:42056 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965038AbXAWRWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 12:22:12 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1H9PLM-0004Sk-1h
-	for git@vger.kernel.org; Tue, 23 Jan 2007 18:22:00 +0100
-Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 18:22:00 +0100
-Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 18:22:00 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965302AbXAWR6S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 23 Jan 2007 12:58:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965363AbXAWR6S
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 12:58:18 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:65078 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965302AbXAWR6R (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jan 2007 12:58:17 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1H9PuS-0000yU-7d; Tue, 23 Jan 2007 18:58:16 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l0NHwDvO023247;
+	Tue, 23 Jan 2007 18:58:13 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l0NHwC8i023246;
+	Tue, 23 Jan 2007 18:58:12 +0100 (MET)
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0701230827440.32200@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37554>
 
-Johannes Schindelin wrote:
+Hi Linus,
 
-> Seriously again, your comment got me thinking: it could actually make 
-> sense to include the information of code moves and code copies (for easier 
-> review) in the "@@ .. @@" lines (or before them, if git apply does not 
-> choke on inserting garbage lines before them).
-> 
-> But maybe it is not that good after all: if you review code, you should 
-> inspect it (even if it was only moved), since it might have all kinds of 
-> side effects, or you might have missed some other aspect before.
+Linus Torvalds wrote:
+>  just out of curiosity, what _is_ your curious text-attachment thing:
+>=20
+>    1 Shown      8 lines  Text (charset: UTF-8)
+>    2   OK    ~928 bytes  Text (charset: ANSI_X3.4-1968)
+ANSI_X3.4-1968 is just the offical name for us-ascii.
 
-It would be nice to have extended git header dealing with code copies
-(or stuff it in chunk header or above), because sometimes both sides
-of code movement (removal from one file, adding in next file) can be
-separated by a few pagefulls of chunks.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+	zeisberg@cepheus:~$ LANG=3DC locale charmap
+	ANSI_X3.4-1968
+
+I'm not sure that this was making you curious.
+
+Another strange thing is, that Alex' MUA choosed
+"Content-Transfer-Encoding: 7bit" for the first part although UTF-8 is
+an 8bit charset.
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3Dthe+speed+of+light+in+m%2Fs
