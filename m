@@ -1,92 +1,67 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: MinGW port - initial work uploaded
-Date: Tue, 23 Jan 2007 16:24:40 +0000
-Message-ID: <200701231624.41716.andyparkins@gmail.com>
-References: <200701192148.20206.johannes.sixt@telecom.at> <200701231506.32396.andyparkins@gmail.com> <Pine.LNX.4.63.0701231614490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH 2/2] Allow fetch-pack to decide keeping the fetched pack without exploding
+Date: Tue, 23 Jan 2007 17:28:13 +0100
+Message-ID: <87sle17lnm.fsf@morpheus.local>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <7v3b6439uh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vzm8ansrt.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701231129501.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0701230809440.32200@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 23 17:24:56 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Jan 23 17:28:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9OS6-0007AY-UF
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 17:24:55 +0100
+	id 1H9OVf-0008PL-AD
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 17:28:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964872AbXAWQYw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 11:24:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964927AbXAWQYw
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 11:24:52 -0500
-Received: from nf-out-0910.google.com ([64.233.182.186]:24842 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964872AbXAWQYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 11:24:51 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so302443nfa
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 08:24:49 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=S3VQZoese+lAovbtM8T79l/AZzWPtkNgHllLv2jIi4M4OqMWe3YmDei0FGITVjz5DlelyXhREKHAUfjYuNLjLWyRtrUvMs3fwI7I87k30BwZppWsnP1CaBlalyU4VQfiHD2U9ytPO+Q5/7Cli70ZnQn4k5fjHDII4v3bj0A4guU=
-Received: by 10.49.19.18 with SMTP id w18mr1358803nfi.1169569488381;
-        Tue, 23 Jan 2007 08:24:48 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id p72sm3154935nfc.2007.01.23.08.24.47;
-        Tue, 23 Jan 2007 08:24:47 -0800 (PST)
+	id S964976AbXAWQ2c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 23 Jan 2007 11:28:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965012AbXAWQ2c
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 11:28:32 -0500
+Received: from main.gmane.org ([80.91.229.2]:45809 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964999AbXAWQ2b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 11:28:31 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H9OVQ-0006CX-Do
+	for git@vger.kernel.org; Tue, 23 Jan 2007 17:28:20 +0100
+Received: from dns.vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 17:28:20 +0100
+Received: from davidk by dns.vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 17:28:20 +0100
+X-Injected-Via-Gmane: http://gmane.org/
 To: git@vger.kernel.org
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.63.0701231614490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: dns.vtab.com
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:hbxKMHuBbPVaCJhPA1tVn82yInU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37546>
 
-On Tuesday 2007 January 23 15:20, Johannes Schindelin wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> MinGW and cygwin differ in one very important point: cygwin needs an extra
-> dll, MinGW does not.
+> On Tue, 23 Jan 2007, Johannes Schindelin wrote:
+>>=20
+>> P.S.: These patches make me dream of yet another diff format enhance=
+ment:=20
+>> code moves!
 >
-> However, the development environment is still console-based, with a bash
-> so you can run configure and simple bash scripts. It is definitely more
-> catering to Unix types than Windows types.
+> It's basically impossible.
 >
-> So yes, there is a bash, and there is a less, and there is perl.
+> Why? You need the context.=20
 
-Those are just tools for MinGW though aren't they?  They aren't needed to run 
-the final executable object?  MinGW just spits out a native windows .exe - 
-i.e. plain windows.  There is no reason to suppose that joe-random-developer 
-will have bash, less and perl, even if they do have git.  Which was kind of 
-the point I was making - there is no pager to rely on in Windows, so why not 
-just drop it.  Okay, so MinGW comes with some nice UNIXy tools, but MinGW is 
-the compiler, not the environment.
+Yes, I think that a diff format for code moves wouldn't be useful.
+What could potentially be useful is a graphical diff browser that can
+e.g.  show two versions side-by-side and show code moves in that.  I
+have a vague memory that the ClearCase merge tool did that.
 
-Am I still misunderstanding?  I'm looking out for the time when
+But as long as the code moves are within a single file, that merge
+tool could derive that move from an ordinary diff.
 
-C:\SomePath> git commit -a
-
-will work (I know - it's a long way off yet).  Not for me; I don't care about 
-Windows in the slightest; but some of my colleagues use it, and I'd like to 
-spread the git-religion as far as I can.
-
-> > That sounds better than I remember.  You'll have talked me into
-> > migrating to Windows soon :-)
->
-> I don't understand. The command "less" is the default pager of git, so you
-> are prone to have used it already.
-
-Of course I have; I was trying (failing) to be amusing.  :-)
-
-Whenever I'm forced to use Windows, it's lack of the most basic of command 
-line tools drives me insane, so you saying that less is easily available with 
-good pipe support would ease my insanity slightly if were ever to go back to 
-the dark place.
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+--=20
+David K=C3=A5gedal
