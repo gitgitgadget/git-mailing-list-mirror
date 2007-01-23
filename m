@@ -1,58 +1,61 @@
-From: Andre Masella <andre@masella.no-ip.org>
-Subject: Re: Repository Security
-Date: Tue, 23 Jan 2007 08:23:19 -0500
-Message-ID: <200701230823.20061.andre@masella.no-ip.org>
-References: <200701221433.13257.andre@masella.no-ip.org> <ep4q5e$ioc$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Deleting remote branches with git-branch and reflog questions
+Date: Tue, 23 Jan 2007 13:25:41 -0800
+Message-ID: <7v1wllo2p6.fsf@assigned-by-dhcp.cox.net>
+References: <200701231259.27719.andyparkins@gmail.com>
+	<45B6076F.5060503@op5.se> <200701231314.53361.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 22:16:19 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 22:26:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9T05-0003bP-K7
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 22:16:17 +0100
+	id 1H9T9Y-0007Md-KJ
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 22:26:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965224AbXAWVQO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 16:16:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965447AbXAWVQO
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 16:16:14 -0500
-Received: from tomts5-srv.bellnexxia.net ([209.226.175.25]:61655 "EHLO
-	tomts5-srv.bellnexxia.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965224AbXAWVQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 16:16:13 -0500
-Received: from masella.no-ip.org ([74.12.158.59])
-          by tomts5-srv.bellnexxia.net
-          (InterMail vM.5.01.06.13 201-253-122-130-113-20050324) with ESMTP
-          id <20070123211611.LFYS5067.tomts5-srv.bellnexxia.net@masella.no-ip.org>;
-          Tue, 23 Jan 2007 16:16:11 -0500
-Received: by masella.no-ip.org (Postfix, from userid 1003)
-	id 3C685508FC; Tue, 23 Jan 2007 08:23:21 -0500 (EST)
-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KMail/1.9.5
-In-Reply-To: <ep4q5e$ioc$1@sea.gmane.org>
-Content-Disposition: inline
+	id S965015AbXAWVZo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 16:25:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965135AbXAWVZo
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 16:25:44 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:37345 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965015AbXAWVZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 16:25:43 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070123212542.RMYD15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 23 Jan 2007 16:25:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ElQl1W00a1kojtg0000000; Tue, 23 Jan 2007 16:24:46 -0500
+To: Andy Parkins <andyparkins@gmail.com>
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37570>
 
-> > As I understand it, none of the repository backends allow any per-user
-> > per-branch access control. SSH and HTTP come the closest with the right
-> > hooks, but since the repository is writeable by those users, there is
-> > little to stop them from changing the repository directly.
-> I wonder if it would be enought for SSH (and perhaps HTTP/WebDAV access)
-> just to rely on filesystem write access to refs/heads files (different
-> files having different access rights), and filesystem ACLs.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-It could probably be done, but it would be very complicated. For instance, if 
-a user is allowed to run prune, then they must have permissions to delete 
-files which would include any of the objects.
+> Aren't /all/ the logged refs under "refs/" these 
+> days?
 
-For DAV, this breaks down completely because all access to the repository will 
-happen as the Apache user.
--- 
---Andre Masella (andre at masella.no-ip.org)
+Yes, so what.  It's not a big deal, and it's too late to change,
+isn't it?
+
+Seriously, I think with addition of 'git log --walk-reflogs' and
+'git show-branch --reflog', there is less reason for an end user
+to look at the raw .git/logs/ directory these days.  They might
+not fully expose the information recorded in reflog yet, but I
+think what they do show is useful and adequate.  If some useful
+information is lacking from their output, we should solve that
+by enhancing them, not by moving .git/logs/refs up one level to
+save the end user five keystrokes to allow him to run less head
+or tail on ".git/logs/heads/master".
+
+And we might want to allow reflogs on detached HEAD someday,
+although I personally think it goes against what detached HEAD
+is -- it is of a very temporary nature.
