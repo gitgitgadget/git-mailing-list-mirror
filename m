@@ -1,61 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Deleting remote branches with git-branch and reflog questions
-Date: Tue, 23 Jan 2007 13:25:41 -0800
-Message-ID: <7v1wllo2p6.fsf@assigned-by-dhcp.cox.net>
-References: <200701231259.27719.andyparkins@gmail.com>
-	<45B6076F.5060503@op5.se> <200701231314.53361.andyparkins@gmail.com>
+From: James Purser <purserj@k-sit.com>
+Subject: Re: Git-bug: Dependency of curl
+Date: Wed, 24 Jan 2007 08:27:13 +1100
+Message-ID: <1169587633.5926.1.camel@localhost>
+References: <45B52E5A.1050706@daimi.au.dk>
+	 <1169515666.5868.26.camel@localhost>  <45B57896.9050600@daimi.au.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-B/75jgoU44HFkhzxUdce"
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 22:26:09 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 22:27:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9T9Y-0007Md-KJ
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 22:26:04 +0100
+	id 1H9TAr-0007rM-A0
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 22:27:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965015AbXAWVZo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 16:25:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965135AbXAWVZo
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 16:25:44 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:37345 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965015AbXAWVZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 16:25:43 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070123212542.RMYD15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 23 Jan 2007 16:25:42 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ElQl1W00a1kojtg0000000; Tue, 23 Jan 2007 16:24:46 -0500
-To: Andy Parkins <andyparkins@gmail.com>
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965140AbXAWV1V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 16:27:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965260AbXAWV1V
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 16:27:21 -0500
+Received: from k-sit.com ([220.233.124.29]:54902 "EHLO k-sit.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965135AbXAWV1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 16:27:20 -0500
+Received: from localhost (Kryten [127.0.0.1])
+	by localhost.akadia.com (Postfix) with ESMTP id B04E718B4029;
+	Wed, 24 Jan 2007 08:27:16 +1100 (EST)
+X-Virus-Scanned: amavisd-new at 
+Received: from k-sit.com ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id f6dJygqa7km9; Wed, 24 Jan 2007 08:27:13 +1100 (EST)
+Received: from [192.168.0.23] (unknown [192.168.0.23])
+	by k-sit.com (Postfix) with ESMTP id 929DD18B4028;
+	Wed, 24 Jan 2007 08:27:13 +1100 (EST)
+To: Rune Zedeler <rz@daimi.au.dk>
+In-Reply-To: <45B57896.9050600@daimi.au.dk>
+X-Mailer: Evolution 2.8.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37571>
 
-Andy Parkins <andyparkins@gmail.com> writes:
 
-> Aren't /all/ the logged refs under "refs/" these 
-> days?
+--=-B/75jgoU44HFkhzxUdce
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-Yes, so what.  It's not a big deal, and it's too late to change,
-isn't it?
+On Tue, 2007-01-23 at 03:53 +0100, Rune Zedeler wrote:
+> James Purser wrote:
+>=20
+> > I've brought this to the notice of the Ubuntu guys (via Launchpad etc).
+> > From what I can understand the way they've got it setup is as a
+> > "recommended" rather than "required" download.
+>=20
+> Okay, thanks.
+> As curl is commonly used with git, and ubuntu-users (yours truly=20
+> included) are not used to packages not working out of the box, it would=20
+> be nice with a more pedagogical error message if you try to use git with=20
+> curl and curl is not installed.
+>=20
+> -Rune
 
-Seriously, I think with addition of 'git log --walk-reflogs' and
-'git show-branch --reflog', there is less reason for an end user
-to look at the raw .git/logs/ directory these days.  They might
-not fully expose the information recorded in reflog yet, but I
-think what they do show is useful and adequate.  If some useful
-information is lacking from their output, we should solve that
-by enhancing them, not by moving .git/logs/refs up one level to
-save the end user five keystrokes to allow him to run less head
-or tail on ".git/logs/heads/master".
+I agree, at the moment I'm on ubuntu (considering a move to something
+else) and for the moment, I'm actually running from the bleeding edge
+(git pull every week or so).
+--=20
+James Purser
+K-sit.com
+http://k-sit.com
+SIP: 1234@k-sit.com
+Mob: 0406 576 553
 
-And we might want to allow reflogs on detached HEAD someday,
-although I personally think it goes against what detached HEAD
-is -- it is of a very temporary nature.
+--=-B/75jgoU44HFkhzxUdce
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (GNU/Linux)
+
+iD8DBQBFtn2xyx477OLqpLMRAjYbAKCr/jnsqbw+12QcXy0+QGIVK/rJMgCdExcq
+GTn+SB3+3yWXiZq8xqyvp84=
+=yDw4
+-----END PGP SIGNATURE-----
+
+--=-B/75jgoU44HFkhzxUdce--
