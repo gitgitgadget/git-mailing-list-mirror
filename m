@@ -1,88 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Repository Security
-Date: Tue, 23 Jan 2007 15:29:21 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701231525250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701221433.13257.andre@masella.no-ip.org>
- <Pine.LNX.4.63.0701231036400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200701230823.17938.andre@masella.no-ip.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Deleting remote branches with git-branch and reflog questions
+Date: Tue, 23 Jan 2007 14:32:22 +0000
+Message-ID: <200701231432.24225.andyparkins@gmail.com>
+References: <200701231259.27719.andyparkins@gmail.com> <ep51ie$i23$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 15:29:29 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 23 15:33:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9MeM-0003E8-Vs
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 15:29:27 +0100
+	id 1H9MiX-0004aK-Gt
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 15:33:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933006AbXAWO3Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 09:29:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933003AbXAWO3Y
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 09:29:24 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39650 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933006AbXAWO3X (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 09:29:23 -0500
-Received: (qmail invoked by alias); 23 Jan 2007 14:29:21 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp035) with SMTP; 23 Jan 2007 15:29:21 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Andre Masella <andre@masella.no-ip.org>
-In-Reply-To: <200701230823.17938.andre@masella.no-ip.org>
-X-Y-GMX-Trusted: 0
+	id S933004AbXAWOdh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 09:33:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933009AbXAWOdh
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 09:33:37 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:40403 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933004AbXAWOdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 09:33:36 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so256926nfa
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 06:33:35 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ArP5ZEDaFACRilrQPjqajSyQ1JFyM8fI2Qr2qMU+vWsalHCNc3NzKUxqJ7GTAeJMYpCk+Q6mMmFmOdMUnrFkhVeqzveLBJrtuR/bp6fTcT817UZ27wCRZC0VXM3snQkQ9UusDYJxf+TS8smmZ2lejSbr7rmqSDnwqrv5cKJmGHI=
+Received: by 10.48.230.5 with SMTP id c5mr1112127nfh.1169562814928;
+        Tue, 23 Jan 2007 06:33:34 -0800 (PST)
+Received: from davejones ( [194.70.53.227])
+        by mx.google.com with ESMTP id k9sm2759252nfc.2007.01.23.06.32.26;
+        Tue, 23 Jan 2007 06:33:30 -0800 (PST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <ep51ie$i23$1@sea.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37526>
 
-Hi,
+On Tuesday 2007 January 23 13:12, Jakub Narebski wrote:
 
-On Tue, 23 Jan 2007, Andre Masella wrote:
+> The problem is when you delete branch 'foo', and then create branch
+> 'foo/bar'. You can't have both 'foo' and 'foo/bar' reflog.
 
-> > > As I understand it, none of the repository backends allow any per-user
-> > > per-branch access control.
-> > The idea in git (unless you really want to get the same setup as in CVS,
-> > which would be rather sad) is that every developer has at least one
-> > repository. Write-access: only one developer.
-> 
-> Believe me: I was ready to throw a party when I got to shutdown CVS last 
-> week.
+Ah; yes of course.  That is a bit of a deal breaker isn't it?
 
-Congratulations!
+On the other hand, why delete it instantly?  Since the reflog is currently 
+deleted by git-branch anyway, couldn't the deletion be delayed until the 
+creation of foo/bar?  At least then the deletion only hits if it really has 
+to.  In most circumstances foo then foo/bar is fairly unlikely.
 
-> Say I have two utterly separate repositories with two integrators. I 
-> want to put them on a web server (and so same DAV share). There is 
-> little to stop the integrator of one project (by intention or accident) 
-> from modifying the other repository. It can be done, but doing it 
-> requires one section of the httpd.conf per repository.
 
-I thought you can do all the fancy WebDAV stuff with .htaccess?
+Andy
 
-> > I already hear the complaint: "But you need a central repository!". If 
-> > you _have_ to have a central repository, designate the integrator's 
-> > repository central.
-> 
-> Okay, say one regular developer wants share his changes with another 
-> developer. He either has to mail patches, create an SSH account, or set 
-> up one of git-daemon or WebDAV.
-
-Most likely just start git-daemon. It's read-only (in the future, you 
-might be able to enable anonymous push, but not right now), so you don't 
-have to worry.
-
-> And most of those require knowing the workstation name which is 
-> inconvienient.
-
-Umm. Oh. Okay. Didn't expect _that_ to be inconvenient.
-
-> I would rather have each user able to push to a branch with their name 
-> on it on a central server.
-
-Really, the easiest is to setup a central server with SSH, where every 
-user has an individual account. Administrating, say, a Linux box with 
-literally thousands of users is a charm.
-
-Ciao,
-Dscho
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
