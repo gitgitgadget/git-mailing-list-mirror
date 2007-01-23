@@ -1,79 +1,61 @@
 From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH] Allow default core.logallrefupdates to be overridden with template's config
-Date: Tue, 23 Jan 2007 16:54:27 +0100
-Message-ID: <81b0412b0701230754p3425ded4k1f37dd26500c1744@mail.gmail.com>
+Subject: Re: MinGW port - initial work uploaded
+Date: Tue, 23 Jan 2007 16:56:38 +0100
+Message-ID: <81b0412b0701230756l72066207o920b008554a70f12@mail.gmail.com>
+References: <200701192148.20206.johannes.sixt@telecom.at>
+	 <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com>
+	 <Pine.LNX.4.64.0701220823260.32200@woody.linux-foundation.org>
+	 <Pine.LNX.4.63.0701231220470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.64.0701230736180.32200@woody.linux-foundation.org>
+	 <81b0412b0701230745g4b18747ep73d37674a969c1aa@mail.gmail.com>
+	 <Pine.LNX.4.63.0701231650560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_169956_28549331.1169567667084"
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 23 16:54:36 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 23 16:56:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9Nym-00062F-Az
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 16:54:36 +0100
+	id 1H9O0r-0006ml-1R
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 16:56:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932739AbXAWPyd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 10:54:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932793AbXAWPyd
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 10:54:33 -0500
-Received: from wr-out-0506.google.com ([64.233.184.233]:9867 "EHLO
+	id S932793AbXAWP4m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 10:56:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932861AbXAWP4m
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 10:56:42 -0500
+Received: from wr-out-0506.google.com ([64.233.184.239]:11295 "EHLO
 	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932739AbXAWPyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 10:54:33 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so1034061wra
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 07:54:32 -0800 (PST)
+	with ESMTP id S932793AbXAWP4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 10:56:41 -0500
+Received: by wr-out-0506.google.com with SMTP id 70so1120308wra
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 07:56:41 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=pbfvx3luCpbnK7TTl17GZEdLFnyX3SkVelW1X/x5rVTe+mP1iRBepvVXfyL9/t+MIt5mTQmPMbedAiS2LoV3Sm7pvBo1OTzW8TdhhPXQVe0VuH7IaLLP4k8JQTzzI3lU952ca6+/dPL0HHkU0D2v9inTsa4ePTaOYpxbAr148a0=
-Received: by 10.78.204.7 with SMTP id b7mr424153hug.1169567667231;
-        Tue, 23 Jan 2007 07:54:27 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Tue, 23 Jan 2007 07:54:27 -0800 (PST)
-To: "Git Mailing List" <git@vger.kernel.org>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YgOppg0mouqaCfdIwJLCvXq6lzB1XIEtQylqsMAslKUkiJmO8hMmEI71O517/UfMNBWfQIUAliwLA2mBbuJ4Jmb6QHpoCB0KyrydGBa9gG+Upa5zvtsE6Us6KtvQf7xRYYHkFmNxy/DdnUAl9VAwwVyl8MxbnwW2aDJwTDCQhC8=
+Received: by 10.78.180.18 with SMTP id c18mr430426huf.1169567798571;
+        Tue, 23 Jan 2007 07:56:38 -0800 (PST)
+Received: by 10.78.135.3 with HTTP; Tue, 23 Jan 2007 07:56:38 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701231650560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37540>
 
-------=_Part_169956_28549331.1169567667084
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+On 1/23/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > I tried to run installers under Wine: nothing worked until the
+> > not-to-be-mentioned parts (ok, the whole "Windows" and "Program Files"
+> > directories from an existing installation) were provided. I didn't tried
+> > cygwin, though.
+>
+> Since when did you not check? According to Wine's git commit messages
+> (yeah!) they worked really hard to get installers going.
+>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
-
-Never found a use for the reflogs and tried to switch
-them off. Didn't work - init-db rewrote it.
-
- builtin-init-db.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-------=_Part_169956_28549331.1169567667084
-Content-Type: text/plain; 
-	name=0001-Allow-default-core.logallrefupdates-to-be-overridden-with-template-s-config.txt; 
-	charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_exaidqnq
-Content-Disposition: attachment; filename="0001-Allow-default-core.logallrefupdates-to-be-overridden-with-template-s-config.txt"
-
-RnJvbSA3MTNjNDg5MGNlNzk1Yzg0MGY1YjQ0NjhkYjg2ODlkZTQ0NTcyZWY4IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBUdWUsIDIzIEphbiAyMDA3IDE2OjUxOjE4ICswMTAwClN1YmplY3Q6IFtQQVRDSF0gQWxsb3cg
-ZGVmYXVsdCBjb3JlLmxvZ2FsbHJlZnVwZGF0ZXMgdG8gYmUgb3ZlcnJpZGRlbiB3aXRoIHRlbXBs
-YXRlJ3MgY29uZmlnCgpTaWduZWQtb2ZmLWJ5OiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwu
-Y29tPgotLS0KIGJ1aWx0aW4taW5pdC1kYi5jIHwgICAgNCArKystCiAxIGZpbGVzIGNoYW5nZWQs
-IDMgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9idWlsdGluLWlu
-aXQtZGIuYyBiL2J1aWx0aW4taW5pdC1kYi5jCmluZGV4IDhlNzU0MGIuLjE4NjU0ODkgMTAwNjQ0
-Ci0tLSBhL2J1aWx0aW4taW5pdC1kYi5jCisrKyBiL2J1aWx0aW4taW5pdC1kYi5jCkBAIC0yNTcs
-NyArMjU3LDkgQEAgc3RhdGljIGludCBjcmVhdGVfZGVmYXVsdF9maWxlcyhjb25zdCBjaGFyICpn
-aXRfZGlyLCBjb25zdCBjaGFyICp0ZW1wbGF0ZV9wYXRoKQogCX0KIAllbHNlIHsKIAkJZ2l0X2Nv
-bmZpZ19zZXQoImNvcmUuYmFyZSIsICJmYWxzZSIpOwotCQlnaXRfY29uZmlnX3NldCgiY29yZS5s
-b2dhbGxyZWZ1cGRhdGVzIiwgInRydWUiKTsKKwkJLyogYWxsb3cgdGVtcGxhdGUgY29uZmlnIGZp
-bGUgdG8gb3ZlcnJpZGUgdGhlIGRlZmF1bHQgKi8KKwkJaWYgKGxvZ19hbGxfcmVmX3VwZGF0ZXMg
-PT0gLTEpCisJCSAgICBnaXRfY29uZmlnX3NldCgiY29yZS5sb2dhbGxyZWZ1cGRhdGVzIiwgInRy
-dWUiKTsKIAl9CiAJcmV0dXJuIHJlaW5pdDsKIH0KLS0gCjEuNS4wLnJjMi5nODNkMwoK
-------=_Part_169956_28549331.1169567667084--
+Since quite a while (some months), I must admit. Have you tried it?
