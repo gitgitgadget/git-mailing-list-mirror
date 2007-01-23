@@ -1,51 +1,54 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Deleting remote branches with git-branch and reflog questions
-Date: Tue, 23 Jan 2007 14:02:39 +0100
-Message-ID: <45B6076F.5060503@op5.se>
-References: <200701231259.27719.andyparkins@gmail.com>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: MinGW port - initial work uploaded
+Date: Tue, 23 Jan 2007 14:08:08 +0100
+Message-ID: <46d6db660701230508g41e7656dwf3f720aa4255b617@mail.gmail.com>
+References: <200701192148.20206.johannes.sixt@telecom.at>
+	 <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com>
+	 <Pine.LNX.4.64.0701220823260.32200@woody.linux-foundation.org>
+	 <Pine.LNX.4.63.0701231220470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 14:03:15 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 14:08:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9LIw-0001mV-NH
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 14:03:15 +0100
+	id 1H9LNo-0003N2-LF
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 14:08:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964976AbXAWNDJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 08:03:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964937AbXAWNDJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 08:03:09 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:37350 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964976AbXAWNDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 08:03:08 -0500
-Received: from [172.27.78.30] (unknown [172.27.76.254])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 40F566BCC1; Tue, 23 Jan 2007 14:03:06 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-To: Andy Parkins <andyparkins@gmail.com>
-In-Reply-To: <200701231259.27719.andyparkins@gmail.com>
+	id S964927AbXAWNIN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 08:08:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964999AbXAWNIN
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 08:08:13 -0500
+Received: from wr-out-0506.google.com ([64.233.184.227]:35607 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964927AbXAWNIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 08:08:13 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so966862wra
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 05:08:12 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EPI7RHC4A/SiDIvtpsMjVX+WP0pjUfl+g99BAMoKpqrsmK//uy7EPcvLnp0/DC+7ECHf2iYPpM6uXpommLqlr5p4SMZAYJoNjw+hGBuEewC/AsyjXXpjck45GedKvotRqhhYtBobRz6ZTQ33IeRkoFWLvHW8+n+TMTyPUb4Jzpo=
+Received: by 10.78.204.20 with SMTP id b20mr327193hug.1169557688812;
+        Tue, 23 Jan 2007 05:08:08 -0800 (PST)
+Received: by 10.78.175.18 with HTTP; Tue, 23 Jan 2007 05:08:08 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701231220470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37509>
 
-Andy Parkins wrote:
-> 
-> reflogs
-> -------
-> 
-> Why does the reflog directory .git/logs need to store the refs/ directory?  
-> Aren't /all/ the refs under "refs/" these days?
-> 
+> Lucky you! Fortunately, I don't have any Windows at home (but I still have
+> windows, thank God!). So I cannot even be tempted to work on this thing in
+> my free time.
 
-No. HEAD isn't, nor is ORIG_HEAD, and possibly others.
+well, you could cross compile it and run it through Wine ?
+:)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+--
+Christian
