@@ -1,83 +1,67 @@
-From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
-Subject: Re: [Announce] GIT v1.5.0-rc2
-Date: Tue, 23 Jan 2007 22:09:24 +0100
-Message-ID: <slrnercuc4.55u.siprbaum@xp.machine.xx>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <eovccc$usc$1@sea.gmane.org> <Pine.LNX.4.63.0701211207500.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17846.20498.635623.173653@lisa.zopyra.com> <Pine.LNX.4.63.0701232012120.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17846.27694.845530.663964@lisa.zopyra.com>
-X-From: git-owner@vger.kernel.org Tue Jan 23 22:35:15 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Deleting remote branches with git-branch and reflog questions
+Date: Tue, 23 Jan 2007 22:35:00 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701232232480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701231259.27719.andyparkins@gmail.com> <45B6076F.5060503@op5.se>
+ <200701231314.53361.andyparkins@gmail.com> <7v1wllo2p6.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 23 22:35:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9TIO-0002S1-Q9
+	id 1H9TIP-0002S1-Al
 	for gcvg-git@gmane.org; Tue, 23 Jan 2007 22:35:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965487AbXAWVfH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 16:35:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965488AbXAWVfG
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 16:35:06 -0500
-Received: from main.gmane.org ([80.91.229.2]:36835 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965487AbXAWVfE (ORCPT <rfc822;git@vger.kernel.org>);
+	id S965479AbXAWVfI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 16:35:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965493AbXAWVfH
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 16:35:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54791 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965479AbXAWVfE (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 23 Jan 2007 16:35:04 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1H9TIE-0005qQ-GJ
-	for git@vger.kernel.org; Tue, 23 Jan 2007 22:35:02 +0100
-Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 22:35:02 +0100
-Received: from siprbaum by mason.hofmann.stw.uni-erlangen.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 22:35:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To: git@vger.kernel.org
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+Received: (qmail invoked by alias); 23 Jan 2007 21:35:00 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp010) with SMTP; 23 Jan 2007 22:35:00 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Junio C Hamano <junkio@cox.net>
+In-Reply-To: <7v1wllo2p6.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37573>
 
-Bill Lear <rael@zopyra.com> schrieb:
-> On Tuesday, January 23, 2007 at 20:12:36 (+0100) Johannes Schindelin writes:
->>Hi,
->>
->>On Tue, 23 Jan 2007, Bill Lear wrote:
->>
->>> I can't seem to get this to work, no matter what I do, using the latest 
->>> 1.5.0-rc2 code.  I have the environment variables LESS, PAGER, 
->>> PAGER_FLAGS, and I can't seem to get 'git diff' to not plough through my 
->>> screen each time it is run, no matter the combinations...  Could someone 
->>> post the magic?
->>
->>Try this:
->>
->>	PAGER=less LESS=-FRS git diff
->
-> Replied to Johannes off-line and thought this was working --- sorry
-> for the false positive.  It is in one regard: it completely suppresses
-> output if there is less than a full screen of output.
->
-> If I do this:
->
-> % export PAGER=less
-> % unset LESS
-> % git diff
->
-> I get 30 lines of output in my current repository, as I should.
->
-> If I then do this:
->
-> % LESS=-FRS git diff
->
-> I get nothing --- I do see a brief blink of output, but it's as if
-> less swallows it whole and I see nothing but the next prompt.
->
+Hi,
 
-This is propably caused by activating "Enable Alternate Screen Switching"
-in xterm. If you have this feature enabled, you get a clean screen (no
-fragments of the displayed file are shown after quitting less). Try to
-disable it and see if it works.
+On Tue, 23 Jan 2007, Junio C Hamano wrote:
 
--Peter
+> Andy Parkins <andyparkins@gmail.com> writes:
+> 
+> > Aren't /all/ the logged refs under "refs/" these 
+> > days?
+> 
+> Yes, so what.  It's not a big deal, and it's too late to change,
+> isn't it?
+> 
+> Seriously, I think with addition of 'git log --walk-reflogs' and
+> 'git show-branch --reflog', there is less reason for an end user
+> to look at the raw .git/logs/ directory these days.
+
+How about introducing the shortcut "-g" for "--walk-reflogs"? It is not 
+yet taken AFAICT.
+
+> And we might want to allow reflogs on detached HEAD someday, although I 
+> personally think it goes against what detached HEAD is -- it is of a 
+> very temporary nature.
+
+But so are reflogs. They go away after some time.
+
+Disk space is cheap.
+
+Ciao,
+Dscho
