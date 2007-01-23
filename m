@@ -1,125 +1,227 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: Rebasing stgit stacks
-Date: Tue, 23 Jan 2007 08:49:45 +0100
-Message-ID: <20070123074945.GB4083@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <b0943d9e0701151446l45eff9dbgcae718c1461d0725@mail.gmail.com> <20070115233958.GF9761@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701161442t6b93e0d6nd88364600f2809ee@mail.gmail.com> <20070116231735.GF7029@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701180105t7b01cb4di43b4db1fdc314bb7@mail.gmail.com> <20070118205233.GK9761@nan92-1-81-57-214-146.fbx.proxad.net> <eoq439$7ml$1@sea.gmane.org> <tnxirezueui.fsf@arm.com> <20070122194756.GA4083@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701221458r77b2b48hfa41d3dffcb848d0@mail.gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [PATCH] rename --exec to --upload-pack for fetch-pack and peek-remote
+Date: Tue, 23 Jan 2007 09:20:17 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070123082017.GA10007@cepheus>
+References: <7v7ivihldu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 08:50:32 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+X-From: git-owner@vger.kernel.org Tue Jan 23 09:20:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9GQK-0006xz-Af
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 08:50:32 +0100
+	id 1H9GtO-00072s-US
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 09:20:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932867AbXAWHu2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 02:50:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932894AbXAWHu2
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 02:50:28 -0500
-Received: from smtp6-g19.free.fr ([212.27.42.36]:35443 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932867AbXAWHu1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 02:50:27 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 7D071436CF;
-	Tue, 23 Jan 2007 08:50:23 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id A5B851F07B; Tue, 23 Jan 2007 08:49:45 +0100 (CET)
-To: Catalin Marinas <catalin.marinas@gmail.com>
+	id S932903AbXAWIUX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 23 Jan 2007 03:20:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932902AbXAWIUX
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 03:20:23 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:58143 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932903AbXAWIUW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Jan 2007 03:20:22 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1H9GtB-0002im-37
+	for git@vger.kernel.org; Tue, 23 Jan 2007 09:20:21 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l0N8KIIF005859
+	for <git@vger.kernel.org>; Tue, 23 Jan 2007 09:20:18 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l0N8KItd005858
+	for git@vger.kernel.org; Tue, 23 Jan 2007 09:20:18 +0100 (MET)
+To: git@vger.kernel.org
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0701221458r77b2b48hfa41d3dffcb848d0@mail.gmail.com>
+In-Reply-To: <7v7ivihldu.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37488>
 
-On Mon, Jan 22, 2007 at 10:58:41PM +0000, Catalin Marinas wrote:
-> On 22/01/07, Yann Dirson <ydirson@altern.org> wrote:
-> >On Mon, Jan 22, 2007 at 05:54:29PM +0000, Catalin Marinas wrote:
-> >> Currently, in the StGIT terminology stack and branch are about the
-> >> same. If you want to move to a different stack, just use the "stg
-> >> branch" command.
-> >
-> >I think you missed the point.  StGIT stacks are usually forked off
-> >another branch.  As I understand it, Jakub talks about standard
-> >rebasing, ie. moving the stack base from its current parent branch to
-> >a new one.
-> 
-> StGIT stacks are a series of volatile commits (commits) at the top of
-> a branch. The idea when I started writing this tool was that a series
-> of applied patches would lead to the head of the current branch. The
-> branch and stack are tightly coupled and you cannot simply change the
-> parent branch the stack is based on (not from a technical point but
-> rather from conception one).
+Just some option name disambiguation.  This is the counter part to comm=
+it
+d23842fd53e61f32c189a6ec902c4133abf29878 which made a similar change fo=
+r push
+and send-pack.
 
-Well, that's now allowed by "rebase".
+--exec continues to work.
 
-> >> A stack is just a branch with stgit-specific metadata.
-> >
-> >I would rather say that an StGIT stacks uses a branch, but the stack
-> >is not the branch - eg, unapplied patches do not belong to the branch.
-> 
-> The unapplied patches can have any commit as a parent, either in the
-> direct history of the current branch or in any other branch, there is
-> no restriction here. They get in line with the current branch's head
-> during the push operation.
+Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de>
+---
+ Documentation/git-fetch-pack.txt  |    7 +++++--
+ Documentation/git-peek-remote.txt |    7 +++++--
+ fetch-pack.c                      |   12 ++++++++----
+ peek-remote.c                     |   12 ++++++++----
+ 4 files changed, 26 insertions(+), 12 deletions(-)
 
-Right.  I'm just emphasizing that, since they are (even temporarily)
-not part of the GIT branch from a GIT point of view, but part of the
-stack, the 2 concepts, while closely linked, are not strict subsets of
-each other.  Rather, they share some common points, but neither would
-be parent of the other in a class hierarchy.
+diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch=
+-pack.txt
+index bd8ebac..105d76b 100644
+--- a/Documentation/git-fetch-pack.txt
++++ b/Documentation/git-fetch-pack.txt
+@@ -8,7 +8,7 @@ git-fetch-pack - Receive missing objects from another r=
+epository
+=20
+ SYNOPSIS
+ --------
+-'git-fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--exec=3D<=
+git-upload-pack>] [--depth=3D<n>] [-v] [<host>:]<directory> [<refs>...]
++'git-fetch-pack' [--all] [--quiet|-q] [--keep|-k] [--thin] [--upload-p=
+ack=3D<git-upload-pack>] [--depth=3D<n>] [-v] [<host>:]<directory> [<re=
+fs>...]
+=20
+ DESCRIPTION
+ -----------
+@@ -45,7 +45,7 @@ OPTIONS
+ 	Spend extra cycles to minimize the number of objects to be sent.
+ 	Use it on slower connection.
+=20
+-\--exec=3D<git-upload-pack>::
++\--upload-pack=3D<git-upload-pack>::
+ 	Use this to specify the path to 'git-upload-pack' on the
+ 	remote side, if is not found on your $PATH.
+ 	Installations of sshd ignores the user's environment
+@@ -57,6 +57,9 @@ OPTIONS
+ 	shells by having a lean .bashrc file (they set most of
+ 	the things up in .bash_profile).
+=20
++\--exec=3D<git-upload-pack>::
++	Same as \--upload-pack=3D<git-upload-pack>.
++
+ \--depth=3D<n>::
+ 	Limit fetching to ancestor-chains not longer than n.
+=20
+diff --git a/Documentation/git-peek-remote.txt b/Documentation/git-peek=
+-remote.txt
+index ac57cda..74f37bd 100644
+--- a/Documentation/git-peek-remote.txt
++++ b/Documentation/git-peek-remote.txt
+@@ -8,7 +8,7 @@ git-peek-remote - List the references in a remote repos=
+itory
+=20
+ SYNOPSIS
+ --------
+-'git-peek-remote' [--exec=3D<git-upload-pack>] [<host>:]<directory>
++'git-peek-remote' [--upload-pack=3D<git-upload-pack>] [<host>:]<direct=
+ory>
+=20
+ DESCRIPTION
+ -----------
+@@ -17,7 +17,7 @@ stores them in the local repository under the same na=
+me.
+=20
+ OPTIONS
+ -------
+---exec=3D<git-upload-pack>::
++\--upload-pack=3D<git-upload-pack>::
+ 	Use this to specify the path to 'git-upload-pack' on the
+ 	remote side, if it is not found on your $PATH. Some
+ 	installations of sshd ignores the user's environment
+@@ -29,6 +29,9 @@ OPTIONS
+ 	shells, but prefer having a lean .bashrc file (they set most of
+ 	the things up in .bash_profile).
+=20
++\--exec=3D<git-upload-pack>::
++	Same \--upload-pack=3D<git-upload-pack>.
++
+ <host>::
+ 	A remote host that houses the repository.  When this
+ 	part is specified, 'git-upload-pack' is invoked via
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 726140a..3546aef 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -12,8 +12,8 @@ static int verbose;
+ static int fetch_all;
+ static int depth;
+ static const char fetch_pack_usage[] =3D
+-"git-fetch-pack [--all] [--quiet|-q] [--keep|-k] [--thin] [--exec=3D<g=
+it-upload-pack>] [--depth=3D<n>] [-v] [<host>:]<directory> [<refs>...]"=
+;
+-static const char *exec =3D "git-upload-pack";
++"git-fetch-pack [--all] [--quiet|-q] [--keep|-k] [--thin] [--upload-pa=
+ck=3D<git-upload-pack>] [--depth=3D<n>] [-v] [<host>:]<directory> [<ref=
+s>...]";
++static const char *uploadpack =3D "git-upload-pack";
+=20
+ #define COMPLETE	(1U << 0)
+ #define COMMON		(1U << 1)
+@@ -643,8 +643,12 @@ int main(int argc, char **argv)
+ 		char *arg =3D argv[i];
+=20
+ 		if (*arg =3D=3D '-') {
++			if (!strncmp("--upload-pack=3D", arg, 14)) {
++				uploadpack =3D arg + 14;
++				continue;
++			}
+ 			if (!strncmp("--exec=3D", arg, 7)) {
+-				exec =3D arg + 7;
++				uploadpack =3D arg + 7;
+ 				continue;
+ 			}
+ 			if (!strcmp("--quiet", arg) || !strcmp("-q", arg)) {
+@@ -682,7 +686,7 @@ int main(int argc, char **argv)
+ 	}
+ 	if (!dest)
+ 		usage(fetch_pack_usage);
+-	pid =3D git_connect(fd, dest, exec);
++	pid =3D git_connect(fd, dest, uploadpack);
+ 	if (pid < 0)
+ 		return 1;
+ 	if (heads && nr_heads)
+diff --git a/peek-remote.c b/peek-remote.c
+index 353da00..ef3c76c 100644
+--- a/peek-remote.c
++++ b/peek-remote.c
+@@ -3,8 +3,8 @@
+ #include "pkt-line.h"
+=20
+ static const char peek_remote_usage[] =3D
+-"git-peek-remote [--exec=3Dupload-pack] [host:]directory";
+-static const char *exec =3D "git-upload-pack";
++"git-peek-remote [--upload-pack=3D<git-upload-pack>] [<host>:]<directo=
+ry>";
++static const char *uploadpack =3D "git-upload-pack";
+=20
+ static int peek_remote(int fd[2], unsigned flags)
+ {
+@@ -35,8 +35,12 @@ int main(int argc, char **argv)
+ 		char *arg =3D argv[i];
+=20
+ 		if (*arg =3D=3D '-') {
++			if (!strncmp("--upload-pack=3D", arg, 14)) {
++				uploadpack =3D arg + 14;
++				continue;
++			}
+ 			if (!strncmp("--exec=3D", arg, 7)) {
+-				exec =3D arg + 7;
++				uploadpack =3D arg + 7;
+ 				continue;
+ 			}
+ 			if (!strcmp("--tags", arg)) {
+@@ -60,7 +64,7 @@ int main(int argc, char **argv)
+ 	if (!dest || i !=3D argc - 1)
+ 		usage(peek_remote_usage);
+=20
+-	pid =3D git_connect(fd, dest, exec);
++	pid =3D git_connect(fd, dest, uploadpack);
+ 	if (pid < 0)
+ 		return 1;
+ 	ret =3D peek_remote(fd, flags);
+--=20
+1.5.0.rc1.g581a
 
-> >Indeed I was thinking about that today, and thought that maybe it
-> >would make sense not to use a head ref (and thus not using a real
-> >branch), which would minimize the risk of someone committing by error
-> >(and thus minimize the need to use "assimilate"), since porcelainish
-> >commit tools would then refuse to commit there.
-> 
-> But isn't this what Quilt already does (i.e. a different mechanism for
-> patches, on top of any SCM)?
 
-I'm not sure wat you mean here.  I'm only talking of StGIT and the GIT
-world here.
+--=20
+Uwe Kleine-K=F6nig
 
-> One of the base ideas of StGIT is that the top patch represents the
-> head of the current branch and that the patches applied on the stack
-> always form the recent history of the current branch.
-
-I'm not willing to change the concept.  I'm just wondering whether
-using a non-head reference (eg. stacks/<name> or stacks/<name>/top)
-would not be better.  For this we may need to consider using detached
-HEAD support from 1.5.0, but I'm just thinking loudly, I have not
-looked at what that thing provides exactly yet.
-
-> I added the commit command to have a way to freeze this state into
-> the current branch and no longer manage them with StGIT.
-
-
-> >> What you'd probably want is a way to import patches from a different
-> >> branch/stack onto the newly checked out branch.
-> >
-> >Sometimes you just want to throw out an obsolete branch and move your
-> >stack to a new baseline.  That said, being able to duplicate a stack
-> >(and possibly rebasing it afterwards) would be useful as well.
-> 
-> You have 'branch --clone' (or --rename if you just want a different
-> name) and now 'rebase'.
-
-D'oh.  I was probably expecting "stack --clone" or something :)
-
-> As I said, the idea of moving the stack (patches) on top of a
-> different branch should be done as an import (or multiple
-> cherry-pick or clone), otherwise we loose the coupling between
-> branches and stacks.
-
-I'll have to think more about that - I'm not sure I get you point.  By
-moving/cloning we keep (or could keep) the patches' history.  By
-importing we cannot do that.
-
-Best regards,
--- 
-Yann.
+http://www.google.com/search?q=3D1+hertz+in+sec**-1
