@@ -1,67 +1,94 @@
-From: Matthias Kestenholz <lists@spinlock.ch>
-Subject: Re: A trivial question on GIT
-Date: Tue, 23 Jan 2007 21:03:25 +0100
-Message-ID: <1169582605.1608.92.camel@localhost.localdomain>
-References: <a02278b00701231145l31e1be2dpff0930cbc9d6fb6c@mail.gmail.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: [Announce] GIT v1.5.0-rc2
+Date: Tue, 23 Jan 2007 14:12:30 -0600
+Message-ID: <17846.27694.845530.663964@lisa.zopyra.com>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
+	<eovccc$usc$1@sea.gmane.org>
+	<Pine.LNX.4.63.0701211207500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17846.20498.635623.173653@lisa.zopyra.com>
+	<Pine.LNX.4.63.0701232012120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 21:04:25 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 21:12:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9RsW-0005Z9-Ql
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 21:04:25 +0100
+	id 1H9S0j-0008Ov-I0
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 21:12:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965480AbXAWUDz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 15:03:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965482AbXAWUDz
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 15:03:55 -0500
-Received: from elephant.oekohosting.ch ([80.74.144.79]:56004 "EHLO
-	elephant.oekohosting.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965480AbXAWUDy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 15:03:54 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by elephant.oekohosting.ch (Postfix) with ESMTP id 03C3862C099;
-	Tue, 23 Jan 2007 21:03:39 +0100 (CET)
-Received: from elephant.oekohosting.ch ([127.0.0.1])
-	by localhost (elephant.oekohosting.ch [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 16748-07; Tue, 23 Jan 2007 21:03:36 +0100 (CET)
-Received: from [192.168.1.7] (190.123.79.83.cust.bluewin.ch [83.79.123.190])
-	by elephant.oekohosting.ch (Postfix) with ESMTP id E8EBE62C051;
-	Tue, 23 Jan 2007 21:03:35 +0100 (CET)
-To: Allexio Ju <allexio.ju@gmail.com>
-In-Reply-To: <a02278b00701231145l31e1be2dpff0930cbc9d6fb6c@mail.gmail.com>
-X-Mailer: Evolution 2.8.2.1 
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S932954AbXAWUMq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 15:12:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933141AbXAWUMq
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 15:12:46 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61744 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932954AbXAWUMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 15:12:45 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0NKCg732497;
+	Tue, 23 Jan 2007 14:12:42 -0600
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701232012120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37564>
 
-On Tue, 2007-01-23 at 11:45 -0800, Allexio Ju wrote:
-> Hi,
-> 
-> I have trivial question on GIT.
-> I've made local copy of Linus's linux-2.6.git repository with
-> following git command,
-> ---
-> # git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-> linux-2.6.git
-> ---
-> 
-> After this, I would like to know how to synchronize local copy and
-> keep updated  with Linus's.
-> I guess cloning everyday would be bad idea as it is heavy operation.
-> Can someone guide me on how to?
-> 
+On Tuesday, January 23, 2007 at 20:12:36 (+0100) Johannes Schindelin writes:
+>Hi,
+>
+>On Tue, 23 Jan 2007, Bill Lear wrote:
+>
+>> I can't seem to get this to work, no matter what I do, using the latest 
+>> 1.5.0-rc2 code.  I have the environment variables LESS, PAGER, 
+>> PAGER_FLAGS, and I can't seem to get 'git diff' to not plough through my 
+>> screen each time it is run, no matter the combinations...  Could someone 
+>> post the magic?
+>
+>Try this:
+>
+>	PAGER=less LESS=-FRS git diff
 
-Yes, go into the directory and execute git pull
+Replied to Johannes off-line and thought this was working --- sorry
+for the false positive.  It is in one regard: it completely suppresses
+output if there is less than a full screen of output.
 
-If you want to know more, a good start is http://git.or.cz/
+If I do this:
 
-There you'll find links to tutorials and more.
+% export PAGER=less
+% unset LESS
+% git diff
 
-Matthias
+I get 30 lines of output in my current repository, as I should.
+
+If I then do this:
+
+% LESS=-FRS git diff
+
+I get nothing --- I do see a brief blink of output, but it's as if
+less swallows it whole and I see nothing but the next prompt.
+
+Hmmm ... I do seem to be using a rather old version of less:
+
+% less --version
+less 382
+Copyright (C) 2002 Mark Nudelman
+
+Could this be the culprit?  Will try and see...  Nope, downloaded,
+built, and installed less-394 and I still see the same problem.  I also
+see this problem when I do 'man git-gc', for example --- the manpage
+just disappears.
+
+If I set LESS to '-F' it fails.  If set to '-RS', output is seen but
+then I see the screen blanked when there is no output from git diff.
+
+This is on Centos 4.3.  I have not yet tried this on my Fedora Core 6
+laptop, at home...
+
+
+
+Bill
