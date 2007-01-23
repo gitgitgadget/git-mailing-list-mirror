@@ -1,73 +1,70 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: MinGW port - initial work uploaded
-Date: Tue, 23 Jan 2007 09:02:12 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701230852270.32200@woody.linux-foundation.org>
-References: <200701192148.20206.johannes.sixt@telecom.at>
- <200701231506.32396.andyparkins@gmail.com>
- <Pine.LNX.4.63.0701231614490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200701231624.41716.andyparkins@gmail.com>
- <Pine.LNX.4.63.0701231732120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] Lose perl dependency. (fwd)
+Date: Tue, 23 Jan 2007 09:07:08 -0800
+Message-ID: <86bqkp1xkz.fsf@blue.stonehenge.com>
+References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vwt3h7dp6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701202240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<200701210137.41219.robin.rosenberg.lists@dewire.com>
+	<Pine.LNX.4.63.0701210234350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17842.53449.35322.514320@lisa.zopyra.com>
+	<7vr6tp5aqq.fsf@assigned-by-dhcp.cox.net>
+	<87vej0gh4k.fsf@morpheus.local> <m3zm89zxs1.fsf@maximus.localdomain>
+	<873b6197jf.fsf@morpheus.local> <m3irexzua9.fsf@maximus.localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 18:02:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 23 18:07:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9P2U-0002Ub-DR
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 18:02:30 +0100
+	id 1H9P7R-0004FR-MQ
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 18:07:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933004AbXAWRC1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 12:02:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932968AbXAWRC1
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 12:02:27 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:40024 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932911AbXAWRC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 12:02:26 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0NH2G3U009584
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 23 Jan 2007 09:02:17 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0NH2CCN025020;
-	Tue, 23 Jan 2007 09:02:14 -0800
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701231732120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-0.776 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
-X-MIMEDefang-Filter: osdl$Revision: 1.170 $
-X-Scanned-By: MIMEDefang 2.36
+	id S933089AbXAWRHf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 12:07:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933093AbXAWRHe
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 12:07:34 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:22439 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933089AbXAWRHe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 12:07:34 -0500
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 6E1171DE65B; Tue, 23 Jan 2007 09:07:08 -0800 (PST)
+To: Krzysztof Halasa <khc@pm.waw.pl>
+x-mayan-date: Long count = 12.19.14.0.1; tzolkin = 3 Imix; haab = 14 Muan
+In-Reply-To: <m3irexzua9.fsf@maximus.localdomain> (Krzysztof Halasa's message of "Tue, 23 Jan 2007 15:34:22 +0100")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37551>
 
+>>>>> "Krzysztof" == Krzysztof Halasa <khc@pm.waw.pl> writes:
 
+Krzysztof> Actually it is the correct way to do that. If people "reply to group"
+Krzysztof> or whatever is it called, the reply goes to "Reply-To" list.
+Krzysztof> If they "reply to author", the reply goes to "From" address and
+Krzysztof> "Reply-To" is ignored.
 
-On Tue, 23 Jan 2007, Johannes Schindelin wrote:
-> 
-> Yes. But it _does_ have a dependency on perl and bash. For example, when 
-> you merge git-merge-one-file is spawned -- a bash script.
+Argh.  Such misinformation abounds on this topic!
 
-That's just disgusting. I thought we fixed it, but apparently we only did 
-so for git-merge-recursive. Hmm?
+The only reason a mail client has the ability to ignore the "reply-to"
+(which *violates* the RFCs - go check it out) is because of *broken*
+(but perhaps well-intentioned) mailing lists that add "reply-to: list".
 
-All the other uses seem to be just a case of
+The proper solution is to *follow* the RFCs, and leave the reply-to alone when
+relaying.  If someone wants to reply to the list *and* the person, they can
+reply to both the "from (or reply-to)" and "to" addresses, often called a
+"wide reply".  If someone wants to reply to just the person, they use the
+"reply-to" if it's present, or the "from" if not.  This is *proper* behavior:
+it's only some broken mailing lists out there that have caused us to have to
+work around it.
 
-	git-merge-index -o git-merge-one-file -a
-
-and wouldn't it be beautiful if the default action for git-merge-index (if 
-you do _not_ specify a merger program) was to do the simple one-file 
-three-way merge that we can already do for real merges?
-
-Wouldn't it be nice if we could just do
-
-	git-merge-index -o -a
-
-and be done with it? 
-
-Johannes, this should be right up your alley.. Hint hint..
-
-		Linus
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
