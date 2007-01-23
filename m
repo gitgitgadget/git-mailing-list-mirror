@@ -1,85 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: MinGW port - initial work uploaded
-Date: Tue, 23 Jan 2007 16:20:31 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701231614490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701192148.20206.johannes.sixt@telecom.at>
- <200701231322.32987.andyparkins@gmail.com>
- <Pine.LNX.4.63.0701231518310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200701231506.32396.andyparkins@gmail.com>
+Date: Tue, 23 Jan 2007 10:29:04 -0500
+Message-ID: <20070123152904.GA23549@spearce.org>
+References: <200701192148.20206.johannes.sixt@telecom.at> <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com> <200701222127.09601.johannes.sixt@telecom.at> <Pine.LNX.4.63.0701231227200.22628@wbgn013.biozentrum.uni-wuerzburg.de> <ep4tmd$ut8$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 16:20:53 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 16:29:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9NS6-00030S-Ca
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 16:20:50 +0100
+	id 1H9NaD-0005dn-1w
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 16:29:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932437AbXAWPUe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 10:20:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932739AbXAWPUe
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 10:20:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44349 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932437AbXAWPUd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 10:20:33 -0500
-Received: (qmail invoked by alias); 23 Jan 2007 15:20:31 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp011) with SMTP; 23 Jan 2007 16:20:31 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Andy Parkins <andyparkins@gmail.com>
-In-Reply-To: <200701231506.32396.andyparkins@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751963AbXAWP3K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 10:29:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbXAWP3K
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 10:29:10 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39766 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751963AbXAWP3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 10:29:08 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1H9Na1-0004KM-6x; Tue, 23 Jan 2007 10:29:01 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 69C7B20FBAE; Tue, 23 Jan 2007 10:29:04 -0500 (EST)
+To: Jakub Narebski <jnareb@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <ep4tmd$ut8$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37532>
 
-Hi,
-
-On Tue, 23 Jan 2007, Andy Parkins wrote:
-
-> On Tuesday 2007 January 23 14:21, Johannes Schindelin wrote:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Johannes Schindelin wrote:
 > 
-> > Uhm. You do understand that we use MinGW to port to, not _plain_ 
-> > Windows? So we do have a "less".
+> > Since Tcl/Tk is available for MinGW, git-gui seems to be a way to go 
+> > there.
 > 
-> Nope; I didn't.  Oh dear.  I've obviously misunderstood.  I thought 
-> MinGW was for compiling to native Windows?  Do you use MinGW to compile 
-> to cygwin as well?
+> Since Qt4 is to work in Windows natively, perhaps QGit is a way to go...
 
-MinGW and cygwin differ in one very important point: cygwin needs an extra 
-dll, MinGW does not.
+Choice is good.  ;-)
 
-However, the development environment is still console-based, with a bash 
-so you can run configure and simple bash scripts. It is definitely more 
-catering to Unix types than Windows types.
+git-gui has slightly different goals/focus than QGit.  I think
+its a better commit creation tool.
 
-So yes, there is a bash, and there is a less, and there is perl.
-
-> > That was not Windows. That was DOS.
-> 
-> I'm sure pipes were still awful in Win98.  I accept though, that it is 
-> possible Windows has changed in the last 9 years :-)
-
-Win98 was based on DOS. Windows XP is based on VMS.
-
-<tongue-in-cheek>
-Yes, I know. They left everything behind, and started Windows NT anew. 
-Yeah, right.
-</tongue-in-cheek>
-
-> > With less, on the other hand, you just exit the pager, or let it 
-> > search through stdin. It is so much more convenient.
-> 
-> That sounds better than I remember.  You'll have talked me into 
-> migrating to Windows soon :-)
-
-I don't understand. The command "less" is the default pager of git, so you 
-are prone to have used it already.
-
-Ciao,
-Dscho
+-- 
+Shawn.
