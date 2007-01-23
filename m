@@ -1,62 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: MinGW port - initial work uploaded
-Date: Tue, 23 Jan 2007 10:29:04 -0500
-Message-ID: <20070123152904.GA23549@spearce.org>
-References: <200701192148.20206.johannes.sixt@telecom.at> <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com> <200701222127.09601.johannes.sixt@telecom.at> <Pine.LNX.4.63.0701231227200.22628@wbgn013.biozentrum.uni-wuerzburg.de> <ep4tmd$ut8$1@sea.gmane.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Deleting remote branches with git-branch and reflog questions
+Date: Tue, 23 Jan 2007 15:29:38 +0000
+Message-ID: <200701231529.40362.andyparkins@gmail.com>
+References: <200701231259.27719.andyparkins@gmail.com> <200701231432.24225.andyparkins@gmail.com> <Pine.LNX.4.63.0701231558080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 16:29:14 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 23 16:29:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9NaD-0005dn-1w
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 16:29:13 +0100
+	id 1H9Nao-0005ns-H4
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 16:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963AbXAWP3K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 10:29:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbXAWP3K
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 10:29:10 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39766 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751963AbXAWP3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 10:29:08 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H9Na1-0004KM-6x; Tue, 23 Jan 2007 10:29:01 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 69C7B20FBAE; Tue, 23 Jan 2007 10:29:04 -0500 (EST)
-To: Jakub Narebski <jnareb@gmail.com>
+	id S1751996AbXAWP3r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 10:29:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751997AbXAWP3r
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 10:29:47 -0500
+Received: from wr-out-0506.google.com ([64.233.184.227]:58388 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751996AbXAWP3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 10:29:47 -0500
+Received: by wr-out-0506.google.com with SMTP id i12so961330wra
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 07:29:46 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=kcpz6qK+w8hr9MdhceTOBCzBBrFDodJ3u/Vso9dQ3Ql2VER3Y523C/Wp4kbSgLANZ/iNGq3WqXAbxtBQR6Uo5BwiRNjWlI8lyAAXbGAcrUl6cta6RR3WnlP7jiQA2uetV6PdtiJQNMssAMYVdeeDA6jdmbui93P5mG3FQB6WLQw=
+Received: by 10.49.65.15 with SMTP id s15mr1188128nfk.1169566185287;
+        Tue, 23 Jan 2007 07:29:45 -0800 (PST)
+Received: from davejones ( [194.70.53.227])
+        by mx.google.com with ESMTP id m15sm2917468nfc.2007.01.23.07.29.43;
+        Tue, 23 Jan 2007 07:29:44 -0800 (PST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.63.0701231558080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-In-Reply-To: <ep4tmd$ut8$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37533>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Johannes Schindelin wrote:
-> 
-> > Since Tcl/Tk is available for MinGW, git-gui seems to be a way to go 
-> > there.
-> 
-> Since Qt4 is to work in Windows natively, perhaps QGit is a way to go...
+On Tuesday 2007 January 23 14:59, Johannes Schindelin wrote:
 
-Choice is good.  ;-)
+> You mean, kind of like a waste bin? Where you delete stuff, but come back
+> and whine that you did not meant to delete it after all?
 
-git-gui has slightly different goals/focus than QGit.  I think
-its a better commit creation tool.
+No, no; I'm whining that the reflog was deleted, not the branch.  I think 
+that "ref deleted" is just as valid for logging as anything else, and 
+deleting the log makes it impossible to view that operation.
 
+Given how powerful the reflog is; it doesn't seem unreasonable to want to be 
+able to do
+
+$ git branch -D some-branch
+$ git show some-branch@{2 days ago}
+
+
+
+
+Andy
 -- 
-Shawn.
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
