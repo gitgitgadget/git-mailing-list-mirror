@@ -1,71 +1,80 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] config_set_multivar(): disallow newlines in keys
-Date: Tue, 23 Jan 2007 13:47:58 +0100
-Message-ID: <81b0412b0701230447sb3cb3e6y125be4d4fa8952f2@mail.gmail.com>
-References: <200701150144.56793.jnareb@gmail.com>
-	 <200701192344.11972.jnareb@gmail.com>
-	 <7v8xfyczxi.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0701200224180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0701220706w65ed0657h1d69819e7879ed40@mail.gmail.com>
-	 <Pine.LNX.4.63.0701221619110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0701220733j1002bd9dse8db491512c7a500@mail.gmail.com>
-	 <Pine.LNX.4.63.0701221643030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0701220809w1851cbfp5aa7e027ce79eed3@mail.gmail.com>
-	 <Pine.LNX.4.63.0701231225450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Deleting remote branches with git-branch and reflog questions
+Date: Tue, 23 Jan 2007 12:59:23 +0000
+Message-ID: <200701231259.27719.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 13:48:12 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 13:59:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9L4K-0005ha-IB
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 13:48:08 +0100
+	id 1H9LFV-0000nZ-3K
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 13:59:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964851AbXAWMsF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 07:48:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbXAWMsF
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 07:48:05 -0500
-Received: from wr-out-0506.google.com ([64.233.184.228]:24683 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964851AbXAWMsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 07:48:04 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so959972wra
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 04:48:03 -0800 (PST)
+	id S964872AbXAWM7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 07:59:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964927AbXAWM7i
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 07:59:38 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:34151 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964872AbXAWM7h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 07:59:37 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so223243nfa
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 04:59:33 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qOXMITmOYiO1pfj3SaEIO7wKyIbCZXvEZMMByyaX8gAF2SMEVVeZInvVlLDNN0E7Tz0MCEfSI1JyI+iQclFFy0Vfd4nOTJiJQibrUH+Y75RGkxQN5jg3OyQBMvO1wHBP9707+YlETlscebkI5pYkLayFapHUWfVrGpsUfb2UVng=
-Received: by 10.78.180.18 with SMTP id c18mr319071huf.1169556478665;
-        Tue, 23 Jan 2007 04:47:58 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Tue, 23 Jan 2007 04:47:58 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701231225450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZaFrDyEAoDPDHgNUvExyX304D62fugKE6aERTh5h1tgpx0jjTtLHlX/ldll1hANX2aaiXSFrcQ9cJLCZ8AI0dtXTvqCCqkl65/udMxJ8Geh5DF0dOXTb7gYERN4P/85xFySB2u7xfkmeDmqc5NNXtqYBStHeLeYvHpLpZyo2HPk=
+Received: by 10.49.29.2 with SMTP id g2mr1024909nfj.1169557172405;
+        Tue, 23 Jan 2007 04:59:32 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id l21sm2445881nfc.2007.01.23.04.59.30;
+        Tue, 23 Jan 2007 04:59:31 -0800 (PST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37507>
 
-On 1/23/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > We probably don't need it libified completely. Just reading and writing of
-> > > > the object database and tags/references and very simple revision walking
-> > > > will be a very good start [...]
-> > >
-> > > ... and even these use xmalloc(), which die()s on out-of-memory. Note that
-> > > it would be a really horrible work to libify that, since you basically
-> > > have to insert gazillions of free() calls at the right point, which we
-> > > don't have to, since exit() cleans up after us anyway.
-> >
-> > Didn't say it'd be simple. Just not impossible.
->
-> I thought that was what you meant by "very simple revision walking".
->
+Hello,
 
-that'd be "just a part of revision walking". Dunno what part yet,
-because I still have to come up with convincing example of where
-only a libgit could be used: just committers and history browsers
-should not have any problems just using plumbing (no, stupid
-microsoft's createprocess is not a reason enough).
+As per subject.
+
+If anything, these are safer to delete than local branches because they will 
+be restored automatically with the next fetch, so why do we require the extra 
+switch for remote branches?
+
+Would it be simpler for the user if the following worked?
+$ git branch -a
+* master
+  origin/master
+$ git branch -D origin/master
+
+i.e. that the -r switch was unnecessary in unambiguous cases.
+
+reflogs
+-------
+
+Why does the reflog directory .git/logs need to store the refs/ directory?  
+Aren't /all/ the refs under "refs/" these days?
+
+Is it right that the reflog for a branch is deleted when the branch is 
+deleted?  Doesn't this kill one of the advantages of reflogs?  In particular, 
+if I accidentally deleted a branch, I would have no way of getting it back 
+because the reflog has been deleted too?  Personally I'd prefer that a reflog 
+line was added saying
+  XXXXXXXXXXXXXXX 00000000000000 Deleted
+Or similar.  After all; it's only disk space.  If the ref was later created 
+again, then the log can continue to be added to, but it will have a "Created 
+from" in the middle instead of at the end.
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
