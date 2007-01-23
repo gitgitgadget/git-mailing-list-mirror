@@ -1,71 +1,50 @@
-From: "Morten Welinder" <mwelinder@gmail.com>
-Subject: Re: [PATCH] sha1_file.c: Avoid multiple calls to find_pack_entry().
-Date: Mon, 22 Jan 2007 21:10:26 -0500
-Message-ID: <118833cc0701221810kf817ddcm2bff07f3a848d1c2@mail.gmail.com>
-References: <20070122202945.GA29297@bohr.gbar.dtu.dk>
-	 <45B524E1.5060205@fs.ei.tum.de>
-	 <Pine.LNX.4.64.0701221611210.32200@woody.linux-foundation.org>
+From: Rune Zedeler <rz@daimi.au.dk>
+Subject: Re: Git-bug: Dependency of curl
+Date: Tue, 23 Jan 2007 03:53:10 +0100
+Message-ID: <45B57896.9050600@daimi.au.dk>
+References: <45B52E5A.1050706@daimi.au.dk> <1169515666.5868.26.camel@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 03:10:32 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 03:53:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9B7H-0005hm-3Y
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 03:10:31 +0100
+	id 1H9Bma-0006Vb-44
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 03:53:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932622AbXAWCK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 21:10:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932664AbXAWCK2
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 21:10:28 -0500
-Received: from wx-out-0506.google.com ([66.249.82.232]:21127 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932622AbXAWCK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 21:10:27 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so1539895wxd
-        for <git@vger.kernel.org>; Mon, 22 Jan 2007 18:10:27 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=T2FZYS2pHaRm3ENN8VBOOiY3jGY5BE1J54m83WjbEzKHHe1m3A/0YfrtXFeAxPzvuzb6KBF7g02xYdS793M44WbTx+dvVbo7AONbv5UmCHqQJsbmv1zqzvA4Xi5R05rR/1us/vyQEMj6YKRe+z2pVTgOB4DxA/FHqIIkgiQZtMY=
-Received: by 10.70.40.1 with SMTP id n1mr12049078wxn.1169518227166;
-        Mon, 22 Jan 2007 18:10:27 -0800 (PST)
-Received: by 10.70.95.5 with HTTP; Mon, 22 Jan 2007 18:10:26 -0800 (PST)
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-In-Reply-To: <Pine.LNX.4.64.0701221611210.32200@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S932671AbXAWCxJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 21:53:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932694AbXAWCxI
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 21:53:08 -0500
+Received: from mx05.stofanet.dk ([212.10.10.25]:51160 "EHLO mx05.stofanet.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932671AbXAWCxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 21:53:07 -0500
+Received: from 56340cee.rev.stofanet.dk ([86.52.12.238])
+	by mx05.stofanet.dk (envelope-from
+	<rz@daimi.au.dk>)
+	with esmtp id 1H9BmS-0001V3-1C; Tue, 23 Jan 2007 03:53:04 +0100
+User-Agent: Thunderbird 1.5.0.9 (X11/20070104)
+To: James Purser <purserj@k-sit.com>
+In-Reply-To: <1169515666.5868.26.camel@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37478>
 
->                 Linus "nostalgic for afw" Torvalds
+James Purser wrote:
 
->From the "nostalgic" department we also have this.  I have no idea if it
-will survive today's mailing lists.  In any case, a fixed-width font is your
-friend.  (And I sadly note that linux.cs.helsinki.fi is nowadays refusing
-finger connections.)
+> I've brought this to the notice of the Ubuntu guys (via Launchpad etc).
+> From what I can understand the way they've got it setup is as a
+> "recommended" rather than "required" download.
 
-Morten
-(who lost the original attribution -- sorry.  I certainly didn't make
-it myself.)
+Okay, thanks.
+As curl is commonly used with git, and ubuntu-users (yours truly 
+included) are not used to packages not working out of the box, it would 
+be nice with a more pedagogical error message if you try to use git with 
+curl and curl is not installed.
 
-
-                                   _,-/"---,
-            ;"""""""""";         _/;; ""  <@`---v
-          ; :::::  ::  "\      _/ ;;  "    _.../
-         ;"     ;;  ;;;  \___/::    ;;,'""""
-        ;"          ;;;;.  ;;  ;;;  ::/
-       ,/ / ;;  ;;;______;;;  ;;; ::,/
-       /;;V_;;   ;;;       \       /
-       | :/ / ,/            \_ "")/
-       | | / /"""=            \;;\""=
-       ; ;{::""""""=            \"""=
-    ;"""";
-    \/"""
-         THAT's a weasel, folks!
-
-              Linux 2.0
+-Rune
