@@ -1,77 +1,57 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] Allow default core.logallrefupdates to be overridden with template's config
-Date: Tue, 23 Jan 2007 18:58:11 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070123175811.GA8070@cepheus>
-References: <81b0412b0701230754p3425ded4k1f37dd26500c1744@mail.gmail.com> <Pine.LNX.4.64.0701230827440.32200@woody.linux-foundation.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: [Announce] GIT v1.5.0-rc2
+Date: Tue, 23 Jan 2007 12:12:34 -0600
+Message-ID: <17846.20498.635623.173653@lisa.zopyra.com>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
+	<eovccc$usc$1@sea.gmane.org>
+	<Pine.LNX.4.63.0701211207500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 23 18:58:26 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 23 19:12:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9PuZ-0005iH-WA
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 18:58:24 +0100
+	id 1H9Q8W-00030D-4h
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 19:12:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965302AbXAWR6S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 23 Jan 2007 12:58:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965363AbXAWR6S
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 12:58:18 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:65078 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965302AbXAWR6R (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jan 2007 12:58:17 -0500
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1H9PuS-0000yU-7d; Tue, 23 Jan 2007 18:58:16 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l0NHwDvO023247;
-	Tue, 23 Jan 2007 18:58:13 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l0NHwC8i023246;
-	Tue, 23 Jan 2007 18:58:12 +0100 (MET)
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701230827440.32200@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S933093AbXAWSMm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 13:12:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933099AbXAWSMm
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 13:12:42 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61624 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933093AbXAWSMl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 13:12:41 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0NICcC22920;
+	Tue, 23 Jan 2007 12:12:38 -0600
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701211207500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37555>
 
-Hi Linus,
+On Sunday, January 21, 2007 at 12:08:25 (+0100) Johannes Schindelin writes:
+>Hi,
+>
+>On Sun, 21 Jan 2007, Jakub Narebski wrote:
+>
+>> By the way, was the pager configured to saner values, so "git diff" on a 
+>> repository with no changes does not output empty page?
+>
+>As Junio mentioned: it already does. Maybe you have set the environment 
+>variable "LESS", and forgot to include "-F"?
 
-Linus Torvalds wrote:
->  just out of curiosity, what _is_ your curious text-attachment thing:
->=20
->    1 Shown      8 lines  Text (charset: UTF-8)
->    2   OK    ~928 bytes  Text (charset: ANSI_X3.4-1968)
-ANSI_X3.4-1968 is just the offical name for us-ascii.
+I can't seem to get this to work, no matter what I do, using the
+latest 1.5.0-rc2 code.  I have the environment variables LESS, PAGER,
+PAGER_FLAGS, and I can't seem to get 'git diff' to not plough through
+my screen each time it is run, no matter the combinations...  Could
+someone post the magic?
 
-	zeisberg@cepheus:~$ LANG=3DC locale charmap
-	ANSI_X3.4-1968
 
-I'm not sure that this was making you curious.
-
-Another strange thing is, that Alex' MUA choosed
-"Content-Transfer-Encoding: 7bit" for the first part although UTF-8 is
-an 8bit charset.
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3Dthe+speed+of+light+in+m%2Fs
+Bill
