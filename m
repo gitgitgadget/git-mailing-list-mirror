@@ -1,79 +1,71 @@
-From: James Purser <purserj@k-sit.com>
-Subject: Re: Git-bug: Dependency of curl
-Date: Tue, 23 Jan 2007 12:27:46 +1100
-Message-ID: <1169515666.5868.26.camel@localhost>
-References: <45B52E5A.1050706@daimi.au.dk>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: [PATCH] sha1_file.c: Avoid multiple calls to find_pack_entry().
+Date: Mon, 22 Jan 2007 21:10:26 -0500
+Message-ID: <118833cc0701221810kf817ddcm2bff07f3a848d1c2@mail.gmail.com>
+References: <20070122202945.GA29297@bohr.gbar.dtu.dk>
+	 <45B524E1.5060205@fs.ei.tum.de>
+	 <Pine.LNX.4.64.0701221611210.32200@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-cj1xApwzaevWvKSorCPO"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 02:54:00 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 03:10:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9ArH-00022S-RD
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 02:54:00 +0100
+	id 1H9B7H-0005hm-3Y
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 03:10:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932596AbXAWBx4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 22 Jan 2007 20:53:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932612AbXAWBx4
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 20:53:56 -0500
-Received: from k-sit.com ([220.233.124.29]:52827 "EHLO k-sit.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932596AbXAWBxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Jan 2007 20:53:55 -0500
-X-Greylist: delayed 1564 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Jan 2007 20:53:55 EST
-Received: from localhost (Kryten [127.0.0.1])
-	by localhost.akadia.com (Postfix) with ESMTP id D8D9918B4028;
-	Tue, 23 Jan 2007 12:27:48 +1100 (EST)
-X-Virus-Scanned: amavisd-new at 
-Received: from k-sit.com ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id qpvoWFNhhI4N; Tue, 23 Jan 2007 12:27:45 +1100 (EST)
-Received: from [192.168.0.23] (unknown [192.168.0.23])
-	by k-sit.com (Postfix) with ESMTP id 7B9D918B4027;
-	Tue, 23 Jan 2007 12:27:45 +1100 (EST)
-To: Rune Zedeler <rz@daimi.au.dk>
-In-Reply-To: <45B52E5A.1050706@daimi.au.dk>
-X-Mailer: Evolution 2.8.1 
+	id S932622AbXAWCK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 22 Jan 2007 21:10:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932664AbXAWCK2
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Jan 2007 21:10:28 -0500
+Received: from wx-out-0506.google.com ([66.249.82.232]:21127 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932622AbXAWCK1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Jan 2007 21:10:27 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so1539895wxd
+        for <git@vger.kernel.org>; Mon, 22 Jan 2007 18:10:27 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=T2FZYS2pHaRm3ENN8VBOOiY3jGY5BE1J54m83WjbEzKHHe1m3A/0YfrtXFeAxPzvuzb6KBF7g02xYdS793M44WbTx+dvVbo7AONbv5UmCHqQJsbmv1zqzvA4Xi5R05rR/1us/vyQEMj6YKRe+z2pVTgOB4DxA/FHqIIkgiQZtMY=
+Received: by 10.70.40.1 with SMTP id n1mr12049078wxn.1169518227166;
+        Mon, 22 Jan 2007 18:10:27 -0800 (PST)
+Received: by 10.70.95.5 with HTTP; Mon, 22 Jan 2007 18:10:26 -0800 (PST)
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+In-Reply-To: <Pine.LNX.4.64.0701221611210.32200@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37477>
+
+>                 Linus "nostalgic for afw" Torvalds
+
+>From the "nostalgic" department we also have this.  I have no idea if it
+will survive today's mailing lists.  In any case, a fixed-width font is your
+friend.  (And I sadly note that linux.cs.helsinki.fi is nowadays refusing
+finger connections.)
+
+Morten
+(who lost the original attribution -- sorry.  I certainly didn't make
+it myself.)
 
 
---=-cj1xApwzaevWvKSorCPO
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+                                   _,-/"---,
+            ;"""""""""";         _/;; ""  <@`---v
+          ; :::::  ::  "\      _/ ;;  "    _.../
+         ;"     ;;  ;;;  \___/::    ;;,'""""
+        ;"          ;;;;.  ;;  ;;;  ::/
+       ,/ / ;;  ;;;______;;;  ;;; ::,/
+       /;;V_;;   ;;;       \       /
+       | :/ / ,/            \_ "")/
+       | | / /"""=            \;;\""=
+       ; ;{::""""""=            \"""=
+    ;"""";
+    \/"""
+         THAT's a weasel, folks!
 
-On Mon, 2007-01-22 at 22:36 +0100, Rune Zedeler wrote:
-> On ubuntu, git is missing a dependency on curl.
->=20
-> -Rune
-> -
-
-Hi Rune,
-
-I've brought this to the notice of the Ubuntu guys (via Launchpad etc).
-=46rom what I can understand the way they've got it setup is as a
-"recommended" rather than "required" download.
---=20
-James Purser
-Producer/Presenter - Open Source On The Air
-A LocalFOSS Production
-http://www.localfoss.org
-irc: #localfoss on irc.freenode.net
-
---=-cj1xApwzaevWvKSorCPO
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQBFtWSSyx477OLqpLMRAr8nAJ9cJ+2OE0Z5EBqlZBYCwZQWLw5wFQCgnVQ2
-63IFOxedIS9N8i1jxgyPqmg=
-=Dl26
------END PGP SIGNATURE-----
-
---=-cj1xApwzaevWvKSorCPO--
+              Linux 2.0
