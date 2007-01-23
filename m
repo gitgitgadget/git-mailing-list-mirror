@@ -1,58 +1,71 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Allow default core.logallrefupdates to be overridden with template's config
-Date: Tue, 23 Jan 2007 23:06:21 +0100
-Message-ID: <81b0412b0701231406t5e5808cex31a12b2aa0b6d03e@mail.gmail.com>
-References: <81b0412b0701230754p3425ded4k1f37dd26500c1744@mail.gmail.com>
-	 <Pine.LNX.4.64.0701230827440.32200@woody.linux-foundation.org>
+From: Krzysztof Halasa <khc@pm.waw.pl>
+Subject: Re: [PATCH] Lose perl dependency. (fwd)
+Date: Wed, 24 Jan 2007 00:27:53 +0100
+Message-ID: <m34pqh2uiu.fsf@maximus.localdomain>
+References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vwt3h7dp6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701202240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<200701210137.41219.robin.rosenberg.lists@dewire.com>
+	<Pine.LNX.4.63.0701210234350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17842.53449.35322.514320@lisa.zopyra.com>
+	<7vr6tp5aqq.fsf@assigned-by-dhcp.cox.net>
+	<87vej0gh4k.fsf@morpheus.local> <m3zm89zxs1.fsf@maximus.localdomain>
+	<873b6197jf.fsf@morpheus.local> <m3irexzua9.fsf@maximus.localdomain>
+	<86bqkp1xkz.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 23 23:07:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 24 00:27:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9Tns-0006Qk-9p
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 23:07:44 +0100
+	id 1H9V3W-0002rV-Lp
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 00:27:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965516AbXAWWGc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 17:06:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965540AbXAWWG3
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 17:06:29 -0500
-Received: from an-out-0708.google.com ([209.85.132.251]:45122 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965552AbXAWWGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 17:06:23 -0500
-Received: by an-out-0708.google.com with SMTP id b33so757412ana
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 14:06:22 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Io2gcAyzfKCm4Pe2Bde6xsG+3Jj+/xrWUL/YbfOadqI/XX6mPJN9z+ESh+UVWfIUJplY2faUBu7SP0HCTBJxr5fJth/ucis5+dlF4LOYqbDFd/rW6DWdNQnaCITmWVvfPtm4OLZd3SKBCWKlMP0mt7gA9zSIsjG6TVKmRTYFzJQ=
-Received: by 10.78.138.6 with SMTP id l6mr736706hud.1169589981949;
-        Tue, 23 Jan 2007 14:06:21 -0800 (PST)
-Received: by 10.78.135.3 with HTTP; Tue, 23 Jan 2007 14:06:21 -0800 (PST)
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-In-Reply-To: <Pine.LNX.4.64.0701230827440.32200@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S965591AbXAWX15 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 18:27:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965595AbXAWX15
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 18:27:57 -0500
+Received: from khc.piap.pl ([195.187.100.11]:52961 "EHLO khc.piap.pl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965591AbXAWX14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 18:27:56 -0500
+Received: by khc.piap.pl (Postfix, from userid 500)
+	id A975D65652; Wed, 24 Jan 2007 00:27:53 +0100 (CET)
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+In-Reply-To: <86bqkp1xkz.fsf@blue.stonehenge.com> (Randal L. Schwartz's message of "Tue, 23 Jan 2007 09:07:08 -0800")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37580>
 
-On 1/23/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->  just out of curiosity, what _is_ your curious text-attachment thing:
->
->    1 Shown      8 lines  Text (charset: UTF-8)
->    2   OK    ~928 bytes  Text (charset: ANSI_X3.4-1968)
->
-> where your normal text is UTF-8, but then attachments are in some really
-> strange encoding name (why not just call it iso-8859-15? Don't ask me..)
->
-> Anyway. Strange.
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-That's Google Mail. The Webmailer. Have no other means to send mail at
-that time of day.
+> The proper solution is to *follow* the RFCs,
+
+Do you remember RFC #s by chance? Some details maybe?
+
+> and leave the reply-to alone
+> when
+> relaying.  If someone wants to reply to the list *and* the person, they can
+> reply to both the "from (or reply-to)" and "to" addresses, often called a
+> "wide reply".  If someone wants to reply to just the person, they use the
+> "reply-to" if it's present, or the "from" if not.  This is *proper* behavior:
+> it's only some broken mailing lists out there that have caused us to have to
+> work around it.
+
+The list doesn't modify the headers in question, at least as far as lkml
+is concerned, so I assume you mean some other lists that are broken.
+
+Reply-To is for the author to set, list software shouldn't change it.
+While it's normal to reply to "From", "Cc" and "To" (at least here),
+some people prefer to be omitted when replying to their mail. How could
+they do that if not with Reply-To?
+
+Then, if I see lkml and no author's address in Reply-To, how
+could I contact him/her privately if not writing to "From" and
+ignoring Reply-To?
+-- 
+Krzysztof Halasa
