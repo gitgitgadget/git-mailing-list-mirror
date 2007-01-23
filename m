@@ -1,86 +1,83 @@
-From: James Purser <purserj@k-sit.com>
-Subject: Re: Git-bug: Dependency of curl
-Date: Wed, 24 Jan 2007 08:27:13 +1100
-Message-ID: <1169587633.5926.1.camel@localhost>
-References: <45B52E5A.1050706@daimi.au.dk>
-	 <1169515666.5868.26.camel@localhost>  <45B57896.9050600@daimi.au.dk>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-B/75jgoU44HFkhzxUdce"
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 22:27:28 2007
+From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
+Subject: Re: [Announce] GIT v1.5.0-rc2
+Date: Tue, 23 Jan 2007 22:09:24 +0100
+Message-ID: <slrnercuc4.55u.siprbaum@xp.machine.xx>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <eovccc$usc$1@sea.gmane.org> <Pine.LNX.4.63.0701211207500.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17846.20498.635623.173653@lisa.zopyra.com> <Pine.LNX.4.63.0701232012120.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17846.27694.845530.663964@lisa.zopyra.com>
+X-From: git-owner@vger.kernel.org Tue Jan 23 22:35:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9TAr-0007rM-A0
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 22:27:25 +0100
+	id 1H9TIO-0002S1-Q9
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 22:35:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965140AbXAWV1V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 16:27:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965260AbXAWV1V
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 16:27:21 -0500
-Received: from k-sit.com ([220.233.124.29]:54902 "EHLO k-sit.com"
+	id S965487AbXAWVfH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 16:35:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965488AbXAWVfG
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 16:35:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:36835 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965135AbXAWV1U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 16:27:20 -0500
-Received: from localhost (Kryten [127.0.0.1])
-	by localhost.akadia.com (Postfix) with ESMTP id B04E718B4029;
-	Wed, 24 Jan 2007 08:27:16 +1100 (EST)
-X-Virus-Scanned: amavisd-new at 
-Received: from k-sit.com ([127.0.0.1])
-	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id f6dJygqa7km9; Wed, 24 Jan 2007 08:27:13 +1100 (EST)
-Received: from [192.168.0.23] (unknown [192.168.0.23])
-	by k-sit.com (Postfix) with ESMTP id 929DD18B4028;
-	Wed, 24 Jan 2007 08:27:13 +1100 (EST)
-To: Rune Zedeler <rz@daimi.au.dk>
-In-Reply-To: <45B57896.9050600@daimi.au.dk>
-X-Mailer: Evolution 2.8.1 
+	id S965487AbXAWVfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 16:35:04 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1H9TIE-0005qQ-GJ
+	for git@vger.kernel.org; Tue, 23 Jan 2007 22:35:02 +0100
+Received: from mason.hofmann.stw.uni-erlangen.de ([131.188.24.36])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 22:35:02 +0100
+Received: from siprbaum by mason.hofmann.stw.uni-erlangen.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 22:35:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: mason.hofmann.stw.uni-erlangen.de
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37572>
 
+Bill Lear <rael@zopyra.com> schrieb:
+> On Tuesday, January 23, 2007 at 20:12:36 (+0100) Johannes Schindelin writes:
+>>Hi,
+>>
+>>On Tue, 23 Jan 2007, Bill Lear wrote:
+>>
+>>> I can't seem to get this to work, no matter what I do, using the latest 
+>>> 1.5.0-rc2 code.  I have the environment variables LESS, PAGER, 
+>>> PAGER_FLAGS, and I can't seem to get 'git diff' to not plough through my 
+>>> screen each time it is run, no matter the combinations...  Could someone 
+>>> post the magic?
+>>
+>>Try this:
+>>
+>>	PAGER=less LESS=-FRS git diff
+>
+> Replied to Johannes off-line and thought this was working --- sorry
+> for the false positive.  It is in one regard: it completely suppresses
+> output if there is less than a full screen of output.
+>
+> If I do this:
+>
+> % export PAGER=less
+> % unset LESS
+> % git diff
+>
+> I get 30 lines of output in my current repository, as I should.
+>
+> If I then do this:
+>
+> % LESS=-FRS git diff
+>
+> I get nothing --- I do see a brief blink of output, but it's as if
+> less swallows it whole and I see nothing but the next prompt.
+>
 
---=-B/75jgoU44HFkhzxUdce
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+This is propably caused by activating "Enable Alternate Screen Switching"
+in xterm. If you have this feature enabled, you get a clean screen (no
+fragments of the displayed file are shown after quitting less). Try to
+disable it and see if it works.
 
-On Tue, 2007-01-23 at 03:53 +0100, Rune Zedeler wrote:
-> James Purser wrote:
->=20
-> > I've brought this to the notice of the Ubuntu guys (via Launchpad etc).
-> > From what I can understand the way they've got it setup is as a
-> > "recommended" rather than "required" download.
->=20
-> Okay, thanks.
-> As curl is commonly used with git, and ubuntu-users (yours truly=20
-> included) are not used to packages not working out of the box, it would=20
-> be nice with a more pedagogical error message if you try to use git with=20
-> curl and curl is not installed.
->=20
-> -Rune
-
-I agree, at the moment I'm on ubuntu (considering a move to something
-else) and for the moment, I'm actually running from the bleeding edge
-(git pull every week or so).
---=20
-James Purser
-K-sit.com
-http://k-sit.com
-SIP: 1234@k-sit.com
-Mob: 0406 576 553
-
---=-B/75jgoU44HFkhzxUdce
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (GNU/Linux)
-
-iD8DBQBFtn2xyx477OLqpLMRAjYbAKCr/jnsqbw+12QcXy0+QGIVK/rJMgCdExcq
-GTn+SB3+3yWXiZq8xqyvp84=
-=yDw4
------END PGP SIGNATURE-----
-
---=-B/75jgoU44HFkhzxUdce--
+-Peter
