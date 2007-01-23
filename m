@@ -1,60 +1,58 @@
-From: Krzysztof Halasa <khc@pm.waw.pl>
-Subject: Re: [PATCH] Lose perl dependency. (fwd)
-Date: Tue, 23 Jan 2007 15:34:22 +0100
-Message-ID: <m3irexzua9.fsf@maximus.localdomain>
-References: <Pine.LNX.4.63.0701181149260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vwt3h7dp6.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701202240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<200701210137.41219.robin.rosenberg.lists@dewire.com>
-	<Pine.LNX.4.63.0701210234350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<17842.53449.35322.514320@lisa.zopyra.com>
-	<7vr6tp5aqq.fsf@assigned-by-dhcp.cox.net>
-	<87vej0gh4k.fsf@morpheus.local> <m3zm89zxs1.fsf@maximus.localdomain>
-	<873b6197jf.fsf@morpheus.local>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Deleting remote branches with git-branch and reflog questions
+Date: Tue, 23 Jan 2007 15:59:06 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701231558080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701231259.27719.andyparkins@gmail.com> <ep51ie$i23$1@sea.gmane.org>
+ <200701231432.24225.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 15:34:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 23 15:59:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9MjY-0004uN-Gb
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 15:34:48 +0100
+	id 1H9N7D-0004Gv-6e
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 15:59:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933016AbXAWOe0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 23 Jan 2007 09:34:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933010AbXAWOe0
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 09:34:26 -0500
-Received: from khc.piap.pl ([195.187.100.11]:32842 "EHLO khc.piap.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933016AbXAWOeZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jan 2007 09:34:25 -0500
-Received: by khc.piap.pl (Postfix, from userid 500)
-	id 364E165652; Tue, 23 Jan 2007 15:34:22 +0100 (CET)
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-In-Reply-To: <873b6197jf.fsf@morpheus.local> (David =?iso-8859-1?Q?K=E5ged?=
- =?iso-8859-1?Q?al's?= message of "Tue, 23 Jan 2007 14:50:12 +0100")
+	id S965224AbXAWO7J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 09:59:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965223AbXAWO7J
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 09:59:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47065 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965224AbXAWO7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 09:59:08 -0500
+Received: (qmail invoked by alias); 23 Jan 2007 14:59:06 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp002) with SMTP; 23 Jan 2007 15:59:06 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Andy Parkins <andyparkins@gmail.com>
+In-Reply-To: <200701231432.24225.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37528>
 
-David K=E5gedal <davidk@lysator.liu.se> writes:
+Hi,
 
->> Actually there is, you can put Reply-To: in your messages.
->
-> That is never the correct answer.  If peaple want to reply to me, the=
-y
-> should be able to.  If they want to follow-up to the list, they shoul=
-d
-> be able to.  I can not decide in advance for them what they want to
-> do.
+On Tue, 23 Jan 2007, Andy Parkins wrote:
 
-Actually it is the correct way to do that. If people "reply to group"
-or whatever is it called, the reply goes to "Reply-To" list.
-If they "reply to author", the reply goes to "From" address and
-"Reply-To" is ignored.
---=20
-Krzysztof Halasa
+> On Tuesday 2007 January 23 13:12, Jakub Narebski wrote:
+> 
+> > The problem is when you delete branch 'foo', and then create branch
+> > 'foo/bar'. You can't have both 'foo' and 'foo/bar' reflog.
+> 
+> Ah; yes of course.  That is a bit of a deal breaker isn't it?
+> 
+> On the other hand, why delete it instantly?
+
+You mean, kind of like a waste bin? Where you delete stuff, but come back 
+and whine that you did not meant to delete it after all?
+
+:-))
+
+Ciao,
+Dscho
