@@ -1,77 +1,65 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: MinGW port - initial work uploaded
-Date: Tue, 23 Jan 2007 14:12:48 +0100
-Message-ID: <46d6db660701230512l571d8c35k24e475c3fe0933cf@mail.gmail.com>
-References: <200701192148.20206.johannes.sixt@telecom.at>
-	 <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com>
-	 <200701222127.09601.johannes.sixt@telecom.at>
-	 <Pine.LNX.4.63.0701231227200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Deleting remote branches with git-branch and reflog questions
+Date: Tue, 23 Jan 2007 13:14:52 +0000
+Message-ID: <200701231314.53361.andyparkins@gmail.com>
+References: <200701231259.27719.andyparkins@gmail.com> <45B6076F.5060503@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 14:13:10 2007
+Cc: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Jan 23 14:15:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9LSX-0004rV-58
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 14:13:09 +0100
+	id 1H9LUg-0005Zw-Ej
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 14:15:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965015AbXAWNMx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 08:12:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965039AbXAWNMw
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 08:12:52 -0500
-Received: from wr-out-0506.google.com ([64.233.184.232]:38195 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965032AbXAWNMv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 08:12:51 -0500
-Received: by wr-out-0506.google.com with SMTP id 68so1010809wra
-        for <git@vger.kernel.org>; Tue, 23 Jan 2007 05:12:51 -0800 (PST)
+	id S965012AbXAWNPA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 08:15:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965034AbXAWNPA
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 08:15:00 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:55532 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965012AbXAWNO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 08:14:59 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so228083nfa
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 05:14:57 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DTjageKUTlBkHVkuIG0aQkGtouG/tDFFkbe1pmSwxoyIjVeAD1Csz2h+wUAVRIeE+ZyE61rjhWOipd/xI1BawYTzD6JbDV1HeNym3OPN+mpexElAYYiTTKNOEQRe5B8FjAsAX0I4/2K3f0zSyarQ+lLaLClrDwMm2uA7NEcacnY=
-Received: by 10.78.193.19 with SMTP id q19mr330808huf.1169557969140;
-        Tue, 23 Jan 2007 05:12:49 -0800 (PST)
-Received: by 10.78.175.18 with HTTP; Tue, 23 Jan 2007 05:12:48 -0800 (PST)
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-In-Reply-To: <Pine.LNX.4.63.0701231227200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ihAlbUtrlU9esr99TDgJwBQz9ZHTXSwyj10eXmSMJFI+8TnWuyXbMZeKv/IMlSKkyLCNIqg/P+EX75gy5sbPRF/3Nln+17sHILdWac+VYyI1RRu9mfgQEKs3ZGHBtC9OCGKO+/wmS/AV5GIziI3ecUecWgNTmdrg8d+TelZToBw=
+Received: by 10.49.26.18 with SMTP id d18mr1080820nfj.1169558096980;
+        Tue, 23 Jan 2007 05:14:56 -0800 (PST)
+Received: from davejones ( [194.70.53.227])
+        by mx.google.com with ESMTP id o53sm2514405nfa.2007.01.23.05.14.55;
+        Tue, 23 Jan 2007 05:14:55 -0800 (PST)
+To: git@vger.kernel.org
+User-Agent: KMail/1.9.5
+In-Reply-To: <45B6076F.5060503@op5.se>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37512>
 
-On 1/23/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Maybe we have to go the other way round, just as POSIX git does: instead
-> of spawning the pager, we should _beginthread() the actual work, and
-> execl() the pager.
+On Tuesday 2007 January 23 13:02, Andreas Ericsson wrote:
 
-actually, one other issue is the spawning of vim when doing commits.
-I usually end up in using -m "my commit message" because of these
-2 errors (basically terminal not recognized, I tried many different
-options to no avail)
-
-$ git commit -a
-Vim: Warning: Output is not to a terminal
-Vim: Warning: Input is not from a terminal
-
-> On the third hand, I fully expect git on Windows to be used only by GUI
-> wieners who cannot handle the command line, let alone a pager! ("WTF! How
-> do I go back to that dollar thingie? You know, where I type git-blabla?")
-
-maybe I'm stuck with windows at work, but I still use vim inside mingw.
-it would be nice to fix the pager issue...
-
+> > Why does the reflog directory .git/logs need to store the refs/
+> > directory? Aren't /all/ the refs under "refs/" these days?
 >
-> Since Tcl/Tk is available for MinGW, git-gui seems to be a way to go
-> there.
+> No. HEAD isn't, nor is ORIG_HEAD, and possibly others.
 
-I did not know about this... let me try... yes! not bad...
-it's working too, so your assumption was correct.
+They're all special cases aren't they?  They are symrefs.  I don't think they 
+are reflogged at all (they certainly don't appear in my .git/logs directory.
 
-thanks for the suggestion.
+Perhaps I should rephrase... aren't /all/ the logged refs under "refs/" these 
+days?
 
---
-Christian
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
