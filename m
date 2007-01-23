@@ -1,68 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config_set_multivar(): disallow newlines in keys
-Date: Tue, 23 Jan 2007 12:26:14 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701231225450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701150144.56793.jnareb@gmail.com>  <200701191310.32417.jnareb@gmail.com>
-  <Pine.LNX.4.63.0701191420000.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
- <200701192344.11972.jnareb@gmail.com>  <7v8xfyczxi.fsf@assigned-by-dhcp.cox.net>
-  <Pine.LNX.4.63.0701200224180.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
- <81b0412b0701220706w65ed0657h1d69819e7879ed40@mail.gmail.com> 
- <Pine.LNX.4.63.0701221619110.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
- <81b0412b0701220733j1002bd9dse8db491512c7a500@mail.gmail.com> 
- <Pine.LNX.4.63.0701221643030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0701220809w1851cbfp5aa7e027ce79eed3@mail.gmail.com>
+Subject: Re: MinGW port - initial work uploaded
+Date: Tue, 23 Jan 2007 12:32:47 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701231227200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701192148.20206.johannes.sixt@telecom.at>
+ <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com>
+ <200701222127.09601.johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 12:26:20 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 12:32:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9JnA-00050R-0G
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 12:26:20 +0100
+	id 1H9JtU-00071W-P4
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 12:32:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932952AbXAWL0R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 06:26:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932929AbXAWL0R
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 06:26:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38992 "HELO mail.gmx.net"
+	id S932958AbXAWLcu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 06:32:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932972AbXAWLct
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 06:32:49 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39084 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932952AbXAWL0Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 06:26:16 -0500
-Received: (qmail invoked by alias); 23 Jan 2007 11:26:15 -0000
+	id S932958AbXAWLct (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 06:32:49 -0500
+Received: (qmail invoked by alias); 23 Jan 2007 11:32:47 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp054) with SMTP; 23 Jan 2007 12:26:15 +0100
+  by mail.gmx.net (mp040) with SMTP; 23 Jan 2007 12:32:47 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Alex Riesen <raa.lkml@gmail.com>
-In-Reply-To: <81b0412b0701220809w1851cbfp5aa7e027ce79eed3@mail.gmail.com>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+In-Reply-To: <200701222127.09601.johannes.sixt@telecom.at>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37502>
 
 Hi,
 
-On Mon, 22 Jan 2007, Alex Riesen wrote:
+On Mon, 22 Jan 2007, Johannes Sixt wrote:
 
-> On 1/22/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > BTW IMHO we will probably never libify git; too many too 
-> > > > complicated cases exist already.
-> > >
-> > > We probably don't need it libified completely. Just reading and writing of
-> > > the object database and tags/references and very simple revision walking
-> > > will be a very good start [...]
-> > 
-> > ... and even these use xmalloc(), which die()s on out-of-memory. Note that
-> > it would be a really horrible work to libify that, since you basically
-> > have to insert gazillions of free() calls at the right point, which we
-> > don't have to, since exit() cleans up after us anyway.
-> 
-> Didn't say it'd be simple. Just not impossible.
+> OTOH, git log, git diff, etc, which run the pager by default, are 
+> broken. It seems that the pipe is not correctly flushed by the writer, 
+> which the MinGW port closes in an atexit() routine, so that the last 
+> part of the piped data is missing. I have no clue how to fix this except 
+> by disabling the pager.
 
-I thought that was what you meant by "very simple revision walking".
+Maybe we have to go the other way round, just as POSIX git does: instead 
+of spawning the pager, we should _beginthread() the actual work, and 
+execl() the pager.
+
+On the third hand, I fully expect git on Windows to be used only by GUI 
+wieners who cannot handle the command line, let alone a pager! ("WTF! How 
+do I go back to that dollar thingie? You know, where I type git-blabla?")
+
+Since Tcl/Tk is available for MinGW, git-gui seems to be a way to go 
+there.
+
+Or to continue on the TortoiseCVS lookalike...
 
 Ciao,
 Dscho
