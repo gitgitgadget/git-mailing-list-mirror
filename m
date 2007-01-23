@@ -1,43 +1,88 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: gets "-dirty" under fakeroot
-Date: Tue, 23 Jan 2007 15:22:19 +0100
-Message-ID: <20070123142219.GA21219@moooo.ath.cx>
-References: <87ac0auhyy.wl@mail2.atmark-techno.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Repository Security
+Date: Tue, 23 Jan 2007 15:29:21 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701231525250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701221433.13257.andre@masella.no-ip.org>
+ <Pine.LNX.4.63.0701231036400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200701230823.17938.andre@masella.no-ip.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 15:22:30 2007
+X-From: git-owner@vger.kernel.org Tue Jan 23 15:29:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9MXb-00011Y-LC
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 15:22:27 +0100
+	id 1H9MeM-0003E8-Vs
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 15:29:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932968AbXAWOWZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 09:22:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932971AbXAWOWZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 09:22:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50655 "HELO mail.gmx.net"
+	id S933006AbXAWO3Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 09:29:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933003AbXAWO3Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 09:29:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39650 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932968AbXAWOWY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 09:22:24 -0500
-Received: (qmail invoked by alias); 23 Jan 2007 14:22:23 -0000
-Received: from pD9EBA479.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.164.121]
-  by mail.gmx.net (mp041) with SMTP; 23 Jan 2007 15:22:23 +0100
-X-Authenticated: #5358227
-To: Yasushi SHOJI <yashi@atmark-techno.com>
-Mail-Followup-To: Yasushi SHOJI <yashi@atmark-techno.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <87ac0auhyy.wl@mail2.atmark-techno.com>
+	id S933006AbXAWO3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 09:29:23 -0500
+Received: (qmail invoked by alias); 23 Jan 2007 14:29:21 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 23 Jan 2007 15:29:21 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+To: Andre Masella <andre@masella.no-ip.org>
+In-Reply-To: <200701230823.17938.andre@masella.no-ip.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37525>
 
-Yasushi SHOJI <yashi@atmark-techno.com> wrote:
-> How do you guys do when you create snapshot package like rpm or deb?
-> or is this just me?
-Use fakeroot -u.
+Hi,
+
+On Tue, 23 Jan 2007, Andre Masella wrote:
+
+> > > As I understand it, none of the repository backends allow any per-user
+> > > per-branch access control.
+> > The idea in git (unless you really want to get the same setup as in CVS,
+> > which would be rather sad) is that every developer has at least one
+> > repository. Write-access: only one developer.
+> 
+> Believe me: I was ready to throw a party when I got to shutdown CVS last 
+> week.
+
+Congratulations!
+
+> Say I have two utterly separate repositories with two integrators. I 
+> want to put them on a web server (and so same DAV share). There is 
+> little to stop the integrator of one project (by intention or accident) 
+> from modifying the other repository. It can be done, but doing it 
+> requires one section of the httpd.conf per repository.
+
+I thought you can do all the fancy WebDAV stuff with .htaccess?
+
+> > I already hear the complaint: "But you need a central repository!". If 
+> > you _have_ to have a central repository, designate the integrator's 
+> > repository central.
+> 
+> Okay, say one regular developer wants share his changes with another 
+> developer. He either has to mail patches, create an SSH account, or set 
+> up one of git-daemon or WebDAV.
+
+Most likely just start git-daemon. It's read-only (in the future, you 
+might be able to enable anonymous push, but not right now), so you don't 
+have to worry.
+
+> And most of those require knowing the workstation name which is 
+> inconvienient.
+
+Umm. Oh. Okay. Didn't expect _that_ to be inconvenient.
+
+> I would rather have each user able to push to a branch with their name 
+> on it on a central server.
+
+Really, the easiest is to setup a central server with SSH, where every 
+user has an individual account. Administrating, say, a Linux box with 
+literally thousands of users is a charm.
+
+Ciao,
+Dscho
