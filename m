@@ -1,70 +1,59 @@
-From: Andre Masella <andre@masella.no-ip.org>
-Subject: Re: Repository Security
-Date: Tue, 23 Jan 2007 08:23:17 -0500
-Message-ID: <200701230823.17938.andre@masella.no-ip.org>
-References: <200701221433.13257.andre@masella.no-ip.org> <Pine.LNX.4.63.0701231036400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: MinGW port - initial work uploaded
+Date: Tue, 23 Jan 2007 20:36:01 +0700
+Message-ID: <fcaeb9bf0701230536p536f3326w36f2b272c869c5cf@mail.gmail.com>
+References: <200701192148.20206.johannes.sixt@telecom.at>
+	 <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com>
+	 <200701222127.09601.johannes.sixt@telecom.at>
+	 <Pine.LNX.4.63.0701231227200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 14:23:36 2007
+Cc: "Johannes Sixt" <johannes.sixt@telecom.at>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 23 14:36:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9Lce-0008BM-14
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 14:23:36 +0100
+	id 1H9Lov-0003io-N0
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 14:36:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965050AbXAWNXY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 08:23:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965067AbXAWNXX
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 08:23:23 -0500
-Received: from tomts20.bellnexxia.net ([209.226.175.74]:42681 "EHLO
-	tomts20-srv.bellnexxia.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965050AbXAWNXV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Jan 2007 08:23:21 -0500
-Received: from masella.no-ip.org ([74.14.39.184])
-          by tomts20-srv.bellnexxia.net
-          (InterMail vM.5.01.06.13 201-253-122-130-113-20050324) with ESMTP
-          id <20070123132320.SBDP24907.tomts20-srv.bellnexxia.net@masella.no-ip.org>;
-          Tue, 23 Jan 2007 08:23:20 -0500
-Received: by masella.no-ip.org (Postfix, from userid 1003)
-	id D7A76508FB; Tue, 23 Jan 2007 08:23:18 -0500 (EST)
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.63.0701231036400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S965067AbXAWNgH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 08:36:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964934AbXAWNgH
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 08:36:07 -0500
+Received: from wr-out-0506.google.com ([64.233.184.226]:51269 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965067AbXAWNgE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 08:36:04 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so976874wra
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 05:36:03 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=k7FaBb1O7QuzaUK/NuGtkVMNJo0NGGwaN01P1/E/uEAmWcSlthjsNkxdKliPU8iz3F9X23E1zh4TpPDBRTa/rVu16ANRIDhlWhVsob10m9L/oXfXmmss4T2/WcVtheM0PmIxVv4kHJB4EQY4tqpd/HYGwMYP3eJ7EJntqLvqHRY=
+Received: by 10.78.200.3 with SMTP id x3mr342347huf.1169559361216;
+        Tue, 23 Jan 2007 05:36:01 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Tue, 23 Jan 2007 05:36:01 -0800 (PST)
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+In-Reply-To: <Pine.LNX.4.63.0701231227200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37517>
 
-> > As I understand it, none of the repository backends allow any per-user
-> > per-branch access control.
-> The idea in git (unless you really want to get the same setup as in CVS,
-> which would be rather sad) is that every developer has at least one
-> repository. Write-access: only one developer.
+On 1/23/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On the third hand, I fully expect git on Windows to be used only by GUI
+> wieners who cannot handle the command line, let alone a pager! ("WTF! How
+> do I go back to that dollar thingie? You know, where I type git-blabla?")
 
-Believe me: I was ready to throw a party when I got to shutdown CVS last week.
-
-Say I have two utterly separate repositories with two integrators. I want to 
-put them on a web server (and so same DAV share). There is little to stop the 
-integrator of one project (by intention or accident) from modifying the other 
-repository. It can be done, but doing it requires one section of the 
-httpd.conf per repository.
-
-Using SSH requires many real user accounts on the system and then if there are 
-more than one integrator, groups to administrate.
-
-> I already hear the complaint: "But you need a central repository!". If you
-> _have_ to have a central repository, designate the integrator's repository
-> central.
-
-Okay, say one regular developer wants share his changes with another 
-developer. He either has to mail patches, create an SSH account, or set up 
-one of git-daemon or WebDAV. And most of those require knowing the 
-workstation name which is inconvienient. I would rather have each user able 
-to push to a branch with their name on it on a central server.
+If I have to use git on Windows (very likely now that this port seems
+to work), I'd much prefer command line interface. cmd.exe may be not
+good enough so I think we should include bash in git-win32 package.
+Many git commands are still bash scripts and new commands are often
+coded as bash scripts. So we need bash in Windows anyway unless
+Windows Git users accept a limited git version. (no-perl git is
+acceptable to me).
 -- 
---Andre Masella (andre at masella.no-ip.org)
+Duy
