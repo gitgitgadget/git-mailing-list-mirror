@@ -1,68 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: MinGW port - initial work uploaded
-Date: Tue, 23 Jan 2007 18:07:50 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701231805100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701192148.20206.johannes.sixt@telecom.at>
- <200701231506.32396.andyparkins@gmail.com>
- <Pine.LNX.4.63.0701231614490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200701231624.41716.andyparkins@gmail.com>
- <Pine.LNX.4.63.0701231732120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0701230852270.32200@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] Allow fetch-pack to decide keeping the fetched pack without exploding
+Date: Tue, 23 Jan 2007 18:22:43 +0100
+Organization: At home
+Message-ID: <ep5g7f$bok$1@sea.gmane.org>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <7v3b6439uh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vzm8ansrt.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701231129501.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0701230809440.32200@woody.linux-foundation.org> <87sle17lnm.fsf@morpheus.local> <Pine.LNX.4.63.0701231738460.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 23 18:08:05 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+X-From: git-owner@vger.kernel.org Tue Jan 23 18:22:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9P7t-0004PA-Dc
-	for gcvg-git@gmane.org; Tue, 23 Jan 2007 18:08:05 +0100
+	id 1H9PLl-0000eK-8V
+	for gcvg-git@gmane.org; Tue, 23 Jan 2007 18:22:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933095AbXAWRIB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 23 Jan 2007 12:08:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933097AbXAWRIB
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 12:08:01 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42693 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933095AbXAWRIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Jan 2007 12:08:00 -0500
-Received: (qmail invoked by alias); 23 Jan 2007 17:07:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp052) with SMTP; 23 Jan 2007 18:07:51 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-To: Linus Torvalds <torvalds@linux-foundation.org>
-In-Reply-To: <Pine.LNX.4.64.0701230852270.32200@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S964999AbXAWRWN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 23 Jan 2007 12:22:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965012AbXAWRWN
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Jan 2007 12:22:13 -0500
+Received: from main.gmane.org ([80.91.229.2]:42056 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965038AbXAWRWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Jan 2007 12:22:12 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1H9PLM-0004Sk-1h
+	for git@vger.kernel.org; Tue, 23 Jan 2007 18:22:00 +0100
+Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 18:22:00 +0100
+Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 18:22:00 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To: git@vger.kernel.org
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37553>
 
-Hi,
+Johannes Schindelin wrote:
 
-On Tue, 23 Jan 2007, Linus Torvalds wrote:
-
-> On Tue, 23 Jan 2007, Johannes Schindelin wrote:
-> > 
-> > Yes. But it _does_ have a dependency on perl and bash. For example, when 
-> > you merge git-merge-one-file is spawned -- a bash script.
+> Seriously again, your comment got me thinking: it could actually make 
+> sense to include the information of code moves and code copies (for easier 
+> review) in the "@@ .. @@" lines (or before them, if git apply does not 
+> choke on inserting garbage lines before them).
 > 
-> That's just disgusting. I thought we fixed it, but apparently we only did 
-> so for git-merge-recursive. Hmm?
-> 
-> All the other uses seem to be just a case of
-> 
-> 	git-merge-index -o git-merge-one-file -a
-> 
-> and wouldn't it be beautiful if the default action for git-merge-index (if 
-> you do _not_ specify a merger program) was to do the simple one-file 
-> three-way merge that we can already do for real merges?
+> But maybe it is not that good after all: if you review code, you should 
+> inspect it (even if it was only moved), since it might have all kinds of 
+> side effects, or you might have missed some other aspect before.
 
-If you think that's a new dream:
-
-http://article.gmane.org/gmane.comp.version-control.git/32046/match=git-merge-one-file
-
-Ciao,
-Dscho
+It would be nice to have extended git header dealing with code copies
+(or stuff it in chunk header or above), because sometimes both sides
+of code movement (removal from one file, adding in next file) can be
+separated by a few pagefulls of chunks.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
