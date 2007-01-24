@@ -1,68 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: MinGW port - initial work uploaded
-Date: Tue, 23 Jan 2007 21:05:04 -0800
-Message-ID: <7vk5zdhv5r.fsf@assigned-by-dhcp.cox.net>
-References: <200701192148.20206.johannes.sixt@telecom.at>
-	<200701231506.32396.andyparkins@gmail.com>
-	<Pine.LNX.4.63.0701231614490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<200701231624.41716.andyparkins@gmail.com>
-	<Pine.LNX.4.63.0701231732120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0701230852270.32200@woody.linux-foundation.org>
-	<Pine.LNX.4.63.0701231805100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vlkjtkxlm.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701240251230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: How to pull only a few files from one branch to another?
+Date: Wed, 24 Jan 2007 00:29:00 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0701240019250.20138@iabervon.org>
+References: <17846.53626.895660.762096@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 24 06:05:21 2007
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Jan 24 06:29:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9aJz-00048T-Mw
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 06:05:20 +0100
+	id 1H9ah1-0005v2-8c
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 06:29:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030199AbXAXFFH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 00:05:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965649AbXAXFFH
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 00:05:07 -0500
-Received: from fed1rmmtao05.cox.net ([68.230.241.34]:55764 "EHLO
-	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965527AbXAXFFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 00:05:05 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao05.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070124050505.KISI15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 24 Jan 2007 00:05:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Et5P1W00B1kojtg0000000; Wed, 24 Jan 2007 00:05:23 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965655AbXAXF3D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 00:29:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965649AbXAXF3D
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 00:29:03 -0500
+Received: from iabervon.org ([66.92.72.58]:4738 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965655AbXAXF3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 00:29:02 -0500
+Received: (qmail 26100 invoked by uid 1000); 24 Jan 2007 00:29:00 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 24 Jan 2007 00:29:00 -0500
+In-Reply-To: <17846.53626.895660.762096@lisa.zopyra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37604>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Tue, 23 Jan 2007, Bill Lear wrote:
 
-> Seriously again, the users of merge-index are
->
-> git-merge, which I do not really understand
->
-> What I am nervous about is git-merge.
+> I have a long-running topic branch.  I have fixed a few nits on
+> the master branch that I would like on the topic branch.  How do I
+> pull in only a few files from the head of the master branch?
 
-I think you are referring to the "carry forward local change"
-logic in 'next'.
+You don't pull in a few files, you apply the changes made in a few 
+commits:
 
-First of all, BAD DSCHO.  You should be looking at 'master', not
-'next' during -rc period ;-).
+  git diff HEX_OF_NIT_FIX^ HEX_OF_NIT_FIX | git apply
 
-Seriously again, the codepath is taken when the merge is a fast
-forward to another commit (iow, our HEAD is an ancestor of the
-other branch, so we will end up updating the branch tip with the
-tip of the other branch).  The use of merge-index there can be
-replaced when we use merge-recursive instead of the 3-way
-"read-tree -m" the same way as how "checkout -m" implements the
-branch switching with local changes.
+If there's other stuff in the nit-fixing commit, shame on you, but you can 
+edit the patch before applying it to remove everything that's not what you 
+want.
+
+(Incidentally, I think "git diff ^ {commit}" should be made to do "git 
+diff {commit}^ {commit}"; i.e., if there is a single other revision 
+provided, interpret a modifier not applied to anything as applying to that 
+revision, in the "what else could that possibly mean?" department.)
+
+	-Daniel
+*This .sig left intentionally blank*
