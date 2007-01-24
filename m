@@ -1,67 +1,67 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: .git/info/refs
-Date: Wed, 24 Jan 2007 08:41:57 -0800
-Message-ID: <45B78C55.2030204@zytor.com>
-References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org> <45B7818F.6020805@zytor.com> <Pine.LNX.4.63.0701241658490.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45B78836.5080508@zytor.com> <Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: MinGW port - initial work uploaded
+Date: Wed, 24 Jan 2007 08:42:29 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701240834190.3606@woody.linux-foundation.org>
+References: <200701192148.20206.johannes.sixt@telecom.at> 
+ <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com> 
+ <Pine.LNX.4.64.0701220823260.32200@woody.linux-foundation.org> 
+ <Pine.LNX.4.63.0701231220470.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <Pine.LNX.4.64.0701230736180.32200@woody.linux-foundation.org>
+ <fcaeb9bf0701232312t5889efa6w58bb3abfa2f53ebd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Jan 24 17:42:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian MICHON <christian.michon@gmail.com>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 24 17:42:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9lCQ-0000nG-WD
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 17:42:15 +0100
+	id 1H9lCz-00012A-85
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 17:42:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752014AbXAXQmI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 11:42:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbXAXQmI
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 11:42:08 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:59836 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752016AbXAXQmG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 11:42:06 -0500
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l0OGfvWX001056
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 24 Jan 2007 08:41:58 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
-In-Reply-To: <Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: ClamAV 0.88.7/2486/Wed Jan 24 06:47:09 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=0.5 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_48_96,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
-X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
+	id S1752006AbXAXQmq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 11:42:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751987AbXAXQmq
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 11:42:46 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:43192 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752006AbXAXQmp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 11:42:45 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0OGgUpa016750
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 24 Jan 2007 08:42:31 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0OGgTCj021354;
+	Wed, 24 Jan 2007 08:42:29 -0800
+In-Reply-To: <fcaeb9bf0701232312t5889efa6w58bb3abfa2f53ebd@mail.gmail.com>
+X-Spam-Status: No, hits=-0.669 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
+X-MIMEDefang-Filter: osdl$Revision: 1.171 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37653>
 
-Johannes Schindelin wrote:
+
+
+On Wed, 24 Jan 2007, Nguyen Thai Ngoc Duy wrote:
 > 
-> Granted, for some things this might work. However, I would not wreak havoc 
-> by changing the format of .git/info/refs, rather put the details you 
-> wanted into .git/info/refs-details.
-> 
+> At least I can say that wine 0.9.27 can run git.exe, git-log.exe,
+> git-diff.exe. I have not tested others yet. git binaries were cross
+> compiled from Linux.
 
-It's not clear to me if it would be wrecking havoc.  After all, if a 
-format can't be expanded *at all*, there is something wrong, and adding 
-things to the end of a line is a common structured way of expansion. 
-Hence the original query
+Ahh, that's perfect. There are even RPM's for mingw around, since that 
+seems to be what some Wine people use for testing.
 
-> However, for other things (like showing a certain number of commits), it 
-> _might_ make sense to cache them (e.g. when literally thousands of people 
-> look at the 100 last commits of linux-2.6.git), but not for others (e.g. 
-> the 100th last to the 200th last commit of git-tools.git).
+And I don't really want to _work_ inside some wine setup anyway, so being 
+able to try to cross-compile from a sane development environment was 
+exactly what I was hoping for.
 
-Any query that's within a repository is fairly easily cachable 
-post-generation.  The front page (and its RSS variant) is a bit of an 
-exception, because it involves all repositories at once.
+No promises, but if I get any free time, I'll look at it a bit. 
 
-Doesn't mean we couldn't do better, but...
-
-	-hpa
+		Linus
