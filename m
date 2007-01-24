@@ -1,77 +1,93 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: GIT+CYGWIN annoying test failure
-Date: Wed, 24 Jan 2007 10:53:15 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701241041190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45B6C1FB.7060005@gmail.com>
+Subject: Re: Deleting remote branches with git-branch and reflog questions
+Date: Wed, 24 Jan 2007 10:58:19 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701241054330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200701231259.27719.andyparkins@gmail.com> <45B6076F.5060503@op5.se>
+ <200701231314.53361.andyparkins@gmail.com> <7v1wllo2p6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0701231649520.3011@xanadu.home> <7vbqkpkxhk.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0701232103290.3011@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, GIT <git@vger.kernel.org>
-To: SungHyun Nam <goweol@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 24 10:53:42 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Jan 24 10:58:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9ep3-0004I1-4h
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 10:53:41 +0100
+	id 1H9etd-0006j9-4c
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 10:58:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750886AbXAXJxT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 04:53:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbXAXJxT
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 04:53:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57360 "HELO mail.gmx.net"
+	id S1750910AbXAXJ6V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 04:58:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750922AbXAXJ6V
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 04:58:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33754 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750905AbXAXJxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 04:53:18 -0500
-Received: (qmail invoked by alias); 24 Jan 2007 09:53:17 -0000
+	id S1750910AbXAXJ6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 04:58:21 -0500
+Received: (qmail invoked by alias); 24 Jan 2007 09:58:19 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp046) with SMTP; 24 Jan 2007 10:53:17 +0100
+  by mail.gmx.net (mp014) with SMTP; 24 Jan 2007 10:58:19 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45B6C1FB.7060005@gmail.com>
+In-Reply-To: <Pine.LNX.4.64.0701232103290.3011@xanadu.home>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37617>
 
 Hi,
 
-On Wed, 24 Jan 2007, SungHyun Nam wrote:
+On Tue, 23 Jan 2007, Nicolas Pitre wrote:
 
-> First of all, this problem always existed to me. I was lazy to report. 
-> Please check the failure logs and my GIT build script below. [...] the 
-> first test failed at 't1000-read-tree-m-3way.sh' always. And in this 
-> case, 2nd test always succeeded.
+> On Tue, 23 Jan 2007, Junio C Hamano wrote:
 > 
-> * FAIL 57: 5 - must match in !O && A && B && A==B case.
->         rm -f .git/index LL &&
->              cp .orig-A/LL LL &&
->              git-update-index --add LL &&
->              echo extra >>LL &&
->              git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
-> 997bbc4a0a51e0574168a4f637739380edebe4d7
-> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
->              check_result
+> > Nicolas Pitre <nico@cam.org> writes:
+> > 
+> > > On Tue, 23 Jan 2007, Junio C Hamano wrote:
+> > >
+> > >> And we might want to allow reflogs on detached HEAD someday,
+> > >> although I personally think it goes against what detached HEAD
+> > >> is -- it is of a very temporary nature.
+> > >
+> > > Didn't we agree already that reflog with detached head was simply 
+> > > insane?
+> > 
+> > Perhaps, perhaps not.
+> > 
+> > 	$ git checkout v2.6.14
+> >         $ git checkout v2.6.15
+> >         $ git checkout v2.6.16
+> > 
+> > Ah, which one did I check-out the last time?
+> > 
+> > 	$ git describe HEAD@{1}
+> 
+> And what does HEAD@{1} means if not detached?
+> 
+> If there is a reflog for HEAD independently of what branch HEAD is 
+> attached to then it could make sense.  Meaning that if you're on branch 
+> "master" and perform a commit, then both reflogs for "master" and "HEAD" 
+> are updated at the same time.  If you then checkout branch "next" then 
+> only the "HEAD" reflog is updated since no changes to any branch did 
+> occur but just HEAD changed.
+> 
+> Then moving around and/or committing with a detached head would just 
+> update the "HEAD reflog.
 
-It is not directly apparent what is causing this error. Could you please 
-change your script to use "-i -v" on the tests? I.e. instead of:
-	
-> 	    if ! make test
+This would also be my idea. I agree with you that mixing approaches like 
+Jakub proposed is insane.
 
-this:
+But given the idea of reflogs ("Where was this yesterday"), I think it 
+would make sense to reflog HEAD -- independent on which branch it happens 
+to refer to.
 
-	    if ! (cd t; GIT_TEST_OPTS="-i -v" make)
-
-It should give us a better idea what happened, since we also see the 
-error messages of the git commands.
-
-If it is still not apparent what went wrong, there is unfortunately no way 
-around doing that particular test case manually, as to find out what went 
-wrong. Since you seem to be the only one who can reproduce this bug, it 
-boils down to you having to do the leg work.
-
-Please keep us posted!
+Warning! It _changes_ the behaviour. As of now, "git log --walk-reflogs 
+HEAD" shows the local view of the _branch_ that HEAD points to 
+_currently_. But I think that the current is difficult to explain to new 
+users, whereas the "jumping HEAD" is not.
 
 Ciao,
 Dscho
