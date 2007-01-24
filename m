@@ -1,94 +1,83 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: How to pull only a few files from one branch to another?
-Date: Wed, 24 Jan 2007 21:39:13 +0100
-Message-ID: <20070124203913.GD4083@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <17846.53626.895660.762096@lisa.zopyra.com> <Pine.LNX.4.64.0701231937310.3606@woody.linux-foundation.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Problem with git push over <hostname>:/path protocol (ssh)
+Date: Wed, 24 Jan 2007 14:40:24 -0600
+Message-ID: <17847.50232.211128.994275@lisa.zopyra.com>
+References: <17847.47131.694158.247941@lisa.zopyra.com>
+	<Pine.LNX.4.64.0701241453410.20138@iabervon.org>
+	<ep8fss$dlf$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bill Lear <rael@zopyra.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jan 24 21:40:15 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 24 21:40:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9oui-0005ZE-Tj
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 21:40:13 +0100
+	id 1H9ovS-0005th-V3
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 21:40:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932549AbXAXUkG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 15:40:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbXAXUkF
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 15:40:05 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:60637 "EHLO smtp5-g19.free.fr"
+	id S932600AbXAXUke convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 24 Jan 2007 15:40:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932617AbXAXUke
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 15:40:34 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61499 "EHLO zopyra.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932549AbXAXUkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 15:40:04 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id E30CF27F48;
-	Wed, 24 Jan 2007 21:40:00 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id EFB921F07B; Wed, 24 Jan 2007 21:39:13 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701231937310.3606@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932600AbXAXUkd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Jan 2007 15:40:33 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0OKeTl23984;
+	Wed, 24 Jan 2007 14:40:29 -0600
+In-Reply-To: <ep8fss$dlf$1@sea.gmane.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37676>
 
-On Tue, Jan 23, 2007 at 08:11:38PM -0800, Linus Torvalds wrote:
-> Git *very* fundamentally tracks project state, not file state. Which means 
-> that you very much can NOT try to "merge a file". It is a senseless 
-> operation in git, and in fact, any SCM that allows it pretty much is 
-> doomed to be a total piece of sh*t (*).
+On Wednesday, January 24, 2007 at 21:35:36 (+0100) Jakub Narebski write=
+s:
+>Daniel Barkalow wrote:
+>
+>>> So, if the developer then commits on his branch on machine 1, all h=
+is
+>>> changes get undone. =A0This has happened to him consistently --- he=
+ is
+>>> running git 1.4.4.1 throughout. =A0I just reproduced it using the a=
+bove,
+>>> and I am using 1.5.0-rc2 on machine 2, and 1.4.4.1 on machine 1.
+>>=20
+>> Git gets unhappy if you push into a branch that's checked out. It do=
+esn't=20
+>> update the index or working directory, so the state after the push l=
+ooks=20
+>> like the user reverted the patch in the working directory and update=
+d the=20
+>> index.
+>
+>So you usually push into _bare_ repository, or use fetch / pull instea=
+d.
 
-> (*) And I'm not saying that just because git doesn't do it. It's much 
-> more fundamental than that. Once you start doing per-file branching and 
-> merging, you've basically screwed yourself, and you'll never be able to 
-> work on the project as a "whole project" any more - you no longer have a 
-> well-defined history that actually is the history of the whole project.
+Well, what we want to do is have a public repo as a collaborative hub.
+We would prefer this be bare.  However, there are problems with that,
+at least with how we are doing things.
 
-In fact, I came some time ago on a workflow which could be seen as
-quite similar to this issue.
+=46or example, if I collaborate with a peer and make a few changes,
+I want to push my changes to my public repo and have an email sent
+to him, and any other interested persons, when the update hook runs.
 
-The problem was about merging a new upstream release in a local
-branch, when both branches had heavy changes.  Indeed this tree was
-not using GIT but CVS, with upstream tarballs imported on a branch - I
-just asked myself how it could be best handled with GIT, and could
-only come to the conclusion that something in GIT was still missing.
+However, if I keep my private repo up-to-date with our company repo by
+doing periodic pulls into it, and then push into my public repo, ALL
+of the changes get noticed on the public repo side, and he gets a
+flood of mail.  This also happens if I pull from my peer's repo into
+my private repo, make changes, and then push to my public repo --- all
+of his changes then get sent out to him again, and mine get mixed in
+with his.
 
-What was particular about this tree, is that we are several people
-working on it, namely developpers taking care of the app, and me as
-build manager taking care of the build mechanics as well as kernel+OS.
-So the task was logically divided: one dev would merge the app, and I
-would merge everything else.  As you see, it's far from one-file
-merges, but the problem is quite similar.
+So, we resorted to using a non-bare public repo into which we could
+pull, to avoid this mess, and it appears, actually, that we have
+created a worse one.
 
 
-The idea which I came up with was inspired by the "partial merge"
-feature in PRCS, which I had never used or even understood the purpose
-before that date.
-
-Basically, it was that if some set of files could be merged somewhat
-independently from the rest, and we don't want to get GIT attempt to
-merge them again when finally merging the whole, a commit of a partial
-merge would somehow record that some files had already been merged.
-And I happenned to think that it could be sufficient to create a
-commit that would not be a merge commit itself (since it is not a
-full-project merge), but which would instead reference "subcommits"
-for the relevant parts of the tree that were merged during that
-iteration.
-
-I realize that solution would not really be perfect, as there is
-always some coupling between the code and build stuff in a project.
-And sometimes we could want to get finer granularity than the file
-level.  But that's so far my best guess at finding a solution.
-
-How would you handle such a situation ?
-
-Best regards,
--- 
-Yann.
+Bill
