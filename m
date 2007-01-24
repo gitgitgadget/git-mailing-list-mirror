@@ -1,93 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Deleting remote branches with git-branch and reflog questions
-Date: Wed, 24 Jan 2007 10:58:19 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701241054330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200701231259.27719.andyparkins@gmail.com> <45B6076F.5060503@op5.se>
- <200701231314.53361.andyparkins@gmail.com> <7v1wllo2p6.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0701231649520.3011@xanadu.home> <7vbqkpkxhk.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0701232103290.3011@xanadu.home>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [Announce] GIT v1.5.0-rc2
+Date: Wed, 24 Jan 2007 11:06:28 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070124100628.GA7872@informatik.uni-freiburg.de>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <eovccc$usc$1@sea.gmane.org> <Pine.LNX.4.63.0701211207500.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17846.20498.635623.173653@lisa.zopyra.com> <Pine.LNX.4.63.0701232012120.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17846.27694.845530.663964@lisa.zopyra.com> <20070123202231.GA2765@cepheus> <17846.28847.436225.732284@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Jan 24 10:58:27 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Jan 24 11:06:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9etd-0006j9-4c
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 10:58:25 +0100
+	id 1H9f1Y-0002B7-Jk
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 11:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750910AbXAXJ6V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 04:58:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750922AbXAXJ6V
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 04:58:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33754 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750910AbXAXJ6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 04:58:21 -0500
-Received: (qmail invoked by alias); 24 Jan 2007 09:58:19 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp014) with SMTP; 24 Jan 2007 10:58:19 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0701232103290.3011@xanadu.home>
-X-Y-GMX-Trusted: 0
+	id S1750942AbXAXKGd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 24 Jan 2007 05:06:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750949AbXAXKGd
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 05:06:33 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:36187 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750942AbXAXKGc (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Jan 2007 05:06:32 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.60)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1H9f1T-0002yE-A6; Wed, 24 Jan 2007 11:06:31 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l0OA6SuO007988;
+	Wed, 24 Jan 2007 11:06:29 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l0OA6Si9007987;
+	Wed, 24 Jan 2007 11:06:28 +0100 (MET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Bill Lear <rael@zopyra.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <17846.28847.436225.732284@lisa.zopyra.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37618>
 
-Hi,
+Bill Lear wrote:
+> On Tuesday, January 23, 2007 at 21:22:32 (+0100) Uwe Kleine-K=F6nig w=
+rites:
+> >> % export PAGER=3Dless
+> >> % unset LESS
+> >> % git diff
+> >>=20
+> >> I get 30 lines of output in my current repository, as I should.
+> >>=20
+> >> If I then do this:
+> >>=20
+> >> % LESS=3D-FRS git diff
+> >What about:
+> >
+> >	LESS=3D-FRSX git diff
+>=20
+> Well, I see output when there is output to show, yes, but it still
+> blanks the screen --- or, I should say, scrolls all the way to the
+> bottom --- when there is no difference to show.
+Ah, OK, now I got it.  Sorry, I understood you wrong.  Seems like
+something that needs fixing in less.  At least I cannot find an option
+for that.  But I'm not sure that all people would consider that being a
+bug.
 
-On Tue, 23 Jan 2007, Nicolas Pitre wrote:
+Best regards
+Uwe
 
-> On Tue, 23 Jan 2007, Junio C Hamano wrote:
-> 
-> > Nicolas Pitre <nico@cam.org> writes:
-> > 
-> > > On Tue, 23 Jan 2007, Junio C Hamano wrote:
-> > >
-> > >> And we might want to allow reflogs on detached HEAD someday,
-> > >> although I personally think it goes against what detached HEAD
-> > >> is -- it is of a very temporary nature.
-> > >
-> > > Didn't we agree already that reflog with detached head was simply 
-> > > insane?
-> > 
-> > Perhaps, perhaps not.
-> > 
-> > 	$ git checkout v2.6.14
-> >         $ git checkout v2.6.15
-> >         $ git checkout v2.6.16
-> > 
-> > Ah, which one did I check-out the last time?
-> > 
-> > 	$ git describe HEAD@{1}
-> 
-> And what does HEAD@{1} means if not detached?
-> 
-> If there is a reflog for HEAD independently of what branch HEAD is 
-> attached to then it could make sense.  Meaning that if you're on branch 
-> "master" and perform a commit, then both reflogs for "master" and "HEAD" 
-> are updated at the same time.  If you then checkout branch "next" then 
-> only the "HEAD" reflog is updated since no changes to any branch did 
-> occur but just HEAD changed.
-> 
-> Then moving around and/or committing with a detached head would just 
-> update the "HEAD reflog.
+--=20
+Uwe Kleine-K=F6nig
 
-This would also be my idea. I agree with you that mixing approaches like 
-Jakub proposed is insane.
-
-But given the idea of reflogs ("Where was this yesterday"), I think it 
-would make sense to reflog HEAD -- independent on which branch it happens 
-to refer to.
-
-Warning! It _changes_ the behaviour. As of now, "git log --walk-reflogs 
-HEAD" shows the local view of the _branch_ that HEAD points to 
-_currently_. But I think that the current is difficult to explain to new 
-users, whereas the "jumping HEAD" is not.
-
-Ciao,
-Dscho
+http://www.google.com/search?q=3D72+PS+point+in+inch
