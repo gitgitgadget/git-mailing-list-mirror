@@ -1,58 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How to pull only a few files from one branch to another?
-Date: Wed, 24 Jan 2007 10:32:33 +0100
-Organization: At home
-Message-ID: <ep791o$h2u$2@sea.gmane.org>
-References: <17846.53626.895660.762096@lisa.zopyra.com> <Pine.LNX.4.64.0701240019250.20138@iabervon.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GIT+CYGWIN annoying test failure
+Date: Wed, 24 Jan 2007 10:53:15 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701241041190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45B6C1FB.7060005@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 24 10:35:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, GIT <git@vger.kernel.org>
+To: SungHyun Nam <goweol@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 24 10:53:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9eXA-0003yy-FD
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 10:35:12 +0100
+	id 1H9ep3-0004I1-4h
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 10:53:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750783AbXAXJfI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 04:35:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbXAXJfI
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 04:35:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:45228 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750783AbXAXJfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 04:35:06 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1H9eX0-0003kj-A3
-	for git@vger.kernel.org; Wed, 24 Jan 2007 10:35:02 +0100
-Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Jan 2007 10:35:02 +0100
-Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Jan 2007 10:35:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1750886AbXAXJxT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 04:53:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750896AbXAXJxT
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 04:53:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57360 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750905AbXAXJxS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 04:53:18 -0500
+Received: (qmail invoked by alias); 24 Jan 2007 09:53:17 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp046) with SMTP; 24 Jan 2007 10:53:17 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45B6C1FB.7060005@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37616>
 
-Daniel Barkalow wrote:
+Hi,
 
-> (Incidentally, I think "git diff ^ {commit}" should be made to do "git 
-> diff {commit}^ {commit}"; i.e., if there is a single other revision 
-> provided, interpret a modifier not applied to anything as applying to that 
-> revision, in the "what else could that possibly mean?" department.)
+On Wed, 24 Jan 2007, SungHyun Nam wrote:
 
-"git diff <commit>^!" doesn't work?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> First of all, this problem always existed to me. I was lazy to report. 
+> Please check the failure logs and my GIT build script below. [...] the 
+> first test failed at 't1000-read-tree-m-3way.sh' always. And in this 
+> case, 2nd test always succeeded.
+> 
+> * FAIL 57: 5 - must match in !O && A && B && A==B case.
+>         rm -f .git/index LL &&
+>              cp .orig-A/LL LL &&
+>              git-update-index --add LL &&
+>              echo extra >>LL &&
+>              git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
+> 997bbc4a0a51e0574168a4f637739380edebe4d7
+> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
+>              check_result
+
+It is not directly apparent what is causing this error. Could you please 
+change your script to use "-i -v" on the tests? I.e. instead of:
+	
+> 	    if ! make test
+
+this:
+
+	    if ! (cd t; GIT_TEST_OPTS="-i -v" make)
+
+It should give us a better idea what happened, since we also see the 
+error messages of the git commands.
+
+If it is still not apparent what went wrong, there is unfortunately no way 
+around doing that particular test case manually, as to find out what went 
+wrong. Since you seem to be the only one who can reproduce this bug, it 
+boils down to you having to do the leg work.
+
+Please keep us posted!
+
+Ciao,
+Dscho
