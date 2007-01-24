@@ -1,67 +1,62 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: MinGW port - initial work uploaded
-Date: Wed, 24 Jan 2007 08:42:29 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701240834190.3606@woody.linux-foundation.org>
-References: <200701192148.20206.johannes.sixt@telecom.at> 
- <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com> 
- <Pine.LNX.4.64.0701220823260.32200@woody.linux-foundation.org> 
- <Pine.LNX.4.63.0701231220470.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
- <Pine.LNX.4.64.0701230736180.32200@woody.linux-foundation.org>
- <fcaeb9bf0701232312t5889efa6w58bb3abfa2f53ebd@mail.gmail.com>
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: git-rm'ing all dead files
+Date: Wed, 24 Jan 2007 14:51:24 -0200
+Message-ID: <9e7ab7380701240851u1249b46ch36450fcf91bf7986@mail.gmail.com>
+References: <loom.20070124T171435-429@post.gmane.org>
+	 <Pine.LNX.4.63.0701241723560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian MICHON <christian.michon@gmail.com>,
-	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 24 17:42:50 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 24 17:51:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9lCz-00012A-85
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 17:42:49 +0100
+	id 1H9lLP-0004cN-Kv
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 17:51:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752006AbXAXQmq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 11:42:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751987AbXAXQmq
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 11:42:46 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:43192 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752006AbXAXQmp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 11:42:45 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0OGgUpa016750
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 24 Jan 2007 08:42:31 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0OGgTCj021354;
-	Wed, 24 Jan 2007 08:42:29 -0800
-In-Reply-To: <fcaeb9bf0701232312t5889efa6w58bb3abfa2f53ebd@mail.gmail.com>
-X-Spam-Status: No, hits=-0.669 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.108__
-X-MIMEDefang-Filter: osdl$Revision: 1.171 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751987AbXAXQv1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 11:51:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752002AbXAXQv1
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 11:51:27 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:3332 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751987AbXAXQv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 11:51:26 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so625648nfa
+        for <git@vger.kernel.org>; Wed, 24 Jan 2007 08:51:25 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=qnNIQ2XkFGhrQydp5o69jch8U1/ktjLddqJ2cF9xdG0a93nngLQjaPF7T10l3/Y4O1gddylla68+V7ojnTxJ4iNVII76DbUA+GmpOCHCY96zBfF7aRv+ogcASOeF6f/T/gdad97jxvkvJdxKCDEM4GWkaSZeWR54As8TT4A1meA=
+Received: by 10.49.28.3 with SMTP id f3mr3041824nfj.1169657484922;
+        Wed, 24 Jan 2007 08:51:24 -0800 (PST)
+Received: by 10.48.216.13 with HTTP; Wed, 24 Jan 2007 08:51:24 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.63.0701241723560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
+X-Google-Sender-Auth: 2b5363456eeade36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37654>
 
+2007/1/24, Johannes Schindelin <Johannes.Schindelin@gmx.de>:
 
+> How about
+>
+>         git ls-files -z --deleted | git update-index -z --remove --stdin
 
-On Wed, 24 Jan 2007, Nguyen Thai Ngoc Duy wrote:
-> 
-> At least I can say that wine 0.9.27 can run git.exe, git-log.exe,
-> git-diff.exe. I have not tested others yet. git binaries were cross
-> compiled from Linux.
+Aha. I was trying
 
-Ahh, that's perfect. There are even RPM's for mingw around, since that 
-seems to be what some Wine people use for testing.
+    git-ls-files -d | xargs git rm --cached
 
-And I don't really want to _work_ inside some wine setup anyway, so being 
-able to try to cross-compile from a sane development environment was 
-exactly what I was hoping for.
+but most removed files contains spaces in their names, and that
+screwed git-rm up. I've even noticed the -z option on git-ls-files,
+but couldn't find one on git-rm, and I completely forgot about
+git-update-index.
 
-No promises, but if I get any free time, I'll look at it a bit. 
+Thanks, Johannes. This should do the trick.
 
-		Linus
+-- Pazu
