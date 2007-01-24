@@ -1,176 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] diff --check: use colour
-Date: Wed, 24 Jan 2007 15:05:48 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701241505260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Jan 24 15:05:55 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 2/1] Documentation/config.txt: Correct info about subsection name
+Date: Wed, 24 Jan 2007 15:14:33 +0100
+Message-ID: <11696480732656-git-send-email-jnareb@gmail.com>
+References: <11694795473648-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 24 15:14:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9il8-000201-Vd
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 15:05:55 +0100
+	id 1H9isy-0005bT-01
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 15:14:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751482AbXAXOFv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 09:05:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbXAXOFv
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 09:05:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57226 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751482AbXAXOFu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 09:05:50 -0500
-Received: (qmail invoked by alias); 24 Jan 2007 14:05:49 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp033) with SMTP; 24 Jan 2007 15:05:49 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+	id S1751546AbXAXON5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 09:13:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751551AbXAXON5
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 09:13:57 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:62659 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751546AbXAXON4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 09:13:56 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so173908uga
+        for <git@vger.kernel.org>; Wed, 24 Jan 2007 06:13:55 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=s6PRDzJdr/9i/R4YVfdmxrPaXsZiFsmdddDE/npcSulwMu+RZcPo60z+KGvF+Dd+lgzeKm6yIj6JaXv8eYfXFLA8PEFYXBscgBp5+Q5cUBqlxqMBO61kG3DV3Knt8nTN6if8YFkUmUGrDr2gE4hDPMiUkSzYV5SeyqTrox/GSys=
+Received: by 10.67.119.9 with SMTP id w9mr1116179ugm.1169648034765;
+        Wed, 24 Jan 2007 06:13:54 -0800 (PST)
+Received: from roke.D-201 ( [81.190.20.200])
+        by mx.google.com with ESMTP id x33sm909600ugc.2007.01.24.06.13.53;
+        Wed, 24 Jan 2007 06:13:54 -0800 (PST)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l0OEEjbY012370;
+	Wed, 24 Jan 2007 15:14:46 +0100
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id l0OEEYDs012368;
+	Wed, 24 Jan 2007 15:14:34 +0100
+X-Mailer: git-send-email 1.4.4.4
+In-Reply-To: <11694795473648-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37641>
 
+Contrary to variable values, in subsection names parsing character
+escape codes (besides literal escaping of " as \", and \ as \\)
+is not performed; subsection name cannot contain newlines.
 
-Reuse the colour handling of the regular diff.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
+ Documentation/config.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-	Is it possible that diff_get_color() _never_ returns NULL?
-	Then diff.c can be further cleaned up...
-
- diff.c |   58 ++++++++++++++++++++++++++++++++++++++++------------------
- 1 files changed, 40 insertions(+), 18 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index f11a633..1b31c4f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -405,22 +405,16 @@ static void emit_line(const char *set, const char *reset, const char *line, int
- 	puts(reset);
- }
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 77a2b16..d8244b1 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -37,8 +37,8 @@ in the section header, like in example below:
  
--static void emit_add_line(const char *reset, struct emit_callback *ecbdata, const char *line, int len)
-+static void emit_line_with_ws(int nparents,
-+		const char *set, const char *reset, const char *ws,
-+		const char *line, int len)
- {
--	int col0 = ecbdata->nparents;
-+	int col0 = nparents;
- 	int last_tab_in_indent = -1;
- 	int last_space_in_indent = -1;
- 	int i;
- 	int tail = len;
- 	int need_highlight_leading_space = 0;
--	const char *ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
--	const char *set = diff_get_color(ecbdata->color_diff, DIFF_FILE_NEW);
--
--	if (!*ws) {
--		emit_line(set, reset, line, len);
--		return;
--	}
--
- 	/* The line is a newly added line.  Does it have funny leading
- 	 * whitespaces?  In indent, SP should never precede a TAB.
- 	 */
-@@ -475,6 +469,18 @@ static void emit_add_line(const char *reset, struct emit_callback *ecbdata, cons
- 		emit_line(set, reset, line + i, len - i);
- }
+ --------
  
-+static void emit_add_line(const char *reset, struct emit_callback *ecbdata, const char *line, int len)
-+{
-+	const char *ws = diff_get_color(ecbdata->color_diff, DIFF_WHITESPACE);
-+	const char *set = diff_get_color(ecbdata->color_diff, DIFF_FILE_NEW);
-+
-+	if (!*ws)
-+		emit_line(set, reset, line, len);
-+	else
-+		emit_line_with_ws(ecbdata->nparents, set, reset, reset,
-+				line, len);
-+}
-+
- static void fn_out_consume(void *priv, char *line, unsigned long len)
- {
- 	int i;
-@@ -864,30 +870,45 @@ static void show_numstat(struct diffstat_t* data, struct diff_options *options)
- struct checkdiff_t {
- 	struct xdiff_emit_state xm;
- 	const char *filename;
--	int lineno;
-+	int lineno, color_diff;
- };
- 
- static void checkdiff_consume(void *priv, char *line, unsigned long len)
- {
- 	struct checkdiff_t *data = priv;
-+	const char *ws = diff_get_color(data->color_diff, DIFF_WHITESPACE);
-+	const char *reset = diff_get_color(data->color_diff, DIFF_RESET);
-+	const char *set = diff_get_color(data->color_diff, DIFF_FILE_NEW);
- 
- 	if (line[0] == '+') {
--		int i, spaces = 0;
-+		int i, spaces = 0, space_before_tab = 0, white_space_at_end = 0;
-+		const char *message = NULL;
- 
- 		/* check space before tab */
- 		for (i = 1; i < len && (line[i] == ' ' || line[i] == '\t'); i++)
- 			if (line[i] == ' ')
- 				spaces++;
- 		if (line[i - 1] == '\t' && spaces)
--			printf("%s:%d: space before tab:%.*s\n",
--				data->filename, data->lineno, (int)len, line);
-+			space_before_tab = 1;
- 
- 		/* check white space at line end */
- 		if (line[len - 1] == '\n')
- 			len--;
- 		if (isspace(line[len - 1]))
--			printf("%s:%d: white space at end: %.*s\n",
--				data->filename, data->lineno, (int)len, line);
-+			white_space_at_end = 1;
-+
-+		if (space_before_tab || white_space_at_end) {
-+			printf("%s:%d: %s", data->filename, data->lineno, ws);
-+			if (space_before_tab) {
-+				printf("space before tab");
-+				if (white_space_at_end)
-+					putchar(',');
-+			}
-+			if (white_space_at_end)
-+				printf("white space at end");
-+			printf(":%s ", reset);
-+			emit_line_with_ws(2, set, reset, ws, line, len);
-+		}
- 
- 		data->lineno++;
- 	} else if (line[0] == ' ')
-@@ -1145,7 +1166,7 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
- 
- static void builtin_checkdiff(const char *name_a, const char *name_b,
- 			     struct diff_filespec *one,
--			     struct diff_filespec *two)
-+			     struct diff_filespec *two, struct diff_options *o)
- {
- 	mmfile_t mf1, mf2;
- 	struct checkdiff_t data;
-@@ -1157,6 +1178,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 	data.xm.consume = checkdiff_consume;
- 	data.filename = name_b ? name_b : name_a;
- 	data.lineno = 0;
-+	data.color_diff = o->color_diff;
- 
- 	if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
- 		die("unable to read files to diff");
-@@ -1766,7 +1788,7 @@ static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
- 	diff_fill_sha1_info(p->one);
- 	diff_fill_sha1_info(p->two);
- 
--	builtin_checkdiff(name, other, p->one, p->two);
-+	builtin_checkdiff(name, other, p->one, p->two, o);
- }
- 
- void diff_setup(struct diff_options *options)
+-Subsection names can contain any characters (doublequote '`"`', backslash
+-'`\`' and newline have to be entered escaped as '`\"`', '`\\`' and '`\n`',
++Subsection names can contain any characters except newline (doublequote
++'`"`' and backslash have to be escaped as '`\"`' and '`\\`',
+ respecitvely) and are case sensitive.  Section header cannot span multiple
+ lines.  Variables may belong directly to a section or to a given subsection.
+ You can have `[section]` if you have `[section "subsection"]`, but you
 -- 
-1.5.0.rc2.g8b13f-dirty
+1.4.4.4
