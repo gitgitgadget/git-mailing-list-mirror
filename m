@@ -1,57 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: A Professional GUI
-Date: Wed, 24 Jan 2007 02:01:24 -0500
-Message-ID: <20070124070124.GB25759@spearce.org>
-References: <8592017.1169617273265.JavaMail.Administrator@2fd9f289359f4a2> <7v64awj4f3.fsf@assigned-by-dhcp.cox.net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: MinGW port - initial work uploaded
+Date: Wed, 24 Jan 2007 14:12:28 +0700
+Message-ID: <fcaeb9bf0701232312t5889efa6w58bb3abfa2f53ebd@mail.gmail.com>
+References: <200701192148.20206.johannes.sixt@telecom.at>
+	 <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com>
+	 <Pine.LNX.4.64.0701220823260.32200@woody.linux-foundation.org>
+	 <Pine.LNX.4.63.0701231220470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.64.0701230736180.32200@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Jan 24 08:01:33 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Christian MICHON" <christian.michon@gmail.com>,
+	"Johannes Sixt" <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 24 08:12:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9c8R-0001cb-4q
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 08:01:31 +0100
+	id 1H9cJ7-00064S-WC
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 08:12:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965140AbXAXHB2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 02:01:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933179AbXAXHB2
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 02:01:28 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39406 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933177AbXAXHB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 02:01:27 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1H9c8L-0003v2-Pm; Wed, 24 Jan 2007 02:01:25 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6E5E920FBAE; Wed, 24 Jan 2007 02:01:24 -0500 (EST)
+	id S965461AbXAXHMb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 02:12:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965480AbXAXHMb
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 02:12:31 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:32164 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965461AbXAXHMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 02:12:30 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so89316uga
+        for <git@vger.kernel.org>; Tue, 23 Jan 2007 23:12:29 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=r+jC4PG+VYSRLBRO+vh4Da//AsMCm/w6w9qbO6lzVHmj42Qhqgl7qbYipWrHPRZOVPKNsYGyJK6NyMnKPXfOEk/wIr7RweeKsQNNw21G+JV40jDnrWVKGVX09bBqKNJBd51JivkyGfHy6eb3CRiwy+y5wRZ2MP7qDMJ8zjP0rY4=
+Received: by 10.78.200.3 with SMTP id x3mr303185huf.1169622748838;
+        Tue, 23 Jan 2007 23:12:28 -0800 (PST)
+Received: by 10.78.100.8 with HTTP; Tue, 23 Jan 2007 23:12:28 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0701230736180.32200@woody.linux-foundation.org>
 Content-Disposition: inline
-In-Reply-To: <7v64awj4f3.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37611>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Heh, professional GUI, just what we need ;-).
+On 1/23/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> Actually, I have been seriously wondering if there is some setup under
+> Wine that I could run, just so that I'd see the Windows development
+> environment for git.
+>
+> Has anybody tried anything like that?
 
-git-gui's close.  ;-)
-
-Its just as stable as any other professional gui.  It comes with
-easter eggs too!
-
+At least I can say that wine 0.9.27 can run git.exe, git-log.exe,
+git-diff.exe. I have not tested others yet. git binaries were cross
+compiled from Linux.
 -- 
-Shawn.
+Duy
