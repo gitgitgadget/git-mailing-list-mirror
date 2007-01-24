@@ -1,83 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: .git/info/refs
-Date: Wed, 24 Jan 2007 17:38:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org>
- <45B7818F.6020805@zytor.com> <Pine.LNX.4.63.0701241658490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45B78836.5080508@zytor.com>
+Date: Wed, 24 Jan 2007 08:41:57 -0800
+Message-ID: <45B78C55.2030204@zytor.com>
+References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org> <45B7818F.6020805@zytor.com> <Pine.LNX.4.63.0701241658490.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45B78836.5080508@zytor.com> <Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Wed Jan 24 17:38:23 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jan 24 17:42:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9l8Y-0007Oq-Pb
-	for gcvg-git@gmane.org; Wed, 24 Jan 2007 17:38:15 +0100
+	id 1H9lCQ-0000nG-WD
+	for gcvg-git@gmane.org; Wed, 24 Jan 2007 17:42:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008AbXAXQiH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 11:38:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbXAXQiG
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 11:38:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57655 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752009AbXAXQiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 11:38:05 -0500
-Received: (qmail invoked by alias); 24 Jan 2007 16:38:02 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp040) with SMTP; 24 Jan 2007 17:38:02 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45B78836.5080508@zytor.com>
-X-Y-GMX-Trusted: 0
+	id S1752014AbXAXQmI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 11:42:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbXAXQmI
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 11:42:08 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:59836 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752016AbXAXQmG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 11:42:06 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l0OGfvWX001056
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 24 Jan 2007 08:41:58 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+In-Reply-To: <Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: ClamAV 0.88.7/2486/Wed Jan 24 06:47:09 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.5 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_48_96,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37652>
 
-Hi,
-
-On Wed, 24 Jan 2007, H. Peter Anvin wrote:
-
-> Johannes Schindelin wrote:
-> > 
-> > To me, it seems like all boils down to caching parsed data structures. I.e.
-> > parse the config, then serialize the parsed data to a file. Don't reparse
-> > the config unless it is 1 hour older than the config.
-> > 
-> > Likewise, run for-each-ref, and serialize the parsed data into a file. Don't
-> > rerun for-each-ref if that file is younger than 15 minutes.
-> > 
-> > Maybe the same for the first 200 commits of each branch.
-> > 
-> > (I made those times up, but you get the idea.)
-> > 
+Johannes Schindelin wrote:
 > 
-> A much better idea is to have that data structure updated on repository 
-> updates, which is the whole point behind .git/info/refs.  On kernel.org, 
-> at least, if you don't keep .git/info/refs up to date you need to get 
-> your fingers whacked anyway, since it damages usability for one 
-> particular class of users.
+> Granted, for some things this might work. However, I would not wreak havoc 
+> by changing the format of .git/info/refs, rather put the details you 
+> wanted into .git/info/refs-details.
+> 
 
-Granted, for some things this might work. However, I would not wreak havoc 
-by changing the format of .git/info/refs, rather put the details you 
-wanted into .git/info/refs-details.
+It's not clear to me if it would be wrecking havoc.  After all, if a 
+format can't be expanded *at all*, there is something wrong, and adding 
+things to the end of a line is a common structured way of expansion. 
+Hence the original query
 
-However, for other things (like showing a certain number of commits), it 
-_might_ make sense to cache them (e.g. when literally thousands of people 
-look at the 100 last commits of linux-2.6.git), but not for others (e.g. 
-the 100th last to the 200th last commit of git-tools.git).
+> However, for other things (like showing a certain number of commits), it 
+> _might_ make sense to cache them (e.g. when literally thousands of people 
+> look at the 100 last commits of linux-2.6.git), but not for others (e.g. 
+> the 100th last to the 200th last commit of git-tools.git).
 
-Having said that, it should be relatively easy to store the (parsed, or at 
-least easily parseable) 500 last commits of a branch into 
-.git/info/commits-<branch>.
+Any query that's within a repository is fairly easily cachable 
+post-generation.  The front page (and its RSS variant) is a bit of an 
+exception, because it involves all repositories at once.
 
-This would put the burden of publishing a branch higher, easening the 
-overall load on the server.
+Doesn't mean we couldn't do better, but...
 
-Jakub?
-
-Ciao,
-Dscho
+	-hpa
