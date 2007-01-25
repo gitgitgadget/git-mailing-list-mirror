@@ -1,7 +1,7 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] fetch-pack: remove --keep-auto and make it the default.
-Date: Wed, 24 Jan 2007 17:14:00 -0800
-Message-ID: <7v7ivbc3hj.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Consolidate {receive,fetch}.unpackLimit
+Date: Wed, 24 Jan 2007 17:14:08 -0800
+Message-ID: <7v1wljc3hb.fsf@assigned-by-dhcp.cox.net>
 References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
 	<7v3b6439uh.fsf@assigned-by-dhcp.cox.net>
 	<Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
@@ -13,186 +13,170 @@ Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Jan 25 02:14:07 2007
+X-From: git-owner@vger.kernel.org Thu Jan 25 02:14:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1H9tBn-0001YA-32
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 02:14:07 +0100
+	id 1H9tBv-0001ak-PA
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 02:14:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751034AbXAYBOE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 24 Jan 2007 20:14:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbXAYBOE
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 20:14:04 -0500
-Received: from fed1rmmtao04.cox.net ([68.230.241.35]:60023 "EHLO
-	fed1rmmtao04.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751034AbXAYBOD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Jan 2007 20:14:03 -0500
+	id S1751402AbXAYBOL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 24 Jan 2007 20:14:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751825AbXAYBOL
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Jan 2007 20:14:11 -0500
+Received: from fed1rmmtao09.cox.net ([68.230.241.30]:38669 "EHLO
+	fed1rmmtao09.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751402AbXAYBOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Jan 2007 20:14:09 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao04.cox.net
+          by fed1rmmtao09.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070125011401.DBCD7494.fed1rmmtao04.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 24 Jan 2007 20:14:01 -0500
+          id <20070125011409.YCUH18767.fed1rmmtao09.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 24 Jan 2007 20:14:09 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id FDEK1W00A1kojtg0000000; Wed, 24 Jan 2007 20:14:19 -0500
+	id FDET1W00W1kojtg0000000; Wed, 24 Jan 2007 20:14:27 -0500
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37700>
 
-This makes git-fetch over git native protocol to automatically
-decide to keep the downloaded pack if the fetch results in more
-than 100 objects, just like receive-pack invoked by git-push
-does.  This logic is disabled when --keep is explicitly given
-from the command line, so that a very small clone still keeps
-the downloaded pack as before.
+This allows transfer.unpackLimit to specify what these two
+configuration variables want to set.
 
-The 100 threshold can be adjusted with fetch.unpacklimit
-configuration.  We might want to introduce transfer.unpacklimit
-to consolidate the two unpacklimit variables, which will be a
-topic for the next patch.
+We would probably want to deprecate the two separate variables,
+as I do not see much point in specifying them independently.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
-  Nicolas Pitre <nico@cam.org> writes:
-
-  > On Tue, 23 Jan 2007, Johannes Schindelin wrote:
-  >
-  >> On Mon, 22 Jan 2007, Junio C Hamano wrote:
-  >> 
-  >> > We may want to later make this the default.
-  >> 
-  >> You have my vote for sooner rather than later.
-  >
-  > Seconded.
-  >
-  > Nicolas
-
-  Ok, how about this, on top of the previous ones?
-
- Documentation/config.txt |   10 ++++++++++
- fetch-pack.c             |   31 +++++++++++++++++--------------
- t/t5500-fetch-pack.sh    |    3 ++-
- 3 files changed, 29 insertions(+), 15 deletions(-)
+ Documentation/config.txt |    5 +++++
+ fetch-pack.c             |   14 +++++++++++++-
+ receive-pack.c           |   24 ++++++++++++++++--------
+ t/t5500-fetch-pack.sh    |    2 +-
+ 4 files changed, 35 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index d8244b1..383ff29 100644
+index 383ff29..8086d75 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -295,6 +295,16 @@ diff.renames::
- 	will enable basic rename detection.  If set to "copies" or
- 	"copy", it will detect copies, as well.
+@@ -488,3 +488,8 @@ receive.denyNonFastForwards::
+ 	even if that push is forced. This configuration variable is
+ 	set when initializing a shared repository.
  
-+fetch.unpackLimit::
-+	If the number of objects fetched over the git native
-+	transfer is below this
-+	limit, then the objects will be unpacked into loose object
-+	files. However if the number of received objects equals or
-+	exceeds this limit then the received pack will be stored as
-+	a pack, after adding any missing delta bases.  Storing the
-+	pack from a push can make the push operation complete faster,
-+	especially on slow filesystems.
++transfer.unpackLimit::
++	When `fetch.unpackLimit` or `receive.unpackLimit` are
++	not set, the value of this variable is used instead.
 +
- format.headers::
- 	Additional email headers to include in a patch to be submitted
- 	by mail.  See gitlink:git-format-patch[1].
++
 diff --git a/fetch-pack.c b/fetch-pack.c
-index dd67e48..fc0534c 100644
+index fc0534c..83a1d7b 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -8,7 +8,7 @@
+@@ -8,6 +8,8 @@
  #include "sideband.h"
  
  static int keep_pack;
--static int keep_auto;
-+static int unpack_limit = 100;
++static int transfer_unpack_limit = -1;
++static int fetch_unpack_limit = -1;
+ static int unpack_limit = 100;
  static int quiet;
  static int verbose;
- static int fetch_all;
-@@ -503,14 +503,14 @@ static int get_pack(int xd[2])
+@@ -645,7 +647,12 @@ static int remove_duplicates(int nr_heads, char **heads)
+ static int fetch_pack_config(const char *var, const char *value)
+ {
+ 	if (strcmp(var, "fetch.unpacklimit") == 0) {
+-		unpack_limit = git_config_int(var, value);
++		fetch_unpack_limit = git_config_int(var, value);
++		return 0;
++	}
++
++	if (strcmp(var, "transfer.unpacklimit") == 0) {
++		transfer_unpack_limit = git_config_int(var, value);
+ 		return 0;
+ 	}
  
- 	av = argv;
- 	*hdr_arg = 0;
--	if (keep_auto) {
-+	if (unpack_limit) {
- 		struct pack_header header;
+@@ -666,6 +673,11 @@ int main(int argc, char **argv)
+ 	setup_ident();
+ 	git_config(fetch_pack_config);
  
- 		if (read_pack_header(fd[0], &header))
- 			die("protocol error: bad pack header");
- 		snprintf(hdr_arg, sizeof(hdr_arg), "--pack_header=%u,%u",
- 			 ntohl(header.hdr_version), ntohl(header.hdr_entries));
--		if (ntohl(header.hdr_entries) < keep_auto)
-+		if (ntohl(header.hdr_entries) < unpack_limit)
- 			do_keep = 0;
- 		else
- 			do_keep = 1;
-@@ -523,7 +523,7 @@ static int get_pack(int xd[2])
- 			*av++ = "-v";
- 		if (use_thin_pack)
- 			*av++ = "--fix-thin";
--		if (keep_pack > 1 || keep_auto) {
-+		if (keep_pack > 1 || unpack_limit) {
- 			int s = sprintf(keep_arg,
- 					"--keep=fetch-pack %d on ", getpid());
- 			if (gethostname(keep_arg + s, sizeof(keep_arg) - s))
-@@ -642,6 +642,16 @@ static int remove_duplicates(int nr_heads, char **heads)
- 	return dst;
- }
++	if (0 <= transfer_unpack_limit)
++		unpack_limit = transfer_unpack_limit;
++	else if (0 <= fetch_unpack_limit)
++		unpack_limit = fetch_unpack_limit;
++
+ 	nr_heads = 0;
+ 	heads = NULL;
+ 	for (i = 1; i < argc; i++) {
+diff --git a/receive-pack.c b/receive-pack.c
+index b3a4552..8b59b32 100644
+--- a/receive-pack.c
++++ b/receive-pack.c
+@@ -10,6 +10,8 @@
+ static const char receive_pack_usage[] = "git-receive-pack <git-dir>";
  
-+static int fetch_pack_config(const char *var, const char *value)
-+{
-+	if (strcmp(var, "fetch.unpacklimit") == 0) {
-+		unpack_limit = git_config_int(var, value);
+ static int deny_non_fast_forwards = 0;
++static int receive_unpack_limit = -1;
++static int transfer_unpack_limit = -1;
+ static int unpack_limit = 100;
+ static int report_status;
+ 
+@@ -18,21 +20,22 @@ static int capabilities_sent;
+ 
+ static int receive_pack_config(const char *var, const char *value)
+ {
+-	git_default_config(var, value);
+-
+-	if (strcmp(var, "receive.denynonfastforwards") == 0)
+-	{
++	if (strcmp(var, "receive.denynonfastforwards") == 0) {
+ 		deny_non_fast_forwards = git_config_bool(var, value);
+ 		return 0;
+ 	}
+ 
+-	if (strcmp(var, "receive.unpacklimit") == 0)
+-	{
+-		unpack_limit = git_config_int(var, value);
++	if (strcmp(var, "receive.unpacklimit") == 0) {
++		receive_unpack_limit = git_config_int(var, value);
+ 		return 0;
+ 	}
+ 
+-	return 0;
++	if (strcmp(var, "transfer.unpacklimit") == 0) {
++		transfer_unpack_limit = git_config_int(var, value);
 +		return 0;
 +	}
 +
 +	return git_default_config(var, value);
-+}
+ }
+ 
+ static int show_ref(const char *path, const unsigned char *sha1, int flag, void *cb_data)
+@@ -431,6 +434,11 @@ int main(int argc, char **argv)
+ 	ignore_missing_committer_name();
+ 	git_config(receive_pack_config);
+ 
++	if (0 <= transfer_unpack_limit)
++		unpack_limit = transfer_unpack_limit;
++	else if (0 <= receive_unpack_limit)
++		unpack_limit = receive_unpack_limit;
 +
- static struct lock_file lock;
+ 	write_head_info();
  
- int main(int argc, char **argv)
-@@ -653,6 +663,8 @@ int main(int argc, char **argv)
- 	struct stat st;
- 
- 	setup_git_directory();
-+	setup_ident();
-+	git_config(fetch_pack_config);
- 
- 	nr_heads = 0;
- 	heads = NULL;
-@@ -674,16 +686,7 @@ int main(int argc, char **argv)
- 			}
- 			if (!strcmp("--keep", arg) || !strcmp("-k", arg)) {
- 				keep_pack++;
--				continue;
--			}
--			if (!strcmp("--keep-auto", arg)) {
--				keep_auto = 100;
--				continue;
--			}
--			if (!strncmp("--keep-auto=", arg, 12)) {
--				keep_auto = strtoul(arg + 12, NULL, 0);
--				if (keep_auto < 20)
--					keep_auto = 20;
-+				unpack_limit = 0;
- 				continue;
- 			}
- 			if (!strcmp("--thin", arg)) {
+ 	/* EOF */
 diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index ef78df6..7fd651b 100755
+index 7fd651b..058cce0 100755
 --- a/t/t5500-fetch-pack.sh
 +++ b/t/t5500-fetch-pack.sh
-@@ -97,7 +97,8 @@ pull_to_client () {
- (
+@@ -98,7 +98,7 @@ pull_to_client () {
  	mkdir client &&
  	cd client &&
--	git-init 2>> log2.txt
-+	git-init 2>> log2.txt &&
-+	git repo-config fetch.unpacklimit 0
+ 	git-init 2>> log2.txt &&
+-	git repo-config fetch.unpacklimit 0
++	git repo-config transfer.unpacklimit 0
  )
  
  add A1
+-- 
+1.5.0.rc2.gae1d
