@@ -1,67 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Hash name is SHA-1
-Date: Thu, 25 Jan 2007 12:10:28 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0701251209100.3011@xanadu.home>
-References: <11697294071178-git-send-email-vonbrand@inf.utfsm.cl>
- <1169729410294-git-send-email-vonbrand@inf.utfsm.cl>
- <20070125170120.GA13089@spearce.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: .git/info/refs
+Date: Thu, 25 Jan 2007 09:13:53 -0800
+Message-ID: <45B8E551.9020808@zytor.com>
+References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org> <45B7818F.6020805@zytor.com> <Pine.LNX.4.63.0701241658490.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45B78836.5080508@zytor.com> <Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45B78C55.2030204@zytor.com> <ep83m2$mts$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jan 25 18:10:35 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 25 18:14:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HA87N-0003gn-TK
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 18:10:34 +0100
+	id 1HA8Al-00058c-VQ
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 18:14:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030446AbXAYRKa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 12:10:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030450AbXAYRKa
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 12:10:30 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:39721 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030446AbXAYRKa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 12:10:30 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCF00IS8P1HGB00@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 25 Jan 2007 12:10:29 -0500 (EST)
-In-reply-to: <20070125170120.GA13089@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S1030457AbXAYROA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 12:14:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030460AbXAYROA
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 12:14:00 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:33040 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030457AbXAYRN7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 12:13:59 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l0PHDrTo010966
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 25 Jan 2007 09:13:54 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+In-Reply-To: <ep83m2$mts$1@sea.gmane.org>
+X-Virus-Scanned: ClamAV 0.88.7/2489/Thu Jan 25 04:35:24 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.6 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37743>
 
-On Thu, 25 Jan 2007, Shawn O. Pearce wrote:
-
-> "Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
-> > index 3fefdac..814f78f 100644
-> > --- a/builtin-apply.c
-> > +++ b/builtin-apply.c
-> > @@ -1811,7 +1812,8 @@ static int apply_binary(struct buffer_desc *desc, struct patch *patch)
-> >  			     "without full index line", name);
-> >  
-> >  	if (patch->old_name) {
-> > -		/* See if the old one matches what the patch
-> > +		/* 
-> > +		 * See if the old one matches what the patch
-> >  		 * applies to.
-> >  		 */
-> >  		hash_sha1_file(desc->buffer, desc->size, blob_type, sha1);
+Jakub Narebski wrote:
 > 
-> However I cannot help but feel that this hunk is unrelated to the
-> theme of this extremely large patch.  I don't know how Junio feels,
-> but this late in the 1.5.0 series I'm a little leary of a 1600+
-> line patch which is changing so much code, even if its something
-> as trivial as the above hunk.
+> I don't think it can be easily expanded. .git/info/refs is meant for
+> http-fetch, and it mimics git-ls-remote / git-peek-remote output.
 
-Maybe the patch could be restricted to documentation fixes only for now?
+For heaven's sake, in computer science we can *NEVER* use the same 
+feature for *MORE THAN ONE THING*.  If it doesn't work format-wise 
+that's fine, but "it's only supposed to be used by dumb transports" is 
+ridiculous.
 
+> BTW. putting the info of git-for-each-ref into .git/info/refs-details
+> would mean that instead of "24175 calls to git" one would need to
+> read 24175 files. Perhaps the whole info needed to generate projects
+> index page should be pre-generated on push (update), instead of per
+> project (per repository) .git/info/refs-details
 
-Nicolas
+No, it should be one file per repository, not one file per ref.  Why? 
+Obviously we don't want 24175 files to be accessed.  However, a push can 
+only affect files for which the repository owner has permission and 
+which resides in the repository filespace, so it should stay inside that 
+  space.
+
+On kernel.org, this would reduce the load from 24175 calls to git to 
+reading 250 files.  Although the latter is still expensive (and will 
+probably need post-generation caching) the files should be small and 
+cacheable by the kernel, and the resulting I/O load should be quite small.
+
+Anyway, as far as git-update-server-index is concerned, I'm *very* 
+concerned that there be a single command that updates all the cached 
+information across the repository.  Telling everyone to update their 
+hooks every time we want to add cached information is silly.  Right now, 
+git-update-server-index is the command to update cached information, and 
+for usability reasons there should be a single entry point.
+
+	-hpa
