@@ -1,96 +1,78 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] Hash name is SHA-1
-Date: Fri, 26 Jan 2007 00:03:02 +0100
-Message-ID: <20070125230302.GB13677@moooo.ath.cx>
-References: <11697294071178-git-send-email-vonbrand@inf.utfsm.cl> <1169729410294-git-send-email-vonbrand@inf.utfsm.cl>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: grafts+repack+prune = history at danger
+Date: Thu, 25 Jan 2007 15:07:47 -0800
+Message-ID: <7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
+References: <45B8E61E.C9C5E6C6@eudaptics.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-X-From: git-owner@vger.kernel.org Fri Jan 26 00:05:36 2007
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 00:08:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HADes-0003zM-NG
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 00:05:31 +0100
+	id 1HADhC-0005Av-9i
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 00:07:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030316AbXAYXF1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 18:05:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030373AbXAYXF1
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 18:05:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49748 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030316AbXAYXF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 18:05:27 -0500
-Received: (qmail invoked by alias); 25 Jan 2007 23:03:04 -0000
-Received: from pD9EB9DDE.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.157.222]
-  by mail.gmx.net (mp017) with SMTP; 26 Jan 2007 00:03:04 +0100
-X-Authenticated: #5358227
-Mail-Followup-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1169729410294-git-send-email-vonbrand@inf.utfsm.cl>
-X-Y-GMX-Trusted: 0
+	id S1030481AbXAYXHt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 18:07:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030484AbXAYXHt
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 18:07:49 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:45635 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030481AbXAYXHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 18:07:48 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070125230747.KMRN25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 25 Jan 2007 18:07:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Fb6q1W00S1kojtg0000000; Thu, 25 Jan 2007 18:06:50 -0500
+In-Reply-To: <45B8E61E.C9C5E6C6@eudaptics.com> (Johannes Sixt's message of
+	"Thu, 25 Jan 2007 18:17:18 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37776>
 
-The patch should probably only change sha1 to SHA-1 and not reformat
-the initialisation of _usage arrays or the comments (new line before
-first line of comment).  If the reformatting is desired it should be a
-separate patch imho.  Here is what I found:
+Johannes Sixt <J.Sixt@eudaptics.com> writes:
 
-Horst H. von Brand <vonbrand@inf.utfsm.cl> wrote:
-> +head this is "refs/heads/master".  The two sha1 are the object names
-> +called before the refname is updated, so either sha1-old is 0{40}
-> +(meaning there is no such ref yet), or it should match what is
-> +recorded in refname.
-sha1 -> SHA-1?
+> Isn't there a major hole in the logic how repack works when grafts are
+> in effect?
+>
+> I did this (details follow):
+>
+> 1. specify grafts
+> 2. repack
+> 3. prune
+> 4. clone
+>
+> Result: Broken history in the clone; info/grafts was not copied.
 
-> -static const char commit_tree_usage[] = "git-commit-tree <sha1> [-p <sha1>]* < changelog";
-> +static const char commit_tree_usage[] = 
-> +       "git-commit-tree <sha1> [-p <sha1>]* < changelog";
-sha1 -> SHA-1?
+That is expected.
 
-> -static const char read_tree_usage[] = "git-read-tree (<sha> | [[-m [--aggressive] | --reset | --prefix=<prefix>] [-u | -i]] [--exclude-per-directory=<gitignore>] <sha1> [<sha2> [<sha3>]])";
-> +static const char read_tree_usage[] = 
-> +       "git-read-tree (<sha> | "
-> +       "[[-m [--aggressive] | --reset | --prefix=<prefix>] "
-> +       "[-u | -i]] [--exclude-per-directory=<gitignore>] "
-> +       "<sha1> [<sha2> [<sha3>]])";
-sha1 -> SHA-1, dunno what to do about the sha2 and sha3 :)
-There is also a space at eol.
+If you had problem in the original repository (i.e. the one with
+grafts) that lost objects after step 3., that would be serious
+and needs to be fixed, but otherwise the rule of thumb has
+always been not to expose repositories with grafts without
+telling unsuspecting downstream people for cloning or fetching.
+It will give objects they did not even ask for.
 
-The following have a space at eol and/or spaces instead of tabs for
-indenting.
-> -	/* New file in the index: it might actually be different in
-> +	/* 
-> +         * New file in the index: it might actually be different in
+grafts are local matter for archaeologist's convenience to glue
+two independent histories together, and not much more.  For
+example, the history that starts at v2.6.12-rc2 can be grafted
+on top of old bkcvs history, but people who clone from you may
+not expect to get anything beyond the true origin of the history
+at v2.6.12-rc2 (after all that commit object records it as a
+parentless commit).
 
-> -	/* dst is recorded as a modification of src.  Are they so
-> +	/* 
-> +         * dst is recorded as a modification of src.  Are they so
-
-> -/* We internally use unsigned short as the score value,
-> +/* 
-> + * We internally use unsigned short as the score value,
-
->   * and rely on an int capable to hold 32-bits.  -B can take
-> -			/* When cloning, it is not unusual to have
-> +			/* 
-> +                         * When cloning, it is not unusual to have
-
-> -	/* If there is data present from a previous transfer attempt,
-> -	   resume where it left off */
-> +	/* 
-> +         * If there is data present from a previous transfer attempt,
-> +         * resume where it left off 
-> +         */
-
-> -		/* Input is non-recursive ls-tree output format
-> -		 * mode SP type SP sha1 TAB name
-> +		/* 
-> +                 * Input is non-recursive ls-tree output format
-> +		 * mode SP type SP SHA-1 TAB name
+I suspect you could extend fetch-pack protocol to give existing
+grafts from upload-pack to trivially fix 'clone', but I do not
+know offhand what the ramifications of it are for normal
+'fetch'.  You would need to merge potentially conflicting graft
+information you obtained from where you fetched from and what
+you already had before starting to fetch.
