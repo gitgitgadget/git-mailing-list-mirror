@@ -1,178 +1,188 @@
-From: Larry Streepy <larry@lightspeed.com>
-Subject: Re: Question about fsck-objects output
-Date: Thu, 25 Jan 2007 14:08:16 -0600
-Message-ID: <45B90E30.2020105@lightspeed.com>
-References: <45B8F575.5050106@lightspeed.com> <Pine.LNX.4.64.0701251144290.25027@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050003080200010609060601"
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Jan 25 21:06:17 2007
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: [PATCH] gitweb: Allow users to have their own project directories.
+Date: Thu, 25 Jan 2007 20:10:11 +0000
+Message-ID: <11697558112701-git-send-email-mdw@distorted.org.uk>
+Cc: Mark Wooding <mdw@distorted.org.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 25 21:15:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAArP-00016I-Rc
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 21:06:16 +0100
+	id 1HAB0m-00050V-D8
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 21:15:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030551AbXAYUGM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 15:06:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030552AbXAYUGM
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 15:06:12 -0500
-Received: from mailhost.lightspeed.com ([12.44.179.187]:60310 "EHLO
-	lightspeed.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030551AbXAYUGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 15:06:11 -0500
-Received: from [72.177.124.81] (account larry HELO [127.0.0.1])
-  by lightspeed.com (CommuniGate Pro SMTP 5.0.9)
-  with ESMTPA id 3576028; Thu, 25 Jan 2007 12:04:49 -0800
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
-In-Reply-To: <Pine.LNX.4.64.0701251144290.25027@woody.linux-foundation.org>
+	id S1030538AbXAYUPc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 15:15:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030552AbXAYUPc
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 15:15:32 -0500
+Received: from distorted.demon.co.uk ([80.177.3.76]:20278 "HELO
+	metalzone.distorted.org.uk" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with SMTP id S1030538AbXAYUPb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Jan 2007 15:15:31 -0500
+X-Greylist: delayed 318 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Jan 2007 15:15:30 EST
+Received: (qmail 13953 invoked by uid 1000); 25 Jan 2007 20:10:11 -0000
+X-Mailer: git-send-email 1.5.0.rc2.gc9a89
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37756>
 
-This is a multi-part message in MIME format.
---------------050003080200010609060601
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+The git-daemon understands `~USER/...' as referring to a project within
+USER's home directory.  This change makes gitweb able to serve each
+user's personal projects without them all having to be linked into one
+place.
 
-Excellent, I have done a rebase, so that could certainly be it.  I'll 
-take a look at the contents using the suggestions you provided.
+If the gitweb_config.perl file defines $user_path then a username given
+in the `u' argument, or as a leading `/~USER/' string in the PATH_INFO,
+causes gitweb to look for projects in $homedir/$user_path (where
+$homedir is USER's home directory).
 
-Thanks for the enlightenment. :-)
+Rather than expose all their projects, or the ones with an export file
+in them, a user can write a file listing the projects to be exported by
+gitweb.  (Maybe this ought to force strict_export on, but it doesn't at
+the moment.)
 
-Larry.
+This patch leaves it as someone else's problem to actually work out
+which users have exported GIT repositories, and maybe compile them into
+a list.
 
-Linus Torvalds wrote:
-> [ Maybe this should be a FAQ answer in some git documentation? Feel free 
->   to edit up this email and use it as a base.. ]
->
-> On Thu, 25 Jan 2007, Larry Streepy wrote:
->
->   
->> Sorry to ask such a basic question, but I can't quite decipher the output of
->> fsck-objects.  When I run it, I get this:
->>
->>  git fsck-objects
->> dangling commit 2213f6d4dd39ca8baebd0427723723e63208521b
->> dangling commit f0d4e00196bd5ee54463e9ea7a0f0e8303da767f
->> dangling blob 6a6d0b01b3e96d49a8f2c7addd4ef8c3bd1f5761
->>
->>
->> Even after a "repack -a -d" they still exist.  The man page has a short
->> explanation, but, at least for me, it wasn't fully enlightening. :-)
->>
->> The man page says that dangling commits could be "root" commits, but since my
->> repo started as a clone of another repo, I don't see how I could have any root
->> commits.  Also, the page doesn't really describe what a dangling blob is.
->>
->> So, can someone explain what these artifacts are and if they are a problem
->> that I should be worried about?
->>     
->
-> The most common situation is that you've rebased a branch (or you have 
-> pulled from somebody else who rebased a branch, like the "pu" branch in 
-> the git.git archive itself).
->
-> What happens is that the old head of the original branch still exists, as 
-> does obviously everything it pointed to. The branch pointer itself just 
-> doesn't, since you replaced it with another one.
->
-> However, there are certainly other situations too that cause dangling 
-> objects. For example, the "dangling blob" situation you have tends to be 
-> because you did a "git add" of a file, but then, before you actually 
-> committed it and made it part of the bigger picture, you changed something 
-> else in that file and committed that *updated* thing - the old state that 
-> you added originally ends up not being pointed to by any commit/tree, so 
-> it's now a dangling blob object.
->
-> Similarly, when the "recursive" merge strategy runs, and finds that there 
-> are criss-cross merges and thus more than one merge base (which is fairly 
-> unusual, but it does happen), it will generate one temporary midway tree 
-> (or possibly even more, if you had lots of criss-crossing merges and 
-> more than two merge bases) as a temporary internal merge base, and again, 
-> those are real objects, but the end result will not end up pointing to 
-> them, so they end up "dangling" in your repository.
->
-> Generally, dangling objects aren't anything to worry about. They can even 
-> be very useful: if you screw something up, the dangling objects can be how 
-> you recover your old tree (say, you did a rebase, and realized that you 
-> really didn't want to - you can look at what dangling objects you have, 
-> and decide to reset your head to some old dangling state).
->
-> For commits, the most useful thing to do with dangling objects tends to be 
-> to do a simple
->
-> 	gitk <dangling-commit-sha-goes-here> --not --all
->
-> which means exactly what it sounds like: it says that you want to see the 
-> commit history that is described by the dangling commit(s), but you do NOT 
-> want to see the history that is described by all your branches and tags 
-> (which are the things you normally reach). That basically shows you in a 
-> nice way what the danglign commit was (and notice that it might not be 
-> just one commit: we only report the "tip of the line" as being dangling, 
-> but there might be a whole deep and complex commit history that has gotten 
-> dropped - rebasing will do that).
->
-> For blobs and trees, you can't do the same, but you can examine them. You 
-> can just do
->
-> 	git show <dangling-blob/tree-sha-goes-here>
->
-> to show what the contents of the blob were (or, for a tree, basically what 
-> the "ls" for that directory was), and that may give you some idea of what 
-> the operation was that left that dangling object.
->
-> Usually, dangling blobs and trees aren't very interesting. They're almost 
-> always the result of either being a half-way mergebase (the blob will 
-> often even have the conflict markers from a merge in it, if you have had 
-> conflicting merges that you fixed up by hand), or simply because you 
-> interrupted a "git fetch" with ^C or something like that, leaving _some_ 
-> of the new objects in the object database, but just dangling and useless.
->
-> Anyway, once you are sure that you're not interested in any dangling 
-> state, you can just prune all unreachable objects:
->
-> 	git prune
->
-> and they'll be gone. But you should only run "git prune" on a quiescent 
-> repository - it's kind of like doing a filesystem fsck recovery: you don't 
-> want to do that while the filesystem is mounted.
->
-> (The same is true of "git-fsck-objects" itself, btw - but since 
-> git-fsck-objects never actually *changes* the repository, it just reports 
-> on what it found, git-fsck-objects itself is never "dangerous" to run. 
-> Running it while somebody is actually changing the repository can cause 
-> confusing and scary messages, but it won't actually do anything bad. In 
-> contrast, running "git prune" while somebody is actively changing the 
-> repository is a *BAD* idea).
->
-> 			Linus
->   
+Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
+---
+ gitweb/gitweb.perl |   56 +++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 53 insertions(+), 3 deletions(-)
 
-
---------------050003080200010609060601
-Content-Type: text/x-vcard; charset=utf-8;
- name="larry.vcf"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="larry.vcf"
-
-begin:vcard
-fn:Larry Streepy
-n:Streepy;Larry
-org:Lightspeed Logic
-adr;dom:Building 2, suite 130;;11612 Bee Caves Road;Austin;TX;78738
-email;internet:larry@lightspeed.com
-title:Sr. Staff Software Engineer
-tel;work:408-616-3292
-x-mozilla-html:TRUE
-url:http://ww.lightspeed.com
-version:2.1
-end:vcard
-
-
---------------050003080200010609060601--
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 88af2e6..14c344d 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -35,6 +35,12 @@ our $GIT = "++GIT_BINDIR++/git";
+ #our $projectroot = "/pub/scm";
+ our $projectroot = "++GITWEB_PROJECTROOT++";
+ 
++# subdirectory of user home to look for projects, or empty to not do that
++our $user_path = "";
++
++# file naming user's projects
++our $user_projects = "projects";
++
+ # target of the home link on top of all pages
+ our $home_link = $my_uri || "/";
+ 
+@@ -285,6 +291,8 @@ $projects_list ||= $projectroot;
+ 
+ # ======================================================================
+ # input validation and dispatch
++our $path_info = $ENV{"PATH_INFO"};
++
+ our $action = $cgi->param('a');
+ if (defined $action) {
+ 	if ($action =~ m/[^0-9a-zA-Z\.\-_]/) {
+@@ -292,6 +300,37 @@ if (defined $action) {
+ 	}
+ }
+ 
++our $user = $cgi->param('u');
++if (!defined($user && $path_info)) {
++	$path_info =~ s:^/+::;
++	if ($path_info =~ m:\~([^/]+)(/.*$|):) {
++		$user = $1;
++		$path_info = $2;
++	}
++}
++if (defined $user) {
++	if (!$user_path || $user =~ m/[^0-9a-zA-Z\.\-_]/) {
++		die_error(undef, "Invalid user parameter");
++	}
++	my @pw = getpwnam($user);
++	my $ok = 0;
++	if (@pw) {
++		$projectroot = $pw[7] . "/" . $user_path;
++		if (-d $projectroot) {
++			$ok = 1;
++		}
++		if ($user_projects && -f "$projectroot/$user_projects") {
++			$projects_list = "$projectroot/$user_projects";
++		} else {
++			$projects_list = $projectroot;
++		}
++		$home_text = "$projectroot/$home_text";
++	}
++	if (!$ok) {
++		die_error("No such user as $user");
++	}
++}
++
+ # parameters which are pathnames
+ our $project = $cgi->param('p');
+ if (defined $project) {
+@@ -377,7 +416,7 @@ if (defined $searchtype) {
+ # now read PATH_INFO and use it as alternative to parameters
+ sub evaluate_path_info {
+ 	return if defined $project;
+-	my $path_info = $ENV{"PATH_INFO"};
++	my $path_info = $::path_info;
+ 	return if !$path_info;
+ 	$path_info =~ s,^/+,,;
+ 	return if !$path_info;
+@@ -482,6 +521,7 @@ sub href(%) {
+ 
+ 	my @mapping = (
+ 		project => "p",
++		user => "u",
+ 		action => "a",
+ 		file_name => "f",
+ 		file_parent => "fp",
+@@ -497,12 +537,15 @@ sub href(%) {
+ 	my %mapping = @mapping;
+ 
+ 	$params{'project'} = $project unless exists $params{'project'};
++	$params{'user'} = $user unless exists $params{'user'};
+ 
+ 	my ($use_pathinfo) = gitweb_check_feature('pathinfo');
+ 	if ($use_pathinfo) {
+ 		# use PATH_INFO for project name
++		$href .= "/~$user" if defined $params{'user'};
+ 		$href .= "/$params{'project'}" if defined $params{'project'};
+ 		delete $params{'project'};
++		delete $params{'user'};
+ 
+ 		# Summary just uses the project path URL
+ 		if (defined $params{'action'} && $params{'action'} eq 'summary') {
+@@ -1771,6 +1814,9 @@ EOF
+ 	               -title => $logo_label},
+ 	              qq(<img src="$logo" width="72" height="27" alt="git" class="logo"/>));
+ 	print $cgi->a({-href => esc_url($home_link)}, $home_link_str) . " / ";
++	if (defined $user) {
++		print $cgi->a({-href => href(action=>"summary", project=>undef)}, esc_html("~" . $user)) . " / ";
++	}
+ 	if (defined $project) {
+ 		print $cgi->a({-href => href(action=>"summary")}, esc_html($project));
+ 		if (defined $action) {
+@@ -1794,9 +1840,11 @@ EOF
+ 		$cgi->param("a", "search");
+ 		$cgi->param("h", $search_hash);
+ 		$cgi->param("p", $project);
++		if (defined $user) { $cgi->param("u", $user); }
+ 		print $cgi->startform(-method => "get", -action => $my_uri) .
+ 		      "<div class=\"search\">\n" .
+ 		      $cgi->hidden(-name => "p") . "\n" .
++		      (defined $user ? $cgi->hidden(-name => "u") . "\n" : "") .
+ 		      $cgi->hidden(-name => "a") . "\n" .
+ 		      $cgi->hidden(-name => "h") . "\n" .
+ 		      $cgi->popup_menu(-name => 'st', -default => 'commit',
+@@ -4715,8 +4763,10 @@ XML
+ 		}
+ 
+ 		my $path = esc_html(chop_str($proj{'path'}, 25, 5));
+-		my $rss  = "$my_url?p=$proj{'path'};a=rss";
+-		my $html = "$my_url?p=$proj{'path'};a=summary";
++		my $base  = "$my_url?p=$proj{'path'}";
++		if (defined $user) { $base .= ";u=$user"; }
++		my $rss  = "$base;a=rss";
++		my $html = "$base;a=summary";
+ 		print "<outline type=\"rss\" text=\"$path\" title=\"$path\" xmlUrl=\"$rss\" htmlUrl=\"$html\"/>\n";
+ 	}
+ 	print <<XML;
+-- 
+1.5.0.rc2.gc9a89
