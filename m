@@ -1,66 +1,86 @@
-From: alan <alan@clueserver.org>
-Subject: Re: Git Subversion problem
-Date: Thu, 25 Jan 2007 08:54:26 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701250853400.14091@blackbox.fnordora.org>
-References: <Pine.LNX.4.64.0701240935330.3282@blackbox.fnordora.org>
- <20070125095430.GA24742@localdomain>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Hash name is SHA-1
+Date: Thu, 25 Jan 2007 12:01:20 -0500
+Message-ID: <20070125170120.GA13089@spearce.org>
+References: <11697294071178-git-send-email-vonbrand@inf.utfsm.cl> <1169729410294-git-send-email-vonbrand@inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Jan 25 17:54:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+X-From: git-owner@vger.kernel.org Thu Jan 25 18:01:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HA7rr-000525-Nt
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 17:54:32 +0100
+	id 1HA7ye-0008Av-4S
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 18:01:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030342AbXAYQy2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 11:54:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030356AbXAYQy2
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 11:54:28 -0500
-Received: from 216-99-213-120.dsl.aracnet.com ([216.99.213.120]:40230 "EHLO
-	clueserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030342AbXAYQy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 11:54:27 -0500
-Received: by clueserver.org (Postfix, from userid 500)
-	id B0420F50C92; Thu, 25 Jan 2007 08:54:26 -0800 (PST)
-Received: from localhost (localhost [127.0.0.1])
-	by clueserver.org (Postfix) with ESMTP id AB692F509AF;
-	Thu, 25 Jan 2007 08:54:26 -0800 (PST)
-X-X-Sender: alan@blackbox.fnordora.org
-In-Reply-To: <20070125095430.GA24742@localdomain>
+	id S1030378AbXAYRB3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 12:01:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030430AbXAYRB3
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 12:01:29 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39857 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030378AbXAYRB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 12:01:28 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HA7yR-00058J-Km; Thu, 25 Jan 2007 12:01:20 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 5E5D420FBAE; Thu, 25 Jan 2007 12:01:20 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <1169729410294-git-send-email-vonbrand@inf.utfsm.cl>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37741>
 
-On Thu, 25 Jan 2007, Eric Wong wrote:
+"Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
+> diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+> index 10e8c46..2fafc79 100644
+> --- a/Documentation/git-receive-pack.txt
+> +++ b/Documentation/git-receive-pack.txt
+> @@ -20,7 +20,7 @@ The UI for the protocol is on the 'git-send-pack' side, and the
+>  program pair is meant to be used to push updates to remote
+>  repository.  For pull operations, see 'git-fetch-pack'.
+>  
+> -The command allows for creation and fast forwarding of sha1 refs
+> +The command allows for creation and fast forwarding of SHA-1 refs
 
-> alan <alan@clueserver.org> wrote:
->> I think I tracked down where my problem with using Git to pull subversion
->> repositories came from.
->>
->> It seems that if the repository has a file larger than what will fit in
->> memory, it does not react well.  (Yes, I know that you should not check in
->> huge data files into a repository, but accidents happen and Subversion
->> does not make it easy to remove them.)
->>
->> I can work around the problem at the moment, but it may be something that
->> the person who maintains that chunk of git may want to look at.
->
-> Which version of git-svn are you using?
+A good cleanup and correction.  We've apparently been a little lax.
+Its a noble and worthy goal to make the correction and I applaud
+you for doing the hard work.
 
-1.4.4.2 from FC6.
+> diff --git a/builtin-apply.c b/builtin-apply.c
+> index 3fefdac..814f78f 100644
+> --- a/builtin-apply.c
+> +++ b/builtin-apply.c
+> @@ -1811,7 +1812,8 @@ static int apply_binary(struct buffer_desc *desc, struct patch *patch)
+>  			     "without full index line", name);
+>  
+>  	if (patch->old_name) {
+> -		/* See if the old one matches what the patch
+> +		/* 
+> +		 * See if the old one matches what the patch
+>  		 * applies to.
+>  		 */
+>  		hash_sha1_file(desc->buffer, desc->size, blob_type, sha1);
 
-> Can you try git-svn from
-> version 1.4.4.4 of git and see if that problem can be reproduced?  The
-> new delta fetching code in the latest git.git master may try to store
-> the entire file in memory when receiving it over the network.
-
-I will give it a try and see if it chokes.
+However I cannot help but feel that this hunk is unrelated to the
+theme of this extremely large patch.  I don't know how Junio feels,
+but this late in the 1.5.0 series I'm a little leary of a 1600+
+line patch which is changing so much code, even if its something
+as trivial as the above hunk.
 
 -- 
-"Invoking the supernatural can explain anything, and hence explains nothing."
-                   - University of Utah bioengineering professor Gregory Clark
+Shawn.
