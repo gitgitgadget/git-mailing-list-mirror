@@ -1,50 +1,66 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 1/2] Teach git-describe to display distances from tags.
-Date: Thu, 25 Jan 2007 18:32:01 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0701251830400.3021@xanadu.home>
-References: <20070125173954.GA13276@spearce.org>
- <7vmz46ajcq.fsf@assigned-by-dhcp.cox.net>
- <7v7ivaailb.fsf@assigned-by-dhcp.cox.net> <20070125214923.GD13874@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: .git/info/refs
+Date: Fri, 26 Jan 2007 00:33:51 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701260029580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org>
+ <45B7818F.6020805@zytor.com> <7vireuaj9d.fsf@assigned-by-dhcp.cox.net>
+ <45B92332.5060206@zytor.com> <7v3b5yai6c.fsf@assigned-by-dhcp.cox.net>
+ <45B928AD.50508@zytor.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jan 26 00:32:11 2007
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 00:33:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAE4f-0007vl-Gu
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 00:32:09 +0100
+	id 1HAE6O-0000Ek-O5
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 00:33:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030505AbXAYXcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 18:32:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030504AbXAYXcF
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 18:32:05 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:53266 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030501AbXAYXcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 18:32:04 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCG00KZ46PDMGD0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 25 Jan 2007 18:32:02 -0500 (EST)
-In-reply-to: <20070125214923.GD13874@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S1030497AbXAYXdx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 18:33:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030501AbXAYXdx
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 18:33:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35208 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030497AbXAYXdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 18:33:53 -0500
+Received: (qmail invoked by alias); 25 Jan 2007 23:33:51 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp030) with SMTP; 26 Jan 2007 00:33:51 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45B928AD.50508@zytor.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37779>
 
-On Thu, 25 Jan 2007, Shawn O. Pearce wrote:
+Hi,
 
-> We probably should make an option to enable the count, and
-> if the count is enabled then we'll have to pickup counting
-> where we left off and finish it out for the chosen tag so
-> the count is correct.
-Please don't make it an option.  This is too useful to require an 
-additional switch all the time.
+On Thu, 25 Jan 2007, H. Peter Anvin wrote:
 
+> Junio C Hamano wrote:
+>
+> > Then that would mean 250 calls to git-for-each-ref, wouldn't it?
+> 
+> Well, I think it was Johannes that said once for each ref.  But either 
+> which way, it's a totally unacceptable load with resulting unacceptable 
+> latency.
 
-Nicolas
+No. I would never say that you have to run for-each-ref for each ref. 
+That's plain stupid.
+
+BTW I take some satisfaction in that you finally agreed (in another email) 
+that some post-creation caching is necessary.
+
+I would be even more satisfied if you finally agreed that it is a good 
+practice to separate conceptually different things, and not continued ad 
+infinitum (and ad nauseam) arguing that .git/info/refs should serve dumb 
+transports, and gitweb, and eventually bring peace to everybody on this 
+planet.
+
+Ciao,
+Dscho
