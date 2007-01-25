@@ -1,56 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: .git/info/refs
-Date: Thu, 25 Jan 2007 17:50:53 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701251749400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org>   
- <45B7818F.6020805@zytor.com> <200701242140.07459.jnareb@gmail.com>
- <2197.69.104.58.50.1169671494.squirrel@www.zytor.com>
- <Pine.LNX.4.63.0701250900380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45B8D704.9040905@zytor.com>
+From: alan <alan@clueserver.org>
+Subject: Re: Git Subversion problem
+Date: Thu, 25 Jan 2007 08:54:26 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701250853400.14091@blackbox.fnordora.org>
+References: <Pine.LNX.4.64.0701240935330.3282@blackbox.fnordora.org>
+ <20070125095430.GA24742@localdomain>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Thu Jan 25 17:51:02 2007
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Jan 25 17:54:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HA7oR-0003Qu-6T
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 17:50:59 +0100
+	id 1HA7rr-000525-Nt
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 17:54:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030318AbXAYQu4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 11:50:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030340AbXAYQu4
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 11:50:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53699 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030318AbXAYQuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 11:50:55 -0500
-Received: (qmail invoked by alias); 25 Jan 2007 16:50:54 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp024) with SMTP; 25 Jan 2007 17:50:54 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45B8D704.9040905@zytor.com>
-X-Y-GMX-Trusted: 0
+	id S1030342AbXAYQy2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 11:54:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030356AbXAYQy2
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 11:54:28 -0500
+Received: from 216-99-213-120.dsl.aracnet.com ([216.99.213.120]:40230 "EHLO
+	clueserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030342AbXAYQy1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 11:54:27 -0500
+Received: by clueserver.org (Postfix, from userid 500)
+	id B0420F50C92; Thu, 25 Jan 2007 08:54:26 -0800 (PST)
+Received: from localhost (localhost [127.0.0.1])
+	by clueserver.org (Postfix) with ESMTP id AB692F509AF;
+	Thu, 25 Jan 2007 08:54:26 -0800 (PST)
+X-X-Sender: alan@blackbox.fnordora.org
+In-Reply-To: <20070125095430.GA24742@localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37740>
 
-Hi,
+On Thu, 25 Jan 2007, Eric Wong wrote:
 
-On Thu, 25 Jan 2007, H. Peter Anvin wrote:
+> alan <alan@clueserver.org> wrote:
+>> I think I tracked down where my problem with using Git to pull subversion
+>> repositories came from.
+>>
+>> It seems that if the repository has a file larger than what will fit in
+>> memory, it does not react well.  (Yes, I know that you should not check in
+>> huge data files into a repository, but accidents happen and Subversion
+>> does not make it easy to remove them.)
+>>
+>> I can work around the problem at the moment, but it may be something that
+>> the person who maintains that chunk of git may want to look at.
+>
+> Which version of git-svn are you using?
 
-> > I hope I have made it clear why (at least IMHO) it would be wrong, 
-> > wrong, wrong to change the format of .git/info/refs _only_ for gitweb, 
-> > which it is not meant for to begin with.
-> 
-> No, you keep using circular reasoning.
+1.4.4.2 from FC6.
 
-No. Once again, .git/info/refs is _not_ for gitweb. But I will stop 
-arguing about that topic, because I don't have enough time for that.
+> Can you try git-svn from
+> version 1.4.4.4 of git and see if that problem can be reproduced?  The
+> new delta fetching code in the latest git.git master may try to store
+> the entire file in memory when receiving it over the network.
 
-Ciao,
-Dscho
+I will give it a try and see if it chokes.
+
+-- 
+"Invoking the supernatural can explain anything, and hence explains nothing."
+                   - University of Utah bioengineering professor Gregory Clark
