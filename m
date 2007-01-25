@@ -1,72 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] fetch-pack: remove --keep-auto and make it the default.
-Date: Thu, 25 Jan 2007 13:32:40 -0800
-Message-ID: <7vejpiaj2f.fsf@assigned-by-dhcp.cox.net>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
-	<7v3b6439uh.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vzm8ansrt.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701231129501.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0701231101040.3011@xanadu.home>
-	<7v7ivbc3hj.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0701250922260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/2] Teach git-describe to display distances from tags.
+Date: Thu, 25 Jan 2007 16:37:12 -0500
+Message-ID: <20070125213712.GC13874@spearce.org>
+References: <20070125173954.GA13276@spearce.org> <7vmz46ajcq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jan 25 22:32:49 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jan 25 22:37:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HACD7-0003ZQ-Tq
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 22:32:46 +0100
+	id 1HACHa-0005QB-5O
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 22:37:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030588AbXAYVcm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 16:32:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030585AbXAYVcm
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 16:32:42 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:54960 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030588AbXAYVcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 16:32:41 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070125213241.UAOC9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 25 Jan 2007 16:32:41 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FZXj1W00l1kojtg0000000; Thu, 25 Jan 2007 16:31:44 -0500
-In-Reply-To: <Pine.LNX.4.63.0701250922260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 25 Jan 2007 09:23:48 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030593AbXAYVhS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 16:37:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030594AbXAYVhS
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 16:37:18 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:50704 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030593AbXAYVhQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 16:37:16 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HACHN-0003qH-3z; Thu, 25 Jan 2007 16:37:09 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 840A020FBAE; Thu, 25 Jan 2007 16:37:12 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vmz46ajcq.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37761>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+>  - This is purely style, but we seem to prefer %d instead of %i
+>    elsewhere in the code (three existing offenders are
+>    builtin-describe.c, receive-pack.c and sha1_file which we may
+>    want to clean up for consistency).
 
-> On Wed, 24 Jan 2007, Junio C Hamano wrote:
->
->>   Ok, how about this, on top of the previous ones?
->
-> Thanks!
->
->> @@ -653,6 +663,8 @@ int main(int argc, char **argv)
->>  	struct stat st;
->>  
->>  	setup_git_directory();
->> +	setup_ident();
->> +	git_config(fetch_pack_config);
->
-> Why do you need setup_ident()?
+I'll send a cleanup patch then for these locations.
+ 
+>  - How much damage are we talking about with this patch to
+>    People's existing scripts?  I expect they all extract the
+>    hash from last -g (because they cannot rely on particular
+>    convention in tagnames), but I am also worried if people are
+>    expecting everything that comes before the last -g is the
+>    whole tag.
 
-Because presumably you would be updating the reflog that records
-who did the fetch?
+No way to know for sure.  I almost put this as an option
+(e.g. "--include-distance") but didn't want everyone to need to
+update their existing git-describe callers to obtain this new data.
+I would hope that people split on last -g to get at or remove the
+commit SHA-1, but they probably are also assiming te tag name is
+everything to the left.  Including the distance would certainly
+violate that.
 
-But then we should do the same ignore_missing_committer_name()
-we have in receive-pack to allow anonymous fetchers to fetch
-from outside world, I guess.
+-- 
+Shawn.
