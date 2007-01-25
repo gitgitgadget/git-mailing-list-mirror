@@ -1,70 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Hash name is SHA-1
-Date: Thu, 25 Jan 2007 14:05:16 -0500
-Message-ID: <20070125190516.GD13089@spearce.org>
-References: <11697294071178-git-send-email-vonbrand@inf.utfsm.cl> <1169729410294-git-send-email-vonbrand@inf.utfsm.cl> <20070125170120.GA13089@spearce.org> <Pine.LNX.4.64.0701251209100.3011@xanadu.home> <200701251856.l0PIu8pP032403@laptop13.inf.utfsm.cl>
+From: Larry Streepy <larry@lightspeed.com>
+Subject: Question about fsck-objects output
+Date: Thu, 25 Jan 2007 12:22:45 -0600
+Message-ID: <45B8F575.5050106@lightspeed.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
-X-From: git-owner@vger.kernel.org Thu Jan 25 20:05:41 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 25 20:23:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HA9ue-00012U-6U
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 20:05:32 +0100
+	id 1HAABg-0008Qp-Ag
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 20:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030488AbXAYTF2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 14:05:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030510AbXAYTF2
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 14:05:28 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:44772 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030488AbXAYTF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 14:05:27 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HA9uM-0008M0-7D; Thu, 25 Jan 2007 14:05:14 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6784520FBAE; Thu, 25 Jan 2007 14:05:16 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <200701251856.l0PIu8pP032403@laptop13.inf.utfsm.cl>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030517AbXAYTXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 14:23:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030518AbXAYTXF
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 14:23:05 -0500
+Received: from mailhost.lightspeed.com ([12.44.179.187]:48221 "EHLO
+	lightspeed.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030517AbXAYTXE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 14:23:04 -0500
+X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Jan 2007 14:23:04 EST
+Received: from [192.168.10.13] (account larry [192.168.10.13] verified)
+  by lightspeed.com (CommuniGate Pro SMTP 5.0.9)
+  with ESMTPA id 3575794 for git@vger.kernel.org; Thu, 25 Jan 2007 10:21:39 -0800
+User-Agent: Thunderbird 1.5.0.5 (X11/20060728)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37752>
 
-"Horst H. von Brand" <vonbrand@inf.utfsm.cl> wrote:
-> Nicolas Pitre <nico@cam.org> wrote:
-> > Maybe the patch could be restricted to documentation fixes only for now?
-> 
-> That's what I tried to do. But just changing the documentation without
-> changing (some) of the messages and so on just gets you worse
-> inconsistency.
+Sorry to ask such a basic question, but I can't quite decipher the output 
+of fsck-objects.  When I run it, I get this:
 
-I'm not at all against updating output messages to match the
-documentation.  Indeed, its good to make them consistent.
+  git fsck-objects
+dangling commit 2213f6d4dd39ca8baebd0427723723e63208521b
+dangling commit f0d4e00196bd5ee54463e9ea7a0f0e8303da767f
+dangling blob 6a6d0b01b3e96d49a8f2c7addd4ef8c3bd1f5761
 
-It just would be a lot easier to review the patch if it wasn't 1600+
-lines, _especially_ when some of the hunks really aren't related
-to the theme of the patch.
 
-Of course with the amount of time I've now spent writing email
-saying how hard it is to review the original patch, I could have just
-read through the entire thing and given it another set of eyeballs.
-Argh, another great misuse of my time.  :-)
+Even after a "repack -a -d" they still exist.  The man page has a short 
+explanation, but, at least for me, it wasn't fully enlightening. :-)
 
--- 
-Shawn.
+The man page says that dangling commits could be "root" commits, but since 
+my repo started as a clone of another repo, I don't see how I could have 
+any root commits.  Also, the page doesn't really describe what a dangling 
+blob is.
+
+So, can someone explain what these artifacts are and if they are a problem 
+that I should be worried about?
+
+Thanks,
+Larry.
