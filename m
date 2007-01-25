@@ -1,58 +1,53 @@
-From: "Yakov Lerner" <iler.ml@gmail.com>
-Subject: two-way sync; from firewalled host
-Date: Thu, 25 Jan 2007 13:31:25 +0200
-Message-ID: <f36b08ee0701250331u10c6a608qcbbb3001a0481e@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jan 25 12:31:37 2007
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Some cleanups
+Date: Thu, 25 Jan 2007 09:50:06 -0300
+Message-ID: <11697294071178-git-send-email-vonbrand@inf.utfsm.cl>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Jan 25 13:50:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HA2pG-0004hv-Jm
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 12:31:30 +0100
+	id 1HA43n-0007U9-R2
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 13:50:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932769AbXAYLb1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 06:31:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932774AbXAYLb1
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 06:31:27 -0500
-Received: from wr-out-0506.google.com ([64.233.184.238]:22807 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932769AbXAYLb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 06:31:26 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so373429wra
-        for <git@vger.kernel.org>; Thu, 25 Jan 2007 03:31:26 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=FK+ls4ZmzZdadPX3SEqE2nqmT7lUzNcqMTRGmIDSNEzdtwUbtCYbHHaCuxEF8sSEJsT5PlzoN4MtquikDrqVwfjhGC23CCDke83CMkw6+n/w450lGqXyIW2AiVjz+yTDbTe91EOKkjshorE48+B3hVFTLsPJzkSOpSI7Pz/Yjrg=
-Received: by 10.90.79.6 with SMTP id c6mr2072717agb.1169724685748;
-        Thu, 25 Jan 2007 03:31:25 -0800 (PST)
-Received: by 10.90.25.9 with HTTP; Thu, 25 Jan 2007 03:31:25 -0800 (PST)
-Content-Disposition: inline
+	id S965284AbXAYMuW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 07:50:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965280AbXAYMuW
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 07:50:22 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:37835 "EHLO inti.inf.utfsm.cl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965284AbXAYMuV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 07:50:21 -0500
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [200.1.19.201])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id l0PCoAFI029536
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 25 Jan 2007 09:50:10 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8) with ESMTP id l0PCo89m011511;
+	Thu, 25 Jan 2007 09:50:08 -0300
+Received: (from vonbrand@localhost)
+	by laptop13.inf.utfsm.cl (8.13.8/8.13.8/Submit) id l0PCo7xL011510;
+	Thu, 25 Jan 2007 09:50:07 -0300
+X-Mailer: git-send-email 1.5.0.rc2
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [0.0.0.0]); Thu, 25 Jan 2007 09:50:10 -0300 (CLST)
+X-Virus-Scanned: ClamAV 0.88.7/2488/Thu Jan 25 06:57:17 2007 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.9 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.0.6
+X-Spam-Checker-Version: SpamAssassin 3.0.6 (2005-12-07) on inti.inf.utfsm.cl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37719>
 
-I have two hosts, host C which is firewalled (no sshd),
-and host S which has sshd and is not firewalled. Both have
-clone of the same repo, modified locally and differently on both hosts.
-
-I need to two-way sync them by running commands on C (the firewalled one).
-
-I need a script that does it, the "git-sync" script, running on C.
-              git-sync  user@host:path  [local-dir]   # synchronize
-local repo with
-                                                                   #
-remote repo via ssh
-If there are no conflicts, I need to bring both repos to same state (even if
-their history will be different). If there are conflicts, I need to
-synchronize everything
-that is not in conflict, and report the list of conflicted files, and leave
-the remote version as  './file.SUFFIX'  on host C, where script was invoked.
-
-Thanks
-Yakov
+The official name of the hash function is SHA-1. I tried to make the usage
+more consistent in the documentation, the comments and the messages (it
+was variously sha1, SHA1, etc). Also some comment reformatting while I was
+at it. The resulting git passes all tests.
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
