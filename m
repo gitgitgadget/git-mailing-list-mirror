@@ -1,40 +1,40 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/4] add a test case for git-merge-one-file
-Date: Thu, 25 Jan 2007 09:34:16 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701250932360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0701240214000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vy7nsc6f0.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH 2/4] merge-one-file: use 'wc' more portably
+Date: Thu, 25 Jan 2007 09:35:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701250934380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0701240213330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v3b60dl24.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Jan 25 09:34:41 2007
+X-From: git-owner@vger.kernel.org Thu Jan 25 09:35:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HA049-00063b-4q
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 09:34:41 +0100
+	id 1HA05K-0006df-Kx
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 09:35:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965712AbXAYIeT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 03:34:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965714AbXAYIeT
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 03:34:19 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50344 "HELO mail.gmx.net"
+	id S965710AbXAYIfw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 03:35:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965711AbXAYIfw
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 03:35:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54811 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965712AbXAYIeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 03:34:18 -0500
-Received: (qmail invoked by alias); 25 Jan 2007 08:34:17 -0000
+	id S965710AbXAYIfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 03:35:51 -0500
+Received: (qmail invoked by alias); 25 Jan 2007 08:35:50 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 25 Jan 2007 09:34:17 +0100
+  by mail.gmx.net (mp036) with SMTP; 25 Jan 2007 09:35:50 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vy7nsc6f0.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v3b60dl24.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37713>
 
 Hi,
 
@@ -42,20 +42,40 @@ On Wed, 24 Jan 2007, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > +git-update-index --index-info << EOF
-> > +10644 $hash_one 1	one
-> > +10644 $hash_two 2	one
-> > +10644 $hash_three 3	one
-> > +EOF
+> > Some wc prefix the number by a tab. Be prepared for this.
+> >
+> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > ---
+> >  git-merge-one-file.sh |    4 ++--
+> >  1 files changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
+> > index 7d62d79..bc7c5ef 100755
+> > --- a/git-merge-one-file.sh
+> > +++ b/git-merge-one-file.sh
+> > @@ -87,9 +87,9 @@ case "${1:-.}${2:-.}${3:-.}" in
+> >  		# This extracts OUR file in $orig, and uses git-apply to
+> >  		# remove lines that are unique to ours.
+> >  		orig=`git-unpack-file $2`
+> > -		sz0=`wc -c <"$orig"`
+> > +		sz0=`wc -c <"$orig" | tr -dc 0-9`
+> >  		diff -u -La/$orig -Lb/$orig $orig $src2 | git-apply --no-add 
+> > -		sz1=`wc -c <"$orig"`
+> > +		sz1=`wc -c <"$orig" | tr -dc 0-9`
+> >  
+> >  		# If we do not have enough common material, it is not
+> >  		# worth trying two-file merge using common subsections.
 > 
-> How can this work with 10644 instead of 100644?  Did you spot a
-> bug in update-index --index-info?
+> I would prefer losing dq around the $sz0 and $sz1 where they are
+> used, instead of spawning tr here, and also tighten error
+> checking by stringing these command sequence with && followed by
+> a || exit.
 
-Actually, since !S_ISLNK(010644), it uses ce_permissions(010644), which 
-basically only checks if (010644 & 0100) is set (i.e. if it is executable 
-by the user), and depending on this returns 0755 or 0644.
+I only needed a quick fix to make it work on my machine. The fact that it 
+was broken for so long, unnoticed by me, shows that this code path was 
+rarely -- if at all -- used.
 
-That's why it works.
+But since I want it builtin, I don't want to spend time on the script...
 
 Ciao,
 Dscho
