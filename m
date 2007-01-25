@@ -1,100 +1,100 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: cvsimport/cvsps: wrong revisions in branch
-Date: Thu, 25 Jan 2007 15:35:30 +0100
-Message-ID: <45B8C032.7020004@fs.ei.tum.de>
-References: <20070125142242.1402.qmail@b4b5deb4d44aa3.315fe32.mid.smarden.org>
+From: "Deepak Barua" <dbbarua@gmail.com>
+Subject: Re: Adding spell checker to GIT
+Date: Thu, 25 Jan 2007 20:06:26 +0530
+Message-ID: <b5a19cd20701250636i6e3f474bhebb16020e918c155@mail.gmail.com>
+References: <b5a19cd20701041246we052685hd700580df2cc120d@mail.gmail.com>
+	 <Pine.LNX.4.63.0701052147070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <b5a19cd20701051921j69f1a85bo97e39db7d8401222@mail.gmail.com>
+	 <Pine.LNX.4.63.0701161709570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <b5a19cd20701160934s16b8717er69b950cff055a5ae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig41FC0FDE164E48733427D080"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 25 15:35:44 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 25 15:36:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HA5hW-0004Ct-OC
-	for gcvg-git@gmane.org; Thu, 25 Jan 2007 15:35:43 +0100
+	id 1HA5iK-0004YT-UP
+	for gcvg-git@gmane.org; Thu, 25 Jan 2007 15:36:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965380AbXAYOfj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 25 Jan 2007 09:35:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965387AbXAYOfj
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 09:35:39 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:32984 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965380AbXAYOfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Jan 2007 09:35:38 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 0E8CA281C0
-	for <git@vger.kernel.org>; Thu, 25 Jan 2007 15:35:37 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Wmfa00U9gcLe for <git@vger.kernel.org>;
-	Thu, 25 Jan 2007 15:35:36 +0100 (CET)
-Received: from [62.216.203.191] (ppp-62-216-203-191.dynamic.mnet-online.de [62.216.203.191])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 40F4E281BB
-	for <git@vger.kernel.org>; Thu, 25 Jan 2007 15:35:36 +0100 (CET)
-User-Agent: Mail/News 1.5.0.4 (X11/20060619)
-In-Reply-To: <20070125142242.1402.qmail@b4b5deb4d44aa3.315fe32.mid.smarden.org>
-X-Enigmail-Version: 0.94.0.0
+	id S965389AbXAYOga (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 25 Jan 2007 09:36:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965395AbXAYOga
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Jan 2007 09:36:30 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:60065 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965389AbXAYOg3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Jan 2007 09:36:29 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so468447uga
+        for <git@vger.kernel.org>; Thu, 25 Jan 2007 06:36:28 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gc3Hf3oB1xantpBEiu6wjNmFqW9YmXxm8n/xe5iVj7zUqbvHEnTc3CpFN4Y0cSFfb25fuo0G6GM5KR1bTsmptfcORNBSYL3UyzVjOvnhX9/ZJOrJqTQlXMjLScz5iLXz8NJGUv+mmdWJWRr3DknKY4mSya+R7/i/UYduC/1AtLo=
+Received: by 10.82.120.15 with SMTP id s15mr1149692buc.1169735786569;
+        Thu, 25 Jan 2007 06:36:26 -0800 (PST)
+Received: by 10.78.50.8 with HTTP; Thu, 25 Jan 2007 06:36:26 -0800 (PST)
+In-Reply-To: <b5a19cd20701160934s16b8717er69b950cff055a5ae@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37726>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig41FC0FDE164E48733427D080
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Hi Johannes,
+                    What about the spell checker...?
 
-Gerrit Pape wrote:
-> Hi, I struggle with importing a CVS repository into git to switch over
-> development.  In some branches there're differences in the source code
-> after importing into git.  We tracked this down to tags and branches
-> that where tagged partially in CVS, first a tag was set on one
-> subdirectory tree (sources), later on another subdirectory tree (docs).=
+Regards
+Deepak
 
-> This confuses cvsimport or cvsps, the tag in git after import doesn't
-> match the tag in CVS.
+On 1/16/07, Deepak Barua <dbbarua@gmail.com> wrote:
+> Hi Johannes,
+>                   It's okay take your time and suggest any changes and
+> teach me how to make this code into a proper patch.
+>
+> Regards
+> Deepak
+>
+> On 1/16/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Hi,
+> >
+> > On Sat, 6 Jan 2007, Deepak Barua wrote:
+> >
+> > > Hi Johannes,
+> > >                    I spell check "//" comments in
+> > > in find_ext()
+> > >
+> > > if($_[0] =~ /\.cc|\.java/) {
+> > >
+> > >                $start_pattern  = qr!\s/\*\s|\s//\s!;
+> > >        }
+> > >
+> > > and
+> > >
+> > > $chosen_pattern eq qq!\s//\s! ? $end_pattern=qq!\s\014\s! : "End
+> > > Pattern Not Found" ;
+> > >
+> > > Also yes i didnt include to use spell checking in string literals , i
+> > > thought that would be irregular and cumbersome.
+> > >
+> > > Could you please test the code then i can include it in a seperate file ..?
+> >
+> > Sorry, I am a little bit stressed at the moment... And I don't have the
+> > required dependencies installed.
+> >
+> > Ciao,
+> > Dscho
+> >
+> >
+>
+>
+> --
+> Code Code Code Away
+>
 
-how do you expect this to ever work?  your tag is not a time stable one. =
- the tag spans multiple change sets.  best forget the whole tag thing, se=
-riously.  my cvs converter [1] already has a hard time reproducing branch=
-es correctly.  doing this with tags is impossible.  svn can do this becau=
-se they don't have tags, so it is a kind of fake.  of course you could do=
- this in git as well by actually creating a branch for a tag, but it is r=
-eally messy.  just don't do that.
 
-good luck
-  simon
-
-[1]: <http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs>, not 100% yet, but pr=
-obably the best you can get at the moment.  i'm a perfectionist, so i mig=
-ht never call it "done".
-
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enig41FC0FDE164E48733427D080
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFuMA1r5S+dk6z85oRAsqhAJ9t6Jb0c+VC+hM0r002/sxud9oueACcDnJ9
-1gO45OOQp2GTX0pOBuxTeec=
-=Fcck
------END PGP SIGNATURE-----
-
---------------enig41FC0FDE164E48733427D080--
+-- 
+Code Code Code Away
