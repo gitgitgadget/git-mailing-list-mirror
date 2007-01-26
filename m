@@ -1,110 +1,113 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Document check option to git diff.
-Date: Fri, 26 Jan 2007 15:46:02 -0800
-Message-ID: <7vodoltkqt.fsf@assigned-by-dhcp.cox.net>
-References: <1169833372823-git-send-email-rael@zopyra.com>
+Subject: Re: grafts+repack+prune = history at danger
+Date: Fri, 26 Jan 2007 15:46:01 -0800
+Message-ID: <7vtzydtkqu.fsf@assigned-by-dhcp.cox.net>
+References: <45B8E61E.C9C5E6C6@eudaptics.com>
+	<7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
+	<45B9B80E.E2534F97@eudaptics.com>
+	<7vr6ti183o.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701260747110.25027@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
 X-From: git-owner@vger.kernel.org Sat Jan 27 00:46:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAalv-0007i0-1E
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 00:46:19 +0100
+	id 1HAalu-0007i0-GX
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 00:46:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbXAZXqI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 18:46:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbXAZXqH
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 18:46:07 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:63375 "EHLO
-	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784AbXAZXqD (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751789AbXAZXqG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 18:46:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752182AbXAZXqG
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 18:46:06 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:54127 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789AbXAZXqD (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 26 Jan 2007 18:46:03 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao11.cox.net
+          by fed1rmmtao05.cox.net
           (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070126234603.KEIH25875.fed1rmmtao11.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 26 Jan 2007 18:46:03 -0500
+          id <20070126234602.JSFF15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 26 Jan 2007 18:46:02 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id Fzl51W00D1kojtg0000000; Fri, 26 Jan 2007 18:45:05 -0500
+	id Fzl41W00S1kojtg0000000; Fri, 26 Jan 2007 18:45:04 -0500
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37903>
 
-rael@zopyra.com writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> From: Bill Lear <rael@zopyra.com>
+> On Fri, 26 Jan 2007, Junio C Hamano wrote:
+>> 
+>> One thing you could do is to take the local-ness of grafts more
+>> literally and enforce it more strictly by dropping grafts while
+>> fetch-pack and receive-pack exchange common objects and spawn
+>> pack-objects to come up with objects needed to be sent.  But
+>> because we currently punt, we do not even do that.
 >
-> Signed-off-by: Bill Lear <rael@zopyra.com>
-> ---
->  Documentation/SubmittingPatches |    3 ++-
->  Documentation/diff-options.txt  |    5 +++++
->  Documentation/git-diff.txt      |    6 ++++++
->  3 files changed, 13 insertions(+), 1 deletions(-)
+> One option might be:
+>
+>  - add a global flag (like the current "save_commit_buffer") that commands 
+>    can set to specify whether they want to honor grafts or not.
+>
+>    The "please_follow_grafts" flag defaults to 1.
+>
+>  - "git send-pack" would explicitly set it to zero, and thus we'd always 
+>    send a non-grafted result.
+>
+>  - "git prune" would *also* explicitly set it to zero, but would also 
+>    manually look at the grafts file, and mark anything that is set in the 
+>    grafts file as being reachable (the same way it does for index entries 
+>    etc).
 
-Thanks.  It's nice to see somebody new getting more and more
-comfortable with git.
+I am not sure why your "git prune" one does that, but will think
+about it for some time first before I ask you to waste your time
+explaining it me.
 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index da1cc60..501e0df 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -58,6 +58,11 @@
->  	Turn off rename detection, even when the configuration
->  	file gives the default to do so.
->  
-> +--check::
-> +	Check whether differences form a valid patch.  Warns if
-> +	differences include a space before a tab or a space at the end
-> +	of a line.
-> +
+> It might also be an option to then do:
+>
+>  - "git repack" should probably also set it to zero - I think we might be 
+>    better off packing any grafted data separately.
+>
+> The alternative, of course, is to try to transfer the grafts file for 
+> clones and fetches, but that is likely to be a *bad* idea. It's even a 
+> potential security issue: grafts can literally be used to short-circuit 
+> some of the inherent safety in git, in that an attacker can make a graft 
+> that makes history *look* fine, but hide part of it (you can't "really" 
+> hide history, but you can make normal git operations like "git log" 
+> basically ignore it by judicious use of grafts).
 
-It is supposed to be only about new lines; correcting an
-existing line that had trailing whitespaces should not trigger
-the check.  "SP before a TAB" check is supposed to apply only in
-the indent part (if the code does not work that way, you have
-spotted bugs).
+I agree that transferring, potentially merging, and
+automatically installing grafts upon fetch has security
+implications.  Thanks for pointing it out [*1*].
 
-Also I fear that 'valid' is a bit too strong a word here.  A
-patch that introduces new lines that have trailing whitespaces
-is still a valid patch in the sense that 'patch' and 'git apply'
-would accept it as input.  How about rewording it like this?
+But if you are cloning, it would be handy if send-pack followed
+the altered world view and the result had identical grafts,
+which is why I am not 100% convinced about send-pack always
+sending a non-grafted result.
 
-	Look for and warn about changes that introduce trailing
-        whitespaces at the end of the line or an indent that
-        uses a whitespace before a tab.
 
-> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-> index 6a098df..5054fb7 100644
-> --- a/Documentation/git-diff.txt
-> +++ b/Documentation/git-diff.txt
-> @@ -70,6 +70,7 @@ Various ways to check your working tree::
->  $ git diff            <1>
->  $ git diff --cached   <2>
->  $ git diff HEAD       <3>
-> +$ git diff --check    <4>
->  ------------
->  +
->  <1> changes in the working tree not yet staged for the next commit.
-> @@ -77,6 +78,11 @@ $ git diff HEAD       <3>
->  would be committing if you run "git commit" without "-a" option.
->  <3> changes in the working tree since your last commit; what you
->  would be committing if you run "git commit -a"
-> +<4> display whether what you are about to commit is a valid patch,
-> +including whether you have spaces at the end of lines, or spaces
-> +before tabs.  Violations are displayed in this form:
-> +
-> +<file name>:<line number>:<violation>:<offending line>
->  
->  Comparing with arbitrary commits::
->  +
+[Footnote]
 
-        ... what you are about to commit introduces funny whitespaces,
-        such as traling whitespaces at the end of the line or an indent
-        that uses a whitespace before a tab.  Violations are...
+*1* Running "git fetch some-random-url" is supposed to be a safe
+operation.  The only thing it does is to download some objects
+that are only reachable from .git/FETCH_HEAD, and it never
+overwrites objects that existed in your repository before the
+fetch, so after looking at what .git/FETCH_HEAD has, potentially
+malicious contents will become cruft and you can gc them away.
+
+Running "git pull some-random-url ref" (without storing refspec)
+to merge and then running "git reset --hard ORIG_HEAD" also is,
+except that the reflog entry for the current branch would refer
+to the merge commit and you could inject bad objects that will
+not be immediately pruned in your object database that way.
+
+The moral of the story is you should not pull from suspicious
+source without thinking; fetching and immediately discarding
+should always be safe.
