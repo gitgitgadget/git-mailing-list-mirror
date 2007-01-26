@@ -1,87 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Seriously broken "git pack-refs"
-Date: Thu, 25 Jan 2007 22:24:35 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701252218540.25027@woody.linux-foundation.org>
+Date: Thu, 25 Jan 2007 22:50:18 -0800
+Message-ID: <7vac062set.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0701251636060.25027@woody.linux-foundation.org>
- <7v7iva4glo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701252202130.25027@woody.linux-foundation.org>
- <7vireu2uc6.fsf@assigned-by-dhcp.cox.net>
+	<7v7iva4glo.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701252202130.25027@woody.linux-foundation.org>
+	<7vireu2uc6.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701252218540.25027@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 26 07:24:45 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jan 26 07:50:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAKVu-0008HJ-VW
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 07:24:43 +0100
+	id 1HAKuq-0001bi-D2
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 07:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030788AbXAZGYk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 01:24:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030789AbXAZGYk
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 01:24:40 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:47970 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030788AbXAZGYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 01:24:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0Q6OagP024080
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 25 Jan 2007 22:24:36 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0Q6OZjx009315;
-	Thu, 25 Jan 2007 22:24:35 -0800
-In-Reply-To: <7vireu2uc6.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.597 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
-X-MIMEDefang-Filter: osdl$Revision: 1.172 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030805AbXAZGuZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 01:50:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030806AbXAZGuZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 01:50:25 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:35871 "EHLO
+	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030805AbXAZGuY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 01:50:24 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070126065023.LAKR29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 26 Jan 2007 01:50:23 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id FipS1W0091kojtg0000000; Fri, 26 Jan 2007 01:49:26 -0500
+In-Reply-To: <Pine.LNX.4.64.0701252218540.25027@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Thu, 25 Jan 2007 22:24:35 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37807>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> Tags automatically fall under that heading (which is why it makes sense to 
+> pack them by default in the first place!) but so does any ref that was 
+> already packed, and hadn't become unpacked since the last repack. By 
+> definition, such a ref isn't "actively changing" even if it isn't a tag.
+>
+> No?
 
-On Thu, 25 Jan 2007, Junio C Hamano wrote:
-> 
-> On the other hand, I do not think it is worth unpacking non-tags
-> that are packed when --all is not given, so...
+Yes.
 
-Exactly. 
-
-I'd much rather have
-
-	git pack-refs --all --prune
-
-just pack everything once and for all. Afterwards, if you do just
-
-	git pack-refs
-
-it will keep everything that was packed packed, and any loose refs (which 
-might be loose because they are new, but perhaps because they simply got 
-overridden by being changed) will not be added to the pack unless they are 
-tags.
-
-Which should be the semantics with my patch applied. 
-
-The above actually makes tons of sense: operations like big imports (or 
-clones) might want to start out with *everything* packed, but then as we 
-update, commit and modify, what we actually want to do is to basically let 
-the branches that are actively developed "become unpacked" as they are 
-updated.
-
-So the "repack refs that were already packed, or refs that are tags" is 
-actually a very sane default. It's not just that we don't want to lose the 
-refs entirely, it's also that what we actually want to do by default is to 
-pack the stuff we have reason to believe won't be actively changing. 
-
-Tags automatically fall under that heading (which is why it makes sense to 
-pack them by default in the first place!) but so does any ref that was 
-already packed, and hadn't become unpacked since the last repack. By 
-definition, such a ref isn't "actively changing" even if it isn't a tag.
-
-No?
-
-		Linus
+diff --git a/Documentation/git-pack-refs.txt b/Documentation/git-pack-refs.txt
+index 464269f..b79b79d 100644
+--- a/Documentation/git-pack-refs.txt
++++ b/Documentation/git-pack-refs.txt
+@@ -34,11 +34,16 @@ OPTIONS
+ 
+ \--all::
+ 
+-The command by default packs all tags and leaves branch tips
++The command by default packs all tags and refs that are already
++packed, and leaves other refs
+ alone.  This is because branches are expected to be actively
+ developed and packing their tips does not help performance.
+ This option causes branch tips to be packed as well.  Useful for
+ a repository with many branches of historical interests.
++Once packing with `\--all` is done, further repacking with the
++default will keep the already packed refs (including branch
++heads) packed, while still actively developed branch heads will
++not be packed (because they become unpacked once modified).
+ 
+ \--no-prune::
+ 
