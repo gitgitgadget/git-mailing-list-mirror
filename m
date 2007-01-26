@@ -1,99 +1,60 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] diff --check: use colour
-Date: Fri, 26 Jan 2007 16:37:00 +0000
-Message-ID: <200701261637.01199.andyparkins@gmail.com>
-References: <Pine.LNX.4.63.0701241505260.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0701260034320.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17850.8953.478146.754550@lisa.zopyra.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: .git/info/refs
+Date: Fri, 26 Jan 2007 08:39:46 -0800
+Message-ID: <45BA2ED2.7080807@zytor.com>
+References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org>	<45B7818F.6020805@zytor.com>	<Pine.LNX.4.63.0701241658490.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45B78836.5080508@zytor.com>	<Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45B78C55.2030204@zytor.com> <ep83m2$mts$1@sea.gmane.org>	<45B8E551.9020808@zytor.com> <7vireuxbel.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Bill Lear <rael@zopyra.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 26 17:37:51 2007
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jan 26 17:40:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAU57-0004Lz-4l
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 17:37:41 +0100
+	id 1HAU7S-0005KN-EH
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 17:40:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030620AbXAZQhI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 11:37:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030709AbXAZQhI
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 11:37:08 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:56565 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030620AbXAZQhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 11:37:05 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so759789uga
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 08:37:04 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=oJD+lDtpiNzC6DwR0ZspmyJHrJOB7JX5ThpeGThuWFz9FpR9SpT+8ZTrSi6pAjbo62BvJ+aB99Vy7kLZQ4r8e1PFwnjfqX/EVQ358Ckgdb07gvYbhUzNr5sZBls0wzh/AhK4Qm1VouQyOJXrcAtnmAPmdB/suT/w2OREfyEEQ64=
-Received: by 10.67.96.14 with SMTP id y14mr4551611ugl.1169829424363;
-        Fri, 26 Jan 2007 08:37:04 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id j1sm4623088ugf.2007.01.26.08.37.03;
-        Fri, 26 Jan 2007 08:37:03 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <17850.8953.478146.754550@lisa.zopyra.com>
-Content-Disposition: inline
+	id S1030590AbXAZQkB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 11:40:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030709AbXAZQkB
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 11:40:01 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:33287 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030590AbXAZQkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 11:40:00 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l0QGdkpa012789
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 26 Jan 2007 08:39:47 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+In-Reply-To: <7vireuxbel.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV 0.88.7/2493/Fri Jan 26 04:00:46 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.8 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_12_24,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37872>
 
-On Friday 2007 January 26 15:49, Bill Lear wrote:
+Junio C Hamano wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+> 
+>> For heaven's sake, in computer science we can *NEVER* use the same
+>> feature for *MORE THAN ONE THING*.  If it doesn't work format-wise
+>> that's fine, but "it's only supposed to be used by dumb transports" is
+>> ridiculous.
+> 
+> Hmmmm... I am lost here....
+> 
 
-> I presume that I send the patch text to the list with the subject line
-> that starts with [PATCH], some sensible topic (e.g., "document --check
-> option to diff"), and then a short body of explanation and then,
-> following my signature, the patch itself.
+Jakub and Johannes seems to have been arguing that "info/refs is for 
+dumb transports, therefore it cannot be used for any other purpose."  I 
+find this argument utterly bizarre, since in general, in computer 
+science, you try to be multipurpose whenever practical.
 
-git-format-patch will make you an email of the correct form.  Personally I do 
-this (this is the IMAP server version, but it's similar for mbox)
-
- * make myself a branch from current master
- * write patch/patches, test (yeah, right ;-))
- * git-format-patch --stdout HEAD^ to check it looks good
- * git-format-patch --stdout HEAD^ | git-imap-send 
- * Go to Drafts mailbox, open it up, add any additional comments for the
-   mailing list only underneath the "---" and before the diffstat.  Make sure
-   you turn word wrap off as soon as you open the mail.  Word wrapping will
-   ruin the patch.
- * Send.
- * Wait for huge feeling of disappointment because your patch is junk and
-   gets savaged by the git-gurus (maybe this step is just for me though).
-
-To make this all easy and automatic I also have the following in 
-my .git/config:
-
-[format]
-        headers = "To: git@vger.kernel.org\n"
-
-And the following in my ~/.gitconfig:
-
-[imap]
-    Folder = "INBOX.Drafts"
-    Tunnel = "ssh -q mailhost /usr/bin/imapd ./IMAPmd 2> /dev/null"
-
-And the following in my .git/hooks/commit-msg (make sure you set it 
-executable) to automatically add the "Signed-Off-By" line to your commits:
-
-SOB=$(git var GIT_AUTHOR_IDENT | sed -n 's/^\(.*>\).*$/Signed-off-by: \1/p')
-grep -qs "^$SOB" "$1" || echo "$SOB" >> "$1"
-
-I've also enabled the .git/hooks/pre-commit hook (chmod a+x) to make git check 
-my patches before they get committed.
-
-git-format-patch makes git mailing list friendly patches that match the 
-guidelines given in Documentation/SubmittingPatches
-
-Hope that helps.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+	-hpa
