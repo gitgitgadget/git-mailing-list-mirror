@@ -1,51 +1,41 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: .git/info/refs
-Date: Fri, 26 Jan 2007 13:54:00 -0800
-Message-ID: <45BA7878.9000300@zytor.com>
-References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org> <45B7818F.6020805@zytor.com> <Pine.LNX.4.63.0701241658490.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45B78836.5080508@zytor.com> <Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45B78C55.2030204@zytor.com> <ep83m2$mts$1@sea.gmane.org> <45B8E551.9020808@zytor.com> <7vireuxbel.fsf@assigned-by-dhcp.cox.net> <45BA2ED2.7080807@zytor.com> <Pine.LNX.4.63.0701262200131.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Jan 26 22:54:22 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: reflog for HEAD (detached or between branches)
+Date: Fri, 26 Jan 2007 17:25:13 -0500
+Message-ID: <11698503133039-git-send-email-nico@cam.org>
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jan 26 23:25:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAZ1Z-0005dQ-EE
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 22:54:21 +0100
+	id 1HAZVX-0003v0-0M
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 23:25:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668AbXAZVyR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 16:54:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751669AbXAZVyR
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 16:54:17 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:49649 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751667AbXAZVyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 16:54:16 -0500
-Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l0QLs4Xq025558
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Jan 2007 13:54:04 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-In-Reply-To: <Pine.LNX.4.63.0701262200131.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: ClamAV 0.88.7/2493/Fri Jan 26 04:00:46 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.4 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_24_48 autolearn=no version=3.1.7
-X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
+	id S1751713AbXAZWZP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 17:25:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbXAZWZP
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 17:25:15 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:60394 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751713AbXAZWZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 17:25:14 -0500
+Received: from localhost.localdomain ([74.56.106.175])
+ by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCH00IL0YA1BO40@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 26 Jan 2007 17:25:13 -0500 (EST)
+X-Mailer: git-send-email 1.5.0.rc2.g6e2c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37886>
 
-By the way, let me be the first to apologize for the emotional 
-escalation.  What matters to me is that the information is cached and 
-updated by a common cached information entry point (the existing 
-git-update-server-index would be preferred, obviously), not where the 
-information ends up.
 
-	-hpa
+This is the implementation for the idea I proposed for the support of
+reflog with detached head.  In fact with this serie HEAD has a reflog
+of its own which may or may not contain the same log entries found in
+reflogs of individual branches.
+
+Nicolas
