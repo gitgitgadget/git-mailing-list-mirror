@@ -1,60 +1,69 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: .git/info/refs
-Date: Fri, 26 Jan 2007 08:39:46 -0800
-Message-ID: <45BA2ED2.7080807@zytor.com>
-References: <45B70D06.3050506@zytor.com> <ep78r0$h2u$1@sea.gmane.org>	<45B7818F.6020805@zytor.com>	<Pine.LNX.4.63.0701241658490.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45B78836.5080508@zytor.com>	<Pine.LNX.4.63.0701241731400.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45B78C55.2030204@zytor.com> <ep83m2$mts$1@sea.gmane.org>	<45B8E551.9020808@zytor.com> <7vireuxbel.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] fix suggested branch creation command when detaching head
+Date: Fri, 26 Jan 2007 11:50:06 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0701261120020.3021@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 26 17:40:06 2007
+X-From: git-owner@vger.kernel.org Fri Jan 26 17:59:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAU7S-0005KN-EH
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 17:40:06 +0100
+	id 1HAUQP-0004sx-4M
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 17:59:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030590AbXAZQkB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 11:40:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030709AbXAZQkB
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 11:40:01 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:33287 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030590AbXAZQkA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 11:40:00 -0500
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l0QGdkpa012789
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Jan 2007 08:39:47 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
-In-Reply-To: <7vireuxbel.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV 0.88.7/2493/Fri Jan 26 04:00:46 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=0.8 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_12_24,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
-X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
+	id S1161095AbXAZQ7d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 11:59:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030834AbXAZQuY
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 11:50:24 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:28267 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030786AbXAZQuH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 11:50:07 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCH00D7HIRISK80@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 26 Jan 2007 11:50:06 -0500 (EST)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37873>
 
-Junio C Hamano wrote:
-> "H. Peter Anvin" <hpa@zytor.com> writes:
-> 
->> For heaven's sake, in computer science we can *NEVER* use the same
->> feature for *MORE THAN ONE THING*.  If it doesn't work format-wise
->> that's fine, but "it's only supposed to be used by dumb transports" is
->> ridiculous.
-> 
-> Hmmmm... I am lost here....
-> 
+Doing:
 
-Jakub and Johannes seems to have been arguing that "info/refs is for 
-dumb transports, therefore it cannot be used for any other purpose."  I 
-find this argument utterly bizarre, since in general, in computer 
-science, you try to be multipurpose whenever practical.
+$ git checkout HEAD^
 
-	-hpa
+Generates the following message:
+
+|warning: you are not on ANY branch anymore.
+|If you meant to create a new branch from the commit, you need -b to
+|associate a new branch with the wanted checkout.  Example:
+|  git checkout -b <new_branch_name> HEAD^
+
+Of course if the user does as told at this point the created branch 
+won't be located at the expected commit.  Reword this message a bit to 
+avoid such confusion.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+diff --git a/git-checkout.sh b/git-checkout.sh
+index c52f352..1929424 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -156,9 +156,9 @@ then
+ 	if test -n "$oldbranch"
+ 	then
+ 		detach_warn="warning: you are not on ANY branch anymore.
+-If you meant to create a new branch from the commit, you need -b to
+-associate a new branch with the wanted checkout.  Example:
+-  git checkout -b <new_branch_name> $arg"
++If you meant to create a new branch from this checkout, you may still do
++so (now or later) by using -b with the checkout command again.  Example:
++  git checkout -b <new_branch_name>"
+ 	fi
+ elif test -z "$oldbranch" && test -n "$branch"
+ then
