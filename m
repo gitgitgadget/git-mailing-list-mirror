@@ -1,93 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: grafts+repack+prune = history at danger
-Date: Fri, 26 Jan 2007 03:29:39 -0800
-Message-ID: <7vodomxbz0.fsf@assigned-by-dhcp.cox.net>
-References: <45B8E61E.C9C5E6C6@eudaptics.com>
-	<7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
-	<45B9B80E.E2534F97@eudaptics.com>
-	<7vr6ti183o.fsf@assigned-by-dhcp.cox.net>
-	<45B9C836.728F31EC@eudaptics.com>
-	<7vzm86yw0q.fsf@assigned-by-dhcp.cox.net>
-	<45B9CE56.D16DFC81@eudaptics.com>
-	<7vmz46ytyy.fsf@assigned-by-dhcp.cox.net>
-	<45B9DAC8.C04C6D3F@eudaptics.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Does git-cvsserver expect all changes to be via CVS?
+Date: Fri, 26 Jan 2007 11:31:40 +0000
+Message-ID: <200701261131.41765.andyparkins@gmail.com>
+References: <200701261037.13948.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Fri Jan 26 12:29:49 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 26 12:32:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAPH9-0003mv-0T
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:29:47 +0100
+	id 1HAPJN-0004mo-0P
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:32:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933187AbXAZL3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 06:29:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933200AbXAZL3l
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:29:41 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:39864 "EHLO
-	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933187AbXAZL3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 06:29:40 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070126112940.QQKV16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 26 Jan 2007 06:29:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FnUi1W00D1kojtg0000000; Fri, 26 Jan 2007 06:28:43 -0500
-In-Reply-To: <45B9DAC8.C04C6D3F@eudaptics.com> (Johannes Sixt's message of
-	"Fri, 26 Jan 2007 11:41:12 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933203AbXAZLbr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 06:31:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933204AbXAZLbr
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:31:47 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:9108 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933203AbXAZLbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 06:31:46 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so692260uga
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 03:31:45 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Dpg36IdVA7tlJzpqHKb7fhhTOFioDVAP6+9Wv3TiEOuWJNHoYErUdJHff2i+BwTpSPhIipzDGNBpAvfq4MOJQ3meGQju/tER/Wj8ANG+PqTcGUDXw+5XJPOFVA58Gw+JeL1zfQ1ZulHi+fMsHT1WfKGFcAAFKxc1i5FR+ceHt8A=
+Received: by 10.67.117.2 with SMTP id u2mr3941508ugm.1169811104852;
+        Fri, 26 Jan 2007 03:31:44 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id 72sm3543755ugb.2007.01.26.03.31.43;
+        Fri, 26 Jan 2007 03:31:43 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <200701261037.13948.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37842>
 
-Johannes Sixt <J.Sixt@eudaptics.com> writes:
+On Friday 2007 January 26 10:37, Andy Parkins wrote:
 
-> - the grafts file is not part of the objects database
+> Still messing around with git-cvsserver.  It's behaving very strangely, and
 
-This is a very conscious design decision from an ancient times.
-It used to be fashionable to share object store across different
-repositories (you literally symlinked .git/objects), and grafts
-are local in the sense that they are per-repository, and that is
-the reason it lives in .git/info.  There is not much reason
-either way and if I were doing this from scratch I would
-probably place it in .git/objects/info next to alternates.
+Please ignore.  Was using old version of git-cvsserver on the remote end.
 
-> - it is manipulated manually instead of by tools the check for errors
 
-Yes, but that is only because nobody saw need for such a tool so
-far.  In reality, grafts have been pretty much "install and
-forget" thing.  You graft 2.6.12-rc2 on top of the bkcvs tip
-once, and then do not think about it after doing so.
+Andy
 
-When somebody sees a need, you know what will happen ;-).
-
-> - it is not transferred across clones/pulls/pushes (it's even possible
-> to create an inconsistent clone)
-
-Yes, as I already said that is where we punted and declared that
-the grafts are local matter.
-
-Even though your resulting clone is inconsistent, I do not even
-have to say "tough".  You can just tell what the necessary graft
-file should look like to the repository owner at the other end,
-and the life will be peachy again.
-
-I even outlined the issues you (or somebody else who may be
-interested) would need to look into to make it more global.  Do
-you need anything more?
-
-> The way out that I see is to make grafts much, much less important.
-
-Breaking what already works does not sound like a way out.  
-
-For local-only, "install and forget" use, what the current setup
-does is consistent and works reasonably well.  I would not say
-it is perfect, but I do not know of any outstanding bugs (and
-what you mentioned in these message are certainly not).
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
