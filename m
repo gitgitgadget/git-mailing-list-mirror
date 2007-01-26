@@ -1,79 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: .git/info/refs
-Date: Fri, 26 Jan 2007 18:06:36 +0100
-Message-ID: <200701261806.37488.jnareb@gmail.com>
-References: <45B70D06.3050506@zytor.com> <7vireuxbel.fsf@assigned-by-dhcp.cox.net> <45BA2ED2.7080807@zytor.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diff --check: use colour
+Date: Fri, 26 Jan 2007 12:19:30 -0500
+Message-ID: <20070126171929.GA23324@coredump.intra.peff.net>
+References: <Pine.LNX.4.63.0701241505260.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vr6tkdnee.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701251015390.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vk5za925w.fsf@assigned-by-dhcp.cox.net> <17849.13327.527531.262943@lisa.zopyra.com> <Pine.LNX.4.63.0701260034320.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17850.8953.478146.754550@lisa.zopyra.com> <17850.10014.251824.979660@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Fri Jan 26 18:07:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 18:19:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAUXK-0007zt-4Q
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 18:06:50 +0100
+	id 1HAUjj-0004wM-IZ
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 18:19:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030865AbXAZRFe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 12:05:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030873AbXAZRFe
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 12:05:34 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:30375 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030861AbXAZRFc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 12:05:32 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so766280uga
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 09:05:31 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=YP56yY6w7EHoqaFFgGg4AKVThCypa4lFm7vCosswZoRf0Wrl1OCr4WCiAJJLEsu1uKjgv3Iy8DElG71k3QZ0aZksxAm11KwyFF/876FoS6Qo4ajf6OBAMLC64PXUtu/PT6KxxAkw9USW4bs0FYrnScawY8WtZDheWRbF+C37cBU=
-Received: by 10.67.119.9 with SMTP id w9mr4584874ugm.1169831130976;
-        Fri, 26 Jan 2007 09:05:30 -0800 (PST)
-Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
-        by mx.google.com with ESMTP id s1sm3921574uge.2007.01.26.09.05.29;
-        Fri, 26 Jan 2007 09:05:29 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <45BA2ED2.7080807@zytor.com>
+	id S1161048AbXAZRTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 12:19:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161047AbXAZRTd
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 12:19:33 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1370 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161048AbXAZRTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 12:19:32 -0500
+Received: (qmail 5481 invoked from network); 26 Jan 2007 12:19:54 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 26 Jan 2007 12:19:54 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jan 2007 12:19:30 -0500
 Content-Disposition: inline
+In-Reply-To: <17850.10014.251824.979660@lisa.zopyra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37875>
 
-H. Peter Anvin wrote:
-> Junio C Hamano wrote:
->> "H. Peter Anvin" <hpa@zytor.com> writes:
->> 
->>> For heaven's sake, in computer science we can *NEVER* use the same
->>> feature for *MORE THAN ONE THING*.  If it doesn't work format-wise
->>> that's fine, but "it's only supposed to be used by dumb transports" is
->>> ridiculous.
+On Fri, Jan 26, 2007 at 10:06:54AM -0600, Bill Lear wrote:
 
-Please, for the future, mark irony if it might be mistaken...
- 
->> Hmmmm... I am lost here....
->
-> Jakub and Johannes seems to have been arguing that "info/refs is for 
-> dumb transports, therefore it cannot be used for any other purpose."  I 
-> find this argument utterly bizarre, since in general, in computer 
-> science, you try to be multipurpose whenever practical.
+> git format-patch -s HEAD^
+> [...]
+> which looks to be formatted as a mail message:
 
-First, changing info/refs format _might_ break fetch related scripts,
-which rely on git-peek-remote / git-ls-remote / info/refs format.
+Right.
 
-Second, it is a bit impractical because info/refs contain (and must
-contain) also _tags_ information (which is not needed for gitweb
-"Last Change" field in projects list) and referenced object for
-those tags. Tags need not to point to commits, nor dereference
-to commits: for example in git.git tags v1.0rc1 to v1.0rc6 points
-to other tags, and junio-gpg-pub point to out-of-tree blob (which
-does not have any "commit time" associated). So what to write there
-in the "commit time" field? What to write in "commit time" for tags?
--- 
-Jakub Narebski
-Poland
+The format is:
+  - subject line is the first line of your commit message
+  - subsequent body lines are the rest of your commit message, until you
+    hit the ---
+  - below that is the patch; everything in the patch section that is not
+    an actual diff hunk is free-form (e.g., the diffstat).
+
+> Do I optionally edit this file, putting my comments before the
+> "Signed-off-by" line, and then just send this off to the list with my
+> mail command, i.e.:
+
+Comments before the signed-off-by line will be part of the commit
+message; so if you have comments to put there, you probably would have
+made them when your were committing. If you have comments to send with
+the email ("cover letter"), place them after the --- but before the
+diffstat.
+
+> % mail git@vger.kernel.org < 0001-Document-check-option-to-git-diff.patch
+> 
+> ?
+
+I'm not an expert on 'mail' but I'm not sure if it handles headers
+correctly (i.e., it expects body text, _not_ the full rfc822 message).
+You can use git-send-email, but I find its interface a little clunky.
+You can use git-imap-send to place the message in an IMAP mailbox, which
+you can then presumably grab as a 'draft' using your regular mail
+client. Or you can use a mail client which understands mbox (most unix
+ones do), open the file as an mbox, and then resume it as a draft.
+
+Or finally, you can simply edit in the headers you want, remove the
+initial 'From ' line, and pipe it to sendmail. :)
+
+What's easiest for you depends on what your mail setup is like (I use
+mutt to open the mbox, then "resend" it with editing).
+
+-Peff
