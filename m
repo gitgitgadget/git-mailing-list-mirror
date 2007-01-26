@@ -1,82 +1,103 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Allow non-developer to clone, checkout and fetch easier.
-Date: Fri, 26 Jan 2007 15:20:30 +0100
-Message-ID: <81b0412b0701260620v31feedecwfe0565ee846253a9@mail.gmail.com>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vzm8ansrt.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0701231129501.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.64.0701231101040.3011@xanadu.home>
-	 <7v7ivbc3hj.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.63.0701250922260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <7vejpiaj2f.fsf@assigned-by-dhcp.cox.net>
-	 <7vhcue4heq.fsf@assigned-by-dhcp.cox.net>
-	 <7v1wli4g8h.fsf_-_@assigned-by-dhcp.cox.net>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: git merge FETCH_HEAD produced bad commit message
+Date: Fri, 26 Jan 2007 16:24:20 +0200
+Message-ID: <20070126142420.GO10812@mellanox.co.il>
+References: <81b0412b0701260102j7d1c44d5nd5aa489cb8312722@mail.gmail.com>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 26 15:20:44 2007
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 15:24:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HARwW-0001Te-Rk
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 15:20:41 +0100
+	id 1HARzi-0002sL-Tc
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 15:23:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965689AbXAZOUh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 09:20:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965692AbXAZOUh
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 09:20:37 -0500
-Received: from an-out-0708.google.com ([209.85.132.247]:58225 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965689AbXAZOUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 09:20:35 -0500
-Received: by an-out-0708.google.com with SMTP id b33so533400ana
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 06:20:35 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hMw6TVRY5gcs5/p4wyHX9NVsGqW0E4mGzuRxMVs8kJ6D6WkQJfk0mhu1Yt/LFI4molxxBb0pSp5jAtUeaxRTWkLt2udjkxthLcxFCC+slUQPMaIEZEdgmYAu+uC4dH6+ePCYLxyDgBm1+tNT4fq3ALoYYVPfUKsFByWoJyYoTcE=
-Received: by 10.78.149.15 with SMTP id w15mr921615hud.1169821230238;
-        Fri, 26 Jan 2007 06:20:30 -0800 (PST)
-Received: by 10.78.139.7 with HTTP; Fri, 26 Jan 2007 06:20:30 -0800 (PST)
-In-Reply-To: <7v1wli4g8h.fsf_-_@assigned-by-dhcp.cox.net>
+	id S1030246AbXAZOXz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 09:23:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030251AbXAZOXz
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 09:23:55 -0500
+Received: from p02c11o141.mxlogic.net ([208.65.145.64]:54948 "EHLO
+	p02c11o141.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030246AbXAZOXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 09:23:54 -0500
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o141.mxlogic.net (mxl_mta-4.0.2-1)
+	with ESMTP id afe0ab54.2699373488.11462.00-007.p02c11o141.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Fri, 26 Jan 2007 07:23:54 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 26 Jan 2007 16:25:47 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Fri, 26 Jan 2007 16:23:04 +0200
 Content-Disposition: inline
+In-Reply-To: <81b0412b0701260102j7d1c44d5nd5aa489cb8312722@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 26 Jan 2007 14:25:47.0596 (UTC) FILETIME=[DF31D8C0:01C74155]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14958.003
+X-TM-AS-Result: No--14.174400-4.000000-31
+X-Spam: [F=0.0100000000; S=0.010(2007010901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37858>
 
-On 1/26/07, Junio C Hamano <junkio@cox.net> wrote:
-> The code that uses committer_info() in reflog can barf and die
-> whenever it is asked to update a ref.  And I do not think
-> calling ignore_missing_committer_name() upfront like recent
-> receive-pack did in the aplication is a reasonable workaround.
->
-> What the patch does.
->
->  - git_committer_info() takes one parameter.  It used to be "if
->    this is true, then die() if the name is not available due to
->    bad GECOS, otherwise issue a warning once but leave the name
->    empty".  The reason was because we wanted to prevent bad
->    commits from being made by git-commit-tree (and its
->    callers).  The value 0 is only used by "git var -l".
->
->    Now it takes -1, 0 or 1.  When set to -1, it does not
->    complain but uses the pw->pw_name when name is not
->    available.  Existing 0 and 1 values mean the same thing as
->    they used to mean before.  0 means issue warnings and leave
->    it empty, 1 means barf and die.
+> Quoting Alex Riesen <raa.lkml@gmail.com>:
+> Subject: Re: git merge FETCH_HEAD produced bad commit message
+> 
+> On 1/25/07, Michael S. Tsirkin <mst@mellanox.co.il> wrote:
+> > Hi!
+> > I like to do
+> >         $git fetch <URL>
+> >
+> >         $git log FETCH_HEAD
+> >
+> >         $git merge FETCH_HEAD
+> >
+> > I would expect this to be equivalent to
+> >
+> >         git pull <URL>
+> >
+> > However, the message that git merge produces in this case
+> > is less than informative:
+> >
+> > commit 3c11f564846227d80aa76b579c974913c3602862
+> > Merge: 9871244... f5e6d63...
+> > Author: Michael S. Tsirkin <mst@mellanox.co.il>
+> > Date:   Thu Jan 25 16:46:51 2007 +0200
+> >
+> >     Merge commit 'FETCH_HEAD' into ofed_1_2
+> >
+> > I note that FETCH_HEAD actually has the information on where
+> > the commit came from:
+> > $cat .git/FETCH_HEAD
+> > f5e6d63839970f4785c36b6be3835f037e74195c ssh://<hidden>/usr/src/ofed_1_2
+> >
+> > So can not git merge be enhanced to put this data in commit log?
+> >
+> 
+> Does it need to?
 
- enum {
-    CMITR_INFO_PW_NAME = -1,
-    CMITR_INFO_EMPTY = 0,
-    CMITR_INFO_DIE = 1,
- };
+FETCH_HEAD is not a real head name, so I think the message above is a bug.
 
--       const char *committer = git_committer_info(CMITR_INFO_DIE);
-+       const char *committer = git_committer_info(CMITR_INFO_PW_NAME);
+> Is the below enough (could be line-wrapped):
+> 
+> git merge --no-commit FETCH_HEAD && \
+> git commit -M "Merge $(cut -d ' ' -f 2- < $(git rev-parse
+> --git-dir)/FETCH_HEAD) \
+> into $(git name-rev HEAD | cut -d ' ' -f 2-)"
 
-The code becoming increasingly harder to read, doesn't it...
+Or I can just commit --amend and edit it manually.
+But that's not the point.
+
+> In the long run you'll almost certainly find this commit message
+> useless, though.
+
+Isn't 'Merge ssh://<hidden>/usr/src/ofed_1_2 info ofed_1_2' much more
+useful than Merge commit 'FETCH_HEAD'?
+
+-- 
+MST
