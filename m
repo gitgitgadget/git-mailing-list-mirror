@@ -1,62 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: grafts+repack+prune = history at danger
-Date: Fri, 26 Jan 2007 01:31:17 -0800
-Message-ID: <7vzm86yw0q.fsf@assigned-by-dhcp.cox.net>
-References: <45B8E61E.C9C5E6C6@eudaptics.com>
-	<7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
-	<45B9B80E.E2534F97@eudaptics.com>
-	<7vr6ti183o.fsf@assigned-by-dhcp.cox.net>
-	<45B9C836.728F31EC@eudaptics.com>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: [PATCH 1/2] Teach git-describe to display distances from tags.
+Date: Fri, 26 Jan 2007 10:39:10 +0100
+Message-ID: <38b2ab8a0701260139w25d3e6c7ka8a0097f247f8421@mail.gmail.com>
+References: <20070125173954.GA13276@spearce.org>
+	 <7vmz46ajcq.fsf@assigned-by-dhcp.cox.net>
+	 <7v7ivaailb.fsf@assigned-by-dhcp.cox.net>
+	 <20070125214923.GD13874@spearce.org>
+	 <Pine.LNX.4.64.0701251830400.3021@xanadu.home>
+	 <7vmz4663xq.fsf@assigned-by-dhcp.cox.net>
+	 <38b2ab8a0701260052q517285e8l2505114a48d34558@mail.gmail.com>
+	 <7vlkjq17sm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Fri Jan 26 10:31:23 2007
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jan 26 10:39:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HANQY-0001PM-Pi
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 10:31:23 +0100
+	id 1HANYD-0005K2-7W
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 10:39:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965608AbXAZJbT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 04:31:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965618AbXAZJbT
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 04:31:19 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:64612 "EHLO
-	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965608AbXAZJbS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 04:31:18 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070126093118.XWOB19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 26 Jan 2007 04:31:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id FlWL1W01R1kojtg0000000; Fri, 26 Jan 2007 04:30:20 -0500
-In-Reply-To: <45B9C836.728F31EC@eudaptics.com> (Johannes Sixt's message of
-	"Fri, 26 Jan 2007 10:21:58 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161002AbXAZJjN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 04:39:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161006AbXAZJjN
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 04:39:13 -0500
+Received: from hu-out-0506.google.com ([72.14.214.235]:18952 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161002AbXAZJjM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 04:39:12 -0500
+Received: by hu-out-0506.google.com with SMTP id 36so624238hui
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 01:39:10 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ksW0ORGgezOv70LwfSHjOW74jIeECwAqF+DxOklKUZzifcF8hQhxqO86nHR03yF0Z3rYP9Z4gLw89y17ybEvmZqrpMphKUvzRLIRDHRF2fe9Ie9SyuD1m3G9GiYuY0cfaaEKOeivnWjQBl8CktEuxs24pVIwee7s+0H5brs7KEs=
+Received: by 10.49.19.5 with SMTP id w5mr2934376nfi.1169804350648;
+        Fri, 26 Jan 2007 01:39:10 -0800 (PST)
+Received: by 10.49.30.4 with HTTP; Fri, 26 Jan 2007 01:39:10 -0800 (PST)
+In-Reply-To: <7vlkjq17sm.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37824>
 
-Johannes Sixt <J.Sixt@eudaptics.com> writes:
+On 1/26/07, Junio C Hamano <junkio@cox.net> wrote:
+> There is no fundamental change between 1.4.4 series and the
+> upcoming 1.5.0 -- only superficial ones.  I do not think it
 
-> Here's my stance on it. Grafts should be a local matter. And they alter
-> the world view, with a pronounciation on *view*. That's why I proposed
-> that only log familiy of commands obey them[*]. And probably rev-list so
-> that gitk et.al. have a way to obey them. And also the ref parser (so
-> that master~20 is what it looks it is). Everything else should disregard
-> grafts: repack, prune, fetch, <transfer>-pack, push etc. No nasty side
-> effects anymore.
+But there are incompatibilities.
 
-I said you are not agreeing, but I should have said you are not
-understanding.
+Another example, which may be a bad one since I unfortunately don't
+have time to follow closely git's development: the internal of 'git
+pull' has completely changed. If I clone a repo with git v1.4.x and I
+pull in this repo with git v1.5.x, does it still works ?
 
-grafts can bring otherwise disconnected commits into the
-altered history, so if you want your log to honor grafts, your
-prune and repack need to be aware of them lest you would not
-lose them.
+thanks
+-- 
+Francis
