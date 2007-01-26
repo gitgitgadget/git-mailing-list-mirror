@@ -1,200 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: .git/info/refs
-Date: Fri, 26 Jan 2007 12:22:49 +0100
-Message-ID: <200701261222.50725.jnareb@gmail.com>
-References: <45B70D06.3050506@zytor.com> <ep83m2$mts$1@sea.gmane.org> <45B8E551.9020808@zytor.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: grafts+repack+prune = history at danger
+Date: Fri, 26 Jan 2007 03:29:39 -0800
+Message-ID: <7vodomxbz0.fsf@assigned-by-dhcp.cox.net>
+References: <45B8E61E.C9C5E6C6@eudaptics.com>
+	<7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
+	<45B9B80E.E2534F97@eudaptics.com>
+	<7vr6ti183o.fsf@assigned-by-dhcp.cox.net>
+	<45B9C836.728F31EC@eudaptics.com>
+	<7vzm86yw0q.fsf@assigned-by-dhcp.cox.net>
+	<45B9CE56.D16DFC81@eudaptics.com>
+	<7vmz46ytyy.fsf@assigned-by-dhcp.cox.net>
+	<45B9DAC8.C04C6D3F@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Fri Jan 26 12:21:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 12:29:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAP9U-0000SD-GT
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:21:53 +0100
+	id 1HAPH9-0003mv-0T
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:29:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933199AbXAZLVt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 06:21:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933195AbXAZLVs
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:21:48 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:61227 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933199AbXAZLVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 06:21:47 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so690165uga
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 03:21:46 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=XBjyhoSX7usfbVjTbx/UIQI0gZdJZBOrgebg5eZgq7BM03dDc/5EMCNuhiAis5YuxETSjPXB6Ry93oQx6oC7YI6Imw+f9vl191X8+evi92luxI+S9OgDyD3I++HwtU17W3PbDNng3SoCSZhJKl400riTnAwPMOYSJcOQnIBqLcY=
-Received: by 10.67.21.11 with SMTP id y11mr4166181ugi.1169810505101;
-        Fri, 26 Jan 2007 03:21:45 -0800 (PST)
-Received: from host-81-190-20-200.torun.mm.pl ( [81.190.20.200])
-        by mx.google.com with ESMTP id j33sm3492787ugc.2007.01.26.03.21.43;
-        Fri, 26 Jan 2007 03:21:44 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <45B8E551.9020808@zytor.com>
-Content-Disposition: inline
+	id S933187AbXAZL3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 06:29:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933200AbXAZL3l
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:29:41 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:39864 "EHLO
+	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933187AbXAZL3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 06:29:40 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070126112940.QQKV16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 26 Jan 2007 06:29:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id FnUi1W00D1kojtg0000000; Fri, 26 Jan 2007 06:28:43 -0500
+In-Reply-To: <45B9DAC8.C04C6D3F@eudaptics.com> (Johannes Sixt's message of
+	"Fri, 26 Jan 2007 11:41:12 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37841>
 
-H. Peter Anvin <hpa@zytor.com> wrote:
-> Jakub Narebski wrote:
->> 
->> I don't think it can be easily expanded. .git/info/refs is meant for
->> http-fetch, and it mimics git-ls-remote / git-peek-remote output.
-> 
-> For heaven's sake, in computer science we can *NEVER* use the same 
-> feature for *MORE THAN ONE THING*.  If it doesn't work format-wise 
-> that's fine, but "it's only supposed to be used by dumb transports" is 
-> ridiculous.
+Johannes Sixt <J.Sixt@eudaptics.com> writes:
 
-.git/info/refs is for dumb transports, so if we follow "do not use
-the same feature for more than one thing" principle we should not
-change its format for gitweb.
+> - the grafts file is not part of the objects database
 
-.git/info/refs is one of auxiliary info files to help dumb servers,
-(servers that does not do on-the-fly pack generation), to help
-clients discover what references server has.  The second auxiliary
-info file is .git/objects/info/packs.  Both are generated by
-git-update-server-info command, usually run from post-update hook.
+This is a very conscious design decision from an ancient times.
+It used to be fashionable to share object store across different
+repositories (you literally symlinked .git/objects), and grafts
+are local in the sense that they are per-repository, and that is
+the reason it lives in .git/info.  There is not much reason
+either way and if I were doing this from scratch I would
+probably place it in .git/objects/info next to alternates.
 
-Because .git/info/refs format is the same as git-ls-remote output
-(AFAIK smart servers use git-ls-remote or git-peek-remote; dumb
-servers use .git/info/refs) we used and can use it as ''cached''
-"git ls-remote ." / "git peek-remote ." / "git show-ref --dereference"
-output. For bare repositories where new data arrives only via
-'update' (via push or fetch) and always trigger post-update hook,
-and not for example via git-commit which does not invoke post-update
-hook, the information in .git/info/refs is always fresh.
+> - it is manipulated manually instead of by tools the check for errors
 
-What I propose as quick solution is to add new (perhaps local)
-git-update-gitweb-info command which is to be used in post-update
-(and perhaps post-commit for non-bare repos) hook, and which results
-we would use in gitweb.  See patch at the bottom.
+Yes, but that is only because nobody saw need for such a tool so
+far.  In reality, grafts have been pretty much "install and
+forget" thing.  You graft 2.6.12-rc2 on top of the bkcvs tip
+once, and then do not think about it after doing so.
 
->> BTW. putting the info of git-for-each-ref into .git/info/refs-details
->> would mean that instead of "24175 calls to git" one would need to
->> read 24175 files. Perhaps the whole info needed to generate projects
->> index page should be pre-generated on push (update), instead of per
->> project (per repository) .git/info/refs-details
-> 
-> No, it should be one file per repository, not one file per ref.  Why? 
-> Obviously we don't want 24175 files to be accessed.  However, a push can 
-> only affect files for which the repository owner has permission and 
-> which resides in the repository filespace, so it should stay inside that 
-> space.
+When somebody sees a need, you know what will happen ;-).
 
-Gitweb _newer_ did one call to git _per ref_, but always one call to git
-_per repository_!  Old git always used HEAD ref to get "Last Change" info
-and used one call to git-rev-list (if I remember correctly), new git
-checks all refs to get "Last Change" info but uses _one_ call to 
-git-for-each-ref.  Because we did not want to affect gitweb performance
-badly we waited for changing "Last Change" to check all refs and not
-only HEAD to have git-for-each-ref to use one call to git command for that.
-Historically it was first use of git-for-each-ref in gitweb.
+> - it is not transferred across clones/pulls/pushes (it's even possible
+> to create an inconsistent clone)
 
-Sidenote: I planned to add new %feature to gitweb to allow to chose
-if to use all refs for "Last Change" info, HEAD ref, or some given ref
-(for example "master").  But that would perhaps wait for .git/config
-parser in Perl.
+Yes, as I already said that is where we punted and declared that
+the grafts are local matter.
 
-> On kernel.org, this would reduce the load from 24175 calls to git to 
-> reading 250 files.  Although the latter is still expensive (and will 
-> probably need post-generation caching) the files should be small and 
-> cacheable by the kernel, and the resulting I/O load should be quite small.
+Even though your resulting clone is inconsistent, I do not even
+have to say "tough".  You can just tell what the necessary graft
+file should look like to the repository owner at the other end,
+and the life will be peachy again.
 
-Oh, so there are around 250 projects, and around 24175 references
-together in those projects on kernel.org?  I thought it were 24175
-_projects_ (repositories)...
+I even outlined the issues you (or somebody else who may be
+interested) would need to look into to make it more global.  Do
+you need anything more?
 
-Currently, it is 250 calls to git, reading 24175 files (unless refs
-are packed, then it would be reading 250 files) to get refs (heads)
-info, and reading around 2*250 files (packs + index) to get last
-change info.  Not "24175 calls to git".
+> The way out that I see is to make grafts much, much less important.
 
-> Anyway, as far as git-update-server-info is concerned, I'm *very* 
-> concerned that there be a single command that updates all the cached 
-> information across the repository.  Telling everyone to update their 
-> hooks every time we want to add cached information is silly.  Right now, 
-> git-update-server-info is the command to update cached information, and 
-> for usability reasons there should be a single entry point.
+Breaking what already works does not sound like a way out.  
 
-git-update-server-info is to "update auxiliary info file to help dumb
-servers". I propose to use (new) git-update-gitweb-info to help gitweb.
-One command for one feature.  This would mean unfortunately adding
-"exec git-update-gitweb-info" line (if it does not exist) to existing
-projects post-update hooks; for new projects it would be I think enough
-to modify post-update template (templates/hooks--post-update or
-/usr/share/git-core/templates/hooks/post-update).
-
-
-Below the patches of how it can be done.  Does not include corrections
-to Makefile to install git-update-gitweb-info.  NOT TESTED!
-
-BTW final version of git-update-gitweb-info probably should be a built-in
-command, like git-update-server-info, not a script.
-
-
-diff --git a/git-update-gitweb-info.sh b/git-update-gitweb-info.sh
-new file mode 100755
-index 0000000..5bb44df
---- /dev/null
-+++ b/git-update-gitweb-info.sh
-@@ -0,0 +1,7 @@
-+#!/bin/sh
-+
-+. git-sh-setup
-+test -w "$GIT_DIR/info/last-changed" &&
-+git-for-each-ref \
-+	--format='%(committer)' --sort=-committerdate --count=1 refs/heads \
-+	> "$GIT_DIR/info/last-changed"
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 88af2e6..e7874a6 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1150,12 +1150,16 @@ sub git_get_last_activity {
- 	my ($path) = @_;
- 	my $fd;
- 
--	$git_dir = "$projectroot/$path";
--	open($fd, "-|", git_cmd(), 'for-each-ref',
--	     '--format=%(committer)',
--	     '--sort=-committerdate',
--	     '--count=1',
--	     'refs/heads') or return;
-+	if (-r "$projectroot/$path/info/last-changed") {
-+		open $fd, "$projectroot/$path/info/last-changed";
-+	} else {
-+		$git_dir = "$projectroot/$path";
-+		open($fd, "-|", git_cmd(), 'for-each-ref',
-+		     '--format=%(committer)',
-+		     '--sort=-committerdate',
-+		     '--count=1',
-+		     'refs/heads') or return;
-+	}
- 	my $most_recent = <$fd>;
- 	close $fd or return;
- 	if ($most_recent =~ / (\d+) [-+][01]\d\d\d$/) {
-diff --git a/templates/hooks--post-update b/templates/hooks--post-update
-old mode 100644
-new mode 100755
-index bcba893..b119224
---- a/templates/hooks--post-update
-+++ b/templates/hooks--post-update
-@@ -6,3 +6,4 @@
- # To enable this hook, make this file executable by "chmod +x post-update".
- 
- exec git-update-server-info
-+exec git-update-gitweb-info
-
--- 
-Jakub Narebski
-Poland
+For local-only, "install and forget" use, what the current setup
+does is consistent and works reasonably well.  I would not say
+it is perfect, but I do not know of any outstanding bugs (and
+what you mentioned in these message are certainly not).
