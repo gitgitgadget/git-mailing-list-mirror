@@ -1,76 +1,85 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Does git-cvsserver expect all changes to be via CVS?
-Date: Fri, 26 Jan 2007 10:37:11 +0000
-Message-ID: <200701261037.13948.andyparkins@gmail.com>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: grafts+repack+prune = history at danger
+Date: Fri, 26 Jan 2007 11:41:12 +0100
+Organization: eudaptics software gmbh
+Message-ID: <45B9DAC8.C04C6D3F@eudaptics.com>
+References: <45B8E61E.C9C5E6C6@eudaptics.com>
+		<7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
+		<45B9B80E.E2534F97@eudaptics.com>
+		<7vr6ti183o.fsf@assigned-by-dhcp.cox.net>
+		<45B9C836.728F31EC@eudaptics.com>
+		<7vzm86yw0q.fsf@assigned-by-dhcp.cox.net>
+		<45B9CE56.D16DFC81@eudaptics.com> <7vmz46ytyy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 26 11:37:47 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jan 26 11:39:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAOSk-0006mE-R0
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 11:37:43 +0100
+	id 1HAOUv-0007nT-Ql
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 11:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751437AbXAZKhS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 05:37:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751037AbXAZKhS
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 05:37:18 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:12394 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751437AbXAZKhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 05:37:17 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so681023uga
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 02:37:15 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=mJ96fVCIU1R/TjZYXNucYV3lwPlZ8GN6bNdeQE48R9rdSnYBOInXERGErpwhQqco8VCOEOQzzbQZTpXRuDRSSVtUgcCRy35D8Pn4nXzhZyRtwyM0YilZpw5VAVxlLK5Ephs9G0ycMuf8Y966sfj0WEWrhByWCtR0pKemAkjDGno=
-Received: by 10.67.119.9 with SMTP id w9mr4119990ugm.1169807835645;
-        Fri, 26 Jan 2007 02:37:15 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id 29sm3522921uga.2007.01.26.02.37.14;
-        Fri, 26 Jan 2007 02:37:15 -0800 (PST)
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+	id S1751858AbXAZKjz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 05:39:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbXAZKjy
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 05:39:54 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160]:16985 "EHLO
+	linz.eudaptics.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751858AbXAZKjy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 05:39:54 -0500
+Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 380866D9; Fri, 26 Jan 2007 11:39:53 +0100 (CET)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37836>
 
-Hello,
+Junio C Hamano wrote:
+> 
+> Johannes Sixt <J.Sixt@eudaptics.com> writes:
+> 
+> > Sure, if I connect my linux repo with a graft to the historical BK tree,
+> > then toss the ref that pointed to the historical tree, then git prune:
+> > - then currently it won't prune the historical tree
+> > - but under my proposal it would. Silly me. Why did I remove that ref?
+> 
+> [...]
+> 
+> Thankfully, the real git does not behave that way.  That is why
+> fsck/prune _must_ honor grafts.  That makes the locally altered
+> view consistent.  To the altered world view, what are stored in
+> the object database do not change, but your view of how they are
+> connected does.  And if your altered view thinks commit
+> v2.6.12-rc2 has one of the commits in the bkcvs history as its
+> parent, you do not want to lose that history merely because you
+> lost a ref to it -- as long as the commit tagged as v2.6.12-rc2
+> is reachable, its (imaginary) parent should be as well.
 
-Still messing around with git-cvsserver.  It's behaving very strangely, and it 
-occurred to me that I have not appreciated that there might be a limitation 
-in it.
+>From your argument I deduce that grafts are a very important thing (once
+they exist in a repo). But the current implementation does not honor
+this:
 
-Here's what I did.
+- the grafts file is not part of the objects database
+- it is manipulated manually instead of by tools the check for errors
+- it is not transferred across clones/pulls/pushes (it's even possible
+to create an inconsistent clone)
 
-* CVS user checks out a branch from the repository
-* CVS user adds new directory and files
-* CVS user checks them in
-* git user updates a tracking branch and then working branch to
-  match latest
-* git user makes changes to same files
-* git user checks in and pushes the branch
-* CVS user runs cvs update
+The way out that I see is to make grafts much, much less important.
+Namely that they are obeyed _only_ by tools that _present_ the database
+contents. All manipulators must disregard grafts.
 
-CVS user can't see the changes; forced updates simply checkout the same files 
-he's just checked in.
+Consequently, if I install grafts, I must make sure that I don't prune
+away objects that the grafted history needs (i.e. avoid the silliness
+mentioned above). If I happen to make the grafted history inconsistent,
+I can make it consistent again by removing the grafts file (it was a
+local thingy anyway) - no harm done - just the _presentation_ was
+altered.
 
-I deleted the sqlite table from the git repository and ran the CVS update 
-again and this time the changed files arrived (but only after a forced 
-update).
-
-My question then is: does git-cvsserver require that all changes go via 
-itself?  Does it expect you not to use normal git on that repository any 
-more?
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+-- Hannes
