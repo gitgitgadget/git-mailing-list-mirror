@@ -1,83 +1,48 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git merge FETCH_HEAD produced bad commit message
-Date: Fri, 26 Jan 2007 10:02:17 +0100
-Message-ID: <81b0412b0701260102j7d1c44d5nd5aa489cb8312722@mail.gmail.com>
-References: <20070125145229.GE25265@mellanox.co.il>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] Heavily expanded update hook to send more useful emails than the old hook
+Date: Fri, 26 Jan 2007 01:09:40 -0800
+Message-ID: <7vejpi17e3.fsf@assigned-by-dhcp.cox.net>
+References: <29b04c45a795406bd9b278eb44321fe572dc8adf.1169801884.git.andyparkins@gmail.com>
+	<200701260901.04813.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Fri Jan 26 10:02:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Deepak Barua" <dbbarua@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 10:09:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAMyV-0005Vj-G1
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 10:02:23 +0100
+	id 1HAN5e-0000OW-56
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 10:09:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030840AbXAZJCU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 04:02:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030838AbXAZJCU
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 04:02:20 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:39434 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030841AbXAZJCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 04:02:19 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so663244uga
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 01:02:18 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eR9aJ4hoWDNMWTVMgahIVu11AJtR7XCuzqFbh4Q/L0wQq6ypkZ30/Rxw3hHMGVFxdN1Qgwt5EJKBgRKcPKV/AygO0aT7fkFs7nvf5QU0P4eQ1dkaeTDwieGlg5pxYs42d7JDKbb02v+4x2ZJWx/Zc26DwcBIdTt4ebmObClK53c=
-Received: by 10.78.204.7 with SMTP id b7mr2130803hug.1169802137701;
-        Fri, 26 Jan 2007 01:02:17 -0800 (PST)
-Received: by 10.78.139.7 with HTTP; Fri, 26 Jan 2007 01:02:17 -0800 (PST)
-In-Reply-To: <20070125145229.GE25265@mellanox.co.il>
-Content-Disposition: inline
+	id S1030844AbXAZJJm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 04:09:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030846AbXAZJJm
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 04:09:42 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:61567 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030844AbXAZJJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 04:09:41 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070126090941.XLGE19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 26 Jan 2007 04:09:41 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Fl8j1W0021kojtg0000000; Fri, 26 Jan 2007 04:08:43 -0500
+In-Reply-To: <200701260901.04813.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 26 Jan 2007 09:01:04 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37819>
 
-On 1/25/07, Michael S. Tsirkin <mst@mellanox.co.il> wrote:
-> Hi!
-> I like to do
->         $git fetch <URL>
->
->         $git log FETCH_HEAD
->
->         $git merge FETCH_HEAD
->
-> I would expect this to be equivalent to
->
->         git pull <URL>
->
-> However, the message that git merge produces in this case
-> is less than informative:
->
-> commit 3c11f564846227d80aa76b579c974913c3602862
-> Merge: 9871244... f5e6d63...
-> Author: Michael S. Tsirkin <mst@mellanox.co.il>
-> Date:   Thu Jan 25 16:46:51 2007 +0200
->
->     Merge commit 'FETCH_HEAD' into ofed_1_2
->
-> I note that FETCH_HEAD actually has the information on where
-> the commit came from:
-> $cat .git/FETCH_HEAD
-> f5e6d63839970f4785c36b6be3835f037e74195c ssh://<hidden>/usr/src/ofed_1_2
->
-> So can not git merge be enhanced to put this data in commit log?
->
-
-Does it need to?
-Is the below enough (could be line-wrapped):
-
-git merge --no-commit FETCH_HEAD && \
-git commit -M "Merge $(cut -d ' ' -f 2- < $(git rev-parse
---git-dir)/FETCH_HEAD) \
-into $(git name-rev HEAD | cut -d ' ' -f 2-)"
-
-In the long run you'll almost certainly find this commit message
-useless, though.
+I've been wondering if we would want to have example-hooks/
+directory (not necessarily under contrib/).  Different people
+seem to want different things from the hooks and I'd like to
+avoid "my version is better than yours" arms race to result in
+unnecessary bloat of example hooks that are copied to every
+repository but yet left disabled.
