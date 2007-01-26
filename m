@@ -1,86 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: More precise tag following
-Date: Fri, 26 Jan 2007 03:07:19 -0800
-Message-ID: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] diff --check: use colour
+Date: Fri, 26 Jan 2007 12:10:26 +0100
+Message-ID: <45B9E1A2.40505@op5.se>
+References: <Pine.LNX.4.63.0701241505260.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<7vr6tkdnee.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.63.0701251015390.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<7vk5za925w.fsf@assigned-by-dhcp.cox.net>	<17849.13327.527531.262943@lisa.zopyra.com>	<Pine.LNX.4.63.0701260034320.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17849.17947.645022.282882@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 26 12:07:25 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 12:10:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAOvU-0002m8-W8
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:07:25 +0100
+	id 1HAOyX-00042y-2H
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:10:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932872AbXAZLHW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 06:07:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932838AbXAZLHW
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:07:22 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:64330 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932872AbXAZLHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 06:07:21 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070126110720.ROSF9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 26 Jan 2007 06:07:20 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Fn6N1W00C1kojtg0000000; Fri, 26 Jan 2007 06:06:23 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932936AbXAZLK3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 06:10:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933158AbXAZLK3
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:10:29 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:33475 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932936AbXAZLK3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 06:10:29 -0500
+Received: from [192.168.1.20] (unknown [213.88.215.14])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 24CD26BCC3; Fri, 26 Jan 2007 12:10:27 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
+In-Reply-To: <17849.17947.645022.282882@lisa.zopyra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37839>
 
-What if (I know, this discussion does not belong here until
-1.5.0 final) we had a "reverse" database that keeps track of
-what tag references which object, and "git rev-list" knows how
-to exploit it?  That is, just like generating a list of objects
-that are reachable with --objects option, if we can add a new
-option --with-tag very cheaply to list tag objects that would
-reach what are in the generated list of objects?
+Bill Lear wrote:
+> On Friday, January 26, 2007 at 00:41:42 (+0100) Johannes Schindelin writes:
+>> ...
+>> The easiest way to find out what it does is to execute:
+>>
+>> 	git log -S--check diff.c
+> 
+> Hmm, using 1.5.0-rc2, I created a test repo, and did this:
+> 
+> echo foo > foo
+> git add foo
+> git commit -a -m foo
+> echo bar > foo
+> git commit -a -m bar
+> git log -S--check foo
+> 
+> and nothing happened.
+> 
+> I did
+> 
+> git log -S --check foo
+> 
+> and the thing went off into outer space.  Now at over 2 1/2 minutes of
+> CPU time on my 2 Ghz Opteron box...
+> 
+> Is it really '-S--check'?
+> 
 
-The way current git-fetch "follows" tags is very imprecise,
-although it is good enough in practice.  If you happen to
-locally have an object that is tagged (and currently we get the
-list of non-tag objects that tags eventually refer to in an
-out-of-band-ish way), then we fetch the tag and everything it
-reaches.  This means if you copied a single commit that is tagged
-from somewhere without objects that it refers to, we would end
-up fetching beyond that commit to complete it.  Which would not
-result in a corrupted repository, but ideally we should not be
-fetching the tag in such a case.  And with something like
-enhanced rev-list that knows --with-tag it might be possible (I
-need to think a bit more about have/want exchange and what
-should happen later in fetch-pack and push-pack protocol,
-though).
+Yes. '-S--check' will start a pickaxe search for the string '--check' in
+the repository, covering all the history and the likes. It can take quite
+a long time (even if used properly ;-)), but it's certainly better than having
+to look manually.
 
-The application of this actually may not be limited to tag
-following.  We could define a tag-like objects that attaches to
-other objects and enhance its meanings (annotates them) and
-treat them the same way as tags for objects traversal and
-transfer purposes, so if we were to do this, the option to
-exploit reverse database would be called --with-annotation and
-not --with-tag.
-
- - If a single-path following turns out to be too expensive
-   (there was a longstanding talk about "git log --single-follow
-   $path"; "git blame" also follows a single path although the
-   target it follows can fork into two or more when following
-   cut&pastes) because we need to explode multi-level trees for
-   each commit while traversing commit ancestry, we could define
-   an annotation to a commit that lists the set of paths the
-   commit touches relative to each of its parents (so the object
-   contains N lists of paths), so that pathspec limiting needs
-   to open and read only one object to figure out that the trees
-   do not have to be opened to skip the commit and/or a merge
-   can be simplified.
-
- - We could define an annotation to a commit that describes what
-   fake parents it should have instead of the real ones
-   (i.e. grafts implemented in the object database).
-
-Just an idle thought.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
