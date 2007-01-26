@@ -1,87 +1,79 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH 1/2] UNIX reference time of 1970-01-01 00:00 is UTC timezone,
- not local time zone
-Date: Fri, 26 Jan 2007 18:49:07 +0100
-Message-ID: <45BA3F13.2090003@fs.ei.tum.de>
-References: <200701260858.48212.andyparkins@gmail.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: StGIT and repo-config
+Date: Fri, 26 Jan 2007 18:53:02 +0100
+Message-ID: <20070126175302.GG4083@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070125225512.GF4083@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0701251545w1b34a0dcg545eeab08d767e38@mail.gmail.com> <Pine.LNX.4.63.0701260052590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig59FC23706ED59268E415C873"
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 26 18:49:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	GIT list <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 26 18:55:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAVCe-0000Np-C2
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 18:49:32 +0100
+	id 1HAVHz-0002r2-C4
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 18:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161097AbXAZRtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 12:49:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161099AbXAZRtS
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 12:49:18 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:41854 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161098AbXAZRtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 12:49:17 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 49B7328213;
-	Fri, 26 Jan 2007 18:49:15 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id qYwrMyF3XJ9B; Fri, 26 Jan 2007 18:49:15 +0100 (CET)
-Received: from [62.216.203.38] (ppp-62-216-203-38.dynamic.mnet-online.de [62.216.203.38])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id DFAE12820E;
-	Fri, 26 Jan 2007 18:49:14 +0100 (CET)
-User-Agent: Mail/News 1.5.0.4 (X11/20060619)
-In-Reply-To: <200701260858.48212.andyparkins@gmail.com>
-X-Enigmail-Version: 0.94.0.0
+	id S1161099AbXAZRyL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 12:54:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161111AbXAZRyK
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 12:54:10 -0500
+Received: from smtp7-g19.free.fr ([212.27.42.64]:36210 "EHLO smtp7-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161099AbXAZRyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 12:54:09 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 80352591C;
+	Fri, 26 Jan 2007 18:54:07 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 206443005; Fri, 26 Jan 2007 18:53:03 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0701260052590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37880>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig59FC23706ED59268E415C873
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On Fri, Jan 26, 2007 at 12:58:38AM +0100, Johannes Schindelin wrote:
+> On Thu, 25 Jan 2007, Catalin Marinas wrote:
+> > What I'd like it to have is a single initial call to git-repo-config 
+> > --list (in config_setup) and all the options cached in a dictionary (so 
+> > that .git/config options would override the global ~/.gitconfig ones). 
+> > The dictionary should also be pre-populated with the default values 
+> > (only in memory, not going to the config file on disk).
 
-Andy Parkins wrote:
-> $ date --date=3D"1970-01-01 00:00" +"%F %T %z (%Z)"
-> 1970-01-01 00:00:00 +0100 (BST)
-
-nice observation.  yet, my system doesn't even have date --date=3D.  rega=
-rding the idea to provide a generic nice hook, it should be considered to=
- convert this usage to a standards-conforming way.
-
-cheers
-  simon
-
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+Pre-filling with default value has a drawback: it will create lots of
+useless entries, especially for per-branch settings.  I'd rather let
+the accessors return the default value when needed.  We can still
+group all defaults in a single dictionnary.
 
 
---------------enig59FC23706ED59268E415C873
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+> I then proposed to have a simple --dump option to repo-config, which 
+> outputs NUL separated key/value pairs (substituting "true" for keys 
+> without -- not with empty! -- values). But somehow the discussion petered 
+> out before anything came out of it.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+Even if that was to be done in git, it would surely be post-1.5, so we
+need another way to do things in the meantime.
 
-iD8DBQFFuj8Wr5S+dk6z85oRAhRBAKDWPikoUmZ9vjtNoPIZ1WuqGLnotgCgqRfS
-Sce174eB0gl7Ghi2DiMCgMU=
-=x7AB
------END PGP SIGNATURE-----
 
---------------enig59FC23706ED59268E415C873--
+> The most important point (to me) which came out of the discussion: It is 
+> not at all easy, or straight-forward, to handle multi-vars, i.e. multiple 
+> values for the same key.
+
+Right, at least for filling a dictionnary.  We would need to declare
+multi-valued parameters as such, which basically means we must only
+try to read those config items we know about, which has all sorts of
+consequences for config.py :)
+
+It would seem reasonable to start without a cache dictionnary, at
+least for now.  After all, there are not so many config items to know
+about in a single stgit run, so IIMHO we're only going to notice a
+difference for the time needed to run the testsuite.
+
+Best regards,
+-- 
+Yann.
