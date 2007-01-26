@@ -1,80 +1,138 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH] fmt-merge-msg: detached HEAD
-Date: Fri, 26 Jan 2007 11:15:51 +0100
-Message-ID: <8aa486160701260215p6a0af653qf110aa2679452c6@mail.gmail.com>
-References: <87zm875d9u.fsf@gmail.com>
-	 <7vireu63rg.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160701260145i4c50d564n90967a07f7ee62a9@mail.gmail.com>
-	 <7vveiuyup7.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-merge: make it usable as the first class UI again.
+Date: Fri, 26 Jan 2007 02:24:29 -0800
+Message-ID: <7vd552ytk2.fsf@assigned-by-dhcp.cox.net>
+References: <7v4pqe16ix.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 26 11:15:59 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 26 11:24:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAO7g-0005Ru-V5
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 11:15:57 +0100
+	id 1HAOG2-0000ue-E5
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 11:24:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161022AbXAZKPy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 26 Jan 2007 05:15:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161028AbXAZKPy
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 05:15:54 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:52467 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161022AbXAZKPx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Jan 2007 05:15:53 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so676746uga
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 02:15:51 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SXnHv3K52yxh8OTHIfP/a6xFPY9Yr9bD/cNgcLLo+CheI3sg9M6/DMAsOCrxuccsZXTp/nMhIFXgndFVIhRvvQlycgj8oHi32zZ+2VwrdUcUB3Ck9BOQrj0YKfSJ/to6IDj0E8V9KVBxukB9UjIFkcERuDVKC30/rafoi4BPBvw=
-Received: by 10.78.134.12 with SMTP id h12mr644341hud.1169806551113;
-        Fri, 26 Jan 2007 02:15:51 -0800 (PST)
-Received: by 10.78.68.8 with HTTP; Fri, 26 Jan 2007 02:15:50 -0800 (PST)
-In-Reply-To: <7vveiuyup7.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1161033AbXAZKYb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 05:24:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161040AbXAZKYb
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 05:24:31 -0500
+Received: from fed1rmmtao12.cox.net ([68.230.241.27]:37650 "EHLO
+	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161033AbXAZKYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 05:24:30 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao12.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070126102430.YWWY19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 26 Jan 2007 05:24:30 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id FmPY1W00A1kojtg0000000; Fri, 26 Jan 2007 05:23:32 -0500
+In-Reply-To: <7v4pqe16ix.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 26 Jan 2007 01:28:22 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37833>
 
-On 1/26/07, Junio C Hamano <junkio@cox.net> wrote:
-> "Santi B=E9jar" <sbejar@gmail.com> writes:
+Junio C Hamano <junkio@cox.net> writes:
+
+> reflog wants to have a short-and-sweet single line message, but
+> its set_reflog_action was slurping the whole command line arguments.
+> When given a multi-line commit message from the command line, reflog
+> code refused to update the ref with the resulting commit.
 >
-> >> > diff --git a/builtin-fmt-merge-msg.c b/builtin-fmt-merge-msg.c
-> >> > index 87d3d63..8cef425 100644
-> >> > --- a/builtin-fmt-merge-msg.c
-> >> > +++ b/builtin-fmt-merge-msg.c
-> >> > @@ -331,7 +331,8 @@ int cmd_fmt_merge_msg(int argc, const char *=
-*argv, const char *prefix)
-> >> >                       printf(" of %s", srcs.list[i]);
-> >> >       }
-> >> >
-> >> > -     if (!strcmp("master", current_branch))
-> >> > +     if (!strcmp("master", current_branch) ||
-> >> > +         !strcmp("HEAD", current_branch))
-> >> >               putchar('\n');
-> >> >       else
-> >> >               printf(" into %s\n", current_branch);
-> >>
-> >> Hmph.
-> >>
-> >> The reason is?
-> >
-> > For me, 'Merge ... into master' and 'Merge ... into HEAD' are equal=
-ly
-> > useful, so do not show them by default. And git always merges into
-> > HEAD.
->
-> I was wondering if people might prefer rewording it to "into
-> detached HEAD".
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
 
-I prefer my patch, but your rewording is OK also.
+Actually, let's rescind that one -- it was very silly of me.
+We should do this instead.
 
-Santi
+-- >8 --
+[PATCH] Make sure we do not write bogus reflog entries.
+
+The file format dictates that entries are LF terminated so
+the message cannot have one in it.  Chomp the message to make
+sure it only has a single line if necessary, while removing the
+leading whitespace.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ builtin-update-ref.c |    2 --
+ refs.c               |   39 +++++++++++++++++++++++----------------
+ 2 files changed, 23 insertions(+), 18 deletions(-)
+
+diff --git a/builtin-update-ref.c b/builtin-update-ref.c
+index b34e598..f2506fa 100644
+--- a/builtin-update-ref.c
++++ b/builtin-update-ref.c
+@@ -23,8 +23,6 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 			msg = argv[++i];
+ 			if (!*msg)
+ 				die("Refusing to perform update with empty message.");
+-			if (strchr(msg, '\n'))
+-				die("Refusing to perform update with \\n in message.");
+ 			continue;
+ 		}
+ 		if (!strcmp("-d", argv[i])) {
+diff --git a/refs.c b/refs.c
+index 4323e9a..0840b3b 100644
+--- a/refs.c
++++ b/refs.c
+@@ -925,6 +925,7 @@ static int log_ref_write(struct ref_lock *lock,
+ {
+ 	int logfd, written, oflags = O_APPEND | O_WRONLY;
+ 	unsigned maxlen, len;
++	int msglen;
+ 	char *logrec;
+ 	const char *committer;
+ 
+@@ -958,24 +959,30 @@ static int log_ref_write(struct ref_lock *lock,
+ 				     lock->log_file, strerror(errno));
+ 	}
+ 
+-	committer = git_committer_info(-1);
++	msglen = 0;
+ 	if (msg) {
+-		maxlen = strlen(committer) + strlen(msg) + 2*40 + 5;
+-		logrec = xmalloc(maxlen);
+-		len = snprintf(logrec, maxlen, "%s %s %s\t%s\n",
+-			sha1_to_hex(lock->old_sha1),
+-			sha1_to_hex(sha1),
+-			committer,
+-			msg);
+-	}
+-	else {
+-		maxlen = strlen(committer) + 2*40 + 4;
+-		logrec = xmalloc(maxlen);
+-		len = snprintf(logrec, maxlen, "%s %s %s\n",
+-			sha1_to_hex(lock->old_sha1),
+-			sha1_to_hex(sha1),
+-			committer);
++		/* clean up the message and make sure it is a single line */
++		for ( ; *msg; msg++)
++			if (!isspace(*msg))
++				break;
++		if (*msg) {
++			const char *ep = strchr(msg, '\n');
++			if (ep)
++				msglen = ep - msg;
++			else
++				msglen = strlen(msg);
++		}
+ 	}
++
++	committer = git_committer_info(-1);
++	maxlen = strlen(committer) + msglen + 100;
++	logrec = xmalloc(maxlen);
++	len = sprintf(logrec, "%s %s %s\n",
++		      sha1_to_hex(lock->old_sha1),
++		      sha1_to_hex(sha1),
++		      committer);
++	if (msglen)
++		len += sprintf(logrec + len - 1, "\t%.*s\n", msglen, msg) - 1;
+ 	written = len <= maxlen ? write_in_full(logfd, logrec, len) : -1;
+ 	free(logrec);
+ 	close(logfd);
