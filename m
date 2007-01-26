@@ -1,58 +1,52 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: git merge FETCH_HEAD produced bad commit message
-Date: Fri, 26 Jan 2007 16:42:46 +0200
-Message-ID: <20070126144246.GQ10812@mellanox.co.il>
-References: <81b0412b0701260632l2181ef10i8d49ee9a795228b7@mail.gmail.com>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: [PATCH 2/2] Heavily expanded update hook to send more useful emails than the old hook
+Date: Fri, 26 Jan 2007 08:45:07 -0600
+Message-ID: <17850.5107.985027.629049@lisa.zopyra.com>
+References: <29b04c45a795406bd9b278eb44321fe572dc8adf.1169801884.git.andyparkins@gmail.com>
+	<200701260901.04813.andyparkins@gmail.com>
+	<7vejpi17e3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 26 15:42:36 2007
+Content-Transfer-Encoding: 7bit
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	"Deepak Barua" <dbbarua@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jan 26 15:45:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HASHa-0002HL-0F
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 15:42:26 +0100
+	id 1HASKM-0003Y6-44
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 15:45:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030635AbXAZOmW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 09:42:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030606AbXAZOmW
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 09:42:22 -0500
-Received: from p02c11o144.mxlogic.net ([208.65.145.67]:57961 "EHLO
-	p02c11o144.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030635AbXAZOmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 09:42:21 -0500
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o144.mxlogic.net (mxl_mta-4.0.2-1)
-	with ESMTP id d431ab54.1784146864.4646.00-017.p02c11o144.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Fri, 26 Jan 2007 07:42:21 -0700 (MST)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 26 Jan 2007 16:44:13 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Fri, 26 Jan 2007 16:41:30 +0200
-Content-Disposition: inline
-In-Reply-To: <81b0412b0701260632l2181ef10i8d49ee9a795228b7@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 26 Jan 2007 14:44:14.0034 (UTC) FILETIME=[72AEE320:01C74158]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14958.003
-X-TM-AS-Result: No--3.797300-4.000000-31
-X-Spam: [F=0.0100000000; S=0.010(2007010901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S1030533AbXAZOpO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 09:45:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030606AbXAZOpO
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 09:45:14 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60610 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030533AbXAZOpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 09:45:13 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0QEj8722070;
+	Fri, 26 Jan 2007 08:45:08 -0600
+In-Reply-To: <7vejpi17e3.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37863>
 
-> What is the point then?
+On Friday, January 26, 2007 at 01:09:40 (-0800) Junio C Hamano writes:
+>I've been wondering if we would want to have example-hooks/
+>directory (not necessarily under contrib/).  Different people
+>seem to want different things from the hooks and I'd like to
+>avoid "my version is better than yours" arms race to result in
+>unnecessary bloat of example hooks that are copied to every
+>repository but yet left disabled.
 
-That
-	git fetch <url>
-	git merge FETCH_HEAD
-should be equivalent to
-	git pull <url>
-and it isn't
+I think this is independent of providing a good (configurable)
+default hook, though.  That effort should continue, I believe.
 
--- 
-MST
+
+Bill
