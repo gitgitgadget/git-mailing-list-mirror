@@ -1,87 +1,61 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] fetch-pack: remove --keep-auto and make it the default.
-Date: Fri, 26 Jan 2007 09:37:15 +0100
-Organization: eudaptics software gmbh
-Message-ID: <45B9BDBB.E9C65371@eudaptics.com>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
-		<7v3b6439uh.fsf@assigned-by-dhcp.cox.net>
-		<Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-		<7vzm8ansrt.fsf@assigned-by-dhcp.cox.net>
-		<Pine.LNX.4.63.0701231129501.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-		<Pine.LNX.4.64.0701231101040.3011@xanadu.home>
-		<7v7ivbc3hj.fsf@assigned-by-dhcp.cox.net>
-		<Pine.LNX.4.63.0701250922260.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vejpiaj2f.fsf@assigned-by-dhcp.cox.net>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: [PATCH 1/2] Teach git-describe to display distances from tags.
+Date: Fri, 26 Jan 2007 09:52:19 +0100
+Message-ID: <38b2ab8a0701260052q517285e8l2505114a48d34558@mail.gmail.com>
+References: <20070125173954.GA13276@spearce.org>
+	 <7vmz46ajcq.fsf@assigned-by-dhcp.cox.net>
+	 <7v7ivaailb.fsf@assigned-by-dhcp.cox.net>
+	 <20070125214923.GD13874@spearce.org>
+	 <Pine.LNX.4.64.0701251830400.3021@xanadu.home>
+	 <7vmz4663xq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 26 09:36:31 2007
+Cc: "Nicolas Pitre" <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Jan 26 09:52:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAMZS-0002sG-OG
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 09:36:31 +0100
+	id 1HAMpD-0001Fw-Qx
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 09:52:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030816AbXAZIg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 03:36:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030822AbXAZIg0
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 03:36:26 -0500
-Received: from main.gmane.org ([80.91.229.2]:37740 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030816AbXAZIgZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 03:36:25 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HAMZA-00079j-3B
-	for git@vger.kernel.org; Fri, 26 Jan 2007 09:36:12 +0100
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 09:36:12 +0100
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 09:36:12 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1030831AbXAZIwW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 03:52:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030830AbXAZIwW
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 03:52:22 -0500
+Received: from hu-out-0506.google.com ([72.14.214.226]:9684 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030835AbXAZIwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 03:52:21 -0500
+Received: by hu-out-0506.google.com with SMTP id 36so616520hui
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 00:52:19 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Jr0Ep+im1SZvK5Er/Tn4pA6WerLE/M25KXMqALLi9UTMnBK57w6El8es+YvayhNAa4FajnG7DBMkSFwnYaLLXML+mDJXthyCyVGf3vyIqOFWtZpMpJb++EBFJuhp08mEck2KVYlwwzwBmTgpzUnVB6ocoy3LH2LVTJtIN/VQa+8=
+Received: by 10.49.68.6 with SMTP id v6mr5338282nfk.1169801539175;
+        Fri, 26 Jan 2007 00:52:19 -0800 (PST)
+Received: by 10.49.30.4 with HTTP; Fri, 26 Jan 2007 00:52:19 -0800 (PST)
+In-Reply-To: <7vmz4663xq.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37812>
 
-Junio C Hamano wrote:
-> 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 24 Jan 2007, Junio C Hamano wrote:
-> >
-> >>   Ok, how about this, on top of the previous ones?
-> >
-> > Thanks!
-> >
-> >> @@ -653,6 +663,8 @@ int main(int argc, char **argv)
-> >>      struct stat st;
-> >>
-> >>      setup_git_directory();
-> >> +    setup_ident();
-> >> +    git_config(fetch_pack_config);
-> >
-> > Why do you need setup_ident()?
-> 
-> Because presumably you would be updating the reflog that records
-> who did the fetch?
-> 
-> But then we should do the same ignore_missing_committer_name()
-> we have in receive-pack to allow anonymous fetchers to fetch
-> from outside world, I guess.
+On 1/26/07, Junio C Hamano <junkio@cox.net> wrote:
+> Another backward incompatibility to mention in the release
+> notes.  I guess it is not too big a deal but makes me feel
+> uneasy.
+>
 
-Instead of using ignore_missing_committer_name(), use
-get_committer_info(0) in refs.c. cherry-pick 4feaf032d3 from my tree at
-git://repo.or.cz/git/mingw.git if you want.
+Sorry if I missed any discussions about that point but why not calling
+the coming release 2.0 instead of 1.5 if this one implies some
+backward incompabilities and a lot of change in the UI ?
 
-Although this approach leaves the name+email in the reflog entry empty
-instead of writing "unkown"...
-
--- Hannes
+thanks
+-- 
+Francis
