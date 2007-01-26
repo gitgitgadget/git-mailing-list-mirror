@@ -1,85 +1,97 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: grafts+repack+prune = history at danger
-Date: Fri, 26 Jan 2007 11:41:12 +0100
-Organization: eudaptics software gmbh
-Message-ID: <45B9DAC8.C04C6D3F@eudaptics.com>
-References: <45B8E61E.C9C5E6C6@eudaptics.com>
-		<7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
-		<45B9B80E.E2534F97@eudaptics.com>
-		<7vr6ti183o.fsf@assigned-by-dhcp.cox.net>
-		<45B9C836.728F31EC@eudaptics.com>
-		<7vzm86yw0q.fsf@assigned-by-dhcp.cox.net>
-		<45B9CE56.D16DFC81@eudaptics.com> <7vmz46ytyy.fsf@assigned-by-dhcp.cox.net>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: Re: [PATCH] contrib/emacs/vc-git.el: support vc-version-other-window
+Date: Fri, 26 Jan 2007 11:57:50 +0100
+Message-ID: <87y7nqukb5.fsf@wine.dyndns.org>
+References: <20070125234352.340DACB9F4@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 26 11:39:58 2007
+To: Sam Vilain <sam.vilain@catalyst.net.nz>
+X-From: git-owner@vger.kernel.org Fri Jan 26 11:58:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAOUv-0007nT-Ql
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 11:39:58 +0100
+	id 1HAOmN-0007Hc-6s
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 11:57:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751858AbXAZKjz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 05:39:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752006AbXAZKjy
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 05:39:54 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160]:16985 "EHLO
-	linz.eudaptics.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751858AbXAZKjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 05:39:54 -0500
-Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 380866D9; Fri, 26 Jan 2007 11:39:53 +0100 (CET)
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S932566AbXAZK54 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 05:57:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932846AbXAZK54
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 05:57:56 -0500
+Received: from mail.codeweavers.com ([216.251.189.131]:57336 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932566AbXAZK5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 05:57:55 -0500
+Received: from adsl-89-217-155-103.adslplus.ch ([89.217.155.103] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HAOmH-0007l0-AJ; Fri, 26 Jan 2007 04:57:54 -0600
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id CFBCD4FB65; Fri, 26 Jan 2007 11:57:50 +0100 (CET)
+In-Reply-To: <20070125234352.340DACB9F4@localhost.localdomain> (Sam Vilain's message of "Fri\, 26 Jan 2007 12\:41\:23 +1300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37837>
 
-Junio C Hamano wrote:
-> 
-> Johannes Sixt <J.Sixt@eudaptics.com> writes:
-> 
-> > Sure, if I connect my linux repo with a graft to the historical BK tree,
-> > then toss the ref that pointed to the historical tree, then git prune:
-> > - then currently it won't prune the historical tree
-> > - but under my proposal it would. Silly me. Why did I remove that ref?
-> 
-> [...]
-> 
-> Thankfully, the real git does not behave that way.  That is why
-> fsck/prune _must_ honor grafts.  That makes the locally altered
-> view consistent.  To the altered world view, what are stored in
-> the object database do not change, but your view of how they are
-> connected does.  And if your altered view thinks commit
-> v2.6.12-rc2 has one of the commits in the bkcvs history as its
-> parent, you do not want to lose that history merely because you
-> lost a ref to it -- as long as the commit tagged as v2.6.12-rc2
-> is reachable, its (imaginary) parent should be as well.
+Sam Vilain <sam.vilain@catalyst.net.nz> writes:
 
->From your argument I deduce that grafts are a very important thing (once
-they exist in a repo). But the current implementation does not honor
-this:
+> Currently, the vc-git-checkout function uses `git checkout' to fetch a
+> file from the git repository to the working copy.  However, it is
+> completely ignoring the input argument that specifies the destination
+> file.  `git-checkout' does not support specifying this, so we have to
+> use `git-cat-file', capture the output in a buffer and then save it.
 
-- the grafts file is not part of the objects database
-- it is manipulated manually instead of by tools the check for errors
-- it is not transferred across clones/pulls/pushes (it's even possible
-to create an inconsistent clone)
+This looks good, though the code can be made simpler by using
+with-temp-file to create the file. Also you need to avoid charset
+conversions when reading and writing, and you should use ls-files -z
+to avoid problems with strange file names.
 
-The way out that I see is to make grafts much, much less important.
-Namely that they are obeyed _only_ by tools that _present_ the database
-contents. All manipulators must disregard grafts.
+I'd suggest something like this:
 
-Consequently, if I install grafts, I must make sure that I don't prune
-away objects that the grafted history needs (i.e. avoid the silliness
-mentioned above). If I happen to make the grafted history inconsistent,
-I can make it consistent again by removing the grafts file (it was a
-local thingy anyway) - no harm done - just the _presentation_ was
-altered.
 
--- Hannes
+>From b37cff5399dd94abe3d4e9778cdbf5cee53d46c0 Mon Sep 17 00:00:00 2001
+From: Alexandre Julliard <julliard@winehq.org>
+Date: Fri, 26 Jan 2007 11:39:55 +0100
+Subject: [PATCH] vc-git.el: Take into account the destination name in vc-checkout.
+
+This is necessary for vc-version-other-window. Based on a patch by Sam
+Vilain <sam.vilain@catalyst.net.nz>.
+
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/vc-git.el |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/emacs/vc-git.el b/contrib/emacs/vc-git.el
+index 3eb4bd1..e456ab9 100644
+--- a/contrib/emacs/vc-git.el
++++ b/contrib/emacs/vc-git.el
+@@ -120,7 +120,16 @@
+     (vc-git--run-command file "commit" "-m" comment "--only" "--")))
+ 
+ (defun vc-git-checkout (file &optional editable rev destfile)
+-  (vc-git--run-command file "checkout" (or rev "HEAD")))
++  (if destfile
++      (let ((fullname (substring
++                       (vc-git--run-command-string file "ls-files" "-z" "--full-name" "--")
++                       0 -1))
++            (coding-system-for-read 'no-conversion)
++            (coding-system-for-write 'no-conversion))
++        (with-temp-file destfile
++          (eq 0 (call-process "git" nil t nil "cat-file" "blob"
++                              (concat (or rev "HEAD") ":" fullname)))))
++    (vc-git--run-command file "checkout" (or rev "HEAD"))))
+ 
+ (defun vc-git-annotate-command (file buf &optional rev)
+   ; FIXME: rev is ignored
+-- 
+1.5.0.rc2.gc651
+
+
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
