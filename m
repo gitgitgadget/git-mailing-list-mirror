@@ -1,97 +1,87 @@
-From: rael@zopyra.com
-Subject: [PATCH] Document check option to git diff.
-Date: Fri, 26 Jan 2007 11:42:52 -0600
-Message-ID: <1169833372823-git-send-email-rael@zopyra.com>
-Cc: Bill Lear <rael@zopyra.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 26 18:42:58 2007
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH 1/2] UNIX reference time of 1970-01-01 00:00 is UTC timezone,
+ not local time zone
+Date: Fri, 26 Jan 2007 18:49:07 +0100
+Message-ID: <45BA3F13.2090003@fs.ei.tum.de>
+References: <200701260858.48212.andyparkins@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig59FC23706ED59268E415C873"
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 18:49:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAV6H-00068a-Pn
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 18:42:58 +0100
+	id 1HAVCe-0000Np-C2
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 18:49:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161066AbXAZRmz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 12:42:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161072AbXAZRmz
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 12:42:55 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60788 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161066AbXAZRmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 12:42:54 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l0QHgq004346;
-	Fri, 26 Jan 2007 11:42:52 -0600
-X-Mailer: git-send-email 1.4.4.1
+	id S1161097AbXAZRtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 12:49:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161099AbXAZRtS
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 12:49:18 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:41854 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161098AbXAZRtR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 12:49:17 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 49B7328213;
+	Fri, 26 Jan 2007 18:49:15 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id qYwrMyF3XJ9B; Fri, 26 Jan 2007 18:49:15 +0100 (CET)
+Received: from [62.216.203.38] (ppp-62-216-203-38.dynamic.mnet-online.de [62.216.203.38])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id DFAE12820E;
+	Fri, 26 Jan 2007 18:49:14 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+In-Reply-To: <200701260858.48212.andyparkins@gmail.com>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37879>
 
-From: Bill Lear <rael@zopyra.com>
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig59FC23706ED59268E415C873
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+
+Andy Parkins wrote:
+> $ date --date=3D"1970-01-01 00:00" +"%F %T %z (%Z)"
+> 1970-01-01 00:00:00 +0100 (BST)
+
+nice observation.  yet, my system doesn't even have date --date=3D.  rega=
+rding the idea to provide a generic nice hook, it should be considered to=
+ convert this usage to a standards-conforming way.
+
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
 
-Signed-off-by: Bill Lear <rael@zopyra.com>
----
- Documentation/SubmittingPatches |    3 ++-
- Documentation/diff-options.txt  |    5 +++++
- Documentation/git-diff.txt      |    6 ++++++
- 3 files changed, 13 insertions(+), 1 deletions(-)
+--------------enig59FC23706ED59268E415C873
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 41b76d8..ce85d06 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -23,7 +23,8 @@ probably need to split up your commit to finer grained pieces.
- 
- Oh, another thing.  I am picky about whitespaces.  Make sure your
- changes do not trigger errors with the sample pre-commit hook shipped
--in templates/hooks--pre-commit.
-+in templates/hooks--pre-commit.  To help ensure this does not happen,
-+run git diff --check on your changes before you commit.
- 
- 
- (2) Generate your patch using git tools out of your commits.
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index da1cc60..501e0df 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -58,6 +58,11 @@
- 	Turn off rename detection, even when the configuration
- 	file gives the default to do so.
- 
-+--check::
-+	Check whether differences form a valid patch.  Warns if
-+	differences include a space before a tab or a space at the end
-+	of a line.
-+
- --full-index::
- 	Instead of the first handful characters, show full
- 	object name of pre- and post-image blob on the "index"
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index 6a098df..5054fb7 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -70,6 +70,7 @@ Various ways to check your working tree::
- $ git diff            <1>
- $ git diff --cached   <2>
- $ git diff HEAD       <3>
-+$ git diff --check    <4>
- ------------
- +
- <1> changes in the working tree not yet staged for the next commit.
-@@ -77,6 +78,11 @@ $ git diff HEAD       <3>
- would be committing if you run "git commit" without "-a" option.
- <3> changes in the working tree since your last commit; what you
- would be committing if you run "git commit -a"
-+<4> display whether what you are about to commit is a valid patch,
-+including whether you have spaces at the end of lines, or spaces
-+before tabs.  Violations are displayed in this form:
-+
-+<file name>:<line number>:<violation>:<offending line>
- 
- Comparing with arbitrary commits::
- +
--- 
-1.5.0-rc2.GIT-dirty
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFuj8Wr5S+dk6z85oRAhRBAKDWPikoUmZ9vjtNoPIZ1WuqGLnotgCgqRfS
+Sce174eB0gl7Ghi2DiMCgMU=
+=x7AB
+-----END PGP SIGNATURE-----
+
+--------------enig59FC23706ED59268E415C873--
