@@ -1,80 +1,101 @@
-From: Jeff King <peff@peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] diff --check: use colour
-Date: Fri, 26 Jan 2007 12:19:30 -0500
-Message-ID: <20070126171929.GA23324@coredump.intra.peff.net>
+Date: Fri, 26 Jan 2007 18:26:39 +0100
+Organization: At home
+Message-ID: <epddi9$f2r$1@sea.gmane.org>
 References: <Pine.LNX.4.63.0701241505260.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vr6tkdnee.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701251015390.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vk5za925w.fsf@assigned-by-dhcp.cox.net> <17849.13327.527531.262943@lisa.zopyra.com> <Pine.LNX.4.63.0701260034320.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17850.8953.478146.754550@lisa.zopyra.com> <17850.10014.251824.979660@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Fri Jan 26 18:19:41 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 26 18:26:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAUjj-0004wM-IZ
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 18:19:39 +0100
+	id 1HAUps-0007b8-U3
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 18:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161048AbXAZRTd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 12:19:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161047AbXAZRTd
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 12:19:33 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1370 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161048AbXAZRTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 12:19:32 -0500
-Received: (qmail 5481 invoked from network); 26 Jan 2007 12:19:54 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 26 Jan 2007 12:19:54 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 26 Jan 2007 12:19:30 -0500
-Content-Disposition: inline
-In-Reply-To: <17850.10014.251824.979660@lisa.zopyra.com>
+	id S1752017AbXAZRZ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 12:25:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751184AbXAZRZ5
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 12:25:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:40714 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752017AbXAZRZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 12:25:56 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HAUpa-0001EI-0M
+	for git@vger.kernel.org; Fri, 26 Jan 2007 18:25:42 +0100
+Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 18:25:41 +0100
+Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 18:25:41 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37876>
 
-On Fri, Jan 26, 2007 at 10:06:54AM -0600, Bill Lear wrote:
+[Cc: git@vger.kernel.org]
 
+Bill Lear wrote:
+
+> On Friday, January 26, 2007 at 09:49:13 (-0600) Bill Lear writes:
+>>...
+>>Assuming that is correct, I should have a patch out before the end of
+>>the day.
+> 
+> I did this:
+> 
 > git format-patch -s HEAD^
-> [...]
+> 
+> it produced this file:
+> 
+> 0001-Document-check-option-to-git-diff.patch
+> 
 > which looks to be formatted as a mail message:
-
-Right.
-
-The format is:
-  - subject line is the first line of your commit message
-  - subsequent body lines are the rest of your commit message, until you
-    hit the ---
-  - below that is the patch; everything in the patch section that is not
-    an actual diff hunk is free-form (e.g., the diffstat).
-
+> 
+>>From 2a81f1e97564b89ab622cf32b68e7cebf605eafe Mon Sep 17 00:00:00 2001
+>>From: Bill Lear <rael@zopyra.com>
+>>Date: Fri, 26 Jan 2007 09:58:07 -0600
+>>Subject: [PATCH] Document --check option to git-diff.
+>>
+>>
+>>Signed-off-by: Bill Lear <rael@zopyra.com>
+>>---
+>> Documentation/diff-options.txt |    5 +++++
+>> Documentation/git-diff.txt     |    6 ++++++
+>> 2 files changed, 11 insertions(+), 0 deletions(-)
+>>...
+> 
+> 
 > Do I optionally edit this file, putting my comments before the
 > "Signed-off-by" line, and then just send this off to the list with my
 > mail command, i.e.:
 
-Comments before the signed-off-by line will be part of the commit
-message; so if you have comments to put there, you probably would have
-made them when your were committing. If you have comments to send with
-the email ("cover letter"), place them after the --- but before the
-diffstat.
+Before "Signed-off-by" line you put commit message. Any coments
+which are not meant to be in commit message (like for example reply
+to some email) are to be put after "---" line, but before diffstat.
+
+Read Documentation/SubmittingPatches
 
 > % mail git@vger.kernel.org < 0001-Document-check-option-to-git-diff.patch
-> 
-> ?
 
-I'm not an expert on 'mail' but I'm not sure if it handles headers
-correctly (i.e., it expects body text, _not_ the full rfc822 message).
-You can use git-send-email, but I find its interface a little clunky.
-You can use git-imap-send to place the message in an IMAP mailbox, which
-you can then presumably grab as a 'draft' using your regular mail
-client. Or you can use a mail client which understands mbox (most unix
-ones do), open the file as an mbox, and then resume it as a draft.
+This should work.
 
-Or finally, you can simply edit in the headers you want, remove the
-initial 'From ' line, and pipe it to sendmail. :)
+% git send-email --to git@vger.kernel.org 0001-Document-check-option-to-git-diff.patch
 
-What's easiest for you depends on what your mail setup is like (I use
-mutt to open the mbox, then "resend" it with editing).
+should also work.
 
--Peff
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
