@@ -1,57 +1,77 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Does git-cvsserver expect all changes to be via CVS?
-Date: Fri, 26 Jan 2007 11:31:40 +0000
-Message-ID: <200701261131.41765.andyparkins@gmail.com>
-References: <200701261037.13948.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Hash name is SHA-1
+Date: Fri, 26 Jan 2007 12:34:55 +0100
+Organization: At home
+Message-ID: <epcouq$co3$1@sea.gmane.org>
+References: <11697294071178-git-send-email-vonbrand@inf.utfsm.cl> <1169729410294-git-send-email-vonbrand@inf.utfsm.cl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 26 12:32:05 2007
+X-From: git-owner@vger.kernel.org Fri Jan 26 12:34:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAPJN-0004mo-0P
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:32:05 +0100
+	id 1HAPLQ-0005h9-TR
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:34:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933203AbXAZLbr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 06:31:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933204AbXAZLbr
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:31:47 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:9108 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933203AbXAZLbq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 06:31:46 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so692260uga
-        for <git@vger.kernel.org>; Fri, 26 Jan 2007 03:31:45 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Dpg36IdVA7tlJzpqHKb7fhhTOFioDVAP6+9Wv3TiEOuWJNHoYErUdJHff2i+BwTpSPhIipzDGNBpAvfq4MOJQ3meGQju/tER/Wj8ANG+PqTcGUDXw+5XJPOFVA58Gw+JeL1zfQ1ZulHi+fMsHT1WfKGFcAAFKxc1i5FR+ceHt8A=
-Received: by 10.67.117.2 with SMTP id u2mr3941508ugm.1169811104852;
-        Fri, 26 Jan 2007 03:31:44 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id 72sm3543755ugb.2007.01.26.03.31.43;
-        Fri, 26 Jan 2007 03:31:43 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <200701261037.13948.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S965017AbXAZLeJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 26 Jan 2007 06:34:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965038AbXAZLeJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:34:09 -0500
+Received: from main.gmane.org ([80.91.229.2]:46583 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965017AbXAZLeI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 06:34:08 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HAPLE-0003of-BU
+	for git@vger.kernel.org; Fri, 26 Jan 2007 12:34:00 +0100
+Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 12:34:00 +0100
+Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 12:34:00 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37843>
 
-On Friday 2007 January 26 10:37, Andy Parkins wrote:
+[Cc: git@vger.kernel.org]
 
-> Still messing around with git-cvsserver.  It's behaving very strangely, and
+Horst H. von Brand wrote:
+> @@ -30,12 +30,12 @@ and executable, it is called with three parameter=
+s:
+> =A0
+> =A0 =A0 =A0 =A0 $GIT_DIR/hooks/update refname sha1-old sha1-new
+> =A0
+> -The refname parameter is relative to $GIT_DIR; e.g. for the
+> -master head this is "refs/heads/master". =A0Two sha1 are the
+> -object names for the refname before and after the update. =A0Note
+> -that the hook is called before the refname is updated, so either
+> -sha1-old is 0{40} (meaning there is no such ref yet), or it
+> -should match what is recorded in refname.
+> +The refname parameter is relative to $GIT_DIR; e.g. for the master
+> +head this is "refs/heads/master". =A0The two sha1 are the object nam=
+es
+                                              ^^^^
+> +for the refname before and after the update. =A0Note that the hook i=
+s
+> +called before the refname is updated, so either sha1-old is 0{40}
+> +(meaning there is no such ref yet), or it should match what is
+> +recorded in refname.
 
-Please ignore.  Was using old version of git-cvsserver on the remote end.
+=46irst, it does some reformatting instead of making documentation
+always use SHA-1.  Second, it does not replace sha1 by SHA-1 (sic!).
 
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
