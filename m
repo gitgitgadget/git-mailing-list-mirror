@@ -1,71 +1,87 @@
 From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: grafts+repack+prune = history at danger
-Date: Fri, 26 Jan 2007 09:13:02 +0100
+Subject: Re: [PATCH] fetch-pack: remove --keep-auto and make it the default.
+Date: Fri, 26 Jan 2007 09:37:15 +0100
 Organization: eudaptics software gmbh
-Message-ID: <45B9B80E.E2534F97@eudaptics.com>
-References: <45B8E61E.C9C5E6C6@eudaptics.com> <7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
+Message-ID: <45B9BDBB.E9C65371@eudaptics.com>
+References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net>
+		<7v3b6439uh.fsf@assigned-by-dhcp.cox.net>
+		<Pine.LNX.4.63.0701212234520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+		<7vzm8ansrt.fsf@assigned-by-dhcp.cox.net>
+		<Pine.LNX.4.63.0701231129501.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+		<Pine.LNX.4.64.0701231101040.3011@xanadu.home>
+		<7v7ivbc3hj.fsf@assigned-by-dhcp.cox.net>
+		<Pine.LNX.4.63.0701250922260.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vejpiaj2f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Jan 26 09:12:00 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 26 09:36:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAMBj-0000ux-Rh
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 09:12:00 +0100
+	id 1HAMZS-0002sG-OG
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 09:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030813AbXAZILs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 03:11:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030815AbXAZILs
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 03:11:48 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160]:16949 "EHLO
-	linz.eudaptics.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030814AbXAZILr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 03:11:47 -0500
-Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id ACCF86D9; Fri, 26 Jan 2007 09:11:45 +0100 (CET)
+	id S1030816AbXAZIg0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 03:36:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030822AbXAZIg0
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 03:36:26 -0500
+Received: from main.gmane.org ([80.91.229.2]:37740 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030816AbXAZIgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 03:36:25 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HAMZA-00079j-3B
+	for git@vger.kernel.org; Fri, 26 Jan 2007 09:36:12 +0100
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 09:36:12 +0100
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 26 Jan 2007 09:36:12 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
 X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
 X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37811>
 
 Junio C Hamano wrote:
 > 
-> Johannes Sixt <J.Sixt@eudaptics.com> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > Isn't there a major hole in the logic how repack works when grafts are
-> > in effect?
+> > On Wed, 24 Jan 2007, Junio C Hamano wrote:
 > >
-> > I did this (details follow):
+> >>   Ok, how about this, on top of the previous ones?
 > >
-> > 1. specify grafts
-> > 2. repack
-> > 3. prune
-> > 4. clone
+> > Thanks!
 > >
-> > Result: Broken history in the clone; info/grafts was not copied.
+> >> @@ -653,6 +663,8 @@ int main(int argc, char **argv)
+> >>      struct stat st;
+> >>
+> >>      setup_git_directory();
+> >> +    setup_ident();
+> >> +    git_config(fetch_pack_config);
+> >
+> > Why do you need setup_ident()?
 > 
-> That is expected.
+> Because presumably you would be updating the reflog that records
+> who did the fetch?
 > 
-> If you had problem in the original repository (i.e. the one with
-> grafts) that lost objects after step 3., that would be serious
-> and needs to be fixed,
+> But then we should do the same ignore_missing_committer_name()
+> we have in receive-pack to allow anonymous fetchers to fetch
+> from outside world, I guess.
 
-Oh, the original repo *does* loose the object after step 3, but you
-would not notice it until you remove the grafts file.
+Instead of using ignore_missing_committer_name(), use
+get_committer_info(0) in refs.c. cherry-pick 4feaf032d3 from my tree at
+git://repo.or.cz/git/mingw.git if you want.
 
-> grafts are local matter for archaeologist's convenience to glue
-> two independent histories together, and not much more.
-
-Agreed. Then grafts must be disregarded by (almost) all plumbing, most
-notably fsck-objects, prune, pack-objects, but also
-{fetch,upload,send,receive}-pack. They should be obeyed only by the log
-and diff families and certainly also rev-list on request.
+Although this approach leaves the name+email in the reflog entry empty
+instead of writing "unkown"...
 
 -- Hannes
