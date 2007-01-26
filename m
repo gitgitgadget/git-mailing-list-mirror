@@ -1,85 +1,73 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH] Use inttypes.h rather than stdint.h.
-Date: Fri, 26 Jan 2007 07:55:06 +0100
-Message-ID: <45B9A5CA.1020801@fs.ei.tum.de>
-References: <24182.1169759500@lotus.CS.Berkeley.EDU>
+From: "Deepak Barua" <dbbarua@gmail.com>
+Subject: Re: Adding spell checker to GIT
+Date: Fri, 26 Jan 2007 12:52:19 +0530
+Message-ID: <b5a19cd20701252322q632b9a30xaa0091e312197a4@mail.gmail.com>
+References: <b5a19cd20701041246we052685hd700580df2cc120d@mail.gmail.com>
+	 <Pine.LNX.4.63.0701052147070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <b5a19cd20701051921j69f1a85bo97e39db7d8401222@mail.gmail.com>
+	 <Pine.LNX.4.63.0701161709570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <b5a19cd20701160934s16b8717er69b950cff055a5ae@mail.gmail.com>
+	 <b5a19cd20701250636i6e3f474bhebb16020e918c155@mail.gmail.com>
+	 <Pine.LNX.4.63.0701251745520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigD45FD7225A28985670C295EB"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jason Riedy <ejr@EECS.Berkeley.EDU>
-X-From: git-owner@vger.kernel.org Fri Jan 26 07:55:24 2007
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Jan 26 08:22:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAKzb-0003Vn-9V
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 07:55:23 +0100
+	id 1HALPo-0005RF-Sn
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 08:22:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030808AbXAZGzS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 01:55:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030801AbXAZGzS
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 01:55:18 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:49984 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030808AbXAZGzQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 01:55:16 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id B9730281EE;
-	Fri, 26 Jan 2007 07:55:14 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id zVCXKWG1iGjV; Fri, 26 Jan 2007 07:55:14 +0100 (CET)
-Received: from [62.216.203.38] (ppp-62-216-203-38.dynamic.mnet-online.de [62.216.203.38])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 459E3281ED;
-	Fri, 26 Jan 2007 07:55:14 +0100 (CET)
-User-Agent: Mail/News 1.5.0.4 (X11/20060619)
-In-Reply-To: <24182.1169759500@lotus.CS.Berkeley.EDU>
-X-Enigmail-Version: 0.94.0.0
+	id S1030777AbXAZHWW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 02:22:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030778AbXAZHWW
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 02:22:22 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:19434 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030777AbXAZHWV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 02:22:21 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so650092uga
+        for <git@vger.kernel.org>; Thu, 25 Jan 2007 23:22:20 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BIa4o6wSe2pUOH3X+39pfymMgEQdpNcS3wbBJFsd8bA01KCS8ruqA0EE2XbfOKip3wEet+dtt9Yw5z8yOQUdQnjbm9JF78Ij59kicsSDyg51f/hwli+zDfYrVGGJN/n6rgTfnEp4I7N5EG1NIQJxolanm5Q48xtA8D3rC1bDc6E=
+Received: by 10.78.172.20 with SMTP id u20mr606745hue.1169796139903;
+        Thu, 25 Jan 2007 23:22:19 -0800 (PST)
+Received: by 10.78.50.8 with HTTP; Thu, 25 Jan 2007 23:22:19 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.63.0701251745520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37809>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigD45FD7225A28985670C295EB
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Hi Johannes,
+                   cold you atleast tell me how to make it a patch so
+i can officially submit it and others can test it ...?
 
-Jason Riedy wrote:
-> Older Solaris machines lack stdint.h but have inttypes.h.
-> The standard has inttypes.h including stdint.h, so at worst
-> this pollutes the namespace a bit.
+Regards
+Deepak
 
-my appologies for not researching enough.  thanks for this correction.
+On 1/25/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Thu, 25 Jan 2007, Deepak Barua wrote:
+>
+> >                    What about the spell checker...?
+>
+> Sorry, time is scarce these days. (And I can't do it on the machines I am
+> right now working on, since I may not install perl packages.)
+>
+> Ciao,
+> Dscho
+>
+>
 
-cheers
-  simon
 
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enigD45FD7225A28985670C295EB
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFuaXOr5S+dk6z85oRAlRsAKDUdsgjXlQQ2VGfqvtvdg979CYGxwCfeChs
-028JAL9Kuha11CAuHZ+zyxY=
-=g8wx
------END PGP SIGNATURE-----
-
---------------enigD45FD7225A28985670C295EB--
+-- 
+Code Code Code Away
