@@ -1,98 +1,101 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git fetch over ssh trouble
-Date: Thu, 25 Jan 2007 22:10:34 -0800
-Message-ID: <7vejpi2u91.fsf@assigned-by-dhcp.cox.net>
-References: <20070126050842.GA18058@fieldses.org>
-	<7vmz462wdh.fsf@assigned-by-dhcp.cox.net>
-	<20070126053400.GB18058@fieldses.org>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: cvsimport/cvsps: wrong revisions in branch
+Date: Fri, 26 Jan 2007 07:20:12 +0100
+Message-ID: <45B99D9C.40908@fs.ei.tum.de>
+References: <20070125142242.1402.qmail@b4b5deb4d44aa3.315fe32.mid.smarden.org>	 <45B8C032.7020004@fs.ei.tum.de> <46a038f90701251806k719dd35p7b13fe049b9cf25c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig351BF541A0487AC4E915E7F1"
 Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri Jan 26 07:10:40 2007
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 26 07:20:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAKIJ-0002rW-VQ
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 07:10:40 +0100
+	id 1HAKRn-0006gW-19
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 07:20:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030767AbXAZGKg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 01:10:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030769AbXAZGKg
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 01:10:36 -0500
-Received: from fed1rmmtao01.cox.net ([68.230.241.38]:57720 "EHLO
-	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030767AbXAZGKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 01:10:35 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao01.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070126061034.OIJS9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 26 Jan 2007 01:10:34 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Fi9d1W00C1kojtg0000000; Fri, 26 Jan 2007 01:09:37 -0500
-In-Reply-To: <20070126053400.GB18058@fieldses.org> (J. Bruce Fields's message
-	of "Fri, 26 Jan 2007 00:34:00 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030784AbXAZGUX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 01:20:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030785AbXAZGUX
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 01:20:23 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:40960 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030784AbXAZGUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 01:20:22 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 58DCA281EB;
+	Fri, 26 Jan 2007 07:20:20 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id YRcXKmRKHpW1; Fri, 26 Jan 2007 07:20:19 +0100 (CET)
+Received: from [62.216.203.38] (ppp-62-216-203-38.dynamic.mnet-online.de [62.216.203.38])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 4D35E281E6;
+	Fri, 26 Jan 2007 07:20:19 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+In-Reply-To: <46a038f90701251806k719dd35p7b13fe049b9cf25c@mail.gmail.com>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37805>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig351BF541A0487AC4E915E7F1
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
->> I wonder what should happen when you do not have anything
->> defined for "linus-nfs" shorthand.
->
-> Oops; I didn't notice that!
->
->> Should it fetch HEAD?
->
-> In my case I'd want it to either default to what I actually wanted
-> (+refs/heads/*:refs/remotes/linux-nfs/*), or just fail with something
-> helpful:
->
-> 	"Nothing to fetch"?
-> 	"No refspec given, and no default fetch configured for linux-nfs"?
-> 	"What do you want me to fetch?"?
->
-> I don't know.
+Martin Langhoff wrote:
+> On 1/26/07, Simon 'corecode' Schubert <corecode@fs.ei.tum.de> wrote:
+>> how do you expect this to ever work?  your tag is not a time stable on=
+e.
+> I agree on that, but you _can_ try a range of importers. I think you
+> should give Keith Packard's parsecvs a try. It is memory-bound and
+> won't do incremental imports but it manages to import some repos
+> cvsimport can't do directly.
 
-Saying "let's grab everything" is certainly tempting, but I
-think it is a bit too much.  How about doing this instead, then?
+whichever importer you try, it *will* fail to create pure tags equivalent=
+ to the CVS tag.  it is not possible.  of course you can do trickery and =
+create branches to simulate crooked tags.
 
--- >8 --
-[PATCH] parse-remote: do not barf on a remote shorthand without any refs to fetch.
+> The other option is to use cvs2svn, which is the most conservative and
+> careful importer around, and most likely to be able to deal with your
+> insane tags. And then git-svnimport right after ;-)
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+yes, cvs2svn is quite top notch regarding the brokenness in repos it tole=
+rates.  however, going from svn to git is equally complicated again, as y=
+ou can't nicely convert svn's copy-to-branch if it again copies files fro=
+m different revisions.  you just converted the problem to svn, but you di=
+dn't make it go away.
 
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 1122c83..7e87f2e 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -81,7 +81,14 @@ get_remote_default_refs_for_push () {
- # is to help prevent randomly "globbed" ref from being chosen as
- # a merge candidate
- expand_refs_wildcard () {
-+	remote="$1"
-+	shift
- 	first_one=yes
-+	if test "$#" = 0
-+	then
-+		echo empty
-+		echo >&2 "Nothing specified for fetching with remote.$remote.fetch"
-+	fi
- 	for ref
- 	do
- 		lref=${ref#'+'}
-@@ -132,7 +139,7 @@ canon_refs_list_for_fetch () {
- 	if test "$1" = "-d"
- 	then
- 		shift ; remote="$1" ; shift
--		set $(expand_refs_wildcard "$@")
-+		set $(expand_refs_wildcard "$remote" "$@")
- 		is_explicit="$1"
- 		shift
- 		if test "$remote" = "$(get_default_remote)"
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+
+
+--------------enig351BF541A0487AC4E915E7F1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFuZ2fr5S+dk6z85oRAiA0AKCIfvOBaJO016IYPmT2wQ1YjqPM6wCgkLak
+pn9WiriQBQmG0VxAtiILa3g=
+=p2Gv
+-----END PGP SIGNATURE-----
+
+--------------enig351BF541A0487AC4E915E7F1--
