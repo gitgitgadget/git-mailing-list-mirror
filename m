@@ -1,97 +1,86 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH] contrib/emacs/vc-git.el: support vc-version-other-window
-Date: Fri, 26 Jan 2007 11:57:50 +0100
-Message-ID: <87y7nqukb5.fsf@wine.dyndns.org>
-References: <20070125234352.340DACB9F4@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: More precise tag following
+Date: Fri, 26 Jan 2007 03:07:19 -0800
+Message-ID: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sam Vilain <sam.vilain@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Fri Jan 26 11:58:00 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 26 12:07:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAOmN-0007Hc-6s
-	for gcvg-git@gmane.org; Fri, 26 Jan 2007 11:57:59 +0100
+	id 1HAOvU-0002m8-W8
+	for gcvg-git@gmane.org; Fri, 26 Jan 2007 12:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932566AbXAZK54 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 05:57:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932846AbXAZK54
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 05:57:56 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:57336 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932566AbXAZK5z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 05:57:55 -0500
-Received: from adsl-89-217-155-103.adslplus.ch ([89.217.155.103] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HAOmH-0007l0-AJ; Fri, 26 Jan 2007 04:57:54 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id CFBCD4FB65; Fri, 26 Jan 2007 11:57:50 +0100 (CET)
-In-Reply-To: <20070125234352.340DACB9F4@localhost.localdomain> (Sam Vilain's message of "Fri\, 26 Jan 2007 12\:41\:23 +1300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.92 (gnu/linux)
+	id S932872AbXAZLHW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 06:07:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932838AbXAZLHW
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 06:07:22 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:64330 "EHLO
+	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932872AbXAZLHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 06:07:21 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070126110720.ROSF9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 26 Jan 2007 06:07:20 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Fn6N1W00C1kojtg0000000; Fri, 26 Jan 2007 06:06:23 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37838>
 
-Sam Vilain <sam.vilain@catalyst.net.nz> writes:
+What if (I know, this discussion does not belong here until
+1.5.0 final) we had a "reverse" database that keeps track of
+what tag references which object, and "git rev-list" knows how
+to exploit it?  That is, just like generating a list of objects
+that are reachable with --objects option, if we can add a new
+option --with-tag very cheaply to list tag objects that would
+reach what are in the generated list of objects?
 
-> Currently, the vc-git-checkout function uses `git checkout' to fetch a
-> file from the git repository to the working copy.  However, it is
-> completely ignoring the input argument that specifies the destination
-> file.  `git-checkout' does not support specifying this, so we have to
-> use `git-cat-file', capture the output in a buffer and then save it.
+The way current git-fetch "follows" tags is very imprecise,
+although it is good enough in practice.  If you happen to
+locally have an object that is tagged (and currently we get the
+list of non-tag objects that tags eventually refer to in an
+out-of-band-ish way), then we fetch the tag and everything it
+reaches.  This means if you copied a single commit that is tagged
+from somewhere without objects that it refers to, we would end
+up fetching beyond that commit to complete it.  Which would not
+result in a corrupted repository, but ideally we should not be
+fetching the tag in such a case.  And with something like
+enhanced rev-list that knows --with-tag it might be possible (I
+need to think a bit more about have/want exchange and what
+should happen later in fetch-pack and push-pack protocol,
+though).
 
-This looks good, though the code can be made simpler by using
-with-temp-file to create the file. Also you need to avoid charset
-conversions when reading and writing, and you should use ls-files -z
-to avoid problems with strange file names.
+The application of this actually may not be limited to tag
+following.  We could define a tag-like objects that attaches to
+other objects and enhance its meanings (annotates them) and
+treat them the same way as tags for objects traversal and
+transfer purposes, so if we were to do this, the option to
+exploit reverse database would be called --with-annotation and
+not --with-tag.
 
-I'd suggest something like this:
+ - If a single-path following turns out to be too expensive
+   (there was a longstanding talk about "git log --single-follow
+   $path"; "git blame" also follows a single path although the
+   target it follows can fork into two or more when following
+   cut&pastes) because we need to explode multi-level trees for
+   each commit while traversing commit ancestry, we could define
+   an annotation to a commit that lists the set of paths the
+   commit touches relative to each of its parents (so the object
+   contains N lists of paths), so that pathspec limiting needs
+   to open and read only one object to figure out that the trees
+   do not have to be opened to skip the commit and/or a merge
+   can be simplified.
 
+ - We could define an annotation to a commit that describes what
+   fake parents it should have instead of the real ones
+   (i.e. grafts implemented in the object database).
 
->From b37cff5399dd94abe3d4e9778cdbf5cee53d46c0 Mon Sep 17 00:00:00 2001
-From: Alexandre Julliard <julliard@winehq.org>
-Date: Fri, 26 Jan 2007 11:39:55 +0100
-Subject: [PATCH] vc-git.el: Take into account the destination name in vc-checkout.
-
-This is necessary for vc-version-other-window. Based on a patch by Sam
-Vilain <sam.vilain@catalyst.net.nz>.
-
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- contrib/emacs/vc-git.el |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
-
-diff --git a/contrib/emacs/vc-git.el b/contrib/emacs/vc-git.el
-index 3eb4bd1..e456ab9 100644
---- a/contrib/emacs/vc-git.el
-+++ b/contrib/emacs/vc-git.el
-@@ -120,7 +120,16 @@
-     (vc-git--run-command file "commit" "-m" comment "--only" "--")))
- 
- (defun vc-git-checkout (file &optional editable rev destfile)
--  (vc-git--run-command file "checkout" (or rev "HEAD")))
-+  (if destfile
-+      (let ((fullname (substring
-+                       (vc-git--run-command-string file "ls-files" "-z" "--full-name" "--")
-+                       0 -1))
-+            (coding-system-for-read 'no-conversion)
-+            (coding-system-for-write 'no-conversion))
-+        (with-temp-file destfile
-+          (eq 0 (call-process "git" nil t nil "cat-file" "blob"
-+                              (concat (or rev "HEAD") ":" fullname)))))
-+    (vc-git--run-command file "checkout" (or rev "HEAD"))))
- 
- (defun vc-git-annotate-command (file buf &optional rev)
-   ; FIXME: rev is ignored
--- 
-1.5.0.rc2.gc651
-
-
-
--- 
-Alexandre Julliard
-julliard@winehq.org
+Just an idle thought.
