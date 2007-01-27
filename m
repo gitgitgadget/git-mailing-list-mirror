@@ -1,77 +1,48 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: grafts+repack+prune = history at danger
-Date: Fri, 26 Jan 2007 16:56:41 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701261652440.25027@woody.linux-foundation.org>
-References: <45B8E61E.C9C5E6C6@eudaptics.com> <7vireu7lj0.fsf@assigned-by-dhcp.cox.net>
- <45B9B80E.E2534F97@eudaptics.com> <7vr6ti183o.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0701260747110.25027@woody.linux-foundation.org>
- <7vtzydtkqu.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: git.kernel.org move (finally)... estimated week of Feb 5
+Date: Fri, 26 Jan 2007 17:17:31 -0800
+Message-ID: <45BAA82B.6000105@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jan 27 01:56:57 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jan 27 02:17:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAbsG-0004HX-Lh
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 01:56:57 +0100
+	id 1HAcCR-0004lf-7Z
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 02:17:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751734AbXA0A4t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 19:56:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751827AbXA0A4t
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 19:56:49 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:34403 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751734AbXA0A4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 19:56:49 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0R0ug1m023426
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 26 Jan 2007 16:56:42 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0R0uf5T031184;
-	Fri, 26 Jan 2007 16:56:41 -0800
-In-Reply-To: <7vtzydtkqu.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.553 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
-X-MIMEDefang-Filter: osdl$Revision: 1.172 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751823AbXA0BRl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 20:17:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbXA0BRl
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 20:17:41 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:48029 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823AbXA0BRk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 20:17:40 -0500
+Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l0R1HYxo032359
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 26 Jan 2007 17:17:34 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
+X-Virus-Scanned: ClamAV 0.88.7/2493/Fri Jan 26 04:00:46 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.4 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_24_48 autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37909>
 
+Just for everyone's information...
 
+The git performance issues (especially) on kernel.org has been very 
+frustrating, obviously.  We're putting a dedicated git server in place 
+hopefully the week of February 5.
 
-On Fri, 26 Jan 2007, Junio C Hamano wrote:
-
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> >
-> >  - "git prune" would *also* explicitly set it to zero, but would also 
-> >    manually look at the grafts file, and mark anything that is set in the 
-> >    grafts file as being reachable (the same way it does for index entries 
-> >    etc).
-> 
-> I am not sure why your "git prune" one does that, but will think
-> about it for some time first before I ask you to waste your time
-> explaining it me.
-
-Simple: the grafts may actually _hide_ history too - not just add it.
-
-Sure, commonly, a graft is used to graft two complete trees together (eg, 
-you'd graft the old Linux history into the new Linux history tree). 
-
-However, they _can_ also be used to "fix" history - say that you had one 
-tree that has a rough history (with all the releases, but not the full 
-history between them), and another "fine-grained" historical tree. You 
-could use a graft to replace the rough history version with the 
-fine-grained one, so the graft may actually hide stuff that is there in 
-the rough history.
-
-So in this case, we wouldn't necessarily want to prune stuff that 
-"exists", but is hidden by a graft. So in my suggestion, pruning would 
-basically only use the grafts file to *add* refs, never to hide them.
-
-		Linus
+	-hpa
