@@ -1,65 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: More precise tag following
-Date: Sat, 27 Jan 2007 08:33:53 -0500
-Message-ID: <20070127133352.GB2417@coredump.intra.peff.net>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org> <7vbqkklv3h.fsf@assigned-by-dhcp.cox.net>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] Allow the tag signing key to be specified in the config
+ file
+Date: Sat, 27 Jan 2007 14:37:56 +0100
+Message-ID: <45BB55B4.5090303@fs.ei.tum.de>
+References: <200701261413.46823.andyparkins@gmail.com> <7vodolnfes.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigA93B997E10E22CC38EECC6EC"
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Jan 27 14:33:59 2007
+X-From: git-owner@vger.kernel.org Sat Jan 27 14:38:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAngs-0002BJ-Sr
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 14:33:59 +0100
+	id 1HAnkx-0003qR-MY
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 14:38:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbXA0Ndz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 08:33:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270AbXA0Ndz
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 08:33:55 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1475 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752268AbXA0Ndz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 08:33:55 -0500
-Received: (qmail 16175 invoked from network); 27 Jan 2007 08:34:17 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 27 Jan 2007 08:34:17 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 27 Jan 2007 08:33:53 -0500
-Content-Disposition: inline
-In-Reply-To: <7vbqkklv3h.fsf@assigned-by-dhcp.cox.net>
+	id S1751673AbXA0NiI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 08:38:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270AbXA0NiI
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 08:38:08 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:34143 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751673AbXA0NiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 08:38:07 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id C2CD82816A;
+	Sat, 27 Jan 2007 14:38:05 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id S6oCE3NVqehu; Sat, 27 Jan 2007 14:38:05 +0100 (CET)
+Received: from [62.216.202.61] (ppp-62-216-202-61.dynamic.mnet-online.de [62.216.202.61])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 0753528165;
+	Sat, 27 Jan 2007 14:38:04 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+In-Reply-To: <7vodolnfes.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37956>
 
-On Sat, Jan 27, 2007 at 12:41:54AM -0800, Junio C Hamano wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigA93B997E10E22CC38EECC6EC
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-> > Based on some (limited) profiling with Shark it seems we spend about
-> > 50% of our CPU time doing zlib decompression of objects and almost
-> > another 14% parsing the tree objects to apply the path limiter.
-> 
-> I once tried to use zlib compression level 0 for tree objects
-> and did not see much difference -- maybe I should dig it up and
-> find out why.
+Junio C Hamano wrote:
+>> +	: ${keyid:=3D$(expr "z$tagger" : 'z\(.*>\)')}
 
-I don't know exactly what Shawn meant, but a considerable amount of time
-in a blame is spent decompressing the blobs. Just for fun, some numbers:
+is there a reason to use name + email as keyid and not just the email add=
+ress?  that would also mitigate the need to specify user.sigingkey if onl=
+y the names missmatch between gpg and git, but the email addresses are th=
+e same.
 
-Fully packed, warm cache, core.compression = -1:
-$ time git blame Makefile >/dev/null
-real    0m5.537s
-user    0m5.500s
-sys     0m0.032s
+cheers
+  simon
 
-Fully packed, warm cache, core.compression = 0:
-$ time git blame Makefile >/dev/null
-real    0m3.001s
-user    0m2.984s
-sys     0m0.012s
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
-That's 45% savings. The resulting pack sizes are 11932K compressed and
-22308 uncompressed.
 
--Peff
+--------------enigA93B997E10E22CC38EECC6EC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFu1W4r5S+dk6z85oRAl/oAJ4xKC+tklukWfq3txpDEkW2eVO94QCeOgsY
+6HM2ScgA/Vy+qoPgXff1kYM=
+=l5/q
+-----END PGP SIGNATURE-----
+
+--------------enigA93B997E10E22CC38EECC6EC--
