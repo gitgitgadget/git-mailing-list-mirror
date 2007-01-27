@@ -1,96 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: More precise tag following
-Date: Sat, 27 Jan 2007 17:30:59 +0100
-Organization: At home
-Message-ID: <epfulr$787$1@sea.gmane.org>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org> <Pine.LNX.4.63.0701271352170.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45BB5888.9020608@fs.ei.tum.de>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] Allow the tag signing key to be specified in the config
+ file
+Date: Sat, 27 Jan 2007 17:44:38 +0100
+Message-ID: <45BB8176.9080106@fs.ei.tum.de>
+References: <200701261413.46823.andyparkins@gmail.com> <7vodolnfes.fsf@assigned-by-dhcp.cox.net> <45BB55B4.5090303@fs.ei.tum.de> <200701271624.50336.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 27 17:30:04 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigCEBE7EB3A4B8BD4E7E5249DF"
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 27 17:44:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAqRG-0002QH-VD
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 17:30:03 +0100
+	id 1HAqfb-00019s-Ni
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 17:44:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751852AbXA0QaA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 11:30:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751887AbXA0QaA
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 11:30:00 -0500
-Received: from main.gmane.org ([80.91.229.2]:54910 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751852AbXA0Q37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 11:29:59 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HAqRA-00044d-Mw
-	for git@vger.kernel.org; Sat, 27 Jan 2007 17:29:56 +0100
-Received: from host-81-190-20-200.torun.mm.pl ([81.190.20.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 27 Jan 2007 17:29:56 +0100
-Received: from jnareb by host-81-190-20-200.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 27 Jan 2007 17:29:56 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-20-200.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1751631AbXA0Qop (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 11:44:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbXA0Qop
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 11:44:45 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:51718 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751631AbXA0Qoo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 11:44:44 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 44D5C281C0;
+	Sat, 27 Jan 2007 17:44:43 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id e9gE80agCiCt; Sat, 27 Jan 2007 17:44:43 +0100 (CET)
+Received: from [192.168.10.124] (ppp-62-216-202-61.dynamic.mnet-online.de [62.216.202.61])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id A5DF52816E;
+	Sat, 27 Jan 2007 17:44:42 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+In-Reply-To: <200701271624.50336.andyparkins@gmail.com>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37960>
 
-Simon 'corecode' Schubert wrote:
-> Johannes Schindelin wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigCEBE7EB3A4B8BD4E7E5249DF
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
->> It is slower than Subversion's counterpart, just because SVN's blame 
->> sucks. You cannot find out the _relevant_ information easily, i.e. once 
->> you merged something, the _merge_ gets attributed for the change (at
->> least the last time I tried it).
->> 
->> So, don't blame blame for being useful in git.
-> 
-> Your reasoning is backwards.  Git's blame (or fwiw, rev-list path.name)
-> is not slower because it is doing a better job (I can't tell, I don't
-> use svn), but because it uses an algorithm which doesn't scale.
-> rev-list and blame are O(number of commits between HEAD and root) and not
-> O(number of commits affecting path).  It might be sufficient for git.git,
-> but certainly not for projects with a long history.  we are talking KDE,
-> FreeBSD, OOo, something like this.  They each got about 400k commits.
-> It takes literally *minutes* to get a rev-list or a blame for a certain
-> path.  The algorithm simply does not scale.  And this has nothing to do
-> with superior output, because hg does it in O(num_of_file_revs), so it
-> *can* be done.          
+Andy Parkins wrote:
+>> is there a reason to use name + email as keyid and not just the email
+>> address?  that would also mitigate the need to specify user.sigingkey
+>> if only the names missmatch between gpg and git, but the email
+>> addresses are the same.
+> That was my original solution, but it was rejected.
+>=20
+> http://www.gelato.unsw.edu.au/archives/git/0610/29733.html
 
-Mercurial (hg) has different repository structure, with changesets in
-per filename "buckets", tied together with mainfest file and changelog
-file. So it is easy to get per file history in hg, while it is harder
-to get per commit (general) history; contrary to git where it is easy
-to get per commit (general) history, and it is harder to get per file
-history.
+oh well.  I don't think this was discussed properly.  The question for me=
+ is, what should be the default:  fail if there is no matching key which =
+also matches the comment field, or choose the default (sub)key even when =
+a different subkey matches (based on the comment field).  First of all, I=
+ think the default should be "try not to fail", so that is the second way=
+=2E  Additionally, people can specify a different keyid if they want to s=
+ign with a different key.
 
-On the other hand IIRC Mercurial, due to its repository structure, has some
-problems with file copying and renames, not to mention more complicated 
-contents movement (of which git-blame is aware of). Perhaps this structure
-is/was also the cause that Mercurial is geared towards one branch per
-repository workflow.
- 
->> Of course, you could introduce a cache, but then, I don't run blame
->> _that_ often.
-> 
-> I don't think a cache is the right way.  I'd call the right idea
-> "auxillary information". 
+Oh well, I don't really care about this.  I just say that I'd expect it n=
+ot to fail...
 
-If the information can be regenerated, this is cache. (Well, this is
-one point of view).
+cheers
+  simon
 
-P.S. In git we can use so called pickaxe (options to git-diff/git-log)
-besides using annotate/blame.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+
+
+--------------enigCEBE7EB3A4B8BD4E7E5249DF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFu4F5r5S+dk6z85oRApHwAKC5uVop8p6QLc8D+dV1wbMcm8XBPwCgxlh/
+ew7uM9u8zjGy1QobJGjotyU=
+=SBAr
+-----END PGP SIGNATURE-----
+
+--------------enigCEBE7EB3A4B8BD4E7E5249DF--
