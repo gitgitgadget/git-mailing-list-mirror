@@ -1,122 +1,98 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 6/6] Make 'stg pull' use git-fetch and not git-pull.
-Date: Sat, 27 Jan 2007 18:22:59 +0100
-Message-ID: <20070127172259.27183.95603.stgit@gandelf.nowhere.earth>
-References: <20070127172129.27183.50432.stgit@gandelf.nowhere.earth>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: More precise tag following
+Date: Sat, 27 Jan 2007 09:36:39 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701270925080.25027@woody.linux-foundation.org>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org>
+ <Pine.LNX.4.63.0701271352170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45BB5888.9020608@fs.ei.tum.de> <epfulr$787$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 27 18:24:26 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 27 18:37:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HArHt-0003Gx-LB
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 18:24:25 +0100
+	id 1HArUE-00018l-Qs
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 18:37:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752200AbXA0RYP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 12:24:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752278AbXA0RYP
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 12:24:15 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:58496 "EHLO smtp5-g19.free.fr"
+	id S1752287AbXA0Rgo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 12:36:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752290AbXA0Rgn
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 12:36:43 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:57986 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752200AbXA0RYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 12:24:13 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 8923B279E7;
-	Sat, 27 Jan 2007 18:24:12 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 3FD151F089;
-	Sat, 27 Jan 2007 18:22:59 +0100 (CET)
-In-Reply-To: <20070127172129.27183.50432.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.11
+	id S1752287AbXA0Rgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 12:36:42 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0RHae1m014740
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 27 Jan 2007 09:36:40 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0RHaduP013213;
+	Sat, 27 Jan 2007 09:36:39 -0800
+In-Reply-To: <epfulr$787$1@sea.gmane.org>
+X-Spam-Status: No, hits=-0.509 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37975>
 
 
-We introduce a new pull-does-rebase setting, as companion to pullcmd.
-This allows to use both pullcmd's that need a rebase (like git-fetch)
-and pullcmd's that do not (like git-pull).
 
-To be able to rebase, we rely on parent information being available
-for the stack.
+On Sat, 27 Jan 2007, Jakub Narebski wrote:
+> 
+> On the other hand IIRC Mercurial, due to its repository structure, has some
+> problems with file copying and renames
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+This is not a hg-only problem.
 
- examples/gitconfig |    8 +++++++-
- stgit/config.py    |    3 ++-
- stgit/git.py       |   15 ++++++++++-----
- 3 files changed, 19 insertions(+), 7 deletions(-)
+This is the SAME and FUNDAMENTAL problem that you have any time you think 
+"file identity" matters.
 
-diff --git a/examples/gitconfig b/examples/gitconfig
-index 5e7b240..e3d9889 100644
---- a/examples/gitconfig
-+++ b/examples/gitconfig
-@@ -33,8 +33,14 @@
- 	#pager = ~/share/stgit/contrib/diffcol.sh
- 	#pager = filterdiff --annotate | colordiff | less -FRX
- 
--	# GIT pull command (should take the same arguments as git-pull)
-+	# GIT pull command (should take the same arguments as
-+	# git-fetch or git-pull).  By default:
-+	#pullcmd = git-fetch
-+	#pull-does-rebase = yes
-+	# Alternative (old behaviour), less intuitive but maybe useful
-+	# for some workflows:
- 	#pullcmd = git-pull
-+	#pull-does-rebase = no
- 
- 	# The three-way merge tool. Note that the 'output' file contains the
- 	# same data as 'branch1'. This is useful for tools that do not take an
-diff --git a/stgit/config.py b/stgit/config.py
-index c2d413b..9b66686 100644
---- a/stgit/config.py
-+++ b/stgit/config.py
-@@ -29,7 +29,8 @@ class GitConfig:
-         'stgit.autoresolved':	'no',
-         'stgit.smtpserver':		'localhost:25',
-         'stgit.smtpdelay':		'5',
--        'stgit.pullcmd':		'git-pull',
-+        'stgit.pullcmd':		'git-fetch',
-+        'stgit.pull-does-rebase':	'yes',
-         'stgit.merger':		'diff3 -L current -L ancestor -L patched -m -E ' \
- 				'"%(branch1)s" "%(ancestor)s" "%(branch2)s" > "%(output)s"',
-         'stgit.autoimerge':		'no',
-diff --git a/stgit/git.py b/stgit/git.py
-index 849a417..708dd56 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -806,18 +806,23 @@ def reset(files = None, tree_id = None, check_out = True):
-         __set_head(tree_id)
- 
- def pull(repository = 'origin', refspec = None):
--    """Pull changes from the remote repository. At the moment, just
--    use the 'git-pull' command
-+    """Pull changes from the remote repository. Uses 'git-fetch'
-+    and moves the stack base.
-     """
--    # 'git-pull' updates the HEAD
-+    # we update the HEAD
-     __clear_head_cache()
- 
-     args = [repository]
-     if refspec:
-         args.append(refspec)
- 
--    if __run(config.get('stgit.pullcmd'), args) != 0:
--        raise GitException, 'Failed "git-pull %s"' % repository
-+    command = config.get('stgit.pullcmd')
-+    if __run(command, args) != 0:
-+        raise GitException, 'Failed "%s %s"' % (command, repository)
-+
-+    if (config.get('stgit.pull-does-rebase')):
-+        # FIXME!
-+        reset(tree_id = rev_parse(repository))
- 
- def repack():
-     """Repack all objects into a single pack
+Yes, it's what makes "blame/annotate" fast. But I have tried, over and 
+over again, to explain why it's fundamentally broken (regardless of any 
+blame thing).
+
+So I will  just say once again: don't try to make "blame" faster. You can 
+only do so by introducing MUCH MORE serious problems in other parts.
+
+This was a very early design decision in git. It was discussed within 
+hours of me releasing the first version of git. Yes, "git blame" is 
+relatively slow, and it is very very fundamental. It's fundamental exactly 
+because git avoids the mistake that *everybody* else has done.
+
+The upside? I just sent a patch that should make it possible to do a "cool 
+blame" that doesn't feel slow, and in fact allows some nice eyecandy 
+effects (well, it would allow it, if I just knew tcl/tk or something like 
+that: it needs a canvas to draw the existing file into, and then filling 
+in the incremental data as git-blame finds it).
+
+It's going to be tons more fun to watch than any CVS/SVN annotate has ever 
+been. Trust me. I bet that you'll feel that "git blame" is *too* fast, and 
+you'll want the graphical viewer to have a "slow down" flag, just so that 
+you can appreciate the blame building up!
+
+[ Ok, that may not be true for everybody, but having played with "git 
+   blame --incremental" a bit I really think it would be a bit cool to 
+   have that "slow down" mode, and start things with a really tiny font 
+   so you could see the blame build up over a file!
+
+   I'm not kidding you. Eyecandy! And it literally would need git to slow 
+   down to make it more human-friendly! ]
+
+The other upside? EVERYTHING ELSE IS FASTER. And I really mean 
+*everything*. Yes, "git blame" is slower than SVN. It will remain so, 
+unless somebody either overrides my objections, or some alien intelligence 
+comes up with something _really_ clever. But look at it this way: blame 
+may take a few seconds, but that's a big part of why you can do merges of 
+things that have tens of thousands of files in half a second.
+
+Things that you would need to go brew a cup of coffee for in some other 
+environments are basically _instantaneous_. 
+
+			Linus
