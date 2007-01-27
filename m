@@ -1,7 +1,7 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 4/5] Have 'stg branch --create' record parent information.
-Date: Sat, 27 Jan 2007 12:21:33 +0100
-Message-ID: <20070127112133.16475.53497.stgit@gandelf.nowhere.earth>
+Subject: [PATCH 3/5] Basic support for keeping a ref to the parent branch.
+Date: Sat, 27 Jan 2007 12:21:27 +0100
+Message-ID: <20070127112127.16475.31003.stgit@gandelf.nowhere.earth>
 References: <20070127104024.16475.81445.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
@@ -13,86 +13,104 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAle7-00059K-9F
+	id 1HAle6-00059K-Ob
 	for gcvg-git@gmane.org; Sat, 27 Jan 2007 12:22:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752241AbXA0LWs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 06:22:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752240AbXA0LWs
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 06:22:48 -0500
-Received: from smtp4-g19.free.fr ([212.27.42.30]:40307 "EHLO smtp4-g19.free.fr"
+	id S1751628AbXA0LWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 06:22:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752241AbXA0LWm
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 06:22:42 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:50596 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752239AbXA0LWq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 06:22:46 -0500
+	id S1751628AbXA0LWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 06:22:41 -0500
 Received: from bylbo.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp4-g19.free.fr (Postfix) with ESMTP id D433088DE;
-	Sat, 27 Jan 2007 12:22:44 +0100 (CET)
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 09D4C4A1FC;
+	Sat, 27 Jan 2007 12:22:40 +0100 (CET)
 Received: from gandelf.nowhere.earth ([10.0.0.5] ident=dwitch)
 	by bylbo.nowhere.earth with esmtp (Exim 4.62)
 	(envelope-from <ydirson@altern.org>)
-	id 1HAleB-0003ZT-Pg; Sat, 27 Jan 2007 12:23:03 +0100
+	id 1HAle6-0003ZO-Id; Sat, 27 Jan 2007 12:22:58 +0100
 In-Reply-To: <20070127104024.16475.81445.stgit@gandelf.nowhere.earth>
 User-Agent: StGIT/0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37943>
 
 
-
+This adds a framework to handle the parent branch of a stack, in
+addition to the parent remote, and to set them when creating a stack.
 
 Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
 
- stgit/commands/branch.py |   37 ++++++++++++++++++++++++++++++++++---
- 1 files changed, 34 insertions(+), 3 deletions(-)
+ TODO           |    2 --
+ stgit/stack.py |   27 ++++++++++++++++++++++++++-
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/stgit/commands/branch.py b/stgit/commands/branch.py
-index d348409..f074d47 100644
---- a/stgit/commands/branch.py
-+++ b/stgit/commands/branch.py
-@@ -123,10 +123,41 @@ def func(parser, options, args):
-         check_head_top_equal()
+diff --git a/TODO b/TODO
+index 549bc9d..884b831 100644
+--- a/TODO
++++ b/TODO
+@@ -20,8 +20,6 @@ The future, when time allows or if someone else does them:
+ - multiple heads in a patch - useful for forking a patch,
+   synchronising with other patches (diff format or in other
+   repositories)
+-- "pull" argument should default to a sane value, "origin" is wrong in
+-  many cases
+ - commit directly to a patch which is not top
+ - patch synchronisation between between branches (as some people,
+   including me have the same patches based on different branches and
+diff --git a/stgit/stack.py b/stgit/stack.py
+index e801f42..9d4f881 100644
+--- a/stgit/stack.py
++++ b/stgit/stack.py
+@@ -410,6 +410,29 @@ class Series(StgitObject):
+             config.add_section(section)
+         config.set(section, 'remote', remote)
  
-         tree_id = None
--        if len(args) == 2:
-+        if len(args) >= 2:
-+            try:
-+                if git.rev_parse(args[1]) == git.rev_parse('refs/heads/' + args[1]):
-+                    # we are for sure refering to a branch
-+                    parentbranch = 'refs/heads/' + args[1]
-+                    print 'Recording "%s" as parent branch.' % parentbranch
-+                elif git.rev_parse(args[1]) and re.search('/', args[1]):
-+                    # FIXME: should the test be more strict ?
-+                    parentbranch = args[1]
-+                else:
-+                    # Note: this includes refs to StGIT patches
-+                    print 'Don\'t know how to determine parent branch from "%s".' % args[1]
-+                    parentbranch = None
-+            except git.GitException:
-+                # should use a more specific exception to catch only non-git refs ?
-+                print 'Don\'t know how to determine parent branch from "%s".' % args[1]
-+                parentbranch = None
-+
-             tree_id = git_id(args[1])
--        
--        stack.Series(args[0]).init(create_at = tree_id)
++    def get_parent_branch(self):
++        section = 'branch "%s"' % self.__name
++        if config.has_option(section, 'merge'):
++            return config.get(section, 'merge')
++        elif rev_parse('heads/origin'):
++            return 'heads/origin'
 +        else:
-+            # branch stack off current branch
-+            parentbranch = git.get_head_file()
++            raise StackException, 'Cannot find a parent branch for "%s"' % self.__name
 +
-+        if parentbranch:
-+            parentremote = git.identify_remote(parentbranch)
-+            if parentremote:
-+                print 'Using "%s" remote to pull parent from.' % parentremote
-+            else:
-+                print 'Not identified a remote to pull parent from.'
-+        else:
-+            parentremote = None
++    def __set_parent_branch(self, name):
++        section = 'branch "%s"' % self.__name
++        if not config.has_section(section):
++            config.add_section(section)
++        config.set(section, 'merge', name)
 +
-+        stack.Series(args[0]).init(create_at = tree_id,
-+                                   parent_remote = parentremote,
-+                                   parent_branch = parentbranch)
++    def set_parent(self, remote, localbranch):
++        if localbranch:
++            self.__set_parent_branch(localbranch)
++            if remote:
++                self.__set_parent_remote(remote)
++        elif remote:
++            raise StackException, 'Remote "%s" without a branch cannot be used as parent' % remote
++
+     def __patch_is_current(self, patch):
+         return patch.get_name() == self.get_current()
  
-         print 'Branch "%s" created.' % args[0]
-         return
+@@ -458,7 +481,7 @@ class Series(StgitObject):
+         """
+         return os.path.isdir(self.__patch_dir)
+ 
+-    def init(self, create_at=False):
++    def init(self, create_at=False, parent_remote=None, parent_branch=None):
+         """Initialises the stgit series
+         """
+         bases_dir = os.path.join(self.__base_dir, 'refs', 'bases')
+@@ -475,6 +498,8 @@ class Series(StgitObject):
+ 
+         os.makedirs(self.__patch_dir)
+ 
++        self.set_parent(parent_remote, parent_branch)
++        
+         create_dirs(bases_dir)
+ 
+         self.create_empty_field('applied')
