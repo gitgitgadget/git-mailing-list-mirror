@@ -1,68 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 3/3] write_in_full: size_t is unsigned.
-Date: Fri, 26 Jan 2007 17:49:10 -0800
-Message-ID: <7vlkjpqlwp.fsf@assigned-by-dhcp.cox.net>
-References: <11698503133039-git-send-email-nico@cam.org>
-	<7vbqkluzcm.fsf@assigned-by-dhcp.cox.net>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: [PATCH] Document check option to git diff.
+Date: Fri, 26 Jan 2007 20:06:11 -0600
+Message-ID: <17850.45971.918929.314082@lisa.zopyra.com>
+References: <1169833372823-git-send-email-rael@zopyra.com>
+	<7vodoltkqt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Jan 27 02:49:26 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jan 27 03:06:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAch0-0001gs-K1
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 02:49:22 +0100
+	id 1HAcxO-0000Z5-4m
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 03:06:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265AbXA0BtQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 26 Jan 2007 20:49:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752266AbXA0BtQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 20:49:16 -0500
-Received: from fed1rmmtao12.cox.net ([68.230.241.27]:34244 "EHLO
-	fed1rmmtao12.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752264AbXA0BtP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Jan 2007 20:49:15 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao12.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070127014911.LUSQ19398.fed1rmmtao12.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 26 Jan 2007 20:49:11 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id G1oD1W0071kojtg0000000; Fri, 26 Jan 2007 20:48:13 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752272AbXA0CGP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 26 Jan 2007 21:06:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbXA0CGO
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Jan 2007 21:06:14 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61436 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752272AbXA0CGO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Jan 2007 21:06:14 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0R26Ct13456;
+	Fri, 26 Jan 2007 20:06:12 -0600
+In-Reply-To: <7vodoltkqt.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37913>
 
-It received the return value from xwrite() in a size_t variable
-'written' and expected comparison with 0 would catch an error
-from xwrite().
+On Friday, January 26, 2007 at 15:46:02 (-0800) Junio C Hamano writes:
+>...
+>Thanks.  It's nice to see somebody new getting more and more
+>comfortable with git.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- * and this is the third bug t7207-co.sh caught.  I haven't
-   bothered to look at the assembly, but I suspect the error
-   return path could have been totally optimized out X-<.
+I, and my colleagues, are grateful for all the work put into it.
 
- write_or_die.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+>Also I fear that 'valid' is a bit too strong a word here.  ...
+>                     ....  How about rewording it like this?
+>
+>	Look for and warn about changes that introduce trailing
+>        whitespaces at the end of the line or an indent that
+>        uses a whitespace before a tab.
 
-diff --git a/write_or_die.c b/write_or_die.c
-index 046e79d..5c4bc85 100644
---- a/write_or_die.c
-+++ b/write_or_die.c
-@@ -23,7 +23,7 @@ int write_in_full(int fd, const void *buf, size_t count)
- 	ssize_t total = 0;
- 
- 	while (count > 0) {
--		size_t written = xwrite(fd, p, count);
-+		ssize_t written = xwrite(fd, p, count);
- 		if (written < 0)
- 			return -1;
- 		if (!written) {
--- 
-1.5.0.rc2.g8ac6-dirty
+I was indeed too strong in wording it as "valid": yet another example
+of haste-induced waste.
+
+I believe that an accurate and concise statement would be:
+
+    Warn if changes introduce trailing whitespace
+    or an indent that uses a space before a tab.
+
+I think it should be explicitly limited to "space" and not
+"whitespace" before the tab, as "whitespace" really includes tab.
+
+Do I really need to say "trailing whitespace at the end of the line"?
+That seems overly verbose: trailing whitespace is, I think, understood
+to trail at the end of the line.
+
+I'll re-do the patch when I hear back, probably tomorrow.
+
+Also: I suppose I am wondering about the motivation for this switch.
+It seems to reflect the aesthetics of the git project.  Whitespace at
+the end of a line is meaningless and wasteful, so I understand and
+sympathize with the judgment that this is undesirable.  Spaces
+preceding tabs are somewhat murkier: two tabs, a space, and text pass
+the check, but a tab, space, tab and text do not.  Why is this bad?
+
+I'm sure there is a better way to categorize these violations other
+than "funny".  Should we not say "wasteful and inelegant, and
+therefore anathema to any decent, self-respecting person"?
+
+
+Bill
