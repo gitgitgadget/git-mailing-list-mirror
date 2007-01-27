@@ -1,53 +1,44 @@
-From: "Josh Boyer" <jwboyer@gmail.com>
-Subject: Re: git.kernel.org move (finally)... estimated week of Feb 5
-Date: Sat, 27 Jan 2007 10:46:21 -0600
-Message-ID: <625fc13d0701270846n710e833cnb1926e9fd51d8b59@mail.gmail.com>
-References: <45BAA82B.6000105@zytor.com>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH 0/7] Series short description
+Date: Sat, 27 Jan 2007 18:04:57 +0100
+Message-ID: <20070127170204.25975.82477.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sat Jan 27 17:46:28 2007
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 27 18:06:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAqh9-0001y6-ED
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 17:46:27 +0100
+	id 1HAr0Q-0002a1-Lk
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 18:06:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751908AbXA0QqX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 11:46:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbXA0QqX
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 11:46:23 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:10980 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751908AbXA0QqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 11:46:22 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1498882nfa
-        for <git@vger.kernel.org>; Sat, 27 Jan 2007 08:46:21 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g1m/0O/ijpQW3BFzldHyNqV38uIjkc+trzDD8d5R1X6xxs3u97+VziA39g+dgboxCgVyAYU5EWn3uU549Ei2NOrlMD0hJ0ivguFYFE2h82XZ5PtaEpyetu+cfNHAPHVrdpxUGSL06YLshAIg5oADIowZmJldghB73+TuPUq9E8o=
-Received: by 10.82.107.15 with SMTP id f15mr2596175buc.1169916381465;
-        Sat, 27 Jan 2007 08:46:21 -0800 (PST)
-Received: by 10.82.108.4 with HTTP; Sat, 27 Jan 2007 08:46:21 -0800 (PST)
-In-Reply-To: <45BAA82B.6000105@zytor.com>
-Content-Disposition: inline
+	id S1751947AbXA0RGN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 12:06:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751940AbXA0RGN
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 12:06:13 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:53121 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751937AbXA0RGM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 12:06:12 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id D352127AAD;
+	Sat, 27 Jan 2007 18:06:10 +0100 (CET)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 9AE491F089;
+	Sat, 27 Jan 2007 18:04:57 +0100 (CET)
+User-Agent: StGIT/0.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37963>
 
-On 1/26/07, H. Peter Anvin <hpa@zytor.com> wrote:
-> Just for everyone's information...
->
-> The git performance issues (especially) on kernel.org has been very
-> frustrating, obviously.  We're putting a dedicated git server in place
-> hopefully the week of February 5.
+The following series implements...
 
-For the hardware geeks out there, do you know what kind of machine it will be?
-
-josh
+-- 
+Yann Dirson    <ydirson@altern.org> |
+Debian-related: <dirson@debian.org> |   Support Debian GNU/Linux:
+                                    |  Freedom, Power, Stability, Gratis
+     http://ydirson.free.fr/        | Check <http://www.debian.org/>
