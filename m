@@ -1,62 +1,66 @@
-From: Matthias Kestenholz <lists@spinlock.ch>
-Subject: (At first sight) unexpected git-diff behavior
-Date: Sat, 27 Jan 2007 09:42:13 +0100
-Message-ID: <1169887333.19364.10.camel@localhost.localdomain>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/4] Teach git-describe to display distances from tags.
+Date: Sat, 27 Jan 2007 00:47:13 -0800
+Message-ID: <7v4pqcluum.fsf@assigned-by-dhcp.cox.net>
+References: <a23c4e55ca5c09f742fa2a047e45613e7797e720.1169880681.git.spearce@spearce.org>
+	<20070127065413.GC10380@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 27 09:42:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Jan 27 09:47:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAj96-0004Fo-6A
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 09:42:48 +0100
+	id 1HAjDS-000692-DG
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 09:47:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211AbXA0Imp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 03:42:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752216AbXA0Imp
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 03:42:45 -0500
-Received: from elephant.oekohosting.ch ([80.74.144.79]:53365 "EHLO
-	elephant.oekohosting.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752211AbXA0Imo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 03:42:44 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by elephant.oekohosting.ch (Postfix) with ESMTP id 80E7462C058
-	for <git@vger.kernel.org>; Sat, 27 Jan 2007 09:42:32 +0100 (CET)
-Received: from elephant.oekohosting.ch ([127.0.0.1])
-	by localhost (elephant.oekohosting.ch [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 04978-01 for <git@vger.kernel.org>;
-	Sat, 27 Jan 2007 09:42:30 +0100 (CET)
-Received: from [192.168.1.7] (93.117.78.83.cust.bluewin.ch [83.78.117.93])
-	by elephant.oekohosting.ch (Postfix) with ESMTP id 053E862C016
-	for <git@vger.kernel.org>; Sat, 27 Jan 2007 09:42:30 +0100 (CET)
-X-Mailer: Evolution 2.8.2.1 
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1752215AbXA0IrP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 03:47:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752224AbXA0IrP
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 03:47:15 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:64787 "EHLO
+	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752219AbXA0IrO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 03:47:14 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070127084714.EXGB16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 27 Jan 2007 03:47:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id G8mG1W00F1kojtg0000000; Sat, 27 Jan 2007 03:46:16 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37935>
 
-Hello,
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-I often specify revision ranges when I need a diff, because I find it
-easier to see what is diffed against what:
+> Junio C Hamano <junkio@cox.net>:
+>> However, I suspect that we could do better with Shawn's new
+>> fangled describe implementation that actually counts the
+>> distance between what is described and the tag.  We could add
+>> "number of commits since the tag" somewhere, to describe:
+>>
+>>   v2.6.20-rc5-256-g419dd83
+>>   v2.6.20-rc5-217-gde14569
+> ...
+>     v2.6.20-rc5+256-g419dd83
+>     v2.6.20-rc5+217-gde14569
+>
+> The + format is much easier to read and understand than the - format
+> original proposed by Junio.
 
-git diff v1.5.0-rc0..v1.5.0-rc1
+I tend to disagree (I do not claim + is _less_ easier to read,
+though).
 
-Today I tried to do the same to get a diff between linux v2.6.11 (which
-is a tag for a tree object) and v2.6.12:
+They are of comparable readability, and I think plus breaks
+GIT-VERSION-GEN (the primary reason it replaces '-' to '.' is
+to work around RPM limitation IIRC, and I do not know what '+'
+does to RPM offhand).
 
-$ git diff v2.6.11..v2.6.12
-error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a
-commit
-fatal: Invalid revision range v2.6.11..v2.6.12
-
-Of course, git diff v2.6.11 v2.6.12 works as it should.
-
-I am not sure if git diff should be able to work with tree objects in
-revision ranges (which does not really make sense).
-
-Thoughts?
+But I do not have a strong feeling either way.
