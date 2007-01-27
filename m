@@ -1,98 +1,68 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: More precise tag following
-Date: Sat, 27 Jan 2007 09:36:39 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701270925080.25027@woody.linux-foundation.org>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org>
- <Pine.LNX.4.63.0701271352170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45BB5888.9020608@fs.ei.tum.de> <epfulr$787$1@sea.gmane.org>
+Date: Sat, 27 Jan 2007 12:47:44 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0701271228270.3021@xanadu.home>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net>
+ <20070127080126.GC9966@spearce.org> <7vbqkklv3h.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 27 18:37:11 2007
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jan 27 18:47:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HArUE-00018l-Qs
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 18:37:11 +0100
+	id 1HAreW-0006Fd-Rx
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 18:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287AbXA0Rgo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 12:36:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752290AbXA0Rgn
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 12:36:43 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:57986 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752287AbXA0Rgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 12:36:42 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0RHae1m014740
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 27 Jan 2007 09:36:40 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0RHaduP013213;
-	Sat, 27 Jan 2007 09:36:39 -0800
-In-Reply-To: <epfulr$787$1@sea.gmane.org>
-X-Spam-Status: No, hits=-0.509 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
-X-MIMEDefang-Filter: osdl$Revision: 1.172 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752301AbXA0Rrq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 12:47:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303AbXA0Rrq
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 12:47:46 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:13474 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752300AbXA0Rrp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 12:47:45 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCJ00MM9G3KWGB0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 27 Jan 2007 12:47:44 -0500 (EST)
+In-reply-to: <7vbqkklv3h.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37976>
 
+On Sat, 27 Jan 2007, Junio C Hamano wrote:
 
-
-On Sat, 27 Jan 2007, Jakub Narebski wrote:
+> Anything you would do, storing that in tree is wrong.  Tree
+> object only represents just the contents of a single state and
+> in itself there should not be any information that describes its
+> relation with other trees [*1*].
 > 
-> On the other hand IIRC Mercurial, due to its repository structure, has some
-> problems with file copying and renames
+> And of course making it pack-only is doubly wrong.
+> 
+> 
+> *1* That's why my thinking-aloud talked about "N list of changed
+> paths recorded in a commit object with N parents".  A commit is
+> to talk about one particular state (i.e. tree) and its relation
+> to other commits (and by indirection, other trees), so logically
+> the information could belong there --- that is merely a "could",
+> since that is strictly caching for performance.  After finding
+> where the bottleneck is, obviously finding a way to optimize the
+> tree pathlimiting with the currently available data without
+> having such redundant data is more preferable.
 
-This is not a hg-only problem.
+I do think, too, that such data is not desirable in the object database.
 
-This is the SAME and FUNDAMENTAL problem that you have any time you think 
-"file identity" matters.
+However there is nothing wrong with a separate "cache", just like the 
+pack index, that can be discarded and recreated at any time.  
+Especially since this "cache data" might change with time as new tricks 
+to speed up things are found.  OTOH it is preferable to keep the object 
+database as slick and stable as possible.
 
-Yes, it's what makes "blame/annotate" fast. But I have tried, over and 
-over again, to explain why it's fundamentally broken (regardless of any 
-blame thing).
 
-So I will  just say once again: don't try to make "blame" faster. You can 
-only do so by introducing MUCH MORE serious problems in other parts.
-
-This was a very early design decision in git. It was discussed within 
-hours of me releasing the first version of git. Yes, "git blame" is 
-relatively slow, and it is very very fundamental. It's fundamental exactly 
-because git avoids the mistake that *everybody* else has done.
-
-The upside? I just sent a patch that should make it possible to do a "cool 
-blame" that doesn't feel slow, and in fact allows some nice eyecandy 
-effects (well, it would allow it, if I just knew tcl/tk or something like 
-that: it needs a canvas to draw the existing file into, and then filling 
-in the incremental data as git-blame finds it).
-
-It's going to be tons more fun to watch than any CVS/SVN annotate has ever 
-been. Trust me. I bet that you'll feel that "git blame" is *too* fast, and 
-you'll want the graphical viewer to have a "slow down" flag, just so that 
-you can appreciate the blame building up!
-
-[ Ok, that may not be true for everybody, but having played with "git 
-   blame --incremental" a bit I really think it would be a bit cool to 
-   have that "slow down" mode, and start things with a really tiny font 
-   so you could see the blame build up over a file!
-
-   I'm not kidding you. Eyecandy! And it literally would need git to slow 
-   down to make it more human-friendly! ]
-
-The other upside? EVERYTHING ELSE IS FASTER. And I really mean 
-*everything*. Yes, "git blame" is slower than SVN. It will remain so, 
-unless somebody either overrides my objections, or some alien intelligence 
-comes up with something _really_ clever. But look at it this way: blame 
-may take a few seconds, but that's a big part of why you can do merges of 
-things that have tens of thousands of files in half a second.
-
-Things that you would need to go brew a cup of coffee for in some other 
-environments are basically _instantaneous_. 
-
-			Linus
+Nicolas
