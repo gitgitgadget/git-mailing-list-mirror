@@ -1,112 +1,80 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH 1/1] Teach for-each-ref about a little language called Tcl.
-Date: Sun, 28 Jan 2007 12:49:09 +0300
-Message-ID: <20070128094909.GA3740@procyon.home>
-References: <20070128073913.GA9915@spearce.org>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 2/2] Show 'StGit/Git' as project decoration
+Date: Sun, 28 Jan 2007 00:57:24 +0100
+Message-ID: <20070127235724.26097.38563.stgit@lathund.dewire.com>
+References: <20070127235718.26097.74542.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="C7zPtVaVf+AK4Oqc"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Jan 28 10:50:31 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Jan 28 11:15:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HB6g8-0006RL-Fg
-	for gcvg-git@gmane.org; Sun, 28 Jan 2007 10:50:28 +0100
+	id 1HB74C-0000tV-7j
+	for gcvg-git@gmane.org; Sun, 28 Jan 2007 11:15:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbXA1JuS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Jan 2007 04:50:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932507AbXA1JuS
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 04:50:18 -0500
-Received: from master.altlinux.org ([62.118.250.235]:3198 "EHLO
-	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932493AbXA1JuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jan 2007 04:50:16 -0500
-Received: by master.altlinux.org (Postfix, from userid 584)
-	id 50437E34C6; Sun, 28 Jan 2007 12:50:15 +0300 (MSK)
-Content-Disposition: inline
-In-Reply-To: <20070128073913.GA9915@spearce.org>
+	id S932515AbXA1KPM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Jan 2007 05:15:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932521AbXA1KPL
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 05:15:11 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:11921 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S932515AbXA1KPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jan 2007 05:15:10 -0500
+X-Greylist: delayed 1298 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Jan 2007 05:15:09 EST
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id B0B7F800199;
+	Sun, 28 Jan 2007 10:48:53 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 21553-10; Sun, 28 Jan 2007 10:48:53 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id DBD60803394;
+	Sun, 28 Jan 2007 10:48:50 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id 73D542939E;
+	Sun, 28 Jan 2007 00:57:31 +0100 (CET)
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+Received: from lathund.dewire.com ([127.0.0.1])
+	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id 7hxln9bOxPQm; Sun, 28 Jan 2007 00:57:25 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id 69030293A7;
+	Sun, 28 Jan 2007 00:57:24 +0100 (CET)
+In-Reply-To: <20070127235718.26097.74542.stgit@lathund.dewire.com>
+User-Agent: StGIT/0.11
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38029>
 
+Git is spelled like this as is StGit. Since we have some support for 
+Stacked Git in the quickdiff code, we should also tell the user if we
+are in StGit mode or plain Git mode.
 
---C7zPtVaVf+AK4Oqc
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
 
-On Sun, Jan 28, 2007 at 02:39:13AM -0500, Shawn O. Pearce wrote:
-> Love it or hate it, some people actually still program in Tcl.  Some
-> of those programs are meant for interfacing with Git.  Programs such as
-> gitk and git-gui.  It may be useful to have Tcl-safe output available
-> from for-each-ref, just like shell, Perl and Python already enjoy.
->=20
-> Thanks to Sergey Vlasov for pointing out the horrible flaws in the
-> first version of this patch, and steering me in the right direction
-> for Tcl value quoting.
-[...]
-> +void tcl_quote_print(FILE *stream, const char *src)
-> +{
-> +	char c;
-> +
-> +	fputc('"', stream);
-> +	while ((c =3D *src++)) {
-> +		switch (c) {
-> +		case '[':
-> +		case ']':
-> +		case '$':
-> +		case '\\':
-> +		case '"':
-> +			fputc('\\', stream);
-> +		default:
-> +			fputc(c, stream);
-> +			break;
-> +		case '\f':
-> +			fputs("\\f", stream);
-> +			break;
-> +		case '\r':
-> +			fputs("\\r", stream);
-> +			break;
-> +		case '\n':
-> +			fputs("\\n", stream);
-> +			break;
-> +		case '\t':
-> +			fputs("\\t", stream);
-> +			break;
-> +		case '\v':
-> +			fputs("\\v", stream);
-> +			break;
-> +		}
-> +	}
-> +	fputc('"', stream);
-> +}
+ .../internal/decorators/GitResourceDecorator.java  |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-This is better; however, wrapping this format inside { ... } (which
-you may want to do in the template for some uses) won't work if the
-string contains unmatched braces.  Quoting '{' and '}' characters with
-backslashes should fix this.
-
-BTW, escaping newline characters as done here is not strictly required
-for a double-quoted string, but is very useful, because you may read
-the output line by line with "gets" and get fields from each line with
-"lindex"; without this escaping you will need to read the whole output
-before trying to parse it as a single huge list.
-
---C7zPtVaVf+AK4Oqc
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFFvHGVW82GfkQfsqIRAt0BAJ9KL9b6qsaIqzC13FWPqFaFLZonawCeLFNl
-htoUp0YgePxeOuH8vdiJEuQ=
-=Ya9I
------END PGP SIGNATURE-----
-
---C7zPtVaVf+AK4Oqc--
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
+index 60ebd2d..45563da 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/decorators/GitResourceDecorator.java
+@@ -62,7 +62,10 @@ public class GitResourceDecorator extends LabelProvider implements
+ 
+ 	RepositoryMapping mapped = d.getRepositoryMapping(rsrc);
+ 	if (mapped != null) {
+-	    decoration.addSuffix(" [GIT]");
++	    if (mapped.getRepository().isStGitMode())
++		decoration.addSuffix(" [StGit]");
++	    else
++		decoration.addSuffix(" [Git]");
+ 	    decoration.addOverlay(UIIcons.OVR_SHARED);
+ 	    return;
+ 	}
