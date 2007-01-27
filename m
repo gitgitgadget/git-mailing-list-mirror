@@ -1,147 +1,63 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] Teach for-each-ref about a little language called Tcl.
-Date: Sat, 27 Jan 2007 14:30:56 +0300
-Message-ID: <20070127143056.d19e80da.vsu@altlinux.ru>
-References: <20070127072258.GA10512@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Allow the tag signing key to be specified in the config file
+Date: Sat, 27 Jan 2007 11:55:51 +0000
+Message-ID: <200701271155.53519.andyparkins@gmail.com>
+References: <200701261413.46823.andyparkins@gmail.com> <7vodolnfes.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Sat__27_Jan_2007_14_30_56_+0300_hZ4efRaSNO7QgzB4"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jan 27 12:32:11 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 27 12:58:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAln0-0000Vu-2F
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 12:32:10 +0100
+	id 1HAmCo-0003hk-Gy
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 12:58:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751486AbXA0LcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 06:32:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751561AbXA0LcF
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 06:32:05 -0500
-Received: from master.altlinux.org ([62.118.250.235]:1419 "EHLO
-	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751486AbXA0LcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 06:32:04 -0500
-Received: by master.altlinux.org (Postfix, from userid 584)
-	id 348BEE36F6; Sat, 27 Jan 2007 14:32:01 +0300 (MSK)
-In-Reply-To: <20070127072258.GA10512@spearce.org>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.2; x86_64-alt-linux-gnu)
+	id S1751623AbXA0L6p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 06:58:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751685AbXA0L6p
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 06:58:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:44417 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751603AbXA0L6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 06:58:45 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so897650uga
+        for <git@vger.kernel.org>; Sat, 27 Jan 2007 03:58:43 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=XZ3rh8qQgvW1SHla9dnXfSee48O1SKJ5rAVw3D0egGNRIHrPdHDsq+RoLsHhW7xkvUz3823UfexdBtXH135hXdKaFo8Lu06KogFg3SDDIR7HytkqFWSk4FfBmDkHH92IKPV6UOutEY60KwF/KqtGchkzz1A5dZ+eJmuGQfHFfz0=
+Received: by 10.67.22.14 with SMTP id z14mr5711031ugi.1169899123495;
+        Sat, 27 Jan 2007 03:58:43 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id 59sm5706101ugf.2007.01.27.03.58.42;
+        Sat, 27 Jan 2007 03:58:43 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vodolnfes.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37948>
 
---Signature=_Sat__27_Jan_2007_14_30_56_+0300_hZ4efRaSNO7QgzB4
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+On Saturday 2007, January 27 06:37, Junio C Hamano wrote:
 
-On Sat, 27 Jan 2007 02:22:58 -0500 Shawn O. Pearce wrote:
+> Why do you use ": ${parameter:=word}" substitution after having
+> already checked that keyid is empty, I wonder...  Am I missing
+> something subtle?
 
-> Love it or hate it, some people actually still program in Tcl.  Some
-> of those programs are meant for interfacing with Git.  Programs such as
-> gitk and git-gui.  It may be useful to have Tcl-safe output available
-> from for-each-ref, just like shell, Perl and Python already enjoy.
-[...]
-> +void tcl_quote_print(FILE *stream, const char *src)
-> +{
-> +	const char lb = '{';
-> +	const char rb = '}';
-> +	const char bq = '\\';
-> +	char c;
-> +
-> +	fputc(lb, stream);
-> +	while ((c = *src++)) {
-> +		if (c == lb || c == rb || c == bq)
-> +			fputc(bq, stream);
-> +		fputc(c, stream);
-> +	}
-> +	fputc(rb, stream);
-> +}
+Nope.  Just that I didn't know what the ":"-notation on a bash line 
+before and couldn't find documentation covering it, so I played safe 
+and left it untouched.
 
-No, this is broken - backslashes cannot be used to quote special
-characters in braces.
+Feel free to drop the enclosing "if".
 
-      If  the  first character of a word is an open brace (``{'') then
-      the word is terminated by  the  matching  close  brace  (``}'').
-      Braces  nest  within  the  word:  for each additional open brace
-      there must be an additional close brace  (however,  if  an  open
-      brace  or close brace within the word is quoted with a backslash
-      then it is not counted in locating the  matching  close  brace).
-      No  substitutions  are  performed  on the characters between the
-      braces  except  for  backslash-newline  substitutions  described
-      below,  nor  do  semi-colons, newlines, close brackets, or white
-      space receive any special interpretation.  The word will consist
-      of  exactly the characters between the outer braces, not includ-
-      ing the braces themselves.
 
-The problem is that using '\{' will protect from nonmatching braces,
-but the backslash will stay in the resulting string - it will not be
-removed.  Similarly for '\}' and '\\'.
-
-Tcl itself checks whether using braces is safe (it could be safe if
-the text does not have nonmatching braces and does not have an odd
-number of backslash characters at end of line), and uses just
-backslashes if braces cannot be used.  See tclUtil.c,
-Tcl_ScanCountedElement() and Tcl_ConvertCountedElement().
-This code adds a backslash before ']', '[', '$', ';', ' ', '\\', '"',
-'{', '}', and also converts special characters '\f', '\n', '\r', '\t',
-'\v' to C-style escape sequences.
-
-Untested code (output will not look very nice, but it is not intended
-for human consumption anyway):
-
-void tcl_quote_print(FILE *stream, const char *src)
-{
-	char c;
-
-	while ((c = *src++)) {
-		switch (c) {
-		case ']':
-		case '[':
-		case '$':
-		case ';':
-		case ' ':
-		case '\\':
-		case '"':
-		case '{':
-		case '}':
-			fputc('\\', stream);
-		default:
-			fputc(c, stream);
-			break;
-
-		case '\f':
-			fputs("\\f", stream);
-			break;
-		case '\n':
-			fputs("\\n", stream);
-			break;
-		case '\r':
-			fputs("\\r", stream);
-			break;
-		case '\t':
-			fputs("\\t", stream);
-			break;
-		case '\v':
-			fputs("\\v", stream);
-			break;
-		}
-	}
-}
-
---Signature=_Sat__27_Jan_2007_14_30_56_+0300_hZ4efRaSNO7QgzB4
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFFuzfzW82GfkQfsqIRAu+FAJ9exPdsUx5ktOrsE3sVBdRMWVjCAACeNoIE
-82fhOQN8jXAWOABSP6AMVjE=
-=v0tq
------END PGP SIGNATURE-----
-
---Signature=_Sat__27_Jan_2007_14_30_56_+0300_hZ4efRaSNO7QgzB4--
+Andy
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
