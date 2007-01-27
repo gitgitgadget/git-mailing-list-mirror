@@ -1,76 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: More precise tag following
-Date: Sat, 27 Jan 2007 20:19:12 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701272017110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org>
- <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>
- <45BB9C8B.8020907@fs.ei.tum.de> <Pine.LNX.4.63.0701271959000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45BBA405.6050409@fs.ei.tum.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sat, 27 Jan 2007 14:23:31 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0701271415280.3021@xanadu.home>
+References: <7vps90lvoh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Sat Jan 27 20:19:18 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Jan 27 20:23:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HAt53-0006yK-Q9
-	for gcvg-git@gmane.org; Sat, 27 Jan 2007 20:19:18 +0100
+	id 1HAt9D-0000VW-QW
+	for gcvg-git@gmane.org; Sat, 27 Jan 2007 20:23:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752352AbXA0TTO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 27 Jan 2007 14:19:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752356AbXA0TTO
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 14:19:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59921 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752352AbXA0TTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Jan 2007 14:19:14 -0500
-Received: (qmail invoked by alias); 27 Jan 2007 19:19:13 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 27 Jan 2007 20:19:13 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45BBA405.6050409@fs.ei.tum.de>
-X-Y-GMX-Trusted: 0
+	id S1752330AbXA0TXc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 27 Jan 2007 14:23:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752359AbXA0TXc
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Jan 2007 14:23:32 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:21484 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752330AbXA0TXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Jan 2007 14:23:32 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCJ00HWNKJ7T1D0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 27 Jan 2007 14:23:31 -0500 (EST)
+In-reply-to: <7vps90lvoh.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/37988>
 
-Hi,
+On Sat, 27 Jan 2007, Junio C Hamano wrote:
 
-On Sat, 27 Jan 2007, Simon 'corecode' Schubert wrote:
-
-> Johannes Schindelin wrote:
-> > > Okay, let's try to assume for now that nobody said "git blame".  
-> > > Instead let's say:
-> > > 
-> > > git rev-list and git log (with or without -p) perform poorly when 
-> > > invoked with a pathspec.
-> > 
-> > So what? You _will_ be interested in the _newest_ changes _99%_ of the 
-> > time. And for these you don't need to wait 1:18, but 0:00.01 or so.
+> * np/dreflog (Fri Jan 26 17:26:11 2007 -0500) 8 commits
+>  - add reflog when moving HEAD to a new branch
+>  - create_symref(): do not assume pathname from git_path() persists
+>    long enough
+>  - add logref support to git-symbolic-ref
+>  - move create_symref() past log_ref_write()
+>  - add reflog entries for HEAD when detached
+>  - enable separate reflog for HEAD
+>  - lock_ref_sha1_basic(): remember the original name of a ref when
+>    resolving it
+>  - make reflog filename independent from struct ref_lock
 > 
-> not if you are interested which commit introduced/changed a particular 
-> line.
+> Perhaps 1.5.0 material, but I do not think anybody in the
+> current code pays attention to reflog for HEAD ("HEAD@{....}"
+> syntax and log or show-branch with -g option would look at the
+> underlying ref and prune and friends do not protect its
+> entries), so merge it post 1.5.0 after these issues are fixed.
 
-Wonderful. Say, you want to know who last changed the beginning of the 
-function main() in git.c:
+I might be partial of course, but I think it is preferable to merge it 
+before 1.5.0 since this causes a behavior change.  Currently HEAD@{n} 
+inherits the reflog of the branch HEAD is currently on.  With this patch 
+serie HEAD@{n} is the true reflog for HEAD regardless of where it is now 
+and where it has been independently of the current branch.  Of course I 
+consider the later behavior to be more sensible and it might be a good 
+idea to give it to 1.5.0 users at the same time as the detached head 
+support rather than creating a behavior change later on when reflogs are 
+more popular.
 
-	$  git blame -L '/main(/,+20' git.c
+I'll look at prune and friend for teaching them about the new reflog 
+entries.
 
-What was your point again?
 
-> > > This particular file has 64 revisions.  However there are ~ 375000 
-> > > revisions in the converted repo.
-> > 
-> > "file version" trap! "file version" trap! "file version" trap!
-> 
-> call it path and retry.
-
-Does not matter. Not one wit. Your reasoning is still harping on "file 
-versions".
-
-Ciao,
-Dscho
+Nicolas
