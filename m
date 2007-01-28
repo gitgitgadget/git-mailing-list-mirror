@@ -1,68 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: More precise tag following
-Date: Sun, 28 Jan 2007 08:15:59 -0500
-Message-ID: <20070128131559.GA31217@coredump.intra.peff.net>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org> <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org> <20070127201640.GA25637@coredump.intra.peff.net> <Pine.LNX.4.64.0701271432450.25027@woody.linux-foundation.org> <20070127235238.GA28706@coredump.intra.peff.net> <20070128023958.GF9897@thunk.org>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] git-blame --incremental: don't use pager
+Date: Sun, 28 Jan 2007 15:25:55 +0100
+Message-ID: <45BCB273.7010601@lsrfire.ath.cx>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net>	<20070127080126.GC9966@spearce.org>	<Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>	<Pine.LNX.4.64.0701270945260.25027@woody.linux-foundation.org>	<7vzm84gmei.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0701271439340.25027@woody.linux-foundation.org> <7vps8zfqlx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Jan 28 14:16:18 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Jan 28 15:26:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HB9tH-0002BT-49
-	for gcvg-git@gmane.org; Sun, 28 Jan 2007 14:16:15 +0100
+	id 1HBAz3-0004oL-Df
+	for gcvg-git@gmane.org; Sun, 28 Jan 2007 15:26:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932524AbXA1NQE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Jan 2007 08:16:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932412AbXA1NQE
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 08:16:04 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1619 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932524AbXA1NQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jan 2007 08:16:03 -0500
-Received: (qmail 8033 invoked from network); 28 Jan 2007 08:16:25 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 28 Jan 2007 08:16:25 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 28 Jan 2007 08:15:59 -0500
-Content-Disposition: inline
-In-Reply-To: <20070128023958.GF9897@thunk.org>
+	id S932653AbXA1O0G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Jan 2007 09:26:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932654AbXA1O0G
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 09:26:06 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:35316
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932653AbXA1O0F (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Jan 2007 09:26:05 -0500
+Received: from [10.0.1.20] (p508E762C.dip.t-dialin.net [80.142.118.44])
+	by neapel230.server4you.de (Postfix) with ESMTP id 3A9ABA08B;
+	Sun, 28 Jan 2007 15:26:02 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+In-Reply-To: <7vps8zfqlx.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38033>
 
-On Sat, Jan 27, 2007 at 09:39:58PM -0500, Theodore Tso wrote:
+Starting a pager defeats the purpose of the incremental output
+mode.  This changes git-blame to only paginate if --incremental
+was not given.
 
-> For emacs users, it would even be better to tie it into emacs.  That
-> way you're already at the line number looking at the source code when
+git -p blame --incremental still starts the pager, though.
 
-I agree that connecting it with the editor might be sensible; I'm not
-likely to work on an emacs version, though. :)
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
 
-One of my other long-standing annoyances with using "raw" git-blame is
-that it shows me a bunch of commits, but then I have to open a new
-window and cut and paste the hash to actually _see_ the commit. That's
-why I think something like tig makes sense, where you can jump between
-different views very easily. An editor extension should be able to do
-the same thing.
+ builtin-blame.c |    3 +++
+ git.c           |    2 +-
+ 2 files changed, 4 insertions(+), 1 deletions(-)
 
-> course, scrolling to the right part of the file is a pain.  So
-> building it into the editor is not only convenient, but it avoids the
-> psychological effects that could make it seem slow because how long it
-> takes to fill the attribution for these first bits:
-
-Agreed, I noticed that as well (especially because the enormous font and
-spacing choices of GTK made sure you could only see the first couple of
-lines :) ).
-
-> is there?).  I have no idea how you would hack this into Vim, other
-> than passing the line number into the GUI so it can open right into
-> the function that the developer was looking at.
-
-I'll look into what's out there for vim; there's quite a bit of
-extensibility if you buy into things like the perl support.
-
--Peff
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 7a58ee3..02bda5e 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -1780,6 +1780,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 			argv[unk++] = arg;
+ 	}
+ 
++	if (!incremental)
++		setup_pager();
++
+ 	if (!blame_move_score)
+ 		blame_move_score = BLAME_DEFAULT_MOVE_SCORE;
+ 	if (!blame_copy_score)
+diff --git a/git.c b/git.c
+index 530e99f..e9febc3 100644
+--- a/git.c
++++ b/git.c
+@@ -217,7 +217,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+ 		{ "annotate", cmd_annotate, USE_PAGER },
+ 		{ "apply", cmd_apply },
+ 		{ "archive", cmd_archive },
+-		{ "blame", cmd_blame, RUN_SETUP | USE_PAGER },
++		{ "blame", cmd_blame, RUN_SETUP },
+ 		{ "branch", cmd_branch, RUN_SETUP },
+ 		{ "cat-file", cmd_cat_file, RUN_SETUP },
+ 		{ "checkout-index", cmd_checkout_index, RUN_SETUP },
