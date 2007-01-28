@@ -1,91 +1,60 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: [PATCH] Documentation/config.txt: Fix documentation of colour config tweaks.
-Date: Sun, 28 Jan 2007 15:17:36 +0000
-Organization: Straylight/Edgeware
-Message-ID: <11699974561956-git-send-email-mdw@distorted.org.uk>
-Cc: Mark Wooding <mdw@distorted.org.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 28 16:17:44 2007
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: More precise tag following
+Date: Sun, 28 Jan 2007 13:10:15 -0500
+Message-ID: <20070128181015.GA25600@thunk.org>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org> <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org> <45BB9C8B.8020907@fs.ei.tum.de> <Pine.LNX.4.64.0701271103520.25027@woody.linux-foundation.org> <204011cb0701271136m655815f6o1501de2bf699b362@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Simon 'corecode' Schubert <corecode@fs.ei.tum.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Chris Lee <clee@kde.org>
+X-From: git-owner@vger.kernel.org Sun Jan 28 19:10:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBBmp-0006h7-9S
-	for gcvg-git@gmane.org; Sun, 28 Jan 2007 16:17:43 +0100
+	id 1HBEUK-0005h1-LM
+	for gcvg-git@gmane.org; Sun, 28 Jan 2007 19:10:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751897AbXA1PRj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Jan 2007 10:17:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932582AbXA1PRj
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 10:17:39 -0500
-Received: from distorted.demon.co.uk ([80.177.3.76]:37110 "HELO
-	metalzone.distorted.org.uk" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S1751897AbXA1PRi (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Jan 2007 10:17:38 -0500
-Received: (qmail 13234 invoked by uid 1000); 28 Jan 2007 15:17:36 -0000
-X-Mailer: git-send-email 1.5.0.rc2.g4e206
+	id S1752471AbXA1SKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Jan 2007 13:10:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752474AbXA1SKm
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 13:10:42 -0500
+Received: from thunk.org ([69.25.196.29]:53138 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752471AbXA1SKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jan 2007 13:10:41 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HBEYn-0005F1-3B; Sun, 28 Jan 2007 13:15:26 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HBETn-00015O-PT; Sun, 28 Jan 2007 13:10:15 -0500
+Content-Disposition: inline
+In-Reply-To: <204011cb0701271136m655815f6o1501de2bf699b362@mail.gmail.com>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38036>
 
-  * The description of valid colour specifications was rather
-    incomplete, so fix it so that it actually describes colour specs as
-    accepted by color_parse().
+On Sat, Jan 27, 2007 at 11:36:50AM -0800, Chris Lee wrote:
+> I don't have access to any servers that I could drop a 3GB packfile
+> onto and expect them to serve it. And I don't have a connection at
+> home that I could use to upload the 3GB pack from quickly - it would
+> take days, at least. If anybody wants to hook me up with a hosting
+> provider or a machine that just the git devs can access, I'd be
+> willing to tie up my upstream bandwidth for a few days so you all can
+> have access to it.
 
-  * The list of colour items allowed in color.diff.BLAH was missing the
-    `commit' and `whitespace' entries.
+Hmm, maybe the right answer is to send a DVD out to someone who is
+willing make copies through a distribution tree to those that want it;
+my guess it will probably be a relatively small set of folks.  
 
-Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
----
-
-Can anyone tell that I've been messing with Git's colour output recently? ;-)
-
- Documentation/config.txt |   26 ++++++++++++++++----------
- 1 files changed, 16 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 3f2fa09..15f12cf 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -250,10 +250,15 @@ color.branch.<slot>::
- 	Use customized color for branch coloration. `<slot>` is one of
- 	`current` (the current branch), `local` (a local branch),
- 	`remote` (a tracking branch in refs/remotes/), `plain` (other
--	refs), or `reset` (the normal terminal color).  The value for
--	these configuration variables can be one of: `normal`, `bold`,
--	`dim`, `ul`, `blink`, `reverse`, `reset`, `black`, `red`,
--	`green`, `yellow`, `blue`, `magenta`, `cyan`, or `white`.
-+	refs).
-++
-+The value for these configuration variables is a list of colors (at most
-+two) and attributes (at most one), separated by spaces.  The colors
-+accepted are `normal`, `black`, `red`, `green`, `yellow`, `blue`,
-+`magenta`, `cyan` and `white`; the attributes are `bold`, `dim`, `ul`,
-+`blink` and `reverse`.  The first color given is the foreground; the
-+second is the background.  The position of the attribute, if any,
-+doesn't matter.
- 
- color.diff::
- 	When true (or `always`), always use colors in patch.
-@@ -261,12 +266,13 @@ color.diff::
- 	colors only when the output is to the terminal.
- 
- color.diff.<slot>::
--	Use customized color for diff colorization.  `<slot>`
--	specifies which part of the patch to use the specified
--	color, and is one of `plain` (context text), `meta`
--	(metainformation), `frag` (hunk header), `old` (removed
--	lines), or `new` (added lines).  The values of these
--	variables may be specified as in color.branch.<slot>.
-+	Use customized color for diff colorization.  `<slot>` specifies
-+	which part of the patch to use the specified color, and is one
-+	of `plain` (context text), `meta` (metainformation), `frag`
-+	(hunk header), `old` (removed lines), `new` (added lines),
-+	`commit` (commit headers), or `whitespace` (highlighting dubious
-+	whitespace).  The values of these variables may be specified as
-+	in color.branch.<slot>.
- 
- color.pager::
- 	A boolean to enable/disable colored output when the pager is in
--- 
-1.5.0.rc2.g4e206
+						- Ted
