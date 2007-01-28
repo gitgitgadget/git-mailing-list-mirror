@@ -1,58 +1,56 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: More precise tag following
-Date: Sun, 28 Jan 2007 11:08:06 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701281107050.25027@woody.linux-foundation.org>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org>
- <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>
- <Pine.LNX.4.64.0701270945260.25027@woody.linux-foundation.org>
- <7vzm84gmei.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701271439340.25027@woody.linux-foundation.org>
- <7vps8zfqlx.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-blame --incremental: don't use pager
+Date: Sun, 28 Jan 2007 11:09:26 -0800
+Message-ID: <7v4pqbezo9.fsf@assigned-by-dhcp.cox.net>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net>
+	<20070127080126.GC9966@spearce.org>
+	<Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0701270945260.25027@woody.linux-foundation.org>
+	<7vzm84gmei.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701271439340.25027@woody.linux-foundation.org>
+	<7vps8zfqlx.fsf@assigned-by-dhcp.cox.net>
+	<45BCB273.7010601@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Jan 28 20:08:17 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Jan 28 20:09:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBFNw-0000Cs-0f
-	for gcvg-git@gmane.org; Sun, 28 Jan 2007 20:08:16 +0100
+	id 1HBFP9-0000yc-NR
+	for gcvg-git@gmane.org; Sun, 28 Jan 2007 20:09:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932736AbXA1TIN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Jan 2007 14:08:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932749AbXA1TIN
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 14:08:13 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:35125 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932736AbXA1TIM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jan 2007 14:08:12 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0SJ871m032061
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 28 Jan 2007 11:08:07 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0SJ86Mi001491;
-	Sun, 28 Jan 2007 11:08:07 -0800
-In-Reply-To: <7vps8zfqlx.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.485 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
-X-MIMEDefang-Filter: osdl$Revision: 1.172 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932749AbXA1TJ3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 28 Jan 2007 14:09:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932754AbXA1TJ3
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 14:09:29 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:60670 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932749AbXA1TJ2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Jan 2007 14:09:28 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070128190928.IDB15640.fed1rmmtao05.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 28 Jan 2007 14:09:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Gj8V1W0091kojtg0000000; Sun, 28 Jan 2007 14:08:29 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38039>
 
+Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
+> Starting a pager defeats the purpose of the incremental output
+> mode.  This changes git-blame to only paginate if --incremental
+> was not given.
 
-On Sun, 28 Jan 2007, Junio C Hamano wrote:
-> 
-> I think it is sensible to do the attached on top of your patch.
-
-Ack.
-
-I see you committed this, which is nice, but now Shawn's butt-ugly thing 
-doesn't work any more, and my mad perl skillz are sadly lacking.
-
-		Linus
+I should have done this myself when I applied Linus's patch.
+Thanks for catching.
