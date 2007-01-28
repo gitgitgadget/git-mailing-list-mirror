@@ -1,57 +1,49 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: More precise tag following
-Date: Sun, 28 Jan 2007 02:40:27 -0500
-Message-ID: <20070128074027.GB9781@spearce.org>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org> <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] user-manual: set user.name and user.email with repo-config
+Date: Sat, 27 Jan 2007 23:44:34 -0800
+Message-ID: <7vk5z7h9y5.fsf@assigned-by-dhcp.cox.net>
+References: <20070127062826.GE14205@fieldses.org>
+	<20070128002246.GA10179@moooo.ath.cx>
+	<Pine.LNX.4.64.0701271625120.25027@woody.linux-foundation.org>
+	<20070128013452.GA11244@moooo.ath.cx>
+	<Pine.LNX.4.64.0701271745000.25027@woody.linux-foundation.org>
+	<20070128024009.GB6545@socrates.priv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Jan 28 08:40:38 2007
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+To: Tom Prince <tom.prince@ualberta.net>
+X-From: git-owner@vger.kernel.org Sun Jan 28 08:44:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HB4eT-00086a-Mx
-	for gcvg-git@gmane.org; Sun, 28 Jan 2007 08:40:38 +0100
+	id 1HB4iN-0001Uu-6I
+	for gcvg-git@gmane.org; Sun, 28 Jan 2007 08:44:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932428AbXA1Hkf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 28 Jan 2007 02:40:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932433AbXA1Hkf
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 02:40:35 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:54328 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932428AbXA1Hke (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Jan 2007 02:40:34 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HB4eK-00056H-7C; Sun, 28 Jan 2007 02:40:28 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id F2F2A20FBAE; Sun, 28 Jan 2007 02:40:27 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932422AbXA1Hog (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Jan 2007 02:44:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932433AbXA1Hog
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 02:44:36 -0500
+Received: from fed1rmmtao03.cox.net ([68.230.241.36]:36962 "EHLO
+	fed1rmmtao03.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932422AbXA1Hog (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jan 2007 02:44:36 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao03.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070128074435.FBX29122.fed1rmmtao03.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 28 Jan 2007 02:44:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id GXjc1W00S1kojtg0000000; Sun, 28 Jan 2007 02:43:37 -0500
+cc: Linus Torvalds <torvalds@linux-foundation.org>
+In-Reply-To: <20070128024009.GB6545@socrates.priv> (Tom Prince's message of
+	"Sat, 27 Jan 2007 18:40:09 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38022>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> Here's a patch. Use "git blame --incremental filename" to get the blame 
-> output in a nicely parseable format that you can now write a simple 
-> graphical viewer for. 
-
-Heh.  Nice timing.  I was starting to think about adding blame output
-to git-gui.  Having an incremental backend would certainly be nice.
-
--- 
-Shawn.
+Please, do not break people's scripts that still use
+repo-config.
