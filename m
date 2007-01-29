@@ -1,65 +1,120 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: [PATCH] Replace perl code with pure shell code
-Date: Mon, 29 Jan 2007 05:21:04 -0800
-Message-ID: <864pqadl4v.fsf@blue.stonehenge.com>
-References: <45BDABB5.4070301@fs.ei.tum.de>
-	<86zm82dpql.fsf@blue.stonehenge.com>
-	<dbfc82860701290438y4e00cc05s5f8c8acdc8022768@mail.gmail.com>
-	<86fy9udmf6.fsf@blue.stonehenge.com>
-	<dbfc82860701290517p739c78a1td05fd0900e280515@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>,
-	git@vger.kernel.org
-To: "Nikolai Weibull" <now@bitwi.se>
-X-From: git-owner@vger.kernel.org Mon Jan 29 14:21:12 2007
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: [PATCH] Make fsck and fsck-objects be builtins.
+Date: Mon, 29 Jan 2007 15:48:06 +0000 (UTC)
+Organization: Straylight/Edgeware development
+Message-ID: <slrners5pm.3l6.mdw@metalzone.distorted.org.uk>
+References: <20070127062826.GE14205@fieldses.org> <20070128002246.GA10179@moooo.ath.cx> <Pine.LNX.4.64.0701271625120.25027@woody.linux-foundation.org> <20070128013452.GA11244@moooo.ath.cx> <Pine.LNX.4.64.0701271745000.25027@woody.linux-foundation.org> <20070128233445.GD12125@fieldses.org> <Pine.LNX.4.64.0701281549070.3611@woody.linux-foundation.org> <7vsldubqof.fsf@assigned-by-dhcp.cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 29 16:48:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBWRb-00040S-2Z
-	for gcvg-git@gmane.org; Mon, 29 Jan 2007 14:21:11 +0100
+	id 1HBYjv-0005h3-03
+	for gcvg-git@gmane.org; Mon, 29 Jan 2007 16:48:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751356AbXA2NVH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Jan 2007 08:21:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbXA2NVH
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 08:21:07 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:24817 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751356AbXA2NVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jan 2007 08:21:06 -0500
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 35C751DEA9C; Mon, 29 Jan 2007 05:21:04 -0800 (PST)
-x-mayan-date: Long count = 12.19.14.0.7; tzolkin = 9 Manik; haab = 0 Pax
-In-Reply-To: <dbfc82860701290517p739c78a1td05fd0900e280515@mail.gmail.com> (Nikolai Weibull's message of "Mon, 29 Jan 2007 14:17:43 +0100")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1750774AbXA2PsM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Jan 2007 10:48:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbXA2PsM
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 10:48:12 -0500
+Received: from distorted.demon.co.uk ([80.177.3.76]:41420 "HELO
+	metalzone.distorted.org.uk" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with SMTP id S1750774AbXA2PsL (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Jan 2007 10:48:11 -0500
+Received: (qmail 21634 invoked by uid 110); 29 Jan 2007 15:48:06 -0000
+Received: (qmail 21618 invoked by uid 9); 29 Jan 2007 15:48:06 -0000
+Path: not-for-mail
+Newsgroups: mail.vger.git
+NNTP-Posting-Host: metalzone.distorted.org.uk
+X-Trace: metalzone.distorted.org.uk 1170085686 21616 172.29.199.2 (29 Jan 2007 15:48:06 GMT)
+X-Complaints-To: usenet@distorted.org.uk
+NNTP-Posting-Date: Mon, 29 Jan 2007 15:48:06 +0000 (UTC)
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38081>
 
->>>>> "Nikolai" == Nikolai Weibull <now@bitwi.se> writes:
+The earlier change df391b192 to rename fsck-objects to fsck broke
+fsck-objects.  This should fix it again.
 
-Nikolai> On 1/29/07, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
->> >>>>> "Nikolai" == Nikolai Weibull <now@bitwi.se> writes:
->> 
-Nikolai> We do require a POSIX-compliant version of sh already, right?
->> 
->> OK, sorry for raising the flag.  I just know that writing portable shell
->> is far trickier than writing portable Perl, so I get overly cautious
->> on anything that wasn't in Unix V7.
+Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
+---
+ Makefile                 |    1 +
+ fsck.c => builtin-fsck.c |    3 +--
+ builtin.h                |    1 +
+ git.c                    |    2 ++
+ 4 files changed, 5 insertions(+), 2 deletions(-)
+ rename fsck.c => builtin-fsck.c (100%)
 
-Nikolai> No problem; I wasn't sure on the current requirements myself :-).
-Nikolai> It's too bad that not all the great stuff one can find in Bash and Zsh
-Nikolai> were in the original...
+Without this, I get 
 
-I'll probably seem like a traitor to my tribe for saying this, but if zsh or
-gnu awk had been around at the time Perl was created, we wouldn't have seen
-Perl.  Of course, Perl has gone far beyond the "awk replacement" as originally
-planned, but who knows what might have happened next?
+[metalzone ~/src/git]git fsck-objects
+fatal: cannot handle fsck-objects internally
 
+which isn't really very helpful.  I thought about hacking the makefile
+to manufacture a hardlink from git-fsck-objects, but this just seemed so
+much easier.  And we are slowly accumulating builtins, right? ;-)
+
+diff --git a/Makefile b/Makefile
+index 1552b2a..91bd665 100644
+--- a/Makefile
++++ b/Makefile
+@@ -284,6 +284,7 @@ BUILTIN_OBJS = \
+ 	builtin-diff-tree.o \
+ 	builtin-fmt-merge-msg.o \
+ 	builtin-for-each-ref.o \
++	builtin-fsck.o \
+ 	builtin-grep.o \
+ 	builtin-init-db.o \
+ 	builtin-log.o \
+diff --git a/fsck.c b/builtin-fsck.c
+similarity index 100%
+rename from fsck.c
+rename to builtin-fsck.c
+index 558f0a6..fec1cbd 100644
+--- a/fsck.c
++++ b/builtin-fsck.c
+@@ -571,12 +571,11 @@ static int fsck_cache_tree(struct cache_tree *it)
+ 	return err;
+ }
+ 
+-int main(int argc, char **argv)
++int cmd_fsck(int argc, char **argv, const char *prefix)
+ {
+ 	int i, heads;
+ 
+ 	track_object_refs = 1;
+-	setup_git_directory();
+ 
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+diff --git a/builtin.h b/builtin.h
+index cfe5990..dd0e352 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -34,6 +34,7 @@ extern int cmd_diff_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix);
+ extern int cmd_for_each_ref(int argc, const char **argv, const char *prefix);
+ extern int cmd_format_patch(int argc, const char **argv, const char *prefix);
++extern int cmd_fsck(int argc, const char **argv, const char *prefix);
+ extern int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
+ extern int cmd_grep(int argc, const char **argv, const char *prefix);
+ extern int cmd_help(int argc, const char **argv, const char *prefix);
+diff --git a/git.c b/git.c
+index d21e5e5..fb03a54 100644
+--- a/git.c
++++ b/git.c
+@@ -235,6 +235,8 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+ 		{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
+ 		{ "for-each-ref", cmd_for_each_ref, RUN_SETUP },
+ 		{ "format-patch", cmd_format_patch, RUN_SETUP },
++		{ "fsck", cmd_fsck, RUN_SETUP },
++		{ "fsck-objects", cmd_fsck, RUN_SETUP },
+ 		{ "get-tar-commit-id", cmd_get_tar_commit_id },
+ 		{ "grep", cmd_grep, RUN_SETUP },
+ 		{ "help", cmd_help },
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+1.5.0.rc2.75.gdbaa0-dirty
+
+-- [mdw]
