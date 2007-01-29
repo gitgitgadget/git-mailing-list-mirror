@@ -1,112 +1,72 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 5/7] Basic support for keeping a ref to the parent branch.
-Date: Tue, 30 Jan 2007 00:05:45 +0100
-Message-ID: <20070129230545.7102.92460.stgit@gandelf.nowhere.earth>
-References: <20070129230117.7102.64322.stgit@gandelf.nowhere.earth>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: MinGW port usable
+Date: Tue, 30 Jan 2007 00:08:59 +0100
+Message-ID: <46d6db660701291508m4362eedchd4050e61f4989a92@mail.gmail.com>
+References: <200701292320.43888.johannes.sixt@telecom.at>
+	 <Pine.LNX.4.64.0701291438580.3611@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 30 00:07:51 2007
+Cc: "Johannes Sixt" <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Jan 30 00:09:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBfbI-0005m9-4u
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 00:07:48 +0100
+	id 1HBfcY-0006UM-2d
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 00:09:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964819AbXA2XGd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Jan 2007 18:06:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964830AbXA2XGc
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 18:06:32 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:40080 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964819AbXA2XG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jan 2007 18:06:28 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id E6D314A1F9;
-	Tue, 30 Jan 2007 00:06:26 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id C11711F07F;
-	Tue, 30 Jan 2007 00:05:45 +0100 (CET)
-In-Reply-To: <20070129230117.7102.64322.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.11
+	id S932833AbXA2XJB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Jan 2007 18:09:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932845AbXA2XJB
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 18:09:01 -0500
+Received: from an-out-0708.google.com ([209.85.132.248]:15939 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932833AbXA2XJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jan 2007 18:09:00 -0500
+Received: by an-out-0708.google.com with SMTP id b33so802705ana
+        for <git@vger.kernel.org>; Mon, 29 Jan 2007 15:09:00 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=R7P42EHIekPXs3PnfBx5hLYap2BsyGE/6urheOObwChLPwl/L6l4J0fxQ90o98bi9jVEndw7DTh+gtcJBOx8AYhQujzh7qhoJSsGSZw5VCXHXYil09N0FJSaGHMC4OrdMVW+RZRkeMq6e7eXbeZdm0XsbzMo75k6XDc0LoZV6io=
+Received: by 10.114.190.6 with SMTP id n6mr311267waf.1170112139583;
+        Mon, 29 Jan 2007 15:08:59 -0800 (PST)
+Received: by 10.115.16.9 with HTTP; Mon, 29 Jan 2007 15:08:59 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0701291438580.3611@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38110>
 
+On 1/29/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> Can you elaborate about any performance differences, especially with
+> cygwin? Does this make git perform reasonably on Windows, or are the
+> performance problems as bad as with cygwin?
+>
 
-This adds a framework to handle the parent branch of a stack, in
-addition to the parent remote, and to set them when creating a stack.
+I do not know about cygwin recently (else than it was slow), but I
+cloned my packed git repository of all 117 2.6 linux kernels and
+the "git diff" rocks on it.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+git-unpack and git-repack was slow as hell, though. Maybe this
+is the part to be improved. Mostly bad I/Os...
 
- TODO           |    2 --
- stgit/stack.py |   24 +++++++++++++++++++++++-
- 2 files changed, 23 insertions(+), 3 deletions(-)
+> gitk really shouldn't use either. It should probably use
+>
+>         git-show-ref -h -d
+>
+> instead, which has the same output format (modulo a space vs tab issue),
+> and is entirely local, with no silly unnecessary remote connext.
+>
+> Something like this patch.
+>
+> Does that work on mingw too?
+>
 
-diff --git a/TODO b/TODO
-index 549bc9d..884b831 100644
---- a/TODO
-+++ b/TODO
-@@ -20,8 +20,6 @@ The future, when time allows or if someone else does them:
- - multiple heads in a patch - useful for forking a patch,
-   synchronising with other patches (diff format or in other
-   repositories)
--- "pull" argument should default to a sane value, "origin" is wrong in
--  many cases
- - commit directly to a patch which is not top
- - patch synchronisation between between branches (as some people,
-   including me have the same patches based on different branches and
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 947b416..9640eb5 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -413,6 +413,26 @@ class Series(StgitObject):
-     def __set_parent_remote(self, remote):
-         value = config.set('branch.%s.remote' % self.__name, remote)
- 
-+    def get_parent_branch(self):
-+        value = config.get('branch.%s.merge' % self.__name)
-+        if value:
-+            return value
-+        elif rev_parse('heads/origin'):
-+            return 'heads/origin'
-+        else:
-+            raise StackException, 'Cannot find a parent branch for "%s"' % self.__name
-+
-+    def __set_parent_branch(self, name):
-+        config.set('branch.%s.merge' % self.__name, name)
-+
-+    def set_parent(self, remote, localbranch):
-+        if localbranch:
-+            self.__set_parent_branch(localbranch)
-+            if remote:
-+                self.__set_parent_remote(remote)
-+        elif remote:
-+            raise StackException, 'Remote "%s" without a branch cannot be used as parent' % remote
-+
-     def __patch_is_current(self, patch):
-         return patch.get_name() == self.get_current()
- 
-@@ -466,7 +486,7 @@ class Series(StgitObject):
-         """
-         return os.path.isdir(self.__patch_dir)
- 
--    def init(self, create_at=False):
-+    def init(self, create_at=False, parent_remote=None, parent_branch=None):
-         """Initialises the stgit series
-         """
-         bases_dir = os.path.join(self.__base_dir, 'refs', 'bases')
-@@ -483,6 +503,8 @@ class Series(StgitObject):
- 
-         os.makedirs(self.__patch_dir)
- 
-+        self.set_parent(parent_remote, parent_branch)
-+        
-         create_dirs(bases_dir)
- 
-         self.create_empty_field('applied')
+I'll try that tomorrow, but you'll have other reporting about it, for sure.
+
+-- 
+Christian
