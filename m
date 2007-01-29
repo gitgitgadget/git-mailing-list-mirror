@@ -1,60 +1,84 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] user-manual: set user.name and user.email with repo-config
-Date: Mon, 29 Jan 2007 01:39:02 -0500
-Message-ID: <20070129063902.GK12125@fieldses.org>
-References: <20070127062826.GE14205@fieldses.org> <20070128002246.GA10179@moooo.ath.cx>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] git blame --progress
+Date: Mon, 29 Jan 2007 08:00:28 +0100
+Message-ID: <45BD9B8C.70003@fs.ei.tum.de>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net>	<20070127080126.GC9966@spearce.org>	<Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>	<Pine.LNX.4.64.0701270945260.25027@woody.linux-foundation.org>	<7vzm84gmei.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0701271439340.25027@woody.linux-foundation.org>	<7vps8zfqlx.fsf@assigned-by-dhcp.cox.net>	<45BCB273.7010601@lsrfire.ath.cx>	<7v4pqbezo9.fsf@assigned-by-dhcp.cox.net>	<7vzm83dkw4.fsf@assigned-by-dhcp.cox.net>	<45BD40AE.9020603@lsrfire.ath.cx> <7vfy9ublvj.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 29 07:39:16 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigF7FE0AD4F0664045015CC51C"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Jan 29 08:00:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBQAd-0003NE-SP
-	for gcvg-git@gmane.org; Mon, 29 Jan 2007 07:39:16 +0100
+	id 1HBQVS-0005yJ-1X
+	for gcvg-git@gmane.org; Mon, 29 Jan 2007 08:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933214AbXA2GjG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Jan 2007 01:39:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933241AbXA2GjG
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 01:39:06 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:54291 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933214AbXA2GjF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jan 2007 01:39:05 -0500
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HBQAQ-0005eD-OW
-	for git@vger.kernel.org; Mon, 29 Jan 2007 01:39:02 -0500
-Content-Disposition: inline
-In-Reply-To: <20070128002246.GA10179@moooo.ath.cx>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S933248AbXA2HAk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Jan 2007 02:00:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933249AbXA2HAk
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 02:00:40 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:58207 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933248AbXA2HAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jan 2007 02:00:39 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id BA7DC28168;
+	Mon, 29 Jan 2007 08:00:37 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id LQgwkL-RqcvK; Mon, 29 Jan 2007 08:00:37 +0100 (CET)
+Received: from [62.216.203.91] (ppp-62-216-203-91.dynamic.mnet-online.de [62.216.203.91])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 5BB46280F6;
+	Mon, 29 Jan 2007 08:00:37 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+In-Reply-To: <7vfy9ublvj.fsf_-_@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38066>
 
-On Sun, Jan 28, 2007 at 01:22:46AM +0100, Matthias Lederhofer wrote:
-> ---
-> There are some other places where direct editing of .git/config is
-> suggested.  I'd rather tell the user to use repo-config and add a note
-> that repo-config saves the configuration to .git/config (or
-> ~/.gitconfig with --global) which can be edited by hand too.
-> cat .git/config to show the remote configuration can be replaced by
-> git-repo-config -l | grep '^remote\.'
-> ---
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigF7FE0AD4F0664045015CC51C
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Based on the followup I think what makes sense is to continue with some
-mixture of the two approaches--mainly editing the configuration file
-directly, but providing frequent references to the
-git-repo-config/git-config manpage so people know where to find the
-details.
+Junio C Hamano wrote:
+> +	fprintf(stderr, "\033[2JAssigning blame for %s\n", sb->path);
 
-I've added a few more references to the manpage, along with a few other
-updates, including an initial import of Linus's discussion of dangling
-objects, and brief dicussions of reflogs, fsck, and pruning:
+are you sure that you want to hard code the escape sequence?  I guess the=
+ correct way would be to query terminfo.
 
-	git://linux-nfs.org/~bfields/git.git master
-	http://www.fieldses.org/~bfields/git-user-manual.html
+cheers
+  simon
 
---b.
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+
+
+--------------enigF7FE0AD4F0664045015CC51C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFvZuPr5S+dk6z85oRAojcAKC3MgDRvZuyMSSDzzt4Zamd1FUk8gCgp7jv
+BwfVbX3lkHuFhwh6mPBN7ds=
+=9q/x
+-----END PGP SIGNATURE-----
+
+--------------enigF7FE0AD4F0664045015CC51C--
