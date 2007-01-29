@@ -1,59 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: More precise tag following
-Date: Mon, 29 Jan 2007 22:02:13 +0100
-Message-ID: <200701292202.14293.jnareb@gmail.com>
-References: <20070127080126.GC9966@spearce.org> <epll4j$iil$1@sea.gmane.org> <20070129204740.GA30963@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/2] Add a Checkpoint Action
+Date: Mon, 29 Jan 2007 16:10:18 -0500
+Message-ID: <20070129211018.GB31075@spearce.org>
+References: <20070129162842.11876.31483.stgit@lathund.dewire.com> <20070129163036.11876.78314.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Jan 29 22:01:12 2007
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Jan 29 22:10:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBdci-0000yZ-B7
-	for gcvg-git@gmane.org; Mon, 29 Jan 2007 22:01:08 +0100
+	id 1HBdlh-0006Av-Mg
+	for gcvg-git@gmane.org; Mon, 29 Jan 2007 22:10:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752596AbXA2VBE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 29 Jan 2007 16:01:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751846AbXA2VBE
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 16:01:04 -0500
-Received: from an-out-0708.google.com ([209.85.132.246]:62510 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752611AbXA2VBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jan 2007 16:01:03 -0500
-Received: by an-out-0708.google.com with SMTP id b33so774166ana
-        for <git@vger.kernel.org>; Mon, 29 Jan 2007 13:01:00 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=eE0+mR5nCEmFKQUjGbNbNQeNrtPtP+K8rXuYfThYdubOlO7/5uF4/LGT1+RPo6Ik0O90TLepYEB/aDxqZNmb+rWQztVi+kHRVwFTUg8QDbpaStaJIXGkneerDuRw3yYoTCz3xK9+EOKhqf04E7e+a2xQ/LlIjpGyo2Zh8MndNl4=
-Received: by 10.49.34.17 with SMTP id m17mr9691120nfj.1170104459949;
-        Mon, 29 Jan 2007 13:00:59 -0800 (PST)
-Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
-        by mx.google.com with ESMTP id x26sm7664340ugc.2007.01.29.13.00.58;
-        Mon, 29 Jan 2007 13:00:59 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20070129204740.GA30963@spearce.org>
+	id S1752486AbXA2VKX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Jan 2007 16:10:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752599AbXA2VKW
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 16:10:22 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:54337 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752486AbXA2VKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jan 2007 16:10:22 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HBdko-0007E4-RB; Mon, 29 Jan 2007 16:09:30 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B3F7920FBAE; Mon, 29 Jan 2007 16:10:18 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <20070129163036.11876.78314.stgit@lathund.dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38099>
 
-Shawn O. Pearce wrote:
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+>  org.spearce.egit.ui/plugin.xml                     |    9 +++-
 
-> I'll like steal them (er, uhm, implement them) in git-gui in the next
-> day or so. =A0The current blame UI was sort of a prototype. =A0Once I
-> tossed the original filename and original line number into that
-> thing it started to become pretty obvious its just too cluttered.
-> But at that point I wanted pretty colors, and uh, it was late... :-)
+All four patches applied and pushed.  The plugin.xml noted above had
+some whitespace issues, apparently it is using spaces for indentation
+and not tab, so the diff alignment in gitk didn't come out right.
+I changed 'em when I applied the patch.  I think there was also
+trailing whitespace on one of those lines, so I applied it with
+--whitespace=strip.
 
-You can borrow some of the ideas from gitweb new blame output=20
-(git_blame2) by Luben and Junio, too...
+I was worried about the time required for the CheckpointClockJob,
+but hadn't had a chance to use it on a large project.  Thanks for
+backing that out, seeing as how its useless...
 
---=20
-Jakub Narebski
-Poland
+-- 
+Shawn.
