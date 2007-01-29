@@ -1,120 +1,143 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: [PATCH] Make fsck and fsck-objects be builtins.
-Date: Mon, 29 Jan 2007 15:48:06 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrners5pm.3l6.mdw@metalzone.distorted.org.uk>
-References: <20070127062826.GE14205@fieldses.org> <20070128002246.GA10179@moooo.ath.cx> <Pine.LNX.4.64.0701271625120.25027@woody.linux-foundation.org> <20070128013452.GA11244@moooo.ath.cx> <Pine.LNX.4.64.0701271745000.25027@woody.linux-foundation.org> <20070128233445.GD12125@fieldses.org> <Pine.LNX.4.64.0701281549070.3611@woody.linux-foundation.org> <7vsldubqof.fsf@assigned-by-dhcp.cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 29 16:48:18 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: More precise tag following
+Date: Mon, 29 Jan 2007 08:24:52 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701290759570.3611@woody.linux-foundation.org>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org>
+ <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0701270945260.25027@woody.linux-foundation.org>
+ <7vzm84gmei.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701271439340.25027@woody.linux-foundation.org>
+ <7vps8zfqlx.fsf@assigned-by-dhcp.cox.net> <20070129061807.GA4634@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jan 29 17:25:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBYjv-0005h3-03
-	for gcvg-git@gmane.org; Mon, 29 Jan 2007 16:48:15 +0100
+	id 1HBZJl-00067C-3p
+	for gcvg-git@gmane.org; Mon, 29 Jan 2007 17:25:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750774AbXA2PsM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Jan 2007 10:48:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751171AbXA2PsM
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 10:48:12 -0500
-Received: from distorted.demon.co.uk ([80.177.3.76]:41420 "HELO
-	metalzone.distorted.org.uk" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S1750774AbXA2PsL (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Jan 2007 10:48:11 -0500
-Received: (qmail 21634 invoked by uid 110); 29 Jan 2007 15:48:06 -0000
-Received: (qmail 21618 invoked by uid 9); 29 Jan 2007 15:48:06 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1170085686 21616 172.29.199.2 (29 Jan 2007 15:48:06 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Mon, 29 Jan 2007 15:48:06 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1751065AbXA2QZA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Jan 2007 11:25:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbXA2QZA
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 11:25:00 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:42095 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751065AbXA2QZA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jan 2007 11:25:00 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0TGOr1m002329
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 29 Jan 2007 08:24:54 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0TGOqWB023288;
+	Mon, 29 Jan 2007 08:24:53 -0800
+In-Reply-To: <20070129061807.GA4634@spearce.org>
+X-Spam-Status: No, hits=-0.418 required=5 tests=AWL,OSDL_NIGERIAN_ESTATE
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38082>
 
-The earlier change df391b192 to rename fsck-objects to fsck broke
-fsck-objects.  This should fix it again.
 
-Signed-off-by: Mark Wooding <mdw@distorted.org.uk>
----
- Makefile                 |    1 +
- fsck.c => builtin-fsck.c |    3 +--
- builtin.h                |    1 +
- git.c                    |    2 ++
- 4 files changed, 5 insertions(+), 2 deletions(-)
- rename fsck.c => builtin-fsck.c (100%)
 
-Without this, I get 
+On Mon, 29 Jan 2007, Shawn O. Pearce wrote:
+> 
+> I just implemented the blame --incremental thing in git-gui.
 
-[metalzone ~/src/git]git fsck-objects
-fatal: cannot handle fsck-objects internally
+That's a real technicolor interface ;)
 
-which isn't really very helpful.  I thought about hacking the makefile
-to manufacture a hardlink from git-fsck-objects, but this just seemed so
-much easier.  And we are slowly accumulating builtins, right? ;-)
+It's prettier, but it highlights an issue I had with the perl-gtk blame 
+viewer too (but there it was overshadowed by all the other aesthetic 
+issues)..
 
-diff --git a/Makefile b/Makefile
-index 1552b2a..91bd665 100644
---- a/Makefile
-+++ b/Makefile
-@@ -284,6 +284,7 @@ BUILTIN_OBJS = \
- 	builtin-diff-tree.o \
- 	builtin-fmt-merge-msg.o \
- 	builtin-for-each-ref.o \
-+	builtin-fsck.o \
- 	builtin-grep.o \
- 	builtin-init-db.o \
- 	builtin-log.o \
-diff --git a/fsck.c b/builtin-fsck.c
-similarity index 100%
-rename from fsck.c
-rename to builtin-fsck.c
-index 558f0a6..fec1cbd 100644
---- a/fsck.c
-+++ b/builtin-fsck.c
-@@ -571,12 +571,11 @@ static int fsck_cache_tree(struct cache_tree *it)
- 	return err;
- }
- 
--int main(int argc, char **argv)
-+int cmd_fsck(int argc, char **argv, const char *prefix)
- {
- 	int i, heads;
- 
- 	track_object_refs = 1;
--	setup_git_directory();
- 
- 	for (i = 1; i < argc; i++) {
- 		const char *arg = argv[i];
-diff --git a/builtin.h b/builtin.h
-index cfe5990..dd0e352 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -34,6 +34,7 @@ extern int cmd_diff_tree(int argc, const char **argv, const char *prefix);
- extern int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix);
- extern int cmd_for_each_ref(int argc, const char **argv, const char *prefix);
- extern int cmd_format_patch(int argc, const char **argv, const char *prefix);
-+extern int cmd_fsck(int argc, const char **argv, const char *prefix);
- extern int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
- extern int cmd_grep(int argc, const char **argv, const char *prefix);
- extern int cmd_help(int argc, const char **argv, const char *prefix);
-diff --git a/git.c b/git.c
-index d21e5e5..fb03a54 100644
---- a/git.c
-+++ b/git.c
-@@ -235,6 +235,8 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
- 		{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
- 		{ "for-each-ref", cmd_for_each_ref, RUN_SETUP },
- 		{ "format-patch", cmd_format_patch, RUN_SETUP },
-+		{ "fsck", cmd_fsck, RUN_SETUP },
-+		{ "fsck-objects", cmd_fsck, RUN_SETUP },
- 		{ "get-tar-commit-id", cmd_get_tar_commit_id },
- 		{ "grep", cmd_grep, RUN_SETUP },
- 		{ "help", cmd_help },
--- 
-1.5.0.rc2.75.gdbaa0-dirty
+One thing I never really enjoyed about the normal "git blame" either, and 
+that the git-gui interface makes even worse, is that it uses a *lot* of 
+real-estate for the blaming. I've got a big screen, and usually run with 
+100+ character wide terminals, but for git blame, I think the canvas is 
+120+ characters, and despite that over half of it is just the blame 
+output.
 
--- [mdw]
+That's actually distracting for several reasons:
+
+ - it may be interesting when the primary interest is the shiny new output 
+   from "git blame --incremental", but at least the way I have ever used 
+   annotations, I'm not actually *interested* in the annotations until I 
+   find the code I'm looking for.
+
+   In other words, the actual file data is really the *primary* thing. 
+   It's the stuff you need to look at first, and it's the thing that ends 
+   up making all the rest relevant. The current "git blame" and "git-gui" 
+   interfaces just seem to give too much importance to the annotation data 
+   itself.
+
+   Now, in a plain-text pager thign (aka the traditional "git blame"), you 
+   don't have much choice. The blame data needs to be there, and you can't 
+   hide it, because if you do, there's no way to get at it. But things are 
+   different with an interactive graphical environment (or a textual one, 
+   for that matter: using some curses interface wouldn't change this 
+   argument).
+
+   You _could_ just make the primary thing be the actual file data, and 
+   the blame be "incidental". Which it really is.
+
+ - As Ted already pointed out, you actually want to search for the point 
+   you're interested in, but when you start out and see the top of the 
+   file that generally gets annotated last, a natural reaction with the 
+   current interface is to wait for the annotations to happen rather than 
+   actually start looking at the code.
+
+   Which is silly. You end up waiting for somethign that you don't even 
+   really care about..
+
+   Again, I think the basic issue is the same: by making the annotation 
+   data *so* prominent, the lack of it just forces you mentally to think 
+   that something important is missing.
+
+ - Finally, the purely practical issue of "on a small screen, this would 
+   be almost impossible to use".
+
+   Optimally, you should be able to see the whole (or at least the bulk) 
+   of the actual file content even if you only had 80-character lines in 
+   the blame viewer. And I just tested: if I make the blame viewer 80 
+   characters wide when I look at a random kernel file annotation, I don't 
+   even see the "current line number", much less the actual file data. And 
+   remember: the file data was supposed to be the *primary* thing.
+
+   If I make it 110 characters wide, I can see ~20 characters of the file 
+   data, which means that I can't actually make sense out of anything that 
+   is indented by more than two indents, and I usually can't even see the 
+   full function names - much less arguments - in declarations..
+
+Anyway, all of these issues makes me suspect that the proper blame 
+interface is to basically *hide* the blame almost entirely, in order to 
+make the important parts much more visible, and in order to encourage 
+people to start looking for the piece of code that they are actually 
+interested in.
+
+Then, some *small* part of the annotation window (preferably on the 
+right-hand side) should have some very basic blame info - possibly even 
+just a "grouping hint" to see where the blame boundaries are. And only 
+when you mouse over it or something, do you get the full data.
+
+I dunno. I'm horrible at actually doing GUI's, so you should take anything 
+I say with a grain of salt. At the same time, I do know what *I* consider 
+to be important (which tends to be unusual in a user), and I'd like to 
+think that I have a clue about how people work. And I've always hated 
+"annotate" in CVS, but git made it even worse by making the annotation 
+data much bigger.
+
+(Yes, from a technical standpoint making the annotation data bigger is a 
+good thign: git simply has more useful information than CVS does. But the 
+lack of information in CVS actually makes the "stupid interface" better, 
+if only because you don't waste as much space on it).
+
+But I'm not going to be able to actually do what I describe above. I can 
+only hope to inspire somebody else..
+
+			Linus
