@@ -1,50 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make fsck and fsck-objects be builtins.
-Date: Mon, 29 Jan 2007 09:35:40 -0800
-Message-ID: <7v4pq991n7.fsf@assigned-by-dhcp.cox.net>
-References: <20070127062826.GE14205@fieldses.org>
-	<20070128002246.GA10179@moooo.ath.cx>
-	<Pine.LNX.4.64.0701271625120.25027@woody.linux-foundation.org>
-	<20070128013452.GA11244@moooo.ath.cx>
-	<Pine.LNX.4.64.0701271745000.25027@woody.linux-foundation.org>
-	<20070128233445.GD12125@fieldses.org>
-	<Pine.LNX.4.64.0701281549070.3611@woody.linux-foundation.org>
-	<7vsldubqof.fsf@assigned-by-dhcp.cox.net>
-	<slrners5pm.3l6.mdw@metalzone.distorted.org.uk>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: More precise tag following
+Date: Mon, 29 Jan 2007 09:42:20 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701290940520.3611@woody.linux-foundation.org>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org>
+ <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>
+ <45BB9C8B.8020907@fs.ei.tum.de> <Pine.LNX.4.64.0701271103520.25027@woody.linux-foundation.org>
+ <204011cb0701271136m655815f6o1501de2bf699b362@mail.gmail.com>
+ <Pine.LNX.4.63.0701281425270.26863@qynat.qvtvafvgr.pbz>
+ <Pine.LNX.4.64.0701291224100.3021@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Wooding <mdw@distorted.org.uk>
-X-From: git-owner@vger.kernel.org Mon Jan 29 18:36:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Lang <david.lang@digitalinsight.com>,
+	Chris Lee <clee@kde.org>,
+	"Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Jan 29 18:43:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBaQI-0004ib-Pc
-	for gcvg-git@gmane.org; Mon, 29 Jan 2007 18:36:07 +0100
+	id 1HBaX0-0007rb-KS
+	for gcvg-git@gmane.org; Mon, 29 Jan 2007 18:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752029AbXA2Rfm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Jan 2007 12:35:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752047AbXA2Rfm
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 12:35:42 -0500
-Received: from fed1rmmtao10.cox.net ([68.230.241.29]:39695 "EHLO
-	fed1rmmtao10.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752029AbXA2Rfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jan 2007 12:35:41 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao10.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070129173540.BXDR20715.fed1rmmtao10.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 29 Jan 2007 12:35:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id H5bz1W01G1kojtg0000000; Mon, 29 Jan 2007 12:36:00 -0500
-In-Reply-To: <slrners5pm.3l6.mdw@metalzone.distorted.org.uk> (Mark Wooding's
-	message of "Mon, 29 Jan 2007 15:48:06 +0000 (UTC)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752520AbXA2Rm7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Jan 2007 12:42:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752521AbXA2Rm7
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 12:42:59 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:46159 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752520AbXA2Rm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jan 2007 12:42:58 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0THgL1m004843
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 29 Jan 2007 09:42:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0THgKsc025307;
+	Mon, 29 Jan 2007 09:42:20 -0800
+In-Reply-To: <Pine.LNX.4.64.0701291224100.3021@xanadu.home>
+X-Spam-Status: No, hits=-0.465 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38086>
 
-Sorry, and thanks.
+
+
+On Mon, 29 Jan 2007, Nicolas Pitre wrote:
+> 
+> Chris: why don't you just set up a Bittorrent feed for it?  When we'll 
+> all start fetching it then the bandwidth will increasingly be shared 
+> amongst all interested people.
+
+Well, it doesn't really help Chris. All the data will end up starting from 
+him anyway. 
+
+The problem isn't the bandwidth for lots of people to download it, but the 
+bandwidth for a *single* upload ;)
+
+Once it's uploaded anywhere, we've got people willing to mirror it 
+infinitely ..
+
+		Linus
