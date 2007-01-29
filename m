@@ -1,51 +1,57 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] git-blame --incremental: don't use pager
-Date: Mon, 29 Jan 2007 01:32:46 +0100
-Message-ID: <45BD40AE.9020603@lsrfire.ath.cx>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net>	<20070127080126.GC9966@spearce.org>	<Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>	<Pine.LNX.4.64.0701270945260.25027@woody.linux-foundation.org>	<7vzm84gmei.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0701271439340.25027@woody.linux-foundation.org>	<7vps8zfqlx.fsf@assigned-by-dhcp.cox.net>	<45BCB273.7010601@lsrfire.ath.cx>	<7v4pqbezo9.fsf@assigned-by-dhcp.cox.net> <7vzm83dkw4.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] user-manual: set user.name and user.email with repo-config
+Date: Sun, 28 Jan 2007 16:52:00 -0800
+Message-ID: <7vsldubqof.fsf@assigned-by-dhcp.cox.net>
+References: <20070127062826.GE14205@fieldses.org>
+	<20070128002246.GA10179@moooo.ath.cx>
+	<Pine.LNX.4.64.0701271625120.25027@woody.linux-foundation.org>
+	<20070128013452.GA11244@moooo.ath.cx>
+	<Pine.LNX.4.64.0701271745000.25027@woody.linux-foundation.org>
+	<20070128233445.GD12125@fieldses.org>
+	<Pine.LNX.4.64.0701281549070.3611@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Jan 29 01:33:04 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Jan 29 01:52:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBKSC-0003V8-7P
-	for gcvg-git@gmane.org; Mon, 29 Jan 2007 01:33:00 +0100
+	id 1HBKkp-0004Ia-Og
+	for gcvg-git@gmane.org; Mon, 29 Jan 2007 01:52:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933026AbXA2Acz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 28 Jan 2007 19:32:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933022AbXA2Acz
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 19:32:55 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:57813
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933026AbXA2Acy (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Jan 2007 19:32:54 -0500
-Received: from [10.0.1.20] (p508E702E.dip.t-dialin.net [80.142.112.46])
-	by neapel230.server4you.de (Postfix) with ESMTP id 001A12F00F;
-	Mon, 29 Jan 2007 01:32:52 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
-In-Reply-To: <7vzm83dkw4.fsf@assigned-by-dhcp.cox.net>
+	id S932989AbXA2AwE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 28 Jan 2007 19:52:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932991AbXA2AwE
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Jan 2007 19:52:04 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:59559 "EHLO
+	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932989AbXA2AwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Jan 2007 19:52:03 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070129005201.XSTV9173.fed1rmmtao01.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 28 Jan 2007 19:52:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Gor21W00e1kojtg0000000; Sun, 28 Jan 2007 19:51:03 -0500
+In-Reply-To: <Pine.LNX.4.64.0701281549070.3611@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sun, 28 Jan 2007 15:49:31 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38059>
 
-Junio C Hamano schrieb:
-> Although I'd apply it anyway, strictly speaking, I think this
-> patch should not matter because any real Porcelain would be
-> using this as an upstream of a pipe to its drawing engine.
->=20
-> Well, unless that Porcelain drives --incremental through a pair
-> of ptys, but I do not think it is likely ;-).
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Ha!, didn't think of that.  I still like it more without a pager
-even if run on a terminal, because then you can *see* that it's
-really incremental (without needing to unset PAGER).  I'm a
-non-believer. ;-)
+> On Sun, 28 Jan 2007, J. Bruce Fields wrote:
+>> 
+>> While we're at it, is there any need for the "objects" in
+>> git-fsck-objects?
+>
+> Not really. We should probably just add that alias too.
 
-Ren=E9
+Done.
