@@ -1,79 +1,67 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH 1/1] Teach for-each-ref about a little language called Tcl.
-Date: Mon, 29 Jan 2007 12:51:22 +0300
-Message-ID: <20070129095122.GB3375@master.mivlgu.local>
-References: <20070128073913.GA9915@spearce.org> <20070128094909.GA3740@procyon.home> <7v4pqaeulw.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: More precise tag following
+Date: Mon, 29 Jan 2007 02:17:32 -0800
+Message-ID: <7v8xfm87cz.fsf@assigned-by-dhcp.cox.net>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net>
+	<20070127080126.GC9966@spearce.org>
+	<Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0701270945260.25027@woody.linux-foundation.org>
+	<7vzm84gmei.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0701271439340.25027@woody.linux-foundation.org>
+	<7vps8zfqlx.fsf@assigned-by-dhcp.cox.net>
+	<20070129061807.GA4634@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1LKvkjL3sHcu1TtY"
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Jan 29 10:51:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jan 29 11:17:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBTAj-0002Tz-J9
-	for gcvg-git@gmane.org; Mon, 29 Jan 2007 10:51:33 +0100
+	id 1HBTZy-0000H5-6z
+	for gcvg-git@gmane.org; Mon, 29 Jan 2007 11:17:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750773AbXA2Jv2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Jan 2007 04:51:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750778AbXA2Jv2
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 04:51:28 -0500
-Received: from mivlgu.ru ([81.18.140.87]:35368 "EHLO master.mivlgu.local"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750773AbXA2Jv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jan 2007 04:51:28 -0500
-Received: by master.mivlgu.local (Postfix, from userid 1000)
-	id BC436180113; Mon, 29 Jan 2007 12:51:22 +0300 (MSK)
-Content-Disposition: inline
-In-Reply-To: <7v4pqaeulw.fsf@assigned-by-dhcp.cox.net>
+	id S1752493AbXA2KRf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Jan 2007 05:17:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750936AbXA2KRf
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 05:17:35 -0500
+Received: from fed1rmmtao08.cox.net ([68.230.241.31]:52922 "EHLO
+	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752485AbXA2KRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jan 2007 05:17:34 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao08.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070129101733.OPM16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 29 Jan 2007 05:17:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id GyGa1W00A1kojtg0000000; Mon, 29 Jan 2007 05:16:35 -0500
+In-Reply-To: <20070129061807.GA4634@spearce.org> (Shawn O. Pearce's message of
+	"Mon, 29 Jan 2007 01:18:07 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38072>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
---1LKvkjL3sHcu1TtY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> If you are curious its been pushed to repo.or.cz:
+>
+>   git://repo.or.cz/git-gui.git
+>
+>   Repository->Browse Current Branch
+>   Double click on the file you want to see.
 
-On Sun, Jan 28, 2007 at 12:58:51PM -0800, Junio C Hamano wrote:
-> Then I'd commit after applying this on top of Shawn's.  Ok?
->=20
-> diff --git a/quote.c b/quote.c
-> index 01db5e2..fb9e4ca 100644
-> --- a/quote.c
-> +++ b/quote.c
-> @@ -395,11 +395,9 @@ void tcl_quote_print(FILE *stream, const char *src)
->  	fputc('"', stream);
->  	while ((c =3D *src++)) {
->  		switch (c) {
-> -		case '[':
-> -		case ']':
-> -		case '$':
-> -		case '\\':
-> -		case '"':
-> +		case '[': case ']':
-> +		case '{': case '}':
-> +		case '$': case '\\': case '"':
->  			fputc('\\', stream);
->  		default:
->  			fputc(c, stream);
+Cool.
 
-Looks OK (still didn't have time to actually test this thing).
+I think it is not a big deal for git-gui which is for active
+developers and not primarily for archaeologists, but it does not
+seem to like to be invoked inside a bare repository.
 
---1LKvkjL3sHcu1TtY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
-
-iD8DBQFFvcOaW82GfkQfsqIRArfnAJ4wG7MdDO/kVDo6AHx8YyFhKk8pnACcDVA0
-xRDnhGAmVq3c/PVv0Mdc7+c=
-=oKDB
------END PGP SIGNATURE-----
-
---1LKvkjL3sHcu1TtY--
+Also it becomes very tempting to somehow have this "file
+browser" selection UI as "tree browser" that can wander around
+to view an arbitrary tree in the commit history.  The boundary
+between git-gui and gitk would start to blurrrrrr.....
