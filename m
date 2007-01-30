@@ -1,86 +1,83 @@
-From: Bill Lear <rael@zopyra.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Why is git clone not checking out files?
-Date: Tue, 30 Jan 2007 13:03:43 -0600
-Message-ID: <17855.38543.761930.929267@lisa.zopyra.com>
+Date: Tue, 30 Jan 2007 11:04:57 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701301058250.3611@woody.linux-foundation.org>
 References: <17855.35058.967318.546726@lisa.zopyra.com>
-	<epo1tn$9sl$1@sea.gmane.org>
-	<17855.35845.922009.364704@lisa.zopyra.com>
-	<20070130182237.GC26415@spearce.org>
-	<17855.36470.309129.391271@lisa.zopyra.com>
-	<Pine.LNX.4.64.0701301040200.3611@woody.linux-foundation.org>
+ <17855.36470.309129.391271@lisa.zopyra.com>
+ <Pine.LNX.4.64.0701301040200.3611@woody.linux-foundation.org>
+ <200701301950.00195.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Jan 30 20:06:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bill Lear <rael@zopyra.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 30 20:07:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HByHM-0002Sp-6a
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 20:04:28 +0100
+	id 1HByI0-0002bR-MI
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 20:05:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751608AbXA3TEX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 14:04:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751616AbXA3TEX
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 14:04:23 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60227 "EHLO zopyra.com"
+	id S1751617AbXA3TFE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 14:05:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbXA3TFE
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 14:05:04 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:43037 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751602AbXA3TEW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 14:04:22 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l0UJ44u00312;
-	Tue, 30 Jan 2007 13:04:04 -0600
-In-Reply-To: <Pine.LNX.4.64.0701301040200.3611@woody.linux-foundation.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1751617AbXA3TFC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 14:05:02 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0UJ4w1m019581
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 30 Jan 2007 11:04:58 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0UJ4vkS025960;
+	Tue, 30 Jan 2007 11:04:57 -0800
+In-Reply-To: <200701301950.00195.jnareb@gmail.com>
+X-Spam-Status: No, hits=-0.456 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38186>
-
-On Tuesday, January 30, 2007 at 10:41:03 (-0800) Linus Torvalds writes:
->On Tue, 30 Jan 2007, Bill Lear wrote:
->...
->> This repository was created like this:
->> 
->> % mkdir /repos/git/project
->> % cd /repos/git/project
->> % git --bare init-db --shared
->>[% GIT_DIR=. git fetch git://source/public/project topic:topic]
->
->...but you don't _have_ any such branch. You only have a "topic" branch.
-
-Hmm, so I did this:
-
-% cd /repos/git/project
-% GIT_DIR=. git branch
-  topic
-
-And then, tried it all again:
-
-% cd ..
-% rm -rf project
-% mkdir project
-% cd project
-% git --bare clone --shared
-% GIT_DIR=. git fetch git://source/public/project
-warning: no common commits
-remote: Generating pack...
-remote: Done counting 1148 objects.
-remote: Deltifying 1148 objects.
-remote:  100% (1148/1148) done
-Unpacking 1148 objects
-remote: Total 1148, written 1148 (delta 632), reused 1020 (delta 534)
- 100% (1148/1148) done
-% GIT_DIR=. git branch
-[eh?  No branches??]
-% cat HEAD
-ref: refs/heads/master
-
-So, where are my branches?  And don't tell me I don't need no
-steenking branches...
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38187>
 
 
-Bill
+
+On Tue, 30 Jan 2007, Jakub Narebski wrote:
+> 
+> ...so "git clone" tries to checkout HEAD -> refs/heads/master
+> branch, which does not exist. It is strange that git does not
+> report error or at least warning, though...
+
+Well, HEAD pointing to a non-existent branch is actually a perfectly valid 
+thing. It literally means "I haven't done the first commit yet".
+
+So Bill's repository is a perfectly fine repository. It has a topic branch 
+(called 'topic'), and it has an empty 'master' branch that just hasn't 
+seen any commits yet. You can work on it as a full and normal git 
+repository, because it really *is* a full and normal git repository.
+
+Of course, I do agree that it'sa fairly confusing way to set up a repo, 
+and you generally shouldn't do it, but Bill did it that way explicitly. 
+Maybe he didn't do it "on purpose", but git at no point in time had any 
+way to know that Bill wanted somethign else. Nothing he did was "wrong", 
+and it's quite possible that it's what he could have meant to do.
+
+Anyway, it's certainly easy to fix. Bill, you can either:
+
+ - just rename the "topic" branch to "master"
+
+ - change the HEAD to point to "topic" rather than "master".
+
+(and if you do that setup in the future, the way to populate the initial 
+bare repository would have been to just do
+
+	git fetch original topic:master
+
+and you'd never have seen this, because the branch you fetched would have 
+been named the default 'master' in the first place).
+
+		Linus
