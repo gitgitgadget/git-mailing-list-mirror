@@ -1,57 +1,89 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: More precise tag following
-Date: Tue, 30 Jan 2007 00:51:16 -0800
-Message-ID: <20070130085116.GC18213@localdomain>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org> <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org> <45BB9C8B.8020907@fs.ei.tum.de> <Pine.LNX.4.64.0701271103520.25027@woody.linux-foundation.org> <204011cb0701271136m655815f6o1501de2bf699b362@mail.gmail.com> <20070129230050.GA15492@localdomain> <20070130004247.GA18213@localdomain>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: Re: blameview and file line number
+Date: Tue, 30 Jan 2007 14:42:31 +0530
+Message-ID: <cc723f590701300112x6493a0eaw153aad1a18cd289a@mail.gmail.com>
+References: <cc723f590701292325k1c85d9edgb9e72ae380fcaad7@mail.gmail.com>
+	 <7vireo52xs.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_160798_16083778.1170148351234"
 Cc: git@vger.kernel.org
-To: Chris Lee <clee@kde.org>
-X-From: git-owner@vger.kernel.org Tue Jan 30 09:51:22 2007
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Jan 30 10:12:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBoi2-0003Gi-0o
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 09:51:22 +0100
+	id 1HBp2c-0006Vu-9l
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 10:12:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751082AbXA3IvT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 03:51:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965067AbXA3IvT
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 03:51:19 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:48081 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751082AbXA3IvS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 03:51:18 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 3E7697DC094;
-	Tue, 30 Jan 2007 00:51:17 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 30 Jan 2007 00:51:16 -0800
-Content-Disposition: inline
-In-Reply-To: <20070130004247.GA18213@localdomain>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S965393AbXA3JMe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 04:12:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965429AbXA3JMe
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 04:12:34 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:54530 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965393AbXA3JMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 04:12:32 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so148419nfa
+        for <git@vger.kernel.org>; Tue, 30 Jan 2007 01:12:31 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=cmo4ndW7K3qPELDdIvfqNHZjTexvvU8VPvd7s9PhDZQuukOXQM2Uq3K9XtteLssobxmq9WPMnWrTB9sTio42yeBPuQ1IllyjDh6rFkHhYrqn7LXTrVxz11vYOaDgtHbxaD6SJ2EjQejFATKuO5zp4120bZdmJ9TbWPdyN8bTj54=
+Received: by 10.49.41.3 with SMTP id t3mr434374nfj.1170148351394;
+        Tue, 30 Jan 2007 01:12:31 -0800 (PST)
+Received: by 10.48.210.15 with HTTP; Tue, 30 Jan 2007 01:12:31 -0800 (PST)
+In-Reply-To: <7vireo52xs.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38142>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Eric Wong <normalperson@yhbt.net> wrote:
-> > It seems to be following kde-common into pre-409202 revisions (down to
-> > r11472) pretty well.  I'll upload the result to git.bogomips.org when
-> > I'm done.
+------=_Part_160798_16083778.1170148351234
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-Ok, kde-common is available here: http://git.bogomips.org/kde-common.git
+On 1/30/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Aneesh Kumar" <aneesh.kumar@gmail.com> writes:
+>
+> > Is it a typo or intentional ? I found the blameview output confusing.
+>
+> Compare it with gitweb or textual output (blame -n -f).
+>
+> It is supposed to show the line number in the original file.
+> Using lno is obviously wrong, as we are not reinventing "cat -n"
+> here ;-).
 
-> This will have to wait: I'm getting "Malformed network data" errors with
-> both do_update and do_switch (not yet working on any release version of
-> SVN incl. 1.4.3).  I'll have to examine this a bit more when I get the
-> time.
+In that case the heading is wrong. It should be something other than
+Filenum. How about the patch below. On top of the series i sent you
+before.
 
-Actually, I think I'm going crazy, do_update works fine, do_switch
-(which no released version of SVN supports, yet) did not because of
-reparenting.  Nevertheless, everything appears to work with my latest
-git-svn (git://git.bogomips.org/git-svn.git)
+-aneesh
 
--- 
-Eric Wong
+------=_Part_160798_16083778.1170148351234
+Content-Type: text/x-patch; name="blameview.diff"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="blameview.diff"
+X-Attachment-Id: f_exk441j7
+
+ZGlmZiAtLWdpdCBhL2NvbnRyaWIvYmxhbWV2aWV3L2JsYW1ldmlldy5wZXJsIGIvY29udHJpYi9i
+bGFtZXZpZXcvYmxhbWV2aWV3LnBlcmwKaW5kZXggOGFkOWJjZi4uOTE0OWUzNSAxMDA3NTUKLS0t
+IGEvY29udHJpYi9ibGFtZXZpZXcvYmxhbWV2aWV3LnBlcmwKKysrIGIvY29udHJpYi9ibGFtZXZp
+ZXcvYmxhbWV2aWV3LnBlcmwKQEAgLTI5LDYgKzI5LDcgQEAgbXkgJHNjcm9sbGVkX3dpbmRvdyA9
+IEd0azI6OlNjcm9sbGVkV2luZG93LT5uZXc7CiAkd2luZG93LT5hZGQoJHNjcm9sbGVkX3dpbmRv
+dyk7CiBteSAkZmlsZXZpZXcgPSBHdGsyOjpTaW1wbGVMaXN0LT5uZXcoCiAgICAgJ0NvbW1pdCcg
+PT4gJ3RleHQnLAorICAgICdPcmlnTGluZScgPT4gJ3RleHQnLAogICAgICdDb21taXRJbmZvJyA9
+PiAndGV4dCcsCiAgICAgJ0ZpbGVMaW5lJyA9PiAndGV4dCcsCiAgICAgJ0RhdGEnID0+ICd0ZXh0
+JwpAQCAtNTAsNyArNTEsNyBAQCBvcGVuKCRmaCwgJy18JywgImdpdCBjYXQtZmlsZSBibG9iICRo
+YXNoOiRmbiIpCiAKIHdoaWxlKDwkZmg+KSB7CiAgIGNob21wOwotICAkZmlsZXZpZXctPntkYXRh
+fS0+WyQuXSA9IFsnSEVBRCcsICc/JywgIiRmbjokLiIsICRfXTsKKyAgJGZpbGV2aWV3LT57ZGF0
+YX0tPlskLl0gPSBbJ0hFQUQnLCc/JywgJz8nLCAiJC4iLCAkX107CiB9CiAKIG15ICRibGFtZTsK
+QEAgLTc5LDggKzgwLDggQEAgc3ViIGZsdXNoX2JsYW1lX2xpbmUgewogCiAJZm9yKG15ICRpID0g
+MDsgJGkgPCAkY250OyAkaSsrKSB7CiAJCUB7JGZpbGV2aWV3LT57ZGF0YX0tPlskbG5vKyRpLTFd
+fVswLDEsMl0gPQotCQkgICAgKHN1YnN0cigkY29tbWl0LCAwLCA4KSwgJGluZm8sCi0JCSAgICAg
+JGZpbGVuYW1lIC4gJzonIC4gKCRsbm8rJGkpKTsKKwkJICAgIChzdWJzdHIoJGNvbW1pdCwgMCwg
+OCksIAorCQkgICAgICRmaWxlbmFtZSAuICc6JyAuICgkc19sbm8rJGkpLCAkaW5mbywgKCRsbm8r
+JGkpKTsKIAl9CiB9CiAK
+------=_Part_160798_16083778.1170148351234--
