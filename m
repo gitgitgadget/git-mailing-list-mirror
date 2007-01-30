@@ -1,111 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Escape --upload-pack from expr.
-Date: Tue, 30 Jan 2007 13:11:49 -0500
-Message-ID: <20070130181149.GA26655@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Why is git clone not checking out files?
+Date: Tue, 30 Jan 2007 19:15:33 +0100
+Organization: At home
+Message-ID: <epo1tn$9sl$1@sea.gmane.org>
+References: <17855.35058.967318.546726@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Jan 30 19:12:36 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 30 19:14:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBxT9-0003XU-Em
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 19:12:35 +0100
+	id 1HBxVG-0004TU-NQ
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 19:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030193AbXA3SLy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 13:11:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030187AbXA3SLx
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 13:11:53 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37497 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030194AbXA3SLw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 13:11:52 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HBxSK-0006xu-P6; Tue, 30 Jan 2007 13:11:44 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5FAB620FBAE; Tue, 30 Jan 2007 13:11:49 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030187AbXA3SOn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 13:14:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030191AbXA3SOn
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 13:14:43 -0500
+Received: from main.gmane.org ([80.91.229.2]:57578 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030187AbXA3SOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 13:14:42 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HBxV5-0003EQ-I3
+	for git@vger.kernel.org; Tue, 30 Jan 2007 19:14:35 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 30 Jan 2007 19:14:35 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 30 Jan 2007 19:14:35 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38180>
 
-Recent commit ae1dffcb28ee89a23f8d2747be65e17c8eab1690 by Junio
-changed the way --upload-pack was passed around between clone,
-fetch and ls-remote and modified the handling of the command
-line parameter parsing.
+Bill Lear wrote:
 
-Unfortunately FreeBSD 6.1 insists that the expression
+> I don't understand why clone (version 1.4.4.1) is not checking out my
+> files:
 
-  expr --upload-pack=git-upload-pack : '-[^=]*=\(.*\)'
-
-is illegal, as the --upload-pack option is not supported by their
-implementation of expr.
-
-Elsewhere in Git we use z as a leading prefix of both arguments,
-ensuring the -- isn't seen by expr.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
-
- I did a quick search, I don't think there are any others.
-
- git-clone.sh     |    2 +-
- git-fetch.sh     |    2 +-
- git-ls-remote.sh |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/git-clone.sh b/git-clone.sh
-index 3d83acb..4ddfa77 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -123,7 +123,7 @@ while
- 		shift
- 		upload_pack="--upload-pack=$1" ;;
- 	*,--upload-pack=*)
--		upload_pack=--upload-pack=$(expr "$1" : '-[^=]*=\(.*\)') ;;
-+		upload_pack=--upload-pack=$(expr "z$1" : 'z-[^=]*=\(.*\)') ;;
- 	1,--depth) usage;;
- 	*,--depth)
- 		shift
-diff --git a/git-fetch.sh b/git-fetch.sh
-index c1f6e1e..357cac2 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -37,7 +37,7 @@ do
- 		;;
- 	--upl=*|--uplo=*|--uploa=*|--upload=*|\
- 	--upload-=*|--upload-p=*|--upload-pa=*|--upload-pac=*|--upload-pack=*)
--		exec=--upload-pack=$(expr "$1" : '-[^=]*=\(.*\)')
-+		exec=--upload-pack=$(expr "z$1" : 'z-[^=]*=\(.*\)')
- 		shift
- 		;;
- 	-f|--f|--fo|--for|--forc|--force)
-diff --git a/git-ls-remote.sh b/git-ls-remote.sh
-index e6f574b..8ea5c5e 100755
---- a/git-ls-remote.sh
-+++ b/git-ls-remote.sh
-@@ -27,7 +27,7 @@ do
- 	shift;;
-   -u=*|--u=*|--up=*|--upl=*|--uplo=*|--uploa=*|--upload=*|\
-   --upload-=*|--upload-p=*|--upload-pa=*|--upload-pac=*|--upload-pack=*)
--	exec=--upload-pack=$(expr "$1" : '-[^=]*=\(.*\)')
-+	exec=--upload-pack=$(expr "z$1" : 'z-[^=]*=\(.*\)')
- 	shift;;
-   --)
-   shift; break ;;
+Unless you use git clone --bare, it should checkout HEAD branch...
 -- 
-1.5.0.rc2.81.g73a2
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
