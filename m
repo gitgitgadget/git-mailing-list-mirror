@@ -1,62 +1,70 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: blameview and file line number
-Date: Tue, 30 Jan 2007 12:55:44 +0530
-Message-ID: <cc723f590701292325k1c85d9edgb9e72ae380fcaad7@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: blameview and file contents
+Date: Tue, 30 Jan 2007 02:29:10 -0500
+Message-ID: <20070130072910.GB32640@spearce.org>
+References: <cc723f590701292246v282408d0o27a0d8320c027743@mail.gmail.com> <20070130065417.GA32640@spearce.org> <cc723f590701292322q7365f99bg3b7c76834f6fbad8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_159050_477232.1170141944702"
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 30 08:25:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Aneesh Kumar <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 30 08:29:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBnNF-0000kc-KJ
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 08:25:50 +0100
+	id 1HBnQd-0002kK-Gh
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 08:29:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965410AbXA3HZq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 02:25:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965411AbXA3HZq
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 02:25:46 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:15139 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965410AbXA3HZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 02:25:46 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so124242nfa
-        for <git@vger.kernel.org>; Mon, 29 Jan 2007 23:25:45 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type;
-        b=TPNXoDmWOF/pH1zjw7ianm9dBOkpE0hcy3vwxdc+w5Aihna5SXk2ULAvJa4xP/8DcyGKbG1x9LdV0XeSekLDVAmeLNhusAdc/5dZ00UKYZsdCiCQY7z2GDatRxIieop9vZVsJR2SiNieFTmpvqm796dN9AJPJFvb5efneiqp438=
-Received: by 10.49.8.1 with SMTP id l1mr347088nfi.1170141944728;
-        Mon, 29 Jan 2007 23:25:44 -0800 (PST)
-Received: by 10.48.210.15 with HTTP; Mon, 29 Jan 2007 23:25:44 -0800 (PST)
+	id S965398AbXA3H3P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 02:29:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965412AbXA3H3P
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 02:29:15 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:43466 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965398AbXA3H3O (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 02:29:14 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HBnQW-00022A-BS; Tue, 30 Jan 2007 02:29:12 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BFB8E20FBAE; Tue, 30 Jan 2007 02:29:10 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <cc723f590701292322q7365f99bg3b7c76834f6fbad8@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38128>
 
-------=_Part_159050_477232.1170141944702
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Aneesh Kumar <aneesh.kumar@gmail.com> wrote:
+> See i said that there should be a simple way. Can we get this
+> documented in git-cat-file man page
 
-Is it a typo or intentional ? I found the blameview output confusing.
+Well, this isn't the git-cat-file man page, but we do suggest people
+use `git show HEAD:foo.c` to get foo.c from HEAD in an interactive
+setting.  The git-show manpage refers people to git-rev-parse,
+which has the following:
 
--aneesh
+	* A suffix ':' followed by a path; this names the blob or tree
+	  at the given path in the tree-ish object named by the part
+	  before the colon.
 
-------=_Part_159050_477232.1170141944702
-Content-Type: text/x-patch; name=blameview.diff; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_exk07ng3
-Content-Disposition: attachment; filename="blameview.diff"
+In a non-interactive case, well, that's what git-cat-file is for.
+And <object> typically is meant to mean what git-rev-parse will
+parse... 
 
-ZGlmZiAtLWdpdCBhL2NvbnRyaWIvYmxhbWV2aWV3L2JsYW1ldmlldy5wZXJsIGIvY29udHJpYi9i
-bGFtZXZpZXcvYmxhbWV2aWV3LnBlcmwKaW5kZXggYTU1Zjc5OS4uZThiY2IxYiAxMDA3NTUKLS0t
-IGEvY29udHJpYi9ibGFtZXZpZXcvYmxhbWV2aWV3LnBlcmwKKysrIGIvY29udHJpYi9ibGFtZXZp
-ZXcvYmxhbWV2aWV3LnBlcmwKQEAgLTYyLDcgKzYyLDcgQEAgc3ViIGZsdXNoX2JsYW1lX2xpbmUg
-ewogCWZvcihteSAkaSA9IDA7ICRpIDwgJGNudDsgJGkrKykgewogCQlAeyRmaWxldmlldy0+e2Rh
-dGF9LT5bJGxubyskaS0xXX1bMCwxLDJdID0KIAkJICAgIChzdWJzdHIoJGNvbW1pdCwgMCwgOCks
-ICRpbmZvLAotCQkgICAgICRmaWxlbmFtZSAuICc6JyAuICgkc19sbm8rJGkpKTsKKwkJICAgICAk
-ZmlsZW5hbWUgLiAnOicgLiAoJGxubyskaSkpOwogCX0KIH0KIAo=
-------=_Part_159050_477232.1170141944702--
+But if you submit a documentation update to git-cat-file's manpage
+that points off to the same section of git-rev-parse, folks may
+appreciate it.  :-)
+
+-- 
+Shawn.
