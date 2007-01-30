@@ -1,68 +1,59 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: [PATCH] Update git-cat-file documentation
-Date: Tue, 30 Jan 2007 13:26:51 +0530
-Message-ID: <45befa72.48e904b7.4b64.ffffd83b@mx.google.com>
-References: <11701438112263-git-send-email-> <11701438241247-git-send-email-> <11701438362085-git-send-email->
-Cc: junkio@cox.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 30 08:58:30 2007
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: MinGW port usable
+Date: Tue, 30 Jan 2007 08:59:46 +0100
+Message-ID: <46d6db660701292359v7647306fla30c9a10e5989dcc@mail.gmail.com>
+References: <200701292320.43888.johannes.sixt@telecom.at>
+	 <20070129223513.GA31372@spearce.org>
+	 <46d6db660701291511v700bfcf7l4851dd6be4fc6e03@mail.gmail.com>
+	 <20070129232425.GB31372@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Sixt" <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Jan 30 08:59:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBnsq-0000RL-AZ
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 08:58:28 +0100
+	id 1HBnuB-0001ES-Ji
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 08:59:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965442AbXA3H5k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 02:57:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965444AbXA3H5k
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 02:57:40 -0500
-Received: from py-out-1112.google.com ([64.233.166.177]:22180 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965443AbXA3H5j (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 02:57:39 -0500
-Received: by py-out-1112.google.com with SMTP id a29so949562pyi
-        for <git@vger.kernel.org>; Mon, 29 Jan 2007 23:57:39 -0800 (PST)
+	id S965441AbXA3H7s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 02:59:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965443AbXA3H7s
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 02:59:48 -0500
+Received: from wr-out-0506.google.com ([64.233.184.225]:31000 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965441AbXA3H7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 02:59:47 -0500
+Received: by wr-out-0506.google.com with SMTP id i22so1150790wra
+        for <git@vger.kernel.org>; Mon, 29 Jan 2007 23:59:47 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:x-mailer:in-reply-to:references:message-id;
-        b=YMqQSSA9TzbcraMSdbjKRQudLk3j8rEYMro3IALMTfWfM1K64a3lni6GktJLCqdXx28YgkYbUF/wTnYTPRenYDry7O46T+tWTb3Af/8ebtSrMawEUcQCZdTXa/1TwBhqvJZ+JdgY/wqnxizEzt4jTJ9QMLd4lFFg/N2mY2C7xTw=
-Received: by 10.35.121.9 with SMTP id y9mr14533504pym.1170143858983;
-        Mon, 29 Jan 2007 23:57:38 -0800 (PST)
-Received: from localhost ( [59.92.165.143])
-        by mx.google.com with ESMTP id n63sm7300570pyh.2007.01.29.23.57.34;
-        Mon, 29 Jan 2007 23:57:38 -0800 (PST)
-X-Mailer: git-send-email 1.5.0.rc2.75.gdbaa0-dirty
-In-Reply-To: <11701438362085-git-send-email->
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Il2PZtGQWXrMra2Y8kJLTjDnPczXvXmQHKmygwvmExx/KTMx5D+yA9C3PVCMRLVmoX7Dkr2xaD7tAttGMRqxEV4CZN+nVtIP2MO5quWMqSVPEEGjjvtd4l8Yw1Y4zV33jurRzTF9wCUypNwDfHh++k6phCmkJNOmuPkQoqw6YRM=
+Received: by 10.114.185.8 with SMTP id i8mr15280waf.1170143986480;
+        Mon, 29 Jan 2007 23:59:46 -0800 (PST)
+Received: by 10.115.16.9 with HTTP; Mon, 29 Jan 2007 23:59:46 -0800 (PST)
+In-Reply-To: <20070129232425.GB31372@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38133>
 
-From: Aneesh Kumar K.V <aneesh.kumar@gmail.com> - unquoted
+On 1/30/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> Try creating a desktop icon (Repository->Create Desktop Icon) and
+> start git-gui from the resulting .bat file.  It *should* come up
+> right on MinGW, but I'm only guessing here.
 
-Update git-cat-file documentation with references for different
-ways of specifying <objects>
+ok, yes it's working. :)
+but call gitk from inside it fail :(
 
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
----
- Documentation/git-cat-file.txt |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+"error in startup script"
+( git-peek-remote is not working from git-gui, could be path related.
+It's hard to tell why yet)
 
-diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-index 7e90ce9..075c0d0 100644
---- a/Documentation/git-cat-file.txt
-+++ b/Documentation/git-cat-file.txt
-@@ -19,7 +19,9 @@ or '-s' is used to find the object size.
- OPTIONS
- -------
- <object>::
--	The sha1 identifier of the object.
-+	The name of the object to show.
-+	For a more complete list of ways to spell object names, see
-+	"SPECIFYING REVISIONS" section in gitlink:git-rev-parse[1].
- 
- -t::
- 	Instead of the content, show the object type identified by
 -- 
-1.5.0.rc2.75.gdbaa0-dirty
+Christian
