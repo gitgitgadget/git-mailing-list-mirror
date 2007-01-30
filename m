@@ -1,54 +1,57 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: MinGW port usable
-Date: Tue, 30 Jan 2007 09:47:42 +0100
-Organization: eudaptics software gmbh
-Message-ID: <45BF062E.37A4327A@eudaptics.com>
-References: <200701292320.43888.johannes.sixt@telecom.at> <20070129223513.GA31372@spearce.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: More precise tag following
+Date: Tue, 30 Jan 2007 00:51:16 -0800
+Message-ID: <20070130085116.GC18213@localdomain>
+References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org> <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org> <45BB9C8B.8020907@fs.ei.tum.de> <Pine.LNX.4.64.0701271103520.25027@woody.linux-foundation.org> <204011cb0701271136m655815f6o1501de2bf699b362@mail.gmail.com> <20070129230050.GA15492@localdomain> <20070130004247.GA18213@localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 30 09:50:25 2007
+Cc: git@vger.kernel.org
+To: Chris Lee <clee@kde.org>
+X-From: git-owner@vger.kernel.org Tue Jan 30 09:51:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBoh4-0002jc-CJ
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 09:50:22 +0100
+	id 1HBoi2-0003Gi-0o
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 09:51:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752649AbXA3IuH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 03:50:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752650AbXA3IuH
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 03:50:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:45841 "EHLO ciao.gmane.org"
+	id S1751082AbXA3IvT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 03:51:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965067AbXA3IvT
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 03:51:19 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:48081 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752649AbXA3IuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 03:50:05 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HBogk-0003YF-Fj
-	for git@vger.kernel.org; Tue, 30 Jan 2007 09:50:02 +0100
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Jan 2007 09:50:02 +0100
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 30 Jan 2007 09:50:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1751082AbXA3IvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 03:51:18 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 3E7697DC094;
+	Tue, 30 Jan 2007 00:51:17 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 30 Jan 2007 00:51:16 -0800
+Content-Disposition: inline
+In-Reply-To: <20070130004247.GA18213@localdomain>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38141>
 
-"Shawn O. Pearce" wrote:
-> Last night I pushed out a number of changes to avoid cygpath when
-> we don't have it in PATH (commit 20ddfcaa).  Were you testing with
-> that version, or something earlier?
+Eric Wong <normalperson@yhbt.net> wrote:
+> Eric Wong <normalperson@yhbt.net> wrote:
+> > It seems to be following kde-common into pre-409202 revisions (down to
+> > r11472) pretty well.  I'll upload the result to git.bogomips.org when
+> > I'm done.
 
-yes, I tested that version. The new incremental blame works, too.
+Ok, kde-common is available here: http://git.bogomips.org/kde-common.git
 
--- Hannes
+> This will have to wait: I'm getting "Malformed network data" errors with
+> both do_update and do_switch (not yet working on any release version of
+> SVN incl. 1.4.3).  I'll have to examine this a bit more when I get the
+> time.
+
+Actually, I think I'm going crazy, do_update works fine, do_switch
+(which no released version of SVN supports, yet) did not because of
+reparenting.  Nevertheless, everything appears to work with my latest
+git-svn (git://git.bogomips.org/git-svn.git)
+
+-- 
+Eric Wong
