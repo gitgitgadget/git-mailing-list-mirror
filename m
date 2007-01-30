@@ -1,69 +1,73 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
 Subject: Re: MinGW port usable
-Date: Tue, 30 Jan 2007 11:28:35 -0500
-Message-ID: <20070130162835.GD25950@spearce.org>
-References: <200701292320.43888.johannes.sixt@telecom.at> <Pine.LNX.4.64.0701291438580.3611@woody.linux-foundation.org> <Pine.LNX.4.63.0701301524360.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070130151803.GA25779@spearce.org> <Pine.LNX.4.63.0701301635050.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070130155653.GB25950@spearce.org> <Pine.LNX.4.63.0701301708160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Tue, 30 Jan 2007 17:31:22 +0100
+Organization: eudaptics software gmbh
+Message-ID: <45BF72DA.B83017CF@eudaptics.com>
+References: <200701292320.43888.johannes.sixt@telecom.at>
+		 <20070129223513.GA31372@spearce.org>
+		 <46d6db660701291511v700bfcf7l4851dd6be4fc6e03@mail.gmail.com>
+		 <20070129232425.GB31372@spearce.org>
+		 <46d6db660701292359v7647306fla30c9a10e5989dcc@mail.gmail.com> <46d6db660701300007v573832b5pc7ac41059dc4490e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jan 30 17:29:07 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 30 17:31:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBvql-0005th-1N
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 17:28:51 +0100
+	id 1HBvtE-00071D-V3
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 17:31:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092AbXA3Q2r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 11:28:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbXA3Q2r
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 11:28:47 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:32795 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752092AbXA3Q2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 11:28:46 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HBvqR-00078R-Iz; Tue, 30 Jan 2007 11:28:31 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2A6D520FBAE; Tue, 30 Jan 2007 11:28:35 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0701301708160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752658AbXA3QbW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 11:31:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752661AbXA3QbW
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 11:31:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:35127 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752658AbXA3QbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 11:31:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HBvsa-00034E-As
+	for git@vger.kernel.org; Tue, 30 Jan 2007 17:30:47 +0100
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 30 Jan 2007 17:30:44 +0100
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 30 Jan 2007 17:30:44 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38166>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > I wonder what the difference is between NO_MMAP=Yes and NO_MMAP=
-> > on Windows.
-> Cygwin:
-> 	real    0m0.812s
-> and
-> 	real    0m2.094s
+Christian MICHON wrote:
 > 
-> IOW, the numbers are slightly worse (!) than with mmap().
+> On 1/30/07, Christian MICHON <christian.michon@gmail.com> wrote:
+> > but call gitk from inside it fail :(
+> >
+> > "error in startup script"
+> > ( git-peek-remote is not working from git-gui, could be path related.
+> > It's hard to tell why yet)
+> 
+> just to be more clear: when using the .bat shortcut, calling gitk
+> from within git-gui fails.
 
-Slightly?  That's double the time!
- 
-> MinGW does not even have mmap().
+Calling gitk from git-gui works here, even if git-gui was invoked from
+the .bat file. But maybe just because I have all git tools in my $PATH.
+And I have this CMD script in my $PATH as well:
 
-But Windows has something almost there.  I just read a flame war
-thread about implementing mmap in libiberty for MinGW by stealing
-source from Cygwin, and how the FSF might feel about someone's
-dirty feet after playing rugby.  Yea... Google is good.  :)
+D:\>cat D:\MSYS\1.0\git\bin\gitk.cmd
+@echo off
+start wish84 D:/MSYS/1.0/git/bin/gitk %1 %2 %3 %4 %5 %6 %7 %8 %9
 
--- 
-Shawn.
+(and, btw, a similar script for git-gui).
+
+-- Hannes
