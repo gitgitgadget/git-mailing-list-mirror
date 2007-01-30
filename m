@@ -1,42 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Escape --upload-pack from expr.
-Date: Tue, 30 Jan 2007 11:19:03 -0800
-Message-ID: <7v4pq8z5js.fsf@assigned-by-dhcp.cox.net>
-References: <20070130181149.GA26655@spearce.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Why is git clone not checking out files?
+Date: Tue, 30 Jan 2007 13:27:19 -0600
+Message-ID: <17855.39959.848058.957592@lisa.zopyra.com>
+References: <17855.35058.967318.546726@lisa.zopyra.com>
+	<epo1tn$9sl$1@sea.gmane.org>
+	<17855.35845.922009.364704@lisa.zopyra.com>
+	<20070130182237.GC26415@spearce.org>
+	<17855.36470.309129.391271@lisa.zopyra.com>
+	<Pine.LNX.4.64.0701301040200.3611@woody.linux-foundation.org>
+	<17855.38543.761930.929267@lisa.zopyra.com>
+	<20070130190907.GE26415@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jan 30 20:19:34 2007
+X-From: git-owner@vger.kernel.org Tue Jan 30 20:27:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HByVt-0000wE-DH
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 20:19:29 +0100
+	id 1HBydo-00051e-Ew
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 20:27:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751680AbXA3TTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 14:19:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751683AbXA3TTH
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 14:19:07 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:35641 "EHLO
-	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751685AbXA3TTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 14:19:05 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070130191903.NNGU16632.fed1rmmtao08.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 30 Jan 2007 14:19:03 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id HXJ41W00G1kojtg0000000; Tue, 30 Jan 2007 14:18:04 -0500
-In-Reply-To: <20070130181149.GA26655@spearce.org> (Shawn O. Pearce's message
-	of "Tue, 30 Jan 2007 13:11:49 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751702AbXA3T11 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 14:27:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbXA3T11
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 14:27:27 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60275 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751700AbXA3T10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 14:27:26 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l0UJRM303785;
+	Tue, 30 Jan 2007 13:27:22 -0600
+In-Reply-To: <20070130190907.GE26415@spearce.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38194>
 
-Good catch; thanks.
+On Tuesday, January 30, 2007 at 14:09:07 (-0500) Shawn O. Pearce writes:
+>...
+>You did not ask for a tracking branch to be created.  So the
+>result of your fetch is in FETCH_HEAD only.  Try instead:
+>
+>GIT_DIR=. git fetch git://source/public/project topic:refs/heads/master
+
+Ok, then when I clone this my master branch in my cloned repo will
+actually be pointing to the topic branch of the remote repo?
+
+[recreate dir, re-init, fetch as above, clone; now, cd into cloned repo]
+% cd project
+% git branch
+* master
+  origin
+
+This makes me really nervous, like a nervousness-inducing cloaking
+device would.  I'm not enough of a git master to just "use the force".
+When I go into my cloned repo, I want to see "topic" for my branch
+name, not master...
+
+BTW, I note also that the clone seems to have taken GOBS more time
+this time around.  Am I seeing things or would this be a result of the
+fetch gymnastics above?
+
+
+Bill
