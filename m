@@ -1,67 +1,71 @@
-From: Alexander Litvinov <litvinov2004@gmail.com>
-Subject: How to enhance merge commit message ?
-Date: Tue, 30 Jan 2007 10:32:24 +0600
-Message-ID: <200701301032.24917.litvinov2004@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: How to enhance merge commit message ?
+Date: Mon, 29 Jan 2007 20:45:36 -0800
+Message-ID: <7v8xfl6s27.fsf@assigned-by-dhcp.cox.net>
+References: <200701301032.24917.litvinov2004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 30 05:32:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alexander Litvinov <litvinov2004@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 30 05:45:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBkfl-0001mw-TT
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 05:32:46 +0100
+	id 1HBksV-0000Hr-5N
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 05:45:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752054AbXA3Ech (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 29 Jan 2007 23:32:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752108AbXA3Ech
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 23:32:37 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:60973 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752054AbXA3Ecg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Jan 2007 23:32:36 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1435363uga
-        for <git@vger.kernel.org>; Mon, 29 Jan 2007 20:32:33 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Xcn8M8e0+zP+9InF0QYueHH/v9m09tDat4nmvMtSygpePVUR0nkw1qvYPyLzcKbYTI9Kw5NdFHmhbMy0lVycYjU+3GGIeewqEJlJ64naggryAQC5y1bIyWSzW8TAAQAjIuA5Iz7CJv/fjfj24BWRSjQ+CvDTp1ihlcM9bb6vzYs=
-Received: by 10.67.119.9 with SMTP id w9mr9591496ugm.1170131552859;
-        Mon, 29 Jan 2007 20:32:32 -0800 (PST)
-Received: from lan.ac-sw.lcl ( [81.1.223.2])
-        by mx.google.com with ESMTP id 20sm7959352uga.2007.01.29.20.32.31;
-        Mon, 29 Jan 2007 20:32:31 -0800 (PST)
-User-Agent: KMail/1.8
-Content-Disposition: inline
+	id S1752110AbXA3Epr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 29 Jan 2007 23:45:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965237AbXA3Epr
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Jan 2007 23:45:47 -0500
+Received: from fed1rmmtao01.cox.net ([68.230.241.38]:42379 "EHLO
+	fed1rmmtao01.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752110AbXA3Eph (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Jan 2007 23:45:37 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao01.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070130044537.KDJ9173.fed1rmmtao01.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 29 Jan 2007 23:45:37 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id HGlw1W00A1kojtg0000000; Mon, 29 Jan 2007 23:45:56 -0500
+In-Reply-To: <200701301032.24917.litvinov2004@gmail.com> (Alexander Litvinov's
+	message of "Tue, 30 Jan 2007 10:32:24 +0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38121>
 
-Hello list,
+Alexander Litvinov <litvinov2004@gmail.com> writes:
 
-git's git repo contains a lot of merges with nice commit message, 
-like this (d96497b8d):
+> git's git repo contains a lot of merges with nice commit message, 
+> like this (d96497b8d):
+> ....
+> How can I made the same messages using git pull . <branch> ?
 
-Merge branches 'jc/merge-base', 'sp/merge', 'jc/diff', 'jc/explain', 'jc/web' 
-and 'jc/pickaxe' into pu
-    
-    * jc/merge-base:
-      Teach "git-merge-base --check-ancestry" about refs.
-      git-merge-base: --check-ancestry option
-    
-    * sp/merge:
-      Avoid git-fetch in `git-pull .` when possible.
-    
-    * jc/diff:
-      test-para: combined diff between HEAD, index and working tree.
-      para-walk: walk n trees, index and working tree in parallel
-    
-    * jc/explain:
-      git-explain
-....
+$ grep -A2 '^merge\.summary' Documentation/config.txt
+merge.summary::
+	Whether to include summaries of merged commits in newly created
+	merge commit messages. False by default.
 
-How can I made the same messages using git pull . <branch> ?
+This is a good option if you are doing the top-level "bundling
+of others' work -- people will base their further work on this"
+merges.  On the other hand, if you are merging from your uplevel
+because your work depends on something that was updated recently,
+having the merge summary is often pointless (because the merge
+would bring in many mostly unrelated commits, in addition to that
+something your work depends on).  I think Linus has explicitly
+asked this option not enabled by people he pulls from for this
+reason.
+
+We might want to have a per-branch option to control this
+behaviour at finer grained level.  I would enable it for my four
+primary integration branches (maint, master, next, and pu) but
+not for topic branches.  That way, if a topic needs a fix that
+happened on the master since it forked, the tip of the master
+will be merged back to the topic without the merge summary
+message (I would describe why that merge in an unusual direction
+was needed in the commit message anyway).
