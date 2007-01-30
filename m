@@ -1,103 +1,68 @@
 From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: [PATCH] blameview: Support browsable functionality to blameview.
-Date: Tue, 30 Jan 2007 13:26:50 +0530
-Message-ID: <45befa66.29cc817d.6c37.ffffa9bc@mx.google.com>
-References: <11701438112263-git-send-email-> <11701438241247-git-send-email->
+Subject: [PATCH] Update git-cat-file documentation
+Date: Tue, 30 Jan 2007 13:26:51 +0530
+Message-ID: <45befa72.48e904b7.4b64.ffffd83b@mx.google.com>
+References: <11701438112263-git-send-email-> <11701438241247-git-send-email-> <11701438362085-git-send-email->
 Cc: junkio@cox.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 30 08:58:28 2007
+X-From: git-owner@vger.kernel.org Tue Jan 30 08:58:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBnsp-0000RL-Q0
+	id 1HBnsq-0000RL-AZ
 	for gcvg-git@gmane.org; Tue, 30 Jan 2007 08:58:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965437AbXA3H53 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 02:57:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965443AbXA3H53
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 02:57:29 -0500
-Received: from nz-out-0506.google.com ([64.233.162.227]:65169 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965437AbXA3H51 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 02:57:27 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1581318nze
-        for <git@vger.kernel.org>; Mon, 29 Jan 2007 23:57:27 -0800 (PST)
+	id S965442AbXA3H5k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 02:57:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965444AbXA3H5k
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 02:57:40 -0500
+Received: from py-out-1112.google.com ([64.233.166.177]:22180 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965443AbXA3H5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 02:57:39 -0500
+Received: by py-out-1112.google.com with SMTP id a29so949562pyi
+        for <git@vger.kernel.org>; Mon, 29 Jan 2007 23:57:39 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:cc:subject:date:x-mailer:in-reply-to:references:message-id;
-        b=gDne1n1DDPywJQbE9op/jkGES7DyaG3/uCLINi9xWqW7ZzYxQ55ToK4TJ40HNZvvMsTH15M/VJ8hRPp3TS6kqU73JkfdPYTaMBeffpQo2I7IoJbW15pTDR7o6E7RBjNqJ1oHvzNWEAOeILQr8L6sw7g40OM4GJ49DCK5du9UM9A=
-Received: by 10.35.93.1 with SMTP id v1mr14590467pyl.1170143847006;
-        Mon, 29 Jan 2007 23:57:27 -0800 (PST)
+        b=YMqQSSA9TzbcraMSdbjKRQudLk3j8rEYMro3IALMTfWfM1K64a3lni6GktJLCqdXx28YgkYbUF/wTnYTPRenYDry7O46T+tWTb3Af/8ebtSrMawEUcQCZdTXa/1TwBhqvJZ+JdgY/wqnxizEzt4jTJ9QMLd4lFFg/N2mY2C7xTw=
+Received: by 10.35.121.9 with SMTP id y9mr14533504pym.1170143858983;
+        Mon, 29 Jan 2007 23:57:38 -0800 (PST)
 Received: from localhost ( [59.92.165.143])
-        by mx.google.com with ESMTP id a70sm7287188pye.2007.01.29.23.57.22;
-        Mon, 29 Jan 2007 23:57:26 -0800 (PST)
+        by mx.google.com with ESMTP id n63sm7300570pyh.2007.01.29.23.57.34;
+        Mon, 29 Jan 2007 23:57:38 -0800 (PST)
 X-Mailer: git-send-email 1.5.0.rc2.75.gdbaa0-dirty
-In-Reply-To: <11701438241247-git-send-email->
+In-Reply-To: <11701438362085-git-send-email->
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38132>
 
 From: Aneesh Kumar K.V <aneesh.kumar@gmail.com> - unquoted
 
-Double clicking on the row  exec a new blameview with commit hash
-as argument.
+Update git-cat-file documentation with references for different
+ways of specifying <objects>
 
 Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@gmail.com>
 ---
- contrib/blameview/blameview.perl |   23 ++++++++++++++++++++---
- 1 files changed, 20 insertions(+), 3 deletions(-)
+ Documentation/git-cat-file.txt |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-diff --git a/contrib/blameview/blameview.perl b/contrib/blameview/blameview.perl
-index 8261e47..8ad9bcf 100755
---- a/contrib/blameview/blameview.perl
-+++ b/contrib/blameview/blameview.perl
-@@ -3,7 +3,17 @@
- use Gtk2 -init;
- use Gtk2::SimpleList;
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index 7e90ce9..075c0d0 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -19,7 +19,9 @@ or '-s' is used to find the object size.
+ OPTIONS
+ -------
+ <object>::
+-	The sha1 identifier of the object.
++	The name of the object to show.
++	For a more complete list of ways to spell object names, see
++	"SPECIFYING REVISIONS" section in gitlink:git-rev-parse[1].
  
--my $fn = shift or die "require filename to blame";
-+my $hash;
-+my $fn;
-+if ( @ARGV == 1 ) {
-+	$hash = "HEAD";
-+	$fn = shift;
-+} elsif ( @ARGV == 2 ) {
-+	$hash = shift;
-+	$fn = shift;
-+} else {
-+	die "Usage blameview [<rev>] <filename>";
-+}
- 
- Gtk2::Rc->parse_string(<<'EOS');
- style "treeview_style"
-@@ -27,17 +37,24 @@ $scrolled_window->add($fileview);
- $fileview->get_column(0)->set_spacing(0);
- $fileview->set_size_request(1024, 768);
- $fileview->set_rules_hint(1);
-+$fileview->signal_connect (row_activated => sub {
-+		my ($sl, $path, $column) = @_;
-+		my $row_ref = $sl->get_row_data_from_path ($path);
-+		system("blameview @$row_ref[0] $fn");
-+		# $row_ref is now an array ref to the double-clicked row's data.
-+		});
- 
- my $fh;
--open($fh, '-|', "git cat-file blob HEAD:$fn")
-+open($fh, '-|', "git cat-file blob $hash:$fn")
-   or die "unable to open $fn: $!";
-+
- while(<$fh>) {
-   chomp;
-   $fileview->{data}->[$.] = ['HEAD', '?', "$fn:$.", $_];
- }
- 
- my $blame;
--open($blame, '-|', qw(git blame --incremental --), $fn)
-+open($blame, '-|', qw(git blame --incremental --), $fn, $hash)
-     or die "cannot start git-blame $fn";
- 
- Glib::IO->add_watch(fileno($blame), 'in', \&read_blame_line);
+ -t::
+ 	Instead of the content, show the object type identified by
 -- 
 1.5.0.rc2.75.gdbaa0-dirty
