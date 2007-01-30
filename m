@@ -1,57 +1,64 @@
-From: Bill Lear <rael@zopyra.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Why is git clone not checking out files?
-Date: Tue, 30 Jan 2007 12:18:45 -0600
-Message-ID: <17855.35845.922009.364704@lisa.zopyra.com>
-References: <17855.35058.967318.546726@lisa.zopyra.com>
-	<epo1tn$9sl$1@sea.gmane.org>
+Date: Tue, 30 Jan 2007 13:22:37 -0500
+Message-ID: <20070130182237.GC26415@spearce.org>
+References: <17855.35058.967318.546726@lisa.zopyra.com> <epo1tn$9sl$1@sea.gmane.org> <17855.35845.922009.364704@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 30 19:19:00 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue Jan 30 19:22:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBxZL-0006UJ-4V
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 19:18:59 +0100
+	id 1HBxd0-0008KV-Gm
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 19:22:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965571AbXA3SS4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 13:18:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965579AbXA3SS4
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 13:18:56 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60187 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965571AbXA3SSz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 13:18:55 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l0UIIn428402;
-	Tue, 30 Jan 2007 12:18:49 -0600
-In-Reply-To: <epo1tn$9sl$1@sea.gmane.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1030194AbXA3SWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 13:22:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030195AbXA3SWn
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 13:22:43 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38070 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030194AbXA3SWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 13:22:42 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HBxcn-0007xP-GH; Tue, 30 Jan 2007 13:22:33 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 984EA20FBAE; Tue, 30 Jan 2007 13:22:37 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <17855.35845.922009.364704@lisa.zopyra.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38182>
 
-On Tuesday, January 30, 2007 at 19:15:33 (+0100) Jakub Narebski writes:
->Bill Lear wrote:
->
->> I don't understand why clone (version 1.4.4.1) is not checking out my
->> files:
->
->Unless you use git clone --bare, it should checkout HEAD branch...
+Bill Lear <rael@zopyra.com> wrote:
+> Ok, well, I certainly did not issue git clone --bare, it was just a
+> plain ol' clone:
+> 
+> % git clone /repos/git/project
+> 
+> and no checkout ensued.  Can I fix this somehow?  I've tried the clone
+> several times with no success.  Is there anything I can check in the
+> source repo (the above /repos/git/project) to see why it would not be
+> working?
 
-Ok, well, I certainly did not issue git clone --bare, it was just a
-plain ol' clone:
+I've seen this happen if HEAD in the source repository does not point
+at a branch, or points at a commit which doesn't exist.  Though I
+usually also see an error about how HEAD isn't a valid object name...
 
-% git clone /repos/git/project
-
-and no checkout ensued.  Can I fix this somehow?  I've tried the clone
-several times with no success.  Is there anything I can check in the
-source repo (the above /repos/git/project) to see why it would not be
-working?
-
-
-Bill
+-- 
+Shawn.
