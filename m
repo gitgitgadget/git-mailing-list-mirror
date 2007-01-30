@@ -1,104 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Tue, 30 Jan 2007 18:10:15 -0500
-Message-ID: <20070130231015.GB10075@coredump.intra.peff.net>
-References: <87odognuhl.wl%cworth@cworth.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Wed Jan 31 00:10:42 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Fail softly if file system does not like test data.
+Date: Tue, 30 Jan 2007 18:28:34 -0500
+Message-ID: <64949F2D-6A6D-4373-8B7F-C8F75529CD2E@silverinsanity.com>
+References: <20070130163219.GA14431@164.242.249.10.in-addr.arpa> <20070130224446.28311.31828.stgit@lathund.dewire.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Jan 31 00:28:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HC27b-0006C6-FI
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 00:10:39 +0100
+	id 1HC2PA-0006K4-4U
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 00:28:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752020AbXA3XKV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 18:10:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbXA3XKV
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 18:10:21 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4513 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752009AbXA3XKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 18:10:19 -0500
-Received: (qmail 15749 invoked from network); 30 Jan 2007 18:10:42 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 30 Jan 2007 18:10:42 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Jan 2007 18:10:15 -0500
-Content-Disposition: inline
-In-Reply-To: <87odognuhl.wl%cworth@cworth.org>
+	id S1752023AbXA3X2p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 30 Jan 2007 18:28:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752027AbXA3X2p
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 18:28:45 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:48450 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752023AbXA3X2o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Jan 2007 18:28:44 -0500
+Received: from [192.168.1.4] (cpe-66-66-74-194.rochester.res.rr.com [66.66.74.194])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 3B7851FFC02B;
+	Tue, 30 Jan 2007 23:28:43 +0000 (UTC)
+In-Reply-To: <20070130224446.28311.31828.stgit@lathund.dewire.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38214>
 
-On Tue, Jan 30, 2007 at 12:13:26PM -0800, Carl Worth wrote:
 
-> Also, if I'm willing to assume (or insist) that users have git 1.5 or
-> newer, it'd be nice to be able to drop the "-b build" thing thanks to
-> the new detached HEAD support. But if I suggest doing just:
-> 
-> 		git checkout origin/proposed-fix
-> 
-> the user is presented with the following message which is much more
-> scary than useful in this situation:
-> 
-> 	warning: you are not on ANY branch anymore.
-> 	If you meant to create a new branch from the commit, you need -b to
-> 	associate a new branch with the wanted checkout.  Example:
-> 	  git checkout -b <new_branch_name> origin/proposed-fix
+On Jan 30, 2007, at 5:49 PM, Robin Rosenberg wrote:
 
-I don't see any reason why we can't scare the user when making a commit,
-instead of just checkout out to look around. Something like the patch
-below. It needs a few things:
-  - remove the old checkout message
-  - we wrap the colorization over the multi-line message. Probably a
-    color_printf_lines() function should be added
-  - if colorization is enabled, print it using color.status.warning
-    (default to red).
+> Most unix file system allow almost any byte sequence, but other may =20
+> reject
+> sequences that are not valid according to the locale. This change =20
+> makes
+> failure somewhat less likely by using UTF-8-encoded characters (which
+> happen to be valid interpreted as ISO-8859-1 and skips the test if th=
+e
+> local file system does not support the test data.
+>
+> Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+> ---
+>
+> Please try this on cygwin (western iso-8859-X, korean on FAT & =20
+> NTFS) and
+> MacOSX (HFS) where we know there was a problem. The non-ascii filenam=
+e
+> test should be skipped, with a notice) in most asian locales on =20
+> Windows
+> and MacOSX.
 
-I'm happy to make all those happen if there is interest (Junio, please
-comment).
+Doesn't work, but it's closer.  I can't see where a .gitignore is =20
+getting set, though.
 
-diff --git a/wt-status.c b/wt-status.c
-index 5567868..285c824 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -22,6 +22,12 @@ static const char use_add_rm_msg[] =
- "use \"git add/rm <file>...\" to update what will be committed";
- static const char use_add_to_include_msg[] =
- "use \"git add <file>...\" to include in what will be committed";
-+static const char detach_warn[] =
-+"# Any commits you make may become inaccessible if you checkout\n"
-+"# another branch. To save them, you may create a new branch\n"
-+"# from the current HEAD using:\n"
-+"#   git checkout -b <new_branch_name>\n"
-+"#";
- 
- static int parse_status_slot(const char *var, int offset)
- {
-@@ -303,16 +309,13 @@ void wt_status_print(struct wt_status *s)
- 	s->is_initial = get_sha1(s->reference, sha1) ? 1 : 0;
- 
- 	if (s->branch) {
--		const char *on_what = "On branch ";
--		const char *branch_name = s->branch;
--		if (!strncmp(branch_name, "refs/heads/", 11))
--			branch_name += 11;
--		else if (!strcmp(branch_name, "HEAD")) {
--			branch_name = "";
--			on_what = "Not currently on any branch.";
-+		const char *c = color(WT_STATUS_HEADER);
-+		if (!strncmp(s->branch, "refs/heads/", 11))
-+			color_printf_ln(c, "# On branch %s", s->branch+11);
-+		else {
-+			color_printf_ln(c, "# Not currently on any branch.");
-+			color_printf_ln(c, detach_warn);
- 		}
--		color_printf_ln(color(WT_STATUS_HEADER),
--			"# %s%s", on_what, branch_name);
- 	}
- 
- 	if (s->is_initial) {
+* expecting success: (mkdir -p "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p=
+/=20
+q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6" ||
+          echo "Local filesystem does not permit this test" ) &&
+          echo Foo >"=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/=
+=20
+v/w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.txt" &&
+          git add "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/=
+=20
+w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.txt" &&
+          cp ../test9200a.png "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/=
+=20
+q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.png" &&
+          git add "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/=
+=20
+w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.png" &&
+          git commit -a -m "G=E5r det s=E5 g=E5r det" && \
+          id=3D$(git rev-list --max-count=3D1 HEAD) &&
+          (cd "$CVSWORK" &&
+          git-cvsexportcommit -v -c $id &&
+          test "$(echo $(sort "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/=
+=20
+q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6/CVS/Entries"|cut -d/ -f2,3,5))" =3D =20
+"g=E5rdets=E5g=E5rdet.png/1.1/-kb g=E5rdets=E5g=E5rdet.txt/1.1/"
+          )
+The following paths are ignored by one of your .gitignore files:
+=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6=
+/=20
+g=E5rdets=E5g=E5rdet.txt
+Use -f if you really want to add them.
+* FAIL 8: File with non-ascii file name
