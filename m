@@ -1,64 +1,80 @@
-From: Alexander Litvinov <litvinov2004@gmail.com>
-Subject: Re: How to enhance merge commit message ?
-Date: Tue, 30 Jan 2007 11:23:59 +0600
-Message-ID: <200701301123.59687.litvinov2004@gmail.com>
-References: <200701301032.24917.litvinov2004@gmail.com> <7v8xfl6s27.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: MinGW port usable
+Date: Mon, 29 Jan 2007 21:53:28 -0800
+Message-ID: <7vveip5acn.fsf@assigned-by-dhcp.cox.net>
+References: <200701292320.43888.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Jan 30 06:24:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Tue Jan 30 06:53:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HBlTd-00045g-45
-	for gcvg-git@gmane.org; Tue, 30 Jan 2007 06:24:17 +0100
+	id 1HBlw3-0003hQ-QU
+	for gcvg-git@gmane.org; Tue, 30 Jan 2007 06:53:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965406AbXA3FYK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 30 Jan 2007 00:24:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965410AbXA3FYK
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 00:24:10 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:43598 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965406AbXA3FYI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Jan 2007 00:24:08 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1442181uga
-        for <git@vger.kernel.org>; Mon, 29 Jan 2007 21:24:07 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=L2vFJyH4/nfoscyKYQ/jxt1ybBRkFJp88WoYRg6NONQBKjsUvp6BHRfq7tXyjsuNJuvEpAWHPXDhf8C3s5JPITj1WxGMXaFhZ0DJxjbb+K46yFByK44wBwHY5dMvCKFUu5Ap8kUSOw0ncqUl5nZKLZywPXOJcS7bFdJ6FQO9gXg=
-Received: by 10.66.252.4 with SMTP id z4mr9261346ugh.1170134646794;
-        Mon, 29 Jan 2007 21:24:06 -0800 (PST)
-Received: from lan.ac-sw.lcl ( [81.1.223.2])
-        by mx.google.com with ESMTP id e1sm9783933ugf.2007.01.29.21.24.04;
-        Mon, 29 Jan 2007 21:24:05 -0800 (PST)
-User-Agent: KMail/1.8
-In-Reply-To: <7v8xfl6s27.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932948AbXA3Fxa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 00:53:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932954AbXA3Fxa
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 00:53:30 -0500
+Received: from fed1rmmtao06.cox.net ([68.230.241.33]:34802 "EHLO
+	fed1rmmtao06.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932948AbXA3Fx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 00:53:29 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao06.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070130055328.FCER3989.fed1rmmtao06.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 30 Jan 2007 00:53:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id HHtn1W0111kojtg0000000; Tue, 30 Jan 2007 00:53:48 -0500
+In-Reply-To: <200701292320.43888.johannes.sixt@telecom.at> (Johannes Sixt's
+	message of "Mon, 29 Jan 2007 23:20:43 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38123>
 
-=D0=92 =D1=81=D0=BE=D0=BE=D0=B1=D1=89=D0=B5=D0=BD=D0=B8=D0=B8 =D0=BE=D1=
-=82 Tuesday 30 January 2007 10:45 Junio C Hamano =D0=BD=D0=B0=D0=BF=D0=B8=
-=D1=81=D0=B0=D0=BB(a):
-> $ grep -A2 '^merge\.summary' Documentation/config.txt
-> merge.summary::
-> 	Whether to include summaries of merged commits in newly created
-> 	merge commit messages. False by default.
-Thanks !
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-> This is a good option if you are doing the top-level "bundling
-> of others' work -- people will base their further work on this"
-> merges.  On the other hand, if you are merging from your uplevel
-> because your work depends on something that was updated recently,
-> having the merge summary is often pointless (because the merge
-> would bring in many mostly unrelated commits, in addition to that
-> something your work depends on).  I think Linus has explicitly
-> asked this option not enabled by people he pulls from for this
-> reason.
-I understand your point.
+> Junio, you may like to cherry-pick these two non-critical commits from my 
+> repository:
+>
+> 8c8bb94f94f1d972c7ffadda4744cf343fac6f34 gitk: Use peek-remote instead of 
+> ls-remote.
+> 46580d2192d79a469f8b40fc1081db9116ad5517 Add a missing fork() error check.
+
+Thanks; cherry-picked the fork() one.
+
+Regarding gitk, I think the following patch would be better
+regardless of the platform.
+
+-- >8 --
+[PATCH] gitk: Use show-ref instead of ls-remote
+
+It used to be ls-remote on self was the only easy way to grab
+the ref information.  Now we have show-ref which does not
+involve fork and IPC, so use it.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/gitk b/gitk
+index 31d0aad..67e6a64 100755
+--- a/gitk
++++ b/gitk
+@@ -309,9 +309,9 @@ proc readrefs {} {
+     foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
+ 	catch {unset $v}
+     }
+-    set refd [open [list | git ls-remote [gitdir]] r]
++    set refd [open [list | git show-ref] r]
+     while {0 <= [set n [gets $refd line]]} {
+-	if {![regexp {^([0-9a-f]{40})	refs/([^^]*)$} $line \
++	if {![regexp {^([0-9a-f]{40}) refs/([^^]*)$} $line \
+ 	    match id path]} {
+ 	    continue
+ 	}
