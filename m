@@ -1,89 +1,78 @@
-From: "Mike Coleman" <tutufan@gmail.com>
-Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Tue, 30 Jan 2007 21:38:10 -0600
-Message-ID: <3c6c07c20701301938u4d1503a2m3e0af51121b8e6db@mail.gmail.com>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
-	 <7v8xfkz8oj.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Fix "git tag -u" breakage
+Date: Tue, 30 Jan 2007 20:00:22 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701301957320.3611@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 31 04:38:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 31 05:00:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HC6Ig-0004B5-V8
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 04:38:23 +0100
+	id 1HC6e9-000322-HM
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 05:00:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932564AbXAaDiM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 22:38:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932521AbXAaDiM
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 22:38:12 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:41466 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932564AbXAaDiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 22:38:11 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so410550nfa
-        for <git@vger.kernel.org>; Tue, 30 Jan 2007 19:38:10 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TlyFMZRjpEX00LjH5sSV+zryagHQh7BV95V0+7lq9gsLeAvaoejL4n4ouLu5e1E3Yd3NdBLDp3rNVMqkUKdAjm1CA9ZlDry+unYSSLpC7KZ0Kk0dgcTL+MrDo3FPhemtgHKA7kU4pynaO2PHc7oI9Hs0/njwsUwa+/VZI247zdI=
-Received: by 10.49.107.8 with SMTP id j8mr1853816nfm.1170214690138;
-        Tue, 30 Jan 2007 19:38:10 -0800 (PST)
-Received: by 10.48.246.15 with HTTP; Tue, 30 Jan 2007 19:38:10 -0800 (PST)
-In-Reply-To: <7v8xfkz8oj.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932803AbXAaEA3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 23:00:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932838AbXAaEA3
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 23:00:29 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:36162 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932803AbXAaEA2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 23:00:28 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0V40N9V006982
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 30 Jan 2007 20:00:24 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0V40MS8006838;
+	Tue, 30 Jan 2007 20:00:23 -0800
+X-Spam-Status: No, hits=-0.476 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38225>
 
-Thanks for all of your replies--this information is very helpful.
-Though both hg and git look good, I will probably try git first,
-partly because it seems the most interesting.  It feels like fertile
-ground for experiments, and I suspect someone will think of some
-surprising application for it.  (Also, I had the privilege of working
-with Junio in a past life, and I consider his involvement a good
-portent.)
 
-This mercurial list post by Ted Tso was also useful:
+The recent cleanup to understand
 
-    http://www.selenic.com/pipermail/mercurial/2007-January/012039.html
+	[user]
+		signingkey = ..
 
-Regarding a Python (or other interpreted language) implementation, the
-most obvious practical benefit would be an easy win32 port.  Not that
-I'd ever choose to develop there, but it removes its lack as an
-objection in some organizational settings (such as mine).  Someone
-mentioned a Java port--that'd cover that base quite well.
+sadly broke the old "-u signingkey" syntax. Admittedly the config file 
+approach is nicer, and I should probably use it, but even so, there's 
+really no reason to break the old syntax either.
 
-As for performance, my thinking was that since hg is implemented
-apparently almost entirely in Python, and has (again apparently)
-generally acceptable performance, this suggested that much of the
-problem might be I/O-bound enough that language efficiency might not
-matter so much.
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
 
-Aside: The program for which I'm considering trying git does mass spec
-protein identification and has (in the general case) exponential
-runtime, all of it CPU.  Run times on a 500-node cluster start at two
-hours and go up rapidly.  You might think at first that this wouldn't
-be a good candidate for Python, but so far this looks to be incorrect.
- The simple reason: asymptotically, all of the run time happens in
-about four functions.  Given that, and friendly constants, what was
-about 15K (*) lines of C++ has turned into somewhat less than 1K lines
-of C++ and 1K lines of Python--it's difficult to gauge because so many
-new features have been added.  Somewhat ironically, the worst
-performance issue seems to be C++'s obscure (to me) object
-construction costs--I may end up just switching the C++ part to C.
+This fixes it for me, and _looks_ obvious enough, but I didn't actually 
+test the other cases (ie tagger name and the config file). Caveat patchor.
 
-There are many axes of design to be considered, of course, but the
-moral I took away from that is that better than asking "Does this
-program have to be really fast?", one should ask "How many lines of
-this program could run 20x slower (than C) without significantly
-affecting overall performance?"  If the answer is 80%, it might be
-worth thinking about.  Skepticism is always in order, of course.
-
-Mike
-
-(*) via David Wheeler's sloccount
+diff --git a/git-tag.sh b/git-tag.sh
+index 988bf4c..c2c57d5 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -115,6 +115,7 @@ tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
+ 
+ keyid=$(git-repo-config user.signingkey) ||
+ 	keyid=$(expr "z$tagger" : 'z\(.*>\)')
++username=${username:-$keyid}
+ 
+ trap 'rm -f "$GIT_DIR"/TAG_TMP* "$GIT_DIR"/TAG_FINALMSG "$GIT_DIR"/TAG_EDITMSG' 0
+ 
+@@ -141,7 +142,7 @@ if [ "$annotate" ]; then
+       cat "$GIT_DIR"/TAG_FINALMSG ) >"$GIT_DIR"/TAG_TMP
+     rm -f "$GIT_DIR"/TAG_TMP.asc "$GIT_DIR"/TAG_FINALMSG
+     if [ "$signed" ]; then
+-	gpg -bsa -u "$keyid" "$GIT_DIR"/TAG_TMP &&
++	gpg -bsa -u "$username" "$GIT_DIR"/TAG_TMP &&
+ 	cat "$GIT_DIR"/TAG_TMP.asc >>"$GIT_DIR"/TAG_TMP ||
+ 	die "failed to sign the tag with GPG."
+     fi
