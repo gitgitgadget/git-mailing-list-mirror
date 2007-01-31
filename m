@@ -1,78 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Tue, 30 Jan 2007 22:22:48 -0500
-Message-ID: <20070131032248.GA17504@coredump.intra.peff.net>
-References: <87odognuhl.wl%cworth@cworth.org> <20070130231015.GB10075@coredump.intra.peff.net> <7vzm80vv1s.fsf@assigned-by-dhcp.cox.net>
+From: "Mike Coleman" <tutufan@gmail.com>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Tue, 30 Jan 2007 21:38:10 -0600
+Message-ID: <3c6c07c20701301938u4d1503a2m3e0af51121b8e6db@mail.gmail.com>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+	 <7v8xfkz8oj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: cworth@cworth.org, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Jan 31 04:23:06 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 31 04:38:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HC63t-0007gf-01
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 04:23:05 +0100
+	id 1HC6Ig-0004B5-V8
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 04:38:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131AbXAaDWv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 22:22:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932417AbXAaDWv
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 22:22:51 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3800 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752140AbXAaDWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 22:22:50 -0500
-Received: (qmail 25715 invoked from network); 30 Jan 2007 22:23:15 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 30 Jan 2007 22:23:15 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Jan 2007 22:22:48 -0500
+	id S932564AbXAaDiM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 22:38:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932521AbXAaDiM
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 22:38:12 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:41466 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932564AbXAaDiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 22:38:11 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so410550nfa
+        for <git@vger.kernel.org>; Tue, 30 Jan 2007 19:38:10 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TlyFMZRjpEX00LjH5sSV+zryagHQh7BV95V0+7lq9gsLeAvaoejL4n4ouLu5e1E3Yd3NdBLDp3rNVMqkUKdAjm1CA9ZlDry+unYSSLpC7KZ0Kk0dgcTL+MrDo3FPhemtgHKA7kU4pynaO2PHc7oI9Hs0/njwsUwa+/VZI247zdI=
+Received: by 10.49.107.8 with SMTP id j8mr1853816nfm.1170214690138;
+        Tue, 30 Jan 2007 19:38:10 -0800 (PST)
+Received: by 10.48.246.15 with HTTP; Tue, 30 Jan 2007 19:38:10 -0800 (PST)
+In-Reply-To: <7v8xfkz8oj.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vzm80vv1s.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38224>
 
-On Tue, Jan 30, 2007 at 05:34:07PM -0800, Junio C Hamano wrote:
+Thanks for all of your replies--this information is very helpful.
+Though both hg and git look good, I will probably try git first,
+partly because it seems the most interesting.  It feels like fertile
+ground for experiments, and I suspect someone will think of some
+surprising application for it.  (Also, I had the privilege of working
+with Junio in a past life, and I consider his involvement a good
+portent.)
 
-> That does not protect anything other than interactive "git
-> commit".  People often do "git commit -m" or "git commit -C".
+This mercurial list post by Ted Tso was also useful:
 
-Yes, those should be covered by a message.
+    http://www.selenic.com/pipermail/mercurial/2007-January/012039.html
 
-> In addition, rebasing a detached HEAD, merging into a detached
-> HEAD, cherry-picking onto a detached HEAD or running reset on a
+Regarding a Python (or other interpreted language) implementation, the
+most obvious practical benefit would be an easy win32 port.  Not that
+I'd ever choose to develop there, but it removes its lack as an
+objection in some organizational settings (such as mine).  Someone
+mentioned a Java port--that'd cover that base quite well.
 
-I'm not even sure what it means to rebase a detached HEAD. Merging
-and cherry picking should make a similar warning.
+As for performance, my thinking was that since hg is implemented
+apparently almost entirely in Python, and has (again apparently)
+generally acceptable performance, this suggested that much of the
+problem might be I/O-bound enough that language efficiency might not
+matter so much.
 
-> detached HEAD to move to a particular state you want to look at
+Aside: The program for which I'm considering trying git does mass spec
+protein identification and has (in the general case) exponential
+runtime, all of it CPU.  Run times on a 500-node cluster start at two
+hours and go up rapidly.  You might think at first that this wouldn't
+be a good candidate for Python, but so far this looks to be incorrect.
+ The simple reason: asymptotically, all of the run time happens in
+about four functions.  Given that, and friendly constants, what was
+about 15K (*) lines of C++ has turned into somewhat less than 1K lines
+of C++ and 1K lines of Python--it's difficult to gauge because so many
+new features have been added.  Somewhat ironically, the worst
+performance issue seems to be C++'s obscure (to me) object
+construction costs--I may end up just switching the C++ part to C.
 
-Running reset on a detached HEAD isn't a problem unless you've done one
-of the other things.
+There are many axes of design to be considered, of course, but the
+moral I took away from that is that better than asking "Does this
+program have to be really fast?", one should ask "How many lines of
+this program could run 20x slower (than C) without significantly
+affecting overall performance?"  If the answer is 80%, it might be
+worth thinking about.  Skepticism is always in order, of course.
 
-> I do not think warning at every step that you are "in a funny
-> state" does not help productivity, so I'd prefer warning upfront
-> once and be silent afterwards, until you try to come back with
-> "git checkout <existing branch>", potentially losing your state,
-> which is what we currently do.
+Mike
 
-I didn't quite parse your first sentence, but I think I get the general
-meaning. I just think it is awkward to have to either see such a warning
-(or use -f) just to _look_ at detached commits, when you aren't doing
-anything even remotely dangerous. The dangerous thing is _creating_
-commits on top of a detached head.  I honestly don't think it should be
-allowed at all, but since some people have argued that it is useful,
-that seems like the place to put warnings. Anything else is just making
-things more confusing for the sorts of people Carl is dealing with --
-those who merely want to look around.
-
-> For situations like Carl's intstruction where a user, who is
-> purely a sightseer, uses the detached HEAD to go-and-look a
-> particular state, the fact that "-f" loses the previous local
-
-Yes, though it would be nicer not to have to explain to them why '-f' is
-needed.
-
--Peff
+(*) via David Wheeler's sloccount
