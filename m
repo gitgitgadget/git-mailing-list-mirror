@@ -1,60 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
-Date: Wed, 31 Jan 2007 17:44:18 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701311742370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <BAY13-F213DF79906B3889D42369D0A50@phx.gbl>
- <Pine.LNX.4.63.0701311612420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45C0C4DF.C0EB4495@eudaptics.com>
+From: "Mike Coleman" <tutufan@gmail.com>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Wed, 31 Jan 2007 10:58:28 -0600
+Message-ID: <3c6c07c20701310858v488ebbd4k98cd14340661f086@mail.gmail.com>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+	 <7v8xfkz8oj.fsf@assigned-by-dhcp.cox.net>
+	 <3c6c07c20701301938u4d1503a2m3e0af51121b8e6db@mail.gmail.com>
+	 <Pine.LNX.4.64.0701310959220.3021@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Wed Jan 31 17:45:21 2007
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Jan 31 17:58:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCIZM-00023s-Fm
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 17:44:24 +0100
+	id 1HCIn5-0007Qf-3I
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 17:58:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030264AbXAaQoV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 11:44:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030268AbXAaQoV
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 11:44:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56346 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030264AbXAaQoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 11:44:20 -0500
-Received: (qmail invoked by alias); 31 Jan 2007 16:44:19 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp030) with SMTP; 31 Jan 2007 17:44:19 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45C0C4DF.C0EB4495@eudaptics.com>
-X-Y-GMX-Trusted: 0
+	id S932967AbXAaQ6b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 11:58:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932965AbXAaQ6b
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 11:58:31 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:34584 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932950AbXAaQ6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 11:58:31 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so609168nfa
+        for <git@vger.kernel.org>; Wed, 31 Jan 2007 08:58:29 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sME9mhlOIVk8ARc5d/o0YvUz2u0OQ8Dpav0hDGP9bYrP7h/f7pPBtU52lu+HSzA9ADAJ9rNMObpZo3fVjPj2sOsI1/9yGmVvqHyTjAfhmuW1s7BO5BYHc/OvdpjpaJhKag4g2zEsJSGNxtyoUWaZ23kjSwKM/kzwpVul9QY2hjc=
+Received: by 10.49.36.6 with SMTP id o6mr2841879nfj.1170262708908;
+        Wed, 31 Jan 2007 08:58:28 -0800 (PST)
+Received: by 10.48.246.15 with HTTP; Wed, 31 Jan 2007 08:58:28 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0701310959220.3021@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38277>
 
+On 1/31/07, Nicolas Pitre <nico@cam.org> wrote:
+> Matt Mackall said himself that some core portion of hg have been
+> rewritten in C in order to improve performances.
 
-Hi,
-On Wed, 31 Jan 2007, Johannes Sixt wrote:
+For what it's worth, sloccount reports the following:
 
-> Johannes Schindelin wrote:
-> > I also verified that with my Tcl/Tk installation on MacOSX, a patch like
-> > this was needed. IIRC Paulus argued that I should get a native TclTk,
-> > which is supposed to work (though not with the paths on Cygwin, oh well).
-> > 
-> > Oh, and it is also needed for MinGW. But I guess it will remain unfixed.
-> 
-> You patch does not improve gitk under MinGW. The layout becomes less
-> useful because the lower part becomes too high, so that the Search bar
-> and some part of the patch + file list windows is not visible. :(
+git: 52K C, 17K Perl, 10K sh, 6K Tcl, 300 Python
 
-Ah yes, I don't use gitk all that often, and I did not realize that there 
-was a search bar. Still, I think Mike's patch is too verbose, i.e. it is 
-not minimal enough ;-)
+hg: 14K Python, 700 C
 
-Ciao,
-Dscho
+Speculating wildly, I'd be surprised if the C part of git couldn't be
+reduced below 5K, at a cost of an 8K increase in Perl (or Python), and
+not more than a doubling of runtime.  (This speculation is for
+entertainment purposes only--I'm not suggesting a course of action.)
+
+Mike
