@@ -1,121 +1,86 @@
-From: Matt Mackall <mpm@selenic.com>
-Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Wed, 31 Jan 2007 16:25:07 -0600
-Message-ID: <20070131222507.GO10108@waste.org>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
-	<20070130165548.GF25950@spearce.org>
-	<20070131015555.GA1944@thunk.org> <eppshi$1l4$1@sea.gmane.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Difficulties in advertising a new branch to git newbies
+Date: Wed, 31 Jan 2007 17:51:21 -0500
+Message-ID: <20070131225121.GC20514@thunk.org>
+References: <87odognuhl.wl%cworth@cworth.org> <20070130231015.GB10075@coredump.intra.peff.net> <7vzm80vv1s.fsf@assigned-by-dhcp.cox.net> <20070131032248.GA17504@coredump.intra.peff.net> <Pine.LNX.4.64.0701310932320.3021@xanadu.home> <20070131170752.GA19527@coredump.intra.peff.net> <7vhcu7uewe.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: mercurial@selenic.com, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: mercurial-bounces@selenic.com Wed Jan 31 23:42:31 2007
-Return-path: <mercurial-bounces@selenic.com>
-Envelope-to: gcvmd-mercurial@gmane.org
-Received: from waste.org ([66.93.16.53])
+Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@cam.org>,
+	cworth@cworth.org, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Jan 31 23:51:38 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCO9s-0000Kv-Bd
-	for gcvmd-mercurial@gmane.org; Wed, 31 Jan 2007 23:42:28 +0100
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l0VMSPHL012703;
-	Wed, 31 Jan 2007 16:28:30 -0600
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id
-	l0VMP87s012350
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 31 Jan 2007 16:25:08 -0600
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id l0VMP7TA012348;
-	Wed, 31 Jan 2007 16:25:07 -0600
+	id 1HCOIg-0003im-GI
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 23:51:34 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751717AbXAaWvb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 17:51:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751724AbXAaWvb
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 17:51:31 -0500
+Received: from thunk.org ([69.25.196.29]:50576 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751717AbXAaWva (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 17:51:30 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HCONT-00047R-R2; Wed, 31 Jan 2007 17:56:32 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HCOIT-0001Z1-Jc; Wed, 31 Jan 2007 17:51:21 -0500
 Content-Disposition: inline
-In-Reply-To: <eppshi$1l4$1@sea.gmane.org>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by amavisd-new
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: mercurial.selenic.com
-List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://www.selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38300>
+In-Reply-To: <7vhcu7uewe.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38301>
 
-On Wed, Jan 31, 2007 at 11:56:01AM +0100, Jakub Narebski wrote:
-> Theodore Tso wrote:
-> 
-> > On Tue, Jan 30, 2007 at 11:55:48AM -0500, Shawn O. Pearce wrote:
-> >> I think hg modifies files as it goes, which could cause some issues
-> >> when a writer is aborted.  I'm sure they have thought about the
-> >> problem and tried to make it safe, but there isn't anything safer
-> >> than just leaving the damn thing alone.  :)
-> > 
-> > To be fair hg modifies files using O_APPEND only.  That isn't quite as
-> > safe as "only creating new files", but it is relatively safe.
-> 
-> >From (libc.info):
-> 
->  -- Macro: int O_APPEND
->      The bit that enables append mode for the file.  If set, then all
->      `write' operations write the data at the end of the file, extending
->      it, regardless of the current file position.  This is the only
->      reliable way to append to a file.  In append mode, you are
->      guaranteed that the data you write will always go to the current
->      end of the file, regardless of other processes writing to the
->      file.  Conversely, if you simply set the file position to the end
->      of file and write, then another process can extend the file after
->      you set the file position but before you write, resulting in your
->      data appearing someplace before the real end of file.
-> 
-> I don't quote understand how that would help hg (Mercurial) to have
-> operations like commit, pull/fetch or push atomic, i.e. all or nothing.
+On Wed, Jan 31, 2007 at 12:20:33PM -0800, Junio C Hamano wrote:
+> I think you (and others in the thread) are forgetting that
+> moving to a particular state by resetting can create a state
+> that you may want to keep a pointer to, but you do not have any
+> existing ref.  That's one of the reasons why we do not merely
+> check if the detached HEAD is not reachable from any of the
+> existing refs when coming back.  Instead, we check and warn if
+> the detached HEAD does not exactly match one of the existing
+> refs.
 
-That's because it's unrelated.
+Is that an important distinction?  The way the user got there was by
+manually specifying the SHA-1 shash of the commit to git-checkout.  So
+if the user could get there once, the user could get there again a
+second time.  Just because we don't have a name to that precise commit
+inside the git system doesn't necessary mean the user can't get back
+there.   In fact, the user probably could via "history | grep 'git checkout'".
 
-> In hg you have to update individual files (blobs buckets) storing delta
-> and perhaps full version, update manifest file (flat tree) and update
-> changelog (commit): what happens if for example there are two concurrent
-> operations trying to update repository, e.g. two push operations in parallel
-> (from two different developers), or fetch from cron and commit?
+> So "until you make commits" is not sufficient, which means that
+> covering all the way you can make commits isn't, either.
 
-Mercurial has write-side locks so there can only ever be one writer at
-a time. There are no locks needed on the read side, so there can be
-any number of readers, even while commits are happening.
+My personal belief is that covering all the way you can make commits
+is where you want to be putting the check.  If I say something like
 
-> What happens if operation is interrupted (e.g. lost connection to
-> network during fetch)?
+git checkout f00b51b8
 
-We keep a simple transaction journal. As Mercurial revlogs are
-append-only, rolling back a transaction just means truncating all
-files in a transaction to their original length.
+There's nothing dangerous about that statement.  To argue that this is
+dangerous and the git needs to warn me because I might not be able to
+get back to it seems silly.  Of _course_ I can get back there; the
+same way I got here in the first place --- By simply saying, "git
+checkout f00b51b8" again!
 
-> In git both situations result in some prune-able and fsck-visible crud in
-> repository, but repository stays uncorrupted, and all operations are atomic
-> (all or nothing).
+And if I tell a user that they should try out a particular version of
+the code, issueing a scary message right then there is pointless if
+they are only going to be doing a read-only browse of the tree, is
+just a Bad Thing.  The best place to warn them really is when they
+modify the tree.
 
-If a Mercurial transaction is interrupted and not rolled back, the
-result is prune-able and fsck-visible crud. But this doesn't happen
-much in practice.
+Otherwise, we'll be educating users to use the -f flag, or telling
+users to "ignore the warning, git's being silly", neither of which is
+desirable.
 
-The claim that's been made is that a) truncate is unsafe because Linux
-has historically had problems in this area and b) git is safer because
-it doesn't do this sort of thing. 
-
-My response is a) those problems are overstated and Linux has never
-had difficulty with the sorts of straightforward single writer
-operations Mercurial uses and b) normal git usage involves regular
-rewrites of data with packing operations that makes its exposure to
-filesystem bugs equivalent or greater.
-
-In either case, both provide strong integrity checks with recursive
-SHA1 hashing, zlib CRCs, and GPG signatures (as well as distributed
-"back-up"!) so this is largely a non-issue relative to traditional
-systems.
-
--- 
-Mathematics is the supreme nostalgia of our time.
+						- Ted
