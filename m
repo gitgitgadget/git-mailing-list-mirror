@@ -1,79 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Thu, 01 Feb 2007 00:18:39 +0100
-Organization: At home
-Message-ID: <epr81s$gaf$1@sea.gmane.org>
-References: <87odognuhl.wl%cworth@cworth.org> <20070130231015.GB10075@coredump.intra.peff.net> <7vzm80vv1s.fsf@assigned-by-dhcp.cox.net> <20070131032248.GA17504@coredump.intra.peff.net> <Pine.LNX.4.64.0701310932320.3021@xanadu.home> <20070131170752.GA19527@coredump.intra.peff.net> <7vhcu7uewe.fsf@assigned-by-dhcp.cox.net> <20070131225121.GC20514@thunk.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] tone down the detached head warning
+Date: Wed, 31 Jan 2007 18:19:43 -0500
+Message-ID: <20070131231942.GB31145@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 01 00:17:35 2007
+Cc: cworth@cworth.org, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Feb 01 00:19:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCOhp-0004mV-QT
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 00:17:34 +0100
+	id 1HCOk1-0005ab-W5
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 00:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030214AbXAaXRa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 18:17:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030277AbXAaXRa
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 18:17:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:49709 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030214AbXAaXR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 18:17:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HCOhh-0006VZ-5C
-	for git@vger.kernel.org; Thu, 01 Feb 2007 00:17:25 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Feb 2007 00:17:25 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Feb 2007 00:17:25 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1160994AbXAaXTp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 18:19:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030460AbXAaXTp
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 18:19:45 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4354 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030446AbXAaXTp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 18:19:45 -0500
+Received: (qmail 10187 invoked from network); 31 Jan 2007 18:19:42 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 31 Jan 2007 18:19:42 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Jan 2007 18:19:43 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0701311405430.3021@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38305>
 
-Theodore Tso wrote:
-> On Wed, Jan 31, 2007 at 12:20:33PM -0800, Junio C Hamano wrote:
+On Wed, Jan 31, 2007 at 02:10:37PM -0500, Nicolas Pitre wrote:
 
->> I think you (and others in the thread) are forgetting that
->> moving to a particular state by resetting can create a state
->> that you may want to keep a pointer to, but you do not have any
->> existing ref.  That's one of the reasons why we do not merely
->> check if the detached HEAD is not reachable from any of the
->> existing refs when coming back.  Instead, we check and warn if
->> the detached HEAD does not exactly match one of the existing
->> refs.
-> 
-> Is that an important distinction?  The way the user got there was by
-> manually specifying the SHA-1 shash of the commit to git-checkout.  So
-> if the user could get there once, the user could get there again a
-> second time.  Just because we don't have a name to that precise commit
-> inside the git system doesn't necessary mean the user can't get back
-> there.   In fact, the user probably could via "history | grep 'git
-> checkout'". 
+> This is not meant to frighten people or even to suggest they might be
+> doing something wrong, but rather to notify them of a state change and
+> provide a likely option in the case this state was entered by mistake.
 
-Have you read further? git-bisect could (and probably should) use detached
-HEAD instead of special 'bisect' branch. Doing bisection can be hard work
-(checking if commit is good or bad might take time) and we don't want to
-lose it.
+I like this much better. Though I wonder in Carl's case if we can do
+even better, since the user is checking out a tracking branch. Does it
+really make sense to say "you are not on ANY branch"? Maybe instead:
 
-Besides, history has finite length, and you could get to the state not only
-via "git checkout", but also via "git reset --hard".
+-- >8 --
+git-checkout: note use of remote tracking branch when making detached warning
 
-Reflog for detached HEAD would help in this.
+---
+Carl, can you comment? Does this require more explanation about why it
+matters that you're on a remote tracking branch?
+
+ git-checkout.sh |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
+
+diff --git a/git-checkout.sh b/git-checkout.sh
+index ed04815..68533a1 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -14,6 +14,7 @@ force=
+ branch=
+ newbranch=
+ newbranch_log=
++detached_remote=
+ merge=
+ LF='
+ '
+@@ -58,6 +59,9 @@ while [ "$#" != "0" ]; do
+ 			if git-show-ref --verify --quiet -- "refs/heads/$arg"
+ 			then
+ 				branch="$arg"
++			elif git-show-ref --verify --quiet -- "refs/remotes/$arg"
++			then
++				detached_remote="$arg"
+ 			fi
+ 		elif rev=$(git-rev-parse --verify "$arg^{tree}" 2>/dev/null)
+ 		then
+@@ -155,7 +159,11 @@ then
+ 	detached="$new"
+ 	if test -n "$oldbranch"
+ 	then
+-		detach_warn="Note: you are not on ANY branch anymore.
++		case "$detached_remote" in
++		  "") detach_warn="Note: you are not on ANY branch anymore." ;;
++		   *) detach_warn="Note: you are on the remote tracking branch '$detached_remote'" ;;
++		esac
++		detach_warn="$detach_warn
+ If you want to create a new branch from this checkout, you may do so
+ (now or later) by using -b with the checkout command again. Example:
+   git checkout -b <new_branch_name>"
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.5.0.rc2.587.gbedb-dirty
