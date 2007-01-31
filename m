@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Qt git repository report
-Date: Wed, 31 Jan 2007 10:42:08 -0500
-Message-ID: <20070131154208.GB21888@spearce.org>
-References: <200701310912.59102.andyparkins@gmail.com> <204011cb0701310234k4cb87eadhcf8669e364be4d6@mail.gmail.com>
+Date: Wed, 31 Jan 2007 10:48:05 -0500
+Message-ID: <20070131154805.GC21888@spearce.org>
+References: <200701310912.59102.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Chris Lee <clee@kde.org>
-X-From: git-owner@vger.kernel.org Wed Jan 31 16:44:09 2007
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 31 16:49:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCHbE-0005oS-Hh
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 16:42:16 +0100
+	id 1HCHh0-0008Fj-0L
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 16:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932861AbXAaPmN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 10:42:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932933AbXAaPmN
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 10:42:13 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52253 "EHLO
+	id S932927AbXAaPsK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 10:48:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932934AbXAaPsK
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 10:48:10 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:52515 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932861AbXAaPmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 10:42:12 -0500
+	with ESMTP id S932927AbXAaPsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 10:48:09 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HCHb2-0003JW-Ge; Wed, 31 Jan 2007 10:42:04 -0500
+	id 1HCHgn-0003gY-U5; Wed, 31 Jan 2007 10:48:02 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5B92220FBAE; Wed, 31 Jan 2007 10:42:08 -0500 (EST)
+	id D0A4F20FBAE; Wed, 31 Jan 2007 10:48:05 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <204011cb0701310234k4cb87eadhcf8669e364be4d6@mail.gmail.com>
+In-Reply-To: <200701310912.59102.andyparkins@gmail.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,21 +43,32 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38263>
 
-Chris Lee <clee@kde.org> wrote:
-> Of course, nobody outside of Trolltech happens to have access to the
-> Trolltech p4 depot, however... if you happen to use p4 internally
-> (like Trolltech) and you wanted to try out the same script, you could
-> clone:
+Andy Parkins <andyparkins@gmail.com> wrote:
+> Key facts:
+>  * 13 years worth of changes
+>  * 94000 revisions
+>  * 736774 objects
+>  * Took 3 hours to convert using git-fast-import and a custom script
+>  * Repository size: 500MB
+>  * Checkd out tree size: 330MB
 > 
-> git://repo.or.cz/fast-export.git
+> I never cease to be amazed by how good git is at its job.
 
-Its nice to see the 'inline' spec is useful.  :-)
+Heh.  :-)
 
-We may actually have a decent little set of importers backed by gfi
-real-soon-now, which would help the argument to merge gfi into the
-main git.git repository post 1.5.0.
+I probably shouldn't mention this until after 1.5.0 is out the door,
+but I'm working on a prototype pack version 4 format that thus far
+would save at least 5.6 MiB on that pack, and make revision traversal
+significantly faster.  (Yes, eat your cake and have it too!)
+
+I'm not done though. I'm sure I can do better.  I've only mucked
+with part of what I'm thinking of doing.
+
+Yes, the code stays backward compatible.  Just like OBJ_OFS_DELTA,
+pack version 4 is a one-way upgrade, but can be undone by simply
+repacking that repository without the option enabled.
 
 -- 
 Shawn.
