@@ -1,70 +1,89 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Tue, 30 Jan 2007 20:35:02 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0701302029460.3611@woody.linux-foundation.org>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com> 
- <7v8xfkz8oj.fsf@assigned-by-dhcp.cox.net> <3c6c07c20701301938u4d1503a2m3e0af51121b8e6db@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Fix "git tag -u" breakage
+Date: Tue, 30 Jan 2007 20:56:37 -0800
+Message-ID: <7vsldrx08q.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0701301957320.3611@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Mike Coleman <tutufan@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 31 05:35:16 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 31 05:56:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HC7Bi-00068y-R3
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 05:35:15 +0100
+	id 1HC7WU-0004q3-31
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 05:56:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932783AbXAaEfI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 30 Jan 2007 23:35:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932787AbXAaEfI
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 23:35:08 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:36718 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932783AbXAaEfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Jan 2007 23:35:06 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0V4Z39V007790
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 30 Jan 2007 20:35:03 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0V4Z226007375;
-	Tue, 30 Jan 2007 20:35:02 -0800
-In-Reply-To: <3c6c07c20701301938u4d1503a2m3e0af51121b8e6db@mail.gmail.com>
-X-Spam-Status: No, hits=-0.471 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
-X-MIMEDefang-Filter: osdl$Revision: 1.172 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752145AbXAaE4j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 30 Jan 2007 23:56:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752158AbXAaE4j
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Jan 2007 23:56:39 -0500
+Received: from fed1rmmtai14.cox.net ([68.230.241.45]:33439 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752145AbXAaE4i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Jan 2007 23:56:38 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070131045636.KGBZ4586.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 30 Jan 2007 23:56:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Hgwd1W0091kojtg0000000; Tue, 30 Jan 2007 23:56:37 -0500
+In-Reply-To: <Pine.LNX.4.64.0701301957320.3611@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 30 Jan 2007 20:00:22 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38227>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> The recent cleanup to understand
+>
+> 	[user]
+> 		signingkey = ..
+>
+> sadly broke the old "-u signingkey" syntax. Admittedly the config file 
+> approach is nicer, and I should probably use it, but even so, there's 
+> really no reason to break the old syntax either.
+>
+> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> ---
+>
+> This fixes it for me, and _looks_ obvious enough, but I didn't actually 
+> test the other cases (ie tagger name and the config file). Caveat patchor.
 
-On Tue, 30 Jan 2007, Mike Coleman wrote:
-> 
-> As for performance, my thinking was that since hg is implemented
-> apparently almost entirely in Python, and has (again apparently)
-> generally acceptable performance, this suggested that much of the
-> problem might be I/O-bound enough that language efficiency might not
-> matter so much.
+Sorry, and thanks.
 
-Note that git actually implements a lot more than hg does.
+There was no reason to introduce a separate variable keyid to
+begin with.  I should have been more careful to read what was
+outside of the patch.
 
-hg depends on external programs (almost uniformly written in C) to do the 
-actual diff generation, 3-way merging etc. 
-
-Git actually ends up doing all of those internally, and minimizes external 
-dependencies that way. More importantly, perhaps, it allows us to do a 
-better job, faster. The early example of this is patch application, where 
-git supports a much nicer patch format that can express renames etc in the 
-patch.
-
-But I'll admit - my main reason going with C is (a) it's what I know and 
-(b) I absolutely _hate_ being constrained by the language. The great thing 
-about C (still) is that you can do *anything* in it. You're literally 
-limited by hardware, and by your own abilities. Nothing else.
-
-			Linus
+diff --git a/git-tag.sh b/git-tag.sh
+index 988bf4c..4a0a7b6 100755
+--- a/git-tag.sh
++++ b/git-tag.sh
+@@ -113,8 +113,9 @@ object=$(git-rev-parse --verify --default HEAD "$@") || exit 1
+ type=$(git-cat-file -t $object) || exit 1
+ tagger=$(git-var GIT_COMMITTER_IDENT) || exit 1
+ 
+-keyid=$(git-repo-config user.signingkey) ||
+-	keyid=$(expr "z$tagger" : 'z\(.*>\)')
++test -n "$username" ||
++	username=$(git-repo-config user.signingkey) ||
++	username=$(expr "z$tagger" : 'z\(.*>\)')
+ 
+ trap 'rm -f "$GIT_DIR"/TAG_TMP* "$GIT_DIR"/TAG_FINALMSG "$GIT_DIR"/TAG_EDITMSG' 0
+ 
+@@ -141,7 +142,7 @@ if [ "$annotate" ]; then
+       cat "$GIT_DIR"/TAG_FINALMSG ) >"$GIT_DIR"/TAG_TMP
+     rm -f "$GIT_DIR"/TAG_TMP.asc "$GIT_DIR"/TAG_FINALMSG
+     if [ "$signed" ]; then
+-	gpg -bsa -u "$keyid" "$GIT_DIR"/TAG_TMP &&
++	gpg -bsa -u "$username" "$GIT_DIR"/TAG_TMP &&
+ 	cat "$GIT_DIR"/TAG_TMP.asc >>"$GIT_DIR"/TAG_TMP ||
+ 	die "failed to sign the tag with GPG."
+     fi
