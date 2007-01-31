@@ -1,53 +1,47 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: When to repack?
-Date: Wed, 31 Jan 2007 13:58:37 +0100
-Organization: At home
-Message-ID: <epq3nd$pv5$1@sea.gmane.org>
+Date: Wed, 31 Jan 2007 14:01:41 +0100
+Message-ID: <45C09335.6010601@op5.se>
 References: <17856.37016.341839.397309@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 31 13:57:38 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Jan 31 14:01:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCF1t-00066J-TA
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 13:57:38 +0100
+	id 1HCF5v-0007d4-QO
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 14:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933219AbXAaM5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 07:57:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933218AbXAaM5e
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 07:57:34 -0500
-Received: from main.gmane.org ([80.91.229.2]:52807 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933219AbXAaM5e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 07:57:34 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HCF1m-0004be-EX
-	for git@vger.kernel.org; Wed, 31 Jan 2007 13:57:30 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 13:57:30 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 13:57:30 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S933218AbXAaNBp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 08:01:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933226AbXAaNBp
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 08:01:45 -0500
+Received: from linux-server1.op5.se ([193.201.96.2]:56201 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933218AbXAaNBo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 08:01:44 -0500
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id 2B0EE6BCBC; Wed, 31 Jan 2007 14:01:43 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00 
+	autolearn=ham version=3.1.4
+Received: from [192.168.1.20] (unknown [192.168.1.20])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id 0B5AB6BCD4; Wed, 31 Jan 2007 14:01:42 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
+In-Reply-To: <17856.37016.341839.397309@lisa.zopyra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38244>
-
-[Cc: git@vger.kernel.org]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38245>
 
 Bill Lear wrote:
-
 > We have a company repo used by many people throughout the day.  When/how
 > can I repack this?  I have come to adopt this approach:
 > 
@@ -56,13 +50,22 @@ Bill Lear wrote:
 > % GIT_DIR=. git repack -a -d
 > % cd ..
 > % mv project.pack project
+> 
 
-Repack is safe. You can do it on live repository. It does the save under
-temporary name and move to proper place on it's own.
+Renaming the directory isn't necessary. The packs won't be used until they
+have a .idx file. That .idx-file is written after the packfile, so any
+operations on the repo will simply use the old, loose, objects before the
+packing is completed.
 
-By the way you can use "git --bare repack -a -d" instead of 
-"GIT_DIR=. git repack -a -d"
+The worst thing that can happen is that an object about to be fetched is
+deleted in its loose version before the upload-pack program can open it,
+but that's no worse than having the entire directory being moved out from
+under it.
+
+On a side-note, this is a grade A example of something that should typically
+be done sunday night at 4am.
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
