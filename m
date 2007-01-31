@@ -1,59 +1,87 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Wed, 31 Jan 2007 00:09:42 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0701302331440.20138@iabervon.org>
-References: <87odognuhl.wl%cworth@cworth.org> <Pine.LNX.4.64.0701301853300.20138@iabervon.org>
- <Pine.LNX.4.64.0701302052230.3021@xanadu.home>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Jan 31 06:09:56 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Fail softly if file system does not like test data.
+Date: Wed, 31 Jan 2007 00:39:36 -0500
+Message-ID: <873A97D5-C343-435F-B51B-55F599AC46D0@silverinsanity.com>
+References: <20070130163219.GA14431@164.242.249.10.in-addr.arpa> <20070130224446.28311.31828.stgit@lathund.dewire.com> <64949F2D-6A6D-4373-8B7F-C8F75529CD2E@silverinsanity.com> <200701310114.38258.robin.rosenberg@dewire.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Jan 31 06:39:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HC7j8-0000WK-RF
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 06:09:47 +0100
+	id 1HC8C7-0001rr-Kc
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 06:39:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932666AbXAaFJo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 00:09:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752181AbXAaFJo
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 00:09:44 -0500
-Received: from iabervon.org ([66.92.72.58]:1995 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752172AbXAaFJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 00:09:43 -0500
-Received: (qmail 23002 invoked by uid 1000); 31 Jan 2007 00:09:42 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 31 Jan 2007 00:09:42 -0500
-In-Reply-To: <Pine.LNX.4.64.0701302052230.3021@xanadu.home>
+	id S932823AbXAaFjk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 31 Jan 2007 00:39:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932865AbXAaFjk
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 00:39:40 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:36152 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932823AbXAaFjj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Jan 2007 00:39:39 -0500
+Received: from [192.168.1.4] (cpe-66-66-74-194.rochester.res.rr.com [66.66.74.194])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id B48B61FFC02B;
+	Wed, 31 Jan 2007 05:39:38 +0000 (UTC)
+In-Reply-To: <200701310114.38258.robin.rosenberg@dewire.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38230>
 
-On Tue, 30 Jan 2007, Nicolas Pitre wrote:
 
-> On Tue, 30 Jan 2007, Daniel Barkalow wrote:
-> 
-> >   warning: you are now browsing the history without a local branch. You 
-> >   will not be able to commit changes unless you create a new local branch 
-> >   with "git checkout -b <new_branch_name>".
-> 
-> This isn't true.  You can commit on top of a detached head.  In fact you 
-> can do almost anything.
+On Jan 30, 2007, at 7:14 PM, Robin Rosenberg wrote:
 
-"Commits you make will not be attached to permanent state unless you 
-create a local branch"? I'm not sure how the feature turned out to work, 
-but I know that (a) you're fine if you don't make any commits and (b) the 
-behavior is more like what happens with anonymous checkouts of other 
-people's repositories in non-distributed SCMs, so people will tend to
-underestimate what they can do with this, rather than overestimating it 
-and getting into trouble.
+> onsdag 31 januari 2007 00:28 skrev Brian Gernhardt:
+>> Doesn't work, but it's closer.  I can't see where a .gitignore is
+>> getting set, though.
+>
+> I did not create any .gitignore files, so I have no explanation at =20
+> this time.
 
-I suppose it's reasonable to warn at commit time, if we ended up going 
-with allowing commits like normal.
+=46irst off, I couldn't get your patch to apply (atop master and next) =
+=20
+and I don't know why.  I did the change manually though, and still =20
+got the same error.  I'm not seeing a .gitignore either, so I have no =20
+idea why the error is showing up.  Anyone else have a guess?
 
-	-Daniel
-*This .sig left intentionally blank*
+* expecting success: (mkdir -p "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p=
+/=20
+q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6" ||
+          echo "Local filesystem does not permit this test" ) &&
+          echo Foo >"=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/=
+=20
+v/w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.txt" &&
+          git add "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/=
+=20
+w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.txt" &&
+          cp ../test9200a.png "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/=
+=20
+q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.png" &&
+          git add "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/=
+=20
+w/x/y/z/=E5/=E4/=F6/g=E5rdets=E5g=E5rdet.png" &&
+          git commit -a -m "G=E5r det s=E5 g=E5r det" && \
+          id=3D$(git rev-list --max-count=3D1 HEAD) &&
+          (cd "$CVSWORK" &&
+          git-cvsexportcommit -v -c $id &&
+          test "$(echo $(sort "=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/=
+=20
+q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6/CVS/Entries"|cut -d/ -f2,3,5))" =3D =20
+"g=E5rdets=E5g=E5rdet.png/1.1/-kb g=E5rdets=E5g=E5rdet.txt/1.1/"
+          )
+The following paths are ignored by one of your .gitignore files:
+=E5/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z/=E5/=E4/=F6=
+/=20
+g=E5rdets=E5g=E5rdet.txt
+Use -f if you really want to add them.
+
+~~ Brian
