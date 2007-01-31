@@ -1,80 +1,113 @@
-From: =?us-ascii?Q?=3D=3Futf-8=3Fq=3FDavid=5FK=3DC3=3DA5gedal=3F=3D?= 
-	<davidk@lysator.liu.se>
-Subject: [PATCH] Improved error message from git-rebase
-Date: Wed, 31 Jan 2007 17:12:03 +0100
-Message-ID: <873b5r2mya.fsf@morpheus.local>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Wed, 31 Jan 2007 08:22:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0701310805500.3632@woody.linux-foundation.org>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+ <7v8xfkz8oj.fsf@assigned-by-dhcp.cox.net> <3c6c07c20701301938u4d1503a2m3e0af51121b8e6db@mail.gmail.com>
+ <Pine.LNX.4.64.0701302029460.3611@woody.linux-foundation.org>
+ <7vodofx06s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 31 17:25:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Jan 31 17:28:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCI7T-0008PJ-JQ
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 17:15:35 +0100
+	id 1HCIEM-0001Ip-KF
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 17:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030225AbXAaQPc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 31 Jan 2007 11:15:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030226AbXAaQPc
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 11:15:32 -0500
-Received: from main.gmane.org ([80.91.229.2]:50606 "EHLO ciao.gmane.org"
+	id S1030234AbXAaQWj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 11:22:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030235AbXAaQWj
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 11:22:39 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:36825 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030225AbXAaQPb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 11:15:31 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HCI6l-0006Rs-PS
-	for git@vger.kernel.org; Wed, 31 Jan 2007 17:14:51 +0100
-Received: from vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 17:14:51 +0100
-Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 17:14:51 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: vtab.com
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:kUxN9c/dhQKw7U+TPTNlPC8kuBA=
+	id S1030234AbXAaQWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 11:22:38 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l0VGMa9V000546
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 31 Jan 2007 08:22:36 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l0VGMZ7W019810;
+	Wed, 31 Jan 2007 08:22:35 -0800
+In-Reply-To: <7vodofx06s.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.459 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38268>
-
-If the index wasn't clean, git-rebase would simply show the output from
-git-diff-index with no further comment to the user.
----
- git-rebase.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-git-rebase sometimes fails without giving a useful error message.  Try
-this:
-
-  $ touch asdf
-  $ git add asdf
-  $ git rebase origin/master
-  A       asdf
-  $=20
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 99cedad..9d2f71d 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -249,7 +249,8 @@ fi
- git-update-index --refresh || exit
- diff=3D$(git-diff-index --cached --name-status -r HEAD)
- case "$diff" in
--?*)	echo "$diff"
-+?*)	echo "cannot rebase: your index is not up-to-date"
-+	echo "$diff"
- 	exit 1
- 	;;
- esac
---=20
-1.5.0.rc2.86.gf4f4f-dirty
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38269>
 
 
---=20
-David K=C3=A5gedal
+
+On Tue, 30 Jan 2007, Junio C Hamano wrote:
+
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> > 
+> > But I'll admit - my main reason going with C is (a) it's what I know and 
+> > (b) I absolutely _hate_ being constrained by the language. The great thing 
+> > about C (still) is that you can do *anything* in it. You're literally 
+> > limited by hardware, and by your own abilities. Nothing else.
+> 
+> Well, if you count "time" as part of your own ability then that
+> is true.  Some things are too cumbersome and not performance
+> critical enough to do in C.
+
+Sure. I'd probably not do some graphical front-end in C - although some of 
+the toolkits make that resonable too. 
+
+But even for "time", C actually does have a number of big advantages that 
+some people often seem to overlook:
+
+ - it has absolutely tons of infrastructure. Something like Perl comes 
+   *close*, but in the end, even the Perl CPAN stuff is just a drop in the 
+   bucket for what somebody programming in C has. Other scripting 
+   languages? Outside of their specific things (ie the tcl/tk kind of 
+   thing), they really have nothing.
+
+ - perhaps even more importantly: there's a ton of clueful people who know 
+   it. Maybe this stems from my personal blinders on what "competent" is 
+   (and from just my sheltered life in general), but absolutely everybody 
+   who is deeply competent will know C. Not everybody will want to program 
+   in it, but they *all* know enough to be able to work with it.
+
+The latter one is rather relevant for open source programming. Finding 
+some really competent person who has written a library to do (say, purely 
+hypothetically - NOT!) a clean and efficient "diff" implementation can be 
+a huge deal. And you will find that using C. 
+
+So yeah, C is low-level. Yeah, you have to know how "pointers" work. And 
+yeah, it takes effort especially to get started. But once you have gotten 
+started, you realize that:
+
+ - it may have been a lot more work to get over the hump, but once you 
+   did, you can find people who can work with you and help you.
+
+ - yeah, you didn't really want to work with people who didn't know how a 
+   "pointer to a function returning a const pointer" really works.
+
+I agree that C is a really hard language for "prototyping". And yes, I'll 
+also agree that probably 95% of all programming is really about 
+prototyping. Make something that works, and move on. In that environment, 
+C is simply wrong.
+
+But in a real core infrastructure environment, I'd say that almost 
+anything *but* C (or "fairly similar" language) tends to be a mistake.
+
+So I personally tend to always work on that infrastructure thing, which is 
+why I love C. If it's not "core enough" that C is the proper language, I'm 
+probably simply not interested.
+
+And yeah, it will change. I realize that. My bet is that C will remain as 
+the default "system language" for at least another decade. 
+
+Of course, is an SCM "core enough"? Some parts definitely are. The actual 
+low-level diff generation fairly obviously is. Is revision walking? 
+Per-file operations? hg and git disagree about that decision.
+
+		Linus
