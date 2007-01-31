@@ -1,51 +1,68 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: What did I just fetch?
-Date: Wed, 31 Jan 2007 06:55:23 -0600
-Message-ID: <17856.37307.324767.617892@lisa.zopyra.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: When to repack?
+Date: Wed, 31 Jan 2007 13:58:37 +0100
+Organization: At home
+Message-ID: <epq3nd$pv5$1@sea.gmane.org>
+References: <17856.37016.341839.397309@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 31 13:55:44 2007
+X-From: git-owner@vger.kernel.org Wed Jan 31 13:57:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCEzq-0005I7-Lm
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 13:55:31 +0100
+	id 1HCF1t-00066J-TA
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 13:57:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933207AbXAaMz1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 07:55:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933217AbXAaMz1
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 07:55:27 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60945 "EHLO zopyra.com"
+	id S933219AbXAaM5e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 07:57:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933218AbXAaM5e
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 07:57:34 -0500
+Received: from main.gmane.org ([80.91.229.2]:52807 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933207AbXAaMz1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 07:55:27 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l0VCtQI01978;
-	Wed, 31 Jan 2007 06:55:26 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S933219AbXAaM5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 07:57:34 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HCF1m-0004be-EX
+	for git@vger.kernel.org; Wed, 31 Jan 2007 13:57:30 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 31 Jan 2007 13:57:30 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 31 Jan 2007 13:57:30 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38244>
 
-When updating in cvs, I get a list of files changed by the update.
+[Cc: git@vger.kernel.org]
 
-How can I do this in git when fetching into a bare repo?
+Bill Lear wrote:
 
-% GIT_DIR=. git fetch git://source/project
-remote: Generating pack...
-remote: Done counting 18 objects.
-remote: Result has 10 objects.
-remote: Deltifying 10 objects.
-remote:  100% (10/10) done
-Unpacking 10 objects
-remote: Total 10, written 10 (delta 6), reused 7 (delta 3)
- 100% (10/10) done
+> We have a company repo used by many people throughout the day.  When/how
+> can I repack this?  I have come to adopt this approach:
+> 
+> % mv project project.pack
+> % cd project.pack
+> % GIT_DIR=. git repack -a -d
+> % cd ..
+> % mv project.pack project
 
-So, I'd like to see the files, perhaps the differences, etc.
+Repack is safe. You can do it on live repository. It does the save under
+temporary name and move to proper place on it's own.
 
-
-Bill
+By the way you can use "git --bare repack -a -d" instead of 
+"GIT_DIR=. git repack -a -d"
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
