@@ -1,68 +1,67 @@
-From: Yann Dirson <ydirson@altern.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git-kill: rewrite history removing a commit
-Date: Wed, 31 Jan 2007 21:22:04 +0100
-Message-ID: <20070131202204.GB5362@nan92-1-81-57-214-146.fbx.proxad.net>
+Date: Wed, 31 Jan 2007 12:26:52 -0800
+Message-ID: <7v7iv3uelv.fsf@assigned-by-dhcp.cox.net>
 References: <20070131195533.GE21097@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Jan 31 21:23:49 2007
+X-From: git-owner@vger.kernel.org Wed Jan 31 21:27:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCLzE-0007d9-JH
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 21:23:20 +0100
+	id 1HCM2r-0000Wb-3P
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 21:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161027AbXAaUWy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 15:22:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161028AbXAaUWy
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 15:22:54 -0500
-Received: from smtp8-g19.free.fr ([212.27.42.65]:46984 "EHLO smtp8-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161027AbXAaUWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 15:22:53 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id CC39855FA;
-	Wed, 31 Jan 2007 21:22:51 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 7B32C2004; Wed, 31 Jan 2007 21:22:04 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20070131195533.GE21097@mellanox.co.il>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1030211AbXAaU0y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 15:26:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030287AbXAaU0y
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 15:26:54 -0500
+Received: from fed1rmmtao11.cox.net ([68.230.241.28]:38777 "EHLO
+	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030211AbXAaU0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 15:26:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao11.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070131202653.ZVYJ25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 31 Jan 2007 15:26:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id HwSs1W00j1kojtg0000000; Wed, 31 Jan 2007 15:26:53 -0500
+In-Reply-To: <20070131195533.GE21097@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Wed, 31 Jan 2007 21:55:33 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38293>
 
-On Wed, Jan 31, 2007 at 09:55:33PM +0200, Michael S. Tsirkin wrote:
+"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+
 > Below is a simple script that rewrites history reverting a single commit.
 > This differs from git-revert in that a commit is completely removed,
 > and is especially useful before one has published a series of
 > commits.
-> 
+>
 > Do you find this useful? Comments?
+> Drop me a line.
 
-That may be well when no patch depends on the one you kill.  In that
-case, it surely requires some work to handfix things.
+"Do you find this useful" is a loaded question.
 
-I'd suggest to use stgit to prepare commits before publication.  Even
-if you don't feel the need for it in everyday life, you can have a
-one-shot use for this particular problem, by turning your latest
-commits into an stgit stack, use stgit facilities to handle posible
-conflicts, and turn them into commits again:
+I do it all the time with git-rebase, so the need to remove a
+botched commit from the history and rebuild the remainder is
+certainly there, meaning "what your patch does IS useful".
 
-The nominal case goes:
+I do it all the time with git-rebase, so I personally do not
+need a new tool to do this, meaning "your patch is not useful to
+me".
 
-  stg init
-  stg uncommit -n <ncommits>
-  stg float <patch-to-kill>
-  stg delete <patch-to-kill>
+When I find master~8 and master~9 to be undesirable, I would do:
 
-And if there is any conflict, you can still solve them, decide to
-change your plans, get diffs from gitk, etc.
+	$ git rebase --onto master~10 master~8
 
-Best regards,
--- 
-Yann.
+which rebuilds master~7 and onward on top of master~10, thereby
+dropping two commits.
