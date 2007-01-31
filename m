@@ -1,58 +1,62 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: git-blame.el
-Date: Wed, 31 Jan 2007 21:27:47 +0100
-Message-ID: <87irenym9o.fsf@morpheus.local>
-References: <87iren2vqx.fsf@morpheus.local> <7v64anvu2u.fsf@assigned-by-dhcp.cox.net>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: git-kill: rewrite history removing a commit
+Date: Wed, 31 Jan 2007 22:54:02 +0200
+Message-ID: <20070131205402.GH21097@mellanox.co.il>
+References: <7v7iv3uelv.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 31 21:28:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Jan 31 21:53:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCM3m-0000tV-Ni
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 21:28:03 +0100
+	id 1HCMSb-0001rC-NY
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 21:53:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030477AbXAaU17 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 31 Jan 2007 15:27:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030568AbXAaU17
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 15:27:59 -0500
-Received: from main.gmane.org ([80.91.229.2]:33124 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030477AbXAaU16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 15:27:58 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HCM3d-00085N-Ei
-	for git@vger.kernel.org; Wed, 31 Jan 2007 21:27:53 +0100
-Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 21:27:53 +0100
-Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 21:27:53 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:6gRGFfClaUM8tvHsteBNMjIkN54=
+	id S1030573AbXAaUxi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 15:53:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030574AbXAaUxi
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 15:53:38 -0500
+Received: from p02c11o145.mxlogic.net ([208.65.145.68]:51518 "EHLO
+	p02c11o145.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030573AbXAaUxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 15:53:37 -0500
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o145.mxlogic.net (mxl_mta-4.0.2-2)
+	with ESMTP id 1d101c54.2024582064.8102.00-004.p02c11o145.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Wed, 31 Jan 2007 13:53:37 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 31 Jan 2007 22:55:36 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Wed, 31 Jan 2007 22:53:01 +0200
+Content-Disposition: inline
+In-Reply-To: <7v7iv3uelv.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 31 Jan 2007 20:55:37.0001 (UTC) FILETIME=[286E9190:01C7457A]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14970.000
+X-TM-AS-Result: No--8.429700-4.000000-31
+X-Spam: [F=0.0100000000; S=0.010(2007010901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38295>
 
-Junio C Hamano <junkio@cox.net> writes:
+> When I find master~8 and master~9 to be undesirable, I would do:
+> 
+> 	$ git rebase --onto master~10 master~8
+> 
+> which rebuilds master~7 and onward on top of master~10, thereby
+> dropping two commits.
 
-> I seem to be getting tons of these; wouldn't you want some (require)?
+That's good to know.
+So it turns out I can just rewrite mine as a one-liner:
+git-rebase --onto $1~1 $1
 
-Yeah, I apparently need a (require 'cl)
+Thanks,
 
-I try to stay away from cl by habit, but since I usually have it
-required by something I use, I might use it without noticing.
-
-So, to try it, add (require 'cl) to the top of the file.
-
---=20
-David K=C3=A5gedal
+-- 
+MST
