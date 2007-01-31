@@ -1,77 +1,116 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: When to repack?
-Date: Wed, 31 Jan 2007 16:19:49 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0701311617360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <17856.37016.341839.397309@lisa.zopyra.com> <45C09335.6010601@op5.se>
+Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
+Date: Wed, 31 Jan 2007 16:17:17 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701311612420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <BAY13-F213DF79906B3889D42369D0A50@phx.gbl>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Jan 31 16:28:58 2007
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: Mike Nefari <fastestspinner@hotmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 31 16:32:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCHHy-00070q-L1
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 16:22:23 +0100
+	id 1HCHDP-0006kz-5V
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 16:17:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030180AbXAaPTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 10:19:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030182AbXAaPTy
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 10:19:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37081 "HELO mail.gmx.net"
+	id S965239AbXAaPRX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 10:17:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965368AbXAaPRW
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 10:17:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48687 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030180AbXAaPTv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 10:19:51 -0500
-Received: (qmail invoked by alias); 31 Jan 2007 15:19:50 -0000
+	id S965239AbXAaPRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 10:17:19 -0500
+Received: (qmail invoked by alias); 31 Jan 2007 15:17:17 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp044) with SMTP; 31 Jan 2007 16:19:50 +0100
+  by mail.gmx.net (mp037) with SMTP; 31 Jan 2007 16:17:17 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45C09335.6010601@op5.se>
+In-Reply-To: <BAY13-F213DF79906B3889D42369D0A50@phx.gbl>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38259>
 
 Hi,
 
-On Wed, 31 Jan 2007, Andreas Ericsson wrote:
+On Wed, 31 Jan 2007, Mike Nefari wrote:
 
-> Bill Lear wrote:
-> > We have a company repo used by many people throughout the day.  When/how
-> > can I repack this?  I have come to adopt this approach:
-> > 
-> > % mv project project.pack
-> > % cd project.pack
-> > % GIT_DIR=. git repack -a -d
-> > % cd ..
-> > % mv project.pack project
-> > 
-> 
-> Renaming the directory isn't necessary. The packs won't be used until they
-> have a .idx file. That .idx-file is written after the packfile, so any
-> operations on the repo will simply use the old, loose, objects before the
-> packing is completed.
-> 
-> The worst thing that can happen is that an object about to be fetched is
-> deleted in its loose version before the upload-pack program can open it,
-> but that's no worse than having the entire directory being moved out from
-> under it.
+> The gitk gui layout was completely broken on Cygwin.
 
-AFAIR this case is handled gracefully by git. If the object it is still 
-accessing moves to a(nother) pack, git will still find it.
+This was noted before. I tried to argue with Paulus (now Cc'ed, as per 
+SubmittingPatches) that he should include it in gitk. Somehow this did not 
+have the effect intended be me.
 
-> On a side-note, this is a grade A example of something that should 
-> typically be done sunday night at 4am.
+I also verified that with my Tcl/Tk installation on MacOSX, a patch like 
+this was needed. IIRC Paulus argued that I should get a native TclTk, 
+which is supposed to work (though not with the paths on Cygwin, oh well).
 
-Actually, I'd recommend git-gc. It does not even call git-prune anymore, 
-so there is no excuse.
+Oh, and it is also needed for MinGW. But I guess it will remain unfixed.
 
-I even do it interactively very often, and I just love the fact that "gc" 
-is so much shorter than "repack -a -d", _plus_ it also does other cleanup 
-tasks.
+> gitk |  282 ++++++++++++++++++++++++++++++++++++------------------------------
+> 1 files changed, 154 insertions(+), 128 deletions(-)
 
-Ciao,
-Dscho
+FWIW my patch is less intrusive:
+
+ gitk |   22 ++++++++++++++++++----
+ 1 files changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/gitk b/gitk
+index 31d0aad..d3dc8f1 100755
+--- a/gitk
++++ b/gitk
+@@ -451,7 +451,10 @@ proc makewindow {} {
+ 	set geometry(ctexth) [expr {($texth - 8) /
+ 				    [font metrics $textfont -linespace]}]
+     }
+-    frame .ctop.top
++    if {![info exists geometry(ctoptoph)]} {
++	set geometry(ctoptoph) [expr $geometry(canvh)+34]
++    }
++    frame .ctop.top -height $geometry(ctoptoph)
+     frame .ctop.top.bar
+     frame .ctop.top.lbar
+     pack .ctop.top.lbar -side bottom -fill x
+@@ -459,7 +462,7 @@ proc makewindow {} {
+     set cscroll .ctop.top.csb
+     scrollbar $cscroll -command {allcanvs yview} -highlightthickness 0
+     pack $cscroll -side right -fill y
+-    panedwindow .ctop.top.clist -orient horizontal -sashpad 0 -handlesize 4
++    panedwindow .ctop.top.clist -orient horizontal -sashpad 0 -handlesize 4 -height $geometry(canvh)
+     pack .ctop.top.clist -side top -fill both -expand 1
+     .ctop add .ctop.top
+     set canv .ctop.top.clist.canv
+@@ -568,9 +571,17 @@ proc makewindow {} {
+     trace add variable highlight_related write vrel_change
+     pack .ctop.top.lbar.relm -side left -fill y
+ 
+-    panedwindow .ctop.cdet -orient horizontal
++    if {![info exists geometry(cdeth)]} {
++	set geometry(cdeth) \
++	    [expr $geometry(ctexth)*[font metrics $textfont -linespace]+4]
++    }
++    panedwindow .ctop.cdet -orient horizontal -height $geometry(cdeth)
+     .ctop add .ctop.cdet
+-    frame .ctop.cdet.left
++    if {![info exists geometry(cdetleftw)]} {
++	set geometry(cdetleftw) \
++	    [expr $geometry(ctextw)*[font measure $textfont "0"]+8] 
++    }
++    frame .ctop.cdet.left -width $geometry(cdetleftw)
+     frame .ctop.cdet.left.bot
+     pack .ctop.cdet.left.bot -side bottom -fill x
+     button .ctop.cdet.left.bot.search -text "Search" -command dosearch \
+@@ -814,6 +825,9 @@ proc savestuff {w} {
+ 	set wid [expr {([winfo width $cflist] - 11) \
+ 			   / [font measure [$cflist cget -font] "0"]}]
+ 	puts $f "set geometry(cflistw) $wid"
++	puts $f "set geometry(ctoptoph) [winfo height .ctop.top]"
++	puts $f "set geometry(cdeth) [winfo height .ctop.cdet]"
++	puts $f "set geometry(cdetleftw) [winfo width .ctop.cdet.left]"
+ 	puts -nonewline $f "set permviews {"
+ 	for {set v 0} {$v < $nextviewnum} {incr v} {
+ 	    if {$viewperm($v)} {
