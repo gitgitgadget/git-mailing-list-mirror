@@ -1,75 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Wed, 31 Jan 2007 15:53:23 +0100
-Organization: At home
-Message-ID: <epqaej$nug$1@sea.gmane.org>
-References: <87odognuhl.wl%cworth@cworth.org> <Pine.LNX.4.64.0701301853300.20138@iabervon.org> <Pine.LNX.4.64.0701302052230.3021@xanadu.home> <Pine.LNX.4.64.0701302331440.20138@iabervon.org> <Pine.LNX.4.64.0701310923010.3021@xanadu.home> <20070131143811.GC10646@fieldses.org>
+Date: Wed, 31 Jan 2007 09:59:08 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0701310932320.3021@xanadu.home>
+References: <87odognuhl.wl%cworth@cworth.org>
+ <20070130231015.GB10075@coredump.intra.peff.net>
+ <7vzm80vv1s.fsf@assigned-by-dhcp.cox.net>
+ <20070131032248.GA17504@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 31 15:52:54 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, cworth@cworth.org,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 31 15:59:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCGpH-0006pi-Jx
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 15:52:43 +0100
+	id 1HCGva-0000to-7U
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 15:59:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933316AbXAaOw3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 09:52:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933317AbXAaOw3
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 09:52:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:52745 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933316AbXAaOw2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 09:52:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HCGoq-0001G7-Uu
-	for git@vger.kernel.org; Wed, 31 Jan 2007 15:52:16 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 15:52:16 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 15:52:16 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S933322AbXAaO7K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 09:59:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933323AbXAaO7K
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 09:59:10 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:59259 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933322AbXAaO7J (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 09:59:09 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCQ009W7MYKAT50@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 31 Jan 2007 09:59:08 -0500 (EST)
+In-reply-to: <20070131032248.GA17504@coredump.intra.peff.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38254>
 
-J. Bruce Fields wrote:
-> On Wed, Jan 31, 2007 at 09:31:00AM -0500, Nicolas Pitre wrote:
+On Tue, 30 Jan 2007, Jeff King wrote:
 
->> It is not the commit which is dangerous when the head is detached.  It 
->> is the checkout of another branch.  And this case is covered already 
->> such that the checkout is refused unless you actually create a branch 
->> for your detached head or you give -f to checkout to override the 
->> protection.
->> 
->> Giving a warning at commit time is not the place where the user has to 
->> be aware of the issue since it is indeed not the place where there is 
->> any issue to worry about.
+> I just think it is awkward to have to either see such a warning
+> (or use -f) just to _look_ at detached commits, when you aren't doing
+> anything even remotely dangerous. The dangerous thing is _creating_
+> commits on top of a detached head.  I honestly don't think it should be
+> allowed at all, but since some people have argued that it is useful,
+> that seems like the place to put warnings. Anything else is just making
+> things more confusing for the sorts of people Carl is dealing with --
+> those who merely want to look around.
 
-I'd like to have some configuration option to make git more careful
-and prohibit commiting in detached HEAD state (the default being that
-you can commit on top of detached HEAD). More secure but less powerfull.
- 
-> By the same argument, the original checkout of a non-branch is also not
-> the place for a warning; by the time you commit and then do a checkout
-> to switch away from the new commit, that original checkout may be a
-> distant memory.
+I disagree again.  Making commits on a detached head is not dangerous.
 
-But the initial checkout of a non-branch is place where we can notify
-user that he does something unexpected / unusual. Though I think that
-single-line warning would be enough...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+What is dangerous is moving away from the tip of that detached head 
+without attaching it somewhere.  And that case is well covered already.
+
+Also the warning when moving to a detached head is useful to make the 
+user aware of what just happened because there is really something 
+special about such checkout.  It is not meant to frighten users and if 
+it does so then maybe it should be reworked some more.  But IMHO it is 
+important that the user be aware of this special state.
+
+But making a warning at commit time is wrong. It is completely 
+disconnected from the actual issue and I think it'd create more 
+confusion because there is in fact nothing to worry about at the moment 
+the commit is made.  The very fact that you think yourself that a 
+warning should be displayed at commit time indicates to me that you 
+might be a bit confused yourself and such warning if present at commit 
+time wouldn't help clearing that confusion at all.
+
+> > For situations like Carl's intstruction where a user, who is
+> > purely a sightseer, uses the detached HEAD to go-and-look a
+> > particular state, the fact that "-f" loses the previous local
+> 
+> Yes, though it would be nicer not to have to explain to them why '-f' is
+> needed.
+
+In Carl's case suggesting -f is probably not a good idea.  Using -f _is_ 
+dangerous and we better not get people into the habit of using -f 
+without thinking.
+
+Let's focus on the real issue: the warning message when head gets 
+detached.  This message is not meant to frighten users.  It is meant to 
+make the user aware of a special state (pretty useful but special 
+nevertheless) and give a suggestion about what to do if that state was 
+entered by mistake.  So if that message scares users away then it is the 
+message itself which is buggy not its presence.
+
+
+Nicolas
