@@ -1,64 +1,58 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] tone down the detached head warning
-Date: Thu, 01 Feb 2007 00:33:38 +0100
-Organization: At home
-Message-ID: <epr8u0$i7r$2@sea.gmane.org>
-References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home> <20070131231942.GB31145@coredump.intra.peff.net> <epr8e9$i7r$1@sea.gmane.org> <20070131232748.GC31145@coredump.intra.peff.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 7/7] Make 'stg pull' use git-fetch and not git-pull.
+Date: Wed, 31 Jan 2007 23:44:07 +0000
+Message-ID: <b0943d9e0701311544k22986545x351c04a8faab8814@mail.gmail.com>
+References: <20070129230117.7102.64322.stgit@gandelf.nowhere.earth>
+	 <20070129230555.7102.93948.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 01 00:32:34 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Thu Feb 01 00:44:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCOwK-0001ix-UJ
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 00:32:33 +0100
+	id 1HCP7e-0005rj-Ki
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 00:44:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161077AbXAaXc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 18:32:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161079AbXAaXc3
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 18:32:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:48749 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161077AbXAaXc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 18:32:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HCOwA-00005k-Fv
-	for git@vger.kernel.org; Thu, 01 Feb 2007 00:32:22 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Feb 2007 00:32:22 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Feb 2007 00:32:22 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1161095AbXAaXoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 18:44:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161093AbXAaXoJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 18:44:09 -0500
+Received: from an-out-0708.google.com ([209.85.132.251]:49558 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161095AbXAaXoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 18:44:08 -0500
+Received: by an-out-0708.google.com with SMTP id b33so236444ana
+        for <git@vger.kernel.org>; Wed, 31 Jan 2007 15:44:08 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S15KcVrFIpK+fEUUBVGKcJ+kfqhZq2Q1szlrDfloH80TeZOgvZcMzv8O10h9LOgg1w3I5MMke95KoQ8F2B/Z+pgJQaO0J9chhpqZz1W2cIx8pGl9WBSyvY5NoQcESdAAD0Se5gt8buZKXUMfAg0csCZzkRhhX9NKUsHG84a9Gks=
+Received: by 10.114.195.19 with SMTP id s19mr106260waf.1170287047520;
+        Wed, 31 Jan 2007 15:44:07 -0800 (PST)
+Received: by 10.115.110.12 with HTTP; Wed, 31 Jan 2007 15:44:07 -0800 (PST)
+In-Reply-To: <20070129230555.7102.93948.stgit@gandelf.nowhere.earth>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38309>
 
-Jeff King wrote:
+On 29/01/07, Yann Dirson <ydirson@altern.org> wrote:
+> We introduce a new pull-does-rebase setting, as companion to pullcmd.
+> This allows to use both pullcmd's that need a rebase (like git-fetch)
+> and pullcmd's that do not (like git-pull).
 
-> On Thu, Feb 01, 2007 at 12:25:14AM +0100, Jakub Narebski wrote:
-> 
->>> git-checkout: note use of remote tracking branch when making detached warning
->>
->> You can checkout a tag, not a remote tracking branch!
-> 
-> Huh?
+Thanks for the patches. I applied all of them but I have a question on this one:
 
-Ooops, I meant not _only_ a remote tracking branch (so note about detached
-HEAD shouldn't talk about remote tracking branch unless we make sure that
-it is remote tracking branch). Sorry.
+> +    if (config.get('stgit.pull-does-rebase')):
+> +        # FIXME!
+> +        reset(tree_id = rev_parse(repository))
+
+Why the "FIXME" here? The alternative is switch() and it might be safer.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Catalin
