@@ -1,77 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: More precise tag following
-Date: Wed, 31 Jan 2007 18:35:47 +0100
-Organization: At home
-Message-ID: <epqjv2$19h$1@sea.gmane.org>
-References: <7vy7nqxd08.fsf@assigned-by-dhcp.cox.net> <20070127080126.GC9966@spearce.org> <Pine.LNX.4.64.0701270837170.25027@woody.linux-foundation.org> <Pine.LNX.4.64.0701270945260.25027@woody.linux-foundation.org> <7vzm84gmei.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701271439340.25027@woody.linux-foundation.org> <7vps8zfqlx.fsf@assigned-by-dhcp.cox.net> <20070129061807.GA4634@spearce.org> <Pine.LNX.4.64.0701290759570.3611@woody.linux-foundation.org> <87bqkf1tey.fsf@morpheus.local> <m3abzz6upz.fsf@localhost.localdomain> <87y7nj161j.fsf@morpheus.local> <m364an6rxp.fsf@localhost.localdomain>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: git-blame.el
+Date: Wed, 31 Jan 2007 10:22:51 -0800
+Message-ID: <864pq7839g.fsf@blue.stonehenge.com>
+References: <87iren2vqx.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 31 18:36:54 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Wed Jan 31 19:23:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCJMr-0004sD-RI
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 18:35:34 +0100
+	id 1HCK78-0005pq-B0
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 19:23:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030448AbXAaRfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 12:35:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030443AbXAaRfF
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 12:35:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:59880 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030446AbXAaRfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 12:35:04 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HCJM4-0004sg-DS
-	for git@vger.kernel.org; Wed, 31 Jan 2007 18:34:44 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 18:34:44 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 18:34:44 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1030501AbXAaSWx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 31 Jan 2007 13:22:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030509AbXAaSWx
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 13:22:53 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:27858 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030503AbXAaSWw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Jan 2007 13:22:52 -0500
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 290141DEC88; Wed, 31 Jan 2007 10:22:51 -0800 (PST)
+x-mayan-date: Long count = 12.19.14.0.9; tzolkin = 11 Muluc; haab = 2 Pax
+In-Reply-To: <87iren2vqx.fsf@morpheus.local> (David =?iso-8859-1?Q?K=E5ged?=
+ =?iso-8859-1?Q?al's?= message of "Wed, 31 Jan 2007 14:04:06 +0100")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38282>
 
-Peter Eriksen wrote:
-> David K?gedal <davidk@lysator.liu.se> writes:
->> Peter Eriksen <s022018@student.dtu.dk> writes:
->> 
->>> David K?gedal <davidk@lysator.liu.se> writes:
->>>
->>>> Usage instructions:  Open a file and type M-x git-blame-mode
->>>> 
->>>> ;;; git-blame.el
->>>
->>> I saved the elisp code in a file .emacs.d/git-blame.el, and loaded it
->>> with M-x load-file.  Then I visited git/cache.h, and typed M-x
->>> git-blame-mode, but the background colours did not change.  What did I
->>> forget to do?
+>>>>> "David" =3D=3D David K=E5gedal <davidk@lysator.liu.se> writes:
 
-I always used M-x load-library, not M-x load-file...
- 
->> Probably you forgot to use the latest version :-)
->> 
->> See my mail with the subject line "git-blame.el".
-> 
-> I saw that mail just after I responded.  The newest version does not
-> work either, that is, it does not work in the same way, as the old
-> version.  Closing Emacs I can see, that Emacs did fork of "git blame"
-> processes.  So it is just the colours, I cannot see.
+David> Here's another version of git-blame.el that automatically tries =
+to
+David> create a sensible list of colors to use for both light and dark
+David> backgrounds.  Plus a few minor fixes.
 
-Do you use new enough version of git, one which has git-blame --incremental?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+If this gets traction, this should be what vc-annotate uses on a git fi=
+le.
+
+--=20
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 =
+0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl tra=
+ining!
