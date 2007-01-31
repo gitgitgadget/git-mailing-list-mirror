@@ -1,70 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Wed, 31 Jan 2007 10:15:32 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0701311007550.3021@xanadu.home>
-References: <87odognuhl.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0701301853300.20138@iabervon.org>
- <Pine.LNX.4.64.0701302052230.3021@xanadu.home>
- <Pine.LNX.4.64.0701302331440.20138@iabervon.org>
- <Pine.LNX.4.64.0701310923010.3021@xanadu.home>
- <20070131143811.GC10646@fieldses.org> <epqaej$nug$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: When to repack?
+Date: Wed, 31 Jan 2007 16:19:49 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701311617360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <17856.37016.341839.397309@lisa.zopyra.com> <45C09335.6010601@op5.se>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 31 16:16:50 2007
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Jan 31 16:28:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCHBl-00068Z-AO
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 16:15:57 +0100
+	id 1HCHHy-00070q-L1
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 16:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964812AbXAaPPe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 10:15:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965038AbXAaPPe
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 10:15:34 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:27877 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964812AbXAaPPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 10:15:33 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCQ00EAINPWQT50@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 31 Jan 2007 10:15:32 -0500 (EST)
-In-reply-to: <epqaej$nug$1@sea.gmane.org>
-X-X-Sender: nico@xanadu.home
+	id S1030180AbXAaPTz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 10:19:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030182AbXAaPTy
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 10:19:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37081 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030180AbXAaPTv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 10:19:51 -0500
+Received: (qmail invoked by alias); 31 Jan 2007 15:19:50 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp044) with SMTP; 31 Jan 2007 16:19:50 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45C09335.6010601@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38258>
 
-On Wed, 31 Jan 2007, Jakub Narebski wrote:
+Hi,
 
-> I'd like to have some configuration option to make git more careful
-> and prohibit commiting in detached HEAD state (the default being that
-> you can commit on top of detached HEAD). More secure but less powerfull.
+On Wed, 31 Jan 2007, Andreas Ericsson wrote:
 
-And what is the purpose of such an artificial annoyance that no one will 
-turn on on purpose?
-
-You have to _realize_ that there is nothing wrong with such commits.  
-Merely having a config option to prohibit them not only is senseless 
-technically but it also send the wrong message to users.
-
-> > By the same argument, the original checkout of a non-branch is also not
-> > the place for a warning; by the time you commit and then do a checkout
-> > to switch away from the new commit, that original checkout may be a
-> > distant memory.
+> Bill Lear wrote:
+> > We have a company repo used by many people throughout the day.  When/how
+> > can I repack this?  I have come to adopt this approach:
+> > 
+> > % mv project project.pack
+> > % cd project.pack
+> > % GIT_DIR=. git repack -a -d
+> > % cd ..
+> > % mv project.pack project
+> > 
 > 
-> But the initial checkout of a non-branch is place where we can notify
-> user that he does something unexpected / unusual. Though I think that
-> single-line warning would be enough...
+> Renaming the directory isn't necessary. The packs won't be used until they
+> have a .idx file. That .idx-file is written after the packfile, so any
+> operations on the repo will simply use the old, loose, objects before the
+> packing is completed.
+> 
+> The worst thing that can happen is that an object about to be fetched is
+> deleted in its loose version before the upload-pack program can open it,
+> but that's no worse than having the entire directory being moved out from
+> under it.
 
-There is a balance problem there.  Too large a message might be annoying 
-but a too short one might not convey enough information not to be yet 
-more confusing.
+AFAIR this case is handled gracefully by git. If the object it is still 
+accessing moves to a(nother) pack, git will still find it.
 
+> On a side-note, this is a grade A example of something that should 
+> typically be done sunday night at 4am.
 
-Nicolas
+Actually, I'd recommend git-gc. It does not even call git-prune anymore, 
+so there is no excuse.
+
+I even do it interactively very often, and I just love the fact that "gc" 
+is so much shorter than "repack -a -d", _plus_ it also does other cleanup 
+tasks.
+
+Ciao,
+Dscho
