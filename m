@@ -1,72 +1,83 @@
-From: "Mark Levedahl" <fastestspinner@hotmail.com>
-Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
-Date: Wed, 31 Jan 2007 16:39:45 +0000
-Message-ID: <BAY13-F4E31B150239BDBBE1AC18D0A50@phx.gbl>
-References: <81b0412b0701310836q4222c82arcfda05d3594182af@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Wed, 31 Jan 2007 17:41:49 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0701311733120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+ <7v8xfkz8oj.fsf@assigned-by-dhcp.cox.net> <3c6c07c20701301938u4d1503a2m3e0af51121b8e6db@mail.gmail.com>
+ <Pine.LNX.4.64.0701302029460.3611@woody.linux-foundation.org>
+ <7vodofx06s.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0701310805500.3632@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed
-Cc: git@vger.kernel.org
-To: raa.lkml@gmail.com
-X-From: git-owner@vger.kernel.org Wed Jan 31 17:41:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jan 31 17:43:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCIUz-0000EI-P8
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 17:39:54 +0100
+	id 1HCIWx-00015C-VR
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 17:41:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030255AbXAaQju (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 11:39:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030256AbXAaQju
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 11:39:50 -0500
-Received: from bay0-omc3-s4.bay0.hotmail.com ([65.54.246.204]:5024 "EHLO
-	bay0-omc3-s4.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1030255AbXAaQju (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Jan 2007 11:39:50 -0500
-Received: from hotmail.com ([64.4.31.4]) by bay0-omc3-s4.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
-	 Wed, 31 Jan 2007 08:39:49 -0800
-Received: from mail pickup service by hotmail.com with Microsoft SMTPSVC;
-	 Wed, 31 Jan 2007 08:39:49 -0800
-Received: from 12.109.151.100 by by13fd.bay13.hotmail.msn.com with HTTP;
-	Wed, 31 Jan 2007 16:39:45 GMT
-X-Originating-IP: [12.109.151.100]
-X-Originating-Email: [fastestspinner@hotmail.com]
-X-Sender: fastestspinner@hotmail.com
-In-Reply-To: <81b0412b0701310836q4222c82arcfda05d3594182af@mail.gmail.com>
-X-OriginalArrivalTime: 31 Jan 2007 16:39:49.0434 (UTC) FILETIME=[6C91B1A0:01C74556]
+	id S1030258AbXAaQlx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 11:41:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030262AbXAaQlx
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 11:41:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57309 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030258AbXAaQlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 11:41:51 -0500
+Received: (qmail invoked by alias); 31 Jan 2007 16:41:50 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp028) with SMTP; 31 Jan 2007 17:41:50 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0701310805500.3632@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38275>
 
-I will resend tonight when I get access to an account where I can control 
-the mailer.
+Hi,
 
+On Wed, 31 Jan 2007, Linus Torvalds wrote:
 
->From: "Alex Riesen" <raa.lkml@gmail.com>
->To: "Mike Nefari" <fastestspinner@hotmail.com>
->CC: git@vger.kernel.org
->Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
->Date: Wed, 31 Jan 2007 17:36:16 +0100
->
->On 1/31/07, Mike Nefari <fastestspinner@hotmail.com> wrote:
->>The gitk gui layout was completely broken on Cygwin. If gitk was started
->>without previous geometry in ~/.gitk, the user could drag the window 
->>sashes
->>to get a useable layout. However, if ~/.gitk existed, this was not 
->>possible
->>at all.
->>
->>The fix was to rewrite makewindow, changing the toplevel containers and
->>the particular geometry information saved between sessions. Numerous bugs
->>in both the Cygwin and the Linux Tk versions make this a delicate
->>balancing act: the version here works in both but many subtle variants
->>are competely broken in one or the other environment.
->>
->
->The patch is broken very spectacularly. How have you made it?
->Copy-paste in the browsers window?
+> So yeah, C is low-level. Yeah, you have to know how "pointers" work. And 
+> yeah, it takes effort especially to get started. But once you have 
+> gotten started, you realize that:
+> 
+>  - it may have been a lot more work to get over the hump, but once you 
+>    did, you can find people who can work with you and help you.
+> 
+>  - yeah, you didn't really want to work with people who didn't know how a 
+>    "pointer to a function returning a const pointer" really works.
 
-_________________________________________________________________
-Get live scores and news about your team: Add the Live.com Football Page  
-http://www.live.com/?addtemplate=football
+Probably related to the second point:
+
+- you do _not_ want to work with people who a scared of pointers. Most 
+  such people are only scared of it, because they are not _able_ to clean 
+  up after themselves. This leads _invariably_ to bad code.
+
+For example, I have never ever seen so bad code as in Java. If you are not 
+forced by the language to clean up the data structures, you tend to get 
+lazy. You don't free memory (why should I? It's garbage collected anyway, 
+right?), you don't close resources, you _waste_ time by using incorrect 
+data-types or doing wholesale copying all the time.
+
+Just look at Eclipse's source code. *tries not to vomit on the keyboard*
+
+All this is a real pity, because when you see Java code by a guy who 
+learnt the ropes in C, and learnt Java properly, it is just elegant and 
+concise. And it gives a huge development boost, because you have so much 
+infrastructure already.
+
+> I agree that C is a really hard language for "prototyping".
+
+That depends. I cannot do it, I am too stupid. But I saw a guy prototyping 
+in assembler, using his assembler library. That was _fast_!
+
+Oh well, I try to stop rambling for today, and do something productive 
+again.
+
+Ciao,
+Dscho
