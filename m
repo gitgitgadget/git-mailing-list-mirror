@@ -1,60 +1,76 @@
-From: "Jakub Narebski" <jnareb@gmail.com>
-Subject: Re: Why is git clone not checking out files?
-Date: Wed, 31 Jan 2007 10:56:53 +0100
-Message-ID: <8fe92b430701310156u958f6dau31552c636ba6bce2@mail.gmail.com>
-References: <17855.35058.967318.546726@lisa.zopyra.com>
-	 <17855.36470.309129.391271@lisa.zopyra.com>
-	 <Pine.LNX.4.64.0701301040200.3611@woody.linux-foundation.org>
-	 <200701301950.00195.jnareb@gmail.com>
+From: "Chris Lee" <clee@kde.org>
+Subject: Re: Qt git repository report
+Date: Wed, 31 Jan 2007 02:34:08 -0800
+Message-ID: <204011cb0701310234k4cb87eadhcf8669e364be4d6@mail.gmail.com>
+References: <200701310912.59102.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Bill Lear" <rael@zopyra.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 31 10:57:06 2007
+Cc: git@vger.kernel.org
+To: "Andy Parkins" <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 31 11:34:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCCD5-0007K9-DC
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 10:56:59 +0100
+	id 1HCCn7-00042Q-Ua
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 11:34:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932922AbXAaJ44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 04:56:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932923AbXAaJ44
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 04:56:56 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:44234 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932922AbXAaJ4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 04:56:55 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so124522uga
-        for <git@vger.kernel.org>; Wed, 31 Jan 2007 01:56:54 -0800 (PST)
+	id S932944AbXAaKeK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 05:34:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932952AbXAaKeK
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 05:34:10 -0500
+Received: from wr-out-0506.google.com ([64.233.184.225]:25309 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932944AbXAaKeJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 05:34:09 -0500
+Received: by wr-out-0506.google.com with SMTP id 68so142118wri
+        for <git@vger.kernel.org>; Wed, 31 Jan 2007 02:34:08 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=r0WUvpxQ9DjdzFRuJhGazYe4ncQ5gg7FhMvNSIl/GeETA9aO1ZkmEbES6s15NrDHDdKwX/yMlFNtXnu2g6/wARaJ1qAwMyCUZ+wkk23qK1D8eW/U7Putq41u3WIbGahWnPClcKZMCIyu9rBf64mD+x4qdpXkMxuxx18gxWQecUo=
-Received: by 10.78.158.11 with SMTP id g11mr114328hue.1170237413617;
-        Wed, 31 Jan 2007 01:56:53 -0800 (PST)
-Received: by 10.78.161.4 with HTTP; Wed, 31 Jan 2007 01:56:53 -0800 (PST)
-In-Reply-To: <200701301950.00195.jnareb@gmail.com>
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=lhBYEo/vEF7Qwp/zfjHph/Flig99O1zAeHsoBrpNlMJJ0ohcEiaoFKjAbHlbRnVbru1izFCtlLUEGjArJtj1UXPIGwvu3fv0ylMRNIX1doyWorl5+Cw+BuY0QDYNty3v2E9Vm0SDh2iajyhXmfAYbkn7HMxXhz6KPcVHADjZXhk=
+Received: by 10.90.78.9 with SMTP id a9mr849416agb.1170239648549;
+        Wed, 31 Jan 2007 02:34:08 -0800 (PST)
+Received: by 10.90.83.16 with HTTP; Wed, 31 Jan 2007 02:34:08 -0800 (PST)
+In-Reply-To: <200701310912.59102.andyparkins@gmail.com>
 Content-Disposition: inline
+X-Google-Sender-Auth: d649a112ca9b1332
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38238>
 
-On 1/30/07, Jakub Narebski <jnareb@gmail.com> wrote:
+On 1/31/07, Andy Parkins <andyparkins@gmail.com> wrote:
+> Hello,
+>
+> It's always nice to read positive reports, so I thought I'd point you all at
+> this one.
+>
+> One of the Qt developers posted a blog entry describing the conversion of the
+> Qt repository from perforce to git.
+>
+> http://qtdeveloper.net/archives/2007/01/30/fun-with-git/
+>
+> Key facts:
+>  * 13 years worth of changes
+>  * 94000 revisions
+>  * 736774 objects
+>  * Took 3 hours to convert using git-fast-import and a custom script
+>  * Repository size: 500MB
+>  * Checkd out tree size: 330MB
+>
+> I never cease to be amazed by how good git is at its job.
 
-> ...so "git clone" tries to checkout HEAD -> refs/heads/master
-> branch, which does not exist. It is strange that git does not
-> report error or at least warning, though...
+Of course, nobody outside of Trolltech happens to have access to the
+Trolltech p4 depot, however... if you happen to use p4 internally
+(like Trolltech) and you wanted to try out the same script, you could
+clone:
 
-It would be nice if git-clone at the very end (at checkout) wrote which
-branch we are at, e.g.
-  "On branch refs/heads/master"
-  "Not currently on any branch"
-  "Current branch refs/heads/master does not exist"
--- 
-Jakub Narebski
+git://repo.or.cz/fast-export.git
+
+You'll also need Shawn's git-fast-import, available from:
+
+git://repo.or.cz/git/fastimport.git
+
+Enjoy!
