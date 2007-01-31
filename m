@@ -1,67 +1,58 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-kill: rewrite history removing a commit
-Date: Wed, 31 Jan 2007 12:26:52 -0800
-Message-ID: <7v7iv3uelv.fsf@assigned-by-dhcp.cox.net>
-References: <20070131195533.GE21097@mellanox.co.il>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: git-blame.el
+Date: Wed, 31 Jan 2007 21:27:47 +0100
+Message-ID: <87irenym9o.fsf@morpheus.local>
+References: <87iren2vqx.fsf@morpheus.local> <7v64anvu2u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Jan 31 21:27:07 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 31 21:28:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCM2r-0000Wb-3P
-	for gcvg-git@gmane.org; Wed, 31 Jan 2007 21:27:05 +0100
+	id 1HCM3m-0000tV-Ni
+	for gcvg-git@gmane.org; Wed, 31 Jan 2007 21:28:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030211AbXAaU0y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 15:26:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030287AbXAaU0y
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 15:26:54 -0500
-Received: from fed1rmmtao11.cox.net ([68.230.241.28]:38777 "EHLO
-	fed1rmmtao11.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030211AbXAaU0x (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 15:26:53 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao11.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070131202653.ZVYJ25875.fed1rmmtao11.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 31 Jan 2007 15:26:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id HwSs1W00j1kojtg0000000; Wed, 31 Jan 2007 15:26:53 -0500
-In-Reply-To: <20070131195533.GE21097@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Wed, 31 Jan 2007 21:55:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030477AbXAaU17 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 31 Jan 2007 15:27:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030568AbXAaU17
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 15:27:59 -0500
+Received: from main.gmane.org ([80.91.229.2]:33124 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030477AbXAaU16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 15:27:58 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HCM3d-00085N-Ei
+	for git@vger.kernel.org; Wed, 31 Jan 2007 21:27:53 +0100
+Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 31 Jan 2007 21:27:53 +0100
+Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 31 Jan 2007 21:27:53 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:6gRGFfClaUM8tvHsteBNMjIkN54=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38294>
 
-"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Below is a simple script that rewrites history reverting a single commit.
-> This differs from git-revert in that a commit is completely removed,
-> and is especially useful before one has published a series of
-> commits.
->
-> Do you find this useful? Comments?
-> Drop me a line.
+> I seem to be getting tons of these; wouldn't you want some (require)?
 
-"Do you find this useful" is a loaded question.
+Yeah, I apparently need a (require 'cl)
 
-I do it all the time with git-rebase, so the need to remove a
-botched commit from the history and rebuild the remainder is
-certainly there, meaning "what your patch does IS useful".
+I try to stay away from cl by habit, but since I usually have it
+required by something I use, I might use it without noticing.
 
-I do it all the time with git-rebase, so I personally do not
-need a new tool to do this, meaning "your patch is not useful to
-me".
+So, to try it, add (require 'cl) to the top of the file.
 
-When I find master~8 and master~9 to be undesirable, I would do:
-
-	$ git rebase --onto master~10 master~8
-
-which rebuilds master~7 and onward on top of master~10, thereby
-dropping two commits.
+--=20
+David K=C3=A5gedal
