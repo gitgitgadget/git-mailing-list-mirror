@@ -1,51 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Subject: Re: should git push . from:to work?
-Date: Thu, 1 Feb 2007 16:00:51 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702011559100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070201145659.GA30716@mellanox.co.il>
+Date: Thu, 1 Feb 2007 17:05:45 +0200
+Message-ID: <20070201150545.GA30858@mellanox.co.il>
+References: <Pine.LNX.4.63.0702011559100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Thu Feb 01 16:01:57 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 01 16:06:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCdRF-0004HZ-0m
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 16:01:25 +0100
+	id 1HCdVs-0005wg-Re
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 16:06:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422917AbXBAPAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 10:00:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422915AbXBAPAy
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 10:00:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55052 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422912AbXBAPAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 10:00:53 -0500
-Received: (qmail invoked by alias); 01 Feb 2007 15:00:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp049) with SMTP; 01 Feb 2007 16:00:51 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070201145659.GA30716@mellanox.co.il>
-X-Y-GMX-Trusted: 0
+	id S1422921AbXBAPFs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 10:05:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422919AbXBAPFs
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 10:05:48 -0500
+Received: from dev.mellanox.co.il ([194.90.237.44]:33076 "EHLO
+	dev.mellanox.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422914AbXBAPF1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 10:05:27 -0500
+Received: from mellanox.co.il ([194.90.237.34])
+	by dev.mellanox.co.il (8.13.1/8.13.1) with SMTP id l11F5JiC027991;
+	Thu, 1 Feb 2007 17:05:19 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Thu,  1 Feb 2007 17:05:45 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702011559100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38360>
 
-Hi,
+> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> Subject: Re: should git push . from:to work?
+> 
+> Hi,
+> 
+> On Thu, 1 Feb 2007, Michael S. Tsirkin wrote:
+> 
+> > Should I not be able to use . as a URL?
+> > git push seems to think . is a remote, not a URL:
+> 
+> You seem to be infected by the less-than-intuitive
+> "git pull ."-makes-perfect-sense camp.
 
-On Thu, 1 Feb 2007, Michael S. Tsirkin wrote:
+Not really, I don't really care.
 
-> Should I not be able to use . as a URL?
-> git push seems to think . is a remote, not a URL:
+> Why not just do "git branch to from"?
 
-You seem to be infected by the less-than-intuitive
-"git pull ."-makes-perfect-sense camp.
+Because I want to update am existing local branch that is different from what
+I have checked out.
 
-Why not just do "git branch to from"?
-
-Ciao,
-Dscho
+-- 
+MST
