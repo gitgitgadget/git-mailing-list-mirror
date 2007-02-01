@@ -1,71 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
-Date: Thu, 1 Feb 2007 15:05:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702011503230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <BAY13-F213DF79906B3889D42369D0A50@phx.gbl>
- <Pine.LNX.4.63.0701311612420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45C14563.8060707@verizon.net> <Pine.LNX.4.63.0702011016430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <epsrj3$gh8$1@sea.gmane.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git-blame.el
+Date: Thu, 1 Feb 2007 15:26:38 +0100
+Message-ID: <20070201142638.GA12980@diana.vm.bytemark.co.uk>
+References: <87iren2vqx.fsf@morpheus.local> <20070201131213.GB11611@diana.vm.bytemark.co.uk> <87veimxbc6.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 15:05:36 2007
+To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Thu Feb 01 15:27:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCcYp-00005v-RF
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 15:05:20 +0100
+	id 1HCctt-0008BL-Nq
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 15:26:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422901AbXBAOFI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 09:05:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422898AbXBAOFH
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 09:05:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43533 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422901AbXBAOFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 09:05:06 -0500
-Received: (qmail invoked by alias); 01 Feb 2007 14:05:04 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp048) with SMTP; 01 Feb 2007 15:05:04 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <epsrj3$gh8$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+	id S1422916AbXBAO0l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 1 Feb 2007 09:26:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422914AbXBAO0k
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 09:26:40 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2827 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422917AbXBAO0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 09:26:39 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HCcta-0003SR-00; Thu, 01 Feb 2007 14:26:38 +0000
+Content-Disposition: inline
+In-Reply-To: <87veimxbc6.fsf@morpheus.local>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38357>
 
-Hi,
+On 2007-02-01 14:21:29 +0100, David K=E5gedal wrote:
 
-On Thu, 1 Feb 2007, Mark Levedahl wrote:
-
-> "Johannes Schindelin" <Johannes.Schindelin@gmx.de> wrote in message 
-> news:Pine.LNX.4.63.0702011016430.22628@wbgn013.biozentrum.uni-wuerzburg.de...
-> >
-> > And then I find that you also fixed whitespace breakage, which does not
-> > belong in this patch.
+> Karl Hasselstr=F6m <kha@treskal.com> writes:
 >
-> My editor simply will not write out trailing whitespace so I do not 
-> notice when such breakage is fixed.
+> >   3. Even after I've edited a line, or added a new line, they
+> >      continue to be attributed to the same existing commits. They
+> >      should either have no attribution, or possibly just "local
+> >      edit" or something. I seem to recall this kind of
+> >      functionality for git-blame being discussed very recently?
+>
+> I saw it was discussed, but I don't think it was added. Currently,
+> it probably makes most sense to verify that the file hasn't been
+> modified, and then switch to read-only mode while viewing the blame.
 
-Fair enough.
+Hmm, probably, yes. But it'll be kind of limiting to not be able to
+run blame on a file that has local modifications. I think I understand
+why vc-annotate opens a new buffer ...
 
-> In the attached, I split out the four whitespace fixes in a separate 
-> patch.
-> 
-> Mark 
-> 
-> 
-> begin 666 0002-Make-gitk-work-reasonably-well-on-Cygwin.patch
-> [lots of uuencoded lines]
+> >   6. It would be nice with a keyboard shortcut for displaying (in
+> >      a separate buffer) the diff to that file introduced by the
+> >      commit under the cursor. This could be combined with (3) by
+> >      having commit details followed by diff.
+>
+> As in "git log -p", you mean?
 
-;-)
+Yes. I was thinking of exactly what "git log -p $hash^..$hash"
+produces. The Emacs windows should be split in two frames, with the
+commit details + diff in the lower frame, just like vc-diff.
 
-Thanks a lot. It's way easier to review now, except for the lines 
-beginning with "M" ;-)
-
-Ciao,
-Dscho
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
