@@ -1,71 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git repack -a -d is not safe
-Date: Thu, 1 Feb 2007 15:59:34 -0500
-Message-ID: <20070201205934.GA19057@spearce.org>
-References: <20070201112545.GA19855@moooo.ath.cx>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: MinGW port usable
+Date: Thu, 01 Feb 2007 13:05:18 -0800
+Message-ID: <45C2560E.6090504@zytor.com>
+References: <200701292320.43888.johannes.sixt@telecom.at> <45C18A3B.2070004@zytor.com> <45C1C24A.471F40AD@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 21:59:49 2007
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Thu Feb 01 22:05:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCj1w-0003qb-VY
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 21:59:41 +0100
+	id 1HCj7i-0006Xq-En
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 22:05:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423008AbXBAU7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 15:59:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423010AbXBAU7i
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 15:59:38 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43917 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423008AbXBAU7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 15:59:37 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HCj1k-00061C-5B; Thu, 01 Feb 2007 15:59:28 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6FF4F20FBAE; Thu,  1 Feb 2007 15:59:34 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20070201112545.GA19855@moooo.ath.cx>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1423010AbXBAVFe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 16:05:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423011AbXBAVFe
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 16:05:34 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:54951 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423010AbXBAVFd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 16:05:33 -0500
+Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l11L5L7d024911
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 1 Feb 2007 13:05:22 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
+In-Reply-To: <45C1C24A.471F40AD@eudaptics.com>
+X-Virus-Scanned: ClamAV 0.88.7/2513/Thu Feb  1 08:48:53 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38403>
 
-Matthias Lederhofer <matled@gmx.net> wrote:
-> First the object is unpacked, start something using read_sha1_file.
-> read_sha1_file: try packed object (fails)
-> run git repack -a -d
-> read_sha1_file: try to read the loose object (fails)
-> read_sha1_file: reread list of packs
-> run git repack -a -d so it will create a new pack
-> read_sha1_file: tries to open the old packs, not the new one, and
->                 fails
+Johannes Sixt wrote:
+> "H. Peter Anvin" wrote:
+>> Johannes Sixt wrote:
+>>> (*) The reason is that on Windows read() and write() cannot operate on
+>>> descriptors created by socket(). A work-around is to implement a (threaded)
+>>> proxy, but that's almost the same as if netcat were used as
+>>> GIT_PROXY_COMMAND.
+>>>
+>> Actually, I believe it can for the NT series kernels (at least 2000 or
+>> later, not sure about the earlier ones), but not for the DOS-based ones.
+>>
+>> The trick is to use _open_osfhandle() to convert the file handle (a
+>> WinAPI construct) to a file descriptor (which in Windows is a construct
+>> of the C library.)
+> 
+> I tried this, but it doesn't seem to work. I get an EINVAL at the first
+> write() to the socket. I conclude that the things returned by socket()
+> are not WinAPI file handles that are valid for WriteFile(). :(
+> 
 
-My 4 patch series that I just posted should (partially) fix this
-problem.  We cannot close it completely however as there always
-exists the potential of the OS to starve the reader and allow 2
-full repacks between the time the reader notices a .idx file and
-the time the reader could open the .pack.
+Except they are (for NT-based Windows), so you're doing something goofy. 
+  This is a widely used construct, so it can't be that broken.
 
-At least now with my additional changes Git will report that a
-packfile is not usable, and then that the object cannot be found,
-and die.
-
-All I can say is, wait at least a few minutes between repacks?  ;-)
-
--- 
-Shawn.
+	-hpa
