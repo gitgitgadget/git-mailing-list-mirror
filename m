@@ -1,100 +1,103 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Fixes to doc strings.
-Date: Thu, 01 Feb 2007 23:28:28 +0100
-Message-ID: <20070201222752.29383.56882.stgit@gandelf.nowhere.earth>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 4/3] provide a nice @{...} syntax to always mean the current
+ branch reflog
+Date: Thu, 01 Feb 2007 17:29:33 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702011725150.3021@xanadu.home>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
+ <20070201191323.GA18608@spearce.org> <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net>
+ <45C25BA6.1000301@fs.ei.tum.de> <Pine.LNX.4.64.0702011710120.3021@xanadu.home>
+ <20070201221758.GA15213@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 01 23:29:31 2007
+To: Junio C Hamano <junkio@cox.net>,
+	Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Feb 01 23:29:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCkQq-0004JB-Iw
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 23:29:28 +0100
+	id 1HCkR2-0004Q4-3j
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 23:29:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932578AbXBAW3Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 17:29:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932493AbXBAW3Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 17:29:25 -0500
-Received: from smtp8-g19.free.fr ([212.27.42.65]:43782 "EHLO smtp8-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932578AbXBAW3Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 17:29:24 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id 3F99354FE;
-	Thu,  1 Feb 2007 23:29:23 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id BABA71F07F;
-	Thu,  1 Feb 2007 23:28:28 +0100 (CET)
-User-Agent: StGIT/0.11
+	id S932493AbXBAW3f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 17:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932769AbXBAW3e
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 17:29:34 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:24267 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932493AbXBAW3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 17:29:34 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCT00H2G2H9JU61@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 01 Feb 2007 17:29:33 -0500 (EST)
+In-reply-to: <20070201221758.GA15213@moooo.ath.cx>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38420>
 
+This is shorter than HEAD@{...} and being nameless it has no semantic 
+issues.
 
-At least the docstring for "branch" is still very confusing, but
-that's hard to fix.  We'll likely have to wait for the post-1.0
-command-line redesign.
-
-Signed-off-by: Yann Dirson <ydirson@altern.org>
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
 
- stgit/commands/float.py    |    2 +-
- stgit/commands/init.py     |   11 ++++-------
- stgit/commands/uncommit.py |    2 +-
- 3 files changed, 6 insertions(+), 9 deletions(-)
+On Thu, 1 Feb 2007, Matthias Lederhofer wrote:
 
-diff --git a/stgit/commands/float.py b/stgit/commands/float.py
-index 4da5f59..0e32f6b 100644
---- a/stgit/commands/float.py
-+++ b/stgit/commands/float.py
-@@ -24,7 +24,7 @@ from stgit.utils import *
- from stgit import stack, git
+> Nicolas Pitre <nico@cam.org> wrote:
+> > I really like "@{...}" to mean whatever branch I'm on.  Given that it 
+> > has no real name it can happily change meaning with branch switches.
+> Ack.
+
+Here it is, on top of my previous patches.
+
+diff --git a/sha1_name.c b/sha1_name.c
+index 70c6e42..de8caf8 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -279,7 +279,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 	/* basic@{time or number} format to query ref-log */
+ 	reflog_len = at = 0;
+ 	if (str[len-1] == '}') {
+-		for (at = 1; at < len - 1; at++) {
++		for (at = 0; at < len - 1; at++) {
+ 			if (str[at] == '@' && str[at+1] == '{') {
+ 				reflog_len = (len-1) - (at+2);
+ 				len = at;
+@@ -289,10 +289,14 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 	}
  
- help = 'push patches to the top, even if applied'
--usage = """%prog [options] [<patches> | <series>]
-+usage = """%prog [<patches> | -s [<series>] ]
+ 	/* Accept only unambiguous ref paths. */
+-	if (ambiguous_path(str, len))
++	if (len && ambiguous_path(str, len))
+ 		return -1;
  
- Push a patch or a range of patches to the top even if applied. The
- necessary pop and push operations will be performed to accomplish
-diff --git a/stgit/commands/init.py b/stgit/commands/init.py
-index 0326f9a..df2235f 100644
---- a/stgit/commands/init.py
-+++ b/stgit/commands/init.py
-@@ -24,15 +24,12 @@ from stgit.utils import *
- from stgit import stack, git
+-	refs_found = dwim_ref(str, len, sha1, &real_ref);
++	if (!len && reflog_len) {
++		/* allow "@{...}" to mean the current branch reflog */
++		refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
++	} else
++		refs_found = dwim_ref(str, len, sha1, &real_ref);
  
+ 	if (!refs_found)
+ 		return -1;
+@@ -312,11 +316,12 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 		 * In the mean time prevent people from getting used to
+ 		 * such a synonym until the work is completed.
+ 		 */
+-		if (!strncmp("HEAD", str, len) &&
++		if (len && !strncmp("HEAD", str, len) &&
+ 		    !strncmp(real_ref, "refs/", 5)) {
+ 			error("reflog for HEAD has not been implemented yet\n"
+-			      "Maybe you could try %s%s instead.",
+-			      strchr(real_ref+5, '/')+1, str + len);
++			      "Maybe you could try %s%s instead, "
++			      "or just %s for current branch..",
++			      strchr(real_ref+5, '/')+1, str+len, str+len);
+ 			exit(-1);
+ 		}
  
--help = 'initialise the tree for use with StGIT'
-+help = 'initialise the current branch for use with StGIT'
- usage = """%prog [options]
- 
--Initialise a GIT repository to be used with StGIT. Note that the
--repository must be already initialised with git-init-db and the
--.git/HEAD link must point to a valid file in refs/heads/. For people
--switching between multiple branches in the same repository, the 'init'
--command has to be run on all the individual branches intended to be
--used with StGIT."""
-+Initialise the current GIT branch to be used as an StGIT stack. Note
-+that the you must already be in a GIT repository and .git/HEAD must
-+point to a valid file in refs/heads/."""
- 
- options = []
- 
-diff --git a/stgit/commands/uncommit.py b/stgit/commands/uncommit.py
-index 9798f19..0ee1585 100644
---- a/stgit/commands/uncommit.py
-+++ b/stgit/commands/uncommit.py
-@@ -25,7 +25,7 @@ from stgit.utils import *
- from stgit import stack, git
- 
- help = 'turn regular GIT commits into StGIT patches'
--usage = """%prog [options] [<patchname1> [<patchname2> ... ]]
-+usage = """%prog [<patchname1> [<patchname2> ... ] | -n [<prefix>]]
- 
- Take one or more git commits at the base of the current stack and turn
- them into StGIT patches. The new patches are created as applied patches
