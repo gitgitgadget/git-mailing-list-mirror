@@ -1,80 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] tone down the detached head warning
-Date: Wed, 31 Jan 2007 19:23:21 -0800
-Message-ID: <7vd54ur26u.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home>
-	<20070131231942.GB31145@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0701311907500.3021@xanadu.home>
-	<20070201030030.GA1979@coredump.intra.peff.net>
+Date: Wed, 31 Jan 2007 22:29:25 -0500
+Message-ID: <20070201032925.GA2505@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home> <20070131231942.GB31145@coredump.intra.peff.net> <Pine.LNX.4.64.0701311907500.3021@xanadu.home> <20070201030030.GA1979@coredump.intra.peff.net> <7vd54ur26u.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 04:23:31 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 01 04:29:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCSXr-0003yr-0U
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 04:23:31 +0100
+	id 1HCSdh-0005ux-2P
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 04:29:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161126AbXBADXY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 22:23:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161297AbXBADXY
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 22:23:24 -0500
-Received: from fed1rmmtao08.cox.net ([68.230.241.31]:53651 "EHLO
-	fed1rmmtao08.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161126AbXBADXX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 22:23:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao08.cox.net
-          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
-          id <20070201032322.CZBV16632.fed1rmmtao08.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 31 Jan 2007 22:23:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id J3PN1W00W1kojtg0000000; Wed, 31 Jan 2007 22:23:22 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161293AbXBAD32 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 22:29:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161297AbXBAD31
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 22:29:27 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1268 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161293AbXBAD31 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 22:29:27 -0500
+Received: (qmail 1870 invoked from network); 31 Jan 2007 22:29:24 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 31 Jan 2007 22:29:24 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Jan 2007 22:29:25 -0500
+Content-Disposition: inline
+In-Reply-To: <7vd54ur26u.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38324>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jan 31, 2007 at 07:23:21PM -0800, Junio C Hamano wrote:
 
-> I think part of the "scariness" of the message is that git-checkout does
-> not _usually_ produce output. I wonder if, when switching HEAD, it
-> usually printed "Now on branch <foo>", and for detached printed some
-> special variant, it would seem more natural.
+>         M	foo.c
+>         Switched to branch "master"
+> 	: gitster project/master; git checkout master^
+> 	M	bar.c
+>         M	foo.c
+> 	Detached your HEAD -- you are not on any branch.
+>         If you want to create a new branch from this checkout, you may do so
+>         (now or later) by using -b with the checkout command again. Example:
+>           git checkout -b <new_branch_name>
+> 	: gitster project; 
+>
+> would feel very natural and much less scary.
 
-That sounds sensible.  Another thing I found slightly annoying
-about branch switching in git-checkout is that we list the paths
-with local changes only when the tip of the old branch and the
-new branch are different.  Very often I start hacking while on
-'master' and later find the change forms a concrete "theme", and
-then say "git checkout -b that-theme" to switch a branch; in
-such a case I do want the list of locally modified paths.
 
-For example:
+Much improved, IMHO. As an added bonus, I think it creates some feedback
+that lets a user know when they have mistakenly used 'git checkout' to
+switch heads when they meant to restore a file.
 
-	: gitster project/master; edit foo.c
-        : gitster project/master; git checkout -b theme
-	M	foo.c
-	Switched to a new branch "theme"
-	: gitster project/theme; edit bar.c
-        : gitster project/theme; git checkout master
-	M	bar.c
-        M	foo.c
-        Switched to branch "master"
-	: gitster project/master; git checkout master^
-	M	bar.c
-        M	foo.c
-	Detached your HEAD -- you are not on any branch.
-        If you want to create a new branch from this checkout, you may do so
-        (now or later) by using -b with the checkout command again. Example:
-          git checkout -b <new_branch_name>
-	: gitster project; 
+I still wish there was some other language for detaching to a commit
+specified by a remote tracking branch; it just seems wrong to say "you
+are not on any branch" right after the user requests to checkout a
+branch (admittedly not one of their local branches, but for a user
+merely poking through the repository, the difference is probably not
+important).
 
-would feel very natural and much less scary.
-
-Note.  I run with PS1=': \h \W$(__git_ps1 "/%s"); '.
+-Peff
