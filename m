@@ -1,67 +1,51 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Thu, 1 Feb 2007 13:13:55 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702011313150.5982@woody.linux-foundation.org>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
- <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org>
- <200702010157.51452.jnareb@gmail.com> <45C19DD0.20504@fs.ei.tum.de>
- <Pine.LNX.4.63.0702011108430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45C1BDD3.8050103@fs.ei.tum.de> <Pine.LNX.4.64.0702010814470.3632@woody.linux-foundation.org>
- <20070201193647.GA18234@soma>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] git-checkout: disable guides how to switch branches with ui.guide
+Date: Thu, 1 Feb 2007 22:23:06 +0100
+Message-ID: <20070201212306.GA14152@moooo.ath.cx>
+References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home> <20070131231942.GB31145@coredump.intra.peff.net> <Pine.LNX.4.64.0701311907500.3021@xanadu.home> <20070201030030.GA1979@coredump.intra.peff.net> <7vd54ur26u.fsf@assigned-by-dhcp.cox.net> <7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net> <20070201184403.GA6326@moooo.ath.cx> <7vabzxpq2t.fsf@assigned-by-dhcp.cox.net> <20070201205145.GA13439@moooo.ath.cx> <7vabzxoaed.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 22:17:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 01 22:23:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCjJ0-0003hR-Jo
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 22:17:18 +0100
+	id 1HCjOj-0006QO-5v
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 22:23:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423017AbXBAVRP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 16:17:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423020AbXBAVRP
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 16:17:15 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:37819 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423017AbXBAVRP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 16:17:15 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l11LDu9V005517
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 1 Feb 2007 13:13:56 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l11LDtWS022672;
-	Thu, 1 Feb 2007 13:13:55 -0800
-In-Reply-To: <20070201193647.GA18234@soma>
-X-Spam-Status: No, hits=-0.443 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
-X-MIMEDefang-Filter: osdl$Revision: 1.172 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1423020AbXBAVXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 16:23:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423019AbXBAVXJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 16:23:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44861 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1423020AbXBAVXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 16:23:08 -0500
+Received: (qmail invoked by alias); 01 Feb 2007 21:23:07 -0000
+Received: from pD9EB9AC1.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.154.193]
+  by mail.gmx.net (mp037) with SMTP; 01 Feb 2007 22:23:07 +0100
+X-Authenticated: #5358227
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vabzxoaed.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38407>
 
+Junio C Hamano <junkio@cox.net> wrote:
+> The error message you quoted [..]
+Ok, I thought you were refering to the first one.  Right, for the
+second one it is ok, one will get used to do -b or -f.
 
-
-On Thu, 1 Feb 2007, Eric Wong wrote:
-> > SVN uses "inode numbers" (I think they are just UUID's generated at "svn 
-> > add" time, but I'm not sure) to track file ID's across renames. Some other 
-> > SCM's do the same.
-> 
-> I think you got this part confused with GNU Arch (and possibly
-> Bzr).  SVN tracks renames in the changeset, it records (in the log)
-> a copy and delete.  pathname@revision is the only "file ID" I know
-> about in SVN.
-
-Ahh, I was sure the revision files in FSFS were per-file, but coor me 
-corrected - they seem to be per-revision.
-
-My bad.
-
-		Linus
+But I also quoted (and patched) the other one for switching to
+detached heads:
+> Note: you are not on any branch and are at commit "v1.1.2"
+> If you want to create a new branch from this checkout, you may do so
+> (now or later) by using -b with the checkout command again. Example:
+>   git checkout -b <new_branch_name>
+This one is a bit shorter but the last three lines are still a guide
+what to do in case you don't know what's going an.
