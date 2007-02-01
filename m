@@ -1,94 +1,67 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: do not let Git.pm warn if we prematurely close pipes
-Date: Thu,  1 Feb 2007 13:12:26 -0800
-Message-ID: <11703643463997-git-send-email-normalperson@yhbt.net>
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 22:12:43 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Thu, 1 Feb 2007 13:13:55 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702011313150.5982@woody.linux-foundation.org>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+ <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org>
+ <200702010157.51452.jnareb@gmail.com> <45C19DD0.20504@fs.ei.tum.de>
+ <Pine.LNX.4.63.0702011108430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45C1BDD3.8050103@fs.ei.tum.de> <Pine.LNX.4.64.0702010814470.3632@woody.linux-foundation.org>
+ <20070201193647.GA18234@soma>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Thu Feb 01 22:17:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCjEX-0001Zq-1j
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 22:12:41 +0100
+	id 1HCjJ0-0003hR-Jo
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 22:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423009AbXBAVM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 16:12:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423018AbXBAVM3
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 16:12:29 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:49667 "EHLO hand.yhbt.net"
+	id S1423017AbXBAVRP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 16:17:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423020AbXBAVRP
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 16:17:15 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:37819 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423009AbXBAVM2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 16:12:28 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 19A6F7DC094;
-	Thu,  1 Feb 2007 13:12:27 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 01 Feb 2007 13:12:26 -0800
-X-Mailer: git-send-email 1.5.0.rc2.133.gca07-dirty
+	id S1423017AbXBAVRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 16:17:15 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l11LDu9V005517
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 1 Feb 2007 13:13:56 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l11LDtWS022672;
+	Thu, 1 Feb 2007 13:13:55 -0800
+In-Reply-To: <20070201193647.GA18234@soma>
+X-Spam-Status: No, hits=-0.443 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38406>
 
-This mainly quiets down warnings when running git svn log.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
 
- This is backported from my development branch and should
- be trivial enough for 1.5.0.
+On Thu, 1 Feb 2007, Eric Wong wrote:
+> > SVN uses "inode numbers" (I think they are just UUID's generated at "svn 
+> > add" time, but I'm not sure) to track file ID's across renames. Some other 
+> > SCM's do the same.
+> 
+> I think you got this part confused with GNU Arch (and possibly
+> Bzr).  SVN tracks renames in the changeset, it records (in the log)
+> a copy and delete.  pathname@revision is the only "file ID" I know
+> about in SVN.
 
- git-svn.perl |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+Ahh, I was sure the revision files in FSFS were per-file, but coor me 
+corrected - they seem to be per-revision.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 68156fc..8ebaae9 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -681,7 +681,7 @@ sub show_log {
- 		process_commit($_, $r_min, $r_max) foreach reverse @k;
- 	}
- out:
--	eval { command_close_pipe($log) };
-+	close $log;
- 	print '-' x72,"\n" unless $_incremental || $_oneline;
- }
- 
-@@ -1475,7 +1475,7 @@ sub map_tree_joins {
- 				$seen{$commit} = 1;
- 			}
- 		}
--		eval { command_close_pipe($pipe) };
-+		close $pipe;
- 	}
- }
- 
-@@ -1669,7 +1669,7 @@ sub write_grafts {
- 				last unless /^\S/;
- 			}
- 		}
--		eval { command_close_pipe($ch) }; # breaking the pipe
-+		close $ch; # breaking the pipe
- 
- 		# if real parents are the only ones in the grafts, drop it
- 		next if join(' ',sort keys %$p) eq join(' ',sort keys %x);
-@@ -1766,7 +1766,7 @@ sub get_commit_time {
- 		} elsif ($tz =~ s/^\-//) {
- 			$s -= tz_to_s_offset($tz);
- 		}
--		eval { command_close_pipe($fh) };
-+		close $fh;
- 		return $s;
- 	}
- 	die "Can't get commit time for commit: $cmt\n";
-@@ -2846,7 +2846,7 @@ sub rmdirs {
- 			delete $rm->{join '/', @dn};
- 		}
- 		unless (%$rm) {
--			eval { command_close_pipe($fh) };
-+			close $fh;
- 			return;
- 		}
- 	}
--- 
-1.5.0.rc2.133.gca07-dirty
+My bad.
+
+		Linus
