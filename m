@@ -1,60 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] tone down the detached head warning
-Date: Wed, 31 Jan 2007 22:54:50 -0500
-Message-ID: <20070201035450.GA2862@coredump.intra.peff.net>
-References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home> <20070131231942.GB31145@coredump.intra.peff.net> <Pine.LNX.4.64.0701311907500.3021@xanadu.home> <20070201030030.GA1979@coredump.intra.peff.net> <7vd54ur26u.fsf@assigned-by-dhcp.cox.net> <20070201032925.GA2505@coredump.intra.peff.net> <Pine.LNX.4.64.0701312238420.3021@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Difficulties in advertising a new branch to git newbies
+Date: Thu, 01 Feb 2007 05:12:06 +0100
+Organization: At home
+Message-ID: <eprp82$snm$1@sea.gmane.org>
+References: <87odognuhl.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Feb 01 04:55:02 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 01 05:11:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCT2I-0005a6-D7
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 04:54:58 +0100
+	id 1HCTI4-0002sl-Tw
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 05:11:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161134AbXBADyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 22:54:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161140AbXBADyw
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 22:54:52 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4570 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161134AbXBADyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 22:54:52 -0500
-Received: (qmail 4148 invoked from network); 31 Jan 2007 22:54:49 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 31 Jan 2007 22:54:49 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Jan 2007 22:54:50 -0500
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0701312238420.3021@xanadu.home>
+	id S1161144AbXBAELF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 31 Jan 2007 23:11:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161157AbXBAELF
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 23:11:05 -0500
+Received: from main.gmane.org ([80.91.229.2]:51817 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161144AbXBAELE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Jan 2007 23:11:04 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HCTHj-0002Lj-Oc
+	for git@vger.kernel.org; Thu, 01 Feb 2007 05:10:55 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 05:10:55 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 05:10:55 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38327>
 
-On Wed, Jan 31, 2007 at 10:47:31PM -0500, Nicolas Pitre wrote:
+Carl Worth wrote:
+[cut]
 
-> But this language convey the truth and users will have to get used to it 
-> at some point. We should not hide the fact that HEAD is really detached at
-> that point, otherwise it could be presumed that a commit might update the
-> checked out (tracking) branch which is obviously not the case.
-
-OK, so let's not lie about it, then. But that doesn't mean we can't
-explain further. What about:
-
-$ git checkout origin/pu
-Detached your HEAD (based on remote origin/pu) -- you are not on any branch
-...
-
-Except that I think the line is getting a bit long. But the point is to
-explain _why_ we're detached (you could even put a different note for
-tags). If a user already knows that 'git checkout v1.4.4.4' is going to
-put him in a detached state, then he doesn't really care about the
-message one way or the other. But if he doesn't know (and there is no
-clue on the command line, except for the fact that we already know
-v1.4.4.4 is a tag and origin/pu is a remote tracking branch), then it
-might make it more why it happened.
-
--Peff
+By the way, you can get new layout with old git using --use-separate-remote
+option to git clone (which is present I think from around Jun 2006).
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
