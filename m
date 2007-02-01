@@ -1,63 +1,54 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] detached HEAD -- finishing touches
-Date: Thu, 1 Feb 2007 10:54:56 +0100
-Message-ID: <81b0412b0702010154v47b290act4e1c8d3722d23dd3@mail.gmail.com>
-References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home>
-	 <20070131231942.GB31145@coredump.intra.peff.net>
-	 <Pine.LNX.4.64.0701311907500.3021@xanadu.home>
-	 <20070201030030.GA1979@coredump.intra.peff.net>
-	 <7vd54ur26u.fsf@assigned-by-dhcp.cox.net>
-	 <7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net>
-	 <81b0412b0702010153m301a3603idc182df8abbf89a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Thu, 1 Feb 2007 11:09:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702011108430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+ <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org>
+ <200702010157.51452.jnareb@gmail.com> <45C19DD0.20504@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>, "Nicolas Pitre" <nico@cam.org>,
-	cworth@cworth.org, git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 10:55:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Thu Feb 01 11:10:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCYek-0001E5-4q
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 10:55:02 +0100
+	id 1HCYtL-0006eM-5B
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 11:10:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422734AbXBAJy7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 04:54:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422735AbXBAJy6
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 04:54:58 -0500
-Received: from wr-out-0506.google.com ([64.233.184.227]:30687 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422734AbXBAJy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 04:54:57 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so477665wra
-        for <git@vger.kernel.org>; Thu, 01 Feb 2007 01:54:57 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kgq1LMWp+wz8b35XGorFlojQZR554O9am6xzIvRPtbSRpdw7lusv41Gldgz/BmjGuFxGcUfpLgtDKkLII9VhixO5+8BkM6feZVgk6NPdruoc4Jj1BWn9BKiIe+jlZU75jZX1BJDd3zhqOJebupstlYFDqugzl6bT5bkrZsSg/nw=
-Received: by 10.78.193.5 with SMTP id q5mr456924huf.1170323696474;
-        Thu, 01 Feb 2007 01:54:56 -0800 (PST)
-Received: by 10.78.139.7 with HTTP; Thu, 1 Feb 2007 01:54:56 -0800 (PST)
-In-Reply-To: <81b0412b0702010153m301a3603idc182df8abbf89a@mail.gmail.com>
-Content-Disposition: inline
+	id S1422748AbXBAKJs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 05:09:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422747AbXBAKJs
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 05:09:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51797 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422742AbXBAKJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 05:09:47 -0500
+Received: (qmail invoked by alias); 01 Feb 2007 10:09:46 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 01 Feb 2007 11:09:46 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45C19DD0.20504@fs.ei.tum.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38339>
 
-On 2/1/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> On 2/1/07, Junio C Hamano <junkio@cox.net> wrote:
-> >     [git.git (master)]$ git checkout master^
-> >     M       git-checkout.sh
-> >     Note: you are not on any branch and are at commit "master^"
-> >     If you want to create a new branch from this checkout, you may do so
-> >     (now or later) by using -b with the checkout command again. Example:
-> >       git checkout -b <new_branch_name>
->
-> How do you detach HEAD _without_ changing working tree at all?
-> IOW, is there a "git checkout --detach"?
->
+Hi,
 
-Ah.. I see, the "obscure, but useful trick".
+[culled many people from the Cc: list to avoid a flamewar]
+
+On Thu, 1 Feb 2007, Simon 'corecode' Schubert wrote:
+
+> If you rename, you take the penalty of duplicating the content 
+> (compressed) with a new name.  No big deal there. So there are *no* 
+> file-ids.  Blobs go into the data/index file which corresponds to their 
+> filename.
+
+So, can you explain to me how a filename is _not_ a file-id?
+
+Ciao,
+Dscho
