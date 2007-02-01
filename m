@@ -1,105 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 4/4] Don't find objects in packs which aren't available anymore.
-Date: Thu, 1 Feb 2007 15:52:38 -0500
-Message-ID: <20070201205238.GD19009@spearce.org>
-References: <a0b03fc086bb66e2aa2e386dcb4ff97fc837f07f.1170363130.git.spearce@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
+Date: Thu, 01 Feb 2007 12:58:14 -0800
+Message-ID: <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
+	<20070201191323.GA18608@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 21:52:55 2007
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Feb 01 21:58:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCivN-0000bC-T0
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 21:52:54 +0100
+	id 1HCj0c-0003Ez-VZ
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 21:58:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423003AbXBAUwn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 15:52:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423005AbXBAUwn
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 15:52:43 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43575 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423003AbXBAUwm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 15:52:42 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HCiv2-0005Kr-KL; Thu, 01 Feb 2007 15:52:32 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id ED68520FBAE; Thu,  1 Feb 2007 15:52:38 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <a0b03fc086bb66e2aa2e386dcb4ff97fc837f07f.1170363130.git.spearce@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1423007AbXBAU6Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 15:58:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423008AbXBAU6Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 15:58:16 -0500
+Received: from fed1rmmtai16.cox.net ([68.230.241.43]:54026 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1423007AbXBAU6P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 15:58:15 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070201205814.KSVY1349.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 1 Feb 2007 15:58:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id JLyE1W00L1kojtg0000000; Thu, 01 Feb 2007 15:58:14 -0500
+In-Reply-To: <20070201191323.GA18608@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 1 Feb 2007 14:13:23 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38401>
 
-Matthias Lederhofer identified a race condition where a Git reader
-process was able to locate an object in a packed_git index, but
-was then preempted while a `git repack -a -d` ran and completed.
-By the time the reader was able to seek in the packfile to get the
-object data, the packfile no longer existed on disk.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-In this particular case the reader process did not attempt to
-open the packfile before it was deleted, so it did not already
-have the pack_fd field popuplated.  With the packfile itself gone,
-there was no way for the reader to open it and fetch the data.
+> Nicolas Pitre <nico@cam.org> wrote:
+>> The work in progress to enable separate reflog for HEAD will make it
+>> independent from reflog of any branch HEAD might be pointing to. In
+>> the mean time disallow HEAD@{...} until that work is completed. Otherwise
+>> people might get used to the current behavior which makes HEAD@{...} an
+>> alias for <current_branch>@{...} which won't be the case later.
+>
+> I happen to really like the fact that HEAD@{...} is an alias for
+> <current_branch>@{...}.
 
-I'm fixing the race condition by teaching find_pack_entry to ignore
-a packed_git whose packfile is not currently open and which cannot
-be opened.  If none of the currently known packs can supply the
-object, we will return 0 and the caller will decide the object is
-not available.  If this is the first attempt at finding an object,
-the caller will reprepare_packed_git and try again.  If it was
-the second attempt, the caller will typically return NULL back,
-and an error message about a missing object will be reported.
+It is usually easier to type.
 
-This patch does not address the situation of a reader which is
-being starved out by a tight sequence of `git repack -a -d` runs.
-In this particular case the reader will try twice, probably fail
-both times, and declare the object in question cannot be found.
-As it is highly unlikely that a real world `git repack -a -d` can
-complete faster than a reader can open a packfile, so I don't think
-this is a huge concern.
+> But now that HEAD will soon be getting its own reflog, I guess I
+> better relearn how to type <current_branch>.  :-)
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- sha1_file.c |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
+One thing that is certain is that master@{...} will mean the
+same thing no matter what happens to Nico's series -- it talks
+about where the tip of that particular branch was at any recent
+time.  Right now HEAD@{...} happens to talk about "the current
+branch" (and only the current branch) -- Nico's patch would
+change the semantics when/if it is merged.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 277319b..37669d6 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1405,6 +1405,18 @@ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, cons
- 		}
- 		offset = find_pack_entry_one(sha1, p);
- 		if (offset) {
-+			/*
-+			 * We are about to tell the caller where they can
-+			 * locate the requested object.  We better make
-+			 * sure the packfile is still here and can be
-+			 * accessed before supplying that answer, as
-+			 * it may have been deleted since the index
-+			 * was loaded!
-+			 */
-+			if (p->pack_fd == -1 && open_packed_git(p)) {
-+				error("packfile %s cannot be accessed", p->pack_name);
-+				continue;
-+			}
- 			e->offset = offset;
- 			e->p = p;
- 			hashcpy(e->sha1, sha1);
--- 
-1.5.0.rc3.1.ge4b0e
+So I would not mind making sure that our documentation talks
+only about specific branch's reflog for now (git grep 'HEAD@{'
+in Documentation directory luckily hits nothing) but am a bit
+reluctant to remove the already useful shorthand from a working
+system.
+
+Although from the consistency point of view, HEAD reflog to
+follow swicthing branches like Nico's patch aims for (but not
+implements fully yet) makes perfect sense, I still am somewhat
+doubtful about it being actually useful in practice.  Even if we
+assume it is useful, I think forbidding people from saying
+HEAD@{...} right now only because the new semantics is
+unimplemented yet feels wrong.  If you use only one branch,
+there is no difference between the reflog of master and HEAD
+today, without waiting for that "reflog on HEAD".
