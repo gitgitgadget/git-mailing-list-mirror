@@ -1,94 +1,59 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Thu, 01 Feb 2007 08:59:12 +0100
-Message-ID: <45C19DD0.20504@fs.ei.tum.de>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com> <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org> <200702010157.51452.jnareb@gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
+Date: Thu, 1 Feb 2007 09:03:23 +0100
+Message-ID: <81b0412b0702010003t7becddf3x8fe6b36b0d84599b@mail.gmail.com>
+References: <BAY13-F213DF79906B3889D42369D0A50@phx.gbl>
+	 <Pine.LNX.4.63.0701311612420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <45C14563.8060707@verizon.net>
+	 <7vk5z2r27s.fsf@assigned-by-dhcp.cox.net> <m264am5u1r.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig4E2BEB4615BBCD09AD59BD25"
-Cc: Matt Mackall <mpm@selenic.com>, mercurial@selenic.com,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 01 08:59:24 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
+	"Mark Levedahl" <mdl123@verizon.net>
+To: "Seth Falcon" <sethfalcon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 01 09:03:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCWqo-0002JH-Tk
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 08:59:23 +0100
+	id 1HCWuo-0003kG-3q
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 09:03:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161025AbXBAH7T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 02:59:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030570AbXBAH7T
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 02:59:19 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:39471 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030540AbXBAH7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 02:59:18 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 8377A2824E;
-	Thu,  1 Feb 2007 08:59:16 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id IjKQUBVORTOp; Thu,  1 Feb 2007 08:59:16 +0100 (CET)
-Received: from [192.168.10.124] (ppp-62-216-202-10.dynamic.mnet-online.de [62.216.202.10])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 00E2B2824B;
-	Thu,  1 Feb 2007 08:59:15 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-In-Reply-To: <200702010157.51452.jnareb@gmail.com>
-X-Enigmail-Version: 0.94.2.0
+	id S1422646AbXBAID0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 03:03:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161226AbXBAID0
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 03:03:26 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:25908 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161212AbXBAIDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 03:03:25 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so398427uga
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 00:03:23 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WA7i9sJq7vuejFMsDm1BInYdCwoKAQkfq8uqD7ro15Cl+V5xAyOPyRwzK/9QB4ubNpsbzzMRRNqoLVrYKnXt7haM+ZoLDoJxSTmWrAI3DwHD0ib71Z/O8drrYRccBSydgzgBnrWyNY5LF0b7MzKfKRHB2OSabdQtDbI8XcrBljg=
+Received: by 10.78.150.7 with SMTP id x7mr445801hud.1170317003263;
+        Thu, 01 Feb 2007 00:03:23 -0800 (PST)
+Received: by 10.78.139.7 with HTTP; Thu, 1 Feb 2007 00:03:23 -0800 (PST)
+In-Reply-To: <m264am5u1r.fsf@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38331>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig4E2BEB4615BBCD09AD59BD25
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On 2/1/07, Seth Falcon <sethfalcon@gmail.com> wrote:
+>
+> > I am not in X right now and won't be able to look at it myself
+> > tonight.  Could folks on MacOS comment on Mark's patch?
+>
+> I gave it a quick spin on OS X.  gitk loads with a different geometry
+> than it had before, but seems to work the same.  If this fixes things
+> elsewhere, it seems fine here.
+>
 
-Jakub Narebski wrote:
->>> Sidenote 2: Mercurial repository structure might make it use "file-id=
-s"
->>> (perhaps implicitely), with all the disadvantages (different renames
->>> on different branches) of those.
->> Nope.
-> How it is so, if the blobs (file contents) are stored filename hashed?
-> IIRC hg has some scheme to deal with renames, but it is file-id (file
-> identity) based AFAIK.
-
-No, the buckets are simply the filename.  If you rename, you take the pen=
-alty of duplicating the content (compressed) with a new name.  No big dea=
-l there.  So there are *no* file-ids.  Blobs go into the data/index file =
-which corresponds to their filename.
-
-cheers
-  simon
-
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enig4E2BEB4615BBCD09AD59BD25
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFFwZ3Tr5S+dk6z85oRAuKHAKDc2gosEP1sWodzhmsDYS9oBAavswCfTHdU
-ZIgdeNZm8sCS/4aBw6uT6A8=
-=I1r0
------END PGP SIGNATURE-----
-
---------------enig4E2BEB4615BBCD09AD59BD25--
+FWIW, I confirm that. Much better. Mouse selection still does not
+work in patch pane, but broken layout was the most annoying.
+Thanks, Mark!
