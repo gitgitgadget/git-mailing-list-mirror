@@ -1,61 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
 Subject: Re: git docs on kernel.org too new?
-Date: Thu, 1 Feb 2007 14:20:57 -0500
-Message-ID: <20070201192057.GC18608@spearce.org>
-References: <Pine.LNX.4.62.0702011051300.31498@torch.nrlssc.navy.mil> <906f26060702011014r254ffd5frd75296c8443078ab@mail.gmail.com>
+Date: Thu, 1 Feb 2007 13:21:50 -0600 (CST)
+Message-ID: <Pine.LNX.4.62.0702011319590.31498@torch.nrlssc.navy.mil>
+References: <Pine.LNX.4.62.0702011051300.31498@torch.nrlssc.navy.mil>
+ <20070201191747.GB18608@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefano Spinucci <virgo977virgo@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 01 20:21:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 01 20:22:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HChUa-0000EK-6E
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 20:21:08 +0100
+	id 1HChVQ-0000df-4Z
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 20:22:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422947AbXBATVE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 14:21:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422957AbXBATVE
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 14:21:04 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39528 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422947AbXBATVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 14:21:03 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HChUL-0008K0-7F; Thu, 01 Feb 2007 14:20:53 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0A0F620FBAE; Thu,  1 Feb 2007 14:20:58 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <906f26060702011014r254ffd5frd75296c8443078ab@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1422958AbXBATV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 14:21:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422959AbXBATV5
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 14:21:57 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50267 "EHLO
+	mail1.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422958AbXBATV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 14:21:56 -0500
+Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
+	by mail1.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l11JLPKt002282
+	for <git@vger.kernel.org>; Thu, 1 Feb 2007 13:21:28 -0600
+Received: from torch.nrlssc.navy.mil ([128.160.25.59]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 1 Feb 2007 13:21:51 -0600
+In-Reply-To: <20070201191747.GB18608@spearce.org>
+X-OriginalArrivalTime: 01 Feb 2007 19:21:51.0413 (UTC) FILETIME=[39BBB650:01C74636]
+X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-3.6.0.1039-14970000
+X-TM-AS-Result: : No
+X-TM-AS-Category-Info: : 31:0.000000
+X-TM-AS-MatchedID: : =?us-ascii?B?MTUwNTY3LTE0NzAxOC03MDI1?=
+	=?us-ascii?B?NzItNzAwMDc1LTEzOTAxMC03MDAxNjAtNzA0NDEwLTEwNTcwMC0x?=
+	=?us-ascii?B?Mzk3MDQtMTA2NTgwLTcwMDA0MC03MDQ3MTItNzAwOTA5LTcwNDcw?=
+	=?us-ascii?B?OC03MDE0NTUtNzA5MDY1LTcwMzMzNC03MDI3MjYtNzAxNjE4LTcw?=
+	=?us-ascii?B?NDg2NC03MDA3NDMtNzAyNjYzLTcwNDQyNS03MDAxMDctMTQ4MDUw?=
+	=?us-ascii?B?LTIwMDQy?=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38391>
 
-Stefano Spinucci <virgo977virgo@gmail.com> wrote:
-> this isn't the first time someone is confused by git docs, and I guess
-> why we can't have a documentation page as
-> http://www.python.org/doc/versions/
+On Thu, 1 Feb 2007, Shawn O. Pearce wrote:
 
-Indeed.  Or at least only post docs which correspond to a
-downloadable tar file?
+> Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>> The git documentation here:
+>>
+>>   http://www.kernel.org/pub/software/scm/git/docs/
+>>
+>> does not seem to describe the current stable release of
+>> git: git-1.4.4.4 (there is a release candidate of 1.5.0 on kernel.org)
+>
+> Yes.  The docs on kernel.org roughly track the `master` branch
+> of git.git, which is stablizing the 1.5.0 release.  Git 1.5.0-rc3
+> was posted last night, and with the exception of a couple of minor
+> cleanups for the detached HEAD warning messages, will be the 1.5.0
+> final release.
 
-Perhaps we could embed in at least the HTML version of the docs the
-output of `GIT-VERSION-GEN` ?  Then users at least have a chance
-at knowing the docs are referring to 1.5.0-rc3 and not to 1.4.4.4?
+Ah. I thought you might be doing something clever like that.
 
--- 
-Shawn.
+> Despite being a release candidate I think we would all encourage
+> you to try working with 1.5.0-rc3 or later.  It is extremely stable,
+> the documentation has been significantly improved and updated since
+> 1.4.4.4, and the learning curve should be easier for new users.
+
+will do, thanks.
+
+-brandon
