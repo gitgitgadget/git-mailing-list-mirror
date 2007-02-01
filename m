@@ -1,58 +1,47 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: .git/info/refs
-Date: Thu, 01 Feb 2007 09:51:51 -0800
-Message-ID: <45C228B7.7080301@zytor.com>
-References: <7vireuaj9d.fsf@assigned-by-dhcp.cox.net> <45B92332.5060206@zytor.com> <7v3b5yai6c.fsf@assigned-by-dhcp.cox.net> <45B928AD.50508@zytor.com> <Pine.LNX.4.63.0701260029580.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45BBCD27.5050408@zytor.com> <Pine.LNX.4.63.0702011501250.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C2124C.5070308@zytor.com> <Pine.LNX.4.63.0702011749100.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C21BA0.4080700@zytor.com> <20070201173234.GA29170@moooo.ath.cx>
+From: "Stefano Spinucci" <virgo977virgo@gmail.com>
+Subject: Re: git docs on kernel.org too new?
+Date: Thu, 1 Feb 2007 19:14:26 +0100
+Message-ID: <906f26060702011014r254ffd5frd75296c8443078ab@mail.gmail.com>
+References: <Pine.LNX.4.62.0702011051300.31498@torch.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 01 18:52:39 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 01 19:14:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCg6v-0008HL-BG
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 18:52:37 +0100
+	id 1HCgS6-00024W-Rx
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 19:14:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422791AbXBARv7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 12:51:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422793AbXBARv7
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 12:51:59 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:57505 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422791AbXBARv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 12:51:58 -0500
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l11HppKG016425
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 1 Feb 2007 09:51:52 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
-In-Reply-To: <20070201173234.GA29170@moooo.ath.cx>
-X-Virus-Scanned: ClamAV 0.88.7/2511/Thu Feb  1 06:55:18 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=0.6 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_96_XX,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
-X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
+	id S1422903AbXBASO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 13:14:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422914AbXBASO1
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 13:14:27 -0500
+Received: from an-out-0708.google.com ([209.85.132.247]:32580 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422903AbXBASO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 13:14:27 -0500
+Received: by an-out-0708.google.com with SMTP id b33so406367ana
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 10:14:26 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=psBYjxY2jd4ekxV2J4pyjU8yaQBlmVdVsBbYO3MCO8Slb0Up23lMS0E2s+edqW7UBII1u5W4RV8jP/7fbsFUzfV77jR2YrwjzKMxo4ACEmbviFDwGC86VyMPj1vIjBvNAvRLv8+P8NIdJU31AgNyNv4QALkoEDeBdvSXzd+HNcU=
+Received: by 10.114.152.17 with SMTP id z17mr184519wad.1170353666181;
+        Thu, 01 Feb 2007 10:14:26 -0800 (PST)
+Received: by 10.114.92.12 with HTTP; Thu, 1 Feb 2007 10:14:26 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.62.0702011051300.31498@torch.nrlssc.navy.mil>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38385>
 
-Matthias Lederhofer wrote:
-> H. Peter Anvin <hpa@zytor.com> wrote:
->> Yes, it does matter, because it drives the load up further.  If you 
->> start having this going on in overlapping instances, then you're soon on 
->> the downhill slope of a cascading failure.
-> Add some other locking mechanism.
-> 
->> And we have already experimented with it.  It unfortunately doesn't help 
->> much, it only makes matters worse.
-> The gitweb overview page has less than one hit per minute?  Otherwise
-> this should help.
+this isn't the first time someone is confused by git docs, and I guess
+why we can't have a documentation page as
+http://www.python.org/doc/versions/
 
-We already cache it with a forced duration of some 15 minutes.  The end 
-result is exactly the same.
-
-	-hpa
+---
+Stefano Spinucci
