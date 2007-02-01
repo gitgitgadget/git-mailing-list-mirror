@@ -1,67 +1,70 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: MinGW port usable
-Date: Thu, 01 Feb 2007 13:05:18 -0800
-Message-ID: <45C2560E.6090504@zytor.com>
-References: <200701292320.43888.johannes.sixt@telecom.at> <45C18A3B.2070004@zytor.com> <45C1C24A.471F40AD@eudaptics.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-checkout: disable guides how to switch branches with ui.guide
+Date: Thu, 01 Feb 2007 13:06:34 -0800
+Message-ID: <7vabzxoaed.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home>
+	<20070131231942.GB31145@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0701311907500.3021@xanadu.home>
+	<20070201030030.GA1979@coredump.intra.peff.net>
+	<7vd54ur26u.fsf@assigned-by-dhcp.cox.net>
+	<7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net>
+	<20070201184403.GA6326@moooo.ath.cx>
+	<7vabzxpq2t.fsf@assigned-by-dhcp.cox.net>
+	<20070201205145.GA13439@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Thu Feb 01 22:05:55 2007
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Thu Feb 01 22:06:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCj7i-0006Xq-En
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 22:05:38 +0100
+	id 1HCj8x-0007Fp-2O
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 22:06:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423010AbXBAVFe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 16:05:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423011AbXBAVFe
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 16:05:34 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:54951 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423010AbXBAVFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 16:05:33 -0500
-Received: from [10.0.6.0] (yardgnome.c2micro.com [69.104.58.50])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l11L5L7d024911
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 1 Feb 2007 13:05:22 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-In-Reply-To: <45C1C24A.471F40AD@eudaptics.com>
-X-Virus-Scanned: ClamAV 0.88.7/2513/Thu Feb  1 08:48:53 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=-0.7 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_96_XX autolearn=no version=3.1.7
-X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
+	id S1423013AbXBAVGg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 16:06:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423016AbXBAVGg
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 16:06:36 -0500
+Received: from fed1rmmtai14.cox.net ([68.230.241.45]:52828 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1423013AbXBAVGf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 16:06:35 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070201210634.PPWC4586.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 1 Feb 2007 16:06:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id JM6a1W00Y1kojtg0000000; Thu, 01 Feb 2007 16:06:34 -0500
+In-Reply-To: <20070201205145.GA13439@moooo.ath.cx> (Matthias Lederhofer's
+	message of "Thu, 1 Feb 2007 21:51:45 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38404>
 
-Johannes Sixt wrote:
-> "H. Peter Anvin" wrote:
->> Johannes Sixt wrote:
->>> (*) The reason is that on Windows read() and write() cannot operate on
->>> descriptors created by socket(). A work-around is to implement a (threaded)
->>> proxy, but that's almost the same as if netcat were used as
->>> GIT_PROXY_COMMAND.
->>>
->> Actually, I believe it can for the NT series kernels (at least 2000 or
->> later, not sure about the earlier ones), but not for the DOS-based ones.
->>
->> The trick is to use _open_osfhandle() to convert the file handle (a
->> WinAPI construct) to a file descriptor (which in Windows is a construct
->> of the C library.)
-> 
-> I tried this, but it doesn't seem to work. I get an EINVAL at the first
-> write() to the socket. I conclude that the things returned by socket()
-> are not WinAPI file handles that are valid for WriteFile(). :(
-> 
+Matthias Lederhofer <matled@gmx.net> writes:
 
-Except they are (for NT-based Windows), so you're doing something goofy. 
-  This is a widely used construct, so it can't be that broken.
+> Junio C Hamano <junkio@cox.net> wrote:
+>> The original hope was after a few times one would know to use
+>> either -f or -b depending on what he wants, and would not run
+>> plain vanilla branch switching "git checkout master".
+> What is the point in detached heads if the user should start using -b
+> after a few times?  I think detached heads are useful, so I will not
+> use -b with it.
 
-	-hpa
+The error message you quoted is given when your head is detached
+and you tried the regular "checkout an existing branch" -- which
+will lose where your detached HEAD currently is.  You either say
+"it's OK to lose it because I am done with it and I do not need
+to keep it anymore" with "-f", or you say "I am done with this
+detached state for now, but I know I need to revisit it later"
+with "-b".
+
+So if you will not use -b with it to discard a temporary state
+that is detached HEAD, that is perfectly fine.  Detached head is
+useful.
