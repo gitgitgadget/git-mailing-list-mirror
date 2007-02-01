@@ -1,145 +1,48 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 2/3] add a quiet option to git-checkout
-Date: Thu, 01 Feb 2007 12:31:26 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702011230320.3021@xanadu.home>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: .git/info/refs
+Date: Thu, 1 Feb 2007 18:32:34 +0100
+Message-ID: <20070201173234.GA29170@moooo.ath.cx>
+References: <7vireuaj9d.fsf@assigned-by-dhcp.cox.net> <45B92332.5060206@zytor.com> <7v3b5yai6c.fsf@assigned-by-dhcp.cox.net> <45B928AD.50508@zytor.com> <Pine.LNX.4.63.0701260029580.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45BBCD27.5050408@zytor.com> <Pine.LNX.4.63.0702011501250.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C2124C.5070308@zytor.com> <Pine.LNX.4.63.0702011749100.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C21BA0.4080700@zytor.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 18:31:39 2007
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Thu Feb 01 18:32:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCfmb-0006CI-Nc
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 18:31:38 +0100
+	id 1HCfnd-0006ju-SK
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 18:32:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751938AbXBARb2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 12:31:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbXBARb2
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 12:31:28 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:29462 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751938AbXBARb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 12:31:27 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCS00FUTOOET9O0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 01 Feb 2007 12:31:26 -0500 (EST)
-X-X-Sender: nico@xanadu.home
+	id S1161193AbXBARcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 12:32:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161207AbXBARcj
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 12:32:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43983 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161193AbXBARci (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 12:32:38 -0500
+Received: (qmail invoked by alias); 01 Feb 2007 17:32:37 -0000
+Received: from pD9EB9AC1.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.154.193]
+  by mail.gmx.net (mp047) with SMTP; 01 Feb 2007 18:32:37 +0100
+X-Authenticated: #5358227
+Mail-Followup-To: "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <45C21BA0.4080700@zytor.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38378>
 
-Those new messages are certainly nice, but there might be cases where
-they are simply unwelcome, like when git-commit is used within scripts.
+H. Peter Anvin <hpa@zytor.com> wrote:
+> Yes, it does matter, because it drives the load up further.  If you 
+> start having this going on in overlapping instances, then you're soon on 
+> the downhill slope of a cascading failure.
+Add some other locking mechanism.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- Documentation/git-checkout.txt |    5 ++++-
- git-checkout.sh                |   23 ++++++++++++++---------
- 2 files changed, 18 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 4ea2b31..55c9289 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -8,7 +8,7 @@ git-checkout - Checkout and switch to a branch
- SYNOPSIS
- --------
- [verse]
--'git-checkout' [-f] [-b <new_branch> [-l]] [-m] [<branch>]
-+'git-checkout' [-q] [-f] [-b <new_branch> [-l]] [-m] [<branch>]
- 'git-checkout' [<tree-ish>] <paths>...
- 
- DESCRIPTION
-@@ -33,6 +33,9 @@ working tree.
- 
- OPTIONS
- -------
-+-q::
-+	Quiet, supress feedback messages.
-+
- -f::
- 	Force a re-read of everything.
- 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 97c26ad..99a81f5 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -1,6 +1,6 @@
- #!/bin/sh
- 
--USAGE='[-f] [-b <new_branch>] [-m] [<branch>] [<paths>...]'
-+USAGE='[-q] [-f] [-b <new_branch>] [-m] [<branch>] [<paths>...]'
- SUBDIRECTORY_OK=Sometimes
- . git-sh-setup
- require_work_tree
-@@ -15,6 +15,7 @@ branch=
- newbranch=
- newbranch_log=
- merge=
-+quiet=
- LF='
- '
- while [ "$#" != "0" ]; do
-@@ -40,6 +41,9 @@ while [ "$#" != "0" ]; do
- 	-m)
- 		merge=1
- 		;;
-+	"-q")
-+		quiet=1
-+		;;
- 	--)
- 		break
- 		;;
-@@ -153,7 +157,7 @@ detach_warn=
- if test -z "$branch$newbranch" && test "$new" != "$old"
- then
- 	detached="$new"
--	if test -n "$oldbranch"
-+	if test -n "$oldbranch" && test -z "$quiet"
- 	then
- 		detach_warn="Note: moving to \"$new_name\" which isn't a local branch
- If you want to create a new branch from this checkout, you may do so
-@@ -180,8 +184,11 @@ fi
- 
- if [ "X$old" = X ]
- then
--	echo >&2 "warning: You appear to be on a branch yet to be born."
--	echo >&2 "warning: Forcing checkout of $new_name."
-+	if test -z "$quiet"
-+	then
-+		echo >&2 "warning: You appear to be on a branch yet to be born."
-+		echo >&2 "warning: Forcing checkout of $new_name."
-+	fi
- 	force=1
- fi
- 
-@@ -226,7 +233,7 @@ else
- 	exit 0
-     )
-     saved_err=$?
--    if test "$saved_err" = 0
-+    if test "$saved_err" = 0 && test -z "$quiet"
-     then
- 	git diff-index --name-status "$new"
-     fi
-@@ -251,11 +258,9 @@ if [ "$?" -eq 0 ]; then
- 	if test -n "$branch"
- 	then
- 		GIT_DIR="$GIT_DIR" git-symbolic-ref HEAD "refs/heads/$branch"
--		if test -n "$newbranch"
-+		if test -z "$quiet"
- 		then
--			echo >&2 "Switched to a new branch \"$branch\""
--		else
--			echo >&2 "Switched to branch \"$branch\""
-+			echo >&2 "Switched to${newbranch:+ a new} branch \"$branch\""
- 		fi
- 	elif test -n "$detached"
- 	then
--- 
-1.5.0.rc2.131.g4b01-dirty
+> And we have already experimented with it.  It unfortunately doesn't help 
+> much, it only makes matters worse.
+The gitweb overview page has less than one hit per minute?  Otherwise
+this should help.
