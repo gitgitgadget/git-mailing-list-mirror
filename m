@@ -1,123 +1,64 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] git-checkout: disable guides how to switch branches with ui.guide
-Date: Thu, 1 Feb 2007 19:44:03 +0100
-Message-ID: <20070201184403.GA6326@moooo.ath.cx>
-References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home> <20070131231942.GB31145@coredump.intra.peff.net> <Pine.LNX.4.64.0701311907500.3021@xanadu.home> <20070201030030.GA1979@coredump.intra.peff.net> <7vd54ur26u.fsf@assigned-by-dhcp.cox.net> <7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH 7/7] Make 'stg pull' use git-fetch and not git-pull.
+Date: Thu, 1 Feb 2007 19:47:05 +0100
+Message-ID: <20070201184705.GC5362@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070129230117.7102.64322.stgit@gandelf.nowhere.earth> <20070129230555.7102.93948.stgit@gandelf.nowhere.earth> <b0943d9e0701311544k22986545x351c04a8faab8814@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 19:44:17 2007
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 01 19:48:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCguq-00080U-3H
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 19:44:12 +0100
+	id 1HCgyn-0001bM-QD
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 19:48:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422933AbXBASoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 13:44:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422934AbXBASoI
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 13:44:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54545 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422933AbXBASoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 13:44:07 -0500
-Received: (qmail invoked by alias); 01 Feb 2007 18:44:05 -0000
-Received: from pD9EB9AC1.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.154.193]
-  by mail.gmx.net (mp019) with SMTP; 01 Feb 2007 19:44:05 +0100
-X-Authenticated: #5358227
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+	id S1422932AbXBASsP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 13:48:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422936AbXBASsO
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 13:48:14 -0500
+Received: from smtp6-g19.free.fr ([212.27.42.36]:40713 "EHLO smtp6-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422932AbXBASsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 13:48:14 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp6-g19.free.fr (Postfix) with ESMTP id 1514D4352F;
+	Thu,  1 Feb 2007 19:48:12 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id DD10F1F080; Thu,  1 Feb 2007 19:47:05 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <b0943d9e0701311544k22986545x351c04a8faab8814@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38387>
 
----
-Junio C Hamano <junkio@cox.net> wrote:
-> * Detaching head would say which commit I am at and reminds me that
->   I am not on any branch (not that I would detach my HEAD while keeping
->   precious local changes around in any real-world workflow -- this is
->   just a sample session).
+On Wed, Jan 31, 2007 at 11:44:07PM +0000, Catalin Marinas wrote:
+> On 29/01/07, Yann Dirson <ydirson@altern.org> wrote:
+> >We introduce a new pull-does-rebase setting, as companion to pullcmd.
+> >This allows to use both pullcmd's that need a rebase (like git-fetch)
+> >and pullcmd's that do not (like git-pull).
 > 
->     [git.git (master)]$ git checkout master^
->     M       git-checkout.sh
->     Note: you are not on any branch and are at commit "master^"
->     If you want to create a new branch from this checkout, you may do so
->     (now or later) by using -b with the checkout command again. Example:
->       git checkout -b <new_branch_name>
+> Thanks for the patches. I applied all of them but I have a question on this 
+> one:
 > 
-> * Coming back to an attached state can lose the detached HEAD, so
->   I get warned and stopped.
+> >+    if (config.get('stgit.pull-does-rebase')):
+> >+        # FIXME!
+> >+        reset(tree_id = rev_parse(repository))
 > 
->     [git.git]$ git checkout master
->     You are not on any branch and switching to branch 'master'
->     may lose your changes.  At this point, you can do one of two things:
->      (1) Decide it is Ok and say 'git checkout -f master';
->      (2) Start a new branch from the current commit, by saying
->          'git checkout -b <branch-name>'.
->     Leaving your HEAD detached; not switching to branch 'master'.
-I think these two are too long, after a few times one knows exactly
-what to do and all this text is not necessary anymore.
+> Why the "FIXME" here? The alternative is switch() and it might be safer.
 
-Perhaps the name (ui.guide) should be different, I just did not find
-any category to put this in.  The variable could become a general
-variable to enable/disable very verbose explanations what to do in a
-situation.
----
- git-checkout.sh |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+The last 2 patches, including the one with this FIXME, will need some
+work.
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index deb4795..1eb8b06 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -5,6 +5,8 @@ SUBDIRECTORY_OK=Sometimes
- . git-sh-setup
- require_work_tree
- 
-+guide=$(git repo-config --bool --get ui.guide)
-+[ -z "$guide" ] && guide=true
- old_name=HEAD
- old=$(git-rev-parse --verify $old_name 2>/dev/null)
- oldbranch=$(git-symbolic-ref $old_name 2>/dev/null)
-@@ -155,10 +157,13 @@ then
- 	detached="$new"
- 	if test -n "$oldbranch"
- 	then
--		detach_warn="Note: you are not on any branch and are at commit \"$new_name\"
-+		detach_warn="Note: you are not on any branch and are at commit \"$new_name\""
-+		if test "$guide" = true; then
-+			detach_warn="$detach_warn
- If you want to create a new branch from this checkout, you may do so
- (now or later) by using -b with the checkout command again. Example:
-   git checkout -b <new_branch_name>"
-+		fi
- 	fi
- elif test -z "$oldbranch" && test -n "$branch"
- then
-@@ -166,13 +171,18 @@ then
- 	if test -z "$force"
- 	then
- 		git show-ref -d -s | grep "$old" >/dev/null || {
--			echo >&2 \
-+			if test "$guide" = true; then
-+				echo >&2 \
- "You are not on any branch and switching to branch '$new_name'
- may lose your changes.  At this point, you can do one of two things:
-  (1) Decide it is Ok and say 'git checkout -f $new_name';
-  (2) Start a new branch from the current commit, by saying
-      'git checkout -b <branch-name>'.
- Leaving your HEAD detached; not switching to branch '$new_name'."
-+			else
-+				echo >&2 \
-+"HEAD detached; use -f to switch to branch '$new_name'."
-+			fi
- 			exit 1;
- 		}
- 	fi
+In this case, we should reset to the parent branch.  It currently just
+works because traditionnaly we use refs/heads/origin from remote
+"origin", and "rev-parse origin" resolves to that branch.
+
+
+Best regards,
 -- 
-1.5.0.rc3.g4a88
+Yann
