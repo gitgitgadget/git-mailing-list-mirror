@@ -1,47 +1,123 @@
-From: "Stefano Spinucci" <virgo977virgo@gmail.com>
-Subject: Re: git docs on kernel.org too new?
-Date: Thu, 1 Feb 2007 19:14:26 +0100
-Message-ID: <906f26060702011014r254ffd5frd75296c8443078ab@mail.gmail.com>
-References: <Pine.LNX.4.62.0702011051300.31498@torch.nrlssc.navy.mil>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] git-checkout: disable guides how to switch branches with ui.guide
+Date: Thu, 1 Feb 2007 19:44:03 +0100
+Message-ID: <20070201184403.GA6326@moooo.ath.cx>
+References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home> <20070131231942.GB31145@coredump.intra.peff.net> <Pine.LNX.4.64.0701311907500.3021@xanadu.home> <20070201030030.GA1979@coredump.intra.peff.net> <7vd54ur26u.fsf@assigned-by-dhcp.cox.net> <7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 01 19:14:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 01 19:44:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCgS6-00024W-Rx
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 19:14:31 +0100
+	id 1HCguq-00080U-3H
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 19:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422903AbXBASO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 13:14:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422914AbXBASO1
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 13:14:27 -0500
-Received: from an-out-0708.google.com ([209.85.132.247]:32580 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422903AbXBASO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 13:14:27 -0500
-Received: by an-out-0708.google.com with SMTP id b33so406367ana
-        for <git@vger.kernel.org>; Thu, 01 Feb 2007 10:14:26 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=psBYjxY2jd4ekxV2J4pyjU8yaQBlmVdVsBbYO3MCO8Slb0Up23lMS0E2s+edqW7UBII1u5W4RV8jP/7fbsFUzfV77jR2YrwjzKMxo4ACEmbviFDwGC86VyMPj1vIjBvNAvRLv8+P8NIdJU31AgNyNv4QALkoEDeBdvSXzd+HNcU=
-Received: by 10.114.152.17 with SMTP id z17mr184519wad.1170353666181;
-        Thu, 01 Feb 2007 10:14:26 -0800 (PST)
-Received: by 10.114.92.12 with HTTP; Thu, 1 Feb 2007 10:14:26 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.62.0702011051300.31498@torch.nrlssc.navy.mil>
+	id S1422933AbXBASoI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 13:44:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422934AbXBASoI
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 13:44:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54545 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422933AbXBASoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 13:44:07 -0500
+Received: (qmail invoked by alias); 01 Feb 2007 18:44:05 -0000
+Received: from pD9EB9AC1.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.154.193]
+  by mail.gmx.net (mp019) with SMTP; 01 Feb 2007 19:44:05 +0100
+X-Authenticated: #5358227
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38385>
-
-this isn't the first time someone is confused by git docs, and I guess
-why we can't have a documentation page as
-http://www.python.org/doc/versions/
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38386>
 
 ---
-Stefano Spinucci
+Junio C Hamano <junkio@cox.net> wrote:
+> * Detaching head would say which commit I am at and reminds me that
+>   I am not on any branch (not that I would detach my HEAD while keeping
+>   precious local changes around in any real-world workflow -- this is
+>   just a sample session).
+> 
+>     [git.git (master)]$ git checkout master^
+>     M       git-checkout.sh
+>     Note: you are not on any branch and are at commit "master^"
+>     If you want to create a new branch from this checkout, you may do so
+>     (now or later) by using -b with the checkout command again. Example:
+>       git checkout -b <new_branch_name>
+> 
+> * Coming back to an attached state can lose the detached HEAD, so
+>   I get warned and stopped.
+> 
+>     [git.git]$ git checkout master
+>     You are not on any branch and switching to branch 'master'
+>     may lose your changes.  At this point, you can do one of two things:
+>      (1) Decide it is Ok and say 'git checkout -f master';
+>      (2) Start a new branch from the current commit, by saying
+>          'git checkout -b <branch-name>'.
+>     Leaving your HEAD detached; not switching to branch 'master'.
+I think these two are too long, after a few times one knows exactly
+what to do and all this text is not necessary anymore.
+
+Perhaps the name (ui.guide) should be different, I just did not find
+any category to put this in.  The variable could become a general
+variable to enable/disable very verbose explanations what to do in a
+situation.
+---
+ git-checkout.sh |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/git-checkout.sh b/git-checkout.sh
+index deb4795..1eb8b06 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -5,6 +5,8 @@ SUBDIRECTORY_OK=Sometimes
+ . git-sh-setup
+ require_work_tree
+ 
++guide=$(git repo-config --bool --get ui.guide)
++[ -z "$guide" ] && guide=true
+ old_name=HEAD
+ old=$(git-rev-parse --verify $old_name 2>/dev/null)
+ oldbranch=$(git-symbolic-ref $old_name 2>/dev/null)
+@@ -155,10 +157,13 @@ then
+ 	detached="$new"
+ 	if test -n "$oldbranch"
+ 	then
+-		detach_warn="Note: you are not on any branch and are at commit \"$new_name\"
++		detach_warn="Note: you are not on any branch and are at commit \"$new_name\""
++		if test "$guide" = true; then
++			detach_warn="$detach_warn
+ If you want to create a new branch from this checkout, you may do so
+ (now or later) by using -b with the checkout command again. Example:
+   git checkout -b <new_branch_name>"
++		fi
+ 	fi
+ elif test -z "$oldbranch" && test -n "$branch"
+ then
+@@ -166,13 +171,18 @@ then
+ 	if test -z "$force"
+ 	then
+ 		git show-ref -d -s | grep "$old" >/dev/null || {
+-			echo >&2 \
++			if test "$guide" = true; then
++				echo >&2 \
+ "You are not on any branch and switching to branch '$new_name'
+ may lose your changes.  At this point, you can do one of two things:
+  (1) Decide it is Ok and say 'git checkout -f $new_name';
+  (2) Start a new branch from the current commit, by saying
+      'git checkout -b <branch-name>'.
+ Leaving your HEAD detached; not switching to branch '$new_name'."
++			else
++				echo >&2 \
++"HEAD detached; use -f to switch to branch '$new_name'."
++			fi
+ 			exit 1;
+ 		}
+ 	fi
+-- 
+1.5.0.rc3.g4a88
