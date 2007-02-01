@@ -1,64 +1,62 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [PATCH 7/7] Make 'stg pull' use git-fetch and not git-pull.
-Date: Thu, 1 Feb 2007 19:47:05 +0100
-Message-ID: <20070201184705.GC5362@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070129230117.7102.64322.stgit@gandelf.nowhere.earth> <20070129230555.7102.93948.stgit@gandelf.nowhere.earth> <b0943d9e0701311544k22986545x351c04a8faab8814@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
+Date: Thu, 1 Feb 2007 14:13:23 -0500
+Message-ID: <20070201191323.GA18608@spearce.org>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 01 19:48:22 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Feb 01 20:13:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCgyn-0001bM-QD
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 19:48:18 +0100
+	id 1HChNf-0005aB-GC
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 20:13:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422932AbXBASsP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 13:48:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422936AbXBASsO
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 13:48:14 -0500
-Received: from smtp6-g19.free.fr ([212.27.42.36]:40713 "EHLO smtp6-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422932AbXBASsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 13:48:14 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp6-g19.free.fr (Postfix) with ESMTP id 1514D4352F;
-	Thu,  1 Feb 2007 19:48:12 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id DD10F1F080; Thu,  1 Feb 2007 19:47:05 +0100 (CET)
+	id S1422946AbXBATNb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 14:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422950AbXBATNb
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 14:13:31 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39239 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422946AbXBATNa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 14:13:30 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HChN1-0007t2-6E; Thu, 01 Feb 2007 14:13:19 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E232D20FBAE; Thu,  1 Feb 2007 14:13:23 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0701311544k22986545x351c04a8faab8814@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38388>
 
-On Wed, Jan 31, 2007 at 11:44:07PM +0000, Catalin Marinas wrote:
-> On 29/01/07, Yann Dirson <ydirson@altern.org> wrote:
-> >We introduce a new pull-does-rebase setting, as companion to pullcmd.
-> >This allows to use both pullcmd's that need a rebase (like git-fetch)
-> >and pullcmd's that do not (like git-pull).
-> 
-> Thanks for the patches. I applied all of them but I have a question on this 
-> one:
-> 
-> >+    if (config.get('stgit.pull-does-rebase')):
-> >+        # FIXME!
-> >+        reset(tree_id = rev_parse(repository))
-> 
-> Why the "FIXME" here? The alternative is switch() and it might be safer.
+Nicolas Pitre <nico@cam.org> wrote:
+> The work in progress to enable separate reflog for HEAD will make it
+> independent from reflog of any branch HEAD might be pointing to. In
+> the mean time disallow HEAD@{...} until that work is completed. Otherwise
+> people might get used to the current behavior which makes HEAD@{...} an
+> alias for <current_branch>@{...} which won't be the case later.
 
-The last 2 patches, including the one with this FIXME, will need some
-work.
+I happen to really like the fact that HEAD@{...} is an alias for
+<current_branch>@{...}.
 
-In this case, we should reset to the parent branch.  It currently just
-works because traditionnaly we use refs/heads/origin from remote
-"origin", and "rev-parse origin" resolves to that branch.
+But now that HEAD will soon be getting its own reflog, I guess I
+better relearn how to type <current_branch>.  :-)
 
-
-Best regards,
 -- 
-Yann
+Shawn.
