@@ -1,81 +1,64 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch
- reflog
-Date: Thu, 01 Feb 2007 12:33:23 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
+From: "Mark Levedahl" <mdl123@verizon.net>
+Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
+Date: Thu, 1 Feb 2007 12:33:51 -0500
+Message-ID: <ept8a1$43s$1@sea.gmane.org>
+References: <BAY13-F213DF79906B3889D42369D0A50@phx.gbl> <Pine.LNX.4.63.0701311612420.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C14563.8060707@verizon.net> <Pine.LNX.4.63.0702011016430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <epsrj3$gh8$1@sea.gmane.org> <Pine.LNX.4.63.0702011503230.22628@wbgn013.biozentrum.uni-wuerzburg.de> <epsviu$j4$1@sea.gmane.org> <45C209AA.25141180@eudaptics.com> <Pine.LNX.4.63.0702011659210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 01 18:33:31 2007
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 01 18:34:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCfoN-00078o-Vh
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 18:33:28 +0100
+	id 1HCfpB-0007XY-R1
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 18:34:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161207AbXBARdZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 12:33:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161234AbXBARdZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 12:33:25 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:32692 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161226AbXBARdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 12:33:24 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCS00KW6ORNRUE0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 01 Feb 2007 12:33:23 -0500 (EST)
-X-X-Sender: nico@xanadu.home
+	id S1161234AbXBAReP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 12:34:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422728AbXBAReP
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 12:34:15 -0500
+Received: from main.gmane.org ([80.91.229.2]:38558 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161226AbXBAReO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 12:34:14 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HCfp2-0000RU-6M
+	for git@vger.kernel.org; Thu, 01 Feb 2007 18:34:08 +0100
+Received: from sahara.mdnt.com ([12.109.151.100])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 18:34:08 +0100
+Received: from mdl123 by sahara.mdnt.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 18:34:08 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: sahara.mdnt.com
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.3028
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38380>
 
-The work in progress to enable separate reflog for HEAD will make it
-independent from reflog of any branch HEAD might be pointing to. In
-the mean time disallow HEAD@{...} until that work is completed. Otherwise
-people might get used to the current behavior which makes HEAD@{...} an
-alias for <current_branch>@{...} which won't be the case later.
+"Johannes Schindelin" <Johannes.Schindelin@gmx.de> wrote in message 
+news:Pine.LNX.4.63.0702011659210.22628@wbgn013.biozentrum.uni-wuerzburg.de...
+> Hi,
+>
+> On Thu, 1 Feb 2007, Johannes Sixt wrote:
+>
+>> Isn't this the same patch that Mike Nefari posted yesterday?
+>
+> Judging by the email address, Mike Nefari and Mark Levedahl are one and
+> the same.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- sha1_name.c |   16 +++++++++++++++-
- 1 files changed, 15 insertions(+), 1 deletions(-)
+I have no idea how the name "Mike Nefari" got on my hotmail account, but this patch is from me. I apologize for all of the email 
+system related confusion.
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 9dfb3ac..70c6e42 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -301,12 +301,26 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 		fprintf(stderr, warning, len, str);
- 
- 	if (reflog_len) {
--		/* Is it asking for N-th entry, or approxidate? */
- 		int nth, i;
- 		unsigned long at_time;
- 		unsigned long co_time;
- 		int co_tz, co_cnt;
- 
-+		/*
-+		 * We'll have an independent reflog for "HEAD" eventually
-+		 * which won't be a synonym for the current branch reflog.
-+		 * In the mean time prevent people from getting used to
-+		 * such a synonym until the work is completed.
-+		 */
-+		if (!strncmp("HEAD", str, len) &&
-+		    !strncmp(real_ref, "refs/", 5)) {
-+			error("reflog for HEAD has not been implemented yet\n"
-+			      "Maybe you could try %s%s instead.",
-+			      strchr(real_ref+5, '/')+1, str + len);
-+			exit(-1);
-+		}
-+
-+		/* Is it asking for N-th entry, or approxidate? */
- 		for (i = nth = 0; 0 <= nth && i < reflog_len; i++) {
- 			char ch = str[at+2+i];
- 			if ('0' <= ch && ch <= '9')
--- 
-1.5.0.rc2.131.g4b01-dirty
+Mark Levedahl 
