@@ -1,123 +1,246 @@
-From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Thu, 1 Feb 2007 01:20:58 +0100
-Message-ID: <200702010120.58806.Josef.Weidendorfer@gmx.de>
-References: <87odognuhl.wl%cworth@cworth.org> <8aa486160701311127v686929c8vb9b5771031776ed8@mail.gmail.com> <871wlbascq.wl%cworth@cworth.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.5.0-rc3
+Date: Wed, 31 Jan 2007 16:26:36 -0800
+Message-ID: <7v7iv2soxv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Santi =?utf-8?q?B=C3=A9jar?=" <sbejar@gmail.com>,
-	git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Thu Feb 01 01:21:34 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 01 01:26:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCPhl-0002Ej-Mk
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 01:21:34 +0100
+	id 1HCPml-00043E-Uv
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 01:26:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161111AbXBAAVa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 31 Jan 2007 19:21:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161114AbXBAAVa
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 19:21:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46769 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161111AbXBAAVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Jan 2007 19:21:30 -0500
-Received: (qmail invoked by alias); 01 Feb 2007 00:21:28 -0000
-Received: from p5496A6CA.dip0.t-ipconnect.de (EHLO noname) [84.150.166.202]
-  by mail.gmx.net (mp013) with SMTP; 01 Feb 2007 01:21:28 +0100
-X-Authenticated: #352111
-User-Agent: KMail/1.9.6
-In-Reply-To: <871wlbascq.wl%cworth@cworth.org>
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S1161053AbXBAA0k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 31 Jan 2007 19:26:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933382AbXBAA0k
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Jan 2007 19:26:40 -0500
+Received: from fed1rmmtao05.cox.net ([68.230.241.34]:61683 "EHLO
+	fed1rmmtao05.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933379AbXBAA0i convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Jan 2007 19:26:38 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao05.cox.net
+          (InterMail vM.6.01.06.03 201-2131-130-104-20060516) with ESMTP
+          id <20070201002637.MOTU15640.fed1rmmtao05.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 31 Jan 2007 19:26:37 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id J0Sd1W00T1kojtg0000000; Wed, 31 Jan 2007 19:26:37 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38315>
 
-On Wednesday 31 January 2007, Carl Worth wrote:
-> > It would be nice if:
-> >
-> > git clone -b ${branch} git://...
+It's been a week and a half, and here comes the -rc3
 
-Nice indeed.
+  http://www.kernel.org/pub/software/scm/git/
 
-Additionally, it would be nice for clone to directly
-checkout tags. Why not an option "--checkout <ref>"
-to directly checkout <ref> after cloning?
+  git-1.5.0-rc3.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.0-rc3.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.0-rc3.tar.{gz,bz2}		(preformatted docs)
+  testing/git-*-1.5.0-rc3-1.$arch.rpm		(RPM)
 
-This goes nicely with the "-b" option
-to create a new branch. A "-b <branch>" option alone would
-imply "--checkout origin/<branch>". And without "--checkout"
-or "-b" option it defaults to "-b master" which gives
-exactly the same behavior as now.
+Hopefully this will be the last -rc before the final 1.5.0.
 
-This way,
+This contains the "git user's manual" by J. Bruce Fields.  While
+it still has its own "To Do" section, it has already been in a
+very good shape for some time, giving information with coherence
+and guiding a new user in a carefully chosen order of topics
+into much more pleasant git experience than before.
 
- git clone --checkout v1.0 git://...
+----------------------------------------------------------------
 
-would checkout tag v1.0, and use a detached head for it.
+Changes since v1.5.0-rc2 are as follows:
 
-> In addition, it would be great to have a command that did the same
-> setup within an existing repository.
+Alex Riesen (5):
+  Insert ACTIVESTATE_STRING in Git.pm
+  Force Activestate Perl to tie git command pipe handle to a handle cla=
+ss
+  Cleanup uninitialized value in chomp
+  Allow default core.logallrefupdates to be overridden with template's =
+config
+  Fix git-update-index to work with relative pathnames.
 
-Why not use "git clone" for this?
-Currently, the man page says about the directory it will clone into:
+Alexandre Julliard (1):
+  vc-git.el: Take into account the destination name in vc-checkout.
 
- "Cloning into an existing directory is not allowed."
+Andy Parkins (5):
+  New files in git weren't being downloaded during CVS update
+  If abbrev is set to zero in git-describe, don't add the unique suffix
+  Allow the tag signing key to be specified in the config file
+  UNIX reference time of 1970-01-01 00:00 is UTC timezone, not local ti=
+me zone
+  Heavily expanded update hook to send more useful emails than the old =
+hook
 
-But we could relax this: if the specified directory is the root of
-a checkout (ie. with a .git subdir), we would clone a remote repository
-into the same local repository. However, this should not default
-to "-b master", ie. not switch the current branch. Additionally, the
-remote name should not default to "origin", but to the 
-"humanish" part of the source repository. IMHO we should have done
-the latter since long time ago, as a remote "origin" is not really
-useful once you work with branches from multiple remote repositories.
+Aneesh Kumar K.V (2):
+  blameview: Use git-cat-file to read the file content.
+  Update git-cat-file documentation
 
-Doing this,
+Bill Lear (1):
+  Document --check option to git diff.
 
- git clone git://... <newdir>
+David K=E5gedal (1):
+  Improved error message from git-rebase
 
-would be the equivalent of
+Eric Wong (1):
+  git-svn: remove leading slash when printing removed directories
 
- mkdir <newdir>
- cd <newdir>
- git init
- git clone -b master git://... .
+J. Bruce Fields (31):
+  Documentation: add git user's manual
+  Documentation: expand preface and todo's
+  Documentation: git-rebase discussion, miscellaneous user-manual updat=
+es
+  Documentation: more user-manual todo's
+  Documentation: reorder development section, todo's
+  Documentation: begin discussion of git-remote in user manual
+  Documentation: rev-list -> rev-parse, other typos, start examples
+  user manual: answer some comments from Junio
+  user-manual: replace init-db by init
+  user-manual: reindent
+  user-manual:  rewrap, fix heading levels
+  user-manual: add "quick start" as chapter 1
+  user-manual: minor quickstart reorganization
+  user-manual: clarify difference between tag and branch
+  user-manual: update references discussion
+  user-manual: update git-gc discussion
+  user-manual: stub discussion of fsck and reflog
+  user-manual: reorganize fetch discussion, add internals, etc.
+  user-manual: git-fsck, dangling objects
+  user-manual: fsck-objects -> fsck
+  user-manual: repo-config -> config
+  user-manual: add references to git-config man page
+  user-manual: typo fix
+  user-manual: fix a header level
+  user-manual: reflogs, other recovery
+  user-manual: rewrap a few long lines
+  user-manual: minor "TODO" updates
+  user-manual: document git-show-branch example
+  user-manual: SHA1 -> object name
+  user-manual: point to README for gitweb information
+  user-manual: todo's
 
-which IMHO would make a lot of sense.
- 
-> And I would be most happy if the two commands for these two use cases
-> shared as much syntax as possible, so I could publish one string and
-> users could cut-and-paste it to either command as appropriate.
+Jakub Narebski (3):
+  Documentation/config.txt: Document config file syntax better
+  t/t1300-repo-config.sh: value continued on next line
+  Documentation/config.txt: Correct info about subsection name
 
-You would say:
+Jason Riedy (1):
+  Use inttypes.h rather than stdint.h.
 
-"To get version <xyz>, do a
+Jeff King (4):
+  format-patch: fix bug with --stdout in a subdirectory
+  contrib/vim: update syntax for changed commit template
+  diffcore-pickaxe: fix infinite loop on zero-length needle
+  Add a sample program 'blameview' to show how to use git-blame --incre=
+mental
 
-  git clone --checkout <xyz> git://...
+Johannes Schindelin (2):
+  annotate: use pager
+  reflog inspection: introduce shortcut "-g"
 
-If you already have a local clone of the repository, append the
-directory of your local repository as target to clone this version
-into".
+Johannes Sixt (1):
+  Add a missing fork() error check.
 
+Junio C Hamano (43):
+  User manual: fix typos in examples
+  Documentation/tutorial-2: Fix interesting typo in an example.
+  Revert "prune: --grace=3Dtime"
+  Make sure git_connect() always give two file descriptors.
+  is_repository_shallow(): prototype fix.
+  shallow repository: disable unsupported operations for now.
+  git-gc: do not run git-prune by default.
+  cvsimport: activate -a option, really.
+  .mailmap: fix screw-ups in Uwe's name
+  honor --author even with --amend, -C, and -c.
+  reflog gc: a tag that does not point at a commit is not a crime.
+  git-checkout -m: fix merge case
+  git-daemon documentation on enabling services.
+  ls-remote and clone: accept --upload-pack=3D<path> as well.
+  Refactor the pack header reading function out of receive-pack.c
+  Allow fetch-pack to decide keeping the fetched pack without exploding
+  fetch-pack: remove --keep-auto and make it the default.
+  Consolidate {receive,fetch}.unpackLimit
+  Allow non-developer to clone, checkout and fetch more easily.
+  parse-remote: do not barf on a remote shorthand without any refs to f=
+etch.
+  show-branch -g: default to HEAD
+  Documentation: pack-refs --all vs default behaviour
+  Make sure we do not write bogus reflog entries.
+  git-merge: leave sensible reflog message when used as the first level=
+ UI.
+  create_symref: check error return from open().
+  write_in_full: size_t is unsigned.
+  Don't force everybody to call setup_ident().
+  git-blame --porcelain: quote filename in c-style when needed.
+  Update describe documentation.
+  Document 'git-blame --incremental'
+  git-fsck-objects is now synonym to git-fsck
+  Two small typofixes.
+  lock_any_ref_for_update(): do not accept malformatted refs.
+  git-commit -s: no extra space when sign-offs appear at the end alread=
+y.
+  git-blame: somewhat better commenting.
+  git-send-email: remove debugging output.
+  Fix git-tag -u
+  Documentation: "git-checkout <tree> <path>" takes any tree-ish
+  t9200: Re-code non-ascii path test in UTF-8
+  t9200: do not test -x bit if the filesystem does not support it.
+  git main documentation: point at the user's manual.
+  Do not use hardcoded path to xhmtl.xsl to generate user's manual
+  GIT v1.5.0-rc3
 
-> One string I would have liked would have been "git://... ${branch}"
+Linus Torvalds (5):
+  fsck-objects: refactor checking for connectivity
+  Fix seriously broken "git pack-refs"
+  Add dangling objects tips.
+  git-blame --incremental
+  git-push through git protocol
 
-IMHO "-b" option is better as it tells you that it creates a new
-local development branch for you.
+Mark Wooding (3):
+  wt-status: Actually accept `color.status.BLAH' configuration variable=
+s.
+  Documentation/config.txt: Fix documentation of colour config tweaks.
+  Make fsck and fsck-objects be builtins.
 
-Josef
+Nicolas Pitre (3):
+  fix suggested branch creation command when detaching head
+  git-log -g --pretty=3Doneline should display the reflog message
+  tone down the detached head warning
 
-> but existing git-clone and git-fetch command syntax is not too
-> amenable for that, (git-clone interprets an argument after the URL as
-> the name of the local directory to create while git-fetch interprets
-> the argument after the URL as a refspec).
-> 
-> -Carl
-> 
+Peter Eriksen (2):
+  sha1_file.c: Avoid multiple calls to find_pack_entry().
+  Documentation: --amend cannot be combined with -c/-C/-F.
+
+Ren=E9 Scharfe (1):
+  git-blame --incremental: don't use pager
+
+Sam Vilain (1):
+  contrib/emacs/vc-git.el: support vc-version-other-window
+
+Santi B=E9jar (1):
+  git-fetch: Allow fetching the remote HEAD
+
+Shawn O. Pearce (6):
+  Remove unnecessary found variable from describe.
+  Teach git-describe to display distances from tags.
+  Compute accurate distances in git-describe before output.
+  Teach for-each-ref about a little language called Tcl.
+  Don't coredump on bad refs in update-server-info.
+  Escape --upload-pack from expr.
+
+Simon 'corecode' Schubert (1):
+  Replace perl code with pure shell code
+
+Tom Prince (1):
+  Rename git-repo-config to git-config.
+
+Uwe Kleine-K=F6nig (2):
+  rename --exec to --upload-pack for fetch-pack and peek-remote
+  make --upload-pack option to git-fetch configurable
