@@ -1,76 +1,56 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Fetching from peer's public repo
-Date: Thu, 1 Feb 2007 09:24:34 -0600
-Message-ID: <17858.1586.41833.597819@lisa.zopyra.com>
+From: "Christian MICHON" <christian.michon@gmail.com>
+Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
+Date: Thu, 1 Feb 2007 16:28:09 +0100
+Message-ID: <46d6db660702010728x68457809o37967f322d49933b@mail.gmail.com>
+References: <BAY13-F213DF79906B3889D42369D0A50@phx.gbl>
+	 <Pine.LNX.4.63.0701311612420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <45C14563.8060707@verizon.net>
+	 <Pine.LNX.4.63.0702011016430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <epsrj3$gh8$1@sea.gmane.org>
+	 <Pine.LNX.4.63.0702011503230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <epsviu$j4$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 01 16:25:50 2007
+Cc: git@vger.kernel.org
+To: "Mark Levedahl" <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Thu Feb 01 16:28:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCdo2-0004i3-Ib
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 16:24:58 +0100
+	id 1HCdrE-0005vR-JP
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 16:28:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422664AbXBAPYt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 10:24:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422677AbXBAPYt
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 10:24:49 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60863 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422665AbXBAPYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 10:24:48 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l11FOm828380;
-	Thu, 1 Feb 2007 09:24:48 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1751603AbXBAP2N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 10:28:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbXBAP2N
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 10:28:13 -0500
+Received: from nz-out-0506.google.com ([64.233.162.232]:48299 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751603AbXBAP2K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 10:28:10 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so545298nze
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 07:28:10 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=f8NxcyKDuTpHNpeLOlelPyOsTtPB7TblVvFsYJmnwGI2bcpWYzOu79NxR8GbP+rQiN9I4q2a/Qrs4+avHR7aPaUax7ax9Db1Q1OiMgnoULneioTz7zF9IXdfwhj/LsuYqaC+YWeMNlkJd796uAo5QBYIgFpF1Fe1cR67M5AR/5k=
+Received: by 10.114.133.1 with SMTP id g1mr137899wad.1170343689685;
+        Thu, 01 Feb 2007 07:28:09 -0800 (PST)
+Received: by 10.115.16.9 with HTTP; Thu, 1 Feb 2007 07:28:09 -0800 (PST)
+In-Reply-To: <epsviu$j4$1@sea.gmane.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38363>
 
-My fetch from a peer's public repo seems to be failing:
+On 2/1/07, Mark Levedahl <mdl123@verizon.net> wrote:
+> Maybe this works better?
+>
 
-% git --bare fetch git://source/public/project topic:topic
-remote: Generating pack...
-remote: Done counting 48 objects.
-remote: Result has 34 objects.
-remote: Deltifying 34 objects.
-remote:  100% (34/34) done
-remote: Total 34, written 34 (delta 22), reused 24 (delta 12)
-Unpacking 34 objects
- 100% (34/34) done
-* refs/heads/topic: not updating to non-fast forward branch 'topic' of git://source/public/project
-  old...new: 1c332f5...f3b18ff
+yes. thanks: it helps on msys/mingw.
 
-I assume that is because his public repo does not contain changes I
-have pushed into my public repo.  So, I asked him to pull from
-my public repo into his.  He did, and said that git blathered that
-there were 12 changed files, etc.
-
-I then tried the fetch again and it failed in the same way.  If I
-look at the log output for the "old...new: 1c332f5...f3b18ff" line
-above, I see the changes that he has that I want to get, but apparently
-cannot (I tried to pull from my public to my private and it said
-"Already up-to-date."):
-
-% git log 1c332f5..f3b18ff
-[... output looks reasonable ...]
-
-Any ideas on how I can resolve this?
-
-Also, what is the difference between:
-
-% git log 1c332f5..f3b18ff
-
-and
-
-% git log 1c332f5...f3b18ff
-
-with the latter having three dots instead of two?  It seems to show
-much more output, but I don't know what the intent is.
-
-
-Bill
+-- 
+Christian
