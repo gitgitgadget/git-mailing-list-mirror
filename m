@@ -1,179 +1,497 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [CFT] git-svn - almost a rewrite...
-Date: Thu, 1 Feb 2007 05:29:34 -0800
-Message-ID: <20070201132934.GB7800@localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: "Mark Levedahl" <mdl123@verizon.net>
+Subject: Re: [PATCH] Make gitk work reasonably well on Cygwin.
+Date: Thu, 1 Feb 2007 08:56:48 -0500
+Message-ID: <epsrj3$gh8$1@sea.gmane.org>
+References: <BAY13-F213DF79906B3889D42369D0A50@phx.gbl> <Pine.LNX.4.63.0701311612420.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C14563.8060707@verizon.net> <Pine.LNX.4.63.0702011016430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 01 14:30:09 2007
+X-From: git-owner@vger.kernel.org Thu Feb 01 14:58:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCc0r-0004B5-R9
-	for gcvg-git@gmane.org; Thu, 01 Feb 2007 14:30:06 +0100
+	id 1HCcRp-0005wv-7e
+	for gcvg-git@gmane.org; Thu, 01 Feb 2007 14:57:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422872AbXBAN3h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 08:29:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422871AbXBAN3h
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 08:29:37 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:49446 "EHLO hand.yhbt.net"
+	id S1422894AbXBAN52 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 08:57:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422885AbXBAN52
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 08:57:28 -0500
+Received: from main.gmane.org ([80.91.229.2]:43867 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422872AbXBAN3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 08:29:36 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id D00FE7DC094;
-	Thu,  1 Feb 2007 05:29:34 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 01 Feb 2007 05:29:34 -0800
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1422894AbXBAN50 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 08:57:26 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HCcR4-00036L-HS
+	for git@vger.kernel.org; Thu, 01 Feb 2007 14:57:12 +0100
+Received: from sahara.mdnt.com ([12.109.151.100])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 14:57:10 +0100
+Received: from mdl123 by sahara.mdnt.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 14:57:10 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: sahara.mdnt.com
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.3028
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38352>
 
-I wanted to better support multi-fetch and --follow-parent, but the
-original design of git-svn was strongly biased towards following a
-single path.  I ended up rewriting significant parts of it.
+"Johannes Schindelin" <Johannes.Schindelin@gmx.de> wrote in message 
+news:Pine.LNX.4.63.0702011016430.22628@wbgn013.biozentrum.uni-wuerzburg.de...
+> Hi,
+>
+> And then I find that you also fixed whitespace breakage, which does not
+> belong in this patch.
+>
+> Ciao,
+> Dscho
+>
+My editor simply will not write out trailing whitespace so I do not notice when such breakage is fixed.
 
-Now git-svn uses .git/config for managing remote fetches (no wildcard
-support yet, unfortunately); making it easy to see what files.  With
-connection minimization (git-svn migrate --minimize), git-svn can now
-avoid unnecessary reconnections to repositories.
+In the attached, I split out the four whitespace fixes in a separate patch.
 
-With a single connection, git-svn can finally multi-fetch
-chronologically, which means --follow-parent is much less likely to
-fetch redundant information.  Additionally, parents created by
---follow-parent are no longer tracked on subsequent invocations
-(since we originally just wanted the child), so we avoid waisting
-time fetching things we didn't ask for.
+Mark 
 
-Not strictly --follow-parent, but git-svn can now better track
-paths that have been deleted up to (but not including) the revision
-where it was deleted.
 
-fetch and multi-fetch is much better at figuring out if there's nothing
-to fetch, so repeatedly running 'git-svn multi-fetch' to get the latest
-changes should be noticeably cheaper.
+begin 666 0002-Make-gitk-work-reasonably-well-on-Cygwin.patch
+M1G)O;2 S8S T,C4P-C$V9C!D965D.#@Q8V4Q-CDP93AC,3DU,&(Q-C0S8C W
+M($UO;B!397 @,3<@,# Z,# Z,# @,C P,0I&<F]M.B!-87)K($QE=F5D86AL
+M(#QM9&PQ,C- =F5R:7IO;BYN970^"D1A=&4Z(%1H=2P@,2!&96(@,C P-R P
+M.#HT-CHS." M,#4P, I3=6)J96-T.B!;4$%40TA=($UA:V4@9VET:R!W;W)K
+M(')E87-O;F%B;'D@=V5L;"!O;B!#>6=W:6XN"@I4:&4@9VET:R!G=6D@;&%Y
+M;W5T('=A<R!C;VUP;&5T96QY(&)R;VME;B!O;B!#>6=W:6XN($EF(&=I=&L@
+M=V%S('-T87)T960*=VET:&]U="!P<F5V:6]U<R!G96]M971R>2!I;B!^+RYG
+M:71K+"!T:&4@=7-E<B!C;W5L9"!D<F%G('1H92!W:6YD;W<@<V%S:&5S"G1O
+M(&=E="!A('5S96%B;&4@;&%Y;W5T+B!(;W=E=F5R+"!I9B!^+RYG:71K(&5X
+M:7-T960L('1H:7,@=V%S(&YO="!P;W-S:6)L90IA="!A;&PN"@I4:&4@9FEX
+M('=A<R!T;R!R97=R:71E(&UA:V5W:6YD;W<L(&-H86YG:6YG('1H92!T;W!L
+M979E;"!C;VYT86EN97)S(&%N9 IT:&4@<&%R=&EC=6QA<B!G96]M971R>2!I
+M;F9O<FUA=&EO;B!S879E9"!B971W965N('-E<W-I;VYS+B!.=6UE<F]U<R!B
+M=6=S"FEN(&)O=&@@=&AE($-Y9W=I;B!A;F0@=&AE($QI;G5X(%1K('9E<G-I
+M;VYS(&UA:V4@=&AI<R!A(&1E;&EC871E"F)A;&%N8VEN9R!A8W0Z('1H92!V
+M97)S:6]N(&AE<F4@=V]R:W,@:6X@8F]T:"!B=70@;6%N>2!S=6)T;&4@=F%R
+M:6%N=',*87)E(&-O;7!E=&5L>2!B<F]K96X@:6X@;VYE(&]R('1H92!O=&AE
+M<B!E;G9I<F]N;65N="X*"E1H<F5E('5S97(@=FES:6)L92!C:&%N9V5S(')E
+M<W5L=#H*,2 M(%1H92!V:65W97(@:7,@9G5L;'D@9G5N8W1I;VYA;"!U;F1E
+M<B!#>6=W:6XN"C(@+2!4:&4@<V5A<F-H(&)A<B!M;W9E<R!F<F]M('1H92!B
+M;W1T;VT@=&\@=&AE('1O<"!O9B!T:&4@;&]W97(@;&5F= H@(" @<&%N92X@
+M5&AI<R!W87,@;F5C97-S87)Y('1O(&=E="!A<F]U;F0@82!L87EO=70@<')O
+M8FQE;2!O;B!#>6=W:6XN"C,@+2!4:&4@=VEN9&]W('-I>F4@86YD('!O<VET
+M:6]N(&ES('-A=F5D(&%N9"!R97-T;W)E9"!B971W965N('-E<W-I;VYS+@H@
+M(" @06=A:6XL('1H:7,@:7,@;F5C97-S87)Y('1O(&=E="!A<F]U;F0@82!L
+M87EO=70@<')O8FQE;2!O;B!#>6=W:6XN"@I3:6=N960M;V9F+6)Y.B!-87)K
+M($QE=F5D86AL(#QM9&PQ,C- =F5R:7IO;BYN970^"BTM+0H@9VET:R!\(" R
+M-S8@*RLK*RLK*RLK*RLK*RLK*RLK*RLK*RLK*RLK*RLK*RLK*RLK+2TM+2TM
+M+2TM+2TM+2TM+2TM+2TM+2TM+2TM+2TM"B Q(&9I;&5S(&-H86YG960L(#$U
+M,"!I;G-E<G1I;VYS*"LI+" Q,C8@9&5L971I;VYS*"TI"@ID:69F("TM9VET
+M(&$O9VET:R!B+V=I=&L*:6YD97@@-C4P-#,U92XN.#$S,C@Q,B Q,# W-34*
+M+2TM(&$O9VET:PHK*RL@8B]G:71K"D! ("TT,S4L-38@*S0S-2PU.2! 0"!P
+M<F]C(&UA:V5W:6YD;W<@>WT@>PH@(" @("YB87(N:&5L<"!C;VYF:6=U<F4@
+M+69O;G0@)'5I9F]N= H@(" @("X@8V]N9FEG=7)E("UM96YU("YB87(*( HM
+M(" @(&EF('LA6VEN9F\@97AI<W1S(&=E;VUE=')Y*&-A;G8Q*5U]('L*+0ES
+M970@9V5O;65T<GDH8V%N=C$I(%ME>'!R('LT-2 J("1C:&%R<W!C?5T*+0ES
+M970@9V5O;65T<GDH8V%N=C(I(%ME>'!R('LS," J("1C:&%R<W!C?5T*+0ES
+M970@9V5O;65T<GDH8V%N=C,I(%ME>'!R('LQ-2 J("1C:&%R<W!C?5T*+0ES
+M970@9V5O;65T<GDH8V%N=F@I(%ME>'!R('LR-2 J("1L:6YE<W!C("L@-'U=
+M"BT)<V5T(&=E;VUE=')Y*&-T97AT=RD@.# *+0ES970@9V5O;65T<GDH8W1E
+M>'1H*2 S, HM"7-E="!G96]M971R>2AC9FQI<W1W*2 S, HM(" @('T**R @
+M(" C('1H92!G=6D@:&%S('5P<&5R(&%N9"!L;W=E<B!H86QF+"!P87)T<R!O
+M9B!A('!A;F5D('=I;F1O=RX*(" @("!P86YE9'=I;F1O=R N8W1O<" M;W)I
+M96YT('9E<G1I8V%L"BT@(" @:68@>UMI;F9O(&5X:7-T<R!G96]M971R>2AW
+M:61T:"E=?2!["BT)+F-T;W @8V]N9B M=VED=&@@)&=E;VUE=')Y*'=I9'1H
+M*2 M:&5I9VAT("1G96]M971R>2AH96EG:'0I"BT)<V5T('1E>'1H(%ME>'!R
+M('LD9V5O;65T<GDH:&5I9VAT*2 M("1G96]M971R>2AC86YV:"D@+2 U-GU=
+M"BT)<V5T(&=E;VUE=')Y*&-T97AT:"D@6V5X<'(@>R@D=&5X=&@@+2 X*2 O
+M"BT)"0D)(" @(%MF;VYT(&UE=')I8W,@)'1E>'1F;VYT("UL:6YE<W!A8V5=
+M?5T*+2 @("!]"BT@(" @9G)A;64@+F-T;W N=&]P"BT@(" @9G)A;64@+F-T
+M;W N=&]P+F)A<@HM(" @(&9R86UE("YC=&]P+G1O<"YL8F%R"BT@(" @<&%C
+M:R N8W1O<"YT;W N;&)A<B M<VED92!B;W1T;VT@+69I;&P@> HM(" @('!A
+M8VL@+F-T;W N=&]P+F)A<B M<VED92!B;W1T;VT@+69I;&P@> HM(" @('-E
+M="!C<V-R;VQL("YC=&]P+G1O<"YC<V(*+2 @("!S8W)O;&QB87(@)&-S8W)O
+M;&P@+6-O;6UA;F0@>V%L;&-A;G9S('EV:65W?2 M:&EG:&QI9VAT=&AI8VMN
+M97-S(# *+2 @("!P86-K("1C<V-R;VQL("US:61E(')I9VAT("UF:6QL('D*
+M+2 @("!P86YE9'=I;F1O=R N8W1O<"YT;W N8VQI<W0@+6]R:65N="!H;W)I
+M>F]N=&%L("US87-H<&%D(# @+6AA;F1L97-I>F4@- HM(" @('!A8VL@+F-T
+M;W N=&]P+F-L:7-T("US:61E('1O<" M9FEL;"!B;W1H("UE>'!A;F0@,0HM
+M(" @("YC=&]P(&%D9" N8W1O<"YT;W *+2 @("!S970@8V%N=B N8W1O<"YT
+M;W N8VQI<W0N8V%N=@HM(" @(&-A;G9A<R D8V%N=B M:&5I9VAT("1G96]M
+M971R>2AC86YV:"D@+7=I9'1H("1G96]M971R>2AC86YV,2D@7 HK"BL@(" @
+M(R!P;W-S:6)L>2!U<V4@87-S=6UE9"!G96]M971R>0HK(" @(&EF('LA6VEN
+M9F\@97AI<W1S(&=E;VUE=')Y*'1O<&AE:6=H="E=?2!["BL@(" @(" @('-E
+M="!G96]M971R>2AT;W!H96EG:'0I(%ME>'!R('LQ-2 J("1L:6YE<W!C?5T*
+M*R @(" @(" @<V5T(&=E;VUE=')Y*'1O<'=I9'1H*2!;97AP<B![.# @*B D
+M8VAA<G-P8WU="BL@(" @(" @('-E="!G96]M971R>2AB;W1H96EG:'0I(%ME
+M>'!R('LQ-2 J("1L:6YE<W!C?5T**R @(" @(" @<V5T(&=E;VUE=')Y*&)O
+M='=I9'1H*2!;97AP<B![-3 @*B D8VAA<G-P8WU="BL@(" @(" @('-E="!G
+M96]M971R>2AC86YV*2!;97AP<B![-# @*B D8VAA<G-P8WU="BL@(" @(" @
+M('-E="!G96]M971R>2AC86YV,BD@6V5X<'(@>S(P("H@)&-H87)S<&-]70HK
+M(" @(" @("!S970@9V5O;65T<GDH8V%N=C,I(%ME>'!R('LR," J("1C:&%R
+M<W!C?5T**R @("!]"BL**R @(" C('1H92!U<'!E<B!H86QF('=I;&P@:&%V
+M92!A('!A;F5D('=I;F1O=RP@82!S8W)O;&P@8F%R('1O('1H92!R:6=H="P@
+M86YD('-O;64@<W1U9F8@8F5L;W<**R @("!F<F%M92 N=&8@+6AE:6=H=" D
+M9V5O;65T<GDH=&]P:&5I9VAT*2 M=VED=&@@)&=E;VUE=')Y*'1O<'=I9'1H
+M*0HK(" @(&9R86UE("YT9BYH:7-T9G)A;64**R @("!P86YE9'=I;F1O=R N
+M=&8N:&ES=&9R86UE+G!W8VQI<W0@+6]R:65N="!H;W)I>F]N=&%L("US87-H
+M<&%D(# @+6AA;F1L97-I>F4@- HK"BL@(" @(R!C<F5A=&4@=&AR964@8V%N
+M=F%S97,**R @("!S970@8W-C<F]L;" N=&8N:&ES=&9R86UE+F-S8@HK(" @
+M('-E="!C86YV("YT9BYH:7-T9G)A;64N<'=C;&ES="YC86YV"BL@(" @8V%N
+M=F%S("1C86YV("UW:61T:" D9V5O;65T<GDH8V%N=BD@7 H@"2UB86-K9W)O
+M=6YD("1B9V-O;&]R("UB9" P(%P*( DM>7-C<F]L;&EN8W(@)&QI;F5S<&,@
+M+7ES8W)O;&QC;VUM86YD(")S8W)O;&QC86YV("1C<V-R;VQL(@HM(" @("YC
+M=&]P+G1O<"YC;&ES="!A9&0@)&-A;G8*+2 @("!S970@8V%N=C(@+F-T;W N
+M=&]P+F-L:7-T+F-A;G8R"BT@(" @8V%N=F%S("1C86YV,B M:&5I9VAT("1G
+M96]M971R>2AC86YV:"D@+7=I9'1H("1G96]M971R>2AC86YV,BD@7 HK(" @
+M("YT9BYH:7-T9G)A;64N<'=C;&ES="!A9&0@)&-A;G8**R @("!S970@8V%N
+M=C(@+G1F+FAI<W1F<F%M92YP=V-L:7-T+F-A;G8R"BL@(" @8V%N=F%S("1C
+M86YV,B M=VED=&@@)&=E;VUE=')Y*&-A;G8R*2!<"B )+6)A8VMG<F]U;F0@
+M)&)G8V]L;W(@+6)D(# @+7ES8W)O;&QI;F-R("1L:6YE<W!C"BT@(" @+F-T
+M;W N=&]P+F-L:7-T(&%D9" D8V%N=C(*+2 @("!S970@8V%N=C,@+F-T;W N
+M=&]P+F-L:7-T+F-A;G8S"BT@(" @8V%N=F%S("1C86YV,R M:&5I9VAT("1G
+M96]M971R>2AC86YV:"D@+7=I9'1H("1G96]M971R>2AC86YV,RD@7 HK(" @
+M("YT9BYH:7-T9G)A;64N<'=C;&ES="!A9&0@)&-A;G8R"BL@(" @<V5T(&-A
+M;G8S("YT9BYH:7-T9G)A;64N<'=C;&ES="YC86YV,PHK(" @(&-A;G9A<R D
+M8V%N=C,@+7=I9'1H("1G96]M971R>2AC86YV,RD@7 H@"2UB86-K9W)O=6YD
+M("1B9V-O;&]R("UB9" P("UY<V-R;VQL:6YC<B D;&EN97-P8PHM(" @("YC
+M=&]P+G1O<"YC;&ES="!A9&0@)&-A;G8S"BT@(" @8FEN9" N8W1O<"YT;W N
+M8VQI<W0@/$-O;F9I9W5R93X@>W)E<VEZ96-L:7-T<&%N97,@)5<@)7=]"BL@
+M(" @+G1F+FAI<W1F<F%M92YP=V-L:7-T(&%D9" D8V%N=C,**PHK(" @(",@
+M82!S8W)O;&P@8F%R('1O(')U;&4@=&AE;0HK(" @('-C<F]L;&)A<B D8W-C
+M<F]L;" M8V]M;6%N9"![86QL8V%N=G,@>79I97=]("UH:6=H;&EG:'1T:&EC
+M:VYE<W,@, HK(" @('!A8VL@)&-S8W)O;&P@+7-I9&4@<FEG:'0@+69I;&P@
+M>0HK(" @(&)I;F0@+G1F+FAI<W1F<F%M92YP=V-L:7-T(#Q#;VYF:6=U<F4^
+M('MR97-I>F5C;&ES='!A;F5S("57("5W?0H@(" @(&QA<'!E;F0@8F=L:7-T
+M("1C86YV("1C86YV,B D8V%N=C,**R @("!P86-K("YT9BYH:7-T9G)A;64N
+M<'=C;&ES=" M9FEL;"!B;W1H("UE>'!A;F0@,2 M<VED92!L969T"B *+2 @
+M("!S970@<VAA,65N=')Y("YC=&]P+G1O<"YB87(N<VAA,0HK(" @(",@=V4@
+M:&%V92!T=V\@8G5T=&]N(&)A<G,@870@8F]T=&]M(&]F('1O<"!F<F%M92X@
+M0F%R(#$**R @("!F<F%M92 N=&8N8F%R"BL@(" @9G)A;64@+G1F+FQB87(@
+M+6AE:6=H=" Q-0HK"BL@(" @<V5T('-H83%E;G1R>2 N=&8N8F%R+G-H83$*
+M(" @("!S970@96YT<FEE<R D<VAA,65N=')Y"BT@(" @<V5T('-H83%B=70@
+M+F-T;W N=&]P+F)A<BYS:&$Q;&%B96P**R @("!S970@<VAA,6)U=" N=&8N
+M8F%R+G-H83%L86)E; H@(" @(&)U='1O;B D<VAA,6)U=" M=&5X=" B4TA!
+M,2!)1#H@(B M<W1A=&4@9&ES86)L960@+7)E;&EE9B!F;&%T(%P*( DM8V]M
+M;6%N9"!G;W1O8V]M;6ET("UW:61T:" X("UF;VYT("1U:69O;G0*(" @(" D
+M<VAA,6)U="!C;VYF("UD:7-A8FQE9&9O<F5G<F]U;F0@6R1S:&$Q8G5T(&-G
+M970@+69O<F5G<F]U;F1="BT@(" @<&%C:R N8W1O<"YT;W N8F%R+G-H83%L
+M86)E;" M<VED92!L969T"BL@(" @<&%C:R N=&8N8F%R+G-H83%L86)E;" M
+M<VED92!L969T"B @(" @96YT<GD@)'-H83%E;G1R>2 M=VED=&@@-# @+69O
+M;G0@)'1E>'1F;VYT("UT97AT=F%R:6%B;&4@<VAA,7-T<FEN9PH@(" @('1R
+M86-E(&%D9"!V87)I86)L92!S:&$Q<W1R:6YG('=R:71E('-H83%C:&%N9V4*
+M(" @("!P86-K("1S:&$Q96YT<GD@+7-I9&4@;&5F=" M<&%D>2 R"D! ("TU
+M,#4L.3$@*S4P."PQ,#4@0$ @<')O8R!M86ME=VEN9&]W('M]('L*( DP># P
+M+" P>#,X+" P>&9F+" P>#=F+" P>&9F+" P>#=F+" P>&9F+" P>#=F+" P
+M># P+" P>#,X+" P># P+" P>#%C+ H@"3!X,# L(#!X,&4L(#!X,# L(#!X
+M,#<L(#!X.# L(#!X,#,L(#!X8S L(#!X,#%].PH@(" @('T*+2 @("!B=71T
+M;VX@+F-T;W N=&]P+F)A<BYL969T8G5T("UI;6%G92!B;2UL969T("UC;VUM
+M86YD(&=O8F%C:R!<"BL@(" @8G5T=&]N("YT9BYB87(N;&5F=&)U=" M:6UA
+M9V4@8FTM;&5F=" M8V]M;6%N9"!G;V)A8VL@7 H@"2US=&%T92!D:7-A8FQE
+M9" M=VED=&@@,C8*+2 @("!P86-K("YC=&]P+G1O<"YB87(N;&5F=&)U=" M
+M<VED92!L969T("UF:6QL('D*+2 @("!B=71T;VX@+F-T;W N=&]P+F)A<BYR
+M:6=H=&)U=" M:6UA9V4@8FTM<FEG:'0@+6-O;6UA;F0@9V]F;W)W(%P**R @
+M("!P86-K("YT9BYB87(N;&5F=&)U=" M<VED92!L969T("UF:6QL('D**R @
+M("!B=71T;VX@+G1F+F)A<BYR:6=H=&)U=" M:6UA9V4@8FTM<FEG:'0@+6-O
+M;6UA;F0@9V]F;W)W(%P*( DM<W1A=&4@9&ES86)L960@+7=I9'1H(#(V"BT@
+M(" @<&%C:R N8W1O<"YT;W N8F%R+G)I9VAT8G5T("US:61E(&QE9G0@+69I
+M;&P@>0HK(" @('!A8VL@+G1F+F)A<BYR:6=H=&)U=" M<VED92!L969T("UF
+M:6QL('D*( HM(" @(&)U='1O;B N8W1O<"YT;W N8F%R+F9I;F1B=70@+71E
+M>'0@(D9I;F0B("UC;VUM86YD(&1O9FEN9" M9F]N=" D=6EF;VYT"BT@(" @
+M<&%C:R N8W1O<"YT;W N8F%R+F9I;F1B=70@+7-I9&4@;&5F= HK(" @(&)U
+M='1O;B N=&8N8F%R+F9I;F1B=70@+71E>'0@(D9I;F0B("UC;VUM86YD(&1O
+M9FEN9" M9F]N=" D=6EF;VYT"BL@(" @<&%C:R N=&8N8F%R+F9I;F1B=70@
+M+7-I9&4@;&5F= H@(" @('-E="!F:6YD<W1R:6YG('M]"BT@(" @<V5T(&9S
+M=')I;F<@+F-T;W N=&]P+F)A<BYF:6YD<W1R:6YG"BL@(" @<V5T(&9S=')I
+M;F<@+G1F+F)A<BYF:6YD<W1R:6YG"B @(" @;&%P<&5N9"!E;G1R:65S("1F
+M<W1R:6YG"B @(" @96YT<GD@)&9S=')I;F<@+7=I9'1H(#,P("UF;VYT("1T
+M97AT9F]N=" M=&5X='9A<FEA8FQE(&9I;F1S=')I;F<*(" @("!T<F%C92!A
+M9&0@=F%R:6%B;&4@9FEN9'-T<FEN9R!W<FET92!F:6YD7V-H86YG90HM(" @
+M('!A8VL@)&9S=')I;F<@+7-I9&4@;&5F=" M97AP86YD(#$@+69I;&P@> HK
+M(" @('!A8VL@)&9S=')I;F<@+7-I9&4@;&5F=" M97AP86YD(#$@+69I;&P@
+M>" M:6X@+G1F+F)A<@H@(" @('-E="!F:6YD='EP92!%>&%C= HM(" @('-E
+M="!F:6YD='EP96UE;G4@6W1K7V]P=&EO;DUE;G4@+F-T;W N=&]P+F)A<BYF
+M:6YD='EP92!<"BT)"0D@(&9I;F1T>7!E($5X86-T($EG;D-A<V4@4F5G97AP
+M70HK(" @('-E="!F:6YD='EP96UE;G4@6W1K7V]P=&EO;DUE;G4@+G1F+F)A
+M<BYF:6YD='EP92!<"BL)"2 @(" @(&9I;F1T>7!E($5X86-T($EG;D-A<V4@
+M4F5G97AP70H@(" @('1R86-E(&%D9"!V87)I86)L92!F:6YD='EP92!W<FET
+M92!F:6YD7V-H86YG90HM(" @("YC=&]P+G1O<"YB87(N9FEN9'1Y<&4@8V]N
+M9FEG=7)E("UF;VYT("1U:69O;G0*+2 @(" N8W1O<"YT;W N8F%R+F9I;F1T
+M>7!E+FUE;G4@8V]N9FEG=7)E("UF;VYT("1U:69O;G0**R @(" N=&8N8F%R
+M+F9I;F1T>7!E(&-O;F9I9W5R92 M9F]N=" D=6EF;VYT"BL@(" @+G1F+F)A
+M<BYF:6YD='EP92YM96YU(&-O;F9I9W5R92 M9F]N=" D=6EF;VYT"B @(" @
+M<V5T(&9I;F1L;V,@(D%L;"!F:65L9',B"BT@(" @=&M?;W!T:6]N365N=2 N
+M8W1O<"YT;W N8F%R+F9I;F1L;V,@9FEN9&QO8R B06QL(&9I96QD<R(@2&5A
+M9&QI;F4@7 HK(" @('1K7V]P=&EO;DUE;G4@+G1F+F)A<BYF:6YD;&]C(&9I
+M;F1L;V,@(D%L;"!F:65L9',B($AE861L:6YE(%P*( E#;VUM96YT<R!!=71H
+M;W(@0V]M;6ET=&5R"B @(" @=')A8V4@861D('9A<FEA8FQE(&9I;F1L;V,@
+M=W)I=&4@9FEN9%]C:&%N9V4*+2 @(" N8W1O<"YT;W N8F%R+F9I;F1L;V,@
+M8V]N9FEG=7)E("UF;VYT("1U:69O;G0*+2 @(" N8W1O<"YT;W N8F%R+F9I
+M;F1L;V,N;65N=2!C;VYF:6=U<F4@+69O;G0@)'5I9F]N= HM(" @('!A8VL@
+M+F-T;W N=&]P+F)A<BYF:6YD;&]C("US:61E(')I9VAT"BT@(" @<&%C:R N
+M8W1O<"YT;W N8F%R+F9I;F1T>7!E("US:61E(')I9VAT"BT*+2 @("!L86)E
+M;" N8W1O<"YT;W N;&)A<BYF;&%B96P@+71E>'0@(DAI9VAL:6=H=#H@($-O
+M;6UI=',@(B!<"BT)+69O;G0@)'5I9F]N= HM(" @('!A8VL@+F-T;W N=&]P
+M+FQB87(N9FQA8F5L("US:61E(&QE9G0@+69I;&P@>0HK(" @("YT9BYB87(N
+M9FEN9&QO8R!C;VYF:6=U<F4@+69O;G0@)'5I9F]N= HK(" @("YT9BYB87(N
+M9FEN9&QO8RYM96YU(&-O;F9I9W5R92 M9F]N=" D=6EF;VYT"BL@(" @<&%C
+M:R N=&8N8F%R+F9I;F1L;V,@+7-I9&4@<FEG:'0**R @("!P86-K("YT9BYB
+M87(N9FEN9'1Y<&4@+7-I9&4@<FEG:'0**PHK(" @(",@8G5I;&0@=7 @=&AE
+M(&)O='1O;2!B87(@;V8@=7!P97(@=VEN9&]W"BL@(" @;&%B96P@+G1F+FQB
+M87(N9FQA8F5L("UT97AT(")(:6=H;&EG:'0Z("!#;VUM:71S("(@7 HK(" @
+M("UF;VYT("1U:69O;G0**R @("!P86-K("YT9BYL8F%R+F9L86)E;" M<VED
+M92!L969T("UF:6QL('D*(" @("!S970@9V1T='EP92 B=&]U8VAI;F<@<&%T
+M:',Z(@HM(" @('-E="!G;2!;=&M?;W!T:6]N365N=2 N8W1O<"YT;W N;&)A
+M<BYG9'1T>7!E(&=D='1Y<&4@(G1O=6-H:6YG('!A=&AS.B(@7 HM"0DB861D
+M:6YG+W)E;6]V:6YG('-T<FEN9SHB70HK(" @('-E="!G;2!;=&M?;W!T:6]N
+M365N=2 N=&8N;&)A<BYG9'1T>7!E(&=D='1Y<&4@(G1O=6-H:6YG('!A=&AS
+M.B(@7 HK"2)A9&1I;F<O<F5M;W9I;F<@<W1R:6YG.B)="B @(" @=')A8V4@
+M861D('9A<FEA8FQE(&=D='1Y<&4@=W)I=&4@:&9I;&5S7V-H86YG90H@(" @
+M("1G;2!C;VYF("UF;VYT("1U:69O;G0*+2 @(" N8W1O<"YT;W N;&)A<BYG
+M9'1T>7!E(&-O;F8@+69O;G0@)'5I9F]N= HM(" @('!A8VL@+F-T;W N=&]P
+M+FQB87(N9V1T='EP92 M<VED92!L969T("UF:6QL('D*+2 @("!E;G1R>2 N
+M8W1O<"YT;W N;&)A<BYF96YT("UW:61T:" R-2 M9F]N=" D=&5X=&9O;G0@
+M7 HK(" @("YT9BYL8F%R+F=D='1Y<&4@8V]N9B M9F]N=" D=6EF;VYT"BL@
+M(" @<&%C:R N=&8N;&)A<BYG9'1T>7!E("US:61E(&QE9G0@+69I;&P@>0HK
+M(" @(&5N=')Y("YT9BYL8F%R+F9E;G0@+7=I9'1H(#(U("UF;VYT("1T97AT
+M9F]N="!<"B )+71E>'1V87)I86)L92!H:6=H;&EG:'1?9FEL97,*(" @("!T
+M<F%C92!A9&0@=F%R:6%B;&4@:&EG:&QI9VAT7V9I;&5S('=R:71E(&AF:6QE
+M<U]C:&%N9V4*+2 @("!L87!P96YD(&5N=')I97,@+F-T;W N=&]P+FQB87(N
+M9F5N= HM(" @('!A8VL@+F-T;W N=&]P+FQB87(N9F5N=" M<VED92!L969T
+M("UF:6QL('@@+65X<&%N9" Q"BT@(" @;&%B96P@+F-T;W N=&]P+FQB87(N
+M=FQA8F5L("UT97AT("(@3U(@:6X@=FEE=R(@+69O;G0@)'5I9F]N= HM(" @
+M('!A8VL@+F-T;W N=&]P+FQB87(N=FQA8F5L("US:61E(&QE9G0@+69I;&P@
+M>0HK(" @(&QA<'!E;F0@96YT<FEE<R N=&8N;&)A<BYF96YT"BL@(" @<&%C
+M:R N=&8N;&)A<BYF96YT("US:61E(&QE9G0@+69I;&P@>" M97AP86YD(#$*
+M*R @("!L86)E;" N=&8N;&)A<BYV;&%B96P@+71E>'0@(B!/4B!I;B!V:65W
+M(B M9F]N=" D=6EF;VYT"BL@(" @<&%C:R N=&8N;&)A<BYV;&%B96P@+7-I
+M9&4@;&5F=" M9FEL;"!Y"B @(" @9VQO8F%L('9I97=H;&UE;G4@<V5L96-T
+M961H;'9I97<*+2 @("!S970@=FEE=VAL;65N=2!;=&M?;W!T:6]N365N=2 N
+M8W1O<"YT;W N;&)A<BYV:&P@<V5L96-T961H;'9I97<@3F]N95T**R @("!S
+M970@=FEE=VAL;65N=2!;=&M?;W!T:6]N365N=2 N=&8N;&)A<BYV:&P@<V5L
+M96-T961H;'9I97<@3F]N95T*(" @(" D=FEE=VAL;65N=2!E;G1R>6-O;F8@
+M3F]N92 M8V]M;6%N9"!D96QV:&EG:&QI9VAT"B @(" @)'9I97=H;&UE;G4@
+M8V]N9B M9F]N=" D=6EF;VYT"BT@(" @+F-T;W N=&]P+FQB87(N=FAL(&-O
+M;F8@+69O;G0@)'5I9F]N= HM(" @('!A8VL@+F-T;W N=&]P+FQB87(N=FAL
+M("US:61E(&QE9G0@+69I;&P@>0HM(" @(&QA8F5L("YC=&]P+G1O<"YL8F%R
+M+G)L86)E;" M=&5X=" B($]2("(@+69O;G0@)'5I9F]N= HM(" @('!A8VL@
+M+F-T;W N=&]P+FQB87(N<FQA8F5L("US:61E(&QE9G0@+69I;&P@>0HK(" @
+M("YT9BYL8F%R+G9H;"!C;VYF("UF;VYT("1U:69O;G0**R @("!P86-K("YT
+M9BYL8F%R+G9H;" M<VED92!L969T("UF:6QL('D**R @("!L86)E;" N=&8N
+M;&)A<BYR;&%B96P@+71E>'0@(B!/4B B("UF;VYT("1U:69O;G0**R @("!P
+M86-K("YT9BYL8F%R+G)L86)E;" M<VED92!L969T("UF:6QL('D*(" @("!G
+M;&]B86P@:&EG:&QI9VAT7W)E;&%T960*+2 @("!S970@;2!;=&M?;W!T:6]N
+M365N=2 N8W1O<"YT;W N;&)A<BYR96QM(&AI9VAL:6=H=%]R96QA=&5D($YO
+M;F4@7 HM"2 @(" @(" B1&5S8V5N9&5N="(@(DYO="!D97-C96YD96YT(B B
+M06YC97-T;W(B(").;W0@86YC97-T;W(B70HK(" @('-E="!M(%MT:U]O<'1I
+M;VY-96YU("YT9BYL8F%R+G)E;&T@:&EG:&QI9VAT7W)E;&%T960@3F]N92!<
+M"BL)(D1E<V-E;F1E;G0B(").;W0@9&5S8V5N9&5N="(@(D%N8V5S=&]R(B B
+M3F]T(&%N8V5S=&]R(ET*(" @(" D;2!C;VYF("UF;VYT("1U:69O;G0*+2 @
+M(" N8W1O<"YT;W N;&)A<BYR96QM(&-O;F8@+69O;G0@)'5I9F]N= HK(" @
+M("YT9BYL8F%R+G)E;&T@8V]N9B M9F]N=" D=6EF;VYT"B @(" @=')A8V4@
+M861D('9A<FEA8FQE(&AI9VAL:6=H=%]R96QA=&5D('=R:71E('9R96Q?8VAA
+M;F=E"BT@(" @<&%C:R N8W1O<"YT;W N;&)A<BYR96QM("US:61E(&QE9G0@
+M+69I;&P@>0HM"BT@(" @<&%N961W:6YD;W<@+F-T;W N8V1E=" M;W)I96YT
+M(&AO<FEZ;VYT86P*+2 @(" N8W1O<"!A9&0@+F-T;W N8V1E= HM(" @(&9R
+M86UE("YC=&]P+F-D970N;&5F= HM(" @(&9R86UE("YC=&]P+F-D970N;&5F
+M="YB;W0*+2 @("!P86-K("YC=&]P+F-D970N;&5F="YB;W0@+7-I9&4@8F]T
+M=&]M("UF:6QL('@*+2 @("!B=71T;VX@+F-T;W N8V1E="YL969T+F)O="YS
+M96%R8V@@+71E>'0@(E-E87)C:"(@+6-O;6UA;F0@9&]S96%R8V@@7 HK(" @
+M('!A8VL@+G1F+FQB87(N<F5L;2 M<VED92!L969T("UF:6QL('D**PHK(" @
+M(",@1FEN:7-H('!U='1I;F<@=&AE('5P<&5R(&AA;&8@;V8@=&AE('9I97=E
+M<B!T;V=E=&AE<@HK(" @('!A8VL@+G1F+FQB87(@+6EN("YT9B M<VED92!B
+M;W1T;VT@+69I;&P@> HK(" @('!A8VL@+G1F+F)A<B M:6X@+G1F("US:61E
+M(&)O='1O;2 M9FEL;"!X"BL@(" @<&%C:R N=&8N:&ES=&9R86UE("UF:6QL
+M(&)O=&@@+7-I9&4@=&]P("UE>'!A;F0@,0HK(" @("YC=&]P(&%D9" N=&8*
+M*PHK(" @(",@;F]W(&)U:6QD('5P('1H92!B;W1T;VT**R @("!P86YE9'=I
+M;F1O=R N<'=B;W1T;VT@+6]R:65N="!H;W)I>F]N=&%L"BL**R @(" C(&QO
+M=V5R(&QE9G0L(&$@=&5X="!B;W@@;W9E<B!S96%R8V@@8F%R+"!S8W)O;&P@
+M8F%R('1O('1H92!R:6=H= HK(" @(",@:68@=V4@:VYO=R!W:6YD;W<@:&5I
+M9VAT+"!T:&5N('1H870@=VEL;"!S970@=&AE(&QO=V5R('1E>'0@:&5I9VAT
+M+"!O=&AE<G=I<V4**R @(" C('=E('-E="!L;W=E<B!T97AT(&AE:6=H="!W
+M:&EC:"!W:6QL(&1R:79E('=I;F1O=R!H96EG:'0**R @("!I9B![6VEN9F\@
+M97AI<W1S(&=E;VUE=')Y*&UA:6XI77T@>PHK(" @(" @("!F<F%M92 N8FQE
+M9G0@+7=I9'1H("1G96]M971R>2AB;W1W:61T:"D**R @("!](&5L<V4@>PHK
+M(" @(" @("!F<F%M92 N8FQE9G0@+7=I9'1H("1G96]M971R>2AB;W1W:61T
+M:"D@+6AE:6=H=" D9V5O;65T<GDH8F]T:&5I9VAT*0HK(" @('T**R @("!F
+M<F%M92 N8FQE9G0N=&]P"BL**R @("!B=71T;VX@+F)L969T+G1O<"YS96%R
+M8V@@+71E>'0@(E-E87)C:"(@+6-O;6UA;F0@9&]S96%R8V@@7 H@"2UF;VYT
+M("1U:69O;G0*+2 @("!P86-K("YC=&]P+F-D970N;&5F="YB;W0N<V5A<F-H
+M("US:61E(&QE9G0@+7!A9'@@-0HM(" @('-E="!S<W1R:6YG("YC=&]P+F-D
+M970N;&5F="YB;W0N<W-T<FEN9PHK(" @('!A8VL@+F)L969T+G1O<"YS96%R
+M8V@@+7-I9&4@;&5F=" M<&%D>" U"BL@(" @<V5T('-S=')I;F<@+F)L969T
+M+G1O<"YS<W1R:6YG"B @(" @96YT<GD@)'-S=')I;F<@+7=I9'1H(#(P("UF
+M;VYT("1T97AT9F]N=" M=&5X='9A<FEA8FQE('-E87)C:'-T<FEN9PH@(" @
+M(&QA<'!E;F0@96YT<FEE<R D<W-T<FEN9PH@(" @('1R86-E(&%D9"!V87)I
+M86)L92!S96%R8VAS=')I;F<@=W)I=&4@:6YC<G-E87)C: H@(" @('!A8VL@
+M)'-S=')I;F<@+7-I9&4@;&5F=" M97AP86YD(#$@+69I;&P@> HM(" @('-E
+M="!C=&5X=" N8W1O<"YC9&5T+FQE9G0N8W1E>'0**R @("!S970@8W1E>'0@
+M+F)L969T+F-T97AT"B @(" @=&5X=" D8W1E>'0@+6)A8VMG<F]U;F0@)&)G
+M8V]L;W(@+69O<F5G<F]U;F0@)&9G8V]L;W(@7 H@"2US=&%T92!D:7-A8FQE
+M9" M9F]N=" D=&5X=&9O;G0@7 HM"2UW:61T:" D9V5O;65T<GDH8W1E>'1W
+M*2 M:&5I9VAT("1G96]M971R>2AC=&5X=&@I(%P*( DM>7-C<F]L;&-O;6UA
+M;F0@<V-R;VQL=&5X=" M=W)A<"!N;VYE"BT@(" @<V-R;VQL8F%R("YC=&]P
+M+F-D970N;&5F="YS8B M8V]M;6%N9" B)&-T97AT('EV:65W(@HM(" @('!A
+M8VL@+F-T;W N8V1E="YL969T+G-B("US:61E(')I9VAT("UF:6QL('D**R @
+M("!S8W)O;&QB87(@+F)L969T+G-B("UC;VUM86YD("(D8W1E>'0@>79I97<B
+M"BL@(" @<&%C:R N8FQE9G0N=&]P("US:61E('1O<" M9FEL;"!X"BL@(" @
+M<&%C:R N8FQE9G0N<V(@+7-I9&4@<FEG:'0@+69I;&P@>0H@(" @('!A8VL@
+M)&-T97AT("US:61E(&QE9G0@+69I;&P@8F]T:" M97AP86YD(#$*+2 @(" N
+M8W1O<"YC9&5T(&%D9" N8W1O<"YC9&5T+FQE9G0*(" @("!L87!P96YD(&)G
+M;&ES=" D8W1E>'0*(" @("!L87!P96YD(&9G;&ES=" D8W1E>'0*( I 0" M
+M-C(P+#,V("LV,S<L-#4@0$ @<')O8R!M86ME=VEN9&]W('M]('L*(" @(" D
+M8W1E>'0@=&%G(&-O;F8@;7-E<" M9F]N="!;8V]N8V%T("1T97AT9F]N="!B
+M;VQD70H@(" @("1C=&5X="!T86<@8V]N9B!F;W5N9" M8F%C:R!Y96QL;W<*
+M( HM(" @(&9R86UE("YC=&]P+F-D970N<FEG:'0*+2 @("!F<F%M92 N8W1O
+M<"YC9&5T+G)I9VAT+FUO9&4*+2 @("!R861I;V)U='1O;B N8W1O<"YC9&5T
+M+G)I9VAT+FUO9&4N<&%T8V@@+71E>'0@(E!A=&-H(B!<"BL@(" @+G!W8F]T
+M=&]M(&%D9" N8FQE9G0**PHK(" @(",@;&]W97(@<FEG:'0**R @("!F<F%M
+M92 N8G)I9VAT"BL@(" @9G)A;64@+F)R:6=H="YM;V1E"BL@(" @<F%D:6]B
+M=71T;VX@+F)R:6=H="YM;V1E+G!A=&-H("UT97AT(")0871C:"(@7 H@"2UC
+M;VUM86YD(')E<V5L96-T;&EN92 M=F%R:6%B;&4@8VUI=&UO9&4@+79A;'5E
+M(")P871C:"(*+2 @("!R861I;V)U='1O;B N8W1O<"YC9&5T+G)I9VAT+FUO
+M9&4N=')E92 M=&5X=" B5')E92(@7 HK(" @(')A9&EO8G5T=&]N("YB<FEG
+M:'0N;6]D92YT<F5E("UT97AT(")4<F5E(B!<"B )+6-O;6UA;F0@<F5S96QE
+M8W1L:6YE("UV87)I86)L92!C;6ET;6]D92 M=F%L=64@(G1R964B"BT@(" @
+M9W)I9" N8W1O<"YC9&5T+G)I9VAT+FUO9&4N<&%T8V@@+F-T;W N8V1E="YR
+M:6=H="YM;V1E+G1R964@+7-T:6-K>2!E=PHM(" @('!A8VL@+F-T;W N8V1E
+M="YR:6=H="YM;V1E("US:61E('1O<" M9FEL;"!X"BT@(" @<V5T(&-F;&ES
+M=" N8W1O<"YC9&5T+G)I9VAT+F-F:6QE<PHK(" @(&=R:60@+F)R:6=H="YM
+M;V1E+G!A=&-H("YB<FEG:'0N;6]D92YT<F5E("US=&EC:WD@97<**R @("!P
+M86-K("YB<FEG:'0N;6]D92 M<VED92!T;W @+69I;&P@> HK(" @('-E="!C
+M9FQI<W0@+F)R:6=H="YC9FEL97,*(" @("!S970@:6YD96YT(%MF;VYT(&UE
+M87-U<F4@)&UA:6YF;VYT(")N;B)="BT@(" @=&5X=" D8V9L:7-T("UW:61T
+M:" D9V5O;65T<GDH8V9L:7-T=RD@7 HK(" @('1E>'0@)&-F;&ES="!<"B )
+M+6)A8VMG<F]U;F0@)&)G8V]L;W(@+69O<F5G<F]U;F0@)&9G8V]L;W(@7 H@
+M"2UF;VYT("1M86EN9F]N="!<"B )+71A8G,@6VQI<W0@)&EN9&5N="!;97AP
+M<B![,B J("1I;F1E;G1]75T@7 HM"2UY<V-R;VQL8V]M;6%N9" B+F-T;W N
+M8V1E="YR:6=H="YS8B!S970B(%P**PDM>7-C<F]L;&-O;6UA;F0@(BYB<FEG
+M:'0N<V(@<V5T(B!<"B )+6-U<G-O<B!;+B!C9V5T("UC=7)S;W)=(%P*( DM
+M<W!A8VEN9S$@,2 M<W!A8VEN9S,@,0H@(" @(&QA<'!E;F0@8F=L:7-T("1C
+M9FQI<W0*(" @("!L87!P96YD(&9G;&ES=" D8V9L:7-T"BT@(" @<V-R;VQL
+M8F%R("YC=&]P+F-D970N<FEG:'0N<V(@+6-O;6UA;F0@(B1C9FQI<W0@>79I
+M97<B"BT@(" @<&%C:R N8W1O<"YC9&5T+G)I9VAT+G-B("US:61E(')I9VAT
+M("UF:6QL('D**R @("!S8W)O;&QB87(@+F)R:6=H="YS8B M8V]M;6%N9" B
+M)&-F;&ES="!Y=FEE=R(**R @("!P86-K("YB<FEG:'0N<V(@+7-I9&4@<FEG
+M:'0@+69I;&P@>0H@(" @('!A8VL@)&-F;&ES=" M<VED92!L969T("UF:6QL
+M(&)O=&@@+65X<&%N9" Q"B @(" @)&-F;&ES="!T86<@8V]N9FEG=7)E(&AI
+M9VAL:6=H="!<"B )+6)A8VMG<F]U;F0@6R1C9FQI<W0@8V=E=" M<V5L96-T
+M8F%C:V=R;W5N9%T*(" @(" D8V9L:7-T('1A9R!C;VYF:6=U<F4@8F]L9" M
+M9F]N="!;8V]N8V%T("1M86EN9F]N="!B;VQD70HM(" @("YC=&]P+F-D970@
+M861D("YC=&]P+F-D970N<FEG:'0*+2 @("!B:6YD("YC=&]P+F-D970@/$-O
+M;F9I9W5R93X@>W)E<VEZ96-D971P86YE<R E5R E=WT*( HM(" @('!A8VL@
+M+F-T;W @+7-I9&4@=&]P("UF:6QL(&)O=&@@+65X<&%N9" Q"BL@(" @+G!W
+M8F]T=&]M(&%D9" N8G)I9VAT"BL@(" @+F-T;W @861D("YP=V)O='1O;0H@
+M"BL@(" @(R!R97-T;W)E('=I;F1O=R!P;W-I=&EO;B!I9B!K;F]W;@HK(" @
+M(&EF('M;:6YF;R!E>&ES=',@9V5O;65T<GDH;6%I;BE=?2!["BL@(" @(" @
+M('=M(&=E;VUE=')Y("X@(B1G96]M971R>2AM86EN*2(**R @("!]"BL**R @
+M("!B:6YD("YP=V)O='1O;2 \0V]N9FEG=7)E/B![<F5S:7IE8V1E='!A;F5S
+M("57("5W?0HK(" @('!A8VL@+F-T;W @+69I;&P@8F]T:" M97AP86YD(#$*
+M(" @("!B:6YD86QL(#PQ/B![<V5L8V%N=FQI;F4@)5<@)7@@)7E]"B @(" @
+M(V)I;F1A;&P@/$(Q+4UO=&EO;CX@>W-E;&-A;G9L:6YE("57("5X("5Y?0H@
+M(" @(&)I;F1A;&P@/$)U='1O;E)E;&5A<V4M-#X@(F%L;&-A;G9S('EV:65W
+M('-C<F]L;" M-2!U;FET<R(*0$ @+3@P,BPQ." K.#(X+#$V($! ('!R;V,@
+M<V%V97-T=69F('MW?2!["B )<'5T<R D9B!;;&ES="!S970@9F=C;VQO<B D
+M9F=C;VQO<ET*( EP=71S("1F(%ML:7-T('-E="!C;VQO<G,@)&-O;&]R<UT*
+M( EP=71S("1F(%ML:7-T('-E="!D:69F8V]L;W)S("1D:69F8V]L;W)S70HM
+M"7!U=',@)&8@(G-E="!G96]M971R>2AW:61T:"D@6W=I;F9O('=I9'1H("YC
+M=&]P72(*+0EP=71S("1F(")S970@9V5O;65T<GDH:&5I9VAT*2!;=VEN9F\@
+M:&5I9VAT("YC=&]P72(*+0EP=71S("1F(")S970@9V5O;65T<GDH8V%N=C$I
+M(%ME>'!R('M;=VEN9F\@=VED=&@@)&-A;G9=+3)]72(*+0EP=71S("1F(")S
+M970@9V5O;65T<GDH8V%N=C(I(%ME>'!R('M;=VEN9F\@=VED=&@@)&-A;G8R
+M72TR?5TB"BT)<'5T<R D9B B<V5T(&=E;VUE=')Y*&-A;G8S*2!;97AP<B![
+M6W=I;F9O('=I9'1H("1C86YV,UTM,GU=(@HM"7!U=',@)&8@(G-E="!G96]M
+M971R>2AC86YV:"D@6V5X<'(@>UMW:6YF;R!H96EG:'0@)&-A;G9=+3)]72(*
+M+0ES970@=VED(%ME>'!R('LH6W=I;F9O('=I9'1H("1C=&5X=%T@+2 X*2!<
+M"BT)"0D@(" O(%MF;VYT(&UE87-U<F4@)'1E>'1F;VYT("(P(EU]70HM"7!U
+M=',@)&8@(G-E="!G96]M971R>2AC=&5X='<I("1W:60B"BT)<V5T('=I9"!;
+M97AP<B![*%MW:6YF;R!W:61T:" D8V9L:7-T72 M(#$Q*2!<"BT)"0D@(" O
+M(%MF;VYT(&UE87-U<F4@6R1C9FQI<W0@8V=E=" M9F]N=%T@(C B77U="BT)
+M<'5T<R D9B B<V5T(&=E;VUE=')Y*&-F;&ES='<I("1W:60B"BL**R @(" @
+M(" @<'5T<R D9B B<V5T(&=E;VUE=')Y*&UA:6XI(%MW:6YF;R!G96]M971R
+M>2 N72(**PEP=71S("1F(")S970@9V5O;65T<GDH=&]P=VED=&@I(%MW:6YF
+M;R!W:61T:" N=&9=(@HK"7!U=',@)&8@(G-E="!G96]M971R>2AT;W!H96EG
+M:'0I(%MW:6YF;R!H96EG:'0@+G1F72(**PEP=71S("1F(")S970@9V5O;65T
+M<GDH8V%N=BD@6V5X<'(@>UMW:6YF;R!W:61T:" D8V%N=ETM,'U=(@HK"7!U
+M=',@)&8@(G-E="!G96]M971R>2AC86YV,BD@6V5X<'(@>UMW:6YF;R!W:61T
+M:" D8V%N=C)=+3!]72(**PEP=71S("1F(")S970@9V5O;65T<GDH8V%N=C,I
+M(%ME>'!R('M;=VEN9F\@=VED=&@@)&-A;G8S72TP?5TB"BL)<'5T<R D9B B
+M<V5T(&=E;VUE=')Y*&)O='=I9'1H*2!;=VEN9F\@=VED=&@@+F)L969T72(*
+M*PEP=71S("1F(")S970@9V5O;65T<GDH8F]T:&5I9VAT*2!;=VEN9F\@:&5I
+M9VAT("YB;&5F=%TB"BL*( EP=71S("UN;VYE=VQI;F4@)&8@(G-E="!P97)M
+M=FEE=W,@>R(*( EF;W(@>W-E="!V(#!]('LD=B \("1N97AT=FEE=VYU;7T@
+M>VEN8W(@=GT@>PH@"2 @("!I9B![)'9I97=P97)M*"1V*7T@>PI 0" M-# T
+M,RPQ,2 K-# V-RPQ,2! 0"!P<F]C(&%D9'1O:&ES=&]R>2![8VUD?2!["B @
+M(" @?0H@(" @(&EN8W(@:&ES=&]R>6EN9&5X"B @(" @:68@>R1H:7-T;W)Y
+M:6YD97@@/B Q?2!["BT)+F-T;W N=&]P+F)A<BYL969T8G5T(&-O;F8@+7-T
+M871E(&YO<FUA; HK"2YT9BYB87(N;&5F=&)U="!C;VYF("US=&%T92!N;W)M
+M86P*(" @("!](&5L<V4@>PHM"2YC=&]P+G1O<"YB87(N;&5F=&)U="!C;VYF
+M("US=&%T92!D:7-A8FQE9 HK"2YT9BYB87(N;&5F=&)U="!C;VYF("US=&%T
+M92!D:7-A8FQE9 H@(" @('T*+2 @(" N8W1O<"YT;W N8F%R+G)I9VAT8G5T
+M(&-O;F8@+7-T871E(&1I<V%B;&5D"BL@(" @+G1F+F)A<BYR:6=H=&)U="!C
+M;VYF("US=&%T92!D:7-A8FQE9 H@?0H@"B!P<F]C(&=O9&\@>V5L='T@>PI 
+M0" M-# V-RPQ," K-# Y,2PQ,"! 0"!P<F]C(&=O8F%C:R![?2!["B @(" @
+M:68@>R1H:7-T;W)Y:6YD97@@/B Q?2!["B ):6YC<B!H:7-T;W)Y:6YD97@@
+M+3$*( EG;V1O(%ML:6YD97@@)&AI<W1O<GD@6V5X<'(@>R1H:7-T;W)Y:6YD
+M97@@+2 Q?5U="BT)+F-T;W N=&]P+F)A<BYR:6=H=&)U="!C;VYF("US=&%T
+M92!N;W)M86P**PDN=&8N8F%R+G)I9VAT8G5T(&-O;F8@+7-T871E(&YO<FUA
+M; H@(" @('T*(" @("!I9B![)&AI<W1O<GEI;F1E>" \/2 Q?2!["BT)+F-T
+M;W N=&]P+F)A<BYL969T8G5T(&-O;F8@+7-T871E(&1I<V%B;&5D"BL)+G1F
+M+F)A<BYL969T8G5T(&-O;F8@+7-T871E(&1I<V%B;&5D"B @(" @?0H@?0H@
+M"D! ("TT,#@Q+#$P("LT,3 U+#$P($! ('!R;V,@9V]F;W)W('M]('L*( ES
+M970@8VUD(%ML:6YD97@@)&AI<W1O<GD@)&AI<W1O<GEI;F1E>%T*( EI;F-R
+M(&AI<W1O<GEI;F1E> H@"6=O9&\@)&-M9 HM"2YC=&]P+G1O<"YB87(N;&5F
+M=&)U="!C;VYF("US=&%T92!N;W)M86P**PDN=&8N8F%R+FQE9G1B=70@8V]N
+M9B M<W1A=&4@;F]R;6%L"B @(" @?0H@(" @(&EF('LD:&ES=&]R>6EN9&5X
+M(#X](%ML;&5N9W1H("1H:7-T;W)Y77T@>PHM"2YC=&]P+G1O<"YB87(N<FEG
+M:'1B=70@8V]N9B M<W1A=&4@9&ES86)L960**PDN=&8N8F%R+G)I9VAT8G5T
+M(&-O;F8@+7-T871E(&1I<V%B;&5D"B @(" @?0H@?0H@"D! ("TT-3DQ+#<@
+M*S0V,34L-R! 0"!P<F]C('-E87)C:&UA<FMV:7-I8FQE('MD;V%L;'T@>PH@
+M<')O8R!S8W)O;&QT97AT('MF,"!F,7T@>PH@(" @(&=L;V)A;"!S96%R8VAS
+M=')I;F<*( HM(" @("YC=&]P+F-D970N;&5F="YS8B!S970@)&8P("1F,0HK
+M(" @("YB;&5F="YS8B!S970@)&8P("1F,0H@(" @(&EF('LD<V5A<F-H<W1R
+M:6YG(&YE('M]?2!["B )<V5A<F-H;6%R:W9I<VEB;&4@, H@(" @('T*+2T@
+;"C$N-2XP+G)C,BXW-BYG-&9C,"UD:7)T>0H*
+`
+end
 
---follow-parent is not yet the default, some more testing from others
-would be nice.  --follow-parent is now greatly improved, as it
-can follow into deleted directories as well as tracking subdirectories
-with no explicit parent at its current level.
-
-graft-branches is gone.  We could still implement merge-tracking the way
-git-svnimport does since we multi-fetch chronologically now...
-Volunteers?
-
-I don't have any hacks using shorter-lived children to reduce memory
-usage anymore.  This was mainly to make development easier, but the Perl
-bindings for SVN 1.4.3 have fixed some memory leak issues from the delta
-editors.
-
-Unfortunately, do_switch() still does not work with SVN 1.4.3.
-
-Sam Vilain's revprops tracking hasn't been merged yet, but I intend to
-support alternate SVN URLs/revnos from both svm:* revprops as well as
-being able to override the repository root path (file:// => http://
-for public distribution).
-
-Repository available here, this is based against Junios git.git master:
-
-  git://git.bogomips.org/git-svn.git
-  http://git.bogomips.org/git-svn.git
-
-I *will* rebase the master here as I see fit...
-
-To take full advantage of remote connection minimization, just run:
-"git-svn migrate --minimize" once and continue to add/edit remote
-refspecs via .git/config.
-
-As great as these changes sound, I don't feel they bring significant
-enough improvement to risk introducing brokeness for 1.5.0.  I would
-like to wait until 1.5.0 has passed before merging into mainline.  I
-still have _not_ used this version of git-svn for any real work yet.
-
-It's way past my bed time so I may have missed a few things or written
-incoherently, but have fun with this anyways :)
-
----
- Documentation/git-svn.txt         |   71 +-
- git-svn.perl                      | 4257 +++++++++++++++++++------------------
- t/t9100-git-svn-basic.sh          |   54 +-
- t/t9101-git-svn-props.sh          |   26 +
- t/t9103-git-svn-graft-branches.sh |   60 -
- t/t9104-git-svn-follow-parent.sh  |  126 ++-
- t/t9105-git-svn-commit-diff.sh    |    9 +
- t/t9107-git-svn-migrate.sh        |   92 +
- 8 files changed, 2467 insertions(+), 2228 deletions(-)
-
----
-Eric Wong (65):
-      git-svn: move authentication prompts into their own namespace
-      git-svn: cleanup: move process_rm around
-      git-svn: cleanup: put SVN workarounds into their own namespace
-      git-svn: cleanup: avoid re-use()ing Git.pm in sub-packages
-      git-svn: add Git::SVN module (to avoid global variables)
-      git-svn: convert 'init' to use Git::SVN
-      git-svn: convert multi-init over to using Git::SVN
-      git-svn: make multi-init capable of reusing the Ra connection
-      git-svn: add a test for show-ignore
-      git-svn: convert show-ignore over to Git::SVN
-      git-svn: moved the 'log' command into its own namespace
-      git-svn: port the 'rebuild' command to use Git::SVN objects
-      git-svn: do not let Git.pm warn if we prematurely close pipes
-      git-svn: convert the 'commit-diff' command to Git::SVN
-      git-svn: get rid of Memoize for now...
-      git-svn: fetch/multi-fetch converted over to Git::SVN module
-      git-svn: switch dcommit to using Git::SVN code
-      git-svn: convert 'set-tree' command to use Git::SVN
-      git-svn: remove graft-branches command
-      git-svn: add support for metadata in .git/config
-      git-svn: fix a regression in dcommit that caused empty log messages
-      git-svn: reuse open SVN::Ra connections by URL
-      git-svn: enable --minimize to simplify the config and connections
-      git-svn: fix --follow-parent to work with Git::SVN
-      git-svn: --follow-parent works with svn-remotes multiple branches
-      git-svn: disallow ambigious local refspecs
-      git-svn: allow --follow-parent on deleted directories
-      git-svn: get rid of additional fetch-arguments
-      git-svn: allow 'init' to work outside of tests
-      git-svn: better error reporting if --follow-parent fails
-      git-svn: 'init' attempts to connect to the repository root if possible
-      git-svn: --follow-parent now works on sub-directories of larger branches
-      git-svn: track writes writes to the index in fetch
-      git-svn: add an odd test case that seems to cause segfaults over HTTP
-      git-svn: avoid tracking change-less revisions
-      git-svn: correctly track revisions made to deleted branches
-      git-svn: fix segfaults from accessing svn_log_changed_path_t
-      git-svn: fix committing to subdirectories, add tests
-      git-svn: avoid an extra svn_ra connection during commits
-      git-svn: simplify usage of the SVN::Git::Editor interface
-      git-svn: cleanup remove unused function
-      git-svn: allow multi-fetch to fetch things chronologically
-      git-svn: correctly track diff-less copies with do_switch
-      git-svn: correctly handle do_{switch,update} in deep directories
-      git-svn: stop using path names as refnames with --follow-parent
-      git-svn: cleanup: move editor-specific variables into the editor namespace
-      git-svn: just use Digest::MD5 instead of requiring it
-      git-svn: reinstate the default SVN error handler after using get_log
-      git-svn: don't rely on do_switch + reparenting with svn(+ssh)://
-      git-svn: fetch tracks initial change with --follow-parent
-      git-svn: remove the 'rebuild' command and make the functionality automatic
-      git-svn: fix several fetch bugs related to repeated invocations
-      git-svn: reinstate --no-metadata, add --svn-remote=, variable cleanups
-      git-svn: gracefully handle --follow-parent failures
-      git-svn: make (multi-)fetch safer but slower
-      git-svn: avoid a huge memory spike with high-numbered revisions
-      git-svn: re-enable repacking flags
-      git-svn: do our best to ensure that our ref and rev_db are consistent
-      git-svn: avoid redundant get_log calls between invocations
-      git-svn: use sys* IO functions for reading rev_db
-      git-svn: don't write to the config file from --follow-parent
-      git-svn: save paths to tags/branches with for future reuse
-      git-svn: migrations default to [svn-remote "git-svn"]
-      git-svn: get rid of revisions_eq check for --follow-parent
-      git-svn: avoid extra get_log calls when refspecs are added for fetching
-
--- 
-Eric Wong
+begin 666 0001-gitk-remove-trailing-whitespace-from-a-few-lines.patch
+M1G)O;2 S9F,P93@S8C$X9#4R.&%C-65C96(U8V,U8C4T,#1F830W9F$V.6$U
+M($UO;B!397 @,3<@,# Z,# Z,# @,C P,0I&<F]M.B!-87)K($QE=F5D86AL
+M(#QM9&PQ,C- =F5R:7IO;BYN970^"D1A=&4Z(%1H=2P@,2!&96(@,C P-R P
+M.#HT-#HT-B M,#4P, I3=6)J96-T.B!;4$%40TA=(&=I=&L@+2!R96UO=F4@
+M=')A:6QI;F<@=VAI=&5S<&%C92!F<F]M(&$@9F5W(&QI;F5S+@H*4VEG;F5D
+M+6]F9BUB>3H@36%R:R!,979E9&%H;" \;61L,3(S0'9E<FEZ;VXN;F5T/@HM
+M+2T*(&=I=&L@?" @(" X("LK*RLM+2TM"B Q(&9I;&5S(&-H86YG960L(#0@
+M:6YS97)T:6]N<R@K*2P@-"!D96QE=&EO;G,H+2D*"F1I9F8@+2UG:70@82]G
+M:71K(&(O9VET:PII;F1E>" S,60P86%D+BXV-3 T,S5E(#$P,#<U-0HM+2T@
+M82]G:71K"BLK*R!B+V=I=&L*0$ @+30R-RPW("LT,C<L-R! 0"!P<F]C(&UA
+M:V5W:6YD;W<@>WT@>PH@(" @("YB87(N=FEE=R!A9&0@<V5P87)A=&]R"B @
+M(" @+F)A<BYV:65W(&%D9"!R861I;V)U='1O;B M;&%B96P@(D%L;"!F:6QE
+M<R(@+6-O;6UA;F0@>W-H;W=V:65W(#!](%P*( DM=F%R:6%B;&4@<V5L96-T
+M961V:65W("UV86QU92 P"BT@(" @"BL*(" @("!M96YU("YB87(N:&5L< H@
+M(" @("YB87(@861D(&-A<V-A9&4@+6QA8F5L(")(96QP(B M;65N=2 N8F%R
+M+FAE;' *(" @(" N8F%R+FAE;' @861D(&-O;6UA;F0@+6QA8F5L(")!8F]U
+M="!G:71K(B M8V]M;6%N9"!A8F]U= I 0" M,30P,BPW("LQ-# R+#<@0$ @
+M<')O8R!N97=V:65W('MI<VAI9VAL:6=H='T@>PH@(" @('-E="!N97=V:65W
+M;F%M92@D;F5X='9I97=N=6TI(")6:65W("1N97AT=FEE=VYU;2(*(" @("!S
+M970@;F5W=FEE=W!E<FTH)&YE>'1V:65W;G5M*2 P"B @(" @<V5T(&YE=W9I
+M97=A<F=S*"1N97AT=FEE=VYU;2D@6W-H96QL87)G;&ES=" D<F5V=')E96%R
+M9W-="BT@(" @=FEE=V5D:71O<B D=&]P("1N97AT=FEE=VYU;2 B1VET:R!V
+M:65W(&1E9FEN:71I;VXB( HK(" @('9I97=E9&ET;W(@)'1O<" D;F5X='9I
+M97=N=6T@(D=I=&L@=FEE=R!D969I;FET:6]N(@H@?0H@"B!P<F]C(&5D:71V
+M:65W('M]('L*0$ @+3,X.3<L-R K,S@Y-RPW($! ('!R;V,@<V5L96-T;&EN
+M92![;"!I<VYE=WT@>PH@"7T*( DD8W1E>'0@:6YS97)T(&5N9" B7&XB"B @
+M(" @?0HM( HK"B @(" @<V5T(&AE861E<G,@>WT*(" @("!S970@;VQD<R!;
+M;&EN9&5X("1P87)E;G1L:7-T("1L70H@(" @(&EF('M;;&QE;F=T:" D;VQD
+M<UT@/B Q?2!["D! ("TT,# V+#<@*S0P,#8L-R! 0"!P<F]C('-E;&YE>'1P
+M86=E('MD:7)]('L*(" @(" @(" @<V5T(&P@6V5X<'(@)&YU;6-O;6UI=',@
+M+2 Q70H@(" @('T*(" @("!U;FUA<FMM871C:&5S"BT@(" @<V5L96-T;&EN
+M92 D;" Q(" @( HK(" @('-E;&5C=&QI;F4@)&P@,0H@?0H@"B!P<F]C('5N
+M<V5L96-T;&EN92![?2!["BTM( HQ+C4N,"YR8S(N-S8N9S1F8S M9&ER='D*
+!"@``
+`
+end
