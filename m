@@ -1,76 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] detached HEAD -- finishing touches
-Date: Thu, 01 Feb 2007 18:38:51 -0800
-Message-ID: <7vwt31l1vo.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home>
-	<20070131231942.GB31145@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0701311907500.3021@xanadu.home>
-	<20070201030030.GA1979@coredump.intra.peff.net>
-	<7vd54ur26u.fsf@assigned-by-dhcp.cox.net>
-	<7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net>
-	<20070201215242.GA1775@thunk.org>
-	<7v64alnz2q.fsf@assigned-by-dhcp.cox.net>
-	<87ejp99wn7.wl%cworth@cworth.org>
-	<7virelmjlr.fsf@assigned-by-dhcp.cox.net>
-	<87d54t9vs7.wl%cworth@cworth.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Instructions concerning detached head lead to lost local changes
+Date: Thu, 01 Feb 2007 21:49:27 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702012135550.3021@xanadu.home>
+References: <87mz3xa3vr.wl%cworth@cworth.org>
+ <7v1wl9mj48.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Fri Feb 02 03:39:06 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Feb 02 03:50:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCoKQ-0003sT-9E
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 03:39:06 +0100
+	id 1HCoV3-0000Tt-VZ
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 03:50:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423080AbXBBCjA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 21:39:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423081AbXBBCjA
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 21:39:00 -0500
-Received: from fed1rmmtai20.cox.net ([68.230.241.39]:63346 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1423080AbXBBCi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 21:38:59 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070202023851.TEJH1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 1 Feb 2007 21:38:51 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id JSes1W00G1kojtg0000000; Thu, 01 Feb 2007 21:38:52 -0500
-In-Reply-To: <87d54t9vs7.wl%cworth@cworth.org> (Carl Worth's message of "Thu,
-	01 Feb 2007 17:46:00 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1423083AbXBBCtb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 21:49:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423087AbXBBCtb
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 21:49:31 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:19404 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423084AbXBBCta (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 21:49:30 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCT00G8QEIFPXV0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 01 Feb 2007 21:49:27 -0500 (EST)
+In-reply-to: <7v1wl9mj48.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38452>
 
-Carl Worth <cworth@cworth.org> writes:
+On Thu, 1 Feb 2007, Junio C Hamano wrote:
 
-> On Thu, 01 Feb 2007 17:30:40 -0800, Junio C Hamano wrote:
->> I do not think of any offhand, but "did we make commit since we
->> detached HEAD" was not a suggestion I made, so what I can think
->> of does not matter much ;-).
->
-> Well, the suggestion I made was to:
->
-> 1. Print the name of the commit we are leaving
->
-> 2. Refuse to leave if what we are leaving would leave commits
->    dangling, (and print a revision specification for those set of
->    commits).
->
-> Do you have a reaction to that?
+> Alternatively we could add yet another suggestion that let's you
+> discard the detached HEAD but still keep your local changes.
+> Either --drop by Linus renamed to some sensible name, or "the
+> obscure but useful trick".
+> 
+> I dunno.
 
-Not having thought things through, I am very tempted to say that
-we can leave things as they are, and when the reflog for HEAD
-materializes, just remove the check from the codepath that makes
-your HEAD point at an existing branch again.  With the reflog on
-HEAD, you do not need to be reminded of which commit you are
-leaving so there is no need for 1 above, and you would not lose
-your point (either connected or disconnected) so there is no
-need for 2 above either.
+I have a feeling that proper reflog for HEAD would make the issue so 
+much simpler.
+
+But in the mean time I tend to agree with Ted about the fact that simply 
+losing the detached position is not _that_ important.  If you go to 
+HEAD^ and want to come back to master I think it should just work (with 
+a display of what the last position was as Carl mentioned).
+
+It might be some work to get to a given position with a detached head 
+and this very position might be valuable information, but if you then do 
+"checkout HEAD^" you will still be detached but your previous position 
+is lost just like it would be if you moved to master.  Yet you're not 
+prevented from going to HEAD^ but you are prevented from going to 
+master.
+
+Same issue if you perform a commit on top of a detached head.  Nothing 
+prevents you from doing "checkout HEAD^" which will leave your head 
+detached but it will also silently drop your last commit dangling.
+
+In short I think there is no magic solution other than proper reflog for 
+HEAD.
+
+
+Nicolas
