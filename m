@@ -1,69 +1,62 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] add --remote option to git-clone.
-Date: Fri, 2 Feb 2007 00:53:14 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702020050190.18870@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702020028540.18776@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070201234706.GP17617@mellanox.co.il>
+From: SungHyun Nam <goweol@gmail.com>
+Subject: Re: GIT+CYGWIN annoying test failure
+Date: Fri, 02 Feb 2007 09:10:53 +0900
+Message-ID: <45C2818D.4020408@gmail.com>
+References: <45B6C1FB.7060005@gmail.com> <Pine.LNX.4.63.0701241041190.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45BD4AA9.5090400@gmail.com> <Pine.LNX.4.63.0702011703280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Fri Feb 02 00:53:19 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 02 01:11:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCljz-0003gI-1b
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 00:53:19 +0100
+	id 1HCm1C-0003aQ-A5
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 01:11:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933149AbXBAXxQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 18:53:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933203AbXBAXxQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 18:53:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53822 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933149AbXBAXxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 18:53:15 -0500
-Received: (qmail invoked by alias); 01 Feb 2007 23:53:14 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp051) with SMTP; 02 Feb 2007 00:53:14 +0100
-X-Authenticated: #1490710
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070201234706.GP17617@mellanox.co.il>
-X-Y-GMX-Trusted: 0
+	id S1423026AbXBBALB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 19:11:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423029AbXBBALB
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 19:11:01 -0500
+Received: from relaygw1.kornet.net ([61.74.75.196]:52333 "EHLO
+	relaygw1.kornet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423026AbXBBALA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 19:11:00 -0500
+Received: from [211.48.62.136] ([211.48.62.136]) 
+          by relaygw1.kornet.net ([61.74.75.196]) 
+          with ESMTP id 2007020209:10:55:587538.19779.133610416
+          Fri, 02 Feb 2007 09:10:55 +0900 (KST) 
+Received: from [61.83.191.48] ([61.83.191.48]) 
+          by relay8.kornet.net ([211.48.62.136]) 
+          with ESMTP id 2007020209:10:55:546793.17820.8092592
+          Fri, 02 Feb 2007 09:10:55 +0900 (KST) 
+User-Agent: Thunderbird 2.0b1 (Windows/20061223)
+In-Reply-To: <Pine.LNX.4.63.0702011703280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.94.1.2
+OpenPGP: id=8509C67F
+X-TERRACE-SPAMMARK: NOT spam-marked.                              
+  (by Terrace)                                            
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38439>
 
-Hi,
-
-On Fri, 2 Feb 2007, Michael S. Tsirkin wrote:
-
-> > Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> > Subject: Re: [PATCH] add --remote option to git-clone.
-> > 
-> > Of course, you'd have to 
-> > support this, too:
-> > 
-> > 	$ git clone --branch topic1 --branch topic2 git://...
+Johannes Schindelin wrote:
 > 
-> Why is this useful?
+> On Mon, 29 Jan 2007, SungHyun Nam wrote:
+> 
+>> I'm not sure I can believe my system, Windows or CYGWIN.
+>> It seems GIT has no problem.
+> 
+> Are you perchance on a FAT32 system?
 
-For the same reasons it might be useful to track _all_ branches.
+No, I have 3 NTFS partitions (C=program, D=work/data, E=temp).
+There's no FAT32.
 
-> and which branch to check out?
+Though I have no FAT32, I even tried the NO_MMAP thing.
+And it didn't help.
 
-I'd say the first, but that's just my opinion.
-
-> One can always get more branches later, is my approach.
-
-Yes. But in the same vein, one can add _one_ branch to an empty repo 
-either. So, with your reasoning, your patch wouldn't be needed to begin 
-with.
-
-But I find it useful. Even the version where you are not limited to one 
-branch.
-
-Ciao,
-Dscho
+Thanks,
+namsh
