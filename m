@@ -1,113 +1,89 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
- branch reflog
-Date: Fri, 02 Feb 2007 17:35:26 +0100
-Message-ID: <45C3684E.7090402@fs.ei.tum.de>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <200702021302.10567.andyparkins@gmail.com> <Pine.LNX.4.64.0702020955540.3021@xanadu.home> <200702021611.06029.andyparkins@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Fri, 2 Feb 2007 08:42:05 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702020835550.15057@woody.linux-foundation.org>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+ <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org>
+ <200702021055.49428.jnareb@gmail.com> <slrnes6mmr.3l6.mdw@metalzone.distorted.org.uk>
+ <epvnln$fmn$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig6C12478D8801ED1F63E00CCA"
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 02 17:36:58 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, mercurial@selenic.com
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 17:42:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD1OE-0007Ll-Ki
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 17:35:54 +0100
+	id 1HD1UQ-0001sb-Dn
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 17:42:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945967AbXBBQfh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 11:35:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945980AbXBBQfh
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 11:35:37 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:46664 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945967AbXBBQfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 11:35:32 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 0C7F22828F;
-	Fri,  2 Feb 2007 17:35:31 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id dtD3tmAzr1aD; Fri,  2 Feb 2007 17:35:30 +0100 (CET)
-Received: from [192.168.10.124] (ppp-62-216-203-79.dynamic.mnet-online.de [62.216.203.79])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 7B27928285;
-	Fri,  2 Feb 2007 17:35:30 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-In-Reply-To: <200702021611.06029.andyparkins@gmail.com>
-X-Enigmail-Version: 0.94.2.0
+	id S1945911AbXBBQmP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 11:42:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945959AbXBBQmP
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 11:42:15 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:57764 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945911AbXBBQmO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 11:42:14 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l12Gg743008958
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 2 Feb 2007 08:42:08 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l12Gg52m012390;
+	Fri, 2 Feb 2007 08:42:06 -0800
+In-Reply-To: <epvnln$fmn$1@sea.gmane.org>
+X-Spam-Status: No, hits=-0.422 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38513>
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig6C12478D8801ED1F63E00CCA
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-
-Andy Parkins wrote:
-> Just because the virtual branch is stored in HEAD, I think it is=20
-> dangerous to thing of HEAD as being the thing that is logged - it is th=
-is=20
-> virtual branch that should be logged because that branch is always ther=
-e and=20
-> can be tracked through time as a discrete entity.  If you track HEAD it=
-self,=20
-> then sometimes it will hold the same as a branch reflog, sometimes it w=
-ill=20
-> hold unique data.
-
-hopefully, yes!  Having to know "uhm, that time I was detached, oh, no, t=
-hat was a ref" is the variable.  The reflog we are talking about, no matt=
-er how it might be called or how its symbol is should track where my inde=
-x wanders.  which is called HEAD, I think (sorry, I'm quite new to git).
-
-So, to make it clear, when I do this:
-
-git checkout master
-git checkout build
-git checkout master~1
-git checkout dbcca21
-git checkout master
-hack && git commit -a
-
-then i expect the "reflog to be named" to follow *exactly these steps:
-
-master, build, master~1, dbcca21..., master, newmaster
-
-and _not_ just
-
-master~1m, dbcca21...
-
-cheers
-  simon
-
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38514>
 
 
---------------enig6C12478D8801ED1F63E00CCA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+On Fri, 2 Feb 2007, Jakub Narebski wrote:
+> 
+> Gaaah. Why anyone would want to have non-propagated tags?
 
-iD8DBQFFw2hRr5S+dk6z85oRAkagAJ99m94j/1wAGmQhaZZpXwJMRkv/0ACfZi4X
-stu2PaV+WP1wSFNmCBMjZhQ=
-=gmzH
------END PGP SIGNATURE-----
+That's *definitely* not the mistake.
 
---------------enig6C12478D8801ED1F63E00CCA--
+I use private tags (and branches, for that matter) all the time. I'd be 
+very upset indeed if all my tags were always pushed out when I push 
+something out.
+
+The mistake seems to be to think that tags get "versioned", and are part 
+of the tree history. That's insane. It means that you can never have a tag 
+to a newer tree than the one you are on.
+
+Tags are *independent* of history. They must be. They are "outside" 
+history, since the whole point of tags are to point to history.
+
+The same is obviously true of branches. The fact that my "master" branch 
+is at some point in time should *not* version my "other" branch. So 
+branches - like tags - must not be "inside" the history.
+
+> > If I may be opinionated for a bit: this is barking for two reasons:
+> > 
+> >   * The tags files grow by having lines added to the bottom.  Files of
+> >     this kind are almost ideal for causing merge conflicts, and there's
+> >     no automatic means for resolving them.  (I actually wrote a custom
+> >     tags merger recently -- if anyone wants it, just mail me.)
+> 
+> Such a merger (merge strategy) would be also useful for other log-like
+> files, e.g. ChangeLogs and such.
+
+Yeah. I think per-file merge strategies are fine. We may not do them in 
+git (nothing fundamental, it just hasn't come upas a real issue, although 
+I think somebody was talking about how he ended up just using a special 
+"merge" program that looked at the filename), but there is definitely 
+nothing wrong with the concept.
+
+And it solves that particular problem for tag-files, but it doesn't change 
+the fact that keeping tags inside of history is insane in the first place 
+(so it's not a problem that *should* be solved!)
+
+			Linus
