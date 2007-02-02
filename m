@@ -1,84 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Fri, 2 Feb 2007 11:01:08 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702021050350.15057@woody.linux-foundation.org>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
- <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org>
- <200702021055.49428.jnareb@gmail.com> <slrnes6mmr.3l6.mdw@metalzone.distorted.org.uk>
- <epvnln$fmn$1@sea.gmane.org> <Pine.LNX.4.64.0702020835550.15057@woody.linux-foundation.org>
- <20070202175923.GA6304@xanadu.kublai.com> <20070202182709.GA3861@kobe.laptop>
+Date: Fri, 2 Feb 2007 19:44:13 +0100
+Message-ID: <200702021944.14756.jnareb@gmail.com>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com> <200702021818.11368.jnareb@gmail.com> <20070202173758.GC10108@waste.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: jnareb@gmail.com, mercurial@selenic.com, git@vger.kernel.org
-To: Giorgos Keramidas <keramida@ceid.upatras.gr>
-X-From: git-owner@vger.kernel.org Fri Feb 02 20:01:37 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: mercurial@selenic.com, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+To: Matt Mackall <mpm@selenic.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 20:10:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD3fA-0006Gy-3L
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 20:01:32 +0100
+	id 1HD3nu-0001bo-Df
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 20:10:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422977AbXBBTB0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 14:01:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422985AbXBBTB0
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 14:01:26 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:35311 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422977AbXBBTBZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 14:01:25 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l12J1943013573
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 2 Feb 2007 11:01:10 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l12J18JD015170;
-	Fri, 2 Feb 2007 11:01:09 -0800
-In-Reply-To: <20070202182709.GA3861@kobe.laptop>
-X-Spam-Status: No, hits=-0.415 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
-X-MIMEDefang-Filter: osdl$Revision: 1.172 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1423039AbXBBTKb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 14:10:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423056AbXBBTKb
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 14:10:31 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:27175 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423039AbXBBTKb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 14:10:31 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so842303uga
+        for <git@vger.kernel.org>; Fri, 02 Feb 2007 11:10:29 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=luH6zcCWHqTMFle67AEPp3BBIuqpgD2WdzCw7EL3Ereg69v6bQSILUtA4xFY1QN3/x4N0ibyscjBdHka3gZu0x6o2TgkWtnfWrDit0fiwSHgJDIOqrGZfMkSjr6coJiPHLowxcNuD2S3dqpGD1mcvfrYPlAqigeF9Sud8oJKx+I=
+Received: by 10.67.26.7 with SMTP id d7mr4840875ugj.1170443429455;
+        Fri, 02 Feb 2007 11:10:29 -0800 (PST)
+Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
+        by mx.google.com with ESMTP id 54sm5842064ugp.2007.02.02.11.10.27;
+        Fri, 02 Feb 2007 11:10:28 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070202173758.GC10108@waste.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38526>
 
+Matt Mackall wrote:
+> On Fri, Feb 02, 2007 at 06:18:10PM +0100, Jakub Narebski wrote:
 
-
-On Fri, 2 Feb 2007, Giorgos Keramidas wrote:
+>> Revision-controlled (in-tree) tags are inane idea. Tags are non-moving
+>> (and sometimes annotated) pointers to given point in history. They should
+>> not depend on which branch you are, or what version you have checked out.
 > 
-> Sometimes, 'sliding a tag' is a real-world need.  Losing the information
-> of who did the tag sliding and when, is not good.
+> And.. they don't!
 
-In practice, this is not much of an issue. 
+If that means that you always use the version of .hgtags from the tip
+(branches are tips of history; they can have different .hgtags),
+this is also broken; this means for example that you cannot compare
+current version when on development head (branch) with tag on different
+branch, those two branches have the same .hgtags file.
 
-First off, CVS tag usage is insane, but it's insane for *other* reasons 
-(ie people use tags differently in CVS, but they do it not because they 
-want to use tags that way, but because CVS makes it impossible to do 
-anything saner).
+"They should not depend on which branch you are"... and they can.
 
-So pointing to CVS tag usage as an argument is pointless. You might as 
-well say that you shouldn't save the merge information, because CVS 
-doesn't do it, and manual tags are a good way to do it. 
+> I'm now officially done correcting your uninformed perceptions. Come
+> back when you've actually looked at the docs.
 
-Secondly, the problems with tags having "history" is that you can't really 
-resolve them anyway. You have to pick one. You can't "merge" them. 
+URL, pretty please?
 
-In other words, tags are atomic *events*, not history. And I certainly 
-agree that you shouldn't lose the events (unless you want to, of course).
+My mistake is caused by the fact that .hgtags is special, i.e. not
+current version is used (as e.g. with .scmignore files) but version
+closest to the tip. This means broken abstraction.
 
-I also do agree that you can absolutely have something that is basically a 
-"tag that moves, and that you want to tie back to the previous state of 
-the tag". In git, we just happen to call those things "branches". You 
-*could* technically put one of those things into the tag-namespace if you 
-want to, although it would largely be considered insane by most git users 
-(and you could see it historically: each "tag" would be a merge that 
-points to its previous incarnation and to the point in time that got 
-tagged).
-
-More commonly, you'd just use a "real tag", which includes the tagger 
-information and a message about why something got tagged, plus possibly a 
-PGP signature. That way, you can see (and save) all the individual events.
-
-		Linus
+-- 
+Jakub Narebski
+Poland
