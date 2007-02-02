@@ -1,54 +1,62 @@
-From: Alexander Litvinov <litvinov2004@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Question: next, master and pu branches
-Date: Fri, 2 Feb 2007 12:54:44 +0600
-Message-ID: <200702021254.44992.litvinov2004@gmail.com>
-References: <200702021142.08975.litvinov2004@gmail.com> <20070202060030.GA20442@spearce.org>
+Date: Fri, 2 Feb 2007 01:57:35 -0500
+Message-ID: <20070202065735.GA20832@spearce.org>
+References: <200702021142.08975.litvinov2004@gmail.com> <20070202060030.GA20442@spearce.org> <200702021254.44992.litvinov2004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 02 07:54:59 2007
+To: Alexander Litvinov <litvinov2004@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 07:57:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCsK1-0000PW-Es
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 07:54:57 +0100
+	id 1HCsMj-0001jJ-IF
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 07:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423157AbXBBGyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 01:54:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423158AbXBBGyy
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 01:54:54 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:24450 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423157AbXBBGyy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 01:54:54 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so685357uga
-        for <git@vger.kernel.org>; Thu, 01 Feb 2007 22:54:52 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=jbju7ER/QIe0bUgZTwiiW1gE8BnY+CJbIwGbZDvPEdmRdBgJLgZGYcFCRSh/qyxv54wygbMI65WyxrU1w8MF2cppARr04buUF6AW7rVfbynagg1LEW9zAfNO+iKv+TMgdoeYGEocWe2OY+VHUqDDRtA3QYAHWFcDcPmfJuYxlIg=
-Received: by 10.67.19.17 with SMTP id w17mr3972619ugi.1170399292696;
-        Thu, 01 Feb 2007 22:54:52 -0800 (PST)
-Received: from lan.ac-sw.lcl ( [81.1.223.2])
-        by mx.google.com with ESMTP id j1sm4762041ugf.2007.02.01.22.54.51;
-        Thu, 01 Feb 2007 22:54:52 -0800 (PST)
-User-Agent: KMail/1.8
-In-Reply-To: <20070202060030.GA20442@spearce.org>
+	id S1423161AbXBBG5m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 01:57:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423164AbXBBG5m
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 01:57:42 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39634 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423161AbXBBG5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 01:57:42 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HCsMd-0005ra-Ru; Fri, 02 Feb 2007 01:57:39 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9FB5A20FBAE; Fri,  2 Feb 2007 01:57:35 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <200702021254.44992.litvinov2004@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38466>
 
-> You can let git-rerere help you to manage conflicts which might
-> reoccur during merges.  If you create the .git/rr-cache directory
-> then git-commit and git-merge will automatically use git-rerere to
-> help you.
+Alexander Litvinov <litvinov2004@gmail.com> wrote:
+> > You can let git-rerere help you to manage conflicts which might
+> > reoccur during merges.  If you create the .git/rr-cache directory
+> > then git-commit and git-merge will automatically use git-rerere to
+> > help you.
+> 
+> Yes git-rerere is a black magic tool, but it works :-)
+> Byt he way, why git-pull (or possible git-merge) does not commit the merge 
+> result after conflict was fixed by git-rerere ?
 
-Yes git-rerere is a black magic tool, but it works :-)
-Byt he way, why git-pull (or possible git-merge) does not commit the merge 
-result after conflict was fixed by git-rerere ?
+No, it doesn't.  That way you can review the result of the merge
+first and verify its indeed correct.
+
+-- 
+Shawn.
