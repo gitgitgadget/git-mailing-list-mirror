@@ -1,58 +1,76 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 2/3] Rebase to parent branch after git-fetch in "stg pull".
-Date: Fri, 2 Feb 2007 09:58:06 +0000
-Message-ID: <b0943d9e0702020158o1a07b8efu9302794c57d050e1@mail.gmail.com>
-References: <20070201234534.3313.10426.stgit@gandelf.nowhere.earth>
-	 <20070201234805.3313.20525.stgit@gandelf.nowhere.earth>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: should git push . from:to work?
+Date: Fri, 02 Feb 2007 11:02:50 +0100
+Organization: At home
+Message-ID: <epv25o$tpm$1@sea.gmane.org>
+References: <Pine.LNX.4.63.0702011559100.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070201150545.GA30858@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Fri Feb 02 10:58:13 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 02 11:02:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCvBN-0000a9-9L
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 10:58:13 +0100
+	id 1HCvFF-0002TX-Vb
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 11:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932967AbXBBJ6J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 04:58:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932998AbXBBJ6J
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 04:58:09 -0500
-Received: from wr-out-0506.google.com ([64.233.184.227]:37303 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932967AbXBBJ6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 04:58:08 -0500
-Received: by wr-out-0506.google.com with SMTP id i22so684629wra
-        for <git@vger.kernel.org>; Fri, 02 Feb 2007 01:58:07 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=M2vRw/IsmWa5hD96C8DcfNNI8gICIIucpLzjseci5FFbwmvd3DDLtrMaECqm+C1v9JJKBMwbzyemxIdHvXkfSDseuipwOAv9pOIQtu26oY5n0C9Be54en2nnjLgpmowyHQ2jxwKE/EhquEu7maOPPo33X4Gd2g5+NCyeYMbFhbg=
-Received: by 10.114.12.9 with SMTP id 9mr277644wal.1170410287008;
-        Fri, 02 Feb 2007 01:58:07 -0800 (PST)
-Received: by 10.115.110.12 with HTTP; Fri, 2 Feb 2007 01:58:06 -0800 (PST)
-In-Reply-To: <20070201234805.3313.20525.stgit@gandelf.nowhere.earth>
-Content-Disposition: inline
+	id S933148AbXBBKB6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 05:01:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933307AbXBBKB6
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 05:01:58 -0500
+Received: from main.gmane.org ([80.91.229.2]:44708 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933148AbXBBKB5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 05:01:57 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HCvEl-0001hT-GC
+	for git@vger.kernel.org; Fri, 02 Feb 2007 11:01:43 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Feb 2007 11:01:43 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Feb 2007 11:01:43 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38485>
 
-On 01/02/07, Yann Dirson <ydirson@altern.org> wrote:
-> Previously we were just assuming that the remote from which we
-> just failed defined a local branch whose name was the same as the
-> remote def, and that this branch was the parent.  While this is true
-> for the most common case (branch "origin" from remote "origin"), it is
-> quite an unflexible assumption.
+Michael S. Tsirkin wrote:
 
-The t1200-push-modified.sh test fails after applying this patch. It
-looks like the 3rd test fails to pull the changes from 'foo' into
-'bar'.
+>> Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+>> Subject: Re: should git push . from:to work?
 
-Thanks.
+>> On Thu, 1 Feb 2007, Michael S. Tsirkin wrote:
+>> 
+>> > Should I not be able to use . as a URL?
+>> > git push seems to think . is a remote, not a URL:
+>> 
+>> You seem to be infected by the less-than-intuitive
+>> "git pull ."-makes-perfect-sense camp.
+> 
+> Not really, I don't really care.
+> 
+>> Why not just do "git branch to from"?
+> 
+> Because I want to update am existing local branch that is different from
+> what I have checked out.
 
+But git-branch does _not_ do checkout, so you can use it to manipulate
+branches even if you are on different branch (even if you have different
+branch checked out)!
+
+Neither git-fetch not git-push understand '.' remote; git-pull was (and is)
+special case to allow git-fetch+git-pull workflow.
 -- 
-Catalin
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
