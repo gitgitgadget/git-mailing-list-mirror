@@ -1,71 +1,140 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Instructions concerning detached head lead to lost local changes
-Date: Thu, 01 Feb 2007 21:49:27 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702012135550.3021@xanadu.home>
-References: <87mz3xa3vr.wl%cworth@cworth.org>
- <7v1wl9mj48.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/2] Pull out remote listing functions in git-remote.
+Date: Fri, 2 Feb 2007 00:05:55 -0500
+Message-ID: <20070202050554.GA20505@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 02 03:50:06 2007
+X-From: git-owner@vger.kernel.org Fri Feb 02 06:06:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCoV3-0000Tt-VZ
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 03:50:06 +0100
+	id 1HCqcj-0003H4-FP
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 06:06:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423083AbXBBCtb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 21:49:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423087AbXBBCtb
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 21:49:31 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:19404 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423084AbXBBCta (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 21:49:30 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCT00G8QEIFPXV0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 01 Feb 2007 21:49:27 -0500 (EST)
-In-reply-to: <7v1wl9mj48.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1423003AbXBBFGA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 00:06:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423007AbXBBFGA
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 00:06:00 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:35887 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423003AbXBBFF7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 00:05:59 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HCqcL-000859-CP; Fri, 02 Feb 2007 00:05:45 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7F9E620FBAE; Fri,  2 Feb 2007 00:05:55 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38453>
 
-On Thu, 1 Feb 2007, Junio C Hamano wrote:
+I want to reuse the stale branch detection to implement a new
+'git remote prune' subcommand.  Easiest way to do that is to use
+the same logic that 'git remote show' uses to determine the stale
+tracking branches, then delete those.
 
-> Alternatively we could add yet another suggestion that let's you
-> discard the detached HEAD but still keep your local changes.
-> Either --drop by Linus renamed to some sensible name, or "the
-> obscure but useful trick".
-> 
-> I dunno.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ git-remote.perl |   43 +++++++++++++++++++++++--------------------
+ 1 files changed, 23 insertions(+), 20 deletions(-)
 
-I have a feeling that proper reflog for HEAD would make the issue so 
-much simpler.
-
-But in the mean time I tend to agree with Ted about the fact that simply 
-losing the detached position is not _that_ important.  If you go to 
-HEAD^ and want to come back to master I think it should just work (with 
-a display of what the last position was as Carl mentioned).
-
-It might be some work to get to a given position with a detached head 
-and this very position might be valuable information, but if you then do 
-"checkout HEAD^" you will still be detached but your previous position 
-is lost just like it would be if you moved to master.  Yet you're not 
-prevented from going to HEAD^ but you are prevented from going to 
-master.
-
-Same issue if you perform a commit on top of a detached head.  Nothing 
-prevents you from doing "checkout HEAD^" which will leave your head 
-detached but it will also silently drop your last commit dangling.
-
-In short I think there is no magic solution other than proper reflog for 
-HEAD.
-
-
-Nicolas
+diff --git a/git-remote.perl b/git-remote.perl
+index c813fe1..969d33b 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -130,7 +130,7 @@ sub update_ls_remote {
+ 	$info->{'LS_REMOTE'} = \@ref;
+ }
+ 
+-sub show_wildcard_mapping {
++sub list_wildcard_mapping {
+ 	my ($forced, $ours, $ls) = @_;
+ 	my %refs;
+ 	for (@$ls) {
+@@ -156,25 +156,14 @@ sub show_wildcard_mapping {
+ 			push @tracked, $_;
+ 		}
+ 	}
+-	if (@new) {
+-		print "  New remote branches (next fetch will store in remotes/$ours)\n";
+-		print "    @new\n";
+-	}
+-	if (@stale) {
+-		print "  Stale tracking branches in remotes/$ours (you'd better remove them)\n";
+-		print "    @stale\n";
+-	}
+-	if (@tracked) {
+-		print "  Tracked remote branches\n";
+-		print "    @tracked\n";
+-	}
++	return \@new, \@stale, \@tracked;
+ }
+ 
+-sub show_mapping {
++sub list_mapping {
+ 	my ($name, $info) = @_;
+ 	my $fetch = $info->{'FETCH'};
+ 	my $ls = $info->{'LS_REMOTE'};
+-	my (@stale, @tracked);
++	my (@new, @stale, @tracked);
+ 
+ 	for (@$fetch) {
+ 		next unless (/(\+)?([^:]+):(.*)/);
+@@ -182,7 +171,11 @@ sub show_mapping {
+ 		if ($theirs eq 'refs/heads/*' &&
+ 		    $ours =~ /^refs\/remotes\/(.*)\/\*$/) {
+ 			# wildcard mapping
+-			show_wildcard_mapping($forced, $1, $ls);
++			my ($w_new, $w_stale, $w_tracked)
++				= list_wildcard_mapping($forced, $1, $ls);
++			push @new, @$w_new;
++			push @stale, @$w_stale;
++			push @tracked, @$w_tracked;
+ 		}
+ 		elsif ($theirs =~ /\*/ || $ours =~ /\*/) {
+ 			print STDERR "Warning: unrecognized mapping in remotes.$name.fetch: $_\n";
+@@ -196,13 +189,23 @@ sub show_mapping {
+ 			}
+ 		}
+ 	}
+-	if (@stale) {
++	return \@new, \@stale, \@tracked;
++}
++
++sub show_mapping {
++	my ($name, $info) = @_;
++	my ($new, $stale, $tracked) = list_mapping($name, $info);
++	if (@$new) {
++		print "  New remote branches (next fetch will store in remotes/$name)\n";
++		print "    @$new\n";
++	}
++	if (@$stale) {
+ 		print "  Stale tracking branches in remotes/$name (you'd better remove them)\n";
+-		print "    @stale\n";
++		print "    @$stale\n";
+ 	}
+-	if (@tracked) {
++	if (@$tracked) {
+ 		print "  Tracked remote branches\n";
+-		print "    @tracked\n";
++		print "    @$tracked\n";
+ 	}
+ }
+ 
+-- 
+1.5.0.rc3.1.ge4b0e
