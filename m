@@ -1,109 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 2/2] Flag and skip over packfiles known to be invalid.
-Date: Fri, 2 Feb 2007 03:00:10 -0500
-Message-ID: <20070202080010.GB21094@spearce.org>
-References: <dda240a4adf0511b3e1ab1eb74abdd28821358b0.1170403175.git.spearce@spearce.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: MinGW port usable
+Date: Fri, 02 Feb 2007 00:28:56 -0800
+Message-ID: <45C2F648.9030105@zytor.com>
+References: <200701292320.43888.johannes.sixt@telecom.at> <45C18A3B.2070004@zytor.com> <45C1C24A.471F40AD@eudaptics.com> <45C2560E.6090504@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 02 09:00:26 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 09:29:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCtLM-0003hF-Cm
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 09:00:24 +0100
+	id 1HCtnG-000871-P6
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 09:29:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423214AbXBBIAQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 03:00:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423215AbXBBIAP
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 03:00:15 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41497 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423214AbXBBIAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 03:00:14 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HCtL9-00084l-56; Fri, 02 Feb 2007 03:00:11 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B9BFC20FBAE; Fri,  2 Feb 2007 03:00:10 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <dda240a4adf0511b3e1ab1eb74abdd28821358b0.1170403175.git.spearce@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S933307AbXBBI3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 03:29:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933310AbXBBI3J
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 03:29:09 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:53825 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933307AbXBBI3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 03:29:08 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l128SuiP016629
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 2 Feb 2007 00:28:57 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+In-Reply-To: <45C2560E.6090504@zytor.com>
+X-Virus-Scanned: ClamAV 0.88.7/2514/Thu Feb  1 13:50:10 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-0.5 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38474>
 
-If we've already looked at a packfile and determined it isn't
-valid/usable as a pack, we shouldn't try to use it again in
-the future either.  This avoids multiple error messages from
-the same packfile.
+H. Peter Anvin wrote:
+> 
+> Except they are (for NT-based Windows), so you're doing something goofy. 
+>  This is a widely used construct, so it can't be that broken.
+> 
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- cache.h     |    1 +
- sha1_file.c |    5 +++++
- 2 files changed, 6 insertions(+), 0 deletions(-)
+Erf... I dug through this, and it seems that WriteFile only works on a 
+socket if it has an OVERLAPPED argument now, because the socket is 
+opened for overlapping I/O.  This must be new behaviour in XP-SP2, 
+because this definitely wasn't the case when I last played with this 
+stuff back in 2003.  The Internet is full of people using this 
+technique, but I haven't found a way to get a socket which is *not* 
+opened for overlapping I/O.
 
-diff --git a/cache.h b/cache.h
-index 9873ee9..64c2d3f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -357,6 +357,7 @@ extern struct packed_git {
- 	off_t pack_size;
- 	int pack_fd;
- 	int pack_local;
-+	unsigned invalid:1;
- 	unsigned char sha1[20];
- 	/* something like ".git/objects/pack/xxxxx.pack" */
- 	char pack_name[FLEX_ARRAY]; /* more */
-diff --git a/sha1_file.c b/sha1_file.c
-index ba1c799..9f6e94e 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -714,6 +714,7 @@ struct packed_git *add_packed_git(char *path, int path_len, int local)
- 	p->next = NULL;
- 	p->windows = NULL;
- 	p->pack_fd = -1;
-+	p->invalid = 0;
- 	p->pack_local = local;
- 	if ((path_len > 44) && !get_sha1_hex(path + path_len - 44, sha1))
- 		hashcpy(p->sha1, sha1);
-@@ -746,6 +747,7 @@ struct packed_git *parse_pack_index_file(const unsigned char *sha1, char *idx_pa
- 	p->next = NULL;
- 	p->windows = NULL;
- 	p->pack_fd = -1;
-+	p->invalid = 0;
- 	hashcpy(p->sha1, sha1);
- 	return p;
- }
-@@ -1395,6 +1397,8 @@ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, cons
- 	prepare_packed_git();
- 
- 	for (p = packed_git; p; p = p->next) {
-+		if (p->invalid)
-+			continue;
- 		if (ignore_packed) {
- 			const char **ig;
- 			for (ig = ignore_packed; *ig; ig++)
-@@ -1418,6 +1422,7 @@ static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, cons
- 					close(p->pack_fd);
- 					p->pack_fd = -1;
- 				}
-+				p->invalid = 1;
- 				error("packfile %s cannot be accessed", p->pack_name);
- 				continue;
- 			}
--- 
-1.5.0.rc3.1.ge4b0e
+How typical of Microsoft to break an incredibly powerful unified 
+paradigm, sort-of repair it, and then break it again.  There doesn't 
+seem to be an obvious way to repair this, either, since MS DLLs won't 
+let you override for example the write() function as called from inside 
+the C runtime DLL.
+
+"Some people are just a total waste of carbon..."
+
+	-hpa
