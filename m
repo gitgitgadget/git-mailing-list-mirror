@@ -1,101 +1,67 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Rogan Dawes <discard@dawes.za.net>
 Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
  branch reflog
-Date: Fri, 02 Feb 2007 10:13:11 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702020955540.3021@xanadu.home>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
- <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
- <200702021302.10567.andyparkins@gmail.com>
+Date: Fri, 02 Feb 2007 17:15:39 +0200
+Message-ID: <45C3559B.80104@dawes.za.net>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <200702021308.48599.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
+	Junio C Hamano <junkio@cox.net>
 To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 02 16:13:50 2007
+X-From: git-owner@vger.kernel.org Fri Feb 02 16:17:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD06k-0003rE-4M
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 16:13:46 +0100
+	id 1HD09w-0005La-Tq
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 16:17:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945915AbXBBPNN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 10:13:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945929AbXBBPNN
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 10:13:13 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:56698 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945915AbXBBPNM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 10:13:12 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCU0080GCXZXL00@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 02 Feb 2007 10:13:12 -0500 (EST)
-In-reply-to: <200702021302.10567.andyparkins@gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1945931AbXBBPRA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 10:17:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945932AbXBBPRA
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 10:17:00 -0500
+Received: from sumo.dreamhost.com ([66.33.216.29]:49105 "EHLO
+	sumo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945931AbXBBPQ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 10:16:59 -0500
+Received: from spunkymail-a1.g.dreamhost.com (sd-green-bigip-81.dreamhost.com [208.97.132.81])
+	by sumo.dreamhost.com (Postfix) with ESMTP id AACAC17F600
+	for <git@vger.kernel.org>; Fri,  2 Feb 2007 07:16:56 -0800 (PST)
+Received: from [192.168.201.104] (dsl-146-24-84.telkomadsl.co.za [165.146.24.84])
+	by spunkymail-a1.g.dreamhost.com (Postfix) with ESMTP id E7901FF9AC;
+	Fri,  2 Feb 2007 07:15:46 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+In-Reply-To: <200702021308.48599.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38505>
 
-On Fri, 2 Feb 2007, Andy Parkins wrote:
-
-> Forgetting about detached heads for the moment,
-
-That is not the way to go about it.  You cannot start forgetting about 
-detached heads and come back to it afterwards like an afterthought.
-
-> imagine that yesterday I did 
-> lots of bouncing around on branches, around 1300 (although I wouldn't 
-> remember the exact time).  Oh look, it's about 1300 now.  What then is
-> HEAD@{yesterday} going to tell me?  What will it tell me one minute from now?  
-> It would be the most confusing operation in the world; I'd have to remember 
-> which branch I had checked out and what time I checked it out.
-
-The exact same argument could be said if you did 1300 operations on a 
-single branch, say master.  What would master@{yesterday} tell you?  
-What will it tell you one minute from now?  Now suppose that you have 
-only one branch and therefore HEAD reflog would be a duplicate of master 
-reflog.
-
-Answer: it would carry the same kind of confusion as your example above.
-
-> I really don't want to be able to answer the question what branch did I have 
-> checked out 15 minutes ago.  I do want to ask where was my current branch 15 
-> minutes ago.
-
-Then simply use @{15 minutes ago}.  You'll even save yourself some 
-typing!  It is not like if you have to type HEAD for most operations 
-anyway since HEAD is the likely default in most cases.  So you may even 
-forget that the HEAD entity exists and be just fine.
-
-But HEAD is still a moving pointer and we might want to know that it 
-switched from one branch to another at some point.  And the only way for 
-that to be sensible is by having a separate reflog for HEAD that is the 
-exact log of every operations you perform regardless of the actual 
-branch you might be on.
-
-> Then of course, it's perfectly reasonable to treat the detached HEAD as 
-> meaning that the symref HEAD was pointing at a kind of virtual branch - this 
-> is a branch that isn't in the refs directory but is reflogged.  Other than 
-> that it's no different from any other branch.
+Andy Parkins wrote:
+> On Thursday 2007 February 01 17:33, Nicolas Pitre wrote:
 > 
-> Any notation would do I think, @{} is as good as any other.  In fact, if we 
-> used the name "unnamed branch" instead of "detached head", the notation @{} 
-> is perfect.  (Actually I think unnamed branch is a much better term than 
-> detached HEAD, because HEAD is never detached - it must point at something)
+>> The work in progress to enable separate reflog for HEAD will make it
+>> independent from reflog of any branch HEAD might be pointing to. In
+>> the mean time disallow HEAD@{...} until that work is completed. Otherwise
+>> people might get used to the current behavior which makes HEAD@{...} an
+>> alias for <current_branch>@{...} which won't be the case later.
+> 
+> I hadn't really appreciated the implications of all this HEAD reflog stuff 
+> until now.
+> 
+> Please, please, HEAD@{} should /always/ be an alias for <current_branch>@{}.
+> 
+> There is one special case:  when head is detached, <current_branch> would then 
+> be the "unnamed branch" for reflog purposes; personally I'd like that stored 
+> in .git/logs/DETACHED_HEAD or similar - in particular not in .git/logs/HEAD.
+> 
+> Andy
+> 
 
-HEAD _does_ get detached.  It becomes loose in the air.  It doesn't drag 
-any 
-branch 
-pointer with it.  And everything you do on top of a detached HEAD will 
-be forgotten as soon as you leave it (and the eventual reflog for HEAD 
-expires) if you don't attach it somehow with a tag or a new branch.  
-There is no notion of a virtual branch at all, not technically, not 
-conceptually either.
+However, if HEAD@{} means what was HEAD pointing at at the indicated 
+time, and @{} means "current branch", then we need no exceptions, and 
+the common case is shorter.
 
-
-Nicolas
+Rogan
