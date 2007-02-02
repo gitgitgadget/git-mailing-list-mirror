@@ -1,58 +1,70 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
- branch reflog
-Date: Fri, 2 Feb 2007 11:42:50 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
- <20070201191323.GA18608@spearce.org> <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net>
- <epv3r9$4f7$2@sea.gmane.org>
+Subject: Re: [PATCH] add --remote option to git-clone.
+Date: Fri, 2 Feb 2007 11:48:10 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702021146440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702020028540.18776@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070201234706.GP17617@mellanox.co.il>
+ <Pine.LNX.4.63.0702020050190.18870@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmz3xmju9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 02 11:43:00 2007
+Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@mellanox.co.il>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Feb 02 11:48:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCvsh-0005zE-M0
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 11:43:00 +0100
+	id 1HCvxx-0000GH-9T
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 11:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751892AbXBBKmw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 05:42:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932564AbXBBKmw
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 05:42:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40722 "HELO mail.gmx.net"
+	id S1422841AbXBBKsN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 05:48:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422843AbXBBKsN
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 05:48:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50904 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751892AbXBBKmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 05:42:51 -0500
-Received: (qmail invoked by alias); 02 Feb 2007 10:42:50 -0000
+	id S1422841AbXBBKsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 05:48:12 -0500
+Received: (qmail invoked by alias); 02 Feb 2007 10:48:11 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
-  by mail.gmx.net (mp046) with SMTP; 02 Feb 2007 11:42:50 +0100
+  by mail.gmx.net (mp019) with SMTP; 02 Feb 2007 11:48:11 +0100
 X-Authenticated: #1490710
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <epv3r9$4f7$2@sea.gmane.org>
+In-Reply-To: <7vmz3xmju9.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38489>
 
 Hi,
 
-On Fri, 2 Feb 2007, Jakub Narebski wrote:
+On Thu, 1 Feb 2007, Junio C Hamano wrote:
 
-> Perhaps we should use @{...} to refer to reflog for HEAD, or use yet 
-> another special notation?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Fri, 2 Feb 2007, Michael S. Tsirkin wrote:
+> > ...
+> >> One can always get more branches later, is my approach.
+> >
+> > Yes. But in the same vein, one can add _one_ branch to an empty repo 
+> > either. So, with your reasoning, your patch wouldn't be needed to begin 
+> > with.
+> 
+> Indeed.
+> 
+> > But I find it useful. Even the version where you are not limited to one 
+> > branch.
+> 
+> I am not against the general idea of tracking a subset of
+> branches, but issues include:
+>
+> [explains why git-remote is a better place for this]
 
-No.
-
-IMHO "bla@{yesterday}" should give you what "bla" pointed to, yesterday. 
-In that sense, the proposed reflog on "HEAD" makes perfect sense.
-
-I am not quite sure what I need most, the reflog for "HEAD", or that for 
-my current branch. I guess it is the latter, so I am okay that 
-"@{yesterday}" should mean the current branch, yesterday.
+Seeing your patch to git-remote, it feels more natural, too. Especially 
+since that (or which? :-D) does not give the term "clone" a 
+Microsoft'esque completely new meaning.
 
 Ciao,
 Dscho
