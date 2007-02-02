@@ -1,61 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Fri, 2 Feb 2007 15:23:37 +0100
-Message-ID: <200702021523.38169.jnareb@gmail.com>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com> <200702021055.49428.jnareb@gmail.com> <45C341CD.7020301@fs.ei.tum.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
+ branch reflog
+Date: Fri, 02 Feb 2007 09:52:48 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702020945090.3021@xanadu.home>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
+ <20070201191323.GA18608@spearce.org> <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net>
+ <epv3r9$4f7$2@sea.gmane.org>
+ <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Fri Feb 02 15:24:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 15:53:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCzKZ-00071n-BV
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 15:23:59 +0100
+	id 1HCzmb-0003IN-3V
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 15:52:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423174AbXBBOW3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 09:22:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423180AbXBBOW3
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 09:22:29 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:1705 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423174AbXBBOW1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 09:22:27 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1259989nfa
-        for <git@vger.kernel.org>; Fri, 02 Feb 2007 06:22:26 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=FpbWFOC6gdEm7zmHvQ+yeoscuLArB9fIW38GMYfNUDdw8p5MDhwxhg3zJcvMdTqZgLcGg0x55uoJaZk3t7lbGE86fjS3mnqwKeIii+L7ILWzT8t+pLPQef7Q1AvnrBa9FTz7X74v9i9VKeH65fd/XRDk3PmbRZHo+27NNKF1gus=
-Received: by 10.49.21.8 with SMTP id y8mr6538863nfi.1170426145783;
-        Fri, 02 Feb 2007 06:22:25 -0800 (PST)
-Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
-        by mx.google.com with ESMTP id 28sm4388600ugc.2007.02.02.06.22.25;
-        Fri, 02 Feb 2007 06:22:25 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <45C341CD.7020301@fs.ei.tum.de>
-Content-Disposition: inline
+	id S1945913AbXBBOwu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 09:52:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945914AbXBBOwu
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 09:52:50 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:25268 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945913AbXBBOwt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 09:52:49 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCU00LCMC004G70@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 02 Feb 2007 09:52:48 -0500 (EST)
+In-reply-to: <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38501>
 
-Simon 'corecode' Schubert wrote:
-> Jakub Narebski wrote:
->> 
->> By the way, RCS / CVS rewrote relevant data (to have diff from the top
->> structure) on each commit.
->> 
->> I wonder if git could generate pack on the fly fastimport like...
+On Fri, 2 Feb 2007, Lars Hjemli wrote:
+
+> On 2/2/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Hi,
+> >
+> > On Fri, 2 Feb 2007, Jakub Narebski wrote:
+> >
+> > > Perhaps we should use @{...} to refer to reflog for HEAD, or use yet
+> > > another special notation?
+> >
+> > No.
+> >
+> > IMHO "bla@{yesterday}" should give you what "bla" pointed to, yesterday.
+> > In that sense, the proposed reflog on "HEAD" makes perfect sense.
 > 
-> What do you mean with that?  generate the pack on which occasion?
-> CVS import?  I do this already. 
+> Since HEAD is a synonym for "current branch" everywhere else in git,
+> while .git/logs/HEAD will be a log of detached HEAD (plus branch
+> switches, I guess), I think the following makes perfect sense:
+> 
+>  "HEAD@{yesterday}" = current branch, yesterday
+>  "@{yesterday}"     = detached head (no branch), yesterday
 
-On commit.
--- 
-Jakub Narebski
-Poland
+No it doesn't.
+
+HEAD is a moving pointer.  Sometimes it means the current branch, 
+sometimes it doesn't.
+
+So HEAD is _NOT_ a synonym for "current branch" everywhere already.
+
+And it is really nice to reflog the switching between branch which makes 
+sense only if HEAD has a reflog of its own.
+
+If I want to know where HEAD was yesterday, then the only way to get to 
+this info is with a separate reflog for HEAD.  IF HEAD was a synonym for 
+the current branch then it is impossible to know where HEAD was 
+yesterday because you only get the info about where the current branch 
+was yesterday.  But it is all possible that the yesterday's current 
+branch wasn't the same as today's current branch.
+
+
+Nicolas
