@@ -1,67 +1,60 @@
-From: Rogan Dawes <discard@dawes.za.net>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
- branch reflog
-Date: Fri, 02 Feb 2007 17:15:39 +0200
-Message-ID: <45C3559B.80104@dawes.za.net>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <200702021308.48599.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 02 16:17:05 2007
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Fri, 2 Feb 2007 15:38:03 +0000 (UTC)
+Organization: Straylight/Edgeware development
+Message-ID: <slrnes6mmr.3l6.mdw@metalzone.distorted.org.uk>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com> <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org> <200702021055.49428.jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 02 16:38:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD09w-0005La-Tq
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 16:17:05 +0100
+	id 1HD0UO-0006uI-R0
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 16:38:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945931AbXBBPRA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 10:17:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945932AbXBBPRA
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 10:17:00 -0500
-Received: from sumo.dreamhost.com ([66.33.216.29]:49105 "EHLO
-	sumo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945931AbXBBPQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 10:16:59 -0500
-Received: from spunkymail-a1.g.dreamhost.com (sd-green-bigip-81.dreamhost.com [208.97.132.81])
-	by sumo.dreamhost.com (Postfix) with ESMTP id AACAC17F600
-	for <git@vger.kernel.org>; Fri,  2 Feb 2007 07:16:56 -0800 (PST)
-Received: from [192.168.201.104] (dsl-146-24-84.telkomadsl.co.za [165.146.24.84])
-	by spunkymail-a1.g.dreamhost.com (Postfix) with ESMTP id E7901FF9AC;
-	Fri,  2 Feb 2007 07:15:46 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
-In-Reply-To: <200702021308.48599.andyparkins@gmail.com>
+	id S1945925AbXBBPiJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 10:38:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945938AbXBBPiJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 10:38:09 -0500
+Received: from distorted.demon.co.uk ([80.177.3.76]:57988 "HELO
+	metalzone.distorted.org.uk" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with SMTP id S1945925AbXBBPiH (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Feb 2007 10:38:07 -0500
+Received: (qmail 5776 invoked by uid 110); 2 Feb 2007 15:38:03 -0000
+Received: (qmail 5760 invoked by uid 9); 2 Feb 2007 15:38:03 -0000
+Path: not-for-mail
+Newsgroups: mail.vger.git
+NNTP-Posting-Host: metalzone.distorted.org.uk
+X-Trace: metalzone.distorted.org.uk 1170430683 5758 172.29.199.2 (2 Feb 2007 15:38:03 GMT)
+X-Complaints-To: usenet@distorted.org.uk
+NNTP-Posting-Date: Fri, 2 Feb 2007 15:38:03 +0000 (UTC)
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38506>
 
-Andy Parkins wrote:
-> On Thursday 2007 February 01 17:33, Nicolas Pitre wrote:
-> 
->> The work in progress to enable separate reflog for HEAD will make it
->> independent from reflog of any branch HEAD might be pointing to. In
->> the mean time disallow HEAD@{...} until that work is completed. Otherwise
->> people might get used to the current behavior which makes HEAD@{...} an
->> alias for <current_branch>@{...} which won't be the case later.
-> 
-> I hadn't really appreciated the implications of all this HEAD reflog stuff 
-> until now.
-> 
-> Please, please, HEAD@{} should /always/ be an alias for <current_branch>@{}.
-> 
-> There is one special case:  when head is detached, <current_branch> would then 
-> be the "unnamed branch" for reflog purposes; personally I'd like that stored 
-> in .git/logs/DETACHED_HEAD or similar - in particular not in .git/logs/HEAD.
-> 
-> Andy
-> 
+Jakub Narebski <jnareb@gmail.com> wrote:
 
-However, if HEAD@{} means what was HEAD pointing at at the indicated 
-time, and @{} means "current branch", then we need no exceptions, and 
-the common case is shorter.
+> BTW does Mercurial have tags?
 
-Rogan
+Yes.  Mercurial stores tags in text files, one per line, mapping the tag
+name to a SHA1 hash of the tagged revision.  There are two files of
+tags: `local' tags go into .hg/tags (or somesuch) and don't get copied
+by clone; global tags go into .hgtags and do get copied (of course,
+since they're part of the source tree).
+
+If I may be opinionated for a bit: this is barking for two reasons:
+
+  * The tags files grow by having lines added to the bottom.  Files of
+    this kind are almost ideal for causing merge conflicts, and there's
+    no automatic means for resolving them.  (I actually wrote a custom
+    tags merger recently -- if anyone wants it, just mail me.)
+
+  * If I visit a tag, and then decide I want to visit some other, more
+    recent tag, I'm screwed because it obviously didn't exist in that
+    old revision.  Tying tags to the revision history in this way is
+    truly daft.
+
+-- [mdw]
