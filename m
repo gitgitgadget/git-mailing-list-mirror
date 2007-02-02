@@ -1,107 +1,76 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: precise keyword matching for pretty switch
-Date: Fri, 2 Feb 2007 05:17:53 -0800
-Message-ID: <20070202131752.GA32248@localdomain>
-References: <20070201224339.GA29666@hermes.lan.home.vilz.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
+Date: Fri, 2 Feb 2007 14:21:21 +0100
+Message-ID: <200702021421.22469.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de> <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Nicolas Vilz <niv@iaglans.de>
-X-From: git-owner@vger.kernel.org Fri Feb 02 14:18:03 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 14:20:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCyIg-0003wB-FY
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 14:17:58 +0100
+	id 1HCyKu-0004y7-6o
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 14:20:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423026AbXBBNRz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 08:17:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423045AbXBBNRz
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 08:17:55 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:50051 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423026AbXBBNRz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 08:17:55 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 53EFB7DC094;
-	Fri,  2 Feb 2007 05:17:53 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 02 Feb 2007 05:17:53 -0800
+	id S1423045AbXBBNUM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 08:20:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423053AbXBBNUL
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 08:20:11 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:55838 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423045AbXBBNUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 08:20:10 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so756062uga
+        for <git@vger.kernel.org>; Fri, 02 Feb 2007 05:20:09 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=GHrL+hHqVFckZ62zTTti1NORrwUXpe0bgPNtmJMGXsCwantBSX46XWHoHdtpNtqgjls/zV5eKPYhOZix8CjLAoBz5UDFwN/t0Yf66B5xG5FRIoj8F9cc+e9p3PrA1jlJiyHZEKtqh7prNLRSZLXh/rLHqT0VE6BEfJflpg8mZ68=
+Received: by 10.66.216.20 with SMTP id o20mr4384301ugg.1170422408932;
+        Fri, 02 Feb 2007 05:20:08 -0800 (PST)
+Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
+        by mx.google.com with ESMTP id m1sm5346609uge.2007.02.02.05.20.07;
+        Fri, 02 Feb 2007 05:20:07 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070201224339.GA29666@hermes.lan.home.vilz.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38497>
 
-Nicolas Vilz <niv@iaglans.de> wrote:
-> hi,
+Lars Hjemli wrote:
+> On 2/2/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> On Fri, 2 Feb 2007, Jakub Narebski wrote:
+>>
+>>> Perhaps we should use @{...} to refer to reflog for HEAD, or use yet
+>>> another special notation?
+>>
+>> No.
+>>
+>> IMHO "bla@{yesterday}" should give you what "bla" pointed to, yesterday.
+>> In that sense, the proposed reflog on "HEAD" makes perfect sense.
 > 
-> i noticed today, that the pretty-switch in git-log -diff and many other
-> tools triggers to "oneline" if you just type an "o" after --pretty=
+> Since HEAD is a synonym for "current branch" everywhere else in git,
+> while .git/logs/HEAD will be a log of detached HEAD (plus branch
+> switches, I guess), I think the following makes perfect sense:
 > 
-> so, not only 
-> 
-> git log --pretty=oneline
-> 
-> but also
-> 
-> git log --pretty=online
-> git log --pretty=offline
-> git log --pretty=omfg
+>   "HEAD@{yesterday}" = current branch, yesterday
+>   "@{yesterday}"     = detached head (no branch), yesterday
 
-Oops, that's unexpected.
+In the counterproposal, we have
 
-> and finally (just to make it short *G*)
-> 
-> git log --pretty=osolomio
-> 
-> does trigger the oneline-feature. Perhaps this is not intended to work
-> as it works now. I would recommend, that the switch should only accept
-> the fully matched keyword and not just a lowercase "o" as the first
-> letter of the keywords following after --pretty=, just to prevent people 
-> getting bad habbits.
+   "HEAD@{yesterday}" = where HEAD was at, yesterday
+   "@{yesterday}"     = current branch, yesterday
 
-No.  The abbreviations are intentional.  It's anything but a bad habit.
-
---pretty=o
---pretty=on
---pretty=one
---pretty=onel
---pretty=oneli
---pretty=onelin
---pretty=oneline
-
-are all valid abbreviations. I'm a lazy git :)
-
-I also intend to resurrect gitopt in some form in the near future...
-
-From: Eric Wong <normalperson@yhbt.net>
-Date: Fri, 2 Feb 2007 05:10:25 -0800
-Subject: [PATCH] Disallow invalid --pretty= abbreviations
-
---pretty=o is a valid abbreviation, --pretty=omfg is not
-
-Noticed by: Nicolas Vilz
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- commit.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/commit.c b/commit.c
-index 9b2b842..3e8c872 100644
---- a/commit.c
-+++ b/commit.c
-@@ -47,7 +47,8 @@ enum cmit_fmt get_commit_format(const char *arg)
- 	if (*arg == '=')
- 		arg++;
- 	for (i = 0; i < ARRAY_SIZE(cmt_fmts); i++) {
--		if (!strncmp(arg, cmt_fmts[i].n, cmt_fmts[i].cmp_len))
-+		if (!strncmp(arg, cmt_fmts[i].n, cmt_fmts[i].cmp_len) &&
-+		    !strncmp(arg, cmt_fmts[i].n, strlen(arg)))
- 			return cmt_fmts[i].v;
- 	}
- 
+The side with patch wins (well, the one that can convince Junio).
+But serously, that decision is work for maintainer.
 -- 
-Eric Wong
+Jakub Narebski
+Poland
