@@ -1,56 +1,93 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [PATCH 2/3] Rebase to parent branch after git-fetch in "stg pull".
-Date: Fri, 2 Feb 2007 19:07:06 +0100
-Message-ID: <20070202180706.GE5362@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070201234534.3313.10426.stgit@gandelf.nowhere.earth> <20070201234805.3313.20525.stgit@gandelf.nowhere.earth> <b0943d9e0702020158o1a07b8efu9302794c57d050e1@mail.gmail.com>
+From: Brendan Cully <brendan@kublai.com>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Fri, 2 Feb 2007 09:59:23 -0800
+Message-ID: <20070202175923.GA6304@xanadu.kublai.com>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+	<200702010058.43431.jnareb@gmail.com>
+	<20070201003429.GQ10108@waste.org>
+	<200702021055.49428.jnareb@gmail.com>
+	<slrnes6mmr.3l6.mdw@metalzone.distorted.org.uk>
+	<epvnln$fmn$1@sea.gmane.org>
+	<Pine.LNX.4.64.0702020835550.15057@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 02 19:08:06 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: mercurial@selenic.com, git@vger.kernel.org,
+        Jakub Narebski <jnareb@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: mercurial-bounces@selenic.com Fri Feb 02 19:10:48 2007
+Return-path: <mercurial-bounces@selenic.com>
+Envelope-to: gcvmd-mercurial@gmane.org
+Received: from waste.org ([66.93.16.53])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD2pR-0007mM-Hl
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 19:08:05 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946009AbXBBSIA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 13:08:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946010AbXBBSIA
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 13:08:00 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:55383 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946009AbXBBSIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 13:08:00 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id DF6348122;
-	Fri,  2 Feb 2007 19:07:58 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 212E21F080; Fri,  2 Feb 2007 19:07:07 +0100 (CET)
+	id 1HD2ro-0000RG-Rn
+	for gcvmd-mercurial@gmane.org; Fri, 02 Feb 2007 19:10:33 +0100
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l12HtXFd012058;
+	Fri, 2 Feb 2007 11:55:38 -0600
+Received: from mail.quuxuum.com (zakopane.cs.ubc.ca [198.162.52.68])
+	by waste.org (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id
+	l12Hl4bt010762
+	for <mercurial@selenic.com>; Fri, 2 Feb 2007 11:47:04 -0600
+Received: from zakopane.cs.ubc.ca (localhost.localdomain [127.0.0.1])
+	by mail.quuxuum.com (Postfix) with ESMTP id 707B05C408
+	for <mercurial@selenic.com>; Fri,  2 Feb 2007 09:59:25 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed; d=kublai.com;
+	h=received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:x-operating-system:user-agent:x-delivery-agent:from:mail-followup-to;
+	q=dns; s=dk; bh=NkuJjpFP3xCIogOlNSkxt1YDHTs=;
+	b=fXmtfGy7XqPyWo/XP5AywRQYToXqs4kcyVvK0ygW3Ld1GJLdeGNjWZU05EAhFRsZ13wp2aZNjHt0ekTsBlqUviDwmtiQly74XExLJngfYQtFZQQX0dyeXg/ngJq1Kj7vq6CSqc4lgJYldmwD34CKoPPXp4Jm6IUfQwSGrYqZTqU=
+Received: by zakopane.cs.ubc.ca (tmda-sendmail, from uid 103);
+	Fri, 02 Feb 2007 09:59:25 -0800 (PST)
+Received: from xanadu.kublai.com (xanadu.kublai.com
+	[IPv6:2001:5c0:89ec:1:1::2])
+	by mail.quuxuum.com (Postfix) with ESMTP id 89C0B5C206;
+	Fri,  2 Feb 2007 09:59:24 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0702020158o1a07b8efu9302794c57d050e1@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38520>
+In-Reply-To: <Pine.LNX.4.64.0702020835550.15057@woody.linux-foundation.org>
+X-Operating-System: Darwin 8.8.0 Power Macintosh
+User-Agent: Mutt/1.5.13 (2007-01-09)
+X-Delivery-Agent: TMDA/1.0.3 (Seattle Slew)
+Mail-Followup-To: torvalds@linux-foundation.org, jnareb@gmail.com,
+	mercurial@selenic.com, git@vger.kernel.org
+X-Virus-Scanned: by amavisd-new
+X-BeenThere: mercurial@selenic.com
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: mercurial.selenic.com
+List-Unsubscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
+List-Archive: <http://www.selenic.com/pipermail/mercurial>
+List-Post: <mailto:mercurial@selenic.com>
+List-Help: <mailto:mercurial-request@selenic.com?subject=help>
+List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=subscribe>
+Sender: mercurial-bounces@selenic.com
+Errors-To: mercurial-bounces@selenic.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38521>
 
-On Fri, Feb 02, 2007 at 09:58:06AM +0000, Catalin Marinas wrote:
-> On 01/02/07, Yann Dirson <ydirson@altern.org> wrote:
-> >Previously we were just assuming that the remote from which we
-> >just failed defined a local branch whose name was the same as the
-> >remote def, and that this branch was the parent.  While this is true
-> >for the most common case (branch "origin" from remote "origin"), it is
-> >quite an unflexible assumption.
+On Friday, 02 February 2007 at 08:42, Linus Torvalds wrote:
 > 
-> The t1200-push-modified.sh test fails after applying this patch. It
-> looks like the 3rd test fails to pull the changes from 'foo' into
-> 'bar'.
+> 
+> On Fri, 2 Feb 2007, Jakub Narebski wrote:
+> > 
+> > Gaaah. Why anyone would want to have non-propagated tags?
+> 
+> That's *definitely* not the mistake.
+> 
+> I use private tags (and branches, for that matter) all the time. I'd be 
+> very upset indeed if all my tags were always pushed out when I push 
+> something out.
+> 
+> The mistake seems to be to think that tags get "versioned", and are part 
+> of the tree history. That's insane. It means that you can never have a tag 
+> to a newer tree than the one you are on.
 
-Strange, it passes here, even after pulling you latest commits
-(HEAD=fba895f5f12a652c248b0fd02b7c41f8342cfbdc).
+The tags you use can simply be those from the tip of the repository,
+regardless of which revision you've currently checked out.
 
-Best regards,
--- 
-Yann.
+> Tags are *independent* of history. They must be. They are "outside" 
+> history, since the whole point of tags are to point to history.
+
+Tags have history too. They are added at particular times by
+particular people, and sometimes changed (this wouldn't happen in an
+ideal world, but it happens). It's a shame not to be able to find this
+history.
