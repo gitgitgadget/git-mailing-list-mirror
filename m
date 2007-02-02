@@ -1,68 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/2] Don't leak file descriptors from unavailable pack files.
-Date: Fri, 2 Feb 2007 03:53:43 -0500
-Message-ID: <20070202085343.GD20832@spearce.org>
-References: <20070202080003.GA21094@spearce.org> <7vbqkdhs4d.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: MinGW port usable
+Date: Fri, 02 Feb 2007 00:55:38 -0800
+Message-ID: <45C2FC8A.4060206@zytor.com>
+References: <200701292320.43888.johannes.sixt@telecom.at> <45C18A3B.2070004@zytor.com> <45C1C24A.471F40AD@eudaptics.com> <45C2560E.6090504@zytor.com> <45C2F648.9030105@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 02 09:53:55 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
+To: "H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 09:56:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCuB6-0002Nw-IB
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 09:53:52 +0100
+	id 1HCuD4-0003O8-AG
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 09:55:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932823AbXBBIxs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 03:53:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932852AbXBBIxs
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 03:53:48 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43283 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932823AbXBBIxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 03:53:47 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HCuAx-00021n-Vc; Fri, 02 Feb 2007 03:53:44 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0769A20FBAE; Fri,  2 Feb 2007 03:53:43 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vbqkdhs4d.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750723AbXBBIzv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 03:55:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750887AbXBBIzv
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 03:55:51 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:51892 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750723AbXBBIzv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 03:55:51 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l128tcBn017375
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 2 Feb 2007 00:55:39 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+In-Reply-To: <45C2F648.9030105@zytor.com>
+X-Virus-Scanned: ClamAV 0.88.7/2514/Thu Feb  1 13:50:10 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.6 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38480>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> I agree leaking fd is not nice, but I wonder if that should be
-> dealt with by the caller.
+H. Peter Anvin wrote:
+> H. Peter Anvin wrote:
+>>
+>> Except they are (for NT-based Windows), so you're doing something 
+>> goofy.  This is a widely used construct, so it can't be that broken.
+>>
 > 
-> Originally it did not matter as open_packed_git() died, but
-> shouldn't it be closing the fd and marking p->pack_fd with -1, as
-> you made it return instead of die?
+> Erf... I dug through this, and it seems that WriteFile only works on a 
+> socket if it has an OVERLAPPED argument now, because the socket is 
+> opened for overlapping I/O.  This must be new behaviour in XP-SP2, 
+> because this definitely wasn't the case when I last played with this 
+> stuff back in 2003.  The Internet is full of people using this 
+> technique, but I haven't found a way to get a socket which is *not* 
+> opened for overlapping I/O.
+> 
+> How typical of Microsoft to break an incredibly powerful unified 
+> paradigm, sort-of repair it, and then break it again.  There doesn't 
+> seem to be an obvious way to repair this, either, since MS DLLs won't 
+> let you override for example the write() function as called from inside 
+> the C runtime DLL.
+> 
+> "Some people are just a total waste of carbon..."
+> 
 
-Yea, I thought of that when I wrote that evil patch...
+**HAH***
 
-But open_packed_git has 12 things that can cause it to return
-an error.  That's basically a rewrite of the function.  This was
-4 lines added to the only caller which didn't die().
+I found a workaround after all.  The trick is to use WSASocket() with a 
+last argument 0 instead of socket().
 
-Probably the wrong thing to do.  But the patch was shorter!
+I feel dirty now...
 
-Do you want to reject this patch and have me rewrite open_packed_git
-instead?
 
--- 
-Shawn.
+#include <winsock2.h>
+#include <fcntl.h>
+#include <io.h>
+
+#define socket(a,b,c) sane_socket(a,b,c)
+
+int sane_socket(int domain, int type, int protocol)
+{
+	SOCKET s;
+	int fd;
+
+	s = WSASocket(domain, type, protocol, NULL, 0, 0);
+	if (s == INVALID_SOCKET) {
+		/*
+		 * WSAGetLastError() values seem to be mostly
+		 * errno+10000; verify this or replace this with
+		 * a switch statement...
+		 */
+		errno = WSAGetLastError() - 10000;
+		return -1;
+	}
+	
+	fd = _open_osfhandle(s, 0);
+	if (fd < 0)
+		closesocket(s);
+
+	return fd;
+}
