@@ -1,65 +1,76 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
-Date: Fri, 2 Feb 2007 16:13:08 +0000
-Message-ID: <200702021613.11058.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <200702021308.48599.andyparkins@gmail.com> <45C3559B.80104@dawes.za.net>
+From: Matt Mackall <mpm@selenic.com>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Fri, 2 Feb 2007 10:03:17 -0600
+Message-ID: <20070202160317.GX10108@waste.org>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com> <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org> <200702021055.49428.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Rogan Dawes <discard@dawes.za.net>, Nicolas Pitre <nico@cam.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: mercurial@selenic.com, git@vger.kernel.org,
 	Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 02 17:13:35 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 17:15:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD12V-0005v9-Ud
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 17:13:28 +0100
+	id 1HD14p-0006wk-CR
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 17:15:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945964AbXBBQNS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 11:13:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945966AbXBBQNR
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 11:13:17 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:41841 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945964AbXBBQNQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 11:13:16 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so799586uga
-        for <git@vger.kernel.org>; Fri, 02 Feb 2007 08:13:14 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RC07IYJlG2HkDzoW1O3aq5ud8xweFzv7swOGa4+QQ9hMUYFXLR9yC2zErilQhE0YRcl3CpF1z32Rd3ZCoMg59pm5FWb67H5KUaUTE1xmMG7ezcrtGjSmgbMaudUiuWzb6flHKrW9G7nm94R5iY+IH1Ky5lLBQA6JxwyElr2Tzy4=
-Received: by 10.66.232.11 with SMTP id e11mr4630122ugh.1170432794458;
-        Fri, 02 Feb 2007 08:13:14 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id w40sm4551526ugc.2007.02.02.08.13.11;
-        Fri, 02 Feb 2007 08:13:12 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <45C3559B.80104@dawes.za.net>
+	id S1945963AbXBBQPs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 11:15:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945965AbXBBQPs
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 11:15:48 -0500
+Received: from waste.org ([66.93.16.53]:56773 "EHLO waste.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945963AbXBBQPr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 11:15:47 -0500
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l12G3H2w028937
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 2 Feb 2007 10:03:18 -0600
+Received: (from oxymoron@localhost)
+	by waste.org (8.13.4/8.13.4/Submit) id l12G3Hvu028935;
+	Fri, 2 Feb 2007 10:03:17 -0600
 Content-Disposition: inline
+In-Reply-To: <200702021055.49428.jnareb@gmail.com>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38511>
 
-On Friday 2007 February 02 15:15, Rogan Dawes wrote:
+On Fri, Feb 02, 2007 at 10:55:48AM +0100, Jakub Narebski wrote:
+> How Mercurial solves problem of multiple _persistent_ branches? Does it
+> add pointers to commits somewhere deeper in changelog / revlog?
 
-> However, if HEAD@{} means what was HEAD pointing at at the indicated
-> time, and @{} means "current branch", then we need no exceptions, and
-> the common case is shorter.
+Each changeset may have a branch marker.
 
-In that case I propose that we rename git-commit to git-c; git checkout to 
-git-o and git-merge to git-m.
+Here's branches in use with an import of mutt's CVS history:
 
-Apologies.  I'm being facetious.  I don't think "which is the less typing" 
-should be the decision policy when we're only talking about four letters.
+$ hg branches
+mutt-0-94                      208:b2cc0abd8fe0
+HEAD                           207:a505693b54c1
+mutt-0-93                      134:d59345944030
+muttintl                       1:29510de8b3fc
+$ hg co HEAD
+176 files updated, 0 files merged, 8 files removed, 0 files unresolved
+$ hg branch
+HEAD
+$ hg branch devel
+$ hg branch
+devel
+$ hg branch devel
 
+> BTW does Mercurial have tags?
 
-Andy
+Yes. Both local and revision-controlled.
+
+> Nice to know. You compress only file deltas, or also file revision
+> metadata? Do you compress manifests (trees) and commits (or at least
+> commit messages) too?
+
+All three use the same underlying storage format, so yes.
 
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+Mathematics is the supreme nostalgia of our time.
