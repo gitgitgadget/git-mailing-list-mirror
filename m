@@ -1,61 +1,70 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] detached HEAD -- finishing touches
-Date: Thu, 01 Feb 2007 17:30:40 -0800
-Message-ID: <7virelmjlr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home>
-	<20070131231942.GB31145@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0701311907500.3021@xanadu.home>
-	<20070201030030.GA1979@coredump.intra.peff.net>
-	<7vd54ur26u.fsf@assigned-by-dhcp.cox.net>
-	<7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net>
-	<20070201215242.GA1775@thunk.org>
-	<7v64alnz2q.fsf@assigned-by-dhcp.cox.net>
-	<87ejp99wn7.wl%cworth@cworth.org>
+Subject: Re: Instructions concerning detached head lead to lost local changes
+Date: Thu, 01 Feb 2007 17:41:11 -0800
+Message-ID: <7v1wl9mj48.fsf@assigned-by-dhcp.cox.net>
+References: <87mz3xa3vr.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, Jeff King <peff@peff.net>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Fri Feb 02 02:30:47 2007
+X-From: git-owner@vger.kernel.org Fri Feb 02 02:41:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCnGH-0006gz-In
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 02:30:45 +0100
+	id 1HCnQR-000320-Pd
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 02:41:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423060AbXBBBam (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 20:30:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423061AbXBBBam
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 20:30:42 -0500
-Received: from fed1rmmtai18.cox.net ([68.230.241.41]:61921 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1423060AbXBBBam (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 20:30:42 -0500
+	id S1423065AbXBBBlN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 20:41:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423067AbXBBBlN
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 20:41:13 -0500
+Received: from fed1rmmtai16.cox.net ([68.230.241.43]:65441 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1423065AbXBBBlM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 20:41:12 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070202013041.QMBF1302.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 1 Feb 2007 20:30:41 -0500
+          id <20070202014112.QXWG1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 1 Feb 2007 20:41:12 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id JRWg1W00g1kojtg0000000; Thu, 01 Feb 2007 20:30:41 -0500
-In-Reply-To: <87ejp99wn7.wl%cworth@cworth.org> (Carl Worth's message of "Thu,
-	01 Feb 2007 17:27:24 -0800")
+	id JRhB1W00U1kojtg0000000; Thu, 01 Feb 2007 20:41:11 -0500
+In-Reply-To: <87mz3xa3vr.wl%cworth@cworth.org> (Carl Worth's message of "Thu,
+	01 Feb 2007 14:51:04 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38447>
 
 Carl Worth <cworth@cworth.org> writes:
 
-> And that's why I proposed a checkout away from detached head just
-> printing the name of the commit that was being left.
+> At this point, I _knew_ that I didn't care about the state I was
+> leaving, (it was something random that I had done for testing). So I
+> definitely didn't want to name it with option (2).
 >
-> Is there any other precious information that that solution would not
-> address?
+> I also knew I hadn't done any commits while detached, which is what I
+> thought the warning was all about. So I wasn't worried about losing
+> nothing with option (1).
 
-I do not think of any offhand, but "did we make commit since we
-detached HEAD" was not a suggestion I made, so what I can think
-of does not matter much ;-).
+Well, the wording could probably be improved because you _did_
+care about the state you were leaving (the "state" is not just
+what commit HEAD points at), but the suggestions did make it
+sound as if your had to choose between only these two, and
+neither would have worked for you.
+
+> Can we fix this please?
+
+The question is how.
+
+We can admit that suggestions are just suggestions and listing
+only two is more confusing than not saying anything concrete.
+
+Alternatively we could add yet another suggestion that let's you
+discard the detached HEAD but still keep your local changes.
+Either --drop by Linus renamed to some sensible name, or "the
+obscure but useful trick".
+
+I dunno.
