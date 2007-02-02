@@ -1,71 +1,94 @@
-From: Brendan Cully <brendan@kublai.com>
-Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Fri, 2 Feb 2007 11:28:29 -0800
-Message-ID: <20070202192829.GB7963@ventoux.cs.ubc.ca>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
-	<Pine.LNX.4.64.0702020835550.15057@woody.linux-foundation.org>
-	<20070202175923.GA6304@xanadu.kublai.com>
-	<200702021919.28669.jnareb@gmail.com>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
+ branch reflog
+Date: Fri, 02 Feb 2007 20:40:02 +0100
+Message-ID: <45C39392.9070000@fs.ei.tum.de>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>	 <20070201191323.GA18608@spearce.org>	 <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net> <epv3r9$4f7$2@sea.gmane.org>	 <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de> <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com> <45C3410A.4030407@fs.ei.tum.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	mercurial@selenic.com, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 02 20:28:36 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigD7F069835CB20F1A6E157EF9"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 02 20:40:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD45M-0000of-3p
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 20:28:36 +0100
+	id 1HD4Gc-0006Xb-1b
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 20:40:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423145AbXBBT2c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 14:28:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423162AbXBBT2c
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 14:28:32 -0500
-Received: from zakopane.cs.ubc.ca ([198.162.52.68]:60280 "EHLO
-	mail.quuxuum.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423145AbXBBT2b (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 14:28:31 -0500
-Received: from zakopane.cs.ubc.ca (localhost.localdomain [127.0.0.1])
-	by mail.quuxuum.com (Postfix) with ESMTP id 44DA85C407
-	for <git@vger.kernel.org>; Fri,  2 Feb 2007 11:28:30 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed; d=kublai.com; h=received:received:received:date:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:x-operating-system:user-agent:x-delivery-agent:from:mail-followup-to; q=dns; s=dk; bh=NKQ3VqzQV2D9bKPZp/E7pbQH7lg=; b=lWWXOx8HPyJ2pZ4JUrlk8IWkZ8FOr8dYjtEfhgm6akPexSeeT36eLHLT6buoLnHKXAjrxERSdwZ7lLInZdbJsYNbSI/4dXayprplvghAA4tp+Dqu3496HR27WLVGrgrVw0l9Y8bsDHCcvdW+V3962tNgsCkSZfHTmC2TI0Jstoo=
-Received: by zakopane.cs.ubc.ca (tmda-sendmail, from uid 103);
-	Fri, 02 Feb 2007 11:28:29 -0800 (PST)
-Received: from ventoux.cs.ubc.ca (ventoux.cs.ubc.ca [198.162.52.72])
-	by mail.quuxuum.com (Postfix) with ESMTP id 8FB7A5C1EC;
-	Fri,  2 Feb 2007 11:28:29 -0800 (PST)
-Received: by ventoux.cs.ubc.ca (Postfix, from userid 3121)
-	id 5C2C9340B5; Fri,  2 Feb 2007 11:28:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <200702021919.28669.jnareb@gmail.com>
-X-Operating-System: Linux 2.6.17-10-generic i686
-User-Agent: Mutt/1.5.13 (2006-11-21)
-X-Delivery-Agent: TMDA/1.0.3 (Seattle Slew)
-Mail-Followup-To: jnareb@gmail.com, torvalds@linux-foundation.org,
-	mercurial@selenic.com, git@vger.kernel.org
+	id S1423079AbXBBTkK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 14:40:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423174AbXBBTkK
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 14:40:10 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:38379 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423079AbXBBTkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 14:40:08 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 203CA28267
+	for <git@vger.kernel.org>; Fri,  2 Feb 2007 20:40:06 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id IaaTpFAYmre7 for <git@vger.kernel.org>;
+	Fri,  2 Feb 2007 20:40:05 +0100 (CET)
+Received: from [192.168.10.124] (ppp-62-216-203-79.dynamic.mnet-online.de [62.216.203.79])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id A45812822A
+	for <git@vger.kernel.org>; Fri,  2 Feb 2007 20:40:05 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+In-Reply-To: <45C3410A.4030407@fs.ei.tum.de>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38529>
 
-On Friday, 02 February 2007 at 19:19, Jakub Narebski wrote:
-> Brendan Cully wrote:
-> > On Friday, 02 February 2007 at 08:42, Linus Torvalds wrote:
-> >> 
-> >> The mistake seems to be to think that tags get "versioned", and are part 
-> >> of the tree history. That's insane. It means that you can never have a tag 
-> >> to a newer tree than the one you are on.
-> > 
-> > The tags you use can simply be those from the tip of the repository,
-> > regardless of which revision you've currently checked out.
-> 
-> _Can_ be or _are_ (in Mercurial)? Besides, there can be more than one
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigD7F069835CB20F1A6E157EF9
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-are. The meaning of tags depends on the repository, not the "index".
+Simon 'corecode' Schubert wrote:
+> Lars Hjemli wrote:
+>>  "HEAD@{yesterday}" =3D current branch, yesterday
+>>  "@{yesterday}"     =3D detached head (no branch), yesterday
+>=20
+> +1 (actually not only "detached head", but "where my workdir was",=20
+> including named branches as well)
 
-> tip of repository (branch are tips of history), and making set of tags
-> dependent on which branch you are on is not a good idea either.
+okay, I take this back and claim the opposite:
 
-agreed.
++1 for
+
+@{..} =3D current branch
+HEAD@{..} =3D log of where HEAD was, detached or not detached, no matter
+
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+
+
+--------------enigD7F069835CB20F1A6E157EF9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFw5OUr5S+dk6z85oRAhLpAJ47eMXilnq9afJDShJ7KWfkrkpuCgCfd0jI
+X/n5EVR1Wl74OgiO9CKY1PY=
+=5few
+-----END PGP SIGNATURE-----
+
+--------------enigD7F069835CB20F1A6E157EF9--
