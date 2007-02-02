@@ -1,63 +1,79 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] detached HEAD -- finishing touches
-Date: Thu, 1 Feb 2007 20:16:09 -0500
-Message-ID: <20070202011608.GA18880@thunk.org>
-References: <Pine.LNX.4.64.0701311405430.3021@xanadu.home> <20070131231942.GB31145@coredump.intra.peff.net> <Pine.LNX.4.64.0701311907500.3021@xanadu.home> <20070201030030.GA1979@coredump.intra.peff.net> <7vd54ur26u.fsf@assigned-by-dhcp.cox.net> <7vlkjip7mu.fsf_-_@assigned-by-dhcp.cox.net> <20070201215242.GA1775@thunk.org> <7v64alnz2q.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] add --remote option to git-clone.
+Date: Thu, 01 Feb 2007 17:25:34 -0800
+Message-ID: <7vmz3xmju9.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702020028540.18776@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20070201234706.GP17617@mellanox.co.il>
+	<Pine.LNX.4.63.0702020050190.18870@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@cam.org>,
-	cworth@cworth.org, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 02 02:16:22 2007
+Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@mellanox.co.il>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 02 02:25:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCn2K-0000CN-Cd
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 02:16:20 +0100
+	id 1HCnBc-0004YG-MU
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 02:25:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423057AbXBBBQR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Feb 2007 20:16:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423053AbXBBBQR
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 20:16:17 -0500
-Received: from THUNK.ORG ([69.25.196.29]:37769 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423057AbXBBBQR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Feb 2007 20:16:17 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HCn78-00023e-Lk; Thu, 01 Feb 2007 20:21:18 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HCn29-0007Jt-IW; Thu, 01 Feb 2007 20:16:09 -0500
-Content-Disposition: inline
-In-Reply-To: <7v64alnz2q.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1423053AbXBBBZg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Feb 2007 20:25:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423058AbXBBBZg
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Feb 2007 20:25:36 -0500
+Received: from fed1rmmtai16.cox.net ([68.230.241.43]:58259 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1423053AbXBBBZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Feb 2007 20:25:36 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070202012535.QQEH1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 1 Feb 2007 20:25:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id JRRb1W00T1kojtg0000000; Thu, 01 Feb 2007 20:25:35 -0500
+In-Reply-To: <Pine.LNX.4.63.0702020050190.18870@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 2 Feb 2007 00:53:14 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38444>
 
-On Thu, Feb 01, 2007 at 05:11:09PM -0800, Junio C Hamano wrote:
-> Didn't I already point out that you can have a precious
-> information while on the detached HEAD without making any
-> commit, and that is the reason why we do not use the
-> reachability crud from refs when deciding to issue the message?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Sorry, I must be dense.  Exactly what precious information can be ever
-be lost in the following sequence:
+> On Fri, 2 Feb 2007, Michael S. Tsirkin wrote:
+> ...
+>> One can always get more branches later, is my approach.
+>
+> Yes. But in the same vein, one can add _one_ branch to an empty repo 
+> either. So, with your reasoning, your patch wouldn't be needed to begin 
+> with.
 
-git checkout HEAD~1
-git checkout master
+Indeed.
 
-such that it want to train users to be typing
+> But I find it useful. Even the version where you are not limited to one 
+> branch.
 
-git checkout -f master
+I am not against the general idea of tracking a subset of
+branches, but issues include:
 
-instead?
+ [1] tracking multiple (but not all) branches, as you pointed out,
 
-						- Ted
+ [2] how this should interact with later fetches from the same
+     remote.
+
+ [3] allowing similar "track these branches from a new remote
+     from now on" in an already initialized repository.
+
+Perhaps by specifying the --branch parameter in an wildcard
+fashion, remote.*.fetch can be initialized to that wildcard and
+later new branches that match the wildcard pattern ca be fetched
+(which is a strawman solution for [1] and [2]).  I suspect [3]
+belongs to what "git remote" should allow you to do, but in that
+case maybe "git init-db ; git remote *that-new-command*" would
+be a single uniform way to solve all of the above?
+
+I personally feel this is post 1.5.0 material.
