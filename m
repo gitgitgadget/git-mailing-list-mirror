@@ -1,75 +1,76 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: git-clone wrongly setting branch.*.merge ? (Was: [PATCH 2/3] Rebase to parent branch after git-fetch in "stg pull".)
-Date: Sat, 3 Feb 2007 00:56:55 +0100
-Message-ID: <20070202235655.GG5362@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070201234534.3313.10426.stgit@gandelf.nowhere.earth> <20070201234805.3313.20525.stgit@gandelf.nowhere.earth> <b0943d9e0702020158o1a07b8efu9302794c57d050e1@mail.gmail.com> <20070202180706.GE5362@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] doc: hooks.txt said post-commit default sends an email, it doesn't
+Date: Fri, 2 Feb 2007 23:56:08 +0000
+Message-ID: <200702022356.11180.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 00:57:53 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 03 00:59:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD8Hx-0004Sn-HY
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 00:57:53 +0100
+	id 1HD8JI-0005B6-35
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 00:59:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933377AbXBBX5u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 18:57:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933386AbXBBX5u
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 18:57:50 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:50720 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933377AbXBBX5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 18:57:49 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 9DB3F4A042;
-	Sat,  3 Feb 2007 00:57:48 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id DEE471F080; Sat,  3 Feb 2007 00:56:55 +0100 (CET)
+	id S933391AbXBBX7N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 18:59:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933386AbXBBX7M
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 18:59:12 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:49022 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946179AbXBBX7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 18:59:11 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so905699uga
+        for <git@vger.kernel.org>; Fri, 02 Feb 2007 15:59:10 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=hsQc9xIdAGn4fRPJSxRoG2mQec/DOKheamAZp8uTpRn4i2LY+FCBtEo+Eo8CBbtlqJYzIyHHz9FQMuyW3WC/GTZXkqf0jJvsPtUCfA/xxFuhmrZRiGUaBhFcVK94Vh8/znivwyHMB/7ObyEwlwxuhQlZFV6ALdxWVnMOPChpnbk=
+Received: by 10.67.21.11 with SMTP id y11mr5183011ugi.1170460750229;
+        Fri, 02 Feb 2007 15:59:10 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id 53sm6257368ugn.2007.02.02.15.59.08;
+        Fri, 02 Feb 2007 15:59:08 -0800 (PST)
+X-TUID: d602cfa4f0b9fea4
+X-UID: 215
+X-Length: 1321
 Content-Disposition: inline
-In-Reply-To: <20070202180706.GE5362@nan92-1-81-57-214-146.fbx.proxad.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38542>
 
-On Fri, Feb 02, 2007 at 07:07:06PM +0100, Yann Dirson wrote:
-> On Fri, Feb 02, 2007 at 09:58:06AM +0000, Catalin Marinas wrote:
-> > On 01/02/07, Yann Dirson <ydirson@altern.org> wrote:
-> > >Previously we were just assuming that the remote from which we
-> > >just failed defined a local branch whose name was the same as the
-> > >remote def, and that this branch was the parent.  While this is true
-> > >for the most common case (branch "origin" from remote "origin"), it is
-> > >quite an unflexible assumption.
-> > 
-> > The t1200-push-modified.sh test fails after applying this patch. It
-> > looks like the 3rd test fails to pull the changes from 'foo' into
-> > 'bar'.
+The default post-commit hook is actually empty; it is the update hook
+that sends an email.  This patch corrects hooks.txt to reflect that.
 
-With current GIT HEAD, plain git-clone creates the following config
-(when cloning a repo with HEAD pointing to branch "downstream":
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ Documentation/hooks.txt |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
 
-
-[remote "origin"]
-        url = /export/work/yann/git/stgit/tmp/.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-[branch "downstream"]
-        remote = origin
-        merge = refs/heads/downstream
-                ^^^^^^^^^^^^^^^^^^^^^
-
-I would have expected "merge = remotes/origin/downstream" instead, and
-this setting confuses the rebase-after-pull logic, causing it to
-rebase the stack onto its own base (no-op).
-
-Isn't that a git-clone bug ?
-
-Now, it looks like without this patch, the post-fetch rebasing only
-worked by chance, even more than I thought.
-
-Best regards, 
+diff --git a/Documentation/hooks.txt b/Documentation/hooks.txt
+index e3b76f9..b083290 100644
+--- a/Documentation/hooks.txt
++++ b/Documentation/hooks.txt
+@@ -90,9 +90,6 @@ parameter, and is invoked after a commit is made.
+ This hook is meant primarily for notification, and cannot affect
+ the outcome of `git-commit`.
+ 
+-The default 'post-commit' hook, when enabled, demonstrates how to
+-send out a commit notification e-mail.
+-
+ update
+ ------
+ 
+@@ -130,6 +127,8 @@ The standard output of this hook is sent to `stderr`, so if you
+ want to report something to the `git-send-pack` on the other end,
+ you can simply `echo` your messages.
+ 
++The default 'update' hook, when enabled, demonstrates how to
++send out a notification e-mail.
+ 
+ post-update
+ -----------
 -- 
-Yann.
+1.5.0.rc1.gf4b6c
