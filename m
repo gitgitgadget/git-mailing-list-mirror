@@ -1,76 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
-Date: Fri, 2 Feb 2007 14:21:21 +0100
-Message-ID: <200702021421.22469.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de> <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
+ branch reflog
+Date: Fri, 02 Feb 2007 14:47:54 +0100
+Message-ID: <45C3410A.4030407@fs.ei.tum.de>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>	 <20070201191323.GA18608@spearce.org>	 <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net> <epv3r9$4f7$2@sea.gmane.org>	 <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de> <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 02 14:20:16 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig186FF4321FFA9806A35736E7"
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Fri Feb 02 14:48:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCyKu-0004y7-6o
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 14:20:16 +0100
+	id 1HCyln-0008Fy-Ox
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 14:48:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423045AbXBBNUM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 08:20:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423053AbXBBNUL
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 08:20:11 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:55838 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423045AbXBBNUK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 08:20:10 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so756062uga
-        for <git@vger.kernel.org>; Fri, 02 Feb 2007 05:20:09 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GHrL+hHqVFckZ62zTTti1NORrwUXpe0bgPNtmJMGXsCwantBSX46XWHoHdtpNtqgjls/zV5eKPYhOZix8CjLAoBz5UDFwN/t0Yf66B5xG5FRIoj8F9cc+e9p3PrA1jlJiyHZEKtqh7prNLRSZLXh/rLHqT0VE6BEfJflpg8mZ68=
-Received: by 10.66.216.20 with SMTP id o20mr4384301ugg.1170422408932;
-        Fri, 02 Feb 2007 05:20:08 -0800 (PST)
-Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
-        by mx.google.com with ESMTP id m1sm5346609uge.2007.02.02.05.20.07;
-        Fri, 02 Feb 2007 05:20:07 -0800 (PST)
-User-Agent: KMail/1.9.3
+	id S1423081AbXBBNsA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 08:48:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423026AbXBBNsA
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 08:48:00 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:50803 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423081AbXBBNr7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 08:47:59 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 59C7128296
+	for <git@vger.kernel.org>; Fri,  2 Feb 2007 14:47:58 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id njSocGOhIj7b for <git@vger.kernel.org>;
+	Fri,  2 Feb 2007 14:47:58 +0100 (CET)
+Received: from [192.168.10.124] (ppp-62-216-203-79.dynamic.mnet-online.de [62.216.203.79])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id F305928293
+	for <git@vger.kernel.org>; Fri,  2 Feb 2007 14:47:57 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
 In-Reply-To: <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
-Content-Disposition: inline
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38498>
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig186FF4321FFA9806A35736E7
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
 Lars Hjemli wrote:
-> On 2/2/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> On Fri, 2 Feb 2007, Jakub Narebski wrote:
->>
->>> Perhaps we should use @{...} to refer to reflog for HEAD, or use yet
->>> another special notation?
->>
->> No.
->>
->> IMHO "bla@{yesterday}" should give you what "bla" pointed to, yesterday.
->> In that sense, the proposed reflog on "HEAD" makes perfect sense.
-> 
-> Since HEAD is a synonym for "current branch" everywhere else in git,
-> while .git/logs/HEAD will be a log of detached HEAD (plus branch
-> switches, I guess), I think the following makes perfect sense:
-> 
->   "HEAD@{yesterday}" = current branch, yesterday
->   "@{yesterday}"     = detached head (no branch), yesterday
+>  "HEAD@{yesterday}" =3D current branch, yesterday
+>  "@{yesterday}"     =3D detached head (no branch), yesterday
 
-In the counterproposal, we have
++1 (actually not only "detached head", but "where my workdir was", includ=
+ing named branches as well)
 
-   "HEAD@{yesterday}" = where HEAD was at, yesterday
-   "@{yesterday}"     = current branch, yesterday
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
-The side with patch wins (well, the one that can convince Junio).
-But serously, that decision is work for maintainer.
--- 
-Jakub Narebski
-Poland
+
+--------------enig186FF4321FFA9806A35736E7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFw0ENr5S+dk6z85oRAoxlAJ9wCzCeZ0keuHxRaSUTKzTbh+7oZwCggLJU
+N4GnhHVXyujS0tFabt8ElG0=
+=Mt4a
+-----END PGP SIGNATURE-----
+
+--------------enig186FF4321FFA9806A35736E7--
