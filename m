@@ -1,65 +1,52 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] Teach 'git remote' how to cleanup stale tracking branches.
-Date: Fri, 2 Feb 2007 01:13:59 -0500
-Message-ID: <20070202061359.GB20719@spearce.org>
-References: <58b74d176fd10417a58d42d9437c631d03f4c4f6.1170392736.git.spearce@spearce.org> <20070202050608.GB20505@spearce.org> <7v4pq5ks9i.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/4] Correct comment in prepare_packed_git_one.
+Date: Thu, 01 Feb 2007 22:21:09 -0800
+Message-ID: <7vwt31jd0q.fsf@assigned-by-dhcp.cox.net>
+References: <a0b03fc086bb66e2aa2e386dcb4ff97fc837f07f.1170363130.git.spearce@spearce.org>
+	<20070201205227.GB19009@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 02 07:14:17 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Feb 02 07:21:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCrgd-0007r0-Tq
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 07:14:16 +0100
+	id 1HCrnO-0002MX-F4
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 07:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423127AbXBBGOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 01:14:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423129AbXBBGOF
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 01:14:05 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:37990 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423127AbXBBGOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 01:14:04 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HCrgP-0004TF-IE; Fri, 02 Feb 2007 01:14:01 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2CD9320FBAE; Fri,  2 Feb 2007 01:14:00 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v4pq5ks9i.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1423130AbXBBGVL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 01:21:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423132AbXBBGVL
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 01:21:11 -0500
+Received: from fed1rmmtai17.cox.net ([68.230.241.42]:58677 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1423130AbXBBGVK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 01:21:10 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070202062111.WAWE1343.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 2 Feb 2007 01:21:11 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id JWM91W00N1kojtg0000000; Fri, 02 Feb 2007 01:21:09 -0500
+In-Reply-To: <20070201205227.GB19009@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 1 Feb 2007 15:52:27 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38461>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> If you are disconnected, would it fail gracefully without
-> removing stuff?  From a cursory look it should, but just making
-> sure.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Indeed, it crashes out:
- 
-	$ ./git-remote prune cs-src
-	ssh: host.that.exists: No address associated with nodename
-	fatal: The remote end hung up unexpectedly
-	ls-remote --heads cs:sw/src/git: command returned error: 1
-	[git (sp/remote)]$ ls .git/refs/remotes/cs-src/
-	.       ..      master
+> After staring at the comment and the associated for loop, I
+> realized the comment was completely bogus.
 
-and the refs are still safe.
-
--- 
-Shawn.
+Yeah, when the comment was written, the loop after the comment
+did not exist.  The comment was talking about calling
+add_packed_git() to see if the corresponding pack can be mapped,
+and then upon receiving NULL, not linking p to the packed_git
+linked list.
