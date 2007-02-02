@@ -1,94 +1,114 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
- branch reflog
-Date: Fri, 02 Feb 2007 20:40:02 +0100
-Message-ID: <45C39392.9070000@fs.ei.tum.de>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>	 <20070201191323.GA18608@spearce.org>	 <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net> <epv3r9$4f7$2@sea.gmane.org>	 <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de> <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com> <45C3410A.4030407@fs.ei.tum.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: newbie questions about git design and features (some wrt hg)
+Date: Fri, 2 Feb 2007 11:42:30 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702021130020.15057@woody.linux-foundation.org>
+References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com>
+ <200702010058.43431.jnareb@gmail.com> <20070201003429.GQ10108@waste.org>
+ <200702021055.49428.jnareb@gmail.com> <slrnes6mmr.3l6.mdw@metalzone.distorted.org.uk>
+ <epvnln$fmn$1@sea.gmane.org> <Pine.LNX.4.64.0702020835550.15057@woody.linux-foundation.org>
+ <20070202175923.GA6304@xanadu.kublai.com> <Pine.LNX.4.64.0702021027450.15057@woody.linux-foundation.org>
+ <20070202192640.GA7963@ventoux.cs.ubc.ca>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigD7F069835CB20F1A6E157EF9"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 02 20:40:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, mercurial@selenic.com,
+	git@vger.kernel.org
+To: Brendan Cully <brendan@kublai.com>
+X-From: git-owner@vger.kernel.org Fri Feb 02 20:42:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD4Gc-0006Xb-1b
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 20:40:14 +0100
+	id 1HD4J0-0007fh-GC
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 20:42:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423079AbXBBTkK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 14:40:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423174AbXBBTkK
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 14:40:10 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:38379 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423079AbXBBTkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 14:40:08 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 203CA28267
-	for <git@vger.kernel.org>; Fri,  2 Feb 2007 20:40:06 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id IaaTpFAYmre7 for <git@vger.kernel.org>;
-	Fri,  2 Feb 2007 20:40:05 +0100 (CET)
-Received: from [192.168.10.124] (ppp-62-216-203-79.dynamic.mnet-online.de [62.216.203.79])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id A45812822A
-	for <git@vger.kernel.org>; Fri,  2 Feb 2007 20:40:05 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
-In-Reply-To: <45C3410A.4030407@fs.ei.tum.de>
-X-Enigmail-Version: 0.94.2.0
+	id S1945898AbXBBTmj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 14:42:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423186AbXBBTmj
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 14:42:39 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:37057 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423183AbXBBTmi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 14:42:38 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l12JgV43014806
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 2 Feb 2007 11:42:31 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l12JgUg5015960;
+	Fri, 2 Feb 2007 11:42:31 -0800
+In-Reply-To: <20070202192640.GA7963@ventoux.cs.ubc.ca>
+X-Spam-Status: No, hits=-0.413 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.172 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38529>
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigD7F069835CB20F1A6E157EF9
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-
-Simon 'corecode' Schubert wrote:
-> Lars Hjemli wrote:
->>  "HEAD@{yesterday}" =3D current branch, yesterday
->>  "@{yesterday}"     =3D detached head (no branch), yesterday
->=20
-> +1 (actually not only "detached head", but "where my workdir was",=20
-> including named branches as well)
-
-okay, I take this back and claim the opposite:
-
-+1 for
-
-@{..} =3D current branch
-HEAD@{..} =3D log of where HEAD was, detached or not detached, no matter
-
-cheers
-  simon
-
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38530>
 
 
---------------enigD7F069835CB20F1A6E157EF9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+On Fri, 2 Feb 2007, Brendan Cully wrote:
+> 
+> I don't think I do, no. (Maybe it's the double negative construction.)
+> Local tags don't get pushed. Tags on private branches don't get
+> pushed. Tags on public branches do. This business you describe, where
+> you push tags around completely separate from the revisions they tag,
+> sounds a little odd. But nothing stops you from maintaining your local
+> tags in their own repository, if that's what makes you happy.
+> 
+> > In other words, tags are just like branches. You don't tie two tags 
+> > together, because one may (and does) make sense without the other.
+> 
+> Which tags are being tied together?
 
-iD8DBQFFw5OUr5S+dk6z85oRAhLpAJ47eMXilnq9afJDShJ7KWfkrkpuCgCfd0jI
-X/n5EVR1Wl74OgiO9CKY1PY=
-=5few
------END PGP SIGNATURE-----
+If you tie "tag" together with "history", and push out history, what 
+happens?
 
---------------enigD7F069835CB20F1A6E157EF9--
+> It seems to me they clearly do have history.
+
+No they don't. Quite often, tags are generated outside of history, ie you 
+tag something as being "known bad" long after it was done. Or you 
+(hopefully) tag it with the test-information after it passed (or 
+didn't) pass some debug check. Neither of which is something you'd do when 
+the thing is actually committed or developed.
+
+So tags are *events*. But if you think they are events "within" the 
+history of a tree, you're missing a big issue.
+
+My personal use of tags tends to be
+ - I tag releases I make, and sign them etc.
+ - when debugging (and using "git bisect" in particular), I tag things for 
+   my own memory (ie if a bisection selected something that didn't 
+   compile, and I have to pick another point by hand, I tag that bad one 
+   temporarily for explanation - the tag shows up nicely in the graphical 
+   history viewers)
+
+The "release" tags are done as I develop, since _others_ will do 
+regression tests etc later on. I don't know whether those others will add 
+their own tags on top of my tag ("passed-regression-test" tag that points 
+to my release-tag, which points to whatever commit I released), but it's 
+really worth pointing out that that is just a small special case.
+
+That *small* special case I wouldn't mind being part of history. But all 
+the other tags should never be, since they are actually personal to 
+whoever made them (even though others may well care: for example, if a 
+regression run tags something as "passed", a lot of people will care: it 
+doesn't mean that the tag should be entirely private!).
+
+And because it's wrong in general to make the tags be bound to history 
+(because they may or may not be relevant to others, and they may or may 
+not actually happen _during_ the history), it's wrong to design the tags 
+that way. Tags really are "outside" the thing, unless you live in a world 
+where only the lead engineer is supposed to use tags.
+
+I want tags to be useful for *anybody*. A total non-developer, who decides 
+that he wants to test a release, should be able to tag the particular 
+versions he happened to test, and it damn well shouldn't be just 
+"my-tag-1023". It should allow him to write a small story about what the 
+results of the tests were!
+
+Which is how git tags are desiged. They're separate from history, but that 
+doesn't make them less useful - it makes them *more* widely useful.
+
+		Linus
