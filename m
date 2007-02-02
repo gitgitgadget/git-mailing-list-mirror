@@ -1,68 +1,67 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Be tolerant to repos without .git/remotes/ or .git/branches/.
-Date: Sat, 03 Feb 2007 00:00:08 +0100
-Message-ID: <20070202225900.30628.17382.stgit@gandelf.nowhere.earth>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 2/3] Rebase to parent branch after git-fetch in "stg pull".
+Date: Fri, 2 Feb 2007 23:01:59 +0000
+Message-ID: <b0943d9e0702021501g2cb9bb6cocae0d706c8742868@mail.gmail.com>
+References: <20070201234534.3313.10426.stgit@gandelf.nowhere.earth>
+	 <20070201234805.3313.20525.stgit@gandelf.nowhere.earth>
+	 <b0943d9e0702020158o1a07b8efu9302794c57d050e1@mail.gmail.com>
+	 <20070202180706.GE5362@nan92-1-81-57-214-146.fbx.proxad.net>
+	 <20070202224250.GF5362@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 00:01:10 2007
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat Feb 03 00:02:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HD7P2-0001QP-7t
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 00:01:08 +0100
+	id 1HD7Py-0001wV-BL
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 00:02:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946149AbXBBXBF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 18:01:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946139AbXBBXBE
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 18:01:04 -0500
-Received: from smtp8-g19.free.fr ([212.27.42.65]:54526 "EHLO smtp8-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946149AbXBBXBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 18:01:03 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp8-g19.free.fr (Postfix) with ESMTP id 03C9B5541;
-	Sat,  3 Feb 2007 00:01:01 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 9636A1F07F;
-	Sat,  3 Feb 2007 00:00:08 +0100 (CET)
-User-Agent: StGIT/0.11
+	id S1946139AbXBBXCD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 18:02:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946152AbXBBXCD
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 18:02:03 -0500
+Received: from wr-out-0506.google.com ([64.233.184.238]:55561 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946139AbXBBXCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 18:02:00 -0500
+Received: by wr-out-0506.google.com with SMTP id 68so856846wri
+        for <git@vger.kernel.org>; Fri, 02 Feb 2007 15:01:59 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=LZe8TKLbw+M5UGkYNTdI9zISqD6Ur1j88PQZuRI2lQsPlcFfteTO06SbYj+GRhTPwwCMYEZ+zhQ1kMihB0i/fZjUZLjWl/7XvC/kdCRRxac7TesiarfGYUwnr8riiWj70g4MJildD9TdJcnWWL9uqA6Gn/vvnjqXl/o0kx79by8=
+Received: by 10.114.126.1 with SMTP id y1mr435736wac.1170457319118;
+        Fri, 02 Feb 2007 15:01:59 -0800 (PST)
+Received: by 10.115.110.12 with HTTP; Fri, 2 Feb 2007 15:01:59 -0800 (PST)
+In-Reply-To: <20070202224250.GF5362@nan92-1-81-57-214-146.fbx.proxad.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38538>
 
+On 02/02/07, Yann Dirson <ydirson@altern.org> wrote:
+> On Fri, Feb 02, 2007 at 07:07:06PM +0100, Yann Dirson wrote:
+> > > The t1200-push-modified.sh test fails after applying this patch. It
+> > > looks like the 3rd test fails to pull the changes from 'foo' into
+> > > 'bar'.
+> >
+> > Strange, it passes here, even after pulling you latest commits
+> > (HEAD=fba895f5f12a652c248b0fd02b7c41f8342cfbdc).
+>
+> Wondering which GIT version you are using, I tried to run the
+> testsuite with current GIT HEAD, and it fails much earlier (t1001).
+> We'll have some work here :)
 
-__remotes_from_dir() was not robust against non-existent dirs.
-This a Git 1.5 compat issue, since repos do not have .git/remotes any
-more.
+I tried the latest GIT and it only fails at t1200. I think I got a
+t1001 failure but I fixed it. Do you want me to push the snapshot I
+have and you can see whether it fails on your system? I tried it with
+both Python 2.4 and 2.3 but what's strange is that 'pull' run manually
+(not from the test script) seems to work.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
-
-This problem prevented me from seeing the t1200 regression you
-reported, but once this one is fixed I do hit a problem there.
-
- stgit/git.py |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/stgit/git.py b/stgit/git.py
-index 022d607..069833d 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -904,7 +904,11 @@ def __remotes_from_config():
-     return config.sections_matching(r'remote\.(.*)\.url')
- 
- def __remotes_from_dir(dir):
--    return os.listdir(os.path.join(basedir.get(), dir))
-+    absdir=os.path.join(basedir.get(), dir)
-+    if os.path.isdir(absdir):
-+        return os.listdir(absdir)
-+    else:
-+        return []
- 
- def remotes_list():
-     """Return the list of remotes in the repository
+-- 
+Catalin
