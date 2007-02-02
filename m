@@ -1,82 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Instructions concerning detached head lead to lost local changes
-Date: Fri, 02 Feb 2007 02:14:07 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702020206480.3021@xanadu.home>
-References: <87mz3xa3vr.wl%cworth@cworth.org>
- <7v1wl9mj48.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702012135550.3021@xanadu.home>
- <20070202065949.GI18880@thunk.org>
+From: "Mike Coleman" <tutufan@gmail.com>
+Subject: Re: [PATCH] fix some doc typos and grammar
+Date: Fri, 2 Feb 2007 01:26:25 -0600
+Message-ID: <3c6c07c20702012326h551b9f32gb3d8238361105741@mail.gmail.com>
+References: <3c6c07c20702012225v19b7aa66vc98a028f700914db@mail.gmail.com>
+	 <7vmz3xjbxv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, Carl Worth <cworth@cworth.org>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Fri Feb 02 08:15:23 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Feb 02 08:26:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCsdn-0000wT-0B
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 08:15:23 +0100
+	id 1HCsoZ-0005kC-JK
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 08:26:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422993AbXBBHOf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 02:14:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422982AbXBBHOf
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 02:14:35 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:40387 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422971AbXBBHOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 02:14:09 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCT0014HQRJQ6E0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 02 Feb 2007 02:14:08 -0500 (EST)
-In-reply-to: <20070202065949.GI18880@thunk.org>
-X-X-Sender: nico@xanadu.home
+	id S1422973AbXBBH02 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 02:26:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423184AbXBBH02
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 02:26:28 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:32333 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422973AbXBBH01 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 02:26:27 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1169720nfa
+        for <git@vger.kernel.org>; Thu, 01 Feb 2007 23:26:26 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=g4riNsUdB1HfQ1FnO4ehDThGvjMcyhujAjsc41pVKRzRx+qWKkdfapl9vdy4fYeKlafV7rp9bgfntLyobAf42Gcjg3zJHe1fy8jy5VPOKBEeB08yAtS7IoJ5a33oitGLbhSYySdqLPJjWGpFiEjt0m8wz2gsuEQUQXEdjhCfV6A=
+Received: by 10.48.48.18 with SMTP id v18mr6006835nfv.1170401185735;
+        Thu, 01 Feb 2007 23:26:25 -0800 (PST)
+Received: by 10.48.246.15 with HTTP; Thu, 1 Feb 2007 23:26:25 -0800 (PST)
+In-Reply-To: <7vmz3xjbxv.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38469>
 
-On Fri, 2 Feb 2007, Theodore Tso wrote:
+On 2/2/07, Junio C Hamano <junkio@cox.net> wrote:
+> It is usually nicer to put this "cover letter" material below
+> the three dashes after Signed-off-by line; not a huge deal,
+> though.
 
-> On Thu, Feb 01, 2007 at 09:49:27PM -0500, Nicolas Pitre wrote:
-> > It might be some work to get to a given position with a detached head 
-> > and this very position might be valuable information, but if you then do 
-> > "checkout HEAD^" you will still be detached but your previous position 
-> > is lost just like it would be if you moved to master.  Yet you're not 
-> > prevented from going to HEAD^ but you are prevented from going to 
-> > master.
-> 
-> Exactly.  With Junio's reasoning, then why aren't we forcing -f in this sequence:
-> 
-> git checkout HEAD^
-> git checkout HEAD^^
-> git checkout HEAD^^^
-> git checkout -f master
-> 
-> The first three are just as likely to "lose" information as the last.
-> Personally, I don't think any of this is "losing" information, any
-> more than I "lose" information in the following sequence of commands:
-> 
-> cd /usr/src/linux/drivers/net
-> cd /usr/src/linux/drivers/char
-> cd /usr/src/linux/fs/ext3
-> cd /home/tytso
-> 
-> The current working directory is just like the detached HEAD.  If I'm
-> moving it around, there is no loss of data.  cd != rm.
+I remembered that the three dashes mattered, but I couldn't remember
+if it was above or below.
 
-It's just that moving around amongst thousands of commits to pin point a 
-particular commit might require some digging work.  This is why there 
-might be some value in a particular position and why there is an attempt 
-at protecting that "work".
+It turns out that it's fairly easy to configure gmail to accept an
+SMTP connection.  This recipe shows how to configure ssmtp, which is
+just a really dumb sender, to work with gmail:
 
-But since moving to another position while still remaining detached from 
-any branch has the same potential for losing the important position and 
-so without any kind of protection then it makes no sense to have such a 
-protection when moving back to a branch.
+    http://www.destr0yr.com/article.php/Gmail_and_sSMTP
 
+This makes git-send-email work directly, and avoids the gmail web MUA.
 
-Nicolas
+> Ah, "which or that", very funny.  At work today I was working
+> with somebody you know (AB) on a document, and he was fixing my
+> that to which.  Now you are fixing my which to that.
+
+Amusingly enough, it was PE who taught me the difference between
+'that' and 'which' in the first place.  Tell AB that MC says "Hi".
+:-)
+
+Mike
