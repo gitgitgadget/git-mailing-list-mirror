@@ -1,78 +1,85 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: How to configure your MTA [Was: [PATCH] fix some doc typos and grammar]
-Date: Fri, 2 Feb 2007 12:43:29 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070202114329.GA5081@cepheus>
-References: <3c6c07c20702012225v19b7aa66vc98a028f700914db@mail.gmail.com> <7vmz3xjbxv.fsf@assigned-by-dhcp.cox.net> <3c6c07c20702012326h551b9f32gb3d8238361105741@mail.gmail.com> <epv761$gc1$1@sea.gmane.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
+Date: Fri, 2 Feb 2007 13:02:07 +0000
+Message-ID: <200702021302.10567.andyparkins@gmail.com>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de> <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 02 12:43:49 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Lars Hjemli" <hjemli@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Jakub Narebski" <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 02 14:02:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HCwpY-0001eU-KE
-	for gcvg-git@gmane.org; Fri, 02 Feb 2007 12:43:48 +0100
+	id 1HCy3b-0005L7-98
+	for gcvg-git@gmane.org; Fri, 02 Feb 2007 14:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947AbXBBLnm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 2 Feb 2007 06:43:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbXBBLnm
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 06:43:42 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:40071 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751947AbXBBLnl (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Feb 2007 06:43:41 -0500
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HCwpQ-000016-9G; Fri, 02 Feb 2007 12:43:40 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l12BhXCb010784;
-	Fri, 2 Feb 2007 12:43:33 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l12BhWvi010783;
-	Fri, 2 Feb 2007 12:43:32 +0100 (MET)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+	id S1423026AbXBBNCU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 08:02:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423031AbXBBNCU
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 08:02:20 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:34279 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423026AbXBBNCT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 08:02:19 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so752086uga
+        for <git@vger.kernel.org>; Fri, 02 Feb 2007 05:02:17 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=A3vaO6C8A1Ad3/DrLGo8yyL8BMSbIw8jRma4e6O7ZaV+vWnzH/k+b//g5qOkQpJja89zoU/BMdjI6V29ZFOp/r2hNmbMxDmMxK+FUylZP1wrXCOQ1e+0/vlHdWiPumIMthEXDDTg+2+d8iXaE/ekzXAH1zc3Q6b+53RDIiGJ/LI=
+Received: by 10.67.121.15 with SMTP id y15mr4372653ugm.1170421337320;
+        Fri, 02 Feb 2007 05:02:17 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id 53sm5281524ugn.2007.02.02.05.02.14;
+        Fri, 02 Feb 2007 05:02:14 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <epv761$gc1$1@sea.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38494>
 
-Hello,
+On Friday 2007 February 02 11:02, Lars Hjemli wrote:
 
-Jakub Narebski wrote:
-> > This makes git-send-email work directly, and avoids the gmail web M=
-UA.
->=20
-> It is fairly easy to do the same with sendmail (which is default MTA
-> for many Linux distributions). I have googled the answer thanks to
-> some tips on #git channel. You have to change /etc/mail/sendmail.mc
-> (or the file where SMART_HOST is commented out), add your credentials
-> to /etc/mail/authinfo, then compile changes using "make -C /etc/mail"
-> (all of it as root, I think).
->=20
-> Your credential should have the form (in /etc/mail/authinfo)
->=20
->   AuthInfo:smtp.gmail.com "U:username@gmail.com" "P:password" "M:PLAI=
-N"
->   AuthInfo: "U:username@gmail.com" "P:password" "M:PLAIN"
-I'd prefer a MTA that is able to do this on a per-user basis.  My wish
-is something like procmail, but for sending.  Some time ago I searched
-for such an MTA, but unsuccessful.  Does anyone know such a server?
+>   "HEAD@{yesterday}" = current branch, yesterday
+>   "@{yesterday}"     = detached head (no branch), yesterday
 
-Best regards
-Uwe
+I'd vote for this too.  It's the only logically consistent view.
 
---=20
-Uwe Kleine-K=F6nig
+HEAD is a symbolic reference, it's a way of referring to a real branch by 
+another name.  HEAD@{} should be the same as branch@{} to be consistent.
 
-dd if=3D/proc/self/exe bs=3D1 skip=3D1 count=3D3 2>/dev/null
+Forgetting about detached heads for the moment, imagine that yesterday I did 
+lots of bouncing around on branches, around 1300 (although I wouldn't 
+remember the exact time).  Oh look, it's about 1300 now.  What then is
+HEAD@{yesterday} going to tell me?  What will it tell me one minute from now?  
+It would be the most confusing operation in the world; I'd have to remember 
+which branch I had checked out and what time I checked it out.
+
+I really don't want to be able to answer the question what branch did I have 
+checked out 15 minutes ago.  I do want to ask where was my current branch 15 
+minutes ago.
+
+Then of course, it's perfectly reasonable to treat the detached HEAD as 
+meaning that the symref HEAD was pointing at a kind of virtual branch - this 
+is a branch that isn't in the refs directory but is reflogged.  Other than 
+that it's no different from any other branch.
+
+Any notation would do I think, @{} is as good as any other.  In fact, if we 
+used the name "unnamed branch" instead of "detached head", the notation @{} 
+is perfect.  (Actually I think unnamed branch is a much better term than 
+detached HEAD, because HEAD is never detached - it must point at something)
+
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
