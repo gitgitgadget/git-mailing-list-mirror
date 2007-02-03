@@ -1,61 +1,52 @@
-From: Michael Coleman <tutufan@gmail.com>
-Subject: [PATCH] fix uninitialized use of msg buffer
-Date: Sat,  3 Feb 2007 10:49:23 -0600
-Message-ID: <11705213662728-git-send-email-tutufan@gmail.com>
-References: <11705213633209-git-send-email-tutufan@gmail.com>
-Cc: Michael Coleman <tutufan@gmail.com>
+From: Mark Wooding <mdw@distorted.org.uk>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
+Date: Sat, 3 Feb 2007 17:07:14 +0000 (UTC)
+Organization: Straylight/Edgeware development
+Message-ID: <slrnes9ga2.3l6.mdw@metalzone.distorted.org.uk>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <200702021302.10567.andyparkins@gmail.com> <Pine.LNX.4.64.0702020955540.3021@xanadu.home> <200702021611.06029.andyparkins@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 03 17:49:40 2007
+X-From: git-owner@vger.kernel.org Sat Feb 03 18:07:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDO55-0004Zc-TZ
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 17:49:40 +0100
+	id 1HDOMK-0004wt-Is
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 18:07:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992430AbXBCQtc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 11:49:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992431AbXBCQtc
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 11:49:32 -0500
-Received: from py-out-1112.google.com ([64.233.166.182]:41295 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992430AbXBCQtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 11:49:31 -0500
-Received: by py-out-1112.google.com with SMTP id a29so567120pyi
-        for <git@vger.kernel.org>; Sat, 03 Feb 2007 08:49:31 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=i/86zb0iXuyq4LY7fzwUnvYfOAzsycMTSDFndLAnP+kLACYv/Bo/phAD+apXIwt37OsEr2F5n6mBLRc6ltXolBiVEomEUWJyn2tB/6yigKbDHJ0wKRmL5tM1aLo41PxOvxjiJKhpTzKwpOxPAxqMdqEAZaj9nfyMhFWOz952De8=
-Received: by 10.35.40.10 with SMTP id s10mr9528096pyj.1170521370923;
-        Sat, 03 Feb 2007 08:49:30 -0800 (PST)
-Received: from tutufan@gmail.com ( [69.154.213.42])
-        by mx.google.com with ESMTP id 15sm22441358nzo.2007.02.03.08.49.28;
-        Sat, 03 Feb 2007 08:49:29 -0800 (PST)
-Received: by tutufan@gmail.com (sSMTP sendmail emulation); Sat,  3 Feb 2007 10:49:26 -0600
-X-Mailer: git-send-email 1.5.0.rc3
-In-Reply-To: <11705213633209-git-send-email-tutufan@gmail.com>
+	id S2992431AbXBCRHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 12:07:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992434AbXBCRHS
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 12:07:18 -0500
+Received: from distorted.demon.co.uk ([80.177.3.76]:12140 "HELO
+	metalzone.distorted.org.uk" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with SMTP id S2992431AbXBCRHR (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Feb 2007 12:07:17 -0500
+Received: (qmail 8097 invoked by uid 110); 3 Feb 2007 17:07:15 -0000
+Received: (qmail 8081 invoked by uid 9); 3 Feb 2007 17:07:15 -0000
+Path: not-for-mail
+Newsgroups: mail.vger.git
+NNTP-Posting-Host: metalzone.distorted.org.uk
+X-Trace: metalzone.distorted.org.uk 1170522434 7991 172.29.199.2 (3 Feb 2007 17:07:14 GMT)
+X-Complaints-To: usenet@distorted.org.uk
+NNTP-Posting-Date: Sat, 3 Feb 2007 17:07:14 +0000 (UTC)
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38577>
 
----
- builtin-branch.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Andy Parkins <andyparkins@gmail.com> wrote:
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index d60690b..ac64b99 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -315,7 +315,7 @@ static void create_branch(const char *name, const char *start_name,
- 	struct ref_lock *lock;
- 	struct commit *commit;
- 	unsigned char sha1[20];
--	char ref[PATH_MAX], msg[PATH_MAX + 20];
-+	char ref[PATH_MAX], msg[PATH_MAX + 20] = { 0 };
- 
- 	snprintf(ref, sizeof ref, "refs/heads/%s", name);
- 	if (check_ref_format(ref))
--- 
-1.5.0.rc3
+> to do.  Asking for HEAD's reflog should be the same as asking for the 
+> pointed-to-branch's reflog.
+
+And what do you do when HEAD is detached?
+
+I mean: I detach HEAD, and then ask about HEAD@{yesterday}.  It'd be
+nonsensical for that to be an error, since HEAD surely did have a value
+yesterday.  But it can't tell me where my current branch head was
+yesterday, because there isn't a current branch to tell me about.
+
+HEAD@{date} referring to the HEAD reflog is the only sane thing to do.
+
+-- [mdw]
