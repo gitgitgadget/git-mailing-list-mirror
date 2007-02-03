@@ -1,58 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: newbie questions about git design and features (some wrt hg)
-Date: Sat, 3 Feb 2007 22:00:10 +0100
-Message-ID: <200702032200.11070.jnareb@gmail.com>
-References: <3c6c07c20701300820l42cfc8dbsb80393fc1469f667@mail.gmail.com> <20070203200638.GA6888@xanadu.kublai.com> <200702032155.16987.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Pushing to a non-bare repository
+Date: Sat, 03 Feb 2007 13:18:04 -0800
+Message-ID: <7vd54r2b5f.fsf@assigned-by-dhcp.cox.net>
+References: <45C3FB08.1020805@midwinter.com>
+	<7vfy9ndiqp.fsf@assigned-by-dhcp.cox.net>
+	<45C459DD.8080201@fs.ei.tum.de>
+	<Pine.LNX.4.64.0702031146050.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Matt Mackall <mpm@selenic.com>, Junio C Hamano <junkio@cox.net>,
-	mercurial@selenic.com, git@vger.kernel.org
-To: Brendan Cully <brendan@kublai.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 21:58:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Feb 03 22:18:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDRyE-00061H-GD
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 21:58:50 +0100
+	id 1HDSGx-0006eJ-E7
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 22:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751652AbXBCU6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 15:58:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751653AbXBCU6s
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 15:58:48 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:29690 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751644AbXBCU6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 15:58:48 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1031589uga
-        for <git@vger.kernel.org>; Sat, 03 Feb 2007 12:58:46 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=biCAPqYpWOLiQJYsT0uvfBYxqjKqzzLSWycKTJ1sGVfpeUMwkS8zBTMkxxoIwTVFhvlzV3heAEl1jip9oURdH8ENKvKNJVyScgiUxcUjUVDoKJyGbu2GyCqabyTmr9sAkmOgE7GVRn6GMBwWAymDH0g2jHUgkWw7TGMYNNszKbI=
-Received: by 10.66.216.20 with SMTP id o20mr6425066ugg.1170536326574;
-        Sat, 03 Feb 2007 12:58:46 -0800 (PST)
-Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
-        by mx.google.com with ESMTP id 53sm6151928ugd.2007.02.03.12.58.45;
-        Sat, 03 Feb 2007 12:58:46 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <200702032155.16987.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751698AbXBCVSJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 16:18:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbXBCVSJ
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 16:18:09 -0500
+Received: from fed1rmmtai16.cox.net ([68.230.241.43]:60896 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751698AbXBCVSI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 16:18:08 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070203211805.DUJD1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 3 Feb 2007 16:18:05 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id K9J41W0161kojtg0000000; Sat, 03 Feb 2007 16:18:05 -0500
+In-Reply-To: <Pine.LNX.4.64.0702031146050.8424@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sat, 3 Feb 2007 11:48:46 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38603>
 
-Jakub Narebski wrote:
-[...] 
-> If above was true, i.e. .hgtags doesn't behave at all as normal file in 
-> working area, then what the heck it is doing there, and not somewhere 
-> under .hgtags!?!
+(sorry, resending to avoid vger spam filter)
 
-I meant: not somewhere under .hg/ (in repository, and not in working area,
-if it does not behave as an ordinary working area file)
--- 
-Jakub Narebski
-Poland
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+> On Sat, 3 Feb 2007, Simon 'corecode' Schubert wrote:
+>> 
+>> However, your suggestion does not help people who don't know better.  Pushing
+>> into the HEAD branch of another repo breaks stuff there.  Badly.  This should
+>> be prevented, really.
+>
+> No, please don't break it. I do it all the time.
+>
+> I just do "git push remote".
+>
+> And then eventually on the remote end I do end up having to "update", but 
+> that's a simple "git checkout -f".
+
+I do not think anybody is disputing the fact that the current
+git-push does work as expected.
+
+But expectation is a relative thing.  The current behaviour is
+likely to confuse new people; it is like a sharp-edged razor
+that can cut through fingers if the user does not know which end
+is the handle and which end is the blade.
+
+I sent a "if Simon wanted to do it, it is simple" concept patch,
+but obviously Simon or anybody can do the same check in the
+update hook if needed.  However, that would make the newbie
+safety opt_in, and there inevitably will come a discussion on
+what should be the default.
+
+And I suspect that the recent trend is that people would want
+the default to be more newbie friendly, while leaving an opt_in
+escape hatch for power-user convenience.  Obviously my patch
+does not have that escape hatch, and as such it is not meant for
+inclusion as-is.
