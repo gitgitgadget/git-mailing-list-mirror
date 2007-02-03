@@ -1,55 +1,53 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] builtin-branch: be prepared for ref-logging
-Date: Sat, 3 Feb 2007 21:38:56 +0100
-Message-ID: <8c5c35580702031238i612acda0p26aba8e3df747b1a@mail.gmail.com>
-References: <11705213662728-git-send-email-tutufan@gmail.com>
-	 <11705277471962-git-send-email-hjemli@gmail.com>
-	 <7vr6t73tsi.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] remove a superfluous git-symbolic-ref call
+Date: Sat, 03 Feb 2007 15:46:53 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702031544240.3021@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 03 21:39:02 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Feb 03 21:46:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDRf3-0004tK-Nx
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 21:39:02 +0100
+	id 1HDRmj-0008Sq-1N
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 21:46:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbXBCUi7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 15:38:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751588AbXBCUi7
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 15:38:59 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:44377 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751577AbXBCUi6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 15:38:58 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1645415nfa
-        for <git@vger.kernel.org>; Sat, 03 Feb 2007 12:38:57 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=at19PqA4GUw9MVwjETDcloorr39QI3+Pi9ieM7OiklOMqChC1q/n4JLZhsA1YDrGTDwaaZCG+0hgsqZIrUz9zyJTE0/9Tah0usFxiQUVLvhgjeSexhzrf0quoFEH4cydoqT0IojlfGyOrX61ZqspUUwtffNxsix6zDwXwgyxi4w=
-Received: by 10.82.107.15 with SMTP id f15mr1697876buc.1170535137010;
-        Sat, 03 Feb 2007 12:38:57 -0800 (PST)
-Received: by 10.82.158.7 with HTTP; Sat, 3 Feb 2007 12:38:56 -0800 (PST)
-In-Reply-To: <7vr6t73tsi.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751614AbXBCUqz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 15:46:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751620AbXBCUqz
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 15:46:55 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:64586 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751596AbXBCUqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 15:46:54 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JCW00JDHN25KZC0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 03 Feb 2007 15:46:53 -0500 (EST)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38597>
 
-On 2/3/07, Junio C Hamano <junkio@cox.net> wrote:
-> Funny thing is that I thought I fixed this already
+Signed-off-by Nicolas Pitre <nico@cam.org>
+---
 
-Infact, you did:
+Found in 'next'.
 
-  http://article.gmane.org/gmane.comp.version-control.git/37197
 
-Don't know what happend to this one...
-
--- 
-larsh
+diff --git a/git-checkout.sh b/git-checkout.sh
+index 99b8779..dd0c2e9 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -265,7 +265,6 @@ if [ "$?" -eq 0 ]; then
+ 	if test -n "$branch"
+ 	then
+ 		GIT_DIR="$GIT_DIR" git-symbolic-ref -m "checkout: moving to $branch" HEAD "refs/heads/$branch"
+-		GIT_DIR="$GIT_DIR" git-symbolic-ref HEAD "refs/heads/$branch"
+ 		if test -z "$quiet"
+ 		then
+ 			echo >&2 "Switched to${newbranch:+ a new} branch \"$branch\""
