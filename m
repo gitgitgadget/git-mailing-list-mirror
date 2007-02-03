@@ -1,81 +1,86 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: git-clone wrongly setting branch.*.merge ? (Was: [PATCH 2/3] Rebase to parent branch after git-fetch in "stg pull".)
-Date: Sat, 3 Feb 2007 12:16:47 +0000
-Message-ID: <b0943d9e0702030416t4088e7e1yaf2ac0a4c30def8d@mail.gmail.com>
-References: <20070201234534.3313.10426.stgit@gandelf.nowhere.earth>
-	 <20070201234805.3313.20525.stgit@gandelf.nowhere.earth>
-	 <b0943d9e0702020158o1a07b8efu9302794c57d050e1@mail.gmail.com>
-	 <20070202180706.GE5362@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <20070202235655.GG5362@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Why is it bad to rewind a branch that has already been pushed out?
+Date: Sat, 3 Feb 2007 08:20:59 -0500
+Message-ID: <20070203132059.GB15419@thunk.org>
+References: <7v1wl7bv66.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Sat Feb 03 13:16:56 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Feb 03 14:21:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDJpA-0001vQ-Du
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 13:16:56 +0100
+	id 1HDKpO-0006P4-4g
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 14:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945911AbXBCMQu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 07:16:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945963AbXBCMQu
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 07:16:50 -0500
-Received: from nz-out-0506.google.com ([64.233.162.237]:53258 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945911AbXBCMQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 07:16:49 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1138478nze
-        for <git@vger.kernel.org>; Sat, 03 Feb 2007 04:16:48 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Bt3jmODF21n3oJzwp4BSB/qucfHtSMjG6vZ5rer6iE3S6EQmrZIDw7GCfU7jTjd8D06Esk+sJ5rq/c4GhIUzY/tmsY6e8MGk5z6ls4E4iUP9PdT9eeIzrA0jzVnzAc95Ize1AT1y9mOuBqBymqU52Mfmo3xwsSnwlBV72mCd71w=
-Received: by 10.115.93.16 with SMTP id v16mr460132wal.1170505008161;
-        Sat, 03 Feb 2007 04:16:48 -0800 (PST)
-Received: by 10.115.110.12 with HTTP; Sat, 3 Feb 2007 04:16:47 -0800 (PST)
-In-Reply-To: <20070202235655.GG5362@nan92-1-81-57-214-146.fbx.proxad.net>
+	id S1752097AbXBCNVI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 08:21:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752110AbXBCNVI
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 08:21:08 -0500
+Received: from thunk.org ([69.25.196.29]:33597 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752097AbXBCNVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 08:21:07 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HDKuE-0001Gq-L1; Sat, 03 Feb 2007 08:26:15 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HDKp9-0001XA-7a; Sat, 03 Feb 2007 08:20:59 -0500
 Content-Disposition: inline
+In-Reply-To: <7v1wl7bv66.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38564>
 
-Yann,
+On Fri, Feb 02, 2007 at 10:40:49PM -0800, Junio C Hamano wrote:
+> I do not think this is a good explanation.  For example, if we
+> do this:
+> 
+> (1) I build a series and push it out.
+> 
+> 	---o---o---o---j
+> 
+> (2) Alice clones from me, and builds two commits on top of it.
+> 
+> 	---o---o---o---j---a---a
+> 
+> (3) I rewind one and build a few, and push them out.
+> 
+> 	---o---o---o...j
+>                     \
+>                      h---h---h---h
+> 
+> (4) Alice pulls from me again:
+> 
+> 	---o---o---o---j---a---a---*
+>                     \             /
+>                      h---h---h---h
+> 
+> Contrary to the description, git will happily have Alice merge
+> between the two branches, and never gets confused.
+> 
+> Maybe I did not want to have 'j' because it was an incomplete
+> solution to some problem....
 
-On 02/02/07, Yann Dirson <ydirson@altern.org> wrote:
-> On Fri, Feb 02, 2007 at 07:07:06PM +0100, Yann Dirson wrote:
-> > On Fri, Feb 02, 2007 at 09:58:06AM +0000, Catalin Marinas wrote:
-> > > On 01/02/07, Yann Dirson <ydirson@altern.org> wrote:
-> > > >Previously we were just assuming that the remote from which we
-> > > >just failed defined a local branch whose name was the same as the
-> > > >remote def, and that this branch was the parent.  While this is true
-> > > >for the most common case (branch "origin" from remote "origin"), it is
-> > > >quite an unflexible assumption.
-> > >
-> > > The t1200-push-modified.sh test fails after applying this patch. It
-> > > looks like the 3rd test fails to pull the changes from 'foo' into
-> > > 'bar'.
->
-> With current GIT HEAD, plain git-clone creates the following config
-> (when cloning a repo with HEAD pointing to branch "downstream":
+Another scenario might be if 'j' was just a bad idea, and should have
+never been committed in the first place.  Now if Alice builds upon it,
+and at some later point Alice asks you to pull from her repository,
+'j' will appear back in your repository.  So it's better to have a
+changeset which simply undoes 'j' rathern than rewind, once you've
+pushed out the repository.
 
-As I haven't followed the GIT latest developments in this area, I
-can't comment. Regarding StGIT, I'd like it to work with earlier
-stable versions of GIT and not just with the current HEAD. I (and
-probably many others) already have repositories cloned some (long)
-time ago and their gitconfig might not have the cloning information.
+The one exception to this is if 'j' contains something which might be
+problematic from a copyright point of view, in which case you're
+largely screwed if other people such as Alice has already pulled from
+you and started basing changes on 'j'.
 
-The (interim) solution I see is for StGIT pull command to default to
-using git-pull and people can configure it to git-fetch and the
-automatic rebase if they need it. I'd like to release 0.12 this
-weekend but 'pull' doesn't currently work. Are you OK with my solution
-(for backward compatibility with older repositories and GIT versions)?
-
-Thanks.
-
--- 
-Catalin
+							- Ted
