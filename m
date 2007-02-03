@@ -1,84 +1,79 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
-Date: Sat, 3 Feb 2007 17:54:17 +0000
-Message-ID: <200702031754.19494.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <200702021611.06029.andyparkins@gmail.com> <slrnes9ga2.3l6.mdw@metalzone.distorted.org.uk>
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Use "-f" when adding files with odd names in t9200.
+Date: Sat, 3 Feb 2007 13:13:29 -0500
+Message-ID: <20070203181329.GA10192@179.242.249.10.in-addr.arpa>
+References: <1AAD2384-C52D-4D60-A948-4F14C9515B53@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Mark Wooding <mdw@distorted.org.uk>
+Content-Type: text/plain; charset=unknown-8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 03 18:57:20 2007
+X-From: git-owner@vger.kernel.org Sat Feb 03 19:13:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDP8X-0003vW-Sk
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 18:57:18 +0100
+	id 1HDPOH-0002qm-2f
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 19:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750925AbXBCR5R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 12:57:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750944AbXBCR5R
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 12:57:17 -0500
-Received: from nz-out-0506.google.com ([64.233.162.228]:23425 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750925AbXBCR5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 12:57:15 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1201823nze
-        for <git@vger.kernel.org>; Sat, 03 Feb 2007 09:57:15 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=QRt03WfvSMfflKxWluOkVpVlWn5/xIUx7AGpGisFJdYWfZa9mIIONI6DVjV53DdDypt2l7n2vx9To+dk0YmbBc5mv5F+6mcJTQmC4tqWRm1S9vbLTZxIh+Sc4enjhYL5RtVXJ7IfcXj2S/OMWbLkNXq1xiGPoKNU65RgqCWOkoM=
-Received: by 10.65.211.1 with SMTP id n1mr8188599qbq.1170525435544;
-        Sat, 03 Feb 2007 09:57:15 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id f14sm3055164qba.2007.02.03.09.57.12;
-        Sat, 03 Feb 2007 09:57:13 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <slrnes9ga2.3l6.mdw@metalzone.distorted.org.uk>
+	id S1750983AbXBCSNb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 3 Feb 2007 13:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750990AbXBCSNb
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 13:13:31 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:51024 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750979AbXBCSNa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 13:13:30 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by silverinsanity.com (Postfix) with ESMTP id E1E171FFC02B
+	for <git@vger.kernel.org>; Sat,  3 Feb 2007 18:13:29 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
 Content-Disposition: inline
+In-Reply-To: <1AAD2384-C52D-4D60-A948-4F14C9515B53@silverinsanity.com>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38581>
 
-On Saturday 2007, February 03 17:07, Mark Wooding wrote:
+Without -f, the UTF-8 named files are ignored (supposedly via
+=2Egitignore) on systems with a different UTF-8 encoding.
+This patch makes the test pass on OS X on HFS+, in particular.
 
-> And what do you do when HEAD is detached?
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
+=20
+ I still think that the behavior of git-add here is an error.  The file
+ is NOT in any ignore file and so should not be marked as such. However=
+,
+ this allows me to finally use "make test && sudo make install".
 
-Well; my proposal was that when head is detached HEAD@{} would return 
-the "unnamed branch" reflog.
+ t/t9200-git-cvsexportcommit.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-However, that idea has been rejected (which I'm fine with).
-
-> I mean: I detach HEAD, and then ask about HEAD@{yesterday}.  It'd be
-> nonsensical for that to be an error, since HEAD surely did have a
-> value yesterday.  But it can't tell me where my current branch head
-> was yesterday, because there isn't a current branch to tell me about.
->
-> HEAD@{date} referring to the HEAD reflog is the only sane thing to
-> do.
-
-Well I don't think "only sane thing" is entirely accurate; I'm happy to 
-accept counter arguments, but rhetoric doesn't count.
-
-My (abandoned) suggestion was that
-
- HEAD@{..} on a undetached head would be equal to <current-branch>@{..}
- HEAD@{..} on a detached head would be equal to unnamed-branch@{..}
- @{..} would be equal to <whatever-i-was-on>@{...}
-
-I accept (but not necessarily condone) that the counter proposal is also 
-valid.  My argument is about which is the more consistent.  It would 
-appear to be a judgment call; so I'm happy to bow out.  I don't think 
-calling me insane (by proxy) lends any weight to any argument.
-
-
-
-Andy
-
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+diff --git a/t/t9200-git-cvsexportcommit.sh b/t/t9200-git-cvsexportcomm=
+it.sh
+index c443f32..6955cdd 100755
+--- a/t/t9200-git-cvsexportcommit.sh
++++ b/t/t9200-git-cvsexportcommit.sh
+@@ -174,9 +174,9 @@ test_expect_success \
+      'File with non-ascii file name' \
+      'mkdir -p =C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/=
+w/x/y/z/=C3=A5/=C3=A4/=C3=B6 &&
+       echo Foo >=C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v=
+/w/x/y/z/=C3=A5/=C3=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.txt &&
+-      git add =C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w=
+/x/y/z/=C3=A5/=C3=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.txt &&
++      git add -f =C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/=
+v/w/x/y/z/=C3=A5/=C3=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.txt &&
+       cp ../test9200a.png =C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q=
+/r/s/t/u/v/w/x/y/z/=C3=A5/=C3=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.p=
+ng &&
+-      git add =C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w=
+/x/y/z/=C3=A5/=C3=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.png &&
++      git add -f =C3=85/goo/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/=
+v/w/x/y/z/=C3=A5/=C3=A4/=C3=B6/g=C3=A5rdets=C3=A5g=C3=A5rdet.png &&
+       git commit -a -m "G=C3=A5r det s=C3=A5 g=C3=A5r det" && \
+       id=3D$(git rev-list --max-count=3D1 HEAD) &&
+       (cd "$CVSWORK" &&
+--=20
+1.5.0.rc3.22.g5057
