@@ -1,70 +1,58 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] builtin-branch: be prepared for ref-logging
-Date: Sat,  3 Feb 2007 19:35:47 +0100
-Message-ID: <11705277471962-git-send-email-hjemli@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] builtin-branch: be prepared for ref-logging
+Date: Sat, 03 Feb 2007 10:55:20 -0800
+Message-ID: <7vzm7v5aw7.fsf@assigned-by-dhcp.cox.net>
 References: <11705213662728-git-send-email-tutufan@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Michael Coleman <tutufan@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 19:35:39 2007
+	<11705266492308-git-send-email-hjemli@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Coleman <tutufan@gmail.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 03 19:55:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDPjd-0005AY-BW
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 19:35:37 +0100
+	id 1HDQ2s-0006nk-NU
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 19:55:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751043AbXBCSfb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 13:35:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751059AbXBCSfb
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 13:35:31 -0500
-Received: from mail47.e.nsc.no ([193.213.115.47]:58883 "EHLO mail47.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751034AbXBCSfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 13:35:31 -0500
-Received: from localhost.localdomain (ti231210a080-7438.bb.online.no [80.213.29.18])
-	by mail47.nsc.no (8.13.8/8.13.5) with ESMTP id l13IZQ75000774;
-	Sat, 3 Feb 2007 19:35:26 +0100 (CET)
-X-Mailer: git-send-email 1.5.0.rc2.ge4b0e
-In-Reply-To: <11705213662728-git-send-email-tutufan@gmail.com>
+	id S1751065AbXBCSzW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 13:55:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751093AbXBCSzW
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 13:55:22 -0500
+Received: from fed1rmmtai17.cox.net ([68.230.241.42]:38905 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751065AbXBCSzV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 13:55:21 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070203185520.FQUE1343.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 3 Feb 2007 13:55:20 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id K6vL1W00d1kojtg0000000; Sat, 03 Feb 2007 13:55:21 -0500
+In-Reply-To: <11705266492308-git-send-email-hjemli@gmail.com> (Lars Hjemli's
+	message of "Sat, 3 Feb 2007 19:17:29 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38586>
 
-The test for reflog parameter to create_branch() should also have tested
-for log_all_ref_updates. But there is no good reason not to prepare a
-reflog message, so lets just do it.
+Lars Hjemli <hjemli@gmail.com> writes:
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+> The test for reflog parameter to create_branch() should also have tested
+> for log_all_ref_updates. But there is no good reason not to prepare a
+> reflog message, so lets just do it.
+>
+> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+> ---
+>
+> If log_all_ref_updates==1 then the reflog will get an empty message with 
+> your patch. That is better than using an uninitialized message, but I think
+> it's still better to just prepare a proper message.
 
-Sorry, the previous patch was obviously no good, since it didn't honour
-the case where (reflog==1 && log_all_ref_updates==0)
-
-This one should be better.
-
-
- builtin-branch.c |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index d60690b..a8c8c98 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -342,12 +342,10 @@ static void create_branch(const char *name, const char *start_name,
- 	if (!lock)
- 		die("Failed to lock ref for update: %s.", strerror(errno));
- 
--	if (reflog) {
-+	if (reflog)
- 		log_all_ref_updates = 1;
--		snprintf(msg, sizeof msg, "branch: Created from %s",
--			 start_name);
--	}
- 
-+	snprintf(msg, sizeof msg, "branch: Created from %s", start_name);
- 	if (write_ref_sha1(lock, sha1, msg) < 0)
- 		die("Failed to write ref: %s.", strerror(errno));
- }
--- 
-1.5.0.rc2.ge4b0e
+True, but don't you still need to set log_all_ref_updates while
+you call write_ref_sha1() for that ref in order to make sure
+that log_ref_write() sets O_CREAT in oflags?
