@@ -1,53 +1,78 @@
-From: Wolfgang Fischer <wf@wf227.com>
-Subject: Re: t9200 still failing...
-Date: Sat, 3 Feb 2007 17:17:50 +0100
-Message-ID: <13848C22-6C0B-46F0-ABC5-1A94D0DB6B06@wf227.com>
-References: <DBACB5AE-7C40-4D44-85BB-76F30BE96E36@silverinsanity.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 17:18:21 2007
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH] config.txt: update branch.<name>.merge documentation
+Date: Sat, 3 Feb 2007 17:19:53 +0100
+Message-ID: <8aa486160702030819k24a42ac4w115b83980d3ee17e@mail.gmail.com>
+References: <87irejgsyj.fsf@gmail.com>
+	 <20070203155652.GL5362@nan92-1-81-57-214-146.fbx.proxad.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat Feb 03 17:20:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDNam-00062V-P4
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 17:18:21 +0100
+	id 1HDNcj-0006zx-Mw
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 17:20:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946484AbXBCQRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 11:17:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946486AbXBCQRx
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 11:17:53 -0500
-Received: from mail.wf227.com ([217.9.110.226]:33237 "EHLO mail.wf227.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946484AbXBCQRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 11:17:52 -0500
-Received: from [192.168.1.2] (ppp-82-135-8-101.dynamic.mnet-online.de [82.135.8.101])
-	by mail.wf227.com (Postfix) with ESMTP id 41313BB450;
-	Sat,  3 Feb 2007 16:17:51 +0000 (UTC)
-In-Reply-To: <DBACB5AE-7C40-4D44-85BB-76F30BE96E36@silverinsanity.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1946481AbXBCQT4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 3 Feb 2007 11:19:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946487AbXBCQT4
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 11:19:56 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:2562 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946481AbXBCQTz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Feb 2007 11:19:55 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so995954uga
+        for <git@vger.kernel.org>; Sat, 03 Feb 2007 08:19:54 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=imcgAj0lW+ZRnOkUh1rvgW84b1qxeC0DuFvFSQRnlcb0jYQI3ggndyggAkeUbfrxD4Sdf0Jgv7XdhN/XwiyLwyRPsQ1koPsyXsEyNaE5zTq1WczQNK/uLgCbcZRu6NuL5+Kfhegnmut3VStRCl3KK4CXNrbSvKVb26ymY1NpLv8=
+Received: by 10.78.203.13 with SMTP id a13mr922224hug.1170519593975;
+        Sat, 03 Feb 2007 08:19:53 -0800 (PST)
+Received: by 10.78.68.8 with HTTP; Sat, 3 Feb 2007 08:19:53 -0800 (PST)
+In-Reply-To: <20070203155652.GL5362@nan92-1-81-57-214-146.fbx.proxad.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38572>
 
-On 03.02.2007, at 16:56, Brian Gernhardt wrote:
-> What I don't understand is that there are no .gitignore files in  
-> the test repo and the .git/info/exclude file only has comments.   
-> This seems like it might actually be a subtle bug in git-add,  
-> although I'm betting it's more OS X filesystem oddness.  I'm trying  
-> to look into it, but thought that maybe someone with more  
-> experience with the code might catch it first.
+On 2/3/07, Yann Dirson <ydirson@altern.org> wrote:
+> On Sat, Feb 03, 2007 at 04:29:40PM +0100, Santi B=E9jar wrote:
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index e5e019f..f129de9 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > @@ -233,11 +233,12 @@ branch.<name>.remote::
+> >  branch.<name>.merge::
+> >       When in branch <name>, it tells `git fetch` the default refsp=
+ec to
+> >       be marked for merging in FETCH_HEAD. The value has exactly to=
+ match
+> > -     a remote part of one of the refspecs which are fetched from t=
+he remote
+> > -     given by "branch.<name>.remote".
+> > +     the remote or local part of one of the refspecs which are fet=
+ched
+> > +     from the remote given by "branch.<name>.remote".
+>
+> Since both local and remote refs are allowed, it would be useful to
+> know how git-fetch decides how to handle them.  Looks like the 1st
+> fetch refspec with that ref on either side is selected.
 
-That was already discussed a lot. Any filename test on OSX with a HFS 
-+ filesystem containing characters with a different UTF-8-NFC and  
-UTF-8-NFD will make such a test fail. If you are using OSX, you might  
-want to use UnicodeChecker to see the encoding difference for such  
-characters. If you want to make such tests pass, either use  
-characters with only one UTF-8 encoding or use a UFS partition to run  
-such tests.
+Yes, the first is selected.
 
-	Wolfgang
+>
+> git-parser-remote also looks branch.*.merge with --get-all, so it is
+> interesting to know what happens for multiple values (if git-fetch
+> just marks them all, how does git-pull react ?).
+
+The last sentence in the branch.<name>.merge says that it would
+produce an octopus, is this enough?
+
+Santi
