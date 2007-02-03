@@ -1,96 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] add --remote option to git-clone.
-Date: Fri, 02 Feb 2007 19:00:29 -0800
-Message-ID: <7vmz3wdjxu.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0702020028540.18776@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20070201234706.GP17617@mellanox.co.il>
-	<Pine.LNX.4.63.0702020050190.18870@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmz3xmju9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0702021146440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Pavel Roskin <proski@gnu.org>
+Subject: stg pull doesn't pull anymore
+Date: Fri, 02 Feb 2007 22:00:47 -0500
+Message-ID: <1170471647.9733.24.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@mellanox.co.il>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Feb 03 04:00:39 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat Feb 03 04:01:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDB8o-000554-JU
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 04:00:38 +0100
+	id 1HDB9E-0005Ja-Mw
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 04:01:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946246AbXBCDAb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 22:00:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946244AbXBCDAb
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 22:00:31 -0500
-Received: from fed1rmmtai18.cox.net ([68.230.241.41]:62995 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1946265AbXBCDAa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 22:00:30 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070203030029.GNTZ1302.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 2 Feb 2007 22:00:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Jr0U1W00N1kojtg0000000; Fri, 02 Feb 2007 22:00:29 -0500
-In-Reply-To: <Pine.LNX.4.63.0702021146440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Fri, 2 Feb 2007 11:48:10 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946244AbXBCDAu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 22:00:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946265AbXBCDAu
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 22:00:50 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:56544 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946244AbXBCDAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 22:00:49 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1HDB7x-0001Ax-06
+	for git@vger.kernel.org; Fri, 02 Feb 2007 21:59:45 -0500
+Received: from proski by gnu.org with local (Exim 4.63)
+	(envelope-from <proski@gnu.org>)
+	id 1HDB8x-00056q-8O; Fri, 02 Feb 2007 22:00:47 -0500
+X-Mailer: Evolution 2.8.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38546>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hello!
 
-> On Thu, 1 Feb 2007, Junio C Hamano wrote:
-> ...
->> I am not against the general idea of tracking a subset of
->> branches, but issues include:
->>
->> [explains why git-remote is a better place for this]
->
-> Seeing your patch to git-remote, it feels more natural, too. Especially 
-> since that (or which? :-D) does not give the term "clone" a 
-> Microsoft'esque completely new meaning.
+I have noticed that "stg pull" doesn't merge the latest changes anymore.
+It fetches the new branches, but the HEAD remains unchanged.
 
-I did not find anything MS'esque in what MST did in his patch,
-though.  I think it is a reasonable thing to ask for from a
-clone.  For example, if you are coming from CVS or have used
-Cogito, cloning a single branch is not an unusual operation at
-all.
+I'm using the current version of git and StGIT (mast branches of both).
+I don't have any local patches.
 
-The real point of my 'remote add -f -t -m' patch is that I think
-we are much better off to do it in a bottom up way, by having a
-tool that can be used in any repository first.  Then we could
-even rewrite 'git clone' along these lines:
+I've checked the log of StGIT changes and I see that StGIT does "git
+fetch" instead of "git pull" now.  I don't have a .gitconfig file, so I
+should get the new default behavior.  I don't see any changes to StGIT
+documentations.
 
-	#/bin/sh
-	track="*" ;# command line parameter to override...
-	... decide what $name to use ...
-	mkdir "$name"
-	cd "$name"
-	git init-db
-        git remote add -f -t "$track" origin $url
-	git branch -f master remotes/origin/master
+The problem is observed with the git repository.  It stays at
+e4b0e4ab8ee68df0fa99100640ed5cb54b736141 although
+refs/remotes/origin/master has advanced to
+aacd404e775ad73188ae9157041d7cc530d5625c.
 
-Of course you would need to deal with -n, --bare and stuff, but
-that is a minor detail.
+My guesses what may be happening:
 
-While I am talking about post 1.5.0 git-clone changes, one thing
-I've always hated about git-clone is that the cloner always has
-to guess where the HEAD pointer at the other side points at.
-This comes from a shortcoming in the fetch-pack protocol (it
-simply does not tell).  A stupid consequence of this is that
-cloning over dumb protocols also have to guess, although they
-are _capable_ of letting the cloner know this information.
+1) "stg pull" is intended not to merge the changes.  In this case, I
+expect changes to the documentation and a new command that would merge
+the changes.
 
-I think the logic to decide where to point remotes/$origin/HEAD
-to should be moved to "git-remote add -m" when we eventually
-rewrite "git-clone" to use "git-remote add -f".  And while we
-would do so, we can make a trivial extension to fetch-pack
-protocol to carry the HEAD symref information.  All will be
-good once that happens.
+2) The there is a bug in the implementation of stgit.pull-does-rebase.
+We are merging the local refs/heads/master instead of the one from
+FETCH_HEAD.  This suspicion is confirmed by the fact that StGIT sources
+have no references to FETCH_HEAD, and the only git command that reads it
+is git-pull, which we are not calling by default now.
+
+-- 
+Regards,
+Pavel Roskin
