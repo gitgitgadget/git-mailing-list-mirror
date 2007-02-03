@@ -1,86 +1,97 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] add --remote option to git-clone.
-Date: Sat, 03 Feb 2007 01:27:04 -0800
-Message-ID: <7v64aj7frr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0702020028540.18776@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20070201234706.GP17617@mellanox.co.il>
-	<Pine.LNX.4.63.0702020050190.18870@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmz3xmju9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0702021146440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmz3wdjxu.fsf@assigned-by-dhcp.cox.net> <eq1j8i$rtv$1@sea.gmane.org>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: Pushing to a non-bare repository
+Date: Sat, 03 Feb 2007 10:46:05 +0100
+Message-ID: <45C459DD.8080201@fs.ei.tum.de>
+References: <45C3FB08.1020805@midwinter.com> <7vfy9ndiqp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 10:27:16 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig27E97B4B98E7A30E8563ED5C"
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Feb 03 10:46:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDHAy-0005yq-GQ
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 10:27:16 +0100
+	id 1HDHTR-0006Cw-Ae
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 10:46:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946415AbXBCJ1J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 04:27:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946416AbXBCJ1I
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 04:27:08 -0500
-Received: from fed1rmmtai17.cox.net ([68.230.241.42]:48244 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1946415AbXBCJ1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 04:27:07 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070203092704.ULKF1343.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 3 Feb 2007 04:27:04 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id JxT41W00G1kojtg0000000; Sat, 03 Feb 2007 04:27:04 -0500
-In-Reply-To: <eq1j8i$rtv$1@sea.gmane.org> (Jakub Narebski's message of "Sat,
-	03 Feb 2007 10:06:44 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933193AbXBCJqO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 04:46:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933285AbXBCJqO
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 04:46:14 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:48364 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933193AbXBCJqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 04:46:12 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id DBB61281E8;
+	Sat,  3 Feb 2007 10:46:08 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id TTrDIO2PtpRO; Sat,  3 Feb 2007 10:46:08 +0100 (CET)
+Received: from [192.168.10.124] (ppp-62-216-203-135.dynamic.mnet-online.de [62.216.203.135])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 6F294281E6;
+	Sat,  3 Feb 2007 10:46:08 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; DragonFly pc32; en-US; rv:1.8.0.8) Gecko/20061212 Thunderbird/1.5.0.8 Mnenhy/0.7.4.666
+In-Reply-To: <7vfy9ndiqp.fsf@assigned-by-dhcp.cox.net>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38559>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig27E97B4B98E7A30E8563ED5C
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
->> I did not find anything MS'esque in what MST did in his patch,
->> though.  I think it is a reasonable thing to ask for from a
->> clone.  For example, if you are coming from CVS or have used
->> Cogito, cloning a single branch is not an unusual operation at
->> all.
->
-> But when we clone whole repository we could have download whole
-> object database of cloned repo as-is (perhaps packing loose objects
-> in smart/git-aware transports).
+Junio C Hamano wrote:
+>> This keeps coming up as I introduce people to git. In previous
+>> discussions, the conclusion often seems to be that users don't really
+>> know what they want the semantics to be.
+>=20
+> I do not think that was the conclusion.  My suggestion to you
+> would be to stop thinking as if push is a converse of pull
+> (because it is not; push is a counterpart of fetch), and leave
+> push as is.
 
-I think your point is if you have branches A and B, cloning A+B
-as a whole is a lot less expensive than cloning A and then B
-separately.  While that is true, I do not think that reasoning
-would apply to somebody, especially behind a slow link, who is
-only interested in A.  She does not want to pay the cost of A+B,
-when she only wants A, even if A+B is much less expensive than
-twice the cost of getting A.
+However, your suggestion does not help people who don't know better.  Pus=
+hing into the HEAD branch of another repo breaks stuff there.  Badly.  Th=
+is should be prevented, really.
 
-Also, if she later gets interested in B, git fetch will make the
-"what's common" optimization.  It won't be like cloning A and
-then fetching B into the same repository later would be twice as
-expensive compared to the case where you start from a clone as a
-whole.  The overall transfer cost would probably be comparable.
+I don't say "Push needs to behave like a fast forward pull", because that=
+'s wrong.  You can't just change the workdir, possibly due to permissions=
+ problems.  But push has to abort if you try to forward HEAD on the remot=
+e, except if it is bare, of course.
 
-> By the way, there was discussed idea about marking pu-like branches
-> as being rewound (non-fast forwarding) in the config file, and somehow
-> transferring this information for git-clone for it to have '+' for
-> some refspecs. What happened to that idea? Was it abandoned...
+cheers
+  simon
 
-Well, I would not call some idle talk without a concrete design
-(preferably with a proof-of-concept code, but that is not an
-absolute requirement) "idea".  Something that did not even start
-cannot get abandoned ;-).
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
-I thought that it would not hurt to have something like that,
-but because in 1.5.0 "git clone" creates fetch configuration of
-'forcing' kind by default, I do not think it makes that much of
-a difference.
+
+--------------enig27E97B4B98E7A30E8563ED5C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFFxFnfr5S+dk6z85oRAiIrAKCYIDTi2Xf7sRt4V7O0rsrXw8CaUwCg8mek
+6T2qfBr/3ZO55kWuJSBhVg8=
+=Vew4
+-----END PGP SIGNATURE-----
+
+--------------enig27E97B4B98E7A30E8563ED5C--
