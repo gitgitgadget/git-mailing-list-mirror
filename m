@@ -1,70 +1,146 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] Use "-f" when adding files with odd names in t9200.
-Date: Sat, 3 Feb 2007 15:12:09 -0500
-Message-ID: <F16FE131-CF33-4DD0-9A06-4A24C59C7623@silverinsanity.com>
-References: <1AAD2384-C52D-4D60-A948-4F14C9515B53@silverinsanity.com> <20070203181329.GA10192@179.242.249.10.in-addr.arpa> <7v4pq358q4.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: a slight anomaly in '--unified=0' diff output for one particular commit?
+Date: Sat, 03 Feb 2007 12:37:54 -0800
+Message-ID: <7virej3rkt.fsf@assigned-by-dhcp.cox.net>
+References: <200702020919.31801.rayl@mail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 03 21:12:21 2007
+To: Ray Lehtiniemi <rayl@mail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 03 21:38:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDRFC-0001Ds-W1
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 21:12:19 +0100
+	id 1HDRe5-0004QK-Vw
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 21:38:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510AbXBCUMM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 15:12:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751517AbXBCUMM
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 15:12:12 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:48777 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751510AbXBCUML (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 15:12:11 -0500
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 57D761FFC02B;
-	Sat,  3 Feb 2007 20:12:10 +0000 (UTC)
-In-Reply-To: <7v4pq358q4.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751517AbXBCUh4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 15:37:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751577AbXBCUh4
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 15:37:56 -0500
+Received: from fed1rmmtai19.cox.net ([68.230.241.40]:35922 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751517AbXBCUhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 15:37:55 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070203203756.BURB1349.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 3 Feb 2007 15:37:56 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id K8du1W0151kojtg0000000; Sat, 03 Feb 2007 15:37:55 -0500
+In-Reply-To: <200702020919.31801.rayl@mail.com> (Ray Lehtiniemi's message of
+	"Fri, 02 Feb 2007 09:19:31 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38595>
 
+Ray Lehtiniemi <rayl@mail.com> writes:
 
-On Feb 3, 2007, at 2:42 PM, Junio C Hamano wrote:
-
-> Can you describe why git-add finds the (presumably mangled by
-> HFS) path in ".gitignore"?  If we had some default pattern in
-> info/exclude that is installed in the trash test repository I
-> would understand that a mangled path could happen to match it,
-> but I do not think we do not have any exclude pattern by
-> default.
+> i get the same output for both these commands in the git repository using 
+> v1.5.0-rc3-1-ge4b0e4a. 
 >
-> Unless/until you know why git-add thinks it is ignored,...
+>   # git show --unified=1 9299c4f147bcff603eef187eb04fe38153571d30
+>   # git show --unified=0 9299c4f147bcff603eef187eb04fe38153571d30
+>
+> in both cases, i get the following single line of context at the end of the 
+> diff:
+>
+>   glossary.html : glossary.txt sort_glossary.pl
+>
+> i'm also not sure the numbers in the '@@@' line look correct for 
+> the 'unified=0' case...
 
-It occurs because of the normalization issue on HFS+.  git-add  
-compares the pathspecs given on the command line to a directory tree  
-read from disk.  The pathspec is in NFC, and the tree is in NFD.   
-When it tries to find the pathspec in the tree, it fails because of  
-that.  When it checks to see if the file exists, HFS+ converts the  
-pathspec to NFD transparently.  And since the file exists, but wasn't  
-read by read_directory, git thinks it was because of an ignore file.
+That's sick.
 
-> ... I think this change means you are installing something the
-> existing test knows to be broken, which is not very pretty.
+-- >8 --
+[PATCH] combine-diff: special case --unified=0
 
-The test finds that the ignore code is slightly broken on HFS+, which  
-is not what it thinks it's testing.  And since the ignore files are  
-empty, it should not adversely affect any other platforms.
+Even when --unified=0 is given, the main loop to show the
+combined textual diff needs to handle a line that is unchanged
+but has lines that were deleted relative to a parent before it
+(because that is where the lost lines hang).  However, such a
+line should not be emitted in the final output.
 
-The only solution I can think of is to make dir.c:match_one() unicode- 
-aware.  Which I'm working on to see if it will work, but don't know  
-if you want to include that complication.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ combine-diff.c |   34 ++++++++++++++++++++++++++++++----
+ 1 files changed, 30 insertions(+), 4 deletions(-)
 
-~~ Brian
+diff --git a/combine-diff.c b/combine-diff.c
+index 29d0c9c..a5f2c8d 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -482,11 +482,11 @@ static int make_hunks(struct sline *sline, unsigned long cnt,
+ 	return has_interesting;
+ }
+ 
+-static void show_parent_lno(struct sline *sline, unsigned long l0, unsigned long l1, int n)
++static void show_parent_lno(struct sline *sline, unsigned long l0, unsigned long l1, int n, unsigned long null_context)
+ {
+ 	l0 = sline[l0].p_lno[n];
+ 	l1 = sline[l1].p_lno[n];
+-	printf(" -%lu,%lu", l0, l1-l0);
++	printf(" -%lu,%lu", l0, l1-l0-null_context);
+ }
+ 
+ static int hunk_comment_line(const char *bol)
+@@ -519,6 +519,7 @@ static void dump_sline(struct sline *sline, unsigned long cnt, int num_parent,
+ 		unsigned long hunk_end;
+ 		unsigned long rlines;
+ 		const char *hunk_comment = NULL;
++		unsigned long null_context = 0;
+ 
+ 		while (lno <= cnt && !(sline[lno].flag & mark)) {
+ 			if (hunk_comment_line(sline[lno].bol))
+@@ -535,10 +536,28 @@ static void dump_sline(struct sline *sline, unsigned long cnt, int num_parent,
+ 		rlines = hunk_end - lno;
+ 		if (cnt < hunk_end)
+ 			rlines--; /* pointing at the last delete hunk */
++
++		if (!context) {
++			/*
++			 * Even when running with --unified=0, all
++			 * lines in the hunk needs to be processed in
++			 * the loop below in order to show the
++			 * deletion recorded in lost_head.  However,
++			 * we do not want to show the resulting line
++			 * with all blank context markers in such a
++			 * case.  Compensate.
++			 */
++			unsigned long j;
++			for (j = lno; j < hunk_end; j++)
++				if (!(sline[j].flag & (mark-1)))
++					null_context++;
++			rlines -= null_context;
++		}
++
+ 		fputs(c_frag, stdout);
+ 		for (i = 0; i <= num_parent; i++) putchar(combine_marker);
+ 		for (i = 0; i < num_parent; i++)
+-			show_parent_lno(sline, lno, hunk_end, i);
++			show_parent_lno(sline, lno, hunk_end, i, null_context);
+ 		printf(" +%lu,%lu ", lno+1, rlines);
+ 		for (i = 0; i <= num_parent; i++) putchar(combine_marker);
+ 
+@@ -578,8 +597,15 @@ static void dump_sline(struct sline *sline, unsigned long cnt, int num_parent,
+ 			if (cnt < lno)
+ 				break;
+ 			p_mask = 1;
+-			if (!(sl->flag & (mark-1)))
++			if (!(sl->flag & (mark-1))) {
++				/*
++				 * This sline was here to hang the
++				 * lost lines in front of it.
++				 */
++				if (!context)
++					continue;
+ 				fputs(c_plain, stdout);
++			}
+ 			else
+ 				fputs(c_new, stdout);
+ 			for (j = 0; j < num_parent; j++) {
