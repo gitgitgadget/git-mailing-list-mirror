@@ -1,101 +1,63 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: git-clone wrongly setting branch.*.merge ? (Was: [PATCH 2/3] Rebase to parent branch after git-fetch in "stg pull".)
-Date: Sat, 3 Feb 2007 15:47:25 +0100
-Message-ID: <20070203144725.GK5362@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20070201234534.3313.10426.stgit@gandelf.nowhere.earth> <20070201234805.3313.20525.stgit@gandelf.nowhere.earth> <b0943d9e0702020158o1a07b8efu9302794c57d050e1@mail.gmail.com> <20070202180706.GE5362@nan92-1-81-57-214-146.fbx.proxad.net> <20070202235655.GG5362@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0702030416t4088e7e1yaf2ac0a4c30def8d@mail.gmail.com>
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: [PATCH] config.txt: update branch.<name>.merge documentation
+Date: Sat, 03 Feb 2007 16:29:40 +0100
+Message-ID: <87irejgsyj.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 15:48:29 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Feb 03 16:30:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDMBm-0005ct-22
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 15:48:26 +0100
+	id 1HDMq6-0008M6-Gl
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 16:30:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946466AbXBCOsV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 09:48:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946467AbXBCOsV
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 09:48:21 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:51326 "EHLO smtp3-g19.free.fr"
+	id S1946323AbXBCPaA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 3 Feb 2007 10:30:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992427AbXBCPaA
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 10:30:00 -0500
+Received: from ifae-s0.ifae.es ([192.101.162.68]:42992 "EHLO ifae-s0.ifae.es"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946466AbXBCOsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 09:48:20 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 814C94A182;
-	Sat,  3 Feb 2007 15:48:19 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 4FA2B1F080; Sat,  3 Feb 2007 15:47:25 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0702030416t4088e7e1yaf2ac0a4c30def8d@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1946323AbXBCP37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 10:29:59 -0500
+Received: from bela (caronte.ifae.es [192.101.162.199])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l13FTuj01556
+	for <git@vger.kernel.org>; Sat, 3 Feb 2007 16:29:57 +0100
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38565>
-
-On Sat, Feb 03, 2007 at 12:16:47PM +0000, Catalin Marinas wrote:
-> Yann,
-> 
-> On 02/02/07, Yann Dirson <ydirson@altern.org> wrote:
-> >On Fri, Feb 02, 2007 at 07:07:06PM +0100, Yann Dirson wrote:
-> >> On Fri, Feb 02, 2007 at 09:58:06AM +0000, Catalin Marinas wrote:
-> >> > On 01/02/07, Yann Dirson <ydirson@altern.org> wrote:
-> >> > >Previously we were just assuming that the remote from which we
-> >> > >just failed defined a local branch whose name was the same as the
-> >> > >remote def, and that this branch was the parent.  While this is true
-> >> > >for the most common case (branch "origin" from remote "origin"), it is
-> >> > >quite an unflexible assumption.
-> >> >
-> >> > The t1200-push-modified.sh test fails after applying this patch. It
-> >> > looks like the 3rd test fails to pull the changes from 'foo' into
-> >> > 'bar'.
-> >
-> >With current GIT HEAD, plain git-clone creates the following config
-> >(when cloning a repo with HEAD pointing to branch "downstream":
-> 
-> As I haven't followed the GIT latest developments in this area, I
-> can't comment.
-
-As noted elsewhere, I have misinterpreted the branch.*.merge
-parameter; I'm trying to get things right.
-
-> Regarding StGIT, I'd like it to work with earlier
-> stable versions of GIT and not just with the current HEAD. I (and
-> probably many others) already have repositories cloned some (long)
-> time ago and their gitconfig might not have the cloning information.
-
-There are 2 issues there:
-
-- support for running atop previous releases of Git. For this we
-should select a policy like "we support the current stable branch (or
-to-be-published, like 1.5.0), and the previous (ie. 1.4.4.x or
-1.4.x)", and document that in the release notes so packagers can
-update their dependencies.
-
-- and continue to work with repos created with old releases.  For the
-"pull" change, what's needed (or should be, modulo bugs such as this
-one), is to tell people they need to "git config" the missing info
-when it's not there.  I have tried to keep the old behaviour as much
-as possible (ie. relying on the user to pass the info on command-line)
-instead of insisting on the user providing the info in the config
-file, but this work is probably not 100% finished.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38566>
 
 
-> The (interim) solution I see is for StGIT pull command to default to
-> using git-pull and people can configure it to git-fetch and the
-> automatic rebase if they need it. I'd like to release 0.12 this
-> weekend but
 
-Right, it is reasonable to keep the old behaviour the default for now.
+Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
+---
+ Documentation/config.txt |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-
-> 'pull' doesn't currently work.
-
-I'll still try to make it work nevertheless before the release :)
-
-Best regards,
--- 
-Yann.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e5e019f..f129de9 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -233,11 +233,12 @@ branch.<name>.remote::
+ branch.<name>.merge::
+ 	When in branch <name>, it tells `git fetch` the default refspec to
+ 	be marked for merging in FETCH_HEAD. The value has exactly to match
+-	a remote part of one of the refspecs which are fetched from the remot=
+e
+-	given by "branch.<name>.remote".
++	the remote or local part of one of the refspecs which are fetched
++	from the remote given by "branch.<name>.remote".
+ 	The merge information is used by `git pull` (which at first calls
+ 	`git fetch`) to lookup the default branch for merging. Without
+-	this option, `git pull` defaults to merge the first refspec fetched.
++	this option and when fetching a non default remote, `git pull`
++	defaults to merge the first refspec fetched.
+ 	Specify multiple values to get an octopus merge.
+=20
+ color.branch::
+--=20
+1.5.0.rc2.579.g7df8
