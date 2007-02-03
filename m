@@ -1,81 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Pushing to a non-bare repository
-Date: Sat, 03 Feb 2007 13:18:04 -0800
-Message-ID: <7vd54r2b5f.fsf@assigned-by-dhcp.cox.net>
-References: <45C3FB08.1020805@midwinter.com>
-	<7vfy9ndiqp.fsf@assigned-by-dhcp.cox.net>
-	<45C459DD.8080201@fs.ei.tum.de>
-	<Pine.LNX.4.64.0702031146050.8424@woody.linux-foundation.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] builtin-branch: be prepared for ref-logging
+Date: Sat, 3 Feb 2007 22:20:10 +0100
+Message-ID: <8c5c35580702031320m2cdf2087k5e2de24d2ec0504@mail.gmail.com>
+References: <11705213662728-git-send-email-tutufan@gmail.com>
+	 <11705277471962-git-send-email-hjemli@gmail.com>
+	 <7vr6t73tsi.fsf@assigned-by-dhcp.cox.net>
+	 <8c5c35580702031238i612acda0p26aba8e3df747b1a@mail.gmail.com>
+	 <7v64aj3qtu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>,
-	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Feb 03 22:18:12 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Feb 03 22:20:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDSGx-0006eJ-E7
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 22:18:11 +0100
+	id 1HDSIz-0007fj-70
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 22:20:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751698AbXBCVSJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 16:18:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbXBCVSJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 16:18:09 -0500
-Received: from fed1rmmtai16.cox.net ([68.230.241.43]:60896 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751698AbXBCVSI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 16:18:08 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070203211805.DUJD1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 3 Feb 2007 16:18:05 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id K9J41W0161kojtg0000000; Sat, 03 Feb 2007 16:18:05 -0500
-In-Reply-To: <Pine.LNX.4.64.0702031146050.8424@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sat, 3 Feb 2007 11:48:46 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751701AbXBCVUO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 16:20:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751727AbXBCVUO
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 16:20:14 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:17129 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751701AbXBCVUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 16:20:13 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1653267nfa
+        for <git@vger.kernel.org>; Sat, 03 Feb 2007 13:20:11 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=N2RcEKvyl4Te1e61mYDvArGXZt98tw7BDEFGfyZmOJSehUof28LUoZ/vcK4+CISvdnvnKaxzJMTD0rCDpO+PfJwBl+xLgz2sXId82LB+Xrr0QDjqrQvSe+jl54WVsX8/vo1q6LEjb9sBS9RZiyfVCvXXDIQEdwS1lN6sjB+FUUQ=
+Received: by 10.82.169.4 with SMTP id r4mr1701782bue.1170537610978;
+        Sat, 03 Feb 2007 13:20:10 -0800 (PST)
+Received: by 10.82.158.7 with HTTP; Sat, 3 Feb 2007 13:20:10 -0800 (PST)
+In-Reply-To: <7v64aj3qtu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38604>
 
-(sorry, resending to avoid vger spam filter)
-
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> On Sat, 3 Feb 2007, Simon 'corecode' Schubert wrote:
->> 
->> However, your suggestion does not help people who don't know better.  Pushing
->> into the HEAD branch of another repo breaks stuff there.  Badly.  This should
->> be prevented, really.
+On 2/3/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Lars Hjemli" <hjemli@gmail.com> writes:
 >
-> No, please don't break it. I do it all the time.
+> > On 2/3/07, Junio C Hamano <junkio@cox.net> wrote:
+> >> Funny thing is that I thought I fixed this already
+> >
+> > Infact, you did:
+> >
+> >  http://article.gmane.org/gmane.comp.version-control.git/37197
+> >
+> > Don't know what happend to this one...
 >
-> I just do "git push remote".
->
-> And then eventually on the remote end I do end up having to "update", but 
-> that's a simple "git checkout -f".
+> Thanks, and I do think that patch is better ;-).
 
-I do not think anybody is disputing the fact that the current
-git-push does work as expected.
+Agreed
 
-But expectation is a relative thing.  The current behaviour is
-likely to confuse new people; it is like a sharp-edged razor
-that can cut through fingers if the user does not know which end
-is the handle and which end is the blade.
-
-I sent a "if Simon wanted to do it, it is simple" concept patch,
-but obviously Simon or anybody can do the same check in the
-update hook if needed.  However, that would make the newbie
-safety opt_in, and there inevitably will come a discussion on
-what should be the default.
-
-And I suspect that the recent trend is that people would want
-the default to be more newbie friendly, while leaving an opt_in
-escape hatch for power-user convenience.  Obviously my patch
-does not have that escape hatch, and as such it is not meant for
-inclusion as-is.
+-- 
+larsh
