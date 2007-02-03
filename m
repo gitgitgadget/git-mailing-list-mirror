@@ -1,74 +1,67 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: merge doesn't remove files
-Date: Sat, 3 Feb 2007 22:48:19 +0000
-Message-ID: <20070203224819.20131.qmail@b1b53206edee41.315fe32.mid.smarden.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/3] Rebase to parent branch after git-fetch in "stg pull".
+Date: Sat, 03 Feb 2007 15:01:59 -0800
+Message-ID: <7v8xfe3kwo.fsf@assigned-by-dhcp.cox.net>
+References: <20070201234534.3313.10426.stgit@gandelf.nowhere.earth>
+	<20070201234805.3313.20525.stgit@gandelf.nowhere.earth>
+	<b0943d9e0702020158o1a07b8efu9302794c57d050e1@mail.gmail.com>
+	<20070202180706.GE5362@nan92-1-81-57-214-146.fbx.proxad.net>
+	<20070202224250.GF5362@nan92-1-81-57-214-146.fbx.proxad.net>
+	<b0943d9e0702021501g2cb9bb6cocae0d706c8742868@mail.gmail.com>
+	<b0943d9e0702021525o2379883aqaf27f874134668c5@mail.gmail.com>
+	<20070203214619.GM5362@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 03 23:48:05 2007
+Cc: git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sun Feb 04 00:02:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDTfw-0000Kg-Hb
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 23:48:04 +0100
+	id 1HDTtU-0006tN-MZ
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 00:02:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbXBCWr7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 17:47:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751806AbXBCWr7
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 17:47:59 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:58280 "HELO a.mx.smarden.org"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with SMTP
-	id S1751802AbXBCWr7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 17:47:59 -0500
-Received: (qmail 20132 invoked by uid 1000); 3 Feb 2007 22:48:19 -0000
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1751827AbXBCXCB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 18:02:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbXBCXCB
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 18:02:01 -0500
+Received: from fed1rmmtai15.cox.net ([68.230.241.44]:48601 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751827AbXBCXCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 18:02:00 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070203230200.RSRW1306.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 3 Feb 2007 18:02:00 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id KB1z1W00u1kojtg0000000; Sat, 03 Feb 2007 18:02:00 -0500
+In-Reply-To: <20070203214619.GM5362@nan92-1-81-57-214-146.fbx.proxad.net>
+	(Yann Dirson's message of "Sat, 3 Feb 2007 22:46:19 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38618>
 
-Hi, please see http://bugs.debian.org/403104
+Yann Dirson <ydirson@altern.org> writes:
 
-Shouldn't git remove the original file after merging a commit that moved
-the file away?  Here's a simple test case:
+> On Fri, Feb 02, 2007 at 11:25:28PM +0000, Catalin Marinas wrote:
+>> OK, tried again and 'stg pull' doesn't update the base with the last
+>> patch in the series ('stg rebase origin' updates it). I don't have
+>> anything set up in my gitconfig in this area.
+>
+> So now that this particular problem has a fix, let's fix everything
+> related.
+>
+> Since branch.*.merge accept local ref names, there is probably far
+> more to change that what I initially feared.
 
-$ mkdir repo && cd repo
-$ git init-db
-defaulting to local storage area
-$ echo a >foo && git add foo
-$ git commit -a -m'add foo'
-Committing initial tree 86de5e13286a8449a8a706a58e63be6781770b12
-$ git branch b  
-$ git mv foo bar
-$ git commit -a -m'move foo'
-$ git checkout b
-$ echo ttt >>foo
-$ git commit -a -m'change foo'
-$ git pull . master
-Trying really trivial in-index merge...
-fatal: Merge requires file-level merging
-Nope.
-Merging HEAD with adc07a8eac73cdb1cb3764ec50747556ed2abc99
-Merging:
-92eff19 change foo
-adc07a8 move foo
-found 1 common ancestor(s):
-ba043e5 add foo
-Merge made by recursive.
- foo => bar |    0 
- 1 files changed, 0 insertions(+), 0 deletions(-)
- rename foo => bar (100%)
-$ git status
-# On branch refs/heads/b
-# Untracked files:
-#   (use "git add" to add to commit)
-#
-#       foo
-nothing to commit
-$ ls
-bar  foo
-$ 
-
-Thanks, Gerrit.
+If that is the case maybe we should fix branch.*.merge not to
+match the local tracking branch name.  Matching it with local
+tracking branch name when the remote name does not match was
+werely a fallback to help broken configurations confused people
+might create by hand, and has never been the part of sane
+practice at all.
