@@ -1,81 +1,106 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
-Date: Fri, 02 Feb 2007 19:04:21 -0800
-Message-ID: <7v4pq4djre.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home>
-	<200702021308.48599.andyparkins@gmail.com>
+Subject: Re: Pushing to a non-bare repository
+Date: Fri, 02 Feb 2007 19:26:22 -0800
+Message-ID: <7vfy9ndiqp.fsf@assigned-by-dhcp.cox.net>
+References: <45C3FB08.1020805@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 04:04:29 2007
+Cc: git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sat Feb 03 04:26:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDBCU-0006uS-Pv
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 04:04:27 +0100
+	id 1HDBXn-0007qh-Ii
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 04:26:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946300AbXBCDEY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Feb 2007 22:04:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946301AbXBCDEX
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 22:04:23 -0500
-Received: from fed1rmmtai18.cox.net ([68.230.241.41]:64195 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1946300AbXBCDEW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Feb 2007 22:04:22 -0500
+	id S1946304AbXBCD0Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Feb 2007 22:26:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946309AbXBCD0X
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Feb 2007 22:26:23 -0500
+Received: from fed1rmmtai19.cox.net ([68.230.241.40]:39113 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1946304AbXBCD0X (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Feb 2007 22:26:23 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070203030421.HCZW1302.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 2 Feb 2007 22:04:21 -0500
+          id <20070203032622.JNOX1349.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 2 Feb 2007 22:26:22 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id Jr4M1W00B1kojtg0000000; Fri, 02 Feb 2007 22:04:21 -0500
+	id JrSM1W00W1kojtg0000000; Fri, 02 Feb 2007 22:26:22 -0500
+In-Reply-To: <45C3FB08.1020805@midwinter.com> (Steven Grimm's message of "Fri,
+	02 Feb 2007 19:01:28 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38549>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Steven Grimm <koreth@midwinter.com> writes:
 
-> Please, please, HEAD@{} should /always/ be an alias for <current_branch>@{}.
+> This keeps coming up as I introduce people to git. In previous
+> discussions, the conclusion often seems to be that users don't really
+> know what they want the semantics to be.
 
-I was confused, and after thinking about it a bit, I agree with
-Nico's new @{} shorthand.
+I do not think that was the conclusion.  My suggestion to you
+would be to stop thinking as if push is a converse of pull
+(because it is not; push is a counterpart of fetch), and leave
+push as is.
 
-HEAD means "current" everywhere in git, but it does not
-necessarily mean "current branch" (i.e. detached HEAD).  
+In a typical mothership-satellite configuration, I would
+recommend a workflow like this:
 
-But it almost always means the "current commit".  It is the
-commit "git commit" builds on top of, and "git diff --cached"
-and "git status" compare against.  It means the current branch
-only in very limited contexts (exactly when we want a branch
-name to operate on --- resetting and growing the branch tip via
-commit/rebase/etc.).
+On Mothership:
+	remote.satellite.url: satellite:project.git
+        remote.satellite.push: refs/heads/master:remotes/mothership/master
 
-Reflog is a vehicle to go back in time and time machines have
-interesting interaction with the notion of "current".
+On Satellite:
+	remote.mothership.url: mothership:project.git
+        remote.mothership.fetch: refs/heads/master:remotes/mothership/master
 
-HEAD@{5.minutes.ago} could mean "dereference HEAD symref to find
-out what branch we are on RIGHT NOW, and then find out where the
-tip of that branch was 5 minutes ago".  Alternatively it could
-mean "what is the commit I would have referred to as HEAD 5
-minutes ago, e.g. if I did "git show HEAD" back then".
+So when you happen to be on the mothership and you would want to
+sync the satellite (because you are tired of working at your
+office and would want to continue on your satellite notebook
+sitting on the couch, relaxed), you would push:
 
-I think both are useful, and the former semantics is given by
-the "emptiness followed by @{} refers to the current branch"
-shorthand, while yet-to-be-implemented HEAD@{} would give the
-latter.
+	mothership$ git push satellite
 
-And I think the way Nico defined 'HEAD@{...}' is more consistent
-with the way 'master@{...}' behaves; they both mean "what commit
-did I mean if I said this at time ...".
+Then you go to the satellite machine, and merge the mothership in:
 
-I am not going to seriously suggest this, but it is conceivable
-to want to be able to say things like "master^2~28@{yesterday}".
-Naturally it would mean the 28th generation parent of the other
-branch I merged into my 'master' branch yesterday (i.e. it asks
-the question: "which commit would I have seen if I said "git
-show master^2~28" yesterday?").
+	satellite$ git merge mothership
+
+If you forgot to push before leaving the mothership, you do not
+have to worry; you can initiate the transfer from the satellite:
+
+	satellite$ git fetch mothership
+
+and then do the same merge:
+
+        satellite$ git merge mothership
+
+Of course you could do "git pull mothership" to do the above two
+as a single step, but the point is then the "patch flow" would
+always be the same no matter from which side you initiate the
+transfer from mothership to satellite.  The changes made on the
+mothership will be done on 'master' branch on the mothership and
+flow into remote/mothership/master on the satellite.  And you
+will merge changes from the mothership to the satellite always
+via remotes/mothership/master tracking branch.
+
+To go the other way, you would further define these two:
+
+On Mothership:
+        remote.satellite.fetch: refs/heads/master:remotes/satellite/master
+
+On Satellite:
+        remote.mothership.push: refs/heads/master:remotes/satellite/master
+
+and "git push mothership" from satellite, or "git fetch
+satellite" from the mothership.
+
+Another reason not to do what you described inside git-push is
+that you do not need to -- I think you should be able to do all
+that from your update (or post-update) hook.
