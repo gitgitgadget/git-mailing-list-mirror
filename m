@@ -1,73 +1,53 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/2] Warn the user when there is no parent information in the
-	config.
-Date: Sat, 03 Feb 2007 17:04:25 +0100
-Message-ID: <20070203160425.32054.75599.stgit@gandelf.nowhere.earth>
-References: <20070203160257.32054.17787.stgit@gandelf.nowhere.earth>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+From: Wolfgang Fischer <wf@wf227.com>
+Subject: Re: t9200 still failing...
+Date: Sat, 3 Feb 2007 17:17:50 +0100
+Message-ID: <13848C22-6C0B-46F0-ABC5-1A94D0DB6B06@wf227.com>
+References: <DBACB5AE-7C40-4D44-85BB-76F30BE96E36@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 03 17:05:40 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Sat Feb 03 17:18:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDNOV-0007jj-JU
-	for gcvg-git@gmane.org; Sat, 03 Feb 2007 17:05:39 +0100
+	id 1HDNam-00062V-P4
+	for gcvg-git@gmane.org; Sat, 03 Feb 2007 17:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946479AbXBCQFg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 11:05:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946480AbXBCQFg
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 11:05:36 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:40770 "EHLO smtp3-g19.free.fr"
+	id S1946484AbXBCQRx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 11:17:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946486AbXBCQRx
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 11:17:53 -0500
+Received: from mail.wf227.com ([217.9.110.226]:33237 "EHLO mail.wf227.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946479AbXBCQFg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 11:05:36 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 261DD4A0E7;
-	Sat,  3 Feb 2007 17:05:35 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id D4F6B1F080;
-	Sat,  3 Feb 2007 17:04:25 +0100 (CET)
-In-Reply-To: <20070203160257.32054.17787.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.11
+	id S1946484AbXBCQRw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 11:17:52 -0500
+Received: from [192.168.1.2] (ppp-82-135-8-101.dynamic.mnet-online.de [82.135.8.101])
+	by mail.wf227.com (Postfix) with ESMTP id 41313BB450;
+	Sat,  3 Feb 2007 16:17:51 +0000 (UTC)
+In-Reply-To: <DBACB5AE-7C40-4D44-85BB-76F30BE96E36@silverinsanity.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38571>
 
+On 03.02.2007, at 16:56, Brian Gernhardt wrote:
+> What I don't understand is that there are no .gitignore files in  
+> the test repo and the .git/info/exclude file only has comments.   
+> This seems like it might actually be a subtle bug in git-add,  
+> although I'm betting it's more OS X filesystem oddness.  I'm trying  
+> to look into it, but thought that maybe someone with more  
+> experience with the code might catch it first.
 
+That was already discussed a lot. Any filename test on OSX with a HFS 
++ filesystem containing characters with a different UTF-8-NFC and  
+UTF-8-NFD will make such a test fail. If you are using OSX, you might  
+want to use UnicodeChecker to see the encoding difference for such  
+characters. If you want to make such tests pass, either use  
+characters with only one UTF-8 encoding or use a UFS partition to run  
+such tests.
 
-
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
-
- stgit/stack.py |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 3960729..9609ed3 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -418,8 +418,7 @@ class Series(StgitObject):
-         if value:
-             return value
-         elif 'origin' in git.remotes_list():
--            # FIXME: this is for compatibility only.  Should be
--            # dropped when all relevant commands record this info.
-+            print "Notice: no parent remote declared for stack '%s', defaulting to 'origin'.  Consider setting 'branch.%s.remote' with 'git repo-config'." % (self.__name, self.__name)
-             return 'origin'
-         else:
-             raise StackException, 'Cannot find a parent remote for "%s"' % self.__name
-@@ -432,8 +431,7 @@ class Series(StgitObject):
-         if value:
-             return value
-         elif git.rev_parse('heads/origin'):
--            # FIXME: this is for compatibility only.  Should be
--            # dropped when all relevant commands record this info.
-+            print "Notice: no parent branch declared for stack '%s', defaulting to 'heads/origin'.  Consider setting 'branch.%s.merge' with 'git repo-config'." % (self.__name, self.__name)
-             return 'heads/origin'
-         else:
-             raise StackException, 'Cannot find a parent branch for "%s"' % self.__name
+	Wolfgang
