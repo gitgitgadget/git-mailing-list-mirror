@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 7/8] bash: Support unique completion when possible.
-Date: Sun, 4 Feb 2007 02:38:43 -0500
-Message-ID: <20070204073843.GG17603@spearce.org>
+Subject: [PATCH 6/8] bash: Support unique completion on git-config.
+Date: Sun, 4 Feb 2007 02:38:37 -0500
+Message-ID: <20070204073837.GF17603@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 04 08:38:51 2007
+X-From: git-owner@vger.kernel.org Sun Feb 04 08:38:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDbxa-0007Y3-SN
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 08:38:51 +0100
+	id 1HDbxa-0007Y3-Bi
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 08:38:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752150AbXBDHit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 02:38:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbXBDHis
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 02:38:48 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:55534 "EHLO
+	id S1752149AbXBDHin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 02:38:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbXBDHin
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 02:38:43 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:55528 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752150AbXBDHir (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 02:38:47 -0500
+	with ESMTP id S1752149AbXBDHim (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 02:38:42 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HDbxT-00005a-T6; Sun, 04 Feb 2007 02:38:44 -0500
+	id 1HDbxO-0008WU-5m; Sun, 04 Feb 2007 02:38:38 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 74C9520FBAE; Sun,  4 Feb 2007 02:38:43 -0500 (EST)
+	id B32A920FBAE; Sun,  4 Feb 2007 02:38:37 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -41,500 +41,231 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38662>
 
-Because our use of -o nospace prevents bash from adding a trailing space
-when a completion is unique and has been fully completed, we need to
-perform this addition on our own.  This (large) change converts all
-existing uses of compgen to our wrapper __gitcomp which attempts to
-handle this by tacking a trailing space onto the end of each offered
-option.
+In many cases we know a completion will be unique, but we've disabled
+bash's automatic space addition (-o nospace) so we need to do it
+ourselves when necessary.
+
+This change adds additional support for new configuration options
+added in 1.5.0, as well as some extended completion support for
+the color.* family of options.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- contrib/completion/git-completion.bash |  190 +++++++++++++++-----------------
- 1 files changed, 91 insertions(+), 99 deletions(-)
+ contrib/completion/git-completion.bash |  120 ++++++++++++++++++++++----------
+ 1 files changed, 82 insertions(+), 38 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 38d6121..3b1f100 100755
+index 382c817..38d6121 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -65,7 +65,7 @@ __gitcomp ()
+@@ -64,14 +64,19 @@ __git_ps1 ()
+ __gitcomp ()
  {
  	local all c s=$'\n' IFS=' '$'\t'$'\n'
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	if [ -n "$2" ]; then
-+	if [ $# -gt 2 ]; then
- 		cur="$3"
- 	fi
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++	if [ -n "$2" ]; then
++		cur="$3"
++	fi
  	for c in $1; do
-@@ -219,7 +219,7 @@ __git_complete_file ()
- 			-- "$cur"))
+-		case "$c" in
+-		--*=*) all="$all$c$s" ;;
+-		*)     all="$all$c $s" ;;
++		case "$c$4" in
++		--*=*) all="$all$c$4$s" ;;
++		*.)    all="$all$c$4$s" ;;
++		*)     all="$all$c$4 $s" ;;
+ 		esac
+ 	done
+ 	IFS=$s
+-	COMPREPLY=($(compgen -W "$all" -- "${COMP_WORDS[COMP_CWORD]}"))
++	COMPREPLY=($(compgen -P "$2" -W "$all" -- "$cur"))
+ 	return
+ }
+ 
+@@ -666,26 +671,40 @@ _git_config ()
+ 	local prv="${COMP_WORDS[COMP_CWORD-1]}"
+ 	case "$prv" in
+ 	branch.*.remote)
+-		COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
++		__gitcomp "$(__git_remotes)"
+ 		return
  		;;
- 	*)
+ 	branch.*.merge)
 -		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
 +		__gitcomp "$(__git_refs)"
+ 		return
  		;;
- 	esac
- }
-@@ -231,15 +231,18 @@ __git_complete_revlist ()
- 	*...*)
- 		pfx="${cur%...*}..."
- 		cur="${cur#*...}"
--		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs)" -- "$cur"))
-+		__gitcomp "$(__git_refs)" "$pfx" "$cur"
+ 	remote.*.fetch)
+ 		local remote="${prv#remote.}"
+ 		remote="${remote%.fetch}"
+-		COMPREPLY=($(compgen -W "$(__git_refs_remotes "$remote")" \
+-			-- "$cur"))
++		__gitcomp "$(__git_refs_remotes "$remote")"
+ 		return
  		;;
- 	*..*)
- 		pfx="${cur%..*}.."
- 		cur="${cur#*..}"
--		COMPREPLY=($(compgen -P "$pfx" -W "$(__git_refs)" -- "$cur"))
-+		__gitcomp "$(__git_refs)" "$pfx" "$cur"
+ 	remote.*.push)
+ 		local remote="${prv#remote.}"
+ 		remote="${remote%.push}"
+-		COMPREPLY=($(compgen -W "$(git --git-dir="$(__gitdir)" \
++		__gitcomp "$(git --git-dir="$(__gitdir)" \
+ 			for-each-ref --format='%(refname):%(refname)' \
+-			refs/heads)" -- "$cur"))
++			refs/heads)"
++		return
 +		;;
-+	*.)
-+		__gitcomp "$cur."
- 		;;
- 	*)
--		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+		__gitcomp "$(__git_refs)"
- 		;;
- 	esac
- }
-@@ -353,22 +356,19 @@ _git_am ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	if [ -d .dotest ]; then
--		COMPREPLY=($(compgen -W "
--			--skip --resolved
--			" -- "$cur"))
-+		__gitcomp "--skip --resolved"
- 		return
- 	fi
- 	case "$cur" in
- 	--whitespace=*)
--		COMPREPLY=($(compgen -W "$__git_whitespacelist" \
--			-- "${cur##--whitespace=}"))
-+		__gitcomp "$__git_whitespacelist" "" "${cur##--whitespace=}"
- 		return
- 		;;
- 	--*)
--		COMPREPLY=($(compgen -W "
-+		__gitcomp "
- 			--signoff --utf8 --binary --3way --interactive
- 			--whitespace=
--			" -- "$cur"))
-+			"
- 		return
- 	esac
- 	COMPREPLY=()
-@@ -379,17 +379,16 @@ _git_apply ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	--whitespace=*)
--		COMPREPLY=($(compgen -W "$__git_whitespacelist" \
--			-- "${cur##--whitespace=}"))
-+		__gitcomp "$__git_whitespacelist" "" "${cur##--whitespace=}"
- 		return
- 		;;
- 	--*)
--		COMPREPLY=($(compgen -W "
-+		__gitcomp "
- 			--stat --numstat --summary --check --index
- 			--cached --index-info --reverse --reject --unidiff-zero
- 			--apply --no-add --exclude=
- 			--whitespace= --inaccurate-eof --verbose
--			" -- "$cur"))
-+			"
- 		return
- 	esac
- 	COMPREPLY=()
-@@ -400,9 +399,7 @@ _git_add ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	--*)
--		COMPREPLY=($(compgen -W "
--			--interactive
--			" -- "$cur"))
-+		__gitcomp "--interactive"
- 		return
- 	esac
- 	COMPREPLY=()
-@@ -410,14 +407,12 @@ _git_add ()
- 
- _git_branch ()
- {
--	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+	__gitcomp "$(__git_refs)"
- }
- 
- _git_checkout ()
- {
--	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+	__gitcomp "$(__git_refs)"
- }
- 
- _git_cherry_pick ()
-@@ -425,12 +420,10 @@ _git_cherry_pick ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	--*)
--		COMPREPLY=($(compgen -W "
--			--edit --no-commit
--			" -- "$cur"))
-+		__gitcomp "--edit --no-commit"
- 		;;
- 	*)
--		COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+		__gitcomp "$(__git_refs)"
- 		;;
- 	esac
- }
-@@ -440,10 +433,10 @@ _git_commit ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	--*)
--		COMPREPLY=($(compgen -W "
-+		__gitcomp "
- 			--all --author= --signoff --verify --no-verify
- 			--edit --amend --include --only
--			" -- "$cur"))
-+			"
- 		return
- 	esac
- 	COMPREPLY=()
-@@ -456,8 +449,7 @@ _git_diff ()
- 
- _git_diff_tree ()
- {
--	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+	__gitcomp "$(__git_refs)"
- }
- 
- _git_fetch ()
-@@ -466,16 +458,15 @@ _git_fetch ()
- 
- 	case "${COMP_WORDS[0]},$COMP_CWORD" in
- 	git-fetch*,1)
--		COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
-+		__gitcomp "$(__git_remotes)"
- 		;;
- 	git,2)
--		COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
-+		__gitcomp "$(__git_remotes)"
- 		;;
- 	*)
- 		case "$cur" in
- 		*:*)
--			cur="${cur#*:}"
--			COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+			__gitcomp "$(__git_refs)" "" "${cur#*:}"
- 			;;
- 		*)
- 			local remote
-@@ -483,7 +474,7 @@ _git_fetch ()
- 			git-fetch) remote="${COMP_WORDS[1]}" ;;
- 			git)       remote="${COMP_WORDS[2]}" ;;
- 			esac
--			COMPREPLY=($(compgen -W "$(__git_refs2 "$remote")" -- "$cur"))
-+			__gitcomp "$(__git_refs2 "$remote")"
- 			;;
- 		esac
- 		;;
-@@ -495,7 +486,7 @@ _git_format_patch ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	--*)
--		COMPREPLY=($(compgen -W "
-+		__gitcomp "
- 			--stdout --attach --thread
- 			--output-directory
- 			--numbered --start-number
-@@ -503,7 +494,7 @@ _git_format_patch ()
- 			--signoff
- 			--in-reply-to=
- 			--full-index --binary
--			" -- "$cur"))
-+			"
- 		return
- 		;;
- 	esac
-@@ -512,8 +503,7 @@ _git_format_patch ()
- 
- _git_ls_remote ()
- {
--	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
-+	__gitcomp "$(__git_remotes)"
- }
- 
- _git_ls_tree ()
-@@ -526,13 +516,13 @@ _git_log ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	--pretty=*)
--		COMPREPLY=($(compgen -W "
-+		__gitcomp "
- 			oneline short medium full fuller email raw
--			" -- "${cur##--pretty=}"))
-+			" "" "${cur##--pretty=}"
- 		return
- 		;;
- 	--*)
--		COMPREPLY=($(compgen -W "
-+		__gitcomp "
- 			--max-count= --max-age= --since= --after=
- 			--min-age= --before= --until=
- 			--root --not --topo-order --date-order
-@@ -542,7 +532,7 @@ _git_log ()
- 			--author= --committer= --grep=
- 			--all-match
- 			--pretty= --name-status --name-only
--			" -- "$cur"))
-+			"
- 		return
- 		;;
- 	esac
-@@ -554,34 +544,31 @@ _git_merge ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "${COMP_WORDS[COMP_CWORD-1]}" in
- 	-s|--strategy)
--		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" -- "$cur"))
++	pull.twohead|pull.octopus)
 +		__gitcomp "$(__git_merge_strategies)"
- 		return
- 	esac
- 	case "$cur" in
- 	--strategy=*)
--		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" \
--			-- "${cur##--strategy=}"))
-+		__gitcomp "$(__git_merge_strategies)" "" "${cur##--strategy=}"
++		return
++		;;
++	color.branch|color.diff|color.status)
++		__gitcomp "always never auto"
++		return
++		;;
++	color.*.*)
++		__gitcomp "
++			black red green yellow blue magenta cyan white
++			bold dim ul blink reverse
++			"
  		return
  		;;
+ 	*.*)
+@@ -695,41 +714,39 @@ _git_config ()
+ 	esac
+ 	case "$cur" in
  	--*)
 -		COMPREPLY=($(compgen -W "
 +		__gitcomp "
- 			--no-commit --no-summary --squash --strategy
+ 			--global --list --replace-all
+ 			--get --get-all --get-regexp
+ 			--unset --unset-all
 -			" -- "$cur"))
 +			"
  		return
- 	esac
--	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+	__gitcomp "$(__git_refs)"
- }
- 
- _git_merge_base ()
- {
--	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+	__gitcomp "$(__git_refs)"
- }
- 
- _git_name_rev ()
- {
--	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "--tags --all --stdin" -- "$cur"))
-+	__gitcomp "--tags --all --stdin"
- }
- 
- _git_pull ()
-@@ -590,10 +577,10 @@ _git_pull ()
- 
- 	case "${COMP_WORDS[0]},$COMP_CWORD" in
- 	git-pull*,1)
--		COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
-+		__gitcomp "$(__git_remotes)"
  		;;
- 	git,2)
--		COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
-+		__gitcomp "$(__git_remotes)"
- 		;;
- 	*)
- 		local remote
-@@ -601,7 +588,7 @@ _git_pull ()
- 		git-pull)  remote="${COMP_WORDS[1]}" ;;
- 		git)       remote="${COMP_WORDS[2]}" ;;
- 		esac
--		COMPREPLY=($(compgen -W "$(__git_refs "$remote")" -- "$cur"))
-+		__gitcomp "$(__git_refs "$remote")"
- 		;;
- 	esac
- }
-@@ -612,10 +599,10 @@ _git_push ()
- 
- 	case "${COMP_WORDS[0]},$COMP_CWORD" in
- 	git-push*,1)
--		COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
-+		__gitcomp "$(__git_remotes)"
- 		;;
- 	git,2)
--		COMPREPLY=($(compgen -W "$(__git_remotes)" -- "$cur"))
-+		__gitcomp "$(__git_remotes)"
- 		;;
- 	*)
- 		case "$cur" in
-@@ -625,11 +612,10 @@ _git_push ()
- 			git-push)  remote="${COMP_WORDS[1]}" ;;
- 			git)       remote="${COMP_WORDS[2]}" ;;
- 			esac
--			cur="${cur#*:}"
--			COMPREPLY=($(compgen -W "$(__git_refs "$remote")" -- "$cur"))
-+			__gitcomp "$(__git_refs "$remote")" "" "${cur#*:}"
- 			;;
- 		*)
--			COMPREPLY=($(compgen -W "$(__git_refs2)" -- "$cur"))
-+			__gitcomp "$(__git_refs2)"
- 			;;
- 		esac
- 		;;
-@@ -640,29 +626,24 @@ _git_rebase ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	if [ -d .dotest ]; then
--		COMPREPLY=($(compgen -W "
--			--continue --skip --abort
--			" -- "$cur"))
-+		__gitcomp "--continue --skip --abort"
- 		return
- 	fi
- 	case "${COMP_WORDS[COMP_CWORD-1]}" in
- 	-s|--strategy)
--		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" -- "$cur"))
-+		__gitcomp "$(__git_merge_strategies)"
- 		return
- 	esac
- 	case "$cur" in
- 	--strategy=*)
--		COMPREPLY=($(compgen -W "$(__git_merge_strategies)" \
--			-- "${cur##--strategy=}"))
-+		__gitcomp "$(__git_merge_strategies)" "" "${cur##--strategy=}"
+ 	branch.*.*)
+ 		local pfx="${cur%.*}."
+ 		cur="${cur##*.}"
+-		COMPREPLY=($(compgen -P "$pfx" -W "remote merge" -- "$cur"))
++		__gitcomp "remote merge" "$pfx" "$cur"
  		return
  		;;
- 	--*)
--		COMPREPLY=($(compgen -W "
--			--onto --merge --strategy
--			" -- "$cur"))
-+		__gitcomp "--onto --merge --strategy"
+ 	branch.*)
+ 		local pfx="${cur%.*}."
+ 		cur="${cur#*.}"
+-		COMPREPLY=($(compgen -P "$pfx" -S . \
+-			-W "$(__git_heads)" -- "$cur"))
++		__gitcomp "$(__git_heads)" "$pfx" "$cur" "."
  		return
+ 		;;
+ 	remote.*.*)
+ 		local pfx="${cur%.*}."
+ 		cur="${cur##*.}"
+-		COMPREPLY=($(compgen -P "$pfx" -W "url fetch push" -- "$cur"))
++		__gitcomp "url fetch push" "$pfx" "$cur"
+ 		return
+ 		;;
+ 	remote.*)
+ 		local pfx="${cur%.*}."
+ 		cur="${cur#*.}"
+-		COMPREPLY=($(compgen -P "$pfx" -S . \
+-			-W "$(__git_remotes)" -- "$cur"))
++		__gitcomp "$(__git_remotes)" "$pfx" "$cur" "."
+ 		return
+ 		;;
  	esac
--	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
-+	__gitcomp "$(__git_refs)"
+-	COMPREPLY=($(compgen -W "
++	__gitcomp "
+ 		apply.whitespace
+ 		core.fileMode
+ 		core.gitProxy
+@@ -741,40 +758,67 @@ _git_config ()
+ 		core.warnAmbiguousRefs
+ 		core.compression
+ 		core.legacyHeaders
+-		i18n.commitEncoding
+-		i18n.logOutputEncoding
+-		diff.color
++		core.packedGitWindowSize
++		core.packedGitLimit
++		color.branch
++		color.branch.current
++		color.branch.local
++		color.branch.remote
++		color.branch.plain
+ 		color.diff
+-		diff.renameLimit
+-		diff.renames
+-		pager.color
++		color.diff.plain
++		color.diff.meta
++		color.diff.frag
++		color.diff.old
++		color.diff.new
++		color.diff.commit
++		color.diff.whitespace
+ 		color.pager
+-		status.color
+ 		color.status
+-		log.showroot
+-		show.difftree
+-		showbranch.default
+-		whatchanged.difftree
++		color.status.header
++		color.status.added
++		color.status.changed
++		color.status.untracked
++		diff.renameLimit
++		diff.renames
++		fetch.unpackLimit
++		format.headers
++		gitcvs.enabled
++		gitcvs.logfile
++		gc.reflogexpire
++		gc.reflogexpireunreachable
++		gc.rerereresolved
++		gc.rerereunresolved
+ 		http.sslVerify
+ 		http.sslCert
+ 		http.sslKey
+ 		http.sslCAInfo
+ 		http.sslCAPath
+ 		http.maxRequests
+-		http.lowSpeedLimit http.lowSpeedTime
++		http.lowSpeedLimit
++		http.lowSpeedTime
+ 		http.noEPSV
++		i18n.commitEncoding
++		i18n.logOutputEncoding
++		log.showroot
++		merge.summary
++		merge.verbosity
+ 		pack.window
++		pull.octopus
++		pull.twohead
+ 		repack.useDeltaBaseOffset
+-		pull.octopus pull.twohead
+-		merge.summary
++		show.difftree
++		showbranch.default
++		tar.umask
++		transfer.unpackLimit
+ 		receive.unpackLimit
+ 		receive.denyNonFastForwards
+-		user.name user.email
+-		tar.umask
+-		gitcvs.enabled
+-		gitcvs.logfile
++		user.name
++		user.email
++		user.signingkey
++		whatchanged.difftree
+ 		branch. remote.
+-	" -- "$cur"))
++	"
  }
  
- _git_config ()
-@@ -824,8 +805,13 @@ _git_config ()
  _git_reset ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	local opt="--mixed --hard --soft"
--	COMPREPLY=($(compgen -W "$opt $(__git_refs)" -- "$cur"))
-+	case "$cur" in
-+	--*)
-+		__gitcomp "--mixed --hard --soft"
-+		return
-+		;;
-+	esac
-+	__gitcomp "$(__git_refs)"
- }
- 
- _git_show ()
-@@ -833,13 +819,13 @@ _git_show ()
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
- 	case "$cur" in
- 	--pretty=*)
--		COMPREPLY=($(compgen -W "
-+		__gitcomp "
- 			oneline short medium full fuller email raw
--			" -- "${cur##--pretty=}"))
-+			" "" "${cur##--pretty=}"
- 		return
- 		;;
- 	--*)
--		COMPREPLY=($(compgen -W "--pretty=" -- "$cur"))
-+		__gitcomp "--pretty="
- 		return
- 		;;
- 	esac
-@@ -906,32 +892,38 @@ _git ()
- _gitk ()
- {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
--	COMPREPLY=($(compgen -W "--all $(__git_refs)" -- "$cur"))
-+	case "$cur" in
-+	--*)
-+		__gitcomp "--not --all"
-+		return
-+		;;
-+	esac
-+	__gitcomp "$(__git_refs)"
- }
- 
- complete -o default -o nospace -F _git git
--complete -o default            -F _gitk gitk
--complete -o default            -F _git_am git-am
--complete -o default            -F _git_apply git-apply
--complete -o default            -F _git_branch git-branch
--complete -o default            -F _git_checkout git-checkout
--complete -o default            -F _git_cherry_pick git-cherry-pick
--complete -o default            -F _git_commit git-commit
-+complete -o default -o nospace -F _gitk gitk
-+complete -o default -o nospace -F _git_am git-am
-+complete -o default -o nospace -F _git_apply git-apply
-+complete -o default -o nospace -F _git_branch git-branch
-+complete -o default -o nospace -F _git_checkout git-checkout
-+complete -o default -o nospace -F _git_cherry_pick git-cherry-pick
-+complete -o default -o nospace -F _git_commit git-commit
- complete -o default -o nospace -F _git_diff git-diff
--complete -o default            -F _git_diff_tree git-diff-tree
-+complete -o default -o nospace -F _git_diff_tree git-diff-tree
- complete -o default -o nospace -F _git_fetch git-fetch
- complete -o default -o nospace -F _git_format_patch git-format-patch
- complete -o default -o nospace -F _git_log git-log
--complete -o default            -F _git_ls_remote git-ls-remote
-+complete -o default -o nospace -F _git_ls_remote git-ls-remote
- complete -o default -o nospace -F _git_ls_tree git-ls-tree
--complete -o default            -F _git_merge git-merge
--complete -o default            -F _git_merge_base git-merge-base
--complete -o default            -F _git_name_rev git-name-rev
-+complete -o default -o nospace -F _git_merge git-merge
-+complete -o default -o nospace -F _git_merge_base git-merge-base
-+complete -o default -o nospace -F _git_name_rev git-name-rev
- complete -o default -o nospace -F _git_pull git-pull
- complete -o default -o nospace -F _git_push git-push
--complete -o default            -F _git_rebase git-rebase
--complete -o default            -F _git_config git-config
--complete -o default            -F _git_reset git-reset
-+complete -o default -o nospace -F _git_rebase git-rebase
-+complete -o default -o nospace -F _git_config git-config
-+complete -o default -o nospace -F _git_reset git-reset
- complete -o default -o nospace -F _git_show git-show
- complete -o default -o nospace -F _git_log git-show-branch
- complete -o default -o nospace -F _git_log git-whatchanged
-@@ -941,19 +933,19 @@ complete -o default -o nospace -F _git_log git-whatchanged
- # included the '.exe' suffix.
- #
- if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
--complete -o default            -F _git_add git-add.exe
--complete -o default            -F _git_apply git-apply.exe
-+complete -o default -o nospace -F _git_add git-add.exe
-+complete -o default -o nospace -F _git_apply git-apply.exe
- complete -o default -o nospace -F _git git.exe
--complete -o default            -F _git_branch git-branch.exe
-+complete -o default -o nospace -F _git_branch git-branch.exe
- complete -o default -o nospace -F _git_diff git-diff.exe
- complete -o default -o nospace -F _git_diff_tree git-diff-tree.exe
- complete -o default -o nospace -F _git_format_patch git-format-patch.exe
- complete -o default -o nospace -F _git_log git-log.exe
- complete -o default -o nospace -F _git_ls_tree git-ls-tree.exe
--complete -o default            -F _git_merge_base git-merge-base.exe
--complete -o default            -F _git_name_rev git-name-rev.exe
-+complete -o default -o nospace -F _git_merge_base git-merge-base.exe
-+complete -o default -o nospace -F _git_name_rev git-name-rev.exe
- complete -o default -o nospace -F _git_push git-push.exe
--complete -o default            -F _git_config git-config
-+complete -o default -o nospace -F _git_config git-config
- complete -o default -o nospace -F _git_show git-show.exe
- complete -o default -o nospace -F _git_log git-show-branch.exe
- complete -o default -o nospace -F _git_log git-whatchanged.exe
 -- 
 1.5.0.rc3.22.g5057
