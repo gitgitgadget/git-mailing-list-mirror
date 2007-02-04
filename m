@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 4/8] bash: Add space after unique command name is completed.
-Date: Sun, 4 Feb 2007 02:38:27 -0500
-Message-ID: <20070204073827.GD17603@spearce.org>
+Subject: [PATCH 1/8] bash: Remove short option completions for branch/checkout/diff.
+Date: Sun, 4 Feb 2007 02:38:17 -0500
+Message-ID: <20070204073817.GA17603@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 04 08:38:35 2007
+X-From: git-owner@vger.kernel.org Sun Feb 04 08:38:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDbxJ-0007PP-Vk
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 08:38:34 +0100
+	id 1HDbxI-0007PP-9t
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 08:38:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142AbXBDHic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 02:38:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752146AbXBDHib
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 02:38:31 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:55513 "EHLO
+	id S1752133AbXBDHiW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 02:38:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752136AbXBDHiW
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 02:38:22 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:55504 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752142AbXBDHia (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 02:38:30 -0500
+	with ESMTP id S1752133AbXBDHiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 02:38:22 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HDbxD-0008Vy-Ti; Sun, 04 Feb 2007 02:38:28 -0500
+	id 1HDbx5-0008VP-6O; Sun, 04 Feb 2007 02:38:19 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 792E220FBAE; Sun,  4 Feb 2007 02:38:27 -0500 (EST)
+	id 2E0BE20FBAE; Sun,  4 Feb 2007 02:38:18 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -41,68 +41,49 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38659>
 
-Because we use the nospace option for our completion function for
-the main 'git' wrapper bash won't automatically add a space after a
-unique completion has been made by the user.  This has been pointed
-out in the past by Linus Torvalds as an undesired behavior.  I agree.
-
-We have to use the nospace option to ensure path completion for
-a command such as `git show` works properly, but that breaks the
-common case of getting the space for a unique completion.  So now we
-set IFS=$'\n' (linefeed) and add a trailing space to every possible
-completion option.  This causes bash to insert the space when the
-completion is unique.
+The short options (-l, -f, -d) for git-branch are rather silly to
+include in the completion generation as these options must be fully
+typed out by the user and most users already know what the options
+are anyway, so including them in the suggested completions does
+not offer huge value.  (The same goes for git-checkout and git-diff.)
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- contrib/completion/git-completion.bash |   26 ++++++++++++++++++++------
- 1 files changed, 20 insertions(+), 6 deletions(-)
+ contrib/completion/git-completion.bash |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 93f2af5..1cf576e 100755
+index 83c69ec..971fefb 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -61,6 +61,20 @@ __git_ps1 ()
- 	fi
+@@ -359,7 +359,7 @@ _git_apply ()
+ _git_branch ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+-	COMPREPLY=($(compgen -W "-l -f -d -D $(__git_refs)" -- "$cur"))
++	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
  }
  
-+__gitcomp ()
-+{
-+	local all c s=$'\n' IFS=' '$'\t'$'\n'
-+	for c in $1; do
-+		case "$c" in
-+		--*=*) all="$all$c$s" ;;
-+		*)     all="$all$c $s" ;;
-+		esac
-+	done
-+	IFS=$s
-+	COMPREPLY=($(compgen -W "$all" -- "${COMP_WORDS[COMP_CWORD]}"))
-+	return
-+}
-+
- __git_heads ()
+ _git_cat_file ()
+@@ -381,7 +381,7 @@ _git_cat_file ()
+ _git_checkout ()
  {
- 	local cmd i is_hash=y dir="$(__gitdir "$1")"
-@@ -787,12 +801,12 @@ _git ()
- 	done
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+-	COMPREPLY=($(compgen -W "-l -b $(__git_refs)" -- "$cur"))
++	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
+ }
  
- 	if [ $c -eq $COMP_CWORD -a -z "$command" ]; then
--		COMPREPLY=($(compgen -W "
--			--git-dir= --version --exec-path
--			$(__git_commands)
--			$(__git_aliases)
--			" -- "${COMP_WORDS[COMP_CWORD]}"))
--		return;
-+		case "${COMP_WORDS[COMP_CWORD]}" in
-+		--*=*) COMPREPLY=() ;;
-+		--*)   __gitcomp "--git-dir= --bare --version --exec-path" ;;
-+		*)     __gitcomp "$(__git_commands) $(__git_aliases)" ;;
-+		esac
-+		return
- 	fi
+ _git_cherry_pick ()
+@@ -421,7 +421,7 @@ _git_diff ()
+ _git_diff_tree ()
+ {
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+-	COMPREPLY=($(compgen -W "-r -p -M $(__git_refs)" -- "$cur"))
++	COMPREPLY=($(compgen -W "$(__git_refs)" -- "$cur"))
+ }
  
- 	local expansion=$(__git_aliased_command "$command")
+ _git_fetch ()
 -- 
 1.5.0.rc3.22.g5057
