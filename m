@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 3/8] bash: Complete long options to git-add.
-Date: Sun, 4 Feb 2007 02:38:23 -0500
-Message-ID: <20070204073823.GC17603@spearce.org>
+Subject: [PATCH 4/8] bash: Add space after unique command name is completed.
+Date: Sun, 4 Feb 2007 02:38:27 -0500
+Message-ID: <20070204073827.GD17603@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 04 08:38:33 2007
+X-From: git-owner@vger.kernel.org Sun Feb 04 08:38:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDbxJ-0007PP-Dh
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 08:38:33 +0100
+	id 1HDbxJ-0007PP-Vk
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 08:38:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752139AbXBDHi3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 02:38:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752142AbXBDHi3
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 02:38:29 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:55512 "EHLO
+	id S1752142AbXBDHic (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 02:38:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752146AbXBDHib
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 02:38:31 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:55513 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752139AbXBDHi2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 02:38:28 -0500
+	with ESMTP id S1752142AbXBDHia (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 02:38:30 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HDbxA-0008Vc-FL; Sun, 04 Feb 2007 02:38:24 -0500
+	id 1HDbxD-0008Vy-Ti; Sun, 04 Feb 2007 02:38:28 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 08CDA20FBAE; Sun,  4 Feb 2007 02:38:24 -0500 (EST)
+	id 792E220FBAE; Sun,  4 Feb 2007 02:38:27 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -41,68 +41,68 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38658>
 
-The new --interactive mode of git-add can be very useful, so users
-will probably want to have completion for it.
+Because we use the nospace option for our completion function for
+the main 'git' wrapper bash won't automatically add a space after a
+unique completion has been made by the user.  This has been pointed
+out in the past by Linus Torvalds as an undesired behavior.  I agree.
 
-Likewise the new git-add--interactive executable is actually a
-plumbing command.  Its invoked by `git add --interactive` and is
-not intended to be invoked directly by the user.  Therefore we
-should hide it from the list of available Git commands.
+We have to use the nospace option to ensure path completion for
+a command such as `git show` works properly, but that breaks the
+common case of getting the space for a unique completion.  So now we
+set IFS=$'\n' (linefeed) and add a trailing space to every possible
+completion option.  This causes bash to insert the space when the
+completion is unique.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- contrib/completion/git-completion.bash |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+ contrib/completion/git-completion.bash |   26 ++++++++++++++++++++------
+ 1 files changed, 20 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b87f96d..93f2af5 100755
+index 93f2af5..1cf576e 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -235,6 +235,7 @@ __git_commands ()
- 	for i in $(git help -a|egrep '^ ')
- 	do
- 		case $i in
-+		add--interactive) : plumbing;;
- 		cat-file)         : plumbing;;
- 		check-ref-format) : plumbing;;
- 		commit-tree)      : plumbing;;
-@@ -358,6 +359,19 @@ _git_apply ()
- 	COMPREPLY=()
+@@ -61,6 +61,20 @@ __git_ps1 ()
+ 	fi
  }
  
-+_git_add ()
++__gitcomp ()
 +{
-+	local cur="${COMP_WORDS[COMP_CWORD]}"
-+	case "$cur" in
-+	--*)
-+		COMPREPLY=($(compgen -W "
-+			--interactive
-+			" -- "$cur"))
-+		return
-+	esac
-+	COMPREPLY=()
++	local all c s=$'\n' IFS=' '$'\t'$'\n'
++	for c in $1; do
++		case "$c" in
++		--*=*) all="$all$c$s" ;;
++		*)     all="$all$c $s" ;;
++		esac
++	done
++	IFS=$s
++	COMPREPLY=($(compgen -W "$all" -- "${COMP_WORDS[COMP_CWORD]}"))
++	return
 +}
 +
- _git_branch ()
+ __git_heads ()
  {
- 	local cur="${COMP_WORDS[COMP_CWORD]}"
-@@ -786,6 +800,7 @@ _git ()
+ 	local cmd i is_hash=y dir="$(__gitdir "$1")"
+@@ -787,12 +801,12 @@ _git ()
+ 	done
  
- 	case "$command" in
- 	am)          _git_am ;;
-+	add)         _git_add ;;
- 	apply)       _git_apply ;;
- 	branch)      _git_branch ;;
- 	checkout)    _git_checkout ;;
-@@ -852,6 +867,7 @@ complete -o default -o nospace -F _git_log git-whatchanged
- # included the '.exe' suffix.
- #
- if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
-+complete -o default            -F _git_add git-add.exe
- complete -o default            -F _git_apply git-apply.exe
- complete -o default -o nospace -F _git git.exe
- complete -o default            -F _git_branch git-branch.exe
+ 	if [ $c -eq $COMP_CWORD -a -z "$command" ]; then
+-		COMPREPLY=($(compgen -W "
+-			--git-dir= --version --exec-path
+-			$(__git_commands)
+-			$(__git_aliases)
+-			" -- "${COMP_WORDS[COMP_CWORD]}"))
+-		return;
++		case "${COMP_WORDS[COMP_CWORD]}" in
++		--*=*) COMPREPLY=() ;;
++		--*)   __gitcomp "--git-dir= --bare --version --exec-path" ;;
++		*)     __gitcomp "$(__git_commands) $(__git_aliases)" ;;
++		esac
++		return
+ 	fi
+ 
+ 	local expansion=$(__git_aliased_command "$command")
 -- 
 1.5.0.rc3.22.g5057
