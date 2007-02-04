@@ -1,90 +1,67 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Use of "stg sync"
-Date: Sun, 4 Feb 2007 15:42:33 +0100
-Message-ID: <20070204144233.GP5362@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: git and file name case on cygwin
+Date: Sun, 4 Feb 2007 16:01:31 +0100
+Message-ID: <20070204150131.GA15726@uranus.ravnborg.org>
+References: <ad8ce5c20702031400h78ddc11o34f98a461339bb55@mail.gmail.com> <Pine.LNX.4.64.0702031716130.8424@woody.linux-foundation.org> <7vmz3uzpc2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702031733190.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 04 15:43:38 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Niklas =?iso-8859-1?Q?H=F6glund?= <nhoglund@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Feb 04 16:34:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDiaf-00040t-QE
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 15:43:38 +0100
+	id 1HDjNg-0002eY-G6
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 16:34:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752366AbXBDOnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 09:43:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752369AbXBDOnc
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 09:43:32 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:49469 "EHLO smtp5-g19.free.fr"
+	id S1752386AbXBDPeI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 10:34:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbXBDPeI
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 10:34:08 -0500
+Received: from pasmtpa.tele.dk ([80.160.77.114]:56444 "EHLO pasmtpA.tele.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752365AbXBDOnb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 09:43:31 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 941A5279DC;
-	Sun,  4 Feb 2007 15:43:30 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id C4E381F080; Sun,  4 Feb 2007 15:42:33 +0100 (CET)
+	id S1752386AbXBDPeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 10:34:07 -0500
+X-Greylist: delayed 1939 seconds by postgrey-1.27 at vger.kernel.org; Sun, 04 Feb 2007 10:34:07 EST
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpA.tele.dk (Postfix) with ESMTP id 63A22800A67;
+	Sun,  4 Feb 2007 16:01:13 +0100 (CET)
+Received: by ravnborg.org (Postfix, from userid 500)
+	id D33EB580D2; Sun,  4 Feb 2007 16:01:31 +0100 (CET)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <Pine.LNX.4.64.0702031733190.8424@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38693>
 
-Hi,
+On Sat, Feb 03, 2007 at 05:38:16PM -0800, Linus Torvalds wrote:
+> 
+> 
+> On Sat, 3 Feb 2007, Junio C Hamano wrote:
+> > 
+> > Are there plans to "fix" the confusion by renaming them to
+> > reduce chances of name clashes on such suboptimal filesystems?
+> 
+> I don't think so. Nobody really does development on such broken 
+> filesystems, and I kind of have this nagging suspicion that Niklas noticed 
+> just because he wanted to test git, not because he really wanted to do 
+> Linux development under Windows ;)
 
-In the context of Debian packaging, I have a tree with an "upstream"
-branch, and 2 stgit stack, one for maintainance ("etch") and one for
-the next Debian version ("lenny").  I maintain them as stgit stacks to
-be able to easily port changes to new upstream releases, and tag
-debian revisions on the stack heads - so the ancestry of a revision to
-the previous can only be tracked through stgit patch logs.
+At my present work we do all development under Windows and this is what
+we have used since day one. Shifting the underlying OS to Linux last
+year should not and did not trigger a development environment revolution
+(read: change to Linux).
 
-The recent history of those stack is a bit tricky, and that may not
-help here: there was originally a single "debian" stack, and I had
-already done some unreleased work in existing patches, when the need
-for a bugfix release appeared.  So I cloned the "main" branch, and
-reproduced the previous release by deleting the only patch that had
-moved since the last release, and picking it from the relevant commit.
+But it would still be preferable to actually build the Linux kernel on
+Windows so there is no need to do a remote build for part of the
+system and the rest on the Windows host.
+Or in other words to make the kernel build able on Windows does not imply
+the desire to actually do kernel development on Windows.
 
-Then to make things more interresting I imported a new release on
-"upstream", and rebased stack "lenny" onto this new release.
-
-Then I wanted to integrate the bugfix from "etch" into "lenny".  So I
-just tried to use "stg sync" on this patch.  It should be noted that
-this particular patch is the one that adds the Debian packaging files
-(as opposed to the other ones, which modify the upstream source
-files).
-
-Here is what I get.  I suppose that could have been expected, but that
-looks nevertheless annoying...
-
-tau-git$ stg sync -b etch debian
-Checking for changes in the working directory... done
-Synchronising "debian"...Error: File "debian/tau.files" added in branches but different
-Error: File "debian/tau-racy.files" added in branches but different
-Error: File "debian/rules" added in branches but different
-Error: File "debian/changelog" added in branches but different
-stg sync: GIT index merging failed (possible conflicts)
-
-Traceback (most recent call last):
-  File "/export/work/yann/git/stgit/stg", line 43, in ?
-    main()
-  File "/export/work/yann/git/stgit/stgit/main.py", line 268, in main
-    command.func(parser, options, args)
-  File "/export/work/yann/git/stgit/stgit/commands/sync.py", line 163, in func
-    merge_patch(patch, p)
-  File "/export/work/yann/git/stgit/stgit/commands/sync.py", line 96, in <lambda>
-    merge_patch = lambda patch, pname: \
-  File "/export/work/yann/git/stgit/stgit/commands/sync.py", line 58, in __branch_merge_patch
-    git.merge(patch.get_bottom(), git.get_head(), patch.get_top())
-  File "/export/work/yann/git/stgit/stgit/git.py", line 664, in merge
-    raise GitException, 'GIT index merging failed (possible conflicts)'
-stgit.git.GitException: GIT index merging failed (possible conflicts)
-
-best regards,
--- 
-Yann.
+	Sam
