@@ -1,82 +1,73 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Handling of 'git-config foo=bar'
-Date: Sun, 04 Feb 2007 21:20:12 +0100
-Organization: At home
-Message-ID: <eq5f34$ir9$1@sea.gmane.org>
-References: <20070204113350.GN5362@nan92-1-81-57-214-146.fbx.proxad.net> <7vsldlr8wg.fsf@assigned-by-dhcp.cox.net>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: git rebase: unexpected conflict
+Date: Sun, 4 Feb 2007 22:53:41 +0200
+Message-ID: <20070204205341.GD29029@mellanox.co.il>
+References: <eq5cc6$al2$1@sea.gmane.org>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 04 21:22:32 2007
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 04 21:53:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDnsd-0000ld-Nh
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 21:22:32 +0100
+	id 1HDoMT-0007AD-4z
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 21:53:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752534AbXBDUW3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 15:22:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbXBDUW3
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 15:22:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:41790 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752534AbXBDUW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 15:22:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HDnr4-00030e-Qq
-	for git@vger.kernel.org; Sun, 04 Feb 2007 21:20:54 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Feb 2007 21:20:54 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Feb 2007 21:20:54 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1752552AbXBDUxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 15:53:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752553AbXBDUxP
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 15:53:15 -0500
+Received: from p02c11o144.mxlogic.net ([208.65.145.67]:56927 "EHLO
+	p02c11o144.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752552AbXBDUxO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 15:53:14 -0500
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o144.mxlogic.net (mxl_mta-4.0.2-2)
+	with ESMTP id ab746c54.2680806320.23132.00-001.p02c11o144.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Sun, 04 Feb 2007 13:53:14 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.50]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Sun, 4 Feb 2007 22:55:16 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Sun,  4 Feb 2007 22:53:10 +0200
+Content-Disposition: inline
+In-Reply-To: <eq5cc6$al2$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 04 Feb 2007 20:55:16.0846 (UTC) FILETIME=[C61228E0:01C7489E]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14974.000
+X-TM-AS-Result: No--6.318100-4.000000-31
+X-Spam: [F=0.0116652951; S=0.011(2007010901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38708>
 
-Junio C Hamano wrote:
+> Quoting Jakub Narebski <jnareb@gmail.com>:
+> Subject: Re: git rebase: unexpected conflict
+> 
+> Michael S. Tsirkin wrote:
+> 
+> > git rebase seems to see conflicts where there shouldn't be any.
+> 
+> Were you on a branch that you wanted to rebase?
 
-> Yann Dirson <ydirson@altern.org> writes:
-> 
->> Currently, running "git-config foo=bar", ie. presumably an erroneous
->> attempt at setting "foo", indeed queries "foo=bar", so outputs nothing
->> and reports success.
->>
->> Do we want to allow "=" signs in config var names ?  It would seem
->> reasonable to refuse them, and report an error to the innocent user
->> (OK, i'm not that innocent, but still ;)
->>
->> Or does that sound a bad idea to anyone ?
-> 
-> Something like:
-> 
->    git config remote.origin.fetch=refs/heads/master:refs/heads/origin
->    git config remote.origin.fetch+=refs/heads/next:refs/heads/next
->    git config remote.origin.fetch+=+refs/heads/pu:refs/heads/pu
->    git config remote.origin.fetch+=refs/heads/maint:refs/heads/maint
-> 
-> sounds sensible.
-> 
-> However, my feeling is "git repo-config" is primarily for use by
-> scripts, and we are better off educating users not to be afraid
-> of viewing and editing .git/config file themselves.
+Yes: I did not specify the <branch> parameter at all.
+However note that there were merges since the commit
+that I wanted to skip.
 
-I think the question was not if we want new syntax for setting variables,
-but if we want to disallow '=' in variable (key) names. They are pretty
-restricted, and I cannot think offhand of variable name we would want that
-would need to have '=' in it...
+> I had made this error once.
+> git rebase --onto <newbase> <upstream> <branch> moves <upstream>..<branch>
+> into <newbase>.
+
+I really just did
+git-rebase --onto $1~1 $1
+
+and the commit I gave 9b3bfe5696aa417d38ce903eb345a03d65743dd2
+actually as a parent of the current branch.
+
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+MST
