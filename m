@@ -1,63 +1,58 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: What's in git.git (stable)
-Date: Sun, 4 Feb 2007 11:12:34 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702041111010.8424@woody.linux-foundation.org>
-References: <7v7iv2soxv.fsf@assigned-by-dhcp.cox.net> <7vps8qtgbm.fsf@assigned-by-dhcp.cox.net>
- <20070204185144.GB24368@coredump.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git rebase: unexpected conflict
+Date: Sun, 04 Feb 2007 20:33:50 +0100
+Organization: At home
+Message-ID: <eq5cc6$al2$1@sea.gmane.org>
+References: <20070204190519.GB29029@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 04 20:12:44 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 04 20:32:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDmn3-0008Tg-HV
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 20:12:41 +0100
+	id 1HDn6O-0001V7-4g
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 20:32:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752507AbXBDTMk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 14:12:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752512AbXBDTMk
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 14:12:40 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:47256 "EHLO smtp.osdl.org"
+	id S1752496AbXBDTcj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 14:32:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbXBDTcj
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 14:32:39 -0500
+Received: from main.gmane.org ([80.91.229.2]:39026 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752507AbXBDTMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 14:12:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l14JCZQ5014646
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 4 Feb 2007 11:12:35 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l14JCYBZ002708;
-	Sun, 4 Feb 2007 11:12:34 -0800
-In-Reply-To: <20070204185144.GB24368@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-0.381 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
-X-MIMEDefang-Filter: osdl$Revision: 1.173 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752496AbXBDTci (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 14:32:38 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HDn6D-0003MS-9n
+	for git@vger.kernel.org; Sun, 04 Feb 2007 20:32:29 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 04 Feb 2007 20:32:29 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 04 Feb 2007 20:32:29 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38702>
 
+Michael S. Tsirkin wrote:
 
+> git rebase seems to see conflicts where there shouldn't be any.
 
-On Sun, 4 Feb 2007, Jeff King wrote:
-> 
-> Just a thought, but it might be useful to blame the contents of an
-> arbitrary file (but starting the history at a given pathname). Something
-> like "git blame --contents /tmp/foo.c file.c", with contents defaulting
-> to "file.c". There's much discussion of editor interfaces, and this
-> leaves the possibility of git-blaming the contents of the editor buffer
-> (after writing it out to a temp file) without having to save changes to
-> the working tree file.
+Were you on a branch that you wanted to rebase? I had made this error once.
+git rebase --onto <newbase> <upstream> <branch> moves <upstream>..<branch>
+into <newbase>.
 
-I agree, that probably would make most sense. If we do this at all. On the 
-other hand, I suspect that most editors would probably want to pipe the 
-contents to the program, not write it to a temp-file.
-
-(I think it's a worthy feature, but Junio's patch wasn't exactly pretty, 
-so the question boils down to whether it's really worth it).
-
-		Linus
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
