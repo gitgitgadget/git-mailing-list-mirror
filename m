@@ -1,143 +1,85 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 1/2] enable HEAD@{...} and make it independent from the current
- branch
-Date: Sat, 03 Feb 2007 21:49:16 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702032144010.3021@xanadu.home>
+Subject: [PATCH 2/2] Let git-checkout always drop any detached head
+Date: Sat, 03 Feb 2007 21:50:39 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702032149200.3021@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 04 03:49:22 2007
+X-From: git-owner@vger.kernel.org Sun Feb 04 03:50:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDXRQ-0007Wj-97
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 03:49:20 +0100
+	id 1HDXSk-0008B4-0z
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 03:50:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751971AbXBDCtS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Feb 2007 21:49:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbXBDCtS
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 21:49:18 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:41891 "EHLO
+	id S1751977AbXBDCuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Feb 2007 21:50:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbXBDCuk
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Feb 2007 21:50:40 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:42311 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751971AbXBDCtR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Feb 2007 21:49:17 -0500
+	with ESMTP id S1751977AbXBDCuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Feb 2007 21:50:40 -0500
 Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JCX0065O3U4RBA0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 03 Feb 2007 21:49:17 -0500 (EST)
+ with ESMTP id <0JCX006HZ3WFR9A0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 03 Feb 2007 21:50:39 -0500 (EST)
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38639>
 
+
+We used to refuse leaving a detached HEAD when it wasn't matching an
+existing ref so not to lose any commit that might have been performed
+while not on any branch (unless -f was provided).
+
+But this protection was completely bogus since it was still possible
+to move to HEAD^ while still remaining detached but losing the last
+commit anyway if there was one.
+
+Now that we have a proper reflog for HEAD it is best to simply remove
+that bogus (and admitedly annoying) protection and simply display the
+last HEAD position instead.  If one wants to recover a lost detached
+state then it can be retrieved from the HEAD reflog.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
+ git-checkout.sh |   17 ++---------------
+ 1 files changed, 2 insertions(+), 15 deletions(-)
 
- sha1_name.c |   60 +++++++++++++++++++++++++++++++++-------------------------
- 1 files changed, 34 insertions(+), 26 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index de8caf8..9841b05 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -235,22 +235,23 @@ static int ambiguous_path(const char *path, int len)
- 	return slash;
- }
- 
-+static const char *ref_fmt[] = {
-+	"%.*s",
-+	"refs/%.*s",
-+	"refs/tags/%.*s",
-+	"refs/heads/%.*s",
-+	"refs/remotes/%.*s",
-+	"refs/remotes/%.*s/HEAD",
-+	NULL
-+};
-+
- int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- {
--	static const char *fmt[] = {
--		"%.*s",
--		"refs/%.*s",
--		"refs/tags/%.*s",
--		"refs/heads/%.*s",
--		"refs/remotes/%.*s",
--		"refs/remotes/%.*s/HEAD",
--		NULL
--	};
- 	const char **p, *r;
- 	int refs_found = 0;
- 
- 	*ref = NULL;
--	for (p = fmt; *p; p++) {
-+	for (p = ref_fmt; *p; p++) {
- 		unsigned char sha1_from_ref[20];
- 		unsigned char *this_result;
- 
-@@ -266,6 +267,26 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- 	return refs_found;
- }
- 
-+static int dwim_log(const char *str, int len, char **log)
-+{
-+	const char **p;
-+	int logs_found = 0;
-+
-+	*log = NULL;
-+	for (p = ref_fmt; *p; p++) {
-+		struct stat st;
-+		char *path = mkpath(*p, len, str);
-+		if (!stat(git_path("logs/%s", path), &st) &&
-+		    S_ISREG(st.st_mode)) {
-+			if (!logs_found++)
-+				*log = xstrdup(path);
-+			if (!warn_ambiguous_refs)
-+				break;
-+		}
-+	}
-+	return logs_found;
-+}
-+
- static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- {
- 	static const char *warning = "warning: refname '%.*s' is ambiguous.\n";
-@@ -295,7 +316,9 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 	if (!len && reflog_len) {
- 		/* allow "@{...}" to mean the current branch reflog */
- 		refs_found = dwim_ref("HEAD", 4, sha1, &real_ref);
--	} else
-+	} else if (reflog_len)
-+		refs_found = dwim_log(str, len, &real_ref);
-+	else
- 		refs_found = dwim_ref(str, len, sha1, &real_ref);
- 
- 	if (!refs_found)
-@@ -310,21 +333,6 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 		unsigned long co_time;
- 		int co_tz, co_cnt;
- 
--		/*
--		 * We'll have an independent reflog for "HEAD" eventually
--		 * which won't be a synonym for the current branch reflog.
--		 * In the mean time prevent people from getting used to
--		 * such a synonym until the work is completed.
--		 */
--		if (len && !strncmp("HEAD", str, len) &&
--		    !strncmp(real_ref, "refs/", 5)) {
--			error("reflog for HEAD has not been implemented yet\n"
--			      "Maybe you could try %s%s instead, "
--			      "or just %s for current branch..",
--			      strchr(real_ref+5, '/')+1, str+len, str+len);
--			exit(-1);
+diff --git a/git-checkout.sh b/git-checkout.sh
+index 99b8779..e4cce06 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -164,22 +164,9 @@ If you want to create a new branch from this checkout, you may do so
+ (now or later) by using -b with the checkout command again. Example:
+   git checkout -b <new_branch_name>"
+ 	fi
+-elif test -z "$oldbranch" && test -n "$branch"
++elif test -z "$oldbranch" && && test -z "$quiet"
+ then
+-	# Coming back...
+-	if test -z "$force"
+-	then
+-		git show-ref -d -s | grep "$old" >/dev/null || {
+-			echo >&2 \
+-"You are not on any branch and switching to branch '$new_name'
+-may lose your changes.  At this point, you can do one of two things:
+- (1) Decide it is Ok and say 'git checkout -f $new_name';
+- (2) Start a new branch from the current commit, by saying
+-     'git checkout -b <branch-name>'.
+-Leaving your HEAD detached; not switching to branch '$new_name'."
+-			exit 1;
 -		}
--
- 		/* Is it asking for N-th entry, or approxidate? */
- 		for (i = nth = 0; 0 <= nth && i < reflog_len; i++) {
- 			char ch = str[at+2+i];
+-	fi
++	echo >&2 "Previous HEAD position was $old"
+ fi
+ 
+ if [ "X$old" = X ]
 -- 
 1.5.0.rc2.651.g3924-dirty
