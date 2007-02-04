@@ -1,73 +1,67 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: git rebase: unexpected conflict
-Date: Sun, 4 Feb 2007 22:53:41 +0200
-Message-ID: <20070204205341.GD29029@mellanox.co.il>
-References: <eq5cc6$al2$1@sea.gmane.org>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: What's in git.git (stable)
+Date: Sun, 4 Feb 2007 15:58:58 -0500
+Message-ID: <20070204205858.GE12943@thunk.org>
+References: <7v7iv2soxv.fsf@assigned-by-dhcp.cox.net> <7vps8qtgbm.fsf@assigned-by-dhcp.cox.net> <20070204185144.GB24368@coredump.intra.peff.net> <Pine.LNX.4.64.0702041111010.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 04 21:53:21 2007
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Feb 04 21:59:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDoMT-0007AD-4z
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 21:53:21 +0100
+	id 1HDoS4-0001gV-Fi
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 21:59:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752552AbXBDUxP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 15:53:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752553AbXBDUxP
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 15:53:15 -0500
-Received: from p02c11o144.mxlogic.net ([208.65.145.67]:56927 "EHLO
-	p02c11o144.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752552AbXBDUxO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 15:53:14 -0500
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o144.mxlogic.net (mxl_mta-4.0.2-2)
-	with ESMTP id ab746c54.2680806320.23132.00-001.p02c11o144.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Sun, 04 Feb 2007 13:53:14 -0700 (MST)
-Received: from mellanox.co.il ([10.4.4.50]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Sun, 4 Feb 2007 22:55:16 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Sun,  4 Feb 2007 22:53:10 +0200
+	id S1752539AbXBDU7H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 15:59:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752555AbXBDU7G
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 15:59:06 -0500
+Received: from THUNK.ORG ([69.25.196.29]:38246 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752539AbXBDU7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 15:59:06 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HDoWw-0007SB-ML; Sun, 04 Feb 2007 16:04:10 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HDoRu-0003IJ-4C; Sun, 04 Feb 2007 15:58:58 -0500
 Content-Disposition: inline
-In-Reply-To: <eq5cc6$al2$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 04 Feb 2007 20:55:16.0846 (UTC) FILETIME=[C61228E0:01C7489E]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14974.000
-X-TM-AS-Result: No--6.318100-4.000000-31
-X-Spam: [F=0.0116652951; S=0.011(2007010901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+In-Reply-To: <Pine.LNX.4.64.0702041111010.8424@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38709>
 
-> Quoting Jakub Narebski <jnareb@gmail.com>:
-> Subject: Re: git rebase: unexpected conflict
+On Sun, Feb 04, 2007 at 11:12:34AM -0800, Linus Torvalds wrote:
 > 
-> Michael S. Tsirkin wrote:
 > 
-> > git rebase seems to see conflicts where there shouldn't be any.
+> On Sun, 4 Feb 2007, Jeff King wrote:
+> > 
+> > Just a thought, but it might be useful to blame the contents of an
+> > arbitrary file (but starting the history at a given pathname). Something
+> > like "git blame --contents /tmp/foo.c file.c", with contents defaulting
+> > to "file.c". There's much discussion of editor interfaces, and this
+> > leaves the possibility of git-blaming the contents of the editor buffer
+> > (after writing it out to a temp file) without having to save changes to
+> > the working tree file.
 > 
-> Were you on a branch that you wanted to rebase?
+> I agree, that probably would make most sense. If we do this at all. On the 
+> other hand, I suspect that most editors would probably want to pipe the 
+> contents to the program, not write it to a temp-file.
 
-Yes: I did not specify the <branch> parameter at all.
-However note that there were merges since the commit
-that I wanted to skip.
+... and use it with --incremental, as well.  In emacs you can have the
+annotation take place as it is being written out relatively easily, by
+arranging to have a callback function get called each time more
+information is handed back to emacs via a pipe.
 
-> I had made this error once.
-> git rebase --onto <newbase> <upstream> <branch> moves <upstream>..<branch>
-> into <newbase>.
-
-I really just did
-git-rebase --onto $1~1 $1
-
-and the commit I gave 9b3bfe5696aa417d38ce903eb345a03d65743dd2
-actually as a parent of the current branch.
-
-
--- 
-MST
+						- Ted
