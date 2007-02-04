@@ -1,57 +1,63 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: 'git config' vs 'git repo-config'
-Date: Sun, 04 Feb 2007 11:36:57 +0100
-Organization: At home
-Message-ID: <eq4ctk$9ae$3@sea.gmane.org>
-References: <e5bfff550702040138r6580c36agf86e8f8191a40021@mail.gmail.com> <7v8xfetft6.fsf@assigned-by-dhcp.cox.net> <e5bfff550702040200y4f09070fia3716ca949fddac7@mail.gmail.com> <7v4pq2tet5.fsf@assigned-by-dhcp.cox.net> <e5bfff550702040223h56f1524x9e6c460445874063@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: merge doesn't remove files
+Date: Sun, 4 Feb 2007 02:40:38 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702040234290.8424@woody.linux-foundation.org>
+References: <20070203224819.20131.qmail@b1b53206edee41.315fe32.mid.smarden.org>
+ <7vy7nezr1f.fsf@assigned-by-dhcp.cox.net> <7vd54qzoka.fsf@assigned-by-dhcp.cox.net>
+ <20070204045933.GC16766@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 04 11:40:13 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Gerrit Pape <pape@smarden.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Feb 04 11:40:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDen4-0001nn-Kw
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 11:40:10 +0100
+	id 1HDenp-0002Bw-0N
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 11:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752258AbXBDKkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 05:40:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752265AbXBDKkI
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 05:40:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:43966 "EHLO ciao.gmane.org"
+	id S1752266AbXBDKk4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 05:40:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752265AbXBDKkz
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 05:40:55 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:36218 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752261AbXBDKkH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 05:40:07 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HDemx-00015v-0f
-	for git@vger.kernel.org; Sun, 04 Feb 2007 11:40:03 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Feb 2007 11:40:03 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Feb 2007 11:40:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S1752266AbXBDKky (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 05:40:54 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l14AedQ5001370
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 4 Feb 2007 02:40:42 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l14AecIk027443;
+	Sun, 4 Feb 2007 02:40:38 -0800
+In-Reply-To: <20070204045933.GC16766@spearce.org>
+X-Spam-Status: No, hits=-0.389 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.111__
+X-MIMEDefang-Filter: osdl$Revision: 1.173 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38683>
 
-Marco Costalba wrote:
 
-> I plan to release a point release after git-1.5 is out, so I'm
-> wondering if renaming git-repo-config --> git-config also in qgit.
 
-This would mean that you cannot use new qgit with older git instalations.
-Not a good idea, I think...
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+On Sat, 3 Feb 2007, Shawn O. Pearce wrote:
+> 
+> But that tree-ish doesn't have to be the first non-base
+> argument to merge-recursive, does it?  In practice it usually is,
+> but can I assume it in the code?
+
+Yes, the first branch is supposed to be the "current" one. That's the one 
+we compare to the index, and that we should already error out on if the 
+index doesn't match the tree. So yeah, a file should ever be removed only 
+if it existed in the old index (and by implication in the first branch, 
+since otherwise we should have failed the merge as not having a clean 
+tree anyway).
+
+		Linus
