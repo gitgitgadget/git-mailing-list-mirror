@@ -1,162 +1,113 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: [PATCH qgit] Show remote branch in orange tag mark
-Date: Sun, 4 Feb 2007 10:30:35 +0100
-Message-ID: <e5bfff550702040130q220a86bcxc65e015b73f76733@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Sun, 04 Feb 2007 01:35:50 -0800
+Message-ID: <7vwt2ytgcp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Pavel Roskin" <proski@gnu.org>
-To: "GIT list" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 04 10:30:40 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 04 10:35:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDdhn-00055d-J3
-	for gcvg-git@gmane.org; Sun, 04 Feb 2007 10:30:39 +0100
+	id 1HDdmv-0007K1-DW
+	for gcvg-git@gmane.org; Sun, 04 Feb 2007 10:35:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752178AbXBDJah (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Feb 2007 04:30:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752185AbXBDJah
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 04:30:37 -0500
-Received: from nz-out-0506.google.com ([64.233.162.238]:61189 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752178AbXBDJag (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Feb 2007 04:30:36 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1327805nze
-        for <git@vger.kernel.org>; Sun, 04 Feb 2007 01:30:35 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=GJ76FGMW9R17NSaaiSLQszzQuHN/u1nIc3g0sWWIRAn9sVF5F8s6G4O1w1GMqC7iQhP6DjlD42sct7uzuOSRRzMkt9x9dbiYpv0QQjbjHb4sJsTkR2s5vfvuB1x8QVaVVZULaMiLGG3iDIWewyNNSrsCLEgXJ1qd3faTNqNJu7o=
-Received: by 10.115.76.1 with SMTP id d1mr506857wal.1170581435355;
-        Sun, 04 Feb 2007 01:30:35 -0800 (PST)
-Received: by 10.114.61.6 with HTTP; Sun, 4 Feb 2007 01:30:35 -0800 (PST)
-Content-Disposition: inline
+	id S1752185AbXBDJfw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 04:35:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbXBDJfw
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 04:35:52 -0500
+Received: from fed1rmmtai14.cox.net ([68.230.241.45]:33332 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752185AbXBDJfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 04:35:51 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070204093551.FRVG4586.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 4 Feb 2007 04:35:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id KMbq1W00G1kojtg0000000; Sun, 04 Feb 2007 04:35:51 -0500
+X-master-at: ec8048913217d8ff6e54950a0cb8ab2e739a1d1f
+X-next-at: 79b8f6b583d63fcaea57bae19609e2a2b651a570
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38671>
 
-Teach qgit about remote branches and show them with an orange
-background in tag mark indicator.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-Signed-off-by: Marco Costalba <mcostalba@gmail.com>
----
- src/git.cpp         |   12 ++++++++++++
- src/git.h           |   12 +++++++-----
- src/git_startup.cpp |    5 +++++
- src/listview.cpp    |    3 +++
- 4 files changed, 27 insertions(+), 5 deletions(-)
+* np/dreflog (Sat Feb 3 23:31:47 2007 -0800) 12 commits
+ + show-branch -g: default to the current branch.
+ + Let git-checkout always drop any detached head
+ + Enable HEAD@{...} and make it independent from the current branch
+ + scan reflogs independently from refs
+ + add reflog when moving HEAD to a new branch
+ + create_symref(): do not assume pathname from git_path() persists
+   long enough
+ + add logref support to git-symbolic-ref
+ + move create_symref() past log_ref_write()
+ + add reflog entries for HEAD when detached
+ + enable separate reflog for HEAD
+ + lock_ref_sha1_basic(): remember the original name of a ref when
+   resolving it
+ + make reflog filename independent from struct ref_lock
 
-diff --git a/src/git.cpp b/src/git.cpp
-index 33834d5..08b3309 100644
---- a/src/git.cpp
-+++ b/src/git.cpp
-@@ -182,6 +182,9 @@ const QStringList Git::getRefName(SCRef sha,
-RefType type, QString* curBranch) c
- 	else if (type == BRANCH)
- 		return rf.branches;
+Earlier I predicted that this will not stabilize before 1.5.0
+happens, but I was wrong.  I'd like to have this in 1.5.0.  Will
+merge to 'master' soon.
 
-+	else if (type == RMT_BRANCH)
-+		return rf.remoteBranches;
-+
- 	else if (type == REF)
- 		return rf.refs;
+Big thanks to Nico.
 
-@@ -214,6 +217,9 @@ const QString Git::getRefSha(SCRef refName,
-RefType type, bool askGit) {
- 		else if ((any || type == BRANCH) && rf.branches.contains(refName))
- 			return it.key();
+* ml/gitk (Thu Feb 1 08:46:38 2007 -0500) 2 commits
+ - Make gitk work reasonably well on Cygwin.
+ - gitk - remove trailing whitespace from a few lines.
 
-+		else if ((any || type == RMT_BRANCH) && rf.remoteBranches.contains(refName))
-+			return it.key();
-+
- 		else if ((any || type == REF) && rf.refs.contains(refName))
- 			return it.key();
+Waiting for Paul's blessing, but I might just go ahead and apply
+them to my tree before 1.5.0 happens.
 
-@@ -257,6 +263,9 @@ const QStringList Git::getAllRefNames(uint mask,
-bool onlyLoaded) {
- 		if (mask & BRANCH)
- 			appendNamesWithId(names, it.key(), (*it).branches, onlyLoaded);
+* jc/blame (Tue Jan 30 01:11:08 2007 -0800) 1 commit
+ - git-blame: no rev means start from the working tree file.
 
-+		if (mask & RMT_BRANCH)
-+			appendNamesWithId(names, it.key(), (*it).remoteBranches, onlyLoaded);
-+
- 		if (mask & REF)
- 			appendNamesWithId(names, it.key(), (*it).refs, onlyLoaded);
+This changes the semantics of "git blame" without the revision
+parameter.  It does not annotate HEAD version but annotates the
+working tree changes as well.  Since it is a behaviour change,
+it might make sense to have it in 1.5.0 if we ever want to do
+this.
 
-@@ -283,6 +292,9 @@ const QString Git::getRevInfo(SCRef sha) {
- 		const QString cap(type & CUR_BRANCH ? "Head: " : "Branch: ");
- 		refsInfo =  cap + getRefName(sha, BRANCH).join(" ");
- 	}
-+	if (type & RMT_BRANCH)
-+		refsInfo.append("   Remote branch: " + getRefName(sha,
-RMT_BRANCH).join(" "));
-+
- 	if (type & TAG)
- 		refsInfo.append("   Tag: " + getRefName(sha, TAG).join(" "));
+All the rest are outside of the scope of 1.5.0 and are on hold.
 
-diff --git a/src/git.h b/src/git.h
-index 48f4e06..5b174ab 100644
---- a/src/git.h
-+++ b/src/git.h
-@@ -51,11 +51,12 @@ public:
- 	enum RefType {
- 		TAG        = 1,
- 		BRANCH     = 2,
--		CUR_BRANCH = 4,
--		REF        = 8,
--		APPLIED    = 16,
--		UN_APPLIED = 32,
--		ANY_REF    = 63
-+		RMT_BRANCH = 4,
-+		CUR_BRANCH = 8,
-+		REF        = 16,
-+		APPLIED    = 32,
-+		UN_APPLIED = 64,
-+		ANY_REF    = 127
- 	};
-
- 	void checkEnvironment();
-@@ -155,6 +156,7 @@ private:
- 		Reference() : type(0) {}
- 		uint type;
- 		QStringList branches;
-+		QStringList remoteBranches;
- 		QString     currentBranch;
- 		QStringList tags;
- 		QStringList refs;
-diff --git a/src/git_startup.cpp b/src/git_startup.cpp
-index 6b34460..84e62a5 100644
---- a/src/git_startup.cpp
-+++ b/src/git_startup.cpp
-@@ -172,6 +172,11 @@ bool Git::getRefs() {
- 				cur->type |= CUR_BRANCH;
- 				cur->currentBranch = curBranchName;
- 			}
-+		} else if (refName.startsWith("refs/remotes/") &&
-!refName.endsWith("HEAD")) {
-+
-+			cur->remoteBranches.append(refName.mid(13));
-+			cur->type |= RMT_BRANCH;
-+
- 		} else if (!refName.endsWith("HEAD")) {
-
- 			cur->refs.append(refName);
-diff --git a/src/listview.cpp b/src/listview.cpp
-index bfc2a7d..80043e9 100644
---- a/src/listview.cpp
-+++ b/src/listview.cpp
-@@ -635,6 +635,9 @@ void ListViewItem::paintTagMarks(int col) {
- 	if (rt & Git::BRANCH)
- 		addBranchPixmap(&newPm);
-
-+	if (rt & Git::RMT_BRANCH)
-+		addRefPixmap(&newPm, git->getRefName(_sha, Git::RMT_BRANCH), ORANGE);
-+
- 	if (rt & Git::TAG)
- 		addRefPixmap(&newPm, git->getRefName(_sha, Git::TAG), Qt::yellow);
-
--- 
-1.5.0-rc3.GIT
+* js/reverse (Sat Jan 20 23:04:02 2007 +0100) 1 commit
+ + Teach revision machinery about --reverse
+* jc/fetch (Tue Jan 16 13:43:28 2007 -0800) 5 commits
+ - git-fetch: rewrite expand_ref_wildcard in C
+ - git-fetch: rewrite another shell loop in C
+ - git-fetch: move more code into C.
+ - git-fetch--tool: start rewriting parts of git-fetch in C.
+ - git-fetch: split fetch_main into fetch_dumb and fetch_native
+* jc/merge-base (Tue Jan 9 01:32:25 2007 -0800) 4 commits
+ + in_merge_bases(): optimization
+ + merge_base(): move traversal into a separate function.
+ + Allow in_merge_bases() to take more than one reference commits.
+ + Make merge-base a built-in.
+* sp/merge (Thu Dec 28 02:35:17 2006 -0500) 1 commit
+ - Avoid git-fetch in `git-pull .` when possible.
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
+* jc/explain (Mon Dec 4 19:35:04 2006 -0800) 1 commit
+ - git-explain
+* jc/3way (Wed Nov 29 18:53:13 2006 -0800) 1 commit
+ + git-merge: preserve and merge local changes when doing fast
+   forward
+* jc/web (Wed Nov 8 14:54:09 2006 -0800) 1 commit
+ - gitweb: steal loadavg throttle from kernel.org
+* jc/pickaxe (Sun Nov 5 11:52:43 2006 -0800) 1 commit
+ - blame: --show-stats for easier optimization work.
+* jc/diff-apply-patch (Fri Sep 22 16:17:58 2006 -0700) 1 commit
+ + git-diff/git-apply: make diff output a bit friendlier to GNU patch
+   (part 2)
