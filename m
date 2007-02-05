@@ -1,73 +1,118 @@
-From: Baz <brian.ewins@gmail.com>
-Subject: Re: qgit on Mac OS X
-Date: Mon, 5 Feb 2007 19:20:33 +0000
-Message-ID: <2faad3050702051120o245e0554wa8625b6f48e3bb6a@mail.gmail.com>
-References: <loom.20070205T130544-216@post.gmane.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Add --patchdepth parameter to git-am.sh
+Date: Mon, 5 Feb 2007 19:24:38 +0000
+Message-ID: <200702051924.39205.andyparkins@gmail.com>
+References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pazu <pazu@pazu.com.br>
-X-From: git-owner@vger.kernel.org Mon Feb 05 20:20:51 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 05 20:28:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE9OU-0001r9-Bf
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 20:20:50 +0100
+	id 1HE9VZ-0005Jj-Jj
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 20:28:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933348AbXBETUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 14:20:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933379AbXBETUf
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 14:20:35 -0500
-Received: from an-out-0708.google.com ([209.85.132.243]:20652 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933348AbXBETUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 14:20:34 -0500
-Received: by an-out-0708.google.com with SMTP id b33so1106057ana
-        for <git@vger.kernel.org>; Mon, 05 Feb 2007 11:20:34 -0800 (PST)
+	id S933417AbXBET1h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 14:27:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933421AbXBET1h
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 14:27:37 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:48320 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933419AbXBET1g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 14:27:36 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1390903uga
+        for <git@vger.kernel.org>; Mon, 05 Feb 2007 11:27:34 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PRf1ZfmL5MS7mmto9TzgNAPL6DArmrJlYlK1Z9F0GFqfT9aeH1vJx9FX1mbEP44l2eENPXqpeArlmtzM0zurl76RZW5Ve7L4/DlDMQtJxpqzngt188VyrnIXQnb2zKTjL8AqEv4VoX8PYteLGDaIYRTxmEdlHgsJnlXKFOW59Hg=
-Received: by 10.100.132.16 with SMTP id f16mr5279129and.1170703233342;
-        Mon, 05 Feb 2007 11:20:33 -0800 (PST)
-Received: by 10.66.238.7 with HTTP; Mon, 5 Feb 2007 11:20:33 -0800 (PST)
-In-Reply-To: <loom.20070205T130544-216@post.gmane.org>
+        h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=Q4fupYnFOMmk1eJYqz9DIkMvzRcsXcgBgi60Y8fYZpeRCMPU8DVjs926/x5P0RAZ2nLta/RAd2v2XFCs5b5F4Y8HGGJI3tNntxp41qbf0OTHV3BoeTCqslEkrPxPLjorc9fgije7/dzFFLk3WRMXO5fBT9SkDJDkd/vzIOC6YTw=
+Received: by 10.66.242.20 with SMTP id p20mr9008921ugh.1170703654619;
+        Mon, 05 Feb 2007 11:27:34 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id g30sm10909820ugd.2007.02.05.11.27.32;
+        Mon, 05 Feb 2007 11:27:32 -0800 (PST)
+In-Reply-To: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
+X-TUID: e4dd995355048259
+X-UID: 218
+X-Length: 2560
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38770>
 
-On 05/02/07, Pazu <pazu@pazu.com.br> wrote:
-> Has anyone tried to compile and use qgit on Mac OS X?
->
-> This week I installed qt-mac (3.3.7), and tried to compile qgit. Everything went
-> surprisingly well, and compilation finished without any errors. Now I'm able to
-> launch qgit, but the main window seems unable to receive focus, so I can't
-> interact with the application. Here's an screenshot:
->
-> http://pazu.com.br/dav/qgit-osx.jpg
->
-> So, I'd love to hear if anyone else tried to use qgit on OS X, and if you had
-> better luck than me.
+If the series of patches you are applying via git-am was based in a
+different directory there was no way to strip the directory (as you
+would with git-apply).
 
-I havent tried qgit, but I've seen this happen with other apps, and
-the Qt/Mac docs mention the problem:
-http://doc.trolltech.com/3.3/mac-differences.html
-"GUI Applications must be run out of a bundle (something like
-widgets.app/) or using the open(1) command. Mac OS X needs this to
-dispatch events correctly, as well as gaining access to the menubar.
-If using GDB you must run with the full path to the executable."
+This patch adds a --patchdepth option to git-am.sh whose argument is
+passed as a "-p" option to git-apply.
 
-I'm guessing the command line you used, obscured in the screenshot,
-was something like
-> `pwd`/qgit
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+I know git-apply isn't going anywhere, but git-applypatch is.  However, all
+this talk of it made me remember this patch.
 
-Try:
-> open ./qgit
-instead. BTW, the same advice is in the docs for Qt4.
+ git-am.sh |   13 ++++++++-----
+ 1 files changed, 8 insertions(+), 5 deletions(-)
 
-HTH
--Baz
+diff --git a/git-am.sh b/git-am.sh
+index 1252f26..cb503fc 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -60,7 +60,7 @@ fall_back_3way () {
+     mkdir "$dotest/patch-merge-tmp-dir"
+ 
+     # First see if the patch records the index info that we can use.
+-    git-apply -z --index-info "$dotest/patch" \
++    git-apply $patchdepth -z --index-info "$dotest/patch" \
+ 	>"$dotest/patch-merge-index-info" &&
+     GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+     git-update-index -z --index-info <"$dotest/patch-merge-index-info" &&
+@@ -70,7 +70,7 @@ fall_back_3way () {
+ 
+     echo Using index info to reconstruct a base tree...
+     if GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
+-	git-apply $binary --cached <"$dotest/patch"
++	git-apply $patchdepth $binary --cached <"$dotest/patch"
+     then
+ 	mv "$dotest/patch-merge-base+" "$dotest/patch-merge-base"
+ 	mv "$dotest/patch-merge-tmp-index" "$dotest/patch-merge-index"
+@@ -106,7 +106,7 @@ It does not apply to blobs recorded in its index."
+ }
+ 
+ prec=4
+-dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary= ws= resolvemsg=
++dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary= ws= resolvemsg= patchdepth=
+ 
+ while case "$#" in 0) break;; esac
+ do
+@@ -147,6 +147,9 @@ do
+ 	--resolvemsg=*)
+ 	resolvemsg=$(echo "$1" | sed -e "s/^--resolvemsg=//"); shift ;;
+ 
++	--patchdepth=*)
++	patchdepth=-p$(echo "$1" | sed -e "s/^--patchdepth=//"); shift ;;
++
+ 	--)
+ 	shift; break ;;
+ 	-*)
+@@ -389,12 +392,12 @@ do
+ 	fi
+ 
+ 	echo
+-	echo "Applying '$SUBJECT'"
++	echo "Applying '$SUBJECT' at depth $patchdepth"
+ 	echo
+ 
+ 	case "$resolved" in
+ 	'')
+-		git-apply $binary --index $ws "$dotest/patch"
++		git-apply $patchdepth $binary --index $ws "$dotest/patch"
+ 		apply_status=$?
+ 		;;
+ 	t)
+-- 
+1.5.0.rc1.gf4b6c
