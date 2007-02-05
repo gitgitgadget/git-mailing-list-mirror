@@ -1,86 +1,73 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] add --remote option to git-clone.
-Date: Mon, 05 Feb 2007 09:58:26 -0800
-Message-ID: <7vmz3smqpp.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0702020028540.18776@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20070201234706.GP17617@mellanox.co.il>
-	<Pine.LNX.4.63.0702020050190.18870@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmz3xmju9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0702021146440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vmz3wdjxu.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0702051245050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: [PATCH] core-tutorial: git-merge uses -m for commit messages
+Date: Mon, 05 Feb 2007 10:07:38 -0800
+Message-ID: <7vejp4mqad.fsf@assigned-by-dhcp.cox.net>
+References: <20070205113439.GA27077@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@mellanox.co.il>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 05 18:58:36 2007
+Cc: git@vger.kernel.org
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Mon Feb 05 19:07:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE86q-0005mS-CZ
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 18:58:32 +0100
+	id 1HE8Fj-0001N5-G8
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 19:07:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752605AbXBER62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 12:58:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752632AbXBER62
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 12:58:28 -0500
-Received: from fed1rmmtai15.cox.net ([68.230.241.44]:52918 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752605AbXBER61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 12:58:27 -0500
+	id S1752088AbXBESHk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 13:07:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbXBESHk
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 13:07:40 -0500
+Received: from fed1rmmtai14.cox.net ([68.230.241.45]:54288 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752088AbXBESHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 13:07:39 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070205175827.IIVW1306.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 5 Feb 2007 12:58:27 -0500
+          id <20070205180738.IWVN4586.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 5 Feb 2007 13:07:38 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id KtyS1W00D1kojtg0000000; Mon, 05 Feb 2007 12:58:26 -0500
+	id Ku7e1W0011kojtg0000000; Mon, 05 Feb 2007 13:07:38 -0500
+In-Reply-To: <20070205113439.GA27077@moooo.ath.cx> (Matthias Lederhofer's
+	message of "Mon, 5 Feb 2007 12:34:39 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38764>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Matthias Lederhofer <matled@gmx.net> writes:
 
-> Oh? Well, to me, "clone" meant something like the genetics thing, i.e. get 
-> a copy of the repository. Since a "branch" is not the complete repository, 
-> but only part of it, I would have expected "engraft" instead of "clone" 
-> there.
+> Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+> ---
+>  Documentation/core-tutorial.txt |   12 ++++++------
+>  1 files changed, 6 insertions(+), 6 deletions(-)
 >
-> But I can learn! So (post-1.5.0, maybe?) I'd be perfectly d'accord with 
-> something like this
->
-> 	git clone git://.../git.git#html
->
-> to mean "just fetch the branch html, and check it out".
+> diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+> index 9c28bea..6f30e0a 100644
+> --- a/Documentation/core-tutorial.txt
+> +++ b/Documentation/core-tutorial.txt
+> @@ -894,11 +894,11 @@ script called `git merge`, which wants to know which branches you want
+>  to resolve and what the merge is all about:
+>  
+>  ------------
+> -$ git merge "Merge work in mybranch" HEAD mybranch
+> +$ git merge -m "Merge work in mybranch" HEAD mybranch
+>  ------------
 
-I agree that the word "clone" to me sounds like "copy the whole
-repo", so a single branch cloning feels it is something
-different from "clone", but I do not think it means wholeness
-must be the only mode of operation.
+Unfortunately it needs more than that.
 
-Except that I do not particularly think the URL fragment
-notation is such a "cool" syntax.
+The funny command argument order in the original example was the
+command line format that has been in use internally for a long
+time:  merge <msg> HEAD <other commit>.
 
->> I think the logic to decide where to point remotes/$origin/HEAD to 
->> should be moved to "git-remote add -m" when we eventually rewrite 
->> "git-clone" to use "git-remote add -f".  And while we would do so, we 
->> can make a trivial extension to fetch-pack protocol to carry the HEAD 
->> symref information.  All will be good once that happens.
->
-> Would you like this as a multi_ack-like extension?
->
-> But then how to teach the dumb protocols in a backwards-compatible 
-> fashion?
+The human-accessible form that uses -m in front of <msg> does
+not need the second argument that always must match the current
+commit (it always must match so there is no point saying it).
 
-I am not talking about enhancing ls-remote output nor info/refs
-file format.  I do not think we need to do anything special to
-support it in backwards compatible way.
-
-Look at what dumb protocols do in git-clone.  http already knows
-where HEAD points at when it fetches HEAD with curl.  I do not
-particularly care about rsync, but I suspect it can be handled
-the same way.
+The original examples work perfectly Ok, and you broke it -- if
+you are doing '-m' you need to remove HEAD (and master in later
+ones) from the command line.
