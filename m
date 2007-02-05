@@ -1,86 +1,65 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Navigating remote branches in qgit
-Date: Mon, 5 Feb 2007 18:45:28 +0100
-Message-ID: <e5bfff550702050945l528b764apacc69b79c60dfb7a@mail.gmail.com>
-References: <1170574889.21644.38.camel@dv>
-	 <e5bfff550702040300x60bb1dfdxd312dc214bc49014@mail.gmail.com>
-	 <1170645235.4191.26.camel@dv.roinet.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Deprecation/Removal schedule
+Date: Mon, 05 Feb 2007 09:56:06 -0800
+Message-ID: <7vtzy0mqtl.fsf@assigned-by-dhcp.cox.net>
+References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702050814380.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Pavel Roskin" <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Feb 05 18:45:54 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Feb 05 18:56:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE7ua-0008S6-Vg
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 18:45:53 +0100
+	id 1HE84a-0004hU-Md
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 18:56:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932952AbXBERpb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 12:45:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932978AbXBERpb
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 12:45:31 -0500
-Received: from an-out-0708.google.com ([209.85.132.243]:13114 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932952AbXBERpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 12:45:30 -0500
-Received: by an-out-0708.google.com with SMTP id b33so1082232ana
-        for <git@vger.kernel.org>; Mon, 05 Feb 2007 09:45:29 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qVp7WCXWTZfDavg1bglBiXS3VV9k0VpnaKLsReVMm7zW+OZuP6pVPgN4jjPLI89WodKZDt8LuwUBKXJsNFyqV/79GuVFLtZCH4U10+VheXqj80nofpJODpwtnQevVnEp6pk8ihGXF5IXbUnk0Bk7hLC12JHwZAtzCCekZdkj+/g=
-Received: by 10.114.153.18 with SMTP id a18mr637732wae.1170697528837;
-        Mon, 05 Feb 2007 09:45:28 -0800 (PST)
-Received: by 10.114.60.16 with HTTP; Mon, 5 Feb 2007 09:45:28 -0800 (PST)
-In-Reply-To: <1170645235.4191.26.camel@dv.roinet.com>
-Content-Disposition: inline
+	id S1752626AbXBER4J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 12:56:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752632AbXBER4I
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 12:56:08 -0500
+Received: from fed1rmmtai15.cox.net ([68.230.241.44]:51660 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752626AbXBER4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 12:56:07 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070205175607.IFLQ1306.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 5 Feb 2007 12:56:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Ktw61W0021kojtg0000000; Mon, 05 Feb 2007 12:56:06 -0500
+In-Reply-To: <Pine.LNX.4.64.0702050814380.8424@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Mon, 5 Feb 2007 08:26:21 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38762>
 
-Hello Pavel,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> OK, I understand.  I feel quite ambivalent on this if we stop showing
-> StGIT bases.  They seem internal details of StGIT to me.
+> Same goes for "git-am". I use "git-applymbox", and I'll happily switch to 
+> git-am, but I'd like somebody who knows to document the differences when 
+> it gets deprecated. I use "git-applymbox -u", and I guess I just should 
+> change that to "git-am --utf8".
+
+True; by the way, for "am", -u is the default these days by
+popular demand.  I do not offhand remember if "applymbox" got
+corresponding changes (I think it did).
+
+>> * git-p4import, git-quiltimport and contrib/gitview
+>> 
+>>   These have seen almost no activity since their appearance.  It
+>>   could be that they are already perfect and many people are
+>>   using them happily, but I find it a bit hard to believe.
 >
+> I think they're useful to keep around, if for no other reason than as 
+> starting points for others.
 
-Probably you are right. Patch pushed.
- >
-> I've made a patch that makes qgit use the same color as gitk.  It looks
-> much better to my eyes.
->
-
-Thanks, applied.
-
-> I think the popup menu for remote branches should have one more level of
-> hierarchy.  The branches should be grouped by remotes:
->
-> Remote branches -> wireless-2.6 -> master
->                                    upstream
->                    wireless-dev -> master
->                                    for-linus
->
-> It may not be as quick to access, but jumping the branches is not going
-> to happen often.  It's more important to provide a good visualization.
->
-
-In your interesting test case at http://www.red-bean.com/proski/qgit/
-all the remotes are on "origin", so in that case I don't see how
-things could go better. Or perhaps I don't have understand the
-grouping logic. In this case please give me some example based on your
-repo, so I can understand the algorithm to use.
-
-> Also, qgit seems to be confused on one of my repositories.  It doesn't
-> show any tags in the main menu and shows tags with branches under
-> "More".  I guess there are too many remote branches.  The tarball is in
-> http://www.red-bean.com/proski/qgit/
->
-
-Thanks. Fixed and patch pushed.
-
-
-  Marco
+I strongly agree with the starting-points arguments.  I was
+hoping to hear the list to form a consensus to move useful
+starting-point examples to contrib/.
