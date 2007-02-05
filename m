@@ -1,83 +1,57 @@
-From: Blu Corater <blu@daga.cl>
-Subject: Re: replacing a bad commit
-Date: Mon, 5 Feb 2007 16:53:32 -0300
-Message-ID: <20070205195332.GW14499@daga.cl>
-References: <20070205153949.GT14499@daga.cl> <eq7mf0$lb0$1@sea.gmane.org>
+From: Pazu <pazu@pazu.com.br>
+Subject: Re: qgit on Mac OS X
+Date: Mon, 5 Feb 2007 17:53:48 -0200
+Message-ID: <9e7ab7380702051153q7c05c4d9h5304d89b7f8ab120@mail.gmail.com>
+References: <loom.20070205T130544-216@post.gmane.org>
+	 <2faad3050702051120o245e0554wa8625b6f48e3bb6a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 05 20:53:39 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Baz <brian.ewins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 05 20:53:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE9uE-00011z-74
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 20:53:38 +0100
+	id 1HE9uV-0001AP-B5
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 20:53:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933014AbXBETxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 14:53:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933020AbXBETxe
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 14:53:34 -0500
-Received: from pc-25-158-44-190.cm.vtr.net ([190.44.158.25]:58961 "EHLO
-	daga.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933014AbXBETxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 14:53:34 -0500
-Received: from blu by daga.cl with local (Exim 4.63)
-	(envelope-from <blu@daga.cl>)
-	id 1HE9u8-0005Do-Ax
-	for git@vger.kernel.org; Mon, 05 Feb 2007 16:53:32 -0300
-Mail-Followup-To: git <git@vger.kernel.org>
+	id S933018AbXBETxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 14:53:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933020AbXBETxv
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 14:53:51 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:21379 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933018AbXBETxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 14:53:50 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1397715uga
+        for <git@vger.kernel.org>; Mon, 05 Feb 2007 11:53:48 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=Iv1V0P690/4SKGf8tZJKQiraLLq250hpXTdUPeY74mBAiMP7N3L7AREWmoSsl7cStw3IHxi6jdn4XETNJbhcpWTPHQa0g9nEP+h6qA13Cqs4040q8Ti0AQEJQMcoa2iJkFSNQQXtkcpBmL/ZBRUcFsCvEkf7zokAGI89BAkpDGA=
+Received: by 10.78.123.4 with SMTP id v4mr1255940huc.1170705228422;
+        Mon, 05 Feb 2007 11:53:48 -0800 (PST)
+Received: by 10.48.216.6 with HTTP; Mon, 5 Feb 2007 11:53:48 -0800 (PST)
+In-Reply-To: <2faad3050702051120o245e0554wa8625b6f48e3bb6a@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <eq7mf0$lb0$1@sea.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Google-Sender-Auth: d07656be5572e261
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38775>
 
-On Mon, Feb 05, 2007 at 05:38:18PM +0100, Jakub Narebski wrote:
-> Blu Corater wrote:
-> 
-> > Here is the situation. Upstream realeses tarballs once in a while. I
-> > maintain local modifications. Every time upstream releases a tarball, I
-> > fast forward the 'upstream' branch, and merge into 'local' branch. My
-> > tree, currently, looks somewhat like this:
-> > 
-> >                o---o---o <--topic2
-> >                |
-> >                |  o---o---o <--topic1
-> >                | /
-> >    o---o---C---A---o---o <--local
-> >   /   /   /  
-> >  /   /   /
-> > o---o---o---B <--upstream
-> > 
-> > Problem is, B should have been merged into 'local', at A, but I just
-> > realized it wasn't (probably due to my own stupidity).
-> > 
-> > I need to correct A, i.e. merge with B, but keeping the branches already
-> > in flux, and propagating the changes due to the merge to them. In short,
-> > replace A with a properly merged A'.
-> > 
-> > I tried branching from C and merging with B, then rebasing topic branches,
-> > but then I am not sure how to rebase 'local'to eliminate A.
-> 
-> Try using
-> 
->   $ git rebase --onto A' A local
+2007/2/5, Baz <brian.ewins@gmail.com>:
 
-Thanks a lot, that did it.
+> Try:
+> open ./qgit
+> instead. BTW, the same advice is in the docs for Qt4.
 
-I've got confused by the wording of the git-rebase man page. It says:
+Unfortunately, using "open" just opens the executable in TextMate.
+Fortunately, creating bundles is a breeze, and indeed, if I run the
+application as a bundle, everything works perfectly!
 
-       <upstream>
-          Upstream branch to compare against
+Cheers,
 
-Which suggests to me that <upstream> must be a branch tip, and not a
-random commit, as seems to be the case (well, not random, but reachable
-from <branch> if I understand well). Also, the man page doesn't give any
-example of rebasing using a random commit as <upstream>, they all use
-branch tips which reinforced my wrong assumption.
-
--- 
-Blu.
+-- Pazu
