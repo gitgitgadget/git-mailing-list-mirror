@@ -1,66 +1,80 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] git-for-each-ref doesn't return "the bit after $GIT_DIR/refs"
-Date: Mon, 5 Feb 2007 19:58:47 +0000
-Message-ID: <200702051958.47237.andyparkins@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: replacing a bad commit
+Date: Mon, 5 Feb 2007 15:02:36 -0500
+Message-ID: <20070205200236.GB8623@spearce.org>
+References: <20070205153949.GT14499@daga.cl> <eq7mf0$lb0$1@sea.gmane.org> <20070205195332.GW14499@daga.cl>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 05 21:01:51 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Blu Corater <blu@daga.cl>
+X-From: git-owner@vger.kernel.org Mon Feb 05 21:02:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEA29-0004pu-7z
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 21:01:49 +0100
+	id 1HEA39-0005IV-M7
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 21:02:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933150AbXBEUBl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 15:01:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933063AbXBEUBl
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 15:01:41 -0500
-Received: from an-out-0708.google.com ([209.85.132.246]:48934 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933141AbXBEUBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 15:01:39 -0500
-Received: by an-out-0708.google.com with SMTP id b33so1116172ana
-        for <git@vger.kernel.org>; Mon, 05 Feb 2007 12:01:39 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=OdOAdwcUkzw552zQnzqNKQ2HYWQ6jyWtUT642FfyW9fNhPVtZQ6DDmCQye/fWsLC5NUKE8Fq5Et58eRVJKe9BBuVnfAd2Fk+XePUCErdqrqoSPaoKRo5O4qrZZN6SVpRNfhUtCPvWjuB4te8oAq7yfXndRDNwUcwD338DFq83Qk=
-Received: by 10.100.174.16 with SMTP id w16mr5330149ane.1170705698776;
-        Mon, 05 Feb 2007 12:01:38 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id 24sm10831015ugf.2007.02.05.12.01.36;
-        Mon, 05 Feb 2007 12:01:36 -0800 (PST)
-X-TUID: 115ad51fc804308f
-X-UID: 219
-X-Length: 1015
+	id S933040AbXBEUCs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 15:02:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933063AbXBEUCs
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 15:02:48 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34392 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933040AbXBEUCr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 15:02:47 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HEA2u-0004ve-PS; Mon, 05 Feb 2007 15:02:37 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9040D20FBAE; Mon,  5 Feb 2007 15:02:36 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <20070205195332.GW14499@daga.cl>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38777>
 
-The documentation for git-for-each-ref said that the refname variable
-would return "the part after $GIT_DIR/refs/", which isn't true.
+Blu Corater <blu@daga.cl> wrote:
+> I've got confused by the wording of the git-rebase man page. It says:
+> 
+>        <upstream>
+>           Upstream branch to compare against
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- Documentation/git-for-each-ref.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index da52eba..f49b0d9 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -66,7 +66,7 @@ keys.
- For all objects, the following names can be used:
+Hmm.  Yes, that manpage can be somewhat confusing.
  
- refname::
--	The name of the ref (the part after $GIT_DIR/refs/).
-+	The name of the ref (the part after $GIT_DIR/).
- 
- objecttype::
- 	The type of the object (`blob`, `tree`, `commit`, `tag`).
+> Which suggests to me that <upstream> must be a branch tip, and not a
+> random commit, as seems to be the case (well, not random, but reachable
+> from <branch> if I understand well). Also, the man page doesn't give any
+> example of rebasing using a random commit as <upstream>, they all use
+> branch tips which reinforced my wrong assumption.
+
+The faster you abandon the idea of branch tip as argument, the
+faster you will pickup the more advanced operations in Git.
+
+Anytime we talk about a branch as input to a command, it can really
+be any commit.  And anytime we talk about a commit or an object,
+it can be expressed by using any of the operators discussed in
+git-rev-parse's man page, which would include using a branch name
+or an abbreviated (or full) SHA-1.
+
+There are a limited number of commands which expect a branch name
+(and only a branch name), as they modify that branch to contain a
+new value.  Examples of these are relatively rare, but include:
+
+  git-branch: the first argument is the name of the branch to create.
+  git-checkout -b: again, the name of the branch to create.
+  git-fetch: it can be asked to update local tracking branches.
+
 -- 
-1.5.0.rc1.gf4b6c
+Shawn.
