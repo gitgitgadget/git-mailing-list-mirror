@@ -1,72 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Deprecation/Removal schedule
-Date: Mon, 5 Feb 2007 01:57:58 -0500
-Message-ID: <20070205065758.GB13472@spearce.org>
-References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
+From: Toralf =?iso-8859-1?q?F=F6rster?= <toralf.foerster@gmx.de>
+Subject: git should complain about seeked tree earlier
+Date: Mon, 5 Feb 2007 09:33:54 +0100
+Message-ID: <200702050933.57376.toralf.foerster@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 05 07:58:14 2007
+Content-Type: multipart/signed;
+  boundary="nextPart2023015.UQKMz3BjLi";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 05 09:34:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDxnp-0004E8-0d
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 07:58:13 +0100
+	id 1HDzIh-0007Fe-67
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 09:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752743AbXBEG6J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 01:58:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752756AbXBEG6J
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 01:58:09 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:35958 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752755AbXBEG6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 01:58:08 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HDxng-00031k-16; Mon, 05 Feb 2007 01:58:04 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1B9E920FBAE; Mon,  5 Feb 2007 01:57:58 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752146AbXBEIeH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 03:34:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbXBEIeG
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 03:34:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47277 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752149AbXBEIeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 03:34:05 -0500
+Received: (qmail invoked by alias); 05 Feb 2007 08:34:03 -0000
+Received: from blueice1n1.de.ibm.com (EHLO n22.hamburg.de.ibm.com) [195.212.29.163]
+  by mail.gmx.net (mp039) with SMTP; 05 Feb 2007 09:34:03 +0100
+X-Authenticated: #5108953
+User-Agent: KMail/1.9.5
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38732>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> We seem to have accumulated some crufts, duplicated and/or
-> disused features.  I think we should start planning deprecation
-> and removal.
-> 
-> Here are potential candidates we might want to mark as
-> "scheduled for removal".  Note that I threw in a bit more than
-> what I seriously consider bloat, so your favorite may appear in
-> the list.
+--nextPart2023015.UQKMz3BjLi
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-I'm OK with everything on the list going away.  But that's because
-I don't ever use them.  :)
+It would be nice if git would complain earlier and not at the end of the pr=
+ocess:
 
-I'd think we also want to remove the following older aliases:
 
-  annotate
-  init-db
-  fsck-objects
-  repo-config
+tfoerste@n22 ~ $ cd devel/bug_udp/
+tfoerste@n22 ~/devel/bug_udp $ man git-bisect
+tfoerste@n22 ~/devel/bug_udp $ git bisect start
+won't bisect on seeked tree
+tfoerste@n22 ~/devel/bug_udp $ git bisect good v2.6.18
+You need to start by "git bisect start"
+Do you want me to do it for you [Y/n]? n
+tfoerste@n22 ~/devel/bug_udp $ git bisect bad
+You need to start by "git bisect start"
+Do you want me to do it for you [Y/n]?
+won't bisect on seeked tree
 
-1 year after 1.5.0 final ships.  That should give people a chance
-to upgrade their other tools (StGit, qgit, etc.).
+=2D-=20
+MfG/Sincerely
 
--- 
-Shawn.
+Toralf F=F6rster
+
+--nextPart2023015.UQKMz3BjLi
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBFxuv1hyrlCH22naMRAhpvAJ4jFrKoaI8vjh3THJpnePV7AOzDqgCgkxmm
+gLGjDLQPGmqRIHE4aU70oYk=
+=eYOT
+-----END PGP SIGNATURE-----
+
+--nextPart2023015.UQKMz3BjLi--
