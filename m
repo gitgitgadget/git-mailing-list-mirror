@@ -1,79 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Deprecation/Removal schedule
-Date: Mon, 5 Feb 2007 05:25:06 -0500
-Message-ID: <20070205102506.GB14234@spearce.org>
-References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net> <eq6tj6$80m$2@sea.gmane.org> <eq6vq5$r7v$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current
+ branch reflog
+Date: Mon, 5 Feb 2007 12:11:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702051208070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> 
+ <20070201191323.GA18608@spearce.org>  <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net>
+ <epv3r9$4f7$2@sea.gmane.org>  <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 05 11:25:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 05 12:11:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE12M-0002lo-2F
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 11:25:26 +0100
+	id 1HE1kj-0000Gp-Ce
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 12:11:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432AbXBEKZL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 05:25:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbXBEKZL
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 05:25:11 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41283 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751440AbXBEKZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 05:25:10 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HE121-0002s2-WE; Mon, 05 Feb 2007 05:25:06 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BCF1B20FBAE; Mon,  5 Feb 2007 05:25:06 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <eq6vq5$r7v$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752496AbXBELLH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 06:11:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752500AbXBELLG
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 06:11:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37303 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752496AbXBELLF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 06:11:05 -0500
+Received: (qmail invoked by alias); 05 Feb 2007 11:11:02 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp050) with SMTP; 05 Feb 2007 12:11:02 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38740>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> An alternative for importers would be to move them into contrib area
-> (I think unmaintained but not obsolete programs can be there in contrib).
+Hi,
 
-Sure, but we don't want to promote carrying around unmaintained
-programs in core Git.  Its additional code which must still be
-tested or fixed when changes get made, like the final removal of
-the fsck-objects alias.  Hence, its never really unmaintained...
-someone must do the work.
+On Fri, 2 Feb 2007, Lars Hjemli wrote:
 
-Having a maintainer means there are one or more persons in the
-community who are making sure that chunk of code stays current
-when changes are made, and bugs are being fixed when identified.
-It also implies the code has some use, as it is unreasonable to
-expect a maintainer to invest time in something which has no value.
+> I think the following makes perfect sense:
+> 
+>  "HEAD@{yesterday}" = current branch, yesterday
+>  "@{yesterday}"     = detached head (no branch), yesterday
 
-Things that are really central in Git have at least 3 or 4
-maintainers who seem to rotate the workload fairly well.  But as
-you get closer to the outer (higher) layers it seems to fall on
-Junio and a much smaller group.  I'd hate to see Junio spend lots
-of time working on things nobody uses.
+Okay, so you say "HEAD@{yesterday}" does _not_ give you what HEAD pointed 
+to yesterday, but "@{yesterday}" does?
 
-Importers are especially problematic.  They aren't the most
-heavily used programs, as people tend to convert to Git once and
-then don't look back.  But they are also one of the first things a
-user has experience with as they testdrive Git on a copy of their
-own project.  So any importers we ship `out of the box' need to
-Just Work Danngit(tm).  Unfortunately they are also get the least
-amount of testing.
+Instead "HEAD@{yesterday}" looks up what HEAD points to _now_, and _then_ 
+goes back to yesterday, finding out what that particular branch pointed to 
+then, _regardless_ what HEAD was then?
 
--- 
-Shawn.
+Oh my, that's convoluted.
+
+Ciao,
+Dscho
