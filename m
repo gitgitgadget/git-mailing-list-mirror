@@ -1,52 +1,57 @@
-From: Mark Wooding <mdw@distorted.org.uk>
-Subject: Re: Deprecation/Removal schedule
-Date: Mon, 5 Feb 2007 12:00:45 +0000 (UTC)
-Organization: Straylight/Edgeware development
-Message-ID: <slrnese73d.86o.mdw@metalzone.distorted.org.uk>
-References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
+From: Pazu <pazu@pazu.com.br>
+Subject: qgit on Mac OS X
+Date: Mon, 5 Feb 2007 12:15:39 +0000 (UTC)
+Message-ID: <loom.20070205T130544-216@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 05 13:01:31 2007
+X-From: git-owner@vger.kernel.org Mon Feb 05 13:16:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE2XJ-0008E9-Qv
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 13:01:30 +0100
+	id 1HE2lz-00077O-2j
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 13:16:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138AbXBEMA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 07:00:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932154AbXBEMA4
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 07:00:56 -0500
-Received: from distorted.demon.co.uk ([80.177.3.76]:21431 "HELO
-	metalzone.distorted.org.uk" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S932138AbXBEMAz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Feb 2007 07:00:55 -0500
-Received: (qmail 5575 invoked by uid 110); 5 Feb 2007 12:00:45 -0000
-Received: (qmail 5559 invoked by uid 9); 5 Feb 2007 12:00:45 -0000
-Path: not-for-mail
-Newsgroups: mail.vger.git
-NNTP-Posting-Host: metalzone.distorted.org.uk
-X-Trace: metalzone.distorted.org.uk 1170676845 5557 172.29.199.2 (5 Feb 2007 12:00:45 GMT)
-X-Complaints-To: usenet@distorted.org.uk
-NNTP-Posting-Date: Mon, 5 Feb 2007 12:00:45 +0000 (UTC)
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S932252AbXBEMP4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 07:15:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932261AbXBEMP4
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 07:15:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:42301 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932252AbXBEMPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 07:15:55 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HE2lD-0001YB-SO
+	for git@vger.kernel.org; Mon, 05 Feb 2007 13:15:53 +0100
+Received: from C925635D.poa.virtua.com.br ([C925635D.poa.virtua.com.br])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Feb 2007 13:15:51 +0100
+Received: from pazu by C925635D.poa.virtua.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 05 Feb 2007 13:15:51 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 201.37.99.93 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38747>
 
-Junio C Hamano <junkio@cox.net> wrote:
+Has anyone tried to compile and use qgit on Mac OS X?
 
-> * git-whatchanged
+This week I installed qt-mac (3.3.7), and tried to compile qgit. Everything went
+surprisingly well, and compilation finished without any errors. Now I'm able to
+launch qgit, but the main window seems unable to receive focus, so I can't
+interact with the application. Here's an screenshot:
 
-My fingers still type `whatchanged', but I can train them.  Besides, it
-could easily be done with an alias.
+http://pazu.com.br/dav/qgit-osx.jpg
 
-> * git-p4import
+So, I'd love to hear if anyone else tried to use qgit on OS X, and if you had
+better luck than me.
 
-I may have a use for p4import, if the company I work for switches to
-Perforce.  If it doesn't work, I'll probably end up fixing it or
-replacing it with something based on Shawn's fastimport, but either way
-I'm not sure it's dead yet.
-
--- [mdw]
+-- Pazu
