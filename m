@@ -1,81 +1,55 @@
-From: Michael <barra_cuda@katamail.com>
-Subject: [PATCH] Documentation: add KMail in SubmittingPatches
-Date: Mon, 5 Feb 2007 14:27:32 +0100
-Message-ID: <200702051427.32532.barra_cuda@katamail.com>
-References: <7v1wl7bv66.fsf@assigned-by-dhcp.cox.net> <200702041716.39999.robin.rosenberg.lists@dewire.com> <7vlkjdr8hj.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Why is git-clone --reference so slow?
+Date: Mon, 5 Feb 2007 16:31:08 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702051629450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1170676004.29759.767.camel@pmac.infradead.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 05 14:22:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: David Woodhouse <dwmw2@infradead.org>
+X-From: git-owner@vger.kernel.org Mon Feb 05 16:31:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE3nU-0006VX-La
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 14:22:17 +0100
+	id 1HE5oK-0007u0-Aj
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 16:31:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932436AbXBENV4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 08:21:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932435AbXBENV4
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 08:21:56 -0500
-Received: from slim-3c.inet.it ([213.92.5.125]:55600 "EHLO slim-3c.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932422AbXBENVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 08:21:53 -0500
-Received: from dial-up-mi-449.lombardiacom.it ([::ffff:212.34.226.195]) by slim-3c.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:212.34.226.195+uejJkTxt8a; Mon, 05 Feb 2007 14:21:49 +0100
-User-Agent: KMail/1.9.4
-In-Reply-To: <7vlkjdr8hj.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-Message-ID: <20070205132150.123659@dial-up-mi-449.lombardiacom.it>
+	id S932518AbXBEPbM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 10:31:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932671AbXBEPbL
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 10:31:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37901 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932518AbXBEPbL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 10:31:11 -0500
+Received: (qmail invoked by alias); 05 Feb 2007 15:31:09 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp042) with SMTP; 05 Feb 2007 16:31:09 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <1170676004.29759.767.camel@pmac.infradead.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38753>
 
+Hi,
 
-Signed-off-by: Michael <barra_cuda@katamail.com>
----
- Documentation/SubmittingPatches |   19 ++++++++++++++++++-
- 1 files changed, 18 insertions(+), 1 deletions(-)
+On Mon, 5 Feb 2007, David Woodhouse wrote:
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index ce85d06..a3dafa5 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -316,7 +316,6 @@ settings but I haven't tried, yet.
- 	mail.identity.id?.compose_html		=> false
- 
- 
--
- Gnus
- ----
- 
-@@ -331,3 +330,21 @@ whitespaces (fatal in patches).  Running 'C-u g' to 
-display the
- message in raw form before using '|' to run the pipe can work
- this problem around.
- 
-+
-+KMail
-+-----
-+
-+This should help you to submit patches inline using KMail.
-+
-+1) Prepare the patch as a text file.
-+
-+2) Click on New Mail.
-+
-+3) Go under "Options" in the Composer window and be sure that
-+"Word wrap" is not set.
-+
-+4) Use Message -> Insert file... and insert the patch.
-+
-+5) Back in the compose window: add whatever other text you wish to the
-+message, complete the addressing and subject fields, and press send.
-+
--- 
-1.4.4.2
+> My DSL line sucks; I know this. But why is git-clone so bad at using it?
+> 
+> This is slow and seems to be downloading a lot of stuff it doesn't
+> need...
+> 
+> pmac /pmac/git $ git-clone --reference /pmac/git/linux-2.6 git://git.kernel.org/pub/scm/linux/kernel/git/geoff/ps3-linux.git
+
+Is this a Mac? Is it Mac OS X? Which git version do you use?
+
+We recently had a case like this, and it was fixed: apparently, mmap() on 
+Mac OS X is less than fast...
+
+Hth,
+Dscho
