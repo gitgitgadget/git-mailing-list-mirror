@@ -1,79 +1,83 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Deprecation/Removal schedule
-Date: Mon, 5 Feb 2007 14:45:08 -0500
-Message-ID: <20070205194508.GD8409@spearce.org>
-References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net> <eq6tj6$80m$2@sea.gmane.org> <81b0412b0702050750m5760ce61le34acc8adfdb8081@mail.gmail.com>
+From: Blu Corater <blu@daga.cl>
+Subject: Re: replacing a bad commit
+Date: Mon, 5 Feb 2007 16:53:32 -0300
+Message-ID: <20070205195332.GW14499@daga.cl>
+References: <20070205153949.GT14499@daga.cl> <eq7mf0$lb0$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 05 20:45:20 2007
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 05 20:53:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE9mA-0005LQ-K6
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 20:45:18 +0100
+	id 1HE9uE-00011z-74
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 20:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933005AbXBETpN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 14:45:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933420AbXBETpN
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 14:45:13 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33536 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933005AbXBETpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 14:45:11 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HE9lu-0003dO-8A; Mon, 05 Feb 2007 14:45:02 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 60B7720FBAE; Mon,  5 Feb 2007 14:45:08 -0500 (EST)
+	id S933014AbXBETxe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 14:53:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933020AbXBETxe
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 14:53:34 -0500
+Received: from pc-25-158-44-190.cm.vtr.net ([190.44.158.25]:58961 "EHLO
+	daga.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933014AbXBETxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 14:53:34 -0500
+Received: from blu by daga.cl with local (Exim 4.63)
+	(envelope-from <blu@daga.cl>)
+	id 1HE9u8-0005Do-Ax
+	for git@vger.kernel.org; Mon, 05 Feb 2007 16:53:32 -0300
+Mail-Followup-To: git <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <81b0412b0702050750m5760ce61le34acc8adfdb8081@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <eq7mf0$lb0$1@sea.gmane.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38774>
 
-Alex Riesen <raa.lkml@gmail.com> wrote:
-> I have reflog off by default (and never missed it yet), so leave it
-> at least as option to git-fsck, please. Besides, how do you find
-> lost objects which were not mentioned in any reflog? (because
-> of a bug someone made in reflog code, for example)
+On Mon, Feb 05, 2007 at 05:38:18PM +0100, Jakub Narebski wrote:
+> Blu Corater wrote:
+> 
+> > Here is the situation. Upstream realeses tarballs once in a while. I
+> > maintain local modifications. Every time upstream releases a tarball, I
+> > fast forward the 'upstream' branch, and merge into 'local' branch. My
+> > tree, currently, looks somewhat like this:
+> > 
+> >                o---o---o <--topic2
+> >                |
+> >                |  o---o---o <--topic1
+> >                | /
+> >    o---o---C---A---o---o <--local
+> >   /   /   /  
+> >  /   /   /
+> > o---o---o---B <--upstream
+> > 
+> > Problem is, B should have been merged into 'local', at A, but I just
+> > realized it wasn't (probably due to my own stupidity).
+> > 
+> > I need to correct A, i.e. merge with B, but keeping the branches already
+> > in flux, and propagating the changes due to the merge to them. In short,
+> > replace A with a properly merged A'.
+> > 
+> > I tried branching from C and merging with B, then rebasing topic branches,
+> > but then I am not sure how to rebase 'local'to eliminate A.
+> 
+> Try using
+> 
+>   $ git rebase --onto A' A local
 
-Learn to love reflog.  :-)
+Thanks a lot, that did it.
 
-I use it daily.  Mainly `git log origin/master@{1}..origin/master`
-to see what has come in from Junio since my last fetch.  The @{n}
-syntax has (for me) been one of its best features.  (Thanks Junio!)
+I've got confused by the wording of the git-rebase man page. It says:
 
-Repeat after me:
+       <upstream>
+          Upstream branch to compare against
 
-  There aren't any bugs in the reflog code.
-  They have not been any bugs in the reflog code.
-  There will never be any bugs in the reflog code.
-
-I don't think we've had a case where a commit wasn't recorded in
-a reflog when it should have been.  Perhaps *very* early in reflog
-development a couple of commands bypassed the reflog code, but that
-has certainly since been fixed.  The last one was git-receive-pack,
-which we finished in early December.
-
-If the reflog code did fail to record something, and you needed it,
-and you hadn't git-prune'd yet, git-fsck would list the dangling
-commit.  And a copy-n-paste session with `git-log -p D --not --all`
-in another xterm would help you navigate what the dangling commits
-were.
+Which suggests to me that <upstream> must be a branch tip, and not a
+random commit, as seems to be the case (well, not random, but reachable
+from <branch> if I understand well). Also, the man page doesn't give any
+example of rebasing using a random commit as <upstream>, they all use
+branch tips which reinforced my wrong assumption.
 
 -- 
-Shawn.
+Blu.
