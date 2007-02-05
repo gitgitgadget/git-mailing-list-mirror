@@ -1,82 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] Use cache_sha1_file() in git-blame and git-merge-recursive.
-Date: Sun, 04 Feb 2007 21:51:26 -0800
-Message-ID: <7v7iuxp2xt.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/2] Use cache_sha1_file() in git-blame and git-merge-recursive.
+Date: Mon, 5 Feb 2007 00:56:59 -0500
+Message-ID: <20070205055659.GA13472@spearce.org>
+References: <7v7iuxp2xt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 05 06:51:43 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Feb 05 06:57:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDwlQ-0000Er-Ni
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 06:51:41 +0100
+	id 1HDwqm-0002hJ-Dk
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 06:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639AbXBEFv3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 00:51:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbXBEFv3
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 00:51:29 -0500
-Received: from fed1rmmtai14.cox.net ([68.230.241.45]:36160 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752639AbXBEFv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 00:51:28 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070205055127.OUBH4586.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 5 Feb 2007 00:51:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id KhrS1W00A1kojtg0000000; Mon, 05 Feb 2007 00:51:26 -0500
+	id S1752632AbXBEF5G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 00:57:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752646AbXBEF5G
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 00:57:06 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34365 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752632AbXBEF5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 00:57:04 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HDwqb-00086w-La; Mon, 05 Feb 2007 00:57:01 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id F3D4D20FBAE; Mon,  5 Feb 2007 00:56:59 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7v7iuxp2xt.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38729>
 
-git-merge-recursive wants an null tree as the fake merge base
-while producing the merge result tree.  The null tree does not
-have to be written out in the object store as it won't be part
-of the result, and it is a prime example for using the new
-cache_sha1_file() function.
+Junio C Hamano <junkio@cox.net> wrote:
+> git-blame needs to register an arbitrary data to in-core index
+> while annotating a working tree file (or standard input), but
+> git-blame is a read-only application and the user of it could
+> even lack the privilege to write into the object store; it is
+> another good example for cache_sha1_file().
 
-git-blame needs to register an arbitrary data to in-core index
-while annotating a working tree file (or standard input), but
-git-blame is a read-only application and the user of it could
-even lack the privilege to write into the object store; it is
-another good example for cache_sha1_file().
+*Excellent* reason for this.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- builtin-blame.c   |    2 +-
- merge-recursive.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+But what about pretend_sha1_file() instead?
 
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 897323a..15d0707 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -2005,7 +2005,7 @@ static struct commit *fake_working_tree_commit(const char *path, const char *con
- 	buf[fin_size] = 0;
- 	origin->file.ptr = buf;
- 	origin->file.size = fin_size;
--	write_sha1_file(buf, fin_size, blob_type, origin->blob_sha1);
-+	cache_sha1_file(buf, fin_size, blob_type, origin->blob_sha1);
- 	commit->util = origin;
- 
- 	/*
-diff --git a/merge-recursive.c b/merge-recursive.c
-index a68fcc6..d4e2460 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1213,7 +1213,7 @@ static int merge(struct commit *h1,
- 
- 		tree->object.parsed = 1;
- 		tree->object.type = OBJ_TREE;
--		write_sha1_file(NULL, 0, tree_type, tree->object.sha1);
-+		cache_sha1_file(NULL, 0, tree_type, tree->object.sha1);
- 		merged_common_ancestors = make_virtual_commit(tree, "ancestor");
- 	}
- 
+The term 'cache' suggests to me (on first glance) that its loading
+an existing object and caching it in memory for faster, frequent
+access, when compared to other non-cached objects.
+
 -- 
-1.5.0.rc3.58.g79812
+Shawn.
