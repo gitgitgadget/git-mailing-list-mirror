@@ -1,77 +1,51 @@
-From: Toralf =?iso-8859-1?q?F=F6rster?= <toralf.foerster@gmx.de>
-Subject: git should complain about seeked tree earlier
-Date: Mon, 5 Feb 2007 09:33:54 +0100
-Message-ID: <200702050933.57376.toralf.foerster@gmx.de>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: MinGW port now supports native git protocol
+Date: Mon, 05 Feb 2007 10:03:50 +0100
+Organization: eudaptics software gmbh
+Message-ID: <45C6F2F6.ADFE0A13@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2023015.UQKMz3BjLi";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 05 09:34:12 2007
+X-From: git-owner@vger.kernel.org Mon Feb 05 10:02:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDzIh-0007Fe-67
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 09:34:11 +0100
+	id 1HDzkA-0004Ne-3L
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 10:02:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbXBEIeH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 03:34:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752152AbXBEIeG
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 03:34:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47277 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752149AbXBEIeF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 03:34:05 -0500
-Received: (qmail invoked by alias); 05 Feb 2007 08:34:03 -0000
-Received: from blueice1n1.de.ibm.com (EHLO n22.hamburg.de.ibm.com) [195.212.29.163]
-  by mail.gmx.net (mp039) with SMTP; 05 Feb 2007 09:34:03 +0100
-X-Authenticated: #5108953
-User-Agent: KMail/1.9.5
-X-Y-GMX-Trusted: 0
+	id S1752178AbXBEJCV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 04:02:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752188AbXBEJCV
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 04:02:21 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160]:17961 "EHLO
+	linz.eudaptics.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752178AbXBEJCU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 04:02:20 -0500
+Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP id 9A9226D9
+	for <git@vger.kernel.org>; Mon,  5 Feb 2007 10:02:17 +0100 (CET)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38733>
 
---nextPart2023015.UQKMz3BjLi
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Thanks to H. Peter Anvin's tips, the MinGW port now also supports clone,
+fetch, pull via the native git protocol. Visit
 
-It would be nice if git would complain earlier and not at the end of the pr=
-ocess:
+gitweb:     http://repo.or.cz/w/git/mingw.git
+Clone/pull: git://repo.or.cz/git/mingw.git
+A Readme:
+http://repo.or.cz/w/git/mingw.git?a=blob_plain;f=README.MinGW;hb=master
 
+Please try branch 'master' first, and if this does not compile or does
+not work in some way, try branch 'devel', which contains a few extra
+patches that I need on my system to make it work.
 
-tfoerste@n22 ~ $ cd devel/bug_udp/
-tfoerste@n22 ~/devel/bug_udp $ man git-bisect
-tfoerste@n22 ~/devel/bug_udp $ git bisect start
-won't bisect on seeked tree
-tfoerste@n22 ~/devel/bug_udp $ git bisect good v2.6.18
-You need to start by "git bisect start"
-Do you want me to do it for you [Y/n]? n
-tfoerste@n22 ~/devel/bug_udp $ git bisect bad
-You need to start by "git bisect start"
-Do you want me to do it for you [Y/n]?
-won't bisect on seeked tree
+If you want to contribute, please consider using the 'mob' branch (see
+the gitweb summary page). Base your contributions on 'master'.
 
-=2D-=20
-MfG/Sincerely
-
-Toralf F=F6rster
-
---nextPart2023015.UQKMz3BjLi
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBFxuv1hyrlCH22naMRAhpvAJ4jFrKoaI8vjh3THJpnePV7AOzDqgCgkxmm
-gLGjDLQPGmqRIHE4aU70oYk=
-=eYOT
------END PGP SIGNATURE-----
-
---nextPart2023015.UQKMz3BjLi--
+-- Hannes
