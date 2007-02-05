@@ -1,80 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] prevent HEAD reflog to be interpreted as current branch reflog
-Date: Mon, 5 Feb 2007 06:21:01 -0500
-Message-ID: <20070205112101.GC14234@spearce.org>
-References: <Pine.LNX.4.64.0702011231300.3021@xanadu.home> <20070201191323.GA18608@spearce.org> <7vmz3xoas9.fsf@assigned-by-dhcp.cox.net> <epv3r9$4f7$2@sea.gmane.org> <Pine.LNX.4.63.0702021140340.22628@wbgn013.biozentrum.uni-wuerzburg.de> <8c5c35580702020302g46f71fe3o24d7dc9490192cab@mail.gmail.com> <Pine.LNX.4.63.0702051208070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] core-tutorial: git-merge uses -m for commit messages
+Date: Mon, 5 Feb 2007 12:34:39 +0100
+Message-ID: <20070205113439.GA27077@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Lars Hjemli <hjemli@gmail.com>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 05 12:21:22 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 05 12:34:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HE1uO-0005El-Of
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 12:21:17 +0100
+	id 1HE27S-0003fy-HZ
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 12:34:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095AbXBELVI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 06:21:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932077AbXBELVI
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 06:21:08 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42743 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932095AbXBELVH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 06:21:07 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HE1u8-0006Ym-6h; Mon, 05 Feb 2007 06:21:00 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8E0EF20FBAE; Mon,  5 Feb 2007 06:21:01 -0500 (EST)
+	id S932096AbXBELen (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 06:34:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932106AbXBELen
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 06:34:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34487 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932096AbXBELen (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 06:34:43 -0500
+Received: (qmail invoked by alias); 05 Feb 2007 11:34:41 -0000
+Received: from pD9EB951F.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.149.31]
+  by mail.gmx.net (mp002) with SMTP; 05 Feb 2007 12:34:41 +0100
+X-Authenticated: #5358227
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702051208070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38742>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Fri, 2 Feb 2007, Lars Hjemli wrote:
-> 
-> > I think the following makes perfect sense:
-> > 
-> >  "HEAD@{yesterday}" = current branch, yesterday
-> >  "@{yesterday}"     = detached head (no branch), yesterday
-> 
-> Okay, so you say "HEAD@{yesterday}" does _not_ give you what HEAD pointed 
-> to yesterday, but "@{yesterday}" does?
-> 
-> Instead "HEAD@{yesterday}" looks up what HEAD points to _now_, and _then_ 
-> goes back to yesterday, finding out what that particular branch pointed to 
-> then, _regardless_ what HEAD was then?
-> 
-> Oh my, that's convoluted.
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+ Documentation/core-tutorial.txt |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-Depends on your point of view:
-
-  HEAD: 1) noun.  Synonym for the branch I am currently on.
-  HEAD: 2) noun.  Synonym for the commit I am currently on.
-
-Now that we can detach our HEAD anytime we want, I'm in the
-latter camp, and your (Dscho's) meaning for HEAD@{yesterday} and
-@{yesterday} makes perfect sense.
-
-But I suspect most Git users are still in the former camp, as they
-haven't been exposed to the process (or need, or desire) to detach
-their HEAD...
-
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index 9c28bea..6f30e0a 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -894,11 +894,11 @@ script called `git merge`, which wants to know which branches you want
+ to resolve and what the merge is all about:
+ 
+ ------------
+-$ git merge "Merge work in mybranch" HEAD mybranch
++$ git merge -m "Merge work in mybranch" HEAD mybranch
+ ------------
+ 
+-where the first argument is going to be used as the commit message if
+-the merge can be resolved automatically.
++The `-m` options specifies the commit message to be used for the merge commit
++(in case it is created).
+ 
+ Now, in this case we've intentionally created a situation where the
+ merge will need to be fixed up by hand, though, so git will do as much
+@@ -981,7 +981,7 @@ resolve to get the "upstream changes" back to your branch.
+ 
+ ------------
+ $ git checkout mybranch
+-$ git merge "Merge upstream changes." HEAD master
++$ git merge -m "Merge upstream changes." HEAD master
+ ------------
+ 
+ This outputs something like this (the actual commit object names
+@@ -1623,8 +1623,8 @@ in both of them.  You could merge in 'diff-fix' first and then
+ 'commit-fix' next, like this:
+ 
+ ------------
+-$ git merge 'Merge fix in diff-fix' master diff-fix
+-$ git merge 'Merge fix in commit-fix' master commit-fix
++$ git merge -m 'Merge fix in diff-fix' master diff-fix
++$ git merge -m 'Merge fix in commit-fix' master commit-fix
+ ------------
+ 
+ Which would result in:
 -- 
-Shawn.
+1.5.0.rc3.544.g79b8
