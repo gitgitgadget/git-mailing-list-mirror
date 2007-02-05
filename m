@@ -1,58 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 6/6] bash: Support git-bisect and its subcommands.
-Date: Mon, 05 Feb 2007 22:05:40 +0100
-Organization: At home
-Message-ID: <eq8649$t2n$2@sea.gmane.org>
-References: <20070205204437.GF8824@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/6] bash: Hide diff-stages from completion.
+Date: Mon, 5 Feb 2007 16:10:05 -0500
+Message-ID: <20070205211005.GB8908@spearce.org>
+References: <20070205204424.GB8824@spearce.org> <eq85t5$t2n$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 05 22:05:42 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 05 22:10:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEB1V-0008FZ-0p
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 22:05:21 +0100
+	id 1HEB6d-0002LF-1A
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 22:10:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933435AbXBEVFI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 16:05:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933436AbXBEVFI
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 16:05:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:44472 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933435AbXBEVFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 16:05:06 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HEB1L-0003y3-5N
-	for git@vger.kernel.org; Mon, 05 Feb 2007 22:05:03 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 05 Feb 2007 22:05:03 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 05 Feb 2007 22:05:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S933455AbXBEVKL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 5 Feb 2007 16:10:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933459AbXBEVKK
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 16:10:10 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:37255 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933455AbXBEVKJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Feb 2007 16:10:09 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HEB66-0001fk-Tm; Mon, 05 Feb 2007 16:09:58 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id C854E20FBAE; Mon,  5 Feb 2007 16:10:05 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <eq85t5$t2n$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38791>
 
-Shawn O. Pearce wrote:
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Shawn O. Pearce wrote:
+>=20
+> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0diff-stages) =A0 =A0 =
+=A0: nobody uses it;;
+>=20
+> I'd rather say: plumbing. (Try not to be cute in the code, please. Th=
+at
+> results in ent axing ;-)
 
-> We now offer completion support for git-bisect's subcommands,
-> as well as ref name completion on the good/bad/reset subcommands.
-> This should make interacting with git-bisect slightly easier on
-> the fingers.
+Did you miss my 'ask gittus' description for applymbox?  ;-)
 
-Thanks a lot.
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Its only documentation for why this item is being omitted.
+But this table needs to die; its 62 lines long and is updated
+by hand independent of the other command lists which ship with
+core Git.  The same is true of the config option completion list,
+that is ~70 lines.
+
+What's with your mail client anyway?  The leading whitespace in
+my patch is showing up here as some horrible non-ASCII character,
+but I know those were two tabs indenting that line.
+
+--=20
+Shawn.
