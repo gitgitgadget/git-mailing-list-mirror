@@ -1,60 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH (take 2)] git-blame.el --- Minor mode for incremental blame for Git
-Date: Sun, 04 Feb 2007 17:40:37 -0800
-Message-ID: <7vwt2xpeju.fsf@assigned-by-dhcp.cox.net>
-References: <200702042114.34922.jnareb@gmail.com>
-	<7vfy9lqusg.fsf@assigned-by-dhcp.cox.net>
-	<200702050225.45328.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 05 02:40:46 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Use "-f" when adding files with odd names in t9200.
+Date: Sun, 4 Feb 2007 20:55:02 -0500
+Message-ID: <EF3945DB-1CCB-4D8A-8300-FD4EB31CD583@silverinsanity.com>
+References: <1AAD2384-C52D-4D60-A948-4F14C9515B53@silverinsanity.com> <20070203181329.GA10192@179.242.249.10.in-addr.arpa> <7v4pq358q4.fsf@assigned-by-dhcp.cox.net> <F16FE131-CF33-4DD0-9A06-4A24C59C7623@silverinsanity.com> <7vabzv3qxi.fsf@assigned-by-dhcp.cox.net> <A9623793-111E-47F7-9709-1D569333C40C@silverinsanity.com> <7vlkje243u.fsf@assigned-by-dhcp.cox.net> <155A5E6A-9EC5-424B-A231-02EF1FE0FD2B@silverinsanity.com> <D7716B9E-0F00-4AEF-95BC-699933B7FFD8@silverinsanity.com> <7vwt2xpezx.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Feb 05 02:55:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HDsqc-0008R1-8v
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 02:40:46 +0100
+	id 1HDt4m-0006JI-Ix
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 02:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752306AbXBEBkj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 4 Feb 2007 20:40:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752571AbXBEBkj
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 20:40:39 -0500
-Received: from fed1rmmtai18.cox.net ([68.230.241.41]:47472 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752306AbXBEBki convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Feb 2007 20:40:38 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070205014038.QEUT1302.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 4 Feb 2007 20:40:38 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Kdgd1W0061kojtg0000000; Sun, 04 Feb 2007 20:40:37 -0500
-In-Reply-To: <200702050225.45328.jnareb@gmail.com> (Jakub Narebski's message
-	of "Mon, 5 Feb 2007 02:25:42 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752626AbXBEBzJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Feb 2007 20:55:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752656AbXBEBzJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Feb 2007 20:55:09 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:38156 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752626AbXBEBzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Feb 2007 20:55:08 -0500
+Received: from [192.168.1.3] (cpe-66-66-74-194.rochester.res.rr.com [66.66.74.194])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 5D03F1FFC02B;
+	Mon,  5 Feb 2007 01:55:07 +0000 (UTC)
+In-Reply-To: <7vwt2xpezx.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38718>
 
-Jakub Narebski <jnareb@gmail.com> writes:
 
-> Junio C Hamano wrote:
->
->> Are you Narbski, or Narebski, or are they the same?
->
-> I usually avoid using letters outside US-ASCII, approximating Nar=C4=99=
-bski=20
-> (with eogonek) with Narebski, but with David using aa in his name...
+On Feb 4, 2007, at 8:30 PM, Junio C Hamano wrote:
 
-Ahh, sorry, I usually use iso-ascii in an Emacs running on an
-ASCII-only term-emu even when I am in X, and I did not see the
-<=C4=99> character between r and b in your name (right now I am in
-another Emacs I opened only to compose this message).
+> In reality, I find highly valuable that our tests find new bugs
+> introduced in unexpected places.  I agree that the person who
+> wrote t9200 did not _mean_ to test "git add", but it ended up
+> helping us identify the problematic behaviour between creat()
+> and readdir() on HFS+ affects "git add".
 
-Junio (aka =E6=BF=B1=E9=87=8E =E7=B4=94)
+Alright, I understand that.  I just meant that since we've identified  
+it, the workaround didn't matter much.
+
+> So how about doing this instead?  It tests if the filesystem has
+> that particular issue we know "git add" has a problem with, and
+> skips the test in such an environment.
+
+Yes, something like this is fine.  The patch looks good, but I  
+couldn't get it to apply and don't have the time to fix it at the  
+moment.  If you *need* me to test it, I'll do so tomorrow or Tuesday.
+
+~~ Brian
