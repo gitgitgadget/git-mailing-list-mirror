@@ -1,109 +1,51 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Show an example of deleting commits with git-rebase.
-Date: Mon, 5 Feb 2007 15:21:06 -0500
-Message-ID: <20070205202106.GA8755@spearce.org>
+From: Blu Corater <blu@daga.cl>
+Subject: Re: replacing a bad commit
+Date: Mon, 5 Feb 2007 17:21:54 -0300
+Message-ID: <20070205202154.GA21890@daga.cl>
+References: <20070205153949.GT14499@daga.cl> <eq7mf0$lb0$1@sea.gmane.org> <20070205195332.GW14499@daga.cl> <20070205200236.GB8623@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 05 21:21:17 2007
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Feb 05 21:22:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEAKz-0005YE-2A
-	for gcvg-git@gmane.org; Mon, 05 Feb 2007 21:21:17 +0100
+	id 1HEALg-0005uB-BL
+	for gcvg-git@gmane.org; Mon, 05 Feb 2007 21:22:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933270AbXBEUVM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 15:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933341AbXBEUVM
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 15:21:12 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:35080 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933270AbXBEUVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 15:21:11 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HEAKi-00068F-R0; Mon, 05 Feb 2007 15:21:00 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id F1CC420FBAE; Mon,  5 Feb 2007 15:21:06 -0500 (EST)
+	id S933274AbXBEUV5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 15:21:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933298AbXBEUV4
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 15:21:56 -0500
+Received: from pc-25-158-44-190.cm.vtr.net ([190.44.158.25]:53576 "EHLO
+	daga.cl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933274AbXBEUV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 15:21:56 -0500
+Received: from blu by daga.cl with local (Exim 4.63)
+	(envelope-from <blu@daga.cl>)
+	id 1HEALa-0005iH-G7
+	for git@vger.kernel.org; Mon, 05 Feb 2007 17:21:54 -0300
+Mail-Followup-To: git <git@vger.kernel.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <20070205200236.GB8623@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38779>
 
-This particular use of git-rebase to remove a single commit or a
-range of commits from the history of a branch recently came up on
-the mailing list.  Documenting the example should help other users
-arrive at the same solution on their own.
+On Mon, Feb 05, 2007 at 03:02:36PM -0500, Shawn O. Pearce wrote:
 
-It also was not obvious to the newcomer that git-rebase is able to
-accept any commit for --onto <newbase> and <upstream>.  We should
-at least minimally document this, as much of the language in
-git-rebase's manpage refers to 'branch' rather than 'committish'.
+[...]
+> The faster you abandon the idea of branch tip as argument, the
+> faster you will pickup the more advanced operations in Git.
+[...]
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Documentation/git-rebase.txt |   27 +++++++++++++++++++++++++--
- 1 files changed, 25 insertions(+), 2 deletions(-)
+Indeed. Changing that piece of mindframe makes git look a lot more
+powerful than it already was in my mind. 
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 0cb9e1f..977f661 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -114,6 +114,27 @@ would result in:
- 
- This is useful when topicB does not depend on topicA.
- 
-+A range of commits could also be removed with rebase.  If we have
-+the following situation:
-+
-+------------
-+    E---F---G---H---I---J  topicA
-+------------
-+
-+then the command
-+
-+    git-rebase --onto topicA~5 topicA~2 topicA
-+
-+would result in the removal of commits F and G:
-+
-+------------
-+    E---H'---I'---J'  topicA
-+------------
-+
-+This is useful if F and G were flawed in some way, or should not be
-+part of topicA.  Note that the argument to --onto and the <upstream>
-+parameter can be any valid commit-ish.
-+
- In case of conflict, git-rebase will stop at the first problematic commit
- and leave conflict markers in the tree.  You can use git diff to locate
- the markers (<<<<<<) and make edits to resolve the conflict.  For each
-@@ -141,10 +162,12 @@ OPTIONS
- <newbase>::
- 	Starting point at which to create the new commits. If the
- 	--onto option is not specified, the starting point is
--	<upstream>.
-+	<upstream>.  May be any valid commit, and not just an
-+	existing branch name.
- 
- <upstream>::
--	Upstream branch to compare against.
-+	Upstream branch to compare against.  May be any valid commit,
-+	not just an existing branch name.
- 
- <branch>::
- 	Working branch; defaults to HEAD.
+Thanks.
+
 -- 
-1.5.0.rc3.58.g79812
+Blu.
