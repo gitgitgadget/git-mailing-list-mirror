@@ -1,86 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Documentation: add KMail in SubmittingPatches
-Date: Mon, 05 Feb 2007 19:07:40 -0800
-Message-ID: <7vveigkmpv.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wl7bv66.fsf@assigned-by-dhcp.cox.net>
-	<200702041716.39999.robin.rosenberg.lists@dewire.com>
-	<7vlkjdr8hj.fsf@assigned-by-dhcp.cox.net>
-	<200702051427.32532.barra_cuda@katamail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: git-fast-import
+Date: Mon, 05 Feb 2007 22:18:46 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702052211360.19212@xanadu.home>
+References: <20070206023111.GB9222@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Michael <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 06 04:07:46 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 06 04:18:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEGgM-0003jH-C2
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 04:07:46 +0100
+	id 1HEGr7-0008HR-5u
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 04:18:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965165AbXBFDHm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 22:07:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965250AbXBFDHm
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 22:07:42 -0500
-Received: from fed1rmmtai16.cox.net ([68.230.241.43]:58842 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S965165AbXBFDHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 22:07:41 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070206030740.UYYC1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 5 Feb 2007 22:07:40 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id L37g1W00V1kojtg0000000; Mon, 05 Feb 2007 22:07:40 -0500
-In-Reply-To: <200702051427.32532.barra_cuda@katamail.com>
-	(barra_cuda@katamail.com's message of "Mon, 5 Feb 2007 14:27:32
-	+0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965244AbXBFDSs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 22:18:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965251AbXBFDSs
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 22:18:48 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:21109 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965244AbXBFDSr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 22:18:47 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JD0004FAUJAL851@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 05 Feb 2007 22:18:47 -0500 (EST)
+In-reply-to: <20070206023111.GB9222@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38806>
 
-Michael <barra_cuda@katamail.com> writes:
+On Mon, 5 Feb 2007, Shawn O. Pearce wrote:
 
-> @@ -331,3 +330,21 @@ whitespaces (fatal in patches).  Running 'C-u g' to 
-> display the
->  message in raw form before using '|' to run the pipe can work
->  this problem around.
->  
-> +
-> +KMail
-> +-----
-> +
-> +This should help you to submit patches inline using KMail.
-> +
-> +1) Prepare the patch as a text file.
-> +
-> +2) Click on New Mail.
-> +
-> +3) Go under "Options" in the Composer window and be sure that
-> +"Word wrap" is not set.
-> +
-> +4) Use Message -> Insert file... and insert the patch.
-> +
-> +5) Back in the compose window: add whatever other text you wish to the
-> +message, complete the addressing and subject fields, and press send.
-> +
+> When exactly we merge it in will depend a lot on Junio.  It should
+> be safe to merge before 1.5.0 as its strictly new source files,
+> but we may still want to wait until after 1.5.0 is out.
 
-This is quite interesting -- notice your own hunk header @@ ... @@ line?
+For that reason I think it should go in now.
 
-I do not use KMail myself, so I cannot comment on the procedure,
-but from the cursory look it *should* do the right thing.  Only
-that it makes me a bit nervous to see your hunk header being
-line wrapped.
+> I'm mainly worried about breaking compliation on odd architectures.
 
-Doubly interesting is that somebody appears to have added two
-message IDs.
+Well, if it doesn't build then just don't make it a fatal build error.  
+That won't be worse than not having it included at all.
+And if it compiles then consider it as a bonus!
 
-   Subject: [PATCH] Documentation: add KMail in SubmittingPatches
-   Date:	Mon, 5 Feb 2007 14:27:32 +0100
-   User-Agent: KMail/1.9.4
-   Message-Id: <200702051427.32532.barra_cuda@katamail.com>
-   Message-ID: <20070205132150.123659@dial-up-mi-449.lombardiacom.it>
+
+Nicolas
