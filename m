@@ -1,64 +1,60 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Deprecation/Removal schedule
-Date: Tue, 06 Feb 2007 15:55:47 +0100
-Message-ID: <45C896F3.5000007@op5.se>
-References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: MinGW port now supports native git protocol
+Date: Tue, 6 Feb 2007 15:56:04 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702061554160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45C6F2F6.ADFE0A13@eudaptics.com> <45C893C7.6050001@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 06 15:55:58 2007
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Tue Feb 06 15:56:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HERjh-0007ZT-DR
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 15:55:57 +0100
+	id 1HERjz-0007gp-DA
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 15:56:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752231AbXBFOzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 09:55:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752229AbXBFOzu
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 09:55:50 -0500
-Received: from linux-server1.op5.se ([193.201.96.2]:55954 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752225AbXBFOzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 09:55:50 -0500
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id A4BDD6BCD0; Tue,  6 Feb 2007 15:55:48 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00 
-	autolearn=ham version=3.1.4
-Received: from [192.168.1.20] (unknown [192.168.1.20])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 71DF36BCCF; Tue,  6 Feb 2007 15:55:47 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-In-Reply-To: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
+	id S1752234AbXBFO4H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Feb 2007 09:56:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752239AbXBFO4H
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 09:56:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49904 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752234AbXBFO4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 09:56:06 -0500
+Received: (qmail invoked by alias); 06 Feb 2007 14:56:04 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO dumbo2) [132.187.25.13]
+  by mail.gmx.net (mp039) with SMTP; 06 Feb 2007 15:56:04 +0100
+X-Authenticated: #1490710
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45C893C7.6050001@xs4all.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38846>
 
-Junio C Hamano wrote:
+Hi,
+
+On Tue, 6 Feb 2007, Han-Wen Nienhuys wrote:
+
+> git-compat-util.h:39:21: error: fnmatch.h: No such file or directory
+> git-compat-util.h:48:19: error: netdb.h: No such file or directory
+> git-compat-util.h:49:17: error: pwd.h: No such file or directory
+> git-compat-util.h:52:17: error: grp.h: No such file or directory
+> git-compat-util.h:105:22: error: sys/mman.h: No such file or directory
 > 
-> * git-lost-found
+> [snip]
 > 
->   Although it has served us well, I think it is about to outlive
->   its usefulness, thanks to the recent "reflog by default"
->   change.
-> 
+> where are these headers supposed to come from?
 
-Nonono. Please no. This has saved me more times than I can even care
-to remember. Especially whenever I'm teaching newcomers how to git.
-I really wouldn't want to not have it there in case its needed and
-some schmuck upgrades git and then loses something vital because he
-forgot to enable the reflog on an old repo.
+>From git's compat/ directory.
 
-Does it add significantly to the maintenance burden?
+As I see you also include sys/mman.h, I'd say that uname_S is probably not 
+correctly set. ;-)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Yes, you found -- again -- that git is not easily cross-compilable.
+
+Ciao,
+Dscho
