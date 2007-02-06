@@ -1,50 +1,60 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] Use "-f" when adding files with odd names in t9200.
-Date: Tue, 6 Feb 2007 10:17:00 -0500
-Message-ID: <981DBEC8-99B6-4921-81DE-CE739EAB3196@silverinsanity.com>
-References: <1AAD2384-C52D-4D60-A948-4F14C9515B53@silverinsanity.com> <20070203181329.GA10192@179.242.249.10.in-addr.arpa> <7v4pq358q4.fsf@assigned-by-dhcp.cox.net> <F16FE131-CF33-4DD0-9A06-4A24C59C7623@silverinsanity.com> <7vabzv3qxi.fsf@assigned-by-dhcp.cox.net> <A9623793-111E-47F7-9709-1D569333C40C@silverinsanity.com> <7vlkje243u.fsf@assigned-by-dhcp.cox.net> <155A5E6A-9EC5-424B-A231-02EF1FE0FD2B@silverinsanity.com> <D7716B9E-0F00-4AEF-95BC-699933B7FFD8@silverinsanity.com> <7vwt2xpezx.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Deprecation/Removal schedule
+Date: Tue, 6 Feb 2007 16:26:14 +0100
+Message-ID: <81b0412b0702060726o17cd3521u633a6c4deb07b9d3@mail.gmail.com>
+References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net> <45C896F3.5000007@op5.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 06 16:17:31 2007
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Feb 06 16:26:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HES4T-0008SA-KQ
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 16:17:25 +0100
+	id 1HESD9-0004Dk-3E
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 16:26:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932436AbXBFPRK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 10:17:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932085AbXBFPRK
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 10:17:10 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:57967 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932477AbXBFPRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 10:17:09 -0500
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 1C9841FFC02B;
-	Tue,  6 Feb 2007 15:17:07 +0000 (UTC)
-In-Reply-To: <7vwt2xpezx.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752229AbXBFP0Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Feb 2007 10:26:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbXBFP0Q
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 10:26:16 -0500
+Received: from wr-out-0506.google.com ([64.233.184.226]:52645 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752225AbXBFP0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 10:26:15 -0500
+Received: by wr-out-0506.google.com with SMTP id 68so1561864wri
+        for <git@vger.kernel.org>; Tue, 06 Feb 2007 07:26:14 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nKixEkBjph0hqstqfds5gdOPWZfbvljwlNkM5l+nOAiz5GokxD/6FV7BRc0AKWQ/GcL64/mU5+kyo6zKZqfc57MdX6UdxJb9LJYGQrQqmk1+4vxGeGncx1VaudPliPRTy13/hde8zAmf2cC7o3WfCITqRUOejvmjRPjJwmj1Pcc=
+Received: by 10.78.47.15 with SMTP id u15mr1723525huu.1170775574148;
+        Tue, 06 Feb 2007 07:26:14 -0800 (PST)
+Received: by 10.78.139.9 with HTTP; Tue, 6 Feb 2007 07:26:14 -0800 (PST)
+In-Reply-To: <45C896F3.5000007@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38849>
 
+On 2/6/07, Andreas Ericsson <ae@op5.se> wrote:
+> Junio C Hamano wrote:
+> >
+> > * git-lost-found
+> >
+> >   Although it has served us well, I think it is about to outlive
+> >   its usefulness, thanks to the recent "reflog by default"
+> >   change.
+> >
+>
+> Nonono. Please no. This has saved me more times than I can even care
+> to remember. Especially whenever I'm teaching newcomers how to git.
+> I really wouldn't want to not have it there in case its needed and
+> some schmuck upgrades git and then loses something vital because he
+> forgot to enable the reflog on an old repo.
 
-On Feb 4, 2007, at 8:30 PM, Junio C Hamano wrote:
-
-> So how about doing this instead?  It tests if the filesystem has
-> that particular issue we know "git add" has a problem with, and
-> skips the test in such an environment.
-
-I'd be tempted to add a "test_expect_success 'skipping UTF8 test on  
-broken filesystem'", but I finally tested it (Sunday and Monday are  
-my weekends) and it works as expected.  Thanks.
-
-~~ Brian
+It's functionality is superseded by "git fsck --unreachable",
+see this discussion.
