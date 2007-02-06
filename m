@@ -1,75 +1,121 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Mon, 05 Feb 2007 23:25:49 -0800
-Message-ID: <7vodo7karm.fsf@assigned-by-dhcp.cox.net>
-References: <87odognuhl.wl%cworth@cworth.org>
-	<87y7nbdeaw.wl%cworth@cworth.org>
-	<7vveifkczt.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 6 Feb 2007 02:28:20 -0500
+Message-ID: <20070206072820.GC23866@coredump.intra.peff.net>
+References: <87odognuhl.wl%cworth@cworth.org> <87y7nbdeaw.wl%cworth@cworth.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Tue Feb 06 08:26:09 2007
+X-From: git-owner@vger.kernel.org Tue Feb 06 08:28:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEKiO-0002SH-OQ
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 08:26:09 +0100
+	id 1HEKke-0003VU-64
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 08:28:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751018AbXBFHZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 02:25:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbXBFHZv
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 02:25:51 -0500
-Received: from fed1rmmtai20.cox.net ([68.230.241.39]:59389 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751001AbXBFHZu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 02:25:50 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070206072550.HRUM1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 6 Feb 2007 02:25:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id L7Rp1W00T1kojtg0000000; Tue, 06 Feb 2007 02:25:50 -0500
-In-Reply-To: <7vveifkczt.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 05 Feb 2007 22:37:42 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750984AbXBFH2X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Feb 2007 02:28:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751059AbXBFH2X
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 02:28:23 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1786 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750984AbXBFH2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 02:28:22 -0500
+Received: (qmail 22690 invoked from network); 6 Feb 2007 02:28:23 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 6 Feb 2007 02:28:23 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Feb 2007 02:28:20 -0500
+Content-Disposition: inline
+In-Reply-To: <87y7nbdeaw.wl%cworth@cworth.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38816>
 
-Junio C Hamano <junkio@cox.net> writes:
+On Mon, Feb 05, 2007 at 09:51:19PM -0800, Carl Worth wrote:
 
-> If you add another DWIM rule, then I suspect that you would have
-> harder time explaining why they get "hey, that is ambiguous"
-> error.
+> I can imagine the resolution rules are already fairly complicated, (I
+> don't even know what they all are already). But when there is no
+> ambiguity, and when the behavior would be backwards compatible to git
+> before separate-remotes, is there any reason this would be a bad idea?
 
-I forgot to quote this part.
+I'm not convinced that the complication is a good idea.  However, if you
+would like to play with it, a patch is below (it depends on my 'add
+utility functions for enumerating remotes' patch, which I just posted).
 
-> ... to resolve "branch" as "remotes/*/branch" if unique?
+-- >8 --
+sha1_name: match refs in 'refs/remotes/*/%s'
 
-One of the reasons I do not think it is a good idea is, saying
-"if unique" makes it sound as if it is sane, but it forgets that
-what confusion it is bringing into the picture when not unique.
+If no other matches are found for a ref, then look for it in every defined
+remote. This will not complain of ambiguity, since we only do the lookup if
+no other ref matches.
+---
+ sha1_name.c |   37 +++++++++++++++++++++++++++++++++++++
+ 1 files changed, 37 insertions(+), 0 deletions(-)
 
-If somebody says "git show master", obviously it would be found
-under refs/heads/, and most likely there would be a tracking
-branch refs/remotes/origin/master if you are not the project
-lead, and if you work on more than one machines using
-mothership-satellites configuration, you would probably have
-refs/remotes/note/master and refs/remotes/laptop/master on your
-mothership machine.  Now, "master" is not unique, but I do not
-think we would want to complain "Gaah, master is not unique!  If
-you mean heads/master, say so".
-
-So addition to "if unique", we need another DWIM rule that says
-"refs/heads/branch" trumps even when there are branch elsewhere
-and prevents ambiguity rule from triggering.
-
-And that is only one example I can think of in 10 minutes while
-watching TV sitting next to my wife, without thinking much about
-git X-<.  Who knows what other additional confusion we are
-talking about?  That is what I fear most.
+diff --git a/sha1_name.c b/sha1_name.c
+index d77f770..d9fe107 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -5,6 +5,7 @@
+ #include "blob.h"
+ #include "tree-walk.h"
+ #include "refs.h"
++#include "remotes.h"
+ 
+ static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
+ {
+@@ -235,6 +236,30 @@ static int ambiguous_path(const char *path, int len)
+ 	return slash;
+ }
+ 
++struct match_ref_in_remote_data {
++	const char *ref;
++	int ref_len;
++	int count;
++	unsigned char *sha1;
++	char *resolved;
++};
++static int match_ref_in_remote(const char *remote, void *data)
++{
++	struct match_ref_in_remote_data *md = data;
++	unsigned char sha1_from_ref[20];
++	const char *r;
++
++	r = resolve_ref(
++		mkpath("refs/remotes/%s/%.*s", remote, md->ref_len, md->ref),
++		md->count ? sha1_from_ref : md->sha1,
++		1, NULL);
++	if (r) {
++		if (!md->count++)
++			md->resolved = xstrdup(r);
++	}
++	return 0;
++}
++
+ static const char *ref_fmt[] = {
+ 	"%.*s",
+ 	"refs/%.*s",
+@@ -264,6 +289,18 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ 				break;
+ 		}
+ 	}
++
++	if (!refs_found) {
++		struct match_ref_in_remote_data md;
++		md.ref = str;
++		md.ref_len = len;
++		md.count = 0;
++		md.sha1 = sha1;
++		for_each_remote(match_ref_in_remote, &md);
++		refs_found = md.count;
++		*ref = md.resolved;
++	}
++
+ 	return refs_found;
+ }
+ 
+-- 
+1.5.0.rc3.554.ga40e-dirty
