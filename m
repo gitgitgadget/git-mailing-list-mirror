@@ -1,79 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/6] bash: Hide diff-stages from completion.
-Date: Tue, 6 Feb 2007 01:27:21 +0100
-Message-ID: <200702060127.21536.jnareb@gmail.com>
-References: <20070205204424.GB8824@spearce.org> <eq89ig$ckk$1@sea.gmane.org> <Pine.LNX.4.64.0702051719480.19212@xanadu.home>
+From: "James Bowes" <jbowes@dangerouslyinc.com>
+Subject: [PATCH] Read cvsimport options from repo-config
+Date: Mon, 5 Feb 2007 20:22:25 -0500
+Message-ID: <3f80363f0702051722x1812228fp1cd7a41dd32b31f3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Feb 06 01:26:01 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 06 02:22:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEE9o-0005nh-Uq
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 01:26:01 +0100
+	id 1HEF2U-0006i1-MG
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 02:22:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965282AbXBFAZz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 19:25:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965284AbXBFAZz
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 19:25:55 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:47498 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965282AbXBFAZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 19:25:54 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so4891nfa
-        for <git@vger.kernel.org>; Mon, 05 Feb 2007 16:25:53 -0800 (PST)
+	id S965435AbXBFBW1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 20:22:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965439AbXBFBW1
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 20:22:27 -0500
+Received: from nz-out-0506.google.com ([64.233.162.236]:2906 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965435AbXBFBW0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 20:22:26 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so1772003nze
+        for <git@vger.kernel.org>; Mon, 05 Feb 2007 17:22:25 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fmARus+z4CsvHj2fCv0P5CGrpG+tJ4wzo98oxqe+Kg9S2+bnMms2nr+R3jf8Nodxp0vT+nXuPQ4GP38und5Zb1A/NhqASspJ1FuLCaewekTZdGW+ueLVUH24yCGe0YcdKCb2Z0B1dGgs25mjgfKidXZVPF2zQWJMx4x5fax+AuI=
-Received: by 10.82.152.16 with SMTP id z16mr3030572bud.1170721552765;
-        Mon, 05 Feb 2007 16:25:52 -0800 (PST)
-Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
-        by mx.google.com with ESMTP id 20sm8922702uga.2007.02.05.16.25.51;
-        Mon, 05 Feb 2007 16:25:52 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0702051719480.19212@xanadu.home>
+        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
+        b=LZfOXZ0Z3VzqLLNNY+ysZBNIeFJoGnvsKnituFhFmvUJfaBlHG9g0kgS/rRDYMY0aHwwArncGj+Hmn6A2AWvJl2LQRX+MZ6kPHDsTcSqCNCl07zLuPxiS48JVW6F2hx++uqzMPOAzrQV08RkJk44nxh+huibVnT4mrBEtafPcpU=
+Received: by 10.65.232.19 with SMTP id j19mr11802890qbr.1170724945341;
+        Mon, 05 Feb 2007 17:22:25 -0800 (PST)
+Received: by 10.65.97.13 with HTTP; Mon, 5 Feb 2007 17:22:25 -0800 (PST)
 Content-Disposition: inline
+X-Google-Sender-Auth: c2dfd630ca37ea8a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38800>
 
-Nicolas Pitre wrote:
-> On Mon, 5 Feb 2007, Jakub Narebski wrote:
->> Nicolas Pitre wrote:
->> 
->>> Jakub's mail client also keeps on dropping the CC's and more importantly 
->>> even the email address to who he's replying.
->>> 
->>> Jakub: this is really really really annoying.  Could you please use a 
->>> sane email client _please_?  I recall it's not the first time this is 
->>> asked of you.
->> 
->> I don't use _email_ client (unless you Cc to me), but _news_ reader
->> (KNode 0.10.2 from KDE 3.5.3) via GMane NNTP interface. If I'm CC'ed,
->> I try to reply via mail; then CC's are not dropped.
-> 
-> But this very email of yours is another example of not even managing to 
-> put _me_ in the To: field, even less in the CC: field.  But unless I'm 
-> mistaken you were replying to me.
+Default values for command line options can be saved in .git/config (or the
+global ~/.gitconfig). Config option names match the command line option names,
+so cvsimport.d corresponds to git-cvsimport -d. One may also set
+cvsimport.module to specify a default cvs module name.
 
-KNode 0.10.2 by default doesn't put original author in Cc:/To:. I'd try
-new version (it is high time for an upgrade), perhaps it would behave
-better.
- 
-> So please use another form of communication (be it a news reader or an 
-> email client or whatever) that follows proper netiquette since your 
-> current setup clearly does not.
+Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
+---
 
-I try to use email as it is easier to preserve Cc:/From:. If mail is sent
-also to me directly, and I don't forget to check email first, I use it
-(like in this example).
+I found myself always forgetting the specific options I needed to sync a given
+project from CVS, so I wrote up this patch which lets me set the options with
+repo-config and then forget about them; 'git cvsimport' is then enough to sync
+from CVS.
+
+This is my first patch, so please be gentle :)
+
+ git-cvsimport.perl |   28 +++++++++++++++++++++++++++-
+ 1 files changed, 27 insertions(+), 1 deletions(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 6c9fbfe..604e636 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -85,7 +85,33 @@ sub write_author_info($) {
+ 	close ($f);
+ }
+
+-getopts("haivmkuo:d:p:C:z:s:M:P:A:S:L:") or usage();
++# convert getopts specs for use by git-repo-config
++sub read_repo_config {
++	my @opts = split(/ *(?!:)/, shift);
++	foreach my $o (@opts) {
++		my $key = $o;
++		$key =~ s/://g;
++		my $arg = 'git-repo-config';
++		$arg .= ' --bool' if ($o !~ /:$/);
++
++        chomp(my $tmp = `$arg --get cvsimport.$key`);
++		if ($tmp && !($arg =~ / --bool / && $tmp eq 'false')) {
++            no strict 'refs';
++            my $opt_name = "opt_" . $key;
++            if (!$$opt_name) {
++                $$opt_name = $tmp;
++            }
++		}
++	}
++    if (@ARGV == 0) {
++        chomp(my $module = `git-repo-config --get cvsimport.module`);
++        push(@ARGV, $module);
++    }
++}
++
++my $opts = "haivmkuo:d:p:C:z:s:M:P:A:S:L:";
++read_repo_config($opts);
++getopts($opts) or usage();
+ usage if $opt_h;
+
+ @ARGV <= 1 or usage();
 -- 
-Jakub Narebski
-Poland
+1.4.4.2
