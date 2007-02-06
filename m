@@ -1,62 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Tue, 06 Feb 2007 20:58:35 +0100
-Organization: At home
-Message-ID: <eqamic$7es$1@sea.gmane.org>
-References: <87odognuhl.wl%cworth@cworth.org> <87y7nbdeaw.wl%cworth@cworth.org> <7vveifkczt.fsf@assigned-by-dhcp.cox.net> <87wt2vce31.wl%cworth@cworth.org> <7vwt2vgkuc.fsf@assigned-by-dhcp.cox.net> <87sldjcbxt.wl%cworth@cworth.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-fast-import
+Date: Tue, 6 Feb 2007 15:09:24 -0500
+Message-ID: <20070206200924.GA5352@spearce.org>
+References: <20070206023111.GB9222@spearce.org> <Pine.LNX.4.64.0702052248070.19212@xanadu.home> <20070206054808.GA10508@spearce.org> <Pine.LNX.4.64.0702060829310.8424@woody.linux-foundation.org> <20070206165630.GB4949@spearce.org> <Pine.LNX.4.64.0702060913220.8424@woody.linux-foundation.org> <Pine.LNX.4.64.0702061329090.19212@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 06 20:58:02 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Feb 06 21:09:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEWS0-0004MQ-1n
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 20:58:00 +0100
+	id 1HEWdH-0001Oa-Uy
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 21:09:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752299AbXBFT5c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 14:57:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965395AbXBFT5c
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 14:57:32 -0500
-Received: from main.gmane.org ([80.91.229.2]:55253 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965389AbXBFT53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 14:57:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HEWRD-0006Fm-89
-	for git@vger.kernel.org; Tue, 06 Feb 2007 20:57:11 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 06 Feb 2007 20:57:11 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 06 Feb 2007 20:57:11 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: jnareb@gmail.com
-User-Agent: KNode/0.10.2
+	id S965406AbXBFUJe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Feb 2007 15:09:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965404AbXBFUJe
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 15:09:34 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:50286 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965406AbXBFUJd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 15:09:33 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HEWcv-0003Xy-Sq; Tue, 06 Feb 2007 15:09:17 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6F38620FBAE; Tue,  6 Feb 2007 15:09:24 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0702061329090.19212@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38872>
 
-Carl Worth wrote:
+Nicolas Pitre <nico@cam.org> wrote:
+> This is therefore a damn good idea if gfi can make things right out of 
+> crap because frontends will not get much attention after the first "hey 
+> it works" level.  And the GIT date format, albeit being perfectly 
+> unambigous, is not inline with the statement above.
 
-> On Tue, 06 Feb 2007 11:14:03 -0800, Junio C Hamano wrote:
->> If you tell your users to --use-separate-remote in the "git
->> clone" instruction, would that solve your backward compatibility
->> problem?
-> 
-> Ah, yes. That should actually do the trick.
+Done.  I just pushed a change to gfi which adds `--date-format=<fmt>`.
+For <fmt> you have the choice of:
 
-Actually git has this option removed (at least from docs; perhaps it is
-simply no-op).
+  raw: Standard Git format.  This is the default, as its what
+  the existing frontends by Chris Lee, Simon Hausmann, Jon Smirl,
+  and Simon 'corecode' Schubert expect.
 
+  rfc2822: Run whatever crap you give us through parse_date(),
+  and cross your fingers.  If parse_date() returns < 0 we bomb
+  out, but otherwise take it at its word.
+
+  now: This is a toy, but useful if you really want now, dammit.
+  We just call datestamp() and tack that in.  Note that the frontend
+  must also supply the literal string `now` in the committer line
+  (e.g. "committer A U Thor <at@example.com> now") to prevent us
+  from bombing out.
+
+The last one will probably get more useful when I fix gfi so it can
+safely commit against active refs without losing commits (make it
+do a strict fast-forward check before updating).  In this case it
+may be useful for something like git-cvsserver, as it avoids the
+need for a temporary directory, index, etc.
+ 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Shawn.
