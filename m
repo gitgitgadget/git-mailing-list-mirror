@@ -1,59 +1,53 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-fast-import
-Date: Tue, 06 Feb 2007 16:42:48 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702061641040.13009@xanadu.home>
-References: <20070206023111.GB9222@spearce.org>
- <Pine.LNX.4.64.0702052248070.19212@xanadu.home>
- <20070206054808.GA10508@spearce.org>
- <Pine.LNX.4.64.0702060829310.8424@woody.linux-foundation.org>
- <20070206165630.GB4949@spearce.org>
- <Pine.LNX.4.64.0702060913220.8424@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702061329090.19212@xanadu.home>
- <20070206200924.GA5352@spearce.org>
- <Pine.LNX.4.64.0702061559160.13009@xanadu.home>
- <20070206211547.GB5820@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC/PATCH] enable rerere by default
+Date: Tue, 06 Feb 2007 15:06:41 -0800
+Message-ID: <7vhctyhon2.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702061103070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0702060556r3e366defwe4b7afabdf5ffb7c@mail.gmail.com>
+	<Pine.LNX.4.63.0702061602360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 06 22:42:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 07 00:07:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEY5V-0002vr-Pg
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 22:42:54 +0100
+	id 1HEZOf-0003rj-UZ
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 00:06:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965524AbXBFVmu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 16:42:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933305AbXBFVmu
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 16:42:50 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:8829 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933300AbXBFVmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 16:42:49 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JD200EAM9NCA870@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 06 Feb 2007 16:42:48 -0500 (EST)
-In-reply-to: <20070206211547.GB5820@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S1030507AbXBFXGn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Feb 2007 18:06:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030519AbXBFXGn
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 18:06:43 -0500
+Received: from fed1rmmtai17.cox.net ([68.230.241.42]:55407 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030507AbXBFXGm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 18:06:42 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070206230642.UQQK1343.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 6 Feb 2007 18:06:42 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id LP6h1W00u1kojtg0000000; Tue, 06 Feb 2007 18:06:42 -0500
+In-Reply-To: <Pine.LNX.4.63.0702061602360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 6 Feb 2007 16:03:58 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38876>
 
-On Tue, 6 Feb 2007, Shawn O. Pearce wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Nicolas Pitre <nico@cam.org> wrote:
-> > I think you should call it something else than rfc2822.  Because 
-> > parse_date() accepts much more than just rfc2822.  What about "cooked"?
-> 
-> It does accept a lot more than that, but straying away from rfc2822
-> gets into the grey areas of parse_date().
+>> How do I disable rerere by default?
+>
+> How'd you like it? Should this rather become a config variable, or do you 
+> want to make a file called "rr-cache" in the templates, which just 
+> contains a word "disabled"? (git-rerere checks if a _directory_ 
+> $GIT_DIR/rr-cache exists.)
 
-OK that makes sense.
-
-
-Nicolas
+Is it so bad to do "rm -rf .git/rr-cache"?
