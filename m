@@ -1,69 +1,52 @@
-From: Michael <barra_cuda@katamail.com>
-Subject: Re: [PATCH] Documentation: add KMail in SubmittingPatches
-Date: Tue, 6 Feb 2007 14:45:07 +0100
-Message-ID: <200702061445.07657.barra_cuda@katamail.com>
-References: <7v1wl7bv66.fsf@assigned-by-dhcp.cox.net> <200702051427.32532.barra_cuda@katamail.com> <7vveigkmpv.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: git-fast-import
+Date: Tue, 6 Feb 2007 14:50:48 +0100
+Message-ID: <81b0412b0702060550u3d4064dal43e37593b013f82e@mail.gmail.com>
+References: <20070206023111.GB9222@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 06 14:39:44 2007
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 06 14:51:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEQXm-0006nX-Ls
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 14:39:35 +0100
+	id 1HEQin-0004Wk-PD
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 14:50:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752157AbXBFNj1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 08:39:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752156AbXBFNj1
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 08:39:27 -0500
-Received: from slim-3a.inet.it ([213.92.5.124]:55976 "EHLO slim-3a.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752135AbXBFNj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 08:39:26 -0500
-Received: from dial-up-mi-727.lombardiacom.it ([::ffff:212.34.227.219]) by slim-3a.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:212.34.227.219+hk8idDWpe3; Tue, 06 Feb 2007 14:39:03 +0100
-User-Agent: KMail/1.9.4
-In-Reply-To: <7vveigkmpv.fsf@assigned-by-dhcp.cox.net>
+	id S1752037AbXBFNuv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Feb 2007 08:50:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752056AbXBFNuv
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 08:50:51 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:21719 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752037AbXBFNuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 08:50:50 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1608340uga
+        for <git@vger.kernel.org>; Tue, 06 Feb 2007 05:50:49 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kAm2FHY8mlZTcP5wFQ/H/AZgHlmVWCySeVpH7d80VXPUfwn6acGu53bcjopXWfrIbldYTdTKHbZvUge5a+aAn72wSB0YwU/qAf0ysdu7pdOPUg0dzBe09KBkNL5LvrN3ag5Xd5+35wHljkXrIFIHymiOCJa2/APYDLOag/dG10A=
+Received: by 10.78.178.5 with SMTP id a5mr1672571huf.1170769848469;
+        Tue, 06 Feb 2007 05:50:48 -0800 (PST)
+Received: by 10.78.139.9 with HTTP; Tue, 6 Feb 2007 05:50:48 -0800 (PST)
+In-Reply-To: <20070206023111.GB9222@spearce.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38840>
 
-Junio C Hamano:
-> Michael <barra_cuda@katamail.com> writes:
-> > @@ -331,3 +330,21 @@ whitespaces (fatal in patches).  Running 'C-u g' to
-> > display the
-> >  message in raw form before using '|' to run the pipe can work
-> >  this problem around.
-[...]
-> This is quite interesting -- notice your own hunk header @@ ... @@ line?
+On 2/6/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> I'm mainly worried about breaking compliation on odd architectures.
+> gfi builds, runs and has been used for production level imports
+> on Mac OS X, Linux and Dragonfly BSD, using both 32 bit and 64 bit
+> architectures, but some of Git's other targets (e.g. AIX) haven't
+> seen any testing.
 
-I see. It's this account's fault: now I know because I've tried with
-another account. I didn't know it had this glitch, sorry.
-
-> I do not use KMail myself, so I cannot comment on the procedure,
-> but from the cursory look it *should* do the right thing.  Only
-> that it makes me a bit nervous to see your hunk header being
-> line wrapped.
->
-> Doubly interesting is that somebody appears to have added two
-> message IDs.
->
->    Subject: [PATCH] Documentation: add KMail in SubmittingPatches
->    Date:	Mon, 5 Feb 2007 14:27:32 +0100
->    User-Agent: KMail/1.9.4
->    Message-Id: <200702051427.32532.barra_cuda@katamail.com>
->    Message-ID: <20070205132150.123659@dial-up-mi-449.lombardiacom.it>
-
-This is my current account's fault too. So I used KMail correctly,
-but my mail server did something to the message. I guess I should
-use another account. Anyway, if some other KMail user has something
-to say about this issue, it will make things clearer.
-
-Bye.
+Compilation errors are the simplest to fix, just send it in.
+I have to import lots of data from perforce spaghetti, so I'm very
+likely to try it out.
