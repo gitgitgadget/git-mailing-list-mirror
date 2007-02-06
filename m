@@ -1,48 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Difficulties in advertising a new branch to git newbies
-Date: Tue, 6 Feb 2007 02:31:41 -0500
-Message-ID: <20070206073141.GD23866@coredump.intra.peff.net>
-References: <87odognuhl.wl%cworth@cworth.org> <87y7nbdeaw.wl%cworth@cworth.org> <7vveifkczt.fsf@assigned-by-dhcp.cox.net> <7vodo7karm.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Quick status updates
+Date: Mon, 05 Feb 2007 23:40:06 -0800
+Message-ID: <7v3b5jka3t.fsf_-_@assigned-by-dhcp.cox.net>
+References: <7v7iv2soxv.fsf@assigned-by-dhcp.cox.net>
+	<7vps8qtgbm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Carl Worth <cworth@cworth.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 06 08:31:48 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 06 08:40:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEKns-00054U-Dq
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 08:31:48 +0100
+	id 1HEKwE-0000fW-3d
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 08:40:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750994AbXBFHbn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 02:31:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751059AbXBFHbn
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 02:31:43 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1374 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750994AbXBFHbn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 02:31:43 -0500
-Received: (qmail 22802 invoked from network); 6 Feb 2007 02:31:43 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 6 Feb 2007 02:31:43 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Feb 2007 02:31:41 -0500
-Content-Disposition: inline
-In-Reply-To: <7vodo7karm.fsf@assigned-by-dhcp.cox.net>
+	id S1750912AbXBFHkJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Feb 2007 02:40:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751063AbXBFHkJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 02:40:09 -0500
+Received: from fed1rmmtai15.cox.net ([68.230.241.44]:59909 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750912AbXBFHkI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 02:40:08 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070206074007.FZPT1306.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 6 Feb 2007 02:40:07 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id L7g61W00d1kojtg0000000; Tue, 06 Feb 2007 02:40:07 -0500
+In-Reply-To: <7vps8qtgbm.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 04 Feb 2007 01:36:29 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38818>
 
-On Mon, Feb 05, 2007 at 11:25:49PM -0800, Junio C Hamano wrote:
+Junio C Hamano <junkio@cox.net> writes:
 
-> So addition to "if unique", we need another DWIM rule that says
-> "refs/heads/branch" trumps even when there are branch elsewhere
-> and prevents ambiguity rule from triggering.
+> Several things to note (in the following, substitute $gmane with
+> http://article.gmane.org/gmane.comp.version-control.git):
+>
+>  - Working around Tk geometry problem, especially on non Linux+X
+>    platforms.  I've forwarded Mark Levedahl's patches
+>    ($gmane/38361) to Paul Mackerras for his blessing; hopefully
+>    he can Ack and/or suggest improvements.  I'd really like to
+>    have them in 1.5.0 in some form.
 
-FWIW, the patch I just posted allows all existing lookups to trump
-refs/remotes/*/%s, but will complain of ambiguities between remotes.
-But please don't take my patch as a vote for this being sane. :) I just
-wanted to give Carl something to play with.
+Mark and I got a response from Paul; unfortunately he is too
+busy right now, immediately after post 2.6.20 merge window has
+opened.  I've parked Mark's patches and another one suggested by
+Linus in response to Johannes Sixt's MinGW work in 'next' for
+now.  Depending on Paul's availablity, I might end up applying
+them in my tree first.
 
--Peff
+>  - Nico's "reflog on HEAD".
+>  - Reverting the patch to allow tracking branch names as the
+>    value of branch.*.merge ($gmane/38621).
+>  - Teaching "git blame" to also use the working tree files
+>    and/or index.
+>  - "git remote add -t -f -m" ($gmane/38470).
+
+These four are in ("git clone" rewrite is not).
+
+>  - We might want to allow git-push to use the wildcard refspec,
+>    like git-fetch does, for symmetry.
+
+I've done this which was not too painful -- a patch in a
+separate message to follow.
+
+I also applied a handful patches from early this year that was
+left unapplied.  After reviewing the message I am responding to,
+and an earlier "a few remaining issues..." ($gmane/35993), I
+think I am pretty much done with 1.5.0 preparation.
+
+After pulling gfi from Shawn and applying the outstanding gitk
+patches (either via Paul or myself), I'll tag -rc4 and give it a
+week or so before the final.
+
+I should remember to remove git-merge-recur before -rc4 ;-).
