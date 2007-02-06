@@ -1,68 +1,70 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [RFC/PATCH] enable rerere by default
-Date: Tue, 6 Feb 2007 16:39:52 +0100
-Message-ID: <81b0412b0702060739y35c00332q8945a33743084219@mail.gmail.com>
-References: <Pine.LNX.4.63.0702061103070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <81b0412b0702060556r3e366defwe4b7afabdf5ffb7c@mail.gmail.com>
-	 <Pine.LNX.4.63.0702061602360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (take 2)] git-blame.el --- Minor mode for incremental blame for Git
+Date: Tue, 6 Feb 2007 16:50:04 +0100
+Message-ID: <200702061650.05221.jnareb@gmail.com>
+References: <200702042114.34922.jnareb@gmail.com> <87ps8nzgiy.fsf@morpheus.local> <873b5jz5zw.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, junkio@cox.net
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 06 16:40:01 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alexandre Julliard <julliard@winehq.org>,
+	Junio Hamano <junkio@cox.net>
+To: David =?utf-8?q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Tue Feb 06 16:48:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HESQI-0001uD-OK
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 16:39:59 +0100
+	id 1HESYj-0005ur-LF
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 16:48:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932588AbXBFPjz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 10:39:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932617AbXBFPjz
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 10:39:55 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:63997 "EHLO
+	id S932085AbXBFPsh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 6 Feb 2007 10:48:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932518AbXBFPsh
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 10:48:37 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:14074 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932588AbXBFPjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 10:39:54 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1638687uga
-        for <git@vger.kernel.org>; Tue, 06 Feb 2007 07:39:53 -0800 (PST)
+	with ESMTP id S932085AbXBFPsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 10:48:36 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1641222uga
+        for <git@vger.kernel.org>; Tue, 06 Feb 2007 07:48:35 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JJCbLrsX7UG5GdfOiLGes2oXjzplsMigwRpXUlJ+TvjsGr0KCw6FR5N01wcLNClTqQMzBWM35BGK2hrIx7f1H5PccarLWN3N1lZQ3PKRi/f1QWyPOYYWMMlss9whSgxNPU+vkfQ554DayUlzdu7rquQSMb6quWgJvXRiRvwqH8E=
-Received: by 10.78.160.2 with SMTP id i2mr1733117hue.1170776393278;
-        Tue, 06 Feb 2007 07:39:53 -0800 (PST)
-Received: by 10.78.139.9 with HTTP; Tue, 6 Feb 2007 07:39:52 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.63.0702061602360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=UPrqKrDRR0HNXRlKqNZBg+SOAXvse71D93qA5yfvok6QmigGNNP/V+rL1bUJgnFjwE9ppViYsrqdmEGwgVK8xOcPlXjcuB/6iAQoVLMAk/YBDhfvZ78I04mdPtlD1kbyV17+OnzXvbH4OU/p47u3KjScxBPT1qb6mnXOEFdOXfU=
+Received: by 10.67.19.13 with SMTP id w13mr9778060ugi.1170776915233;
+        Tue, 06 Feb 2007 07:48:35 -0800 (PST)
+Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
+        by mx.google.com with ESMTP id 55sm12346078ugq.2007.02.06.07.48.33;
+        Tue, 06 Feb 2007 07:48:34 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <873b5jz5zw.fsf@morpheus.local>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38853>
 
-On 2/6/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > >         I know it is quite late in the game for 1.5.0, but since the theme
-> > >         is usability and user-friendliness, I cannot think of a better
-> > >         release to enable rerere by default, if that should ever happen.
-> > >
-> > >         Comments?
-> >
-> > How do I disable rerere by default?
->
-> How'd you like it? Should this rather become a config variable, or do you
-> want to make a file called "rr-cache" in the templates, which just
-> contains a word "disabled"? (git-rerere checks if a _directory_
-> $GIT_DIR/rr-cache exists.)
+David K=C3=A5gedal wrote:
 
-I suggest a config variable defaulting to "on", able to disable rerere even if
-rr-cache exists. So the var has at least theoretical use also after a
-repo is created.
-I'll put it in templates config then, and modify existing repos to
-switch it "off"
-(so I always have it mentioned in the configs).
-Newbies, who don't have it own templates, wont even notice it.
-Unless it is put into the generated config, that is: like
-core.logallrefupdates -
-it can be in templates config, or git-init writes it.
+> I have a feeling that my emails are not reaching the git list.  I
+> normally read through gmane, but to to keep people happy, I tried
+> answering the reply mails I got instead of following up in the
+> newsgroup.  But since I'm not directly subscribed, my emails are
+> probably dropped.
+>=20
+> I don't see Jakub's recent mails in this thread in gmane either, so
+> maybe he suffers from the same problem?
+
+It looks like the whole subdiscussion didn't reach git list. I also
+read git through GMane NNTP interface, but it looks as if MARC also
+shows only 4 messages in this thread (no subthread starting from
+David reply). Junio, Alexandre, are you subscribed to git mailing
+list; can you confirm if there is no copy of this (and previous)
+messages via git@vger.kernel.org?
+
+Perhaps VGER anti-spam filter went funky again (it happened).=20
+postmaster@vger.kernel.org is to be pestered then.
+
+--=20
+Jakub Narebski
+Poland
