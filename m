@@ -1,61 +1,52 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-fast-import
-Date: Mon, 05 Feb 2007 23:06:23 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702052248070.19212@xanadu.home>
-References: <20070206023111.GB9222@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Read cvsimport options from repo-config
+Date: Mon, 05 Feb 2007 20:26:17 -0800
+Message-ID: <7vireflxna.fsf@assigned-by-dhcp.cox.net>
+References: <3f80363f0702051722x1812228fp1cd7a41dd32b31f3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 06 05:06:38 2007
+To: "James Bowes" <jbowes@dangerouslyinc.com>
+X-From: git-owner@vger.kernel.org Tue Feb 06 05:26:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEHbJ-0003p7-UV
-	for gcvg-git@gmane.org; Tue, 06 Feb 2007 05:06:38 +0100
+	id 1HEHub-0003wP-J8
+	for gcvg-git@gmane.org; Tue, 06 Feb 2007 05:26:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752730AbXBFEGc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Feb 2007 23:06:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752731AbXBFEGc
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 23:06:32 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:57394 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752730AbXBFEGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Feb 2007 23:06:32 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JD00055MWQNLDB2@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 05 Feb 2007 23:06:24 -0500 (EST)
-In-reply-to: <20070206023111.GB9222@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S1751400AbXBFE0T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Feb 2007 23:26:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752390AbXBFE0T
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Feb 2007 23:26:19 -0500
+Received: from fed1rmmtai20.cox.net ([68.230.241.39]:56550 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751400AbXBFE0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Feb 2007 23:26:18 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070206042618.EPOQ1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 5 Feb 2007 23:26:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id L4SH1W00k1kojtg0000000; Mon, 05 Feb 2007 23:26:18 -0500
+In-Reply-To: <3f80363f0702051722x1812228fp1cd7a41dd32b31f3@mail.gmail.com>
+	(James Bowes's message of "Mon, 5 Feb 2007 20:22:25 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38808>
 
-On Mon, 5 Feb 2007, Shawn O. Pearce wrote:
+I find what your patch does quite sensible, although the
+split(/ *(?!:)/) magic might be a bit hard to read for the
+uninitiated.
 
-> I'm particularly interested in feedback on the documentation,
-> so I am attaching it below.
-> 
-[...]
-> 
-> The time of the change is specified by `<time>` as the number of
-> seconds since the UNIX epoc (midnight, Jan 1, 1970, UTC) and is
-> written in base-10 notation using US-ASCII digits.  The committer's
-> timezone is specified by `<tz>` as a positive or negative offset
-> from UTC, in minutes.  For example EST would be expressed in `<tz>`
-> by ``-0500''.
+> +		my $arg = 'git-repo-config';
+> +		$arg .= ' --bool' if ($o !~ /:$/);
+> +
+> +        chomp(my $tmp = `$arg --get cvsimport.$key`);
+> +		if ($tmp && !($arg =~ / --bool / && $tmp eq 'false')) {
 
-I think this is quite error prone, demonstrated by the fact that we 
-screwed that up ourselves on a few occasions.  I think that the frontend 
-should be relieved from this by letting it provide the time of change in 
-a more natural format amongst all possible ones(like RFC2822 for 
-example) and gfi should simply give it to parse_date().
-
-Otherwise I think this is pretty nice.
-
-
-Nicolas
+Can this =~ / --bool / ever match (note the SP after 'l')?
