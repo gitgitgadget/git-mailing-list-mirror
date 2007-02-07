@@ -1,102 +1,110 @@
-From: "James Bowes" <jbowes@dangerouslyinc.com>
-Subject: Re: [PATCH] Read cvsimport options from repo-config
-Date: Wed, 7 Feb 2007 17:57:43 -0500
-Message-ID: <3f80363f0702071457g713f6f0bn41dfc0dacd7415a2@mail.gmail.com>
-References: <3f80363f0702051722x1812228fp1cd7a41dd32b31f3@mail.gmail.com>
-	 <7vireflxna.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git log of all (modifying) commands run on a repo?
+Date: Wed, 7 Feb 2007 23:59:07 +0100
+Message-ID: <200702072359.08043.jnareb@gmail.com>
+References: <17866.20355.744025.133326@lisa.zopyra.com> <eqdjt3$jo5$1@sea.gmane.org> <17866.21770.762672.84327@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 07 23:58:00 2007
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Feb 07 23:59:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEvjZ-00016C-4K
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 23:57:49 +0100
+	id 1HEvl7-0001lc-Pb
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 23:59:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422807AbXBGW5p (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 17:57:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422808AbXBGW5p
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 17:57:45 -0500
-Received: from an-out-0708.google.com ([209.85.132.240]:47915 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422807AbXBGW5o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 17:57:44 -0500
-Received: by an-out-0708.google.com with SMTP id b33so306437ana
-        for <git@vger.kernel.org>; Wed, 07 Feb 2007 14:57:43 -0800 (PST)
+	id S1422815AbXBGW7V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 17:59:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422823AbXBGW7V
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 17:59:21 -0500
+Received: from wx-out-0506.google.com ([66.249.82.233]:50822 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422815AbXBGW7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 17:59:20 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so323744wxd
+        for <git@vger.kernel.org>; Wed, 07 Feb 2007 14:59:19 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=b2HzETEzPHM9uGAlyCWBUwQz12VJxntSY5fqkj4m109q6x4DgPzRkvKQpASS5gy0dABwclUxXH3OSS6Gp4sw6wSQJnc7L0naEeIMZ3XIeqHuEDfDeU+0rn0HcSMqVo1qENV8jEsxJxJriWZ6om/b0LTacUFKWH/Yx/HHe4C2iHc=
-Received: by 10.100.119.14 with SMTP id r14mr8786514anc.1170889063359;
-        Wed, 07 Feb 2007 14:57:43 -0800 (PST)
-Received: by 10.65.97.13 with HTTP; Wed, 7 Feb 2007 14:57:43 -0800 (PST)
-In-Reply-To: <7vireflxna.fsf@assigned-by-dhcp.cox.net>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RTAx+urlm6S4c1ODieFB/x9Ccmw57ygHoPDAQCAKEkU65lPQKYt2IMeRoHs3fQunxY5ME291xbbWeZ8uIb8+v0VoYQrkcbO1xg7l5FmZOHOXm2rVppF81not9tF43D/wtQRTM7OZpamVGIrnSRkxAE0oBBVYFyZFXtqgjOkv0t4=
+Received: by 10.100.189.17 with SMTP id m17mr3356048anf.1170889159813;
+        Wed, 07 Feb 2007 14:59:19 -0800 (PST)
+Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
+        by mx.google.com with ESMTP id o24sm2048878ugd.2007.02.07.14.59.08;
+        Wed, 07 Feb 2007 14:59:08 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <17866.21770.762672.84327@lisa.zopyra.com>
 Content-Disposition: inline
-X-Google-Sender-Auth: e71e95cb101bcb0e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38992>
 
-Default values for command line options can be saved in .git/config (or the
-global ~/.gitconfig). Config option names match the command line option names,
-so cvsimport.d corresponds to git-cvsimport -d. One may also set
-cvsimport.module to specify a default cvs module name.
+Bill Lear wrote:
+> On Wednesday, February 7, 2007 at 23:29:56 (+0100) Jakub Narebski writes:
+>>...
+>> Is history of shell commands too short? Reflogs doesn't help
+>> (concatenate all reflogs, perhaps preceding them with file name,
+>> and sort by date) either?
+> 
+> Well, I thought of shell history also, but the problem is, that we often
+> have multiple repos on a machine (we may be executing a long-running
+> experiment in one, for example, and not want to disturb it).
+> 
+> Shell history in that case doesn't help.  Also, not having the branch
+> information is a minus (each of us puts the current git branch in our
+> prompt).
 
-Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
----
+Fact. Although in worst case, if shell history is deep enough, you could
+do forensic on it... unless you use multiple shells, freely interspersing
+commands in them...
+ 
+> I didn't know about reflogs.  What did you have in mind?  Could you
+> show an example, please?
 
-Thanks for the reply, Junio. I've added a comment explaining the
-regex, and fixed the check for '--bool'; you were right, it didn't
-work.
+Unfortunately till some time ago reflogs were not enabled by default.
+If they are enabled, for each branch you should have 
+$GIT_DIR/logs/refs/heads/<branch> file, which contains information about
+operations on given branch. It has pre- and post-operation commit ids,
+and timestamp of a change, together with short description. You could
+concatenate reflogs, and sort them by timestamp.
 
- git-cvsimport.perl |   30 +++++++++++++++++++++++++++++-
- 1 files changed, 29 insertions(+), 1 deletions(-)
+Reflogs are purely local matter, they represent local view of history.
 
-diff --git a/git-cvsimport.perl b/git-cvsimport.perl
-index 6c9fbfe..1a1ba7b 100755
---- a/git-cvsimport.perl
-+++ b/git-cvsimport.perl
-@@ -85,7 +85,35 @@ sub write_author_info($) {
- 	close ($f);
- }
+See git-update-ref(1), "Logging Updates" section, git-repo-config(1)
+(or git-config(1)), description of core.logAllRefUpdates variable,
+and Git User's Manual.
 
--getopts("haivmkuo:d:p:C:z:s:M:P:A:S:L:") or usage();
-+# convert getopts specs for use by git-repo-config
-+sub read_repo_config {
-+    # Split the string between characters, unless there is a ':'
-+    # So "abc:de" becomes ["a", "b", "c:", "d", "e"]
-+	my @opts = split(/ *(?!:)/, shift);
-+	foreach my $o (@opts) {
-+		my $key = $o;
-+		$key =~ s/://g;
-+		my $arg = 'git-repo-config';
-+		$arg .= ' --bool' if ($o !~ /:$/);
-+
-+        chomp(my $tmp = `$arg --get cvsimport.$key`);
-+		if ($tmp && !($arg =~ /--bool/ && $tmp eq 'false')) {
-+            no strict 'refs';
-+            my $opt_name = "opt_" . $key;
-+            if (!$$opt_name) {
-+                $$opt_name = $tmp;
-+            }
-+		}
-+	}
-+    if (@ARGV == 0) {
-+        chomp(my $module = `git-repo-config --get cvsimport.module`);
-+        push(@ARGV, $module);
-+    }
-+}
-+
-+my $opts = "haivmkuo:d:p:C:z:s:M:P:A:S:L:";
-+read_repo_config($opts);
-+getopts($opts) or usage();
- usage if $opt_h;
 
- @ARGV <= 1 or usage();
+Examples (sha1 are shortened, and lines are broken for easier reading):
+
+ * .git/logs/refs/heads/origin
+ 798123... e68989... Jakub Narebski <jnareb@gmail.com> 1170836783 +0100 \
+    pull origin git://git.kernel.org/pub/scm/git/git.git: fast-forward
+ e68989... 6506e1... Jakub Narebski <jnareb@gmail.com> 1170873620 +0100 \
+   fetch origin git://git.kernel.org/pub/scm/git/git.git: fast-forward
+
+ * git/logs/refs/heads/master
+ 93342d... 39daf6... Jakub Narebski <jnareb@gmail.com> 1169555797 +0100 \
+   commit: t/t1300-repo-config.sh: value continued on next line
+ 39daf6... b62502... Jakub Narebski <jnareb@gmail.com> 1169809125 +0100 \
+   commit (merge): Merge branch 'master' of git://git.kernel.org/pub/scm/git/git
+ b62502... 7ab704... Jakub Narebski <jnareb@gmail.com> 1170150241 +0100 \
+   pull origin: Merge made by recursive.
+ 7ab704... bb77c5... Jakub Narebski <jnareb@gmail.com> 1170238531 +0100 \
+   pull origin: In-index merge
+
+ * git/logs/refs/heads/gitweb/web
+ ceae8a... a29878... Jakub Narebski <jnareb@gmail.com> 1169973601 +0100 \
+   commit: Git config file reader in Perl (WIP 5)
+ a29878... 1b600e... Jakub Narebski <jnareb@gmail.com> 1170034498 +0100 \
+   reset --hard 1b600e659abc7e409c9d830e332d3cef010
+ 62c1c1... 05b936... Jakub Narebski <jnareb@gmail.com> 1170034499 +0100 \
+   rebase: Git config file reader in Perl (WIP 1)
 -- 
-1.4.4.2
+Jakub Narebski
+Poland
