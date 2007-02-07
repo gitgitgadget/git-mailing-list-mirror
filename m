@@ -1,65 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Don Zickus" <dzickus@gmail.com>
 Subject: Re: git log filtering
-Date: Wed, 7 Feb 2007 10:16:15 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702070919320.8424@woody.linux-foundation.org>
+Date: Wed, 7 Feb 2007 13:19:03 -0500
+Message-ID: <68948ca0702071019i5704f24fnf2b9a7d6dfa74d86@mail.gmail.com>
 References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
- <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
+	 <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Don Zickus <dzickus@gmail.com>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 07 19:16:34 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 07 19:19:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HErLF-0000qM-Q9
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 19:16:26 +0100
+	id 1HErOC-00027O-Mm
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 19:19:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965701AbXBGSQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 13:16:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965541AbXBGSQW
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 13:16:22 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:58252 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965701AbXBGSQU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 13:16:20 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l17IGGmA012361
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 7 Feb 2007 10:16:16 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l17IGFmS022095;
-	Wed, 7 Feb 2007 10:16:16 -0800
+	id S1030533AbXBGSTH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 13:19:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030210AbXBGSTH
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 13:19:07 -0500
+Received: from wr-out-0506.google.com ([64.233.184.227]:8810 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422697AbXBGSTF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 13:19:05 -0500
+Received: by wr-out-0506.google.com with SMTP id i21so288639wra
+        for <git@vger.kernel.org>; Wed, 07 Feb 2007 10:19:04 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Jtmd01o9AISeVcBUQW1rlot+AeJMqn5ArMPVN1ZvQhtUe2y8hX5kr8yyuHPlurJs3HDtZVtUDdT9fr3cxy0LZCMjxt/meHBWKLCcmegiiL8we9NcHY+ASMmHToXiaxZso29Z3yxyv74qu2ciQaLb0eRTkIbz00riM4qxtC+d2Bk=
+Received: by 10.114.181.1 with SMTP id d1mr2191005waf.1170872343179;
+        Wed, 07 Feb 2007 10:19:03 -0800 (PST)
+Received: by 10.65.189.12 with HTTP; Wed, 7 Feb 2007 10:19:03 -0800 (PST)
 In-Reply-To: <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.455 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.112__
-X-MIMEDefang-Filter: osdl$Revision: 1.174 $
-X-Scanned-By: MIMEDefang 2.36
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38952>
 
+>  - "git log" can itself do a lot of filtering. Both on date, on revisions,
+>    on "modifies files/directories X, Y and Z" _and_ on strings.
+>
+>    See "man git-rev-list" for more (it doesn't apply to just "git log", it
+>    applies to just about any revision listing, including gitk etc)
+>
+>    For example,
+>
+>         git log [--author=pattern] [--committer=pattern] [--grep=pattern]
+>
+>    will likely do exactly what you want. You can do
+>
+>         git log --grep="Signed-off-by:.*akpm"
+>
+>    on the kernel archive to see which ones were signed off by Andrew.
 
+Cool.  The hidden little options.  :-)  This is exactly what I was
+looking for.  Thanks.
 
-On Wed, 7 Feb 2007, Linus Torvalds wrote:
-> 
-> 	git log --pretty -z |
+I didn't see these options in the man pages.  Might be worth putting in there??
 
-Gaah. If all you want is normal logs, you don't need the "--pretty", 
-of course, since that's the default. Just "git log -z" will give you 
-zero-terminated logs. 
-
-But if you want to grep on committer, you'd need to use "--pretty=full" or 
-something, of course, so the "--pretty=xyz" thing is indeed often 
-applicable for things like this.
-
-Also, I just checked, and we have a bug. Merges do not have the ending 
-zero in "git log -z" output. It seems to be connected to the fact that we 
-handle the "always_show_header" commits differently (the ones that we 
-wouldn't normally show because they have no diffs associated with them).
-
-The obvious fix for that failed. I'll look at it some more.
-
-		Linus
+Cheers,
+Don
