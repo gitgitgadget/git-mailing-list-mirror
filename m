@@ -1,71 +1,79 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git log filtering
-Date: Wed, 7 Feb 2007 10:27:17 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702071025100.8424@woody.linux-foundation.org>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com> 
- <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
- <68948ca0702071019i5704f24fnf2b9a7d6dfa74d86@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git rebase: unexpected conflict
+Date: Wed, 07 Feb 2007 11:32:32 -0800
+Message-ID: <7vr6t17ohb.fsf@assigned-by-dhcp.cox.net>
+References: <20070204190519.GB29029@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Don Zickus <dzickus@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 07 19:27:39 2007
+To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+X-From: git-owner@vger.kernel.org Wed Feb 07 20:32:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HErW6-0005ar-8y
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 19:27:38 +0100
+	id 1HEsX0-0001Iz-Ga
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 20:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965706AbXBGS1X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 13:27:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965709AbXBGS1X
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 13:27:23 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:58593 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965708AbXBGS1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 13:27:22 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l17IRJmA012761
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 7 Feb 2007 10:27:19 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l17IRIef022354;
-	Wed, 7 Feb 2007 10:27:18 -0800
-In-Reply-To: <68948ca0702071019i5704f24fnf2b9a7d6dfa74d86@mail.gmail.com>
-X-Spam-Status: No, hits=-0.454 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.112__
-X-MIMEDefang-Filter: osdl$Revision: 1.174 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161086AbXBGTcf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Feb 2007 14:32:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422704AbXBGTcf
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 14:32:35 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62884 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161086AbXBGTce convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Feb 2007 14:32:34 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070207193233.KMWB1349.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 7 Feb 2007 14:32:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id LjYZ1W00E1kojtg0000000; Wed, 07 Feb 2007 14:32:33 -0500
+In-Reply-To: <20070204190519.GB29029@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Sun, 4 Feb 2007 21:05:19 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38954>
 
+"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
 
-
-On Wed, 7 Feb 2007, Don Zickus wrote:
+> When you have resolved this problem run "git rebase --continue".
+> If you would prefer to skip this patch, instead run "git rebase --ski=
+p".
+> To restore the original branch and stop rebasing run "git rebase --ab=
+ort".
+> --------------------------
 >
-> I didn't see these options in the man pages.  Might be worth putting in
-> there??
+> Sure enough, there are conflicts in drivers/mtd/nand/Kconfig:
+>
+> <<<<<<< HEAD:drivers/mtd/nand/Kconfig
+> config MTD_NAND_CAFE
+>        tristate "NAND support for OLPC CAF=C3=89 chip"
+>        depends on PCI
+>        help
+>          Use NAND flash attached to the CAF=C3=89 chip designed for t=
+he $100
+>          laptop.
+> =3D=3D=3D=3D=3D=3D=3D
+> config MTD_NAND_AT91
+>         bool "Support for NAND Flash / SmartMedia on AT91"
+>         depends on MTD_NAND && ARCH_AT91
+>         help
+>           Enables support for NAND Flash / Smart Media Card interface
+>           on Atmel AT91 processors.
+>>>>>>>> [MTD] NAND: AT91 NAND driver:drivers/mtd/nand/Kconfig
+>
+> But I don't really understand where do the conflicts come from:
+> The patch I skipped (9b3bfe5696aa417d38ce903eb345a03d65743dd2)
+> only touched the file drivers/infiniband/core/addr.c,
+> so why can't rebase replay all of the changes?
 
-Well, they really _are_ there, indirectly:
+That is because David Woodhouse has an evil merge at
+c45aa055c32b488fc3fd73c760df372b09acf69a.
 
-	The command takes options applicable to the git-rev-list(1) command 
-	to control what is shown and how, and options applicable to the 
-	git-diff-tree(1) commands to control how the change each commit 
-	introduces are shown.
-
-so you have to look at both git-rev-list and git-diff-tree to get all the 
-options.
-
-It then goes on to say:
-
-	This manual page describes only the most frequently used options.
-	                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-so technically it's complete and true.
-
-But yeah, maybe we could include all the options there.
-
-		Linus
+Running "git show" on that commit would tell you the story.
