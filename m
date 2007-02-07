@@ -1,63 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Deprecation/Removal schedule
-Date: Wed, 07 Feb 2007 01:37:44 -0800
-Message-ID: <7v64aeb95j.fsf@assigned-by-dhcp.cox.net>
-References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
-	<7vsldibfva.fsf@assigned-by-dhcp.cox.net>
-	<200702070933.21804.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Add --patchdepth parameter to git-am.sh
+Date: Wed, 07 Feb 2007 10:44:08 +0100
+Organization: At home
+Message-ID: <eqc6ua$pc$1@sea.gmane.org>
+References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net> <200702051924.39205.andyparkins@gmail.com> <7vfy9ibcdx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Mark Wooding <mdw@distorted.org.uk>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andreas Ericsson <ae@op5.se>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 07 10:38:12 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 07 10:43:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEjFk-00061z-A1
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 10:38:12 +0100
+	id 1HEjKY-0008Ko-0U
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 10:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161092AbXBGJhs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 04:37:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161098AbXBGJhr
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 04:37:47 -0500
-Received: from fed1rmmtai17.cox.net ([68.230.241.42]:59304 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1161092AbXBGJhq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 04:37:46 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070207093745.FCTV1343.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 7 Feb 2007 04:37:45 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id LZdk1W00U1kojtg0000000; Wed, 07 Feb 2007 04:37:45 -0500
-In-Reply-To: <200702070933.21804.jnareb@gmail.com> (Jakub Narebski's message
-	of "Wed, 7 Feb 2007 09:33:20 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161072AbXBGJnG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 04:43:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161086AbXBGJnG
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 04:43:06 -0500
+Received: from main.gmane.org ([80.91.229.2]:47381 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161072AbXBGJnD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 04:43:03 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HEjKF-0007To-UR
+	for git@vger.kernel.org; Wed, 07 Feb 2007 10:42:51 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Feb 2007 10:42:51 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Feb 2007 10:42:51 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38903>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Junio C Hamano wrote:
 
-> Junio C Hamano wrote:
->
->> In 1.5.0, you will still see git-resolve and git-diff-stages,
->> but they will be removed by 1.5.1.
->
-> Well, it is not as if we cannot obtain equivalent of git-diff-stages
-> without this command. Stages are <ours>, <theirs> and <ancestor>
-> (git-merge-base <ours> <theirs>) so I think we can use git-diff-tree
-> with appropriate arguments...
+> Andy Parkins <andyparkins@gmail.com> writes:
+> 
+>> If the series of patches you are applying via git-am was based in a
+>> different directory there was no way to strip the directory (as you
+>> would with git-apply).
+>>
+>> This patch adds a --patchdepth option to git-am.sh whose argument is
+>> passed as a "-p" option to git-apply.
+[...]
+> 
+> I do not understand this remark, as applypatch does not have -p
+> either.  If we were to do this, I agree with others that this
+> should simply be called -p (we do not have name crash with
+> existing options, do we?).
 
-Well, sorry for wasting the bandwidth if it was not obvious from
-my message, but that's exactly why I am announcing officially
-that they *will* be removed with a definite timeframe.
+Perhaps options should be -p as short version, and --patchdepth 
+(or --strip as in GNU patch) as long version?
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
