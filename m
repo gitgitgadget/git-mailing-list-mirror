@@ -1,53 +1,66 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: git-fast-import
-Date: Tue, 6 Feb 2007 23:45:14 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702062337090.20138@iabervon.org>
-References: <20070206023111.GB9222@spearce.org> <200702060928.54440.andyparkins@gmail.com>
- <Pine.LNX.4.64.0702060836180.8424@woody.linux-foundation.org>
- <20070206164441.GA4949@spearce.org>
+Date: Tue, 6 Feb 2007 23:55:46 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702062347060.20138@iabervon.org>
+References: <20070206023111.GB9222@spearce.org> <45C81C33.6010704@gmail.com>
+ <20070206061817.GB10508@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 07 05:45:26 2007
+X-From: git-owner@vger.kernel.org Wed Feb 07 05:55:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEegN-0005jA-KP
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 05:45:23 +0100
+	id 1HEeqW-0001jI-UJ
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 05:55:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965634AbXBGEpR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 23:45:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965639AbXBGEpR
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 23:45:17 -0500
-Received: from iabervon.org ([66.92.72.58]:1356 "EHLO iabervon.org"
+	id S1030255AbXBGEzt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Feb 2007 23:55:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965639AbXBGEzs
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 23:55:48 -0500
+Received: from iabervon.org ([66.92.72.58]:4083 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965634AbXBGEpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 23:45:16 -0500
-Received: (qmail 27930 invoked by uid 1000); 6 Feb 2007 23:45:14 -0500
+	id S965615AbXBGEzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Feb 2007 23:55:48 -0500
+Received: (qmail 28722 invoked by uid 1000); 6 Feb 2007 23:55:46 -0500
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Feb 2007 23:45:14 -0500
-In-Reply-To: <20070206164441.GA4949@spearce.org>
+  by localhost with SMTP; 6 Feb 2007 23:55:46 -0500
+In-Reply-To: <20070206061817.GB10508@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38888>
 
 On Tue, 6 Feb 2007, Shawn O. Pearce wrote:
 
-> What about this language?
+> "Aneesh Kumar K.V" <aneesh.kumar@gmail.com> wrote:
+> > >SYNOPSIS
+> > >--------
+> > >frontend | 'git-fast-import' [options]
+> > >
+> > 
+> > Do we have example frontend  that can be added along with gfi ?
 > 
-> 	The time of the change is specified by `<time>` as the number of
-> 	seconds since the UNIX epoc (midnight, Jan 1, 1970, UTC) and is
-> 	written in base-10 notation using US-ASCII digits.  The committer's
-> 	timezone is specified by `<tz>` as a positive or negative offset
-> 	from UTC.  For example EST (which is typically 5 hours behind GMT)
-> 	would be expressed in `<tz>` by ``-0500'' while GMT is ``+0000''.
+> Not yet.  Some frontends are available here on repo.or.cz:
+> 
+>   gitweb: http://repo.or.cz/w/fast-export.git
+>   clone:  git://repo.or.cz/fast-export.git
+> 
+> But both lack branch support, for example, so they probably aren't
+> nearly as complete as the existing non-gfi based importers.
 
-EST is always 5 hours behind GMT. During the summer, EST is still 5 hours 
-behind GMT, but the clocks which use ET are set to EDT (-0400) instead. 
+It might be nice to have a git-fast-export, which could actually be 
+potentially useful for generating a repository with systematic differences 
+from the original. (E.g., to make a repository of git's Documentation 
+directory, with just the commits that affect it)
+
+That might also be a big help to projects that find they should have been 
+using more, fewer, or different repositories through their history.
+
+Also, I'd guess that it would be pretty straightforward and easy to 
+understand, plus easy to verify correctness on large examples with.
 
 	-Daniel
 *This .sig left intentionally blank*
