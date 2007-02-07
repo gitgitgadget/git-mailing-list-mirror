@@ -1,117 +1,94 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] qgit: Default the log window to wider than the file list and set monospaced font
-Date: Wed, 7 Feb 2007 21:38:36 +0000
-Message-ID: <200702072138.36787.andyparkins@gmail.com>
+Subject: [PATCH] qgit: Improve default column widths by changing resize modes
+Date: Wed, 7 Feb 2007 21:39:22 +0000
+Message-ID: <200702072139.22272.andyparkins@gmail.com>
+References: <75ebbfaed42a61c54ec6a38bc60d5e777a074dc5.1170884269.git.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 07 22:41:59 2007
+X-From: git-owner@vger.kernel.org Wed Feb 07 22:42:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEuYA-0003Lc-06
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 22:41:58 +0100
+	id 1HEuYW-0003Vd-53
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 22:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161430AbXBGVle (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 16:41:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161436AbXBGVld
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 16:41:33 -0500
-Received: from nz-out-0506.google.com ([64.233.162.234]:28157 "EHLO
+	id S1161291AbXBGVmR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 16:42:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161436AbXBGVmR
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 16:42:17 -0500
+Received: from nz-out-0506.google.com ([64.233.162.228]:28457 "EHLO
 	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161430AbXBGVlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 16:41:32 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so297042nze
-        for <git@vger.kernel.org>; Wed, 07 Feb 2007 13:41:32 -0800 (PST)
+	with ESMTP id S1161291AbXBGVmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 16:42:16 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so297211nze
+        for <git@vger.kernel.org>; Wed, 07 Feb 2007 13:42:15 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition;
-        b=EUZl1nlzWKlSMdAXjsqPzN6iXTeHeke+4xc7f8rSPv/V6jhcII9WmK55pckK4EgZSsLMCMUPe4Gtt4wzFLla60/sfRFrOWfQqXZpPmWo9DM0xxOGAhSNehftdjiP9ZLClCu2DcFsW3/Zf9gQILCGFokTX6Wvrdll8z4K6RxOiBg=
-Received: by 10.64.156.3 with SMTP id d3mr14436326qbe.1170884492006;
-        Wed, 07 Feb 2007 13:41:32 -0800 (PST)
+        h=received:message-id:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition;
+        b=mqKp26wv+BPaDeGE6LCPVb1FbapmmLXLBAH6mveelB7HbCX6jhsBgLF73j/mziyWcixsZx9SIylitMYtbEZ2Y5E08CF/L7Qj+fZIVBnDzV/Mk2dYHCEzllFPnKo/NS+6d0YqcaJ4VzJHg1CL6O2fazfpaVr3Hd5SoPNN2JtKuys=
+Received: by 10.114.161.11 with SMTP id j11mr2494291wae.1170884535323;
+        Wed, 07 Feb 2007 13:42:15 -0800 (PST)
 Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id q14sm1273764qbq.2007.02.07.13.41.28;
-        Wed, 07 Feb 2007 13:41:29 -0800 (PST)
-X-TUID: d0ea13c245a62ff2
-X-UID: 224
-X-Length: 2625
+        by mx.google.com with ESMTP id 1sm1302339qbh.2007.02.07.13.42.12;
+        Wed, 07 Feb 2007 13:42:13 -0800 (PST)
+In-Reply-To: <75ebbfaed42a61c54ec6a38bc60d5e777a074dc5.1170884269.git.andyparkins@gmail.com>
+X-TUID: 08991bd92e15a939
+X-UID: 227
+X-Length: 2161
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38975>
 
-The log window and changed files list would start at equal sizes.  This
-patch gives them each a horizontal stretch factor making them have a 3:1
-ratio.
-
-The font for the log viewer is set to "Monospace", but this should
-really be done in software and given a config setting (perhaps use the
-patch view font)
+The time column is not the best column to be auto stretched, it's
+probably a fixed width because it's only showing dates.  The log column
+is more typically variable, so have that one be the one that takes up
+whatever space is left.
 
 Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 ---
- src/revsview.ui |   31 ++++++++++++++++++++++++++-----
- 1 files changed, 26 insertions(+), 5 deletions(-)
+ src/common.h     |    2 +-
+ src/listview.cpp |    6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/src/revsview.ui b/src/revsview.ui
-index 3fb02ee..ad16200 100644
---- a/src/revsview.ui
-+++ b/src/revsview.ui
-@@ -55,11 +55,32 @@
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <widget class="RevDesc" name="textBrowserDesc" >
-+       <property name="sizePolicy" >
-+        <sizepolicy>
-+         <hsizetype>5</hsizetype>
-+         <vsizetype>13</vsizetype>
-+         <horstretch>3</horstretch>
-+         <verstretch>0</verstretch>
-+        </sizepolicy>
-+       </property>
-+       <property name="font" >
-+        <font>
-+         <family>Monospace</family>
-+        </font>
-+       </property>
-        <property name="lineWrapMode" >
-         <enum>QTextEdit::NoWrap</enum>
-        </property>
-       </widget>
-       <widget class="FileList" name="fileList" >
-+       <property name="sizePolicy" >
-+        <sizepolicy>
-+         <hsizetype>5</hsizetype>
-+         <vsizetype>13</vsizetype>
-+         <horstretch>1</horstretch>
-+         <verstretch>0</verstretch>
-+        </sizepolicy>
-+       </property>
-        <property name="contextMenuPolicy" >
-         <enum>Qt::CustomContextMenu</enum>
-        </property>
-@@ -72,16 +93,16 @@
-  <layoutdefault spacing="6" margin="11" />
-  <customwidgets>
-   <customwidget>
--   <class>ListView</class>
--   <extends>QTreeView</extends>
--   <header>listview.h</header>
--  </customwidget>
--  <customwidget>
-    <class>FileList</class>
-    <extends>QListWidget</extends>
-    <header>filelist.h</header>
-   </customwidget>
-   <customwidget>
-+   <class>ListView</class>
-+   <extends>QTreeView</extends>
-+   <header>listview.h</header>
-+  </customwidget>
-+  <customwidget>
-    <class>RevDesc</class>
-    <extends>QTextBrowser</extends>
-    <header>revdesc.h</header>
+diff --git a/src/common.h b/src/common.h
+index e3da323..43b5527 100644
+--- a/src/common.h
++++ b/src/common.h
+@@ -158,7 +158,7 @@ namespace QGit {
+ 	const int DEF_GRAPH_COL_WIDTH = 80;
+ 	const int DEF_LOG_COL_WIDTH   = 500;
+ 	const int DEF_AUTH_COL_WIDTH  = 230;
+-	const int DEF_TIME_COL_WIDTH  = 130;
++	const int DEF_TIME_COL_WIDTH  = 160;
+ 
+ 	// colors
+ 	extern const QColor BROWN;
+diff --git a/src/listview.cpp b/src/listview.cpp
+index d5f8daf..91be60a 100644
+--- a/src/listview.cpp
++++ b/src/listview.cpp
+@@ -64,12 +64,16 @@ void ListView::setupGeometry() {
+ 	setPalette(pl); // does not seem to inherit application 
+paletteAnnotate
+ 
+ 	QHeaderView* hv = header();
+-	hv->resizeSection(GRAPH_COL, DEF_GRAPH_COL_WIDTH);
++	hv->setStretchLastSection( false );
++	hv->setResizeMode( LOG_COL, QHeaderView::Stretch );
++	hv->setResizeMode( TIME_COL, QHeaderView::Interactive);
+ 	hv->setResizeMode(ANN_ID_COL, QHeaderView::ResizeToContents);
++	hv->resizeSection(GRAPH_COL, DEF_GRAPH_COL_WIDTH);
+ 	hv->resizeSection(LOG_COL, DEF_LOG_COL_WIDTH);
+ 	hv->resizeSection(AUTH_COL, DEF_AUTH_COL_WIDTH);
+ 	hv->resizeSection(TIME_COL, DEF_TIME_COL_WIDTH);
+ 
++
+ 	if (git->isMainHistory(fh))
+ 		hideColumn(ANN_ID_COL);
+ }
 -- 
 1.5.0.rc1.gf4b6c
