@@ -1,87 +1,50 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: git log filtering
-Date: Wed, 7 Feb 2007 18:01:22 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070207170122.GB18704@informatik.uni-freiburg.de>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: MinGW binary installer available
+Date: Wed, 07 Feb 2007 18:05:43 +0100
+Message-ID: <45CA06E7.3050704@xs4all.nl>
+References: <45C9E470.7030609@xs4all.nl> <Pine.LNX.4.63.0702071552470.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C9EB54.3040406@xs4all.nl> <Pine.LNX.4.63.0702071625341.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C9F184.1060300@xs4all.nl> <Pine.LNX.4.63.0702071713190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Don Zickus <dzickus@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 07 18:01:40 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jan Nieuwenhuizen <janneke@gnu.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 07 18:11:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEqAl-0004uc-E4
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 18:01:31 +0100
+	id 1HEqEu-0005tK-T6
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 18:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161434AbXBGRB2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Feb 2007 12:01:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161435AbXBGRB2
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 12:01:28 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:46278 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1161434AbXBGRB1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Feb 2007 12:01:27 -0500
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HEqAg-0001BY-EZ; Wed, 07 Feb 2007 18:01:26 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l17H1NSv019368;
-	Wed, 7 Feb 2007 18:01:23 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l17H1NhS019367;
-	Wed, 7 Feb 2007 18:01:23 +0100 (MET)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1161369AbXBGRFq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 12:05:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161385AbXBGRFq
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 12:05:46 -0500
+Received: from smtp-vbr5.xs4all.nl ([194.109.24.25]:4199 "EHLO
+	smtp-vbr5.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161369AbXBGRFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 12:05:45 -0500
+Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
+	(authenticated bits=0)
+	by smtp-vbr5.xs4all.nl (8.13.8/8.13.8) with ESMTP id l17H5XxK051853
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 7 Feb 2007 18:05:33 +0100 (CET)
+	(envelope-from hanwen@xs4all.nl)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070130)
+In-Reply-To: <Pine.LNX.4.63.0702071713190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38940>
 
-Don Zickus wrote:
-> I was curious to know what is the easiest way to filter info inside a
-> commit message.
->=20
-> For example say I wanted to find out what patches Joe User has
-> submitted to the git project.
-> I know I can do something like ' git log |grep -B2 "^Author: Joe User=
-"
-What about
+Johannes Schindelin escreveu:
 
-	git log --author=3D"Joe User"
+> BTW do you have side branches in that darcs gub repository? If not, I'll 
+> try to leech it into a git repo with tailor (I do not want to install 
+> darcs on all my machines, just to play with gub).
 
-> ' and it will output the matches and the commit id.  However, if I
-> wanted to filter on something like "Signed-off-by: Joe User", then it
-> is a little harder to dig for the commit id.
->=20
-> Is there a better way of doing this?  Or should I accept the fact tha=
-t
-> git wasn't designed to filter info like this very quickly?
->=20
-> I guess what I was looking to do was embed some metadata inside the
-> commit message and parse through it at a later time (ie like a
-> bugzilla number or something).
->=20
-> Any thoughts/tips/tricks would be helpful.
+No, but I have a conversion running here.  I'll publish it once it's done.
 
-Maybe:
-
-	git log | awk -v sob=3D"Joe User" '$1 =3D=3D "commit" {commit =3D $2} =
-/Signed-off-by:/ {if (match($0, sob)) print commit}'
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D2004+in+roman+numerals
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
