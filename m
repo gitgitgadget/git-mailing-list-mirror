@@ -1,53 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH] fast-import: Fix compile warnings
-Date: Wed, 07 Feb 2007 09:47:29 -0800
-Message-ID: <7vveid7tce.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0702071237360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vzm7p7uf9.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0702071829450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git log filtering
+Date: Wed, 7 Feb 2007 10:16:15 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702070919320.8424@woody.linux-foundation.org>
+References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
+ <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 07 18:47:41 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Don Zickus <dzickus@gmail.com>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 07 19:16:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEqtR-0003vE-2F
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 18:47:41 +0100
+	id 1HErLF-0000qM-Q9
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 19:16:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422630AbXBGRrh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 12:47:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161407AbXBGRrh
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 12:47:37 -0500
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:35919 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161403AbXBGRrg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 12:47:36 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070207174736.LOVL1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 7 Feb 2007 12:47:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id LhnV1W0171kojtg0000000; Wed, 07 Feb 2007 12:47:30 -0500
-In-Reply-To: <Pine.LNX.4.63.0702071829450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 7 Feb 2007 18:35:30 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965701AbXBGSQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 13:16:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965541AbXBGSQW
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 13:16:22 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:58252 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965701AbXBGSQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 13:16:20 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l17IGGmA012361
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 7 Feb 2007 10:16:16 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l17IGFmS022095;
+	Wed, 7 Feb 2007 10:16:16 -0800
+In-Reply-To: <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-0.455 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.112__
+X-MIMEDefang-Filter: osdl$Revision: 1.174 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38951>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> However, your patch does not apply.
->
-> Hmm. Strange, I thought that I only changed the in_merge_bases() line... 
-> Will have a look tomorrow.
 
-Sorry, but not to worry.  It was because Shawn had a few updates
-ahead of you.
+On Wed, 7 Feb 2007, Linus Torvalds wrote:
+> 
+> 	git log --pretty -z |
+
+Gaah. If all you want is normal logs, you don't need the "--pretty", 
+of course, since that's the default. Just "git log -z" will give you 
+zero-terminated logs. 
+
+But if you want to grep on committer, you'd need to use "--pretty=full" or 
+something, of course, so the "--pretty=xyz" thing is indeed often 
+applicable for things like this.
+
+Also, I just checked, and we have a bug. Merges do not have the ending 
+zero in "git log -z" output. It seems to be connected to the fact that we 
+handle the "always_show_header" commits differently (the ones that we 
+wouldn't normally show because they have no diffs associated with them).
+
+The obvious fix for that failed. I'll look at it some more.
+
+		Linus
