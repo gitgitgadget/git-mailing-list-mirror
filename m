@@ -1,108 +1,81 @@
-From: "Don Zickus" <dzickus@gmail.com>
-Subject: Re: Fix "git log -z" behaviour
-Date: Wed, 7 Feb 2007 17:53:22 -0500
-Message-ID: <68948ca0702071453i3c4d1b66hcf173fc17919acd6@mail.gmail.com>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
-	 <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0702070919320.8424@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0702071139090.8424@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-fast-import
+Date: Wed, 7 Feb 2007 17:55:32 -0500
+Message-ID: <20070207225532.GA1970@spearce.org>
+References: <20070206023111.GB9222@spearce.org> <45C81C33.6010704@gmail.com> <20070206061817.GB10508@spearce.org> <Pine.LNX.4.64.0702062347060.20138@iabervon.org> <20070207091351.GA1632@diana.vm.bytemark.co.uk> <Pine.LNX.4.63.0702071216330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 07 23:54:02 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 07 23:55:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEvfY-0007Zf-IP
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 23:53:40 +0100
+	id 1HEvhZ-000055-Vt
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 23:55:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422812AbXBGWxZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 17:53:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422815AbXBGWxZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 17:53:25 -0500
-Received: from nz-out-0506.google.com ([64.233.162.233]:55566 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422812AbXBGWxX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 17:53:23 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so312340nze
-        for <git@vger.kernel.org>; Wed, 07 Feb 2007 14:53:22 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qJRXo9gUd+N70K7KLS64zkaq/8wmiKnQUMlSanucdq9rsN1g4PcbItvctqJeSD38VZphlcfzgwXP3B7NKfUoeKbmAr6NcMbUiURAUmChD90bqXPePtHT6IN/QVevWBNu49HLPHfX501q1xtqtq08Amj7NCHJ2BlI7NbL1qX8q0k=
-Received: by 10.65.119.14 with SMTP id w14mr14360281qbm.1170888802445;
-        Wed, 07 Feb 2007 14:53:22 -0800 (PST)
-Received: by 10.65.189.12 with HTTP; Wed, 7 Feb 2007 14:53:22 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0702071139090.8424@woody.linux-foundation.org>
+	id S1161303AbXBGWzm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Feb 2007 17:55:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161475AbXBGWzm
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 17:55:42 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:45825 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161474AbXBGWzl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Feb 2007 17:55:41 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HEvhE-0003Ci-St; Wed, 07 Feb 2007 17:55:24 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9190020FBAE; Wed,  7 Feb 2007 17:55:32 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702071216330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38988>
 
->
-> For commit messages, we should really put the "line_termination" when we
-> output the character in between different commits, *not* between the
-> commit and the diff. The diff goes hand-in-hand with the commit, it
-> shouldn't be separated from it with the termination character.
->
-> So this:
->  - uses the termination character for true inter-commit spacing
->  - uses a regular newline between the commit log and the diff
->
-> We had it the other way around.
->
-> For the normal case where the termination character is '\n', this
-> obviously doesn't change anything at all, since we just switched two
-> identical characters around. So it's very safe - it doesn't change any
-> normal usage, but it definitely fixes "git log -z".
->
-> By fixing "git log -z", you can now also do insane things like
->
->         git log -p -z |
->                 grep -z "some patch expression" |
->                 tr '\0' '\n' |
->                 less -S
->
-> and you will see only those commits that have the "some patch expression"
-> in their commit message _or_ their patches.
->
-> (This is slightly different from 'git log -S"some patch expression"',
-> since the latter requires the expression to literally *change* in the
-> patch, while the "git log -p -z | grep .." approach will see it if it's
-> just an unchanged _part_ of the patch context)
->
-> Of course, if you actually do something like the above, you're probably
-> insane, but hey, it works!
->
-> Try the above command line for a demonstration (of course, you need to
-> change the "some patch expression" to be something relevant). The old
-> behaviour of "git log -p -z" was useless (and got things completely wrong
-> for log entries without patches).
->
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> ---
->
-> On Wed, 7 Feb 2007, Linus Torvalds wrote:
-> >
-> > Also, I just checked, and we have a bug. Merges do not have the ending
-> > zero in "git log -z" output. It seems to be connected to the fact that we
-> > handle the "always_show_header" commits differently (the ones that we
-> > wouldn't normally show because they have no diffs associated with them).
-> >
-> > The obvious fix for that failed. I'll look at it some more.
->
-> Actually, the obvious fix was right, I just did the *wrong* obvious fix at
-> first ;)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Wed, 7 Feb 2007, Karl Hasselstr=F6m wrote:
+> > In other words, general history rewriting, but fast.
+>=20
+> For this, it would be better to use a different approach: fast-import=
+=20
+> still hashes all the objects, which would not be necessary when rewri=
+ting.=20
+> I guess that is what cogito's tool is doing.
 
-Works for me.  :)
-And I thought I had a handle on a lot of the Unix commands.  That -z
-stuff just threw me for a loop.  It's pretty neat to be able to grep
-commits and have the output display the whole commit and diff.
+gfi doesn't require that it rehash blob objects.
 
-Cheers,
-Don
+If the blobs in question are already available in the repository
+gfi is running against (say, from the old branch history) you
+can just feed those blob SHA-1s at gfi in its 'M' commands when
+making commits.  Yes gfi will need to recompute the tree hashes
+from scratch, but those are certainly smaller and faster to create
+than blobs.
+
+So you probably could make a faster history rewriter by taking
+the output of say `git log --pretty=3Draw --raw -z`, filter that and
+reverse it, and stream it into gfi.  It probably would kick Cogito's
+cg-admin-rewritefilter thing in the teeth, as you are forking just
+one gfi process rather than a thousand git-commit-tree processes.
+
+And if you are doing more complex pathname translations than just
+picking out a subtree, it also completely avoids needing to read and
+write index files via update-index, or tree objects by write-tree.
+
+--=20
+Shawn.
