@@ -1,53 +1,71 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [RFC/PATCH] fast-import: Fix compile warnings
-Date: Wed, 7 Feb 2007 13:19:00 +0100
-Message-ID: <81b0412b0702070419t2293f776wb4f3f7beb76c986c@mail.gmail.com>
-References: <Pine.LNX.4.63.0702071237360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: describe fails on tagless branch
+Date: Wed, 07 Feb 2007 13:37:32 +0100
+Organization: At home
+Message-ID: <eqch3d$5gc$1@sea.gmane.org>
+References: <eqb660$ft7$1@sea.gmane.org> <200702070922.57163.andyparkins@gmail.com> <7vy7na8f2t.fsf@assigned-by-dhcp.cox.net> <200702071201.16931.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 07 13:19:08 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 07 13:37:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEllT-0005gB-VH
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 13:19:08 +0100
+	id 1HEm2k-0005FP-VJ
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 13:36:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161280AbXBGMTE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 07:19:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161288AbXBGMTE
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 07:19:04 -0500
-Received: from wx-out-0506.google.com ([66.249.82.232]:36032 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161280AbXBGMTC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 07:19:02 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so173470wxd
-        for <git@vger.kernel.org>; Wed, 07 Feb 2007 04:19:01 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IBxULyM3AAFN0cqw0vpwGm4qh/ohOs9EdJAnKVwTrS0BiIThOEdxdbFQCd9UwlZOAMj5qbUO2EIOKffFs2xKI//sNx53jj6P7Tz9iCziBumedUyix0SmJHoZYN6421UTqgLsF5wML+6puz8lUXfk6LDQuaGCYXMEqvQjTuwt50M=
-Received: by 10.78.138.6 with SMTP id l6mr2181695hud.1170850740680;
-        Wed, 07 Feb 2007 04:19:00 -0800 (PST)
-Received: by 10.78.139.9 with HTTP; Wed, 7 Feb 2007 04:19:00 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.63.0702071237360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1030283AbXBGMg4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Feb 2007 07:36:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030621AbXBGMg4
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 07:36:56 -0500
+Received: from main.gmane.org ([80.91.229.2]:38231 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030283AbXBGMgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 07:36:55 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HEm2K-0003eK-9K
+	for git@vger.kernel.org; Wed, 07 Feb 2007 13:36:32 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Feb 2007 13:36:32 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Feb 2007 13:36:32 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: jnareb@gmail.com
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38919>
 
-On 2/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
->         I have no idea how portable %z is, but there are so many
->         experts on this list. Care to enlighten me?
->
+Andy Parkins wrote:
 
-IEEE Std 1003.1[1] mentions it, but I never was able to rely on it:
-AIX, Solaris, QNX-libc at least didn't have it, last time I checked.
-Micro$oft doesn't have it, of course.
+>> It might not be a bad idea to give '-q' option to make it silent
+>> when it fails because the commit is indescribable.
+>=20
+> I don't think it's worth it. =A0The "-q" be used only in scripts, and=
+ in a=20
+> script you would do the whole "2> /dev/null || echo 'No tag found'" t=
+hing=20
+> anyway.
 
-[1] http://www.opengroup.org/onlinepubs/009695399/functions/fprintf.html
+It would be worth for Perl (for gitweb) to be able to use list form of =
+magic
+open, without spawning shell (and assorted argument quoting troubles), =
+but
+silently.=20
+
+I think it would be fairly easy to add -q option to git wrapper: it wou=
+ld
+simply set die, error and warn routines and no-op (no-write) versions.
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
