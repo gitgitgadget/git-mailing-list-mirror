@@ -1,62 +1,77 @@
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: MinGW binary installer available
-Date: Wed, 07 Feb 2007 23:10:48 +0100
-Message-ID: <45CA4E68.6070308@xs4all.nl>
-References: <45C9E470.7030609@xs4all.nl> <Pine.LNX.4.63.0702071552470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: hanwen@xs4all.nl
+From: Bill Lear <rael@zopyra.com>
+Subject: Git log of all (modifying) commands run on a repo?
+Date: Wed, 7 Feb 2007 16:15:31 -0600
+Message-ID: <17866.20355.744025.133326@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jan Nieuwenhuizen <janneke@gnu.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 07 23:11:00 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 07 23:15:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEv02-0006cR-T6
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 23:10:47 +0100
+	id 1HEv51-0000GJ-Sk
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 23:15:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422816AbXBGWKn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 17:10:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422889AbXBGWKn
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 17:10:43 -0500
-Received: from smtp-vbr4.xs4all.nl ([194.109.24.24]:1936 "EHLO
-	smtp-vbr4.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422816AbXBGWKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 17:10:42 -0500
-Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
-	(authenticated bits=0)
-	by smtp-vbr4.xs4all.nl (8.13.8/8.13.8) with ESMTP id l17MAcrP054153
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 7 Feb 2007 23:10:39 +0100 (CET)
-	(envelope-from hanwen@xs4all.nl)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070130)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <Pine.LNX.4.63.0702071552470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1422912AbXBGWPm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 17:15:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422918AbXBGWPm
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 17:15:42 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61548 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422916AbXBGWPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 17:15:41 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l17MFf306342;
+	Wed, 7 Feb 2007 16:15:41 -0600
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38980>
 
-Johannes Schindelin escreveu:
-> I played a little with it. IMHO it makes no sense to use it without a 
-> bash, and without less. For example,
-> 
-> 	$ git init
-> 	$ git add git.exe
-> 	$ git status
-> 	$ git commit -a -m initial
-> 	$ git show HEAD
-> 
-> do not produce any output when issued in cmd.
+Our company recently switched to git.  Our enthusiasm for git outweighs
+the problems we have encountered so far, universally those of user
+befuddlement, not git problems per se.
 
-can you check out the -2 build, at 
- 
-  http://lilypond.org/git/binaries/mingw/git-1.4.9993-2.mingw.exe
-  
-to see if this is better?
+I have destroyed several repos by accidentally pulling from or pushing
+to the wrong branch, not realizing this until later, and, trying what
+I thought the proper way to undo it, failed that miserably.  I have
+destroyed a few other repos by pulling from a "polluted" repo of a
+co-worker that had mistakenly merged things in, and have had to resort
+each time to full-scale reconstructions (again, almost trivially
+accomplished thanks to git).  Thankfully, our company repo is so far
+pristine, and I have been able to quickly reconstruct things and
+continue working.
 
--- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+A co-worker just called to say he apparently had done something
+similar, as he tried to pull from our company repo, got a conflict,
+and then discovered files and changes to files that should not have
+been on the master branch.  These files and changes do not exist in
+our company repo, of that we are certain.
+
+I'm not certain how I managed to screw up my repo, and he is equally
+unsure of how he managed to screw up his.
+
+I thought that it would be very useful to have a history of git
+commands that have been run against a repo, in order to hopefully
+debug this sort of thing --- perhaps only those that modify the repo.
+
+I suppose this would need to include information about which branches
+were affected as well.
+
+% cat .git/repo.log
+[....]
+2007-02-07 10:05:44 git pull . .....
+** Pull from master branch onto project branch
+** Pull from foobar branch onto boobar branch
+** ...
+2007-02-07 10:05:44 git pull git://source/project master:project
+** Your explanation here...
+
+Would this sort of thing be easy to do?  I presume git does not
+currently have support for this, but thought I would ask.
+
+
+Bill
