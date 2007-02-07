@@ -1,62 +1,130 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Fix "git log -z" behaviour
-Date: Wed, 07 Feb 2007 11:55:56 -0800
-Message-ID: <7vmz3p7neb.fsf@assigned-by-dhcp.cox.net>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
-	<Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0702070919320.8424@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0702071139090.8424@woody.linux-foundation.org>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: git rebase: unexpected conflict
+Date: Wed, 7 Feb 2007 22:05:08 +0200
+Message-ID: <20070207200508.GE12140@mellanox.co.il>
+References: <7vr6t17ohb.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 07 20:58:31 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 07 21:04:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEsvs-00041V-Uv
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 20:58:21 +0100
+	id 1HEt23-0006h2-He
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 21:04:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422915AbXBGT4R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 14:56:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161445AbXBGT4Q
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 14:56:16 -0500
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:40009 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161439AbXBGT4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 14:56:00 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070207195558.OLRA1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 7 Feb 2007 14:55:58 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Ljvx1W0041kojtg0000000; Wed, 07 Feb 2007 14:55:57 -0500
-In-Reply-To: <Pine.LNX.4.64.0702071139090.8424@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 7 Feb 2007 11:49:56 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161435AbXBGUEk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Feb 2007 15:04:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161438AbXBGUEk
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 15:04:40 -0500
+Received: from p02c11o143.mxlogic.net ([208.65.145.66]:51111 "EHLO
+	p02c11o143.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161435AbXBGUEj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Feb 2007 15:04:39 -0500
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o143.mxlogic.net (mxl_mta-4.0.2-2)
+	with ESMTP id 6d03ac54.1966611376.50953.00-008.p02c11o143.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Wed, 07 Feb 2007 13:04:38 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 7 Feb 2007 22:06:46 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Wed,  7 Feb 2007 22:02:27 +0200
+Content-Disposition: inline
+In-Reply-To: <7vr6t17ohb.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 07 Feb 2007 20:06:46.0080 (UTC) FILETIME=[7E5BC400:01C74AF3]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14984.001
+X-TM-AS-Result: No--16.509000-4.000000-31
+X-Spam: [F=0.2841480236; S=0.284(2007010901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38957>
 
-Ah, I was looking at other minor issues and then came up with
-this one liner.  But obviously "termination should be the true
-inter-commit spacing" is the right direction, so I'll chuck this
-one.
+> Quoting Junio C Hamano <junkio@cox.net>:
+> Subject: Re: git rebase: unexpected conflict
+>=20
+> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+>=20
+> > When you have resolved this problem run "git rebase --continue".
+> > If you would prefer to skip this patch, instead run "git rebase --s=
+kip".
+> > To restore the original branch and stop rebasing run "git rebase --=
+abort".
+> > --------------------------
+> >
+> > Sure enough, there are conflicts in drivers/mtd/nand/Kconfig:
+> >
+> > <<<<<<< HEAD:drivers/mtd/nand/Kconfig
+> > config MTD_NAND_CAFE
+> >        tristate "NAND support for OLPC CAF=C9 chip"
+> >        depends on PCI
+> >        help
+> >          Use NAND flash attached to the CAF=C9 chip designed for th=
+e $100
+> >          laptop.
+> > =3D=3D=3D=3D=3D=3D=3D
+> > config MTD_NAND_AT91
+> >         bool "Support for NAND Flash / SmartMedia on AT91"
+> >         depends on MTD_NAND && ARCH_AT91
+> >         help
+> >           Enables support for NAND Flash / Smart Media Card interfa=
+ce
+> >           on Atmel AT91 processors.
+> >>>>>>>> [MTD] NAND: AT91 NAND driver:drivers/mtd/nand/Kconfig
+> >
+> > But I don't really understand where do the conflicts come from:
+> > The patch I skipped (9b3bfe5696aa417d38ce903eb345a03d65743dd2)
+> > only touched the file drivers/infiniband/core/addr.c,
+> > so why can't rebase replay all of the changes?
+>=20
+> That is because David Woodhouse has an evil merge at
+> c45aa055c32b488fc3fd73c760df372b09acf69a.
+>=20
+> Running "git show" on that commit would tell you the story.
 
-diff --git a/log-tree.c b/log-tree.c
-index d8ca36b..410f90f 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -354,6 +354,8 @@ int log_tree_commit(struct rev_info *opt, struct commit *commit)
- 	if (!shown && opt->loginfo && opt->always_show_header) {
- 		log.parent = NULL;
- 		show_log(opt, "");
-+		if (!opt->diffopt.line_termination)
-+			putchar(0);
- 		shown = 1;
- 	}
- 	opt->loginfo = NULL;
+Sorry about being dense. What's evil there?
+There seems to have been a merge, and a conflict was resolved.
+
+mst@mst-lt:~/scm/linux-2.6$ git show c45aa055c32b488fc3fd73c760df372b09=
+acf69a
+commit c45aa055c32b488fc3fd73c760df372b09acf69a
+Merge: 784f4d5... 8dd851d...
+Author: David Woodhouse <dwmw2@infradead.org>
+Date:   Sun Oct 22 02:17:05 2006 +0100
+
+    Merge git://git.infradead.org/~dwmw2/cafe-2.6
+
+    Conflicts:
+
+        drivers/mtd/nand/Kconfig
+
+diff --cc drivers/mtd/nand/Kconfig
+index b4b1656,5e97e63..564f79d
+--- a/drivers/mtd/nand/Kconfig
++++ b/drivers/mtd/nand/Kconfig
+@@@ -219,6 -219,6 +219,13 @@@ config MTD_NAND_SHARPS
+        tristate "Support for NAND Flash on Sharp SL Series (C7xx + oth=
+ers)"
+        depends on MTD_NAND && ARCH_PXA
+
+++config MTD_NAND_CAFE
+++       tristate "NAND support for OLPC CAF=C9 chip"
+++       depends on PCI
+++       help
+++       Use NAND flash attached to the CAF=C9 chip designed for the $1=
+00
+++       laptop.
+++
+  config MTD_NAND_CS553X
+        tristate "NAND support for CS5535/CS5536 (AMD Geode companion c=
+hip)"
+        depends on MTD_NAND && X86_32 && (X86_PC || X86_GENERICARCH)
+
+--=20
+MST
