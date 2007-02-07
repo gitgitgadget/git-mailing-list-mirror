@@ -1,80 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git rebase: unexpected conflict
-Date: Wed, 07 Feb 2007 12:37:39 -0800
-Message-ID: <7vabzp7lgs.fsf@assigned-by-dhcp.cox.net>
-References: <7vired7mkw.fsf@assigned-by-dhcp.cox.net>
-	<20070207203133.GG12140@mellanox.co.il>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git log filtering
+Date: Wed, 7 Feb 2007 13:03:05 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
+References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
+ <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v64ad7l12.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Feb 07 21:39:41 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 07 22:03:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEtZr-0003qF-Sx
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 21:39:40 +0100
+	id 1HEtwo-0004Uu-1o
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 22:03:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161433AbXBGUiP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 15:38:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161373AbXBGUhq
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 15:37:46 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48009 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161439AbXBGUhk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 15:37:40 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070207203739.THYJ1302.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 7 Feb 2007 15:37:39 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Lkdf1W00i1kojtg0000000; Wed, 07 Feb 2007 15:37:40 -0500
-In-Reply-To: <20070207203133.GG12140@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Wed, 7 Feb 2007 22:31:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1422742AbXBGVDO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 16:03:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422744AbXBGVDO
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 16:03:14 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:36732 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422742AbXBGVDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 16:03:13 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l17L36dD019312
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 7 Feb 2007 13:03:06 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l17L351x027071;
+	Wed, 7 Feb 2007 13:03:05 -0800
+In-Reply-To: <7v64ad7l12.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.448 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.113__
+X-MIMEDefang-Filter: osdl$Revision: 1.175 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38966>
 
-"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
 
->> Since git-rebase currently ignores merge commits
->
-> Ugh. This is the bit I did not know about.
->
-> So the following script is kind of equivalent to rebase -
-> it applies commits in range $1..$2 that touch files in list on top of current tree:
->
-> from=$1
-> shift
-> to=$1
-> shift
-> git-show --pretty=email `git-rev-list --no-merges $from..$to -- $* | tac` > box
-> ../git-am box
->
-> And here I was hoping rebase will be smarter and help me out.
->
-> OK.
->
-> Questions about the above line now:
->
-> 1. What is annoying in the above is that
-> git-show can not limit its output to just the part of patch
-> that affects the list of files I give, the way git-diff can.
-> Would such an extension be a good idea?
 
-It is a good idea and I think it is implemented.
+On Wed, 7 Feb 2007, Junio C Hamano wrote:
+> 
+> This is very tempting but, ... hmmmm...
 
-	$ git-show <commit>... --- <paths>
+I would actually prefer to have it be some marker on the expression 
+itself.
 
-would probably give what you want (although I am not absolutely
-sure I understand what you want).
+We already do that '^' handling by hand for "author"/"committer" things. 
+We could do other things like that.
 
-> 2. It's unfortunate that I need a temp file here.
-> Can git-am get stdin somehow?
+Although I guess the downside of not doing standard regexps would be too 
+big.
 
-See "git-rebase.sh" around ll.325.
+		Linus
