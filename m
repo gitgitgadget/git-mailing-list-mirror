@@ -1,66 +1,99 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git-fast-import
-Date: Tue, 6 Feb 2007 23:55:46 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702062347060.20138@iabervon.org>
-References: <20070206023111.GB9222@spearce.org> <45C81C33.6010704@gmail.com>
- <20070206061817.GB10508@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Make gitk save and restore the user set window position.
+Date: Wed, 7 Feb 2007 00:40:10 -0500
+Message-ID: <20070207054010.GB7047@spearce.org>
+References: <7v3b5ifyam.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 07 05:55:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 07 06:40:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEeqW-0001jI-UJ
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 05:55:53 +0100
+	id 1HEfXd-0004LR-F0
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 06:40:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030255AbXBGEzt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Feb 2007 23:55:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965639AbXBGEzs
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Feb 2007 23:55:48 -0500
-Received: from iabervon.org ([66.92.72.58]:4083 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965615AbXBGEzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Feb 2007 23:55:48 -0500
-Received: (qmail 28722 invoked by uid 1000); 6 Feb 2007 23:55:46 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 6 Feb 2007 23:55:46 -0500
-In-Reply-To: <20070206061817.GB10508@spearce.org>
+	id S1752323AbXBGFkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 00:40:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752326AbXBGFkT
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 00:40:19 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42506 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323AbXBGFkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 00:40:18 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HEfXP-00039Z-Qc; Wed, 07 Feb 2007 00:40:11 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1E51420FBAE; Wed,  7 Feb 2007 00:40:10 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7v3b5ifyam.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38889>
 
-On Tue, 6 Feb 2007, Shawn O. Pearce wrote:
-
-> "Aneesh Kumar K.V" <aneesh.kumar@gmail.com> wrote:
-> > >SYNOPSIS
-> > >--------
-> > >frontend | 'git-fast-import' [options]
-> > >
-> > 
-> > Do we have example frontend  that can be added along with gfi ?
+Junio C Hamano <junkio@cox.net> wrote:
+>    After seeing what this patch has to do, I feel dirty, but
+>    that is not Mark's fault -- rather it is Tk's.
 > 
-> Not yet.  Some frontends are available here on repo.or.cz:
-> 
->   gitweb: http://repo.or.cz/w/fast-export.git
->   clone:  git://repo.or.cz/fast-export.git
-> 
-> But both lack branch support, for example, so they probably aren't
-> nearly as complete as the existing non-gfi based importers.
+>    I am tempted to suggest adding an explicit "Save window
+>    configuration" action on the menubar and forget about
+>    resurrecting the window configuration immediately before the
+>    end of the last session.
 
-It might be nice to have a git-fast-export, which could actually be 
-potentially useful for generating a repository with systematic differences 
-from the original. (E.g., to make a repository of git's Documentation 
-directory, with just the commits that affect it)
+Maybe take a look at what git-gui does here, because its slightly
+saner and still saves the geometry on exit:
 
-That might also be a big help to projects that find they should have been 
-using more, fewer, or different repositories through their history.
+	set is_quitting 0
+	proc do_quit {} {
+		global is_quitting
+		if {$is_quitting} return
+		set is_quitting 1
+		# save wm geometry
+	}
+	bind . <Destroy> do_quit
 
-Also, I'd guess that it would be pretty straightforward and easy to 
-understand, plus easy to verify correctness on large examples with.
+OK, its not that much saner.  But it does bypass needing to setup
+some ugly bindings on every object in the UI.  Though I recently
+took a slightly different approach in a dialog:
 
-	-Daniel
-*This .sig left intentionally blank*
+	proc do_quit {} {
+		bind . <Destroy> {}
+		# do cleanup
+	}
+	bind . <Destroy> do_quit
+
+Yes the binding is firing in both cases for some arbitrary child
+widget in the window, but it doesn't matter.  In the latter version
+setting the binding to the empty string removes the do_quit binding,
+allowing the other widgets to destroy without reinvoking do_quit
+and whacking whatever geometry data you may have saved before the
+widgets started to get deleted.
+
+
+The only problem I seem to have in git-gui is the window position
+opens about 10 pixels lower and 2 pixels to the right than the last
+time it opened.  I think there's a bug in Tk on Windows where the
+window position on the desktop doesn't include the titlebar when I
+get it, but expects to include it when I attempt to set it on the
+next start.
+
+I should note I also see the same behavior with my day-time-job's
+Java apps on Windows however, so I don't think its a specific Tk
+or git-gui issue.
+
+-- 
+Shawn.
