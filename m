@@ -1,100 +1,120 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git rebase: unexpected conflict
-Date: Wed, 07 Feb 2007 12:13:35 -0800
-Message-ID: <7vired7mkw.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6t17ohb.fsf@assigned-by-dhcp.cox.net>
-	<20070207200508.GE12140@mellanox.co.il>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: [PATCH] add -C[NUM] to git-am
+Date: Wed, 7 Feb 2007 22:15:11 +0200
+Message-ID: <20070207201511.GF12140@mellanox.co.il>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Feb 07 21:13:44 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 07 21:14:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEtAh-0001mQ-P7
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 21:13:40 +0100
+	id 1HEtBn-0002Do-4B
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 21:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030658AbXBGUNh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Feb 2007 15:13:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030660AbXBGUNh
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 15:13:37 -0500
-Received: from fed1rmmtai15.cox.net ([68.230.241.44]:46922 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030659AbXBGUNg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Feb 2007 15:13:36 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070207201336.OBYS1306.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 7 Feb 2007 15:13:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id LkDb1W00X1kojtg0000000; Wed, 07 Feb 2007 15:13:35 -0500
-In-Reply-To: <20070207200508.GE12140@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Wed, 7 Feb 2007 22:05:08 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030657AbXBGUOo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 15:14:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030659AbXBGUOn
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 15:14:43 -0500
+Received: from p02c11o142.mxlogic.net ([208.65.145.65]:51881 "EHLO
+	p02c11o142.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030657AbXBGUOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 15:14:43 -0500
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o142.mxlogic.net (mxl_mta-4.0.2-2)
+	with ESMTP id 2333ac54.1716288432.7074.00-047.p02c11o142.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Wed, 07 Feb 2007 13:14:42 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 7 Feb 2007 22:16:49 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Wed,  7 Feb 2007 22:12:31 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 07 Feb 2007 20:16:49.0426 (UTC) FILETIME=[E5FB0F20:01C74AF4]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14984.001
+X-TM-AS-Result: No--10.555400-4.000000-31
+X-Spam: [F=0.2053272300; S=0.205(2007010901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38959>
 
-"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
 
-> Sorry about being dense. What's evil there?
+Add -C[NUM] to git-am so that patches can be applied even
+if context has changed a bit.
 
-Sorry for being too terse to be useful.
+Signed-off-by: Michael S. Tsirkin <mst@mellanox.co.il>
 
-An evil merge is a merge that introduces changes that do not
-appear in any parent.
+---
 
-> There seems to have been a merge, and a conflict was resolved.
->
-> mst@mst-lt:~/scm/linux-2.6$ git show c45aa055c32b488fc3fd73c760df372b=
-09acf69a
-> commit c45aa055c32b488fc3fd73c760df372b09acf69a
-> Merge: 784f4d5... 8dd851d...
-> Author: David Woodhouse <dwmw2@infradead.org>
-> Date:   Sun Oct 22 02:17:05 2006 +0100
->
->     Merge git://git.infradead.org/~dwmw2/cafe-2.6
->
->     Conflicts:
->
->         drivers/mtd/nand/Kconfig
->
-> diff --cc drivers/mtd/nand/Kconfig
-> index b4b1656,5e97e63..564f79d
-> --- a/drivers/mtd/nand/Kconfig
-> +++ b/drivers/mtd/nand/Kconfig
-> @@@ -219,6 -219,6 +219,13 @@@ config MTD_NAND_SHARPS
->         tristate "Support for NAND Flash on Sharp SL Series (C7xx + o=
-thers)"
->         depends on MTD_NAND && ARCH_PXA
->
-> ++config MTD_NAND_CAFE
-> ++       tristate "NAND support for OLPC CAF=C3=89 chip"
-> ++       depends on PCI
-> ++       help
-> ++       Use NAND flash attached to the CAF=C3=89 chip designed for t=
-he $100
-> ++       laptop.
-> ++
->   config MTD_NAND_CS553X
->         tristate "NAND support for CS5535/CS5536 (AMD Geode companion=
- chip)"
->         depends on MTD_NAND && X86_32 && (X86_PC || X86_GENERICARCH)
->
+I just had to apply a largish number of patches on a project
+that has evolved since, and I found the following to be useful.
 
-Notice two plus letters?  The copy of the file in either
-parents of the merge did not have these 7 lines.  These were
-literally _added_ by the merge.
+What do others think.
 
-Since git-rebase currently ignores merge commits, while you are
-rebasing your branch, your branch does not have these lines
-after finishing to rebase the commit just before one.  The
-commit that comes on top of this one _expects_ to have NAND_CAFE
-already added in the tree, but since you do not have one, you
-get a conflict.
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index aa4ce1d..f7d551e 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -64,6 +64,10 @@ default.   You could use `--no-utf8` to override this.
+ 	This flag is passed to the `git-apply` program that applies
+ 	the patch.
+ 
++-C<n>::
++	This flag is passed to the `git-apply` program that applies
++	the patch.
++
+ --interactive::
+ 	Run interactively, just like git-applymbox.
+ 
+diff --git a/git-am.sh b/git-am.sh
+index 1252f26..9a61234 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -3,7 +3,7 @@
+ # Copyright (c) 2005, 2006 Junio C Hamano
+ 
+ USAGE='[--signoff] [--dotest=<dir>] [--utf8 | --no-utf8] [--binary] [--3way]
+-  [--interactive] [--whitespace=<option>] <mbox>...
++  [--interactive] [--whitespace=<option>] [-CNUM] <mbox>...
+   or, when resuming [--skip | --resolved]'
+ . git-sh-setup
+ set_reflog_action am
+@@ -106,7 +106,8 @@ It does not apply to blobs recorded in its index."
+ }
+ 
+ prec=4
+-dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary= ws= resolvemsg=
++dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary= resolvemsg=
++git_apply_opt=
+ 
+ while case "$#" in 0) break;; esac
+ do
+@@ -142,7 +143,10 @@ do
+ 	skip=t; shift ;;
+ 
+ 	--whitespace=*)
+-	ws=$1; shift ;;
++	git_apply_opt="$git_apply_opt $1"; shift ;;
++
++	-C*)
++	git_apply_opt="$git_apply_opt $1"; shift ;;
+ 
+ 	--resolvemsg=*)
+ 	resolvemsg=$(echo "$1" | sed -e "s/^--resolvemsg=//"); shift ;;
+@@ -394,7 +398,7 @@ do
+ 
+ 	case "$resolved" in
+ 	'')
+-		git-apply $binary --index $ws "$dotest/patch"
++		git-apply $git_apply_opt $binary --index "$dotest/patch"
+ 		apply_status=$?
+ 		;;
+ 	t)
+
+-- 
+MST
