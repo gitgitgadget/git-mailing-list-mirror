@@ -1,57 +1,70 @@
-From: "Raimund Bauer" <ray007@gmx.net>
-Subject: RE: git-fast-import
-Date: Wed, 7 Feb 2007 10:29:47 +0100
-Message-ID: <000c01c74a9a$82fc99c0$0b0aa8c0@abf.local>
-References: <Pine.LNX.4.64.0702062347060.20138@iabervon.org>
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+Subject: Re: Deprecation/Removal schedule
+Date: Wed, 07 Feb 2007 10:33:11 +0100
+Message-ID: <20070207093311.258490@gmx.net>
+References: <7v8xfdnlqm.fsf@assigned-by-dhcp.cox.net>
+ <7vsldibfva.fsf@assigned-by-dhcp.cox.net>
+ <200702070933.21804.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: "'Aneesh Kumar K.V'" <aneesh.kumar@gmail.com>,
-	<git@vger.kernel.org>
-To: "'Daniel Barkalow'" <barkalow@iabervon.org>,
-	"'Shawn O. Pearce'" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 07 10:30:00 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: ae@op5.se, torvalds@linux-foundation.org, mdw@distorted.org.uk,
+	peff@peff.net, raa.lkml@gmail.com, spearce@spearce.org,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Feb 07 10:33:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEj7n-0001wL-1Y
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 10:29:59 +0100
+	id 1HEjB5-0003gY-Mm
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 10:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161081AbXBGJ34 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 04:29:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161082AbXBGJ34
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 04:29:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46320 "HELO mail.gmx.net"
+	id S1161095AbXBGJdP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Feb 2007 04:33:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161092AbXBGJdO
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 04:33:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:32895 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161081AbXBGJ3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 04:29:55 -0500
-Received: (qmail invoked by alias); 07 Feb 2007 09:29:53 -0000
-X-Provags-ID: V01U2FsdGVkX194xaAo5Pt4wcsoKiL8/R1ciBlrobmSZMFBcJmHVq
-	twpw==
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.6626
-In-Reply-To: <Pine.LNX.4.64.0702062347060.20138@iabervon.org>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
-Importance: Normal
-X-Y-GMX-Trusted: 0
+	id S1161082AbXBGJdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 04:33:12 -0500
+Received: (qmail 15344 invoked by uid 0); 7 Feb 2007 09:33:11 -0000
+Received: from 84.153.71.238 by www116.gmx.net with HTTP;
+ Wed, 07 Feb 2007 10:33:11 +0100 (CET)
+In-Reply-To: <200702070933.21804.jnareb@gmail.com>
+X-Authenticated: #1490710
+X-Flags: 0001
+X-Mailer: WWW-Mail 6100 (Global Message Exchange)
+X-Priority: 3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38901>
 
-> It might be nice to have a git-fast-export, which could actually be 
-> potentially useful for generating a repository with 
-> systematic differences 
-> >from the original. (E.g., to make a repository of git's Documentation
-> directory, with just the commits that affect it)
+Hi,
 
-Search the list-archives for "git-split", that may be what you're looking
-for.
+Jakub wrote:
 
--- 
-best regards
+> Junio C Hamano wrote:
+>=20
+> > In 1.5.0, you will still see git-resolve and git-diff-stages,
+> > but they will be removed by 1.5.1.
+>=20
+> Well, it is not as if we cannot obtain equivalent of git-diff-stages
+> without this command. Stages are <ours>, <theirs> and <ancestor>
+> (git-merge-base <ours> <theirs>) so I think we can use git-diff-tree
+> with appropriate arguments...
 
-  Ray
+Not exactly. The stages are in the index. For example, when you have co=
+nflicts, the stages might not reflect _any_ tree at all! This is becaus=
+e _part_ of the changes could be merged, and _part_ of the changes conf=
+lict.
+
+But it does not matter anyway. Good bye diff-stages!
+
+Ciao,
+Dscho
+
+--=20
+Der GMX SmartSurfer hilft bis zu 70% Ihrer Onlinekosten zu sparen!=20
+Ideal f=FCr Modem und ISDN: http://www.gmx.net/de/go/smartsurfer
