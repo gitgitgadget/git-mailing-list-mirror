@@ -1,62 +1,67 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Git log of all (modifying) commands run on a repo?
-Date: Wed, 7 Feb 2007 15:02:53 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702071451030.8424@woody.linux-foundation.org>
-References: <17866.20355.744025.133326@lisa.zopyra.com>
- <Pine.LNX.4.64.0702071441160.8424@woody.linux-foundation.org>
+Date: Wed, 7 Feb 2007 18:03:17 -0500
+Message-ID: <20070207230317.GC1970@spearce.org>
+References: <17866.20355.744025.133326@lisa.zopyra.com> <Pine.LNX.4.64.0702071441160.8424@woody.linux-foundation.org> <7vd54l60gg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Feb 08 00:03:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 08 00:03:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEvoY-0003G3-Jz
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 00:02:58 +0100
+	id 1HEvp0-0003RN-R1
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 00:03:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161317AbXBGXC4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 18:02:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161457AbXBGXC4
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 18:02:56 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:43875 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161317AbXBGXCz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 18:02:55 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l17N2sdD023785
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 7 Feb 2007 15:02:54 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l17N2rFY030430;
-	Wed, 7 Feb 2007 15:02:53 -0800
-In-Reply-To: <Pine.LNX.4.64.0702071441160.8424@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.443 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.113__
-X-MIMEDefang-Filter: osdl$Revision: 1.175 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161457AbXBGXDX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 18:03:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161472AbXBGXDX
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 18:03:23 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:46224 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161457AbXBGXDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 18:03:22 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HEvoj-0003oi-UB; Wed, 07 Feb 2007 18:03:10 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id D481820FBAE; Wed,  7 Feb 2007 18:03:17 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vd54l60gg.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38995>
 
+Junio C Hamano <junkio@cox.net> wrote:
+> 	$ git log -g?
 
+	[git (build)]$ git log -g?
+	fatal: unrecognized argument: -g?
 
-On Wed, 7 Feb 2007, Linus Torvalds wrote:
-> 
-> Newer gits enable reflogs by default [...]
+I think its:
 
-This, btw, is only true for non-bare ones. 
+	[git (build)]$ git log -g ?
+	commit 6506e156d99bd406661cd5d2e502db7c0960d716
+	Reflog: HEAD@{0} (Shawn O. Pearce <spearce@spearce.org>)
+	Reflog message: merge origin/master: Fast forward
+	Author: Junio C Hamano <junkio@cox.net>
+	...
 
-In particular, if you only _push_ to a repository, it won't have reflogs 
-enabled by default, because pushing is a "bare git" action even if it 
-actually has a working tree (because the push will ignore the working tree 
-and enter the ".git" directory itself).
+at least with bash.  :-)
 
-So even with new git, if you want to have reflogs enabled for shared 
-repositories that people push to (as opposed to the individual *developer* 
-repositories), you need to enable reflogs by hand (either in the git 
-config file, or by just creating the empty log file).
-
-		Linus
+-- 
+Shawn.
