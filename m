@@ -1,60 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [RFC/PATCH] fast-import: Fix compile warnings
-Date: Wed, 7 Feb 2007 18:35:30 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702071829450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Wed, 07 Feb 2007 09:47:29 -0800
+Message-ID: <7vveid7tce.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0702071237360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzm7p7uf9.fsf@assigned-by-dhcp.cox.net>
+	<7vzm7p7uf9.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702071829450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 07 18:38:22 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 07 18:47:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEqhm-0005dW-0Q
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 18:35:38 +0100
+	id 1HEqtR-0003vE-2F
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 18:47:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161397AbXBGRfc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 12:35:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161403AbXBGRfc
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 12:35:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56743 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161397AbXBGRfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 12:35:31 -0500
-Received: (qmail invoked by alias); 07 Feb 2007 17:35:30 -0000
-X-Provags-ID: V01U2FsdGVkX19rZORgqfBrKMQRBHyw60IuglVESWaoCh9gwE7Mbu
-	zovg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vzm7p7uf9.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1422630AbXBGRrh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 12:47:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161407AbXBGRrh
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 12:47:37 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:35919 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161403AbXBGRrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 12:47:36 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070207174736.LOVL1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 7 Feb 2007 12:47:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id LhnV1W0171kojtg0000000; Wed, 07 Feb 2007 12:47:30 -0500
+In-Reply-To: <Pine.LNX.4.63.0702071829450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 7 Feb 2007 18:35:30 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38950>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Wed, 7 Feb 2007, Junio C Hamano wrote:
+>> However, your patch does not apply.
+>
+> Hmm. Strange, I thought that I only changed the in_merge_bases() line... 
+> Will have a look tomorrow.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Not on all platforms are size_t and unsigned long equivalent.
-> > Since I do not know how portable %z is, I play safe, and just
-> > cast the respective variables to unsigned long.
-> 
-> The format "%s %lu" is consistent with what write_sha1_file_prepare()
-> and unpack_sha1_header() uses, so that should be safe enough.
-
-So, should we cast to (unsigned long) to make the gcc warning go away, or 
-do we not care at all?
-
-> However, your patch does not apply.
-
-Hmm. Strange, I thought that I only changed the in_merge_bases() line... 
-Will have a look tomorrow.
-
-Ciao,
-Dscho
+Sorry, but not to worry.  It was because Shawn had a few updates
+ahead of you.
