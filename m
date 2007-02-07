@@ -1,62 +1,60 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git log filtering
-Date: Wed, 7 Feb 2007 13:03:05 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
- <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v64ad7l12.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH for 'next'] fast-import: in_merge_bases() has a different signature now
+Date: Wed, 07 Feb 2007 13:05:27 -0800
+Message-ID: <7vtzxx65m0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702071235370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 07 22:03:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 07 22:05:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEtwo-0004Uu-1o
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 22:03:22 +0100
+	id 1HEtyu-0005J6-L5
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 22:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422742AbXBGVDO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 16:03:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422744AbXBGVDO
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 16:03:14 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:36732 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422742AbXBGVDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 16:03:13 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l17L36dD019312
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 7 Feb 2007 13:03:06 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l17L351x027071;
-	Wed, 7 Feb 2007 13:03:05 -0800
-In-Reply-To: <7v64ad7l12.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.448 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.113__
-X-MIMEDefang-Filter: osdl$Revision: 1.175 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422724AbXBGVFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 16:05:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422743AbXBGVF3
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 16:05:29 -0500
+Received: from fed1rmmtai17.cox.net ([68.230.241.42]:35784 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422724AbXBGVF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 16:05:29 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070207210528.PDJH1343.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 7 Feb 2007 16:05:28 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Ll5U1W0041kojtg0000000; Wed, 07 Feb 2007 16:05:28 -0500
+In-Reply-To: <Pine.LNX.4.63.0702071235370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 7 Feb 2007 12:37:32 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38967>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> The function in_merge_bases() can take more than one reference now,
+> and therefore we need to call it differently.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+> 	Yes, yes, I know. BAD Dscho. Still not using master. Maybe 
+> 	tomorrow I will find the time to rebase my changes on top of
+> 	next to master. That will be my first experience with git-rebase!
 
-On Wed, 7 Feb 2007, Junio C Hamano wrote:
-> 
-> This is very tempting but, ... hmmmm...
+Thanks for a heads-up.
 
-I would actually prefer to have it be some marker on the expression 
-itself.
+It _might_ be worth merging the in_merge_bases() from 'next' to
+'master', either up to 03840fc3 or all the way to dc3806d3.
 
-We already do that '^' handling by hand for "author"/"committer" things. 
-We could do other things like that.
-
-Although I guess the downside of not doing standard regexps would be too 
-big.
-
-		Linus
+But I'd resist the temptation for now.
