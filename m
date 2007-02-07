@@ -1,50 +1,62 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Why are commits on detached heads good, again?
-Date: Wed, 07 Feb 2007 09:56:29 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702070954110.13009@xanadu.home>
-References: <20070207142642.23503.qmail@science.horizon.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: MinGW binary installer available
+Date: Wed, 7 Feb 2007 16:05:38 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702071559340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45C9E470.7030609@xs4all.nl>
+ <Pine.LNX.4.63.0702071552470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: linux@horizon.com
-X-From: git-owner@vger.kernel.org Wed Feb 07 15:56:54 2007
+Cc: git@vger.kernel.org, Jan Nieuwenhuizen <janneke@gnu.org>
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Wed Feb 07 16:06:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEoE7-0007zd-Nr
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 15:56:52 +0100
+	id 1HEoMh-0003YS-Ti
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 16:05:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161344AbXBGO4b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 09:56:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161350AbXBGO4b
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 09:56:31 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:36525 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161344AbXBGO4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 09:56:30 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JD3003A3LI5OB20@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 07 Feb 2007 09:56:29 -0500 (EST)
-In-reply-to: <20070207142642.23503.qmail@science.horizon.com>
-X-X-Sender: nico@xanadu.home
+	id S1161351AbXBGPFl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 10:05:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161350AbXBGPFl
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 10:05:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49544 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161351AbXBGPFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 10:05:40 -0500
+Received: (qmail invoked by alias); 07 Feb 2007 15:05:39 -0000
+X-Provags-ID: V01U2FsdGVkX19lMCElvldlaOF0qCPJu4jQRUoeKTapVlDbHBkY0T
+	d57Q==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.63.0702071552470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38928>
 
-On Wed, 7 Feb 2007, linux@horizon.com wrote:
+Hi,
 
-> I agree 100% that it's entirely doable and can be used safely.
+On Wed, 7 Feb 2007, Johannes Schindelin wrote:
+
+> On Wed, 7 Feb 2007, Han-Wen Nienhuys wrote:
 > 
-> But perhaps the confusion is more trouble than it's worth?  If the rules
-> are hard to implement, is that perhaps a clue that they're hard for the
-> poor user to understand?
+> > I don't actually have a windows copy, so it's basically untested.
+> > However, I did succeed in running rev-list in wine.
+> 
+> I played a little with it. IMHO it makes no sense to use it without a 
+> bash, and without less.
 
-The rules are simple and have been implemented now and the confusion is 
-no more.
+Side note: Since "ln <src> <dest>" in MinGW is really a copy, not a hard 
+link, this gets rather big (44M here).
 
+Which makes me think if we should just disallow the "git-<builtin>" on 
+Windows, since sooner or later, Git will no longer be used from the 
+command line on Windows.
 
-Nicolas
+And another thing hit me there: Are you sure that all works well if you 
+change the install path from "C:\Program Files\Git" to something else?
+Without explicitely setting GIT_EXEC_PATH?
+
+Ciao,
+Dscho
