@@ -1,61 +1,66 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: MinGW binary installer available
-Date: Wed, 7 Feb 2007 16:26:55 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702071625341.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45C9E470.7030609@xs4all.nl>
- <Pine.LNX.4.63.0702071552470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45C9EB54.3040406@xs4all.nl>
+Subject: Re: Why are commits on detached heads good, again?
+Date: Wed, 7 Feb 2007 16:32:19 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702071629210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070207142642.23503.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jan Nieuwenhuizen <janneke@gnu.org>
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
-X-From: git-owner@vger.kernel.org Wed Feb 07 16:27:13 2007
+Cc: git@vger.kernel.org
+To: linux@horizon.com
+X-From: git-owner@vger.kernel.org Wed Feb 07 16:32:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEohT-0004wu-Sx
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 16:27:12 +0100
+	id 1HEomW-0007OO-6t
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 16:32:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030626AbXBGP1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 10:27:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030618AbXBGP1E
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 10:27:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60637 "HELO mail.gmx.net"
+	id S1030629AbXBGPcV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 10:32:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030631AbXBGPcV
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 10:32:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49984 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030626AbXBGP05 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 10:26:57 -0500
-Received: (qmail invoked by alias); 07 Feb 2007 15:26:55 -0000
-X-Provags-ID: V01U2FsdGVkX18dGxss6u0d2wl4v4WmQTPdM6D6utlpbHNcBouYMZ
-	bQaQ==
+	id S1030629AbXBGPcU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 10:32:20 -0500
+Received: (qmail invoked by alias); 07 Feb 2007 15:32:19 -0000
+X-Provags-ID: V01U2FsdGVkX19ARsIb/sJAepGceaBglSYeN68PcTrsGDRxJgd42U
+	Pffg==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45C9EB54.3040406@xs4all.nl>
+In-Reply-To: <20070207142642.23503.qmail@science.horizon.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38932>
 
 Hi,
 
-On Wed, 7 Feb 2007, Han-Wen Nienhuys wrote:
+On Wed, 7 Feb 2007, linux@horizon.com wrote:
 
-> Johannes Schindelin escreveu:
->
-> > Also, many scripts rely on bash and/or perl, so you'd have to include 
-> > them, too.
-> 
-> Indeed: for now, this is intended for people clueful enough to install 
-> bash and perl on their own.  Adding bash itself should be easy, but I 
-> have no idea how to make cmd open the scripts with bash automatically.
+> Can someone explain why committing on top of a detached head is a killer 
+> feature and thinking up a name sooner rather than later is a huge 
+> inconvenience?
 
-Would be nice to include them, though. In this case, you can add a 
-shortcut to bash, named "Git shell" ;-)
+I agree that "because I could" is a weak excuse for this feature.
 
-> The thought of x-compiling perl makes me shudder. 
+But actually, I think it is more convenient to be able to play around with 
+an idea, properly committing simple steps, and finally, if, and only if, 
+it works as expected, make a topic branch of it.
 
-You don't want to tell me that you x-compile Python when bundling 
-LilyPond, do you?
+IOW:
+
+checkout v2.6.20
+<hackhackhack>
+commit
+<hackhackhack>
+commit
+<hackhack..
+	Oh darn, it _cannot_ work after all, so let's forget about it.
+
+No hard thinking of a proper name, no cleanup required.
+
+Yeah, maybe not a killer feature, but maybe a butcher feature ;-)
 
 Ciao,
 Dscho
