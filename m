@@ -1,78 +1,63 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-fast-import
-Date: Wed, 7 Feb 2007 12:17:45 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702071216330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070206023111.GB9222@spearce.org> <45C81C33.6010704@gmail.com>
- <20070206061817.GB10508@spearce.org> <Pine.LNX.4.64.0702062347060.20138@iabervon.org>
- <20070207091351.GA1632@diana.vm.bytemark.co.uk>
+Subject: [PATCH for 'next'] fast-import: in_merge_bases() has a different
+ signature now
+Date: Wed, 7 Feb 2007 12:37:32 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702071235370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1063159776-1170847065=:22628"
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Feb 07 12:17:55 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 07 12:37:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEkoF-0003wq-E4
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 12:17:55 +0100
+	id 1HEl7L-0003ry-2k
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 12:37:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161199AbXBGLRs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 06:17:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161207AbXBGLRs
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 06:17:48 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39068 "HELO mail.gmx.net"
+	id S1161216AbXBGLhg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 06:37:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161219AbXBGLhg
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 06:37:36 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50055 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161199AbXBGLRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 06:17:47 -0500
-Received: (qmail invoked by alias); 07 Feb 2007 11:17:46 -0000
-X-Provags-ID: V01U2FsdGVkX1/BjPYbgXjBrFfk+uqW+lmE88OJbvPHw1TlaVQKRY
-	Kc+A==
+	id S1161216AbXBGLhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 06:37:35 -0500
+Received: (qmail invoked by alias); 07 Feb 2007 11:37:33 -0000
+X-Provags-ID: V01U2FsdGVkX1/DV9ZDwHPDc50WvWES9BxP2qwtCa71USlzJLxkAC
+	d/dw==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070207091351.GA1632@diana.vm.bytemark.co.uk>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38913>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----1148973799-1063159776-1170847065=:22628
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+The function in_merge_bases() can take more than one reference now,
+and therefore we need to call it differently.
 
-Hi,
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-On Wed, 7 Feb 2007, Karl Hasselström wrote:
+	Yes, yes, I know. BAD Dscho. Still not using master. Maybe 
+	tomorrow I will find the time to rebase my changes on top of
+	next to master. That will be my first experience with git-rebase!
 
-> On 2007-02-06 23:55:46 -0500, Daniel Barkalow wrote:
-> 
-> > It might be nice to have a git-fast-export, which could actually be
-> > potentially useful for generating a repository with systematic
-> > differences from the original. (E.g., to make a repository of git's
-> > Documentation directory, with just the commits that affect it)
-> 
-> Or to solve problems like
-> 
->   Gaaah! This file we've had in the repository for the last 17 months
->   has copyright problems and we can't distribute it!
-> 
-> or
-> 
->   Wouldn't it be nice to permanently include all that old Linux
->   history that's currently grafted onto the "real" history?
-> 
-> In other words, general history rewriting, but fast.
+ fast-import.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-For this, it would be better to use a different approach: fast-import 
-still hashes all the objects, which would not be necessary when rewriting. 
-I guess that is what cogito's tool is doing.
-
-Ciao,
-Dscho
-
----1148973799-1063159776-1170847065=:22628--
+diff --git a/fast-import.c b/fast-import.c
+index c72c5c7..bc95a0d 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1302,7 +1302,7 @@ static int update_branch(struct branch *b)
+ 			return error("Branch %s is missing commits.", b->name);
+ 		}
+ 
+-		if (!in_merge_bases(old_cmit, new_cmit)) {
++		if (!in_merge_bases(old_cmit, &new_cmit, 1)) {
+ 			unlock_ref(lock);
+ 			warn("Not updating %s"
+ 				" (new tip %s does not contain %s)",
+-- 
+1.5.0.rc3.2124.g3861-dirty
