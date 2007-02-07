@@ -1,88 +1,50 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: MinGW binary installer available
-Date: Wed, 7 Feb 2007 15:55:58 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702071552470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45C9E470.7030609@xs4all.nl>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Why are commits on detached heads good, again?
+Date: Wed, 07 Feb 2007 09:56:29 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702070954110.13009@xanadu.home>
+References: <20070207142642.23503.qmail@science.horizon.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Jan Nieuwenhuizen <janneke@gnu.org>
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
-X-From: git-owner@vger.kernel.org Wed Feb 07 15:56:11 2007
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: linux@horizon.com
+X-From: git-owner@vger.kernel.org Wed Feb 07 15:56:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEoDT-0007j3-2L
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 15:56:11 +0100
+	id 1HEoE7-0007zd-Nr
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 15:56:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161348AbXBGO4A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 09:56:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161347AbXBGO4A
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 09:56:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41435 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161350AbXBGOz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 09:55:59 -0500
-Received: (qmail invoked by alias); 07 Feb 2007 14:55:58 -0000
-X-Provags-ID: V01U2FsdGVkX18IEyU09RAIy3dhfhDBV3OvxdyKglOqOJTFWp+FDz
-	mDpw==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45C9E470.7030609@xs4all.nl>
-X-Y-GMX-Trusted: 0
+	id S1161344AbXBGO4b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 09:56:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161350AbXBGO4b
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 09:56:31 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:36525 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161344AbXBGO4a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 09:56:30 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JD3003A3LI5OB20@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 07 Feb 2007 09:56:29 -0500 (EST)
+In-reply-to: <20070207142642.23503.qmail@science.horizon.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38927>
 
-Hi,
+On Wed, 7 Feb 2007, linux@horizon.com wrote:
 
-On Wed, 7 Feb 2007, Han-Wen Nienhuys wrote:
-
-> I had a try to see whether I could make GUB
-> also produce a MinGW installer for Git.
-
-Great!
-
-> You can download the result at 
+> I agree 100% that it's entirely doable and can be used safely.
 > 
-> http://lilypond.org/mingit/mingit-1.4.9993-1.mingw.exe
-> 
-> the odd version number was because I was too lazy to write code
-> to extract the version number from the repository automatically.
-> 
-> I don't actually have a windows copy, so it's basically untested.
-> However, I did succeed in running rev-list in wine.
+> But perhaps the confusion is more trouble than it's worth?  If the rules
+> are hard to implement, is that perhaps a clue that they're hard for the
+> poor user to understand?
 
-I played a little with it. IMHO it makes no sense to use it without a 
-bash, and without less. For example,
+The rules are simple and have been implemented now and the confusion is 
+no more.
 
-	$ git init
-	$ git add git.exe
-	$ git status
-	$ git commit -a -m initial
-	$ git show HEAD
 
-do not produce any output when issued in cmd.
-
-Also, many scripts rely on bash and/or perl, so you'd have to include 
-them, too.
-
-> PS. I'd be interested in comments on using GUB from others.
-> GUB is a cross-compiling build tool, probably best described
-> as a "Poor Man's Conary".
->  
-> Once I have the boilerplate code committed, building this 
-> installer should amount to  
-> 
->   darcs get  http://lilypond.org/vc/gub.darcs/ gub
->   cd gub
->   make -f Makefile.mingit bootstrap mingw
-
-I'll try that if I get the time.
-
-> (yes, GUB itself is still hosted in Darcs. Shoot me.)
-
-I will.
-
-Ciao,
-Dscho
+Nicolas
