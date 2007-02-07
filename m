@@ -1,60 +1,57 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: describe fails on tagless branch
-Date: Wed, 7 Feb 2007 09:22:54 +0000
-Message-ID: <200702070922.57163.andyparkins@gmail.com>
-References: <eqb660$ft7$1@sea.gmane.org> <45C92918.8010801@xs4all.nl> <7vr6t2g1dt.fsf@assigned-by-dhcp.cox.net>
+From: "Raimund Bauer" <ray007@gmx.net>
+Subject: RE: git-fast-import
+Date: Wed, 7 Feb 2007 10:29:47 +0100
+Message-ID: <000c01c74a9a$82fc99c0$0b0aa8c0@abf.local>
+References: <Pine.LNX.4.64.0702062347060.20138@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+	charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, hanwen@xs4all.nl
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 07 10:23:13 2007
+Cc: "'Aneesh Kumar K.V'" <aneesh.kumar@gmail.com>,
+	<git@vger.kernel.org>
+To: "'Daniel Barkalow'" <barkalow@iabervon.org>,
+	"'Shawn O. Pearce'" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 07 10:30:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HEj1E-00074i-P7
-	for gcvg-git@gmane.org; Wed, 07 Feb 2007 10:23:13 +0100
+	id 1HEj7n-0001wL-1Y
+	for gcvg-git@gmane.org; Wed, 07 Feb 2007 10:29:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161054AbXBGJXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 04:23:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161055AbXBGJXJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 04:23:09 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:59719 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161054AbXBGJXH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 04:23:07 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so130029uga
-        for <git@vger.kernel.org>; Wed, 07 Feb 2007 01:23:06 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Ke5jdE5lE6EozouANqQXRz7rG7Pn1wJohQZwkZyvYorXNYJDubINCiFArJWPhxut8whu/ZEShaSBD/14le7wWwmHKhXSPVCjsAqJ3kSERJ1znzmsn+yGKRWTbK39o0BUi2bLB68ZZKsc1Rds30LpeuPuDMqYRd4eiitw33bgLiI=
-Received: by 10.82.114.3 with SMTP id m3mr355607buc.1170840182167;
-        Wed, 07 Feb 2007 01:23:02 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id b35sm843257ugd.2007.02.07.01.22.59;
-        Wed, 07 Feb 2007 01:22:59 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vr6t2g1dt.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1161081AbXBGJ34 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 04:29:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161082AbXBGJ34
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 04:29:56 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46320 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161081AbXBGJ3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 04:29:55 -0500
+Received: (qmail invoked by alias); 07 Feb 2007 09:29:53 -0000
+X-Provags-ID: V01U2FsdGVkX194xaAo5Pt4wcsoKiL8/R1ciBlrobmSZMFBcJmHVq
+	twpw==
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.6626
+In-Reply-To: <Pine.LNX.4.64.0702062347060.20138@iabervon.org>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
+Importance: Normal
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/38900>
 
-On Wednesday 2007 February 07 02:14, Junio C Hamano wrote:
+> It might be nice to have a git-fast-export, which could actually be 
+> potentially useful for generating a repository with 
+> systematic differences 
+> >from the original. (E.g., to make a repository of git's Documentation
+> directory, with just the commits that affect it)
 
-> I do not think it a good idea to make "git-describe" itself do
-> the above, as the user of describe may want to fall back on
-> something other than "rev-parse --verify" after ||.
+Search the list-archives for "git-split", that may be what you're looking
+for.
 
-Agreed - the "nearest tag" mode (--abbrev=0) would be broken in that it 
-git-describe would return a tag that doesn't exist.
-
-
-Andy
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+best regards
+
+  Ray
