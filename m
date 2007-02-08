@@ -1,48 +1,67 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: [BUG] Empty reflogs and "git log -g"
-Date: Thu, 8 Feb 2007 02:21:33 +0100
-Message-ID: <8aa486160702071721s401ea38fxa8eb71bb694a6915@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 08 02:21:41 2007
+From: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>
+Subject: Re: git log filtering
+Date: Wed, 07 Feb 2007 22:59:44 -0300
+Message-ID: <200702080159.l181xiK3021514@laptop13.inf.utfsm.cl>
+References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com> <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org> <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
+Cc: Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Don Zickus <dzickus@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Feb 08 03:00:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HExym-000525-6p
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 02:21:40 +0100
+	id 1HEya1-0001y7-Lp
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 03:00:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933316AbXBHBVh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 20:21:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933350AbXBHBVh
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 20:21:37 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:43017 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933316AbXBHBVg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 20:21:36 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so346095uga
-        for <git@vger.kernel.org>; Wed, 07 Feb 2007 17:21:34 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=U0I+9xYERbV4CM6x0L3A2Ve3tvXwQfal1M48OUL28HavpgIkilVQVC6PW9ojj416TYM3rFxR1i0DfSLvkEWB6upxzl2k7r4pQWgVareZgWwIC3ausfp88QQC4XQQzboNeltWY+PamS3Y9rPHtbVJJAVHJk/3TrYUW2Nx2aSN7oQ=
-Received: by 10.78.181.13 with SMTP id d13mr50339huf.1170897693489;
-        Wed, 07 Feb 2007 17:21:33 -0800 (PST)
-Received: by 10.78.68.8 with HTTP; Wed, 7 Feb 2007 17:21:33 -0800 (PST)
-Content-Disposition: inline
+	id S1422864AbXBHCAE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 21:00:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422871AbXBHCAB
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 21:00:01 -0500
+Received: from inti.inf.utfsm.cl ([200.1.21.155]:47217 "EHLO inti.inf.utfsm.cl"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422864AbXBHCAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 21:00:00 -0500
+Received: from laptop13.inf.utfsm.cl (pc-173-245-83-200.cm.vtr.net [200.83.245.173])
+	by inti.inf.utfsm.cl (8.13.1/8.13.1) with ESMTP id l181xjhI022118
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 7 Feb 2007 22:59:46 -0300
+Received: from laptop13.inf.utfsm.cl (laptop13.inf.utfsm.cl [127.0.0.1])
+	by laptop13.inf.utfsm.cl (8.14.0/8.13.8) with ESMTP id l181xiK3021514;
+	Wed, 7 Feb 2007 22:59:44 -0300
+In-reply-to: <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
+Comments: In-reply-to Linus Torvalds <torvalds@linux-foundation.org>
+   message dated "Wed, 07 Feb 2007 13:03:05 -0800."
+X-Mailer: MH-E 7.4.2; nmh 1.2-20070115cvs; XEmacs 21.5  (beta27)
+X-Greylist: IP, sender and recipient auto-whitelisted, not delayed by milter-greylist-3.0 (inti.inf.utfsm.cl [0.0.0.0]); Wed, 07 Feb 2007 22:59:46 -0300 (CLST)
+X-Virus-Scanned: ClamAV 0.88.7/2533/Wed Feb  7 11:20:47 2007 on inti.inf.utfsm.cl
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-5.7 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.0.6
+X-Spam-Checker-Version: SpamAssassin 3.0.6 (2005-12-07) on inti.inf.utfsm.cl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39027>
 
-Hi *,
+Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> On Wed, 7 Feb 2007, Junio C Hamano wrote:
+> > This is very tempting but, ... hmmmm...
+> 
+> I would actually prefer to have it be some marker on the expression 
+> itself.
+> 
+> We already do that '^' handling by hand for "author"/"committer" things. 
+> We could do other things like that.
+> 
+> Although I guess the downside of not doing standard regexps would be too 
+> big.
 
-  when a reflog entry do not have a reflog message the refs@{num}
-syntax gives a different result than with 'git log -g'. Actually 'git
-log -g' just skips this ref.
-
-Regards,
-
-Santi
+Use Perl's regexps? the pcre library packs them, and they have all sorts of
+goodies like markers in the expression itself. 
+-- 
+Dr. Horst H. von Brand                   User #22616 counter.li.org
+Departamento de Informatica                    Fono: +56 32 2654431
+Universidad Tecnica Federico Santa Maria             +56 32 2654239
+Casilla 110-V, Valparaiso, Chile               Fax:  +56 32 2797513
