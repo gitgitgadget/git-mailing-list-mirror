@@ -1,63 +1,72 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] add -C[NUM] to git-am
-Date: Wed, 07 Feb 2007 23:52:09 -0800
-Message-ID: <7vfy9h13yu.fsf@assigned-by-dhcp.cox.net>
-References: <7vejp17m3t.fsf@assigned-by-dhcp.cox.net>
-	<20070207211910.GK12140@mellanox.co.il>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/2] Correct ^0 asciidoc syntax in fast-import docs.
+Date: Thu, 8 Feb 2007 02:58:45 -0500
+Message-ID: <20070208075844.GA3950@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Thu Feb 08 08:52:17 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 08 08:58:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HF44l-0003mo-VV
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 08:52:16 +0100
+	id 1HF4BA-0006D2-NK
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 08:58:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161451AbXBHHwM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 02:52:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161515AbXBHHwL
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 02:52:11 -0500
-Received: from fed1rmmtai14.cox.net ([68.230.241.45]:47413 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161451AbXBHHwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 02:52:10 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070208075210.XIJK4586.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 8 Feb 2007 02:52:10 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Lvs91W00J1kojtg0000000; Thu, 08 Feb 2007 02:52:10 -0500
-In-Reply-To: <20070207211910.GK12140@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Wed, 7 Feb 2007 23:19:10 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161461AbXBHH6t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 02:58:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161533AbXBHH6t
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 02:58:49 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:60200 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161461AbXBHH6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 02:58:49 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HF4B4-0008FI-BJ; Thu, 08 Feb 2007 02:58:46 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 58F2620FBAE; Thu,  8 Feb 2007 02:58:45 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39039>
 
-"Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+I wrote this documentation with asciidoc 7.1.2, but apparently
+asciidoc 8 assumes ^ means superscript.  The solution was already
+documented in rev-parse's manpage and is to use {caret} instead.
 
->> Quoting r. Junio C Hamano <junkio@cox.net>:
->> 
->> FWIW, I am in favor although I do not foresee myself ever using
->> it.  However, this has slight ramifications.
->> 
->>  - we will be keeping applymbox after all.  shouldn't this be
->>    side-ported to it?
->
-> OK.
->
->>  - am is used as a workhorse for rebase.  shouldn't this be
->>    accessible through its command line as well?
->
-> How will it be used?
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ Documentation/git-fast-import.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Although I do not foresee myself using -C<num> that applies to
-the whole series inexactly for "git am" to begin with, I would
-imagine somebody who wants to say "git am -C1" may want to say
-something like "git rebase -C1 origin/master",
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 0b64d33..0c44761 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -380,9 +380,9 @@ current branch value should be written as:
+ ----
+ 	from refs/heads/branch^0
+ ----
+-The `^0` suffix is necessary as gfi does not permit a branch to
++The `{caret}0` suffix is necessary as gfi does not permit a branch to
+ start from itself, and the branch is created in memory before the
+-`from` command is even read from the input.  Adding `^0` will force
++`from` command is even read from the input.  Adding `{caret}0` will force
+ gfi to resolve the commit through Git's revision parsing library,
+ rather than its internal branch table, thereby loading in the
+ existing value of the branch.
+-- 
+1.5.0.rc3.175.g6506
