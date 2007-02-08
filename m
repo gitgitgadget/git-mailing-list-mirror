@@ -1,109 +1,72 @@
-From: Kumar Gala <galak@kernel.crashing.org>
-Subject: Re: git-am and workflow question
-Date: Thu, 8 Feb 2007 10:07:31 -0600
-Message-ID: <9A55745B-03D2-47B3-8359-FF2D9575502E@kernel.crashing.org>
-References: <FA0FC64E-75D2-4722-8BD9-F7E6C8C9AFA7@kernel.crashing.org> <7vodo5153j.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 08 17:09:17 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-fast-import
+Date: Thu, 8 Feb 2007 08:56:08 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702080851140.8424@woody.linux-foundation.org>
+References: <20070206023111.GB9222@spearce.org> <45C81C33.6010704@gmail.com>
+ <20070206061817.GB10508@spearce.org> <Pine.LNX.4.64.0702062347060.20138@iabervon.org>
+ <20070207091351.GA1632@diana.vm.bytemark.co.uk>
+ <Pine.LNX.4.63.0702071216330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070207225532.GA1970@spearce.org> <Pine.LNX.4.63.0702080054180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	"Aneesh Kumar K.V" <aneesh.kumar@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 08 17:56:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFBpj-0002OI-Eh
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 17:09:15 +0100
+	id 1HFCZR-0007JB-Ni
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 17:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423118AbXBHQIY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 11:08:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423121AbXBHQIY
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 11:08:24 -0500
-Received: from nommos.sslcatacombnetworking.com ([67.18.224.114]:64574 "EHLO
-	nommos.sslcatacombnetworking.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1423118AbXBHQIX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Feb 2007 11:08:23 -0500
-Received: from [72.183.106.80] (helo=[192.168.1.100])
-	by nommos.sslcatacombnetworking.com with esmtp (Exim 4.63)
-	(envelope-from <galak@kernel.crashing.org>)
-	id 1HFBor-0001SG-HU; Thu, 08 Feb 2007 10:08:21 -0600
-In-Reply-To: <7vodo5153j.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Apple Mail (2.752.2)
-X-PopBeforeSMTPSenders: kumar-chaos@kgala.com,kumar-statements@kgala.com,kumar@kgala.com
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - nommos.sslcatacombnetworking.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - kernel.crashing.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1423081AbXBHQ40 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 11:56:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423231AbXBHQ40
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 11:56:26 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:49650 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423081AbXBHQ40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 11:56:26 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l18GuAdD023746
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 8 Feb 2007 08:56:10 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l18Gu8gB019461;
+	Thu, 8 Feb 2007 08:56:08 -0800
+In-Reply-To: <Pine.LNX.4.63.0702080054180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-0.439 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.113__
+X-MIMEDefang-Filter: osdl$Revision: 1.175 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39062>
 
 
-On Feb 8, 2007, at 1:27 AM, Junio C Hamano wrote:
 
-> Kumar Gala <galak@kernel.crashing.org> writes:
->
->> I poked around the docs and mailing lists but didn't find an  
->> answer to
->> my question some simple searches so I figured it might be easier  to
->> just post a query to the list.
->>
->> So my problem is that I'm applying some patches from a mbox and want
->> to be able to do some slight modifications before actually committing
->> the change.  I was wondering how people solve this problem (if at  
->> all).
->
-> I am one of the two people who have been applying e-mailed
-> patches to a repository using git for the longest time, so I am
-> probably qualified to comment.  The other person is obviously
-> Linus, but our workflows are a bit different.
->
-> Linus's first pass is to read his mails in his usual e-mail
-> client; he saves potentially worthy patches in a separate
-> mailbox for later review.  In the second pass, he opens the
-> saved mailbox in an editor, while fixing up bits in the commit
-> messages and diff text.  Then after making another pass for the
-> final review, he applies them in a single batch.
->
-> I tend to work more incrementally.  My "first pass" is to read
-> mails and fire off kibitzing responses without doing anything
-> other than marking potentially worthy patches for later review.
-> My second pass is actually applying the patch by piping each
-> e-mail message from my e-mail client to "git am -3 -s", and if I
-> do not like something in the patch, I make corrections and then
-> run "git commit --amend".  My final pass is "git log -p", and if
-> I find something I want to fix, I do "git format-patch -$N" and
-> "git reset --hard HEAD~$N", fix it up in the editor by editing
-> the commit message and the diff text, and "git am" to rebind the
-> branch.
->
-> In short, there are two different approaches:
->
->  - If a fix is something trivial, and if you are comfortable
->    editing diff text in your editor, then edit it before
->    applying.
->
->  - If a fix is more involved, you are probably better off
->    stopping immediately after applying the patch you want to fix
->    up, make the fix in your working tree, and commit it with
->    "git commit --amend".
+On Thu, 8 Feb 2007, Johannes Schindelin wrote:
+> 
+> Ah! I overlooked that feature. Certainly, this makes gfi (could we please 
+> call it "fast-import", please?) very useful for history rewriting 
+> purposed.
 
-Thanks.  Have there been any thoughts on having git-am apply the  
-patch and then let the user do some modifications before the commit?   
-I kinda did this by hand by doing the following:
+Yeah, I think fast-import is great. And I'd also like to echo that call to 
+not call it "gfi". Maybe it's just me, and maybe it's just because I'm a 
+home-owner who does things like add in-wall ethernet cables, but to me, 
+gfi is about an electrical outlet.
 
-git-am -i ...
-< suspend >
-patch -p1 < .dotest/patch
-< modify >
-git-diff > .dotest/patch
-< cleanup >
-< resume >
+So to me, gfi means "ground fault interrupter": the kind of outlet that 
+breaks the circuit if there is current leaking to the ground pin. All your 
+electrical outlets in "wet areas" (bathroom, kitchen within a certain 
+distance of a sink, outside, near swimming pools etc) are supposed to be 
+GFI's.
 
-- k
+I realize that there's not a lot of chance of confusion in the git world, 
+but still.
+
+			Linus
