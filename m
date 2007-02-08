@@ -1,60 +1,130 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: git rebase: unexpected conflict
-Date: Fri, 9 Feb 2007 00:29:01 +0200
-Message-ID: <20070208222901.GG6560@mellanox.co.il>
-References: <7vk5ysz3n6.fsf@assigned-by-dhcp.cox.net>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Bill Lear <rael@zopyra.com>
+Subject: Question on git fetch to bare repo
+Date: Thu, 8 Feb 2007 16:28:29 -0600
+Message-ID: <17867.41997.561756.679778@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 08 23:28:38 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 08 23:29:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFHkr-0004B2-B5
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 23:28:37 +0100
+	id 1HFHla-0004bH-Dk
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 23:29:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423490AbXBHW2e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 17:28:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423493AbXBHW2e
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 17:28:34 -0500
-Received: from p02c11o146.mxlogic.net ([208.65.145.69]:33969 "EHLO
-	p02c11o146.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423490AbXBHW2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 17:28:33 -0500
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o146.mxlogic.net (mxl_mta-4.0.2-2)
-	with ESMTP id 014abc54.2656332720.10022.00-029.p02c11o146.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Thu, 08 Feb 2007 15:28:32 -0700 (MST)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 9 Feb 2007 00:30:41 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Fri,  9 Feb 2007 00:26:24 +0200
-Content-Disposition: inline
-In-Reply-To: <7vk5ysz3n6.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 08 Feb 2007 22:30:41.0533 (UTC) FILETIME=[C3E712D0:01C74BD0]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14986.001
-X-TM-AS-Result: No--10.527000-4.000000-31
-X-Spam: [F=0.0100000000; S=0.010(2007010901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+	id S1423493AbXBHW3T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 17:29:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423494AbXBHW3T
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 17:29:19 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61717 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423493AbXBHW3S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 17:29:18 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l18MTIM29170;
+	Thu, 8 Feb 2007 16:29:18 -0600
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39109>
 
-> Quoting Junio C Hamano <junkio@cox.net>:
-> Subject: Re: git rebase: unexpected conflict
-> 
-> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
-> 
-> > Junio, is the following patch correct?
-> 
-> Looks sane to me.
+If I have not yet made myself unwelcome, I now have another problem
+using git 1.4.4.1.
 
-You can take it then :)
+I have a public bare repo I created yesterday:
 
--- 
-MST
+% mkdir project && cd project
+% git --bare init-db --shared
+% git --bare fetch git://source/project
+[All seems well]
+
+I have a private repo:
+
+% mkdir project && cd project
+% git clone /repos/git/project
+[All is well]
+
+A co-worker checks something in to our company repo, so I go to my
+public repo to fetch the changes:
+
+% cd /repos/git/project
+% git --bare fetch -v git://source/project
+remote: Generating pack...
+remote: Done counting 230 objects.
+remote: Result has 152 objects.
+remote: Deltifying 152 objects.
+remote:  100% (152/152) done
+Unpacking 152 objects
+remote: Total 152, written 152 (delta 109), reused 90 (delta 51)
+ 100% (152/152) done
+* fetched git://source/project
+  commit: 5c2d43d
+
+I then go to my private repo to pull from my public one:
+
+% cd ~/project
+% git branch
+  topic
+* master
+% git pull
+Already up-to-date.
+% cat .git/remotes/origin
+URL: /repos/git/project
+Pull: refs/heads/master:refs/heads/origin
+Pull: refs/heads/topic:refs/heads/topic
+[All seems well with this repo ??]
+
+I try to push from my private to my public:
+
+% git push /repos/git/project
+Everything up-to-date
+
+I go back to my public repo, and poking around, can't see what is wrong.
+
+The commit that the fetch says it pulled is there, if I do:
+
+% cd /repos/git/project
+% git --bare show -t 5c2d43d
+
+the patch comes out exactly as it did in my email notification, so I
+know it's there.
+
+I tried then to be more forceful, and did another fetch like this,
+which I sort of expected to fail:
+
+% git --bare fetch -v git://source/project master:master
+remote: Generating pack...
+remote: Done counting 230 objects.
+remote: Result has 152 objects.
+remote: Deltifying 152 objects.
+remote:  100% (152/152) done
+Unpacking 152 objects
+remote: Total 152, written 152 (delta 109), reused 90 (delta 51)
+ 100% (152/152) done
+* refs/heads/master: fast forward to branch 'master' of git://source/project
+  old..new: 37e2298..5c2d43d
+Cannot fetch into the current branch.
+
+Having enabled the logs, I can investigate a bit:
+
+% cat logs/refs/heads/master
+37e229835103a11365b1e081f9b9987a88437e62 5c2d43dc819fc1bc37ebae1696c3fbfd6a4401db Bill Lear <rael@zopyra.com> 1170973321 -0600     fetch git://source/project: fast-forward
+5c2d43dc819fc1bc37ebae1696c3fbfd6a4401db 37e229835103a11365b1e081f9b9987a88437e62 Bill Lear <rael@zopyra.com> 1170973321 -0600     fetch git://source/project: Undoing incorrectly fetched HEAD.
+
+And, my branches seem to be there, properly:
+
+% git --bare branch
+  topic
+* master
+
+So, I'm confused.  Why does my fetch seem to fetch things the first
+time, yet I cannot pull these into my private repo?  I could swear I
+just did this same sequence of operations on Monday and it worked.
+
+Perhaps I just need a vacation ...
+
+
+Bill
