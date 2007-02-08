@@ -1,66 +1,64 @@
-From: Kalle Pokki <kalle.pokki@iki.fi>
-Subject: Re: Git rescue mission
-Date: 09 Feb 2007 00:03:35 +0200
-Message-ID: <87bqk4z4qw.fsf@host94.eke.fi>
-References: <17866.27739.701406.722074@lisa.zopyra.com>
-	<Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org>
-	<87fy9gz9vu.fsf@host94.eke.fi>
-	<Pine.LNX.4.64.0702081321040.8424@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] Correct some language in fast-import documentation.
+Date: Thu, 08 Feb 2007 23:07:10 +0100
+Organization: At home
+Message-ID: <eqg6rb$mb1$1@sea.gmane.org>
+References: <20070208075851.GB3950@spearce.org> <20070208082850.GA4334@informatik.uni-freiburg.de> <7vveidyqw5.fsf@assigned-by-dhcp.cox.net> <20070208183243.GA30673@spearce.org> <Pine.LNX.4.63.0702081937260.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070208203145.GA26420@informatik.uni-freiburg.de> <Pine.LNX.4.63.0702082152590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kalle Pokki <kalle.pokki@iki.fi>, Bill Lear <rael@zopyra.com>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Feb 08 23:05:58 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 08 23:07:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFHNS-0000Dn-EC
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 23:04:26 +0100
+	id 1HFHQ2-0001M1-GN
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 23:07:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945914AbXBHWDx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 17:03:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945916AbXBHWDx
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 17:03:53 -0500
-Received: from [194.100.36.62] ([194.100.36.62]:32971 "EHLO host94.eke.fi"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1945914AbXBHWDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 17:03:52 -0500
-Received: from host94.eke.fi (localhost.localdomain [127.0.0.1])
-	by host94.eke.fi (8.13.4/8.13.4/Debian-3) with ESMTP id l18M3aDF004943;
-	Fri, 9 Feb 2007 00:03:36 +0200
-Received: (from kp@localhost)
-	by host94.eke.fi (8.13.4/8.13.4/Submit) id l18M3ZjY004940;
-	Fri, 9 Feb 2007 00:03:35 +0200
-In-Reply-To: <Pine.LNX.4.64.0702081321040.8424@woody.linux-foundation.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1945921AbXBHWFw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Feb 2007 17:05:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945917AbXBHWFv
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 17:05:51 -0500
+Received: from main.gmane.org ([80.91.229.2]:39648 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945930AbXBHWFm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 17:05:42 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HFHOc-0007Ln-9R
+	for git@vger.kernel.org; Thu, 08 Feb 2007 23:05:38 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 23:05:38 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 23:05:38 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39102>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Johannes Schindelin wrote:
 
-> On Thu, 8 Feb 2007, Kalle Pokki wrote:
-> > 
-> > I usually undo a pull by throwing away just the merge commit by
-> > 
-> >         git reset --hard HEAD^
-> 
-> Don't do this.
-> 
-> If the merge just fast-forwarded, you'll do the wrong thing.
+> On Thu, 8 Feb 2007, Uwe Kleine-K=F6nig wrote:
+>=20
+>>> J=F6h=E4nn=EBs "Dsch=F6" Schind=EBlin
+>>>
+>> So what about:
+>> ----- 8< ----
+>> Subject: [PATCH] add Johannes proper name to .mailmap.
+>=20
+> *LOLROTF*!!!!
 
-Yes, I know. But when looking at the history with gitk, it feels
-quite intuitive to just get rid of the one new commit that appeared
-on top of the "good" history. Without that kind of visualisation
-I would surely always just use ORIG_HEAD as a reference.
-
-Perhaps gitk could (optionally) also show ORIG_HEAD. That way we could
-just do
-
-        gitk --all
-
-after a pull and see what got pulled, and everything else was already
-there, too, if needed.
+By the way, how this .mailmap thingy work? Is it corrected
+using email to find proper entry?
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
