@@ -1,67 +1,65 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: MinGW binary installer available
-Date: Thu, 8 Feb 2007 22:26:05 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702082224380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45C9E470.7030609@xs4all.nl> <45C9EB54.3040406@xs4all.nl>
- <45CADAAA.74058D21@eudaptics.com> <200702082215.50389.robin.rosenberg.lists@dewire.com>
- <Pine.LNX.4.63.0702082216000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070208212259.GA1091@spearce.org>
+Subject: Re: git-fast-import
+Date: Thu, 8 Feb 2007 22:34:17 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702082227170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070206023111.GB9222@spearce.org> <200702060928.54440.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0702060836180.8424@woody.linux-foundation.org>
+ <20070206164441.GA4949@spearce.org> <200702070117.l171HGxr023213@laptop13.inf.utfsm.cl>
+ <Pine.LNX.4.64.0702061832020.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Sixt <J.Sixt@eudaptics.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 08 22:26:18 2007
+Cc: "Horst H. von Brand" <vonbrand@inf.utfsm.cl>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Feb 08 22:34:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFGmW-0006w0-HE
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 22:26:16 +0100
+	id 1HFGuR-0002g0-KB
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 22:34:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423414AbXBHV0M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 16:26:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423415AbXBHV0M
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 16:26:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56593 "HELO mail.gmx.net"
+	id S1423430AbXBHVeU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 16:34:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423433AbXBHVeU
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 16:34:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37979 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1423414AbXBHV0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 16:26:10 -0500
-Received: (qmail invoked by alias); 08 Feb 2007 21:26:09 -0000
-X-Provags-ID: V01U2FsdGVkX1/gEd9ZxMzg+UAnuyLQi00AO86Q2Pp1rqyqBRg/Q+
-	khDw==
+	id S1423430AbXBHVeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 16:34:19 -0500
+Received: (qmail invoked by alias); 08 Feb 2007 21:34:18 -0000
+X-Provags-ID: V01U2FsdGVkX18OdpEWgUIOakFt2tr2idd+r2wetU9YT194ix5+ku
+	hhyA==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070208212259.GA1091@spearce.org>
+In-Reply-To: <Pine.LNX.4.64.0702061832020.8424@woody.linux-foundation.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39098>
 
 Hi,
 
-On Thu, 8 Feb 2007, Shawn O. Pearce wrote:
+On Tue, 6 Feb 2007, Linus Torvalds wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Frankly, I'd rather stay away from such hackeries. For now, we can ship 
-> > bash, perl and Tcl/Tk with Git, as well as git-gui, can't we? After all, 
-> > Windows users are used to bloatware. Then, we just hide the command line 
-> > from them!
-> 
-> I agree.
-> 
-> I'm happy to make changes in git-gui to help users who are trying
-> to use Git without Cygwin, and are on Windows.  Patches would be
-> even more welcome of course.  ;-)
-> 
-> Most of git-gui tries to stay away from shell scripts, partly for
-> this reason, and partly because its Porcelain and shouldn't depend
-> on the stock Porcelain-ish that comes with Git.  Oh, and shell
-> scripts on Cygwin aren't speed-demons.  :-)
+> [Talks about timestamps being in UTC, even if augmented by a timezone]
+>
+> And yes, for all I know we might get this wrong inside git too. It's 
+> easy to get confused, because they really do mean different things.
 
-I was talking about MinGW. Shipping MSYS' bash, perl and tcltk would not 
-be impossible. And configuring git-gui to be started with MSYS' wish would 
-solve the common problems calling bash scripts.
+FWIW I just grepped git for tz, and looked at the results. The place I had 
+to think a bit more about was in builtin-blame.c:format_time(). Probably a 
+special date format is needed to stay compatible with cvsserver, otherwise 
+show_date() or even show_rfc2822_date() could be used.
+
+The code actually adds the timezone in minutes to the timestamp, and then 
+calls gmtime() to be able to format the date with strftime() (something 
+similar, without strftime() is done in show_[rfc2822_]date()). The result 
+is correct AFAICT, although it would be cleaner IMHO to add yet another 
+function to date.c which formats the time according to cvsserver's wishes.
+
+Post 1.5.0.
 
 Ciao,
 Dscho
