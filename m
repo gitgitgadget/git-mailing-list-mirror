@@ -1,73 +1,65 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH 2/2] Correct some language in fast-import documentation.
-Date: Thu, 8 Feb 2007 09:28:50 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070208082850.GA4334@informatik.uni-freiburg.de>
-References: <20070208075851.GB3950@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-am and workflow question
+Date: Thu, 08 Feb 2007 09:34:28 +0100
+Organization: At home
+Message-ID: <eqen7k$fb5$1@sea.gmane.org>
+References: <FA0FC64E-75D2-4722-8BD9-F7E6C8C9AFA7@kernel.crashing.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 08 09:29:16 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 08 09:33:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HF4eX-0001CC-JS
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 09:29:13 +0100
+	id 1HF4iS-0002kx-Hv
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 09:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161488AbXBHI3K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Feb 2007 03:29:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422859AbXBHI3K
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 03:29:10 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:49907 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1161488AbXBHI3J (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Feb 2007 03:29:09 -0500
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HF4eS-0001r8-7S; Thu, 08 Feb 2007 09:29:08 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l188T5fq005298;
-	Thu, 8 Feb 2007 09:29:05 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l188SpKD005297;
-	Thu, 8 Feb 2007 09:28:51 +0100 (MET)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070208075851.GB3950@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1423024AbXBHIdM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 03:33:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422981AbXBHIdM
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 03:33:12 -0500
+Received: from main.gmane.org ([80.91.229.2]:58675 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423024AbXBHIdL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 03:33:11 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HF4iC-0001UM-Ek
+	for git@vger.kernel.org; Thu, 08 Feb 2007 09:33:00 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 09:33:00 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 09:33:00 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39047>
 
-Hello Shawn,
+[Cc: git@vger.kernel.org]
 
-Shawn O. Pearce wrote:
-> Minor documentation improvements, as suggested on the Git mailing
-> list by Horst H. von Brand and Karl Hasselstr=C3=B6m.
-you have an encoding problem here     ---------^
+Kumar Gala wrote:
 
-That "o umlaut" seems to be UTF-8 encoded, but the headers of you mail
-claim iso-8859-1.
+> I poked around the docs and mailing lists but didn't find an answer  
+> to my question some simple searches so I figured it might be easier  
+> to just post a query to the list.
+> 
+> So my problem is that I'm applying some patches from a mbox and want  
+> to be able to do some slight modifications before actually committing  
+> the change.  I was wondering how people solve this problem (if at all).
 
-I had this kind of problem, too.  You have to assert that the
-environment variable LANG (or LC_CTYPE) match your terminal and the mut=
-t
-config variable "charset" matches that, too.  (Not to set charset seems
-to do the right thing.)
+Both git-am and git-applymbox have interactive mode, although I'm not
+sure how extensively interactive this mode is.
 
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D1+electron+mass%3D
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
