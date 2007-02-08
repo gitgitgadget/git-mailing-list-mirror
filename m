@@ -1,99 +1,91 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: broken git-fast-import.xml
-Date: Thu, 8 Feb 2007 18:13:41 -0500
-Message-ID: <20070208231341.GB1382@spearce.org>
-References: <864ppwtffu.fsf@blue.stonehenge.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [BUG] Empty reflogs and "git log -g"
+Date: Thu, 08 Feb 2007 15:18:35 -0800
+Message-ID: <7vveicw850.fsf@assigned-by-dhcp.cox.net>
+References: <8aa486160702071721s401ea38fxa8eb71bb694a6915@mail.gmail.com>
+	<Pine.LNX.4.63.0702082021210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<eqfu36$lb3$1@sea.gmane.org>
+	<Pine.LNX.4.63.0702082040390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Fri Feb 09 00:14:02 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 09 00:18:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFISo-0001u2-2v
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 00:14:02 +0100
+	id 1HFIXI-0004AA-Mm
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 00:18:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751840AbXBHXNq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 18:13:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbXBHXNq
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 18:13:46 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39164 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751840AbXBHXNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 18:13:45 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HFISL-00053q-Si; Thu, 08 Feb 2007 18:13:34 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 652BF20FBAE; Thu,  8 Feb 2007 18:13:41 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <864ppwtffu.fsf@blue.stonehenge.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S965716AbXBHXSh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 18:18:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965717AbXBHXSh
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 18:18:37 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:60901 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965716AbXBHXSg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 18:18:36 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070208231836.CFHM21704.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 8 Feb 2007 18:18:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MBJb1W00Q1kojtg0000000; Thu, 08 Feb 2007 18:18:36 -0500
+In-Reply-To: <Pine.LNX.4.63.0702082040390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 8 Feb 2007 20:46:43 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39119>
 
-"Randal L. Schwartz" <merlyn@stonehenge.com> wrote:
-> xmlto -m callouts.xsl man git-fast-import.xml
-> xmlto: input does not validate (status 1)
-> /Volumes/UFS/MIRROR/git-GIT/Documentation/git-fast-import.xml:527: parser error : Opening and ending tag mismatch: superscript line 527 and literal
-> <simpara>The <literal><superscript>0</literal> suffix is necessary as gfi does n
->                                               ^
-> /Volumes/UFS/MIRROR/git-GIT/Documentation/git-fast-import.xml:529: parser error : Opening and ending tag mismatch: literal line 529 and superscript
-> m</literal> command is even read from the input.  Adding <literal></superscript>
->                                                                                ^
-> make[1]: *** [git-fast-import.1] Error 1
-> rm git-fast-import.xml git-diff-stages.xml
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks. I already knew about the problem and fixed it in 209f1298.
-I think Junio planned on pulling this in from my branch on repo.or.cz:
+> On Thu, 8 Feb 2007, Jakub Narebski wrote:
+>
+>> StGIT used to produce no reflog messages; I don't know if this has 
+>> improved. But you can have old reflog entries with empty messages; git 
+>> log -g should deal with them IMHO.
+>
+> I just tried. An empty string is not enough. The tab before the message 
+> has to be lacking, too.
+>
+> Here's a small patch, if you have to have it.
 
-  git://repo.or.cz/git/fastimport
+I think this is necessary for v1.5.0.  I'd appreciate a properly
+signed-off log message.
 
-but it hasn't made it to kernel.org yet.  Here's the patch, if you
-want to apply it yourself:
-
---8>--
-From: Shawn O. Pearce <spearce@spearce.org>
-Date: Thu, 8 Feb 2007 01:35:37 -0500
-Subject: [PATCH] Correct ^0 asciidoc syntax in fast-import docs.
-
-I wrote this documentation with asciidoc 7.1.2, but apparently
-asciidoc 8 assumes ^ means superscript.  The solution was already
-documented in rev-parse's manpage and is to use {caret} instead.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- Documentation/git-fast-import.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 0b64d33..0c44761 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -380,9 +380,9 @@ current branch value should be written as:
- ----
- 	from refs/heads/branch^0
- ----
--The `^0` suffix is necessary as gfi does not permit a branch to
-+The `{caret}0` suffix is necessary as gfi does not permit a branch to
- start from itself, and the branch is created in memory before the
--`from` command is even read from the input.  Adding `^0` will force
-+`from` command is even read from the input.  Adding `{caret}0` will force
- gfi to resolve the commit through Git's revision parsing library,
- rather than its internal branch table, thereby loading in the
- existing value of the branch.
--- 
-1.5.0.rc4
+>
+> ---
+>
+>  refs.c |    8 +++++---
+>  1 files changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 7e07fc4..ba5bd2d 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1189,12 +1189,14 @@ int for_each_reflog_ent(const char *ref, each_reflog_ent_fn fn, void *cb_data)
+>  		    !message || message[0] != ' ' ||
+>  		    (message[1] != '+' && message[1] != '-') ||
+>  		    !isdigit(message[2]) || !isdigit(message[3]) ||
+> -		    !isdigit(message[4]) || !isdigit(message[5]) ||
+> -		    message[6] != '\t')
+> +		    !isdigit(message[4]) || !isdigit(message[5]))
+>  			continue; /* corrupt? */
+>  		email_end[1] = '\0';
+>  		tz = strtol(message + 1, NULL, 10);
+> -		message += 7;
+> +		if (message[6] != '\t')
+> +			message += 6;
+> +		else
+> +			message += 7;
+>  		ret = fn(osha1, nsha1, buf+82, timestamp, tz, message, cb_data);
+>  		if (ret)
+>  			break;
