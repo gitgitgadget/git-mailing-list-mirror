@@ -1,107 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [BUG] Empty reflogs and "git log -g"
-Date: Thu, 8 Feb 2007 20:36:03 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702082022200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <8aa486160702071721s401ea38fxa8eb71bb694a6915@mail.gmail.com>
- <8aa486160702072325q1d63c5d2mc1c6a492392802c6@mail.gmail.com>
+Date: Thu, 08 Feb 2007 20:37:44 +0100
+Organization: At home
+Message-ID: <eqfu36$lb3$1@sea.gmane.org>
+References: <8aa486160702071721s401ea38fxa8eb71bb694a6915@mail.gmail.com> <Pine.LNX.4.63.0702082021210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-982537615-1170963363=:22628"
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 08 20:36:15 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 08 20:37:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFF43-0001GV-AI
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 20:36:15 +0100
+	id 1HFF5D-0001uU-5x
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 20:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423272AbXBHTgJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 14:36:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423271AbXBHTgI
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 14:36:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:32851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1423272AbXBHTgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 14:36:04 -0500
-Received: (qmail invoked by alias); 08 Feb 2007 19:36:03 -0000
-X-Provags-ID: V01U2FsdGVkX19FXR8mHkZFTQ/mlEIEvMTbHe4vOiz1XjBqUEkEGt
-	drEw==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <8aa486160702072325q1d63c5d2mc1c6a492392802c6@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1423271AbXBHTge convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Feb 2007 14:36:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423274AbXBHTgd
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 14:36:33 -0500
+Received: from main.gmane.org ([80.91.229.2]:38137 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423271AbXBHTgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 14:36:33 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HFF49-0003Tz-JW
+	for git@vger.kernel.org; Thu, 08 Feb 2007 20:36:21 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 20:36:21 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 20:36:21 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39078>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin wrote:
 
----1148973799-982537615-1170963363=:22628
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> On Thu, 8 Feb 2007, Santi B=E9jar wrote:
+>=20
+>>  when a reflog entry do not have a reflog message the refs@{num} syn=
+tax=20
+>> gives a different result than with 'git log -g'. Actually 'git log -=
+g'=20
+>> just skips this ref.
+>=20
+> I could be that some older git version produces empty messages. But I=
+'d=20
+> regard the empty messages to be the problem. Or is the current Git ve=
+rsion=20
+> still producing such entries?
 
-Hi,
-
-On Thu, 8 Feb 2007, Santi Béjar wrote:
-
-> On 2/8/07, Santi Béjar <sbejar@gmail.com> wrote:
-> > Hi *,
-> > 
-> >   when a reflog entry do not have a reflog message the refs@{num}
-> > syntax gives a different result than with 'git log -g'. Actually 'git
-> > log -g' just skips this ref.
-> > 
-> 
-> Also:
-> 
-> $ git log origin/master
-> 
-> works, but
-> 
-> $ git log -g origin/master
-> 
-> does not. You have to put the remotes prefix.
-
-I hesitate "fixing" that. I mean, if you want to know about the remote 
-branch "master" why not be precise? Yes, "git log" _is_ nice if you want 
-to be sloppy.
-
-But if you _have_ to have it, see attached patch. I will not push for it 
-in time for 1.5.0, though, since I have a track record of not getting 
-patches right on the first try.
-
-Ciao,
-Dscho
-
----
-
- reflog-walk.c |   13 +++++++++++++
- 1 files changed, 13 insertions(+), 0 deletions(-)
-
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 653ec95..430faef 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -174,6 +174,19 @@ void add_reflog_for_walk(struct reflog_walk_info *info,
- 			branch = xstrdup(head);
- 		}
- 		reflogs = read_complete_reflog(branch);
-+		if (!reflogs || reflogs->nr == 0) {
-+			unsigned char sha1[20];
-+			char *b;
-+			if (dwim_ref(branch, strlen(branch), sha1, &b) == 1) {
-+				if (reflogs) {
-+					free(reflogs->ref);
-+					free(reflogs);
-+				}
-+				free(branch);
-+				branch = b;
-+				reflogs = read_complete_reflog(branch);
-+			}
-+		}
- 		if (!reflogs || reflogs->nr == 0)
- 			die("No reflogs found for '%s'", branch);
- 		path_list_insert(branch, &info->complete_reflogs)->util
----1148973799-982537615-1170963363=:22628--
+StGIT used to produce no reflog messages; I don't know if this has impr=
+oved.
+But you can have old reflog entries with empty messages; git log -g sho=
+uld
+deal with them IMHO.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
