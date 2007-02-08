@@ -1,140 +1,67 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git rescue mission
-Date: Wed, 07 Feb 2007 16:48:42 -0800
-Message-ID: <7vr6t13251.fsf@assigned-by-dhcp.cox.net>
-References: <17866.27739.701406.722074@lisa.zopyra.com>
+Subject: Re: Git log of all (modifying) commands run on a repo?
+Date: Wed, 07 Feb 2007 16:50:44 -0800
+Message-ID: <7vmz3p321n.fsf@assigned-by-dhcp.cox.net>
+References: <17866.20355.744025.133326@lisa.zopyra.com>
+	<Pine.LNX.4.64.0702071441160.8424@woody.linux-foundation.org>
+	<7vd54l60gg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702071525270.8424@woody.linux-foundation.org>
+	<7vtzxx4k1c.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702071539390.8424@woody.linux-foundation.org>
+	<7v8xf94hq1.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702080140230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Feb 08 01:48:49 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 08 01:50:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HExSy-0001I8-Rn
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 01:48:49 +0100
+	id 1HExUv-000211-JZ
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 01:50:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161504AbXBHAsp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Feb 2007 19:48:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161503AbXBHAsp
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 19:48:45 -0500
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:42868 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161498AbXBHAso (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Feb 2007 19:48:44 -0500
+	id S1161498AbXBHAuq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Feb 2007 19:50:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161503AbXBHAuq
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Feb 2007 19:50:46 -0500
+Received: from fed1rmmtai15.cox.net ([68.230.241.44]:46329 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161498AbXBHAup (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Feb 2007 19:50:45 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070208004842.MFZH1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 7 Feb 2007 19:48:42 -0500
+          id <20070208005045.TWDM1306.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 7 Feb 2007 19:50:45 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id Looi1W0191kojtg0000000; Wed, 07 Feb 2007 19:48:43 -0500
-In-Reply-To: <17866.27739.701406.722074@lisa.zopyra.com> (Bill Lear's message
-	of "Wed, 7 Feb 2007 18:18:35 -0600")
+	id Loql1W0031kojtg0000000; Wed, 07 Feb 2007 19:50:45 -0500
+In-Reply-To: <Pine.LNX.4.63.0702080140230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 8 Feb 2007 01:41:39 +0100
+	(CET)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39024>
 
-Bill Lear <rael@zopyra.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> 2) Why does git pull do the right thing when on master, but seemingly
-> changes behavior when on topic?
+>> Well, you would not know if the user gave you '-g' before you
+>> ask setup_revisions() to parse the options, and once you let it
+>> do its thing, you would not know if it also found an explicit
+>> output format given by the end user, so your cannot sanely make
+>> default depend on '-g'.
+>> 
+>> I suspect that it would have to be either somewhat involved or
+>> outright hacky.  
+>
+> Well, we could always make CMIT_FMT_DEFAULT _not_be the same as _MEDIUM, 
+> and if it still is the same _after_ parsing the options, set it to MEDIUM 
+> explicitely. Same goes for the abbrev thing.
 
-Because you told it to.
-
-      %  cat .git/remotes/origin
-      URL: /repos/git/project
-      Pull: refs/heads/master:refs/heads/origin
-      Pull: refs/heads/topic:refs/heads/topic
-
-It tells "git pull" to drive "git fetch" to copy their master to
-your origin and overwrite your topic with their topic, and then
-merge their master to whatever branch you are currently on.
-
-The sane/safe thing to do in the traditional layout (I'll talk
-about non-traditional one in a second) is:
-
- - do your 'pull' only and always while on your 'master' and not
-   anywhere else.
-
- - never build on a branch that appears on the RHS of ':'.
-
-This layout is convenient when you always do fetches and pulls
-while on 'master', but has burned enough people.  So what people
-on the list seem to recommend is to use a separate remote layout
-in the repository.
-
-The principle is:
-
- * The branches you work on in the repository are kept in refs/heads/
-
- * Copies of branches from other repositories (it does not
-   matter who is in control of them -- some of them may be your
-   repository) are kept in refs/remotes/<symbolic name>.
-
-So the current "git clone" (if you are using 1.4.4 series, you
-can say "git clone --use-separate-remote") creates something
-like this instead:
-
-      URL: /repos/git/project
-      Pull: refs/heads/master:refs/remotes/origin/master
-      Pull: refs/heads/topic:refs/remotes/origin/topic
-
-(git-clone from 1.5.0 does not actually make remotes/origin file
-in .git/ that has the above -- it creates the moral equivalent
-in .git/config).
-
-So whatever you do the first step of "git pull", which is "git
-fetch", will _not_ overwrite the current branch.
-
-In order to prevent merging their 'master' into your 'topic'
-when you are on 'topic', git-fetch/git-pull from 1.5.0 uses
-further safety which is left by 'git clone'.  The real
-configuration created by 'git clone' looks like this:
-
-	[remote "origin"]
-        	url = /repos/git/project
-                fetch = refs/heads/*:refs/remotes/origin/*
-	[branch "master"]
-        	remote = origin
-                merge = refs/heads/master
-
-The 'fetch' lines correspond to 'Pull' in .git/remotes/origin file;
-it uses globbing pattern so if there are new branches on the
-remote side you can automatically track them, which is a plus.
-
-But more importantly, when 'fetch' lines only do the globbing
-pattern, 'git pull' without explicitly saying which remote
-branch you want to merge to the current branch (perhaps by
-mistake) refuses to do a merge, if there is no branch.*.merge
-configuration ("refs/heads/master" in the above example).  So
-with the above configuration, 'git pull' from 1.5.0 will fetch
-two remote branches and keep them in remotes/origin/master and
-remotes/origin/topic, and if you are on 'master' their
-refs/heads/master is merged into your current branch, but if you
-are on 'topic', it will not do the merge step (this only applies
-to "git pull" without any refspec parameters).
-
-With 1.4.4 series, I think you can create the [branch] section
-yourself and do something like this:
-
-	[remote "origin"]
-        	url = /repos/git/project
-                fetch = refs/heads/master:refs/remotes/origin/master
-                fetch = refs/heads/topic:refs/remotes/origin/topic
-	[branch "master"]
-        	remote = origin
-                merge = refs/heads/master
-	[branch "topic"]
-        	remote = origin
-                merge = refs/heads/topic
-
-This configuration also works with 1.5.0, so if you are happy
-with this (I am assuming you are using 1.4.4 series, preferably
-the last one, 1.4.4.4), after you upgrade to 1.5.0, it will
-continue to do its thing (but you would want to upgrade the
-fetch line).
+I think we are in agreement.  I showed an outright hacky one
+because I am not ready to do somewhat involved one at the end of
+the rc period.
