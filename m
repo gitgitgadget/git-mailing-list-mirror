@@ -1,56 +1,53 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: MinGW binary installer available
-Date: Thu, 08 Feb 2007 09:12:34 +0100
-Organization: eudaptics software gmbh
-Message-ID: <45CADB72.D84D1698@eudaptics.com>
-References: <45C9E470.7030609@xs4all.nl> <Pine.LNX.4.63.0702071552470.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45C9EB54.3040406@xs4all.nl> <45CA4035.4090803@xs4all.nl>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: MinGW port - initial work uploaded
+Date: Thu, 08 Feb 2007 00:17:59 -0800
+Message-ID: <45CADCB7.5050107@zytor.com>
+References: <200701192148.20206.johannes.sixt@telecom.at>	 <46d6db660701220506t20214d3bi4d0e1e93abd01aad@mail.gmail.com>	 <Pine.LNX.4.64.0701220823260.32200@woody.linux-foundation.org> <46d6db660701221425i672e826coc9eef4bd8d22ae9d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 08 09:15:16 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Christian MICHON <christian.michon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 08 09:18:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HF4Qz-00044k-Hb
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 09:15:13 +0100
+	id 1HF4U5-0005Ie-KW
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 09:18:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161546AbXBHIPJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 03:15:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161545AbXBHIPI
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 03:15:08 -0500
-Received: from main.gmane.org ([80.91.229.2]:34920 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161546AbXBHIPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 03:15:07 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HF4Qo-00072Y-In
-	for git@vger.kernel.org; Thu, 08 Feb 2007 09:15:02 +0100
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Feb 2007 09:15:02 +0100
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Feb 2007 09:15:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1161481AbXBHISW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 03:18:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422936AbXBHISW
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 03:18:22 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:53675 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161481AbXBHISV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 03:18:21 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l188HxuQ018610
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 8 Feb 2007 00:18:00 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20061219)
+In-Reply-To: <46d6db660701221425i672e826coc9eef4bd8d22ae9d@mail.gmail.com>
+X-Virus-Scanned: ClamAV 0.88.7/2534/Wed Feb  7 19:28:17 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.1 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_06_12,RCVD_IN_SORBS_DUL autolearn=no version=3.1.7
+X-Spam-Checker-Version: SpamAssassin 3.1.7 (2006-10-05) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39044>
 
-Han-Wen Nienhuys wrote:
-> A good reason to get rid of bash scripts.
+Christian MICHON wrote:
+> 
+> the only recent alternative on Windows I came with was to run git
+> through coLinux and share directories using cofs.
+> 
 
-Not that good a reasion, imho, as long as the scripts work!
+Actually, git has been working on Cygwin for years.
 
-Then there are still the hooks that someone may want to run. Would you
-like to recode them in some Windowsish language? Visual Basic maybe?
-*cough*
-
--- Hannes
+	-hpa
