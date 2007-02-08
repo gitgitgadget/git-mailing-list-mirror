@@ -1,63 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git rescue mission
-Date: Thu, 8 Feb 2007 18:33:24 -0500
-Message-ID: <20070208233324.GA1556@spearce.org>
-References: <17866.27739.701406.722074@lisa.zopyra.com> <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org> <17867.40122.51865.575762@lisa.zopyra.com> <Pine.LNX.4.64.0702081408140.8424@woody.linux-foundation.org> <17867.45437.922483.805945@lisa.zopyra.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] qgit4: Removed the monospace font override from the log viewer box
+Date: Thu, 8 Feb 2007 23:31:28 +0000
+Message-ID: <200702082331.28249.andyparkins@gmail.com>
+References: <200702082158.56463.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Fri Feb 09 00:33:37 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 09 00:34:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFIli-0003UV-Ml
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 00:33:35 +0100
+	id 1HFImu-00047g-MH
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 00:34:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965614AbXBHXd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 18:33:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030205AbXBHXd3
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 18:33:29 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39885 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965616AbXBHXd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 18:33:29 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HFIlR-0007LM-4A; Thu, 08 Feb 2007 18:33:17 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DEB1120FBAE; Thu,  8 Feb 2007 18:33:24 -0500 (EST)
+	id S1161157AbXBHXep (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 18:34:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965616AbXBHXep
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 18:34:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:21943 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965608AbXBHXeo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 18:34:44 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so618870uga
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 15:34:43 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=LSLjeqmgq6agW3Zp6vhDmhUiqd3kXuZRPbDYmCfdhTWOE7jlWphhgqw8YvZjFQ1PD985MrY16F42zfXvVCggSTa3vpa7XQkGaq/2YbfkA2eryhydpPbyf6NvlG4X28FPxRhsWsOGDfJcNmgM5cFWt9extN4fZpHP6S8xHF1cTn4=
+Received: by 10.78.97.7 with SMTP id u7mr4657816hub.1170977683382;
+        Thu, 08 Feb 2007 15:34:43 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id 32sm3930739ugf.2007.02.08.15.34.36;
+        Thu, 08 Feb 2007 15:34:40 -0800 (PST)
+In-Reply-To: <200702082158.56463.andyparkins@gmail.com>
+X-TUID: 05f243f5522097f4
+X-UID: 232
+X-Length: 1093
 Content-Disposition: inline
-In-Reply-To: <17867.45437.922483.805945@lisa.zopyra.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39124>
 
-Bill Lear <rael@zopyra.com> wrote:
-> With regard to the new version and old repos, am I correct in assuming
-> that we can upgrade our old repo (a bare one) to the new git by first
-> installing the new git, and then doing this:
-> 
-> % cd /repos/git
-> % mv project project.old_git
-> % git --bare clone project.old_git project
-> 
-> or is there something else we must do?
+The font is now set in software and is made up of both variable and
+monospaced fonts, therefore this override is no longer appropriate.
 
-In the case of a bare repo, there isn't anything to do.
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ src/revsview.ui |    5 -----
+ 1 files changed, 0 insertions(+), 5 deletions(-)
 
+diff --git a/src/revsview.ui b/src/revsview.ui
+index ad16200..870110e 100644
+--- a/src/revsview.ui
++++ b/src/revsview.ui
+@@ -63,11 +63,6 @@
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+-       <property name="font" >
+-        <font>
+-         <family>Monospace</family>
+-        </font>
+-       </property>
+        <property name="lineWrapMode" >
+         <enum>QTextEdit::NoWrap</enum>
+        </property>
 -- 
-Shawn.
+1.5.0.rc1.gf4b6c
