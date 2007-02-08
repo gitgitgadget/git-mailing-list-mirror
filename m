@@ -1,74 +1,54 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git rescue mission
-Date: Thu, 8 Feb 2007 18:50:06 -0500
-Message-ID: <20070208235006.GC1556@spearce.org>
-References: <17866.27739.701406.722074@lisa.zopyra.com> <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org> <17867.40122.51865.575762@lisa.zopyra.com> <Pine.LNX.4.64.0702081408140.8424@woody.linux-foundation.org> <17867.45437.922483.805945@lisa.zopyra.com> <20070208233324.GA1556@spearce.org> <17867.46325.433406.974582@lisa.zopyra.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] qgit4: Add a header and set the font family appropriately to the log message
+Date: Thu, 08 Feb 2007 15:58:44 -0800
+Message-ID: <7vk5ysw6a3.fsf@assigned-by-dhcp.cox.net>
+References: <200702082158.56463.andyparkins@gmail.com>
+	<200702082331.13095.andyparkins@gmail.com>
+	<20070208234153.GB1556@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Fri Feb 09 00:50:17 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Feb 09 00:58:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFJ1r-0003eP-Or
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 00:50:16 +0100
+	id 1HFJA9-0007vT-Kh
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 00:58:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422709AbXBHXuM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 18:50:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422729AbXBHXuM
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 18:50:12 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:40365 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422709AbXBHXuK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 18:50:10 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HFJ1a-0000pV-GD; Thu, 08 Feb 2007 18:49:58 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6BDDC20FBAE; Thu,  8 Feb 2007 18:50:06 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <17867.46325.433406.974582@lisa.zopyra.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1945937AbXBHX6q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 18:58:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945938AbXBHX6q
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 18:58:46 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:36288 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945937AbXBHX6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 18:58:45 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070208235844.DFRU21668.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 8 Feb 2007 18:58:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MByk1W00b1kojtg0000000; Thu, 08 Feb 2007 18:58:45 -0500
+In-Reply-To: <20070208234153.GB1556@spearce.org> (Shawn O. Pearce's message of
+	"Thu, 8 Feb 2007 18:41:53 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39132>
 
-Bill Lear <rael@zopyra.com> wrote:
-> So, I assume I need to tell our developers that once we have installed
-> the new git, they will need to set aside their old repos and just
-> clone again from our company repo?
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-Right.  Otherwise they need to do the config changes by hand in their
-existing repository, which may be annoying/tedious/painful/difficult,
-depending on your knowledge level with git.
+> In case you did not already know, --numbered is a wonderful option
+> to git-format-patch.  It automatically numbers the commits by placing
+> a sequence into the subject header (e.g. [PATCH 1/3]), making it
+> easier for everyone to know how many patches are in your series.
 
-You can actually use the old developer repositories with the newer
-Git without doing anything specific to upgrade them.  Its just that
-1.5.0 sets up the initial config of the repository differently,
-and that's exactly the change in functionality you are looking for.
-
-They can save their old topic branches (if they are important)
-by doing something like:
-
-	mv proj old_proj
-	git clone git://server/proj proj
-	cd proj
-	git fetch ../old_proj topicA:topicA [topicB:topicB ...]
-
-at which point ../old_proj can be tossed.
-
--- 
-Shawn.
+This came up before, but when you have more than 9 in your
+series, we _could_ do [PATCH 01/12] ... [PATCH 12/12] to line
+them up in e-mail client of the recipients better.  Currently I
+think we do [PATCH 1/12] ... [PATCH 12/12].
