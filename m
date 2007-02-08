@@ -1,58 +1,63 @@
-From: Bill Lear <rael@zopyra.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Git rescue mission
-Date: Thu, 8 Feb 2007 17:32:05 -0600
-Message-ID: <17867.45813.15301.479436@lisa.zopyra.com>
-References: <17866.27739.701406.722074@lisa.zopyra.com>
-	<7vr6t13251.fsf@assigned-by-dhcp.cox.net>
-	<17867.16740.875694.789664@lisa.zopyra.com>
-	<20070208232404.GA9493@coredump.intra.peff.net>
+Date: Thu, 8 Feb 2007 18:33:24 -0500
+Message-ID: <20070208233324.GA1556@spearce.org>
+References: <17866.27739.701406.722074@lisa.zopyra.com> <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org> <17867.40122.51865.575762@lisa.zopyra.com> <Pine.LNX.4.64.0702081408140.8424@woody.linux-foundation.org> <17867.45437.922483.805945@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 09 00:32:37 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Fri Feb 09 00:33:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFIkl-0002x4-4j
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 00:32:35 +0100
+	id 1HFIli-0003UV-Ml
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 00:33:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161070AbXBHXcQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 18:32:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965620AbXBHXcO
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 18:32:14 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:61902 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965616AbXBHXcJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 18:32:09 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l18NW7h04222;
-	Thu, 8 Feb 2007 17:32:07 -0600
-In-Reply-To: <20070208232404.GA9493@coredump.intra.peff.net>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S965614AbXBHXd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 18:33:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030205AbXBHXd3
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 18:33:29 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39885 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965616AbXBHXd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 18:33:29 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HFIlR-0007LM-4A; Thu, 08 Feb 2007 18:33:17 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DEB1120FBAE; Thu,  8 Feb 2007 18:33:24 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <17867.45437.922483.805945@lisa.zopyra.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39123>
 
-On Thursday, February 8, 2007 at 18:24:04 (-0500) Jeff King writes:
->...
->Maybe I don't understand what you mean by sync here, but I don't see the
->mental leap. Whenever you fetch, from whatever branch, using the
->'origin' remote, it will update all tracking branches in your local
->repository. You can then selectively do merges to any local branches
->you're working on. You _can't_ do an operation that is "for every local
->branch I have, merge the matching remote branch into my local branch".
->And I don't think you'd want to: a merge may or may not be a trivial
->thing, since it might have conflicts.
->...
+Bill Lear <rael@zopyra.com> wrote:
+> With regard to the new version and old repos, am I correct in assuming
+> that we can upgrade our old repo (a bare one) to the new git by first
+> installing the new git, and then doing this:
+> 
+> % cd /repos/git
+> % mv project project.old_git
+> % git --bare clone project.old_git project
+> 
+> or is there something else we must do?
 
-A very good point, and an obvious one in retrospect.  I guess I will
-be entirely satisfied if I am on branch X I can just say 'git pull'
-and it will NOT pull from any other branch.  You have added to my
-understanding on this, and thank you for taking the time.
+In the case of a bare repo, there isn't anything to do.
 
-
-Bill
+-- 
+Shawn.
