@@ -1,107 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git rescue mission
-Date: Thu, 8 Feb 2007 23:29:11 +0100
-Message-ID: <200702082329.12572.jnareb@gmail.com>
-References: <17866.27739.701406.722074@lisa.zopyra.com> <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org> <17867.40122.51865.575762@lisa.zopyra.com>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
+Subject: Re: git rebase: unexpected conflict
+Date: Fri, 9 Feb 2007 00:29:01 +0200
+Message-ID: <20070208222901.GG6560@mellanox.co.il>
+References: <7vk5ysz3n6.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Feb 08 23:27:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 08 23:28:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFHk8-0003oU-WD
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 23:27:53 +0100
+	id 1HFHkr-0004B2-B5
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 23:28:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423487AbXBHW1s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 17:27:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423494AbXBHW1s
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 17:27:48 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:6305 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423487AbXBHW1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 17:27:47 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so602533uga
-        for <git@vger.kernel.org>; Thu, 08 Feb 2007 14:27:45 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=F/bZ+WKz38ndlRvgSV9T8VKNojx6dC/EHc1spwxc8N1PbPdDV10qz+Pealw6etGT3kbEvqsDUetCKF517A6EgSWRakGilm++1WqeFpe3RvgO5qgW1xKVsXoDF3lNoWHpzioV754S/l/SWi21o/1xRKt3SZOrAEdnk3ECgca1YI8=
-Received: by 10.78.165.16 with SMTP id n16mr14086hue.1170973656024;
-        Thu, 08 Feb 2007 14:27:36 -0800 (PST)
-Received: from host-81-190-29-4.torun.mm.pl ( [81.190.29.4])
-        by mx.google.com with ESMTP id 39sm3282498ugb.2007.02.08.14.27.35;
-        Thu, 08 Feb 2007 14:27:35 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <17867.40122.51865.575762@lisa.zopyra.com>
+	id S1423490AbXBHW2e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 17:28:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423493AbXBHW2e
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 17:28:34 -0500
+Received: from p02c11o146.mxlogic.net ([208.65.145.69]:33969 "EHLO
+	p02c11o146.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423490AbXBHW2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 17:28:33 -0500
+Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
+	by p02c11o146.mxlogic.net (mxl_mta-4.0.2-2)
+	with ESMTP id 014abc54.2656332720.10022.00-029.p02c11o146.mxlogic.net (envelope-from <mst@mellanox.co.il>);
+	Thu, 08 Feb 2007 15:28:32 -0700 (MST)
+Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 9 Feb 2007 00:30:41 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Fri,  9 Feb 2007 00:26:24 +0200
 Content-Disposition: inline
+In-Reply-To: <7vk5ysz3n6.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-OriginalArrivalTime: 08 Feb 2007 22:30:41.0533 (UTC) FILETIME=[C3E712D0:01C74BD0]
+X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14986.001
+X-TM-AS-Result: No--10.527000-4.000000-31
+X-Spam: [F=0.0100000000; S=0.010(2007010901)]
+X-MAIL-FROM: <mst@mellanox.co.il>
+X-SOURCE-IP: [194.90.237.34]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39108>
 
-Bill Lear wrote:
-[cut]
+> Quoting Junio C Hamano <junkio@cox.net>:
+> Subject: Re: git rebase: unexpected conflict
+> 
+> "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
+> 
+> > Junio, is the following patch correct?
+> 
+> Looks sane to me.
 
-With git 1.5.0-rc4 cloned repository, with globbing refspecs for origin
-you don't have the problem. When you are on branch 'master', "git pull"
-fetches and merges 'origin/master' into 'master'. When on any other
-branch, "git pull" would fetch only (unless configured otherwise).
+You can take it then :)
 
-Note: you cannot pull into 'master' if you are not on 'master' because
-of possibility of merge conflict: you need working area for that.
-
-> In CVS, if I am on branch topic and say 'cvs update', it updates my
-> branch topic.  If I am on branch master and say 'cvs update', it
-> updates my branch master.  Etc., etc.  It doesn't matter that you move
-> from one branch to the other, the update behavior is the same.  In
-> git, if I am on master, things seem to work wonderfully --- one 'git
-> pull' and my entire repo is synced (that is, merged) as I expect with
-> the other repo.
-
-In CVS branches are totally f**ked up. And enforced update before commit 
-workflow doesn't help, also. Get rid of bad CVS habits. Please.
-
-> I really don't want to do 'git fetch'.  I really want 'git pull'.  I
-> really want the changes put into my repo, from that repo's branch X
-> onto my branch X, and that repo's branch Y onto my branch Y.  I really
-> don't want to have to remember to switch to my master branch before I
-> do git pull (this, however, as it stands, does seem to me to be the
-> best option).  Perhaps I'll just write a script 'git-sync' that does
-> 'git checkout master; git pull'...
-
-It's the only option.
-
-> Jakub is of course literally correct when he says "'Crossing of the
-> streams' is _required_ ... If you do parallel work ... you have to
-> do merges".  Again, I recognize that my "foo" branch is different
-> from your "foo" branch, and that when they come together they are
-> in fact merged, but logically they are one thing --- one stream of
-> shared work that we don't want to slip over into another one, at
-> least not until we are ready.
-
-So do fetch, and do pull only when changes are ready...
-
-RTFM. Take a look at http://git.or.cz/gitwiki/GitLinks namely section
-"Seminars and presentations", read new Git User's Manual also at
-http://www.fieldses.org/~bfields/git-user-manual.html, browse GitWiki.
-
-By the way, the workflow looks slightly different if you pull directly
-from one another (A pulls or fetches from B, B pulls or fetches from A),
-and if you have one central public bare repository (A pulls or fetches
-from 'public' and pushes her changes to 'public', B pulls or fetches
-from 'public' and pushes his changes to 'public'). In the latter git
-asks you to pull (fetch) before pushing if you are not up to date. Notice
-that it is on push, not on commit!
-
-
-We should really update http://git.or.cz/gitwiki/GitWorkflows ...
-but how to make diagrams: ASCII art is hard because it needs monospace,
-upload of images attachements is not possible...
 -- 
-Jakub Narebski
-Poland
+MST
