@@ -1,150 +1,115 @@
-From: Brett Schwarz <brett_schwarz@yahoo.com>
-Subject: Re: [PATCH] Make gitk save and restore the user set window position.
-Date: Wed, 7 Feb 2007 21:43:31 -0800 (PST)
-Message-ID: <491753.81112.qm@web38915.mail.mud.yahoo.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log filtering
+Date: Thu, 8 Feb 2007 01:16:54 -0500
+Message-ID: <20070208061654.GA8813@coredump.intra.peff.net>
+References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com> <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org> <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org> <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 08 06:50:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Feb 08 07:17:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HF2Al-0003pH-VC
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 06:50:20 +0100
+	id 1HF2ac-00049F-BK
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 07:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161535AbXBHFuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 00:50:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161538AbXBHFuQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 00:50:16 -0500
-Received: from web38915.mail.mud.yahoo.com ([209.191.125.121]:26180 "HELO
-	web38915.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1161535AbXBHFuO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 8 Feb 2007 00:50:14 -0500
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Feb 2007 00:50:14 EST
-Received: (qmail 81810 invoked by uid 60001); 8 Feb 2007 05:43:31 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=Mq+Cv7hgIpzQiquk+Gtig0QRBCZbtAherHFqnY3t/VvgWqgA35IMtJ3HM33i1bgPdE0pbEq8AAxyvIL8gKkJN7qpv7X7pWLYWRSfTzc94NA2JiX/bUDPR3Ie11tais8e7gnVVfBbwELdzULT/FoaXl1Us1iI4l+VKxETbGGR4E0=;
-X-YMail-OSG: eKwePFcVM1kDWKR9vDY0sPpo5u5LfDU3IL_PG4CV6Ixu9ry2ZiTDT5T.f8RRvaTIMw--
-Received: from [198.205.32.93] by web38915.mail.mud.yahoo.com via HTTP; Wed, 07 Feb 2007 21:43:31 PST
-X-Mailer: YahooMailRC/368.7 YahooMailWebService/0.6.132.7
+	id S1422904AbXBHGQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 01:16:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422923AbXBHGQ5
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 01:16:57 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3813 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422904AbXBHGQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 01:16:56 -0500
+Received: (qmail 6250 invoked from network); 8 Feb 2007 01:16:58 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 8 Feb 2007 01:16:58 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Feb 2007 01:16:54 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39032>
 
->----- Original Message ----
->From: Mark Levedahl <mdl123@verizon.net>
->To: Shawn O. Pearce <spearce@spearce.org>
->Cc: Junio C Hamano <junkio@cox.net>; git@vger.kernel.org
->Sent: Wednesday, February 7, 2007 4:30:38 PM
->Subject: Re: [PATCH] Make gitk save and restore the user set window position.
+On Wed, Feb 07, 2007 at 01:53:18PM -0800, Linus Torvalds wrote:
+
+> What's PCRE performance like? I'd hate to make "git grep" slower, and it 
+> would be stupid and confusing to use two different regex libraries..
 >
->Shawn O. Pearce wrote:
->> Junio C Hamano <junkio@cox.net> wrote:
->>  
->>>    After seeing what this patch has to do, I feel dirty, but
->>>    that is not Mark's fault -- rather it is Tk's.
->>>
->>>    I am tempted to suggest adding an explicit "Save window
->>>    configuration" action on the menubar and forget about
->>>    resurrecting the window configuration immediately before the
->>>    end of the last session.
->>>    
->>
->> Maybe take a look at what git-gui does here, because its slightly
->> saner and still saves the geometry on exit:
->>
->>     set is_quitting 0
->>     proc do_quit {} {
->>         global is_quitting
->>         if {$is_quitting} return
->>         set is_quitting 1
->>         # save wm geometry
->>     }
->>     bind . <Destroy> do_quit
->>
->> OK, its not that much saner.  But it does bypass needing to setup
->> some ugly bindings on every object in the UI.  Though I recently
->> took a slightly different approach in a dialog:
->>
->>     proc do_quit {} {
->>         bind . <Destroy> {}
->>         # do cleanup
->>     }
->>     bind . <Destroy> do_quit
->>
->> Yes the binding is firing in both cases for some arbitrary child
->> widget in the window, but it doesn't matter.  In the latter version
->> setting the binding to the empty string removes the do_quit binding,
->> allowing the other widgets to destroy without reinvoking do_quit
->> and whacking whatever geometry data you may have saved before the
->> widgets started to get deleted.
->>
->>
->> The only problem I seem to have in git-gui is the window position
->> opens about 10 pixels lower and 2 pixels to the right than the last
->> time it opened.  I think there's a bug in Tk on Windows where the
->> window position on the desktop doesn't include the titlebar when I
->> get it, but expects to include it when I attempt to set it on the
->> next start.
->>
->> I should note I also see the same behavior with my day-time-job's
->> Java apps on Windows however, so I don't think its a specific Tk
->> or git-gui issue.
->>
->>  
-> What you suggest is essentially what gitk does before my patch. In
-> git-gui, routine do_quit is invoked when Tk is ready to destroy the top
-> level window: this is _after_ Tk has destroyed everything in the window,
-> and thus the problem. I still haven't isolated which object(s) being
-> destroyed from gitk cause the geometry reported from wm info to change,
-> clearly my patch is binding widgets that do not need to be bound, but I
-> haven't found which specific one needs to be bound.
-> 
-> With my patch, the correct position is saved and restored on both Linux
-> and Cygwin. I think that should be the goal. A more elegant solution
-> accomplishing that end is of course desirable, but there remains the
-> issue of finding it. I think the objections to my patch are more
-> theoretical than practical: I seriously doubt you can find any
-> practically observable side effect of binding all the widgets other than
-> that the window geometry _is_ correctly saved and restored.
-> 
-> As to being specific to Tk, I have many windows applications that
-> successfully save and restore window state, this geometry issue is not
-> endemic to Windows and I have never encountered it except with Tk.
-> 
-> Mark
-> 
+> Maybe somebody could test - afaik, PCRE has a regex-compatible (from a API 
+> standpoint, not from a regex standpoint!) wrapper thing, and it might be 
+> interesting to hear if doing "git grep" is slower or faster..
 
-I've only been half following this thread, so I apologize if this was already talked about.
+The patch is delightfully simple (though a real patch would probably be
+conditional):
 
-Have you tried [wm protocol] command. You would use it like this:
-
-    wm protocol . WM_DELETE_WINDOW do_quit
-
-This basically traps the signal from the windowmanager, and [do_quit] gets executed *before* the gui is torn down. The only bad thing about this, is if you explicitly destroy a widget inside your code (i.e. [destroy .]), then this will *not* get invoked. You also need to make sure you catch any possible errors in do_quit, otherwise the gui will hang.
-
-HTH,
-    --brett
-
-
--
-To unsubscribe from this list: send the line "unsubscribe git" in
-the body of a message to majordomo@vger.kernel.org
-More majordomo info at  http://vger.kernel.org/majordomo-info.html
-
-
-
-
-
+diff --git a/Makefile b/Makefile
+index aca96c8..cf391dc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -323,7 +323,7 @@ BUILTIN_OBJS = \
+ 	builtin-pack-refs.o
  
-____________________________________________________________________________________
-Be a PS3 game guru.
-Get your game face on with the latest PS3 news and previews at Yahoo! Games.
-http://videogames.yahoo.com/platform?platform=120121
+ GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
+-EXTLIBS = -lz
++EXTLIBS = -lz -lpcreposix -lpcre
+ 
+ #
+ # Platform specific tweaks
+diff --git a/git-compat-util.h b/git-compat-util.h
+index c1bcb00..a6c77f9 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -40,7 +40,7 @@
+ #include <sys/poll.h>
+ #include <sys/socket.h>
+ #include <assert.h>
+-#include <regex.h>
++#include <pcreposix.h>
+ #include <netinet/in.h>
+ #include <netinet/tcp.h>
+ #include <arpa/inet.h>
+
+
+A few numbers, all from a fully packed kernel repository:
+
+# glibc, trivial regex
+$ /usr/bin/time git grep --cached foo >/dev/null
+10.07user 0.15system 0:10.23elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+36617minor)pagefaults 0swaps
+
+# glibc, complex regex
+$ /usr/bin/time git grep --cached '[a-z][0-9][a-z][0-9][a-z]'  >/dev/null
+24.42user 0.15system 0:24.60elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+36210minor)pagefaults 0swaps
+
+# pcre, trivial regex
+$ /usr/bin/time git grep --cached foo >/dev/null
+7.82user 0.12system 0:08.00elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+36571minor)pagefaults 0swaps
+
+# pcre, complex regex
+$ /usr/bin/time git grep --cached '[a-z][0-9][a-z][0-9][a-z]'  >/dev/null
+36.51user 0.13system 0:36.65elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+36583minor)pagefaults 0swaps
+
+
+So the winner seems to vary based on the complexity of the pattern.
+There are some less rudimentary but non-git performance tests here:
+
+  http://www.boost.org/libs/regex/doc/gcc-performance.html
+
+In every case there, pcre has either comparable performance, or simply
+blows away glibc.
+
+One final note that caused some confusion during my testing: git-grep
+still uses external grep for working tree greps (i.e., 'git grep foo').
+This meant that 'git grep' and 'git grep --cached' produced wildly
+different results once I was using pcre internally. Something to look
+out for if we switch to pcre (or any other library which doesn't exactly
+match external grep behavior!).
+
+-Peff
