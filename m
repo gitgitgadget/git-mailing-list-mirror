@@ -1,115 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git log filtering
-Date: Thu, 8 Feb 2007 01:16:54 -0500
-Message-ID: <20070208061654.GA8813@coredump.intra.peff.net>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com> <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org> <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org> <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC/PATCH] fast-import: Fix compile warnings
+Date: Thu, 8 Feb 2007 02:03:42 -0500
+Message-ID: <20070208070342.GA3746@spearce.org>
+References: <Pine.LNX.4.63.0702071237360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Feb 08 07:17:05 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 08 08:03:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HF2ac-00049F-BK
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 07:17:02 +0100
+	id 1HF3Jz-0002mi-3v
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 08:03:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422904AbXBHGQ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 01:16:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422923AbXBHGQ5
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 01:16:57 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3813 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422904AbXBHGQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 01:16:56 -0500
-Received: (qmail 6250 invoked from network); 8 Feb 2007 01:16:58 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 8 Feb 2007 01:16:58 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Feb 2007 01:16:54 -0500
+	id S1422898AbXBHHDs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 02:03:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422914AbXBHHDs
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 02:03:48 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:58478 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422898AbXBHHDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 02:03:47 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HF3Jp-00066x-2A; Thu, 08 Feb 2007 02:03:45 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DC69B20FBAE; Thu,  8 Feb 2007 02:03:42 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
+In-Reply-To: <Pine.LNX.4.63.0702071237360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39033>
 
-On Wed, Feb 07, 2007 at 01:53:18PM -0800, Linus Torvalds wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Not on all platforms are size_t and unsigned long equivalent.
+> Since I do not know how portable %z is, I play safe, and just
+> cast the respective variables to unsigned long.
 
-> What's PCRE performance like? I'd hate to make "git grep" slower, and it 
-> would be stupid and confusing to use two different regex libraries..
->
-> Maybe somebody could test - afaik, PCRE has a regex-compatible (from a API 
-> standpoint, not from a regex standpoint!) wrapper thing, and it might be 
-> interesting to hear if doing "git grep" is slower or faster..
+We do this elsewhere in Git.  blobs are using unsigned long in
+sha1_file.c for their length; I chose to size_t in gfi as that's
+what the type is for...  but then look at the mess.
 
-The patch is delightfully simple (though a real patch would probably be
-conditional):
-
-diff --git a/Makefile b/Makefile
-index aca96c8..cf391dc 100644
---- a/Makefile
-+++ b/Makefile
-@@ -323,7 +323,7 @@ BUILTIN_OBJS = \
- 	builtin-pack-refs.o
+I applied this patch to my tree and pushed it to repo.or.cz.
+This last hunk:
  
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
--EXTLIBS = -lz
-+EXTLIBS = -lz -lpcreposix -lpcre
- 
- #
- # Platform specific tweaks
-diff --git a/git-compat-util.h b/git-compat-util.h
-index c1bcb00..a6c77f9 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -40,7 +40,7 @@
- #include <sys/poll.h>
- #include <sys/socket.h>
- #include <assert.h>
--#include <regex.h>
-+#include <pcreposix.h>
- #include <netinet/in.h>
- #include <netinet/tcp.h>
- #include <arpa/inet.h>
+> @@ -2028,7 +2030,8 @@ int main(int argc, const char **argv)
+>  	fprintf(stderr, "      marks:     %10ju (%10ju unique    )\n", (((uintmax_t)1) << marks->shift) * 1024, marks_set_count);
+>  	fprintf(stderr, "      atoms:     %10u\n", atom_cnt);
+>  	fprintf(stderr, "Memory total:    %10ju KiB\n", (total_allocd + alloc_count*sizeof(struct object_entry))/1024);
+> -	fprintf(stderr, "       pools:    %10lu KiB\n", total_allocd/1024);
+> +	fprintf(stderr, "       pools:    %10lu KiB\n",
+> +		(unsigned long)(total_allocd / 1024));
+>  	fprintf(stderr, "     objects:    %10ju KiB\n", (alloc_count*sizeof(struct object_entry))/1024);
+>  	fprintf(stderr, "---------------------------------------------------------------------\n");
+>  	pack_report();
 
+was the only part that did not apply cleanly, but that was easily
+fixed by tossing an extra tab at the start of each line, as this
+hunk was shifted in one level by a recent commit that Junio has
+not pushed out to master.
 
-A few numbers, all from a fully packed kernel repository:
-
-# glibc, trivial regex
-$ /usr/bin/time git grep --cached foo >/dev/null
-10.07user 0.15system 0:10.23elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+36617minor)pagefaults 0swaps
-
-# glibc, complex regex
-$ /usr/bin/time git grep --cached '[a-z][0-9][a-z][0-9][a-z]'  >/dev/null
-24.42user 0.15system 0:24.60elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+36210minor)pagefaults 0swaps
-
-# pcre, trivial regex
-$ /usr/bin/time git grep --cached foo >/dev/null
-7.82user 0.12system 0:08.00elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+36571minor)pagefaults 0swaps
-
-# pcre, complex regex
-$ /usr/bin/time git grep --cached '[a-z][0-9][a-z][0-9][a-z]'  >/dev/null
-36.51user 0.13system 0:36.65elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+36583minor)pagefaults 0swaps
-
-
-So the winner seems to vary based on the complexity of the pattern.
-There are some less rudimentary but non-git performance tests here:
-
-  http://www.boost.org/libs/regex/doc/gcc-performance.html
-
-In every case there, pcre has either comparable performance, or simply
-blows away glibc.
-
-One final note that caused some confusion during my testing: git-grep
-still uses external grep for working tree greps (i.e., 'git grep foo').
-This meant that 'git grep' and 'git grep --cached' produced wildly
-different results once I was using pcre internally. Something to look
-out for if we switch to pcre (or any other library which doesn't exactly
-match external grep behavior!).
-
--Peff
+-- 
+Shawn.
