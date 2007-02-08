@@ -1,63 +1,64 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH] qgit: Default the log window to wider than the file list and set monospaced font
-Date: Thu, 8 Feb 2007 09:39:50 +0100
-Message-ID: <e5bfff550702080039l236b1f69o6765b8e2dff3e3c4@mail.gmail.com>
-References: <200702072138.36787.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] Correct some language in fast-import documentation.
+Date: Thu, 08 Feb 2007 00:50:34 -0800
+Message-ID: <7vveidyqw5.fsf@assigned-by-dhcp.cox.net>
+References: <20070208075851.GB3950@spearce.org>
+	<20070208082850.GA4334@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Andy Parkins" <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 08 09:39:58 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Thu Feb 08 09:50:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HF4ov-0005lT-3o
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 09:39:57 +0100
+	id 1HF4zM-0001hM-6G
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 09:50:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423045AbXBHIjx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 03:39:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423051AbXBHIjw
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 03:39:52 -0500
-Received: from wx-out-0506.google.com ([66.249.82.239]:48852 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423045AbXBHIjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 03:39:52 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so429420wxd
-        for <git@vger.kernel.org>; Thu, 08 Feb 2007 00:39:51 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Tb5D5vRRR0vcIgZ+rKpzkxNL2yjhuA7DZZhxyQE4JVOYpS3sVSLMTu5m7KKYPRCOT1AAbQv9Cc61ajIRFRouIMllrj3w/mtb578yD7GPF5LCgqhBYbYdF8gKcI+/0rE08E02gBjFgD83gKtwyxRlE57zEYUNuo75k7ZxkVsF5Bs=
-Received: by 10.114.202.15 with SMTP id z15mr3474137waf.1170923991032;
-        Thu, 08 Feb 2007 00:39:51 -0800 (PST)
-Received: by 10.114.60.16 with HTTP; Thu, 8 Feb 2007 00:39:50 -0800 (PST)
-In-Reply-To: <200702072138.36787.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S1423037AbXBHIuh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Feb 2007 03:50:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423040AbXBHIuh
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 03:50:37 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:54991 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1423037AbXBHIuh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Feb 2007 03:50:37 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070208085035.CHDX1306.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 8 Feb 2007 03:50:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Lwqb1W0071kojtg0000000; Thu, 08 Feb 2007 03:50:36 -0500
+In-Reply-To: <20070208082850.GA4334@informatik.uni-freiburg.de> (Uwe
+	=?utf-8?Q?Kleine-K=C3=B6nig's?= message of "Thu, 8 Feb 2007 09:28:50
+ +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39050>
 
+Uwe Kleine-K=C3=B6nig  <ukleinek@informatik.uni-freiburg.de> writes:
+
+> Shawn O. Pearce wrote:
+>> Minor documentation improvements, as suggested on the Git mailing
+>> list by Horst H. von Brand and Karl Hasselstr~A(P)m.
+> you have an encoding problem here     ---------^
 >
-> The font for the log viewer is set to "Monospace", but this should
-> really be done in software and given a config setting (perhaps use the
-> patch view font)
->
+> That "o umlaut" seems to be UTF-8 encoded, but the headers of you mai=
+l
+> claim iso-8859-1.
 
-Thanks Andy for patches, I will apply as soon as I have access to my
-box, probably this evening.
+I noticed it, too.  This seems to be purely between the
+format-patch output and the mailing list.  In Shawn's tree, the
+corresponding commit f842fdb0 does not have the encoding
+problem.
 
-Regarding "Monospace" it should be changeable with Settings menu and
-should apply _only_ to fixed space font viewers, in our case only
-patch viewer and file content viewer.
-
-Other fonts used in qgit are derived from system wide settings and are
-changeable with qtconfig tool.
-
-If you see Monospace applied to list view or any other widget apart
-from the above mentioned ones then it's a bug.
-
-Thanks
-Marco
+As Shawn's tree currently has only these two commits on top of
+what my tree already has, I do not mind pulling from it.  It
+would make life easier for people who are following his tree.
