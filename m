@@ -1,61 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] tar archive frontend for fast-import.
-Date: Thu, 8 Feb 2007 16:01:41 -0500
-Message-ID: <20070208210141.GA1047@spearce.org>
-References: <20070208203845.GB956@spearce.org> <Pine.LNX.4.63.0702082155210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: MinGW binary installer available
+Date: Thu, 8 Feb 2007 22:15:50 +0100
+Organization: Dewire
+Message-ID: <200702082215.50389.robin.rosenberg.lists@dewire.com>
+References: <45C9E470.7030609@xs4all.nl> <45C9EB54.3040406@xs4all.nl> <45CADAAA.74058D21@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 08 22:01:52 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Sixt <J.Sixt@eudaptics.com>
+X-From: git-owner@vger.kernel.org Thu Feb 08 22:15:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFGOt-0002fS-LB
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 22:01:51 +0100
+	id 1HFGbp-0001GX-BD
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 22:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423339AbXBHVBt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 16:01:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423340AbXBHVBs
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 16:01:48 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33988 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423339AbXBHVBs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 16:01:48 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HFGOd-0002Ua-1n; Thu, 08 Feb 2007 16:01:35 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 41D6B20FBAE; Thu,  8 Feb 2007 16:01:41 -0500 (EST)
+	id S1423396AbXBHVO5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 16:14:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423401AbXBHVO5
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 16:14:57 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:24891 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1423397AbXBHVOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 16:14:55 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 997E9803393;
+	Thu,  8 Feb 2007 22:10:06 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 29076-03; Thu,  8 Feb 2007 22:10:06 +0100 (CET)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id 58A5C800199;
+	Thu,  8 Feb 2007 22:10:04 +0100 (CET)
+User-Agent: KMail/1.9.4
+In-Reply-To: <45CADAAA.74058D21@eudaptics.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702082155210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39093>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Thu, 8 Feb 2007, Shawn O. Pearce wrote:
+torsdag 08 februari 2007 09:09 skrev Johannes Sixt:
 > 
-> > Each tar is treated as one commit, with the commit timestamp coming
-> > from the oldest file modification date found within the tar.
+> @echo off
+> rem () { :; } ; : \
+> sh %0 %1 %2 %3 %4 %5 %6 %7 %8 %9
+> rem ; : \
+> exit /B %ERRORLEVEL%
 > 
-> You mean the youngest, i.e. the newest file, right? (I did not read the 
-> code yet...)
+> 
+> in place of the usual "#!/bin/sh". It requires you to have a command
+> named @echo.exe in the path that is a noop. Also, it is limited to 9
+> command line arguments.
+> 
+> What a hack! (*)
 
-Arrggh!  Yes, of course, the youngest/newest file.  The code (and
-you) is right, the commit message is wrong.  ;-)
+Yes... I suggest you use %* to pass on all arguments. It works with more than 10
+arguemtns, including quoted arguemnts (presumably whatever limit windows has)
 
--- 
-Shawn.
+-- robin
