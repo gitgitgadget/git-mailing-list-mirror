@@ -1,63 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git log filtering
-Date: Thu, 8 Feb 2007 19:06:25 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702081905570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
- <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
- <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
- <20070208061654.GA8813@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/2] Correct some language in fast-import documentation.
+Date: Thu, 8 Feb 2007 13:32:44 -0500
+Message-ID: <20070208183243.GA30673@spearce.org>
+References: <20070208075851.GB3950@spearce.org> <20070208082850.GA4334@informatik.uni-freiburg.de> <7vveidyqw5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 08 19:06:53 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 08 19:33:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFDfJ-0007qX-IC
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 19:06:37 +0100
+	id 1HFE59-0003ZI-CS
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 19:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752381AbXBHSGb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 13:06:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752382AbXBHSGb
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 13:06:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57975 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752380AbXBHSGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 13:06:30 -0500
-Received: (qmail invoked by alias); 08 Feb 2007 18:06:28 -0000
-X-Provags-ID: V01U2FsdGVkX19IPY970ylIfUDOZbVU6Dae4JwqJxFjy/PTfIph1R
-	JaXg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070208061654.GA8813@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1752421AbXBHScv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Feb 2007 13:32:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752422AbXBHScv
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 13:32:51 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:55362 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752419AbXBHScu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Feb 2007 13:32:50 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HFE4V-0001kE-8o; Thu, 08 Feb 2007 13:32:39 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2CE4C20FBAE; Thu,  8 Feb 2007 13:32:44 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vveidyqw5.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39069>
 
-Hi,
-
-On Thu, 8 Feb 2007, Jeff King wrote:
-
-> On Wed, Feb 07, 2007 at 01:53:18PM -0800, Linus Torvalds wrote:
-> 
-> > What's PCRE performance like? I'd hate to make "git grep" slower, and it 
-> > would be stupid and confusing to use two different regex libraries..
+Junio C Hamano <junkio@cox.net> wrote:
+> Uwe Kleine-K=F6nig  <ukleinek@informatik.uni-freiburg.de> writes:
+>=20
+> > Shawn O. Pearce wrote:
+> >> Minor documentation improvements, as suggested on the Git mailing
+> >> list by Horst H. von Brand and Karl Hasselstr~A(P)m.
+> > you have an encoding problem here     ---------^
 > >
-> > Maybe somebody could test - afaik, PCRE has a regex-compatible (from a API 
-> > standpoint, not from a regex standpoint!) wrapper thing, and it might be 
-> > interesting to hear if doing "git grep" is slower or faster..
-> 
-> The patch is delightfully simple (though a real patch would probably be
-> conditional):
->
-> [...]
+> > That "o umlaut" seems to be UTF-8 encoded, but the headers of you m=
+ail
+> > claim iso-8859-1.
+>=20
+> I noticed it, too.  This seems to be purely between the
+> format-patch output and the mailing list.  In Shawn's tree, the
+> corresponding commit f842fdb0 does not have the encoding
+> problem.
 
-May I register a complaint? This is yet _another_ dependency.
+Yes, correct.  I took great care to copy Uwe's name from a prior
+commit of his in git.git, to make sure I got it spelled correctly
+in the commit message.  :)
 
-Ciao,
-Dscho
+Unfortunately mutt set the wrong charset on the message.
+Uwe thoughtly sent some notes on how to correct that, so I'll try
+to fix my mutt.
+=20
+> As Shawn's tree currently has only these two commits on top of
+> what my tree already has, I do not mind pulling from it.  It
+> would make life easier for people who are following his tree.
+
+Those are built upon a commit you already merged, but not the tip
+of `master` at the time they were written (kernel.org mirror lag
+strikes again).  Please feel free to rebase them into the current
+tip of master (instead of merging them in) if you want.
+
+--=20
+Shawn.
