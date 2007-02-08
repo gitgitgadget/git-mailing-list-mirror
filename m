@@ -1,117 +1,68 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Git rescue mission
-Date: Thu, 8 Feb 2007 15:57:14 -0600
-Message-ID: <17867.40122.51865.575762@lisa.zopyra.com>
-References: <17866.27739.701406.722074@lisa.zopyra.com>
-	<Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] qgit: Default the log window to wider than the file list and set monospaced font
+Date: Thu, 8 Feb 2007 21:58:55 +0000
+Message-ID: <200702082158.56463.andyparkins@gmail.com>
+References: <200702072138.36787.andyparkins@gmail.com> <e5bfff550702081129x6c94eaa4p40cf09e70c4e09cd@mail.gmail.com> <e5bfff550702081151q5536b547p34728cafa9a7dee@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Feb 08 22:58:11 2007
+Cc: "Marco Costalba" <mcostalba@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 08 23:02:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFHHO-0006A5-6e
-	for gcvg-git@gmane.org; Thu, 08 Feb 2007 22:58:10 +0100
+	id 1HFHL6-00080l-JC
+	for gcvg-git@gmane.org; Thu, 08 Feb 2007 23:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423483AbXBHV6G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 16:58:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423484AbXBHV6G
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 16:58:06 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:61676 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423483AbXBHV6F (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 16:58:05 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l18LvLF26977;
-	Thu, 8 Feb 2007 15:57:21 -0600
-CC: Jakub Narebski <jnareb@gmail.com>
-In-Reply-To: <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1945904AbXBHWB4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 17:01:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945903AbXBHWB4
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 17:01:56 -0500
+Received: from nz-out-0506.google.com ([64.233.162.235]:56665 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945912AbXBHWBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 17:01:55 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so608695nze
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 14:01:54 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=OMu0kJ2g0GvzvlRFFxuZUKc99MBnDt+5/pGTBMKXV2mZcG3LIKq0dXjO1Cf3gcOYYhJQDhGGgVGFmJ0hc9Zj7xT782fsIvIT4g6C48MQTSaiu4D1hUFIKvbAGjs5FDS6NPsH9Bn/m4bRGoYxjX/w7FoKtq9q6I+CSWk6j50Tqcc=
+Received: by 10.35.110.13 with SMTP id n13mr23480615pym.1170972114214;
+        Thu, 08 Feb 2007 14:01:54 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id z21sm2904965qbc.2007.02.08.14.01.50;
+        Thu, 08 Feb 2007 14:01:51 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <e5bfff550702081151q5536b547p34728cafa9a7dee@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39100>
 
-On Thursday, February 8, 2007 at 09:27:50 (-0800) Linus Torvalds writes:
->On Wed, 7 Feb 2007, Bill Lear wrote:
->> 
->> I have a public bare repo on my machine that I have cloned to make a
->> private repo.  I just want to sync my branches on my public and
->> private repos.  I do not want to merge across branches, I just want to
->> "sync".
->
->Ok, others already replied, but here's a few rules to ease your mind in 
->general:
->
-> - First off: you can always _trivially_ get back to whatever state you 
->   had before, as long as you committed it, and didn't have any dirty 
->   state (uncommitted patches) in your working tree.
->...
+On Thursday 2007, February 08 19:51, Marco Costalba wrote:
 
-Well, I have read all of the very welcome advice and am comfortable
-with all of it.
+> BTW it's a little bit funny when you try to resize with mouse the
+> author column and see short log column moving instead :-)
 
-However, I still have a few open issues with the other branch of this
-discussion, i.e., why can we not have an update operation that
-respects branches in the first place, as 'git pull' seems to do, when
-run from the master branch?  I do realize that the branch 'foo' in my
-repo is different from the branch 'foo' in your repo.  However, I want
-to track things, and "track" here is a very appropriate word.  Tracks
-don't cross, and I don't want to cross my "logically equivalent"
-branches (at least yet), even though, as Linus pointed out in great
-detail, this is easy to undo (though, do see below for a qualification
-of "easy").
+Yeah, I'm not entirely sure I like it.  What I really want, but Qt won't 
+do it is
+ * all columns resizable
+ * default date width to fit contents
+ * columns always take up whole width of view, never introducing a 
+   horizontal scrollbar
 
-So, why should I care?
-
-Because, an ounce of prevention is worth a pound of cure.  So, if a
-pound of undo is so very easy, then, in my mind, an ounce of
-preventing the problem in the first place is at least 1/16th that.
-
-When working in a peer-to-peer relationship, I often push and pull
-with my peers, perhaps on a daily basis, perhaps weekly.  Just the
-other day, my peer was the one who goofed up his branches and I pulled
-them into my public repo, all tangled up, and did not realize it.
-Thence pulled into my private repo, did lots of work, pushed back to
-my public repo, and after more time intervened, realized something was
-wrong.  It took a LOT of work (for me, I'm sure for others here it
-would have been much, much less) for me to 1) figure out the genesis
-of the problem, and 2) figure out how to undo it all without
-destroying my subsequent work.  When we both do this, and merge
-unexpectedly, at different points on one branch from a different
-point on another, and then pollute each others' repos, it does become
-rather ... well, annoying is the best way to put it.
-
-In CVS, if I am on branch topic and say 'cvs update', it updates my
-branch topic.  If I am on branch master and say 'cvs update', it
-updates my branch master.  Etc., etc.  It doesn't matter that you move
-from one branch to the other, the update behavior is the same.  In
-git, if I am on master, things seem to work wonderfully --- one 'git
-pull' and my entire repo is synced (that is, merged) as I expect with
-the other repo.
-
-I really don't want to do 'git fetch'.  I really want 'git pull'.  I
-really want the changes put into my repo, from that repo's branch X
-onto my branch X, and that repo's branch Y onto my branch Y.  I really
-don't want to have to remember to switch to my master branch before I
-do git pull (this, however, as it stands, does seem to me to be the
-best option).  Perhaps I'll just write a script 'git-sync' that does
-'git checkout master; git pull'...
-
-Jakub is of course literally correct when he says "'Crossing of the
-streams' is _required_ ... If you do parallel work ... you have to
-do merges".  Again, I recognize that my "foo" branch is different
-from your "foo" branch, and that when they come together they are
-in fact merged, but logically they are one thing --- one stream of
-shared work that we don't want to slip over into another one, at
-least not until we are ready.
-
-Again, thanks to everyone for their patience.  We really do enjoy
-using git --- very cool, fast, and flexible.
+If you want to drop it, I won't be upset.  It is very disconcerting, the 
+only thing in that patches favour is that the view starts out basically 
+correct.
 
 
-Bill
+Andy
+
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
