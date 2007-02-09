@@ -1,66 +1,210 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: 'git status' is not read-only fs friendly
-Date: Fri, 9 Feb 2007 12:59:22 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702091253120.8424@woody.linux-foundation.org>
-References: <e5bfff550702091125j202620cfqb2450a3ee69ed421@mail.gmail.com> 
- <Pine.LNX.4.64.0702091148060.8424@woody.linux-foundation.org> 
- <7vr6szt71j.fsf@assigned-by-dhcp.cox.net> <e5bfff550702091235x74e44362gad5b9b6076a5ea53@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-pull and tag objects
+Date: Fri, 09 Feb 2007 15:19:50 -0800
+Message-ID: <7v4ppurka1.fsf@assigned-by-dhcp.cox.net>
+References: <1170933407.15431.38.camel@okra.transitives.com>
+	<81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, GIT list <git@vger.kernel.org>
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 09 21:59:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Alex Bennee" <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 10 00:20:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFcqE-0004jp-1i
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 21:59:34 +0100
+	id 1HFf2J-0006Gv-It
+	for gcvg-git@gmane.org; Sat, 10 Feb 2007 00:20:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992454AbXBIU72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 15:59:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992837AbXBIU72
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 15:59:28 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:45908 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992454AbXBIU71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 15:59:27 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l19KxNUI015728
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 9 Feb 2007 12:59:24 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l19KxMwI025788;
-	Fri, 9 Feb 2007 12:59:23 -0800
-In-Reply-To: <e5bfff550702091235x74e44362gad5b9b6076a5ea53@mail.gmail.com>
-X-Spam-Status: No, hits=-0.429 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.116__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752547AbXBIXTx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Feb 2007 18:19:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbXBIXTx
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 18:19:53 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:51342 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752547AbXBIXTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 18:19:52 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070209231951.WZXZ21704.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 9 Feb 2007 18:19:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MbKq1W00a1kojtg0000000; Fri, 09 Feb 2007 18:19:51 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39200>
 
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
+> You have to use "git pull ../baseline master:somewhere".
+> This "master:somewhere" expression makes git fetch and stores
+> the tags along with the branch' commits. Better yet, create an
+> entry in remotes: .git/remotes or .git/config, depending on the version
+> of git you have. The current master on kernel.org has the support
+> for latter (branches in .git/config), which will also be in the upcoming
+> release 1.5.
 
-On Fri, 9 Feb 2007, Marco Costalba wrote:
-> 
-> If I modify qgit in running 'git runstatus' as a fallback in case 'git
-> status' exits with an error (without checking what kind of error
-> exactly) could be an acceptable path or could hide subtle
-> side-effects? I have no the knowledge to answer this by hand.
+While this is technically correct, the automatic tag following
+performed by git-fetch (git-pull invokes git-fetch internally
+and it is done as the side effect) probably needs a bit more
+detailed explanation.
 
-It's probably better for you to just
+Automatic tag following is done by first fetching from the
+remote using the given <refspec>s, and if the repository has
+objects that are pointed by remote tags that it does not yet
+have, then fetch those missing tags.  If the other end has tags
+that point at branches you are not interested in, you will not
+get them.
 
- - run "git update-index --refresh" and don't care about the exit value
- - run "git runstatus" unconditionally
+There are currently two ways for you to get tags and one and
+half ways to decline.
 
-which should basically get you something working.
+ * "git fetch --tags URL <refspec>..." will download all tags.
+   This has nothing to do with the automatic following.
 
-HOWEVER, it's also quite possible that "git-commit.sh" should just do this 
-on its own. If the update-index fails, we really only care if we literally 
-use the index later to *write* something, ie the commit case. For just 
-"git status", maybe we should just silently ignore the error..
+ * "git fetch URL <refspec>..." (including the case where
+   <refspec>s are taken from the configuration files) will
+   trigger automatic tag following only when <refspec>s store
+   the fetch result in tracking branches (this is what raa
+   pointed out)
 
-		Linus
+ * "git fetch --no-tags URL <refspec>..." forbids automatic tag
+   following, even when <refspec>s are the tracking kind.
+
+The other half way to decline that is implicit in the above is
+to use <refspec>s that do not store the result in tracking
+branches.
+
+Now, the --no-tags option means "Do not automatically follow
+tags".  But the --tags option does not mean the opposite.  It
+means "Do fetch _all_ tags".  We do not have an explicit option
+that says "Do follow tags".  It is implicitly decided based on
+the kind of <refspec>.
+
+This is not a problem in practice and is a good heuristics that
+does the right thing for both people near the toplevel and
+people who only follow others trees.
+
+If you are following somebody else's tree, you are most likely
+using tracking branches (refs/heads/origin in traditional
+layout, or refs/remotes/origin/master in the separate-remote
+layout).  You usually want the tags from the other end.
+
+On the other hand, if you are fetching because you would want a
+one-shot merge from somebody else, you typically do not want to
+get tags from there.  This happens more often for people near
+the toplevel but not limited to them.  Mere mortals when pulling
+from each other do not necessarily want to automatically get
+private 'anchor point' tags from the other person.
+
+You would notice "please pull" messages on the mailing list says
+repo URL and branch name alone.  This is designed to be easily
+cut&pasted to "git fetch" command line:
+
+	Linus, please pull from
+
+        	git://git..../proj.git master
+
+	to get the following updates...
+
+becomes:
+
+        $ git pull git://git..../proj.git master
+
+In such a case, you do not want to automatically follow other's
+tags.
+
+One important aspect of git is it is distributed, and being
+distributed largely means there is no inherent "upstream" or
+"downstream" in the system.  On the face of it, the above
+example might seem to indicate that the tag namespace is owned
+by upper echelon of people and tags only flow downwards, but
+that is not the case.  It only shows that the usage pattern
+determines who are interested in whose tags.
+
+A one-shot pull is a sign that a commit history is now crossing
+the boundary between one circle of people (e.g. "people who are
+primarily interested in networking part of the kernel") who may
+have their own set of tags (e.g. "this is the third release
+candidate from the networking group to be proposed for general
+consumption with 2.6.21 release") to another circle of people
+(e.g. "people who integrate various subsystem improvements").
+The latter are usually not interested in the detailed tags used
+internally in the former group (that is what "internal" means).
+That is why it is desirable not to follow tags automatically in
+this case.
+
+It may well be that among networking people, they may want to
+exchange the tags internal to their group, but in that workflow
+they are most likely tracking with each other's progress by
+having tracking branches.  Again, the existing heuristic would
+automatically follow such tags and that is a good thing.
+
+Although I do not think it is necessary for the above reasons,
+if somebody wanted to do it, it is easy and straightforward to
+make the automated tag following more orthogonal by letting you
+pass --do-follow-tags to "git fetch" to explicitly tell it to
+follow tags even when you are not tracking the other side.
+
+--
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 357cac2..aef2159 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -17,6 +17,7 @@ IFS="$LF"
+ 
+ no_tags=
+ tags=
++follow_tags=
+ append=
+ force=
+ verbose=
+@@ -46,6 +47,9 @@ do
+ 	-t|--t|--ta|--tag|--tags)
+ 		tags=t
+ 		;;
++	--fol|--foll|--follo|--follow)
++		follow_tags=t
++		;;
+ 	-n|--n|--no|--no-|--no-t|--no-ta|--no-tag|--no-tags)
+ 		no_tags=t
+ 		;;
+@@ -454,12 +458,11 @@ fetch_main () {
+ fetch_main "$reflist" || exit
+ 
+ # automated tag following
+-case "$no_tags$tags" in
+-'')
+-	case "$reflist" in
+-	*:refs/*)
+-		# effective only when we are following remote branch
+-		# using local tracking branch.
++if test -z "$no_tags$tags" && {
++	test -n "$follow_tags" ||
++	case "$reflist" in *:refs/*) :;; *) false ;; esac
++   }
++then
+ 		taglist=$(IFS='	' &&
+ 		echo "$ls_remote_result" |
+ 		git-show-ref --exclude-existing=refs/tags/ |
+@@ -469,7 +472,6 @@ case "$no_tags$tags" in
+ 			echo >&2 "Auto-following $name"
+ 			echo ".${name}:${name}"
+ 		done)
+-	esac
+ 	case "$taglist" in
+ 	'') ;;
+ 	?*)
+@@ -477,7 +479,7 @@ case "$no_tags$tags" in
+ 		shallow_depth=
+ 		fetch_main "$taglist" || exit ;;
+ 	esac
+-esac
++fi
+ 
+ # If the original head was empty (i.e. no "master" yet), or
+ # if we were told not to worry, we do not have to check.
