@@ -1,101 +1,102 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Rogan Dawes <lists@dawes.za.net>
 Subject: Re: restriction of pulls
-Date: Fri, 9 Feb 2007 16:19:20 +0000
-Message-ID: <200702091619.23058.andyparkins@gmail.com>
-References: <200702091149.12462.duelli@melosgmbh.de> <Pine.LNX.4.63.0702091554160.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45CC941E.9030808@dawes.za.net>
+Date: Fri, 09 Feb 2007 18:36:17 +0200
+Message-ID: <45CCA301.4060504@dawes.za.net>
+References: <200702091149.12462.duelli@melosgmbh.de> <Pine.LNX.4.63.0702091554160.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45CC941E.9030808@dawes.za.net> <200702091619.23058.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Rogan Dawes <lists@dawes.za.net>,
+Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christoph Duelli <duelli@melosgmbh.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 09 17:19:48 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 09 17:36:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFYTM-0003yx-IH
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 17:19:40 +0100
+	id 1HFYjh-0003IY-F3
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 17:36:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946603AbXBIQTe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 11:19:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946607AbXBIQTe
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 11:19:34 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:12646 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946603AbXBIQTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 11:19:32 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so820005uga
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 08:19:30 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=jgJIyQ4xmbzoe3MBkivkK9dq/WBWDmqMYs/KLSp9MKR5s/tzTZaexs6zzxusqC1lAOt1a1D1capKeKCM2bDRfLqDXrBdBlswnbyUClTaR5dwthXiOmaR+zXTjGlHKfMwOGNc2iXx3cTzFiTLXl2ZKBm9SaDDYCgkrCfYN0g0XzE=
-Received: by 10.67.19.17 with SMTP id w17mr11451013ugi.1171037969952;
-        Fri, 09 Feb 2007 08:19:29 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id y1sm4409302uge.2007.02.09.08.19.26;
-        Fri, 09 Feb 2007 08:19:26 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <45CC941E.9030808@dawes.za.net>
-Content-Disposition: inline
+	id S1946615AbXBIQga (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Feb 2007 11:36:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946625AbXBIQga
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 11:36:30 -0500
+Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:54095 "EHLO
+	spunkymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1946615AbXBIQg3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Feb 2007 11:36:29 -0500
+X-Greylist: delayed 3797 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Feb 2007 11:36:29 EST
+Received: from [192.168.201.100] (dsl-146-24-208.telkomadsl.co.za [165.146.24.208])
+	by spunkymail-a5.g.dreamhost.com (Postfix) with ESMTP id 44E7914D6AB;
+	Fri,  9 Feb 2007 08:36:22 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+In-Reply-To: <200702091619.23058.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39185>
 
-On Friday 2007 February 09 15:32, Rogan Dawes wrote:
+Andy Parkins wrote:
+> On Friday 2007 February 09 15:32, Rogan Dawes wrote:
+> 
+>> One obstacle to implementing partial checkouts is that one does not know
+>> which objects have changed or been deleted. One way of addressing this
+> 
+> Why would you want to do a partial checkout.  I used subversion for a long 
+> time before git, which does to partial checkouts and it's a nightmare.
+> 
+> Things like this
+> 
+>  cd dir1/
+>  edit files
+>  cd ../dir2
+>  edit files
+>  svn commit
+>  * committed revision 100
+> 
+> KABLAM!  Disaster.  Revision 100 no longer compiles/runs.  The changes in dir1 
+> and dir2 were complimentary changes (say like renaming a function and then 
+> the places that call that function).
 
-> One obstacle to implementing partial checkouts is that one does not know
-> which objects have changed or been deleted. One way of addressing this
+Please note that my suggestion does NOT imply allowing partial checkins 
+(or if it does, it was not my intention)
 
-Why would you want to do a partial checkout.  I used subversion for a long 
-time before git, which does to partial checkouts and it's a nightmare.
+What I am trying to support is Jon Smirl's description of how some 
+Mozilla contributors work, specifically the documentation folks.
 
-Things like this
+They do not have any need to look at the actual code, but simply limit 
+themselves to the files in the doc/ directory.
 
- cd dir1/
- edit files
- cd ../dir2
- edit files
- svn commit
- * committed revision 100
+Supporting a partial checkout of this doc/ directory would allow them to 
+get a "check in"-able subdirectory, without having to download the rest 
+of the source.
 
-KABLAM!  Disaster.  Revision 100 no longer compiles/runs.  The changes in dir1 
-and dir2 were complimentary changes (say like renaming a function and then 
-the places that call that function).
+What I intended to convey was that when determining which files have 
+changed, and presenting them to the user to decide whether to commit 
+them or not, the filesystem-walker would first check the "negative 
+index" to see if that directory/file had been explicitly excluded from 
+the checkout. This implies that they did not (and do not intend to) 
+modify that portion of the tree. Which implies that the committer can 
+then construct a complete view of the entire tree (now including the 
+changes that were made in the partial checkout) by resolving the 
+modified files with the knowledge of the hashes of the unmodified 
+files/trees.
 
-I didn't even notice how awful it was until I started using git and had a VCS 
-that did the right thing.
+> 
+> In every way that matters you can do a partial checkout - I can pull any 
+> version of any file out of the repository.  However, it should certainly not 
+> be the case that git records that fact.
 
-In every way that matters you can do a partial checkout - I can pull any 
-version of any file out of the repository.  However, it should certainly not 
-be the case that git records that fact.
+Why not? If you only want to modify that file, does it not make sense 
+that you can just check out that file, modify it, and check it back in?
 
-I think what you're actually after (from your description) is a shallow clone.  
-I believe that went in a while ago from Dscho.
+Or at least if not check it in, construct a diff for mailing to the 
+maintainer?
 
- $ git clone --depth=5 <someurl>
+Or even, allowing the maintainer to pull/merge the changes from the 
+contributor, even though the contributor doesn't necessarily have all 
+the blobs required to make up the tree he is committing? They should all 
+be available from the "alternate" if required.
 
-Will fetch only the last 5 revisions from the remote.  The other half to that 
-is a shallow-by-tree clone; that is anathema to git as there is no such thing 
-as a partial tree.  Submodule support is what you want, but that's still in 
-development.
-
-The only piece that (I think) is missing to get the functionality you want is 
-a kind of lazy transfer mode.  For something like, say, the kde repository 
-you can do
-
- svn checkout svn://svn.kde.org/kde/some/deep/path/in/the/project
-
-And just get that directory - i.e. you don't have to pay the cost of 
-downloading the whole of KDE.  Git can't do that; however, I think one day it 
-will be able to by choosing not to download every object from the remote.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+Rogan
