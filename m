@@ -1,102 +1,72 @@
-From: Rogan Dawes <lists@dawes.za.net>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: restriction of pulls
-Date: Fri, 09 Feb 2007 18:36:17 +0200
-Message-ID: <45CCA301.4060504@dawes.za.net>
-References: <200702091149.12462.duelli@melosgmbh.de> <Pine.LNX.4.63.0702091554160.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45CC941E.9030808@dawes.za.net> <200702091619.23058.andyparkins@gmail.com>
+Date: Fri, 9 Feb 2007 16:45:31 +0000
+Message-ID: <200702091645.33384.andyparkins@gmail.com>
+References: <200702091149.12462.duelli@melosgmbh.de> <200702091619.23058.andyparkins@gmail.com> <45CCA301.4060504@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
+Cc: Rogan Dawes <lists@dawes.za.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christoph Duelli <duelli@melosgmbh.de>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 09 17:36:35 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 09 17:50:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFYjh-0003IY-F3
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 17:36:33 +0100
+	id 1HFYwz-00019V-IG
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 17:50:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946615AbXBIQga (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 11:36:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946625AbXBIQga
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 11:36:30 -0500
-Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:54095 "EHLO
-	spunkymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1946615AbXBIQg3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Feb 2007 11:36:29 -0500
-X-Greylist: delayed 3797 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Feb 2007 11:36:29 EST
-Received: from [192.168.201.100] (dsl-146-24-208.telkomadsl.co.za [165.146.24.208])
-	by spunkymail-a5.g.dreamhost.com (Postfix) with ESMTP id 44E7914D6AB;
-	Fri,  9 Feb 2007 08:36:22 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
-In-Reply-To: <200702091619.23058.andyparkins@gmail.com>
+	id S1946657AbXBIQqS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Feb 2007 11:46:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946639AbXBIQp4
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 11:45:56 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:55117 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946667AbXBIQpj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 11:45:39 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so827848uga
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 08:45:38 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fo6MsPAHinhw3kM7i1R42bq+mZN4jwJ4RwwCWbNiD1y9KAAlRWCRvmR2jHc+hktHpM/FuVGtjVMrlrcr8CUISj5oFmIBogKFh2FZl27cZUqAEKwLkfMspyQgTpP1xUq2VV6Ib1lJlPjCxbZ3fPjcIeUK78VCgraJtGRaYhkbY7Q=
+Received: by 10.66.242.20 with SMTP id p20mr11444554ugh.1171039537546;
+        Fri, 09 Feb 2007 08:45:37 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id m1sm4443834ugc.2007.02.09.08.45.34;
+        Fri, 09 Feb 2007 08:45:35 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <45CCA301.4060504@dawes.za.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39186>
 
-Andy Parkins wrote:
-> On Friday 2007 February 09 15:32, Rogan Dawes wrote:
-> 
->> One obstacle to implementing partial checkouts is that one does not know
->> which objects have changed or been deleted. One way of addressing this
-> 
-> Why would you want to do a partial checkout.  I used subversion for a long 
-> time before git, which does to partial checkouts and it's a nightmare.
-> 
-> Things like this
-> 
->  cd dir1/
->  edit files
->  cd ../dir2
->  edit files
->  svn commit
->  * committed revision 100
-> 
-> KABLAM!  Disaster.  Revision 100 no longer compiles/runs.  The changes in dir1 
-> and dir2 were complimentary changes (say like renaming a function and then 
-> the places that call that function).
+On Friday 2007 February 09 16:36, Rogan Dawes wrote:
 
-Please note that my suggestion does NOT imply allowing partial checkins 
-(or if it does, it was not my intention)
+> Please note that my suggestion does NOT imply allowing partial checkins
+> (or if it does, it was not my intention)
 
-What I am trying to support is Jon Smirl's description of how some 
-Mozilla contributors work, specifically the documentation folks.
+My apologies then; I did misunderstand.
 
-They do not have any need to look at the actual code, but simply limit 
-themselves to the files in the doc/ directory.
 
-Supporting a partial checkout of this doc/ directory would allow them to 
-get a "check in"-able subdirectory, without having to download the rest 
-of the source.
+> > In every way that matters you can do a partial checkout - I can pull any
+> > version of any file out of the repository.  However, it should certainly
+> > not be the case that git records that fact.
+>
+> Why not? If you only want to modify that file, does it not make sense
+> that you can just check out that file, modify it, and check it back in?
 
-What I intended to convey was that when determining which files have 
-changed, and presenting them to the user to decide whether to commit 
-them or not, the filesystem-walker would first check the "negative 
-index" to see if that directory/file had been explicitly excluded from 
-the checkout. This implies that they did not (and do not intend to) 
-modify that portion of the tree. Which implies that the committer can 
-then construct a complete view of the entire tree (now including the 
-changes that were made in the partial checkout) by resolving the 
-modified files with the knowledge of the hashes of the unmodified 
-files/trees.
+Sorry - what I meant was that it shouldn't record that you checked out 
+revision 74 of that file and retain a link from the current version to that 
+old version.
 
-> 
-> In every way that matters you can do a partial checkout - I can pull any 
-> version of any file out of the repository.  However, it should certainly not 
-> be the case that git records that fact.
 
-Why not? If you only want to modify that file, does it not make sense 
-that you can just check out that file, modify it, and check it back in?
-
-Or at least if not check it in, construct a diff for mailing to the 
-maintainer?
-
-Or even, allowing the maintainer to pull/merge the changes from the 
-contributor, even though the contributor doesn't necessarily have all 
-the blobs required to make up the tree he is committing? They should all 
-be available from the "alternate" if required.
-
-Rogan
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
