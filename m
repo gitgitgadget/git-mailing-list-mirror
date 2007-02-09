@@ -1,73 +1,54 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git rescue mission
-Date: Thu, 8 Feb 2007 20:58:39 -0500
-Message-ID: <20070209015839.GG1556@spearce.org>
-References: <17866.27739.701406.722074@lisa.zopyra.com> <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org> <87fy9gz9vu.fsf@host94.eke.fi> <Pine.LNX.4.64.0702081321040.8424@woody.linux-foundation.org> <87bqk4z4qw.fsf@host94.eke.fi> <20070208221023.GB1091@spearce.org> <20070209014852.GA13207@thunk.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log filtering
+Date: Thu, 8 Feb 2007 20:59:25 -0500
+Message-ID: <20070209015925.GD10574@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org> <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org> <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org> <20070208061654.GA8813@coredump.intra.peff.net> <Pine.LNX.4.63.0702081905570.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070208223336.GA9422@coredump.intra.peff.net> <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kalle Pokki <kalle.pokki@iki.fi>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Fri Feb 09 02:58:54 2007
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 09 02:59:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFL2L-0008VB-KF
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 02:58:53 +0100
+	id 1HFL2x-0000O5-DX
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 02:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946022AbXBIB6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 20:58:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946014AbXBIB6s
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 20:58:48 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:44762 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946017AbXBIB6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 20:58:47 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HFL1z-00048x-Ax; Thu, 08 Feb 2007 20:58:31 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 21A2F20FBAE; Thu,  8 Feb 2007 20:58:39 -0500 (EST)
+	id S1946003AbXBIB72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 20:59:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946014AbXBIB72
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 20:59:28 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1696 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1946003AbXBIB71 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 20:59:27 -0500
+Received: (qmail 32327 invoked from network); 8 Feb 2007 20:59:29 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 8 Feb 2007 20:59:29 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Feb 2007 20:59:25 -0500
 Content-Disposition: inline
-In-Reply-To: <20070209014852.GA13207@thunk.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39148>
 
-Theodore Tso <tytso@mit.edu> wrote:
-> On Thu, Feb 08, 2007 at 05:10:23PM -0500, Shawn O. Pearce wrote:
-> > 	git config alias.new "gitk --all --not ORIG_HEAD"
-> > 
-> > Would give you a new git subcommand:
-> > 
-> > 	git new
-> > 
-> > which shows all of the new stuff, on all branches, but doesn't show
-> > your prior commit history.
-> 
-> Aliases don't seem to be working for me; I'm using git 1.5.0-rc4.  Am
-> I doing something wrong?
+On Fri, Feb 09, 2007 at 01:18:01AM +0100, Johannes Schindelin wrote:
 
-Its not you.  The problem is 'gitk' is not an internal command,
-nor is there a 'git-gitk'.  So we cannot execute it.  Instead we
-are giving back a horrible error message.
+> Yes, I do. Not because of the extra lines, but because of the inconsistent 
+> interface.
 
-Symlink git-gitk to gitk and it works.
+OK, so we may either:
+  1. always use the lowest common denominator (i.e., no pcre support)
+  2. force a dependency for new features (i.e., require pcre)
+  3. have inconsistency between builds (i.e., conditional dependency)
+  4. include all dependencies, or re-write them natively
 
-Sorry about giving false hopes.  :-)
+I agree that 4 can make some sense in limited situations, but I worry
+that it will eventually cease to be scalable (we don't get improvements
+or bugfixes automatically from other packages, we potentially re-invent
+the wheel). We already have '3' for other things: openssl, curl, expat,
+even perl.
 
--- 
-Shawn.
+-Peff
