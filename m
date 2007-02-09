@@ -1,97 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git log filtering
-Date: Fri, 9 Feb 2007 16:02:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702091557420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v64ad7l12.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
- <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
- <20070208061654.GA8813@coredump.intra.peff.net>
- <Pine.LNX.4.63.0702081905570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070208223336.GA9422@coredump.intra.peff.net>
- <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070209015925.GD10574@coredump.intra.peff.net>
- <Pine.LNX.4.63.0702091410230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070209132239.GA727@coredump.intra.peff.net>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: restriction of pulls
+Date: Fri, 09 Feb 2007 17:32:46 +0200
+Message-ID: <45CC941E.9030808@dawes.za.net>
+References: <200702091149.12462.duelli@melosgmbh.de> <Pine.LNX.4.63.0702091554160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 09 16:02:32 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Christoph Duelli <duelli@melosgmbh.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 09 16:34:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFXGf-0001I6-CO
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 16:02:29 +0100
+	id 1HFXlR-00089P-Gw
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 16:34:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946483AbXBIPC0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 10:02:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946487AbXBIPC0
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 10:02:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43852 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1946483AbXBIPCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 10:02:25 -0500
-Received: (qmail invoked by alias); 09 Feb 2007 15:02:24 -0000
-X-Provags-ID: V01U2FsdGVkX18vTe4Q39gvEb77XLOtAHBZUM7S+dJz8DVT9bvSY8
-	r7XQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070209132239.GA727@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1946526AbXBIPeO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Feb 2007 10:34:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946536AbXBIPeO
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 10:34:14 -0500
+Received: from sumo.dreamhost.com ([66.33.216.29]:40186 "EHLO
+	sumo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946526AbXBIPeN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 10:34:13 -0500
+Received: from spunkymail-a9.g.dreamhost.com (sd-green-bigip-145.dreamhost.com [208.97.132.145])
+	by sumo.dreamhost.com (Postfix) with ESMTP id E1B98277D67
+	for <git@vger.kernel.org>; Fri,  9 Feb 2007 07:34:11 -0800 (PST)
+Received: from [192.168.201.100] (dsl-146-24-208.telkomadsl.co.za [165.146.24.208])
+	by spunkymail-a9.g.dreamhost.com (Postfix) with ESMTP id C164F20D0B;
+	Fri,  9 Feb 2007 07:32:49 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+In-Reply-To: <Pine.LNX.4.63.0702091554160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39182>
 
-Hi,
-
-On Fri, 9 Feb 2007, Jeff King wrote:
-
-> On Fri, Feb 09, 2007 at 02:13:18PM +0100, Johannes Schindelin wrote:
+Johannes Schindelin wrote:
+> Hi,
 > 
-> > The difference, of course, is that with the "other things", we either have 
-> > no alternative (if you do not have curl, you cannot use HTTP transport), 
-> > or we have workalikes (if you don't use openssl, the (possibly slower) 
-> > SHA1 replacements take effect).
+> On Fri, 9 Feb 2007, Christoph Duelli wrote:
 > 
-> I'm not a pcre expert, but I thought most of the additions to posix
-> extended regular expressions were expressed through constructs that
-> would otherwise be invalid patterns.
-
-So, once pcre is used, you can use these constructs. Even in scripts. 
-Which just so happen to break on platforms where git is not compiled with 
-pcre support.
-
-Or do you suggest checking (in git!) if the pattern is a pcre special or 
-not? That would be insane.
-
-> > We _used_ to rely on external "diff" and "merge", but have them as 
-> > inbuilt components, exactly to avoid "if you have a slightly differing 
-> > setup, git behaves differently".
+>> Is it possible to restrict a chechout, clone or a later pull to some 
+>> subdirectory of a repository?
 > 
-> But you're OK with "if you didn't built against curl, http transport 
-> just doesn't work."
+> No. In git, a revision really is a revision, and not a group of file 
+> revisions.
+> 
+> Ciao,
+> Dscho
+> 
 
-Yes, I am. Since HTTP is itself only a second-class citizen.
+I thought about how this might be implemented, although I'm not entirely 
+sure how efficient this will be.
 
-> So what if there is a '--pcre' option and a corresponding config option? 
-> Thus you get the same results always, unless you use --pcre and it's not 
-> built, in which case git dies. That seems to be the moral equivalent of 
-> the curl situation.
+One obstacle to implementing partial checkouts is that one does not know 
+which objects have changed or been deleted. One way of addressing this 
+is to keep a record of the hashes of all the objects that were NOT 
+checked out. (If one does not check out part of a directory, simply 
+store the hash of the top level, and you do not need to store the child 
+hashes.) This record would be a kind of "negative index".
 
-I might be wrong, but most of git does not depend on HTTP.
+When deciding what to check in, or which files are modified, one would 
+check the "negative index" first to see if an entry exists. If not, only 
+then would you check the filesystem to see if modification times have 
+changed. With the "negative index", and the files in the file system, 
+one would be able to construct new commits, without any problem.
 
-> At any rate, you didn't address my original point, which is _all_ of 
-> those options have drawbacks. I think the drawbacks of re-writing or 
-> re-packaging a regular expression library outweigh those of adding the 
-> dependency (or even having slightly irregular behavior).
+It would also require an updated transfer protocol, which would allow 
+the client to specify a tag/commit, then walk the tree that it points to 
+to find the portion that the client is looking for, then pull only those 
+objects (and possibly their history). This is likely to be VERY 
+inefficient in terms of round trips, at least initially.
 
-This is only because you do not really have problems with dependencies. 
-You just install, or compile, the dependent thing, which happens to be no 
-hassle, since you use Linux. And you can compile & install things.
+This might be able to benefit from the shallow checkout support that was 
+recently implemented.
 
-Once everybody runs Linux, and is allowed to compile & install things, I 
-will no longer complain about trillions of dependencies.
+Comments?
 
-Ciao,
-Dscho
+Rogan
