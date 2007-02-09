@@ -1,165 +1,119 @@
 From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH 1/7] git-blame: Add Emacs Lisp file headers and GNU GPL boilerplate
-Date: Fri, 09 Feb 2007 09:19:28 +0100
-Message-ID: <874ppvrbe7.fsf@morpheus.local>
+Subject: [PATCH 3/7] Handle uncommitted changes and cache descriptions
+Date: Fri, 09 Feb 2007 09:20:38 +0100
+Message-ID: <87veibpwrt.fsf@morpheus.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 09 09:19:53 2007
+X-From: git-owner@vger.kernel.org Fri Feb 09 09:25:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFQz0-0001n2-9T
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 09:19:50 +0100
+	id 1HFR4D-0004Th-JZ
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 09:25:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946209AbXBIITr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 9 Feb 2007 03:19:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946211AbXBIITr
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 03:19:47 -0500
-Received: from main.gmane.org ([80.91.229.2]:53219 "EHLO ciao.gmane.org"
+	id S1946205AbXBIIZK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 9 Feb 2007 03:25:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946212AbXBIIZJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 03:25:09 -0500
+Received: from main.gmane.org ([80.91.229.2]:49882 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946209AbXBIITq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 03:19:46 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HFQyp-0004fI-I7
-	for git@vger.kernel.org; Fri, 09 Feb 2007 09:19:39 +0100
+	id S1946205AbXBIIZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 03:25:07 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1HFR42-0005V0-Nd
+	for git@vger.kernel.org; Fri, 09 Feb 2007 09:25:02 +0100
 Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 09:19:39 +0100
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 09:25:02 +0100
 Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 09:19:39 +0100
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 09:25:02 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@sea.gmane.org
 X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
 User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:RRswmRHqC2kLfEt8TjBjDjVjRQw=
+Cancel-Lock: sha1:+hAir8Qksfqo4Wz4/0Ki3oHGFEY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39160>
 
-=46rom: Jakub Narebski <jnareb@gmail.com>
 
-Add Emacs Lisp file headers, according to "Coding Conventions" chapter
-in Emacs Lisp Reference Manual and Elisp Area Convetions for
-EmacsWiki:
-  http://www.emacswiki.org/cgi-bin/wiki/ElispAreaConventions
-Those include: copyright notice, GNU GPL boilerplate, description and
-instalation instructions as provided in email and in commit message
-introducing git-blame.el, compatibility notes from another email by
-David K=C3=A5gedal about what to change to use it in GNU Emacs 20, and
-"git-blame ends here" to detect if file was truncated.  First line
-includes setting file encoding via first line local variable values
-(file variables).
-
-Added comment to "(require 'cl)" to note why it is needed; "Coding
-Conventions" advises to avoid require the `cl' package of Common Lisp
-extensions at run time.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: David K=C3=A5gedal <davidk@lysator.liu.se>
 ---
- contrib/emacs/git-blame.el |   75 ++++++++++++++++++++++++++++++++++++=
-++++++--
- 1 files changed, 72 insertions(+), 3 deletions(-)
+ contrib/emacs/git-blame.el |   26 ++++++++++++++++++++------
+ 1 files changed, 20 insertions(+), 6 deletions(-)
 
 diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
-index 62cf24c..ba9d8a6 100644
+index 56a548b..c99437e 100644
 --- a/contrib/emacs/git-blame.el
 +++ b/contrib/emacs/git-blame.el
-@@ -1,8 +1,73 @@
--;;; git-blame.el
--;; David K=C3=A5gedal <davidk@lysator.liu.se>
-+;;; git-blame.el --- Minor mode for incremental blame for Git  -*- cod=
-ing: utf-8 -*-
-+;;
-+;; Copyright (C) 2007  David K=C3=A5gedal
-+;;
-+;; Authors:    David K=C3=A5gedal <davidk@lysator.liu.se>
-+;; Created:    31 Jan 2007
- ;; Message-ID: <87iren2vqx.fsf@morpheus.local>
-+;; License:    GPL
-+;; Keywords:   git, version control, release management
-+;;
-+;; Compatibility: Emacs21
-+
-+
-+;; This file is *NOT* part of GNU Emacs.
-+;; This file is distributed under the same terms as GNU Emacs.
-+
-+;; This program is free software; you can redistribute it and/or
-+;; modify it under the terms of the GNU General Public License as
-+;; published by the Free Software Foundation; either version 2 of
-+;; the License, or (at your option) any later version.
-+
-+;; This program is distributed in the hope that it will be
-+;; useful, but WITHOUT ANY WARRANTY; without even the implied
-+;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-+;; PURPOSE.  See the GNU General Public License for more details.
-+
-+;; You should have received a copy of the GNU General Public
-+;; License along with this program; if not, write to the Free
-+;; Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-+;; MA 02111-1307 USA
-+
-+;; http://www.fsf.org/copyleft/gpl.html
-+
-+
-+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-+;;
-+;;; Commentary:
-+;;
-+;; Here is an Emacs implementation of incremental git-blame.  When you
-+;; turn it on while viewing a file, the editor buffer will be updated =
-by
-+;; setting the background of individual lines to a color that reflects
-+;; which commit it comes from.  And when you move around the buffer, a
-+;; one-line summary will be shown in the echo area.
-+
-+;;; Installation:
-+;;
-+;;  1) Load into emacs: M-x load-file RET git-blame.el RET
-+;;  2) Open a git-controlled file
-+;;  3) Blame: M-x git-blame-mode
-+
-+;;; Compatibility:
-+;;
-+;; It requires GNU Emacs 21.  If you'are using Emacs 20, try
-+;; changing this:
-+;;
-+;;            (overlay-put ovl 'face (list :background
-+;;                                         (cdr (assq 'color (cddddr i=
+@@ -187,8 +187,10 @@
+                (res-line (string-to-number (match-string 3)))
+                (num-lines (string-to-number (match-string 4))))
+            (setq git-blame-current
+-                 (git-blame-new-commit
+-                  hash src-line res-line num-lines)))
++                 (if (string=3D hash "00000000000000000000000000000000=
+00000000")
++                     nil
++                   (git-blame-new-commit
++                    hash src-line res-line num-lines))))
+          (delete-region (point) (match-end 0))
+          t)
+         ((looking-at "filename \\(.+\\)\n")
+@@ -220,6 +222,7 @@
+           (unless color
+             (setq color git-blame-ancient-color))
+           (setq info (list hash src-line res-line num-lines
++                           (git-describe-commit hash)
+                            (cons 'color color))))
+         (puthash hash info git-blame-cache))
+       (goto-line res-line)
+@@ -233,7 +236,8 @@
+             (overlay-put ovl 'git-blame info)
+             (overlay-put ovl 'help-echo hash)
+             (overlay-put ovl 'face (list :background
+-                                         (cdr (assq 'color (cddddr inf=
+o)))))
++                                         (cdr (assq 'color (nthcdr 5 i=
 nfo)))))
-+;;
-+;; to
-+;;
-+;;            (overlay-put ovl 'face (cons 'background-color
-+;;                                         (cdr (assq 'color (cddddr i=
-nfo)))))
-+
-+
-+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-+;;
-+;;; Code:
-+
-+(require 'cl)			      ; to use `push', `pop'
++            ;; the point-entered property doesn't seem to work in over=
+lays
+             ;;(overlay-put ovl 'point-entered
+             ;;             `(lambda (x y) (git-blame-identify ,hash)))
+             (let ((modified (buffer-modified-p)))
+@@ -253,11 +257,21 @@
+         (car info)
+       (error "No commit info"))))
 =20
--(require 'cl)
- (defun color-scale (l)
-   (let* ((colors ())
-          r g b)
-@@ -178,3 +243,7 @@
-   (shell-command
-    (format "git log -1 --pretty=3Doneline %s" (or hash
-                                                 (git-blame-current-com=
++(defun git-describe-commit (hash)
++  (with-temp-buffer
++    (call-process "git" nil t nil
++                  "log" "-1" "--pretty=3Doneline"
++                  hash)
++    (buffer-substring (point-min) (1- (point-max)))))
++
++(defvar git-blame-last-identification nil)
++(make-variable-buffer-local 'git-blame-last-identification)
+ (defun git-blame-identify (&optional hash)
+   (interactive)
+-  (shell-command
+-   (format "git log -1 --pretty=3Doneline %s" (or hash
+-                                                (git-blame-current-com=
 mit)))))
-+
-+(provide 'git-blame)
-+
-+;;; git-blame.el ends here
++  (let ((info (gethash (or hash (git-blame-current-commit)) git-blame-=
+cache)))
++    (when (and info (not (eq info git-blame-last-identification)))
++      (message "%s" (nth 4 info))
++      (setq git-blame-last-identification info))))
+=20
+ (provide 'git-blame)
+=20
 --=20
 1.5.0.rc3.204.g93c76
 
