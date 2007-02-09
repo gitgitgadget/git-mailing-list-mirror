@@ -1,56 +1,81 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: git-pull and tag objects
-Date: Fri, 9 Feb 2007 10:33:46 +0100
-Message-ID: <81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
-References: <1170933407.15431.38.camel@okra.transitives.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 6/7] git-blame.el: Doc fixes and cleanup
+Date: Fri, 09 Feb 2007 10:39:45 +0100
+Organization: At home
+Message-ID: <eqhfdv$8uq$1@sea.gmane.org>
+References: <87irebpwps.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Alex Bennee" <kernel-hacker@bennee.com>
-X-From: git-owner@vger.kernel.org Fri Feb 09 10:34:16 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 09 10:38:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFS91-00052h-J1
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 10:34:15 +0100
+	id 1HFSDG-0007Io-3k
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 10:38:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946247AbXBIJeM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 04:34:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946264AbXBIJeM
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 04:34:12 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:32580 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946247AbXBIJeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 04:34:10 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so714500uga
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 01:34:09 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DNsUs+ydbydANqdwCZIH0AaKIgO3IM2D0pW7RwyIb126JPRPkV9G7KB9LmZm0Y2DZBMdihgu4EXSXmpaAI4mVeeqBsd26gBPkQlaJVNfI/0wLeH4BO4UrcJxHMBp975rJgMVwWExNMYAOzeoON4mK8zmLL1NDAft/ZPcvl1QzTY=
-Received: by 10.78.138.14 with SMTP id l14mr17867hud.1171013626207;
-        Fri, 09 Feb 2007 01:33:46 -0800 (PST)
-Received: by 10.78.139.9 with HTTP; Fri, 9 Feb 2007 01:33:46 -0800 (PST)
-In-Reply-To: <1170933407.15431.38.camel@okra.transitives.com>
-Content-Disposition: inline
+	id S1946254AbXBIJie convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 9 Feb 2007 04:38:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946259AbXBIJie
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 04:38:34 -0500
+Received: from main.gmane.org ([80.91.229.2]:54732 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1946254AbXBIJid (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 04:38:33 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HFSCz-0000li-B6
+	for git@vger.kernel.org; Fri, 09 Feb 2007 10:38:21 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 10:38:21 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 10:38:21 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39170>
 
-On 2/8/07, Alex Bennee <kernel-hacker@bennee.com> wrote:
-> I have slave repositaries which are cloned of the baseline which I do my
-> development in. However when I bring the master branch of these work
-> repositaries upto date (via git-pull ../baseline master) I find the tag
-> objects are lost. Should they not be part of the tree? After all when I
-> sync to Linus's kernel repo I get all his version tags as part of that.
+[Cc: git@vger.kernel.org]
 
-You have to use "git pull ../baseline master:somewhere".
-This "master:somewhere" expression makes git fetch and stores
-the tags along with the branch' commits. Better yet, create an
-entry in remotes: .git/remotes or .git/config, depending on the version
-of git you have. The current master on kernel.org has the support
-for latter (branches in .git/config), which will also be in the upcoming
-release 1.5.
+David K?gedal wrote:
+
+> @@ -123,6 +123,7 @@
+> =A0
+> =A0;;;###autoload
+> =A0(defun git-blame-mode (&optional arg)
+> + =A0"Minor mode for displaying Git blame"
+> =A0 =A0(interactive "P")
+> =A0 =A0(if arg
+> =A0 =A0 =A0 =A0(setq git-blame-mode (eq arg 1))
+
+We should probably also change file description in header, and autoload
+instruction in Installation: section of commentary:
+
+;;; git-blame.el --- Minor mode for displaying Git blame  -*- coding: u=
+tf-8 -*-
+;;
+
+[...]
+
+;; If you do not want to load this package before it is necessary, you
+;; can make use of the `autoload' feature, e.g. by adding to your .emac=
+s
+;; the following lines
+;;
+;;    (autoload 'git-blame-mode "git-blame"
+;;              "Minor mode for displaying Git blame" t)
+
+(docstring is needed because INTERACTIVE is _fourth_ parameter).
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
