@@ -1,78 +1,63 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: git rebase: unexpected conflict
-Date: Fri, 9 Feb 2007 12:23:23 +0200
-Message-ID: <20070209102323.GV6560@mellanox.co.il>
-References: <7vabzp7lgs.fsf@assigned-by-dhcp.cox.net>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Christoph Duelli <duelli@melosgmbh.de>
+Subject: restriction of pulls
+Date: Fri, 9 Feb 2007 11:49:12 +0100
+Organization: MELOS GmbH
+Message-ID: <200702091149.12462.duelli@melosgmbh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 09 11:23:14 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 09 11:55:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFSuP-0004EF-Ak
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 11:23:13 +0100
+	id 1HFTPK-0003Bi-3n
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 11:55:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946319AbXBIKW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 05:22:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946311AbXBIKW5
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 05:22:57 -0500
-Received: from p02c11o144.mxlogic.net ([208.65.145.67]:33245 "EHLO
-	p02c11o144.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946323AbXBIKW4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 05:22:56 -0500
-Received: from unknown [63.251.237.3] (EHLO mtiexch01.mti.com)
-	by p02c11o144.mxlogic.net (mxl_mta-4.0.2-2)
-	with ESMTP id 08b4cc54.2216508336.3912.00-001.p02c11o144.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Fri, 09 Feb 2007 03:22:56 -0700 (MST)
-Received: from mtlexch01.mtl.com ([10.0.8.11]) by mtiexch01.mti.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 9 Feb 2007 02:25:55 -0800
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Fri, 9 Feb 2007 12:25:03 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Fri,  9 Feb 2007 12:20:46 +0200
+	id S1946298AbXBIKzH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Feb 2007 05:55:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946356AbXBIKzH
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 05:55:07 -0500
+Received: from mo-p00-ob.rzone.de ([81.169.146.160]:53746 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946298AbXBIKzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 05:55:05 -0500
+X-Greylist: delayed 406 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Feb 2007 05:55:05 EST
+Received: from gw2.melosgmbh.de (p549B02B9.dip0.t-ipconnect.de [84.155.2.185])
+	by post.webmailer.de (mrclete mo18) (RZmta 4.5) with ESMTP id F03c75j19ABCCu
+	for <git@vger.kernel.org>; Fri, 9 Feb 2007 11:48:16 +0100 (MET)
+X-Spam-Status: No, hits=0.0 required=4.0
+	tests=AWL: 0.073,BAYES_00: -1.665,TOTAL_SCORE: -1.592
+X-Spam-Level: 
+Received: from duelli.melosgmbh.de ([172.27.1.229])
+	by gw2.melosgmbh.de (Kerio MailServer 6.3.0)
+	for git@vger.kernel.org;
+	Fri, 9 Feb 2007 11:48:14 +0100
+User-Agent: KMail/1.7.1
 Content-Disposition: inline
-In-Reply-To: <7vabzp7lgs.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 09 Feb 2007 10:25:03.0408 (UTC) FILETIME=[8F922B00:01C74C34]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14986.003
-X-TM-AS-Result: No--10.269200-4.000000-31
-X-Spam: [F=0.0883213769; S=0.088(2007010901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [63.251.237.3]
+X-RZG-AUTH: hvKqOO6Ph79JHUJJIwMxXgzUdNi97hMDGc5n+ojdbo9B56/YXBysNp6yRT6vKXIWMkPu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39174>
 
-> > 2. It's unfortunate that I need a temp file here.
-> > Can git-am get stdin somehow?
-> 
-> See "git-rebase.sh" around ll.325.
+Is it possible to restrict a chechout, clone or a later pull to some 
+subdirectory of a repository?
+(Background: using subversion (or cvs), it is possible to do a file or 
+directory-restricted update.)
 
-git-am can read standard input. Document this.
+Say, I have a repository containing 2 (mostly) independent projects A and B 
+(in separate) directories:
+- R
+  -  A
+  -  B
+Is it possibly to pull all the changes made to B, but not those made to A. 
+(Yes, I know that this causes trouble if there are dependencies into A.)
 
-Signed-off-by: Michael S. Tsirkin <mst@mellanox.co.il>
 
---
-
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index f7d551e..77ef103 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -21,6 +21,10 @@ current branch.
- 
- OPTIONS
- -------
-+<mbox>...::
-+	The list of mailbox files to read patches from. If you do not
-+	supply this argument, reads from the standard input.
-+
- --signoff::
- 	Add `Signed-off-by:` line to the commit message, using
- 	the committer identity of yourself.
-
+Regards
 -- 
-MST
+Christoph Duelli
+MELOS GmbH
