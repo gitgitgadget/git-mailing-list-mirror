@@ -1,59 +1,105 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git log filtering
-Date: Thu, 8 Feb 2007 19:23:44 -0500
-Message-ID: <20070209002344.GF1556@spearce.org>
-References: <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org> <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org> <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org> <20070208061654.GA8813@coredump.intra.peff.net> <Pine.LNX.4.63.0702081905570.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070208223336.GA9422@coredump.intra.peff.net> <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] log --reflog: use dwim_log
+Date: Fri, 9 Feb 2007 01:28:23 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702090127510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <8aa486160702071721s401ea38fxa8eb71bb694a6915@mail.gmail.com>
+ <Pine.LNX.4.63.0702082021210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <eqfu36$lb3$1@sea.gmane.org> <Pine.LNX.4.63.0702082040390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vveicw850.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 09 01:26:24 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Feb 09 01:28:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFJao-0004nt-A8
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 01:26:22 +0100
+	id 1HFJcr-0005tC-Ke
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 01:28:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423029AbXBIAYG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 19:24:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423057AbXBIAYG
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 19:24:06 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41545 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423029AbXBIAXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 19:23:49 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HFJY9-00045v-3q; Thu, 08 Feb 2007 19:23:37 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 4D96820FBAE; Thu,  8 Feb 2007 19:23:45 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1423057AbXBIA20 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 19:28:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965730AbXBIA20
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 19:28:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53164 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965596AbXBIA2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 19:28:25 -0500
+Received: (qmail invoked by alias); 09 Feb 2007 00:28:23 -0000
+X-Provags-ID: V01U2FsdGVkX186zGIXcqc69NvIqg8maf7/KcyNNUPDUOTce0Y0Bs
+	vNhg==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vveicw850.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39140>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> We included libxdiff _exactly_ to ensure consistency between different git 
-> installations (remember, diff behaves quite differently on different 
-> platforms, and even GNU diff behaves differently depending on which 
-> version you use).
 
-pcre is covered by the BSD license.  Can we ship it with git, like
-we ship libxdiff?  I want to say Apache ships with pcre, but they
-use the Apache License so it might be easier for them to do so.
+Since "git log origin/master" uses dwim_log() to match
+"refs/remotes/origin/master", it makes sense to do that for
+"git log --reflog", too.
 
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+
+	I changed dwim_ref() to dwim_log() as per Nico's request.
+
+ cache.h       |    1 +
+ reflog-walk.c |   13 +++++++++++++
+ sha1_name.c   |    2 +-
+ 3 files changed, 15 insertions(+), 1 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index 6f55fdc..44941c0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -304,6 +304,7 @@ extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
+ extern int read_ref(const char *filename, unsigned char *sha1);
+ extern const char *resolve_ref(const char *path, unsigned char *sha1, int, int *);
+ extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
++extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
+ 
+ extern int create_symref(const char *ref, const char *refs_heads_master, const char *logmsg);
+ extern int validate_headref(const char *ref);
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 653ec95..e0f1332 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -174,6 +174,19 @@ void add_reflog_for_walk(struct reflog_walk_info *info,
+ 			branch = xstrdup(head);
+ 		}
+ 		reflogs = read_complete_reflog(branch);
++		if (!reflogs || reflogs->nr == 0) {
++			unsigned char sha1[20];
++			char *b;
++			if (dwim_log(branch, strlen(branch), sha1, &b) == 1) {
++				if (reflogs) {
++					free(reflogs->ref);
++					free(reflogs);
++				}
++				free(branch);
++				branch = b;
++				reflogs = read_complete_reflog(branch);
++			}
++		}
+ 		if (!reflogs || reflogs->nr == 0)
+ 			die("No reflogs found for '%s'", branch);
+ 		path_list_insert(branch, &info->complete_reflogs)->util
+diff --git a/sha1_name.c b/sha1_name.c
+index d0d9536..c50a378 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -268,7 +268,7 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ 	return refs_found;
+ }
+ 
+-static int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
++int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ {
+ 	const char **p;
+ 	int logs_found = 0;
 -- 
-Shawn.
+1.5.0.rc4.2051.g679c-dirty
