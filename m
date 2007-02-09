@@ -1,63 +1,89 @@
-From: Christoph Duelli <duelli@melosgmbh.de>
-Subject: restriction of pulls
-Date: Fri, 9 Feb 2007 11:49:12 +0100
-Organization: MELOS GmbH
-Message-ID: <200702091149.12462.duelli@melosgmbh.de>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: [PATCH 6/7] git-blame.el: Doc fixes and cleanup
+Date: Fri, 09 Feb 2007 12:02:59 +0100
+Message-ID: <871wkzpp98.fsf@morpheus.local>
+References: <87irebpwps.fsf@morpheus.local> <eqhfdv$8uq$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 09 11:55:15 2007
+X-From: git-owner@vger.kernel.org Fri Feb 09 12:03:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFTPK-0003Bi-3n
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 11:55:10 +0100
+	id 1HFTXj-0007qO-Ke
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 12:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946298AbXBIKzH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 05:55:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946356AbXBIKzH
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 05:55:07 -0500
-Received: from mo-p00-ob.rzone.de ([81.169.146.160]:53746 "EHLO
-	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946298AbXBIKzF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 05:55:05 -0500
-X-Greylist: delayed 406 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Feb 2007 05:55:05 EST
-Received: from gw2.melosgmbh.de (p549B02B9.dip0.t-ipconnect.de [84.155.2.185])
-	by post.webmailer.de (mrclete mo18) (RZmta 4.5) with ESMTP id F03c75j19ABCCu
-	for <git@vger.kernel.org>; Fri, 9 Feb 2007 11:48:16 +0100 (MET)
-X-Spam-Status: No, hits=0.0 required=4.0
-	tests=AWL: 0.073,BAYES_00: -1.665,TOTAL_SCORE: -1.592
-X-Spam-Level: 
-Received: from duelli.melosgmbh.de ([172.27.1.229])
-	by gw2.melosgmbh.de (Kerio MailServer 6.3.0)
-	for git@vger.kernel.org;
-	Fri, 9 Feb 2007 11:48:14 +0100
-User-Agent: KMail/1.7.1
-Content-Disposition: inline
-X-RZG-AUTH: hvKqOO6Ph79JHUJJIwMxXgzUdNi97hMDGc5n+ojdbo9B56/YXBysNp6yRT6vKXIWMkPu
+	id S965728AbXBILDs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 9 Feb 2007 06:03:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965730AbXBILDs
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 06:03:48 -0500
+Received: from main.gmane.org ([80.91.229.2]:58501 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965728AbXBILDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 06:03:47 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HFTXK-0008QS-SJ
+	for git@vger.kernel.org; Fri, 09 Feb 2007 12:03:27 +0100
+Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 12:03:26 +0100
+Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 12:03:26 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:I/5WND64E5QKvLoUEPJ1irVLxQE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39175>
 
-Is it possible to restrict a chechout, clone or a later pull to some 
-subdirectory of a repository?
-(Background: using subversion (or cvs), it is possible to do a file or 
-directory-restricted update.)
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Say, I have a repository containing 2 (mostly) independent projects A and B 
-(in separate) directories:
-- R
-  -  A
-  -  B
-Is it possibly to pull all the changes made to B, but not those made to A. 
-(Yes, I know that this causes trouble if there are dependencies into A.)
+> [Cc: git@vger.kernel.org]
+>
+> David K?gedal wrote:
+>
+>> @@ -123,6 +123,7 @@
+>> =C2=A0
+>> =C2=A0;;;###autoload
+>> =C2=A0(defun git-blame-mode (&optional arg)
+>> + =C2=A0"Minor mode for displaying Git blame"
+>> =C2=A0 =C2=A0(interactive "P")
+>> =C2=A0 =C2=A0(if arg
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0(setq git-blame-mode (eq arg 1))
+>
+> We should probably also change file description in header, and autolo=
+ad
+> instruction in Installation: section of commentary:
 
+Agreed.
 
-Regards
--- 
-Christoph Duelli
-MELOS GmbH
+> ;;; git-blame.el --- Minor mode for displaying Git blame  -*- coding:=
+ utf-8 -*-
+> ;;
+>
+> [...]
+>
+> ;; If you do not want to load this package before it is necessary, yo=
+u
+> ;; can make use of the `autoload' feature, e.g. by adding to your .em=
+acs
+> ;; the following lines
+> ;;
+> ;;    (autoload 'git-blame-mode "git-blame"
+> ;;              "Minor mode for displaying Git blame" t)
+>
+> (docstring is needed because INTERACTIVE is _fourth_ parameter).
+
+Yes?  Of course you need the doc string here, since the file isn't
+loaded yet.
+
+--=20
+David K=C3=A5gedal
