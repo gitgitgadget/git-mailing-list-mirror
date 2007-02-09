@@ -1,99 +1,200 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git rescue mission
-Date: Fri, 09 Feb 2007 03:01:41 +0100
-Organization: At home
-Message-ID: <eqgkj2$2nl$1@sea.gmane.org>
-References: <17866.27739.701406.722074@lisa.zopyra.com> <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org> <87fy9gz9vu.fsf@host94.eke.fi> <Pine.LNX.4.64.0702081321040.8424@woody.linux-foundation.org> <87bqk4z4qw.fsf@host94.eke.fi> <20070208221023.GB1091@spearce.org> <20070209014852.GA13207@thunk.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Question on git fetch to bare repo
+Date: Thu, 8 Feb 2007 21:39:41 -0500
+Message-ID: <20070209023941.GE10574@coredump.intra.peff.net>
+References: <17867.41997.561756.679778@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 09 03:00:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Fri Feb 09 03:39:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFL3o-0000qb-Ej
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 03:00:24 +0100
+	id 1HFLg5-00029X-As
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 03:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945974AbXBICAW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Feb 2007 21:00:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946014AbXBICAV
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 21:00:21 -0500
-Received: from main.gmane.org ([80.91.229.2]:58870 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1945974AbXBICAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 21:00:21 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HFL3e-0004E1-8S
-	for git@vger.kernel.org; Fri, 09 Feb 2007 03:00:14 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 03:00:14 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 03:00:14 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1945898AbXBICjo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 21:39:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946012AbXBICjo
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 21:39:44 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4757 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1945898AbXBICjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 21:39:43 -0500
+Received: (qmail 1525 invoked from network); 8 Feb 2007 21:39:46 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 8 Feb 2007 21:39:46 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Feb 2007 21:39:41 -0500
+Content-Disposition: inline
+In-Reply-To: <17867.41997.561756.679778@lisa.zopyra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39150>
 
-<opublikowany i wys=B3any>
+On Thu, Feb 08, 2007 at 04:28:29PM -0600, Bill Lear wrote:
 
-Theodore Tso wrote:
+> % mkdir project && cd project
+> % git --bare init-db --shared
+> % git --bare fetch git://source/project
+> [All seems well]
 
-> On Thu, Feb 08, 2007 at 05:10:23PM -0500, Shawn O. Pearce wrote:
->>      git config alias.new "gitk --all --not ORIG_HEAD"
->>=20
->> Would give you a new git subcommand:
->>=20
->>      git new
->>=20
->> which shows all of the new stuff, on all branches, but doesn't show
->> your prior commit history.
->=20
-> Aliases don't seem to be working for me; I'm using git 1.5.0-rc4.  Am
-> I doing something wrong?
->=20
-> <tytso@candygram> {/usr/projects/linux/linux-2.6}  [master]
-> 37% git version
-> git version 1.5.0.rc4
-> <tytso@candygram> {/usr/projects/linux/linux-2.6}  [master]
-> 38% git config alias.new "gitk --all --not ORIG_HEAD"
-> <tytso@candygram> {/usr/projects/linux/linux-2.6}  [master]
-> 39% git new
-> git: 'new' is not a git-command
+It's not. You have fetched the objects from git://source/project, and
+FETCH_HEAD (an ephemeral pointer to the things you just fetched) points
+to them. But look in project/refs/heads; you have no branches!
 
-> <tytso@candygram> {/usr/projects/linux/linux-2.6}  [master]
-> 40% tail .git/config=20
->=20
-> [user]
->         name =3D Theodore Ts'o
->         email =3D tytso@mit.edu
->=20
-> [remote "iwlwifi"]
->         url =3D http://bughost.org/repos/iwlwifi.git/
->         fetch =3D +refs/heads/*:refs/remotes/iwlwifi/*
-> [alias]
->         new =3D gitk --all --not ORIG_HEAD
->                                      =20
+What you want instead is:
+  git --bare fetch git://source/project master:master
+which means
+  "fetch project's master and store it as my master; if it's not a
+  fast-forward, then complain loudly. Don't do any merges."
 
-Actually I think you can only alias git commands. For example
-"alias.last  =3D  cat-file  commit HEAD" makes "git last" call
-"git cat-file  commit HEAD".
+> I have a private repo:
+> 
+> % mkdir project && cd project
+> % git clone /repos/git/project
+> [All is well]
 
-So "alias.new  =3D gitk --all --not ORIG_HEAD" would mean that
-"git new" invokes "git gitk ..." not "gitk ...". Do you see
-the problem.
+Is it? You shouldn't have any branches in /repos/git/project at this
+point.
 
-But error message is a bit strange...
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> A co-worker checks something in to our company repo, so I go to my
+> public repo to fetch the changes:
+> 
+> % cd /repos/git/project
+> % git --bare fetch -v git://source/project
+> remote: Generating pack...
+> remote: Done counting 230 objects.
+> remote: Result has 152 objects.
+> remote: Deltifying 152 objects.
+> remote:  100% (152/152) done
+> Unpacking 152 objects
+> remote: Total 152, written 152 (delta 109), reused 90 (delta 51)
+>  100% (152/152) done
+> * fetched git://source/project
+>   commit: 5c2d43d
+
+Again, you're not _storing_ those changes in a branch, you're just
+putting them in FETCH_HEAD.
+
+> I then go to my private repo to pull from my public one:
+> 
+> % cd ~/project
+> % git branch
+>   topic
+> * master
+> % git pull
+> Already up-to-date.
+
+Not surprising, since you didn't actually update any branches in the
+previous step.
+
+> % cat .git/remotes/origin
+> URL: /repos/git/project
+> Pull: refs/heads/master:refs/heads/origin
+> Pull: refs/heads/topic:refs/heads/topic
+> [All seems well with this repo ??]
+
+I'm confused as to how there are branches in the 'public' repo at this
+step, since your initial fetch shouldn't have actually made any,
+especially not a 'topic' branch.
+
+> % cd /repos/git/project
+> % git --bare show -t 5c2d43d
+> 
+> the patch comes out exactly as it did in my email notification, so I
+> know it's there.
+
+Sure, you have the object, but you don't have any _pointers_ to it.
+
+> I tried then to be more forceful, and did another fetch like this,
+> which I sort of expected to fail:
+> 
+> % git --bare fetch -v git://source/project master:master
+> remote: Generating pack...
+> remote: Done counting 230 objects.
+> remote: Result has 152 objects.
+> remote: Deltifying 152 objects.
+> remote:  100% (152/152) done
+> Unpacking 152 objects
+> remote: Total 152, written 152 (delta 109), reused 90 (delta 51)
+>  100% (152/152) done
+> * refs/heads/master: fast forward to branch 'master' of git://source/project
+>   old..new: 37e2298..5c2d43d
+> Cannot fetch into the current branch.
+
+You're more on the right track here, but not quite. If you want to save
+things in branches, you either need to use a 'remotes' shorthand (which
+defines pull lines with refspecs) or you need to specify the refspec on
+the command line (like master:master). However, you _don't_ want to
+fetch directly into your master branch. fetch is for copying refs and
+objects, not for merging (and you've presumably made some commits on
+master that the upstream doesn't have).
+
+It seems like you're trying to merge in your "public" repository, which
+is a mistake. I think you would be much better served to think of your
+public repository as a place where you publish changes (_only_ from your
+private repository), and do all of your external fetching and merging in
+your private repository. Everyone has a public repo, so you always
+"pull" from other people's public repos, and "push" into your public
+repo. Thus you don't need --shared at all.
+
+IOW, do this:
+
+# set up public repository; initially empty, but we will push something
+# useful into it soon.
+mkdir /git/repo/project && cd /git/repo/project
+git --bare init
+
+# set up our private repository, which is a clone of the company repo
+cd $HOME
+git clone git://source/project
+
+# at this point, our .git/remotes/origin file is set up to pull from
+# the company repo. But we still want to publish our changes in our
+# personal public repo. Let's set that up. We always want the public
+# branches to match ours, even if we've reset or rebased, so we use '+'
+# to always overwrite. This is safe, because data is never getting into
+# the public repo in any way _except_ for us pushing it.
+cat >.git/remotes/publish <<'EOF'
+URL: /git/repo/project
+Push: +master:master
+Push: +topic:topic
+
+# now we can make our first publication, which at this point is the same
+# as the source repo
+git push publish
+
+# and now we make some changes
+hack hack hack
+git commit
+
+# and we can publish more changes
+git push publish
+
+# but now we want to grab some changes from Bob's public repo. Let's set
+# up a new remote for him. Again, we use '+' to overwrite, since we are
+# just tracking what Bob is doing. Note that we have Bob's branch now,
+# but we don't _publish_ it, since it's not in our publish remote.
+cat >.git/remotes/bob <<'EOF'
+URL: /path/to/bobs/repo
+Pull: +master:bob-master
+EOF
+
+# and now we can fetch/pull from bob
+git fetch bob
+# what has bob done that we haven't?
+gitk bob-master..master
+# ok, let's merge
+git pull . bob-master
+# or do the fetch/pull in one step
+git pull bob master
+
+And Bob can of course do the same to us.
+
+Does that make more sense? Or have I completely missed what you are
+trying to accomplish? :)
+
+-Peff
