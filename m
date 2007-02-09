@@ -1,75 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: restriction of pulls
-Date: Fri, 09 Feb 2007 12:19:05 +0100
-Organization: At home
-Message-ID: <eqhl87$ut3$1@sea.gmane.org>
-References: <200702091149.12462.duelli@melosgmbh.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git log filtering
+Date: Fri, 9 Feb 2007 14:13:18 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702091410230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
+ <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
+ <20070208061654.GA8813@coredump.intra.peff.net>
+ <Pine.LNX.4.63.0702081905570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070208223336.GA9422@coredump.intra.peff.net>
+ <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070209015925.GD10574@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 09 12:17:58 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 09 14:13:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFTlM-0006dI-UD
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 12:17:57 +0100
+	id 1HFVZ6-0005WO-Px
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 14:13:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946367AbXBILRy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 06:17:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946362AbXBILRy
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 06:17:54 -0500
-Received: from main.gmane.org ([80.91.229.2]:57517 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946367AbXBILRx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 06:17:53 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HFTl7-0003Zk-5j
-	for git@vger.kernel.org; Fri, 09 Feb 2007 12:17:41 +0100
-Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 12:17:41 +0100
-Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 12:17:41 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1946437AbXBINNV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Feb 2007 08:13:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946444AbXBINNV
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 08:13:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54639 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1946437AbXBINNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 08:13:20 -0500
+Received: (qmail invoked by alias); 09 Feb 2007 13:13:18 -0000
+X-Provags-ID: V01U2FsdGVkX18MDscEpYwMgt1I4hsUBgAgr+Kg9EmMa5Tt8XmvEp
+	ZJ1w==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070209015925.GD10574@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39178>
 
-Christoph Duelli wrote:
+Hi,
 
-> Is it possible to restrict a chechout, clone or a later pull to some 
-> subdirectory of a repository?
-> (Background: using subversion (or cvs), it is possible to do a file or 
-> directory-restricted update.)
+On Thu, 8 Feb 2007, Jeff King wrote:
+
+> On Fri, Feb 09, 2007 at 01:18:01AM +0100, Johannes Schindelin wrote:
 > 
-> Say, I have a repository containing 2 (mostly) independent projects
-> A and B (in separate) directories:
-> - R
->   -  A
->   -  B
-> Is it possibly to pull all the changes made to B, but not those made to A. 
-> (Yes, I know that this causes trouble if there are dependencies into A.)
+> > Yes, I do. Not because of the extra lines, but because of the inconsistent 
+> > interface.
+> 
+> OK, so we may either:
+>   1. always use the lowest common denominator (i.e., no pcre support)
+>   2. force a dependency for new features (i.e., require pcre)
+>   3. have inconsistency between builds (i.e., conditional dependency)
+>   4. include all dependencies, or re-write them natively
+> 
+> I agree that 4 can make some sense in limited situations, but I worry
+> that it will eventually cease to be scalable (we don't get improvements
+> or bugfixes automatically from other packages, we potentially re-invent
+> the wheel). We already have '3' for other things: openssl, curl, expat,
+> even perl.
 
-No, it is not possible. Moreover, it is not sensible, as it breaks atomicity
-of a commit. Well, you can hack, but...
+The difference, of course, is that with the "other things", we either have 
+no alternative (if you do not have curl, you cannot use HTTP transport), 
+or we have workalikes (if you don't use openssl, the (possibly slower) 
+SHA1 replacements take effect).
 
-That said, there is experimental submodule (subproject) support
-  http://git.or.cz/gitwiki/SubprojectSupport
-  http://git.admingilde.org/tali/git.git/module2
-(there was also proposal of more lightweight submodule support, but I don't
-have a link to it), and you should have set A and B as submodules
-(subprojects).
+We _used_ to rely on external "diff" and "merge", but have them as inbuilt 
+components, exactly to avoid "if you have a slightly differing setup, 
+git behaves differently".
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ciao,
+Dscho
