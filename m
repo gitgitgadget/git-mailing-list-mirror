@@ -1,69 +1,72 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git log filtering
-Date: Fri, 9 Feb 2007 01:18:01 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
- <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
- <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
- <20070208061654.GA8813@coredump.intra.peff.net>
- <Pine.LNX.4.63.0702081905570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070208223336.GA9422@coredump.intra.peff.net>
+Subject: Re: Question on git fetch to bare repo
+Date: Fri, 9 Feb 2007 01:22:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702090119070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <17867.41997.561756.679778@lisa.zopyra.com> <eqg8fa$ru3$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Feb 09 01:18:13 2007
+Cc: git@vger.kernel.org, Bill Lear <rael@zopyra.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 09 01:22:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFJSt-0000kc-JC
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 01:18:11 +0100
+	id 1HFJXO-0002yK-Q1
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 01:22:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422767AbXBIASG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 19:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422733AbXBIASG
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 19:18:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44884 "HELO mail.gmx.net"
+	id S1422783AbXBIAWs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 19:22:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422806AbXBIAWs
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 19:22:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44427 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965596AbXBIASD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 19:18:03 -0500
-Received: (qmail invoked by alias); 09 Feb 2007 00:18:01 -0000
-X-Provags-ID: V01U2FsdGVkX1+6gkYarCe6whOwuZi5MlYernLvB9z7rIYC+NUEbD
-	1T8g==
+	id S1422783AbXBIAWr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 19:22:47 -0500
+Received: (qmail invoked by alias); 09 Feb 2007 00:22:46 -0000
+X-Provags-ID: V01U2FsdGVkX1+1mpI2LT21zrjg9lcYOeS0ihZYSf1gShHOWwRdVZ
+	uHkA==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070208223336.GA9422@coredump.intra.peff.net>
+In-Reply-To: <eqg8fa$ru3$1@sea.gmane.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39137>
 
 Hi,
 
-On Thu, 8 Feb 2007, Jeff King wrote:
+[Jakub, you broke the thread. I Cc' Bill, but I cannot join the thread]
 
-> On Thu, Feb 08, 2007 at 07:06:25PM +0100, Johannes Schindelin wrote:
+On Thu, 8 Feb 2007, Jakub Narebski wrote:
+
+> Bill Lear wrote:
 > 
-> > May I register a complaint? This is yet _another_ dependency.
+> > I have a public bare repo I created yesterday:
+> > 
+> > % mkdir project && cd project
+> > % git --bare init-db --shared
+> > % git --bare fetch git://source/project
+> > [All seems well]
 > 
-> Unlike other dependencies, I think it's quite natural to make it a
-> conditional dependency. If you have pcre, you get more featureful
-> regular expressions. If you don't, you get posix regular expressions.
-> Do you object to a few extra lines in the Makefile?
+> _Seems_ well
+> 
+>   % git clone --bare --shared git://source/project project
+> 
+> is a proper invocation.
 
-Yes, I do. Not because of the extra lines, but because of the inconsistent 
-interface.
+No.
 
-We included libxdiff _exactly_ to ensure consistency between different git 
-installations (remember, diff behaves quite differently on different 
-platforms, and even GNU diff behaves differently depending on which 
-version you use).
+init --shared means that the repository is set up such that different 
+users can update branches.
 
-So no, I do not like the idea of using git on some random box, only to 
-realize that what I have grown used to does not work.
+clone --shared means that if the original repository is on the local 
+machine (which it is not in your example), then that is used as an 
+alternate, i.e. the objects are not copied at all, but reused from the 
+other location.
+
+I complained about that ambiguity, but I am probably the guilty person: 
+AFAIR it was me who introduced "init --shared".
 
 Ciao,
 Dscho
