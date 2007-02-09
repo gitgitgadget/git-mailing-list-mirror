@@ -1,124 +1,168 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH/RFC] git-clone: add --copy-remotes option
-Date: Fri, 9 Feb 2007 03:07:20 -0500
-Message-ID: <20070209080720.GA19750@coredump.intra.peff.net>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [PATCH 1/7] git-blame: Add Emacs Lisp file headers and GNU GPL boilerplate
+Date: Fri, 09 Feb 2007 09:19:28 +0100
+Message-ID: <874ppvrbe7.fsf@morpheus.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 09 09:07:27 2007
+X-From: git-owner@vger.kernel.org Fri Feb 09 09:19:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFQn0-0004T5-Pz
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 09:07:27 +0100
+	id 1HFQz0-0001n2-9T
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 09:19:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946195AbXBIIHX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Feb 2007 03:07:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946197AbXBIIHX
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 03:07:23 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3441 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1946195AbXBIIHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 03:07:23 -0500
-Received: (qmail 10657 invoked from network); 9 Feb 2007 03:07:25 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 9 Feb 2007 03:07:25 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Feb 2007 03:07:20 -0500
-Content-Disposition: inline
+	id S1946209AbXBIITr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 9 Feb 2007 03:19:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946211AbXBIITr
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 03:19:47 -0500
+Received: from main.gmane.org ([80.91.229.2]:53219 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1946209AbXBIITq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 03:19:46 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HFQyp-0004fI-I7
+	for git@vger.kernel.org; Fri, 09 Feb 2007 09:19:39 +0100
+Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 09:19:39 +0100
+Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 09:19:39 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:RRswmRHqC2kLfEt8TjBjDjVjRQw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39159>
 
-When invoked as
+=46rom: Jakub Narebski <jnareb@gmail.com>
 
-  git clone --copy-remotes origin:grandparent parent child
+Add Emacs Lisp file headers, according to "Coding Conventions" chapter
+in Emacs Lisp Reference Manual and Elisp Area Convetions for
+EmacsWiki:
+  http://www.emacswiki.org/cgi-bin/wiki/ElispAreaConventions
+Those include: copyright notice, GNU GPL boilerplate, description and
+instalation instructions as provided in email and in commit message
+introducing git-blame.el, compatibility notes from another email by
+David K=C3=A5gedal about what to change to use it in GNU Emacs 20, and
+"git-blame ends here" to detect if file was truncated.  First line
+includes setting file encoding via first line local variable values
+(file variables).
 
-the repo 'child' will clone and track all branches of the parent's
-refs/remotes/origin/*, storing them as refs/remotes/grandparent/*.
+Added comment to "(require 'cl)" to note why it is needed; "Coding
+Conventions" advises to avoid require the `cl' package of Common Lisp
+extensions at run time.
 
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
+ contrib/emacs/git-blame.el |   75 ++++++++++++++++++++++++++++++++++++=
+++++++--
+ 1 files changed, 72 insertions(+), 3 deletions(-)
 
-Since the move to separate remotes, I occasionally have the desire to
-"fully" clone a repository, including its remotes. For example, I
-sometimes want to work on a topic branch in a fresh working directory,
-so I use "git clone -s git topic". However, later on in topic I want to
-compare my work against upstream branches, but they may not have been
-cloned into 'topic' (e.g., I want to look at Junio's 'next', but there
-was no 'next' branch in my 'git' repository, only 'remotes/origin/next',
-so it didn't get cloned).
+diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
+index 62cf24c..ba9d8a6 100644
+--- a/contrib/emacs/git-blame.el
++++ b/contrib/emacs/git-blame.el
+@@ -1,8 +1,73 @@
+-;;; git-blame.el
+-;; David K=C3=A5gedal <davidk@lysator.liu.se>
++;;; git-blame.el --- Minor mode for incremental blame for Git  -*- cod=
+ing: utf-8 -*-
++;;
++;; Copyright (C) 2007  David K=C3=A5gedal
++;;
++;; Authors:    David K=C3=A5gedal <davidk@lysator.liu.se>
++;; Created:    31 Jan 2007
+ ;; Message-ID: <87iren2vqx.fsf@morpheus.local>
++;; License:    GPL
++;; Keywords:   git, version control, release management
++;;
++;; Compatibility: Emacs21
++
++
++;; This file is *NOT* part of GNU Emacs.
++;; This file is distributed under the same terms as GNU Emacs.
++
++;; This program is free software; you can redistribute it and/or
++;; modify it under the terms of the GNU General Public License as
++;; published by the Free Software Foundation; either version 2 of
++;; the License, or (at your option) any later version.
++
++;; This program is distributed in the hope that it will be
++;; useful, but WITHOUT ANY WARRANTY; without even the implied
++;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
++;; PURPOSE.  See the GNU General Public License for more details.
++
++;; You should have received a copy of the GNU General Public
++;; License along with this program; if not, write to the Free
++;; Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
++;; MA 02111-1307 USA
++
++;; http://www.fsf.org/copyleft/gpl.html
++
++
++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
++;;
++;;; Commentary:
++;;
++;; Here is an Emacs implementation of incremental git-blame.  When you
++;; turn it on while viewing a file, the editor buffer will be updated =
+by
++;; setting the background of individual lines to a color that reflects
++;; which commit it comes from.  And when you move around the buffer, a
++;; one-line summary will be shown in the echo area.
++
++;;; Installation:
++;;
++;;  1) Load into emacs: M-x load-file RET git-blame.el RET
++;;  2) Open a git-controlled file
++;;  3) Blame: M-x git-blame-mode
++
++;;; Compatibility:
++;;
++;; It requires GNU Emacs 21.  If you'are using Emacs 20, try
++;; changing this:
++;;
++;;            (overlay-put ovl 'face (list :background
++;;                                         (cdr (assq 'color (cddddr i=
+nfo)))))
++;;
++;; to
++;;
++;;            (overlay-put ovl 'face (cons 'background-color
++;;                                         (cdr (assq 'color (cddddr i=
+nfo)))))
++
++
++;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
++;;
++;;; Code:
++
++(require 'cl)			      ; to use `push', `pop'
+=20
+-(require 'cl)
+ (defun color-scale (l)
+   (let* ((colors ())
+          r g b)
+@@ -178,3 +243,7 @@
+   (shell-command
+    (format "git log -1 --pretty=3Doneline %s" (or hash
+                                                 (git-blame-current-com=
+mit)))))
++
++(provide 'git-blame)
++
++;;; git-blame.el ends here
+--=20
+1.5.0.rc3.204.g93c76
 
-Using this patch, I can do
-  git clone -s --copy-remotes origin:junio git topic
-and access the resulting branches as 'junio/next'.
 
-Some thoughts:
-  - the implementation is a little ugly, but making key/value pairs in
-    shell variables is inherently ugly. Suggestions are welcome.
-  - The child tracks the remote tracking branches of the parent, which
-    is very simple. To solve my problem, I could instead automagically
-    copy the remotes config from the parent, and the child could then
-    track upstream itself. That seems a bit ugly to me (I end up with
-    two repos tracking the same data, potentially downloading it twice).
-  - making a mapping of names (origin -> junio) is more complex than I
-    would like, but otherwise you run a high risk of collision (remote's
-    origin/master becoming your origin/master conflicts with remote's
-    master becoming your origin/master).
-
-Are people interested in this?
-
- git-clone.sh |   24 ++++++++++++++++++++++++
- 1 files changed, 24 insertions(+), 0 deletions(-)
-
-diff --git a/git-clone.sh b/git-clone.sh
-index 1bd54de..1f3530b 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -128,6 +128,14 @@ while
- 	*,--depth)
- 		shift
- 		depth="--depth=$1";;
-+	1,--copy-remotes) usage ;;
-+	*,--copy-remotes)
-+		shift
-+		from=`echo $1 | cut -d: -f1`
-+		to=`echo $1 | cut -d: -f2`
-+		eval "copy_remotes_$from=\"$to\""
-+		copy_remotes="$copy_remotes $from"
-+		;;
- 	*,-*) usage ;;
- 	*) break ;;
- 	esac
-@@ -321,6 +329,17 @@ then
- 			destname="refs/$branch_top/${name#refs/heads/}" ;;
- 		refs/tags/*)
- 			destname="refs/$tag_top/${name#refs/tags/}" ;;
-+		refs/remotes/*)
-+			for i in $copy_remotes; do
-+			  case "$name" in
-+			    refs/remotes/$i/*)
-+			      eval "destremote=\$copy_remotes_$i"
-+			      destname="refs/remotes/$destremote/${name#refs/remotes/$i/}"
-+			      break
-+			      ;;
-+			  esac
-+			done
-+			;;
- 		*)
- 			continue ;;
- 		esac
-@@ -383,6 +402,11 @@ then
- 		# Set up the mappings to track the remote branches.
- 		git-config remote."$origin".fetch \
- 			"+refs/heads/*:$remote_top/*" '^$' &&
-+		for i in $copy_remotes; do
-+			eval "destremote=\$copy_remotes_$i"
-+			git-config --add remote."$origin".fetch \
-+				"+refs/remotes/$i/*:refs/remotes/$destremote/*"
-+		done
- 		rm -f "refs/remotes/$origin/HEAD"
- 		git-symbolic-ref "refs/remotes/$origin/HEAD" \
- 			"refs/remotes/$origin/$head_points_at" &&
--- 
-1.5.0.rc4.502.g6a6e-dirty
+--=20
+David K=C3=A5gedal
