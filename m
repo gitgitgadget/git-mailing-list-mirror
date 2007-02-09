@@ -1,71 +1,75 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH 7/7] git-blame.el: Autoupdate while editing
-Date: Fri, 09 Feb 2007 12:05:51 +0100
-Message-ID: <87veiboak0.fsf@morpheus.local>
-References: <87ejozpwp0.fsf@morpheus.local> <eqhfqv$bnu$1@sea.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: restriction of pulls
+Date: Fri, 09 Feb 2007 12:19:05 +0100
+Organization: At home
+Message-ID: <eqhl87$ut3$1@sea.gmane.org>
+References: <200702091149.12462.duelli@melosgmbh.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 09 12:10:38 2007
+X-From: git-owner@vger.kernel.org Fri Feb 09 12:17:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFTeF-0002nO-4Q
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 12:10:35 +0100
+	id 1HFTlM-0006dI-UD
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 12:17:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423023AbXBILKc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 9 Feb 2007 06:10:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423038AbXBILKc
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 06:10:32 -0500
-Received: from main.gmane.org ([80.91.229.2]:57331 "EHLO ciao.gmane.org"
+	id S1946367AbXBILRy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Feb 2007 06:17:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946362AbXBILRy
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 06:17:54 -0500
+Received: from main.gmane.org ([80.91.229.2]:57517 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1423023AbXBILKb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Feb 2007 06:10:31 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HFTdi-0001fM-4I
-	for git@vger.kernel.org; Fri, 09 Feb 2007 12:10:02 +0100
-Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
+	id S1946367AbXBILRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 06:17:53 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HFTl7-0003Zk-5j
+	for git@vger.kernel.org; Fri, 09 Feb 2007 12:17:41 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 12:10:02 +0100
-Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 12:17:41 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 09 Feb 2007 12:10:02 +0100
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 12:17:41 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:LMRmeosKdcl1Qhr559ZcmjNeDmQ=
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39177>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Christoph Duelli wrote:
 
-> [Cc: git@vger.kernel.org]
->
-> David K?gedal wrote:
->
->> This adds the support for automatically updating the buffer while ed=
-iting.
->> A configuration variable git-blame-autoupdate controls whether this =
-should
->> be enabled or not.
->
-> Can we use -L option of git-blame for this?
+> Is it possible to restrict a chechout, clone or a later pull to some 
+> subdirectory of a repository?
+> (Background: using subversion (or cvs), it is possible to do a file or 
+> directory-restricted update.)
+> 
+> Say, I have a repository containing 2 (mostly) independent projects
+> A and B (in separate) directories:
+> - R
+>   -  A
+>   -  B
+> Is it possibly to pull all the changes made to B, but not those made to A. 
+> (Yes, I know that this causes trouble if there are dependencies into A.)
 
-We do.
+No, it is not possible. Moreover, it is not sensible, as it breaks atomicity
+of a commit. Well, you can hack, but...
 
-> BTW did you take a look at Font Lock modes: Fast Lock mode, Lazy Lock=
- mode,
-> Just-in-time Lock mode?
+That said, there is experimental submodule (subproject) support
+  http://git.or.cz/gitwiki/SubprojectSupport
+  http://git.admingilde.org/tali/git.git/module2
+(there was also proposal of more lightweight submodule support, but I don't
+have a link to it), and you should have set A and B as submodules
+(subprojects).
 
-I know of them (I use lazy-lock-mode, which I think is the
-default). But what do you want me to look at?
-
---=20
-David K=C3=A5gedal
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
