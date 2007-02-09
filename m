@@ -1,54 +1,99 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git log filtering
-Date: Thu, 8 Feb 2007 20:59:25 -0500
-Message-ID: <20070209015925.GD10574@coredump.intra.peff.net>
-References: <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org> <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org> <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org> <20070208061654.GA8813@coredump.intra.peff.net> <Pine.LNX.4.63.0702081905570.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070208223336.GA9422@coredump.intra.peff.net> <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git rescue mission
+Date: Fri, 09 Feb 2007 03:01:41 +0100
+Organization: At home
+Message-ID: <eqgkj2$2nl$1@sea.gmane.org>
+References: <17866.27739.701406.722074@lisa.zopyra.com> <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org> <87fy9gz9vu.fsf@host94.eke.fi> <Pine.LNX.4.64.0702081321040.8424@woody.linux-foundation.org> <87bqk4z4qw.fsf@host94.eke.fi> <20070208221023.GB1091@spearce.org> <20070209014852.GA13207@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 09 02:59:33 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 09 03:00:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFL2x-0000O5-DX
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 02:59:31 +0100
+	id 1HFL3o-0000qb-Ej
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 03:00:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946003AbXBIB72 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 20:59:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946014AbXBIB72
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 20:59:28 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1696 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1946003AbXBIB71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 20:59:27 -0500
-Received: (qmail 32327 invoked from network); 8 Feb 2007 20:59:29 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 8 Feb 2007 20:59:29 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Feb 2007 20:59:25 -0500
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1945974AbXBICAW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Feb 2007 21:00:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946014AbXBICAV
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 21:00:21 -0500
+Received: from main.gmane.org ([80.91.229.2]:58870 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1945974AbXBICAV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 21:00:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HFL3e-0004E1-8S
+	for git@vger.kernel.org; Fri, 09 Feb 2007 03:00:14 +0100
+Received: from host-81-190-29-4.torun.mm.pl ([81.190.29.4])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 03:00:14 +0100
+Received: from jnareb by host-81-190-29-4.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Feb 2007 03:00:14 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-4.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39149>
 
-On Fri, Feb 09, 2007 at 01:18:01AM +0100, Johannes Schindelin wrote:
+<opublikowany i wys=B3any>
 
-> Yes, I do. Not because of the extra lines, but because of the inconsistent 
-> interface.
+Theodore Tso wrote:
 
-OK, so we may either:
-  1. always use the lowest common denominator (i.e., no pcre support)
-  2. force a dependency for new features (i.e., require pcre)
-  3. have inconsistency between builds (i.e., conditional dependency)
-  4. include all dependencies, or re-write them natively
+> On Thu, Feb 08, 2007 at 05:10:23PM -0500, Shawn O. Pearce wrote:
+>>      git config alias.new "gitk --all --not ORIG_HEAD"
+>>=20
+>> Would give you a new git subcommand:
+>>=20
+>>      git new
+>>=20
+>> which shows all of the new stuff, on all branches, but doesn't show
+>> your prior commit history.
+>=20
+> Aliases don't seem to be working for me; I'm using git 1.5.0-rc4.  Am
+> I doing something wrong?
+>=20
+> <tytso@candygram> {/usr/projects/linux/linux-2.6}  [master]
+> 37% git version
+> git version 1.5.0.rc4
+> <tytso@candygram> {/usr/projects/linux/linux-2.6}  [master]
+> 38% git config alias.new "gitk --all --not ORIG_HEAD"
+> <tytso@candygram> {/usr/projects/linux/linux-2.6}  [master]
+> 39% git new
+> git: 'new' is not a git-command
 
-I agree that 4 can make some sense in limited situations, but I worry
-that it will eventually cease to be scalable (we don't get improvements
-or bugfixes automatically from other packages, we potentially re-invent
-the wheel). We already have '3' for other things: openssl, curl, expat,
-even perl.
+> <tytso@candygram> {/usr/projects/linux/linux-2.6}  [master]
+> 40% tail .git/config=20
+>=20
+> [user]
+>         name =3D Theodore Ts'o
+>         email =3D tytso@mit.edu
+>=20
+> [remote "iwlwifi"]
+>         url =3D http://bughost.org/repos/iwlwifi.git/
+>         fetch =3D +refs/heads/*:refs/remotes/iwlwifi/*
+> [alias]
+>         new =3D gitk --all --not ORIG_HEAD
+>                                      =20
 
--Peff
+Actually I think you can only alias git commands. For example
+"alias.last  =3D  cat-file  commit HEAD" makes "git last" call
+"git cat-file  commit HEAD".
+
+So "alias.new  =3D gitk --all --not ORIG_HEAD" would mean that
+"git new" invokes "git gitk ..." not "gitk ...". Do you see
+the problem.
+
+But error message is a bit strange...
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
