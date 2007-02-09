@@ -1,105 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] log --reflog: use dwim_log
-Date: Fri, 9 Feb 2007 01:28:23 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702090127510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <8aa486160702071721s401ea38fxa8eb71bb694a6915@mail.gmail.com>
- <Pine.LNX.4.63.0702082021210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <eqfu36$lb3$1@sea.gmane.org> <Pine.LNX.4.63.0702082040390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vveicw850.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] qgit4: Add a header and set the font family appropriately
+ to the log message
+Date: Thu, 8 Feb 2007 16:29:17 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702081623460.8424@woody.linux-foundation.org>
+References: <200702082158.56463.andyparkins@gmail.com>
+ <200702082331.13095.andyparkins@gmail.com> <20070208234153.GB1556@spearce.org>
+ <7vk5ysw6a3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 09 01:28:30 2007
+X-From: git-owner@vger.kernel.org Fri Feb 09 01:29:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFJcr-0005tC-Ke
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 01:28:29 +0100
+	id 1HFJdn-0006RF-SF
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 01:29:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423057AbXBIA20 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 19:28:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965730AbXBIA20
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 19:28:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53164 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965596AbXBIA2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 19:28:25 -0500
-Received: (qmail invoked by alias); 09 Feb 2007 00:28:23 -0000
-X-Provags-ID: V01U2FsdGVkX186zGIXcqc69NvIqg8maf7/KcyNNUPDUOTce0Y0Bs
-	vNhg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vveicw850.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1423086AbXBIA3Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 19:29:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965741AbXBIA3Y
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 19:29:24 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:46937 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965730AbXBIA3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 19:29:23 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l190TI3O008069
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 8 Feb 2007 16:29:18 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l190THL4032061;
+	Thu, 8 Feb 2007 16:29:17 -0800
+In-Reply-To: <7vk5ysw6a3.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.437 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.116__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39141>
 
 
-Since "git log origin/master" uses dwim_log() to match
-"refs/remotes/origin/master", it makes sense to do that for
-"git log --reflog", too.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+On Thu, 8 Feb 2007, Junio C Hamano wrote:
+> 
+> This came up before, but when you have more than 9 in your
+> series, we _could_ do [PATCH 01/12] ... [PATCH 12/12] to line
+> them up in e-mail client of the recipients better.
 
-	I changed dwim_ref() to dwim_log() as per Nico's request.
+Not just "line them up". It's more than just a visual thing.
 
- cache.h       |    1 +
- reflog-walk.c |   13 +++++++++++++
- sha1_name.c   |    2 +-
- 3 files changed, 15 insertions(+), 1 deletions(-)
+So I long ago I asked Andrew to do that for me in his scripts, because 
+when he sends me 150+ patches in one go, and I want to sort them to be in 
+order, I can't depend on arrival order (because it won't be reliable) and 
+I can't necessarily depend on date order (because he can send more than 
+one patch a second), so what do I do? I sort by subject.
 
-diff --git a/cache.h b/cache.h
-index 6f55fdc..44941c0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -304,6 +304,7 @@ extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
- extern int read_ref(const char *filename, unsigned char *sha1);
- extern const char *resolve_ref(const char *path, unsigned char *sha1, int, int *);
- extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
-+extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
- 
- extern int create_symref(const char *ref, const char *refs_heads_master, const char *logmsg);
- extern int validate_headref(const char *ref);
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 653ec95..e0f1332 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -174,6 +174,19 @@ void add_reflog_for_walk(struct reflog_walk_info *info,
- 			branch = xstrdup(head);
- 		}
- 		reflogs = read_complete_reflog(branch);
-+		if (!reflogs || reflogs->nr == 0) {
-+			unsigned char sha1[20];
-+			char *b;
-+			if (dwim_log(branch, strlen(branch), sha1, &b) == 1) {
-+				if (reflogs) {
-+					free(reflogs->ref);
-+					free(reflogs);
-+				}
-+				free(branch);
-+				branch = b;
-+				reflogs = read_complete_reflog(branch);
-+			}
-+		}
- 		if (!reflogs || reflogs->nr == 0)
- 			die("No reflogs found for '%s'", branch);
- 		path_list_insert(branch, &info->complete_reflogs)->util
-diff --git a/sha1_name.c b/sha1_name.c
-index d0d9536..c50a378 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -268,7 +268,7 @@ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- 	return refs_found;
- }
- 
--static int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
-+int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- {
- 	const char **p;
- 	int logs_found = 0;
--- 
-1.5.0.rc4.2051.g679c-dirty
+But I don't know of a _single_ email reader (and certainly not the one I 
+use) that can "sort numerically by subject, using field #2". So it's a lot 
+easier if the numbering is sorted _alphabetically_ rather than 
+numerically.
+
+Otherwise I tend to see things like
+
+	[PATCH 1/89]
+	[PATCH 10/89]
+	[PATCH 11/89]
+	...
+	[PATCH 2/89]
+	[PATCH 20/89]
+	[PATCH 21/89]
+	...
+
+(note that this was mostly a problem just when syncing with Andrew: if the 
+patch series is just in the teens or something, it may not sort easily, 
+but you can just pick out the individual emails in order. When you have 
+hundreds of patches, suddenly you realize that computers sorting them for 
+you is really convenient).
+
+			Linus
