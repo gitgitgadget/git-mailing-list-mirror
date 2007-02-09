@@ -1,53 +1,61 @@
-From: Alexander Litvinov <litvinov2004@gmail.com>
-Subject: Re: Git rescue mission
-Date: Fri, 9 Feb 2007 09:32:54 +0600
-Message-ID: <200702090932.55255.litvinov2004@gmail.com>
-References: <17866.27739.701406.722074@lisa.zopyra.com> <200702081028.31493.litvinov2004@gmail.com> <7vy7n8up6b.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] log --reflog: use dwim_log
+Date: Thu, 08 Feb 2007 19:43:30 -0800
+Message-ID: <7vtzxwuhb1.fsf@assigned-by-dhcp.cox.net>
+References: <8aa486160702071721s401ea38fxa8eb71bb694a6915@mail.gmail.com>
+	<Pine.LNX.4.63.0702082021210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<eqfu36$lb3$1@sea.gmane.org>
+	<Pine.LNX.4.63.0702082040390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vveicw850.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702090127510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Bill Lear <rael@zopyra.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 09 04:33:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 09 04:43:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFMVa-00029d-4i
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 04:33:10 +0100
+	id 1HFMfg-0007DH-Pp
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 04:43:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946073AbXBIDdG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Feb 2007 22:33:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946054AbXBIDdG
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 22:33:06 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:18322 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946073AbXBIDdF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Feb 2007 22:33:05 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so662418uga
-        for <git@vger.kernel.org>; Thu, 08 Feb 2007 19:33:03 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=kZGX5qpLJqJ9HpWRtAFnumBi5MQiU8Zo3Jt/dDV+PNRYaL13Uu2CapdIwfWBIPPS8IYF7fAhxfxaFZuvN7bQ0pHHmevUFuI0wDD6D/NyIJP5WCHlPhxJ/ASmgetXBkjKZ8fGW3M9JJP7a9P1HC8EgBmRk0P4KtBohdz/5cleQQs=
-Received: by 10.67.93.6 with SMTP id v6mr10742732ugl.1170991983072;
-        Thu, 08 Feb 2007 19:33:03 -0800 (PST)
-Received: from lan.ac-sw.lcl ( [81.1.223.2])
-        by mx.google.com with ESMTP id c1sm3528142ugf.2007.02.08.19.33.01;
-        Thu, 08 Feb 2007 19:33:01 -0800 (PST)
-User-Agent: KMail/1.8
-In-Reply-To: <7vy7n8up6b.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1946054AbXBIDnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 22:43:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946075AbXBIDnc
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 22:43:32 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:35446 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946054AbXBIDnb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 22:43:31 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070209034331.HNHL21668.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 8 Feb 2007 22:43:31 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id MFjW1W00E1kojtg0000000; Thu, 08 Feb 2007 22:43:30 -0500
+In-Reply-To: <Pine.LNX.4.63.0702090127510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 9 Feb 2007 01:28:23 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39152>
 
-=D0=92 =D1=81=D0=BE=D0=BE=D0=B1=D1=89=D0=B5=D0=BD=D0=B8=D0=B8 =D0=BE=D1=
-=82 Friday 09 February 2007 06:53 Junio C Hamano =D0=BD=D0=B0=D0=BF=D0=B8=
-=D1=81=D0=B0=D0=BB(a):
-> Fair enough.  But I am known to be very bad at writing, so I
-> would ask the list to proofread this to see if it makes sense,
-> and prefereably rewrite it to make it easier to understand.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-It is cleary enought for me to understand. Thanks a lot.
+> Since "git log origin/master" uses dwim_log() to match
+> "refs/remotes/origin/master", it makes sense to do that for
+> "git log --reflog", too.
+
+This is a bit sad.
+
+When there is remotes/origin/HEAD symref that points at
+remotes/origin/master (and usually there is, in a repository
+initialized with the current git-clone), you can say "git log
+origin".  Even with this patch, I do not think dwim_log would
+allow you to say "git log -g origin" to mean "git log -g
+origin/master".
