@@ -1,73 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git rescue mission
-Date: Thu, 8 Feb 2007 16:17:43 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702081613370.8424@woody.linux-foundation.org>
-References: <17866.27739.701406.722074@lisa.zopyra.com>
- <Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org>
- <17867.40122.51865.575762@lisa.zopyra.com> <Pine.LNX.4.64.0702081408140.8424@woody.linux-foundation.org>
- <17867.45437.922483.805945@lisa.zopyra.com> <20070208233324.GA1556@spearce.org>
- <17867.46325.433406.974582@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git log filtering
+Date: Fri, 9 Feb 2007 01:18:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702090115180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
+ <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org>
+ <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org>
+ <20070208061654.GA8813@coredump.intra.peff.net>
+ <Pine.LNX.4.63.0702081905570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070208223336.GA9422@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Fri Feb 09 01:17:57 2007
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 09 01:18:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFJSe-0000cN-RX
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 01:17:57 +0100
+	id 1HFJSt-0000kc-JC
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 01:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422759AbXBIARw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 19:17:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422767AbXBIARw
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 19:17:52 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:46758 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422759AbXBIARv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 19:17:51 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l190Hj3O007708
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 8 Feb 2007 16:17:45 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l190Hhma031782;
-	Thu, 8 Feb 2007 16:17:44 -0800
-In-Reply-To: <17867.46325.433406.974582@lisa.zopyra.com>
-X-Spam-Status: No, hits=-0.44 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.116__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422767AbXBIASG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Feb 2007 19:18:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422733AbXBIASG
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 19:18:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44884 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965596AbXBIASD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Feb 2007 19:18:03 -0500
+Received: (qmail invoked by alias); 09 Feb 2007 00:18:01 -0000
+X-Provags-ID: V01U2FsdGVkX1+6gkYarCe6whOwuZi5MlYernLvB9z7rIYC+NUEbD
+	1T8g==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070208223336.GA9422@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39136>
 
+Hi,
 
+On Thu, 8 Feb 2007, Jeff King wrote:
 
-On Thu, 8 Feb 2007, Bill Lear wrote:
+> On Thu, Feb 08, 2007 at 07:06:25PM +0100, Johannes Schindelin wrote:
 > 
-> So, I assume I need to tell our developers that once we have installed
-> the new git, they will need to set aside their old repos and just
-> clone again from our company repo?
+> > May I register a complaint? This is yet _another_ dependency.
+> 
+> Unlike other dependencies, I think it's quite natural to make it a
+> conditional dependency. If you have pcre, you get more featureful
+> regular expressions. If you don't, you get posix regular expressions.
+> Do you object to a few extra lines in the Makefile?
 
-Not unless they want to take advantage of *all* the new features.
+Yes, I do. Not because of the extra lines, but because of the inconsistent 
+interface.
 
-The new version of git will work fine with old repositories, both on the 
-"server" side and the "user" side. And people can use a lot of the new 
-features even if they do nothing at all.
+We included libxdiff _exactly_ to ensure consistency between different git 
+installations (remember, diff behaves quite differently on different 
+platforms, and even GNU diff behaves differently depending on which 
+version you use).
 
-But for the _specific_ case of having a clearly separated "local branch" 
-vs "remote branch" case, you do need to make that distinction clear when 
-you create the repository (unless you want to get really down and dirty 
-with the repo and just modify it yourself: certainly possible but 
-generally just not worth the effort since it's just easier to clone a new 
-one instead).
+So no, I do not like the idea of using git on some random box, only to 
+realize that what I have grown used to does not work.
 
-So it's really a matter of how you use it. Switching to a new version of 
-git on the "server side" (ie the shared repository operations) won't 
-really affect anything at all. 
-
-		Linus
+Ciao,
+Dscho
