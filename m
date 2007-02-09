@@ -1,65 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git rescue mission
-Date: Thu, 08 Feb 2007 20:38:50 -0800
-Message-ID: <7vps8kueqt.fsf@assigned-by-dhcp.cox.net>
-References: <17866.27739.701406.722074@lisa.zopyra.com>
-	<Pine.LNX.4.64.0702080858430.8424@woody.linux-foundation.org>
-	<17867.40122.51865.575762@lisa.zopyra.com>
-	<Pine.LNX.4.64.0702081408140.8424@woody.linux-foundation.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [PATCH] qgit4: Add a header and set the font family appropriately to the log message
+Date: Fri, 9 Feb 2007 06:44:35 +0100
+Message-ID: <e5bfff550702082144h7ae6de5ai23853f43fb27f345@mail.gmail.com>
+References: <200702082158.56463.andyparkins@gmail.com>
+	 <200702082331.13095.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Feb 09 05:38:56 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Andy Parkins" <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 09 06:44:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFNXC-00014O-PG
-	for gcvg-git@gmane.org; Fri, 09 Feb 2007 05:38:55 +0100
+	id 1HFOYq-00069h-JY
+	for gcvg-git@gmane.org; Fri, 09 Feb 2007 06:44:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946100AbXBIEiw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Feb 2007 23:38:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946097AbXBIEiw
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Feb 2007 23:38:52 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:65217 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946100AbXBIEiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Feb 2007 23:38:51 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070209043852.QHIJ4586.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 8 Feb 2007 23:38:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id MGeq1W0061kojtg0000000; Thu, 08 Feb 2007 23:38:50 -0500
-In-Reply-To: <Pine.LNX.4.64.0702081408140.8424@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Thu, 8 Feb 2007 14:13:47 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946122AbXBIFoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Feb 2007 00:44:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946124AbXBIFoh
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Feb 2007 00:44:37 -0500
+Received: from wr-out-0506.google.com ([64.233.184.234]:23965 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946122AbXBIFog (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Feb 2007 00:44:36 -0500
+Received: by wr-out-0506.google.com with SMTP id 68so799433wri
+        for <git@vger.kernel.org>; Thu, 08 Feb 2007 21:44:35 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=s2bqYrgdy4pTxDWOCVfIUBiYaRXOTjyTvoEi4L4rksDarED0E5b7cVmhZVi5b8q3YEhUSyrFZlizqHhV57Bf+ECURNNw7xQS7CxTSWa1x5/0nzl9gdtsaR/U3+qfl4v6H74O9JbwS2e+9PmDTSdgrGVIA2tiwWJ3/yeEAexp6+Y=
+Received: by 10.114.211.1 with SMTP id j1mr4666928wag.1170999875460;
+        Thu, 08 Feb 2007 21:44:35 -0800 (PST)
+Received: by 10.114.60.16 with HTTP; Thu, 8 Feb 2007 21:44:35 -0800 (PST)
+In-Reply-To: <200702082331.13095.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39155>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On 2/9/07, Andy Parkins <andyparkins@gmail.com> wrote:
+> I've moved the short log to be the first header row, and highlighted it
+> more strongly.  I've also set the font family of the log div based on
+> TYPE_WRITER_FONT as suggested by Marco.
+>
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+> ---
 
-> Considering how stable the -rc kernels are (and actually, git "master" in 
-> general), there's really very little reason to wait for the real release. 
-> Junio has been very careful, and I think a lot of the delay in 1.5 has 
-> been about trying to get all the new stuff that changes semantics subtly 
-> in before the release, so that Junio will not have to do any real user- 
-> visible changes later.
+This patch does not apply on my qgit4 repo, it seems it is on the top
+of a your not published previous patch. Could you please rebase
+against current public qgi4 repo (git://repo.or.cz/qgit4.git)
 
-Heh, I do not work on kernels ;-)
+Other two patches has been applied and pushed.
 
-Seriously, I think you are giving me a bit too much credit, but
-I do agree that the tip of "master" tends to be very stable most
-of the time.  This is especially true since some tagged releases
-were followed up with immediate corrections for "oops, brown
-paper bag" bugs in the past X-<.
-
-But the tip of "master" contains dubious change from time to
-time (for example, I still haven't sorted out your "log -z"
-stuff, which is already in my tree).
+Thanks
+Marco
