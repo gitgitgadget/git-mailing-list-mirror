@@ -1,111 +1,72 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: 'git status' is not read-only fs friendly
-Date: Sat, 10 Feb 2007 20:08:53 +0100
-Message-ID: <e5bfff550702101108k5dabd8d5o2487cc87bb1eafc7@mail.gmail.com>
-References: <e5bfff550702091125j202620cfqb2450a3ee69ed421@mail.gmail.com>
-	 <e5bfff550702100648p6db5fc67vb5e4a04d40771922@mail.gmail.com>
-	 <Pine.LNX.4.63.0702101554170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <Pine.LNX.4.64.0702101049480.1757@xanadu.home>
-	 <7vr6syj7uw.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0702101131070.1757@xanadu.home>
-	 <7vmz3mj6yo.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0702101154130.1757@xanadu.home>
-	 <7v1wkxki4a.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0702101351430.1757@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Allow aliases to expand to shell commands
+Date: Sat, 10 Feb 2007 21:34:38 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702102129110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070209014852.GA13207@thunk.org> <1171123504783-git-send-email-tytso@mit.edu>
+ <11711235041527-git-send-email-tytso@mit.edu> <11711235042388-git-send-email-tytso@mit.edu>
+ <20070210181357.GE25607@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"GIT list" <git@vger.kernel.org>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Feb 10 20:08:59 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sat Feb 10 21:34:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFxak-0007w0-GX
-	for gcvg-git@gmane.org; Sat, 10 Feb 2007 20:08:58 +0100
+	id 1HFyvk-0008Qb-CF
+	for gcvg-git@gmane.org; Sat, 10 Feb 2007 21:34:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbXBJTI4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Feb 2007 14:08:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751799AbXBJTIz
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 14:08:55 -0500
-Received: from wr-out-0506.google.com ([64.233.184.239]:39795 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751798AbXBJTIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Feb 2007 14:08:55 -0500
-Received: by wr-out-0506.google.com with SMTP id 68so1256103wri
-        for <git@vger.kernel.org>; Sat, 10 Feb 2007 11:08:54 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=l/0gcLJrP1GRjNxjRM8s9nIdU6c4sF/foJszJTSMPyh3zQPcYn4iPaD8O0zMgp5U6nMBSvjne+3JsKa0z4NNBvB9x+yKw+oq/JB2WKjlHrwXmOLi0XjBxvshgRAY0YJK5j6d6oPEp+FXbKt0s9eF4H6RlcuwahiMzIRmUauQYhQ=
-Received: by 10.114.190.6 with SMTP id n6mr6500635waf.1171134533791;
-        Sat, 10 Feb 2007 11:08:53 -0800 (PST)
-Received: by 10.114.60.16 with HTTP; Sat, 10 Feb 2007 11:08:53 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0702101351430.1757@xanadu.home>
-Content-Disposition: inline
+	id S1751850AbXBJUel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Feb 2007 15:34:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbXBJUel
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 15:34:41 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39815 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751850AbXBJUek (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Feb 2007 15:34:40 -0500
+Received: (qmail invoked by alias); 10 Feb 2007 20:34:39 -0000
+X-Provags-ID: V01U2FsdGVkX1/C7IgsCkvClDuV0/hJ5sJ0IV/jFu1PZyWGIFyklZ
+	kNlg==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070210181357.GE25607@thunk.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39257>
 
-On 2/10/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Sat, 10 Feb 2007, Junio C Hamano wrote:
->
-> >  (0) Do nothing.
-> >
-> >  (1) We keep the current "git-status [-v] [-a] [[-i|-o] <paths...>]"
-> >      command line and do the necessary index manipulation
-> >      in-core without writing it out (see git-commit.sh for
-> >      details of what it involves).
-> >
-> >  (2) We drop the support for any command line parameter from
-> >      "git-status", apply my two patches for Marco to
-> >      "git-runstatus", and rename "git-runstatus" to
-> >      "git-status".
-> >
-> > If I have to pick between the two, I would probably pick (2).
-> > While (1) would essentially mean doing "git-commit" entirely
-> > in-core without writing the index out until we really make the
-> > commit, which is a good thing in itself in the longer term, it
-> > is out of the question this late in the game for 1.5.0.
->
-> And don't get me wrong.  I think that for 1.5.0 you should really do (0).
->
+Hi,
 
-I agree on doing (0) for 1.5.0 and the following Linus lines make me
-wonder if is better doing (0) also after 1.5.0
+On Sat, 10 Feb 2007, Theodore Tso wrote:
 
-> So the fact is, "git status" _needs_ to refresh the index. Because if it
-> doesn't, you'll see every file that doesn't match the index as "dirty",
-> and that is not just a "technical issue".
->
-> And yes, doing an "internal" refresh, like Junio's patch does, hides the
-> issue, but it hides it BY MAKING THE OPTIMIZATION POINTLESS!
->
-> I suspect Marco is testing some reasonably small git archive. With
-> something like git itself, with less than a thousand files (and most of
-> them fairly small, so rehashing them all is quick), the optimization may
-> _feel_ like just a small technical detail.
+> diff --git a/git.c b/git.c
+> index c43d4ff..fc08396 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -159,6 +159,16 @@ static int handle_alias(int *argcp, const char ***argv)
+>  	alias_command = (*argv)[0];
+>  	git_config(git_alias_config);
+>  	if (alias_string) {
+> +		if (alias_string[0] == '!') {
+> +			trace_printf("trace: alias to shell cmd: %s => %s\n",
+> +				     alias_command, alias_string+1);
 
-If current 'git runstatus' on a NTFS directory, Linux side, show as
-dirty _all_ the repo files, then in case of big repos, as Linus
-pointed out, a possible future 'git runstatus --refresh' will be
-terribly slow because must filter out as false positives _all_ the
-repo files. And worst, have to do it *any time* it is run.
+Here, you add 1 to alias string (though I would put spaces around the 
+plus, but that's really a nit).
 
-So perhaps the two patches of Junio _seems_ to work to me just because
-repo is small, is qgit4 indeed, but on a Linux tree would be veeery
-slow, so slow that probably is better to avoid completely and report
-quickly to user an empty set, being a corner case user will understand
-;-)
+> +			ret = system(alias_string+1);
+> +			if (ret >= 0 && WIFEXITED(ret) && 
+> +			    WEXITSTATUS(ret) != 127)
+> +				exit(WEXITSTATUS(ret));
+> +			die("Failed to run '%s' when expanding alias '%s'\n", 
+> +			    alias_string, alias_command);
 
-Marco
+So, shouldn't you here, too?
 
-P.S: I know I'm looking for flames but, if git-status HAVE to write
-the index and if 'status', as Nicolas points out, is a word that
-suggest a read only function, why don't change the name of the
-command.....'git sync-index' as example.
+It made me feel a little uneasy that we can execute _any_ command now, but 
+I can only find one way to exploit this, when an attacker does not have 
+shell access anyway: git-shell.
+
+Ciao,
+Dscho
