@@ -1,90 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git-pull and tag objects
-Date: Sat, 10 Feb 2007 22:32:05 +0100
-Organization: At home
-Message-ID: <eqldhe$h7i$1@sea.gmane.org>
-References: <1170933407.15431.38.camel@okra.transitives.com> <81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com> <7v4ppurka1.fsf@assigned-by-dhcp.cox.net> <20070210142322.GB25607@thunk.org> <Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
+Date: Sat, 10 Feb 2007 13:58:59 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702101347350.8424@woody.linux-foundation.org>
+References: <1170933407.15431.38.camel@okra.transitives.com>
+ <81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
+ <7v4ppurka1.fsf@assigned-by-dhcp.cox.net> <20070210142322.GB25607@thunk.org>
+ <Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
+ <eqldhe$h7i$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 10 22:30:52 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 10 22:59:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFzo3-0001mO-E5
-	for gcvg-git@gmane.org; Sat, 10 Feb 2007 22:30:51 +0100
+	id 1HG0Fd-0008Dy-S4
+	for gcvg-git@gmane.org; Sat, 10 Feb 2007 22:59:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751898AbXBJVan (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Feb 2007 16:30:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751911AbXBJVan
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 16:30:43 -0500
-Received: from main.gmane.org ([80.91.229.2]:39125 "EHLO ciao.gmane.org"
+	id S1751967AbXBJV7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Feb 2007 16:59:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbXBJV7F
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 16:59:05 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:59096 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751898AbXBJVam (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Feb 2007 16:30:42 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HFznj-0008RU-7f
-	for git@vger.kernel.org; Sat, 10 Feb 2007 22:30:31 +0100
-Received: from host-81-190-18-64.torun.mm.pl ([81.190.18.64])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Feb 2007 22:30:31 +0100
-Received: from jnareb by host-81-190-18-64.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Feb 2007 22:30:31 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-64.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751967AbXBJV7C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Feb 2007 16:59:02 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1ALx0UI026819
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 10 Feb 2007 13:59:00 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1ALwxEe022643;
+	Sat, 10 Feb 2007 13:59:00 -0800
+In-Reply-To: <eqldhe$h7i$1@sea.gmane.org>
+X-Spam-Status: No, hits=-0.436 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.116__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39261>
 
-Linus Torvalds wrote:
- 
-> On Sat, 10 Feb 2007, Theodore Tso wrote:
 
->> 3) The git-tag man page talks about GPG signing tags, but it doesn't
->> talk about how a GPG-signed tag is validated.  Does this happen
->> manually or automatically?
+
+On Sat, 10 Feb 2007, Jakub Narebski wrote:
 > 
-> Use "git verify-tag X" to see something like this:
-> 
->       [torvalds@woody linux]$ git-verify-tag v2.6.17
->       gpg: Signature made Sat 17 Jun 2006 06:49:59 PM PDT using DSA key ID 76E21CBB
->       gpg: Good signature from "Linus Torvalds (tag signing key) <torvalds@osdl.org>"
-> 
-> but you obviously need to have the public key in question available to 
-> you.
+> One of the solutions, used in git.git repository, is to put public key
+> as a out-of-tree blob using git-hash-object, then tag it using singed tag
+> with instruction about how to extract key in the tag message (tag comment).
 
-One of the solutions, used in git.git repository, is to put public key
-as a out-of-tree blob using git-hash-object, then tag it using singed tag
-with instruction about how to extract key in the tag message (tag comment).
+No. That's horrible. Yes, it's what Junio did, but if you don't trust the 
+archive, the _last_ thing you should do is to depend on a blob in the 
+archive itself to contain the thing to make you trust it more.
 
- $ git cat-file -p junio-gpg-pub
- object 0246401b5d117e01717149c413aa2f8702a83d4f
- type blob
- tag junio-gpg-pub
- tagger Junio C Hamano <junkio@cox.net> Tue Dec 13 16:33:29 2005 -0800
+So you want to get the gpg public key from somewhere else to be able to 
+_independently_ verify that it's ok.
 
- GPG key to sign git.git archive.
+Otherwise, somebody could just totally replace the object with one of 
+their own, and then _claim_ that the public key they made is 
+"junio-gpg-pub", and fool people into thinkign it's signed by Junio.
 
- This blob object contains the GPG public key I use to sign git.git
- archive.
+So to get a valid chain of trust, you really have to have some sideband 
+channel to get you started. There's a lot of infrastructure for that 
+elsewhere (ie the whole "sign other peoples keys" thing that is so central 
+to pgp), but even if you don't have a key to start with, you're actually 
+better off getting a key (even with no other validation) from an 
+independent source than have it be in the repository itself. Because at 
+least then any attacker has to fake _two_ things, rather than just a 
+single repo.
 
- To use it to verify tags I signed, do:
+Of course, in *practice* this is not a problem. And, in fact, thanks to 
+git's SHA1 setup, you obviously don't have to really verify the key itself 
+in git, you really only want to verify that yes, the object name is 
+correct (ie if you get some sideband information from Junio that the 
+"object 0246401b5d117e01717149c413aa2f8702a83d4f" really is Junio's key, 
+that's sufficient in itself).
 
-   $ git-cat-file blob junio-gpg-pub | gpg --import
+(The "sideband channel" can be something as simple as google. For example, 
+if you just google for the SHA1 of the tag itself, you'll actually get a 
+lot of hits for it - a0e7d36193b96f552073558acf5fcc1f10528917 (which is 
+not the key itself, but it is the tag that points to it, which in turn is 
+signed with the key) shows up in manyplaces, and that very fact in itself 
+is "interesting" as a sideband information. It's not "proof", but it's 
+certainly one piece of information that may make you more comfortable with 
+that tag not being something recent and fake - it's been around and been 
+quoted by me in email archives, so if it's faked, it's fooled a number of 
+people).
 
- to import it into your keyring, and then
-
-   $ git-verify-tag $tag_to_be_verified
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+		Linus
