@@ -1,93 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: 'git status' is not read-only fs friendly
-Date: Sat, 10 Feb 2007 10:00:37 -0800
-Message-ID: <7v1wkxki4a.fsf@assigned-by-dhcp.cox.net>
-References: <e5bfff550702091125j202620cfqb2450a3ee69ed421@mail.gmail.com>
-	<Pine.LNX.4.63.0702101517360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<e5bfff550702100631w1b6243e7i44039ceaa8d3fe93@mail.gmail.com>
-	<Pine.LNX.4.63.0702101536090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<e5bfff550702100648p6db5fc67vb5e4a04d40771922@mail.gmail.com>
-	<Pine.LNX.4.63.0702101554170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0702101049480.1757@xanadu.home>
-	<7vr6syj7uw.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702101131070.1757@xanadu.home>
-	<7vmz3mj6yo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702101154130.1757@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Allow aliases to expand to shell commands
+Date: Sat, 10 Feb 2007 10:04:47 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702101000100.8424@woody.linux-foundation.org>
+References: <20070209014852.GA13207@thunk.org> <1171123504783-git-send-email-tytso@mit.edu>
+ <11711235041527-git-send-email-tytso@mit.edu> <11711235042388-git-send-email-tytso@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	GIT list <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Feb 10 19:00:44 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Theodore Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sat Feb 10 19:04:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFwWh-00053k-L3
-	for gcvg-git@gmane.org; Sat, 10 Feb 2007 19:00:43 +0100
+	id 1HFwam-0007GC-Nk
+	for gcvg-git@gmane.org; Sat, 10 Feb 2007 19:04:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751703AbXBJSAk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Feb 2007 13:00:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbXBJSAk
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 13:00:40 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:53628 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751703AbXBJSAj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Feb 2007 13:00:39 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070210180039.JCWN21177.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 10 Feb 2007 13:00:39 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Mu0d1W01J1kojtg0000000; Sat, 10 Feb 2007 13:00:38 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751708AbXBJSEx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Feb 2007 13:04:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbXBJSEx
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 13:04:53 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:53569 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751702AbXBJSEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Feb 2007 13:04:52 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1AI4mUI020293
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 10 Feb 2007 10:04:48 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1AI4lQp018316;
+	Sat, 10 Feb 2007 10:04:47 -0800
+In-Reply-To: <11711235042388-git-send-email-tytso@mit.edu>
+X-Spam-Status: No, hits=-2.433 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.116__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39249>
 
-Nicolas Pitre <nico@cam.org> writes:
 
-> You're making assumption about work flows and using that to justify 
-> command implementation flaws.  This is not exactly "user friendly".
 
-I do not necessarily agree that making the command to follow a
-BCP workflow is "user unfriendly", but that does not pertain
-what I will end up saying in this message, which is to agree
-with you.
+On Sat, 10 Feb 2007, Theodore Ts'o wrote:
+>
+> If the alias expansion is prefixed with an exclamation point, treat
+> it as a shell command which is run using system(3).
 
-> But a command that is called "status" should provide a "status" even if 
-> the file system is read-only nevertheless.  The index updating business 
-> that is done behind the scene is and should be an opportunistic 
-> optimization, but it should not prevent status reporting.
+ACK. This should also make it possible to do pipelines etc as aliases, 
+although to be *really* useful we would probably have to have some way to 
+specify where the arguments to the alias would go.
 
-Fair enough.  That leaves us two options.
+The more generic solution is obviously to just do it as external shell 
+scripts (which can be named "git-xyzzy" so that you don't even need this 
+kind of thing), but for the simple cases like gitk/qgit/xmerge/whatever, 
+this approach by Ted seems to be a good way to get easy access to stuff 
+that doesn't need anything fancier..
 
- (0) Do nothing.
-
- (1) We keep the current "git-status [-v] [-a] [[-i|-o] <paths...>]"
-     command line and do the necessary index manipulation
-     in-core without writing it out (see git-commit.sh for
-     details of what it involves).  
-
- (2) We drop the support for any command line parameter from
-     "git-status", apply my two patches for Marco to
-     "git-runstatus", and rename "git-runstatus" to
-     "git-status".
-
-If I have to pick between the two, I would probably pick (2).
-While (1) would essentially mean doing "git-commit" entirely
-in-core without writing the index out until we really make the
-commit, which is a good thing in itself in the longer term, it
-is out of the question this late in the game for 1.5.0.
-
-And now I think what Linus suggests also make sense -- we could
-tweak (2) so that git-runstatus actually writes the refreshed
-index out when it finds that it _can_ write it (and drop
-subsequent internal refresh).
-
-Now, I am heading out.
+			Linus
