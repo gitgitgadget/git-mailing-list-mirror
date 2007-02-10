@@ -1,82 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Fix "git log -z" behaviour
-Date: Sat, 10 Feb 2007 09:09:44 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702100902250.8424@woody.linux-foundation.org>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com>
- <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702070919320.8424@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702071139090.8424@woody.linux-foundation.org>
- <7v7iusz3c2.fsf@assigned-by-dhcp.cox.net> <7vtzxumps5.fsf@assigned-by-dhcp.cox.net>
- <7vlkj6mk0q.fsf@assigned-by-dhcp.cox.net>
+From: Blaisorblade <blaisorblade@yahoo.it>
+Subject: git-send-email: default values do not work
+Date: Sat, 10 Feb 2007 18:15:45 +0100
+Message-ID: <200702101815.45201.blaisorblade@yahoo.it>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Don Zickus <dzickus@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 10 18:09:58 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Ryan Anderson <ryan@michonline.com>
+X-From: git-owner@vger.kernel.org Sat Feb 10 18:34:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFvjY-0004MV-5X
-	for gcvg-git@gmane.org; Sat, 10 Feb 2007 18:09:56 +0100
+	id 1HFw76-0008G8-VG
+	for gcvg-git@gmane.org; Sat, 10 Feb 2007 18:34:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391AbXBJRJx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Feb 2007 12:09:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751393AbXBJRJx
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 12:09:53 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:52494 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751391AbXBJRJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Feb 2007 12:09:52 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1AH9jUI018965
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 10 Feb 2007 09:09:45 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1AH9iop017324;
-	Sat, 10 Feb 2007 09:09:44 -0800
-In-Reply-To: <7vlkj6mk0q.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.436 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.116__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751603AbXBJReO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Feb 2007 12:34:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751598AbXBJReO
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 12:34:14 -0500
+Received: from smtp006.mail.ukl.yahoo.com ([217.12.11.95]:31803 "HELO
+	smtp006.mail.ukl.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751486AbXBJReN (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Feb 2007 12:34:13 -0500
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Feb 2007 12:34:12 EST
+Received: (qmail 17384 invoked from network); 10 Feb 2007 17:27:30 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.it;
+  h=Received:X-YMail-OSG:From:To:Subject:Date:User-Agent:MIME-Version:Content-Disposition:Content-Type:Content-Transfer-Encoding:Message-Id;
+  b=B9da8QOPifrje6cLyR8/eHLb+L5rYQiBJWNQkd7DmYjXzw3NqBmPXGyiLEzLwpVNSKAHUFNMGYSuEhPLvL2cv/3803jDaU32xmuuWbunLUIRHndYP1hInLhKinnXQ/1AkbqhtMTAQ5ocZNb/zz4Qtioi2oPCxB9S1sWbl+pYGpg=  ;
+Received: from unknown (HELO americanbeauty.home.lan) (blaisorblade@82.53.44.70 with login)
+  by smtp006.mail.ukl.yahoo.com with SMTP; 10 Feb 2007 17:27:30 -0000
+X-YMail-OSG: GGOxjAoVM1lWyBJQoiyESF9rDXULUVoRIOmF2eygd9w9YErIMJSmkmnIh9_3NigKFOb.8.c3ymsnMNYkNbVU4pEpx8tPzHF4cSSfyduAgPXyxydwYOnfDbWWmJnqy6Rb0NyF3Dm0sAQXDfK4VKuXjv5Fjx9ucU159nDud5ZUqf.Rlkp9bMC3HXUwSg--
+User-Agent: KMail/1.9.5
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39245>
 
+I'm using git v1.4.4.4, and trying to use directly git-send-email on plain 
+files.
 
+bug #1 (default values when prompting do not work)
 
-On Sat, 10 Feb 2007, Junio C Hamano wrote:
-> 
-> ... well, it just occured to me that it might make sense not to
-> let this new "use NUL as inter-commit separator for grep -z"
-> semantics hijack existing -z option, but introduce another
-> option, say, -Z.
+According to git-send-email documentation, it should suggest default values 
+when prompting the user.
 
-I don't think I disagree, but I do suspect it's not worth it.
+However it does not, since ->readline does not accept a default value.
 
-Yes, we really do have two "line_termination" characters: the one between 
-commits, and the one we use within raw diffs. However, I don't think the 
-*combination* ever makes sense any more (*), so using the same flag 
-doesn't seem to really be a problem.
+I've verified this in man Term\:\:ReadLine and by looking 
+at /usr/share/perl/5.8.7/Term/ReadLine.pm, and with the perl debugger - the 
+default is correctly calculated but not printed. At least with my perl 
+(5.8.7, from up-to-date Ubuntu 6.06 LTS).
 
-And the -z "line_termination" already got hijacked a long time ago for 
-inter-commit messages too, so while adding a "-Z" would perhaps avoid a 
-certain ambiguity, it would actually potentially break stuff that just did
+git-send-email should instead say "press Enter for default [$default]" and 
+behave correspondingly.
 
-	git-rev-list -z --pretty .. | ...
+bug #2 (subject line is cut away but ignored)
 
-which is actually _more_ likely than the "multiple commit messages _and_ 
-raw outpu _and_ '-z'" combination.
+Additionally, I was sending a patch starting with (on 1st line):
 
-So I would suggest leaving it as-is, especially since I don't think 
-anybody has actually even noticed (ie nobody probably used that 
-combination), and the new semantics in many ways are both more useful and 
-more logical.
+Kconfig: FAULT_INJECTION can be selected only if LOCKDEP is enabled.
 
-		Linus
+'Kconfig:' is interpreted as a mbox parameter, and ignored, and that line is 
+removed from the email.
 
-(*) It may well have made sense a year and a half ago, I don't think it 
-makes much sense any more.
+This should be documented and pitfall, and probably the user should be allowed 
+to override that.
+
+Thanks.
+-- 
+Inform me of my mistakes, so I can add them to my list!
+Paolo Giarrusso, aka Blaisorblade
+http://www.user-mode-linux.org/~blaisorblade
+Chiacchiera con i tuoi amici in tempo reale! 
+ http://it.yahoo.com/mail_it/foot/*http://it.messenger.yahoo.com 
