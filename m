@@ -1,74 +1,78 @@
-From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-Subject: [PATCH] vim ftplugin
-Date: Sat, 10 Feb 2007 20:19:47 +0530
-Message-ID: <45CDDB8B.1000405@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: restriction of pulls
+Date: Sat, 10 Feb 2007 15:50:11 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702101533060.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200702091149.12462.duelli@melosgmbh.de>
+ <Pine.LNX.4.63.0702091554160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45CC941E.9030808@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------090700020000050109040902"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 10 15:50:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Christoph Duelli <duelli@melosgmbh.de>, git@vger.kernel.org
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Sat Feb 10 15:50:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFtY9-0001tR-Gq
-	for gcvg-git@gmane.org; Sat, 10 Feb 2007 15:50:01 +0100
+	id 1HFtYR-00022k-P5
+	for gcvg-git@gmane.org; Sat, 10 Feb 2007 15:50:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932451AbXBJOt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Feb 2007 09:49:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932520AbXBJOt6
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 09:49:58 -0500
-Received: from nz-out-0506.google.com ([64.233.162.227]:7265 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932451AbXBJOt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Feb 2007 09:49:58 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1098472nze
-        for <git@vger.kernel.org>; Sat, 10 Feb 2007 06:49:57 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type;
-        b=AsqC/PRsc6Fb9eK+UrYqLNwMhKDTW4+lRMcFJVRSMPVAykPJtr8cAao3ObquqszbGkFd4lUQGU0UuoO6ynxCWeE6/4GSUHUlpB4EIgCmzBRSOGW0HI+pHI0OLG6LDfEndR6nJl56cEDpovnx8j/u0X9yhUtLUiCsC+wWVkDyjGY=
-Received: by 10.35.68.16 with SMTP id v16mr28197940pyk.1171118997229;
-        Sat, 10 Feb 2007 06:49:57 -0800 (PST)
-Received: from ?192.168.2.69? ( [59.96.40.183])
-        by mx.google.com with ESMTP id f55sm7839728pyh.2007.02.10.06.49.55;
-        Sat, 10 Feb 2007 06:49:56 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
+	id S932520AbXBJOuP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Feb 2007 09:50:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbXBJOuO
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 09:50:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60473 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932520AbXBJOuN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Feb 2007 09:50:13 -0500
+Received: (qmail invoked by alias); 10 Feb 2007 14:50:12 -0000
+X-Provags-ID: V01U2FsdGVkX1/wzaRm0+Lwbd9Zxz16QfjlnJLeIxtnk5rGHvNy78
+	TDbQ==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45CC941E.9030808@dawes.za.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39226>
 
-This is a multi-part message in MIME format.
---------------090700020000050109040902
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Hi,
 
-The attached patch is need for the ftplugin found at
-http://madism.org/~madcoder/dotfiles/vim/ftplugin/git.vim
+On Fri, 9 Feb 2007, Rogan Dawes wrote:
 
+> Johannes Schindelin wrote:
+> > 
+> > On Fri, 9 Feb 2007, Christoph Duelli wrote:
+> > 
+> > > Is it possible to restrict a chechout, clone or a later pull to some 
+> > > subdirectory of a repository?
+> > 
+> > No. In git, a revision really is a revision, and not a group of file 
+> > revisions.
+> 
+> I thought about how this might be implemented, although I'm not entirely 
+> sure how efficient this will be.
 
+There are basically three ways I can think of:
 
---------------090700020000050109040902
-Content-Type: text/plain;
- name="k"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="k"
+- rewrite the commit objects on the fly. You might want to avoid the use 
+of the pack protocol here (i.e. use HTTP or FTP transport).
 
---- /tmp/git.vim	2007-02-10 19:58:12.000000000 +0530
-+++ /home/kvaneesh/.vim/ftplugin/git.vim	2007-02-10 20:08:41.000000000 +0530
-@@ -16,8 +16,8 @@
-     " drop everything until '#  (will commit)' and the next empty line
-     while i <= line('$')
-         let line = getline(i)
--        if line =~ '^#\s*(will commit)$'
--            let i = i + 2
-+        if line =~ '^#\s*Changes to be committed:$'
-+            let i = i + 3
-             break
-         endif
- 
+- try to teach git a way to ignore certain missing objects and 
+directories. This might be involved, but you could extend upload-pack 
+easily with a new extension for that.
 
+(my favourite:)
+- use git-split to create a new branch, which only contains doc/. Do work 
+only on that branch, and merge into mainline from time to time.
 
---------------090700020000050109040902--
+If you don't need the history, you don't need to git-split the branch.
+
+You only need to make sure that the newly created branch is _not_ branched 
+off of mainline, since the next merge would _delete_ all files outside of 
+doc/ (merge would see that the files exist in mainline, and existed in the 
+common ancestor, too, so would think that the files were deleted in the 
+doc branch).
+
+Ciao,
+Dscho
