@@ -1,78 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: restriction of pulls
-Date: Sat, 10 Feb 2007 15:50:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702101533060.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200702091149.12462.duelli@melosgmbh.de>
- <Pine.LNX.4.63.0702091554160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45CC941E.9030808@dawes.za.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: 'git status' is not read-only fs friendly
+Date: Sat, 10 Feb 2007 15:51:39 +0100
+Message-ID: <e5bfff550702100651j244e5a2flf02fb91dc71799b3@mail.gmail.com>
+References: <e5bfff550702091125j202620cfqb2450a3ee69ed421@mail.gmail.com>
+	 <Pine.LNX.4.63.0702101517360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <e5bfff550702100631w1b6243e7i44039ceaa8d3fe93@mail.gmail.com>
+	 <Pine.LNX.4.63.0702101536090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <e5bfff550702100648p6db5fc67vb5e4a04d40771922@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christoph Duelli <duelli@melosgmbh.de>, git@vger.kernel.org
-To: Rogan Dawes <lists@dawes.za.net>
-X-From: git-owner@vger.kernel.org Sat Feb 10 15:50:21 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, "GIT list" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 10 15:51:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFtYR-00022k-P5
-	for gcvg-git@gmane.org; Sat, 10 Feb 2007 15:50:20 +0100
+	id 1HFtZn-0002fe-VO
+	for gcvg-git@gmane.org; Sat, 10 Feb 2007 15:51:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932520AbXBJOuP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Feb 2007 09:50:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932579AbXBJOuO
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 09:50:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60473 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932520AbXBJOuN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Feb 2007 09:50:13 -0500
-Received: (qmail invoked by alias); 10 Feb 2007 14:50:12 -0000
-X-Provags-ID: V01U2FsdGVkX1/wzaRm0+Lwbd9Zxz16QfjlnJLeIxtnk5rGHvNy78
-	TDbQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45CC941E.9030808@dawes.za.net>
-X-Y-GMX-Trusted: 0
+	id S932579AbXBJOvl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Feb 2007 09:51:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932581AbXBJOvl
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 09:51:41 -0500
+Received: from wr-out-0506.google.com ([64.233.184.224]:21257 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932579AbXBJOvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Feb 2007 09:51:40 -0500
+Received: by wr-out-0506.google.com with SMTP id 68so1204306wri
+        for <git@vger.kernel.org>; Sat, 10 Feb 2007 06:51:39 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SEHNnl2itYXSbitNC4GFub+cHLCyAWWJ8TGudeukWyQjC4CI5YoNezfZVFetTsMQUpqH/Eek+m3yYhO8yO0FuFEQxABn4OETTnewtKiNu7FdcjZDcyWBN2OhZEOwVqtfcnBDkgZLk+NwG8VLnLDPuMAveu5teDKqL/nXIbK21nQ=
+Received: by 10.114.177.1 with SMTP id z1mr5391724wae.1171119099299;
+        Sat, 10 Feb 2007 06:51:39 -0800 (PST)
+Received: by 10.114.60.16 with HTTP; Sat, 10 Feb 2007 06:51:39 -0800 (PST)
+In-Reply-To: <e5bfff550702100648p6db5fc67vb5e4a04d40771922@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39227>
 
-Hi,
+On 2/10/07, Marco Costalba <mcostalba@gmail.com> wrote:
+> >
+> > You need a new version of _Git_ if you use that option.
+> >
+>
+> That's a true point. Altough if git 1.5 ships _without_ '--refresh'
+> option in 'git runstatus' for a porcelain tool point of view it means
+> *do forget* that option until next major release. There's no point in
+> adding the feature one day after git 1.5 is out; qgit will not use
+> that feature anyway for next months.
+>
 
-On Fri, 9 Feb 2007, Rogan Dawes wrote:
-
-> Johannes Schindelin wrote:
-> > 
-> > On Fri, 9 Feb 2007, Christoph Duelli wrote:
-> > 
-> > > Is it possible to restrict a chechout, clone or a later pull to some 
-> > > subdirectory of a repository?
-> > 
-> > No. In git, a revision really is a revision, and not a group of file 
-> > revisions.
-> 
-> I thought about how this might be implemented, although I'm not entirely 
-> sure how efficient this will be.
-
-There are basically three ways I can think of:
-
-- rewrite the commit objects on the fly. You might want to avoid the use 
-of the pack protocol here (i.e. use HTTP or FTP transport).
-
-- try to teach git a way to ignore certain missing objects and 
-directories. This might be involved, but you could extend upload-pack 
-easily with a new extension for that.
-
-(my favourite:)
-- use git-split to create a new branch, which only contains doc/. Do work 
-only on that branch, and merge into mainline from time to time.
-
-If you don't need the history, you don't need to git-split the branch.
-
-You only need to make sure that the newly created branch is _not_ branched 
-off of mainline, since the next merge would _delete_ all files outside of 
-doc/ (merge would see that the files exist in mainline, and existed in the 
-common ancestor, too, so would think that the files were deleted in the 
-doc branch).
-
-Ciao,
-Dscho
+I could opt for shipping qgit 1.5.5 _without_ using '--refresh' and
+then ship, as example in a month, qgit 1.5.6 that uses the feaure. But
+I can do this _only_ if git 1.5 has it.
