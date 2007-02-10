@@ -1,168 +1,149 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: 'git status' is not read-only fs friendly
-Date: Sat, 10 Feb 2007 09:37:58 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702100913020.8424@woody.linux-foundation.org>
-References: <e5bfff550702091125j202620cfqb2450a3ee69ed421@mail.gmail.com>
- <Pine.LNX.4.63.0702101517360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <e5bfff550702100631w1b6243e7i44039ceaa8d3fe93@mail.gmail.com>
- <Pine.LNX.4.63.0702101536090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <e5bfff550702100648p6db5fc67vb5e4a04d40771922@mail.gmail.com>
- <Pine.LNX.4.63.0702101554170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702101049480.1757@xanadu.home> <7vr6syj7uw.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702101131070.1757@xanadu.home>
+Subject: Re: git-pull and tag objects
+Date: Sat, 10 Feb 2007 09:56:25 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
+References: <1170933407.15431.38.camel@okra.transitives.com>
+ <81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
+ <7v4ppurka1.fsf@assigned-by-dhcp.cox.net> <20070210142322.GB25607@thunk.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	GIT list <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Feb 10 18:38:42 2007
+Cc: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
+	Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sat Feb 10 18:56:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HFwBM-00021D-4S
-	for gcvg-git@gmane.org; Sat, 10 Feb 2007 18:38:40 +0100
+	id 1HFwSk-00034u-Um
+	for gcvg-git@gmane.org; Sat, 10 Feb 2007 18:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbXBJRih (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Feb 2007 12:38:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751399AbXBJRih
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 12:38:37 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:53081 "EHLO smtp.osdl.org"
+	id S1751644AbXBJR4g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Feb 2007 12:56:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbXBJR4g
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 12:56:36 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:53438 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751439AbXBJRig (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Feb 2007 12:38:36 -0500
+	id S1751703AbXBJR4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Feb 2007 12:56:35 -0500
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1AHbxUI019637
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1AHuRUI020064
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 10 Feb 2007 09:37:59 -0800
+	Sat, 10 Feb 2007 09:56:27 -0800
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1AHbwW0017813;
-	Sat, 10 Feb 2007 09:37:58 -0800
-In-Reply-To: <Pine.LNX.4.64.0702101131070.1757@xanadu.home>
-X-Spam-Status: No, hits=-0.435 required=5 tests=AWL
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1AHuPFR018155;
+	Sat, 10 Feb 2007 09:56:26 -0800
+In-Reply-To: <20070210142322.GB25607@thunk.org>
+X-Spam-Status: No, hits=-0.434 required=5 tests=AWL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.116__
 X-MIMEDefang-Filter: osdl$Revision: 1.176 $
 X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39247>
 
 
 
-On Sat, 10 Feb 2007, Nicolas Pitre wrote:
-> > >
-> > > Because git-status itself is conceptually a read-only operation, and 
-> > > having it barf on a read-only file system is justifiably a bug.
-> > 
-> > I do not 100% agree that it is conceptually a read-only operation.
+On Sat, 10 Feb 2007, Theodore Tso wrote:
 > 
-> It is.
+> This brings up another question which I've been looking for, but for
+> which I haven't found a good answer in the git documentation.  A
+> google search shows a suggestion by hpa (and a brief discussion from
+> sct) about how to handle conflicting tags back in 2005, but as far as
+> I can tell it didn't go anywhere.
 
-It really isn't. 
+I don't think we've ever had a conflicting tag.
 
-It's not even a "technical issue". It's a fundamental optimization. Sure, 
-you can call optimizations just "technical issues", but the fact is, it's 
-one of the things that makes git so _usable_ on large archives. At some 
-point, an "optimization" is no longer just about making things slightly 
-faster, it's about something much bigger, and has real semantic meaning.
+> 1) Suppose I do a "git tag" of a release, and then realize that I
+> messed up, and I need to do some additional release work (i.e.,
+> editing a debian changelog file, etc.) before really doing another
+> release, what do I do to tag a later revision as the "real" version
+> v1.2?
 
-So the fact is, "git status" _needs_ to refresh the index. Because if it 
-doesn't, you'll see every file that doesn't match the index as "dirty", 
-and that is not just a "technical issue".
+Well, if you never pushed anything out, just re-tag it. Use "-f" to 
+replace the old one. And you're done.
 
-And yes, doing an "internal" refresh, like Junio's patch does, hides the 
-issue, but it hides it BY MAKING THE OPTIMIZATION POINTLESS!
+But if you have pushed things out (or others could just read your 
+repository directly), then others will have already seen the old tag. In 
+that case you can do one of two things:
 
-I suspect Marco is testing some reasonably small git archive. With 
-something like git itself, with less than a thousand files (and most of 
-them fairly small, so rehashing them all is quick), the optimization may 
-_feel_ like just a small technical detail.
+ - The sane thing.
 
-Now, try the same thing on the Linux kernel or somethign similar, 
-especially with cold caches or not a huge amount of memory.
+   Just admit you screwed up, and use a different name. Others have 
+   already seen one tag-name, and if you keep the same name, you may be in 
+   the situation that two people both have "version X", but they actually 
+   have _different_ "X"'s.
 
-That "technical issue" is what makes "git status" take less than a second 
-for me, and only a bit longer if things aren't cached - because we don't 
-actually have to read all the file data. 
+   So just call it "X.1" and be done with it. 
 
-Now, it so happens that _if_ things are cached, at least under Linux, 
-cached IO is so _incredibly_ fast that you won't even realize how 
-expensive an operation you missed. I can SHA1 every file in the kernel 
-archive (21432 files right now - 8 million LOC, and 230MB of data) in less 
-than a couple of seconds. But that's only because it's all cached for me 
-anyway, because I tend to run with lots of RAM, and I do things like "git 
-grep so-and-so" which brings it all into cache.
+ - The insane thing.
 
-But try the same thing without caches.
+   You really want to call the new version "X" too, _even_though_ others 
+   have already seen the old one. So just use "git tag -f" again, as if 
+   you hadn't already published the old one.
 
-Here's something you can do under linux:
+   HOWEVER!
 
-	sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"
-	git read-tree HEAD
-	time git update-index --refresh
+   Git does *not* (and in my very very strong opinion, MUST NOT!) change 
+   tags behind users back. So if somebody already got the old tag, doing a 
+   "git pull" on your tree shouldn't just make them overwrite the old one. 
 
-and it takes me *40* seconds. That's with quite a fast disk too - it would 
-take a whole lot longer on a laptop.
+And I really think that git does the right thing. If somebody got a 
+release tag from you, you cannot just change the tag for them by updating 
+your own one. I think this is a BIG security issue, in that people MUST be 
+able to trust their tag-names. If I got a particular tag, NO WAY IN HELL 
+must git just replace it for me because you happened to have a newer one!
 
-Then, try it _without_ having to actually read all files, because the 
-index is already up-to-date:
+So if you really want to do the insane thing, you need to just fess up to 
+it, and tell people that you messed up. You can do that by making a very 
+public announcement saying
 
-	sudo sh -c "echo 3 > /proc/sys/vm/drop_caches"
-	time git update-index --refresh
+  "Ok, I messed up, and I pushed out an earlier version tagged as X. I 
+   then fixed somethign, and retagged the *fixed* tree as X again.
 
-and not it took *4* seconds. That's because it didn't actually need to 
-read any file data, it could just do the stats.
+   If you got the wrong tag, and want the new one, you'll have to delete 
+   the old one and fetch the new one:
 
-Then, cached:
+	git tag -d X
+	git fetch origin X
 
-	# bring it all in again
-	git grep something-or-other
+   to get my updated tag.
 
-	# invalidate the index cache
-	git read-tree HEAD
-	time git update-index --refresh
+   You can test which tag you have by doing
 
-and I can do it under *2* seconds - because Linux is just damn good at 
-cached IO, so I can read all those 21-thousand files and 235MB of data 
-from the kernel cache in less than a second.
+	git rev-parse X
 
-But finally, do it with caches _and_ the index in place:
+   which should return 0123456789abcdef.. if you have the new version".
 
-	time git update-index --refresh
+Does this seem a bit complicated? HELL YES. But it *should* be. There is 
+no way in hell that it would be correct to just "fix" it behind peoples 
+backs. People need to know that their tags might have been changed.
 
-and it now takes 0.06 seconds. It's what allows me to do "git diff" on the 
-kernel tree in a tenth of a second.
+> 3) The git-tag man page talks about GPG signing tags, but it doesn't
+> talk about how a GPG-signed tag is validated.  Does this happen
+> manually or automatically?
 
-THIS IS NOT "JUST A TECHNICAL ISSUE". 
+Use "git verify-tag X" to see something like this:
 
-When the difference is 40 seconds vs 4 (uncached), or 2 seconds vs 0.06, 
-it's not about "just an optimization" any more. At that point, it's about 
-"unusable vs usable".
+	[torvalds@woody linux]$ git-verify-tag v2.6.17
+	gpg: Signature made Sat 17 Jun 2006 06:49:59 PM PDT using DSA key ID 76E21CBB
+	gpg: Good signature from "Linus Torvalds (tag signing key) <torvalds@osdl.org>"
 
-And yeah, waiting 40 seconds for a global "diff" for a big project may be 
-something that a person coming from CVS considers to be just par for the 
-course. Maybe I'm just unreasonable. But I think it's a _bug_ if I can't 
-get a small diff in about a tenth of a second. It needs to be so fast that 
-I never even _think_ about it.
+but you obviously need to have the public key in question available to 
+you.
 
-And the index is what makes it so. 
+We could verify tags automatically, of course, but the question is, what 
+would the policy be? 
 
-And that's why it's important to keep the index up-to-date. If we have 
-operations that allow the index to just *stay* non-coherent, like the 
-suggested "git runstatus --refresh" that doesn't actually write it back, 
-then that's a *bad* thing. 
+(Side note: the 'monotone' people do the trust thing very deep in 
+monotone, AND IT IS A COMPLETE DISASTER! I'm surprised they are not only 
+continuing with it, they are adding more and more infrastructure exactly 
+because once you do it automatically, you need to be able to handle any 
+possible policy. It's insane. It's also really sad, because monotone gets 
+so many things right. Their security model is just *totally* broken, and 
+makes the whole thing be just a steaming pile of shit. Sad. Not that the 
+whole C++/boost/STL crap exactly "helps" either, but the security thing 
+is probably the more fundamental problem.)
 
-I think it would be much better if "git status" always wrote the refreshed 
-index file. It could then choose to ignore any errors if they happen, 
-because if you have a broken setup like the NTFS read-only thing, then 
-tough, it's broken, but git can't do anythign about it. But people should 
-be aware that yes, "git status" absolutely _needs_ to write the index 
-file. 
-
-It is *not* a read-only operation. The index is too important to be 
-considered "just a technical issue". 
-
-		Linus
+			Linus
