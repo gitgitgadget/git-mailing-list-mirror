@@ -1,69 +1,67 @@
 From: Bruno Haible <bruno@clisp.org>
 Subject: Re: how to speed up "git log"?
-Date: Mon, 12 Feb 2007 00:41:27 +0100
-Message-ID: <200702120041.27419.bruno@clisp.org>
-References: <200702111252.28393.bruno@clisp.org> <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Mon, 12 Feb 2007 00:52:23 +0100
+Message-ID: <200702120052.23468.bruno@clisp.org>
+References: <200702111252.28393.bruno@clisp.org> <20070211152840.GA2781@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 12 00:35:36 2007
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 12 00:46:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGOEK-0002T0-CD
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:35:36 +0100
+	id 1HGOOp-00081Q-Dh
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:46:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932914AbXBKXfd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 18:35:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932919AbXBKXfc
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:35:32 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:58755 "EHLO
+	id S932925AbXBKXqY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 18:46:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932926AbXBKXqY
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:46:24 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:59765 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932914AbXBKXfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 18:35:32 -0500
+	with ESMTP id S932925AbXBKXqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 18:46:23 -0500
 Received: from linuix.haible.de (cable-137-244.iesy.net [81.210.137.244])
-	by post.webmailer.de (klopstock mo50) (RZmta 4.5)
-	with ESMTP id B01032j1BJjUP5 ; Mon, 12 Feb 2007 00:35:30 +0100 (MET)
+	by post.webmailer.de (klopstock mo34) (RZmta 4.5)
+	with ESMTP id D00fdbj1BIQWWz ; Mon, 12 Feb 2007 00:46:21 +0100 (MET)
 User-Agent: KMail/1.5.4
-In-Reply-To: <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <20070211152840.GA2781@steel.home>
 Content-Disposition: inline
 X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY4JDyuz6KRYg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39333>
 
-Hello Johannes,
+Alex Riesen wrote:
+> - do not use "tr.c", unless you really need it: git has to read more
+>   of a commit in this case. Just "git log" takes only 0.9 sec on the
+>   machine above.
 
-Thanks for the helpful answer.
+"git log" is indeed faster, but is useless for the given task, since it doesn't
+show which of the 4 megabytes of commit messages apply to tr.c.
 
-> Yes, because there were only 147 commits which changed the file. But git 
-> looked at all commits to find that.
+> > On a file in a local copy of the coreutils git repository,
+> > "git log tr.c > output" takes
+> 
+> Why do you need _all_ commits, btw?
 
-Ouch.
-
-> Basically, we don't do file versions. File versions do not make sense, 
-> since they strip away the context.
-
-Is there some other concept or command that git offers? I'm in the situation
-where I know that 'tr' in coreutils version 5.2.1 had a certain bug and
-version 6.4 does not have the bug, and I want to review all commits that
-are relevant to this. I know that the only changes in tr.c are relevant
-for this, and I'm interested in a display of the minimum amount of relevant
-commit messages. If "git log" is not the right command for this question,
-which command is it?
+I want to quickly find the cause of a behaviour change between tr.c of
+coreutils 5.2.1 and the one of coreutils 6.4. It's a period of 1.5 years,
+but limited to a single file. Can't git produce this quickly?
 
 > > 2) Why so much system CPU time, but only on MacOS X?
 > 
-> Probably the mmap() problem. Does it go away when you use git 1.5.0-rc4?
+> MacOS X is famous for its bad perfomance when doing serious work.
+> The mmap(2) of it, in particular.
 
-No, it became even worse: git-1.5.0-rc4 is twice as slow as git-1.4.4 for
-this command:
-  git-1.4.4: 25 seconds real time, 24 seconds of CPU time (12 user, 12 system)
-  git-1.5.0: 50 seconds real time, 39 seconds of CPU time (20 user, 19 system)
+But at least, a MacOS X machine is still interactively usable when it uses
+6 times more swap than the machine's RAM size. Whereas a Linux 2.4 machine
+is interactively unusable already with 1.5 to 2 times more swap than the
+machine has RAM.
 
 Bruno
