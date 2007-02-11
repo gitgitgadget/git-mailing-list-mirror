@@ -1,77 +1,68 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: Re: [PATCH] Clean up geometry save code in gitk.
-Date: Sun, 11 Feb 2007 12:44:03 -0500
-Message-ID: <45CF55E3.9080508@verizon.net>
-References: <11712040401127-git-send-email-mdl123@verizon.net>
- <11712040403973-git-send-email-mdl123@verizon.net>
- <1171204040779-git-send-email-mdl123@verizon.net>
- <20070211195643.b1f548f2.vsu@altlinux.ru>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Possible BUG in 'git config'
+Date: Sun, 11 Feb 2007 18:47:53 +0100
+Message-ID: <e5bfff550702110947s77e8f264k951ae1c158fcee98@mail.gmail.com>
+References: <e5bfff550702110613q315e1f7es4ca1a88b92e4c3e9@mail.gmail.com>
+	 <Pine.LNX.4.63.0702111720260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <e5bfff550702110921l710d62cr6c82baed1b678ab2@mail.gmail.com>
+	 <Pine.LNX.4.63.0702111829230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Paul Mackerras <paulus@samba.org>
-To: Sergey Vlasov <vsu@altlinux.ru>
-X-From: git-owner@vger.kernel.org Sun Feb 11 18:44:23 2007
+Cc: "Junio C Hamano" <junkio@cox.net>, "GIT list" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 11 18:47:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGIkQ-0000TB-Ko
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 18:44:22 +0100
+	id 1HGInu-0002MM-TA
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 18:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748AbXBKRoT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 12:44:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750749AbXBKRoT
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 12:44:19 -0500
-Received: from vms044pub.verizon.net ([206.46.252.44]:48889 "EHLO
-	vms044pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748AbXBKRoT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 12:44:19 -0500
-Received: from [127.0.0.1] ([71.246.235.75])
- by vms044.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDB00MJL7XC0V90@vms044.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 11 Feb 2007 11:44:02 -0600 (CST)
-In-reply-to: <20070211195643.b1f548f2.vsu@altlinux.ru>
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S1750749AbXBKRr4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 12:47:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750750AbXBKRr4
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 12:47:56 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:52408 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750749AbXBKRrz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 12:47:55 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so376851uga
+        for <git@vger.kernel.org>; Sun, 11 Feb 2007 09:47:54 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IOKkS1ur8bD12rWs1tAFtBoi3C4uv3gex3vWQyaE+r1vpAnT3XBfbCda7+3Hr+pvmvKUEImDcaC5KXTmgdTlVGkB22ONCZDC9Wbz+LYbn4pdSRIJQVsZfJNKKBIXFsOkih7aeTQhnIeOPaSpty8qFgX7uUhl6AQx9FkO+IXJ8zs=
+Received: by 10.114.152.17 with SMTP id z17mr6567669wad.1171216073665;
+        Sun, 11 Feb 2007 09:47:53 -0800 (PST)
+Received: by 10.114.60.16 with HTTP; Sun, 11 Feb 2007 09:47:53 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.63.0702111829230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39300>
 
-Sergey Vlasov wrote:
-> These two patches fix saving of the window position for me; however,
-> some things still remain broken:
+On 2/11/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 >
->  - No matter what sizes of the commit tree, patch and filelist panes I
->    set, on gitk restart they come up with their default sizes.
+> Yes, this is probably a bug. But it's obvious that if git-config _without_
+> --global would _not_ use ~/.gitconfig, that would rather make ~/.gitconfig
+> pointless, wouldn't it?
 >
->  - Sizes of commit tree columns are not saved properly - on every gitk
->    restart the dividers are shifting more and more to the right.
->
-> This is on Linux (x86_64) with Tk 8.4.13.
->
-> I made two more patches which fix the above problems for me - please
-> test them (in particular, someone needs to check that the Cygwin
-> support is not broken - apparently something is different between Tk
-> on Linux and Cygwin to create the problem with commit tree columns).
->
-> See the followup messages.
->
-> --
-> Sergey Vlasov
->   
 
-I could not actually apply your patches, but your suggested changes were 
-simple enough to apply by hand:
-1) I do notice the change in size of panes in the upper window on Cygwin 
-(hadn't noticed before but it is there), and your "-highlightthickness 
-0" tweak fixes that. Just for grins, I tried reenabling the "subtract 2" 
-strategy in place before, and that only makes the problem worse on Cygwin.
-2) I don't see any effect of the "pane configure" tweak on Cygwin. 
-Haven't checked on Linux (don't have that here) so cannot comment.
+Yes.
 
-Gotta say, the more I play with Tk, the more I wonder why anyone uses 
-anything else  ;-) .
+> So yes, the description should mention that this is meant for the case of
+> _setting_ variables, not _querying_ variables. The original poster (Sean)
+> probaly though -- IMHO correctly -- that querying with --global makes no
+> sense.
+>
 
-Mark
+Yes. It makes non sense but it' allowed. So probably, at least for
+consistency, could exists a query without silent fallback. Something
+like
+
+git repo-config --local user.name
+
+
+Marco
