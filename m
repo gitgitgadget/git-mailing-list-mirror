@@ -1,77 +1,79 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: gitk: Fix restoring of column widths in the commit tree
-Date: Sun, 11 Feb 2007 19:58:33 +0300
-Message-ID: <11712131153045-git-send-email-vsu@altlinux.ru>
-References: <20070211195643.b1f548f2.vsu@altlinux.ru> <117121311393-git-send-email-vsu@altlinux.ru>
-Cc: git@vger.kernel.org, Sergey Vlasov <vsu@altlinux.ru>
-To: Mark Levedahl <mdl123@verizon.net>,
-	Junio C Hamano <junkio@cox.net>,
-	Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Feb 11 17:59:20 2007
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Possible BUG in 'git config'
+Date: Sun, 11 Feb 2007 18:21:08 +0100
+Message-ID: <e5bfff550702110921l710d62cr6c82baed1b678ab2@mail.gmail.com>
+References: <e5bfff550702110613q315e1f7es4ca1a88b92e4c3e9@mail.gmail.com>
+	 <Pine.LNX.4.63.0702111720260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, "GIT list" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 11 18:21:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGI2o-0004LP-J0
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 17:59:18 +0100
+	id 1HGIO2-00069b-Q6
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 18:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750734AbXBKQ6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 11:58:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750735AbXBKQ6s
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 11:58:48 -0500
-Received: from master.altlinux.org ([62.118.250.235]:2048 "EHLO
-	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750734AbXBKQ6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 11:58:47 -0500
-Received: by master.altlinux.org (Postfix, from userid 584)
-	id 06442E3F71; Sun, 11 Feb 2007 19:58:46 +0300 (MSK)
-X-Mailer: git-send-email 1.5.0.rc4.50.g403de
-In-Reply-To: <117121311393-git-send-email-vsu@altlinux.ru>
+	id S1750747AbXBKRVL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 12:21:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750746AbXBKRVL
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 12:21:11 -0500
+Received: from wr-out-0506.google.com ([64.233.184.227]:57815 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750747AbXBKRVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 12:21:09 -0500
+Received: by wr-out-0506.google.com with SMTP id 68so1380445wri
+        for <git@vger.kernel.org>; Sun, 11 Feb 2007 09:21:09 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jSP1gG7fYLgfD6E8F9VdP4eYS8ymRwnhgkG0LLDfuKcBOPcljuK+68R3I16cVn7ZRK3Ry54idck0DM+SfbPfXTjY5DF1M2roZ0+wuWS+A+4jRz0uR6tGcrSNkOYyeOwHJEA0/vdClcGwQjVt8+noBG5Y9NgsyQWZ/MfzVm6S67I=
+Received: by 10.114.133.1 with SMTP id g1mr6559252wad.1171214468997;
+        Sun, 11 Feb 2007 09:21:08 -0800 (PST)
+Received: by 10.114.60.16 with HTTP; Sun, 11 Feb 2007 09:21:08 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.63.0702111720260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39297>
 
-On Linux with Tk 8.4.13 after each gitk restart the column dividers
-were shifting more and more to the right.  Apparently the value from
-[winfo width $canv] is larger than the value of the -width option
-specified when creating the widget due to non-zero -highlightthickness
-used by default.  But gitk never shows the focus highlight on canvases
-used for the commit tree, so we can just set "-highlightthickness 0",
-which fixes the width mismatch.
+On 2/11/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-(The code before commit 3468e71f452701b3eff6a2aeb826bbe0cdad8270
-subtracted 2 from widths of canvases when saving them - apparently to
-account for that hidden highlightthickness; I suppose that Cygwin
-behaves differently - hope that "-highlightthickness 0" will give
-proper results everywhere.)
+>
+> So I am certain that you made a mistake when you need to ignore the
+> settings in $HOME/.gitconfig.
+>
 
-Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
----
- gitk |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Please do the following:
 
-diff --git a/gitk b/gitk
-index 7e6ee56..ea3d68a 100755
---- a/gitk
-+++ b/gitk
-@@ -459,14 +459,17 @@ proc makewindow {} {
-     set canv .tf.histframe.pwclist.canv
-     canvas $canv -width $geometry(canv) \
- 	-background $bgcolor -bd 0 \
-+	-highlightthickness 0 \
- 	-yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll"
-     .tf.histframe.pwclist add $canv
-     set canv2 .tf.histframe.pwclist.canv2
-     canvas $canv2 -width $geometry(canv2) \
-+	-highlightthickness 0 \
- 	-background $bgcolor -bd 0 -yscrollincr $linespc
-     .tf.histframe.pwclist add $canv2
-     set canv3 .tf.histframe.pwclist.canv3
-     canvas $canv3 -width $geometry(canv3) \
-+	-highlightthickness 0 \
- 	-background $bgcolor -bd 0 -yscrollincr $linespc
-     .tf.histframe.pwclist add $canv3
- 
--- 
-1.5.0.rc4.50.g403de
+$ cd <git tree repo>
+$ git repo-config --global --unset user.name
+$ git repo-config --unset user.name
+$ git gui
+
+Then go to Edit->options, you will see empty both 'git repository' and
+'Global (All repositories)'
+
+Then exit 'git gui' and type:
+
+$ git repo-config --global user.name dummy
+$ git gui
+
+Then go to Edit->options and.... surprise! dummy has been added to
+both panes instead of only in 'Global' one.
+
+The bug is not in 'git gui' but in 'git repo-config' that when queried
+for user.name if doesn't find it in local config, silently falls back
+in global config. This is not documented and probably a bug because
+documentation of --global option says:
+
+--global::
+       Use global ~/.gitconfig file *rather than* the repository .git/config.
+
+
+Thanks
+Marco
