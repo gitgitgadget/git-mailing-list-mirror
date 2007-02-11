@@ -1,63 +1,63 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] Allow aliases to expand to shell commands
-Date: Sun, 11 Feb 2007 11:21:36 -0500
-Message-ID: <20070211162136.GA26461@thunk.org>
-References: <20070209014852.GA13207@thunk.org> <1171123504783-git-send-email-tytso@mit.edu> <11711235041527-git-send-email-tytso@mit.edu> <11711235042388-git-send-email-tytso@mit.edu> <20070210181357.GE25607@thunk.org> <Pine.LNX.4.63.0702102129110.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070211001346.GA19656@thunk.org> <Pine.LNX.4.63.0702111701160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Possible BUG in 'git config'
+Date: Sun, 11 Feb 2007 17:24:53 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702111720260.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <e5bfff550702110613q315e1f7es4ca1a88b92e4c3e9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 11 17:21:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, GIT list <git@vger.kernel.org>
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 11 17:25:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGHSY-0003Nq-9I
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 17:21:50 +0100
+	id 1HGHVZ-0004yq-Pn
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 17:24:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750720AbXBKQVr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 11:21:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbXBKQVr
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 11:21:47 -0500
-Received: from thunk.org ([69.25.196.29]:59338 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750720AbXBKQVq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 11:21:46 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HGHXX-0006gt-4I; Sun, 11 Feb 2007 11:26:59 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HGHSK-0007Oj-Qi; Sun, 11 Feb 2007 11:21:36 -0500
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702111701160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1750713AbXBKQYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 11:24:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750715AbXBKQYz
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 11:24:55 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50286 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750713AbXBKQYy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 11:24:54 -0500
+Received: (qmail invoked by alias); 11 Feb 2007 16:24:53 -0000
+X-Provags-ID: V01U2FsdGVkX1+CpBgI+C6CmPOpSh4mhOkBcjeZc81j0ifkGZP7CG
+	m37w==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <e5bfff550702110613q315e1f7es4ca1a88b92e4c3e9@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39289>
 
-On Sun, Feb 11, 2007 at 05:03:29PM +0100, Johannes Schindelin wrote:
-> > ... and git-shell only allows git-receive-pack and git-upload-pack to be 
-> > called, with a single argument, and aliases aren't allowed to override 
-> > commands.  So we're safe here, I think.
-> 
-> Yes, sorry. I have a modified git-shell, which allows the git wrapper, 
-> too, to allow setting the config. I'll just fix it here.
+Hi,
 
-If all you've enabled is the ability to set the config, I think we're
-still safe, since aliases can't override commands.  
+On Sun, 11 Feb 2007, Marco Costalba wrote:
 
-Still there are enough config options that might be scary, either now
-(the http.ssl* options) or in the future (someone might think that it
-makes sense to set the post-commit, post-push, et. al hooks in the
-config), that I wouldn't be particularly comfortable letting git-shell
-have unrestricted access to set the config without having some
-restriction about which config parameters were allowed to be set from
-the restricted shell.  Why did you add that ability, out of curiosity?
+> I would expect git repo-config user.name returns an empty string, 
+> because user.name is defined _only_ in global config file ~/.gitconfig
 
-						- Ted
+The whole point of ~/.gitconfig is to store variables to be seen in _all_ 
+repositories.
+
+> How it is possible to know if a variable is stored in local config file?
+
+If you _have_ to, you can use
+
+	$ GIT_CONFIG=.git/config git config -l
+
+but I _strongly_ suggest you rethink your workflow if you need that.
+
+$HOME/.gitconfig _really_ is only meant to make it unnecessary to set a 
+variable in _all_ your repositories, and you can even override (although 
+not unset) the variables locally.
+
+So I am certain that you made a mistake when you need to ignore the 
+settings in $HOME/.gitconfig.
+
+Hth,
+Dscho
