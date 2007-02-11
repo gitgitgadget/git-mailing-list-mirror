@@ -1,95 +1,109 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Efficiency of initial clone from server
-Date: Sun, 11 Feb 2007 14:53:47 -0500
-Message-ID: <9e4733910702111153p1691ad99nda97325b34b7a13f@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-pull and tag objects
+Date: Sun, 11 Feb 2007 13:41:23 -0800
+Message-ID: <7v3b5ce5j0.fsf@assigned-by-dhcp.cox.net>
+References: <1170933407.15431.38.camel@okra.transitives.com>
+	<81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
+	<7v4ppurka1.fsf@assigned-by-dhcp.cox.net>
+	<20070210142322.GB25607@thunk.org>
+	<Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
+	<7vy7n5gs0y.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702110948120.8424@woody.linux-foundation.org>
+	<7vire8ec6w.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702111124410.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Feb 11 20:53:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Tso <tytso@mit.edu>, Alex Riesen <raa.lkml@gmail.com>,
+	Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Feb 11 22:41:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGKll-0004Vb-Pf
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 20:53:54 +0100
+	id 1HGMRr-0005L0-To
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 22:41:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750715AbXBKTxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 14:53:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750718AbXBKTxu
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 14:53:50 -0500
-Received: from wr-out-0506.google.com ([64.233.184.237]:47260 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750715AbXBKTxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 14:53:50 -0500
-Received: by wr-out-0506.google.com with SMTP id i21so1416686wra
-        for <git@vger.kernel.org>; Sun, 11 Feb 2007 11:53:47 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Dler6+9x9a0MQszAKyMni7uLkOgIa7TZ5Bo32nGa4Y0LMfW3Fm3yXNKCtHQQ2O9znGxJKdueDB+oa2HtuOWfyFgVxDvD5BrW9V/bBvzFBNmHpv+kqOlBQiGIF4YKT9CHtejYjGPXODmtpoEG+3G/FuO0/GrZinQPSgCYBy0Xdmo=
-Received: by 10.114.126.1 with SMTP id y1mr6567369wac.1171223627035;
-        Sun, 11 Feb 2007 11:53:47 -0800 (PST)
-Received: by 10.114.195.13 with HTTP; Sun, 11 Feb 2007 11:53:47 -0800 (PST)
-Content-Disposition: inline
+	id S1750908AbXBKVlZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 16:41:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbXBKVlZ
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 16:41:25 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:35497 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750908AbXBKVlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 16:41:24 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070211214124.LKAR1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 11 Feb 2007 16:41:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id NMhP1W00S1kojtg0000000; Sun, 11 Feb 2007 16:41:24 -0500
+In-Reply-To: <Pine.LNX.4.64.0702111124410.8424@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sun, 11 Feb 2007 11:25:15 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39306>
 
-I'm doing a clone right now and I see this:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-jonsmirl@jonsmirl:/extra$ cg clone
-git://git2.kernel.org/pub/scm/linux/kernel/git/linville/wireless-dev.git
-Initialized empty Git repository in .git/
-Fetching pack (head and objects)...
-remote: Generating pack...
-remote: Done counting 404120 objects.
-remote: Deltifying 404120 objects.
-remote:  100% (404120/404120) done
-Indexing 404120 objects.
-remote: Total 404120, written 404120 (delta 320324), reused 365290
-(delta 282572)
- 100% (404120/404120) done
-Resolving 320324 deltas.
-....
+> On Sun, 11 Feb 2007, Junio C Hamano wrote:
+>> 
+>> Well, what you are saying is that it used to be Ok in Jul 5 2005
+>> version but with tag following it is not Ok anymore, isn't it?
+>
+> Do we actually do it with automatic tag following? I tested, and it didn't 
+> do anything bad for me.
 
-Is this happening because the repository on the server is not
-completely packed? It is basically building a pack of the whole thing
-and shipping it to me, right?
+You are right.
 
-If that is the case, why not first pack the whole repository and then
-copy it down the wire? Now the next clone that comes along doesn't
-have to do so much work. Would this help to eliminate some of the load
-at kernel.org?
+The only iffy case that is remaining is "git fetch --tags $URL".
+The user is explicitly saying "I want all tags from there", but
+the user may not be expecting tags that are already present in
+the local repository to be overwritten.
 
-Some this is wrong with this tree too, what are these errors about
-fatal: pack: not a valid SHA1
+The filtering on the auto-follow codepath Johannes added with
+"git-show-ref --exclude-existing" would fix this case as well.
 
-fatal: pack: not a valid SHA1
-Fetching tags... v2.6.12 v2.6.12-rc2 v2.6.12-rc3 v2.6.12-rc4
-v2.6.12-rc5 v2.6.12-rc6 v2.6.13 v2.6.13-rc1 v2.6.13-rc2 v2.6.13-rc3
-v2.6.13-rc4 v2.6.13-rc5 v2.6.13-rc6 v2.6.13-rc7 v2.6.14 v2.6.14-rc1
-v2.6.14-rc2 v2.6.14-rc3 v2.6.14-rc4 v2.6.14-rc5 v2.6.15 v2.6.15-rc1
-v2.6.15-rc2 v2.6.15-rc3 v2.6.15-rc4 v2.6.15-rc5 v2.6.15-rc6
-v2.6.15-rc7 v2.6.16 v2.6.16-rc1 v2.6.16-rc2 v2.6.16-rc3 v2.6.16-rc4
-v2.6.16-rc5 v2.6.16-rc6 v2.6.17 v2.6.17-rc1 v2.6.17-rc2 v2.6.17-rc3
-v2.6.17-rc4 v2.6.17-rc5 v2.6.17-rc6 v2.6.18 v2.6.18-rc1 v2.6.18-rc2
-v2.6.18-rc3 v2.6.18-rc4 v2.6.18-rc5 v2.6.18-rc6 v2.6.18-rc7 v2.6.19
-v2.6.19-rc1 v2.6.19-rc2 v2.6.19-rc3 v2.6.19-rc4 v2.6.19-rc5
-v2.6.19-rc6 v2.6.20-rc1 v2.6.20-rc2 v2.6.20-rc3 v2.6.20-rc4
-v2.6.20-rc5 v2.6.20-rc6
-remote: Generating pack...
-remote: Done counting 63 objects.
-remote: Deltifying 63 objects.
-remote:  100% (63/63) done
-Indexing 63 objects.
-remote: Total 63, written 63 (delta 0), reused 63 (delta 0)
- 100% (63/63) done
-fatal: pack: not a valid SHA1
-New branch: 0953670fbcb75e26fb93340bddae934e85618f2e
+-- >8 --
+[PATCH] "git-fetch --tags $URL" should not overwrite existing tags
 
+Use the same --exclude-existing filter as we use for automatic
+tag following to avoid overwriting existing tags with replacement
+ones the other side created.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 357cac2..ca984e7 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -253,23 +253,10 @@ if test "$tags"
+ then
+ 	taglist=`IFS='	' &&
+ 		  echo "$ls_remote_result" |
++		  git-show-ref --exclude-existing=refs/tags/ |
+ 	          while read sha1 name
+ 		  do
+-			case "$sha1" in
+-			fail)
+-				exit 1
+-			esac
+-			case "$name" in
+-			*^*) continue ;;
+-			refs/tags/*) ;;
+-			*) continue ;;
+-			esac
+-		  	if git-check-ref-format "$name"
+-			then
+-			    echo ".${name}:${name}"
+-			else
+-			    echo >&2 "warning: tag ${name} ignored"
+-			fi
++			echo ".${name}:${name}"
+ 		  done` || exit
+ 	if test "$#" -gt 1
+ 	then
