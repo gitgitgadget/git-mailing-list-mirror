@@ -1,74 +1,92 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: how to speed up "git log"?
-Date: Sun, 11 Feb 2007 17:49:03 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200702111252.28393.bruno@clisp.org>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] Clean up geometry save code in gitk.
+Date: Sun, 11 Feb 2007 19:56:43 +0300
+Message-ID: <20070211195643.b1f548f2.vsu@altlinux.ru>
+References: <11712040401127-git-send-email-mdl123@verizon.net>
+	<11712040403973-git-send-email-mdl123@verizon.net>
+	<1171204040779-git-send-email-mdl123@verizon.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Bruno Haible <bruno@clisp.org>
-X-From: git-owner@vger.kernel.org Sun Feb 11 17:49:10 2007
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Sun__11_Feb_2007_19_56_43_+0300_A74O_c=nbok7Fp.U"
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Paul Mackerras <paulus@samba.org>
+To: Mark Levedahl <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Sun Feb 11 17:57:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGHsz-0007zV-Vj
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 17:49:10 +0100
+	id 1HGI0j-0003K6-Dy
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 17:57:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750726AbXBKQtG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 11:49:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750727AbXBKQtG
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 11:49:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40185 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750726AbXBKQtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 11:49:05 -0500
-Received: (qmail invoked by alias); 11 Feb 2007 16:49:04 -0000
-X-Provags-ID: V01U2FsdGVkX18uLQd438Qu4TkfcJ3IZ9RAYfgqufXNHY5KHPQk/K
-	7snQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200702111252.28393.bruno@clisp.org>
-X-Y-GMX-Trusted: 0
+	id S1750728AbXBKQ47 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 11:56:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750731AbXBKQ46
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 11:56:58 -0500
+Received: from master.altlinux.org ([62.118.250.235]:2016 "EHLO
+	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750728AbXBKQ46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 11:56:58 -0500
+Received: by master.altlinux.org (Postfix, from userid 584)
+	id 5A906E3F5D; Sun, 11 Feb 2007 19:56:57 +0300 (MSK)
+In-Reply-To: <1171204040779-git-send-email-mdl123@verizon.net>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.6; x86_64-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39294>
 
-Hi,
+--Signature=_Sun__11_Feb_2007_19_56_43_+0300_A74O_c=nbok7Fp.U
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-On Sun, 11 Feb 2007, Bruno Haible wrote:
+Hello!
 
-> Are there some known tricks to speed up the operation of "git log"?
-> 
-> On a file in a local copy of the coreutils git repository,
-> "git log tr.c > output" takes
->   - 33 seconds of CPU time (33 user, 0 system) on a Linux/x86 500MHz system,
->   - 24 seconds of CPU time (12 user, 12 system) on a MacOS X PowerPC 1.1 GHz
->     system.
-> The result shows only 147 commits and a total of 40 KB textual output.
+On Sun, 11 Feb 2007 09:27:20 -0500
+Mark Levedahl <mdl123@verizon.net> wrote:
 
-Yes, because there were only 147 commits which changed the file. But git 
-looked at all commits to find that.
+> gitk was saving widget sizes and positions when the main window was
+> destroyed, which is after all child widgets are destroyed. The cure
+> is to trap the WM_DELETE_WINDOW event before the gui is torn down. Also,
+> the saved geometry was captured using "winfo geometry .", rather than
+> "wm geometry ." Under Linux, these two return different answers and the
+> latter one is correct.
 
-Basically, we don't do file versions. File versions do not make sense, 
-since they strip away the context. See also
+> Leftover code was subtracting zero from several items before storing, an
+> obvious noop now deleted.
 
-http://news.gmane.org/group/gmane.comp.version-control.git/thread=37838
+These two patches fix saving of the window position for me; however,
+some things still remain broken:
 
-for a real flamewar revolving around that very subject.
+ - No matter what sizes of the commit tree, patch and filelist panes I
+   set, on gitk restart they come up with their default sizes.
 
-> 1) Why so much user CPU time?
+ - Sizes of commit tree columns are not saved properly - on every gitk
+   restart the dividers are shifting more and more to the right.
 
-See above.
+This is on Linux (x86_64) with Tk 8.4.13.
 
-Plus, you are probably not really interested in _all_ revisions changing 
-that file, are you? Usually the output of git-log -- even with pathname 
-filtering -- starts almost instantaneous, and is piped to your pager. So, 
-your numbers are misleading.
+I made two more patches which fix the above problems for me - please
+test them (in particular, someone needs to check that the Cygwin
+support is not broken - apparently something is different between Tk
+on Linux and Cygwin to create the problem with commit tree columns).
 
-> 2) Why so much system CPU time, but only on MacOS X?
+See the followup messages.
 
-Probably the mmap() problem. Does it go away when you use git 1.5.0-rc4?
+--
+Sergey Vlasov
 
-Hth,
-Dscho
+--Signature=_Sun__11_Feb_2007_19_56_43_+0300_A74O_c=nbok7Fp.U
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.1 (GNU/Linux)
+
+iD8DBQFFz0rOW82GfkQfsqIRAuyrAJ9GGu4nxTpIAd5bE4V07jh/Y3GxewCfS91P
+479ClheWgEP/DFzmCQuIJGw=
+=essL
+-----END PGP SIGNATURE-----
+
+--Signature=_Sun__11_Feb_2007_19_56_43_+0300_A74O_c=nbok7Fp.U--
