@@ -1,98 +1,63 @@
-From: Dotan Barak <dotanb@dev.mellanox.co.il>
-Subject: [PATCH] Allow setting the path of asciidoc in only one place when
-	creating the documentation
-Date: Sun, 11 Feb 2007 17:54:40 +0200
-Message-ID: <1171209280.20052.5.camel@mtldesk014.lab.mtl.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] Allow aliases to expand to shell commands
+Date: Sun, 11 Feb 2007 11:21:36 -0500
+Message-ID: <20070211162136.GA26461@thunk.org>
+References: <20070209014852.GA13207@thunk.org> <1171123504783-git-send-email-tytso@mit.edu> <11711235041527-git-send-email-tytso@mit.edu> <11711235042388-git-send-email-tytso@mit.edu> <20070210181357.GE25607@thunk.org> <Pine.LNX.4.63.0702102129110.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070211001346.GA19656@thunk.org> <Pine.LNX.4.63.0702111701160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 11 17:15:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 11 17:21:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGHM6-0000Eh-MF
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 17:15:11 +0100
+	id 1HGHSY-0003Nq-9I
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 17:21:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750710AbXBKQO6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 11:14:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750712AbXBKQO6
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 11:14:58 -0500
-Received: from dev.mellanox.co.il ([194.90.237.44]:33465 "EHLO
-	dev.mellanox.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750710AbXBKQO6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 11:14:58 -0500
-X-Greylist: delayed 1195 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Feb 2007 11:14:57 EST
-Received: from mtldesk014.lab.mtl.com ([194.90.237.34])
-	by dev.mellanox.co.il (8.13.1/8.13.1) with ESMTP id l1BFsvXH008049
-	for <git@vger.kernel.org>; Sun, 11 Feb 2007 17:54:58 +0200
-X-Mailer: Evolution 2.0.2 (2.0.2-22) 
+	id S1750720AbXBKQVr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 11:21:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbXBKQVr
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 11:21:47 -0500
+Received: from thunk.org ([69.25.196.29]:59338 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750720AbXBKQVq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 11:21:46 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HGHXX-0006gt-4I; Sun, 11 Feb 2007 11:26:59 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HGHSK-0007Oj-Qi; Sun, 11 Feb 2007 11:21:36 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702111701160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39288>
 
-Allow setting the path of asciidoc in only one place when creating the documentation.
+On Sun, Feb 11, 2007 at 05:03:29PM +0100, Johannes Schindelin wrote:
+> > ... and git-shell only allows git-receive-pack and git-upload-pack to be 
+> > called, with a single argument, and aliases aren't allowed to override 
+> > commands.  So we're safe here, I think.
+> 
+> Yes, sorry. I have a modified git-shell, which allows the git wrapper, 
+> too, to allow setting the config. I'll just fix it here.
 
-Signed-off-by: Dotan Barak <dotanb@dev.mellanox.co.il>
+If all you've enabled is the ability to set the config, I think we're
+still safe, since aliases can't override commands.  
 
----
+Still there are enough config options that might be scary, either now
+(the http.ssl* options) or in the future (someone might think that it
+makes sense to set the post-commit, post-push, et. al hooks in the
+config), that I wouldn't be particularly comfortable letting git-shell
+have unrestricted access to set the config without having some
+restriction about which config parameters were allowed to be set from
+the restricted shell.  Why did you add that ability, out of curiosity?
 
-Index: git-1.5.0.rc4/Documentation/Makefile
-===================================================================
---- git-1.5.0.rc4.orig/Documentation/Makefile	2007-02-08 01:05:14.000000000 +0200
-+++ git-1.5.0.rc4/Documentation/Makefile	2007-02-11 17:37:05.000000000 +0200
-@@ -31,6 +31,7 @@ man1dir=$(mandir)/man1
- man7dir=$(mandir)/man7
- # DESTDIR=
- 
-+ASCIIDOC=asciidoc
- INSTALL?=install
- DOC_REF = origin/man
- 
-@@ -91,16 +92,16 @@ clean:
- 	rm -f $(cmds_txt)
- 
- %.html : %.txt
--	asciidoc -b xhtml11 -d manpage -f asciidoc.conf $<
-+	$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf $<
- 
- %.1 %.7 : %.xml
- 	xmlto -m callouts.xsl man $<
- 
- %.xml : %.txt
--	asciidoc -b docbook -d manpage -f asciidoc.conf $<
-+	$(ASCIIDOC) -b docbook -d manpage -f asciidoc.conf $<
- 
- user-manual.xml: user-manual.txt user-manual.conf
--	asciidoc -b docbook -d book $<
-+	$(ASCIIDOC) -b docbook -d book $<
- 
- user-manual.html: user-manual.xml
- 	xmlto html-nochunks $<
-@@ -108,7 +109,7 @@ user-manual.html: user-manual.xml
- glossary.html : glossary.txt sort_glossary.pl
- 	cat $< | \
- 	perl sort_glossary.pl | \
--	asciidoc -b xhtml11 - > glossary.html
-+	$(ASCIIDOC) -b xhtml11 - > glossary.html
- 
- howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
- 	rm -f $@+ $@
-@@ -116,13 +117,13 @@ howto-index.txt: howto-index.sh $(wildca
- 	mv $@+ $@
- 
- $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
--	asciidoc -b xhtml11 $*.txt
-+	$(ASCIIDOC) -b xhtml11 $*.txt
- 
- WEBDOC_DEST = /pub/software/scm/git/docs
- 
- $(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
- 	rm -f $@+ $@
--	sed -e '1,/^$$/d' $< | asciidoc -b xhtml11 - >$@+
-+	sed -e '1,/^$$/d' $< | $(ASCIIDOC) -b xhtml11 - >$@+
- 	mv $@+ $@
- 
- install-webdoc : html
+						- Ted
