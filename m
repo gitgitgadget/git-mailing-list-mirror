@@ -1,77 +1,78 @@
-From: Mark Levedahl <mlevedahl@verizon.net>
-Subject: mingw, windows, crlf/lf, and git
-Date: Sun, 11 Feb 2007 18:13:16 -0500
-Message-ID: <45CFA30C.6030202@verizon.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: 'git status' is not read-only fs friendly
+Date: Mon, 12 Feb 2007 00:24:24 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702120018110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <e5bfff550702091125j202620cfqb2450a3ee69ed421@mail.gmail.com>
+ <Pine.LNX.4.63.0702101517360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <e5bfff550702100631w1b6243e7i44039ceaa8d3fe93@mail.gmail.com>
+ <Pine.LNX.4.63.0702101536090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <e5bfff550702100648p6db5fc67vb5e4a04d40771922@mail.gmail.com>
+ <e5bfff550702100651j244e5a2flf02fb91dc71799b3@mail.gmail.com>
+ <7v1wkykmj1.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702102135080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vbqk0cq7i.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702112305580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vsldcba3k.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 12 00:13:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	GIT list <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Feb 12 00:24:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGNtC-0000I6-F4
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:13:46 +0100
+	id 1HGO3h-0005cX-Oj
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:24:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750931AbXBKXNV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 18:13:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750930AbXBKXNV
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:13:21 -0500
-Received: from vms048pub.verizon.net ([206.46.252.48]:54125 "EHLO
-	vms048pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750929AbXBKXNU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 18:13:20 -0500
-Received: from [127.0.0.1] ([71.246.235.75])
- by vms048.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDB00KSKN6132V4@vms048.mailsrvcs.net> for
- git@vger.kernel.org; Sun, 11 Feb 2007 17:13:16 -0600 (CST)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S932591AbXBKXY1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 18:24:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932593AbXBKXY1
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:24:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53882 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932591AbXBKXY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 18:24:26 -0500
+Received: (qmail invoked by alias); 11 Feb 2007 23:24:24 -0000
+X-Provags-ID: V01U2FsdGVkX1+D+y9dp6eDY74IS3o+hOFjZGbHx9LJ0ybhl+lOKh
+	KVKQ==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vsldcba3k.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39326>
 
-I am NOT intending to start a flamewar O:-) , so please don't turn this 
-into one.
+Hi,
 
-The recent threads on a mingw git port are explicit in the intent to 
-provide a Windows native git. I believe there is a fundamental conflict 
-here with the position, clearly stated by Linus, that git does not alter 
-content in any way. Windows suffers the curse of DOS line endings (\r\n 
-vs \n), and a true port to Windows *must* allow for \r\n and \n to be 
-semantically the same thing as most large projects end up with a mixture 
-of such files and/or are targeting cross-platform capabilities. The 
-major competing solutions git seeks to supplant (cvs, cvsnt, svn, hg) 
-have capability to recognize "text" files and transparently replace \r\n 
-with \n on input, the reverse on output, and ignore all such differences 
-on diff operations. To be relevant on native Windows, git must do the 
-same. Otherwise, git will be deemed "too wierd" and dismissed in favor 
-of a tool "that works."
+On Sun, 11 Feb 2007, Junio C Hamano wrote:
 
-There is no use to debating the technical merits of \r\n vs \n vs \r vs 
-whatever, nor of not converting. Really. Just accept that there is a 
-fundamental requirement that any version control tool on Windows be able 
-to silently convert between \r\n and \n. To believe otherwise is to 
-expect that the conversion be pushed elsewhere into the tool chain in 
-use, and that won't happen as the competition already provide this 
-conversion capability.
+> Ah, you misread me.  What I was trying to drive at was if we find the 
+> subtle difference between Cygwin's lstat(2) emulation and lstat(2) 
+> result from the NTFS driver in the Linux kernel, we could start and fuel 
+> flamewar on _other_ lists (namely, kernel and Cygwin) saying "you guys 
+> are inconsistent which inconvenience applications great deal".
 
-So, I think the git project needs to come to an explicit position on 
-this, basically being:
+I have no access to cygwin right now, so I'll argue using MinGW instead.
 
-1) git is a POSIX only tool (i.e., there will be no \r\n munging), or
-2) a Windows port of git will handle and mung \r\n and \n line endings.
+As I already said, I do not know what would happen if we touched st_ino. 
+We'd likely have to touch it, since it takes 2 bytes on MinGW, and 4 bytes 
+on Linux. Also, IIRC Cygwin fakes the inodes; and it depends on the Cygwin 
+version, how it does it.
 
-If the answer is 1, the mingw port is a waste of time as it simply won't 
-be usable by its target audience. If the answer is 2, then I think a 
-very careful design of this capability is in order.
+Also, we check st_uid and st_gid explicitely, which is more a problem to 
+be solved by the person mounting the filesystem than the person 
+maintaining the filesystem driver.
 
-Comments?
+AFAICT we do not use st_dev anyway.
 
-BTW, I have addressed this in my own world using a pre-commit script 
-that converts textfile line endings into \n, recognizing that our 
-Windows tool chain handles such files perfectly well, while our Linux 
-toolchain requires it.
+> And watching other people flame each other is a lot more fun than 
+> flamewar raging close to home ;-).
 
-Mark Levedahl
+Sometimes I find them fun here, too. That is, if it is not such a tiring 
+flamewar as the renaming issues which creep up regularly.
+
+Ciao,
+Dsho
