@@ -1,137 +1,163 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-pull and tag objects
-Date: Sat, 10 Feb 2007 21:52:29 -0800
-Message-ID: <7vy7n5gs0y.fsf@assigned-by-dhcp.cox.net>
-References: <1170933407.15431.38.camel@okra.transitives.com>
-	<81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
-	<7v4ppurka1.fsf@assigned-by-dhcp.cox.net>
-	<20070210142322.GB25607@thunk.org>
-	<Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
+Subject: Re: 'git status' is not read-only fs friendly
+Date: Sat, 10 Feb 2007 22:33:46 -0800
+Message-ID: <7vtzxtdwz9.fsf@assigned-by-dhcp.cox.net>
+References: <e5bfff550702091125j202620cfqb2450a3ee69ed421@mail.gmail.com>
+	<Pine.LNX.4.63.0702101517360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<e5bfff550702100631w1b6243e7i44039ceaa8d3fe93@mail.gmail.com>
+	<Pine.LNX.4.63.0702101536090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<e5bfff550702100648p6db5fc67vb5e4a04d40771922@mail.gmail.com>
+	<Pine.LNX.4.63.0702101554170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0702101049480.1757@xanadu.home>
+	<7vr6syj7uw.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702101131070.1757@xanadu.home>
+	<Pine.LNX.4.64.0702100913020.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, Alex Riesen <raa.lkml@gmail.com>,
-	Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+Cc: Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marco Costalba <mcostalba@gmail.com>,
+	GIT list <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Feb 11 06:52:47 2007
+X-From: git-owner@vger.kernel.org Sun Feb 11 07:33:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HG7dk-0001U1-Ny
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 06:52:45 +0100
+	id 1HG8HX-0002vG-Gy
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 07:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753023AbXBKFwl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 00:52:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752958AbXBKFwl
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 00:52:41 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:42804 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752976AbXBKFwk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 00:52:40 -0500
+	id S1753112AbXBKGds (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 01:33:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753116AbXBKGds
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 01:33:48 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:45136 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753112AbXBKGdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 01:33:47 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
+          by fed1rmmtao102.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070211055241.RGER22948.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 11 Feb 2007 00:52:41 -0500
+          id <20070211063348.RZFG21668.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 11 Feb 2007 01:33:48 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id N5sf1W00G1kojtg0000000; Sun, 11 Feb 2007 00:52:40 -0500
-In-Reply-To: <Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sat, 10 Feb 2007 09:56:25 -0800 (PST)")
+	id N6Zm1W0061kojtg0000000; Sun, 11 Feb 2007 01:33:47 -0500
+In-Reply-To: <Pine.LNX.4.64.0702100913020.8424@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sat, 10 Feb 2007 09:37:58 -0800 (PST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39274>
 
 Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> But if you have pushed things out (or others could just read your 
-> repository directly), then others will have already seen the old tag. In 
-> that case you can do one of two things:
+> On Sat, 10 Feb 2007, Nicolas Pitre wrote:
+>> > >
+>> > > Because git-status itself is conceptually a read-only operation, and 
+>> > > having it barf on a read-only file system is justifiably a bug.
+>> > 
+>> > I do not 100% agree that it is conceptually a read-only operation.
+>> 
+>> It is.
+>
+> It really isn't. 
+>
+> It's not even a "technical issue". It's a fundamental optimization. Sure, 
+> you can call optimizations just "technical issues", but the fact is, it's
+> one of the things that makes git so _usable_ on large archives. At some 
+> point, an "optimization" is no longer just about making things slightly 
+> faster, it's about something much bigger, and has real semantic meaning.
 > ...
->  - The insane thing.
+> THIS IS NOT "JUST A TECHNICAL ISSUE". 
+> ...
+> And the index is what makes it so. 
 >
->    You really want to call the new version "X" too, _even_though_ others 
->    have already seen the old one. So just use "git tag -f" again, as if 
->    you hadn't already published the old one.
->
->    HOWEVER!
->
->    Git does *not* (and in my very very strong opinion, MUST NOT!) change 
->    tags behind users back. So if somebody already got the old tag, doing a 
->    "git pull" on your tree shouldn't just make them overwrite the old one. 
->
-> And I really think that git does the right thing. If somebody got a 
-> release tag from you, you cannot just change the tag for them by updating 
-> your own one. I think this is a BIG security issue, in that people MUST be 
-> able to trust their tag-names. If I got a particular tag, NO WAY IN HELL 
-> must git just replace it for me because you happened to have a newer one!
->
-> So if you really want to do the insane thing, you need to just fess up to 
-> it, and tell people that you messed up.
+> And that's why it's important to keep the index up-to-date.
 
-Confession time.
+I think a one paragraph summary of your argument is:
 
-Although it is correct that the people who already saw the
-original tag would not lose the tag object from their repository
-when you publish a replacement tag, we have _always_ overwritten
-the refs/tags/$tag to point at the new one, effectively losing
-the original.
+ - index is a good thing -- it is what makes the difference
+   between usable and unusable.
 
-* 0a623e7c (Jul 5, 2005)
-In this version "git fetch $repo tag v2.6.13" would have done just
+ - git-status needs to refresh the index in order to do its
+   thing efficiently and usably _anyway_, so once it spends
+   cycles to do so, it is senseless not to write the refreshed
+   index out when it can.
 
-	echo "$head" >"$GIT_DIR/$destination"
+I do not think anybody disputes that in a repository with 20k+
+paths, it is sensible to leave the index stat-dirty for all
+paths.  But I think your example
 
-without checking if it already existed.
+	read-tree HEAD
 
-* ae2da406 (Aug 22, 2005)
+misses the point by stressing the importance of index too much.
+Index is important for the usability and I do not think anybody
+is disputing it.
 
-We started checking if the fetched/followed tag already existed
-with this version.  However, the result of the check was only
-used to say "$tagname: updating with $new_sha1 from $old_sha1"
-in the status message.
+The thing is, nobody switches the index that way without running
+"update-index --refresh" afterwards.  Normal people would use
+git-reset to switch to a different tree object, and the command
+does that for you.  If you are a hardcore, you would know to use
+"read-tree -m HEAD" at least to avoid making paths unnecessarily
+stat-dirty.  Your example, while it is valid and demonstrates
+why the index is a good thing very well, is simply not part of
+a normal workflow and not very relevant when discussing the
+performance ramifications of what state "git-status" should
+leave the index in.
 
-And after numerous code reorganizations of git-fetch throughout
-its life, this logic has never been touched.  This comment
-around ll. 170 we currently have:
+When I said "calling 'update-index --refresh' in git-status
+loses stat-dirtiness information", I was certainly _NOT_ talking
+about losing the information that 20k+ paths used to be
+stat-dirty because the user did "read-tree HEAD" earlier.
 
-    case "$1" in
-    refs/tags/*)
-	# Tags need not be pointing at commits so there
-	# is no way to guarantee "fast-forward" anyway.
+At least for me, it is very normal to do something like this.
 
-was introduced with 853a3697 (Aug 20, 2005) and stayed there
-ever since.
+ * start from a clean index.
 
-I think it is worth fixing this by tightening the rule as you
-described, even with this late in the game for 1.5.0.  The user
-either needs to force it, or remove it beforehand.
+ * edit cache.h, diff.h, and diff-lib.c.
 
+ * stop, think, and realize that my earlier edit to change one
+   function prototype in diff.h was not needed, and revert the
+   change to that line still in the editor.
 
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 357cac2..1078016 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -169,14 +169,18 @@ update_local_ref () {
- 
-     case "$1" in
-     refs/tags/*)
--	# Tags need not be pointing at commits so there
--	# is no way to guarantee "fast-forward" anyway.
-+	# Tags should never be blindly overwritten without user's
-+	# consent.
- 	if test -n "$oldshort_"
- 	then
- 		if now_=$(git show-ref --hash "$1") && test "$now_" = "$2"
- 		then
- 			[ "$verbose" ] && echo >&2 "* $1: same as $3"
- 			[ "$verbose" ] && echo >&2 "  $label_: $newshort_" ||:
-+		elif test -z "$force$single_force"
-+		then
-+			echo >&2 "* $1: refusing to update with $3"
-+			false
- 		else
- 			echo >&2 "* $1: updating with $3"
- 			echo >&2 "  $label_: $newshort_"
+ * fix things up further by editing other files.
+
+And then, I would run "git diff" to see where I am.  I still
+remember that I touched diff.h and I also remember that I once
+changed a function prototype but then decided the change was not
+necessary after all, but I do not remember if I changed anything
+else in the file.  It is _very_ assuring to see the emptiness
+that follows "git diff --git" header for diff.h in such a case.
+Seeing the path to be stat-dirty is a very good thing for me,
+because otherwise I might lose a few seconds thinking that what
+I thought I touched might have been cache.h and not diff.h.
+
+To me, running "git status" is "wrapping things up" step.  I do
+not need that stat-dirty assurance "git diff" gave me at that
+point.  Not seeing diff.h in "modified but updated" list is a
+good thing.  And in my workflow, after that 'wrapping things up"
+step, I do not need that stat-dirty assurance _anymore_.
+
+I think Nico is correct to point out that "not _anymore_" part
+of the above reasoning of mine assumes _my_ workflow and
+preference, and I think that is a valid point.  Not saving the
+refreshed index would make the stat-dirtiness for diff.h to come
+back, which would be inconvenient and annoying to me.
+
+But the user might want to keep it stat-dirty after running
+"git-status".  People in "not _anymore_" camp like me can throw
+the stat-dirtiness away by "update-index --refresh".  I do not
+think he (or anybody) is advocating to keep 20k+ paths in
+stat-dirty state (arguably, "artificially" due to use of
+"read-tree HEAD"), so your example using "read-tree HEAD" only
+confuses the discussion.
+
+Having said all that, I do agree with you that git-status should
+throw that stat-dirtiness information away by saving the
+refreshed index.  Doing otherwise is annoying to me as I already
+said, and I do not think of a valid reason for the user to want
+to keep stat-dirtiness information after running "git-status",
+because to me the whole point of running "git-status" is to
+start wrapping things up.
