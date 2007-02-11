@@ -1,68 +1,67 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: [PATCH 1/2] Print a sane error message if an alias expands to an invalid git command
-Date: Sat, 10 Feb 2007 19:33:57 -0500
-Message-ID: <1171154038778-git-send-email-tytso@mit.edu>
-References: <11711540383470-git-send-email-tytso@mit.edu>
-Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 11 01:34:08 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-pull and tag objects
+Date: Sat, 10 Feb 2007 19:21:31 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702101919520.8424@woody.linux-foundation.org>
+References: <1170933407.15431.38.camel@okra.transitives.com>
+ <81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
+ <7v4ppurka1.fsf@assigned-by-dhcp.cox.net> <20070210142322.GB25607@thunk.org>
+ <Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
+ <20070211002501.GB19656@thunk.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
+	Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sun Feb 11 04:21:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HG2fQ-0007w2-3r
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 01:34:08 +0100
+	id 1HG5Ho-0000kI-Hl
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 04:21:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752249AbXBKAeD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Feb 2007 19:34:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752427AbXBKAeD
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 19:34:03 -0500
-Received: from THUNK.ORG ([69.25.196.29]:58104 "EHLO thunker.thunk.org"
+	id S1752619AbXBKDVl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Feb 2007 22:21:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752647AbXBKDVl
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Feb 2007 22:21:41 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:36316 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752249AbXBKAeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Feb 2007 19:34:01 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HG2kR-0003fT-4I; Sat, 10 Feb 2007 19:39:19 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HG2fG-0002AW-U5; Sat, 10 Feb 2007 19:33:58 -0500
-X-Mailer: git-send-email 1.5.0.rc4.2.g4249
-In-Reply-To: <11711540383470-git-send-email-tytso@mit.edu>
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752619AbXBKDVk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Feb 2007 22:21:40 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1B3LXUI002377
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 10 Feb 2007 19:21:33 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1B3LW4T028257;
+	Sat, 10 Feb 2007 19:21:32 -0800
+In-Reply-To: <20070211002501.GB19656@thunk.org>
+X-Spam-Status: No, hits=-0.437 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.116__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39270>
 
-Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
----
- git.c |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
 
-diff --git a/git.c b/git.c
-index 82a8357..c43d4ff 100644
---- a/git.c
-+++ b/git.c
-@@ -387,8 +387,15 @@ int main(int argc, const char **argv, char **envp)
- 		done_alias = 1;
- 	}
- 
--	if (errno == ENOENT)
-+	if (errno == ENOENT) {
-+		if (done_alias) {
-+			fprintf(stderr, "Expansion of alias '%s' failed; "
-+				"'%s' is not a git-command\n",
-+				cmd, argv[0]);
-+			exit(1);
-+		}
- 		help_unknown_cmd(cmd);
-+	}
- 
- 	fprintf(stderr, "Failed to run command '%s': %s\n",
- 		cmd, strerror(errno));
--- 
-1.5.0.rc4.2.g4249
+
+On Sat, 10 Feb 2007, Theodore Tso wrote:
+> 
+> What I would propose (post-1.5.0!) is that the policy file be local to
+> the repository, and consist of an ordered list of regular expressions
+> and and lists of PGP keys associated with each regexp.  So for
+> example, I might have in my repository a config file which states that
+> any tag that matches v2.6.[0-9]+ and v2.6.[0-9]+-rc[0-9]+ must be
+> signed by PGP key 0x76E21CBB (Linus's key).
+
+Actually, I think you can do it already.
+
+I think the "update" hook runs whenever we're pulling a ref, once for each 
+ref. It might happen just for pushing to a remote, though.
+
+Anyway, with a hook, it's easy enough to just add exactly the kind of 
+thing you are outlining, and yes, it would be repository-local.
+
+		Linus
