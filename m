@@ -1,39 +1,34 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: 'git status' is not read-only fs friendly
-Date: Sun, 11 Feb 2007 02:23:58 -0500
-Message-ID: <20070211072358.GB2082@spearce.org>
-References: <e5bfff550702091125j202620cfqb2450a3ee69ed421@mail.gmail.com> <Pine.LNX.4.63.0702101517360.22628@wbgn013.biozentrum.uni-wuerzburg.de> <e5bfff550702100631w1b6243e7i44039ceaa8d3fe93@mail.gmail.com> <Pine.LNX.4.63.0702101536090.22628@wbgn013.biozentrum.uni-wuerzburg.de> <e5bfff550702100648p6db5fc67vb5e4a04d40771922@mail.gmail.com> <Pine.LNX.4.63.0702101554170.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0702101049480.1757@xanadu.home> <7vr6syj7uw.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702101131070.1757@xanadu.home> <Pine.LNX.4.64.0702100913020.8424@woody.linux-foundation.org>
+Subject: Merge git-gui into 1.5.0 ?
+Date: Sun, 11 Feb 2007 03:40:30 -0500
+Message-ID: <20070211084030.GE2082@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Marco Costalba <mcostalba@gmail.com>,
-	GIT list <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Feb 11 08:24:34 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 11 09:40:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HG94b-0008Hv-93
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 08:24:33 +0100
+	id 1HGAGH-0000Ue-F0
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 09:40:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753147AbXBKHY3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 02:24:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753149AbXBKHY3
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 02:24:29 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52802 "EHLO
+	id S1753162AbXBKIki (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 03:40:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753163AbXBKIki
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 03:40:38 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:54514 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147AbXBKHY2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 02:24:28 -0500
+	with ESMTP id S1753162AbXBKIkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 03:40:37 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HG944-00031o-73; Sun, 11 Feb 2007 02:24:00 -0500
+	id 1HGAGA-0006so-35
+	for git@vger.kernel.org; Sun, 11 Feb 2007 03:40:34 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5B0EF20FBAE; Sun, 11 Feb 2007 02:23:59 -0500 (EST)
+	id DE9EB20FBAE; Sun, 11 Feb 2007 03:40:30 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0702100913020.8424@woody.linux-foundation.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -46,66 +41,61 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39277>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> It's not even a "technical issue". It's a fundamental optimization. Sure, 
-> you can call optimizations just "technical issues", but the fact is, it's 
-> one of the things that makes git so _usable_ on large archives. At some 
-> point, an "optimization" is no longer just about making things slightly 
-> faster, it's about something much bigger, and has real semantic meaning.
-> 
-> So the fact is, "git status" _needs_ to refresh the index. Because if it 
-> doesn't, you'll see every file that doesn't match the index as "dirty", 
-> and that is not just a "technical issue".
+One of my goals for git-gui is to get it merged into core Git, so
+there is a GUI tool available out-of-the-box for commit creation,
+(some) branch manipulation, basic merging, and pushing/fetching
+changes.
 
-Indeed.  Except that `git-update-index --refresh` is itself not
-very fast on Cygwin+NTFS and large projects (about the size of
-the kernel).  So git-status is a real slouch there.  Not running
-`git update-index --refresh` saves at least a couple of seconds.
+I'm wondering, should that start to occur as part of 1.5.0?
+Its one .sh script, like gitk.  :)
 
-This is why git-gui lets you disable the refresh, and is part of
-the reason why it computes the status on its own by diff-index,
-diff-files and ls-files --others.
- 
-> THIS IS NOT "JUST A TECHNICAL ISSUE". 
-> 
-> When the difference is 40 seconds vs 4 (uncached), or 2 seconds vs 0.06, 
-> it's not about "just an optimization" any more. At that point, it's about 
-> "unusable vs usable".
-> 
-> And yeah, waiting 40 seconds for a global "diff" for a big project may be 
-> something that a person coming from CVS considers to be just par for the 
-> course. Maybe I'm just unreasonable. But I think it's a _bug_ if I can't 
-> get a small diff in about a tenth of a second. It needs to be so fast that 
-> I never even _think_ about it.
+Given all of the other changes going into 1.5.0, and how much news
+we're probably going to try to attract to this release, it may be
+nice to be able to say "we also have a commit creating GUI".
 
-Yes.  Which is why if git-gui finds a file that has an empty diff,
-but that was reported as modified by diff-files, it tells the user
-its about to go waste a few seconds running `update-index --refresh`,
-then does so.
 
-In practice I've found it rare that a file is dirty in the index,
-but is not actually modified.  The typical culprit appears to
-actually be the virus scanner on a Windows system.  For some reason
-it feels a need to modify some random XML 'source' files that are
-tracked by Git.  Out of 30,000 files it likes to modify about 100.
-*sigh* At least I have Git to tell me it didn't change any content.
- 
-> I think it would be much better if "git status" always wrote the refreshed 
-> index file. It could then choose to ignore any errors if they happen, 
-> because if you have a broken setup like the NTFS read-only thing, then 
-> tough, it's broken, but git can't do anythign about it. But people should 
-> be aware that yes, "git status" absolutely _needs_ to write the index 
-> file. 
+The main idea behind git-gui is to provide a complete enough UI
+that someone can work on files stored in a Git repository without
+needing to drop to the command line.  By sticking to Tcl/Tk,
+git-gui is available anywhere gitk is.
 
-Not only that, but I think we can do much better with git-runstatus
-than we do now.  If we scan the working directory (to search for
-untracked files), and we walk the index in parallel, we can update
-the index with new stat data if necessary.
+It would be nice if all operations available on the command line
+were also available through git-gui, but I think that is a very
+difficult goal to reach.  The command line interface is simply more
+powerful and much more expressive.  So I'm really just aiming to
+make an interface that the average user can use to do collaboration
+through Git, without needing to fall back on git-cvsserver and a
+CVS client.  I fully expect 'power' users to use the command line.
+You know who you are.  ;-)
 
-Of course that doesn't matter much on Linux; its VFS operations
-don't take hours.
+That said, operations like `git gui blame rev file` may simply
+be better in the GUI, even for power users, as it offers some way
+to visualize the annotation data and navigate through it.  So I'm
+also trying to make those parts of git-gui easily available from
+the command line, when possible.
+
+Another example is `git gui citool` (or `git citool` if git-citool
+is a symlink/hardlink to git-gui), which will open the UI for
+just one commit.  Users of that-other-SCM-used-before-Git's citool
+subcommand may like this feature, as it offers somewhat similiar
+functionality, and some nice extras.  ;-)
+
+
+Right now git-gui is being used in production by myself and about 5
+other coworkers of mine (the rest were either die-hard command line
+users already, or found out how useful the command line is and now
+refuse to give it up!).  It has thus far proven to be pretty stable
+and easy to use.  Its running stably on both Mac OS X and Windows.
+
+It is also lacking the critical `git clone` operation.  ;-)
+
+
+Thoughts?  Anyone interested can check out the repository:
+
+  gitweb:  http://repo.or.cz/w/git-gui.git
+  git:     git://repo.or.cz/git-gui.git
 
 -- 
 Shawn.
