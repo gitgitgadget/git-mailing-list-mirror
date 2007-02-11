@@ -1,102 +1,87 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Speeding up a null fetch
-Date: Sun, 11 Feb 2007 18:52:18 -0500
-Message-ID: <20070211235218.GH31488@spearce.org>
-References: <200702112332.14698.julian@quantumfyre.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: how to speed up "git log"?
+Date: Mon, 12 Feb 2007 00:56:36 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702120051240.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200702111252.28393.bruno@clisp.org>
+ <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200702120041.27419.bruno@clisp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon Feb 12 00:52:26 2007
+To: Bruno Haible <bruno@clisp.org>
+X-From: git-owner@vger.kernel.org Mon Feb 12 00:56:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGOUb-0002ZX-HE
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:52:25 +0100
+	id 1HGOYj-0004h2-EX
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:56:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932931AbXBKXwX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 18:52:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932932AbXBKXwW
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:52:22 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53332 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932931AbXBKXwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 18:52:22 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HGOUM-0007Vv-8C; Sun, 11 Feb 2007 18:52:10 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id ADC7020FBAE; Sun, 11 Feb 2007 18:52:18 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <200702112332.14698.julian@quantumfyre.co.uk>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932934AbXBKX4i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 18:56:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932935AbXBKX4i
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:56:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55973 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932934AbXBKX4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 18:56:37 -0500
+Received: (qmail invoked by alias); 11 Feb 2007 23:56:36 -0000
+X-Provags-ID: V01U2FsdGVkX19vjKwmo81vGD+9aCvZ5CJIZj68c522ZFBYhV/gOb
+	baBQ==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200702120041.27419.bruno@clisp.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39338>
 
-Julian Phillips <julian@quantumfyre.co.uk> wrote:
-> Investigation showed that the main culprit seemed to be show-ref
-> having to build a sorted list of all refs for every ref that was being
-> checked.  So I used the patch below to reduce this to a single call to
-> show-ref (unless the ref had been updated).  With this patch the fetch
-> timed dropped to just under 1m - obviously quite a lot faster (better
-> than I expected in fact).
+Hi,
 
-Have a look at the `pu` branch in git.git.  Junio has done some
-work in this area to handle 1000 refs better:
+On Mon, 12 Feb 2007, Bruno Haible wrote:
 
-  ...
-  commit 58fef67cb067b6dee8f94b7b0e0c1a2d324e3505
-  Author: Junio C Hamano <junkio@cox.net>
-  Date:   Tue Jan 16 02:31:36 2007 -0800
+> > Yes, because there were only 147 commits which changed the file. But git 
+> > looked at all commits to find that.
+> 
+> Ouch.
 
-    git-fetch: rewrite another shell loop in C
-    
-    Move another shell loop that canonicalizes the list of refs for
-    underlying git-fetch-pack and fetch-native-store into C.
-    
-    This seems to shave the runtime for the same 1000 branch
-    repository from 30 seconds down to 15 seconds (it used to be 2
-    and half minutes with the original version).
-    
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
+Not so ouch:
 
-  commit 3fc3729cd08e9d40dad54ccdd4db53900eca197b
-  Author: Junio C Hamano <junkio@cox.net>
-  Date:   Tue Jan 16 01:53:29 2007 -0800
+> > Basically, we don't do file versions. File versions do not make sense, 
+> > since they strip away the context.
 
-    git-fetch: move more code into C.
-    
-    This adds "native-store" subcommand to git-fetch--tool to
-    move a huge loop implemented in shell into C.  This shaves about
-    70% of the runtime to fetch and update 1000 tracking branches
-    with a single fetch.
-    
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
-  ...
+You could have it faster, but you'd break a very useful concept by doing 
+so.
 
-> However, this seems more band-aid than fix, and I wondered if someone
-> more familiar with the git internals could point me in the right
-> direction for a better fix, e.g. should I look at rewriting fetch in C?
+> Is there some other concept or command that git offers? I'm in the 
+> situation where I know that 'tr' in coreutils version 5.2.1 had a 
+> certain bug and version 6.4 does not have the bug, and I want to review 
+> all commits that are relevant to this.
 
-Rewriting fetch in C is a lot of work, not just in developing it,
-but in testing that all existing functionality is preserved and no
-new bugs are introduced.  Rewriting some of the performance critical
-parts perhaps makes sense.  Rewriting them in Python doesn't, as
-we no longer have any Python dependency, and would like to keep it
-that way (actuallly, some folks are also trying to remove the Perl
-dependency from some of our critical tools).
+So, only look at those:
 
--- 
-Shawn.
+	git log v5.2.1..v6.4 tr.c
+
+(provided you have the tags for the releases). You can start reviewing 
+right away, since the output will start very fast (much faster than it 
+takes to complete the log!).
+
+If you want to get the patches to tr.c with the logs, just add "-p":
+
+	git log -p v5.2.1..v6.4 tr.c
+
+> > > 2) Why so much system CPU time, but only on MacOS X?
+> > 
+> > Probably the mmap() problem. Does it go away when you use git 
+> > 1.5.0-rc4?
+> 
+> No, it became even worse: git-1.5.0-rc4 is twice as slow as git-1.4.4 for
+> this command:
+>   git-1.4.4: 25 seconds real time, 24 seconds of CPU time (12 user, 12 system)
+>   git-1.5.0: 50 seconds real time, 39 seconds of CPU time (20 user, 19 system)
+
+Hmmm. I don't have MacOSX any more, so I cannot investigate. You might 
+find this the perfect opening into working on git ;-)
+
+Hth,
+Dscho
