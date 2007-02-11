@@ -1,60 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Merge git-gui into 1.5.0 ?
-Date: Sun, 11 Feb 2007 23:53:39 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702112351270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070211084030.GE2082@spearce.org> <7vwt2oba8s.fsf@assigned-by-dhcp.cox.net>
- <20070211224158.GA31488@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: how to speed up "git log"?
+Date: Sun, 11 Feb 2007 18:00:35 -0500
+Message-ID: <20070211230035.GD31488@spearce.org>
+References: <200702111252.28393.bruno@clisp.org> <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Feb 11 23:54:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Bruno Haible <bruno@clisp.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 12 00:00:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGNaA-0007M3-A0
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 23:54:06 +0100
+	id 1HGNga-0002Sb-Jj
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:00:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932825AbXBKWxq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 17:53:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932828AbXBKWxp
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 17:53:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59607 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932835AbXBKWxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 17:53:42 -0500
-Received: (qmail invoked by alias); 11 Feb 2007 22:53:40 -0000
-X-Provags-ID: V01U2FsdGVkX1/Q9VJW41/Q2SEgd7uf1I2m7uBpsipzeNmH/ZHImC
-	mGVg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070211224158.GA31488@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S932914AbXBKXAk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 18:00:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932917AbXBKXAk
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:00:40 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:51967 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932914AbXBKXAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 18:00:40 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HGNgJ-0003So-6J; Sun, 11 Feb 2007 18:00:27 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2588F20FBAE; Sun, 11 Feb 2007 18:00:35 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39322>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 1) Why so much user CPU time?
+> 
+> See above.
 
-On Sun, 11 Feb 2007, Shawn O. Pearce wrote:
+Some of the ideas Nico and I have kicked around for a pack v4 (post
+1.5.0, obviously) would speed up revision traversal by bypassing
+some of the costly decompression overheads.
+ 
+> > 2) Why so much system CPU time, but only on MacOS X?
+> 
+> Probably the mmap() problem. Does it go away when you use git 1.5.0-rc4?
 
-> Unlike Kay, I'm not looking to merge git-gui into git.git to abandon it.
+What does 1.5.0-rc4 do here that didn't happen before?  Are you
+referring to the mmap sliding window?  Because NO_MMAP might be
+faster on MacOS X then using mmap (thanks to its slower mmap)... but
+I can't say I have performance tested it either way.
 
-That's great!
-
-> It may be saner for all involved if that development happens in the 
-> git-gui.git repository, with drops made to git.git by way of merging the 
-> "subproject" every so often.
-
-Fully agree.
-
-> It may make patching slightly more interesting though, as some
-> users new to git-gui development may generate a patch in git.git
-> (using a/git-gui/git-gui.sh as the path) which then would not apply
-> as-is to the master git-gui development tree.
-
-In this case, a "-p <n>" option to git-am would make sense, no?
-
-Ciao,
-Dscho
+-- 
+Shawn.
