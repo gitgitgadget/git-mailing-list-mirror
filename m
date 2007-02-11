@@ -1,61 +1,64 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] Avoid ugly linewrap in git help
-Date: Sun, 11 Feb 2007 14:29:58 +0100
-Message-ID: <45CF1A56.1060809@lsrfire.ath.cx>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Possible BUG in 'git config'
+Date: Sun, 11 Feb 2007 15:13:27 +0100
+Message-ID: <e5bfff550702110613q315e1f7es4ca1a88b92e4c3e9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 11 14:30:26 2007
+Cc: "GIT list" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Feb 11 15:13:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGEmf-0007xU-MJ
-	for gcvg-git@gmane.org; Sun, 11 Feb 2007 14:30:26 +0100
+	id 1HGFSW-0002H7-G3
+	for gcvg-git@gmane.org; Sun, 11 Feb 2007 15:13:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932821AbXBKNaN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 08:30:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932831AbXBKNaN
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 08:30:13 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:36645
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932821AbXBKNaM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Feb 2007 08:30:12 -0500
-Received: from [10.0.1.20] (p508E59D9.dip.t-dialin.net [80.142.89.217])
-	by neapel230.server4you.de (Postfix) with ESMTP id 212C97035;
-	Sun, 11 Feb 2007 14:30:11 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S1751686AbXBKONb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 09:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752037AbXBKONb
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 09:13:31 -0500
+Received: from ug-out-1314.google.com ([66.249.92.175]:41035 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751686AbXBKONa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 09:13:30 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so345303uga
+        for <git@vger.kernel.org>; Sun, 11 Feb 2007 06:13:29 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=BWodcZPlW/L17EUAWUHizpx8yXNzgiS4FbDbfldYHjSrLDybN31QtTvQcdp6CDu0jip1b+z9Jmc3tb3WUfi8VMinicgF+DUp63slJx9vuCVQyBPiCyMKmTOGKqcVfjN8P405QcTtuV/QWVdZ1fpschbsv6CjvVY8H00mUT3eTQE=
+Received: by 10.115.19.16 with SMTP id w16mr6549556wai.1171203207873;
+        Sun, 11 Feb 2007 06:13:27 -0800 (PST)
+Received: by 10.114.60.16 with HTTP; Sun, 11 Feb 2007 06:13:27 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39281>
 
-Some of the short help texts that are shown e.g. when running 'git'
-without any parameters wrap on a 80-column terminal.  They are just
-one character over the line.  This patch avoids it by decreasing the
-number of spaces around the preceding command name from four to
-three (on both sides for symmetry).
+bash-3.1$ cat ./.git/config
+[i18n]
+        commitencoding = UTF-8
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
+bash-3.1$ git repo-config --global user.name
+marco
 
- help.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+bash-3.1$ git repo-config user.name
+marco
 
-diff --git a/help.c b/help.c
-index 341b9e3..b667463 100644
---- a/help.c
-+++ b/help.c
-@@ -168,8 +168,8 @@ static void list_common_cmds_help(void)
- 
- 	puts("The most commonly used git commands are:");
- 	for (i = 0; i < ARRAY_SIZE(common_cmds); i++) {
--		printf("    %s", common_cmds[i].name);
--		mput_char(' ', longest - strlen(common_cmds[i].name) + 4);
-+		printf("   %s   ", common_cmds[i].name);
-+		mput_char(' ', longest - strlen(common_cmds[i].name));
- 		puts(common_cmds[i].help);
- 	}
- 	puts("(use 'git help -a' to get a list of all installed git commands)");
+I would expect git repo-config user.name returns an empty string,
+because user.name is defined _only_ in global config file ~/.gitconfig
+
+>From git-config documentation:
+
+--global::
+	Use global ~/.gitconfig file rather than the repository .git/config.
+
+
+
+How it is possible to know if a variable is stored in local config file?
+
+Thanks
+Marco
