@@ -1,110 +1,84 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [RFC] Speeding up a null fetch
-Date: Mon, 12 Feb 2007 00:14:12 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0702120005530.5695@beast.quantumfyre.co.uk>
-References: <200702112332.14698.julian@quantumfyre.co.uk>
- <Pine.LNX.4.63.0702120045320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 12 01:14:36 2007
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: [PATCH] Use patch file's modtime as the git author and commiter date
+Date: Sun, 11 Feb 2007 18:24:35 -0500
+Message-ID: <11712362751442-git-send-email-tytso@mit.edu>
+Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>
+To: jsipek@cs.sunysb.edu
+X-From: git-owner@vger.kernel.org Mon Feb 12 01:17:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGOq3-0004ms-F8
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 01:14:35 +0100
+	id 1HGOse-00066y-D1
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 01:17:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750951AbXBLAOO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 19:14:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750956AbXBLAOO
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 19:14:14 -0500
-Received: from neutron.datavampyre.co.uk ([212.159.54.235]:51927 "EHLO
-	neutron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750951AbXBLAON (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 19:14:13 -0500
-Received: (qmail 28178 invoked by uid 103); 12 Feb 2007 00:14:12 +0000
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.88.7/2551. spamassassin: 3.1.3. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.032266 secs); 12 Feb 2007 00:14:12 -0000
-Received: from unknown (HELO beast.quantumfyre.co.uk) (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 12 Feb 2007 00:14:12 +0000
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <Pine.LNX.4.63.0702120045320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1750985AbXBLARK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 19:17:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbXBLARJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 19:17:09 -0500
+Received: from thunk.org ([69.25.196.29]:36699 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750985AbXBLARI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 19:17:08 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HGOxe-0008FN-3I; Sun, 11 Feb 2007 19:22:26 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HGO3f-0001DK-QL; Sun, 11 Feb 2007 18:24:35 -0500
+X-Mailer: git-send-email 1.5.0.rc4.2.g4249
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39343>
 
-On Mon, 12 Feb 2007, Johannes Schindelin wrote:
+By using the same author and committer date, it keeps the git commit
+id's stable if the patches haven't changed.  Otherwise, repeated
+invocations of "guilt pop -a; guilt push -a" will create new commit's
+with different commit dates, creating a lot of garbage commits that
+won't disappear for a LONG time, even after running "git-gc --prune",
+thanks to the reflog in git 1.5.
 
-> Hi,
->
-> On Sun, 11 Feb 2007, Julian Phillips wrote:
->
->> An artifical test repository that has similar features (~25000 commits,
->> ~8000 tags, ~900 branches and a 2.5Gb packfile) when running locally
->> takes ~20m to clone and ~48m to fetch (with no new commits in the
->> original repository - i.e. the fetch does not update anything) with a
->> current code base (i.e. newer than 1.5.0-rc4).
->
-> Ouch.
->
-> I hope you packed the refs?
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+---
+ guilt |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
 
-Unfortunately packing only makes things slower ... as it then becomes 
-impossible to directly access a particular ref directly, which some of the 
-calls to show-ref do.
-
->
-> BTW your patch
-> - was not minimal (and therefore it takes longer than necessary to find
->  what you actually fixed),
-> - it does not show where and how the call to show-ref is avoided (I
->  eventually understand that you avoid calling update_local_ref early, but
->  you sure could have made that easier), and
-
-Ah yes, sorry.  I seem to have managed to forget to include the paragraph 
-explaining what I had done ... :$
-
-(That'll teach me to trying doing too many things at once.)
-
-> - it uses Pythong.
->
-> Also, it touches a quite core part of git, which will hopefully be
-> replaced by a builtin _after_ 1.5.0.
-
-Indeed, I would never propose what I have done so far as a fix.  I am 
-definitely still in the investigation phase.
-
->
->> However, this seems more band-aid than fix, and I wondered if someone
->> more familiar with the git internals could point me in the right
->> direction for a better fix, e.g. should I look at rewriting fetch in C?
->
-> Look into the "pu" branch of git. There are the beginnings of a builtin
-> (written in C) fetch.
-
-Ah - this I didn't know.  I shall have to have a play with that, I did 
-notice that there is internal caching of the ref list that might magically 
-solve the problem if fetch was a builtin (but I have a feeling that it 
-won't be that simple).
-
->
-> But this _will_ have to wait until after 1.5.0.
-
-I hope so.  1.5 is looking very nice, and I really don't think that many 
-people have such a stuipdly large repository ...
-
->
-> Ciao,
-> Dscho
->
-
+diff --git a/guilt b/guilt
+index ced441b..7cb52c4 100755
+--- a/guilt
++++ b/guilt
+@@ -248,6 +248,10 @@ function push_patch
+ 
+ 		export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
+ 	fi
++	local backup_author_date="$GIT_AUTHOR_DATE"
++	local backup_committer_date="$GIT_COMMITTER_DATE"
++	export GIT_AUTHOR_DATE=`stat -c %y $p`
++	export GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE
+ 
+ 	# commit
+ 	local treeish=`git-write-tree`
+@@ -271,6 +275,16 @@ function push_patch
+ 			unset GIT_AUTHOR_EMAIL
+ 		fi
+ 	fi
++	if [ ! -z "$backup_author_date" ]; then
++		export GIT_AUTHOR_DATE="$backup_author_date"
++	else
++		unset GIT_AUTHOR_DATE
++	fi
++		if [ ! -z "$backup_committer_date" ]; then
++		export GIT_COMMITTER_DATE="$backup_committer_date"
++	else
++		unset GIT_COMMITTER_DATE
++	fi
+ 
+ 	rm -f /tmp/guilt.msg.$$ /tmp/guilt.log.$$
+ 
 -- 
-Julian
-
-  ---
-You are in a maze of little twisting passages, all alike.
+1.5.0.rc4.2.g4249
