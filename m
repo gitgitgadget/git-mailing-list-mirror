@@ -1,81 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: how to speed up "git log"?
-Date: Sun, 11 Feb 2007 18:46:49 -0500
-Message-ID: <20070211234649.GG31488@spearce.org>
-References: <200702111252.28393.bruno@clisp.org> <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de> <200702120041.27419.bruno@clisp.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [RFC] Speeding up a null fetch
+Date: Mon, 12 Feb 2007 00:49:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702120045320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200702112332.14698.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Bruno Haible <bruno@clisp.org>
-X-From: git-owner@vger.kernel.org Mon Feb 12 00:47:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Feb 12 00:50:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGOPL-0008JI-AU
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:46:59 +0100
+	id 1HGOSH-0001P9-Bn
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 00:50:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932926AbXBKXqz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 18:46:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932927AbXBKXqz
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:46:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53195 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932926AbXBKXqz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 18:46:55 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HGOP3-0007Cv-8Y; Sun, 11 Feb 2007 18:46:41 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 758EE20FBAE; Sun, 11 Feb 2007 18:46:49 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <200702120041.27419.bruno@clisp.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932927AbXBKXt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 18:49:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932929AbXBKXt6
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 18:49:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50734 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932927AbXBKXt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 18:49:57 -0500
+Received: (qmail invoked by alias); 11 Feb 2007 23:49:56 -0000
+X-Provags-ID: V01U2FsdGVkX1/4SwRJ0/L4U+/6d3y18jstLOvvyWj11dhY/nXjZe
+	+GcQ==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200702112332.14698.julian@quantumfyre.co.uk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39335>
 
-Bruno Haible <bruno@clisp.org> wrote:
-> Is there some other concept or command that git offers? I'm in the situation
-> where I know that 'tr' in coreutils version 5.2.1 had a certain bug and
-> version 6.4 does not have the bug, and I want to review all commits that
-> are relevant to this. I know that the only changes in tr.c are relevant
-> for this, and I'm interested in a display of the minimum amount of relevant
-> commit messages. If "git log" is not the right command for this question,
-> which command is it?
+Hi,
 
-Two options come to mind:
+On Sun, 11 Feb 2007, Julian Phillips wrote:
 
-  `git log v5.2.1..v6.4 -- tr.c`
-  `git bisect`
+> An artifical test repository that has similar features (~25000 commits,
+> ~8000 tags, ~900 branches and a 2.5Gb packfile) when running locally
+> takes ~20m to clone and ~48m to fetch (with no new commits in the
+> original repository - i.e. the fetch does not update anything) with a
+> current code base (i.e. newer than 1.5.0-rc4).
 
-The former has a few different flavors, e.g. you can run the
-same arguments to `gitk` to view the changes in a graphical form.
-The latter will help you do a binary search through the commits
-which affected tr.c between the known good and known bad revisions,
-allowing you to test the possible candidates for the defect.
- 
-> > > 2) Why so much system CPU time, but only on MacOS X?
-> > 
-> > Probably the mmap() problem. Does it go away when you use git 1.5.0-rc4?
-> 
-> No, it became even worse: git-1.5.0-rc4 is twice as slow as git-1.4.4 for
-> this command:
->   git-1.4.4: 25 seconds real time, 24 seconds of CPU time (12 user, 12 system)
->   git-1.5.0: 50 seconds real time, 39 seconds of CPU time (20 user, 19 system)
+Ouch.
 
-That's not so good... This is `git log -- tr.c >/dev/null` ?
+I hope you packed the refs?
 
--- 
-Shawn.
+BTW your patch
+- was not minimal (and therefore it takes longer than necessary to find 
+  what you actually fixed),
+- it does not show where and how the call to show-ref is avoided (I 
+  eventually understand that you avoid calling update_local_ref early, but 
+  you sure could have made that easier), and
+- it uses Pythong.
+
+Also, it touches a quite core part of git, which will hopefully be 
+replaced by a builtin _after_ 1.5.0.
+
+> However, this seems more band-aid than fix, and I wondered if someone 
+> more familiar with the git internals could point me in the right 
+> direction for a better fix, e.g. should I look at rewriting fetch in C?
+
+Look into the "pu" branch of git. There are the beginnings of a builtin 
+(written in C) fetch.
+
+But this _will_ have to wait until after 1.5.0.
+
+Ciao,
+Dscho
