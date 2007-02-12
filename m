@@ -1,64 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Mon, 12 Feb 2007 01:46:56 +0100
-Organization: At home
-Message-ID: <eqodam$r17$1@sea.gmane.org>
-References: <45CFA30C.6030202@verizon.net> <Pine.LNX.4.63.0702120028340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: darcs2git.py - convert darcs repository using gfi
+Date: Sun, 11 Feb 2007 20:14:01 -0500
+Message-ID: <20070212011401.GK31488@spearce.org>
+References: <eqoaf7$loq$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 12 01:47:00 2007
+Cc: git@vger.kernel.org
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Feb 12 02:14:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGPLN-0002qK-A5
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 01:46:57 +0100
+	id 1HGPlr-0006lt-0Q
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 02:14:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932881AbXBLApy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 19:45:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932938AbXBLApy
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 19:45:54 -0500
-Received: from main.gmane.org ([80.91.229.2]:45134 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932881AbXBLApb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 19:45:31 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HGPJp-0005bD-14
-	for git@vger.kernel.org; Mon, 12 Feb 2007 01:45:21 +0100
-Received: from host-81-190-18-64.torun.mm.pl ([81.190.18.64])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Feb 2007 01:45:21 +0100
-Received: from jnareb by host-81-190-18-64.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Feb 2007 01:45:21 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-18-64.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S932594AbXBLBOI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 20:14:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932821AbXBLBOI
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 20:14:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:55383 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932594AbXBLBOG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 20:14:06 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HGPlQ-0006G3-WD; Sun, 11 Feb 2007 20:13:53 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id D641620FBAE; Sun, 11 Feb 2007 20:14:01 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <eqoaf7$loq$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39347>
 
-Johannes Schindelin wrote:
-> On Sun, 11 Feb 2007, Mark Levedahl wrote:
-> 
->> The major competing solutions git seeks to supplant (cvs, cvsnt, svn, 
->> hg) have capability to recognize "text" files and transparently replace 
->> \r\n with \n on input, the reverse on output, and ignore all such 
->> differences on diff operations.
-> 
-> Agree with transformations on input and output; disagree on diff.
+Han-Wen Nienhuys <hanwen@xs4all.nl> wrote:
+> The python script attached is a try at providing a sane
+> conversion from Darcs to GIT.  It tries to map darcs conflict
+> resolutions onto git branch merges.
 
-I wonder if this could/should be solved with adding some option to git-diff,
-similar to --ignore-space-change and --ignore-all-space...
+Impressive.
+ 
+> Regarding GFI, it's a breeze to work with; my compliments to its
+> author.
 
-Just a [idle] thought.
+Hey, thanks!  ;-)
+
+> My only gripe is the need to specify a branch for each commit.
+> Darcs uses changeset based storage. It doesn't really have branches,
+> but it does record divergent changes and merges of resulting
+> conflicts.  Hence, it's not clear which refs/head/BRANCH should be
+> used when creating a commit object.
+
+Just make something up.  Or don't use refs/heads, instead use your
+own directory e.g. refs/patches/.  Then you can delete the entire
+directory when you are done importing.
+
+> So, my feature request: please make the "commit" command always accept
+> a "from" command
+
+This restriction was a safety valve.  fast-import itself would be
+OK if I permitted a from all of the time.  A bug in cvs2svn caused
+multiple froms to be emitted for the same branch, and that wasn't
+correct, so fast-import crashed on it rather than silently accepting
+the data corruption.
+
+Its actually one of those things that is nice to remove, as its 3
+lines of code that just need to be deleted.  ;-)
+
+> and make the "refs" argument optional.
+
+This is harder than it sounds.  fast-import internally is built
+around the assumption of a branch, which has a name, and which lives
+in the branch LRU.  With the "from" command restriction lifted
+you can just import every single commit onto the same hardcoded
+branch name (e.g. DARCS_HEAD) then delete it when you are done
+(e.g. rm .git/DARCS_HEAD).  That's basically the same thing as an
+optional ref argument.
+
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Shawn.
