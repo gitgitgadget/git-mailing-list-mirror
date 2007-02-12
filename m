@@ -1,64 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Mon, 12 Feb 2007 12:21:29 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702121219550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45CFA30C.6030202@verizon.net>
- <Pine.LNX.4.63.0702120028340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <eqodam$r17$1@sea.gmane.org>
+From: Bruno Haible <bruno@clisp.org>
+Subject: Re: how to speed up "git log"?
+Date: Mon, 12 Feb 2007 12:27:15 +0100
+Message-ID: <200702121227.15757.bruno@clisp.org>
+References: <200702111252.28393.bruno@clisp.org> <200702120041.27419.bruno@clisp.org> <Pine.LNX.4.64.0702112009440.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mlevedahl@verizon.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 12 12:21:45 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Feb 12 12:21:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGZFe-0008Vv-2d
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 12:21:42 +0100
+	id 1HGZFd-0008Vv-Hg
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 12:21:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964837AbXBLLVc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 06:21:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964859AbXBLLVb
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 06:21:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59721 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964837AbXBLLVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 06:21:31 -0500
-Received: (qmail invoked by alias); 12 Feb 2007 11:21:29 -0000
-X-Provags-ID: V01U2FsdGVkX1+zf1h3rPezby2gE7gJ+NPECknDikPAr9aMx1t4d4
-	aGtA==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <eqodam$r17$1@sea.gmane.org>
-X-Y-GMX-Trusted: 0
+	id S964858AbXBLLVM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 06:21:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964859AbXBLLVM
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 06:21:12 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:49688 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964858AbXBLLVL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 06:21:11 -0500
+Received: from linuix.haible.de (cable-137-244.iesy.net [81.210.137.244])
+	by post.webmailer.de (klopstock mo56) (RZmta 4.5)
+	with ESMTP id H0103bj1C9PddG ; Mon, 12 Feb 2007 12:21:08 +0100 (MET)
+User-Agent: KMail/1.5.4
+In-Reply-To: <Pine.LNX.4.64.0702112009440.8424@woody.linux-foundation.org>
+Content-Disposition: inline
+X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY4JDyuz6KRYg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39393>
 
-Hi,
+Linus,
 
-[Cc'ing git list, which I sometimes have to do when Jakub replies]
-
-On Mon, 12 Feb 2007, Jakub Narebski wrote:
-
-> Johannes Schindelin wrote:
-> > On Sun, 11 Feb 2007, Mark Levedahl wrote:
-> > 
-> >> The major competing solutions git seeks to supplant (cvs, cvsnt, svn, 
-> >> hg) have capability to recognize "text" files and transparently replace 
-> >> \r\n with \n on input, the reverse on output, and ignore all such 
-> >> differences on diff operations.
-> > 
-> > Agree with transformations on input and output; disagree on diff.
+> >   git-1.4.4: 25 seconds real time, 24 seconds of CPU time (12 user, 12 system)
+> >   git-1.5.0: 50 seconds real time, 39 seconds of CPU time (20 user, 19 system)
 > 
-> I wonder if this could/should be solved with adding some option to git-diff,
-> similar to --ignore-space-change and --ignore-all-space...
+> That's an interesting fact in itself.
 
-It could be done, but those options were introduced for CRLF breakage in 
-the first place.
+Sorry, these measurements happened to be done in different conditions:
+repo fully cached in RAM vs. repo not yet in buffer cache / page cache.
 
-You need --ignore-crlf-breakage? Just holler.
+When measured under the same conditions, no speed difference is visible
+between git-1.4.4 and git-1.5.0-rc4.
 
-Ciao,
-Dscho
+Bruno
