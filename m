@@ -1,82 +1,110 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Mon, 12 Feb 2007 01:14:21 +0100
-Organization: Dewire
-Message-ID: <200702120114.21477.robin.rosenberg.lists@dewire.com>
-References: <45CFA30C.6030202@verizon.net>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [RFC] Speeding up a null fetch
+Date: Mon, 12 Feb 2007 00:14:12 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0702120005530.5695@beast.quantumfyre.co.uk>
+References: <200702112332.14698.julian@quantumfyre.co.uk>
+ <Pine.LNX.4.63.0702120045320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Mark Levedahl <mlevedahl@verizon.net>
-X-From: git-owner@vger.kernel.org Mon Feb 12 01:13:36 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 12 01:14:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGOp3-0004Ga-9W
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 01:13:33 +0100
+	id 1HGOq3-0004ms-F8
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 01:14:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964AbXBLANY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 11 Feb 2007 19:13:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750954AbXBLANY
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 19:13:24 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:20795 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750950AbXBLANT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Feb 2007 19:13:19 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id CB2F7803395;
-	Mon, 12 Feb 2007 01:08:27 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 15019-06; Mon, 12 Feb 2007 01:08:27 +0100 (CET)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 71B1F80338F;
-	Mon, 12 Feb 2007 01:08:27 +0100 (CET)
-User-Agent: KMail/1.9.4
-In-Reply-To: <45CFA30C.6030202@verizon.net>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1750951AbXBLAOO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 19:14:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750956AbXBLAOO
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 19:14:14 -0500
+Received: from neutron.datavampyre.co.uk ([212.159.54.235]:51927 "EHLO
+	neutron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951AbXBLAON (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 19:14:13 -0500
+Received: (qmail 28178 invoked by uid 103); 12 Feb 2007 00:14:12 +0000
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.88.7/2551. spamassassin: 3.1.3. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.032266 secs); 12 Feb 2007 00:14:12 -0000
+Received: from unknown (HELO beast.quantumfyre.co.uk) (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 12 Feb 2007 00:14:12 +0000
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <Pine.LNX.4.63.0702120045320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39342>
 
-m=E5ndag 12 februari 2007 00:13 skrev Mark Levedahl:
-> The recent threads on a mingw git port are explicit in the intent to=20
-> provide a Windows native git. I believe there is a fundamental confli=
-ct=20
-> here with the position, clearly stated by Linus, that git does not al=
-ter=20
-> content in any way. Windows suffers the curse of DOS line endings (\r=
-\n=20
-> vs \n), and a true port to Windows *must* allow for \r\n and \n to be=
-=20
-> semantically the same thing as most large projects end up with a mixt=
-ure=20
-> of such files and/or are targeting cross-platform capabilities. The=20
-> major competing solutions git seeks to supplant (cvs, cvsnt, svn, hg)=
-=20
-> have capability to recognize "text" files and transparently replace \=
-r\n=20
-> with \n on input, the reverse on output, and ignore all such differen=
-ces=20
-> on diff operations. To be relevant on native Windows, git must do the=
-=20
-> same. Otherwise, git will be deemed "too wierd" and dismissed in favo=
-r=20
-> of a tool "that works."
->=20
-As of today git is a posix tool simply because it's not fully ported to
-other enviromnents. I brought this up quite a time ago, and didn't face=
- heavy artillery
-then, and wouldn't today either. The code is still missing though. I di=
-dn't=20
-write it then, because it's my #1 priority and nobody else did. Linus e=
-ven did a=20
-rough scetch, but that's it.=20
+On Mon, 12 Feb 2007, Johannes Schindelin wrote:
 
-I guess git will get this feature when someone does the code for it.
+> Hi,
+>
+> On Sun, 11 Feb 2007, Julian Phillips wrote:
+>
+>> An artifical test repository that has similar features (~25000 commits,
+>> ~8000 tags, ~900 branches and a 2.5Gb packfile) when running locally
+>> takes ~20m to clone and ~48m to fetch (with no new commits in the
+>> original repository - i.e. the fetch does not update anything) with a
+>> current code base (i.e. newer than 1.5.0-rc4).
+>
+> Ouch.
+>
+> I hope you packed the refs?
 
--- robin
+Unfortunately packing only makes things slower ... as it then becomes 
+impossible to directly access a particular ref directly, which some of the 
+calls to show-ref do.
+
+>
+> BTW your patch
+> - was not minimal (and therefore it takes longer than necessary to find
+>  what you actually fixed),
+> - it does not show where and how the call to show-ref is avoided (I
+>  eventually understand that you avoid calling update_local_ref early, but
+>  you sure could have made that easier), and
+
+Ah yes, sorry.  I seem to have managed to forget to include the paragraph 
+explaining what I had done ... :$
+
+(That'll teach me to trying doing too many things at once.)
+
+> - it uses Pythong.
+>
+> Also, it touches a quite core part of git, which will hopefully be
+> replaced by a builtin _after_ 1.5.0.
+
+Indeed, I would never propose what I have done so far as a fix.  I am 
+definitely still in the investigation phase.
+
+>
+>> However, this seems more band-aid than fix, and I wondered if someone
+>> more familiar with the git internals could point me in the right
+>> direction for a better fix, e.g. should I look at rewriting fetch in C?
+>
+> Look into the "pu" branch of git. There are the beginnings of a builtin
+> (written in C) fetch.
+
+Ah - this I didn't know.  I shall have to have a play with that, I did 
+notice that there is internal caching of the ref list that might magically 
+solve the problem if fetch was a builtin (but I have a feeling that it 
+won't be that simple).
+
+>
+> But this _will_ have to wait until after 1.5.0.
+
+I hope so.  1.5 is looking very nice, and I really don't think that many 
+people have such a stuipdly large repository ...
+
+>
+> Ciao,
+> Dscho
+>
+
+-- 
+Julian
+
+  ---
+You are in a maze of little twisting passages, all alike.
