@@ -1,128 +1,74 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: Merge git-gui into 1.5.0 ?
-Date: Mon, 12 Feb 2007 08:25:29 +0200
-Message-ID: <20070212062529.GE28231@mellanox.co.il>
-References: <7vvei89b9k.fsf@assigned-by-dhcp.cox.net> <20070212055903.GD28231@mellanox.co.il>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: how to speed up "git log"?
+Date: Mon, 12 Feb 2007 01:28:13 -0500
+Message-ID: <20070212062813.GE699@spearce.org>
+References: <200702111252.28393.bruno@clisp.org> <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de> <200702120041.27419.bruno@clisp.org> <200702120059.17676.robin.rosenberg.lists@dewire.com> <7vmz3kaugq.fsf@assigned-by-dhcp.cox.net> <20070212060641.GC699@spearce.org> <7vmz3jaorx.fsf@assigned-by-dhcp.cox.net> <20070212062224.GD699@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Bruno Haible <bruno@clisp.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 12 07:25:03 2007
+X-From: git-owner@vger.kernel.org Mon Feb 12 07:28:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGUcZ-000555-KL
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 07:25:03 +0100
+	id 1HGUfp-0006hk-Sc
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 07:28:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933010AbXBLGY7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 01:24:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933029AbXBLGY7
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 01:24:59 -0500
-Received: from p02c11o144.mxlogic.net ([208.65.145.67]:33019 "EHLO
-	p02c11o144.mxlogic.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933010AbXBLGY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 01:24:58 -0500
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o144.mxlogic.net (mxl_mta-4.0.2-2)
-	with ESMTP id a3800d54.1830480816.47722.00-001.p02c11o144.mxlogic.net (envelope-from <mst@mellanox.co.il>);
-	Sun, 11 Feb 2007 23:24:58 -0700 (MST)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 12 Feb 2007 08:27:12 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation); Mon, 12 Feb 2007 08:22:58 +0200
+	id S933029AbXBLG2X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 01:28:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933030AbXBLG2X
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 01:28:23 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:35873 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933029AbXBLG2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 01:28:22 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HGUff-0004DC-Do; Mon, 12 Feb 2007 01:28:15 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id D0D2920FBAE; Mon, 12 Feb 2007 01:28:13 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20070212055903.GD28231@mellanox.co.il>
+In-Reply-To: <20070212062224.GD699@spearce.org>
 User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 12 Feb 2007 06:27:12.0205 (UTC) FILETIME=[D482A7D0:01C74E6E]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-14988.001
-X-TM-AS-Result: No--15.154300-4.000000-2
-X-Spam: [F=0.1295462456; S=0.129(2007010901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39377>
 
-> Quoting Michael S. Tsirkin <mst@mellanox.co.il>:
-> Subject: Re: Merge git-gui into 1.5.0 ?
-> 
-> > Quoting Junio C Hamano <junkio@cox.net>:
-> > Subject: Re: Merge git-gui into 1.5.0 ?
-> > 
-> > "Michael S. Tsirkin" <mst@mellanox.co.il> writes:
-> > 
-> > > Actually, -p<n> option to git-am is also useful for piping
-> > > patches to git-am directly from mail: sometimes people would generate
-> > > a patch by hand and this results in patches incorrect -p level.
-> > 
-> > You also would need negative -p option to deal with it as well.
-> > Think of getting "diff a/git-add.txt b/git-add.txt" and wanting
-> > to apply it to Documentation/git-add.txt.
-> 
-> Heh, right. With patch I just switch to another shell, cd to the correct
-> directory, start mutt *there* and pipe the message to patch.  Since this already
-> seems to work for git-apply, maybe this can be made to work with git-am as well?
-> 
-> Currently:
-> $git-am mbox
-> fatal: Not a git repository: '.git'
-> You need to run this command from the toplevel of the working tree.
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> Junio C Hamano <junkio@cox.net> wrote:
+> > "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > > So I ran three trials, v1.5.0-rc4-26-gcc46a74 with and without
+> > > NO_MMAP against v1.4.4.4 on a freshly repacked git.git.
 
-Junio, the following seems to work for me. Is this correct?
-If yes, adding -p is trivial.
+I probably should have mentioned, my run (in all cases) was:
 
-Make git-am support "negative strip-level" patches by running it
-in a subdirectory.
+	git rev-list HEAD -- Makefile 2>/dev/null
 
-Signed-off-by: Michael S. Tsirkin <mst@mellanox.co.il>
+cheap, a file that exists pretty much everywhere, and that triggers
+the path limiter in the revision walking code.
 
----
+BTW, I discovered by accident tonight that this works:
 
-diff --git a/git-am.sh b/git-am.sh
-index 9a61234..4cea1d2 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -5,6 +5,8 @@
- USAGE='[--signoff] [--dotest=<dir>] [--utf8 | --no-utf8] [--binary] [--3way]
-   [--interactive] [--whitespace=<option>] [-CNUM] <mbox>...
-   or, when resuming [--skip | --resolved]'
-+where=$PWD
-+SUBDIRECTORY_OK=Yes
- . git-sh-setup
- set_reflog_action am
- require_work_tree
-@@ -60,7 +62,7 @@ fall_back_3way () {
-     mkdir "$dotest/patch-merge-tmp-dir"
- 
-     # First see if the patch records the index info that we can use.
--    git-apply -z --index-info "$dotest/patch" \
-+    (cd $where && git-apply -z --index-info "$dotest/patch") \
- 	>"$dotest/patch-merge-index-info" &&
-     GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
-     git-update-index -z --index-info <"$dotest/patch-merge-index-info" &&
-@@ -69,8 +71,8 @@ fall_back_3way () {
-     cannot_fallback "Patch does not record usable index information."
- 
-     echo Using index info to reconstruct a base tree...
--    if GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
--	git-apply $binary --cached <"$dotest/patch"
-+    if (cd $where && GIT_INDEX_FILE="$dotest/patch-merge-tmp-index" \
-+	git-apply $binary --cached <"$dotest/patch")
-     then
- 	mv "$dotest/patch-merge-base+" "$dotest/patch-merge-base"
- 	mv "$dotest/patch-merge-tmp-index" "$dotest/patch-merge-index"
-@@ -398,7 +400,7 @@ do
- 
- 	case "$resolved" in
- 	'')
--		git-apply $git_apply_opt $binary --index "$dotest/patch"
-+		(cd $where && git-apply $git_apply_opt $binary --index "$dotest/patch")
- 		apply_status=$?
- 		;;
- 	t)
+	cp git-rev-list ../git-1444
+	../git-1444 rev-list
+
+which is so not something I would have expected.  :-) I honestly
+expected the wrapper to puke and say it doesn't know what command
+1444 is.
+
 -- 
-MST
+Shawn.
