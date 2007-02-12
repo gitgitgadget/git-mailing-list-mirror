@@ -1,83 +1,66 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: [ANNOUNCE] Guilt v0.19
-Date: Mon, 12 Feb 2007 14:48:17 -0500
-Message-ID: <20070212194816.GB12616@filer.fsl.cs.sunysb.edu>
+From: "Don Zickus" <dzickus@gmail.com>
+Subject: committing empty diffs
+Date: Mon, 12 Feb 2007 14:49:36 -0500
+Message-ID: <68948ca0702121149p4d87ae07jd3aa532a0df79156@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 12 20:49:10 2007
+X-From: git-owner@vger.kernel.org Mon Feb 12 20:49:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGhAh-0006Pj-Ek
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 20:49:07 +0100
+	id 1HGhBG-0006gQ-AI
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 20:49:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965351AbXBLTsU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 14:48:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965353AbXBLTsU
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 14:48:20 -0500
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:37801 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965351AbXBLTsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 14:48:19 -0500
-Received: from filer.fsl.cs.sunysb.edu (IDENT:7u+PDi6/h+A+IwXT9RjP19zbD3szAUnt@localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l1CJmHrJ014948;
-	Mon, 12 Feb 2007 14:48:17 -0500
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l1CJmH2V014946;
-	Mon, 12 Feb 2007 14:48:17 -0500
+	id S965348AbXBLTti (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 14:49:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965350AbXBLTti
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 14:49:38 -0500
+Received: from nz-out-0506.google.com ([64.233.162.225]:22882 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965348AbXBLTth (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 14:49:37 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so1728827nze
+        for <git@vger.kernel.org>; Mon, 12 Feb 2007 11:49:36 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=kiBlI1YIwocNJQ8GJv/iiO3Swz+8krT2trYzXg3mlCA2Y7Pawy2D5GFP8tcPvrV8iw+AYrYGf/byqDTxsKcKZDVitCN2bwRIacRmQFa/4UWjd1MJ4AiOP35NkzpnBRbBV6nOIqN9mG9DCwvhVVykPYadtXBx2O/uAdcCaHQHpYQ=
+Received: by 10.114.197.1 with SMTP id u1mr6282537waf.1171309776547;
+        Mon, 12 Feb 2007 11:49:36 -0800 (PST)
+Received: by 10.114.80.9 with HTTP; Mon, 12 Feb 2007 11:49:36 -0800 (PST)
 Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39428>
 
-Guilt v0.19 is available for download (once it mirrors out on kernel.org).
+I was toying around with the idea of keeping track of scripts or
+config files in my home directory.  Most of the time my commits would
+include a change to the file I was tracking.  However, there are a
+couple of cases where I wanted to commit empty diffs.  For example,
+ideas or todos about that particular file that I didn't want to embed
+in the file itself nor write it in yet another file labeled ideas or
+todos.  I thought it would be easier to just to run a 'git log' on the
+file and see my whole thought process.
 
-Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
-queues-like functionality and interface to git.
+Considering git-commit doesn't allow this (probably for good reason),
+is it technically safe to do the following sequence of events?
 
-Tarballs:
-http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
+tree=$(git-write-tree)  #basically the same tree HEAD points to
+commit=$(echo $IDEAS | git-commit-tree $tree -p HEAD)
+git-update-ref HEAD $commit HEAD
 
-Git repo:
-git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
+I figured all a commit is doing is taking a snapshot of a particular
+tree at a moment in time.  And taking multiple snapshots at that same
+moment and stringing them together (pointed to by HEAD) wouldn't be a
+big deal.
 
+Am I going to wind up shooting myself in the foot later or will this
+work?  Light testing didn't show any issues.  Thought I would ask the
+experts.  Thanks.
 
-The most important change is the use of the patch file's mtime as the
-GIT_{AUTHOR,COMMITTER}_DATE. Without this change, repeated invocations of
-"guilt pop -a; guilt push -a" would create new commit's with different
-commit dates, creating a lot of garbage commits. Other changes are mostly
-related to expanding (and slightly fixing) the regression scripts.
-
-Josef "Jeff" Sipek.
-
-------------
-
-Changes since v0.18:
-
-Josef 'Jeff' Sipek (18):
-      guilt-applied: added -c to list the commit hash for the patch
-      guilt-new: Fix [ syntax
-      patchbomb: Friendly wrapper for git-format-patch & git-send-email
-      delete: Added argument -f to remove patch file
-      Guilt v0.19-rc1
-      regression: test new patch insertion
-      regression: test new patch insertion at the end
-      regression: Test push/pop given a patch name
-      regression: Test for guilt-init in a already initialized branch
-      regression: Test guilt-init on non-master branch
-      regression: Fix test descriptions
-      Centralize editor determining code
-      new: added -e to edit the patch description interactively
-      Makefile: Forgot to add guilt-patchbomb to the list of scripts
-      regression: Fix regression test failure
-      patchbomb: Added -n flag
-      regression: Fixed regression suite failure
-      Guilt v0.19
-
-Theodore Ts'o (1):
-      Use patch file's modtime as the git author and commiter date
+Cheers,
+Don
