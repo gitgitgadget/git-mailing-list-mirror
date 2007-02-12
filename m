@@ -1,45 +1,70 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git merge documentation: -m is optional
-Date: Mon, 12 Feb 2007 13:56:18 -0800
-Message-ID: <7vy7n36nwd.fsf@assigned-by-dhcp.cox.net>
-References: <20070205113727.GB27077@moooo.ath.cx>
-	<20070212170757.GA20826@moooo.ath.cx>
+Subject: Re: [PATCH] Fix cg-commit -p to not touch the working tree
+Date: Mon, 12 Feb 2007 14:01:57 -0800
+Message-ID: <7vtzxr6nmy.fsf@assigned-by-dhcp.cox.net>
+References: <20070212031923.D20B913A382@magnus.utsl.gen.nz>
+	<7v8xf4atoe.fsf@assigned-by-dhcp.cox.net>
+	<45D0CC74.9020606@vilain.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Feb 12 22:56:26 2007
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Mon Feb 12 23:02:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGj9r-0002SV-SL
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 22:56:24 +0100
+	id 1HGjFU-0005bk-FZ
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 23:02:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965338AbXBLV4U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 16:56:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965425AbXBLV4U
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 16:56:20 -0500
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:46262 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965338AbXBLV4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 16:56:19 -0500
+	id S965436AbXBLWB7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 17:01:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965437AbXBLWB7
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 17:01:59 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61448 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965436AbXBLWB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 17:01:59 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070212215619.FQGL1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 12 Feb 2007 16:56:19 -0500
+          id <20070212220158.WMXG1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 12 Feb 2007 17:01:58 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id NlwJ1W0181kojtg0000000; Mon, 12 Feb 2007 16:56:19 -0500
+	id Nm1y1W0021kojtg0000000; Mon, 12 Feb 2007 17:01:58 -0500
+In-Reply-To: <45D0CC74.9020606@vilain.net> (Sam Vilain's message of "Tue, 13
+	Feb 2007 09:22:12 +1300")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39445>
 
-Matthias Lederhofer <matled@gmx.net> writes:
+Sam Vilain <sam@vilain.net> writes:
 
-> Is anything wrong with this documentation update?
+> Junio C Hamano wrote:
+>>> Previously, the working tree state was modified with `patch', which
+>>> was a fragile operation.  Do everything with `git-apply --cached
+>>> --index' instead.
+>>>     
+>> I do not use Cogito so I do not know what behaviour is wanted
+>> here, but '--cached --index' is same as saying just '--cached'
+>> as far as I know.  It will patch against the index and should
+>> not touch working tree.  If the original used 'patch' to apply,
+>> I suspect it wanted to touch the working tree (and possibly, it
+>> wanted to leave the index alone?), so --cached might be
+>> completely wrong thing to use here?
+>>   
+>
+> The context is that "cg-commit -p", a kind of poor man's interactive
+> commit that lets you preview changes that are to be committed in 'diff'
+> form, and edit the patch to be applied. Many users expect this command
+> to behave this way; they're quite surprised and sometimes even miffed
+> when the changes they deleted from the patch are gone from their working
+> copy.
 
-Was dropped by accident, I think.  Care to resend?
+Ah, I see that's why you do want to leave the working tree
+untouched.  I think '--cached' alone is the right way to spell
+it (strictly speaking, giving --index and --cached should error
+out, although the current implementation does not).
