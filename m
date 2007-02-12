@@ -1,72 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Merge git-gui into 1.5.0 ?
-Date: Mon, 12 Feb 2007 18:42:12 -0500
-Message-ID: <20070212234212.GB30967@spearce.org>
-References: <20070211084030.GE2082@spearce.org> <7vwt2oba8s.fsf@assigned-by-dhcp.cox.net> <20070211224158.GA31488@spearce.org> <7v64a782ht.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702130037530.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Mon, 12 Feb 2007 15:42:50 -0800
+Message-ID: <7vfy9b6iyt.fsf@assigned-by-dhcp.cox.net>
+References: <45CFA30C.6030202@verizon.net> <20070212042425.GB18010@thunk.org>
+	<Pine.LNX.4.64.0702120839490.8424@woody.linux-foundation.org>
+	<7vps8f6l81.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702130020450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 13 00:42:22 2007
+X-From: git-owner@vger.kernel.org Tue Feb 13 00:42:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGkoO-00072j-S6
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 00:42:21 +0100
+	id 1HGkp0-0007Ly-TU
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 00:42:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030503AbXBLXmS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 18:42:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030506AbXBLXmS
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 18:42:18 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:45669 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030503AbXBLXmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 18:42:17 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HGko8-0007iE-KZ; Mon, 12 Feb 2007 18:42:04 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9AD5C20FBAE; Mon, 12 Feb 2007 18:42:12 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702130037530.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030514AbXBLXmx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 18:42:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030509AbXBLXmx
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 18:42:53 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:42464 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030511AbXBLXmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 18:42:52 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070212234252.YNJF1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 12 Feb 2007 18:42:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Nniq1W00q1kojtg0000000; Mon, 12 Feb 2007 18:42:51 -0500
+In-Reply-To: <Pine.LNX.4.63.0702130020450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 13 Feb 2007 00:24:55 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39460>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Hi,
+>
 > On Mon, 12 Feb 2007, Junio C Hamano wrote:
-> 
-> > Ok, so here is what I did last night.
-> > 
-> > $ git remote show git-gui
-> > * remote git-gui
-> >   URL: git://repo.or.cz/git-gui.git/
-> >   Tracked remote branches
-> >     master
-> > $ git fetch git-gui
-> > $ git read-tree --prefix=git-gui/ git-gui/master
-> > $ git checkout git-gui
-> 
-> Didn't you mean "git checkout master" here?
+>
+>> I agree that we can assume editors can grok files with LF end-of-line 
+>> just fine and we would not need to do the reverse conversion on checkout 
+>> paths (e.g. "read-tree -u", "checkout-index").
+>
+> In that case, a simple pre-commit hook would suffice.
+>
+> No, the problem mentioned by Mark was a very real one: you _cannot_ rely 
+> on Windows' editors not to fsck up with line endings. The worst case is if 
+> the file contains _some_ CRLF and _some _LF_. Almost always I had the 
+> problem that it now converted _all_ LFs to CRLFs. Even those which already 
+> were converted.
+>
+> So, if we are to support text mode, it is not one-way. If we do one-way, 
+> we really do _not_ support text mode, but pre-commit conversion to LF 
+> style text. And in this case, core git does not need _any_ change.
 
-I don't think so.  At this point the subdirectory git-gui is known
-in the index, so Junio is trying to get checkout-index to process
-those paths and create it in the working directory.
- 
-> > $ git rev-parse git-gui/master >.git/MERGE_HEAD
-> > $ git commit
+Well I disagree in two counts.
 
--- 
-Shawn.
+ - I do not see how you propose to solve some CRLF and some LF
+   case with both-ways conversion.
+
+ - Pre-commit hook would not be sufficient.  In a edit, diff,
+   test and then commit cycle, diff and test step needs to look
+   at whatever the editor left on the filesystem, so the changes
+   to populate-filespec is needed to make diff part work.
+
+
+   
