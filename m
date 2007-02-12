@@ -1,66 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Efficiency of initial clone from server
-Date: Sun, 11 Feb 2007 20:38:09 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702112022430.1757@xanadu.home>
-References: <9e4733910702111153p1691ad99nda97325b34b7a13f@mail.gmail.com>
- <20070211225326.GC31488@spearce.org>
- <9e4733910702111525x176053d3y9fd6d809ac447c0a@mail.gmail.com>
+From: Bruno Haible <bruno@clisp.org>
+Subject: Re: how to speed up "git log"?
+Date: Mon, 12 Feb 2007 03:02:00 +0100
+Message-ID: <200702120302.00576.bruno@clisp.org>
+References: <200702111252.28393.bruno@clisp.org> <200702120041.27419.bruno@clisp.org> <200702120059.17676.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 12 02:38:22 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Feb 12 02:56:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGQ97-0001Hm-H8
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 02:38:21 +0100
+	id 1HGQQW-0000WM-4C
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 02:56:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932825AbXBLBiM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 20:38:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932929AbXBLBiM
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 20:38:12 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:42950 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932825AbXBLBiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 20:38:11 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDB00F2ATVL5KO0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 11 Feb 2007 20:38:09 -0500 (EST)
-In-reply-to: <9e4733910702111525x176053d3y9fd6d809ac447c0a@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S932925AbXBLB4D (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 20:56:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932927AbXBLB4D
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 20:56:03 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:13164 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932925AbXBLB4B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 20:56:01 -0500
+Received: from linuix.haible.de (cable-137-244.iesy.net [81.210.137.244])
+	by post.webmailer.de (klopstock mo32) (RZmta 4.5)
+	with ESMTP id B00fd0j1BIuKc0 ; Mon, 12 Feb 2007 02:55:57 +0100 (MET)
+User-Agent: KMail/1.5.4
+In-Reply-To: <200702120059.17676.robin.rosenberg.lists@dewire.com>
+Content-Disposition: inline
+X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY4JDyuz6KRYg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39349>
 
-On Sun, 11 Feb 2007, Jon Smirl wrote:
+Thanks for the responses.
 
-> On 2/11/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > Jon Smirl <jonsmirl@gmail.com> wrote:
-> > > remote: Total 63, written 63 (delta 0), reused 63 (delta 0)
-> > > 100% (63/63) done
-> > > fatal: pack: not a valid SHA1
-> > > New branch: 0953670fbcb75e26fb93340bddae934e85618f2e
-> >
-> > What version of git is this?  That looks like we're assuming the word
-> > pack was an object, but I'm not sure why we would do such a thing...
+Robin Rosenberg wrote:
+> Since you know that you are not interested in the whole history, you can limit your scan.
+> 
+> git log COREUTILS-5_2_1..COREUTILS-6_4 src/tr.c
 
-This "pack" comes from pack-index when providing the name of the pack.
-It is either "pack" or "keep" and specifies the name of the .keep file 
-to remove in the later case.
-This is caught by git-fetch.sh with some code identified with a comment 
-that reads: "# special line coming from index-pack with the pack name"
+Thanks, that indeed does the trick: it reduces the time from 33 sec to 11 sec.
 
-> jonsmirl@jonsmirl:/usr/local/bin$ git --version
-> git version 1.5.0.rc2.g53551-dirty
+To reduce the time even more, and to allow more flexibility among the
+search criteria (e.g. "I need the commits from date X to date Y, on this
+file set, from anyone except me"), I would need to connect git to a database.
+git cannot store all kinds of indices and reverse mappings to allow all
+kinds of queries; that's really a classical database application area.
 
-You must have conflicting vintage of GIT installations on your machine 
-with missing support for the "pack" and "keep" stuff described above.
+> > No, it became even worse: git-1.5.0-rc4 is twice as slow as git-1.4.4 for
+> > this command:
+> >   git-1.4.4: 25 seconds real time, 24 seconds of CPU time (12 user, 12 system)
+> >   git-1.5.0: 50 seconds real time, 39 seconds of CPU time (20 user, 19 system)
+> 
+> Could the UTF-8 stuff have anything to do with this?
 
+Actually, no. Brown paper bag on me for doing benches in different
+conditions. The timing difference is an effect of the buffer cache / page
+cache:
 
-Nicolas
+  - After the second repetition of the command (i.e. when all files are cached
+    in RAM), the timings are
+        25 seconds real time, 24 seconds of CPU time (13 user, 11 system)
+    both in git-1.4.4 and -1.5.0-rc4.
+
+  - After unmounting and remounting the disk containing the repository (i.e.
+    when none of the files are cached in RAM), the timings are
+        49 seconds real time, 38 seconds of CPU time (20 user, 18 system)
+
+Sorry for the false alarm.
+
+Bruno
