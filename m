@@ -1,64 +1,115 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Sun, 11 Feb 2007 23:28:02 -0800 (PST)
-Message-ID: <Pine.LNX.4.63.0702112325560.6287@qynat.qvtvafvgr.pbz>
-References: <45CFA30C.6030202@verizon.net> <20070212042425.GB18010@thunk.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: Why a _full_ diff? (was: [PATCH] Char: serial167, cleanup (fwd))
+Date: Mon, 12 Feb 2007 09:39:46 +0100 (CET)
+Message-ID: <Pine.LNX.4.62.0702120934120.10436@chinchilla.sonytel.be>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Feb 12 08:46:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 12 09:39:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGVt8-0001MC-Vr
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 08:46:15 +0100
+	id 1HGWj3-0002YB-KU
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 09:39:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933105AbXBLHnm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 02:43:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933088AbXBLHnD
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 02:43:03 -0500
-Received: from warden-p.diginsite.com ([208.29.163.248]:62637 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S964774AbXBLHmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 02:42:44 -0500
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sun, 11 Feb 2007 23:42:43 -0800
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sun, 11 Feb 2007 23:42:34 -0800
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <20070212042425.GB18010@thunk.org>
+	id S933120AbXBLIjt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 03:39:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933124AbXBLIjt
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 03:39:49 -0500
+Received: from vervifontaine.sonytel.be ([80.88.33.193]:52979 "EHLO
+	vervifontaine.sonycom.com" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S933120AbXBLIjs (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Feb 2007 03:39:48 -0500
+Received: from chinchilla.sonytel.be (piraat.sonytel.be [43.221.60.197])
+	by vervifontaine.sonycom.com (Postfix) with ESMTP id 41A3258ADF
+	for <git@vger.kernel.org>; Mon, 12 Feb 2007 09:39:46 +0100 (MET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39384>
 
-On Sun, 11 Feb 2007, Theodore Tso wrote:
+	Hi,
 
-> Then for each file type, we implement a set of interfaces (perhaps as
-> simple as a series of executables named git-<type>-<operation>) which
-> if present, transforms the file from its live format to the canonical
-> format which is actually checked in and back again.  Besides using
-> this for the DOS CR/LF problem, it also allows for an efficient
-> storage of things like OpenOffice files which are a zipped set of .xml
-> files.  By decompressing them before pushing them into the SCM, it
-> means that if the user makes a tiny spelling correction in their
-> OpenOffice file, the delta stored in the git repository can be much
-> more efficiently stored (since the diff of the .xml tree will be
-> small, where as the diff of the entire compressed file is likely going
-> to be close to the entire size of the .odt file).
->
-> Another nice thing to provide for each file type would be a
-> pretty-printer for the diffs, so it becomes easier to see the delta
-> between two versions of an OpenOffice file in a textual window.
->
-> So, is this idea sane or completely insane?  Hopefully it passes
-> Linus's it-solves-multiple-problems-at-once test, at least.  :-)
+I received the email below, showing a _full_ (i.e. every single line) diff
+between the old and the new version:
 
-there have been other things discussed that could use the 'do this on checkout' 
-hooks, specificly on the issue of useing git to manage /etc the need to 
-save/restore permissions requires a hook on checkout that doesn't exist yet. 
-this sounds like it would solve that problem as well.
+| Date: Sun, 11 Feb 2007 20:00:54 GMT
+| From: Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+| To: git-commits-head@vger.kernel.org
+| Subject: [PATCH] Char: serial167, cleanup
+| 
+| Gitweb:     http://git.kernel.org/git/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=44bafdf37b30234671d4e2fb595dea4c3717d089
+| Commit:     44bafdf37b30234671d4e2fb595dea4c3717d089
+| Parent:     30a063a900518926966f4d75333c1bfbde1658fa
+| Author:     Jiri Slaby <jirislaby@gmail.com>
+| AuthorDate: Sat Feb 10 01:45:08 2007 -0800
+| Committer:  Linus Torvalds <torvalds@woody.linux-foundation.org>
+| CommitDate: Sun Feb 11 10:51:28 2007 -0800
+| 
+|     [PATCH] Char: serial167, cleanup
+|     
+|     serial167, cleanup
+|     
+|     - Lindent the code
+|     - remove 3 pointers from paranoia_check
+|     
+|     Signed-off-by: Jiri Slaby <jirislaby@gmail.com>
+|     Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+|     Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+| ---
+|  drivers/char/serial167.c | 5616 +++++++++++++++++++++++-----------------------
+|  1 files changed, 2792 insertions(+), 2824 deletions(-)
+| 
+| diff --git a/drivers/char/serial167.c b/drivers/char/serial167.c
+| dissimilarity index 67%
+| index af50d32..5fd314a 100644
+| --- a/drivers/char/serial167.c
+| +++ b/drivers/char/serial167.c
+| @@ -1,2824 +1,2792 @@
+| -/*
+| - * linux/drivers/char/serial167.c
+| - *
 
-David Lang
+    [...]
+
+| -#endif
+| -
+| -MODULE_LICENSE("GPL");
+| +/*
+| + * linux/drivers/char/serial167.c
+| + *
+
+    [...]
+
+| +#endif
+| +
+| +MODULE_LICENSE("GPL");
+| -
+| To unsubscribe from this list: send the line "unsubscribe git-commits-head" in
+| the body of a message to majordomo@vger.kernel.org
+| More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+At first I thought the new version had CR/LF line endings or so, but that
+isn't the case.
+
+Just using
+
+| anakin$ git show 44bafdf37b30234671d4e2fb595dea4c3717d089 | diffstat
+|  serial167.c | 3322 +++++++++++++++++++++++++++++-------------------------------
+|  1 file changed, 1645 insertions(+), 1677 deletions(-)
+| anakin$
+
+shows that far from all lines were changed.
+
+Gr{oetje,eeting}s,
+
+						Geert
+
+P.S. I'm not subscribed to git@vger.kernel.org, please CC me on replies
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+							    -- Linus Torvalds
