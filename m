@@ -1,91 +1,64 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: StGIT discards local commits on "stg pull"
-Date: Mon, 12 Feb 2007 02:26:25 -0500
-Message-ID: <20070212022625.rvyyo0kc0wowgogc@webmail.spamcop.net>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Sun, 11 Feb 2007 23:28:02 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0702112325560.6287@qynat.qvtvafvgr.pbz>
+References: <45CFA30C.6030202@verizon.net> <20070212042425.GB18010@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Yann Dirson <ydirson@altern.org>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 12 08:26:33 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Feb 12 08:46:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGVa5-0000GB-0N
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 08:26:33 +0100
+	id 1HGVt8-0001MC-Vr
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 08:46:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933061AbXBLH01 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 02:26:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933062AbXBLH00
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 02:26:26 -0500
-Received: from mailgate.cesmail.net ([216.154.195.36]:51358 "HELO
-	mailgate.cesmail.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S933061AbXBLH00 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 02:26:26 -0500
-Received: (qmail 18588 invoked from network); 12 Feb 2007 07:26:25 -0000
-Received: from unknown (HELO delta.cesmail.net) (192.168.1.30)
-  by mailgate.cesmail.net with SMTP; 12 Feb 2007 07:26:25 -0000
-Received: (qmail 30597 invoked by uid 99); 12 Feb 2007 07:26:25 -0000
-Received: from c-71-230-131-166.hsd1.pa.comcast.net
-	(c-71-230-131-166.hsd1.pa.comcast.net [71.230.131.166]) by
-	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
-	Mon, 12 Feb 2007 02:26:25 -0500
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) 4.0-cvs
+	id S933105AbXBLHnm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 02:43:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933088AbXBLHnD
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 02:43:03 -0500
+Received: from warden-p.diginsite.com ([208.29.163.248]:62637 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S964774AbXBLHmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 02:42:44 -0500
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sun, 11 Feb 2007 23:42:43 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sun, 11 Feb 2007 23:42:34 -0800
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <20070212042425.GB18010@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39383>
 
-Hello!
+On Sun, 11 Feb 2007, Theodore Tso wrote:
 
-I have been bitten by a strange bug/feature of StGIT, and it looks like it's not
-only counterintuitive, but also inconsistent with git.
+> Then for each file type, we implement a set of interfaces (perhaps as
+> simple as a series of executables named git-<type>-<operation>) which
+> if present, transforms the file from its live format to the canonical
+> format which is actually checked in and back again.  Besides using
+> this for the DOS CR/LF problem, it also allows for an efficient
+> storage of things like OpenOffice files which are a zipped set of .xml
+> files.  By decompressing them before pushing them into the SCM, it
+> means that if the user makes a tiny spelling correction in their
+> OpenOffice file, the delta stored in the git repository can be much
+> more efficiently stored (since the diff of the .xml tree will be
+> small, where as the diff of the entire compressed file is likely going
+> to be close to the entire size of the .odt file).
+>
+> Another nice thing to provide for each file type would be a
+> pretty-printer for the diffs, so it becomes easier to see the delta
+> between two versions of an OpenOffice file in a textual window.
+>
+> So, is this idea sane or completely insane?  Hopefully it passes
+> Linus's it-solves-multiple-problems-at-once test, at least.  :-)
 
-I have a repository available over ssh and I push to it from several places.  
-Sometimes I make a commit and forget to push it.  Then I run "stg pull" to make
-sure my repository is up to date.
+there have been other things discussed that could use the 'do this on checkout' 
+hooks, specificly on the issue of useing git to manage /etc the need to 
+save/restore permissions requires a hook on checkout that doesn't exist yet. 
+this sounds like it would solve that problem as well.
 
-The result is that the repository is rebased back to the last remote commit. 
-It's very easy to miss.  There is no warning.  Everything looks just like an
-update from the remote.
-
-The example below shows that git-pull keeps my commit, but "stg pull" discards
-it by rebasing back to the remote ID.
-
-My .gitconfig doesn't override "stg pull" behavior; it merely sets my name and
-mail aliases.
-
-[proski@dl stgit-test]$ stg id
-ebc429e7b7e596a12e8255fadc397123893cec73
-[proski@dl stgit-test]$ echo "test change" >README
-[proski@dl stgit-test]$ git-commit -m "test commit" README
-Created commit 468861a2a1530f3bf98108e69632b3059e4ca0ce
- 1 files changed, 1 insertions(+), 14 deletions(-)
-[proski@dl stgit-test]$ git-pull
-Fetching refs/heads/master from http://homepage.ntlworld.com/cmarinas/stgit.git
-using http
-Fetching refs/heads/stable from http://homepage.ntlworld.com/cmarinas/stgit.git
-using http
-Already up-to-date.
-[proski@dl stgit-test]$ stg id
-468861a2a1530f3bf98108e69632b3059e4ca0ce
-[proski@dl stgit-test]$ stg pull
-Checking for changes in the working directory... done
-Pulling from "origin"...
-Fetching refs/heads/master from http://homepage.ntlworld.com/cmarinas/stgit.git
-using http
-Fetching refs/heads/stable from http://homepage.ntlworld.com/cmarinas/stgit.git
-using http
-rebasing to "ebc429e7b7e596a12e8255fadc397123893cec73"...
-done
-No patches applied
-[proski@dl stgit-test]$ stg id
-ebc429e7b7e596a12e8255fadc397123893cec73
-[proski@dl stgit-test]$
-
---
-Regards,
-Pavel Roskin
+David Lang
