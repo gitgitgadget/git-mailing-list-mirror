@@ -1,74 +1,70 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: how to speed up "git log"?
-Date: Mon, 12 Feb 2007 01:28:13 -0500
-Message-ID: <20070212062813.GE699@spearce.org>
-References: <200702111252.28393.bruno@clisp.org> <Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de> <200702120041.27419.bruno@clisp.org> <200702120059.17676.robin.rosenberg.lists@dewire.com> <7vmz3kaugq.fsf@assigned-by-dhcp.cox.net> <20070212060641.GC699@spearce.org> <7vmz3jaorx.fsf@assigned-by-dhcp.cox.net> <20070212062224.GD699@spearce.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] Allow aliases to expand to shell commands
+Date: Sun, 11 Feb 2007 22:56:24 -0500
+Message-ID: <20070212035613.GA18010@thunk.org>
+References: <20070209014852.GA13207@thunk.org> <1171123504783-git-send-email-tytso@mit.edu> <11711235041527-git-send-email-tytso@mit.edu> <11711235042388-git-send-email-tytso@mit.edu> <20070210181357.GE25607@thunk.org> <Pine.LNX.4.63.0702102129110.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070211001346.GA19656@thunk.org> <Pine.LNX.4.63.0702111701160.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070211162136.GA26461@thunk.org> <7vy7n4cqti.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Bruno Haible <bruno@clisp.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 12 07:28:26 2007
+X-From: git-owner@vger.kernel.org Mon Feb 12 07:39:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGUfp-0006hk-Sc
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 07:28:26 +0100
+	id 1HGUqQ-0003Wh-9f
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 07:39:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933029AbXBLG2X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 01:28:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933030AbXBLG2X
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 01:28:23 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:35873 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933029AbXBLG2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 01:28:22 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HGUff-0004DC-Do; Mon, 12 Feb 2007 01:28:15 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D0D2920FBAE; Mon, 12 Feb 2007 01:28:13 -0500 (EST)
+	id S933032AbXBLGjL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 01:39:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933037AbXBLGjL
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 01:39:11 -0500
+Received: from thunk.org ([69.25.196.29]:35541 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933032AbXBLGjK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 01:39:10 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HGUvK-0000hf-6S; Mon, 12 Feb 2007 01:44:26 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HGSIi-00023J-2N; Sun, 11 Feb 2007 22:56:25 -0500
 Content-Disposition: inline
-In-Reply-To: <20070212062224.GD699@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <7vy7n4cqti.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39378>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Junio C Hamano <junkio@cox.net> wrote:
-> > "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > > So I ran three trials, v1.5.0-rc4-26-gcc46a74 with and without
-> > > NO_MMAP against v1.4.4.4 on a freshly repacked git.git.
+On Sun, Feb 11, 2007 at 01:44:25PM -0800, Junio C Hamano wrote:
+> Theodore Tso <tytso@mit.edu> writes:
+> 
+> > ..., I think we're
+> > still safe, since aliases can't override commands.  
+> 
+> I feel a bit uneasy to hear safety argument based on that
+> current restriction, since we might want to loosen it later.
 
-I probably should have mentioned, my run (in all cases) was:
+Loosen which restriction?
 
-	git rev-list HEAD -- Makefile 2>/dev/null
+1) The ability for aliases to shadow existing git commands?
+2) The ability for untrusted users to make arbitrary changes to the 
+      config file?
+3) The ability for untrusted users to execute arbitrary git commands via 
+      git-shell?
 
-cheap, a file that exists pretty much everywhere, and that triggers
-the path limiter in the revision walking code.
+You hjave to loosen at least 2 of the 3 current restrictions before
+the ability to execute shell commands out of aliases becomes a problem
+--- and I would argue that either (2) or (3) are things that we would
+be insane to loosen at least to the point of allowing untrusted users
+to make arbitrary changes to the config or execute arbitrary git
+commands, since even today, they could do a huge amount of damage
+already.
 
-BTW, I discovered by accident tonight that this works:
-
-	cp git-rev-list ../git-1444
-	../git-1444 rev-list
-
-which is so not something I would have expected.  :-) I honestly
-expected the wrapper to puke and say it doesn't know what command
-1444 is.
-
--- 
-Shawn.
+						- Ted
