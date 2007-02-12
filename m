@@ -1,84 +1,113 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: [PATCH] Use patch file's modtime as the git author and commiter date
-Date: Sun, 11 Feb 2007 18:24:35 -0500
-Message-ID: <11712362751442-git-send-email-tytso@mit.edu>
-Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>
-To: jsipek@cs.sunysb.edu
-X-From: git-owner@vger.kernel.org Mon Feb 12 01:17:17 2007
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [RFC] Speeding up a null fetch
+Date: Mon, 12 Feb 2007 00:18:29 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0702120014510.5695@beast.quantumfyre.co.uk>
+References: <200702112332.14698.julian@quantumfyre.co.uk>
+ <20070211235218.GH31488@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 12 01:18:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGOse-00066y-D1
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 01:17:16 +0100
+	id 1HGOtu-0006hU-Hp
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 01:18:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbXBLARK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 19:17:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbXBLARJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 19:17:09 -0500
-Received: from thunk.org ([69.25.196.29]:36699 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750985AbXBLARI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 19:17:08 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HGOxe-0008FN-3I; Sun, 11 Feb 2007 19:22:26 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HGO3f-0001DK-QL; Sun, 11 Feb 2007 18:24:35 -0500
-X-Mailer: git-send-email 1.5.0.rc4.2.g4249
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1750968AbXBLASb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 19:18:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750987AbXBLASb
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 19:18:31 -0500
+Received: from neutron.datavampyre.co.uk ([212.159.54.235]:58875 "EHLO
+	neutron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750968AbXBLASb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 19:18:31 -0500
+Received: (qmail 28360 invoked by uid 103); 12 Feb 2007 00:18:29 +0000
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.88.7/2551. spamassassin: 3.1.3. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.032669 secs); 12 Feb 2007 00:18:29 -0000
+Received: from unknown (HELO beast.quantumfyre.co.uk) (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 12 Feb 2007 00:18:29 +0000
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <20070211235218.GH31488@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39344>
 
-By using the same author and committer date, it keeps the git commit
-id's stable if the patches haven't changed.  Otherwise, repeated
-invocations of "guilt pop -a; guilt push -a" will create new commit's
-with different commit dates, creating a lot of garbage commits that
-won't disappear for a LONG time, even after running "git-gc --prune",
-thanks to the reflog in git 1.5.
+On Sun, 11 Feb 2007, Shawn O. Pearce wrote:
 
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
----
- guilt |   14 ++++++++++++++
- 1 files changed, 14 insertions(+), 0 deletions(-)
+> Julian Phillips <julian@quantumfyre.co.uk> wrote:
+>> Investigation showed that the main culprit seemed to be show-ref
+>> having to build a sorted list of all refs for every ref that was being
+>> checked.  So I used the patch below to reduce this to a single call to
+>> show-ref (unless the ref had been updated).  With this patch the fetch
+>> timed dropped to just under 1m - obviously quite a lot faster (better
+>> than I expected in fact).
+>
+> Have a look at the `pu` branch in git.git.  Junio has done some
+> work in this area to handle 1000 refs better:
+>
+>  ...
+>  commit 58fef67cb067b6dee8f94b7b0e0c1a2d324e3505
+>  Author: Junio C Hamano <junkio@cox.net>
+>  Date:   Tue Jan 16 02:31:36 2007 -0800
+>
+>    git-fetch: rewrite another shell loop in C
+>
+>    Move another shell loop that canonicalizes the list of refs for
+>    underlying git-fetch-pack and fetch-native-store into C.
+>
+>    This seems to shave the runtime for the same 1000 branch
+>    repository from 30 seconds down to 15 seconds (it used to be 2
+>    and half minutes with the original version).
+>
+>    Signed-off-by: Junio C Hamano <junkio@cox.net>
+>
+>  commit 3fc3729cd08e9d40dad54ccdd4db53900eca197b
+>  Author: Junio C Hamano <junkio@cox.net>
+>  Date:   Tue Jan 16 01:53:29 2007 -0800
+>
+>    git-fetch: move more code into C.
+>
+>    This adds "native-store" subcommand to git-fetch--tool to
+>    move a huge loop implemented in shell into C.  This shaves about
+>    70% of the runtime to fetch and update 1000 tracking branches
+>    with a single fetch.
+>
+>    Signed-off-by: Junio C Hamano <junkio@cox.net>
+>  ...
+>
 
-diff --git a/guilt b/guilt
-index ced441b..7cb52c4 100755
---- a/guilt
-+++ b/guilt
-@@ -248,6 +248,10 @@ function push_patch
- 
- 		export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
- 	fi
-+	local backup_author_date="$GIT_AUTHOR_DATE"
-+	local backup_committer_date="$GIT_COMMITTER_DATE"
-+	export GIT_AUTHOR_DATE=`stat -c %y $p`
-+	export GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE
- 
- 	# commit
- 	local treeish=`git-write-tree`
-@@ -271,6 +275,16 @@ function push_patch
- 			unset GIT_AUTHOR_EMAIL
- 		fi
- 	fi
-+	if [ ! -z "$backup_author_date" ]; then
-+		export GIT_AUTHOR_DATE="$backup_author_date"
-+	else
-+		unset GIT_AUTHOR_DATE
-+	fi
-+		if [ ! -z "$backup_committer_date" ]; then
-+		export GIT_COMMITTER_DATE="$backup_committer_date"
-+	else
-+		unset GIT_COMMITTER_DATE
-+	fi
- 
- 	rm -f /tmp/guilt.msg.$$ /tmp/guilt.log.$$
- 
+I shall have to see how this work fares with ~9000 refs ... but it 
+certainly sounds good.
+
+>> However, this seems more band-aid than fix, and I wondered if someone
+>> more familiar with the git internals could point me in the right
+>> direction for a better fix, e.g. should I look at rewriting fetch in C?
+>
+> Rewriting fetch in C is a lot of work, not just in developing it,
+> but in testing that all existing functionality is preserved and no
+> new bugs are introduced.  Rewriting some of the performance critical
+> parts perhaps makes sense.
+
+Indeed - this is why I asked rather than just diving in.
+
+> Rewriting them in Python doesn't, as
+> we no longer have any Python dependency, and would like to keep it
+> that way (actuallly, some folks are also trying to remove the Perl
+> dependency from some of our critical tools).
+
+I only used python for speed of development, I was simply trying to verify 
+my suspicions.  I certainly wouldn't expect a python script to get added 
+(having seen all the python scripts get replaced).
+
 -- 
-1.5.0.rc4.2.g4249
+Julian
+
+  ---
+There are no accidents whatsoever in the universe.
+ 		-- Baba Ram Dass
