@@ -1,71 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: how to speed up "git log"?
-Date: Mon, 12 Feb 2007 12:19:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702121215190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200702111252.28393.bruno@clisp.org> <200702120041.27419.bruno@clisp.org>
- <200702120059.17676.robin.rosenberg.lists@dewire.com> <200702120302.00576.bruno@clisp.org>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Mon, 12 Feb 2007 12:21:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702121219550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45CFA30C.6030202@verizon.net>
+ <Pine.LNX.4.63.0702120028340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <eqodam$r17$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: Bruno Haible <bruno@clisp.org>
-X-From: git-owner@vger.kernel.org Mon Feb 12 12:19:35 2007
+Cc: Mark Levedahl <mlevedahl@verizon.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 12 12:21:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGZDa-0007Vx-Lx
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 12:19:35 +0100
+	id 1HGZFe-0008Vv-2d
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 12:21:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964824AbXBLLT3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 06:19:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964831AbXBLLT3
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 06:19:29 -0500
-Received: from mail.gmx.net ([213.165.64.20]:32932 "HELO mail.gmx.net"
+	id S964837AbXBLLVc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 06:21:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964859AbXBLLVb
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 06:21:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59721 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964824AbXBLLT2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 06:19:28 -0500
-Received: (qmail invoked by alias); 12 Feb 2007 11:19:26 -0000
-X-Provags-ID: V01U2FsdGVkX19K/9dStUxKs+O4cZM3a4drX7SkxsmMqqO2FRc9hq
-	E+6g==
+	id S964837AbXBLLVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 06:21:31 -0500
+Received: (qmail invoked by alias); 12 Feb 2007 11:21:29 -0000
+X-Provags-ID: V01U2FsdGVkX1+zf1h3rPezby2gE7gJ+NPECknDikPAr9aMx1t4d4
+	aGtA==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200702120302.00576.bruno@clisp.org>
+In-Reply-To: <eqodam$r17$1@sea.gmane.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39392>
 
 Hi,
 
-On Mon, 12 Feb 2007, Bruno Haible wrote:
+[Cc'ing git list, which I sometimes have to do when Jakub replies]
 
-> Robin Rosenberg wrote:
-> > Since you know that you are not interested in the whole history, you can limit your scan.
+On Mon, 12 Feb 2007, Jakub Narebski wrote:
+
+> Johannes Schindelin wrote:
+> > On Sun, 11 Feb 2007, Mark Levedahl wrote:
 > > 
-> > git log COREUTILS-5_2_1..COREUTILS-6_4 src/tr.c
+> >> The major competing solutions git seeks to supplant (cvs, cvsnt, svn, 
+> >> hg) have capability to recognize "text" files and transparently replace 
+> >> \r\n with \n on input, the reverse on output, and ignore all such 
+> >> differences on diff operations.
+> > 
+> > Agree with transformations on input and output; disagree on diff.
 > 
-> Thanks, that indeed does the trick: it reduces the time from 33 sec to 11 sec.
-> 
-> To reduce the time even more, and to allow more flexibility among the 
-> search criteria (e.g. "I need the commits from date X to date Y, on this 
-> file set, from anyone except me"), I would need to connect git to a 
-> database. git cannot store all kinds of indices and reverse mappings to 
-> allow all kinds of queries; that's really a classical database 
-> application area.
+> I wonder if this could/should be solved with adding some option to git-diff,
+> similar to --ignore-space-change and --ignore-all-space...
 
-[in the following paragraph, "index" means the index on a classical 
-database table]
+It could be done, but those options were introduced for CRLF breakage in 
+the first place.
 
-And -- as everywhere else with classical databases -- you have to ask if 
-it is worth it. Given the fact that a one-time use of such an index is 
-_worse_ than doing it without index at all (building and writing the 
-index is _at least_ as expensive as searching once without an index), I'd 
-rather doubt it.
-
-However, if you do similar kinds of searches quite often, it makes tons of 
-sense to connect to a database. We already use sqlite in cvsserver, so I'd 
-try that.
+You need --ignore-crlf-breakage? Just holler.
 
 Ciao,
 Dscho
