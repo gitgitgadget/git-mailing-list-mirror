@@ -1,51 +1,49 @@
 From: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
 Subject: Re: git-gui blametool
-Date: Mon, 12 Feb 2007 21:58:33 +0530
-Message-ID: <45D095B1.9070308@gmail.com>
+Date: Mon, 12 Feb 2007 22:03:04 +0530
+Message-ID: <45D096C0.9070002@gmail.com>
 References: <45D07A76.1070009@gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed;
- boundary="------------090102080803070405000402"
+ boundary="------------070007080809040402090500"
 Cc: git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 12 17:30:29 2007
+To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 12 17:33:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGe4J-0007ae-4l
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 17:30:19 +0100
+	id 1HGe7n-0000fP-93
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 17:33:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964926AbXBLQ3c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 11:29:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964936AbXBLQ3c
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 11:29:32 -0500
-Received: from main.gmane.org ([80.91.229.2]:57039 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964926AbXBLQ3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 11:29:31 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HGe3I-0005Fv-Cd
-	for git@vger.kernel.org; Mon, 12 Feb 2007 17:29:16 +0100
-Received: from 59.92.185.27 ([59.92.185.27])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Feb 2007 17:29:16 +0100
-Received: from aneesh.kumar by 59.92.185.27 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Feb 2007 17:29:16 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 59.92.185.27
+	id S964946AbXBLQdS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 11:33:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964960AbXBLQdS
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 11:33:18 -0500
+Received: from nz-out-0506.google.com ([64.233.162.226]:44580 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964946AbXBLQdR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 11:33:17 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so1667699nze
+        for <git@vger.kernel.org>; Mon, 12 Feb 2007 08:33:16 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type;
+        b=SV9Uil4S8t9+mh3nBSyrjAiQcl0EwKFmP81AAszi+dVMRuhpV8CWsZPiz/0gAWNxLThpOqVQS/i8Hg9w2/DjWXp9q+i2vUQqPCZ9l1Jqih9ssRes2pfEcPQDyYiVCAnMU7MD6c349vT9GPsbkBbhmlts5FVM87wUu6nkWija+FY=
+Received: by 10.35.91.10 with SMTP id t10mr6413057pyl.1171297996639;
+        Mon, 12 Feb 2007 08:33:16 -0800 (PST)
+Received: from ?192.168.2.69? ( [59.92.185.27])
+        by mx.google.com with ESMTP id n44sm12505737pyh.2007.02.12.08.33.05;
+        Mon, 12 Feb 2007 08:33:10 -0800 (PST)
 User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
 In-Reply-To: <45D07A76.1070009@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39412>
 
 This is a multi-part message in MIME format.
---------------090102080803070405000402
+--------------070007080809040402090500
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -74,7 +72,7 @@ window to be a bit larger. Any help ?
 -aneesh
 
 
---------------090102080803070405000402
+--------------070007080809040402090500
 Content-Type: text/x-patch;
  name="blameview.perl.diff"
 Content-Transfer-Encoding: 7bit
@@ -149,4 +147,4 @@ index 807d01f..67a0714 100755
  }
  
 
---------------090102080803070405000402--
+--------------070007080809040402090500--
