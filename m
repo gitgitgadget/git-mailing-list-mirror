@@ -1,134 +1,101 @@
-From: AJ Rossini <blindglobe@gmail.com>
-Subject: git-svn on a strangely configured (pathwise) subversion repository
-Date: Mon, 12 Feb 2007 11:36:00 +0100
-Organization: BlindGlobe Networks
-Message-ID: <200702121136.06382.blindglobe@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn test suite failures due to Subversion race
+Date: Mon, 12 Feb 2007 02:38:22 -0800
+Message-ID: <20070212103822.GA21413@localdomain>
+References: <45CFDFDE.8080907@uwaterloo.ca>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2971984.k7758K6QWv";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 12 11:38:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Spang <mspang@uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Mon Feb 12 11:38:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGYZm-0005uX-81
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 11:38:26 +0100
+	id 1HGYa0-00062P-RJ
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 11:38:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964851AbXBLKiX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 05:38:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbXBLKiX
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 05:38:23 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:19360 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964851AbXBLKiW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 05:38:22 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so2199898nfa
-        for <git@vger.kernel.org>; Mon, 12 Feb 2007 02:38:20 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:message-id;
-        b=U6YFgURElIHu6m9F6sZg2a1p/rhH8oe/QJdlG+GJHU3KU6RT+tRpwxOEQX8veDYMZAeWgYFvR+XTzBCQ0yqHy2PgR3h+h8Uo8YKQ+juB8/57aYAfhBji3wHIgHIZKvg/kc0ZoOD4RgYBGkGh/4+Yjth/oweaVL6YUCsIV6GIk/Y=
-Received: by 10.48.48.1 with SMTP id v1mr4496812nfv.1171276700107;
-        Mon, 12 Feb 2007 02:38:20 -0800 (PST)
-Received: from servant.local ( [83.77.97.47])
-        by mx.google.com with ESMTP id v20sm29222824nfc.2007.02.12.02.38.19;
-        Mon, 12 Feb 2007 02:38:19 -0800 (PST)
-User-Agent: KMail/1.9.5
+	id S964852AbXBLKi0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 05:38:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964853AbXBLKi0
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 05:38:26 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:56378 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964852AbXBLKiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 05:38:25 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 1DC927DC094;
+	Mon, 12 Feb 2007 02:38:23 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 12 Feb 2007 02:38:22 -0800
+Content-Disposition: inline
+In-Reply-To: <45CFDFDE.8080907@uwaterloo.ca>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39390>
 
---nextPart2971984.k7758K6QWv
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Michael Spang <mspang@uwaterloo.ca> wrote:
+> Some of the git-svn tests can fail on fast machines due to a race in
+> Subversion: if a file is modified in the same second it was checked out
+> (or in for that matter), Subversion will not consider it modified.
+> Apparently there is also a "racy Subversion" problem parallel to the
+> "racy-git" problem. The machine is an Athlon 64 X2 3800+.
 
-Greetings all -
+I don't think any of my machines are even half as fast.  The git-svn
+tests take a long time on my dev machine, so we have entirely different
+issues.
 
-(paths and names changed, but basically correct)
+> For example, test #3 of t9106-git-svn-commit-diff-clobber.sh will fail
+> if Subversion happens to fail to make any commit in test #2 of the same
+> file. Test #2 will silently pass if no commit was made, as it is not an
+> error to commit nothing. The commit in #3 is supposed to conflict with
+> the one from #2, but obviously won't if that commit wasn't made. So in
+> this case test #3's commit succeeds when failure is expected, and the
+> test fails. The [annotated] output of a test run where this happens is
+> attached. A couple of other tests have the same problem.
+> 
+> This may be a known issue, but my search of the archives was fruitless
+> and it doesn't appear to be documented anywhere. It's obviously one that
+> would need to ultimately be fixed in Subversion, although a workaround
+> in the test suite might help those whose builds depend on a passing test
+> suite. It's problematic for me to have the git test suite fail because
+> the git package for Debian runs the test suite while building, and will
+> abort the build if there are failures.
 
-I'm trying to use git-svn as a svn client on a repository which is not quit=
-e=20
-configured in a standard way...  i.e.=20
+Not known to me.  This is the first time I've heard of this issue; but
+I'm not at all surprised that this is happening, though.
 
-$ git svn fetch                                                            =
-                                                    =20
-RA layer request failed: PROPFIND request failed on '/path/to': PROPFIND=20
-of '/path/to': 403 Forbidden (https://dummy-host-name.com)=20
-at /usr/bin/git-svn line 2861
+> Until this race is fixed in Subversion I guess I'm stuck either skipping
+> the git-svn tests or inserting `sleep 1` in a few places to work around
+> it. A patch that works around this problem in all of the tests that
+> failed for me is attached in case its useful to someone. Even faster
+> machines may reveal more instances of the problem. I did not attempt to
+> "fix" any tests that will still pass if commits are lost.
 
+This is disconcerting.  Given that hardware is still getting faster, I
+suspect there will be many more problems with the svn tests in the
+future.  I have no plans for upgrading hardware in the near future; so I
+won't be hitting these problems myself.
 
-where as from my working svn copy (no problems from svn, of course, sigh...=
-),=20
-I'm getting:
+I'm alright with adding the `sleep 1` in several more places where this
+can be an issue.  If it gets bad enough for people with slower
+computers, I'll probably just create a function that sleeps only if a
+variable is not set (TOO_SLOW_TO_RACE=1 :)
 
-$ svn info                                                                 =
-                                                   =20
-Path: .
-URL: https://dummy-host-name.com/path/to/projects/project
-Repository Root: https://dummy-host-name.com/path/to
-Repository UUID: 97840717-62f2-0310-bead-daafb7b60902
-Revision: 554
-Node Kind: directory
-Schedule: normal
-Last Changed Author: someone
-Last Changed Rev: 514
-Last Changed Date: 2007-01-25 14:20:44 +0100 (Thu, 25 Jan 2007)
+I've been considering rewriting the tests to use the Perl SVN::
+libraries exclusively; but that runs the risk of introducing new bugs.
 
-The problem seems to be that the Repository Root directory is not readable,=
-=20
-while the URL is (at least for me, using HTTPS).
+> From 97e90fcd7cf600726ec468016eb37d1e1de38dde Mon Sep 17 00:00:00 2001
+> From: Michael Spang <mspang@uwaterloo.ca>
+> Date: Sun, 11 Feb 2007 20:56:22 -0500
+> Subject: [PATCH] Work around Subversion race in git-svn tests.
+> 
+> Signed-off-by: Michael Spang <mspang@uwaterloo.ca>
 
-This is using
-$ git --version                                                            =
-                                                   =20
-git version 1.4.4.4
+It would've been good to have the above email explanation above in the
+commit message below so we know why the patch was needed (when it gets
+applied).
 
-(on debian unstable).
-
-Here is what I'm considering:=20
-#1 - upgrading to the 1.5.0 RC series
-#2 - trying Eric Wong's git-svn branch at http://git.bogomips.org/git-svn.g=
-it
-#3 - getting a dump of the repository from the owner, loading it into a loc=
-al=20
-svn server, and doing a local conversion...
-
-With respect to #1/#2, I'm a bit cautious with upgrading to something not r=
-ock=20
-solid (let's just say that except for this, git 1.4.4.4 has been excellent=
-=20
-for my needs...).
-
-With respect to #3 - I'd prefer not to waste the admin's (personal) time if=
-=20
-not necessary!
-
-Does any one have any thoughts?  =20
-
-best,
-=2Dtony
-
-blindglobe@gmail.com
-Muttenz, Switzerland.
-"Commit early,commit often, and commit in a repository from which we can=20
-easily roll-back your mistakes" (AJR, 4Jan05).
-
---nextPart2971984.k7758K6QWv
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBF0EMWeKAfgkUpPRARAt97AKCbxokMnZsN/XJlU2fPb9u34Zq7owCfdBKD
-Wl4fQIJojB1u4C2FCc6QqTk=
-=XTl/
------END PGP SIGNATURE-----
-
---nextPart2971984.k7758K6QWv--
+-- 
+Eric Wong
