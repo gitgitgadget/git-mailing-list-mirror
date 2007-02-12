@@ -1,68 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Subject: Re: add negative -p to git-am, Re: Merge git-gui into 1.5.0 ?
-Date: Mon, 12 Feb 2007 13:06:05 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702121304450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702121250270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070212115943.GA15526@mellanox.co.il>
+Date: Mon, 12 Feb 2007 14:26:07 +0200
+Message-ID: <20070212122607.GC15526@mellanox.co.il>
+References: <Pine.LNX.4.63.0702121304450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>,
 	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: git-owner@vger.kernel.org Mon Feb 12 13:06:22 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 12 13:25:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGZwo-0003TX-BN
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 13:06:18 +0100
+	id 1HGaFi-0003YE-3B
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 13:25:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964888AbXBLMGI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 07:06:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964897AbXBLMGI
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 07:06:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50945 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964888AbXBLMGG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 07:06:06 -0500
-Received: (qmail invoked by alias); 12 Feb 2007 12:06:05 -0000
-X-Provags-ID: V01U2FsdGVkX18MVhdGsIsMkpSNsd7ukCJEXCIGy5kuOST29VkjRu
-	iu3g==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070212115943.GA15526@mellanox.co.il>
-X-Y-GMX-Trusted: 0
+	id S964893AbXBLMZr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 07:25:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964897AbXBLMZr
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 07:25:47 -0500
+Received: from dev.mellanox.co.il ([194.90.237.44]:33508 "EHLO
+	dev.mellanox.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964893AbXBLMZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 07:25:46 -0500
+Received: from mellanox.co.il ([194.90.237.34])
+	by dev.mellanox.co.il (8.13.1/8.13.1) with SMTP id l1CCPVkj008093;
+	Mon, 12 Feb 2007 14:25:31 +0200
+Received: by mellanox.co.il (sSMTP sendmail emulation); Mon, 12 Feb 2007 14:26:07 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702121304450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39400>
 
-Hi,
-
-On Mon, 12 Feb 2007, Michael S. Tsirkin wrote:
-
-> > Quoting Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> > Subject: add negative -p to git-am, Re: Merge git-gui into 1.5.0 ?
+> > > > Make git-am support "negative strip-level" patches by running it in a 
+> > > > subdirectory.
+> > > 
+> > > I'd rather hide this behind a command line switch to git-am, since it _is_ 
+> > > a feature that you do not have to cd to the repo root when git-am'ing 
+> > > correct patches.
 > > 
-> > Hi,
-> > 
-> > On Mon, 12 Feb 2007, Michael S. Tsirkin wrote:
-> > 
-> > > Make git-am support "negative strip-level" patches by running it in a 
-> > > subdirectory.
-> > 
-> > I'd rather hide this behind a command line switch to git-am, since it _is_ 
-> > a feature that you do not have to cd to the repo root when git-am'ing 
-> > correct patches.
+> > Maybe it *could* be a nice feature, but it does *not* currently work,
 > 
-> Maybe it *could* be a nice feature, but it does *not* currently work,
+> yes, I read your email. My point was more to allow both use cases, and 
+> hide the more obscure one behind an option.
 
-yes, I read your email. My point was more to allow both use cases, and 
-hide the more obscure one behind an option.
+I guess one person's obscure case is the other's common one.
 
-> And I think git-am is really similiar to git-apply functionally, so
-> it should work in a similiar manner.
-
-Except git-apply works without a repository, too.
-
-Ciao,
-Dscho
+-- 
+MST
