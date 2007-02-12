@@ -1,89 +1,137 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: restriction of pulls
-Date: Mon, 12 Feb 2007 15:13:44 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702121508360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200702091149.12462.duelli@melosgmbh.de>
- <Pine.LNX.4.63.0702091554160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45CC941E.9030808@dawes.za.net> <Pine.LNX.4.63.0702101533060.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45D07296.7070804@dawes.za.net>
+From: Michael Loeffler <zvpunry@zvpunry.de>
+Subject: [PATCH] import-tars: use Archive::Tar instead of unpack()
+Date: Mon, 12 Feb 2007 15:17:11 +0100
+Message-ID: <1171289831.629.6.camel@ibook.zvpunry.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Rogan Dawes <lists@dawes.za.net>,
-	Christoph Duelli <duelli@melosgmbh.de>, git@vger.kernel.org
-To: Rogan Dawes <discard@dawes.za.net>
-X-From: git-owner@vger.kernel.org Mon Feb 12 15:13:54 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 12 15:17:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGbwE-0007QQ-T8
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 15:13:51 +0100
+	id 1HGbzp-0000aB-MO
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 15:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964936AbXBLONr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 09:13:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964938AbXBLONr
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 09:13:47 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59402 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964936AbXBLONq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 09:13:46 -0500
-Received: (qmail invoked by alias); 12 Feb 2007 14:13:45 -0000
-X-Provags-ID: V01U2FsdGVkX19X5ExhjANXROmNETR3G4YFFJgKj1zM6aBBZWVv3G
-	NVDQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45D07296.7070804@dawes.za.net>
-X-Y-GMX-Trusted: 0
+	id S964945AbXBLOR2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 09:17:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbXBLOR2
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 09:17:28 -0500
+Received: from mx01.ap-wdsl.de ([88.198.184.82]:60370 "EHLO mx01.ap-wdsl.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964940AbXBLOR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 09:17:26 -0500
+X-Mailer: Evolution 2.6.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39403>
 
-Hi,
+this is less obscure, does not use gzcat (which is often installed as zcat)
+and it is shorter.
 
-On Mon, 12 Feb 2007, Rogan Dawes wrote:
+Signed-off-by: Michael Loeffler <zvpunry@zvpunry.de>
+---
 
-> Johannes Schindelin wrote:
-> > 
-> > (my favourite:)
-> > - use git-split to create a new branch, which only contains doc/. Do work
-> > only on that branch, and merge into mainline from time to time.
-> 
-> Your third option sounds quite clever, apart from the problem of attributing a
-> commit and a commit message to someone, when the actual commit doesn't match
-> what they actually did :-(
+This version does no longer support bzip2 or compress which will be fixed in
+an amend. I did this patch to solve 2 problems. Maybe I do another patch with
+GetoptLong and bzip2/compress support.
 
-This problem is not related to subprojects at all. If the commit message 
-does not match the patch, you are always fscked.
+The first is a bug with this $git_mode variable which should be 0644 of
+0755, but nothing else I think.
 
-> As well as wondering what happens when they check out a few more files. Do we
-> rewrite those commits as well? What happens if the user has made some commits
-> already? What happens if they have already sent those upstream? etc.
+The second problem was the usage of gzcat, I don't have this link
+(Debian sid).
 
-I think you misunderstood. My favourite option would make docs a 
-_separate_ project, with its own history. It just happens to be pulled 
-from time to time, just like git-gui, gitk and git-fast-import in git.git.
-
-> I think the best solution is ultimately to make git able to cope with 
-> certain missing objects.
-
-Hmm. I am not convinced. On nice thing about git is its level of 
-integrity. Which means that no random objects are missing.
-
-> I started writing this in response to another message, but it will do fine
-> here, too:
-> 
-> The description I give here will likely horrify people in terms of
-> communications inefficiency, but I'm sure that can be improved.
->
-> [goes on... and describes the lazy clone!]
-
-AFAICT this really is the lazy clone. And it was already determined that 
-it is all to easy to pull in all commit objects by accident. Which boils 
-down to a substantial chunk of the repository.
-
-But if you want to play with it: by all means, go ahead. It might just be 
-that you overcome the fundamental difficulties, and we get something nice 
-out of it.
-
-Ciao,
-Dscho
+diff --git a/contrib/fast-import/import-tars.perl b/contrib/fast-import/import-tars.perl
+index 26c42c9..c084573 100755
+--- a/contrib/fast-import/import-tars.perl
++++ b/contrib/fast-import/import-tars.perl
+@@ -10,6 +10,10 @@
+ ##
+ 
+ use strict;
++use Archive::Tar;
++use Archive::Tar::File;
++use Archive::Tar::Constant;
++
+ die "usage: import-tars *.tar.{gz,bz2,Z}\n" unless @ARGV;
+ 
+ my $branch_name = 'import-tars';
+@@ -23,48 +27,25 @@ foreach my $tar_file (@ARGV)
+ {
+ 	$tar_file =~ m,([^/]+)$,;
+ 	my $tar_name = $1;
+-
+-	if ($tar_name =~ s/\.(tar\.gz|tgz)$//) {
+-		open(I, '-|', 'gzcat', $tar_file) or die "Unable to gzcat $tar_file: $!\n";
+-	} elsif ($tar_name =~ s/\.(tar\.bz2|tbz2)$//) {
+-		open(I, '-|', 'bzcat', $tar_file) or die "Unable to bzcat $tar_file: $!\n";
+-	} elsif ($tar_name =~ s/\.tar\.Z$//) {
+-		open(I, '-|', 'zcat', $tar_file) or die "Unable to zcat $tar_file: $!\n";
+-	} elsif ($tar_name =~ s/\.tar$//) {
+-		open(I, $tar_file) or die "Unable to open $tar_file: $!\n";
+-	} else {
+-		die "Unrecognized compression format: $tar_file\n";
+-	}
++	$tar_name =~ s/\.(tar|tgz|tar\.gz)$//;
++	my $tar = new Archive::Tar($tar_file) or die "Unable to open $tar_file: $!\n";
+ 
+ 	my $commit_time = 0;
+ 	my $next_mark = 1;
+ 	my $have_top_dir = 1;
+ 	my ($top_dir, %files);
+ 
+-	while (read(I, $_, 512) == 512) {
+-		my ($name, $mode, $uid, $gid, $size, $mtime,
+-			$chksum, $typeflag, $linkname, $magic,
+-			$version, $uname, $gname, $devmajor, $devminor,
+-			$prefix) = unpack 'Z100 Z8 Z8 Z8 Z12 Z12
+-			Z8 Z1 Z100 Z6
+-			Z2 Z32 Z32 Z8 Z8 Z*', $_;
+-		last unless $name;
+-		$mode = oct $mode;
+-		$size = oct $size;
+-		$mtime = oct $mtime;
+-		next if $mode & 0040000;
+-
+-		print FI "blob\n", "mark :$next_mark\n", "data $size\n";
+-		while ($size > 0 && read(I, $_, 512) == 512) {
+-			print FI substr($_, 0, $size);
+-			$size -= 512;
+-		}
+-		print FI "\n";
+-
+-		my $path = "$prefix$name";
+-		$files{$path} = [$next_mark++, $mode];
+-
+-		$commit_time = $mtime if $mtime > $commit_time;
++	foreach my $entry ($tar->get_files()) {
++		next if $entry->type != FILE;
++
++		printf FI "blob\nmark :%s\ndata %s\n%s\n", $next_mark,
++			$entry->size, $entry->get_content();
++
++		my $path = $entry->prefix . $entry->name;
++		$files{$path} = [$next_mark++, $entry->mode];
++
++		$commit_time = $entry->mtime if $entry->mtime > $commit_time;
++
+ 		$path =~ m,^([^/]+)/,;
+ 		$top_dir = $1 unless $top_dir;
+ 		$have_top_dir = 0 if $top_dir ne $1;
+@@ -83,10 +64,8 @@ EOF
+ 	foreach my $path (keys %files)
+ 	{
+ 		my ($mark, $mode) = @{$files{$path}};
+-		my $git_mode = 0644;
+-		$git_mode |= 0700 if $mode & 0111;
+ 		$path =~ s,^([^/]+)/,, if $have_top_dir;
+-		printf FI "M %o :%i %s\n", $git_mode, $mark, $path;
++		printf FI "M %o :%i %s\n", $mode & 0111 ? 0755 : 0644, $mark, $path;
+ 	}
+ 	print FI "\n";
+ 
+-- 
+1.5.0.rc4
