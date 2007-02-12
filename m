@@ -1,120 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Merge git-gui into 1.5.0 ?
-Date: Mon, 12 Feb 2007 18:34:54 -0500
-Message-ID: <20070212233453.GA30967@spearce.org>
-References: <20070211084030.GE2082@spearce.org> <7vwt2oba8s.fsf@assigned-by-dhcp.cox.net> <20070211224158.GA31488@spearce.org> <7v64a782ht.fsf@assigned-by-dhcp.cox.net>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Mon, 12 Feb 2007 15:23:00 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0702121513350.6630@qynat.qvtvafvgr.pbz>
+References: <45CFA30C.6030202@verizon.net> 
+ <20070212042425.GB18010@thunk.org><Pine.LNX.4.64.0702120839490.8424@woody.l
+ inux-foundation.org><7vps8f6l81.fsf@assigned-by-dhcp.cox.net> 
+ <Pine.LNX.4.64.0702121505560.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0702121514500.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 00:35:05 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>, Theodore Tso <tytso@mit.edu>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Feb 13 00:37:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGkhM-0003Mu-Jy
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 00:35:04 +0100
+	id 1HGkk7-0004px-Pb
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 00:37:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030478AbXBLXfB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 18:35:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030493AbXBLXfB
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 18:35:01 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:45496 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030478AbXBLXfA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 18:35:00 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HGkh6-0006yl-Ta; Mon, 12 Feb 2007 18:34:49 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9B4B420FBAE; Mon, 12 Feb 2007 18:34:54 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v64a782ht.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030493AbXBLXhx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 18:37:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030496AbXBLXhx
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 18:37:53 -0500
+Received: from warden-p.diginsite.com ([208.29.163.248]:56627 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1030493AbXBLXhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 18:37:52 -0500
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 12 Feb 2007 15:37:52 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Mon, 12 Feb 2007 15:37:43 -0800
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <Pine.LNX.4.64.0702121514500.8424@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39457>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > It may be saner for all involved if that development happens in
-> > the git-gui.git repository, with drops made to git.git by way of
-> > merging the "subproject" every so often.
-> 
-> Ok, so here is what I did last night.
-> 
-> $ git remote show git-gui
-> * remote git-gui
->   URL: git://repo.or.cz/git-gui.git/
->   Tracked remote branches
->     master
-> $ git fetch git-gui
-> $ git read-tree --prefix=git-gui/ git-gui/master
-> $ git checkout git-gui
-> $ git rev-parse git-gui/master >.git/MERGE_HEAD
-> $ git commit
+On Mon, 12 Feb 2007, Linus Torvalds wrote:
 
-I just sent you a patch for Makefile in git.git to build git-gui.
-I've also setup things so git-gui's versions track independently of
-git, yet the correct versions are embedded into the release tarball
-and executable in both the standalone and embedded-in-git cases.
-A true subproject!
+> So we'd just need to pass in the information about whether it's binary or
+> not, and then do something like
+>
+> 	@@ -2091,6 +2091,10 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st, int write_object, con
+>
+> 	 	if (!type)
+> 	 		type = blob_type;
+> 	+#ifndef __UNIX__
+> 	+	if (text && !strcmp(type, blob_type))
+> 	+		convert_crlf_to_lf(&buf, &size);
+> 	+#endif
+> 	 	if (write_object)
+> 	 		ret = write_sha1_file(buf, size, type, sha1);
+> 	 	else
+>
+> and that would take care of a lot of things (yeah, I'd not do it that way
+> in practice, but really doesn't look that nasty - it's actually much
+> nastier to have to look up the text/binary type in the first place).
 
-For this to work the gitgui-* tags need to be fetched into your
-repository.  I also took the assumption that the git-gui subdirectory
-is never modified in git.git, but only through merging git-gui's
-commit history.
+you could do something like this and it would deal with the srlf/lf problem, but 
+if you instead put in the conversion hooks like Ted suggested then you can 
+actually gain a LOT more.
 
-To play nice I'm prefixing the git-gui tags with 'gitgui-', rather
-than 'v', so that they don't conflict with git's own version numbers
-within the refs/tags namespace.
+his example of openoffice documents that are gziped xml files is a very good 
+one. if the 'conversion' is to gunzip on checkin and gzip on checkout then the 
+core git logic will work on the nice diffable xml instead of the compressed 
+binary blob.
 
-I am signing gitgui tags with a GPG key. For ease of distribution
-my public key was tagged under spearce-gpg-pub.  The hash for
-spearce-gpg-pub is 8bb563fb25a372a9cb14f0a9b9015d409fd82c16.
+if this is extensable to arbatrary helper functions to do the conversions I'll 
+bet that there are many other cases that can use this.
 
-I'm not sure if it makes sense to push the gitgui-* tags (or
-spearce-gpg-pub) to the public git.git repository.  If these tags
-aren't present then git-gui will fail to get its version number
-and fallback on the hardcoded value in git-gui/GIT-VERSION-GEN.
-Anyone who really cares that this is correct could just fetch
-the tags on their own from repo.or.cz.
+I think the big questions needs to be, is this helper app a filter, or can it be 
+passed a filename as the destination (which would let it do things like set 
+permissions on the files it creates), or should it be both?
 
-Here's the script I was working with to merge git-gui into git.git:
-
--->8--
-#!/bin/sh
-
-remote=git-gui
-branch=master
-
-git-fetch $remote &&
-ggh=$(git-rev-parse $remote/$branch) &&
-ggt=$(git-rev-parse $ggh^{tree}) &&
-tree=$(git ls-tree HEAD \
-	| sed "/	git-gui/s/tree .*	/tree $ggt	/" \
-	| git mktree) &&
-git-read-tree -m -u --exclude-per-directory=.gitignore HEAD $tree &&
-git-update-ref ORIG_HEAD HEAD &&
-git-update-ref MERGE_HEAD $ggh &&
-msg="Merge branch '$branch' of $(git-config remote.$remote.url)
-
-Update to version $(git describe --abbrev=4 $ggh).
-" &&
-echo "$msg" >.git/MERGE_MSG &&
-echo "Merge complete.  Please commit the result." ||
-exit
--->8--
-
--- 
-Shawn.
+David Lang
