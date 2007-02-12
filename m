@@ -1,101 +1,120 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Mon, 12 Feb 2007 15:25:00 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702121514500.8424@woody.linux-foundation.org>
-References: <45CFA30C.6030202@verizon.net> <20070212042425.GB18010@thunk.org>
- <Pine.LNX.4.64.0702120839490.8424@woody.linux-foundation.org>
- <7vps8f6l81.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702121505560.8424@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Merge git-gui into 1.5.0 ?
+Date: Mon, 12 Feb 2007 18:34:54 -0500
+Message-ID: <20070212233453.GA30967@spearce.org>
+References: <20070211084030.GE2082@spearce.org> <7vwt2oba8s.fsf@assigned-by-dhcp.cox.net> <20070211224158.GA31488@spearce.org> <7v64a782ht.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Tso <tytso@mit.edu>,
-	Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 00:25:17 2007
+X-From: git-owner@vger.kernel.org Tue Feb 13 00:35:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGkXs-0006k8-SM
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 00:25:17 +0100
+	id 1HGkhM-0003Mu-Jy
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 00:35:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030479AbXBLXZM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 18:25:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030487AbXBLXZM
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 18:25:12 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:47028 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030479AbXBLXZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 18:25:10 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1CNP1hB030186
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Feb 2007 15:25:02 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1CNP0fB015138;
-	Mon, 12 Feb 2007 15:25:01 -0800
-In-Reply-To: <Pine.LNX.4.64.0702121505560.8424@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.424 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030478AbXBLXfB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 18:35:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030493AbXBLXfB
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 18:35:01 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:45496 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030478AbXBLXfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 18:35:00 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HGkh6-0006yl-Ta; Mon, 12 Feb 2007 18:34:49 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9B4B420FBAE; Mon, 12 Feb 2007 18:34:54 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7v64a782ht.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39456>
 
-
-
-On Mon, 12 Feb 2007, Linus Torvalds wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > It may be saner for all involved if that development happens in
+> > the git-gui.git repository, with drops made to git.git by way of
+> > merging the "subproject" every so often.
 > 
-> But it shouldn't be a problem. We'll always know which one matters: the 
-> index case is always about pure stat information (and has no meaning 
-> outside of that, really - after all, it's no different from st_mode etc, 
-> and we actually keep it in a special binary format that is endian-safe!) 
-> and the "real object" case is always about the *data* we use to compare 
-> with.
+> Ok, so here is what I did last night.
+> 
+> $ git remote show git-gui
+> * remote git-gui
+>   URL: git://repo.or.cz/git-gui.git/
+>   Tracked remote branches
+>     master
+> $ git fetch git-gui
+> $ git read-tree --prefix=git-gui/ git-gui/master
+> $ git checkout git-gui
+> $ git rev-parse git-gui/master >.git/MERGE_HEAD
+> $ git commit
 
-In fact, for git-update-index, I think it's *literally* as easy as just 
-changing "index_fd()" to convert the buffer on-the-fly as needed, before 
-we actually call "write_sha1_file()" or "hash_sha1_file()".
+I just sent you a patch for Makefile in git.git to build git-gui.
+I've also setup things so git-gui's versions track independently of
+git, yet the correct versions are embedded into the release tarball
+and executable in both the standalone and embedded-in-git cases.
+A true subproject!
 
-So we'd just need to pass in the information about whether it's binary or 
-not, and then do something like
+For this to work the gitgui-* tags need to be fetched into your
+repository.  I also took the assumption that the git-gui subdirectory
+is never modified in git.git, but only through merging git-gui's
+commit history.
 
-	@@ -2091,6 +2091,10 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st, int write_object, con
-	 
-	 	if (!type)
-	 		type = blob_type;
-	+#ifndef __UNIX__
-	+	if (text && !strcmp(type, blob_type))
-	+		convert_crlf_to_lf(&buf, &size);
-	+#endif
-	 	if (write_object)
-	 		ret = write_sha1_file(buf, size, type, sha1);
-	 	else
+To play nice I'm prefixing the git-gui tags with 'gitgui-', rather
+than 'v', so that they don't conflict with git's own version numbers
+within the refs/tags namespace.
 
-and that would take care of a lot of things (yeah, I'd not do it that way 
-in practice, but really doesn't look that nasty - it's actually much 
-nastier to have to look up the text/binary type in the first place).
+I am signing gitgui tags with a GPG key. For ease of distribution
+my public key was tagged under spearce-gpg-pub.  The hash for
+spearce-gpg-pub is 8bb563fb25a372a9cb14f0a9b9015d409fd82c16.
 
-Something similar looks to be true in diff generation. The core "compare 
-two SHA1's at a time" doesn't need any changes, but the code that actually 
-reads in the temporary file from disk obviously does. But even that is 
-just _one_ point, afaik - diff_populate_filespec()":
+I'm not sure if it makes sense to push the gitgui-* tags (or
+spearce-gpg-pub) to the public git.git repository.  If these tags
+aren't present then git-gui will fail to get its version number
+and fallback on the hardcoded value in git-gui/GIT-VERSION-GEN.
+Anyone who really cares that this is correct could just fetch
+the tags on their own from repo.or.cz.
 
-	@@ -1362,6 +1362,10 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
-	 		if (fd < 0)
-	 			goto err_empty;
-	 		s->data = xmmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
-	+#ifndef __UNIX__
-	+		if (text)
-	+			convert_crlf_to_lf(&s->data, &s->size);
-	+#endif
-	 		close(fd);
-	 		s->should_munmap = 1;
-	 	}
+Here's the script I was working with to merge git-gui into git.git:
 
-(and again, that's not real code, it would also need to change the 
-"should_munmap" flag to indicate the state of the _new_ "data" thing.
+-->8--
+#!/bin/sh
 
-		Linus
+remote=git-gui
+branch=master
+
+git-fetch $remote &&
+ggh=$(git-rev-parse $remote/$branch) &&
+ggt=$(git-rev-parse $ggh^{tree}) &&
+tree=$(git ls-tree HEAD \
+	| sed "/	git-gui/s/tree .*	/tree $ggt	/" \
+	| git mktree) &&
+git-read-tree -m -u --exclude-per-directory=.gitignore HEAD $tree &&
+git-update-ref ORIG_HEAD HEAD &&
+git-update-ref MERGE_HEAD $ggh &&
+msg="Merge branch '$branch' of $(git-config remote.$remote.url)
+
+Update to version $(git describe --abbrev=4 $ggh).
+" &&
+echo "$msg" >.git/MERGE_MSG &&
+echo "Merge complete.  Please commit the result." ||
+exit
+-->8--
+
+-- 
+Shawn.
