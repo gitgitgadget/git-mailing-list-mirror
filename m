@@ -1,93 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: darcs2git.py - convert darcs repository using gfi
-Date: Sun, 11 Feb 2007 20:14:01 -0500
-Message-ID: <20070212011401.GK31488@spearce.org>
-References: <eqoaf7$loq$1@sea.gmane.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Efficiency of initial clone from server
+Date: Sun, 11 Feb 2007 20:38:09 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702112022430.1757@xanadu.home>
+References: <9e4733910702111153p1691ad99nda97325b34b7a13f@mail.gmail.com>
+ <20070211225326.GC31488@spearce.org>
+ <9e4733910702111525x176053d3y9fd6d809ac447c0a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon Feb 12 02:14:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 12 02:38:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGPlr-0006lt-0Q
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 02:14:19 +0100
+	id 1HGQ97-0001Hm-H8
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 02:38:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932594AbXBLBOI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 20:14:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932821AbXBLBOI
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 20:14:08 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:55383 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932594AbXBLBOG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 20:14:06 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HGPlQ-0006G3-WD; Sun, 11 Feb 2007 20:13:53 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D641620FBAE; Sun, 11 Feb 2007 20:14:01 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <eqoaf7$loq$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932825AbXBLBiM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 20:38:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932929AbXBLBiM
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 20:38:12 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:42950 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932825AbXBLBiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 20:38:11 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JDB00F2ATVL5KO0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 11 Feb 2007 20:38:09 -0500 (EST)
+In-reply-to: <9e4733910702111525x176053d3y9fd6d809ac447c0a@mail.gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39348>
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> wrote:
-> The python script attached is a try at providing a sane
-> conversion from Darcs to GIT.  It tries to map darcs conflict
-> resolutions onto git branch merges.
+On Sun, 11 Feb 2007, Jon Smirl wrote:
 
-Impressive.
- 
-> Regarding GFI, it's a breeze to work with; my compliments to its
-> author.
+> On 2/11/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > Jon Smirl <jonsmirl@gmail.com> wrote:
+> > > remote: Total 63, written 63 (delta 0), reused 63 (delta 0)
+> > > 100% (63/63) done
+> > > fatal: pack: not a valid SHA1
+> > > New branch: 0953670fbcb75e26fb93340bddae934e85618f2e
+> >
+> > What version of git is this?  That looks like we're assuming the word
+> > pack was an object, but I'm not sure why we would do such a thing...
 
-Hey, thanks!  ;-)
+This "pack" comes from pack-index when providing the name of the pack.
+It is either "pack" or "keep" and specifies the name of the .keep file 
+to remove in the later case.
+This is caught by git-fetch.sh with some code identified with a comment 
+that reads: "# special line coming from index-pack with the pack name"
 
-> My only gripe is the need to specify a branch for each commit.
-> Darcs uses changeset based storage. It doesn't really have branches,
-> but it does record divergent changes and merges of resulting
-> conflicts.  Hence, it's not clear which refs/head/BRANCH should be
-> used when creating a commit object.
+> jonsmirl@jonsmirl:/usr/local/bin$ git --version
+> git version 1.5.0.rc2.g53551-dirty
 
-Just make something up.  Or don't use refs/heads, instead use your
-own directory e.g. refs/patches/.  Then you can delete the entire
-directory when you are done importing.
+You must have conflicting vintage of GIT installations on your machine 
+with missing support for the "pack" and "keep" stuff described above.
 
-> So, my feature request: please make the "commit" command always accept
-> a "from" command
 
-This restriction was a safety valve.  fast-import itself would be
-OK if I permitted a from all of the time.  A bug in cvs2svn caused
-multiple froms to be emitted for the same branch, and that wasn't
-correct, so fast-import crashed on it rather than silently accepting
-the data corruption.
-
-Its actually one of those things that is nice to remove, as its 3
-lines of code that just need to be deleted.  ;-)
-
-> and make the "refs" argument optional.
-
-This is harder than it sounds.  fast-import internally is built
-around the assumption of a branch, which has a name, and which lives
-in the branch LRU.  With the "from" command restriction lifted
-you can just import every single commit onto the same hardcoded
-branch name (e.g. DARCS_HEAD) then delete it when you are done
-(e.g. rm .git/DARCS_HEAD).  That's basically the same thing as an
-optional ref argument.
-
--- 
-Shawn.
+Nicolas
