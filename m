@@ -1,90 +1,66 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Efficiency of initial clone from server
-Date: Sun, 11 Feb 2007 21:15:35 -0500
-Message-ID: <9e4733910702111815g5a42989fr8042e84b291ab576@mail.gmail.com>
-References: <9e4733910702111153p1691ad99nda97325b34b7a13f@mail.gmail.com>
-	 <20070211225326.GC31488@spearce.org>
-	 <9e4733910702111525x176053d3y9fd6d809ac447c0a@mail.gmail.com>
-	 <Pine.LNX.4.64.0702112022430.1757@xanadu.home>
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Sun, 11 Feb 2007 21:36:26 -0500
+Message-ID: <45CFD2AA.5090509@verizon.net>
+References: <45CFA30C.6030202@verizon.net>
+ <Pine.LNX.4.63.0702120028340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <eqodam$r17$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Feb 12 03:15:55 2007
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 12 03:36:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGQjR-0001Av-Ku
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 03:15:53 +0100
+	id 1HGR3R-0001qi-RA
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 03:36:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932935AbXBLCPj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 21:15:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932936AbXBLCPj
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 21:15:39 -0500
-Received: from wr-out-0506.google.com ([64.233.184.227]:41105 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932935AbXBLCPi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 21:15:38 -0500
-Received: by wr-out-0506.google.com with SMTP id i21so1499002wra
-        for <git@vger.kernel.org>; Sun, 11 Feb 2007 18:15:37 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=g95TGevPMx6SbLbVFeUS5QmgNUQtZJ4rh0lFfeNgzLHNJYnag/xCro432TYINDh3vsPXvaG+6T3V5IJpwiEpkD1nQrHEK15vnxJR9l8PG85nwAwdRk1k48Rz+kwBIQrnBLS0Ydlj6E4yxABdI+NMoPOFpSvRi8G9Wz7/AmIm+fQ=
-Received: by 10.114.93.1 with SMTP id q1mr6597100wab.1171246535918;
-        Sun, 11 Feb 2007 18:15:35 -0800 (PST)
-Received: by 10.114.195.13 with HTTP; Sun, 11 Feb 2007 18:15:35 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0702112022430.1757@xanadu.home>
-Content-Disposition: inline
+	id S932931AbXBLCgb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 21:36:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932939AbXBLCgb
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 21:36:31 -0500
+Received: from vms048pub.verizon.net ([206.46.252.48]:11816 "EHLO
+	vms048pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932931AbXBLCga (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 21:36:30 -0500
+Received: from [127.0.0.1] ([71.246.235.75])
+ by vms048.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JDB00D92WKNGDN5@vms048.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 11 Feb 2007 20:36:24 -0600 (CST)
+In-reply-to: <eqodam$r17$1@sea.gmane.org>
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39351>
 
-On 2/11/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Sun, 11 Feb 2007, Jon Smirl wrote:
+Jakub Narebski wrote:
+> Johannes Schindelin wrote:
+>   
+>> On Sun, 11 Feb 2007, Mark Levedahl wrote:
+>>
+>>     
+>>> The major competing solutions git seeks to supplant (cvs, cvsnt, svn, 
+>>> hg) have capability to recognize "text" files and transparently replace 
+>>> \r\n with \n on input, the reverse on output, and ignore all such 
+>>> differences on diff operations.
+>>>       
+>> Agree with transformations on input and output; disagree on diff.
+>>     
 >
-> > On 2/11/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > > Jon Smirl <jonsmirl@gmail.com> wrote:
-> > > > remote: Total 63, written 63 (delta 0), reused 63 (delta 0)
-> > > > 100% (63/63) done
-> > > > fatal: pack: not a valid SHA1
-> > > > New branch: 0953670fbcb75e26fb93340bddae934e85618f2e
-> > >
-> > > What version of git is this?  That looks like we're assuming the word
-> > > pack was an object, but I'm not sure why we would do such a thing...
+> I wonder if this could/should be solved with adding some option to git-diff,
+> similar to --ignore-space-change and --ignore-all-space...
 >
-> This "pack" comes from pack-index when providing the name of the pack.
-> It is either "pack" or "keep" and specifies the name of the .keep file
-> to remove in the later case.
-> This is caught by git-fetch.sh with some code identified with a comment
-> that reads: "# special line coming from index-pack with the pack name"
->
-> > jonsmirl@jonsmirl:/usr/local/bin$ git --version
-> > git version 1.5.0.rc2.g53551-dirty
->
-> You must have conflicting vintage of GIT installations on your machine
-> with missing support for the "pack" and "keep" stuff described above.
+> Just a [idle] thought.
+>   
+That would work. Assuming blobs are stored in with \n, diff just has to 
+open files in 'rt' mode rather than just 'r' and the \r\n are 
+transformed  on read so are never seen by git code. That is basically 
+what Windows native tools do, but they also write files opened in 'wt' 
+mode so \n become \r\n on output. Of course, if this were an option, 
+users could look for line ending differences if they cared.
 
-I can clone Linus' git tree without getting errors.
-
-Maybe there is something wrong with the wireless-dev tree.
-It looks like someone is working on it:
-
-jonsmirl@jonsmirl:/extra$ git clone
-git://git.kernel.org/pub/scm/linux/kernel/gt/linville/wireless-dev.git
-Initialized empty Git repository in /extra/wireless-dev/.git/
-fatal: The remote end hung up unexpectedly
-fetch-pack from
-'git://git.kernel.org/pub/scm/linux/kernel/gt/linville/wireless-dev.git'
-failed.
-jonsmirl@jonsmirl:/extra$
-
-
-
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Mark
