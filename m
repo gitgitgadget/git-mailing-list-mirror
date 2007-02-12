@@ -1,74 +1,96 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: mingw, windows, crlf/lf, and git
-Date: Mon, 12 Feb 2007 15:02:46 -0800
-Message-ID: <7vk5yn6ktl.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 12 Feb 2007 15:02:42 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702121455560.8424@woody.linux-foundation.org>
 References: <45CFA30C.6030202@verizon.net> <20070212042425.GB18010@thunk.org>
-	<Pine.LNX.4.64.0702120839490.8424@woody.linux-foundation.org>
-	<7vps8f6l81.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0702120839490.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702122332180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Theodore Tso <tytso@mit.edu>,
 	Mark Levedahl <mlevedahl@verizon.net>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 13 00:02:56 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 13 00:03:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGkCB-0003fY-AS
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 00:02:51 +0100
+	id 1HGkCJ-0003kq-G9
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 00:02:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030445AbXBLXCs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 18:02:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030454AbXBLXCs
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 18:02:48 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:35925 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030445AbXBLXCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 18:02:47 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070212230247.THJP21704.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 12 Feb 2007 18:02:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Nn2m1W00Q1kojtg0000000; Mon, 12 Feb 2007 18:02:47 -0500
-In-Reply-To: <7vps8f6l81.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 12 Feb 2007 14:54:06 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030454AbXBLXCz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 18:02:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030455AbXBLXCz
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 18:02:55 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:46312 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030454AbXBLXCx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 18:02:53 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1CN2hhB029356
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 12 Feb 2007 15:02:44 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1CN2g0R014505;
+	Mon, 12 Feb 2007 15:02:43 -0800
+In-Reply-To: <Pine.LNX.4.63.0702122332180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-0.426 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39449>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> Btw, how would I implement this? If I really were energetic enough to 
->> implement it, I would do:
->> ...
->>  (b) Teach the git-update-index logic about hashing text blobs.
->
-> I agree that we can assume editors can grok files with LF
-> end-of-line just fine and we would not need to do the reverse
-> conversion on checkout paths (e.g. "read-tree -u", "checkout-index").
->
-> Textual diff generation needs to learn the CRLF-to-LF conversion
-> in diff_populate_filespec(); this needs to be done even when the
-> caller wants size_only.
->
-> Oops.
->
-> Not so fast.  What's your plan for st_size?
 
-If I were to do this, I would say the cache should store the
-size on the filesystem in stat fields.  Which means that the
-object name recorded is text blob _after_ line endings are
-normalized to LF, and its exploded size does not necessarily
-match the cached size.
+On Mon, 12 Feb 2007, Johannes Schindelin wrote:
+>
+> >  (c) Profit!
+> 
+> Not so fast.
 
-So this means that whoever does the diff_populate_filespec()
-change needs to be careful, but it is not such a big deal.
+Aww! And just when I _finally_ had a "step 2".
+
+> In order for this to be _useful_, you also have to have a way to _extract_ 
+> the text blobs. Not only for read-tree, but _also_ for diff.
+
+Actually, my argument is that we don't need it all that much.
+
+For example, your "read-tree" argument is actually wrong. Anything that is 
+in a tree is _already_ fixed to be '\n'. So as long as we keep to things 
+like
+
+	git diff version1..version2
+
+we'll actually always get the right version.
+
+Also, the index will make sure that we don't even *try* to diff normal 
+checked out files.
+
+So the only time you actually really need to test the .gitattributes file 
+is when you do an "open blob in working tree". And once you do that 
+function right, and just make sure both git-update-index and yes, the 
+"diff against working tree" cases use it, you really should be mostly 
+done.
+
+Both git-update-index and git-diff-files want basically the same 
+interface:
+
+	struct file_buf {
+		const char *buf;
+		unsigned long size;
+		int flags;
+	}
+
+	int read_file(const char *path, struct file_buf *);
+	close_file(struct file_buf *);
+
+and we should use that instead of the current "open + stat + mmap/read + 
+close" sequences.
+
+It really shouldn't be too nasty.
+
+		Linus
