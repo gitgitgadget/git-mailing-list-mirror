@@ -1,70 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix cg-commit -p to not touch the working tree
-Date: Mon, 12 Feb 2007 14:01:57 -0800
-Message-ID: <7vtzxr6nmy.fsf@assigned-by-dhcp.cox.net>
-References: <20070212031923.D20B913A382@magnus.utsl.gen.nz>
-	<7v8xf4atoe.fsf@assigned-by-dhcp.cox.net>
-	<45D0CC74.9020606@vilain.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Mon, 12 Feb 2007 23:37:58 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702122332180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45CFA30C.6030202@verizon.net> <20070212042425.GB18010@thunk.org>
+ <Pine.LNX.4.64.0702120839490.8424@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Mon Feb 12 23:02:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Theodore Tso <tytso@mit.edu>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Feb 12 23:38:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGjFU-0005bk-FZ
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 23:02:12 +0100
+	id 1HGjoo-0007eO-9z
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 23:38:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965436AbXBLWB7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 17:01:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965437AbXBLWB7
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 17:01:59 -0500
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:61448 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965436AbXBLWB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 17:01:59 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070212220158.WMXG1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 12 Feb 2007 17:01:58 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Nm1y1W0021kojtg0000000; Mon, 12 Feb 2007 17:01:58 -0500
-In-Reply-To: <45D0CC74.9020606@vilain.net> (Sam Vilain's message of "Tue, 13
-	Feb 2007 09:22:12 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965438AbXBLWiD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 17:38:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965440AbXBLWiC
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 17:38:02 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33616 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965439AbXBLWiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 17:38:00 -0500
+Received: (qmail invoked by alias); 12 Feb 2007 22:37:59 -0000
+X-Provags-ID: V01U2FsdGVkX1/qd859ElrqTyeA9zbMs6ctHXranT3t7kqAokYIvX
+	P1QQ==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0702120839490.8424@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39446>
 
-Sam Vilain <sam@vilain.net> writes:
+Hi,
 
-> Junio C Hamano wrote:
->>> Previously, the working tree state was modified with `patch', which
->>> was a fragile operation.  Do everything with `git-apply --cached
->>> --index' instead.
->>>     
->> I do not use Cogito so I do not know what behaviour is wanted
->> here, but '--cached --index' is same as saying just '--cached'
->> as far as I know.  It will patch against the index and should
->> not touch working tree.  If the original used 'patch' to apply,
->> I suspect it wanted to touch the working tree (and possibly, it
->> wanted to leave the index alone?), so --cached might be
->> completely wrong thing to use here?
->>   
->
-> The context is that "cg-commit -p", a kind of poor man's interactive
-> commit that lets you preview changes that are to be committed in 'diff'
-> form, and edit the patch to be applied. Many users expect this command
-> to behave this way; they're quite surprised and sometimes even miffed
-> when the changes they deleted from the patch are gone from their working
-> copy.
+[I agree on the .gitignore approach; see my other mail in this thread]
 
-Ah, I see that's why you do want to leave the working tree
-untouched.  I think '--cached' alone is the right way to spell
-it (strictly speaking, giving --index and --cached should error
-out, although the current implementation does not).
+On Mon, 12 Feb 2007, Linus Torvalds wrote:
+
+> Btw, how would I implement this? If I really were energetic enough to 
+> implement it, I would do:
+> 
+>  (a) Add a flag to "git-ls-files" logic to add "type information" in 
+>      front.
+> 
+>      Not only do you want this *anyway* for other reasons, but for
+>      binary/text, the thing you actually care most about is "git add", and 
+>      it already basically just does "take this file pattern, feed it 
+>      through git-ls-files, and add those files". So you'd get it basically 
+>      for free.
+> 
+>      It is also fairly easy to add at this stage, because you can simply 
+>      look for all the places that work with "info/exclude" and 
+>      ".gitignore", and you know that "Ahh, I need to teach these exact 
+>      places to understand about attributes". So you'd add an 
+>      "add_attributes_from_file()" function etc etc.
+> 
+>      Quite straightforward. In fact, you might be able to use the 
+>      gitignore parsing *as*is*, and just teach it about more flags that 
+>      just "ignore": both in "struct dir_entry" and in "struct exclude".
+> 
+>  (b) Teach the git-update-index logic about hashing text blobs.
+> 
+>  (c) Profit!
+
+Not so fast.
+
+In order for this to be _useful_, you also have to have a way to _extract_ 
+the text blobs. Not only for read-tree, but _also_ for diff. It makes no 
+sense at all to have this transformation one-way. For diff, you _might_ 
+want to have a diff beautifier (for example the .odt thing), but read-tree 
+is _really_ important.
+
+Ciao,
+Dscho
