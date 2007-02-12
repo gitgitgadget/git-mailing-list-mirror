@@ -1,54 +1,60 @@
-From: Bruno Haible <bruno@clisp.org>
-Subject: Re: how to speed up "git log"?
-Date: Mon, 12 Feb 2007 12:27:15 +0100
-Message-ID: <200702121227.15757.bruno@clisp.org>
-References: <200702111252.28393.bruno@clisp.org> <200702120041.27419.bruno@clisp.org> <Pine.LNX.4.64.0702112009440.8424@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Mon, 12 Feb 2007 12:36:26 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702121232120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45CFA30C.6030202@verizon.net> <20070212042425.GB18010@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Feb 12 12:21:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Feb 12 12:36:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGZFd-0008Vv-Hg
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 12:21:41 +0100
+	id 1HGZU1-0006WI-Cj
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 12:36:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964858AbXBLLVM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 06:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964859AbXBLLVM
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 06:21:12 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:49688 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964858AbXBLLVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 06:21:11 -0500
-Received: from linuix.haible.de (cable-137-244.iesy.net [81.210.137.244])
-	by post.webmailer.de (klopstock mo56) (RZmta 4.5)
-	with ESMTP id H0103bj1C9PddG ; Mon, 12 Feb 2007 12:21:08 +0100 (MET)
-User-Agent: KMail/1.5.4
-In-Reply-To: <Pine.LNX.4.64.0702112009440.8424@woody.linux-foundation.org>
-Content-Disposition: inline
-X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY4JDyuz6KRYg==
+	id S964867AbXBLLg3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 06:36:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964868AbXBLLg2
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 06:36:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42616 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964867AbXBLLg2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 06:36:28 -0500
+Received: (qmail invoked by alias); 12 Feb 2007 11:36:26 -0000
+X-Provags-ID: V01U2FsdGVkX19GeOd04S1GqAPVfH1XmXTByFYrzISfMT4fehNrIN
+	cLsw==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070212042425.GB18010@thunk.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39394>
 
-Linus,
+Hi,
 
-> >   git-1.4.4: 25 seconds real time, 24 seconds of CPU time (12 user, 12 system)
-> >   git-1.5.0: 50 seconds real time, 39 seconds of CPU time (20 user, 19 system)
-> 
-> That's an interesting fact in itself.
+On Sun, 11 Feb 2007, Theodore Tso wrote:
 
-Sorry, these measurements happened to be done in different conditions:
-repo fully cached in RAM vs. repo not yet in buffer cache / page cache.
+> My proposal does require adding a file type to each file, as tracked
+> metadata, which may doom it from the start.
 
-When measured under the same conditions, no speed difference is visible
-between git-1.4.4 and git-1.5.0-rc4.
+I'd rather do that a la .gitignore, i.e. make this handling dependent on 
+file name patterns. It is not only backwards compatible (from the 
+viewpoint of the repository format), it also avoids having to specify over 
+and over again that yes, this new .odt file _is_ an OpenOffice document.
 
-Bruno
+> Then for each file type, we implement a set of interfaces (perhaps as
+> simple as a series of executables named git-<type>-<operation>) which
+> if present, transforms the file from its live format to the canonical
+> format which is actually checked in and back again.
+
+Again, I propose a slight change: Let's add a transformation driver like 
+the merge driver: this allows inlining common operations like unzipping, 
+CRLF->LF conversion, etc.
+
+Ciao,
+Dscho
