@@ -1,74 +1,83 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Efficiency of initial clone from server
-Date: Mon, 12 Feb 2007 14:35:07 -0500
-Message-ID: <20070212193507.GA18730@thunk.org>
-References: <9e4733910702111525x176053d3y9fd6d809ac447c0a@mail.gmail.com> <Pine.LNX.4.64.0702112022430.1757@xanadu.home> <7vd54gau3r.fsf@assigned-by-dhcp.cox.net> <9e4733910702112029k6ef3fb7bl3bdb134a787512e8@mail.gmail.com> <7v4ppsatbr.fsf@assigned-by-dhcp.cox.net> <9e4733910702112053q2c196ddcr970a062281d332b7@mail.gmail.com> <9e4733910702112101h256b1468j5de65c6e89109a22@mail.gmail.com> <20070212051108.GB699@spearce.org> <9e4733910702112117o53630946ja50572c7c7f2b2c1@mail.gmail.com> <Pine.LNX.4.64.0702121013150.1757@xanadu.home>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: [ANNOUNCE] Guilt v0.19
+Date: Mon, 12 Feb 2007 14:48:17 -0500
+Message-ID: <20070212194816.GB12616@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Feb 12 20:35:32 2007
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 12 20:49:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGgxV-0008Or-Gr
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 20:35:29 +0100
+	id 1HGhAh-0006Pj-Ek
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 20:49:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965336AbXBLTf0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 14:35:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965338AbXBLTf0
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 14:35:26 -0500
-Received: from thunk.org ([69.25.196.29]:49681 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965336AbXBLTfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 14:35:25 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HGh2S-0006ef-9z; Mon, 12 Feb 2007 14:40:37 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HGgx9-0007ut-Ub; Mon, 12 Feb 2007 14:35:07 -0500
+	id S965351AbXBLTsU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 14:48:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965353AbXBLTsU
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 14:48:20 -0500
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:37801 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965351AbXBLTsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 14:48:19 -0500
+Received: from filer.fsl.cs.sunysb.edu (IDENT:7u+PDi6/h+A+IwXT9RjP19zbD3szAUnt@localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l1CJmHrJ014948;
+	Mon, 12 Feb 2007 14:48:17 -0500
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l1CJmH2V014946;
+	Mon, 12 Feb 2007 14:48:17 -0500
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0702121013150.1757@xanadu.home>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39427>
 
-On Mon, Feb 12, 2007 at 10:20:31AM -0500, Nicolas Pitre wrote:
-> Repacking on clone is not the solution at all.
-> 
-> This problem is going to largely be resolved when GIT 1.5.0 gets 
-> installed on kernel.org.  With latest GIT, pushes are kept as packs on 
-> the remote end (when they're big enough which is over 100 objects by 
-> default).  Then repacking multiple packs into one is almost free as most 
-> of the data is simply copied from one pack and sent over the wire as a 
-> single pack.
+Guilt v0.19 is available for download (once it mirrors out on kernel.org).
 
-Even before we get Git 1.5.0 installed on master.kernel.org (and we
-should really ask hpa to do that), is there a reason we haven't done
-something like this across all of the kernel repo's on
-master.kernel.org?
+Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
+queues-like functionality and interface to git.
 
-for i in <list of kernel git repo's on master.kernel.org>
-do
-   pushd $i
-   if [ ! -f objects/info/alternates ]; then
-	echo /pub/scm/linux/kernel/git/torvalds/linux-2.6.git/objects \
-	   > objects/info/alternates
-	git repack -a -d -l
-   fi
-   popd
-done
+Tarballs:
+http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
+
+Git repo:
+git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
 
 
-					- Ted
+The most important change is the use of the patch file's mtime as the
+GIT_{AUTHOR,COMMITTER}_DATE. Without this change, repeated invocations of
+"guilt pop -a; guilt push -a" would create new commit's with different
+commit dates, creating a lot of garbage commits. Other changes are mostly
+related to expanding (and slightly fixing) the regression scripts.
+
+Josef "Jeff" Sipek.
+
+------------
+
+Changes since v0.18:
+
+Josef 'Jeff' Sipek (18):
+      guilt-applied: added -c to list the commit hash for the patch
+      guilt-new: Fix [ syntax
+      patchbomb: Friendly wrapper for git-format-patch & git-send-email
+      delete: Added argument -f to remove patch file
+      Guilt v0.19-rc1
+      regression: test new patch insertion
+      regression: test new patch insertion at the end
+      regression: Test push/pop given a patch name
+      regression: Test for guilt-init in a already initialized branch
+      regression: Test guilt-init on non-master branch
+      regression: Fix test descriptions
+      Centralize editor determining code
+      new: added -e to edit the patch description interactively
+      Makefile: Forgot to add guilt-patchbomb to the list of scripts
+      regression: Fix regression test failure
+      patchbomb: Added -n flag
+      regression: Fixed regression suite failure
+      Guilt v0.19
+
+Theodore Ts'o (1):
+      Use patch file's modtime as the git author and commiter date
