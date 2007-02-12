@@ -1,64 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-gui blametool
-Date: Mon, 12 Feb 2007 12:54:00 -0500
-Message-ID: <20070212175400.GB30669@coredump.intra.peff.net>
-References: <45D07A76.1070009@gmail.com> <45D095B1.9070308@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn on a strangely configured (pathwise) subversion repository
+Date: Mon, 12 Feb 2007 10:32:02 -0800
+Message-ID: <20070212183202.GB21413@localdomain>
+References: <200702121136.06382.blindglobe@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 12 18:54:10 2007
+To: AJ Rossini <blindglobe@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 12 19:34:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGfNQ-0002IN-BR
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 18:54:08 +0100
+	id 1HGg0F-0004PW-Hy
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 19:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965040AbXBLRyF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 12:54:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965039AbXBLRyE
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 12:54:04 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1877 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965038AbXBLRyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 12:54:03 -0500
-Received: (qmail 6266 invoked from network); 12 Feb 2007 12:54:06 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 12 Feb 2007 12:54:06 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Feb 2007 12:54:00 -0500
+	id S965287AbXBLScW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 13:32:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965291AbXBLScW
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 13:32:22 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:56528 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965289AbXBLScF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 13:32:05 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id D4F9C7DC094;
+	Mon, 12 Feb 2007 10:32:02 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 12 Feb 2007 10:32:02 -0800
 Content-Disposition: inline
-In-Reply-To: <45D095B1.9070308@gmail.com>
+In-Reply-To: <200702121136.06382.blindglobe@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39423>
 
-On Mon, Feb 12, 2007 at 09:58:33PM +0530, Aneesh Kumar K.V wrote:
+AJ Rossini <blindglobe@gmail.com> wrote:
+> Greetings all -
+> 
+> (paths and names changed, but basically correct)
+> 
+> I'm trying to use git-svn as a svn client on a repository which is not
+> quite configured in a standard way...  i.e. 
 
-> Sine i don't have a tcl/tk reference around i update blameview to show 
-> the above. The patch is attached below in case you are interested.
+Perfectly standard on some corporate networks, unfortunately :(
 
-It certainly looks better, though the whole thing is still horribly
-ugly. You might play with replacing the main List widget with something
-a bit more compact.
+> $ git svn fetch
+> RA layer request failed: PROPFIND request failed on '/path/to': PROPFIND 
+> of '/path/to': 403 Forbidden (https://dummy-host-name.com) 
+> at /usr/bin/git-svn line 2861
 
-> NOTE: How do i resize the widgets in perl-gtk ? I wanted the commit 
-> window to be a bit larger. Any help ?
+<snip>
 
-Something like this?
+> The problem seems to be that the Repository Root directory is not
+> readable, while the URL is (at least for me, using HTTPS).
+> 
+> This is using
+> $ git --version
+> git version 1.4.4.4
 
--Peff
+Known problem.  This is fixed in commit
+747fa12cef73b6ca04fffaddaad7326cf546cdea
 
-diff --git a/contrib/blameview/blameview.perl b/contrib/blameview/blameview.perl
-index 67a0714..fd174eb 100755
---- a/contrib/blameview/blameview.perl
-+++ b/contrib/blameview/blameview.perl
-@@ -51,6 +51,7 @@ $vbox->pack_start($commitwindow, 1, 1, 0);
- my $commit_text = Gtk2::TextView->new();
- my $commit_buffer = Gtk2::TextBuffer->new();
- $commit_text->set_buffer($commit_buffer);
-+$commit_text->set_size_request(1024, 200);
- $commitwindow->add($commit_text);
- 
- $fileview->signal_connect (cursor_changed => sub {
+> Here is what I'm considering: 
+> #1 - upgrading to the 1.5.0 RC series
+
+Stop after #1 if you want a sure thing the current 1.5.0 RC series
+contains fixes for repositories with only partial read permissions.
+
+> #2 - trying Eric Wong's git-svn branch at
+> http://git.bogomips.org/git-svn.git
+
+Read access in your case *should* continue to work here.  More testing
+would be good.  This branch may not work well if your write access is
+not the same as as your read access; which is something I keep
+forgetting to fix...
+
+> #3 - getting a dump of the repository from the owner, loading it into
+> a local svn server, and doing a local conversion...
+> 
+> With respect to #1/#2, I'm a bit cautious with upgrading to something
+> not rock solid (let's just say that except for this, git 1.4.4.4 has
+> been excellent for my needs...).
+> 
+> With respect to #3 - I'd prefer not to waste the admin's (personal)
+> time if 
+
+#3 is definitely not necessary.
+
+Junio has done a wonderful job of keeping the 1.5.0-rc* series stable
+and usable, so #1 is the safest.  I'll try to fix things today so #2
+will work better.
+
+-- 
+Eric Wong
