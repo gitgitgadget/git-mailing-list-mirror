@@ -1,61 +1,64 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Efficiency of initial clone from server
-Date: Sun, 11 Feb 2007 22:55:54 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702112251580.1757@xanadu.home>
-References: <9e4733910702111153p1691ad99nda97325b34b7a13f@mail.gmail.com>
- <20070211225326.GC31488@spearce.org>
- <9e4733910702111525x176053d3y9fd6d809ac447c0a@mail.gmail.com>
- <Pine.LNX.4.64.0702112022430.1757@xanadu.home>
- <9e4733910702111815g5a42989fr8042e84b291ab576@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: how to speed up "git log"?
+Date: Sun, 11 Feb 2007 20:08:37 -0800
+Message-ID: <7vmz3kaugq.fsf@assigned-by-dhcp.cox.net>
+References: <200702111252.28393.bruno@clisp.org>
+	<Pine.LNX.4.63.0702111745170.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<200702120041.27419.bruno@clisp.org>
+	<200702120059.17676.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 12 04:56:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Bruno Haible <bruno@clisp.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Feb 12 05:08:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGSIf-0004Hq-4i
-	for gcvg-git@gmane.org; Mon, 12 Feb 2007 04:56:21 +0100
+	id 1HGSUm-0001Js-Jn
+	for gcvg-git@gmane.org; Mon, 12 Feb 2007 05:08:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932963AbXBLDz4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Feb 2007 22:55:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932965AbXBLDz4
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 22:55:56 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:42336 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932963AbXBLDzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Feb 2007 22:55:55 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDC00DZU0968ZE0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 11 Feb 2007 22:55:55 -0500 (EST)
-In-reply-to: <9e4733910702111815g5a42989fr8042e84b291ab576@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S932577AbXBLEIk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Feb 2007 23:08:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932578AbXBLEIj
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Feb 2007 23:08:39 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:62636 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932577AbXBLEIj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Feb 2007 23:08:39 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070212040839.LYZA4586.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 11 Feb 2007 23:08:39 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id NU8e1W0041kojtg0000000; Sun, 11 Feb 2007 23:08:38 -0500
+In-Reply-To: <200702120059.17676.robin.rosenberg.lists@dewire.com> (Robin
+	Rosenberg's message of "Mon, 12 Feb 2007 00:59:17 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39356>
 
-On Sun, 11 Feb 2007, Jon Smirl wrote:
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-> Maybe there is something wrong with the wireless-dev tree.
-> It looks like someone is working on it:
-> 
-> jonsmirl@jonsmirl:/extra$ git clone
-> git://git.kernel.org/pub/scm/linux/kernel/gt/linville/wireless-dev.git
-> Initialized empty Git repository in /extra/wireless-dev/.git/
-> fatal: The remote end hung up unexpectedly
-> fetch-pack from
-> 'git://git.kernel.org/pub/scm/linux/kernel/gt/linville/wireless-dev.git'
-> failed.
+>> No, it became even worse: git-1.5.0-rc4 is twice as slow as git-1.4.4 for
+>> this command:
+>>   git-1.4.4: 25 seconds real time, 24 seconds of CPU time (12 user, 12 system)
+>>   git-1.5.0: 50 seconds real time, 39 seconds of CPU time (20 user, 19 system)
+>
+> Could the UTF-8 stuff have anything to do with this?
 
-Try with git2.kernel.org then.  It seems that git.kernel.org too often 
-resolves to git1.kernel.org not sharing the load with git2.kernel.org 
-appropriately.
+I doubt it -- sliding mmap() in the current git, while is a good
+change overall for handling really huge repos, would most likely
+perform poorer than the fixed mmap() in 1.4.4 series on
+platforms with slow mmap(), most notably on MacOS X.
 
+It _might_ be possible that turning some sliding mmap() calls
+into pread() makes it perform better on MacOS X.
 
-Nicolas
+I wonder what happens it git is compiled with NO_MMAP there...
