@@ -1,59 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's in git.git (stable)
-Date: Tue, 13 Feb 2007 11:15:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702131108240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v1wl15zc2.fsf@assigned-by-dhcp.cox.net> <7vtzxq3af6.fsf@assigned-by-dhcp.cox.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Do not run git-pack-refs by default for now from git-gc
+Date: Tue, 13 Feb 2007 05:29:51 -0500
+Message-ID: <20070213102951.GA14903@coredump.intra.peff.net>
+References: <7v7ium1k7s.fsf@assigned-by-dhcp.cox.net> <7vzm7iz8uv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702131101400.1300@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 11:15:10 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 13 11:30:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGugo-0002jf-Ku
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 11:15:10 +0100
+	id 1HGuvc-0001Nz-P4
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 11:30:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242AbXBMKPH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 05:15:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbXBMKPH
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 05:15:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44040 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751242AbXBMKPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 05:15:05 -0500
-Received: (qmail invoked by alias); 13 Feb 2007 10:15:04 -0000
-X-Provags-ID: V01U2FsdGVkX1+2Lv5+pxm2DuWZxD3mZhIfnVoD768NGAxOl4R9/V
-	Wgcw==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vtzxq3af6.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751245AbXBMK3z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 05:29:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbXBMK3z
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 05:29:55 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3721 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751245AbXBMK3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 05:29:54 -0500
+Received: (qmail 11102 invoked from network); 13 Feb 2007 05:29:58 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 13 Feb 2007 05:29:58 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Feb 2007 05:29:51 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702131101400.1300@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39511>
 
-Hi,
+On Tue, Feb 13, 2007 at 11:03:32AM +0100, Johannes Schindelin wrote:
 
-On Mon, 12 Feb 2007, Junio C Hamano wrote:
+> It seems to me that the reason are dumb transports, which are very likely 
+> to run only from bare repositories. How about checking for a bare 
+> repository explicitely, and only if it _is_ bare, check for gc.packrefs, 
+> too?
 
-> It feels like it took me forever to get here, but this is almost
-> it.
+The way you have stated it, I think we will get a lot of "I set
+gc.packrefs, but it doesn't do anything!" complaints. I think a
+tri-state "yes/no/notbare" defaulting to "notbare" makes more sense. But
+maybe you meant the other way around in the first place.
 
-Congratulations!
-
-> The short-log looks huge but only because Shawn's git-gui is now 
-> included.
-
-So, it's a huge-log?
-
-> Unless there is some last minute showstopper, the final will be
-> cut on Wednesday.  Should I give it a catchy codename?  ;-)
-
-Oh yes, yes, yes! (To both.)
-
-Ciao,
-Dscho
-
-P.S.: How about "The frotzy Nitfol"?
+-Peff
