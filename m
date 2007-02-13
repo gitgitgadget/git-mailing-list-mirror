@@ -1,82 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Efficiency of initial clone from server
-Date: Tue, 13 Feb 2007 01:51:16 +0100
-Organization: At home
-Message-ID: <eqr1up$uvv$1@sea.gmane.org>
-References: <9e4733910702111525x176053d3y9fd6d809ac447c0a@mail.gmail.com> <Pine.LNX.4.64.0702112022430.1757@xanadu.home> <7vd54gau3r.fsf@assigned-by-dhcp.cox.net> <9e4733910702112029k6ef3fb7bl3bdb134a787512e8@mail.gmail.com> <7v4ppsatbr.fsf@assigned-by-dhcp.cox.net> <9e4733910702112053q2c196ddcr970a062281d332b7@mail.gmail.com> <9e4733910702112101h256b1468j5de65c6e89109a22@mail.gmail.com> <20070212051108.GB699@spearce.org> <9e4733910702112117o53630946ja50572c7c7f2b2c1@mail.gmail.com> <Pine.LNX.4.64.0702121013150.1757@xanadu.home> <20070212193507.GA18730@thunk.org> <7vd54f85du.fsf@assigned-by-dhcp.cox.net>
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Mon, 12 Feb 2007 19:59:50 -0500
+Message-ID: <45D10D86.3030508@verizon.net>
+References: <45CFA30C.6030202@verizon.net> <20070212042425.GB18010@thunk.org>
+ <Pine.LNX.4.64.0702120839490.8424@woody.linux-foundation.org>
+ <7vps8f6l81.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702130020450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfy9b6iyt.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702130046450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 13 01:50:34 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 13 02:00:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGlsP-00068h-3G
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 01:50:33 +0100
+	id 1HGm1j-0002Dk-2K
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 02:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750976AbXBMAu3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 19:50:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932821AbXBMAu3
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 19:50:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:50460 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750976AbXBMAu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 19:50:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HGlrq-0002Lb-Hw
-	for git@vger.kernel.org; Tue, 13 Feb 2007 01:49:58 +0100
-Received: from host-81-190-26-216.torun.mm.pl ([81.190.26.216])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Feb 2007 01:49:58 +0100
-Received: from jnareb by host-81-190-26-216.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Feb 2007 01:49:58 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-216.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S965445AbXBMBAH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 20:00:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965448AbXBMBAH
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 20:00:07 -0500
+Received: from vms046pub.verizon.net ([206.46.252.46]:40142 "EHLO
+	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965445AbXBMA7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 19:59:54 -0500
+Received: from [127.0.0.1] ([71.246.235.75])
+ by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JDD00DM5MRM40PC@vms046.mailsrvcs.net> for
+ git@vger.kernel.org; Mon, 12 Feb 2007 18:59:49 -0600 (CST)
+In-reply-to: <Pine.LNX.4.63.0702130046450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39470>
 
-Junio C Hamano wrote:
+Johannes Schindelin wrote:
+> However, since this is all post-1.5.0 (right? Right?) why not go with more 
+> of Ted's proposal, and make this whole mess also usable for other things 
+> than just crlf issues
+Whatever is done, it needs to be robust to the notion that people will 
+fail to set the correct file type somewhere. Current cvsnt is fairly 
+good at autodetecting and setting text vs binary file type, and enforces 
+this across all platforms, so things don't go awry too often. It is in 
+my experience more reliable than subversion, which basically relies upon 
+file extensions mapping to mime types to identify content. All of which 
+is a very much too low standard of accuracy for a version control 
+system: I lost many files per year due to the above nonsense, so I worry 
+about trying to create a very general transform solution and not making 
+it really, really failsafe. Having projects define individual globbing 
+patterns is good, double checking the content for sanity is an absolute 
+must, but I don't think that is enough. I suspect the solution should 
+include round-trip conversion when creating blobs to assure that the 
+input can be exactly reconstructed by the inverse transformation (and 
+therefore possibly rejecting input with mixed line endings). A similar 
+check could be applied on checkout.
 
-> Theodore Tso <tytso@mit.edu> writes:
-> 
->> Even before we get Git 1.5.0 installed on master.kernel.org (and we
->> should really ask hpa to do that), is there a reason we haven't done
->> something like this across all of the kernel repo's on
->> master.kernel.org?
->>
->> for i in <list of kernel git repo's on master.kernel.org>
->> do
->>    pushd $i
->>    if [ ! -f objects/info/alternates ]; then
->>      echo /pub/scm/linux/kernel/git/torvalds/linux-2.6.git/objects \
->>         > objects/info/alternates
->>      git repack -a -d -l
->>    fi
->>    popd
->> done
-> 
-> Perhaps s/<list of kernel git repo's on master.kernel.org>/& minus a few/?
-> 
-> "Minus a few" are (obviously) Linus's repository and bkcvs
-> historical ones (I think there are two of them).
-> 
-> Other than that I do not think of a major problem.  Repacking
-> into one would inconvenience http clients but that is not a new
-> issue and would have happened when the owner of the individual
-> repository chose to do so anyway.
+Perhaps I'm too paranoid, but I've been burnt way too many times by 
+text/binary mode stuff to let this part be trivialized. Maybe it only 
+gets enabled by core.ImReallyParanoid, but I want that option.
 
-So objects/info/http-alternates should be also set, I guess...
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Mark
