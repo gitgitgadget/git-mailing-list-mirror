@@ -1,86 +1,57 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] Update RPM core package description
-Date: Tue, 13 Feb 2007 11:39:01 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702131136220.1757@xanadu.home>
+Subject: Re: git-cvsserver doesn't respect core.sharedrepository
+Date: Tue, 13 Feb 2007 11:48:53 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702131139490.1757@xanadu.home>
+References: <200702131438.30291.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0702131611010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200702131605.29088.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 17:39:16 2007
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 13 17:49:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH0gT-00031R-QN
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 17:39:14 +0100
+	id 1HH0q7-00076V-KI
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 17:49:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750814AbXBMQjJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 11:39:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750818AbXBMQjJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 11:39:09 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:64858 "EHLO
+	id S1750822AbXBMQtI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 11:49:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750825AbXBMQtI
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 11:49:08 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:22349 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750814AbXBMQjI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 11:39:08 -0500
+	with ESMTP id S1750822AbXBMQtH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 11:49:07 -0500
 Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDE00AI2U919G30@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 13 Feb 2007 11:39:01 -0500 (EST)
+ with ESMTP id <0JDE00AXAUPH9K40@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 13 Feb 2007 11:48:54 -0500 (EST)
+In-reply-to: <200702131605.29088.andyparkins@gmail.com>
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39541>
 
-Git isn't as stupid as it used to be
+On Tue, 13 Feb 2007, Andy Parkins wrote:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
+> That perhaps might be the explanation for the bad behaviour.  The ref is being 
+> updated in git-cvsserver by writing the new head hash into the lockfile then 
+> doing
+> 
+>     unlink($reffile);
+>     rename($lockfile, $reffile);
 
-diff --git a/git.spec.in b/git.spec.in
-index ffab6bb..46aee88 100644
---- a/git.spec.in
-+++ b/git.spec.in
-@@ -12,12 +12,9 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
- Requires:	git-core, git-svn, git-cvs, git-arch, git-email, gitk, git-gui, perl-Git
- 
- %description
--This is a stupid (but extremely fast) directory content manager.  It
--doesn't do a whole lot, but what it _does_ do is track directory
--contents efficiently. It is intended to be the base of an efficient,
--distributed source code management system. This package includes
--rudimentary tools that can be used as a SCM, but you should look
--elsewhere for tools for ordinary humans layered on top of this.
-+Git is a fast, scalable, distributed revision control system with an
-+unusually rich command set that provides both high-level operations
-+and full access to internals.
- 
- This is a dummy package which brings in all subpackages.
- 
-@@ -26,12 +23,9 @@ Summary:	Core git tools
- Group:		Development/Tools
- Requires:	zlib >= 1.2, rsync, curl, less, openssh-clients, expat
- %description core
--This is a stupid (but extremely fast) directory content manager.  It
--doesn't do a whole lot, but what it _does_ do is track directory
--contents efficiently. It is intended to be the base of an efficient,
--distributed source code management system. This package includes
--rudimentary tools that can be used as a SCM, but you should look
--elsewhere for tools for ordinary humans layered on top of this.
-+Git is a fast, scalable, distributed revision control system with an
-+unusually rich command set that provides both high-level operations
-+and full access to internals.
- 
- These are the core tools with minimal dependencies.
- 
-@@ -173,6 +167,9 @@ rm -rf $RPM_BUILD_ROOT
- %{!?_without_docs: %doc Documentation/*.html }
- 
- %changelog
-+* Mon Feb 13 2007 Nicolas Pitre <nico@cam.org>
-+- Update core package description (Git isn't as stupid as it used to be)
-+
- * Mon Feb 12 2007 Junio C Hamano <junkio@cox.net>
- - Add git-gui and git-citool.
- 
+Wouldn't it be much better if it used git-update-ref instead?  This 
+manual ref updating looks like it has a potential for races to me.
+
+Also git-update-ref should probably be used with -m to create reflog 
+entries.
+
+
+Nicolas
