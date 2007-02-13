@@ -1,64 +1,55 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: linux-2.6.git/packed-refs???
-Date: Tue, 13 Feb 2007 13:16:10 -0500
-Message-ID: <20070213181610.GA2782@thunk.org>
-References: <7v7ium1k7s.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH/RFC] Have git-cvsserver call hooks/update before really altering the ref
+Date: Tue, 13 Feb 2007 18:14:39 +0000
+Message-ID: <200702131814.41512.andyparkins@gmail.com>
+References: <200702131512.45412.andyparkins@gmail.com> <7v7iumymvq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: torvalds@linux-foundation.org, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 19:16:38 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 13 19:17:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH2CV-00056k-Df
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 19:16:23 +0100
+	id 1HH2Do-0005iD-Di
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 19:17:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbXBMSQU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 13:16:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751445AbXBMSQU
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 13:16:20 -0500
-Received: from thunk.org ([69.25.196.29]:60244 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751429AbXBMSQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 13:16:19 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HH2HZ-0002OX-Ul; Tue, 13 Feb 2007 13:21:38 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HH2CJ-0000uR-0I; Tue, 13 Feb 2007 13:16:11 -0500
+	id S1751450AbXBMSRm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 13:17:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbXBMSRl
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 13:17:41 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:24693 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751450AbXBMSRl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 13:17:41 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so304704uga
+        for <git@vger.kernel.org>; Tue, 13 Feb 2007 10:17:35 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=G7eADmk2P14APKI0S5has7Pd0CCjNBUEjNSYliZMQiiAGvQdI2PRy7624zFZbmOR99PYnCmR97cOvWWG2UwoXjOWTCiwRBG8xlzY3ZJpnxkjCmjekMzEPCest5vCTJArn9PFSohK4wsRZ7hlfivK/ca81NO1jEwgPtOK7v9Ef/o=
+Received: by 10.66.239.18 with SMTP id m18mr855274ugh.1171390655760;
+        Tue, 13 Feb 2007 10:17:35 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id e33sm12521709ugd.2007.02.13.10.17.32;
+        Tue, 13 Feb 2007 10:17:33 -0800 (PST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7v7iumymvq.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7v7ium1k7s.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39572>
 
-On Tue, Feb 13, 2007 at 01:27:03AM -0800, Junio C Hamano wrote:
-> I noticed while scanning #git log that it appears that pack-refs
-> was run in your public repo and some people cannot clone over
-> dumb protocols with older git.
-> 
->     commit 2986c02217f98809d8990e7679edf0f5d99f904d
->     Author: Junio C Hamano <junkio@cox.net>
->     Date:   Wed Nov 22 22:24:09 2006 -0800
-> 
->     git-fetch: fix dumb protocol transport to fetch from pack-pruned ref
-> 
-> was the first revision that aligned dumb protocol clients with
-> pack-ref; unfortunately anything older will not find the ref
-> that was packed.
+On Tuesday 2007, February 13, Junio C Hamano wrote:
+> As a principle, I am in favor of this.  Perhaps post 1.5.0 after
+> hearing what real cvsserver users have to say on the list.
 
-Stupid question.  Suppose someone has run git pack-refs on a
-repository.  What is the recommended way to reverse the process.  Is
-the answer is to clone the repository and then throw away the original
-one?  Is there another way to do it?
+Am I not a real user then? ;-)  Cool - I /love/ being imaginary.
 
-						- Ted
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
