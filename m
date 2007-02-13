@@ -1,51 +1,60 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: re-map repository URLs and UUIDs on SVK mirror paths
-Date: Tue, 13 Feb 2007 14:21:02 -0800
-Message-ID: <20070213222102.GA25092@localdomain>
-References: <20070210233750.A333013A384@magnus.utsl.gen.nz>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: How do I get git-format-patch to ignore changes that remove spaces from the end of the line?
+Date: Tue, 13 Feb 2007 14:24:17 -0800
+Message-ID: <7vhctpwvam.fsf@assigned-by-dhcp.cox.net>
+References: <45D234C5.5090005@freescale.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 23:21:10 2007
+To: Timur Tabi <timur@freescale.com>
+X-From: git-owner@vger.kernel.org Tue Feb 13 23:24:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH61N-0004jo-W0
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 23:21:10 +0100
+	id 1HH64U-0006SF-TN
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 23:24:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751330AbXBMWVG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 17:21:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbXBMWVF
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 17:21:05 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:57430 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751330AbXBMWVE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 17:21:04 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id C148E7DC094;
-	Tue, 13 Feb 2007 14:21:02 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 13 Feb 2007 14:21:02 -0800
-Content-Disposition: inline
-In-Reply-To: <20070210233750.A333013A384@magnus.utsl.gen.nz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751348AbXBMWYT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 17:24:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751345AbXBMWYT
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 17:24:19 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:56434 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751348AbXBMWYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 17:24:18 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070213222416.XVIT4586.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 13 Feb 2007 17:24:16 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id PAQH1W00N1kojtg0000000; Tue, 13 Feb 2007 17:24:17 -0500
+In-Reply-To: <45D234C5.5090005@freescale.com> (Timur Tabi's message of "Tue,
+	13 Feb 2007 15:59:33 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39591>
 
-Sam Vilain <sam@vilain.net> wrote:
-> If an SVN revision has a property, "svm:headrev", it is likely that
-> the revision was created by SVN::Mirror (a part of SVK).  The property
-> contains a repository UUID and a revision.  We want to make it look
-> like we are mirroring the original URL, so introduce a helper function
-> that returns the original identity URL and UUID, and use it when
-> generating commit messages.
+Timur Tabi <timur@freescale.com> writes:
 
-If somebody is using these options with git-svn and wants to dcommit,
-they should only be committing to the svm:source repository and not to
-the repository managed by SVN::Mirror, right?
+> After I commit my changes, I use git-format-patch to make a patch.  I
+> then get deltas like this:
+>
+>   * Copyright (C) 1996-2005 Paul Mackerras.
+> - *
+> + *
+>   *  Adapted for 64bit PowerPC by Dave Engebretsen and Peter Bergner.
+> - *    {engebret|bergner}@us.ibm.com
+> + *    {engebret|bergner}@us.ibm.com
+>   *
+>
+> I don't want these deltas in my patch.
 
--- 
-Eric Wong
+You could revert the change to the editor configuration and rely
+on "git diff" before committing to point out the whitespace
+breakage that you newly introduced to the file.  Then you would
+be sending out exactly what you changed.
