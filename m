@@ -1,90 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 3/3] diffstat generation in hooks--update was passing
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: Re: [PATCH 3/3] diffstat generation in hooks--update was passing  
  "^baserev" to git-diff-tree
-Date: Tue, 13 Feb 2007 09:03:44 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702130856580.8424@woody.linux-foundation.org>
-References: <200702131424.21665.andyparkins@gmail.com>
+Date: Tue, 13 Feb 2007 18:16:26 +0100
+Organization: eudaptics software gmbh
+Message-ID: <45D1F26A.28FEADD8@eudaptics.com>
+References: <200702131424.21665.andyparkins@gmail.com> <45D1DB57.65433549@eudaptics.com> <200702131632.37401.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 13 18:04:27 2007
+X-From: git-owner@vger.kernel.org Tue Feb 13 18:14:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH14Y-0005DB-Pl
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 18:04:07 +0100
+	id 1HH1Em-0001YV-Fm
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 18:14:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750901AbXBMRDs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 12:03:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbXBMRDs
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 12:03:48 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:44444 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750903AbXBMRDr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 12:03:47 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1DH3jhB028916
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 13 Feb 2007 09:03:45 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1DH3iKd003377;
-	Tue, 13 Feb 2007 09:03:44 -0800
-In-Reply-To: <200702131424.21665.andyparkins@gmail.com>
-X-Spam-Status: No, hits=-0.923 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750962AbXBMROh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 12:14:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750963AbXBMROh
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 12:14:37 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160]:18931 "EHLO
+	linz.eudaptics.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954AbXBMROg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 12:14:36 -0500
+Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 8B81A546; Tue, 13 Feb 2007 18:14:32 +0100 (CET)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39545>
+
+Andy Parkins wrote:
+> > You still need to derive a merge-base, but only to detect the forced
+> > update and to format the message. Then you should use --not $baserev
+> > instead of ^$baserev just in case there is more than one merge-base.
+> 
+> Are you suggesting something like this?
+> 
+> git-rev-parse --not --all $baserev | git-rev-list --stdin --pretty $newrev
+> 
+> Which would start showing from $newrev but would exclude all baserevs and all
+> existing branches.
+
+You are using ^$baserev in two instances.
+
+(1) in a for loop which obviously is intended as a table of contents
+(revs plus rev-type (can this be anything else than 'commit'?)). Here
+you should use
+
+git-rev-list $newrev --not $baserev
+
+(2) later to print the log messages for all new revs. Here you use just
+this:
+
+git-rev-list --pretty $oldrev..$newrev
 
 
+Then the diffstat:
 
-On Tue, 13 Feb 2007, Andy Parkins wrote:
->
-> -			echo "Diffstat:"
-> -			git-diff-tree --no-color --stat -M -C --find-copies-harder $newrev ^$baserev
-> +			echo "Diffstat against $baserev:"
-> +			git-diff-tree --no-color --stat -M -C --find-copies-harder $newrev $baserev
+git-diff-tree --no-color --stat -M -C --find-copies-harder \
+  $oldrev $newrev
 
-This is wrong.
+This reflects the modifications of the revisions that have just been
+listed *only* in the fast-forward case. But even in the forced update
+case it tells how the old tree transformed into the new tree, and for
+this reason nothing more complicated is needed, IMO.
 
-	newrev ^baserev
-
-is right. The "not baserev" tells diff-tree that the baserev is the 
-starting point, so newrev is obviously the target, and thus that will 
-generate a diff from baserev to newrev.
-
-So will either of
-
-	baserev..newrev
-	baserev newrev
-
-which mean _exactly_ the same thing as "newrev ^basrev" to "diff-tree", 
-because in all cases it's obviously "baserev" that is the old one to diff 
-against.
-
-But
-
-	newrev baserev
-
-means the diff from "new" to "base", which is exactly the wrong way 
-around.
-
-Of course, since we did
-
-	baserev=$(git-merge-base $oldrev $newrev)
-
-to generate base-rev, we could actually have done
-
-	$oldrev...$newrev
-
-(note the _three_ dots) which means "diff from merge-base to newrev". But 
-since we use "baserev" multiple times, what the update hook does right now 
-is actually better - it avoids the cost of re-computing the merge base 
-that we needed for other things anyway.
-
-		Linus
+-- Hannes
