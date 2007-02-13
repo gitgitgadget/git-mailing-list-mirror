@@ -1,86 +1,101 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Tue, 13 Feb 2007 16:08:15 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702131557430.1757@xanadu.home>
-References: <45CFA30C.6030202@verizon.net>
- <200702130932.51601.litvinov2004@gmail.com>
- <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702130919100.8424@woody.linux-foundation.org>
- <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
- <20070213204248.GA21046@uranus.ravnborg.org>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: Re: git-gui Error
+Date: Tue, 13 Feb 2007 22:53:03 +0100
+Message-ID: <20070213215303.GA26716@auto.tuwien.ac.at>
+References: <20070213065616.GA4195@auto.tuwien.ac.at> <20070213074519.GA32687@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Tue Feb 13 22:08:35 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 13 22:53:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH4sz-0001wp-9D
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 22:08:25 +0100
+	id 1HH5aJ-0007f7-46
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 22:53:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751080AbXBMVIR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 16:08:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751083AbXBMVIR
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 16:08:17 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:32480 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080AbXBMVIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 16:08:17 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDF00DR66PST6D0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 13 Feb 2007 16:08:16 -0500 (EST)
-In-reply-to: <20070213204248.GA21046@uranus.ravnborg.org>
-X-X-Sender: nico@xanadu.home
+	id S1751230AbXBMVxH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Feb 2007 16:53:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbXBMVxH
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 16:53:07 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:37276 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230AbXBMVxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 16:53:06 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id C5F1168009CA;
+	Tue, 13 Feb 2007 22:53:03 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3e-vYgWvwTOI; Tue, 13 Feb 2007 22:53:03 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 6BFD068006AA; Tue, 13 Feb 2007 22:53:03 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20070213074519.GA32687@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39586>
 
-On Tue, 13 Feb 2007, Sam Ravnborg wrote:
+On Tue, Feb 13, 2007 at 02:45:19AM -0500, Shawn O. Pearce wrote:
+> Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
+> > Starting git-gui without any parameters display an error message in=
+stead
+> > of a usage message:
+>=20
+> Starting it with no parameters (`git-gui` or `git gui`) should
+> work just fine.  I do this all of the time on Mac OS X and Windows,
+> as it opens a commit window and keeps it running.
+> =20
+> > Error in startup script: child process exited abnormally
+> >     while executing
+> > "close $fd"
+> >     (procedure "load_all_heads" line 11)
+> >     invoked from within
+> > "load_all_heads"
+> >     invoked from within
+> > "if {[is_enabled transport]} {
+> >         load_all_remotes
+> >         load_all_heads
+> >=20
+> >         populate_branch_menu
+> >         populate_fetch_menu
+> >         populate_push_menu
+> > }"
+>=20
+> According to this backtrace, we were trying to startup the UI
+> and load the branches, but:
+>=20
+>   git for-each-ref --format=3D%(refname) refs/heads
+>=20
+> returned a non-zero exit code or something else with it went wrong.
+> Is this maybe a brand new repository?  This is most certainly a bug
+> in git-gui, but I'd like to understand more about the environment
+> so I can track it down.
 
-> This whole auto CRLF things seems to deal with DOS issues that I personally
-> have not encountered since looong time ago.
+My fault, I had only a too old GIT core (1.4.1) in my path.
+With the current version, the problem disapears.
 
-Maybe you didn't share a work environment with Windows users since 
-looong time ago.
+Some notes about using git-gui:=20
 
-> Granted notepad in Windows does not understand UNIX files but that a bug
-> in notepad and everyone knows that wordpad can be used.
-> 
-> I wonder what we are really trying to address here. Or in other words
-> could the original poster maybe tell what Windows IDE's that does
-> not handle UNIX files properly?
+* Fetching over ssh results in an empty dialog. The password prompt is
+only shown in the terminal window, which is likly to be hidden by the
+the main window of git-gui.
 
-Windows IDE's can _create_files.  Those files will be CRLF infected.
+* It there any reason, why tags are not included in the list of possibl=
+e
+merge sources in Merge/Local Merge?
 
-Also some of them read UNIX files just fine but they will use CRLF to 
-end new added lines despite the rest of the file using only LF.
+It only needs one additional line in do_local_merge:
+         set cmd [list git for-each-ref]
+         lappend cmd {--format=3D%(objectname) %(refname)}
+         lappend cmd refs/heads
+         lappend cmd refs/remotes
++        lappend cmd refs/tags
+         set fr_fd [open "| $cmd" r]
 
-> core git today should not care about CRLF as opposed to LF end-of-line
-> as long as the end-of-line is consistent - correct?
-
-Consistency won't come alone if not enforced in some way.
-
-> So defaulting to autoCRLF in Windows/DOS environments was maybe
-> sane 10 years ago but today that seems to be the wrong thing to do.
-> For certain project the option could be useful if the tool-set in
-> the project *requires* CRLF, but if the toolset like all modern toolset
-> supports both CRLF and LF then git better avoid changing end-of-line marker.
-
-Rather git better enforce consistency otherwise it'll be only a mix of 
-possible combination as soon as Windows and UNIX users work on the same 
-project.
-
-
-Nicolas
+mfg Martin K=F6gler
