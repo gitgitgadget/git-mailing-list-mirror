@@ -1,86 +1,54 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Including the release notes in the git-1.5.0 release?
-Date: Tue, 13 Feb 2007 13:05:41 -0500
-Message-ID: <20070213180541.GH8670@thunk.org>
-References: <E1HGyPn-0003Te-9s@candygram.thunk.org> <7vzm7ix895.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] Have git-cvsserver call hooks/update before really altering the ref
+Date: Tue, 13 Feb 2007 10:07:57 -0800
+Message-ID: <7vtzxqvsle.fsf@assigned-by-dhcp.cox.net>
+References: <200702131512.45412.andyparkins@gmail.com>
+	<7v7iumymvq.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702131253010.1757@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 19:06:20 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Feb 13 19:08:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH22e-0000CB-Uf
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 19:06:13 +0100
+	id 1HH24W-00015q-8j
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 19:08:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751401AbXBMSFs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 13:05:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbXBMSFs
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 13:05:48 -0500
-Received: from thunk.org ([69.25.196.29]:53281 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751412AbXBMSFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 13:05:48 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HH27Q-0002MA-I0; Tue, 13 Feb 2007 13:11:08 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HH229-00006u-L0; Tue, 13 Feb 2007 13:05:41 -0500
-Content-Disposition: inline
-In-Reply-To: <7vzm7ix895.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1751423AbXBMSH7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 13:07:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbXBMSH7
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 13:07:59 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:56137 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbXBMSH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 13:07:59 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070213180759.KXOA22948.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 13 Feb 2007 13:07:59 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id P67x1W0221kojtg0000000; Tue, 13 Feb 2007 13:07:58 -0500
+In-Reply-To: <Pine.LNX.4.64.0702131253010.1757@xanadu.home> (Nicolas Pitre's
+	message of "Tue, 13 Feb 2007 12:54:39 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39566>
 
-On Tue, Feb 13, 2007 at 09:44:22AM -0800, Junio C Hamano wrote:
-> As the text assumes familiarity with git 1.3.0 or so, I am not
-> sure if making it as one of the manpages makes much sense.
+Nicolas Pitre <nico@cam.org> writes:
 
-Yeah, that's a good point.
+> On Tue, 13 Feb 2007, Junio C Hamano wrote:
+>
+>> As a principle, I am in favor of this.  Perhaps post 1.5.0 after
+>> hearing what real cvsserver users have to say on the list.
+>
+> Andy looks to me like a real cvsserver user though.
 
-> Also there is a question of what to do when 1.6.0 comes out.
-> Will its release notes replace 1.5.0 one?  If so changes from
-> which version will it describe?
-
-What I've seen some projects do (including some commercial products)
-is to keep them around with the old file names.  So if we have
-
-Documentation/RELEASE-NOTES_1.5.0.txt
-Documentation/RELEASE-NOTES_1.6.0.txt
-Documentation/RELEASE-NOTES_1.7.0.txt
-
-and a symlink from RELEASE-NOTES to Documentation/RELEASE-NOTES-<cur_ver>.txt
-
-that would make a lot of sense....
-
-> and have pointer to v1.5.0.txt from Documentation/git.txt would
-> be a sensible and easy thing to do.
-
-The only reason why I suggest Documentation/RELEASE-NOTES_1.5.0.txt
-instead of Documentation/v1.5.0.txt is that it might not be as obvious
-what "v1.5.0.txt" is for someone just looking at it in the
-Documntation directory, where as "RELEASE-NOTES_1.5.0.txt leaves no
-doubt.
-
-But keeping the the old release notes around is good both for people
-who are upgrading from older versions, and it also means that for
-someone who wants to answer the question, "suppose we want to enable
-feature <foo>", what which older versions of git clients will be
-breaking.  
-
-(I was about to suggest that we just break the older git clients using
-dumb http protecols on kernel.org, befure I realized that that meant
-breaking git clients that were released last August.  Whoops; it's
-amazing how much improvements git has seen in the last six months,
-that it seems a lot longer ago... :-)
-
-							- Ted
+I know.  If he were the only real cvsserver user, then the patch
+is fine as there is no risk breaking somebody else's setup.
