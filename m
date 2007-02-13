@@ -1,66 +1,69 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 3/3] diffstat generation in hooks--update was passing "^baserev" to git-diff-tree
-Date: Tue, 13 Feb 2007 18:34:34 +0000
-Message-ID: <200702131834.36001.andyparkins@gmail.com>
-References: <200702131424.21665.andyparkins@gmail.com> <Pine.LNX.4.64.0702130856580.8424@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Tue, 13 Feb 2007 10:39:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702131037330.8424@woody.linux-foundation.org>
+References: <45CFA30C.6030202@verizon.net> <200702130932.51601.litvinov2004@gmail.com>
+ <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702131901040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 13 19:37:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alexander Litvinov <litvinov2004@gmail.com>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 13 19:40:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH2X1-0006nO-Gn
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 19:37:35 +0100
+	id 1HH2ZW-000870-U0
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 19:40:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751527AbXBMShc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 13:37:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751529AbXBMShc
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 13:37:32 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:46282 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526AbXBMShb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 13:37:31 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so392976nfa
-        for <git@vger.kernel.org>; Tue, 13 Feb 2007 10:37:30 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tSjjQ4t3XpD2fm9TcElH2Ix/MDOkvpCAT34tAcgAHickIt3UIGiQhisEVkpQmemVgtZiupvAMzHr/o//5v3o5Pr0iY0nVXmO8d9EH7PosokDsuAfsaRRUtApcNCmeQaNejM8E6c/D4rPonxqia2pqZij0A/lFsnCxx/Ag5EZMds=
-Received: by 10.82.113.6 with SMTP id l6mr11765720buc.1171391850292;
-        Tue, 13 Feb 2007 10:37:30 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id 30sm12335361ugf.2007.02.13.10.37.27;
-        Tue, 13 Feb 2007 10:37:27 -0800 (PST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <Pine.LNX.4.64.0702130856580.8424@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1751560AbXBMSj2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 13:39:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751563AbXBMSj2
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 13:39:28 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:48055 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751559AbXBMSj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 13:39:27 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1DIdKhB031911
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 13 Feb 2007 10:39:21 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1DIdJfg005788;
+	Tue, 13 Feb 2007 10:39:20 -0800
+In-Reply-To: <Pine.LNX.4.63.0702131901040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-0.421 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39577>
-
-On Tuesday 2007, February 13, Linus Torvalds wrote:
-
-> This is wrong.
->
-> 	newrev ^baserev
->
-> is right. The "not baserev" tells diff-tree that the baserev is the
-
-Right.  It's all come back to me now you've explained it; I obviously 
-understood it when I wrote it, but it leaked out in the interim :-).  I 
-was surprised because I've been using the hook for ages and the output 
-seemed right. :-)
-
-Junio - please ignore this patch.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39578>
 
 
-Andy
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+
+On Tue, 13 Feb 2007, Johannes Schindelin wrote:
+> 
+> No hooks means something like cvsnt does, and that means no .gitattributes 
+> either. (BTW I really hate .gitattributes, as it does not at all say what 
+> this is about; it's about file _conversions_, not attributes).
+
+No, it *is* about attributes.
+
+In order to know how to convert, you need to know the attributes of the 
+file.
+
+So it's not about conversion: we would ALWAYS do conversion. It's about 
+the fact that in order to do the conversion, we need to know what the 
+attributes of the file is - is it text, or what.
+
+And the equal point is that there are _other_ attributes that git might 
+care about. The "merge strategy" attribute, for example. Or "owner" 
+attributes for files etc.
+
+		Linus
