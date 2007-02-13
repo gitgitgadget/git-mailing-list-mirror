@@ -1,83 +1,56 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui Error
-Date: Tue, 13 Feb 2007 02:45:19 -0500
-Message-ID: <20070213074519.GA32687@spearce.org>
-References: <20070213065616.GA4195@auto.tuwien.ac.at>
+From: Junio C Hamano <junkio@cox.net>
+Subject: linux-2.6.git/packed-refs???
+Date: Tue, 13 Feb 2007 01:27:03 -0800
+Message-ID: <7v7ium1k7s.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Tue Feb 13 08:45:29 2007
+To: torvalds@linux-foundation.org
+X-From: git-owner@vger.kernel.org Tue Feb 13 10:27:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGsLw-0006qO-Lv
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 08:45:29 +0100
+	id 1HGtwQ-0005Ee-Pj
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 10:27:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164AbXBMHpZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 02:45:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751163AbXBMHpZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 02:45:25 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57795 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751167AbXBMHpZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 02:45:25 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HGsLp-0007T5-4f; Tue, 13 Feb 2007 02:45:21 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BF83620FBAE; Tue, 13 Feb 2007 02:45:19 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20070213065616.GA4195@auto.tuwien.ac.at>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751225AbXBMJ1H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 04:27:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751219AbXBMJ1H
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 04:27:07 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:38213 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225AbXBMJ1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 04:27:05 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070213092703.ETBQ22948.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 13 Feb 2007 04:27:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id NxT31W00X1kojtg0000000; Tue, 13 Feb 2007 04:27:04 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39504>
 
-Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
-> Starting git-gui without any parameters display an error message instead
-> of a usage message:
+I noticed while scanning #git log that it appears that pack-refs
+was run in your public repo and some people cannot clone over
+dumb protocols with older git.
 
-Starting it with no parameters (`git-gui` or `git gui`) should
-work just fine.  I do this all of the time on Mac OS X and Windows,
-as it opens a commit window and keeps it running.
- 
-> Error in startup script: child process exited abnormally
->     while executing
-> "close $fd"
->     (procedure "load_all_heads" line 11)
->     invoked from within
-> "load_all_heads"
->     invoked from within
-> "if {[is_enabled transport]} {
->         load_all_remotes
->         load_all_heads
-> 
->         populate_branch_menu
->         populate_fetch_menu
->         populate_push_menu
-> }"
+    commit 2986c02217f98809d8990e7679edf0f5d99f904d
+    Author: Junio C Hamano <junkio@cox.net>
+    Date:   Wed Nov 22 22:24:09 2006 -0800
 
-According to this backtrace, we were trying to startup the UI
-and load the branches, but:
+    git-fetch: fix dumb protocol transport to fetch from pack-pruned ref
 
-  git for-each-ref --format=%(refname) refs/heads
+was the first revision that aligned dumb protocol clients with
+pack-ref; unfortunately anything older will not find the ref
+that was packed.
 
-returned a non-zero exit code or something else with it went wrong.
-Is this maybe a brand new repository?  This is most certainly a bug
-in git-gui, but I'd like to understand more about the environment
-so I can track it down.
+We do have a backward compatibility warning on this in v1.5.0
+release notes draft, but I think we would make it more obvious.
 
--- 
-Shawn.
+Sigh...
