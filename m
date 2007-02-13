@@ -1,101 +1,98 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: git-gui Error
-Date: Tue, 13 Feb 2007 22:53:03 +0100
-Message-ID: <20070213215303.GA26716@auto.tuwien.ac.at>
-References: <20070213065616.GA4195@auto.tuwien.ac.at> <20070213074519.GA32687@spearce.org>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Tue, 13 Feb 2007 22:58:19 +0100
+Organization: Dewire
+Message-ID: <200702132258.20278.robin.rosenberg.lists@dewire.com>
+References: <45CFA30C.6030202@verizon.net> <200702131816.27705.litvinov2004@gmail.com> <eqt40c$5ov$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 13 22:53:11 2007
+To: Mark Levedahl <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Tue Feb 13 22:57:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH5aJ-0007f7-46
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 22:53:11 +0100
+	id 1HH5eO-0001Ob-BK
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 22:57:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751230AbXBMVxH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Feb 2007 16:53:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751313AbXBMVxH
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 16:53:07 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:37276 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751230AbXBMVxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 16:53:06 -0500
+	id S1751243AbXBMV5V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 16:57:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbXBMV5V
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 16:57:21 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:11168 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751243AbXBMV5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 16:57:20 -0500
 Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id C5F1168009CA;
-	Tue, 13 Feb 2007 22:53:03 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3e-vYgWvwTOI; Tue, 13 Feb 2007 22:53:03 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 6BFD068006AA; Tue, 13 Feb 2007 22:53:03 +0100 (CET)
+	by dewire.com (Postfix) with ESMTP id 80F67803393;
+	Tue, 13 Feb 2007 22:52:27 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 28226-06; Tue, 13 Feb 2007 22:52:27 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 1B4B880338F;
+	Tue, 13 Feb 2007 22:52:25 +0100 (CET)
+User-Agent: KMail/1.9.4
+In-Reply-To: <eqt40c$5ov$1@sea.gmane.org>
 Content-Disposition: inline
-In-Reply-To: <20070213074519.GA32687@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39587>
 
-On Tue, Feb 13, 2007 at 02:45:19AM -0500, Shawn O. Pearce wrote:
-> Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
-> > Starting git-gui without any parameters display an error message in=
-stead
-> > of a usage message:
->=20
-> Starting it with no parameters (`git-gui` or `git gui`) should
-> work just fine.  I do this all of the time on Mac OS X and Windows,
-> as it opens a commit window and keeps it running.
-> =20
-> > Error in startup script: child process exited abnormally
-> >     while executing
-> > "close $fd"
-> >     (procedure "load_all_heads" line 11)
-> >     invoked from within
-> > "load_all_heads"
-> >     invoked from within
-> > "if {[is_enabled transport]} {
-> >         load_all_remotes
-> >         load_all_heads
-> >=20
-> >         populate_branch_menu
-> >         populate_fetch_menu
-> >         populate_push_menu
-> > }"
->=20
-> According to this backtrace, we were trying to startup the UI
-> and load the branches, but:
->=20
->   git for-each-ref --format=3D%(refname) refs/heads
->=20
-> returned a non-zero exit code or something else with it went wrong.
-> Is this maybe a brand new repository?  This is most certainly a bug
-> in git-gui, but I'd like to understand more about the environment
-> so I can track it down.
+tisdag 13 februari 2007 20:36 skrev Mark Levedahl:
+> Alexander Litvinov wrote:
+> 
+> > ? ????????? ?? Tuesday 13 February 2007 16:06 Johannes Schindelin
+> > ???????(a):
+> >> Hi,
+> >>
+> >> On Tue, 13 Feb 2007, Alexander Litvinov wrote:
+> >> > When I have file that was converted from dos to unix format (or from
+> >> > unix to dos) git genereta big diff. But anyway, c++ compiler works well
+> >> > with both formats and in this case I simply convert file to dos format
+> >> > and git shows again nice diff. If unix format was commited to git I
+> >> > simply change the format and commit that file again.
+> >>
+> >> That's awful!
+> > If you are tring to build history that looks good - you are right this is
+> > a terrible workflow.
+> > 
+> >> > The only trouble is the rebase, it does not like \r\n ending and othen
+> >> > produce unexpected merge conflict. But I don't use rebse to othen to
+> >> > realy investigate and try to solve the problem.
+> >>
+> >> Well, if everybody thinks like you, maybe we do not have to change
+> >> anything for Windows after all?
+> > I still wish to have working rebase so if git will hanle somehow \r\n it
+> > would be nice. But please do not produce the same behavior as cvs does:
+> > under cygwin it still use \n !
+> 
+> Cygwin != Windows, Cygwin is a POSIX emulation layer with the explicit goal
+> of providing user tools behaving exactly as they do under Linux, and this
+> includes line ending style.
 
-My fault, I had only a too old GIT core (1.4.1) in my path.
-With the current version, the problem disapears.
+Line ending style is selectable in cygwin, both on a global level and path level (cygwin 
+mounts). If you use CVS for windows development using CRLF works well and
+is the only option if you want to use the same working are with both native CVS clients
+like TortoiseCVS and the cygwin client. I use the CRLF style by default and LF only
+for selected directories. The only annoying thing I see is that files transformed by patch end 
+up with LF-only line endings.
 
-Some notes about using git-gui:=20
+> So, the Cygwin ports of various Linux tools are not expected to satisfy
+> users who want native Win32 behavior. This is where the mingw port of git
+> fits in. Yes, under Cygwin git can track files with \r\n endings, but: 
+> 1) Those projects are not portable to non-windows platforms, and 
+> 2) As you noted, git will have trouble with rebase, merge, etc. as there is
+> an assumption of \n endings throughout.
 
-* Fetching over ssh results in an empty dialog. The password prompt is
-only shown in the terminal window, which is likly to be hidden by the
-the main window of git-gui.
+Even if there is a native port, I'm inclined to want to use the cygwin version 
+anyway because of the nice shell and scripting capabilities and large selection of packages
+that match what I'm used to in Linux. Git under cygwin should do CRLF transformations 
+according to the same rules that apply to text files in cygwin.
 
-* It there any reason, why tags are not included in the list of possibl=
-e
-merge sources in Merge/Local Merge?
-
-It only needs one additional line in do_local_merge:
-         set cmd [list git for-each-ref]
-         lappend cmd {--format=3D%(objectname) %(refname)}
-         lappend cmd refs/heads
-         lappend cmd refs/remotes
-+        lappend cmd refs/tags
-         set fr_fd [open "| $cmd" r]
-
-mfg Martin K=F6gler
+-- robin
