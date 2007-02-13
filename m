@@ -1,95 +1,83 @@
-From: "Julian Phillips" <jp3@quantumfyre.co.uk>
-Subject: [PATCH] Allow fetch--tool to read from stdin
-Date: Tue, 13 Feb 2007 01:21:39 +0000
-Message-ID: <11713297013179-git-send-email-julian@quantumfyre.co.uk>
-References: <11713297014015-git-send-email-julian@quantumfyre.co.uk>
-Cc: Julian Phillips <julian@quantumfyre.co.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 13 02:28:34 2007
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Mon, 12 Feb 2007 17:20:15 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0702121715220.6630@qynat.qvtvafvgr.pbz>
+References: <45CFA30C.6030202@verizon.net>  <20070212042425.GB18010@thunk.org>
+  <Pine.LNX.4.64.0702120839490.8424@woody.linux-foundation.org> 
+ <7vps8f6l81.fsf@assigned-by-dhcp.cox.net> 
+ <Pine.LNX.4.63.0702130020450.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7vfy9b6iyt.fsf@assigned-by-dhcp.cox.net> 
+ <Pine.LNX.4.63.0702130046450.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <45D10D86.3030508@verizon.net>  <Pine.LNX.4.63.0702130204120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070213011329.GB31377@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Mark Levedahl <mdl123@verizon.net>,
+	Junio C Hamano <junkio@cox.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Theodore Tso <tytso@mit.edu>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 13 02:35:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGmTB-0006ZR-QL
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 02:28:34 +0100
+	id 1HGmaH-0001TG-9X
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 02:35:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965458AbXBMB2Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 20:28:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965462AbXBMB2Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 20:28:25 -0500
-Received: from neutron.datavampyre.co.uk ([212.159.54.235]:37417 "EHLO
-	neutron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965458AbXBMB2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 20:28:24 -0500
-Received: (qmail 25772 invoked by uid 103); 13 Feb 2007 01:21:41 +0000
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <jp3@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.88.7/2553. spamassassin: 3.1.3. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.024449 secs); 13 Feb 2007 01:21:41 -0000
-Received: from unknown (HELO beast) (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 13 Feb 2007 01:21:41 +0000
-Received: by beast (sSMTP sendmail emulation); Tue, 13 Feb 2007 01:21:41 +0000
-X-Mailer: git-send-email 1.4.4.4
-In-Reply-To: <11713297014015-git-send-email-julian@quantumfyre.co.uk>
+	id S965464AbXBMBfo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 20:35:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965465AbXBMBfo
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 20:35:44 -0500
+Received: from warden-p.diginsite.com ([208.29.163.248]:55908 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S965464AbXBMBfn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 20:35:43 -0500
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 12 Feb 2007 17:35:43 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Mon, 12 Feb 2007 17:34:59 -0800
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <20070213011329.GB31377@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39478>
 
-If the reflist is "-" then read the reflist data from stdin instead,
-this will allow the passing of more than 128K of reflist data - which
-won't fit in the environment passed by execve.
+On Mon, 12 Feb 2007, Shawn O. Pearce wrote:
 
-Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
----
- builtin-fetch--tool.c |   24 ++++++++++++++++++++++--
- 1 files changed, 22 insertions(+), 2 deletions(-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> On Mon, 12 Feb 2007, Mark Levedahl wrote:
+>>
+>>> Perhaps I'm too paranoid, but I've been burnt way too many times by
+>>> text/binary mode stuff to let this part be trivialized. Maybe it only
+>>> gets enabled by core.ImReallyParanoid, but I want that option.
+>>
+>> Be aware that what you proposed costs many CPU cycles. I am totally
+>> opposed to enabling that option by default on all platforms. I am okay
+>> with .gitattributes (but I would call it .gitfiletypes), but I am _not_
+>> okay with git being _too much_ fscked up by Windows. Microsoft has done
+>> enough harm already.
+>
+> Indeed; this type of checking should only occur if there is a filter
+> applied to a file.  Most files in most projects would hopefully
+> just be considered to be byte streams to Git, like they are today,
+> and thus not incur any additional overhead, beyond matching their
+> type to determine they are in fact just a byte stream.
+>
+> The type could be cached in the index; or at least a single bit
+> which says "I'm just a byte stream, thanks" so that the matching
+> only needs to occur during an initial read-tree.
 
-diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
-index 3090ffe..619ceb0 100644
---- a/builtin-fetch--tool.c
-+++ b/builtin-fetch--tool.c
-@@ -2,6 +2,20 @@
- #include "refs.h"
- #include "commit.h"
- 
-+static char *get_stdin(void)
-+{
-+#define CHUNK_SIZE (1048576)
-+	char *data = xmalloc(CHUNK_SIZE);
-+	int offset = 0, read = 0;
-+	read = xread(0, data, CHUNK_SIZE);
-+	while (read == CHUNK_SIZE) {
-+		offset += CHUNK_SIZE;
-+		data = xrealloc(data, offset + CHUNK_SIZE);
-+		read = xread(0, data + offset, CHUNK_SIZE);
-+	}
-+	return data;
-+}
-+
- static void show_new(char *type, unsigned char *sha1_new)
- {
- 	fprintf(stderr, "  %s: %s\n", type,
-@@ -463,12 +477,18 @@ int cmd_fetch__tool(int argc, const char **argv, const char *prefix)
- 	if (!strcmp("parse-reflist", argv[1])) {
- 		if (argc != 3)
- 			return error("parse-reflist takes 1 arg");
--		return parse_reflist(argv[2]);
-+		const char *reflist = argv[2];
-+		if (!strcmp(reflist, "-"))
-+			reflist = get_stdin();
-+		return parse_reflist(reflist);
- 	}
- 	if (!strcmp("expand-refs-wildcard", argv[1])) {
- 		if (argc < 4)
- 			return error("expand-refs-wildcard takes at least 2 args");
--		return expand_refs_wildcard(argv[2], argc - 3, argv + 3);
-+		const char *reflist = argv[2];
-+		if (!strcmp(reflist, "-"))
-+			reflist = get_stdin();
-+		return expand_refs_wildcard(reflist, argc - 3, argv + 3);
- 	}
- 
- 	return error("Unknown subcommand: %s", argv[1]);
--- 
-1.4.4.4
+for the limited case of line endings it may be reasonable to define the internal 
+git format to be lf, and if you are running on a platform that uses this nativly 
+no transition is needed
+
+one possible way to make this be a general feture is to have the helper script 
+have a --needed flag that tells git if it would do anything on the current 
+platform or not. this way you don't need to run it (and sanity check it) if it's 
+not needed.
+
+David Lang
