@@ -1,60 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-svn test suite failures due to Subversion race
-Date: Mon, 12 Feb 2007 22:17:48 -0800
-Message-ID: <7vps8e1sz7.fsf@assigned-by-dhcp.cox.net>
-References: <45CFDFDE.8080907@uwaterloo.ca>
-	<20070212103822.GA21413@localdomain> <45D1239C.4040706@gmail.com>
-	<20070213032137.GA28534@localdomain>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: git-gui Error
+Date: Tue, 13 Feb 2007 07:56:16 +0100
+Message-ID: <20070213065616.GA4195@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Spang <mcspang@gmail.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 07:17:55 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 13 08:30:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGqzC-0007ke-A2
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 07:17:54 +0100
+	id 1HGs7Z-00088g-Og
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 08:30:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161095AbXBMGRu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 01:17:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161097AbXBMGRu
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 01:17:50 -0500
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:46248 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161095AbXBMGRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 01:17:49 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070213061750.PXBB1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 13 Feb 2007 01:17:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id NuHo1W00q1kojtg0000000; Tue, 13 Feb 2007 01:17:49 -0500
-In-Reply-To: <20070213032137.GA28534@localdomain> (Eric Wong's message of
-	"Mon, 12 Feb 2007 19:21:37 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751156AbXBMHae convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Feb 2007 02:30:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161107AbXBMHae
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 02:30:34 -0500
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:44136 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751156AbXBMHae (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 02:30:34 -0500
+X-Greylist: delayed 2055 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Feb 2007 02:30:34 EST
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id EE3986868ED3
+	for <git@vger.kernel.org>; Tue, 13 Feb 2007 07:56:16 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qcTj4P6z-qny for <git@vger.kernel.org>;
+	Tue, 13 Feb 2007 07:56:16 +0100 (CET)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id B52626800A19; Tue, 13 Feb 2007 07:56:16 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39501>
 
-Eric Wong <normalperson@yhbt.net> writes:
+Starting git-gui without any parameters display an error message instea=
+d
+of a usage message:
 
-> Thanks for the patch.  Just one portability nit below, otherwise:
-> Acked-by: Eric Wong <normalperson@yhbt.net>
->
->> +poke() {
->> +	touch -r "$1" -d +1sec "$1"
->> +}
->
-> I'm not sure that -d is portable.  However,
->
->   perl -e '@x = stat($ARGV[0]); utime($x[8], $x[9] + 1, $ARGV[0])' "$1"
->
-> should work on any platform git-svn runs on.
+Error in startup script: child process exited abnormally
+    while executing
+"close $fd"
+    (procedure "load_all_heads" line 11)
+    invoked from within
+"load_all_heads"
+    invoked from within
+"if {[is_enabled transport]} {
+        load_all_remotes
+        load_all_heads
 
-Sounds sensible, as git-svn wants perl-svn libraries already
-anyway.
+        populate_branch_menu
+        populate_fetch_menu
+        populate_push_menu
+}"
+
+mfg Martin K=F6gler
