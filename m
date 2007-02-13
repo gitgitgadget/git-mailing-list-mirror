@@ -1,127 +1,108 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: [PATCH] Make gitk save and restore window pane position on Linux and
- Cygwin.
-Date: Mon, 12 Feb 2007 19:19:34 -0500
-Message-ID: <11713259742627-git-send-email-mdl123@verizon.net>
-Cc: Mark Levedahl <mdl123@verizon.net>
-To: junkio@cox.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 13 01:19:49 2007
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: StGIT discards local commits on "stg pull"
+Date: Mon, 12 Feb 2007 19:20:11 -0500
+Message-ID: <1171326011.2326.30.camel@dv>
+References: <20070212022625.rvyyo0kc0wowgogc@webmail.spamcop.net>
+	 <b0943d9e0702120131r528fb29ete143b8ce5a0a99e9@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Yann Dirson <ydirson@altern.org>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 13 01:20:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGlOd-0008WG-RU
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 01:19:48 +0100
+	id 1HGlPB-0000MM-2n
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 01:20:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030579AbXBMATk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Feb 2007 19:19:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030574AbXBMATk
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 19:19:40 -0500
-Received: from vms044pub.verizon.net ([206.46.252.44]:41889 "EHLO
-	vms044pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030579AbXBMATj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Feb 2007 19:19:39 -0500
-Received: from fal-l07294-lp.us.ray.com ([71.246.235.75])
- by vms044.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0JDD00HIEKWKLOK1@vms044.mailsrvcs.net> for
- git@vger.kernel.org; Mon, 12 Feb 2007 18:19:33 -0600 (CST)
-X-Mailer: git-send-email 1.5.0.rc3.24.g0c5e
-X-Peer: 127.0.0.1
+	id S1030581AbXBMAUR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Feb 2007 19:20:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030574AbXBMAUQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Feb 2007 19:20:16 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:37468 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030581AbXBMAUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Feb 2007 19:20:14 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1HGlNn-0000pP-U4
+	for git@vger.kernel.org; Mon, 12 Feb 2007 19:18:56 -0500
+Received: from proski by gnu.org with local (Exim 4.66)
+	(envelope-from <proski@gnu.org>)
+	id 1HGlP1-00014E-Os; Mon, 12 Feb 2007 19:20:11 -0500
+In-Reply-To: <b0943d9e0702120131r528fb29ete143b8ce5a0a99e9@mail.gmail.com>
+X-Mailer: Evolution 2.9.5 (2.9.5-4.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39465>
 
-Subtle bugs remained on both Cygwin and Linux that caused the various
-window panes to be restored in positions different than where the user
-last placed them. Sergey Vlasov posed a pair of suggested fixes to this,
-what is done here is slightly different. The basic fix here involves
-a) explicitly remembering and restoring the sash positions for the upper
-window, and b) using paneconfigure to redundantly set height and width of
-other elements. This redundancy is needed as Cygwin Tcl has a nasty habit
-of setting pane sizes to zero if their slaves are not configured with a
-specific size, but Linux Tcl does not honor the specific size given.
+On Mon, 2007-02-12 at 09:31 +0000, Catalin Marinas wrote:
+> On 12/02/07, Pavel Roskin <proski@gnu.org> wrote:
 
-Signed-off-by: Mark Levedahl <mdl123@verizon.net>
----
- gitk |   23 +++++++++++++----------
- 1 files changed, 13 insertions(+), 10 deletions(-)
+> > The example below shows that git-pull keeps my commit, but "stg pull"
+> > discards it by rebasing back to the remote ID.
+> 
+> I think this is a "feature" but we should've probably leave the
+> original behaviour as the default. Maybe we should also have this
+> per-branch rather than per-repository.
 
-diff --git a/gitk b/gitk
-index df1ce8c..9ddff3e 100755
---- a/gitk
-+++ b/gitk
-@@ -439,14 +439,13 @@ proc makewindow {} {
-     panedwindow .ctop -orient vertical
- 
-     # possibly use assumed geometry
--    if {![info exists geometry(topheight)]} {
-+    if {![info exists geometry(pwsash0)]} {
-         set geometry(topheight) [expr {15 * $linespc}]
-         set geometry(topwidth) [expr {80 * $charspc}]
-         set geometry(botheight) [expr {15 * $linespc}]
-         set geometry(botwidth) [expr {50 * $charspc}]
--        set geometry(canv) [expr {40 * $charspc}]
--        set geometry(canv2) [expr {20 * $charspc}]
--        set geometry(canv3) [expr {20 * $charspc}]
-+        set geometry(pwsash0) "[expr {40 * $charspc}] 2"
-+        set geometry(pwsash1) "[expr {60 * $charspc}] 2"
-     }
- 
-     # the upper half will have a paned window, a scroll bar to the right, and some stuff below
-@@ -457,18 +456,20 @@ proc makewindow {} {
-     # create three canvases
-     set cscroll .tf.histframe.csb
-     set canv .tf.histframe.pwclist.canv
--    canvas $canv -width $geometry(canv) \
-+    canvas $canv \
- 	-background $bgcolor -bd 0 \
- 	-yscrollincr $linespc -yscrollcommand "scrollcanv $cscroll"
-     .tf.histframe.pwclist add $canv
-     set canv2 .tf.histframe.pwclist.canv2
--    canvas $canv2 -width $geometry(canv2) \
-+    canvas $canv2 \
- 	-background $bgcolor -bd 0 -yscrollincr $linespc
-     .tf.histframe.pwclist add $canv2
-     set canv3 .tf.histframe.pwclist.canv3
--    canvas $canv3 -width $geometry(canv3) \
-+    canvas $canv3 \
- 	-background $bgcolor -bd 0 -yscrollincr $linespc
-     .tf.histframe.pwclist add $canv3
-+    eval .tf.histframe.pwclist sash place 0 $geometry(pwsash0)
-+    eval .tf.histframe.pwclist sash place 1 $geometry(pwsash1)
- 
-     # a scroll bar to rule them
-     scrollbar $cscroll -command {allcanvs yview} -highlightthickness 0
-@@ -577,6 +578,8 @@ proc makewindow {} {
-     pack .tf.bar -in .tf -side bottom -fill x
-     pack .tf.histframe -fill both -side top -expand 1
-     .ctop add .tf
-+    .ctop paneconfigure .tf -height $geometry(topheight)
-+    .ctop paneconfigure .tf -width $geometry(topwidth)
- 
-     # now build up the bottom
-     panedwindow .pwbottom -orient horizontal
-@@ -638,6 +641,7 @@ proc makewindow {} {
-     $ctext tag conf found -back yellow
- 
-     .pwbottom add .bleft
-+    .pwbottom paneconfigure .bleft -width $geometry(botwidth)
- 
-     # lower right
-     frame .bright
-@@ -832,9 +836,8 @@ proc savestuff {w} {
- 	puts $f "set geometry(main) [wm geometry .]"
- 	puts $f "set geometry(topwidth) [winfo width .tf]"
- 	puts $f "set geometry(topheight) [winfo height .tf]"
--	puts $f "set geometry(canv) [winfo width $canv]"
--	puts $f "set geometry(canv2) [winfo width $canv2]"
--	puts $f "set geometry(canv3) [winfo width $canv3]"
-+        puts $f "set geometry(pwsash0) \"[.tf.histframe.pwclist sash coord 0]\""
-+        puts $f "set geometry(pwsash1) \"[.tf.histframe.pwclist sash coord 1]\""
- 	puts $f "set geometry(botwidth) [winfo width .bleft]"
- 	puts $f "set geometry(botheight) [winfo height .bleft]"
- 
+I don't know the original motivation behind effectively reimplementing
+"git pull" in StGIT, but it's clear that the StGIT's own implementation
+needs some polish.
+
+I think it's always wrong to lose local commits.  I think StGIT should
+refuse to rebase if a merge would be needed or the rebase would go back
+in history (in other words, if git-pull would not go to the remote
+revision).
+
+> In StGIT 0.12, git-fetch is used by default rather than git-pull and
+> StGIT performs the rebasing. We had some discussions on whether this
+> would break existing workflows and we thought it wouldn't (I don't
+> usually mix git-commit with stg commands).
+
+Maybe such assumptions could be enforced?  Perhaps we could consider
+branch specialization.  As it stands now, we can have branches where
+fast-forward is OK and branches where it's not OK.
+
+If we look at it from the user standpoint, the branches could be
+distinguished by the use model:
+
+1) Tracking branch: pull is OK, commit is not OK, push is not OK.  All
+development is done in StGIT patches and sent to others.
+
+2) Development branch: commit is OK, push is OK, pull is OK but no
+merges by default.
+
+3) Merge branch: pull is OK, even with automatic merge, commit is OK,
+merge is OK.
+
+I'm not sure if this belongs to git or StGIT.
+
+> The solution would be to define the following in your gitconfig file
+> (either ~/.gitconfig or .git/config; a full example in StGIT's
+> examples/gitconfig):
+> 
+> [stgit]
+> 	pullcmd = git-pull
+> 	pull-does-rebase = no
+> 
+> The last line would tell StGIT not to do the rebasing and let git-pull
+> handle it.
+
+It's actually my deliberate choice to subject myself to the pains of the
+default configuration.  I don't want to live in backwards compatible
+environment until it rots away.  I'll rather eat the dogfood we are
+offering to others :)
+
+> I agree that for the rebasing case, we should have some warning if
+> fast-forwarding of the stack's base is not possible so that you could
+> run 'stg uncommit'.
+
+Sounds good to me.
+
 -- 
-1.5.0.rc3.24.g0c5e
+Regards,
+Pavel Roskin
