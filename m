@@ -1,59 +1,55 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] Make gitk save and restore window pane position on Linux and Cygwin.
-Date: Tue, 13 Feb 2007 14:10:37 +0300
-Message-ID: <20070213111037.GM23550@master.mivlgu.local>
-References: <11713259742627-git-send-email-mdl123@verizon.net> <7vbqjy7t86.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="iKKZt69u2Wx/rspf"
-Cc: Mark Levedahl <mdl123@verizon.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 12:10:51 2007
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: Publishing on a simple HTTP server
+Date: Tue, 13 Feb 2007 12:45:40 +0100
+Message-ID: <23628.1171367140@localhost>
+References: <14870.1171311025@localhost> <Pine.LNX.4.63.0702130009010.22628@wbgn013.biozentrum.uni-wuerzburg.de> <19695.1171344721@localhost> <Pine.LNX.4.63.0702131106230.1300@wbgn013.biozentrum.uni-wuerzburg.de>
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 13 12:48:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGvYb-0002Yy-DO
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 12:10:45 +0100
+	id 1HGw93-0002RK-CQ
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 12:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751280AbXBMLKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 06:10:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbXBMLKm
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 06:10:42 -0500
-Received: from mivlgu.ru ([81.18.140.87]:45607 "EHLO master.mivlgu.local"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751280AbXBMLKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 06:10:41 -0500
-Received: by master.mivlgu.local (Postfix, from userid 1000)
-	id 5EB32180119; Tue, 13 Feb 2007 14:10:37 +0300 (MSK)
-Content-Disposition: inline
-In-Reply-To: <7vbqjy7t86.fsf@assigned-by-dhcp.cox.net>
+	id S1751291AbXBMLsT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 06:48:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbXBMLsT
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 06:48:19 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:43046 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751292AbXBMLsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 06:48:18 -0500
+Received: from localhost.localdomain (cha51-2-82-244-211-40.fbx.proxad.net [82.244.211.40])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id 2086B27B51;
+	Tue, 13 Feb 2007 12:48:15 +0100 (CET)
+Received: from localhost (IDENT:1001@localhost [127.0.0.1])
+	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1DBjeG2023629;
+	Tue, 13 Feb 2007 12:45:40 +0100
+In-reply-to: <Pine.LNX.4.63.0702131106230.1300@wbgn013.biozentrum.uni-wuerzburg.de> 
+Comments: In-reply-to Johannes Schindelin <Johannes.Schindelin@gmx.de>
+   message dated "Tue, 13 Feb 2007 11:07:31 +0100."
+X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39516>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
---iKKZt69u2Wx/rspf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> In that case, please extend your mirror script to run 
+> git-update-server-info before mirroring.
 
-On Mon, Feb 12, 2007 at 05:15:53PM -0800, Junio C Hamano wrote:
-> This looks sane to me, although a bit twisted (and again it is
-> not Mark's fault).  Sergey, Ack?
+I thought this:
 
-Yes, current git (85b1f988) works for me.
+git --bare --git-dir=/tmp/my-cloned.git update-server-info
 
---iKKZt69u2Wx/rspf
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+was supposed to achieve this. Doesn't it ?
+ 
+> And if it works, a small description (maybe as a patch for 
+> Documentation/howto/?) would be nice.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.2.4 (GNU/Linux)
+No problem. I won't forget.
 
-iD8DBQFF0ZytW82GfkQfsqIRAqqKAJ9ZAg/1ZOnqQpjciGpydbARQEQI0gCglDyp
-0CSFUrw8981mulvlwhIRI7w=
-=cyaU
------END PGP SIGNATURE-----
-
---iKKZt69u2Wx/rspf--
+Xavier
