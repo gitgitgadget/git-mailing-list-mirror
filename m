@@ -1,83 +1,86 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 3/3] diffstat generation in hooks--update was passing  "^baserev" to git-diff-tree
-Date: Tue, 13 Feb 2007 16:32:35 +0000
-Message-ID: <200702131632.37401.andyparkins@gmail.com>
-References: <200702131424.21665.andyparkins@gmail.com> <45D1DB57.65433549@eudaptics.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] Update RPM core package description
+Date: Tue, 13 Feb 2007 11:39:01 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702131136220.1757@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 13 17:33:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 13 17:39:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH0aL-00007t-9c
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 17:32:53 +0100
+	id 1HH0gT-00031R-QN
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 17:39:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750813AbXBMQcu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 11:32:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbXBMQcu
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 11:32:50 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:1563 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750813AbXBMQct (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 11:32:49 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so269506uga
-        for <git@vger.kernel.org>; Tue, 13 Feb 2007 08:32:47 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RnA96h7z4fCq/2P0CQ6L9rIDtPmPjLkO9Fso2HpBirCZtdS4yhU1ICAsKJqyJy+Y6PWJ7aa8BwVxFxAgwRso228zHY2to3dWuaciiDLozV1w76i3yNesxW6aNMXz8s61Da/GKN7GGXQ9SOsn7rMykjDH5XujxkZaR96MDJzx3nI=
-Received: by 10.67.117.2 with SMTP id u2mr10618644ugm.1171384367227;
-        Tue, 13 Feb 2007 08:32:47 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id 59sm12281863ugf.2007.02.13.08.32.39;
-        Tue, 13 Feb 2007 08:32:39 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <45D1DB57.65433549@eudaptics.com>
-Content-Disposition: inline
+	id S1750814AbXBMQjJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 11:39:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750818AbXBMQjJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 11:39:09 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:64858 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750814AbXBMQjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 11:39:08 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JDE00AI2U919G30@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 13 Feb 2007 11:39:01 -0500 (EST)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39540>
 
-On Tuesday 2007 February 13 15:37, Johannes Sixt wrote:
+Git isn't as stupid as it used to be
 
-> Shouldn't that be "... $baserev $newrev"? But read on.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
-I think it should, yes.  Thanks.
-
-> #   * --- * --- * --- * (oldrev)
-> #          \
-> #           * --- * --- * (newrev)
->
-> git rev-list $oldrev..$newrev
->
-> is exactly what you want in this case. The stunt with $baserev is not
-> necessary, and it may even be wrong if there is more than one
-> merge-base. $oldrev..$newrev will be correct even in this case.
-
-I just pinched the idea from the old update hook by Junio in 4f11b84c84.  I 
-just assumed that was the better way to do it.  A quick test shows it to give 
-the same output - I'm easy.
-
-> You still need to derive a merge-base, but only to detect the forced
-> update and to format the message. Then you should use --not $baserev
-> instead of ^$baserev just in case there is more than one merge-base.
-
-Are you suggesting something like this?
-
-git-rev-parse --not --all $baserev | git-rev-list --stdin --pretty $newrev
-
-Which would start showing from $newrev but would exclude all baserevs and all 
-existing branches.
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+diff --git a/git.spec.in b/git.spec.in
+index ffab6bb..46aee88 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -12,12 +12,9 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+ Requires:	git-core, git-svn, git-cvs, git-arch, git-email, gitk, git-gui, perl-Git
+ 
+ %description
+-This is a stupid (but extremely fast) directory content manager.  It
+-doesn't do a whole lot, but what it _does_ do is track directory
+-contents efficiently. It is intended to be the base of an efficient,
+-distributed source code management system. This package includes
+-rudimentary tools that can be used as a SCM, but you should look
+-elsewhere for tools for ordinary humans layered on top of this.
++Git is a fast, scalable, distributed revision control system with an
++unusually rich command set that provides both high-level operations
++and full access to internals.
+ 
+ This is a dummy package which brings in all subpackages.
+ 
+@@ -26,12 +23,9 @@ Summary:	Core git tools
+ Group:		Development/Tools
+ Requires:	zlib >= 1.2, rsync, curl, less, openssh-clients, expat
+ %description core
+-This is a stupid (but extremely fast) directory content manager.  It
+-doesn't do a whole lot, but what it _does_ do is track directory
+-contents efficiently. It is intended to be the base of an efficient,
+-distributed source code management system. This package includes
+-rudimentary tools that can be used as a SCM, but you should look
+-elsewhere for tools for ordinary humans layered on top of this.
++Git is a fast, scalable, distributed revision control system with an
++unusually rich command set that provides both high-level operations
++and full access to internals.
+ 
+ These are the core tools with minimal dependencies.
+ 
+@@ -173,6 +167,9 @@ rm -rf $RPM_BUILD_ROOT
+ %{!?_without_docs: %doc Documentation/*.html }
+ 
+ %changelog
++* Mon Feb 13 2007 Nicolas Pitre <nico@cam.org>
++- Update core package description (Git isn't as stupid as it used to be)
++
+ * Mon Feb 12 2007 Junio C Hamano <junkio@cox.net>
+ - Add git-gui and git-citool.
+ 
