@@ -1,55 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-cvsserver doesn't respect core.sharedrepository
-Date: Tue, 13 Feb 2007 19:10:51 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702131910020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200702131438.30291.andyparkins@gmail.com>
- <Pine.LNX.4.63.0702131611010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200702131605.29088.andyparkins@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 2/3] Only show log entries for new revisions in hooks--update
+Date: Tue, 13 Feb 2007 18:08:17 +0000
+Message-ID: <200702131808.19291.andyparkins@gmail.com>
+References: <200702131424.06983.andyparkins@gmail.com> <7vbqjyymye.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 13 19:11:17 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 13 19:11:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH27Z-0002ef-9r
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 19:11:17 +0100
+	id 1HH27Z-0002ef-Qd
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 19:11:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751418AbXBMSKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 13:10:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751416AbXBMSKy
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 13:10:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58773 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751437AbXBMSKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 13:10:53 -0500
-Received: (qmail invoked by alias); 13 Feb 2007 18:10:52 -0000
-X-Provags-ID: V01U2FsdGVkX19dWBFj++Fd1AdvGpyWoYWgIqtqJ1L7wCGFW64IP8
-	/SkA==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200702131605.29088.andyparkins@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751416AbXBMSLP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 13:11:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbXBMSLP
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 13:11:15 -0500
+Received: from wx-out-0506.google.com ([66.249.82.231]:1785 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751416AbXBMSLP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 13:11:15 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so2355961wxd
+        for <git@vger.kernel.org>; Tue, 13 Feb 2007 10:11:14 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dTQUzs8nfWlOTc2b7TtoKpApyk2GhNZmAIknOEcDPsxNdz7kgirfNRFha0OkPcN3nQ4fAUC1+M178YSefU218WXNpGTMVkHuJT5TtyYMhxi+hGgfjg8+wZ8vin1lj8kZGC3X0DagbLHaq+OJ9xHYw43RtHW6NcGVu3+PJ6LMlG4=
+Received: by 10.90.104.14 with SMTP id b14mr19611793agc.1171390274455;
+        Tue, 13 Feb 2007 10:11:14 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id e34sm12479990ugd.2007.02.13.10.11.10;
+        Tue, 13 Feb 2007 10:11:12 -0800 (PST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vbqjyymye.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39569>
 
-Hi,
+On Tuesday 2007, February 13, Junio C Hamano wrote:
 
-On Tue, 13 Feb 2007, Andy Parkins wrote:
+> If we want to take this example hook seriously, I suspect that
+> the existing mechanism based on hooks.* variables might need to
+> be made to allow finer grained, per-branch, control.  I dunno.
+>
+> Post 1.5.0.
 
-> On Tuesday 2007 February 13 15:11, Johannes Schindelin wrote:
-> 
-> > Since ref updates are not write-into-existing-file, but rather
-> > write-into-new-file-and-replace-old, it should work, no?
-> 
-> That perhaps might be the explanation for the bad behaviour.
+Absolutely - per-branch sounds great.  However, as that is definitely a 
+post-1.5.0 topic, I wanted to get the hook that was there in better 
+shape for the release.
 
-Ummm. What I tried to say is that this is intended behaviour, not bad 
-behaviour. The file does not have to have write permissions for the group. 
-The _directory_ has to have them.
+Until the per-branch work is done, I think this patch is worth having.
 
-Ciao,
-Dscho
+
+Andy
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
