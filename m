@@ -1,49 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Do not run git-pack-refs by default for now from git-gc
-Date: Tue, 13 Feb 2007 05:29:51 -0500
-Message-ID: <20070213102951.GA14903@coredump.intra.peff.net>
-References: <7v7ium1k7s.fsf@assigned-by-dhcp.cox.net> <7vzm7iz8uv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702131101400.1300@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PU PATCH] Fix git fetch for very large ref counts
+Date: Tue, 13 Feb 2007 10:39:41 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0702131031180.6435@reaper.quantumfyre.co.uk>
+References: <11713297014015-git-send-email-julian@quantumfyre.co.uk>
+ <7vd54e4ufk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 13 11:30:29 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 13 11:39:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGuvc-0001Nz-P4
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 11:30:29 +0100
+	id 1HGv4f-0005dd-UQ
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 11:39:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245AbXBMK3z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 05:29:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751248AbXBMK3z
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 05:29:55 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3721 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751245AbXBMK3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 05:29:54 -0500
-Received: (qmail 11102 invoked from network); 13 Feb 2007 05:29:58 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 13 Feb 2007 05:29:58 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Feb 2007 05:29:51 -0500
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702131101400.1300@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751239AbXBMKjq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 05:39:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbXBMKjq
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 05:39:46 -0500
+Received: from neutron.datavampyre.co.uk ([212.159.54.235]:38739 "EHLO
+	neutron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239AbXBMKjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 05:39:43 -0500
+Received: (qmail 2863 invoked by uid 103); 13 Feb 2007 10:39:42 +0000
+Received: from 192.168.0.16 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.88.7/2560. spamassassin: 3.1.3. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.16):. 
+ Processed in 0.031446 secs); 13 Feb 2007 10:39:42 -0000
+Received: from unknown (HELO reaper.quantumfyre.co.uk) (192.168.0.16)
+  by neutron.datavampyre.co.uk with SMTP; 13 Feb 2007 10:39:42 +0000
+X-X-Sender: jp3@reaper.quantumfyre.co.uk
+In-Reply-To: <7vd54e4ufk.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39512>
 
-On Tue, Feb 13, 2007 at 11:03:32AM +0100, Johannes Schindelin wrote:
+On Mon, 12 Feb 2007, Junio C Hamano wrote:
 
-> It seems to me that the reason are dumb transports, which are very likely 
-> to run only from bare repositories. How about checking for a bare 
-> repository explicitely, and only if it _is_ bare, check for gc.packrefs, 
-> too?
+> "Julian Phillips" <jp3@quantumfyre.co.uk> writes:
+>
+>> The updated git fetch in pu is vastly improved on repositories with very
+>> large numbers of refs.  The time taken for a no-op fetch over ~9000 refs
+>> drops from ~48m to ~0.5m.
+>>
+>> However, before git fetch will actually run on a repository with ~9000
+>> refs the calling interface between fetch and fetch--tool needs to be
+>> changed.  The existing version passes the entire reflist on the command
+>> line, which means that it is subject to the maxiumum environment size
+>> passed to a child process by execve.
+>>
+>> The following patches add a stdin based interface to fetch--tool allowing
+>> the ~9000 refs to be passed without exceeding the environment limit.
+>
+> Thanks.
+>
+> But the ones in 'pu' were done primarily as demonstration of
+> where the bottlenecks are, and not meant for real-world
+> consumption.  I think the final shaving of 0.5m down to a few
+> seconds needs to move the ls_remote_result string currently kept
+> as a shell variable to a list of strings represented in a
+> git-fetch largely rewritten in C, and at that point the
+> interface from outside fetch--tool to throw 9000 refs at it
+> would be an internal function call and the code you fixed along
+> with new function you introduced would probably need to be
+> discarded.
 
-The way you have stated it, I think we will get a lot of "I set
-gc.packrefs, but it doesn't do anything!" complaints. I think a
-tri-state "yes/no/notbare" defaulting to "notbare" makes more sense. But
-maybe you meant the other way around in the first place.
+And there I was thinking 0.5m was fast ... given how long I've been 
+reading this list I really should have know better. ;)
 
--Peff
+I only really made the changes so I could try your improvements to fetch 
+out - if they aren't necessary because you're making it even faster then I 
+really don't have much cause to complain.
+
+-- 
+Julian
+
+  ---
+To be a kind of moral Unix, he touched the hem of Nature's shift.
+ 		-- Shelley
