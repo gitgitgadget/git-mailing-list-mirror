@@ -1,59 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Do not run git-pack-refs by default for now from git-gc
-Date: Tue, 13 Feb 2007 11:55:43 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702131151520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7v7ium1k7s.fsf@assigned-by-dhcp.cox.net> <7vzm7iz8uv.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702131101400.1300@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070213102951.GA14903@coredump.intra.peff.net>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] Make gitk save and restore window pane position on Linux and Cygwin.
+Date: Tue, 13 Feb 2007 14:10:37 +0300
+Message-ID: <20070213111037.GM23550@master.mivlgu.local>
+References: <11713259742627-git-send-email-mdl123@verizon.net> <7vbqjy7t86.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 11:56:10 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="iKKZt69u2Wx/rspf"
+Cc: Mark Levedahl <mdl123@verizon.net>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 13 12:10:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HGvKT-0004Vp-C3
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 11:56:09 +0100
+	id 1HGvYb-0002Yy-DO
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 12:10:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750994AbXBMK4F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 05:56:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbXBMK4F
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 05:56:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55424 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750994AbXBMK4E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 05:56:04 -0500
-Received: (qmail invoked by alias); 13 Feb 2007 10:56:01 -0000
-X-Provags-ID: V01U2FsdGVkX19+nWgD1D5+RWRyaCpQXULTj4c53wuaEotSyO6tAl
-	Wj+A==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070213102951.GA14903@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1751280AbXBMLKm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 06:10:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751279AbXBMLKm
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 06:10:42 -0500
+Received: from mivlgu.ru ([81.18.140.87]:45607 "EHLO master.mivlgu.local"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751280AbXBMLKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 06:10:41 -0500
+Received: by master.mivlgu.local (Postfix, from userid 1000)
+	id 5EB32180119; Tue, 13 Feb 2007 14:10:37 +0300 (MSK)
+Content-Disposition: inline
+In-Reply-To: <7vbqjy7t86.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39515>
 
-Hi,
 
-On Tue, 13 Feb 2007, Jeff King wrote:
+--iKKZt69u2Wx/rspf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> On Tue, Feb 13, 2007 at 11:03:32AM +0100, Johannes Schindelin wrote:
-> 
-> > It seems to me that the reason are dumb transports, which are very 
-> > likely to run only from bare repositories. How about checking for a 
-> > bare repository explicitely, and only if it _is_ bare, check for 
-> > gc.packrefs, too?
-> 
-> The way you have stated it, I think we will get a lot of "I set 
-> gc.packrefs, but it doesn't do anything!" complaints. I think a 
-> tri-state "yes/no/notbare" defaulting to "notbare" makes more sense. But 
-> maybe you meant the other way around in the first place.
+On Mon, Feb 12, 2007 at 05:15:53PM -0800, Junio C Hamano wrote:
+> This looks sane to me, although a bit twisted (and again it is
+> not Mark's fault).  Sergey, Ack?
 
-No, I meant it as you understood it. But your solution is evidently way 
-more elegant.
+Yes, current git (85b1f988) works for me.
 
-Ciao,
-Dscho
+--iKKZt69u2Wx/rspf
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.2.4 (GNU/Linux)
+
+iD8DBQFF0ZytW82GfkQfsqIRAqqKAJ9ZAg/1ZOnqQpjciGpydbARQEQI0gCglDyp
+0CSFUrw8981mulvlwhIRI7w=
+=cyaU
+-----END PGP SIGNATURE-----
+
+--iKKZt69u2Wx/rspf--
