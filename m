@@ -1,98 +1,70 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Tue, 13 Feb 2007 22:58:19 +0100
-Organization: Dewire
-Message-ID: <200702132258.20278.robin.rosenberg.lists@dewire.com>
-References: <45CFA30C.6030202@verizon.net> <200702131816.27705.litvinov2004@gmail.com> <eqt40c$5ov$1@sea.gmane.org>
+From: Timur Tabi <timur@freescale.com>
+Subject: How do I get git-format-patch to ignore changes that remove spaces
+ from the end of the line?
+Date: Tue, 13 Feb 2007 15:59:33 -0600
+Organization: Freescale
+Message-ID: <45D234C5.5090005@freescale.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Tue Feb 13 22:57:25 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 13 22:59:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH5eO-0001Ob-BK
-	for gcvg-git@gmane.org; Tue, 13 Feb 2007 22:57:24 +0100
+	id 1HH5gf-0002WQ-Ca
+	for gcvg-git@gmane.org; Tue, 13 Feb 2007 22:59:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbXBMV5V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 16:57:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbXBMV5V
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 16:57:21 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:11168 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751243AbXBMV5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 16:57:20 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 80F67803393;
-	Tue, 13 Feb 2007 22:52:27 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 28226-06; Tue, 13 Feb 2007 22:52:27 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 1B4B880338F;
-	Tue, 13 Feb 2007 22:52:25 +0100 (CET)
-User-Agent: KMail/1.9.4
-In-Reply-To: <eqt40c$5ov$1@sea.gmane.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1751315AbXBMV7h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 16:59:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751317AbXBMV7h
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 16:59:37 -0500
+Received: from de01egw02.freescale.net ([192.88.165.103]:54707 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751315AbXBMV7h (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 16:59:37 -0500
+Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id l1DLxYnp022081
+	for <git@vger.kernel.org>; Tue, 13 Feb 2007 14:59:34 -0700 (MST)
+Received: from [10.82.19.119] (ld0169-tx32.am.freescale.net [10.82.19.119])
+	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id l1DLxXqV023738
+	for <git@vger.kernel.org>; Tue, 13 Feb 2007 15:59:34 -0600 (CST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.8.1.2pre) Gecko/20070111 SeaMonkey/1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39588>
 
-tisdag 13 februari 2007 20:36 skrev Mark Levedahl:
-> Alexander Litvinov wrote:
-> 
-> > ? ????????? ?? Tuesday 13 February 2007 16:06 Johannes Schindelin
-> > ???????(a):
-> >> Hi,
-> >>
-> >> On Tue, 13 Feb 2007, Alexander Litvinov wrote:
-> >> > When I have file that was converted from dos to unix format (or from
-> >> > unix to dos) git genereta big diff. But anyway, c++ compiler works well
-> >> > with both formats and in this case I simply convert file to dos format
-> >> > and git shows again nice diff. If unix format was commited to git I
-> >> > simply change the format and commit that file again.
-> >>
-> >> That's awful!
-> > If you are tring to build history that looks good - you are right this is
-> > a terrible workflow.
-> > 
-> >> > The only trouble is the rebase, it does not like \r\n ending and othen
-> >> > produce unexpected merge conflict. But I don't use rebse to othen to
-> >> > realy investigate and try to solve the problem.
-> >>
-> >> Well, if everybody thinks like you, maybe we do not have to change
-> >> anything for Windows after all?
-> > I still wish to have working rebase so if git will hanle somehow \r\n it
-> > would be nice. But please do not produce the same behavior as cvs does:
-> > under cygwin it still use \n !
-> 
-> Cygwin != Windows, Cygwin is a POSIX emulation layer with the explicit goal
-> of providing user tools behaving exactly as they do under Linux, and this
-> includes line ending style.
+I have configured my text editor to remove spaces at the end of each line 
+whenever it saves a file.  I do this so that I don't inadvertently add spaces to 
+the end of any line.
 
-Line ending style is selectable in cygwin, both on a global level and path level (cygwin 
-mounts). If you use CVS for windows development using CRLF works well and
-is the only option if you want to use the same working are with both native CVS clients
-like TortoiseCVS and the cygwin client. I use the CRLF style by default and LF only
-for selected directories. The only annoying thing I see is that files transformed by patch end 
-up with LF-only line endings.
+Unfortunately, if the file *already* had spaces at the end of some lines before 
+I start editing it, this spaces will also be removed.
 
-> So, the Cygwin ports of various Linux tools are not expected to satisfy
-> users who want native Win32 behavior. This is where the mingw port of git
-> fits in. Yes, under Cygwin git can track files with \r\n endings, but: 
-> 1) Those projects are not portable to non-windows platforms, and 
-> 2) As you noted, git will have trouble with rebase, merge, etc. as there is
-> an assumption of \n endings throughout.
+After I commit my changes, I use git-format-patch to make a patch.  I then get 
+deltas like this:
 
-Even if there is a native port, I'm inclined to want to use the cygwin version 
-anyway because of the nice shell and scripting capabilities and large selection of packages
-that match what I'm used to in Linux. Git under cygwin should do CRLF transformations 
-according to the same rules that apply to text files in cygwin.
+   * Copyright (C) 1996-2005 Paul Mackerras.
+- *
++ *
+   *  Adapted for 64bit PowerPC by Dave Engebretsen and Peter Bergner.
+- *    {engebret|bergner}@us.ibm.com
++ *    {engebret|bergner}@us.ibm.com
+   *
 
--- robin
+I don't want these deltas in my patch.  However, if I specify an option like 
+--ignore-all-space, git-format-patch omits deltas like this one:
+
+-               memcpy(fs_enet_data.macaddr, mac_addr, 6);
++                       memcpy(fs_enet_data.macaddr, mac_addr, 6);
+
+In this case, I *do* want the delta, because I'm indenting a line to fix a 
+formatting error.
+
+So how do I get the output that I want, and not the output that I don't want?
+
+-- 
+Timur Tabi
+Linux Kernel Developer @ Freescale
