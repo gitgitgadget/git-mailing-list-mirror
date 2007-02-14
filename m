@@ -1,67 +1,75 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
-Date: Wed, 14 Feb 2007 15:18:42 -0600
-Message-ID: <17875.31922.333264.948817@lisa.zopyra.com>
-References: <17875.13564.622087.63653@lisa.zopyra.com>
-	<7vhctor78j.fsf@assigned-by-dhcp.cox.net>
-	<17875.17647.74882.218627@lisa.zopyra.com>
-	<7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>
-	<17875.30187.289679.417079@lisa.zopyra.com>
-	<7vmz3gmojt.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] git-unbundle - unbundle objects and references for
+ disconnected transfer.
+Date: Wed, 14 Feb 2007 16:18:46 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702141615570.1757@xanadu.home>
+References: <11714622292110-git-send-email-mdl123@verizon.net>
+ <11714622292295-git-send-email-mdl123@verizon.net>
+ <11714622293142-git-send-email-mdl123@verizon.net>
+ <20070214194537.GD28290@spearce.org> <45D377A8.1080404@verizon.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 22:18:53 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Mark Levedahl <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 22:18:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHRWc-0008Kw-4p
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:18:50 +0100
+	id 1HHRWc-0008Kw-Lh
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:18:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932622AbXBNVSr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S932623AbXBNVSs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 16:18:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932624AbXBNVSs
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:18:48 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:18385 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932623AbXBNVSr (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 14 Feb 2007 16:18:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932623AbXBNVSr
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:18:47 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60378 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932622AbXBNVSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 16:18:46 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1ELIjI20381;
-	Wed, 14 Feb 2007 15:18:45 -0600
-In-Reply-To: <7vmz3gmojt.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JDH00B9C1VAPR10@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 14 Feb 2007 16:18:47 -0500 (EST)
+In-reply-to: <45D377A8.1080404@verizon.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39751>
 
-On Wednesday, February 14, 2007 at 13:12:22 (-0800) Junio C Hamano writes:
->Bill Lear <rael@zopyra.com> writes:
->...
->"ldd ~/git-master/bin/git" tells me that it links with libcrypto.so,
->so I am using OpenSSL's SHA-1 implementation.  I do not know
->what your distro uses (or you hand built git yourself?).
+On Wed, 14 Feb 2007, Mark Levedahl wrote:
 
-Should have known --- I hand-built it myself, and thought perhaps
-it was a configure option (output truncated):
+> Shawn O. Pearce wrote:
+> > Mark Levedahl <mdl123@verizon.net> wrote:
+> >   
+> > > +# get the objects
+> > > +unzip -p "$bfile" .gitBundlePack | git-unpack-objects
+> > >     
+> >
+> > Since you are transporting a packfile by sneakernet it might
+> > be reasonable to assume this transfer happens infrequently.
+> > Consequently we might assume its object count exceeds
+> > transfer.unpackLimit, which means a standard fetch or push would
+> > have kept the packfile rather than unpacking it to loose objects.
+> >
+> > So maybe use git-index-pack here to index the packfile and
+> > retain it as-is, rather than unpacking it?
+> >
+> >   
+> Many of my uses of this result in 10-20 objects being transferred, so I'm not
+> sure keeping each pack is a real benefit. In particular, one use is for daily
+> updates between two sites via email where we tend to have a lot of extra
+> objects in the packs as we assume that not every bundle actually gets applied,
+> while the number of real new objects tends to be small. On the other hand,
+> given the manual nature of this operation, we could always just follow up with
+> repack -a -d, possibly guarded by a git count. Thoughts?
 
-% ldd /opt/git-1.5.0/bin/git
-        libcrypto.so.4 => /lib64/libcrypto.so.4 (0x0000003de1300000)
-% ldd /usr/bin/git
-        libcrypto.so.4 => /lib64/libcrypto.so.4 (0x0000003de1300000)
-
-So, both 1.5 and 1.4.4.1 are using OpenSSL, I reckon.
-
->So it looks more and more like a bit decay as Linus suspected...
-
-Strange: given that fsck works on my public repo, with both 1.4.4.1
-and with 1.5.0, and I reproduced this easily and fsck barfs on
-both of my failed repos.  I can't imagine this is really a disk
-error of any kind.
+Since this is meant for manual operation and therefore is not meant to 
+happen multiple times per minute, I'd suggest you still use index-pack 
+unconditionally instead of unpack-objects despite having a small number 
+of objects.
 
 
-Bill
+Nicolas
