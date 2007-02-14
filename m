@@ -1,101 +1,64 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: git-gui Error
-Date: Wed, 14 Feb 2007 19:09:06 +0100
-Message-ID: <20070214180906.GB21612@auto.tuwien.ac.at>
-References: <20070213065616.GA4195@auto.tuwien.ac.at> <20070213074519.GA32687@spearce.org> <20070213215303.GA26716@auto.tuwien.ac.at> <20070214022200.GB30884@spearce.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: [PATCH] config: read system-wide defaults from /etc/gitconfig
+Date: Wed, 14 Feb 2007 19:10:26 +0100
+Message-ID: <45D35092.8040901@xs4all.nl>
+References: <200702140909.28369.andyparkins@gmail.com> <slrnet5p5h.s9h.siprbaum@xp.machine.xx> <Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 14 19:09:22 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>,
+	Andy Parkins <andyparkins@gmail.com>, junkio@cox.net,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 14 19:11:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHOZ9-0004bI-Ls
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 19:09:16 +0100
+	id 1HHOax-0005RO-02
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 19:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932415AbXBNSJM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 14 Feb 2007 13:09:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932418AbXBNSJM
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 13:09:12 -0500
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:58778 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932415AbXBNSJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 13:09:11 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 545356869BC7;
-	Wed, 14 Feb 2007 19:09:07 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dS-Gwq9Ab5zT; Wed, 14 Feb 2007 19:09:06 +0100 (CET)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id D3C116869BC3; Wed, 14 Feb 2007 19:09:06 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20070214022200.GB30884@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932422AbXBNSKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 13:10:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932421AbXBNSKy
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 13:10:54 -0500
+Received: from smtp-vbr1.xs4all.nl ([194.109.24.21]:2912 "EHLO
+	smtp-vbr1.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932419AbXBNSKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 13:10:53 -0500
+Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
+	(authenticated bits=0)
+	by smtp-vbr1.xs4all.nl (8.13.8/8.13.8) with ESMTP id l1EIAHOe077134
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 14 Feb 2007 19:10:17 +0100 (CET)
+	(envelope-from hanwen@xs4all.nl)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39714>
 
-On Tue, Feb 13, 2007 at 09:22:00PM -0500, Shawn O. Pearce wrote:
-> Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
-> > My fault, I had only a too old GIT core (1.4.1) in my path.
-> > With the current version, the problem disapears.
->=20
-> Yea, I figured (much later) it was something like that.  I still
-> think there is a bug in git-gui, namely not telling you that it
-> requires Git 1.5.x or later if it finds out the 'git' its invoking
-> is older than that.  I'll probably patch it tonight, but it won't
-> ship that way in 1.5.0.
-> =20
-> > Some notes about using git-gui:=20
-> >=20
-> > * Fetching over ssh results in an empty dialog. The password prompt=
- is
-> > only shown in the terminal window, which is likly to be hidden by t=
-he
-> > the main window of git-gui.
->=20
-> This is a "feature".  I only use git-gui + ssh with an ssh-agent
-> and public key authentication, so I never get password prompts.
-> Unfortunately Tcl does not permit me to setup bi-directional pipes
-> to a process (heck, I can't get both stdout and stderr except by
-> going through cat!), and even if it does, I think ssh would demand
-> the tty to get the password, thereby bypassing my pipe anyway.
->=20
-> Basically I don't know how to improve this.  If someone has a bright
-> idea, please pass it along!
+Johannes Schindelin escreveu:
+> The settings in /etc/gitconfig can be overridden in ~/.gitconfig,
+> which in turn can be overridden in .git/config.
 
-Well, there are two way:
+> +#define ETC_GITCONFIG "/etc/gitconfig"
 
-1) SSH_ASKPASS (see ssh(1))
-    If ssh needs a passphrase, it will read the passphrase from the
-    current terminal if it was run from a terminal.  If ssh does not
-    have a terminal associated with it but DISPLAY and SSH_ASKPASS
-    are set, it will execute the program specified by SSH_ASKPASS
-    and open an X11 window to read the passphrase.  This is particu-
-    larly useful when calling ssh from a .Xsession or related
-    script.  (Note that on some machines it may be necessary to
-    redirect the input from /dev/null to make this work.)
+> +		if (!access(ETC_GITCONFIG, R_OK))
+> +			ret += git_config_from_file(fn, ETC_GITCONFIG);
 
-This require, that a password helper is installed. One implementation
-is part of every linux distribution (openssh-askpass-gnome).
+this is a stupid idea.  
 
-2) Simulate user (like http://websvn.kde.org/tags/KDE/3.4.3/kdebase/kio=
-slave/fish/fish.cpp?rev=3D467549&view=3Dauto)
+This should use the path given as the --sysconfdir argument to configure. 
+If the configure result is not available, it should default to $prefix/etc/ 
 
-This requires opening a pty and running ssh on the slave of
-it. Additionally it requires some logic to determine, what type of
-input ssh requires.
+It should be possible to install private copy of Git without being affected
+by system wide defaults.
 
-I tried to implement the second way in a C program once. The interpreti=
-on
-of the ssh output is difficult, but I got it working, but after a syste=
-m upgrade,
-the logic was not working any more. So I would avoid this.
 
-mfg Martin K=F6gler
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
