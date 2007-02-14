@@ -1,74 +1,99 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
-Date: Wed, 14 Feb 2007 13:52:21 -0800
-Message-ID: <7vvei4l84q.fsf@assigned-by-dhcp.cox.net>
-References: <17875.13564.622087.63653@lisa.zopyra.com>
-	<7vhctor78j.fsf@assigned-by-dhcp.cox.net>
-	<17875.17647.74882.218627@lisa.zopyra.com>
-	<7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>
-	<17875.30187.289679.417079@lisa.zopyra.com>
-	<17875.30687.661794.512124@lisa.zopyra.com>
-	<Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org>
-	<17875.33204.413186.355557@lisa.zopyra.com>
-	<7vzm7gl8cf.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-bundle - bundle objects and references for disconnected
+ transfer.
+Date: Wed, 14 Feb 2007 22:58:15 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702142238310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11714622292110-git-send-email-mdl123@verizon.net>
+ <11714622292295-git-send-email-mdl123@verizon.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Feb 14 22:52:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 22:58:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHS3E-0007vk-6k
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:52:32 +0100
+	id 1HHS91-0002A9-90
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:58:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932484AbXBNVw1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 16:52:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932642AbXBNVw1
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:52:27 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:33827 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932484AbXBNVw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 16:52:26 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070214215223.LFTP21704.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 14 Feb 2007 16:52:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id PZsN1W0081kojtg0000000; Wed, 14 Feb 2007 16:52:22 -0500
-In-Reply-To: <7vzm7gl8cf.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 14 Feb 2007 13:47:44 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932665AbXBNV6T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 16:58:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932663AbXBNV6T
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:58:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38300 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932665AbXBNV6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 16:58:17 -0500
+Received: (qmail invoked by alias); 14 Feb 2007 21:58:15 -0000
+X-Provags-ID: V01U2FsdGVkX1+OCboegkOORaA3yS+xwnOdi7qKpbYzRIOE8p8XsA
+	JrDw==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <11714622292295-git-send-email-mdl123@verizon.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39761>
 
-Junio C Hamano <junkio@cox.net> writes:
+Hi,
 
-> Bill Lear <rael@zopyra.com> writes:
->
->> WAAAAAIAMINIT ... I think I see it:
->>
->> % perl -pi -e 's/.*\$Id.*//sx' $(xgrep -l '[$]Id')
->>
->> Could I have corrupted the pack file?  I'll bet $50 I did:
->>
->> % [yet another clone]
->> % xgrep -l '[$]Id'
->> ./.git/objects/pack/pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.pack
->> [...]
->>
->> %!@#$&$%(@@@!!!
->
-> We all make mistakes.  Thanks for being honest.
+On Wed, 14 Feb 2007, Mark Levedahl wrote:
 
-By the way, I sometimes think it might be worth doing this:
+> +bfile=bundle.zip
+> +for arg in $myargs ; do
+> +	case "$arg" in
+> +		--bare)
+> +			export GIT_DIR=.;;
 
-	$ chmod a-r .git/
+This is not necessary. You should do this instead:
 
-We always access files by explicit paths and never ask "ls .git/foo*"
-to find what are under .git/ directory.
+	. git-sh-setup
+
+It should autodetect if you are running in a bare repo. Also, it gives you 
+the nice die and help functions.
+
+> +		-h|--h|--he|--hel|--help)
+> +			echo "$USAGE"
+> +			exit;;
+> +		--output=*)
+> +			bfile=${arg##--output=};;
+
+Throughout git, we seem to do both "--output=<bla>" _and_ "--output <bla>" 
+forms, or just the latter.
+
+> +GIT_DIR=$(git-rev-parse --git-dir) || die "Not in a git directory"
+
+Again, this is done by git-sh-setup
+
+> +git-show-ref $refs > .gitBundleReferences
+
+Would it not be better to say explicitely which refs are expected to be 
+present already (they start with "^" in the output of `git-rev-parse`, but 
+you would need to do a bit more work, since you cannot just take the 
+symbolic names).
+
+Some general remarks:
+
+It would be so much nicer if you worked without temporary files (you could 
+do that by starting the file with the refs, then have an empty line, and 
+then just pipe the pack after that).
+
+IMHO reliance on $(git fsck | grep ^missing) is not good. The file check 
+might take very, very long, or use much memory. And you _can_ do better 
+[*1*].
+
+Also, your use of shallow is incorrect. If the boundary commits are 
+present, you might just leave them as-are, but if they are not present, 
+you have to mark them as shallow. Otherwise, you end up with a corrupt 
+(not shallow) repository.
+
+Ciao,
+Dscho
+
+[*1*] Instead of providing a list "<hash> <refname>" with just the refs to 
+be updated, append a list "<hash> ^<refname>" with the refs which _have_ 
+to be present in order to succeed. You get this list by
+
+	gitrevnotargs=$(git-rev-parse --symbolic --revs-only --not $*)
+	git show-ref $gitrevnotargs | sed 's/^\(.\{41\}\)/&^/'
