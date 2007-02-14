@@ -1,63 +1,77 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: "freezing" gitk geometry
-Date: Wed, 14 Feb 2007 17:23:51 +0000
-Message-ID: <e1dab3980702140923m1e4e430ci28f8ed246c5fe786@mail.gmail.com>
+From: Mark Levedahl <mlevedahl@verizon.net>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Wed, 14 Feb 2007 12:28:22 -0500
+Message-ID: <45D346B6.5020802@verizon.net>
+References: <45CFA30C.6030202@verizon.net>
+ <200702130932.51601.litvinov2004@gmail.com>
+ <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0702130919100.8424@woody.linux-foundation.org>
+ <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
+ <7v8xf1uxme.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0702132127330.3604@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702141208020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45D31C0E.2040206@verizon.net>
+ <Pine.LNX.4.63.0702141653440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 14 18:23:56 2007
+Cc: Mark Levedahl <mdl123@verizon.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Alexander Litvinov <litvinov2004@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 14 18:28:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHNrH-0001n9-Nd
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 18:23:56 +0100
+	id 1HHNve-0003gt-HK
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 18:28:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750792AbXBNRXx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 12:23:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750832AbXBNRXw
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 12:23:52 -0500
-Received: from nz-out-0506.google.com ([64.233.162.238]:17070 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792AbXBNRXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 12:23:52 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so262448nze
-        for <git@vger.kernel.org>; Wed, 14 Feb 2007 09:23:51 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Swac3DLghmSr6CMofFdBV+KrEdLgz7zxxZ78Uopwpx+mUr6MPuf8Pl46A8SBdoAZdmyuW586oM5PWEx0BbOsCy2pTm8LqGQH5AsHkMgBvHYFLu7OozUh0c/sAEecBfsLw/11lnRWJEJ1HbhsBAbFg3S3C8h6TvkUWsAA5msNoIg=
-Received: by 10.64.10.2 with SMTP id 2mr1065823qbj.1171473831725;
-        Wed, 14 Feb 2007 09:23:51 -0800 (PST)
-Received: by 10.65.160.13 with HTTP; Wed, 14 Feb 2007 09:23:51 -0800 (PST)
-Content-Disposition: inline
+	id S1750901AbXBNR2W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 12:28:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750865AbXBNR2W
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 12:28:22 -0500
+Received: from vms046pub.verizon.net ([206.46.252.46]:43675 "EHLO
+	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832AbXBNR2W (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 12:28:22 -0500
+Received: from [127.0.0.1] ([71.246.235.75])
+ by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JDG00CJQR74WL13@vms046.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 14 Feb 2007 11:28:21 -0600 (CST)
+In-reply-to: <Pine.LNX.4.63.0702141653440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39697>
 
-Hi,
+Johannes Schindelin wrote:
+> Hi,
+>
+> On Wed, 14 Feb 2007, Mark Levedahl wrote:
+>   
+> This sounds regretfully complex. Somebody (you?) mentioned that cvsnt does 
+> a kick-ass job here. Does cvsnt need strategies? I don't think so. Neither 
+> do we. Someone who cares enough should just rip^H^H^Hlook at cvsnt's text 
+> detection.
+>
+> Ciao,
+> Dscho
+>   
+I agree that is complex, I started thinking of PAM when I wrote that, 
+leading to, "this aint gonna work." But in the modern day let's all feel 
+good spirit of "there are no stupid ideas, just some are better" I threw 
+it out anyway.
 
-now I've installed 1.5.0, I've discovered gitk is still the
-visualisation tool for graphically browsing history. I think gitk is a
-good program, but one thing I'd like to be able to change is to have a
-way to force gitk not to update its saved internal geometry (position
-of internal dividers, etc) when it exits. I tried making ~/.gitk not
-writable but that didn't work. I don't know tcl: is there a simple way
-to prevent gitk updating this upon quitting?
+As to cvsnt, my actual feeling is I'd like to kick it in the ass, it has 
+destroyed too many files for me over the years, binary and text, so I 
+don't think its strategies are very good. That is why I'm kicking these 
+ideas around, if I thought I knew the "right" way I would have written 
+it already.
 
-(Why do I want this? A tiling window manager often changes the size of
-clients automatically to fit things onto the screen as new windows
-appear. Sometimes this results in windows being made quite small. If I
-quit gitk without expanding it up to full size "just to get the
-geometry right" it stores a crushed geometry which gets restored when
-it's restarted regardless of the actual window space currently
-available.)
-
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-Details are all that matters; God dwells there, and you never get to
-see Him if you don't struggle to get them right. -- Stephen Jay Gould
+Mark
