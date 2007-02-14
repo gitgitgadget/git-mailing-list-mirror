@@ -1,62 +1,50 @@
-From: Alexander Litvinov <litvinov2004@gmail.com>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Wed, 14 Feb 2007 17:36:57 +0600
-Message-ID: <200702141736.57521.litvinov2004@gmail.com>
-References: <45CFA30C.6030202@verizon.net> <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 14 12:37:29 2007
+From: Xavier Maillard <zedek@gnu.org>
+Subject: [SOLVED] Re: Publishing on a simple HTTP server
+Date: Wed, 14 Feb 2007 12:34:48 +0100
+Message-ID: <4827.1171452888@localhost>
+References: <14870.1171311025@localhost> <Pine.LNX.4.63.0702130009010.22628@wbgn013.biozentrum.uni-wuerzburg.de> <19695.1171344721@localhost> <Pine.LNX.4.63.0702131106230.1300@wbgn013.biozentrum.uni-wuerzburg.de> <23628.1171367140@localhost> <Pine.LNX.4.63.0702131256430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <4127.1171450765@localhost> <20070214112324.GA5472@coredump.intra.peff.net>
+Cc: Xavier Maillard <zedek@gnu.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 12:37:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHIS0-0000fl-MN
+	id 1HHIS1-0000fl-7T
 	for gcvg-git@gmane.org; Wed, 14 Feb 2007 12:37:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932223AbXBNLhH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 14 Feb 2007 06:37:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932222AbXBNLhH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 06:37:07 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:7144 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932221AbXBNLhG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Feb 2007 06:37:06 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so154464uga
-        for <git@vger.kernel.org>; Wed, 14 Feb 2007 03:37:04 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qUmrqTdb21SYZkKpVOT3Mcx/FylH8oOvHUGnfjf3eMHImn2ACW1hhSV6XUI6eW5jwQbAv+VAzy4LtC3Kx/6yiY6dY2P8NGLHpue1rOakadcUyeV76P5AgeVomoLz1lhT8fDcphzpwzf15d9lgFDB/4gdGC9V1bBYc4vZH2isX4Y=
-Received: by 10.67.22.14 with SMTP id z14mr272814ugi.1171453024627;
-        Wed, 14 Feb 2007 03:37:04 -0800 (PST)
-Received: from lan.ac-sw.lcl ( [81.1.223.2])
-        by mx.google.com with ESMTP id o24sm747184ugd.2007.02.14.03.37.03;
-        Wed, 14 Feb 2007 03:37:03 -0800 (PST)
-User-Agent: KMail/1.8
-In-Reply-To: <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S932221AbXBNLh0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 06:37:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932222AbXBNLhZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 06:37:25 -0500
+Received: from smtp7-g19.free.fr ([212.27.42.64]:58181 "EHLO smtp7-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932221AbXBNLhY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 06:37:24 -0500
+Received: from localhost.localdomain (cha51-2-82-244-211-40.fbx.proxad.net [82.244.211.40])
+	by smtp7-g19.free.fr (Postfix) with ESMTP id 91E2355FC;
+	Wed, 14 Feb 2007 12:37:22 +0100 (CET)
+Received: from localhost (IDENT:1001@localhost [127.0.0.1])
+	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1EBYmEv004828;
+	Wed, 14 Feb 2007 12:34:49 +0100
+In-reply-to: <20070214112324.GA5472@coredump.intra.peff.net> 
+Comments: In-reply-to Jeff King <peff@peff.net>
+   message dated "Wed, 14 Feb 2007 06:23:24 -0500."
+X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39638>
 
-=D0=92 =D1=81=D0=BE=D0=BE=D0=B1=D1=89=D0=B5=D0=BD=D0=B8=D0=B8 =D0=BE=D1=
-=82 Wednesday 14 February 2007 01:07 Linus Torvalds =D0=BD=D0=B0=D0=BF=D0=
-=B8=D1=81=D0=B0=D0=BB:
-> Actually, I did it myself.
->
-> This is a "lazy man's auto-CRLF", and it really is pretty simple.
+Jeff King <peff@peff.net> wrote:
 
-Wow ! Thanks.=20
+> It works fine when I try it (after correcting the typo). What's not
+> working?
 
-I just tried this patch and it works! From now I can use git-cvsimport =
-under=20
-Linux and then clone it to cygwin and work there with full history. Nic=
-e,=20
-very nice. In my case text file detection work well as far most of our =
-files=20
-are .cpp and .h
+It just fails with the error message given earlier.
+
+Update: I tried again and it works. I may have missed something.
+
+Sorry.
+
+Xavier
