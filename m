@@ -1,113 +1,89 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Tue, 13 Feb 2007 18:16:12 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702131813560.3604@woody.linux-foundation.org>
-References: <45CFA30C.6030202@verizon.net> <200702130932.51601.litvinov2004@gmail.com>
- <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
- <200702131816.27705.litvinov2004@gmail.com> <eqt40c$5ov$1@sea.gmane.org>
- <Pine.LNX.4.64.0702131225070.3604@woody.linux-foundation.org>
- <45D2691C.4090005@verizon.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-gui Error
+Date: Tue, 13 Feb 2007 21:22:00 -0500
+Message-ID: <20070214022200.GB30884@spearce.org>
+References: <20070213065616.GA4195@auto.tuwien.ac.at> <20070213074519.GA32687@spearce.org> <20070213215303.GA26716@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 03:16:22 2007
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Wed Feb 14 03:22:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HH9gz-0007km-R7
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 03:16:22 +0100
+	id 1HH9ml-0001zH-BH
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 03:22:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253AbXBNCQT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Feb 2007 21:16:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932257AbXBNCQT
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 21:16:19 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:36974 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932253AbXBNCQS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Feb 2007 21:16:18 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1E2GDhB014297
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 13 Feb 2007 18:16:13 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1E2GCe2018844;
-	Tue, 13 Feb 2007 18:16:13 -0800
-In-Reply-To: <45D2691C.4090005@verizon.net>
-X-Spam-Status: No, hits=-0.416 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932256AbXBNCWI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Feb 2007 21:22:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932251AbXBNCWI
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Feb 2007 21:22:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38819 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932256AbXBNCWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Feb 2007 21:22:07 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HH9mM-0004Nz-GB; Tue, 13 Feb 2007 21:21:54 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2680120FBAE; Tue, 13 Feb 2007 21:22:01 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20070213215303.GA26716@auto.tuwien.ac.at>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39611>
 
+Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
+> My fault, I had only a too old GIT core (1.4.1) in my path.
+> With the current version, the problem disapears.
 
-
-On Tue, 13 Feb 2007, Mark Levedahl wrote:
+Yea, I figured (much later) it was something like that.  I still
+think there is a bug in git-gui, namely not telling you that it
+requires Git 1.5.x or later if it finds out the 'git' its invoking
+is older than that.  I'll probably patch it tonight, but it won't
+ship that way in 1.5.0.
+ 
+> Some notes about using git-gui: 
 > 
-> The ternary value is definitely useful. As noted elsewhere, most tools on
-> windows are very happy with \n ending, few honor those line endings when files
-> are modified, and fewer still allow the user to specify use of \n for new
-> files. However, cygwin tools in particular are not tolerant of crlf, so for
-> that environment it makes sense to banish crlf and the input-only option is
-> most likely the best default setting there.
+> * Fetching over ssh results in an empty dialog. The password prompt is
+> only shown in the terminal window, which is likly to be hidden by the
+> the main window of git-gui.
 
-Here's a UNTESTED patch on top of the patch I already sent, which allows 
-you to do
+This is a "feature".  I only use git-gui + ssh with an ssh-agent
+and public key authentication, so I never get password prompts.
+Unfortunately Tcl does not permit me to setup bi-directional pipes
+to a process (heck, I can't get both stdout and stderr except by
+going through cat!), and even if it does, I think ssh would demand
+the tty to get the password, thereby bypassing my pipe anyway.
 
-	[core]
-		AutoCRLF = input
-
-and it should do only the CRLF->LF translation (ie it simplifies CRLF only 
-when reading working tree files, but when checking out files, it leaves 
-the LF alone, and doesn't turn it into a CRLF).
-
-And by "untested" I mean that it looks ok and seems to compile, but I 
-really didn't do anything else.
-
-		Linus
----
-diff --git a/config.c b/config.c
-index ffe0212..e8ae919 100644
---- a/config.c
-+++ b/config.c
-@@ -325,6 +325,10 @@ int git_default_config(const char *var, const char *value)
- 	}
+Basically I don't know how to improve this.  If someone has a bright
+idea, please pass it along!
  
- 	if (!strcmp(var, "core.autocrlf")) {
-+		if (value && !strcasecmp(value, "input")) {
-+			auto_crlf = -1;
-+			return 0;
-+		}
- 		auto_crlf = git_config_bool(var, value);
- 		return 0;
- 	}
-diff --git a/convert.c b/convert.c
-index c04b6c2..b5a47c2 100644
---- a/convert.c
-+++ b/convert.c
-@@ -133,7 +133,7 @@ int convert_to_working_tree(const char *path, char **bufp, unsigned long *sizep)
- 	 * based on filename patterns. Right now we just do the
- 	 * stupid auto-CRLF one.
- 	 */
--	if (!auto_crlf)
-+	if (auto_crlf <= 0)
- 		return 0;
- 
- 	size = *sizep;
-diff --git a/environment.c b/environment.c
-index 2fa0960..570e32a 100644
---- a/environment.c
-+++ b/environment.c
-@@ -28,7 +28,7 @@ size_t packed_git_window_size = DEFAULT_PACKED_GIT_WINDOW_SIZE;
- size_t packed_git_limit = DEFAULT_PACKED_GIT_LIMIT;
- int pager_in_use;
- int pager_use_color = 1;
--int auto_crlf = 0;
-+int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
- 
- static const char *git_dir;
- static char *git_object_dir, *git_index_file, *git_refs_dir, *git_graft_file;
+> * It there any reason, why tags are not included in the list of possible
+> merge sources in Merge/Local Merge?
+> 
+> It only needs one additional line in do_local_merge:
+>          set cmd [list git for-each-ref]
+>          lappend cmd {--format=%(objectname) %(refname)}
+>          lappend cmd refs/heads
+>          lappend cmd refs/remotes
+> +        lappend cmd refs/tags
+>          set fr_fd [open "| $cmd" r]
+
+I just didn't consider it.  The way I use git-gui for merges, I never
+merge tags.  But its obviously valid in plain Git.  I'll add it.
+
+-- 
+Shawn.
