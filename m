@@ -1,49 +1,83 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: Newbie experience with push over ssh
-Date: Wed, 14 Feb 2007 18:52:19 +0100
-Message-ID: <20070214175219.GA7082@moooo.ath.cx>
-References: <vpq64a4bzp1.fsf@olympe.imag.fr> <20070214142731.GA1478@moooo.ath.cx> <45D33485.5020906@webdrake.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: "freezing" gitk geometry
+Date: Wed, 14 Feb 2007 09:53:26 -0800
+Message-ID: <7vsld8pqw9.fsf@assigned-by-dhcp.cox.net>
+References: <e1dab3980702140923m1e4e430ci28f8ed246c5fe786@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Joseph Wakeling <joseph.wakeling@webdrake.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 18:52:40 2007
+To: "David Tweed" <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 14 18:53:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHOJ1-0005kh-E6
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 18:52:35 +0100
+	id 1HHOKB-0006Jj-M0
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 18:53:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932135AbXBNRw2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 12:52:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932396AbXBNRw2
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 12:52:28 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51851 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932289AbXBNRw1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 12:52:27 -0500
-Received: (qmail invoked by alias); 14 Feb 2007 17:52:26 -0000
-X-Provags-ID: V01U2FsdGVkX19toXE9gTttebV3w0avHDUGgKeZTFj3slW7r7XGRP
-	hGnA==
-Mail-Followup-To: Joseph Wakeling <joseph.wakeling@webdrake.net>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <45D33485.5020906@webdrake.net>
-X-Y-GMX-Trusted: 0
+	id S932394AbXBNRx2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 12:53:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbXBNRx2
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 12:53:28 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:56274 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932394AbXBNRx1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 12:53:27 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070214175327.TMSX1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Feb 2007 12:53:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id PVtS1W00b1kojtg0000000; Wed, 14 Feb 2007 12:53:27 -0500
+In-Reply-To: <e1dab3980702140923m1e4e430ci28f8ed246c5fe786@mail.gmail.com>
+	(David Tweed's message of "Wed, 14 Feb 2007 17:23:51 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39706>
 
-Joseph Wakeling <joseph.wakeling@webdrake.net> wrote:
-> I remember coming across the same issue as Matthieu and never got round
-> to solving it.  In my case the desire is to upload the code onto a
-> remote machine---in particular a cluster where I run simulations.  I
-> don't particularly need that remote code to be in a repo or otherwise,
-> since it's only there to be run, not edited.
+"David Tweed" <david.tweed@gmail.com> writes:
 
-git archive --format=tar HEAD | ssh remote 'cd /some/where;tar xvf -'
+> now I've installed 1.5.0, I've discovered gitk is still the
+> visualisation tool for graphically browsing history. I think gitk is a
+> good program, but one thing I'd like to be able to change is to have a
+> way to force gitk not to update its saved internal geometry (position
+> of internal dividers, etc) when it exits. I tried making ~/.gitk not
+> writable but that didn't work. I don't know tcl: is there a simple way
+> to prevent gitk updating this upon quitting?
 
-You could put this in a shell script which takes the remote hostname,
-path and optionally the revision to send..
+I do not talk Tcl, but I think you can apply this patch and then
+if you add
+
+	set dontsave 1
+
+at the end of ~/.gitk with your editor, it would stop updating
+your geometry (or anything else for that matter).
+
+diff --git a/gitk b/gitk
+index 9ddff3e..cd0d68d 100755
+--- a/gitk
++++ b/gitk
+@@ -813,9 +813,10 @@ proc savestuff {w} {
+     global maxwidth showneartags
+     global viewname viewfiles viewargs viewperm nextviewnum
+     global cmitmode wrapcomment
+-    global colors bgcolor fgcolor diffcolors
++    global colors bgcolor fgcolor diffcolors dontsave
+ 
+     if {$stuffsaved} return
++    if {$dontsave} return
+     if {![winfo viewable .]} return
+     catch {
+ 	set f [open "~/.gitk-new" w]
+@@ -6251,6 +6252,7 @@ set bgcolor white
+ set fgcolor black
+ set diffcolors {red "#00a000" blue}
+ 
++set dontsave 0
+ catch {source ~/.gitk}
+ 
+ font create optionfont -family sans-serif -size -12
