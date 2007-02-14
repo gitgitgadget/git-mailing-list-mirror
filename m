@@ -1,90 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [ANNOUNCE] GIT 1.5.0
-Date: Wed, 14 Feb 2007 01:48:28 -0800
-Message-ID: <7vzm7hrrwz.fsf@assigned-by-dhcp.cox.net>
-References: <7vlkj1v3av.fsf@assigned-by-dhcp.cox.net>
-	<200702140906.37440.andyparkins@gmail.com>
-	<7vabzht72l.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 14 10:48:50 2007
+From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
+Subject: Re: /etc/gitconfig
+Date: Wed, 14 Feb 2007 11:30:09 +0100
+Message-ID: <slrnet5p5h.s9h.siprbaum@xp.machine.xx>
+References: <200702140909.28369.andyparkins@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 14 11:28:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHGkr-0000ZC-If
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 10:48:49 +0100
+	id 1HHHN5-0002jA-Nn
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 11:28:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751059AbXBNJsb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 04:48:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751511AbXBNJsb
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 04:48:31 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55143 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751059AbXBNJsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 04:48:30 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070214094829.YQB21177.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 14 Feb 2007 04:48:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id PMoU1W00L1kojtg0000000; Wed, 14 Feb 2007 04:48:29 -0500
-In-Reply-To: <7vabzht72l.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 14 Feb 2007 01:35:46 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751534AbXBNK2I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 05:28:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751538AbXBNK2I
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 05:28:08 -0500
+Received: from main.gmane.org ([80.91.229.2]:32824 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751534AbXBNK2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 05:28:07 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HHHMi-0000VK-VP
+	for git@vger.kernel.org; Wed, 14 Feb 2007 11:27:57 +0100
+Received: from p54aa85ed.dip0.t-ipconnect.de ([84.170.133.237])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Feb 2007 11:27:56 +0100
+Received: from siprbaum by p54aa85ed.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Feb 2007 11:27:56 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: p54aa85ed.dip0.t-ipconnect.de
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39630>
 
-Junio C Hamano <junkio@cox.net> writes:
-
-> Andy Parkins <andyparkins@gmail.com> writes:
+Andy Parkins <andyparkins@gmail.com> schrieb:
+> Hello
 >
->> On Wednesday 2007 February 14 03:14, Junio C Hamano wrote:
->>
->>>  - There is a configuration variable core.legacyheaders that
->>
->>> The above two are not enabled by default and you explicitly have
->>> to ask for them, because these two features make repositories
->>
->> It isn't really the case that you have to _enable_ legacyheaders?  It defaults 
->> to on already.  You actually have to disable legacyheaders.
+> With the release of 1.5.0 I added legacyheaders=false and 
+> usedelatbaseoffset=true to my repositories.
 >
-> Ah, true.  What it should have stressed is that we currently
-> default to the safer, backward compatible behaviour, and you have
-> to explicitly ask to use more efficient but incompatible
-> encoding by setting core.legacyheaders to false.
+> While doing that though, it felt wrong to be editing every single config.  Is 
+> there a justification for having three config files?
+>
+>  /etc/gitconfig
+>  $HOME/.gitconfig
+>  $GIT_DIR/config
+>
+> With /etc/gitconfig coming in at lowest priority?
+>
+> Andy
 
-So this will be the updated explanation.
+I would like this, too. This would allow me to set e.g.
+"diff.color = auto" for everyone one a machine. We use git there to only
+manage some config files and several simple perl scripts. As it is
+mostly myself who does the editing, ~/.gitconfig works for *ME*.
 
--- >8 --
-diff --git a/Documentation/RelNotes-1.5.0.txt b/Documentation/RelNotes-1.5.0.txt
-index f0120e1..0989ded 100644
---- a/Documentation/RelNotes-1.5.0.txt
-+++ b/Documentation/RelNotes-1.5.0.txt
-@@ -25,12 +25,18 @@ Specifically, the available options are:
-    older clients over dumb transports (e.g. http) using older
-    versions of git will also be affected.
- 
-+   To let git use the new loose object format, you have to
-+   set core.legacyheaders to false.
-+
-  - Since v1.4.3, configuration repack.usedeltabaseoffset allows
-    packfile to be created in more space efficient format, which
-    cannot be read by git older than that version.
- 
--The above two are not enabled by default and you explicitly have
--to ask for them, because these two features make repositories
-+   To let git use the new format for packfiles, you have to
-+   set repack.usedeltabaseoffset to true.
-+
-+The above two new features are not enabled by default and you
-+have explicitly to ask for them, because they make repositories
- unreadable by older versions of git, and in v1.5.0 we still do
- not enable them by default for the same reason.  We will change
- this default probably 1 year after 1.4.2's release, when it is
+But I'd like to set this globally so that my colluagues which don't have
+much clue about git don't need to bother about config settings. And yes,
+editing every single repo doesn't seem like an elegant solution. 
+
+-Peter
