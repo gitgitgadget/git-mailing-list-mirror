@@ -1,76 +1,85 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui Error
-Date: Wed, 14 Feb 2007 01:00:41 -0500
-Message-ID: <20070214060041.GA31871@spearce.org>
-References: <20070213065616.GA4195@auto.tuwien.ac.at> <20070213074519.GA32687@spearce.org> <20070213215303.GA26716@auto.tuwien.ac.at> <20070214022200.GB30884@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-pull and tag objects
+Date: Tue, 13 Feb 2007 22:38:37 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702132230490.3604@woody.linux-foundation.org>
+References: <1170933407.15431.38.camel@okra.transitives.com>
+ <81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
+ <7v4ppurka1.fsf@assigned-by-dhcp.cox.net> <20070210142322.GB25607@thunk.org>
+ <Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
+ <7vy7n5gs0y.fsf@assigned-by-dhcp.cox.net> <20070212162745.GB2741@thunk.org>
+ <7vr6su1szp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Wed Feb 14 07:00:52 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Theodore Tso <tytso@mit.edu>, Alex Riesen <raa.lkml@gmail.com>,
+	Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 07:38:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHDCF-0007yx-BD
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 07:00:51 +0100
+	id 1HHDn3-0000Ns-Uh
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 07:38:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751577AbXBNGAq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 01:00:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751580AbXBNGAq
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 01:00:46 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:44239 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751577AbXBNGAp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 01:00:45 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HHDC7-0001Sd-1N; Wed, 14 Feb 2007 01:00:43 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9DB6B20FBAE; Wed, 14 Feb 2007 01:00:41 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20070214022200.GB30884@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751124AbXBNGiq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 01:38:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbXBNGiq
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 01:38:46 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:43429 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751124AbXBNGip (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 01:38:45 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1E6cchB020848
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 13 Feb 2007 22:38:38 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1E6cbLC023422;
+	Tue, 13 Feb 2007 22:38:37 -0800
+In-Reply-To: <7vr6su1szp.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.413 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39621>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
-> > * It there any reason, why tags are not included in the list of possible
-> > merge sources in Merge/Local Merge?
-> > 
-> > It only needs one additional line in do_local_merge:
-> >          set cmd [list git for-each-ref]
-> >          lappend cmd {--format=%(objectname) %(refname)}
-> >          lappend cmd refs/heads
-> >          lappend cmd refs/remotes
-> > +        lappend cmd refs/tags
-> >          set fr_fd [open "| $cmd" r]
+
+
+On Mon, 12 Feb 2007, Junio C Hamano wrote:
 > 
-> I just didn't consider it.  The way I use git-gui for merges, I never
-> merge tags.  But its obviously valid in plain Git.  I'll add it.
+> "fsck --full" should report "dangling tag".
 
-This is now pushed to repo.or.cz.  It probably won't show up in
-git.git for at least a few weeks.  I want to push through some
-more features (especially around the blame UI) in git-gui before
-I bother Junio with another git-gui merge.  Besides, Git 1.5.0
-(including git-gui 0.6.0.1) just shipped.  :)
+Well, except if
+ - you've pruned
+ - the importer never imported anything but the most recent one.
 
-It turned out to be slightly more difficult than just adding
-refs/tags, as %(objectname) would be the name of the annotated tag,
-and we need the commit name to match against rev-list output.  So I
-had to extend the for-each-ref call to also include %(*objectname).
+One thing that _might_ be a good idea for tags (if people _really_ want to 
+actually update tags under the same name) is to have a "parent" pointer 
+for tag objects, the same way we have for commits. That way you could - if 
+you really wanted to - create a chain of tags, and show the history of 
+them.
 
--- 
-Shawn.
+Now, I personally think you'd be better off just having separate names, 
+but for something like a "passed testing" tag, it might be valid to (a) 
+have the last one and (b) have a history chain. And it's not like it would 
+be technically "hard" to do.
+
+I dunno. Personally I'd rather try to just tell people to not re-use 
+tag-names, because it kind of destroys the whole point of a tag ("I 
+checked out tag X!" just leadsto "_Which_ X?").
+
+And you could certainly do the "passed testing" thing with commits in a 
+separate branch instead: you'd create the "testing" branch, which is 
+always a set of commits that have as their primary parent the commit that 
+got tested, and as the second parent the previous commit in the "testing" 
+series).
+
+So _generally_ I think we're better off keeping things the way they are, 
+but on the other hand, if only to work well with idiotic systems that 
+mis-use tags in ways that tags shouldn't be used, we *could* just extend 
+on what tyou can do with a git tag too..
+
+		Linus
