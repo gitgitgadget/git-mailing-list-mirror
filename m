@@ -1,67 +1,61 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Wed, 14 Feb 2007 09:41:21 +0100
-Message-ID: <20070214084121.GB25617@uranus.ravnborg.org>
-References: <45CFA30C.6030202@verizon.net> <200702130932.51601.litvinov2004@gmail.com> <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org> <Pine.LNX.4.64.0702130919100.8424@woody.linux-foundation.org> <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org> <20070213204248.GA21046@uranus.ravnborg.org> <Pine.LNX.4.64.0702131524130.3604@woody.linux-foundation.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [ANNOUNCE] GIT 1.5.0
+Date: Wed, 14 Feb 2007 09:06:35 +0000
+Message-ID: <200702140906.37440.andyparkins@gmail.com>
+References: <7vlkj1v3av.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 14 09:41:00 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 14 10:06:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHFhE-0000Io-7G
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 09:41:00 +0100
+	id 1HHG6D-0004CK-QP
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 10:06:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932168AbXBNIk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 03:40:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932186AbXBNIk5
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 03:40:57 -0500
-Received: from pasmtpb.tele.dk ([80.160.77.98]:41035 "EHLO pasmtpB.tele.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932168AbXBNIk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 03:40:56 -0500
-Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
-	by pasmtpB.tele.dk (Postfix) with ESMTP id 8D90AE3035E;
-	Wed, 14 Feb 2007 09:40:55 +0100 (CET)
-Received: by ravnborg.org (Postfix, from userid 500)
-	id EC7A8580D2; Wed, 14 Feb 2007 09:41:21 +0100 (CET)
+	id S932187AbXBNJGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 04:06:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932192AbXBNJGq
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 04:06:46 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:46748 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932187AbXBNJGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 04:06:44 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so114956uga
+        for <git@vger.kernel.org>; Wed, 14 Feb 2007 01:06:43 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QBtLHtU40E6ZB+v5Et2De59DvBfqCQ9hzoIt1XJc5d5zOO50gMUYArp/tvQ3R6MT1Oi5v6ly/BQ9PLrlyUoxwjfKcz6xEmBf1Xs9INPCsocRAI8s5ZycnwT4hfmUTIRel4VF8OfDWYFDvr+WsCHAExPlGunmHUMTpWLjIrO+2H8=
+Received: by 10.67.119.13 with SMTP id w13mr144531ugm.1171444003310;
+        Wed, 14 Feb 2007 01:06:43 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id 24sm559036ugf.2007.02.14.01.06.39;
+        Wed, 14 Feb 2007 01:06:41 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vlkj1v3av.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0702131524130.3604@woody.linux-foundation.org>
-User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39624>
 
-> > This whole auto CRLF things seems to deal with DOS issues that I personally
-> > have not encountered since looong time ago.
-> 
-> Maybe you stopped using DOS a loong time ago ;)
-Unfortunately not. (Sitting with a Windows 2000 laptop atm but saved by ssh).
+On Wednesday 2007 February 14 03:14, Junio C Hamano wrote:
 
-> 
-> It's definitely an issue. Yes, all windows programs basically *understand* 
-> files that have just LF. But almost all of them will *write* files with 
-> CRLF.
+>  - There is a configuration variable core.legacyheaders that
 
-So the issue with git supporting CRLF -> LF is to make interoperability between
-UNIX* programs and Windows programs which is anohter domain.
+> The above two are not enabled by default and you explicitly have
+> to ask for them, because these two features make repositories
 
-My main objective is the proposal to make a conversion default when many users
-do not need it. For the UNIX* compatibility thing having conversion at lowest
-layer make sense.
+It isn't really the case that you have to _enable_ legacyheaders?  It defaults 
+to on already.  You actually have to disable legacyheaders.
 
-> (Which means that I suspect I made the default for "auto_crlf" be wrong in 
-> my patch: I probably should not default to checking out with CRLF, but 
-> checking out with just LF, and only do the CRLF->LF conversion on input).
-Expect that it seems a few br0ken programs yet does not support LF as
-end-of-line marker - so .gitattriutes make take special care here.
 
-	Sam
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
