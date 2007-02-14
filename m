@@ -1,65 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Including the release notes in the git-1.5.0 release?
-Date: Wed, 14 Feb 2007 08:27:41 -0800
-Message-ID: <7vk5ykso02.fsf@assigned-by-dhcp.cox.net>
-References: <E1HGyPn-0003Te-9s@candygram.thunk.org>
-	<7vzm7ix895.fsf@assigned-by-dhcp.cox.net>
-	<20070213180541.GH8670@thunk.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Wed, 14 Feb 2007 08:28:24 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702140823220.3604@woody.linux-foundation.org>
+References: <45CFA30C.6030202@verizon.net> <200702130932.51601.litvinov2004@gmail.com>
+ <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0702130919100.8424@woody.linux-foundation.org>
+ <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
+ <20070213204248.GA21046@uranus.ravnborg.org>
+ <Pine.LNX.4.64.0702131524130.3604@woody.linux-foundation.org>
+ <20070214084121.GB25617@uranus.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 14 17:27:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alexander Litvinov <litvinov2004@gmail.com>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sam Ravnborg <sam@ravnborg.org>
+X-From: git-owner@vger.kernel.org Wed Feb 14 17:28:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHMyy-0002qr-Pf
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:27:49 +0100
+	id 1HHMzu-0003I2-Th
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932366AbXBNQ1n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 11:27:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbXBNQ1n
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:27:43 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:51268 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932368AbXBNQ1n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 11:27:43 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070214162743.ETEP21177.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 14 Feb 2007 11:27:43 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id PUTi1W0021kojtg0000000; Wed, 14 Feb 2007 11:27:42 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932368AbXBNQ2o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 11:28:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932369AbXBNQ2o
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:28:44 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:34542 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932368AbXBNQ2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 11:28:43 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1EGSQhB007371
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 14 Feb 2007 08:28:26 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1EGSOPB002481;
+	Wed, 14 Feb 2007 08:28:25 -0800
+In-Reply-To: <20070214084121.GB25617@uranus.ravnborg.org>
+X-Spam-Status: No, hits=-0.412 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39669>
 
-Theodore Tso <tytso@mit.edu> writes:
 
-> What I've seen some projects do (including some commercial products)
-> is to keep them around with the old file names.  So if we have
+
+On Wed, 14 Feb 2007, Sam Ravnborg wrote:
 >
-> Documentation/RELEASE-NOTES_1.5.0.txt
-> Documentation/RELEASE-NOTES_1.6.0.txt
-> Documentation/RELEASE-NOTES_1.7.0.txt
+> > (Which means that I suspect I made the default for "auto_crlf" be wrong in 
+> > my patch: I probably should not default to checking out with CRLF, but 
+> > checking out with just LF, and only do the CRLF->LF conversion on input).
 >
-> and a symlink from RELEASE-NOTES to Documentation/RELEASE-NOTES-<cur_ver>.txt
->
-> that would make a lot of sense....
+> Expect that it seems a few br0ken programs yet does not support LF as
+> end-of-line marker - so .gitattriutes make take special care here.
 
-Done.
+Yes, but I also think that even without .gitattributes, you just want to 
+have a default for what "text" actually means, and it's entirely possible 
+that the default should be: "check out with just LF, and on check-in turn 
+CRLF into LF".
 
-I used to like reading pod/perl*delta.pod but these days they
-are tooooo long.  Hopefully we can keep our release notes short
-and sweet. 
+But exactly because _some_ programs might want to always see CRLF on input 
+too, it should be overridable. 
 
-People might already have noticed that the latest docs at
+Or maybe the default should be "turn into CRLF", and there should just be 
+an option to make it check out as LF-only.
 
-	http://www.kernel.org/pub/software/scm/git/docs/
+Regardless, I think that is independent of ".gitattributes". The 
+_attribute_ should be "text", but what it then means in practice is a 
+separate flag.
 
-has link to older versions.
+And yes, we *could* have a per-file attribute ("text,crlf-checkout") which 
+could be used to say "I want to always check out as crlf regardless of any 
+other policy") and the same for lf-only, but I seriously doubt that 
+anybody really needs that kind of knob-tweaking. At some point it's just 
+fine to say "you're crazy".
+
+			Linus
