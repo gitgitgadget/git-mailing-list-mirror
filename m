@@ -1,65 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Wed, 14 Feb 2007 09:43:10 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702140941590.3604@woody.linux-foundation.org>
-References: <45CFA30C.6030202@verizon.net> <200702130932.51601.litvinov2004@gmail.com>
- <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702130919100.8424@woody.linux-foundation.org>
- <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
- <7v8xf1uxme.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702132127330.3604@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702141208020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45D31C0E.2040206@verizon.net> <Pine.LNX.4.64.0702140745110.3604@woody.linux-foundation.org>
- <7v64a4snfo.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702140855080.3604@woody.linux-foundation.org>
- <7v3b58r6kc.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
+Date: Wed, 14 Feb 2007 09:45:14 -0800
+Message-ID: <7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>
+References: <17875.13564.622087.63653@lisa.zopyra.com>
+	<7vhctor78j.fsf@assigned-by-dhcp.cox.net>
+	<17875.17647.74882.218627@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mdl123@verizon.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 18:43:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Feb 14 18:45:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHOAC-0001oi-5n
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 18:43:28 +0100
+	id 1HHOC1-0002cP-Iu
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 18:45:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750963AbXBNRnZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 12:43:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751101AbXBNRnZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 12:43:25 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:36618 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751042AbXBNRnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 12:43:24 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1EHhBhB009604
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Feb 2007 09:43:11 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1EHhAdK004173;
-	Wed, 14 Feb 2007 09:43:10 -0800
-In-Reply-To: <7v3b58r6kc.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.407 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751101AbXBNRpQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 12:45:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751113AbXBNRpQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 12:45:16 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:64582 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751101AbXBNRpP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 12:45:15 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070214174515.GQKN21177.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Feb 2007 12:45:15 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id PVlE1W00E1kojtg0000000; Wed, 14 Feb 2007 12:45:14 -0500
+In-Reply-To: <17875.17647.74882.218627@lisa.zopyra.com> (Bill Lear's message
+	of "Wed, 14 Feb 2007 11:20:47 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39701>
 
+Bill Lear <rael@zopyra.com> writes:
 
+> % git fsck-objects --full
+> error: Packfile .git/objects/pack/pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.pack SHA1 mismatch with itself
+> fatal: failed to find delta-pack base object 90bad0d280a6d7c155bbd9582b35ffcf5e3bdd27
+>
+>
+> % /usr/bin/git --version
+> git version 1.4.4.1
+>
+> % /usr/bin/git fsck-objects --full
+> error: Packfile .git/objects/pack/pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.pack SHA1 mismatch with itself
+> fatal: failed to find delta-pack base object 90bad0d280a6d7c155bbd9582b35ffcf5e3bdd27
+>
+> So, all I did was try to do a commit with the new git ... haven't
+> recloned, or pulled from upstream...
 
-On Wed, 14 Feb 2007, Junio C Hamano wrote:
-> 
-> Ok.  How about adding BS and FF to the Ok set, and checking if
-> bad ones are less than 1% of the good ones?
+If you haven't packed the repository lately, the above indicates
+this is not an issue between 1.4.4.1 and 1.5.0, but you had a
+corrupt packfile before even started.
 
-I think that looks fine.
+How big is this pack, what platform are you working on and whose
+SHA-1 implementation do you use?
 
-		Linus
+We used to have a bug that fed really large buffer to
+SHA1_Update() function of the underlying SHA-1 library,
+which was discovered exactly because somebody reported that
+"mismatch with itself" message.
+
+Also, do you have a huge blob in the repository?  I do not know
+if it is related but the write_sha1_file_prepare() function on
+the codepath to write loose objects out would trigger the same
+bug...
