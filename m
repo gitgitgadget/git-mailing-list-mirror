@@ -1,46 +1,64 @@
-From: Joseph Wakeling <joseph.wakeling@webdrake.net>
-Subject: Re: Newbie experience with push over ssh
-Date: Wed, 14 Feb 2007 17:04:43 +0000
-Message-ID: <45D3412B.9010200@webdrake.net>
-References: <vpq64a4bzp1.fsf@olympe.imag.fr>	<20070214142731.GA1478@moooo.ath.cx> <45D33485.5020906@webdrake.net>	<17875.14305.910866.273778@lisa.zopyra.com>	<17875.14859.177000.558634@lisa.zopyra.com>	<45D33D53.6040209@webdrake.net> <vpqbqjw65kj.fsf@olympe.imag.fr>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
+Date: Wed, 14 Feb 2007 11:07:03 -0600
+Message-ID: <17875.16823.981920.183618@lisa.zopyra.com>
+References: <17875.13564.622087.63653@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 14 18:05:47 2007
+X-From: git-owner@vger.kernel.org Wed Feb 14 18:07:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHNYv-0002NO-TI
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 18:04:58 +0100
+	id 1HHNb7-0003GR-FA
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 18:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750713AbXBNREr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 12:04:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbXBNREr
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 12:04:47 -0500
-Received: from alf.nbi.dk ([130.225.212.55]:1050 "EHLO alf.nbi.dk"
+	id S1750707AbXBNRHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 12:07:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750732AbXBNRHJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 12:07:09 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61413 "EHLO zopyra.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750713AbXBNREq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 12:04:46 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by alf.nbi.dk (8.9.3/8.9.3) with ESMTP id SAA10443
-	for <git@vger.kernel.org>; Wed, 14 Feb 2007 18:04:43 +0100 (MET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
-In-Reply-To: <vpqbqjw65kj.fsf@olympe.imag.fr>
-X-Enigmail-Version: 0.94.0.0
+	id S1750707AbXBNRHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 12:07:08 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1EH78Z31804;
+	Wed, 14 Feb 2007 11:07:08 -0600
+In-Reply-To: <17875.13564.622087.63653@lisa.zopyra.com>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39688>
 
-Matthieu Moy wrote:
-> Not any. The joke was just "if you insist in having git at the
-> beginning of the command line, ...".
+On Wednesday, February 14, 2007 at 10:12:44 (-0600) Bill Lear writes:
+>I have a 1.4.4.1 repository, non-bare, cloned from my public
+>repository.  I just installed and am using the new 1.5.0 git.
+>
+>On my master branch, I cleaned out some cvs ids in our text files and
+>did a git diff --- all was well.
+>
+>I then did a commit, and something went wrong:
+>
+>% git commit -a -m "Nuke CVS Id strings"
+>error: Could not read ab66b31e390889e6bcbb2002111e2803c51f42b5
+>error: unable to read tree object HEAD
+># On branch master
+>error: Could not read ab66b31e390889e6bcbb2002111e2803c51f42b5
+>error: unable to read tree object HEAD
+>...
 
-Forgive me, I have a BAAD cold today and many things are going over my
-head .... :-)
+I also notice this:
 
-That is frustrating, though, that I can't push/upload code in the same
-way as I can with bzr.  Unless I _can_ init-repo on the remote machine
-with the git on my own .... ?
+% git diff src/fus/testsuite/fus.design/prep4_5.s
+fatal: failed to find delta-pack base object 1e742ba82e01f5bb39ed62e6863712fd3c9b0616
+diff --git a/src/fus/testsuite/fus.design/prep4_5.s b/src/fus/tes[...]
+index 106a233..4e6dbd5 100644
+
+But running diff again seems to make the warning go away, but no
+changes are listed...bad.
+
+
+Bill
