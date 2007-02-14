@@ -1,55 +1,119 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: Re: [PATCH] git-unbundle - unbundle objects and references for
- disconnected transfer.
-Date: Wed, 14 Feb 2007 17:43:13 -0500
-Message-ID: <45D39081.2010709@verizon.net>
-References: <11714622292110-git-send-email-mdl123@verizon.net>
- <11714622292295-git-send-email-mdl123@verizon.net>
- <11714622293142-git-send-email-mdl123@verizon.net>
- <20070214194537.GD28290@spearce.org> <45D377A8.1080404@verizon.net>
- <20070214210300.GF28290@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
+Date: Wed, 14 Feb 2007 15:03:19 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702141447290.20368@woody.linux-foundation.org>
+References: <17875.13564.622087.63653@lisa.zopyra.com>
+ <7vhctor78j.fsf@assigned-by-dhcp.cox.net> <17875.17647.74882.218627@lisa.zopyra.com>
+ <7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net> <17875.30187.289679.417079@lisa.zopyra.com>
+ <17875.30687.661794.512124@lisa.zopyra.com>
+ <Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org>
+ <17875.33204.413186.355557@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 14 23:43:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Thu Feb 15 00:03:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHSqQ-0000Rb-5f
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 23:43:22 +0100
+	id 1HHT9r-0002T8-M2
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 00:03:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbXBNWnT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 17:43:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751266AbXBNWnT
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 17:43:19 -0500
-Received: from vms042pub.verizon.net ([206.46.252.42]:30727 "EHLO
-	vms042pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300AbXBNWnS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 17:43:18 -0500
-Received: from [127.0.0.1] ([71.246.235.75])
- by vms042.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDH00KQS5S0I3K1@vms042.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 14 Feb 2007 16:43:14 -0600 (CST)
-In-reply-to: <20070214210300.GF28290@spearce.org>
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S964798AbXBNXDY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 18:03:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964800AbXBNXDY
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 18:03:24 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:50224 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S964798AbXBNXDX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 18:03:23 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1EN3KhB019642
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 14 Feb 2007 15:03:20 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1EN3Jvf012137;
+	Wed, 14 Feb 2007 15:03:19 -0800
+In-Reply-To: <17875.33204.413186.355557@lisa.zopyra.com>
+X-Spam-Status: No, hits=-0.407 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39771>
 
-Shawn O. Pearce wrote:
-> I don't really have an opinion here, as I'm fortunate enough that
-> I can use an SSH or an anonymous git connection between all of my
-> repositories, and thus don't really have a need for bundle/unbundle.
+
+
+On Wed, 14 Feb 2007, Bill Lear wrote:
 >
-> Its just one of those operations which I thought would not happen
-> often, and when it did, probably would be big.  In which case keeping
-> the packfile would make the unbundle run faster, as you don't need
-> to create a huge mess of loose objects.
-Fair enough - I've made that change, also your other suggestion about 
-piping refs directly to pack-objects. Thanks for both.
+> WAAAAAIAMINIT ... I think I see it:
+> 
+> % perl -pi -e 's/.*\$Id.*//sx' $(xgrep -l '[$]Id')
+> 
+> Could I have corrupted the pack file?  I'll bet $50 I did:
 
-Mark
+Heh.
+
+I'm relieved git is off the hook, although I think we should still look at 
+that SIGSEGV. We might well have some situation where we react badly do a 
+corrupt pack (most likely, by having one of the object parsing routines 
+return NULL, and then we follow that NULL pointer rather than saying "bad 
+object").
+
+> % [yet another clone]
+> % xgrep -l '[$]Id'
+> ./.git/objects/pack/pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.pack
+
+This is just one reason I don't ever use 'find' on my source tree. I long 
+ago used to do
+
+	find . -name '*.c' | xargs grep ...
+
+etc, but especially with git I have almost totally stopped using "xargs 
+grep" entirely - to the point where I actually end up importing tar-files 
+into new git archives just because I'm so used to "git grep".
+
+So I would suggest that in order to avoid this in the future, you teach 
+your fingers to say "git grep" instead of "xgrep"., which I assume is just 
+some local alias of yours for "find .. | xargs grep"?
+
+"git grep" really works wonderfully well, and you could have just done
+
+	perl -pi -e 's/.*\$Id.*//sx' $(git grep -l '[$]Id')
+
+instead.
+
+("git grep" is much nicer than "xargs grep" in many other ways too. You 
+can ask it to limit itself to a certain pattern of filenames etc by doing
+
+	git grep -l '[$]Id' -- 'net/*.[ch]'
+
+as long as you realize that the name pattern for git grep considers '*' to 
+act like '**' does for some shells - ie it globs against '/'too, so the 
+above will find any C and header files under the net/ directory, however 
+deep they are.. And you can ask it to grep in just a certain revision etc 
+too).
+
+Once you get used to "git grep", I bet you'll forget all about "xgrep", 
+and won't have to worry about going into the .git/ directory by mistake 
+any more.
+
+There are other tricks you can do, but they are somewhat inconvenient. 
+They range from making ".git" a symlink to somewhere else (to stop 
+"find" from following it), and in your case, since you apparently already 
+have an "xgrep" alias for this, you could just teach your "find" thing to 
+do something like what we do in the kernel Makefile:
+
+	RCS_FIND_IGNORE := \( -name SCCS -o -name BitKeeper -o -name .svn -o -name CVS -o -name .pc -o -name .hg -o -name .git \) -prune -o
+
+and then we use
+
+	find . $(RCS_FIND_IGNORE) ...
+
+which knows to ignore ".git" directories along with all the other 
+SCCS/CVS/SVN/BK/etc directories.
+
+		Linus
