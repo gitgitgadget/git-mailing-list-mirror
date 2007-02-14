@@ -1,84 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
-Date: Wed, 14 Feb 2007 15:24:32 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702141516120.20368@woody.linux-foundation.org>
-References: <17875.13564.622087.63653@lisa.zopyra.com>
- <7vhctor78j.fsf@assigned-by-dhcp.cox.net> <17875.17647.74882.218627@lisa.zopyra.com>
- <7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net> <17875.30187.289679.417079@lisa.zopyra.com>
- <17875.30687.661794.512124@lisa.zopyra.com>
- <Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org>
- <17875.33204.413186.355557@lisa.zopyra.com> <Pine.LNX.4.64.0702141722410.1757@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git (stable)
+Date: Wed, 14 Feb 2007 15:54:02 -0800
+Message-ID: <7vtzxojnxh.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-1291334993-1171495472=:20368"
-Cc: Bill Lear <rael@zopyra.com>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Feb 15 00:25:13 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 15 00:54:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHTUu-0004ra-2z
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 00:25:12 +0100
+	id 1HHTwv-0002iW-B5
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 00:54:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932445AbXBNXZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 18:25:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751353AbXBNXZH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 18:25:07 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:50639 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751347AbXBNXZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 18:25:06 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1ENOXhB020134
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Feb 2007 15:24:33 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1ENOWrH012614;
-	Wed, 14 Feb 2007 15:24:32 -0800
-In-Reply-To: <Pine.LNX.4.64.0702141722410.1757@xanadu.home>
-X-Spam-Status: No, hits=-0.406 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751129AbXBNXyG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 18:54:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932253AbXBNXyF
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 18:54:05 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:33969 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751358AbXBNXyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 18:54:04 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070214235403.VRDJ4586.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Feb 2007 18:54:03 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Pbu21W00r1kojtg0000000; Wed, 14 Feb 2007 18:54:03 -0500
+X-maint-at: 204d409247e7bbc7848569462aa11a87e373c8d6
+X-master-at: 78e90f89e39b112af2670516f80586163dcd56ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39774>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The next maintenance release from 'maint' branch will be 1.5.0.1
+when we accumulate enough fixes worth to cut one.
 
----1463790079-1291334993-1171495472=:20368
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+The next feature release from 'master' will be 1.5.1.  I'd like
+to have 6 to 8 weeks between releases, so that will be around
+end of March or mid-April.  Maybe we can talk about what the
+theme for that release should be in a separate thread.
+
+Now the big release is over, I should be able to slow a little
+bit down for a few days.
 
 
+* The 'maint' branch has these fixes since v1.5.0
 
-On Wed, 14 Feb 2007, Nicolas Pitre wrote:
-> 
-> But...... your pack file is read-only, isn't it?
+ Alexandre Julliard (2):
+  git-daemon: Avoid leaking the listening sockets into child processes.
+  sha1_file.c: Round the mmap offset to half the window size.
 
-Almost any "edit in place" operation under UNIX is invariably a question 
-of "read old file + write new file + mv new old". 
+ Junio C Hamano (8):
+  Documentation: Drop full-stop from git-fast-import title.
+  cmd-list: add git-remote
+  Makefile: update check-docs target
+  Clarify two backward incompatible repository options.
+  Still updating 1.5.0 release notes.
+  Add RelNotes 1.5.0.1
+  Make sure packedgitwindowsize is multiple of (pagesize * 2)
+  GIT-VERSION-FILE: check ./version first.
 
-As such, to be read-only for a lot of programs, you actually need to not 
-just make the *file* read-only, you need to make the *directory* read-only 
-too. 
+ Nicolas Pitre (1):
+  Minor corrections to release notes
 
-Or you need to use only tools that explicitly check (a lot of editors will 
-do that, for example, because in an RCS world you're supposed to do magic 
-things to actually edit a file).
 
-So I'm not at all surprised that "-pi" (where the "i" stands for 
-"in-place") will overwrite read-only files.
+* The 'master' branch has these since v1.5.0; this includes all
+  of the above.
 
-I'm sure there is some random character that makes perl check, and not do 
-it. Probably a sequence of unusual characters that makes it look like a 
-swear-word. 
+ Alexandre Julliard (2):
+  git-daemon: Avoid leaking the listening sockets into child processes.
+  sha1_file.c: Round the mmap offset to half the window size.
 
-Maybe "perl -pi -%££@$" will do it. And if not, just add random characters 
-until it works. "It's the perl way".
+ Andy Parkins (2):
+  Only show log entries for new revisions in hooks--update
+  The "table-of-contents" in the update hook script should match the body
 
-	Linus "Yeah, I never really got the 'perl way'" Torvalds
----1463790079-1291334993-1171495472=:20368--
+ Johannes Schindelin (2):
+  Teach revision machinery about --reverse
+  teach diff machinery about --ignore-space-at-eol
+
+ Junio C Hamano (18):
+  git-diff/git-apply: make diff output a bit friendlier to GNU patch (part 2)
+  Make merge-base a built-in.
+  Allow in_merge_bases() to take more than one reference commits.
+  Remove git-resolve.
+  Remove git-diff-stages.
+  Add link to v1.5.0 documentation.
+  blame: --show-stats for easier optimization work.
+  Documentation: Drop full-stop from git-fast-import title.
+  cmd-list: add git-remote
+  Makefile: update check-docs target
+  Document --ignore-space-at-eol option.
+  Add RelNotes 1.5.1
+  Point top-level RelNotes link at 1.5.1 release notes being prepared.
+  Clarify two backward incompatible repository options.
+  Still updating 1.5.0 release notes.
+  Add RelNotes 1.5.0.1
+  Make sure packedgitwindowsize is multiple of (pagesize * 2)
+  GIT-VERSION-FILE: check ./version first.
+
+ Nicolas Pitre (1):
+  Minor corrections to release notes
