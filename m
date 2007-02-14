@@ -1,73 +1,65 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: /etc/gitconfig
-Date: Wed, 14 Feb 2007 11:40:52 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070214104052.GA9047@informatik.uni-freiburg.de>
-References: <200702140909.28369.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 14 11:42:19 2007
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: Publishing on a simple HTTP server
+Date: Wed, 14 Feb 2007 11:59:25 +0100
+Message-ID: <4127.1171450765@localhost>
+References: <14870.1171311025@localhost> <Pine.LNX.4.63.0702130009010.22628@wbgn013.biozentrum.uni-wuerzburg.de> <19695.1171344721@localhost> <Pine.LNX.4.63.0702131106230.1300@wbgn013.biozentrum.uni-wuerzburg.de> <23628.1171367140@localhost> <Pine.LNX.4.63.0702131256430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Cc: Xavier Maillard <zedek@gnu.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 14 12:02:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHHaa-00015p-Gy
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 11:42:16 +0100
+	id 1HHHtk-0001mj-4t
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 12:02:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932198AbXBNKlK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 14 Feb 2007 05:41:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932200AbXBNKlK
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 05:41:10 -0500
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:61269 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932198AbXBNKk5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Feb 2007 05:40:57 -0500
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.60)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HHHZI-0004iR-B3; Wed, 14 Feb 2007 11:40:56 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l1EAerXl009155;
-	Wed, 14 Feb 2007 11:40:53 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l1EAeqOs009154;
-	Wed, 14 Feb 2007 11:40:52 +0100 (MET)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <200702140909.28369.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750716AbXBNLCA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 06:02:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750780AbXBNLCA
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 06:02:00 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:50823 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750716AbXBNLB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 06:01:59 -0500
+Received: from localhost.localdomain (cha51-2-82-244-211-40.fbx.proxad.net [82.244.211.40])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id 2725527C82;
+	Wed, 14 Feb 2007 12:01:58 +0100 (CET)
+Received: from localhost (IDENT:1001@localhost [127.0.0.1])
+	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1EAxP0T004128;
+	Wed, 14 Feb 2007 11:59:25 +0100
+In-reply-to: <Pine.LNX.4.63.0702131256430.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+Comments: In-reply-to Johannes Schindelin <Johannes.Schindelin@gmx.de>
+   message dated "Tue, 13 Feb 2007 12:57:40 +0100."
+X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39632>
 
-Andy Parkins wrote:
-> With the release of 1.5.0 I added legacyheaders=3Dfalse and=20
-> usedelatbaseoffset=3Dtrue to my repositories.
->=20
-> While doing that though, it felt wrong to be editing every single con=
-fig.  Is=20
-> there a justification for having three config files?
->=20
->  /etc/gitconfig
->  $HOME/.gitconfig
->  $GIT_DIR/config
->=20
-> With /etc/gitconfig coming in at lowest priority?
-I didn't try it, but maybe you could place your desired config to
-/usr/share/git-core/templates/config and then at least newly created
-repos get it?
+Hi Johannes,
 
-Best regards
-Uwe
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
---=20
-Uwe Kleine-K=F6nig
+> > I thought this:
+> > 
+> > git --bare --git-dir=/tmp/my-cloned.git update-server-info
+> > 
+> > was supposed to achieve this. Doesn't it ?
+> 
+> If you mirror /tmp/my-cloned.git to the HTTP server, then yes, this should 
+> do it. Make sure that /tmp/my-cloned.git/info/refs is really updated and 
+> mirrored out, though.
 
-$ dc -e "5735816763073014741799356604682P"
+I double checked and yes, info/refs is really updated and yes, it
+is mirrored but it still fails when I try to clone my repository
+with this:
+
+ git clone http://zedek01.free.fr/projetcs/your-proj2.git
+
+(you can try by yourself).
+
+What can I do ?
+
+Regards,
+
+Xavier
