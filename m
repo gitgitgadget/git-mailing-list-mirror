@@ -1,77 +1,70 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Bill Lear <rael@zopyra.com>
 Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
-Date: Wed, 14 Feb 2007 13:35:27 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702141327240.20368@woody.linux-foundation.org>
+Date: Wed, 14 Feb 2007 15:40:04 -0600
+Message-ID: <17875.33204.413186.355557@lisa.zopyra.com>
 References: <17875.13564.622087.63653@lisa.zopyra.com>
- <7vhctor78j.fsf@assigned-by-dhcp.cox.net> <17875.17647.74882.218627@lisa.zopyra.com>
- <Pine.LNX.4.64.0702140958440.3604@woody.linux-foundation.org>
- <17875.31600.643352.808533@lisa.zopyra.com>
+	<7vhctor78j.fsf@assigned-by-dhcp.cox.net>
+	<17875.17647.74882.218627@lisa.zopyra.com>
+	<7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>
+	<17875.30187.289679.417079@lisa.zopyra.com>
+	<17875.30687.661794.512124@lisa.zopyra.com>
+	<Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Feb 14 22:35:44 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 14 22:40:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHRmq-0007hG-9f
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:35:36 +0100
+	id 1HHRrS-0001ds-6N
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:40:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932651AbXBNVfc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 16:35:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932649AbXBNVfc
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:35:32 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:47122 "EHLO smtp.osdl.org"
+	id S932655AbXBNVkS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 16:40:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932656AbXBNVkS
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:40:18 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60461 "EHLO zopyra.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932651AbXBNVfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 16:35:31 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1ELZShB016888
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Feb 2007 13:35:28 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1ELZRPN009936;
-	Wed, 14 Feb 2007 13:35:28 -0800
-In-Reply-To: <17875.31600.643352.808533@lisa.zopyra.com>
-X-Spam-Status: No, hits=-0.408 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932655AbXBNVkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 16:40:17 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1ELe9H20682;
+	Wed, 14 Feb 2007 15:40:09 -0600
+In-Reply-To: <Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39758>
+
+WAAAAAIAMINIT ... I think I see it:
+
+% perl -pi -e 's/.*\$Id.*//sx' $(xgrep -l '[$]Id')
+
+Could I have corrupted the pack file?  I'll bet $50 I did:
+
+% [yet another clone]
+% xgrep -l '[$]Id'
+./.git/objects/pack/pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.pack
+[...]
+
+%!@#$&$%(@@@!!!
+
+I sent this list to a Perl script to nuke CVS Ids!  I invoked this
+one level up in my directories, not in my source tree, and .git
+got picked up.
+
+[Really, Really Red Shame Face Here]
+
+Ok, I win $50, and I owe each of you a bottle of very good wine for
+wasting your time.  Just send me an email privately to tell me what
+you prefer ... seriously, very seriously ....
+
+I am, however, still curious about the git segfaults in my
+/var/log/messages.
 
 
-
-On Wed, 14 Feb 2007, Bill Lear wrote:
-> 
-> No NFS, but I checked /var/log/messages.  I see segfaults from git,
-> that I missed somehow (don't remember seeing anything awry on the
-> terminal):
-> 
-> Feb 14 10:05:07 lisa kernel: git[21648]: segfault at 0000000000000000 rip 0000003f5eb709d0 rsp 0000007fbfffc158 error 4
-> Feb 14 10:05:43 lisa kernel: git[21710]: segfault at 0000000000000000 rip 0000003f5eb709d0 rsp 0000007fbfffc158 error 4
-> Feb 14 10:06:28 lisa kernel: git[21858]: segfault at 0000000000000000 rip 0000003f5eb709d0 rsp 0000007fbfffc158 error 4
->
-> 10:05 is just before I posted my first note of this to the git list, and
-> the first instance of a segfault that I see.
-
-Ok, this is almost certainly what's up. For some strange reason your git 
-binary segfaults on the clone. The scary thing is, it left your cloned 
-repo in a bad state without even telling you. That's not good.  Normally 
-we should always die() and give a _reason_ for a failure.
-
-If you have that particular git binary, doing a
-
-	gdb git
-
-and then at the gdb prompt doing
-
-	x/5i 0x0000003f5eb709d0
-
-will at least tell where the SIGSEGV happened, but it doesn't give a 
-backtrace so unless it's obvious, it can be a bit hard to debug remotely..
-
-			Linus
+Bill
