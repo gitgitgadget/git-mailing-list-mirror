@@ -1,53 +1,59 @@
-From: Xavier Maillard <zedek@gnu.org>
-Subject: git-blame.el won't run
-Date: Wed, 14 Feb 2007 23:35:35 +0100
-Message-ID: <13283.1171492535@localhost>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 14 23:38:31 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] config: read system-wide defaults from /etc/gitconfig
+Date: Wed, 14 Feb 2007 23:39:20 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702142338450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200702140909.28369.andyparkins@gmail.com> <slrnet5p5h.s9h.siprbaum@xp.machine.xx>
+ <Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45D35092.8040901@xs4all.nl> <7vr6sso8w8.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702142015150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfy98o78i.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702142049430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 23:39:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHSlh-0006BM-8E
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 23:38:29 +0100
+	id 1HHSma-0006g2-Qg
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 23:39:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932670AbXBNWiX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 17:38:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932668AbXBNWiX
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 17:38:23 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:59649 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932670AbXBNWiW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 17:38:22 -0500
-Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 3A9589B71F
-	for <git@vger.kernel.org>; Wed, 14 Feb 2007 23:38:21 +0100 (CET)
-Received: from localhost (IDENT:1001@localhost [127.0.0.1])
-	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1EMZZu4013284
-	for <git@vger.kernel.org>; Wed, 14 Feb 2007 23:35:35 +0100
-X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
+	id S1751250AbXBNWjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 17:39:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751263AbXBNWjW
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 17:39:22 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57049 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751250AbXBNWjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 17:39:21 -0500
+Received: (qmail invoked by alias); 14 Feb 2007 22:39:20 -0000
+X-Provags-ID: V01U2FsdGVkX19EzEgGV05EgGcYhWtEWfv5bc5I/YimbCUFjlnnbw
+	pzrg==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.63.0702142049430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39768>
 
 Hi,
 
-I was happy to see that latest git's git included an emacs mode
-for git-blame.
+On Wed, 14 Feb 2007, Johannes Schindelin wrote:
 
-Sadly, when trying it, I just have this displayed into *Messages*
-buffer: 
+> diff --git a/builtin-config.c b/builtin-config.c
+> index 0f9051d..a42d251 100644
+> --- a/builtin-config.c
+> +++ b/builtin-config.c
+> @@ -147,6 +152,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>  			} else {
+>  				die("$HOME not set");
+>  			}
+> +		else if (!strcmp(argv[1], "--system-wide")) {
 
-Setting up indent for shell type bash
-setting up indent stuff
-Indentation variable are now local.
-Indentation setup for shell type bash
-let: Process git-blame not running
+Ooops. There is a "}" missing before "else".
 
-If I launch git-blame manually onto the file from command line,
-it works.
-
-It is on a emacs 22 (aka CVS version).
-
-Xavier
+Sorry,
+Dscho
