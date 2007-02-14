@@ -1,79 +1,67 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Bill Lear <rael@zopyra.com>
 Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
-Date: Wed, 14 Feb 2007 16:14:40 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702141603440.1757@xanadu.home>
+Date: Wed, 14 Feb 2007 15:18:42 -0600
+Message-ID: <17875.31922.333264.948817@lisa.zopyra.com>
 References: <17875.13564.622087.63653@lisa.zopyra.com>
- <7vhctor78j.fsf@assigned-by-dhcp.cox.net>
- <17875.17647.74882.218627@lisa.zopyra.com>
- <7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>
- <17875.30187.289679.417079@lisa.zopyra.com>
+	<7vhctor78j.fsf@assigned-by-dhcp.cox.net>
+	<17875.17647.74882.218627@lisa.zopyra.com>
+	<7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>
+	<17875.30187.289679.417079@lisa.zopyra.com>
+	<7vmz3gmojt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Feb 14 22:14:47 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 22:18:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHRSh-0006T9-2O
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:14:47 +0100
+	id 1HHRWc-0008Kw-4p
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:18:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932608AbXBNVOn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 16:14:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932614AbXBNVOn
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:14:43 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:11895 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932608AbXBNVOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 16:14:42 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDH00BPK1OGPI00@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 14 Feb 2007 16:14:41 -0500 (EST)
-In-reply-to: <17875.30187.289679.417079@lisa.zopyra.com>
-X-X-Sender: nico@xanadu.home
+	id S932622AbXBNVSr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 16:18:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932623AbXBNVSr
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:18:47 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60378 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932622AbXBNVSq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 16:18:46 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1ELIjI20381;
+	Wed, 14 Feb 2007 15:18:45 -0600
+In-Reply-To: <7vmz3gmojt.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39750>
 
-On Wed, 14 Feb 2007, Bill Lear wrote:
+On Wednesday, February 14, 2007 at 13:12:22 (-0800) Junio C Hamano writes:
+>Bill Lear <rael@zopyra.com> writes:
+>...
+>"ldd ~/git-master/bin/git" tells me that it links with libcrypto.so,
+>so I am using OpenSSL's SHA-1 implementation.  I do not know
+>what your distro uses (or you hand built git yourself?).
 
-> So (hopefully this is helpful) I look in my public repo for this pack
-> file:
-> 
-> % ls -l /repos/git/fus/objects/pack
-> total 88420
-> -r--r--r--  1 blear software    10376 Feb 14 10:06 pack-1a201381fe465cbf4d771aec681aff6e12648ea0.idx
-> -r--r--r--  1 blear software   753437 Feb 14 10:06 pack-1a201381fe465cbf4d771aec681aff6e12648ea0.pack
-> -r--r--r--  1 blear software    77360 Feb 13 10:57 pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.idx
-> -r--r--r--  1 blear software 89576130 Feb 13 10:57 pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.pack
-> 
-> and notice, it is different than the same pack on my just-cloned repo
-> (that is, the second clone, that I used to reproduce the first
-> failure):
-> 
-> % ls -l objects/pack/
-> total 87632
-> -r--r--r--  1 blear software    77360 Feb 14 12:50 pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.idx
-> -r--r--r--  1 blear software 89548154 Feb 14 12:52 pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.pack
-> 
-> and in my first-cloned repo:
-> 
-> % ls -l objects/pack/
-> total 85992
-> -r--r--r--  1 blear software    77360 Feb 13 10:18 pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.idx
-> -r--r--r--  1 blear software 87874337 Feb 14 10:00 pack-23d1a9af78b4b78d1f3750cf70f83cb91a20ba64.pack
-> 
-> The .pack files have the same SHA, but different sizes (don't know
-> what that means).
+Should have known --- I hand-built it myself, and thought perhaps
+it was a configure option (output truncated):
 
-The name of the pack corresponds to the list of objects it contains.  
-The way those objects are packed can change the size and the raw content 
-of the pack file, but they still should contain the equivalent data.  So 
-this size difference is not a sign of problem.
+% ldd /opt/git-1.5.0/bin/git
+        libcrypto.so.4 => /lib64/libcrypto.so.4 (0x0000003de1300000)
+% ldd /usr/bin/git
+        libcrypto.so.4 => /lib64/libcrypto.so.4 (0x0000003de1300000)
+
+So, both 1.5 and 1.4.4.1 are using OpenSSL, I reckon.
+
+>So it looks more and more like a bit decay as Linus suspected...
+
+Strange: given that fsck works on my public repo, with both 1.4.4.1
+and with 1.5.0, and I reproduced this easily and fsck barfs on
+both of my failed repos.  I can't imagine this is really a disk
+error of any kind.
 
 
-Nicolas
+Bill
