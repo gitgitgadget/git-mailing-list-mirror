@@ -1,67 +1,65 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Newbie experience with push over ssh
-Date: Wed, 14 Feb 2007 10:25:05 -0600
-Message-ID: <17875.14305.910866.273778@lisa.zopyra.com>
-References: <vpq64a4bzp1.fsf@olympe.imag.fr>
-	<20070214142731.GA1478@moooo.ath.cx>
-	<45D33485.5020906@webdrake.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Including the release notes in the git-1.5.0 release?
+Date: Wed, 14 Feb 2007 08:27:41 -0800
+Message-ID: <7vk5ykso02.fsf@assigned-by-dhcp.cox.net>
+References: <E1HGyPn-0003Te-9s@candygram.thunk.org>
+	<7vzm7ix895.fsf@assigned-by-dhcp.cox.net>
+	<20070213180541.GH8670@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Joseph Wakeling <joseph.wakeling@webdrake.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 17:25:27 2007
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Feb 14 17:27:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHMwc-0001qW-To
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:25:23 +0100
+	id 1HHMyy-0002qr-Pf
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932363AbXBNQZT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 11:25:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbXBNQZT
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:25:19 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:61231 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932363AbXBNQZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 11:25:17 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1EGPBP26774;
-	Wed, 14 Feb 2007 10:25:11 -0600
-In-Reply-To: <45D33485.5020906@webdrake.net>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S932366AbXBNQ1n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 11:27:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbXBNQ1n
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:27:43 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:51268 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932368AbXBNQ1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 11:27:43 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070214162743.ETEP21177.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Feb 2007 11:27:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id PUTi1W0021kojtg0000000; Wed, 14 Feb 2007 11:27:42 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39668>
 
-On Wednesday, February 14, 2007 at 16:10:45 (+0000) Joseph Wakeling writes:
->Matthias Lederhofer wrote:
->> I don't think there is any way to 'clone to remote'.  You'd have to
->> ssh to the other machine and clone from there, or you can just create
->> an empty repository on the remote host and push the stuff into it.
+Theodore Tso <tytso@mit.edu> writes:
+
+> What I've seen some projects do (including some commercial products)
+> is to keep them around with the old file names.  So if we have
 >
->I remember coming across the same issue as Matthieu and never got round
->to solving it.  In my case the desire is to upload the code onto a
->remote machine---in particular a cluster where I run simulations.  I
->don't particularly need that remote code to be in a repo or otherwise,
->since it's only there to be run, not edited.
+> Documentation/RELEASE-NOTES_1.5.0.txt
+> Documentation/RELEASE-NOTES_1.6.0.txt
+> Documentation/RELEASE-NOTES_1.7.0.txt
 >
->As far as I know I have no way of installing git on that machine.
->Perhaps I could install it locally but I suspect the sysadmin would not
->be supportive.
+> and a symlink from RELEASE-NOTES to Documentation/RELEASE-NOTES-<cur_ver>.txt
 >
->So, is there a way of using git to upload my code to a machine without a
->repo ready-prepared?
+> that would make a lot of sense....
 
-If you must ...
+Done.
 
-% cat ~/.gitconfig
-[alias]
-	scp !scp
-	rcp !rcp
-% git scp -rp . me@remotehost:/directory
+I used to like reading pod/perl*delta.pod but these days they
+are tooooo long.  Hopefully we can keep our release notes short
+and sweet. 
 
+People might already have noticed that the latest docs at
 
-Bill
+	http://www.kernel.org/pub/software/scm/git/docs/
+
+has link to older versions.
