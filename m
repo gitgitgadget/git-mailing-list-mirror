@@ -1,68 +1,68 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: Re: [PATCH] git-unbundle - unbundle objects and references for
- disconnected transfer.
-Date: Wed, 14 Feb 2007 15:57:12 -0500
-Message-ID: <45D377A8.1080404@verizon.net>
-References: <11714622292110-git-send-email-mdl123@verizon.net>
- <11714622292295-git-send-email-mdl123@verizon.net>
- <11714622293142-git-send-email-mdl123@verizon.net>
- <20070214194537.GD28290@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-unbundle - unbundle objects and references for disconnected transfer.
+Date: Wed, 14 Feb 2007 16:03:00 -0500
+Message-ID: <20070214210300.GF28290@spearce.org>
+References: <11714622292110-git-send-email-mdl123@verizon.net> <11714622292295-git-send-email-mdl123@verizon.net> <11714622293142-git-send-email-mdl123@verizon.net> <20070214194537.GD28290@spearce.org> <45D377A8.1080404@verizon.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 14 21:59:24 2007
+To: Mark Levedahl <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 22:07:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHRDb-00016B-KR
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 21:59:12 +0100
+	id 1HHRHT-0001lS-Es
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:03:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932578AbXBNU7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 15:59:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932583AbXBNU7G
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 15:59:06 -0500
-Received: from vms042pub.verizon.net ([206.46.252.42]:36992 "EHLO
-	vms042pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932578AbXBNU7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 15:59:04 -0500
-Received: from [127.0.0.1] ([71.246.235.75])
- by vms042.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDH00A6E0VCEC12@vms042.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 14 Feb 2007 14:57:14 -0600 (CST)
-In-reply-to: <20070214194537.GD28290@spearce.org>
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S932461AbXBNVDH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 16:03:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932589AbXBNVDH
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:03:07 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:42668 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932461AbXBNVDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 16:03:05 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HHRHC-0006wx-0O; Wed, 14 Feb 2007 16:02:54 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id D857D20FBAE; Wed, 14 Feb 2007 16:03:00 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <45D377A8.1080404@verizon.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39745>
 
-Shawn O. Pearce wrote:
-> Mark Levedahl <mdl123@verizon.net> wrote:
->   
->> +# get the objects
->> +unzip -p "$bfile" .gitBundlePack | git-unpack-objects
->>     
->
-> Since you are transporting a packfile by sneakernet it might
-> be reasonable to assume this transfer happens infrequently.
-> Consequently we might assume its object count exceeds
-> transfer.unpackLimit, which means a standard fetch or push would
-> have kept the packfile rather than unpacking it to loose objects.
->
-> So maybe use git-index-pack here to index the packfile and
-> retain it as-is, rather than unpacking it?
->
->   
-Many of my uses of this result in 10-20 objects being transferred, so 
-I'm not sure keeping each pack is a real benefit. In particular, one use 
-is for daily updates between two sites via email where we tend to have a 
-lot of extra objects in the packs as we assume that not every bundle 
-actually gets applied, while the number of real new objects tends to be 
-small. On the other hand, given the manual nature of this operation, we 
-could always just follow up with repack -a -d, possibly guarded by a git 
-count. Thoughts?
+Mark Levedahl <mdl123@verizon.net> wrote:
+> Many of my uses of this result in 10-20 objects being transferred, so 
+> I'm not sure keeping each pack is a real benefit. In particular, one use 
+> is for daily updates between two sites via email where we tend to have a 
+> lot of extra objects in the packs as we assume that not every bundle 
+> actually gets applied, while the number of real new objects tends to be 
+> small. On the other hand, given the manual nature of this operation, we 
+> could always just follow up with repack -a -d, possibly guarded by a git 
+> count. Thoughts?
 
-Mark
+I don't really have an opinion here, as I'm fortunate enough that
+I can use an SSH or an anonymous git connection between all of my
+repositories, and thus don't really have a need for bundle/unbundle.
+
+Its just one of those operations which I thought would not happen
+often, and when it did, probably would be big.  In which case keeping
+the packfile would make the unbundle run faster, as you don't need
+to create a huge mess of loose objects.
+
+-- 
+Shawn.
