@@ -1,53 +1,63 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Stupid question on getting branch from yesterday
-Date: Wed, 14 Feb 2007 13:38:02 -0600
-Message-ID: <17875.25882.784307.731860@lisa.zopyra.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-bundle - bundle objects and references for disconnected transfer.
+Date: Wed, 14 Feb 2007 14:42:37 -0500
+Message-ID: <20070214194237.GC28290@spearce.org>
+References: <11714622292110-git-send-email-mdl123@verizon.net> <11714622292295-git-send-email-mdl123@verizon.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 14 20:38:24 2007
+Cc: git@vger.kernel.org
+To: Mark Levedahl <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 20:42:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHPxO-0008Cy-IC
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 20:38:22 +0100
+	id 1HHQ1m-0001dV-IM
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 20:42:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbXBNTiH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 14:38:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932498AbXBNTiH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 14:38:07 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60005 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932493AbXBNTiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 14:38:06 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1EJc4311189;
-	Wed, 14 Feb 2007 13:38:04 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S932503AbXBNTmm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 14:42:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932212AbXBNTmm
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 14:42:42 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:40053 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932500AbXBNTml (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 14:42:41 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HHQ1P-0001EL-Br; Wed, 14 Feb 2007 14:42:31 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6C1A020FBAE; Wed, 14 Feb 2007 14:42:37 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <11714622292295-git-send-email-mdl123@verizon.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39731>
 
-I have not yet figured this one out: I have not tagged anything, but
-know that I checked in something lame sometime between now and two days
-ago.  How do I get my working repo to be that as it was, say, yesterday?
+Mark Levedahl <mdl123@verizon.net> wrote:
+> +# add the pack file
+> +(git-rev-list --objects $gitrevargs | \
+> +	cut -b -40 | \
+> +	git pack-objects --all-progress --progress --stdout >.gitBundlePack) \
+> +	|| (rm -f "$bfile" ; exit)
 
-Do I do:
+pack-objects can run a rev-list internally; which means this
+can be written as:
 
-% git log --since="2 days ago"
+ echo $gitrevargs | \
+ git pack-objects --all-progress --progress --stdout --revs >.gitBundlePack \
+ || (rm -f "$bfile" ; exit)
 
-parse, the output for the commit I want, and then do
-
-% git reset <SHA>
-
-or would I do
-
-% git reset --soft <SHA>
-
-or something else?
-
-
-Bill
+-- 
+Shawn.
