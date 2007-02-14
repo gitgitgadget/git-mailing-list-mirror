@@ -1,61 +1,70 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: How to get rid of tracking branch?
-Date: Wed, 14 Feb 2007 13:35:37 +0000
-Message-ID: <200702141335.41165.andyparkins@gmail.com>
-References: <45D30D8F.50261DB0@eudaptics.com>
+From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+Subject: Exporting a git repository via FTP
+Date: Wed, 14 Feb 2007 14:36:20 +0100
+Message-ID: <8b65902a0702140536v4a1cb1d0u3d3549e542aade2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <J.Sixt@eudaptics.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 14 14:35:59 2007
+X-From: git-owner@vger.kernel.org Wed Feb 14 14:36:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHKIc-0003mA-5z
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 14:35:54 +0100
+	id 1HHKJ7-0003zn-Gp
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 14:36:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932272AbXBNNfv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 08:35:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbXBNNfv
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 08:35:51 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:59324 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932272AbXBNNfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 08:35:50 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so188961uga
-        for <git@vger.kernel.org>; Wed, 14 Feb 2007 05:35:48 -0800 (PST)
+	id S932276AbXBNNgW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 08:36:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbXBNNgW
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 08:36:22 -0500
+Received: from wx-out-0506.google.com ([66.249.82.229]:17767 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932276AbXBNNgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 08:36:21 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so206697wxd
+        for <git@vger.kernel.org>; Wed, 14 Feb 2007 05:36:21 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ELwhwcefl8WHDAu9qR/yF3nd9USPydpl9ycqFr3aVPAOa05bjHULPuZuIjnQwTZrFkYGDnHdwRUCO52iJwPlVVGWoKjIinO6vtQyJtXYI1W+G5wJs0KtT80lNevuKPHrvW+bWxOK30ycS2Jv6fdCQs2hxuhg1jExWE6RksgYyP0=
-Received: by 10.67.121.15 with SMTP id y15mr368798ugm.1171460148537;
-        Wed, 14 Feb 2007 05:35:48 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id a1sm925148ugf.2007.02.14.05.35.45;
-        Wed, 14 Feb 2007 05:35:46 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <45D30D8F.50261DB0@eudaptics.com>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=qajFuDRtgUztv5b9XSFxGpK5j+aOTwLvv8fcJ7uqYf0Dudefw6UP03YP9FkfxrUu7XGPnzeFlAgZEdu5bMuMTYFXpv41wCvOj6v1h0G/44sGwrwahSO4M9fRNZTIv4PJBSuRyhNN+npsWZU/s2mXQ+h1P1sjDx+q4q7MLWnaxxc=
+Received: by 10.90.55.19 with SMTP id d19mr560118aga.1171460181017;
+        Wed, 14 Feb 2007 05:36:21 -0800 (PST)
+Received: by 10.90.51.16 with HTTP; Wed, 14 Feb 2007 05:36:20 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39643>
 
-On Wednesday 2007 February 14 13:24, Johannes Sixt wrote:
-> Call me clueless, but how the heck do I get rid of a tracking remote
-> branch? I've cloned a repo locally, but in the clone I don't want to
-> track all the topic branches of the origin. But git branch -d keeps
-> saying it doesn't find the remote branch:
+Hi,
 
- $ git branch -r -d origin/repo-devel
+I'm currently looking for the _simplest_ way to share a Git repo on my
+HomePage (offered by my ISP). My configuration is:
+- a raw HTTP server (no way to have any WebDav features);
+- a simple FTP for upload.
 
-I suffered the same thing a while ago :-)
+Following the documentation, I first used a local directory mirrored
+on the server (with the sitecopy tool). It worked, but needs disk
+space (and is not funny :-))
+
+So, I tried a direct git-push over ftp URL (as Curl knows FTP download
+and upload). But it failed because FTP is not supported in push
+operations.
+
+So, I tried curlftpfs: setting up a local mount point connected to my
+remote directory. It worked... sometimes. But it freeze really often.
 
 
-Andy
+So... I ask the Git community :-)
+Is there any hope to see a git-ftp-push command one day? Reading the
+http-push.c file, it seems that the most problematic part is that FTP
+does not allow LOCKs. But, in my case, LOCKs are not necessary as I'm
+the only one user to update my remote repo. No chance for conflicting
+updates.
+Anybody working on such thing?
 -- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+Guilhem BONNEFILLE
+-=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
