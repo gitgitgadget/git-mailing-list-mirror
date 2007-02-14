@@ -1,61 +1,67 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: [ANNOUNCE] GIT 1.5.0
-Date: Wed, 14 Feb 2007 08:57:23 -0600
-Message-ID: <17875.9043.217255.863200@lisa.zopyra.com>
-References: <7vlkj1v3av.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: mingw, windows, crlf/lf, and git
+Date: Wed, 14 Feb 2007 07:44:00 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702140742280.3604@woody.linux-foundation.org>
+References: <45CFA30C.6030202@verizon.net> <200702130932.51601.litvinov2004@gmail.com>
+ <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0702130919100.8424@woody.linux-foundation.org>
+ <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
+ <7v8xf1uxme.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702132127330.3604@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702141208020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, linux-kernel@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 15:57:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Alexander Litvinov <litvinov2004@gmail.com>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 14 16:44:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHLZo-0006FK-8r
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 15:57:44 +0100
+	id 1HHMIt-0000x4-38
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 16:44:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932322AbXBNO5f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 09:57:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbXBNO5f
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 09:57:35 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60899 "EHLO zopyra.com"
+	id S932337AbXBNPoQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 10:44:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932344AbXBNPoQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 10:44:16 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:60810 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932322AbXBNO5e (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 09:57:34 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1EEvSt19632;
-	Wed, 14 Feb 2007 08:57:28 -0600
-In-Reply-To: <7vlkj1v3av.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S932337AbXBNPoP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 10:44:15 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1EFi1hB005794
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 14 Feb 2007 07:44:02 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1EFi06K001451;
+	Wed, 14 Feb 2007 07:44:00 -0800
+In-Reply-To: <Pine.LNX.4.63.0702141208020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-0.414 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39655>
-
-On Tuesday, February 13, 2007 at 19:14:16 (-0800) Junio C Hamano writes:
->The latest feature release GIT 1.5.0 is available at the usual places:
->...
-
-I do think worth pointing out that, quite significantly, you can now
-use git-daemon to push changes into a repo, something very handy for
-private networks.
-
-This is enabled by passing the --enable=receive-pack to the
-git-daemon (usually in the [x]?inetd configuration).
-
-This has the benefit of:
-
-  1) More efficient git transport for both pushes and pulls.
-
-  2) A less ugly URL to use: git://server/repo, instead of, say,
-     ssh+git://server/path/to/repos/repo.
-
-  3) Ability to easily move your repo without changing the URL in each
-     client, by changing the URL in the git-daemon config file
-     (xinetd) --- say, if you want to move your repo to a striped
-     disk, or similar.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39656>
 
 
-Bill
+
+On Wed, 14 Feb 2007, Johannes Schindelin wrote:
+> 
+> Last time I checked, the text files never had lines longer than 200 
+> characters (I chose this intentionally large). So, it might be a good 
+> heuristic to check the maximal line length,
+
+No, some broken editor programs and people use "flowing text" files, where 
+a newline is actually a _paragraph_ end. You have lines in the hundreds 
+(and thousands) of characters, and the program will just flow the text for 
+you.
+
+Ugh. Horrible, I know. 
+
+		Linus
