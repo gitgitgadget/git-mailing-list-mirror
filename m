@@ -1,63 +1,46 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Newbie experience with push over ssh
-Date: Wed, 14 Feb 2007 17:56:44 +0100
-Message-ID: <vpqbqjw65kj.fsf@olympe.imag.fr>
-References: <vpq64a4bzp1.fsf@olympe.imag.fr>
-	<20070214142731.GA1478@moooo.ath.cx> <45D33485.5020906@webdrake.net>
-	<17875.14305.910866.273778@lisa.zopyra.com>
-	<17875.14859.177000.558634@lisa.zopyra.com>
-	<45D33D53.6040209@webdrake.net>
+From: Sergio Callegari <scallegari@arces.unibo.it>
+Subject: git-gui shows untracked files as "changed but not updated"
+Date: Wed, 14 Feb 2007 17:33:17 +0100
+Organization: ARCES - =?UTF-8?B?VW5pdmVyc2l0w6AgZGkgQm9sb2duYQ==?=
+Message-ID: <45D339CD.4040603@arces.unibo.it>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 14 17:57:00 2007
+X-From: git-owner@vger.kernel.org Wed Feb 14 17:59:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHNRD-0007Gm-G6
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:56:59 +0100
+	id 1HHNTc-0008LL-TZ
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:59:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932390AbXBNQ44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 11:56:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932394AbXBNQ44
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:56:56 -0500
-Received: from imag.imag.fr ([129.88.30.1]:34872 "EHLO imag.imag.fr"
+	id S932416AbXBNQ7X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 11:59:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932418AbXBNQ7X
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:59:23 -0500
+Received: from arces.unibo.it ([137.204.143.6]:37233 "EHLO arces.unibo.it"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932390AbXBNQ44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 11:56:56 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l1EGuiRr000235
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 14 Feb 2007 17:56:44 +0100 (CET)
-Received: from olympe.imag.fr ([129.88.43.60])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HHNQy-0008Vx-Ik
-	for git@vger.kernel.org; Wed, 14 Feb 2007 17:56:44 +0100
-Received: from moy by olympe.imag.fr with local (Exim 4.50)
-	id 1HHNQy-0000qQ-GE
-	for git@vger.kernel.org; Wed, 14 Feb 2007 17:56:44 +0100
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <45D33D53.6040209@webdrake.net> (Joseph Wakeling's message of "Wed\, 14 Feb 2007 16\:48\:19 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 14 Feb 2007 17:56:44 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S932416AbXBNQ7V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 11:59:21 -0500
+X-Greylist: delayed 1557 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Feb 2007 11:59:21 EST
+Received: from [192.168.143.193] (mars-fw.arces.unibo.it [137.204.143.2])
+	(authenticated bits=0)
+	by arces.unibo.it (8.13.7/8.13.7) with ESMTP id l1EGXOJH007389
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 14 Feb 2007 17:33:26 +0100
+User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
+X-Spam-Status: No, score=-2.5 required=5.0 tests=AWL,BAYES_00 autolearn=ham 
+	version=3.1.3-gr0
+X-Spam-Checker-Version: SpamAssassin 3.1.3-gr0 (2006-06-01) on 
+	mail.arces.unibo.it
+X-Virus-Scanned: ClamAV 0.88.7/2568/Wed Feb 14 16:42:10 2007 on arces.unibo.it
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39684>
 
-Joseph Wakeling <joseph.wakeling@webdrake.net> writes:
+A short mail just to check if this is the intended behaviour...
 
-> If I understand right, is there any particular point in
-> bothering with these aliases,
-
-Not any. The joke was just "if you insist in having git at the
-beginning of the command line, ...".
-
--- 
-Matthieu
+Sergio
