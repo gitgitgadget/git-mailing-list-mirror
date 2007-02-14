@@ -1,73 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-pull and tag objects
-Date: Wed, 14 Feb 2007 12:18:25 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702141213150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1170933407.15431.38.camel@okra.transitives.com>
- <81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com>
- <7v4ppurka1.fsf@assigned-by-dhcp.cox.net> <20070210142322.GB25607@thunk.org>
- <Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org>
- <7vy7n5gs0y.fsf@assigned-by-dhcp.cox.net> <20070212162745.GB2741@thunk.org>
- <7vr6su1szp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702132230490.3604@woody.linux-foundation.org>
- <7vfy99td98.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] The "table-of-contents" in the update hook script should match the body
+Date: Wed, 14 Feb 2007 11:20:32 +0000
+Message-ID: <200702141120.32776.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Theodore Tso <tytso@mit.edu>, Alex Riesen <raa.lkml@gmail.com>,
-	Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 12:18:33 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 14 12:20:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHI9g-0000bD-Q6
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 12:18:33 +0100
+	id 1HHIBj-0001a9-0h
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 12:20:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932205AbXBNLSa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 06:18:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932215AbXBNLSa
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 06:18:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58318 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932205AbXBNLS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 06:18:29 -0500
-Received: (qmail invoked by alias); 14 Feb 2007 11:18:27 -0000
-X-Provags-ID: V01U2FsdGVkX1/hoj5U/g3hnqCrrsdOYYkh0LPROjplAfs/sRbOZd
-	x1IQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vfy99td98.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S932217AbXBNLUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 06:20:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932219AbXBNLUg
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 06:20:36 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:36568 "EHLO
+	369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932217AbXBNLUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 06:20:35 -0500
+Received: from dvr.360vision.com ([192.189.1.65]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Wed, 14 Feb 2007 11:23:13 +0000
+Received: from localhost ([127.0.0.1])
+	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1HHIBe-0007Q4-00
+	for <git@vger.kernel.org>; Wed, 14 Feb 2007 11:20:34 +0000
+X-TUID: 1d86ce3a1958bd6e
+X-UID: 239
+X-Length: 1576
+Content-Disposition: inline
+X-OriginalArrivalTime: 14 Feb 2007 11:23:13.0671 (UTC) FILETIME=[83FEC970:01C7502A]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39635>
 
-Hi,
+44478d99ee0 introduced a filter using "git-rev-parse --not --all" to the
+log display to prevent the display of revisions already in the
+repository.  However, the table of contents generation didn't get that
+same update.
 
-On Tue, 13 Feb 2007, Junio C Hamano wrote:
+This patch fixes that.  The table of contents before the log and the log
+now both display the same list of revisions.
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > And you could certainly do the "passed testing" thing with commits in 
-> > a separate branch instead: you'd create the "testing" branch, which is 
-> > always a set of commits that have as their primary parent the commit 
-> > that got tested, and as the second parent the previous commit in the 
-> > "testing" series).
-> 
-> I personally feel that that kind of commit is misusing the parent field 
-> (for one thing, it would not play well with merges at all, although 
-> people who abuse commits to record non-ancestry structure may not even 
-> be interested in merging such things so it may not be a problem in 
-> practice).
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+Apologies.  I should always wait a day before posting patches.
 
-I don't think it is misusing the parent field, but I would make the 
-primary parent the ancestor in terms of testing. In a very real sense, 
-this maps the history -- not of development, but of testing. It also makes 
-sense to bisect on this line of history.
+ templates/hooks--update |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-The chance of a mismerge is somewhat real, though. At first I thought that 
-you'd need a special script anyway, until I realized that it's just a 
-matter of "git merge -s theirs <from-devel>".
-
-Ciao,
-Dscho
+diff --git a/templates/hooks--update b/templates/hooks--update
+index a7cf604..fd1f73d 100644
+--- a/templates/hooks--update
++++ b/templates/hooks--update
+@@ -57,7 +57,7 @@ announcerecipients=$(git-repo-config hooks.announcelist)
+ allowunannotated=$(git-repo-config --bool hooks.allowunannotated)
+ 
+ # --- Check types
+-newrev_type=$(git-cat-file -t "$newrev")
++newrev_type=$(git-cat-file -t $newrev)
+ 
+ case "$refname","$newrev_type" in
+ 	refs/tags/*,commit)
+@@ -165,7 +165,7 @@ case "$refname_type" in
+ 			baserev=$(git-merge-base $oldrev $newrev)
+ 
+ 			# Commit with a parent
+-			for rev in $(git-rev-list $newrev ^$baserev)
++			for rev in $(git-rev-parse --not --all | git-rev-list --stdin $newrev ^$baserev)
+ 			do
+ 				revtype=$(git-cat-file -t "$rev")
+ 				echo "       via  $rev ($revtype)"
+-- 
+1.5.0.rc4.365.g5eff6-dirty
