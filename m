@@ -1,56 +1,69 @@
-From: Joseph Wakeling <joseph.wakeling@webdrake.net>
-Subject: Re: Newbie experience with push over ssh
-Date: Wed, 14 Feb 2007 16:29:58 +0000
-Message-ID: <45D33906.2040905@webdrake.net>
-References: <vpq64a4bzp1.fsf@olympe.imag.fr>	<20070214142731.GA1478@moooo.ath.cx>	<45D33485.5020906@webdrake.net> <17875.14305.910866.273778@lisa.zopyra.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] config: read system-wide defaults from /etc/gitconfig
+Date: Wed, 14 Feb 2007 08:30:51 -0800
+Message-ID: <7vfy98snus.fsf@assigned-by-dhcp.cox.net>
+References: <200702140909.28369.andyparkins@gmail.com>
+	<slrnet5p5h.s9h.siprbaum@xp.machine.xx>
+	<Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Feb 14 17:30:12 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>,
+	Andy Parkins <andyparkins@gmail.com>, junkio@cox.net,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 14 17:30:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHN1H-0003sk-8a
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:30:11 +0100
+	id 1HHN20-0004Dd-8E
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932369AbXBNQaH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 11:30:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932370AbXBNQaH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:30:07 -0500
-Received: from alf.nbi.dk ([130.225.212.55]:4916 "EHLO alf.nbi.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932369AbXBNQaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 11:30:06 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by alf.nbi.dk (8.9.3/8.9.3) with ESMTP id RAA17504;
-	Wed, 14 Feb 2007 17:29:59 +0100 (MET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
-In-Reply-To: <17875.14305.910866.273778@lisa.zopyra.com>
-X-Enigmail-Version: 0.94.0.0
+	id S932367AbXBNQax convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 14 Feb 2007 11:30:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932370AbXBNQax
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:30:53 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:36399 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932367AbXBNQax convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Feb 2007 11:30:53 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070214163053.ERXL22948.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Feb 2007 11:30:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id PUWr1W0101kojtg0000000; Wed, 14 Feb 2007 11:30:52 -0500
+In-Reply-To: <Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 14 Feb 2007 12:48:14 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39671>
 
-Bill Lear wrote:
->> So, is there a way of using git to upload my code to a machine without a
->> repo ready-prepared?
-> 
-> If you must ...
-> 
-> % cat ~/.gitconfig
-> [alias]
-> 	scp !scp
-> 	rcp !rcp
-> % git scp -rp . me@remotehost:/directory
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Thanks very much.  And (should have asked this first ....) is it
-possible to init a repo remotely, i.e. to use the git on my machine to
-do init-repo on a directory accessed via ssh or ftp?  And if yes ... to
-do other git commands similarly remotely?
+> The settings in /etc/gitconfig can be overridden in ~/.gitconfig,
+> which in turn can be overridden in .git/config.
+>
+> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> ---
+> ...
+> 	Voil=C3=A0.
 
-The latter would be a slow and painful way of working, I imagine, but
-might be useful.
+I knew this can be done, and you are capable of doing this, but
+I was wondering if it is a good thing to do in the first place.
+
+Site-wide configuration for options that are potentially
+compatibility-breaking is a bad idea on a multi-user machines,
+and it was certainly the case back when our machines hosted many
+diverse set of people.
+
+But these days many machines are practically single-user and
+many more are owned by a single group/project that share the
+same policy.  So in such a setting, /etc/gitconfig might not be
+too bad. =20
