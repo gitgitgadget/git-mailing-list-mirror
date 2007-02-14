@@ -1,82 +1,60 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Wed, 14 Feb 2007 09:26:22 -0500
-Message-ID: <45D31C0E.2040206@verizon.net>
-References: <45CFA30C.6030202@verizon.net>
- <200702130932.51601.litvinov2004@gmail.com>
- <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702130919100.8424@woody.linux-foundation.org>
- <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
- <7v8xf1uxme.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702132127330.3604@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702141208020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: Newbie experience with push over ssh
+Date: Wed, 14 Feb 2007 15:27:31 +0100
+Message-ID: <20070214142731.GA1478@moooo.ath.cx>
+References: <vpq64a4bzp1.fsf@olympe.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 14 15:26:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 14 15:27:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHL5d-0000zE-4o
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 15:26:33 +0100
+	id 1HHL6i-0001SY-FV
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 15:27:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932290AbXBNO0a (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 09:26:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932317AbXBNO0a
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 09:26:30 -0500
-Received: from vms046pub.verizon.net ([206.46.252.46]:33022 "EHLO
-	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932290AbXBNO03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 09:26:29 -0500
-Received: from [127.0.0.1] ([71.246.235.75])
- by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDG00C9EIRSSPL2@vms046.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 14 Feb 2007 08:26:18 -0600 (CST)
-In-reply-to: <Pine.LNX.4.63.0702141208020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S932317AbXBNO1i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 09:27:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932319AbXBNO1h
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 09:27:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60665 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932317AbXBNO1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 09:27:37 -0500
+Received: (qmail invoked by alias); 14 Feb 2007 14:27:35 -0000
+X-Provags-ID: V01U2FsdGVkX1+SNP58YhWSZIGHXcqYi6CwwLzNvD+rB9USqf1bMO
+	EgOQ==
+Mail-Followup-To: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <vpq64a4bzp1.fsf@olympe.imag.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39652>
 
-Johannes Schindelin wrote:
-> Last time I checked, the text files never had lines longer than 200 
-> characters (I chose this intentionally large). So, it might be a good 
-> heuristic to check the maximal line length, and refuse to believe that 
-> it's text once a certain (configurable) threshold is reached.
->
-> Ciao,
-> Dsch
-Unfortunately, on my program we have folks using text files with single 
-lines over 60,000 characters long, these are data files. Think for 
-example of a comma or tab separated data file saved from a spreadsheet. 
-In this case, the files are pure ascii. So, the line length could be 
-something else to take into account, but is not decisive by itself.
+Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> I could create a local repository, commit in it, but then, I tried to
+> push it to a remote machine, on which git is installed.
+> 
+> I would have expected "push" to do this, but:
+> 
+> $ git push ssh://machine.fr/tmp/foo 
+> fatal: '/tmp/foo': unable to chdir or not a git archive
+> fatal: The remote end hung up unexpectedly
+git push is can only push into an existing repository, there seems to
+be no repository in /tmp/foo on machine.fr.
 
-To recap, we have the following various suggestions to determine textness:
+> Then, I tried "clone":
+> 
+> $ git clone . ssh://machine.fr/tmp/foo
+This means: "clone the repository at . to the directory
+ssh://machine.fr/tmp/foo".  The first parameter is the repository to
+clone from, the second is the directory to put the clone into (this is
+optional).
 
-1) ratio of ascii to non-ascii characters, possibly weighting some chars 
-more than others
-2) line length
-3) existence of a null (\0)
-4) file name globbing
-5) roundtrip ( lf(crlf(file) ) == file
-
-I don't think any one suggestion is completely adequate for all uses, 
-all need to be available, somehow configurable. This suggests to me a 
-core.AutoCRLFstrategy variable that is a comma separated list of methods 
-to use (set to a reasonable default of course that does not cause 
-runtime headaches on Unix): a file would be deemed binary unless all 
-listed methods declare the file as text (with an empty list disabling 
-AutoCRLF detection).
-
-Mark
+I don't think there is any way to 'clone to remote'.  You'd have to
+ssh to the other machine and clone from there, or you can just create
+an empty repository on the remote host and push the stuff into it.
