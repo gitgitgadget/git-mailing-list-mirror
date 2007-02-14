@@ -1,107 +1,115 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
-Date: Wed, 14 Feb 2007 13:12:22 -0800
-Message-ID: <7vmz3gmojt.fsf@assigned-by-dhcp.cox.net>
-References: <17875.13564.622087.63653@lisa.zopyra.com>
-	<7vhctor78j.fsf@assigned-by-dhcp.cox.net>
-	<17875.17647.74882.218627@lisa.zopyra.com>
-	<7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>
-	<17875.30187.289679.417079@lisa.zopyra.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Stupid question on getting branch from yesterday
+Date: Wed, 14 Feb 2007 13:13:09 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702141250300.20368@woody.linux-foundation.org>
+References: <17875.25882.784307.731860@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Feb 14 22:12:30 2007
+X-From: git-owner@vger.kernel.org Wed Feb 14 22:13:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHRQQ-0005NT-Od
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:12:27 +0100
+	id 1HHRRD-0005oH-5p
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 22:13:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932599AbXBNVMX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 16:12:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932602AbXBNVMX
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:12:23 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:53890 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932599AbXBNVMX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 16:12:23 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070214211222.SLQW4586.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 14 Feb 2007 16:12:22 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id PZCN1W00M1kojtg0000000; Wed, 14 Feb 2007 16:12:22 -0500
-In-Reply-To: <17875.30187.289679.417079@lisa.zopyra.com> (Bill Lear's message
-	of "Wed, 14 Feb 2007 14:49:47 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932602AbXBNVNM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 16:13:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932603AbXBNVNM
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 16:13:12 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:46005 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932602AbXBNVNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 16:13:11 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1ELDAhB015959
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 14 Feb 2007 13:13:10 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1ELD9gC009240;
+	Wed, 14 Feb 2007 13:13:09 -0800
+In-Reply-To: <17875.25882.784307.731860@lisa.zopyra.com>
+X-Spam-Status: No, hits=-0.41 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39747>
 
-Bill Lear <rael@zopyra.com> writes:
 
->>How big is this pack, what platform are you working on and whose
->>SHA-1 implementation do you use?
+
+On Wed, 14 Feb 2007, Bill Lear wrote:
 >
-> In order:
->
-> % cd .git/objects/pack
-> % ls -l
-> -r--r--r--  1 rael software    77360 Feb 13 10:18 pack-23d1a9af78b4b78d...
-> -r--r--r--  1 rael software 87874337 Feb 14 10:00 pack-23d1a9af78b4b78d...
->
-> [output of ls trimmed to width]
->
-> % uname -a
-> Linux lisa.zopyra.com 2.6.9-34.0.2.ELsmp #1 SMP Fri Jul 7 18:22:55 CDT 2006 x86_64 x86_64 x86_64 GNU/Linux
->
-> I don't know which SHA-1 implementation I use --- I just installed git
-> and off I went.  I do see this:
->
-> % which sha1sum
-> /usr/bin/sha1sum
-> % sha1sum --version
-> shasum (coreutils) 5.2.1
-> Written by Ulrich Drepper and Scott Miller.
-> [...]
->
-> But I'm not sure which library is in use --- how do I know?
+> I have not yet figured this one out: I have not tagged anything, but
+> know that I checked in something lame sometime between now and two days
+> ago.  How do I get my working repo to be that as it was, say, yesterday?
+> 
+> Do I do:
+> 
+> % git log --since="2 days ago"
+> 
+> parse, the output for the commit I want, and then do
+> 
+> % git reset <SHA>
 
-"ldd ~/git-master/bin/git" tells me that it links with libcrypto.so,
-so I am using OpenSSL's SHA-1 implementation.  I do not know
-what your distro uses (or you hand built git yourself?).
+No, use that only if you want to throw away everything you did after 
+that particular point.
 
-I asked this question, because... 
+If you just want to go and look at it more closely, with git-1.5 you do
 
->>Also, do you have a huge blob in the repository?  I do not know
->>if it is related but the write_sha1_file_prepare() function on
->>the codepath to write loose objects out would trigger the same
->>bug...
->
-> I don't know what "huge" is, but the pack file seems to be the largest
-> and then one of the objects is listed at 28,604,986 bytes, but nothing
-> else is very large.
+	git checkout <SHA>
 
-... we had a problem that some SHA-1 implementation gave bogus
-results when we did this:
+which will just detatch your HEAD from any current branch, and just move 
+you there. But with an older git that doesn't like the detached state, 
+you'd could instead do
 
-	SHA_CTX ctx;
-	unsigned char sha1[20];
-      
-	SHA1_Init(&ctx);
-        /* hash len bytes starting from buf */
-	SHA1_Update(&ctx, buf, len);
-	SHA1_Final(sha1, &ctx);
+	git checkout -b nonlame-branch <SHA>
 
-and asked to hash a large buffer in one go.  One of the SHA1
-implementations we ship ourselves (I think it was handcrafted
-PPC one) used to have problems.  But I do not think 27MB is
-large enough to trigger such a library bug (the bug was integer
-wraparound of a bit counter, I think).
+which actually creates a new branch with the <SHA> as the beginning point, 
+and switches to it. That will work with any version (including 1.5, of 
+course).
 
-So it looks more and more like a bit decay as Linus suspected...
+You can then decide to re-do the branch without the lame commit. One 
+particularly simple thing to do (if it's just one lame commit, and you 
+don't want to *remove* it, but just fix it up a bit) is to literally check 
+out the tip of tree juat AT the lame commit, and then you can use
+
+	git commit --amend
+
+to actually change it.
+
+So depending on what your situation is, this sequence actually works:
+
+	#
+	# Create and check out a "fixes" branch that has the 
+	# known-broken commit as its head commit
+	#
+	git checkout -b fixes <BROKEN-COMMIT>
+
+	.. edit edit edit to fix the broken commit ..
+
+	#
+	# Then, just _replace_ the broken commit with the fixed state
+	# by doing a "git commit --amend"
+	#
+	git commit -a --amend
+
+	#
+	# ok, now the "fixed-branch" is in good shape, but we
+	# want to re-surrect our original 'master' branch WITH the 
+	# fix, and based on the fixed branch, so we rebase the
+	# master branch# _onto_ the fixed state in "fixes", with
+	# the broken commit (that we do _not_ want to include) as
+	# the base.
+	#
+	git rebase --onto fixes <BROKEN-COMMIT> master
+
+Somebody else should verify that "git rebase" thing. I still find the 
+syntax for that thing rather illogical for these kinds of things.  
+Possibly because I never do it myself.
+
+		Linus
