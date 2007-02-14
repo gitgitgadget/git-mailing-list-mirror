@@ -1,100 +1,67 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: mingw, windows, crlf/lf, and git
-Date: Wed, 14 Feb 2007 08:23:04 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702140813190.3604@woody.linux-foundation.org>
-References: <45CFA30C.6030202@verizon.net> <200702130932.51601.litvinov2004@gmail.com>
- <Pine.LNX.4.63.0702131105240.1300@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702130845330.8424@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702130919100.8424@woody.linux-foundation.org>
- <7v7iumx7hu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702131053110.8424@woody.linux-foundation.org>
- <7v8xf1uxme.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702132127330.3604@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702141208020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45D31C0E.2040206@verizon.net> <Pine.LNX.4.63.0702141653440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Newbie experience with push over ssh
+Date: Wed, 14 Feb 2007 10:25:05 -0600
+Message-ID: <17875.14305.910866.273778@lisa.zopyra.com>
+References: <vpq64a4bzp1.fsf@olympe.imag.fr>
+	<20070214142731.GA1478@moooo.ath.cx>
+	<45D33485.5020906@webdrake.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mdl123@verizon.net>,
-	Junio C Hamano <junkio@cox.net>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 14 17:23:19 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Joseph Wakeling <joseph.wakeling@webdrake.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 17:25:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHMud-0000zF-BX
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:23:19 +0100
+	id 1HHMwc-0001qW-To
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:25:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932359AbXBNQXQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 11:23:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932358AbXBNQXQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:23:16 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:34357 "EHLO smtp.osdl.org"
+	id S932363AbXBNQZT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 11:25:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932361AbXBNQZT
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:25:19 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61231 "EHLO zopyra.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932359AbXBNQXP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 11:23:15 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1EGN5hB007245
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Feb 2007 08:23:05 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1EGN4FE002351;
-	Wed, 14 Feb 2007 08:23:04 -0800
-In-Reply-To: <Pine.LNX.4.63.0702141653440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-0.413 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932363AbXBNQZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 11:25:17 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1EGPBP26774;
+	Wed, 14 Feb 2007 10:25:11 -0600
+In-Reply-To: <45D33485.5020906@webdrake.net>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39667>
+
+On Wednesday, February 14, 2007 at 16:10:45 (+0000) Joseph Wakeling writes:
+>Matthias Lederhofer wrote:
+>> I don't think there is any way to 'clone to remote'.  You'd have to
+>> ssh to the other machine and clone from there, or you can just create
+>> an empty repository on the remote host and push the stuff into it.
+>
+>I remember coming across the same issue as Matthieu and never got round
+>to solving it.  In my case the desire is to upload the code onto a
+>remote machine---in particular a cluster where I run simulations.  I
+>don't particularly need that remote code to be in a repo or otherwise,
+>since it's only there to be run, not edited.
+>
+>As far as I know I have no way of installing git on that machine.
+>Perhaps I could install it locally but I suspect the sysadmin would not
+>be supportive.
+>
+>So, is there a way of using git to upload my code to a machine without a
+>repo ready-prepared?
+
+If you must ...
+
+% cat ~/.gitconfig
+[alias]
+	scp !scp
+	rcp !rcp
+% git scp -rp . me@remotehost:/directory
 
 
-
-On Wed, 14 Feb 2007, Johannes Schindelin wrote:
-> 
-> This sounds regretfully complex. Somebody (you?) mentioned that cvsnt does 
-> a kick-ass job here. Does cvsnt need strategies? I don't think so. Neither 
-> do we. Someone who cares enough should just rip^H^H^Hlook at cvsnt's text 
-> detection.
-
-Well, one thing to keep in mind is that for source code in particular, 
-this really very seldom is an issue.
-
-So you can do a really *bad* job in theory, and in practice it really 
-works very very well.
-
-Very few people keep binary blobs in any SCM archive _anyway_, partly 
-because they've always been told that it's unsafe (and with a lot of SCM's 
-it is), but even more because binary blobs are almost always generated by 
-some build method, so normally you'd never version them in the first 
-place, or versioning isn't all that helpful.
-
-And most binary blobs are so *obviously* binary that even the stupidest 
-algorithm on earth will get it right. The only hard cases actually tend to 
-be really tiny files, or literally test-sequences.
-
-Tiny files are hard because:
-
- - they (by being tiny) have so few characters that they can easily lack 
-   a "fingerprint" character (eg a NUL character or similar). 
-
- - tiny files are a lot more likely than bigger files to have strange 
-   statistics that throw some more "sophisticated" rule off the scent. 
-   Something like a "10% rule" tends to work fine if you have a big text, 
-   and ten percent is still a reasonable number to average things out 
-   over, but what if you only had ten characters to begin with?
-
-The good news is that tiny files can usually be considered text, since 
-you'd seldom use a binary format for something really small anyway.
-
-So I suspect that IN PRACTICE, especially if you come as a CVS replacement 
-(where binary files are just damn hard to get right even under the best of 
-circumstances!), you can do just about anything, including just saying 
-"everything is text", and you'd be fine.
-
-It's entirely possible that that is exactly what CVSNT does ;)
-
-		Linus
+Bill
