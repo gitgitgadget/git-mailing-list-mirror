@@ -1,85 +1,142 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Newbie experience with push over ssh
-Date: Wed, 14 Feb 2007 15:07:06 +0100
-Message-ID: <vpq64a4bzp1.fsf@olympe.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: [PATCH] git-bundle - bundle objects and references for disconnected
+ transfer.
+Date: Wed, 14 Feb 2007 09:10:26 -0500
+Message-ID: <11714622292295-git-send-email-mdl123@verizon.net>
+References: <11714622292110-git-send-email-mdl123@verizon.net>
+Cc: Mark Levedahl <mdl123@verizon.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 14 15:07:33 2007
+X-From: git-owner@vger.kernel.org Wed Feb 14 15:10:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHKnE-0001K1-3Z
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 15:07:32 +0100
+	id 1HHKq6-0002c9-7x
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 15:10:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751371AbXBNOHY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 09:07:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751397AbXBNOHY
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 09:07:24 -0500
-Received: from imag.imag.fr ([129.88.30.1]:37881 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751371AbXBNOHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 09:07:23 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l1EE76j6026736
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 14 Feb 2007 15:07:07 +0100 (CET)
-Received: from olympe.imag.fr ([129.88.43.60])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HHKmo-00051C-BR
-	for git@vger.kernel.org; Wed, 14 Feb 2007 15:07:06 +0100
-Received: from moy by olympe.imag.fr with local (Exim 4.50)
-	id 1HHKmo-0000Zc-8w
-	for git@vger.kernel.org; Wed, 14 Feb 2007 15:07:06 +0100
-Mail-Followup-To: git@vger.kernel.org
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 14 Feb 2007 15:07:07 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S932308AbXBNOK1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 09:10:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751404AbXBNOK1
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 09:10:27 -0500
+Received: from vms040pub.verizon.net ([206.46.252.40]:10657 "EHLO
+	vms040pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751397AbXBNOK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 09:10:26 -0500
+Received: from fal-l07294-lp.us.ray.com ([71.246.235.75])
+ by vms040.mailsrvcs.net
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTPA id <0JDG001KKI1C1R20@vms040.mailsrvcs.net> for
+ git@vger.kernel.org; Wed, 14 Feb 2007 08:10:25 -0600 (CST)
+In-reply-to: <11714622292110-git-send-email-mdl123@verizon.net>
+X-Mailer: git-send-email 1.5.0.rc3.24.g0c5e
+X-Peer: 127.0.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39645>
 
-Hi,
+Some workflows require coordinated development between repositories on
+machines that can never be connected. This utility creates a bundle
+containing a pack of objects and associated references (heads or tags)
+that can be independently transferred to another machine, effectively
+supporting git-push like operations between disconnected systems.
 
-I'm playing a bit with git (still ~ total beginner).
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
+---
+ git-bundle |   85 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 85 insertions(+), 0 deletions(-)
+ create mode 100755 git-bundle
 
-I could create a local repository, commit in it, but then, I tried to
-push it to a remote machine, on which git is installed.
-
-I would have expected "push" to do this, but:
-
-$ git push ssh://machine.fr/tmp/foo 
-fatal: '/tmp/foo': unable to chdir or not a git archive
-fatal: The remote end hung up unexpectedly
-
-Then, I tried "clone":
-
-$ git clone . ssh://machine.fr/tmp/foo
-Initialized empty Git repository in /tmp/foo/ssh:/machine.fr/tmp/foo/.git/
-remote: Generating pack...
-remote: Done counting 3 objects.
-remote: Deltifying 3 objects.
- 100% (3/3) done/3) done
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Indexing 3 objects.
- 100% (3/3) done
-
-Gosh, "push" seems to know what a URL is, but not "clone", which
-considers the _file_ ssh:/machine.fr/tmp/foo ...
-
-Then only, I understood that I would have to log onto the remote
-machine, and mkdir + git init manually. At least, this should be
-mentionned in the git-push man page, but indeed, is there any reason
-why git-push could not just create the remote repository? And any
-reason why clone doesn't deal with URLs?
-
-Thanks,
-
+diff --git a/git-bundle b/git-bundle
+new file mode 100755
+index 0000000..1341885
+--- /dev/null
++++ b/git-bundle
+@@ -0,0 +1,85 @@
++#!/bin/sh
++# Create a bundle to carry from one git repo to another (e.g., "sneaker-net" based push)
++# git-bundle <git-rev-list args>
++# git-bundle --bare <git-rev-list args>
++# creates bundle.zip in current directory (can rename of course)
++#
++# The bundle includes all refs given (--all selects every ref in the repo).
++# and all of the commit objects needed subject to the list given.
++#
++# Objects to be packed are limited by specifying one or more of
++#   ^commit-ish    - indicated commits already at the target (can have more than one ^commit-ish)
++#   --since=xxx    - Assume target repo has all relevant commits earlier than xxx
++
++USAGE='git-bundle <options> <git-rev-list arguments>
++
++Creates a bundle of objects to be carried to a disconnected repository, bringing the target
++repository''s definition of one or more references up to date as selected by the
++<git-rev-list arguments>
++
++Options:
++    -h, --help        Print this help screen
++        --bare        Work in a bare repository
++    --output=f        Output to file f (default is bundle.zip)
++
++    examples
++        git-bundle master~10..master
++        git-bundle master next pu ^master~30 --output=mybundle.zip --bare'
++
++die() {
++	echo >&2 "$@"
++	exit 1
++}
++
++# pull out rev-list args vs program args, parse the latter
++gitrevargs=$(git-rev-parse --symbolic --revs-only $*) || exit 1
++myargs=$(git-rev-parse --no-revs $*) || exit 1
++
++bfile=bundle.zip
++for arg in $myargs ; do
++	case "$arg" in
++		--bare)
++			export GIT_DIR=.;;
++		-h|--h|--he|--hel|--help)
++			echo "$USAGE"
++			exit;;
++		--output=*)
++			bfile=${arg##--output=};;
++		-*)
++			die "unknown option: $arg";;
++		*)
++	esac
++done
++
++GIT_DIR=$(git-rev-parse --git-dir) || die "Not in a git directory"
++
++# find the refs to carry along and get sha1s for each.
++refs=
++for arg in $gitrevargs ; do
++	#ignore options and basis refs
++	case "$arg" in
++		^*) ;;
++		-*) ;;
++		*)
++			n=$(git-show-ref "$arg" | wc -l)
++			[ $n -eq 1 ] || die "ambiguous reference: $arg"
++			refs="$refs $arg"
++			;;
++	esac
++done
++[ -z "$refs" ] && die "No references specified, I don't know what to bundle."
++
++# put the refs into the bundle file
++[ -e "$bfile" ] && rm -f "$bfile" 2>/dev/null
++git-show-ref $refs > .gitBundleReferences
++zip -m "$bfile" .gitBundleReferences
++
++# add the pack file
++(git-rev-list --objects $gitrevargs | \
++	cut -b -40 | \
++	git pack-objects --all-progress --progress --stdout >.gitBundlePack) \
++	|| (rm -f "$bfile" ; exit)
++zip -m "$bfile" .gitBundlePack
++
++# done
++echo "Created $bfile"
 -- 
-Matthieu
+1.5.0.rc3.24.g0c5e
