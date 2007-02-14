@@ -1,69 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] config: read system-wide defaults from /etc/gitconfig
-Date: Wed, 14 Feb 2007 08:30:51 -0800
-Message-ID: <7vfy98snus.fsf@assigned-by-dhcp.cox.net>
-References: <200702140909.28369.andyparkins@gmail.com>
-	<slrnet5p5h.s9h.siprbaum@xp.machine.xx>
-	<Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Newbie experience with push over ssh
+Date: Wed, 14 Feb 2007 10:34:19 -0600
+Message-ID: <17875.14859.177000.558634@lisa.zopyra.com>
+References: <vpq64a4bzp1.fsf@olympe.imag.fr>
+	<20070214142731.GA1478@moooo.ath.cx>
+	<45D33485.5020906@webdrake.net>
+	<17875.14305.910866.273778@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>,
-	Andy Parkins <andyparkins@gmail.com>, junkio@cox.net,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 14 17:30:56 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: Joseph Wakeling <joseph.wakeling@webdrake.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 14 17:34:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHN20-0004Dd-8E
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:30:56 +0100
+	id 1HHN5o-0005uf-1E
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 17:34:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932367AbXBNQax convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 14 Feb 2007 11:30:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932370AbXBNQax
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:30:53 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:36399 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932367AbXBNQax convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Feb 2007 11:30:53 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070214163053.ERXL22948.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 14 Feb 2007 11:30:53 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id PUWr1W0101kojtg0000000; Wed, 14 Feb 2007 11:30:52 -0500
-In-Reply-To: <Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Wed, 14 Feb 2007 12:48:14 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932376AbXBNQeV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 11:34:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932375AbXBNQeV
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 11:34:21 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61272 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932365AbXBNQeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 11:34:19 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1EGYJ129258;
+	Wed, 14 Feb 2007 10:34:19 -0600
+In-Reply-To: <17875.14305.910866.273778@lisa.zopyra.com>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39672>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-
-> The settings in /etc/gitconfig can be overridden in ~/.gitconfig,
-> which in turn can be overridden in .git/config.
+On Wednesday, February 14, 2007 at 10:25:05 (-0600) Bill Lear writes:
+>...
+>If you must ...
 >
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> ---
-> ...
-> 	Voil=C3=A0.
+>% cat ~/.gitconfig
+>[alias]
+>	scp !scp
+>	rcp !rcp
+>% git scp -rp . me@remotehost:/directory
 
-I knew this can be done, and you are capable of doing this, but
-I was wondering if it is a good thing to do in the first place.
+Actually that was a bit tongue-in-cheek, syntactically incorrect (I
+believe missing '='), I'm not actually sure it will work, nor if the
+patch for this actually got in to 1.5.0.  The patch I saw does not
+appear to pass the rest of the command line to the system call, but
+perhaps I'm wrong and someone else can confirm.
 
-Site-wide configuration for options that are potentially
-compatibility-breaking is a bad idea on a multi-user machines,
-and it was certainly the case back when our machines hosted many
-diverse set of people.
+If the patch to do this is reasonable, I would expect the command:
 
-But these days many machines are practically single-user and
-many more are owned by a single group/project that share the
-same policy.  So in such a setting, /etc/gitconfig might not be
-too bad. =20
+% git scp -rp . me@remotehost:/directory
+
+to expand to:
+
+% scp -rp . me@remotehost:/directory
+
+and if not, I think it should, just as when I have:
+
+[alias]
+	pub = push /my/repo
+
+and:
+
+% git pub branch:branch
+
+expands to:
+
+% git push /my/repo branch:branch
+
+
+Bill
