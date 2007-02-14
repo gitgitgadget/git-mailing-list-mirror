@@ -1,56 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Scripts to use "bundles" for moving data between repositories
-Date: Wed, 14 Feb 2007 10:00:15 -0800
-Message-ID: <7vhctopqkw.fsf@assigned-by-dhcp.cox.net>
-References: <11714622292110-git-send-email-mdl123@verizon.net>
-	<7vlkj0r7f0.fsf@assigned-by-dhcp.cox.net>
-	<45D34D58.8050701@verizon.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] config: read system-wide defaults from /etc/gitconfig
+Date: Wed, 14 Feb 2007 19:02:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702141901250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200702140909.28369.andyparkins@gmail.com> <slrnet5p5h.s9h.siprbaum@xp.machine.xx>
+ <Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfy98snus.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702141843190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vlkj0pqp5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 19:01:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 14 19:02:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHORm-0001G4-61
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 19:01:38 +0100
+	id 1HHOSM-0001Uz-3m
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 19:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932411AbXBNSAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 13:00:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932412AbXBNSAS
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 13:00:18 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:57004 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932411AbXBNSAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 13:00:16 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070214180016.GVJW22948.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 14 Feb 2007 13:00:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id PW0F1W00N1kojtg0000000; Wed, 14 Feb 2007 13:00:15 -0500
-In-Reply-To: <45D34D58.8050701@verizon.net> (Mark Levedahl's message of "Wed,
-	14 Feb 2007 12:56:40 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932404AbXBNSCF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 13:02:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932410AbXBNSCF
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 13:02:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39303 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932404AbXBNSCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 13:02:03 -0500
+Received: (qmail invoked by alias); 14 Feb 2007 18:02:02 -0000
+X-Provags-ID: V01U2FsdGVkX19VDHkgwdJVlMzM/xChcbEi35AYsrB5sbBqP4gQ7l
+	UB9A==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vlkj0pqp5.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39711>
 
-Mark Levedahl <mdl123@verizon.net> writes:
+Hi,
 
-> That is any easy change. As the dominant content is an already
-> compressed pack file, is tar sufficient or should it be a gzip or bzip
-> tar?
+On Wed, 14 Feb 2007, Junio C Hamano wrote:
 
-Plain vanilla would do.  Have you noticed how well they deflate
-with your implementation that uses zip?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Well, I don't use it myself (other than testing that the patch does what 
+> > it says). Let the list decide?
+> 
+> I am slightly worried about stupid distros screwing people over
+> by shipping with a bad default config in /etc, which would make
+> diagnosing their problems harder without knowing what they have
+> there.  But other than that I do not have a problem with it.
 
-Also we _might_ want to uuencode (or base85) so that you can
-even e-mail a bundle easily.
+They can do that already by shipping with a bad default /etc/skel/ 
+directory.
 
-I am 75% kidding ;-).
+Ciao,
+Dscho
