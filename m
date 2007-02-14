@@ -1,63 +1,50 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-svn: re-map repository URLs and UUIDs on SVK mirror
- paths
-Date: Wed, 14 Feb 2007 18:18:21 +1300
-Message-ID: <45D29B9D.5010701@vilain.net>
-References: <20070210233750.A333013A384@magnus.utsl.gen.nz> <20070213222102.GA25092@localdomain>
+From: Timur Tabi <timur@freescale.com>
+Subject: Re: [PATCH] teach diff machinery about --ignore-space-at-eol
+Date: Tue, 13 Feb 2007 23:28:21 -0600
+Message-ID: <45D29DF5.8020809@freescale.com>
+References: <45D234C5.5090005@freescale.com> <7vhctpwvam.fsf@assigned-by-dhcp.cox.net> <45D23D68.6040004@freescale.com> <Pine.LNX.4.63.0702140125410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Feb 14 06:18:47 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 14 06:28:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHCXU-0005UQ-Jw
-	for gcvg-git@gmane.org; Wed, 14 Feb 2007 06:18:44 +0100
+	id 1HHCh4-0001mZ-Ky
+	for gcvg-git@gmane.org; Wed, 14 Feb 2007 06:28:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932305AbXBNFSl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 00:18:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932306AbXBNFSl
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 00:18:41 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:35113 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932305AbXBNFSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 00:18:41 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 72A1A13A384; Wed, 14 Feb 2007 18:18:39 +1300 (NZDT)
-Received: from [127.0.0.1] (longdrop.magnus.utsl.gen.nz [192.168.253.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id E138C13A303;
-	Wed, 14 Feb 2007 18:18:35 +1300 (NZDT)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
-In-Reply-To: <20070213222102.GA25092@localdomain>
-X-Enigmail-Version: 0.94.0.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S932307AbXBNF22 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 00:28:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932308AbXBNF22
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 00:28:28 -0500
+Received: from az33egw01.freescale.net ([192.88.158.102]:38223 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932307AbXBNF22 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 00:28:28 -0500
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id l1E5SMOe029850;
+	Tue, 13 Feb 2007 22:28:22 -0700 (MST)
+Received: from Artemis.local (mvp-10-214-73-4.am.freescale.net [10.214.73.4])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id l1E5SLTI029922;
+	Tue, 13 Feb 2007 23:28:22 -0600 (CST)
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X Mach-O; en-US; rv:1.8.1.2pre) Gecko/20070111 SeaMonkey/1.1
+In-Reply-To: <Pine.LNX.4.63.0702140125410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39617>
 
-Eric Wong wrote:
->> If an SVN revision has a property, "svm:headrev", it is likely that
->> the revision was created by SVN::Mirror (a part of SVK).  The property
->> contains a repository UUID and a revision.  We want to make it look
->> like we are mirroring the original URL, so introduce a helper function
->> that returns the original identity URL and UUID, and use it when
->> generating commit messages.
->>     
-> If somebody is using these options with git-svn and wants to dcommit,
-> they should only be committing to the svm:source repository and not to
-> the repository managed by SVN::Mirror, right?
+Johannes Schindelin wrote:
 
-Yes. Only SVM::Mirror should write to paths below where svm:source and
-svm:uuid are seen.
+> 	Strictly speaking, you made life difficult on git by asking your 
+> 	editor to edit text it should not edit.
 
-Sam.
+Given a choice between me and my computer, I think my computer should be 
+the one doing the hard work.
+
+> 	However, this was a nice late-night exercise.
+
+You are truly a most awesome dude.  Thank you.
