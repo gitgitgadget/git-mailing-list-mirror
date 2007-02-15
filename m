@@ -1,73 +1,152 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Error converting from 1.4.4.1 to 1.5.0?
-Date: Thu, 15 Feb 2007 01:41:40 +0100
-Organization: At home
-Message-ID: <er0a4k$n59$1@sea.gmane.org>
-References: <17875.13564.622087.63653@lisa.zopyra.com> <7vhctor78j.fsf@assigned-by-dhcp.cox.net> <17875.17647.74882.218627@lisa.zopyra.com> <7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net> <17875.30187.289679.417079@lisa.zopyra.com> <17875.30687.661794.512124@lisa.zopyra.com> <Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org> <17875.33204.413186.355557@lisa.zopyra.com> <7vzm7gl8cf.fsf@assigned-by-dhcp.cox.net> <7vvei4l84q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702142303250.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vire4l76a.fsf@assigned-by-dhcp.cox.net>
+From: SungHyun Nam <goweol@gmail.com>
+Subject: Re: GIT+CYGWIN annoying test failure
+Date: Thu, 15 Feb 2007 09:55:55 +0900
+Message-ID: <45D3AF9B.40205@gmail.com>
+References: <45B6C1FB.7060005@gmail.com> <Pine.LNX.4.63.0701241041190.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45BD4AA9.5090400@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 15 01:40:20 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GIT <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 15 01:56:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHUfb-00086W-DH
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 01:40:19 +0100
+	id 1HHUuy-0007Qv-1E
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 01:56:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429AbXBOAkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 19:40:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbXBOAkH
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 19:40:07 -0500
-Received: from main.gmane.org ([80.91.229.2]:43075 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751429AbXBOAkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 19:40:06 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HHUfH-0003aM-Kk
-	for git@vger.kernel.org; Thu, 15 Feb 2007 01:39:59 +0100
-Received: from host-81-190-26-5.torun.mm.pl ([81.190.26.5])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Feb 2007 01:39:59 +0100
-Received: from jnareb by host-81-190-26-5.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Feb 2007 01:39:59 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-81-190-26-5.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751445AbXBOA4E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 19:56:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbXBOA4E
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 19:56:04 -0500
+Received: from relaygw3.kornet.net ([61.74.75.198]:36954 "EHLO
+	relaygw3.kornet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751445AbXBOA4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 19:56:02 -0500
+Received: from [211.48.62.136] ([211.48.62.136]) 
+          by relaygw3.kornet.net ([61.74.75.198]) 
+          with ESMTP id 2007021509:55:56:633187.2046.24370096
+          Thu, 15 Feb 2007 09:55:56 +0900 (KST) 
+Received: from [61.83.195.103] ([61.83.195.103]) 
+          by relay8.kornet.net ([211.48.62.136]) 
+          with ESMTP id 2007021509:55:56:947553.27725.37919664
+          Thu, 15 Feb 2007 09:55:56 +0900 (KST) 
+User-Agent: Thunderbird 2.0b1 (Windows/20061223)
+In-Reply-To: <45BD4AA9.5090400@gmail.com>
+X-Enigmail-Version: 0.94.1.2
+OpenPGP: id=8509C67F
+X-TERRACE-SPAMMARK: NOT spam-marked.                              
+  (by Terrace)                                            
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39780>
 
-Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> On Wed, 14 Feb 2007, Junio C Hamano wrote:
->>
->>> By the way, I sometimes think it might be worth doing this:
->>> 
->>>     $ chmod a-r .git/
->>> 
->>> We always access files by explicit paths and never ask "ls .git/foo*" to 
->>> find what are under .git/ directory.
->>
->> If so, please make it unconfigurable. I use tab-completion in the git 
->> directory quite often.
+Hello,
+
+It seems the patch below work-around the problem.
+I tested this patch several times after knowing the problem.
+
+Thanks,
+namsh
+
+diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
+index d0af8c3..422922e 100755
+--- a/t/t1000-read-tree-m-3way.sh
++++ b/t/t1000-read-tree-m-3way.sh
+@@ -130,6 +130,7 @@ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+
+ check_result () {
++    [ -r current ] && rm -f current
+     git-ls-files --stage | sed -e 's/ '"$_x40"' / X /' >current &&
+     diff -u expected current
+ }
+
+
+SungHyun Nam wrote:
+> Hello,
 > 
-> Do you mean "configurable"?
+> Johannes Schindelin wrote:
+>> On Wed, 24 Jan 2007, SungHyun Nam wrote:
+>>
+>>> First of all, this problem always existed to me. I was lazy to report. 
+>>> Please check the failure logs and my GIT build script below. [...] the 
+>>> first test failed at 't1000-read-tree-m-3way.sh' always. And in this 
+>>> case, 2nd test always succeeded.
+>>>
+>>> * FAIL 57: 5 - must match in !O && A && B && A==B case.
+>>>         rm -f .git/index LL &&
+>>>              cp .orig-A/LL LL &&
+>>>              git-update-index --add LL &&
+>>>              echo extra >>LL &&
+>>>              git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
+>>> 997bbc4a0a51e0574168a4f637739380edebe4d7
+>>> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
+>>>              check_result
+>> It is not directly apparent what is causing this error. Could you please 
+>> change your script to use "-i -v" on the tests? I.e. instead of:
+>> 	
+>>> 	    if ! make test
+>> this:
+>>
+>> 	    if ! (cd t; GIT_TEST_OPTS="-i -v" make)
+>>
+>> It should give us a better idea what happened, since we also see the 
+>> error messages of the git commands.
+>>
+>> If it is still not apparent what went wrong, there is unfortunately no way 
+>> around doing that particular test case manually, as to find out what went 
+>> wrong. Since you seem to be the only one who can reproduce this bug, it 
+>> boils down to you having to do the leg work.
 > 
-> I wonder what you are doing inside .git directory in the first
-> place.  I never chdir() into it myself, but that may be because
-> I practicaly live inside Emacs.
-
-I look what interesting is in here (like COMMIT_EDITMSG, MERGE_HEAD,
-ORIG_HEAD, some StGIT templates,....).
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+> I'm not sure I can believe my system, Windows or CYGWIN.
+> It seems GIT has no problem.
+> 
+> Thanks,
+> 
+> 2007-01-25
+> =========================================================================
+> * expecting success: rm -fr [NDMALTS][NDMALTSF] Z &&
+>      rm .git/index &&
+>      git-read-tree 997bbc4a0a51e0574168a4f637739380edebe4d7 &&
+>      git-checkout-index -f -u -a &&
+>      git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
+> 997bbc4a0a51e0574168a4f637739380edebe4d7
+> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
+>      check_result
+> t1000-read-tree-m-3way.sh: line 133: current: Permission denied
+> * FAIL 46: 3-way merge with git-read-tree -m, match H
+>         rm -fr [NDMALTS][NDMALTSF] Z &&
+>              rm .git/index &&
+>              git-read-tree 997bbc4a0a51e0574168a4f637739380edebe4d7 &&
+>              git-checkout-index -f -u -a &&
+>              git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
+> 997bbc4a0a51e0574168a4f637739380edebe4d7
+> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
+>              check_result
+> make: *** [t1000-read-tree-m-3way.sh] Error 1
+> 
+> 
+> 2007-01-29
+> =========================================================================
+> * expecting success: rm -f .git/index LL &&
+>      cp .orig-A/LL LL &&
+>      git-update-index --add LL &&
+>      echo extra >>LL &&
+>      git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
+> 997bbc4a0a51e0574168a4f637739380edebe4d7
+> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
+>      check_result
+> t1000-read-tree-m-3way.sh: line 133: current: Permission denied
+> * FAIL 57: 5 - must match in !O && A && B && A==B case.
+>         rm -f .git/index LL &&
+>              cp .orig-A/LL LL &&
+>              git-update-index --add LL &&
+>              echo extra >>LL &&
+>              git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
+> 997bbc4a0a51e0574168a4f637739380edebe4d7
+> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
+>              check_result
+> make: *** [t1000-read-tree-m-3way.sh] Error 1
