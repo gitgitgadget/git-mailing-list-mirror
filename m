@@ -1,122 +1,77 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: Re: [PATCH] git-bundle - bundle objects and references for
- disconnected   transfer.
-Date: Wed, 14 Feb 2007 21:32:13 -0500
-Message-ID: <45D3C62D.6090609@verizon.net>
-References: <11714622292110-git-send-email-mdl123@verizon.net>
- <11714622292295-git-send-email-mdl123@verizon.net>
- <Pine.LNX.4.63.0702142238310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45D398F9.6070205@verizon.net>
- <Pine.LNX.4.63.0702150054210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-gui Error
+Date: Wed, 14 Feb 2007 21:40:14 -0500
+Message-ID: <20070215024014.GA29865@spearce.org>
+References: <20070213065616.GA4195@auto.tuwien.ac.at> <20070213074519.GA32687@spearce.org> <20070213215303.GA26716@auto.tuwien.ac.at> <20070214022200.GB30884@spearce.org> <20070214060041.GA31871@spearce.org> <20070214174635.GA21612@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 15 03:32:34 2007
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Thu Feb 15 03:40:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHWQD-0008CM-Nx
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 03:32:34 +0100
+	id 1HHWXo-0003KD-Te
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 03:40:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964860AbXBOCc3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 21:32:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964866AbXBOCc3
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 21:32:29 -0500
-Received: from vms042pub.verizon.net ([206.46.252.42]:52638 "EHLO
-	vms042pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964860AbXBOCc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 21:32:28 -0500
-Received: from [127.0.0.1] ([71.246.235.75])
- by vms042.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDH00KVYGDRI782@vms042.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 14 Feb 2007 20:32:16 -0600 (CST)
-In-reply-to: <Pine.LNX.4.63.0702150054210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Newsgroups: gmane.comp.version-control.git
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S964869AbXBOCkW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 21:40:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964871AbXBOCkW
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 21:40:22 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:57592 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964869AbXBOCkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 21:40:21 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HHWXX-0004fB-Sj; Wed, 14 Feb 2007 21:40:07 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B59DC20FBAE; Wed, 14 Feb 2007 21:40:14 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20070214174635.GA21612@auto.tuwien.ac.at>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39792>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 14 Feb 2007, Mark Levedahl wrote:
-> 
-> 
-> Ah, I just realized that you do not shift. This is wrong. For example,
-> 
-> 	git bundle --output=a1 a..b
-> 
-> would pass "--output=a1 a..b" to git-rev-parse. While you say 
-> "--revs-only", this would work, but so would "these are no refs". You lose 
-> valuable information that way (namely invalid parameters). The standard 
-> shell way is nicely visible in git-tag.sh (see the while loop). It is 
-> basically
-> 
-> while case "$#" in 0) break ;; esac
-> do
-> 	case "$1" in
-> 	--output)
-> 		# handle $1 (and check that you can write to it).
-> 		;;
-> 	-*)
-> 		usage
-> 		;;
-> 	*)
-> 		break
-> 	esac
-> done
+Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
+> I'm missing the possibility to base a new branch on a tag.
+> The following adds a tag drop down to the new branch dialog:
 
-And that loop would always abort on things meant for git-rev-list. I 
-want to avoid making git-bundle have to understand everything that is 
-legal to git-rev-list. The current construct does this: it lets 
-git-rev-parse remove what that function knows, aborting if something is 
-amiss (or aborting later in git-rev-list), leaving git-bundle's parser 
-to chew on the rest. I really don't see a way out of the dilemma: either 
-allow --output foo but don't barf on bad arguments, or only accept 
---output=foo and be able to trap errors, or teach git-bundle everything 
-that is valid for the other two.  (Let me write this in python, the 
-dilemma is gone).
+Yea, again, laziness on my part.  :-) You could enter the tag name
+in the SHA-1 expression field, but having it as a picklist may
+make sense.
+ 
+> --- git-gui.sh  2007-02-14 08:51:38.025781229 +0000
+> +++ git-gui     2007-02-14 10:50:13.618870598 +0000
+> @@ -1916,11 +1916,25 @@
+>         return [lsort -unique $all_trackings]
+>  }
 
->>>   
->> Originally, this was in python with zip file built in memory (no 
->> temporaries). Sticking to portable shell makes many easy things really 
->> hard.
-> 
-> Not if you just pipe the two parts (refs & pack) into the output. Piping 
-> also allows for "--output -" meaning stdout...
+Unfortunately this patch has severe whitespace damage.  All of the
+tabs were received here as spaces, so nothing applies.
 
-git-unbundle uses no temporary files: it pipes directly from tar (was 
-zip, but I've changed to tar per Junio's request).
+>  proc do_create_branch_action {w} {
+>         global all_heads null_sha1 repo_config
+>         global create_branch_checkout create_branch_revtype
+>         global create_branch_head create_branch_trackinghead
+>         global create_branch_name create_branch_revexp
+> +        global create_branch_tag
 
-The problem is creating the tar: I know of no way to create a tar file 
-with two separately addressable items, both created by piping in to 
-stdin. If there are not two streams, I don't know how to split the data 
-in sh without mangling the pack file due to sh variable substitution 
-rules. So, I think the temporary file solution is a reasonable compromise.
-> 
-> Not at all. I meant to verify that these _hashes_ exist as commits. Not 
-> necessarily refs.
+The indentation does not line up here.  All of the existing context
+lines were indented with just one tab, until the whitespace damage
+noted above.
 
-See my other note.
-
->
-> 
-> We have shallow clones. This means that you can mark commits as "fake 
-> root" commits, i.e. even if they have parents, they are treated as if they 
-> had no parents. You do this by adding the hashes of the shallow commits to 
-> ..git/shallow. For a short description, search for "shallow" in 
-> Documentation/glossary.txt.
-
-Thanks.
-
-> 
-> Ciao,
-> Dscho
-> 
-
-Mark
+-- 
+Shawn.
