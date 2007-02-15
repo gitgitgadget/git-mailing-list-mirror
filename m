@@ -1,152 +1,88 @@
-From: SungHyun Nam <goweol@gmail.com>
-Subject: Re: GIT+CYGWIN annoying test failure
-Date: Thu, 15 Feb 2007 09:55:55 +0900
-Message-ID: <45D3AF9B.40205@gmail.com>
-References: <45B6C1FB.7060005@gmail.com> <Pine.LNX.4.63.0701241041190.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45BD4AA9.5090400@gmail.com>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: OT: data destruction classics (was: Re: Error converting from 1.4.4.1
+ to 1.5.0?)
+Date: Thu, 15 Feb 2007 02:18:31 +0100
+Message-ID: <45D3B4E7.8050408@fs.ei.tum.de>
+References: <17875.13564.622087.63653@lisa.zopyra.com>	<7vhctor78j.fsf@assigned-by-dhcp.cox.net>	<17875.17647.74882.218627@lisa.zopyra.com>	<7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>	<17875.30187.289679.417079@lisa.zopyra.com>	<17875.30687.661794.512124@lisa.zopyra.com>	<Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org>	<17875.33204.413186.355557@lisa.zopyra.com>	<Pine.LNX.4.64.0702141722410.1757@xanadu.home> <17875.36879.872210.264473@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 15 01:56:13 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig5BCD47574B16778528929CF4"
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Thu Feb 15 02:18:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHUuy-0007Qv-1E
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 01:56:12 +0100
+	id 1HHVGn-0000nh-R6
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 02:18:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbXBOA4E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 19:56:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbXBOA4E
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 19:56:04 -0500
-Received: from relaygw3.kornet.net ([61.74.75.198]:36954 "EHLO
-	relaygw3.kornet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751445AbXBOA4C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 19:56:02 -0500
-Received: from [211.48.62.136] ([211.48.62.136]) 
-          by relaygw3.kornet.net ([61.74.75.198]) 
-          with ESMTP id 2007021509:55:56:633187.2046.24370096
-          Thu, 15 Feb 2007 09:55:56 +0900 (KST) 
-Received: from [61.83.195.103] ([61.83.195.103]) 
-          by relay8.kornet.net ([211.48.62.136]) 
-          with ESMTP id 2007021509:55:56:947553.27725.37919664
-          Thu, 15 Feb 2007 09:55:56 +0900 (KST) 
-User-Agent: Thunderbird 2.0b1 (Windows/20061223)
-In-Reply-To: <45BD4AA9.5090400@gmail.com>
-X-Enigmail-Version: 0.94.1.2
-OpenPGP: id=8509C67F
-X-TERRACE-SPAMMARK: NOT spam-marked.                              
-  (by Terrace)                                            
+	id S1751476AbXBOBSk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 20:18:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbXBOBSk
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 20:18:40 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:52308 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751476AbXBOBSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 20:18:39 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 04870281CB;
+	Thu, 15 Feb 2007 02:18:35 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 8eGe13IUKmZ1; Thu, 15 Feb 2007 02:18:34 +0100 (CET)
+Received: from [62.216.212.169] (ppp-62-216-212-169.dynamic.mnet-online.de [62.216.212.169])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 8AD06281C4;
+	Thu, 15 Feb 2007 02:18:34 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+In-Reply-To: <17875.36879.872210.264473@lisa.zopyra.com>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39781>
 
-Hello,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig5BCD47574B16778528929CF4
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-It seems the patch below work-around the problem.
-I tested this patch several times after knowing the problem.
+Bill Lear wrote:
+> I'm still muttering to myself that I could be that dumb...
 
-Thanks,
-namsh
+Still better than trying to backup with
 
-diff --git a/t/t1000-read-tree-m-3way.sh b/t/t1000-read-tree-m-3way.sh
-index d0af8c3..422922e 100755
---- a/t/t1000-read-tree-m-3way.sh
-+++ b/t/t1000-read-tree-m-3way.sh
-@@ -130,6 +130,7 @@ _x40='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
- _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
+tar czvf data* destfile.tar.gz
 
- check_result () {
-+    [ -r current ] && rm -f current
-     git-ls-files --stage | sed -e 's/ '"$_x40"' / X /' >current &&
-     diff -u expected current
- }
+automatic tape backup is a real helper then :)
+
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
 
-SungHyun Nam wrote:
-> Hello,
-> 
-> Johannes Schindelin wrote:
->> On Wed, 24 Jan 2007, SungHyun Nam wrote:
->>
->>> First of all, this problem always existed to me. I was lazy to report. 
->>> Please check the failure logs and my GIT build script below. [...] the 
->>> first test failed at 't1000-read-tree-m-3way.sh' always. And in this 
->>> case, 2nd test always succeeded.
->>>
->>> * FAIL 57: 5 - must match in !O && A && B && A==B case.
->>>         rm -f .git/index LL &&
->>>              cp .orig-A/LL LL &&
->>>              git-update-index --add LL &&
->>>              echo extra >>LL &&
->>>              git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
->>> 997bbc4a0a51e0574168a4f637739380edebe4d7
->>> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
->>>              check_result
->> It is not directly apparent what is causing this error. Could you please 
->> change your script to use "-i -v" on the tests? I.e. instead of:
->> 	
->>> 	    if ! make test
->> this:
->>
->> 	    if ! (cd t; GIT_TEST_OPTS="-i -v" make)
->>
->> It should give us a better idea what happened, since we also see the 
->> error messages of the git commands.
->>
->> If it is still not apparent what went wrong, there is unfortunately no way 
->> around doing that particular test case manually, as to find out what went 
->> wrong. Since you seem to be the only one who can reproduce this bug, it 
->> boils down to you having to do the leg work.
-> 
-> I'm not sure I can believe my system, Windows or CYGWIN.
-> It seems GIT has no problem.
-> 
-> Thanks,
-> 
-> 2007-01-25
-> =========================================================================
-> * expecting success: rm -fr [NDMALTS][NDMALTSF] Z &&
->      rm .git/index &&
->      git-read-tree 997bbc4a0a51e0574168a4f637739380edebe4d7 &&
->      git-checkout-index -f -u -a &&
->      git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
-> 997bbc4a0a51e0574168a4f637739380edebe4d7
-> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
->      check_result
-> t1000-read-tree-m-3way.sh: line 133: current: Permission denied
-> * FAIL 46: 3-way merge with git-read-tree -m, match H
->         rm -fr [NDMALTS][NDMALTSF] Z &&
->              rm .git/index &&
->              git-read-tree 997bbc4a0a51e0574168a4f637739380edebe4d7 &&
->              git-checkout-index -f -u -a &&
->              git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
-> 997bbc4a0a51e0574168a4f637739380edebe4d7
-> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
->              check_result
-> make: *** [t1000-read-tree-m-3way.sh] Error 1
-> 
-> 
-> 2007-01-29
-> =========================================================================
-> * expecting success: rm -f .git/index LL &&
->      cp .orig-A/LL LL &&
->      git-update-index --add LL &&
->      echo extra >>LL &&
->      git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
-> 997bbc4a0a51e0574168a4f637739380edebe4d7
-> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
->      check_result
-> t1000-read-tree-m-3way.sh: line 133: current: Permission denied
-> * FAIL 57: 5 - must match in !O && A && B && A==B case.
->         rm -f .git/index LL &&
->              cp .orig-A/LL LL &&
->              git-update-index --add LL &&
->              echo extra >>LL &&
->              git-read-tree -m 3fe085e0589de4327971d50e416fc292dd00fbfe
-> 997bbc4a0a51e0574168a4f637739380edebe4d7
-> 76d47d681d7f1d4fa975334a9a0ba8a6eeea2226 &&
->              check_result
-> make: *** [t1000-read-tree-m-3way.sh] Error 1
+--------------enig5BCD47574B16778528929CF4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFF07Tpr5S+dk6z85oRAsm6AKDjQLHWcOBLJVutcG8NX6JfUSD4DACguuzh
+eG4mZHoOnDUiSPBUsUikuPs=
+=bvJU
+-----END PGP SIGNATURE-----
+
+--------------enig5BCD47574B16778528929CF4--
