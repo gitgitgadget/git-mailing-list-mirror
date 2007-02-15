@@ -1,97 +1,57 @@
-From: Christian Schlotter <schlotter@users.sourceforge.net>
-Subject: [PATCH] git-clone: Sync documentation to usage note.
-Date: Thu, 15 Feb 2007 23:13:54 +0100
-Message-ID: <117157763494-git-send-email-schlotter@users.sourceforge.net>
-Cc: Christian Schlotter <schlotter@users.sourceforge.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 15 23:15:42 2007
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Dangers of working on a tracking branch
+Date: Thu, 15 Feb 2007 16:30:49 -0600
+Message-ID: <17876.57113.528430.800897@lisa.zopyra.com>
+References: <17876.51013.561979.431717@lisa.zopyra.com>
+	<Pine.LNX.4.64.0702151557410.1757@xanadu.home>
+	<17876.52962.662946.582507@lisa.zopyra.com>
+	<17876.53654.426022.454712@lisa.zopyra.com>
+	<20070215214352.GA2980@coredump.intra.peff.net>
+	<17876.54845.708466.669437@lisa.zopyra.com>
+	<20070215215816.GA3757@coredump.intra.peff.net>
+	<20070215220634.GA3833@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 15 23:31:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHot9-0007rR-9P
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 23:15:39 +0100
+	id 1HHp89-0007Az-83
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 23:31:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161487AbXBOWO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 17:14:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161488AbXBOWO4
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 17:14:56 -0500
-Received: from moutng.kundenserver.de ([212.227.126.171]:53448 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161487AbXBOWOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 17:14:54 -0500
-Received: from [84.175.163.191] (helo=acer)
-	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis),
-	id 0ML25U-1HHosN425I-0006Ld; Thu, 15 Feb 2007 23:14:53 +0100
-Received: by acer (sSMTP sendmail emulation); Thu, 15 Feb 2007 23:13:54 +0100
-X-Mailer: git-send-email 1.5.0
-X-Provags-ID: kundenserver.de abuse@kundenserver.de login:03851f2123155a0adb6932167c7dba9e
-X-Provags-ID2: V01U2FsdGVkX19Ms7nlrFsqeB/Sq+9H1ryBZgQbjlxNSGVRVPQGmRY7IorEVSb88oGb5bmME4XtRFeO3IrJsqMvUUeOj6t+PpbPNR42KZTNMobM67ZcE3D3sQ==
+	id S1161558AbXBOWav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 17:30:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161559AbXBOWav
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 17:30:51 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60623 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161558AbXBOWau (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 17:30:50 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1FMUnA18696;
+	Thu, 15 Feb 2007 16:30:49 -0600
+In-Reply-To: <20070215220634.GA3833@coredump.intra.peff.net>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39860>
 
-Documentation advertises the new `--depth <n>' parameter with an equal
-sign, while the usage notes (shown after `git-clone --help') do not.  If I
-understood git-clone's source code correctly, the version without the
-equal sign is correct, which is why this patch syncs documentation to the
-usage note.
+On Thursday, February 15, 2007 at 17:06:34 (-0500) Jeff King writes:
+>On Thu, Feb 15, 2007 at 04:58:16PM -0500, Jeff King wrote:
+>
+>> Fair enough. It should be pretty simple to implement; why don't you try
+>> working up a patch? :)
+>
+>Re-reading this, it sounds a little harsh. I meant less "screw you, if
+>you want it, make a patch" and more "I don't have time to work on this
+>now, but I would be happy to help guide you in making a patch."
 
-Please note that I was not able to test the new shallow clone feature, as
-both
-    git clone --depth=5 git://git2.kernel.org/pub/scm/git/git.git
-and
-    git clone --depth 5 git://git2.kernel.org/pub/scm/git/git.git
-do not seem to work.  The former correctly produces the usage note, while
-the latter prints
+Understood perfectly the first time, even with the smiley. :)
 
-    Initialized empty Git repository in /home/cs/tmp2/git/.git/
-    fatal: read error (Connection reset by peer)
-    fetch-pack from 'git://git2.kernel.org/pub/scm/git/git.git' failed.
 
-Is this a problem on my end?
-
-Signed-off-by: Christian Schlotter <schlotter@users.sourceforge.net>
----
- Documentation/RelNotes-1.5.0.txt |    2 +-
- Documentation/git-clone.txt      |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Documentation/RelNotes-1.5.0.txt b/Documentation/RelNotes-1.5.0.txt
-index 599efb8..daf4bdb 100644
---- a/Documentation/RelNotes-1.5.0.txt
-+++ b/Documentation/RelNotes-1.5.0.txt
-@@ -448,7 +448,7 @@ Updates in v1.5.0 since v1.4.4 series
-  - There is a partial support for 'shallow' repositories that
-    keeps only recent history.  A 'shallow clone' is created by
-    specifying how deep that truncated history should be
--   (e.g. "git clone --depth=5 git://some.where/repo.git").
-+   (e.g. "git clone --depth 5 git://some.where/repo.git").
- 
-    Currently a shallow repository has number of limitations:
- 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 707376f..6d32c49 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git-clone' [--template=<template_directory>] [-l [-s]] [-q] [-n] [--bare]
- 	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
--	  [--depth=<depth>] <repository> [<directory>]
-+	  [--depth <depth>] <repository> [<directory>]
- 
- DESCRIPTION
- -----------
-@@ -96,7 +96,7 @@ OPTIONS
- 	if unset the templates are taken from the installation
- 	defined default, typically `/usr/share/git-core/templates`.
- 
----depth=<depth>::
-+--depth <depth>::
- 	Create a 'shallow' clone with a history truncated to the
- 	specified number of revs.  A shallow repository has
- 	number of limitations (you cannot clone or fetch from
--- 
-1.5.0
+Bill
