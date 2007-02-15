@@ -1,65 +1,90 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: User-wide ignore list
-Date: Thu, 15 Feb 2007 11:12:04 +0000
-Message-ID: <200702151112.06729.andyparkins@gmail.com>
-References: <vpq4ppnvi1j.fsf@olympe.imag.fr>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] config: read system-wide defaults from /etc/gitconfig
+Date: Thu, 15 Feb 2007 03:25:34 -0800
+Message-ID: <7vvei3d5n5.fsf@assigned-by-dhcp.cox.net>
+References: <200702140909.28369.andyparkins@gmail.com>
+	<slrnet5p5h.s9h.siprbaum@xp.machine.xx>
+	<Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<45D35092.8040901@xs4all.nl> <7vr6sso8w8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702142015150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vfy98o78i.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702142049430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v1wkshtxg.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702151126300.448@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 15 12:12:20 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: hanwen@xs4all.nl,
+	Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 15 12:25:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHeXB-0001AU-32
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 12:12:17 +0100
+	id 1HHek9-00075z-GD
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 12:25:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965638AbXBOLMN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 06:12:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965640AbXBOLMN
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 06:12:13 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:9597 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965638AbXBOLMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 06:12:12 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so114395uga
-        for <git@vger.kernel.org>; Thu, 15 Feb 2007 03:12:11 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=BaWqB9IaG9dRwk5Tav+7CPiaycnq/6rHGlZ8JtbRLHoQqbn5KFQvhHlN92oVZIJ3BPyHsBS7h50YQFbc/xzlam79GlSDlOdgeQmntfFxYwqqJuDpOqEfPjgfLI667F+ON+vwAlZNe5BWkOmxQLvIflICCSzcAbObaRotVZxiIoo=
-Received: by 10.66.252.4 with SMTP id z4mr1534084ugh.1171537931013;
-        Thu, 15 Feb 2007 03:12:11 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id s1sm2011550uge.2007.02.15.03.12.08;
-        Thu, 15 Feb 2007 03:12:08 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <vpq4ppnvi1j.fsf@olympe.imag.fr>
-Content-Disposition: inline
+	id S965647AbXBOLZh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 06:25:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965890AbXBOLZh
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 06:25:37 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:56881 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965647AbXBOLZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 06:25:36 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070215112536.ZIJD21177.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 15 Feb 2007 06:25:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id PnRa1W00N1kojtg0000000; Thu, 15 Feb 2007 06:25:36 -0500
+In-Reply-To: <Pine.LNX.4.63.0702151126300.448@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Thu, 15 Feb 2007 11:43:56 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39818>
 
-On Thursday 2007 February 15 10:20, Matthieu Moy wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Is there a way to have a per-user ignore list in git?
+> Okay for GIT_LOCAL_CONFIG. I do not remember off-hand who wanted it 
+> (Jakub? Pasky?), but it was in the context of gitweb.
+>
+> However, GIT_CONFIG is meant to parse arbitrary config files.
+> ...
+> But this "core.*" stuff is insane. Please no.
 
-Yep; in repository-layout.txt it says:
+Ok, Eric's example and yours made it clear that GIT_CONFIG is an
+interface meant to reuse (or abuse) git-config to read some file
+that is not at all related to git, and should never be used by
+other plumbing.  As long as that is clear (could we have that in
+the documentation, by the way, please?), I have no problem with
+that.
 
-info/exclude::
-    This file, by convention among Porcelains, stores the
-    exclude pattern list. `.gitignore` is the per-directory
-    ignore file.  `git status`, `git add`, `git rm` and `git
-    clean` look at it but the core git commands do not look
-    at it.  See also: gitlink:git-ls-files[1] `--exclude-from`
-    and `--exclude-per-directory`.
+In fact, I am very happy that we do not have to do that insane
+"core.*" stuff, which I thought was needed purely because
+somebody was trying to use GIT_CONFIG to prevent plumbing and
+porcelain from reading core configuration variables that are per
+repository in nature.
 
+As I said in my other message, GIT_LOCAL_CONFIG is parallel to
+GIT_OBJECT_DIRECTORY and GIT_INDEX_FILE, and I am Ok with the
+way it is handled by the current code.
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+I mildly disagree with you on having an ability to disable
+/etc/gitconfig.  This is necessary in the real world (in the
+same sense as "adduser" can be told not to copy skeltons by
+creating an empty home directory beforehand), even if we do not
+consider the fact that it would help gaining repeatable results
+from our test scripts (remember, using GIT_CONFIG to make
+plumbing and porcelain read from there would set a bad example,
+even when it is pointing at .git/config).
+
+I've queued that insane "core.*" stuff in 'pu' and pushed out,
+but I'll drop that topic altogether.  But before doing that,
+it's past my bedtime ;-).
