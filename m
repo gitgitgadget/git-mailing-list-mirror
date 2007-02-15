@@ -1,50 +1,47 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Dissociating a repository from its alternates
-Date: Thu, 15 Feb 2007 16:39:44 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702151638130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net>
+From: Joseph Wakeling <joseph.wakeling@webdrake.net>
+Subject: Configuring gitk appearance
+Date: Thu, 15 Feb 2007 16:24:49 +0000
+Message-ID: <45D48951.2000207@webdrake.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 15 16:59:27 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 15 17:24:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHii5-00007C-D4
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 16:39:49 +0100
+	id 1HHjPk-0002Wk-GB
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 17:24:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965748AbXBOPjq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 10:39:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965918AbXBOPjq
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 10:39:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36842 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965748AbXBOPjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 10:39:46 -0500
-Received: (qmail invoked by alias); 15 Feb 2007 15:39:44 -0000
-X-Provags-ID: V01U2FsdGVkX18WD4cpn8UW95FHCbhKj8ddIbzisos5MUMbaMZN4q
-	S+Xw==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S966065AbXBOQYx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 11:24:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966066AbXBOQYx
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 11:24:53 -0500
+Received: from alf.nbi.dk ([130.225.212.55]:4863 "EHLO alf.nbi.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966065AbXBOQYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 11:24:52 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	by alf.nbi.dk (8.9.3/8.9.3) with ESMTP id RAA18476
+	for <git@vger.kernel.org>; Thu, 15 Feb 2007 17:24:49 +0100 (MET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39835>
 
-Hi,
+Is there any way to configure the appearance of gitk either during or
+after installation?  At present on my system (Ubuntu 6.10) the font used
+is almost illegible.  I'm guessing it is partly due to gitk using GTK+
+v1 instead of v2.
 
-On Wed, 14 Feb 2007, Junio C Hamano wrote:
+On a related note (which will reveal me as totally incompetent about
+Linux anything...), is it necessary to uninstall old versions of git
+before installing the new version?  If so ... how?  There is nothing in
+the INSTALL file about this.
 
-> People often start out with "clone -l -s" (or --reference) and
-> later wish to dissociate the repository from its alternates.
+Thanks,
 
-Why not make a really dumb script which just _copies_ (or maybe 
-optionally hard link) the objects from the alternate repo, and then kills 
-the alternatives file? That should be easier. You always can repack after 
-that.
-
-Ciao,
-Dscho
+    -- Joe
