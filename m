@@ -1,83 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] config: read system-wide defaults from /etc/gitconfig
-Date: Thu, 15 Feb 2007 13:05:13 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702151302540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200702140909.28369.andyparkins@gmail.com> <slrnet5p5h.s9h.siprbaum@xp.machine.xx>
- <Pine.LNX.4.63.0702141246160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45D35092.8040901@xs4all.nl> <7vr6sso8w8.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702142015150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vfy98o78i.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702142049430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v1wkshtxg.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702151126300.448@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vvei3d5n5.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: MinGW port updated to GIT 1.5.0
+Date: Thu, 15 Feb 2007 13:19:33 +0100
+Organization: eudaptics software gmbh
+Message-ID: <45D44FD5.72299A3A@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: hanwen@xs4all.nl,
-	Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 15 13:05:21 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 15 13:18:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHfMW-0007aV-TC
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 13:05:21 +0100
+	id 1HHfZQ-00053j-Um
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 13:18:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965706AbXBOMFR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 07:05:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965709AbXBOMFR
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 07:05:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57174 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965706AbXBOMFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 07:05:15 -0500
-Received: (qmail invoked by alias); 15 Feb 2007 12:05:14 -0000
-X-Provags-ID: V01U2FsdGVkX1/ZkdwwIdLZRVXMb7Ta0uysuNykc+Xe3rfaWSGp77
-	JzXQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vvei3d5n5.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S965912AbXBOMSF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 07:18:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965916AbXBOMSF
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 07:18:05 -0500
+Received: from main.gmane.org ([80.91.229.2]:40078 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965915AbXBOMSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 07:18:03 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HHfYd-0002tq-Eu
+	for git@vger.kernel.org; Thu, 15 Feb 2007 13:17:51 +0100
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Feb 2007 13:17:51 +0100
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Feb 2007 13:17:51 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39825>
 
-Hi,
+I've merged GIT 1.5.0 into the MinGW port. It is available at the usual
+location:
 
-On Thu, 15 Feb 2007, Junio C Hamano wrote:
+pull/clone: git://repo.or.cz/git/mingw.git
+gitweb:     http://repo.or.cz/w/git/mingw.git
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Okay for GIT_LOCAL_CONFIG. I do not remember off-hand who wanted it 
-> > (Jakub? Pasky?), but it was in the context of gitweb.
-> >
-> > However, GIT_CONFIG is meant to parse arbitrary config files.
-> > ...
-> > But this "core.*" stuff is insane. Please no.
-> 
-> Ok, Eric's example and yours made it clear that GIT_CONFIG is an
-> interface meant to reuse (or abuse) git-config to read some file
-> that is not at all related to git, and should never be used by
-> other plumbing.  As long as that is clear (could we have that in
-> the documentation, by the way, please?), I have no problem with
-> that.
+It contains an important fix (MinGW specific): Earlier versions could
+sometimes create temporary files read-only instead of read-writable.
 
-I am no particularly good with documentation, but the good people who 
-wanted this feature in the first place are.
 
-> I mildly disagree with you on having an ability to disable
-> /etc/gitconfig.
+WARNING!
 
-I'm okay either way. But I thought /etc/gitconfig was not so much like 
-/etc/skel/, but more like /etc/profile.
+The MinGW port does not support symbolic links, but the git.git itself
+now contains a symbolic link (RelNotes). For this reason, you cannot
+successfully pull this version's "master" branch to your Windows box and
+expect it to work. The "devel" branch has the symbolic link removed, so
+it can at least be checked out. For other operations you may enounter an
+error like this:
 
-> I've queued that insane "core.*" stuff in 'pu' and pushed out,
-> but I'll drop that topic altogether.  But before doing that,
-> it's past my bedtime ;-).
+bad tree object: 4571d0d1cfb5a4170dfc80e9654228acae295129
 
-Hey, take it easy, now that Git "snog" is out!
+I'm working on a solution. The general idea is to extend the meaning of
+`core.filemode = false` to check out symbolic links as plain files. Any
+hints about where the source code needs changes are welcome.
 
-Ciao,
-Dscho
+-- Hannes
