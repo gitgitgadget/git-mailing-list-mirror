@@ -1,74 +1,80 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: OT: data destruction classics (was: Re: Error converting from 1.4.4.1 to 1.5.0?)
-Date: Thu, 15 Feb 2007 09:13:52 +0000
-Message-ID: <200702150914.01361.andyparkins@gmail.com>
-References: <17875.13564.622087.63653@lisa.zopyra.com> <17875.36879.872210.264473@lisa.zopyra.com> <45D3B4E7.8050408@fs.ei.tum.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH +1] Dissociating a repository from its alternates
+Date: Thu, 15 Feb 2007 01:37:00 -0800
+Message-ID: <7vsld7g3sz.fsf@assigned-by-dhcp.cox.net>
+References: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>,
-	Bill Lear <rael@zopyra.com>
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 15 10:14:27 2007
+X-From: git-owner@vger.kernel.org Thu Feb 15 10:37:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHch9-0005Fs-0l
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 10:14:27 +0100
+	id 1HHd3C-0007cY-De
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 10:37:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965294AbXBOJOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 04:14:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965336AbXBOJOJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 04:14:09 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:41056 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965294AbXBOJOG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 04:14:06 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so85673uga
-        for <git@vger.kernel.org>; Thu, 15 Feb 2007 01:14:05 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=cOaqjKgBccZaLnPjzVagsnTwy6Xq+2qLmMxASlTt3dvvPkS1Emoo1NLFSPpFHT0lvHCrJP70T+2i9EKPXmHecjSJCqc3rb2K6EijuHhIlJlbtf9h7Zevpt2cGf2QUbpdMFdVR7ti9chu4DPvtzMGWifKeJEzKZ+qEP8uur6RJxk=
-Received: by 10.67.92.1 with SMTP id u1mr1444509ugl.1171530845390;
-        Thu, 15 Feb 2007 01:14:05 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id j33sm1871528ugc.2007.02.15.01.14.03;
-        Thu, 15 Feb 2007 01:14:03 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <45D3B4E7.8050408@fs.ei.tum.de>
-Content-Disposition: inline
+	id S932280AbXBOJhF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 04:37:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932313AbXBOJhF
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 04:37:05 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:33798 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932280AbXBOJhC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 04:37:02 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070215093701.GHON4586.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 15 Feb 2007 04:37:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Pld01W00U1kojtg0000000; Thu, 15 Feb 2007 04:37:01 -0500
+In-Reply-To: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 14 Feb 2007 23:51:13 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39803>
 
-On Thursday 2007 February 15 01:18, Simon 'corecode' Schubert wrote:
+On top of the previous patch.  This is needed to:
 
-> > I'm still muttering to myself that I could be that dumb...
+ - reject "repack -A -l", which does not make any sense; you
+   want to repack the objects you borrow from the alternates.
 
-How about this:
+ - make "repack -A" without "-a" to work.
 
-1) "I should like to clean up root's home directory"
-2) cd /root; ls -la .
-3) "Oh, there are a lot of config file in this directory that I don't need any
-   more"
-4) rm -rf .*
+These operations corrupted the repository with the previous
+patch alone.
 
-Now start crying softly to yourself, when you realise that ".." is covered 
-by ".*".  Now go to every computer you work on and put
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-  export GLOBIGNORE=".:.."
+ git-repack.sh |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-In your .bashrc.
-
-Boy, was my face red...
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+diff --git a/git-repack.sh b/git-repack.sh
+index 774286e..66b5039 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -25,6 +25,10 @@ do
+ 	esac
+ 	shift
+ done
++if test "$nuke_alternates,$local" = "t,--local"
++then
++	die "-A and -l are incompatible"
++fi
+ 
+ # Later we will default repack.UseDeltaBaseOffset to true
+ default_dbo=false
+@@ -45,7 +49,7 @@ case ",$all_into_one,$nuke_alternates," in
+ 	args='--unpacked --incremental'
+ 	;;
+ ,,t,)
+-	args='--incremental --ignore-alternate-pack'
++	args='--ignore-alternate-pack'
+ 	;;
+ ,t,*)
+ 	if [ -d "$PACKDIR" ]; then
