@@ -1,89 +1,97 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Dangers of working on a tracking branch
-Date: Thu, 15 Feb 2007 17:14:50 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702151651440.1757@xanadu.home>
-References: <17876.51013.561979.431717@lisa.zopyra.com>
- <Pine.LNX.4.64.0702151557410.1757@xanadu.home>
- <17876.52962.662946.582507@lisa.zopyra.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
+From: Christian Schlotter <schlotter@users.sourceforge.net>
+Subject: [PATCH] git-clone: Sync documentation to usage note.
+Date: Thu, 15 Feb 2007 23:13:54 +0100
+Message-ID: <117157763494-git-send-email-schlotter@users.sourceforge.net>
+Cc: Christian Schlotter <schlotter@users.sourceforge.net>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Feb 15 23:15:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHot8-0007rR-Oj
+	id 1HHot9-0007rR-9P
 	for gcvg-git@gmane.org; Thu, 15 Feb 2007 23:15:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161486AbXBOWOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 17:14:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161489AbXBOWOw
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 17:14:52 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:59867 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161486AbXBOWOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 17:14:51 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDI00L42Z4QM470@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 15 Feb 2007 17:14:51 -0500 (EST)
-In-reply-to: <17876.52962.662946.582507@lisa.zopyra.com>
-X-X-Sender: nico@xanadu.home
+	id S1161487AbXBOWO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 17:14:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161488AbXBOWO4
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 17:14:56 -0500
+Received: from moutng.kundenserver.de ([212.227.126.171]:53448 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161487AbXBOWOy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 17:14:54 -0500
+Received: from [84.175.163.191] (helo=acer)
+	by mrelayeu.kundenserver.de (node=mrelayeu5) with ESMTP (Nemesis),
+	id 0ML25U-1HHosN425I-0006Ld; Thu, 15 Feb 2007 23:14:53 +0100
+Received: by acer (sSMTP sendmail emulation); Thu, 15 Feb 2007 23:13:54 +0100
+X-Mailer: git-send-email 1.5.0
+X-Provags-ID: kundenserver.de abuse@kundenserver.de login:03851f2123155a0adb6932167c7dba9e
+X-Provags-ID2: V01U2FsdGVkX19Ms7nlrFsqeB/Sq+9H1ryBZgQbjlxNSGVRVPQGmRY7IorEVSb88oGb5bmME4XtRFeO3IrJsqMvUUeOj6t+PpbPNR42KZTNMobM67ZcE3D3sQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39859>
 
-On Thu, 15 Feb 2007, Bill Lear wrote:
+Documentation advertises the new `--depth <n>' parameter with an equal
+sign, while the usage notes (shown after `git-clone --help') do not.  If I
+understood git-clone's source code correctly, the version without the
+equal sign is correct, which is why this patch syncs documentation to the
+usage note.
 
-> On Thursday, February 15, 2007 at 16:00:23 (-0500) Nicolas Pitre writes:
-> >On Thu, 15 Feb 2007, Bill Lear wrote:
-> >
-> >> We are about to switch to git 1.5 from git 1.4.4.1.  I cannot remember
-> >> if someone posted about this, but what is the danger of working on a
-> >> tracking branch --- there are abundant cautions about doing this, but
-> >> I can't recall and can't find the reason this is bad.
-> >
-> >A tracking branch is supposed to be a local mirror of what is available 
-> >remotely.  If you commit local changes to it then you break that model.
-> 
-> Ok, so I break the model, what is the harm in that?  Can I no longer
-> pull from or push to the remote branch?  Do I corrupt something
-> locally?  Does something else break?  I'm trying to formulate an
-> explanation to our users why the 1.5 way is superior and I can't just
-> say "if you do that you break the model".
+Please note that I was not able to test the new shallow clone feature, as
+both
+    git clone --depth=5 git://git2.kernel.org/pub/scm/git/git.git
+and
+    git clone --depth 5 git://git2.kernel.org/pub/scm/git/git.git
+do not seem to work.  The former correctly produces the usage note, while
+the latter prints
 
-If you commit on top of a tracking branch, then you won't be ablt to 
-update that branch with remote changes because the tracking branch will 
-contain local changes that the remote doesn't have.  In other words, the 
-remote end won't be able to determine the set of changes you are 
-missing to send you only those missing changes.
+    Initialized empty Git repository in /home/cs/tmp2/git/.git/
+    fatal: read error (Connection reset by peer)
+    fetch-pack from 'git://git2.kernel.org/pub/scm/git/git.git' failed.
 
-At that point it is still possible to do the reverse, i.e. push your 
-local changes to the remote then both local and remote branches will be 
-in sync.  But that works only if the remote was not updated by someone 
-else.  If the remote was updated by someone else, then you fall into the 
-same situation as if you committed on top of a tracking branch and you 
-try to fetch, because it is then impossible for you to determine what 
-the remote is lacking since you won't find the remote changes in your 
-local repository.  You are then stuck in a dead lock.
+Is this a problem on my end?
 
-Now there is of course a way to force a push or a fetch even if the 
-above scenarios occur.  But if you force the push then the remote 
-changes that you don't have will be lost.  If you force a fetch then 
-your local changes that the remote doesn't have will be lost.
+Signed-off-by: Christian Schlotter <schlotter@users.sourceforge.net>
+---
+ Documentation/RelNotes-1.5.0.txt |    2 +-
+ Documentation/git-clone.txt      |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-This is why it is better to have a tracking branch that is modified only 
-by fetching remote changes only.  When you make a local copy of that 
-branch and commit changes to that work branch, then you can push those 
-changes to update the remote branch.  And if the remote branch has 
-changed then you have the possibility of updating the tracking branch 
-with the remote changes you don't have yet, merge them into your local 
-copy with your work, and reattempt the push.  But that works fine only 
-if the tracking branch is always a subset of what the remote has.
-
-
-Nicolas
+diff --git a/Documentation/RelNotes-1.5.0.txt b/Documentation/RelNotes-1.5.0.txt
+index 599efb8..daf4bdb 100644
+--- a/Documentation/RelNotes-1.5.0.txt
++++ b/Documentation/RelNotes-1.5.0.txt
+@@ -448,7 +448,7 @@ Updates in v1.5.0 since v1.4.4 series
+  - There is a partial support for 'shallow' repositories that
+    keeps only recent history.  A 'shallow clone' is created by
+    specifying how deep that truncated history should be
+-   (e.g. "git clone --depth=5 git://some.where/repo.git").
++   (e.g. "git clone --depth 5 git://some.where/repo.git").
+ 
+    Currently a shallow repository has number of limitations:
+ 
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 707376f..6d32c49 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git-clone' [--template=<template_directory>] [-l [-s]] [-q] [-n] [--bare]
+ 	  [-o <name>] [-u <upload-pack>] [--reference <repository>]
+-	  [--depth=<depth>] <repository> [<directory>]
++	  [--depth <depth>] <repository> [<directory>]
+ 
+ DESCRIPTION
+ -----------
+@@ -96,7 +96,7 @@ OPTIONS
+ 	if unset the templates are taken from the installation
+ 	defined default, typically `/usr/share/git-core/templates`.
+ 
+---depth=<depth>::
++--depth <depth>::
+ 	Create a 'shallow' clone with a history truncated to the
+ 	specified number of revs.  A shallow repository has
+ 	number of limitations (you cannot clone or fetch from
+-- 
+1.5.0
