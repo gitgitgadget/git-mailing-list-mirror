@@ -1,80 +1,81 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH +1] Dissociating a repository from its alternates
-Date: Thu, 15 Feb 2007 01:37:00 -0800
-Message-ID: <7vsld7g3sz.fsf@assigned-by-dhcp.cox.net>
-References: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] remotes.not-origin.tagopt
+Date: Thu, 15 Feb 2007 01:46:27 -0800
+Message-ID: <7vfy97g3d8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 15 10:37:15 2007
+X-From: git-owner@vger.kernel.org Thu Feb 15 10:46:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHd3C-0007cY-De
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 10:37:14 +0100
+	id 1HHdCC-0003je-8s
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 10:46:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932280AbXBOJhF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 04:37:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932313AbXBOJhF
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 04:37:05 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:33798 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932280AbXBOJhC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 04:37:02 -0500
+	id S932691AbXBOJq3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 04:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932692AbXBOJq3
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 04:46:29 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:62891 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932691AbXBOJq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 04:46:28 -0500
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao104.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070215093701.GHON4586.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 15 Feb 2007 04:37:01 -0500
+          id <20070215094628.YNTR22948.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 15 Feb 2007 04:46:28 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id Pld01W00U1kojtg0000000; Thu, 15 Feb 2007 04:37:01 -0500
-In-Reply-To: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 14 Feb 2007 23:51:13 -0800")
+	id PlmT1W00Q1kojtg0000000; Thu, 15 Feb 2007 04:46:28 -0500
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39804>
 
-On top of the previous patch.  This is needed to:
+With a configuration entry like this:
 
- - reject "repack -A -l", which does not make any sense; you
-   want to repack the objects you borrow from the alternates.
+	[remote "alt-git"]
+        	url = git://repo.or.cz/alt.git/git/
+                fetch = +refs/heads/*:refs/remotes/alt-git/*
+                tagopt = --no-tags
 
- - make "repack -A" without "-a" to work.
+you do not have to say "git pull --no-tags alt-git".  Just
+saying "git pull alt-git" would suffice.
 
-These operations corrupted the repository with the previous
-patch alone.
+Obviously, if you want to get the tag from such an alternate
+remote in a separate namespace, you could also do something like:
+
+	[remote "alt-git"]
+        	url = git://repo.or.cz/alt.git/git/
+                fetch = +refs/heads/*:refs/remotes/alt-git/*
+                fetch = +refs/tags/*:refs/remote-tags/alt-git/*
+                tagopt = --no-tags
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
+ git-fetch.sh |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
- git-repack.sh |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
-
-diff --git a/git-repack.sh b/git-repack.sh
-index 774286e..66b5039 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -25,6 +25,10 @@ do
- 	esac
- 	shift
- done
-+if test "$nuke_alternates,$local" = "t,--local"
-+then
-+	die "-A and -l are incompatible"
-+fi
+diff --git a/git-fetch.sh b/git-fetch.sh
+index ca984e7..d230995 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -243,6 +243,15 @@ then
+ 	orig_head=$(git-rev-parse --verify HEAD 2>/dev/null)
+ fi
  
- # Later we will default repack.UseDeltaBaseOffset to true
- default_dbo=false
-@@ -45,7 +49,7 @@ case ",$all_into_one,$nuke_alternates," in
- 	args='--unpacked --incremental'
- 	;;
- ,,t,)
--	args='--incremental --ignore-alternate-pack'
-+	args='--ignore-alternate-pack'
- 	;;
- ,t,*)
- 	if [ -d "$PACKDIR" ]; then
++# Allow --notags from remote.$1.tagopt
++case "$tags$no_tags" in
++'')
++	case "$(git-config --get "remote.$1.tagopt")" in
++	--no-tags)
++		no_tags=t ;;
++	esac
++esac
++
+ # If --tags (and later --heads or --all) is specified, then we are
+ # not talking about defaults stored in Pull: line of remotes or
+ # branches file, and just fetch those and refspecs explicitly given.
