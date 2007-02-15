@@ -1,88 +1,60 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: OT: data destruction classics (was: Re: Error converting from 1.4.4.1
- to 1.5.0?)
-Date: Thu, 15 Feb 2007 02:18:31 +0100
-Message-ID: <45D3B4E7.8050408@fs.ei.tum.de>
-References: <17875.13564.622087.63653@lisa.zopyra.com>	<7vhctor78j.fsf@assigned-by-dhcp.cox.net>	<17875.17647.74882.218627@lisa.zopyra.com>	<7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net>	<17875.30187.289679.417079@lisa.zopyra.com>	<17875.30687.661794.512124@lisa.zopyra.com>	<Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org>	<17875.33204.413186.355557@lisa.zopyra.com>	<Pine.LNX.4.64.0702141722410.1757@xanadu.home> <17875.36879.872210.264473@lisa.zopyra.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-pull and tag objects
+Date: Thu, 15 Feb 2007 02:21:36 +0100
+Organization: At home
+Message-ID: <er0cfg$1m7$1@sea.gmane.org>
+References: <1170933407.15431.38.camel@okra.transitives.com> <81b0412b0702090133qa4eb0c0v6a2d309fe9653a3f@mail.gmail.com> <7v4ppurka1.fsf@assigned-by-dhcp.cox.net> <20070210142322.GB25607@thunk.org> <Pine.LNX.4.64.0702100938540.8424@woody.linux-foundation.org> <7vy7n5gs0y.fsf@assigned-by-dhcp.cox.net> <20070212162745.GB2741@thunk.org> <7vr6su1szp.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702132230490.3604@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig5BCD47574B16778528929CF4"
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Feb 15 02:18:46 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 15 02:25:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHVGn-0000nh-R6
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 02:18:46 +0100
+	id 1HHVMy-0003U1-7d
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 02:25:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476AbXBOBSk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 20:18:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbXBOBSk
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 20:18:40 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:52308 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751476AbXBOBSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 20:18:39 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 04870281CB;
-	Thu, 15 Feb 2007 02:18:35 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 8eGe13IUKmZ1; Thu, 15 Feb 2007 02:18:34 +0100 (CET)
-Received: from [62.216.212.169] (ppp-62-216-212-169.dynamic.mnet-online.de [62.216.212.169])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 8AD06281C4;
-	Thu, 15 Feb 2007 02:18:34 +0100 (CET)
-User-Agent: Mail/News 1.5.0.4 (X11/20060619)
-In-Reply-To: <17875.36879.872210.264473@lisa.zopyra.com>
-X-Enigmail-Version: 0.94.0.0
+	id S1751478AbXBOBZE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 20:25:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750737AbXBOBZE
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 20:25:04 -0500
+Received: from main.gmane.org ([80.91.229.2]:51844 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751478AbXBOBZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 20:25:01 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HHVL7-0000n3-96
+	for git@vger.kernel.org; Thu, 15 Feb 2007 02:23:13 +0100
+Received: from host-81-190-26-5.torun.mm.pl ([81.190.26.5])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Feb 2007 02:23:13 +0100
+Received: from jnareb by host-81-190-26-5.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Feb 2007 02:23:13 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-5.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39782>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig5BCD47574B16778528929CF4
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Linus Torvalds wrote:
 
-Bill Lear wrote:
-> I'm still muttering to myself that I could be that dumb...
+> One thing that _might_ be a good idea for tags (if people _really_ want to 
+> actually update tags under the same name) is to have a "parent" pointer 
+> for tag objects, the same way we have for commits. That way you could - if 
+> you really wanted to - create a chain of tags, and show the history of 
+> them.
 
-Still better than trying to backup with
-
-tar czvf data* destfile.tar.gz
-
-automatic tape backup is a real helper then :)
-
-cheers
-  simon
-
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enig5BCD47574B16778528929CF4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFF07Tpr5S+dk6z85oRAsm6AKDjQLHWcOBLJVutcG8NX6JfUSD4DACguuzh
-eG4mZHoOnDUiSPBUsUikuPs=
-=bvJU
------END PGP SIGNATURE-----
-
---------------enig5BCD47574B16778528929CF4--
+Wouldn't it be better to just use reflog for given tag? That assuming of
+course that we could protect tag reflog from pruning...
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
