@@ -1,100 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: OT: data destruction classics (was: Re: Error converting from
- 1.4.4.1 to 1.5.0?)
-Date: Wed, 14 Feb 2007 18:51:09 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702141836510.20368@woody.linux-foundation.org>
-References: <7vhctor78j.fsf@assigned-by-dhcp.cox.net> <17875.17647.74882.218627@lisa.zopyra.com>
- <7vy7n0pr9x.fsf@assigned-by-dhcp.cox.net> <17875.30187.289679.417079@lisa.zopyra.com>
- <17875.30687.661794.512124@lisa.zopyra.com>
- <Pine.LNX.4.64.0702141314440.20368@woody.linux-foundation.org>
- <17875.33204.413186.355557@lisa.zopyra.com> <Pine.LNX.4.64.0702141722410.1757@xanadu.home>
- <17875.36879.872210.264473@lisa.zopyra.com> <45D3B4E7.8050408@fs.ei.tum.de>
- <20070215021345.GB29732@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-gui Error
+Date: Wed, 14 Feb 2007 23:07:25 -0500
+Message-ID: <20070215040725.GB29944@spearce.org>
+References: <20070213065616.GA4195@auto.tuwien.ac.at> <20070213074519.GA32687@spearce.org> <20070213215303.GA26716@auto.tuwien.ac.at> <20070214022200.GB30884@spearce.org> <20070214180906.GB21612@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>,
-	Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Feb 15 03:54:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Thu Feb 15 05:07:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHWlg-0001M3-FQ
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 03:54:44 +0100
+	id 1HHXuA-0007kX-RU
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 05:07:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964883AbXBOCy2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Feb 2007 21:54:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964882AbXBOCy2
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 21:54:28 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:59581 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964880AbXBOCy1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Feb 2007 21:54:27 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1F2pAhB026202
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 14 Feb 2007 18:51:11 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1F2p9pw018019;
-	Wed, 14 Feb 2007 18:51:09 -0800
-In-Reply-To: <20070215021345.GB29732@spearce.org>
-X-Spam-Status: No, hits=-0.411 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S964887AbXBOEHa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Feb 2007 23:07:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932616AbXBOEHa
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Feb 2007 23:07:30 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:59761 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932151AbXBOEH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Feb 2007 23:07:29 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HHXtr-00018p-Gg; Wed, 14 Feb 2007 23:07:15 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0143720FBAE; Wed, 14 Feb 2007 23:07:25 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <20070214180906.GB21612@auto.tuwien.ac.at>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39795>
 
-
-
-On Wed, 14 Feb 2007, Shawn O. Pearce wrote:
-
-> Simon 'corecode' Schubert <corecode@fs.ei.tum.de> wrote:
-> > Bill Lear wrote:
-> > >I'm still muttering to myself that I could be that dumb...
-> > 
-> > Still better than trying to backup with
-> > 
-> > tar czvf data* destfile.tar.gz
-> > 
-> > automatic tape backup is a real helper then :)
+Martin Koegler <mkoegler@auto.tuwien.ac.at> wrote:
+> 1) SSH_ASKPASS (see ssh(1))
+>     If ssh needs a passphrase, it will read the passphrase from the
+>     current terminal if it was run from a terminal.  If ssh does not
+>     have a terminal associated with it but DISPLAY and SSH_ASKPASS
+>     are set, it will execute the program specified by SSH_ASKPASS
+>     and open an X11 window to read the passphrase.  This is particu-
+>     larly useful when calling ssh from a .Xsession or related
+>     script.  (Note that on some machines it may be necessary to
+>     redirect the input from /dev/null to make this work.)
 > 
-> or manual backup to "tape", where the tape device supplied was
-> the only disk...  SunOS 4 did not take too kindly to its kernel,
-> swap space, root fs being overwritten...
+> This require, that a password helper is installed. One implementation
+> is part of every linux distribution (openssh-askpass-gnome).
 
-Hey, I can beat that (stop me at any time you've heard this story. No? Ok, 
-then..)
+I had written a Tk based SSH_ASKPASS helper not to long ago,
+and hoped it would work here.  It doesn't work on Cygwin for
+anything except ssh-agent.  I'm not sure why.  I haven't tested
+other platforms.
+ 
+> 2) Simulate user (like http://websvn.kde.org/tags/KDE/3.4.3/kdebase/kioslave/fish/fish.cpp?rev=467549&view=auto)
 
-I auto-dialed my harddisk. 
+Yea, that's a difficult one, and very error prone...
 
-I had this auto-dialer, that would send "+++" + "atz" + "atdt..." to dial 
-the number to the university dial-in farm that was always busy for hours 
-at a time, and since I've never been much of a user interface person ("No 
-really? Linus, please tell more! I would never have guessed!"), it was 
-basically
-
-	autodial /dev/ttyS1
-
-or something very similar. It was really stupid too, so if it got some 
-other answer than "BUSY" or "CONNECTED" back (or timed out), it would just 
-go on to the next number and try again.
-
-Anyway, the smarter among you will already see how I by mistake filled up 
-one of my harddisk partitions with Hayes "AT" modem commands, and deleted 
-my Minix installation. AND THE BASTARD NEVER ANSWERED!
-
-That was one big (perhaps _the_) impetus for just deciding to make Linux 
-good enough that I wouldn't need to actually reinstall Minix. Happily, it 
-was already able to bootstrap itself at that point, it just wasn't quite 
-as good yet. I fixed that in short order, and indeed, I never did end up 
-feeding the 17 floppy disks into my computer to reinstall Minix.
-
-Moral of the story: "Stupidity is what makes the world go round."
-
-Or something like that.
-
-			Linus
+-- 
+Shawn.
