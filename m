@@ -1,80 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: MinGW port updated to GIT 1.5.0
-Date: Thu, 15 Feb 2007 10:59:20 -0800
-Message-ID: <7v7iujckmv.fsf@assigned-by-dhcp.cox.net>
-References: <45D44FD5.72299A3A@eudaptics.com>
-	<7vire3co5s.fsf@assigned-by-dhcp.cox.net>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: qgit4 segfault
+Date: Fri, 16 Feb 2007 00:38:32 +0530
+Message-ID: <cc723f590702151108u1bb8e9e8se72e9f216a23d2f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Thu Feb 15 19:59:30 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 15 20:09:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHlpI-0001Sd-RQ
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 19:59:29 +0100
+	id 1HHlyX-0005lR-I2
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 20:09:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030623AbXBOS7X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 13:59:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030619AbXBOS7X
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 13:59:23 -0500
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:62653 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030623AbXBOS7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 13:59:22 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070215185921.GGUV21668.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 15 Feb 2007 13:59:21 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id PuzL1W00g1kojtg0000000; Thu, 15 Feb 2007 13:59:21 -0500
-In-Reply-To: <7vire3co5s.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 15 Feb 2007 09:43:11 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030680AbXBOTIf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 14:08:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030679AbXBOTIf
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 14:08:35 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:60085 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030680AbXBOTIe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 14:08:34 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1245809nfa
+        for <git@vger.kernel.org>; Thu, 15 Feb 2007 11:08:32 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=msiI3TFZ/l2r9pWxN/YbLy4CXreRObl5tnBp6FyAxBpaBtYVFyBztUagMp4HDYK3w2HzW1uW2ijuV9PB5hWxpMxYwocaeu/bPoghz38taytKK7b4H9DWu/mxY8Fbf42RZCjXQsu8Qcqqe4xgjQwc2cyrSrQC7aMNiKafKpwQqVc=
+Received: by 10.49.90.4 with SMTP id s4mr1639166nfl.1171566512238;
+        Thu, 15 Feb 2007 11:08:32 -0800 (PST)
+Received: by 10.48.210.15 with HTTP; Thu, 15 Feb 2007 11:08:32 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39842>
 
-Junio C Hamano <junkio@cox.net> writes:
+on a linux-2.6 repo it fails during exit
 
-> Johannes Sixt <J.Sixt@eudaptics.com> writes:
->
->> .... The general idea is to extend the meaning of
->> `core.filemode = false` to check out symbolic links as plain files. Any
->> hints about where the source code needs changes are welcome.
-
-I might have misread the above but I do not think linking
-core.filemode and the symlink munging is the right way.  Another
-per-repository core.symlink = yes/no (which defaults to yes for
-others and no on filesystems without symlinks) would be more
-appropriate, as it allows Cygwin to continue using symlinks
-where it can, and UNIX folks to try it out.
-
-I take by "checking out as plain files" you mean instead of
-calling symlink(2) you would write(2) it out.
-
-I think that would be Ok from git's side.  Just like we use
-executable bit from the index to "fix" what we read from the
-filesystem (e.g. look for trust_executable_bit in diff-lib.c)
-when core.filemode is set, you would munge st.st_mode and
-pretend as if your lstat() said "RelNotes", which should be a
-symlink but you checked out as a regular file, said it is a
-symlink, using what is in the index.
-
-However, I am not so sure if we can do better to help Windows
-people.  They have what they call "ShortCut", which to me feels
-like what they use for what symlinks are used for.  I do not
-know if it is possible (I do not even know doing so would make
-life easier for Windows people) but perhaps a symlink can be
-"checked out" as a ShortCut?
-
-I suspect reading side would become too complex and slow if the
-shortcut needs to be named differently from the real name
-(e.g. "RelNotes" needs to be checked out as "RelNotes.lnk" or
-something silly like that), so if that is the case, please
-forget about this useless suggestion.
+Done.
+QProcess: Destroyed while process is still running.
+Segmentation fault (core dumped)
+Program terminated with signal 11, Segmentation fault.
+#0  0xb764db4f in QTabWidget::indexOf () from /usr/lib/libQtGui.so.4
+(gdb) where
+#0  0xb764db4f in QTabWidget::indexOf () from /usr/lib/libQtGui.so.4
+#1  0x080ce7c5 in ~RevsView (this=0x81bb070) at
+/usr/include/qt4/QtGui/qtabwidget.h:171
+#2  0xb6fa1e61 in QObjectPrivate::deleteChildren () from /usr/lib/libQtCore.so.4
+#3  0xb736add5 in QWidget::~QWidget () from /usr/lib/libQtGui.so.4
+#4  0xb760fe41 in QMainWindow::~QMainWindow () from /usr/lib/libQtGui.so.4
+#5  0x080de0a4 in ~MainImpl (this=0x813a498) at ../build/../src/mainimpl.h:34
+#6  0xb6fa460b in QObject::event () from /usr/lib/libQtCore.so.4
+#7  0xb7371d77 in QWidget::event () from /usr/lib/libQtGui.so.4
+#8  0x080b0a7c in MainImpl::event (this=0x813a498, e=0xb30df08) at
+mainimpl.cpp:653
+#9  0xb7329590 in QApplicationPrivate::notify_helper () from
+/usr/lib/libQtGui.so.4
+#10 0xb732bc66 in QApplication::notify () from /usr/lib/libQtGui.so.4
+#11 0xb6f954a4 in QCoreApplication::sendPostedEvents () from
+/usr/lib/libQtCore.so.4
+#12 0xb6fb7790 in QEventDispatcherGlib::processEvents () from
+/usr/lib/libQtCore.so.4
+#13 0xb6e0b802 in g_main_context_dispatch () from /usr/lib/libglib-2.0.so.0
+#14 0xb6e0e7df in g_main_context_check () from /usr/lib/libglib-2.0.so.0
+#15 0xb6e0ed45 in g_main_context_iteration () from /usr/lib/libglib-2.0.so.0
+#16 0xb6fb76ae in QEventDispatcherGlib::processEvents () from
+/usr/lib/libQtCore.so.4
+#17 0xb73a7935 in QX11Info::copyX11Data () from /usr/lib/libQtGui.so.4
+#18 0xb6f932f1 in QEventLoop::processEvents () from /usr/lib/libQtCore.so.4
+#19 0xb6f933fa in QEventLoop::exec () from /usr/lib/libQtCore.so.4
+#20 0xb6f957f8 in QCoreApplication::exec () from /usr/lib/libQtCore.so.4
+#21 0xb7329007 in QApplication::exec () from /usr/lib/libQtGui.so.4
+#22 0x080c8fb4 in main (argc=0xb78dd7a8, argv=0x814f150) at qgit.cpp:22
