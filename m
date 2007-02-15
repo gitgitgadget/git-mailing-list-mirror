@@ -1,47 +1,68 @@
-From: Joseph Wakeling <joseph.wakeling@webdrake.net>
-Subject: Configuring gitk appearance
-Date: Thu, 15 Feb 2007 16:24:49 +0000
-Message-ID: <45D48951.2000207@webdrake.net>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: GIT 1.5.0 binary installer available.
+Date: Thu, 15 Feb 2007 17:53:09 +0100
+Message-ID: <45D48FF5.2060800@xs4all.nl>
+References: <45D44FD5.72299A3A@eudaptics.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 15 17:24:56 2007
+X-From: git-owner@vger.kernel.org Thu Feb 15 17:54:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHjPk-0002Wk-GB
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 17:24:56 +0100
+	id 1HHjrW-0006Kq-F8
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 17:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966065AbXBOQYx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 11:24:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966066AbXBOQYx
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 11:24:53 -0500
-Received: from alf.nbi.dk ([130.225.212.55]:4863 "EHLO alf.nbi.dk"
+	id S966130AbXBOQxf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 11:53:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966131AbXBOQxe
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 11:53:34 -0500
+Received: from main.gmane.org ([80.91.229.2]:54398 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966065AbXBOQYw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 11:24:52 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by alf.nbi.dk (8.9.3/8.9.3) with ESMTP id RAA18476
-	for <git@vger.kernel.org>; Thu, 15 Feb 2007 17:24:49 +0100 (MET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
-X-Enigmail-Version: 0.94.0.0
+	id S966130AbXBOQxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 11:53:34 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HHjrG-0000ny-3F
+	for git@vger.kernel.org; Thu, 15 Feb 2007 17:53:22 +0100
+Received: from peder.xs4all.nl ([82.93.198.126])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Feb 2007 17:53:22 +0100
+Received: from hanwen by peder.xs4all.nl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Feb 2007 17:53:22 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: peder.xs4all.nl
+User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
+In-Reply-To: <45D44FD5.72299A3A@eudaptics.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39836>
 
-Is there any way to configure the appearance of gitk either during or
-after installation?  At present on my system (Ubuntu 6.10) the font used
-is almost illegible.  I'm guessing it is partly due to gitk using GTK+
-v1 instead of v2.
+Johannes Sixt escreveu:
+> I've merged GIT 1.5.0 into the MinGW port. It is available at the usual
+> location:
+> 
+> pull/clone: git://repo.or.cz/git/mingw.git
+> gitweb:     http://repo.or.cz/w/git/mingw.git
+> 
+> It contains an important fix (MinGW specific): Earlier versions could
+> sometimes create temporary files read-only instead of read-writable.
 
-On a related note (which will reveal me as totally incompetent about
-Linux anything...), is it necessary to uninstall old versions of git
-before installing the new version?  If so ... how?  There is nothing in
-the INSTALL file about this.
+I've uploaded a binary installer to
 
-Thanks,
+http://lilypond.org/git/binaries/mingw/
 
-    -- Joe
+(untested, and will need magic to get the bash scripts 
+working)
+
+
+
+
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
