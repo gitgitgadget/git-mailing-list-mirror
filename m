@@ -1,68 +1,53 @@
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: GIT 1.5.0 binary installer available.
-Date: Thu, 15 Feb 2007 17:53:09 +0100
-Message-ID: <45D48FF5.2060800@xs4all.nl>
-References: <45D44FD5.72299A3A@eudaptics.com>
-Reply-To: hanwen@xs4all.nl
+From: tab@snarc.org (Vincent Hanquez)
+Subject: Re: Configuring gitk appearance
+Date: Thu, 15 Feb 2007 17:26:46 +0100
+Message-ID: <20070215162646.GA25337@snarc.org>
+References: <45D48951.2000207@webdrake.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 15 17:54:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Joseph Wakeling <joseph.wakeling@webdrake.net>
+X-From: git-owner@vger.kernel.org Thu Feb 15 18:02:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHjrW-0006Kq-F8
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 17:53:38 +0100
+	id 1HHk08-0001pN-9f
+	for gcvg-git@gmane.org; Thu, 15 Feb 2007 18:02:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966130AbXBOQxf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 11:53:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966131AbXBOQxe
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 11:53:34 -0500
-Received: from main.gmane.org ([80.91.229.2]:54398 "EHLO ciao.gmane.org"
+	id S1030217AbXBORBK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 12:01:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030238AbXBORBJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 12:01:09 -0500
+Received: from hades.snarc.org ([212.85.152.11]:1609 "EHLO hades.snarc.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966130AbXBOQxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 11:53:34 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HHjrG-0000ny-3F
-	for git@vger.kernel.org; Thu, 15 Feb 2007 17:53:22 +0100
-Received: from peder.xs4all.nl ([82.93.198.126])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Feb 2007 17:53:22 +0100
-Received: from hanwen by peder.xs4all.nl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Feb 2007 17:53:22 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: peder.xs4all.nl
-User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
-In-Reply-To: <45D44FD5.72299A3A@eudaptics.com>
+	id S1030237AbXBORBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 12:01:07 -0500
+X-Greylist: delayed 1830 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Feb 2007 12:01:07 EST
+Received: by hades.snarc.org (Postfix, from userid 1000)
+	id 040461B481; Thu, 15 Feb 2007 17:26:46 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <45D48951.2000207@webdrake.net>
+X-Warning: Email may contain unsmilyfied humor and/or satire.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39837>
 
-Johannes Sixt escreveu:
-> I've merged GIT 1.5.0 into the MinGW port. It is available at the usual
-> location:
-> 
-> pull/clone: git://repo.or.cz/git/mingw.git
-> gitweb:     http://repo.or.cz/w/git/mingw.git
-> 
-> It contains an important fix (MinGW specific): Earlier versions could
-> sometimes create temporary files read-only instead of read-writable.
+On Thu, Feb 15, 2007 at 04:24:49PM +0000, Joseph Wakeling wrote:
+> Is there any way to configure the appearance of gitk either during or
+> after installation?  At present on my system (Ubuntu 6.10) the font used
+> is almost illegible.  I'm guessing it is partly due to gitk using GTK+
+> v1 instead of v2.
 
-I've uploaded a binary installer to
+gitk is not using GTK v1 but TCL/TK.
 
-http://lilypond.org/git/binaries/mingw/
+see your ~/.gitk and just change those option (9 to 13 or 15 will do):
 
-(untested, and will need magic to get the bash scripts 
-working)
-
-
-
+set mainfont {Helvetica 9}
+set textfont {Courier 9}
+set uifont {Helvetica 9 bold}
 
 -- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Vincent Hanquez
