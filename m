@@ -1,108 +1,92 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: GIT 1.5.0 binary installer available.
-Date: Fri, 16 Feb 2007 20:10:16 +0100
-Message-ID: <e5bfff550702161110x3507da82v1820bca9d4e37bc1@mail.gmail.com>
-References: <45D44FD5.72299A3A@eudaptics.com> <45D48FF5.2060800@xs4all.nl>
-	 <Pine.LNX.4.63.0702151954480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20070215201249.GA27526@spearce.org>
-	 <Pine.LNX.4.63.0702160517390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <20070216050615.GC28894@spearce.org>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] pager: use an environment variable for pager_in_use
+Date: Fri, 16 Feb 2007 20:43:30 +0100
+Message-ID: <45D60962.6010605@fs.ei.tum.de>
+References: <20070216151925.GA28974@moooo.ath.cx> <20070216155658.GB7183@coredump.intra.peff.net> <20070216182231.GA31676@moooo.ath.cx> <Pine.LNX.4.63.0702161934230.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070216185653.GA10308@moooo.ath.cx> <Pine.LNX.4.63.0702162004590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Han-Wen Nienhuys" <hanwen@xs4all.nl>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Feb 16 20:10:52 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigB6717578C866BFDF1CB0AA38"
+Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 16 20:43:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HI8Tf-0000Ss-TB
-	for gcvg-git@gmane.org; Fri, 16 Feb 2007 20:10:40 +0100
+	id 1HI8zf-0000mY-2L
+	for gcvg-git@gmane.org; Fri, 16 Feb 2007 20:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946229AbXBPTKU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Feb 2007 14:10:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946230AbXBPTKU
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 14:10:20 -0500
-Received: from wr-out-0506.google.com ([64.233.184.238]:19798 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946225AbXBPTKS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Feb 2007 14:10:18 -0500
-Received: by wr-out-0506.google.com with SMTP id i31so1216525wra
-        for <git@vger.kernel.org>; Fri, 16 Feb 2007 11:10:17 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ny7rU02y5/oseMa1hzBn6llmmfTjpIYpqqx60wg7Y4UHUtvW8F0usdnjMz1mCF3/UBWVL0rUzD95ZQyPHyXc8vS9J5mQAINeVlXUytocpnwWvuPHo7YpJweiS1YebVafEAo/ufnIt6vYYOPB83ZE2lErgArMSRmB1PuKQBnhpyA=
-Received: by 10.114.145.1 with SMTP id s1mr2107722wad.1171653016855;
-        Fri, 16 Feb 2007 11:10:16 -0800 (PST)
-Received: by 10.114.60.16 with HTTP; Fri, 16 Feb 2007 11:10:16 -0800 (PST)
-In-Reply-To: <20070216050615.GC28894@spearce.org>
-Content-Disposition: inline
+	id S1946085AbXBPTnk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Feb 2007 14:43:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946088AbXBPTnj
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 14:43:39 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:57284 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946085AbXBPTnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Feb 2007 14:43:39 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id B756428115;
+	Fri, 16 Feb 2007 20:43:34 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id SxtboB6VYCAt; Fri, 16 Feb 2007 20:43:34 +0100 (CET)
+Received: from [62.216.209.99] (ppp-62-216-209-99.dynamic.mnet-online.de [62.216.209.99])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 3E70328101;
+	Fri, 16 Feb 2007 20:43:34 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+In-Reply-To: <Pine.LNX.4.63.0702162004590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39942>
 
-On 2/16/07, Shawn O. Pearce <spearce@spearce.org> wrote:
->
-> One problem that I had with the last version of qgit that I looked at
-> was creating commits was sort of a secondary operation in the UI.
-> It very much felt like that feature was bolted onto the side,
-> and was a second class citizen.  The primary focus of the UI was
-> showing the graphical history.  Which is fine if that's what your
-> primary task is.  But its not for everyone I know.
->
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigB6717578C866BFDF1CB0AA38
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Yes commit in qgit is very simple: check files you want to commit,
-write commit message and press a button. That's all. In case you are
-on a StGIT repo it will create a patch / push on top of current patch
-instead.
+Johannes Schindelin wrote:
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>>> +int pager_in_use =3D getenv("GIT_PAGER_IN_USE");
+>> test.c:3: error: initializer element is not constant
+> Sorry.
+>=20
+> Still, it feels wrong to use two system calls when you need none.
 
-qgit commit is definitely not for hardcore use but for a developer
-that just want to save and document his job. For anything outside the
-*main path* you need something else [1]. qgit is not THE git GUI
-interface and IMHO it is good like this. Why?
+getenv() is usually no system call, but processed in userland.
 
-- Easy to use for first time user approaching git (Linux and Windows)
+However, I also always get the feeling that using environment variables w=
+ithin one process to communicate state seems wrong, but many old unix too=
+ls do it this way.
 
-- Easy and quick for the most common browsing/committing/ patch
-export-import tasks.
+cheers
+  simon
 
-- No git 'slang/glossary' required
-
-- No deeply understanding of git main concepts required (index-merging-etc...)
-
-So in the conquer of the SCM world by git, I see qgit as a 'git
-advertising tool', it is instrumental in spreading git use among the
-big part of developers that never tried/know our wonderful 'stupid
-content tracker' and could be potentially scared by a frontal approach
-to 'git help --all' output.
-
-I imagine qgit at the 'entry level' of the long, and at times steep,
-git learning curve.
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
 
-Marco
+--------------enigB6717578C866BFDF1CB0AA38
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-[1] BTW for any command not supported you could use the IMHO powerful
-and flexible 'custom action' paradigm, where you can associate a
-custom menu entry to *any* kind of command/script you can imagine
-(also with parameter passing!). As an example, in my private branch I
-have created custom actions like:
+iD8DBQFF1gllr5S+dk6z85oRAlD1AKDmkuuJyhrt51tv8axEn48V0CQ3MQCggvi6
+IuvA8MptMOC8BneKu7u4YCU=
+=kcf9
+-----END PGP SIGNATURE-----
 
-- make
-- make install
-- git pull
-- merge <branch name>
-
-And few scripts too.
-
-This lets qgit interface to stay simple, and on the other side allows
-the user to quickly run also very complex or very uncommon git
-commands. Given the sheer number of git commands times git commands
-options (and counting ;-) I had no better idea then 'custom actions'
-to keep it simple and at the same time potentially command complete
-for any git user.
+--------------enigB6717578C866BFDF1CB0AA38--
