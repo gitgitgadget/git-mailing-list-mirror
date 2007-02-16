@@ -1,42 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-blame: prevent argument parsing segfault
-Date: Fri, 16 Feb 2007 00:23:37 -0800
-Message-ID: <7vsld67bp2.fsf@assigned-by-dhcp.cox.net>
-References: <45D55F6D.5090900@ray.fi>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH/RFC 0/3] Split fetch and merge logic
+Date: Fri, 16 Feb 2007 09:40:51 +0100
+Message-ID: <8aa486160702160040t3f42b5a0xbd12f333805ad4d7@mail.gmail.com>
+References: <874ppmplw7.fsf@gmail.com>
+	 <7vwt2i7bq7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: tommi.kyntola@ray.fi
-X-From: git-owner@vger.kernel.org Fri Feb 16 09:23:43 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Feb 16 09:40:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHyNa-0000Xu-Ne
-	for gcvg-git@gmane.org; Fri, 16 Feb 2007 09:23:43 +0100
+	id 1HHyeH-0000LF-8d
+	for gcvg-git@gmane.org; Fri, 16 Feb 2007 09:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966206AbXBPIXj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Feb 2007 03:23:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966207AbXBPIXj
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 03:23:39 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:63052 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966206AbXBPIXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Feb 2007 03:23:38 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070216082336.TEHV22948.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 16 Feb 2007 03:23:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Q8Pd1W00A1kojtg0000000; Fri, 16 Feb 2007 03:23:37 -0500
-In-Reply-To: <45D55F6D.5090900@ray.fi> (Tommi Kyntola's message of "Fri, 16
-	Feb 2007 09:38:21 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S966233AbXBPIky convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 16 Feb 2007 03:40:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966235AbXBPIky
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 03:40:54 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:50151 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966233AbXBPIkx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Feb 2007 03:40:53 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so77115uga
+        for <git@vger.kernel.org>; Fri, 16 Feb 2007 00:40:51 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AWkVXaBVgkdIS7z22zUJM3JJII420sCHluj+skc4MOov6aY1pnzYV1p2xk22fFBk6yOY4xH7WzAj9caLDlxR4Bb7sVuXWrGV4Zb1MjXAGpkltKpuWgDC9fCGIVNZL+a1R3uwBtc/+m1sE7LMOSmfUn2OHSKSbDK2pGMhMxFaGYY=
+Received: by 10.78.50.5 with SMTP id x5mr562485hux.1171615251510;
+        Fri, 16 Feb 2007 00:40:51 -0800 (PST)
+Received: by 10.78.69.4 with HTTP; Fri, 16 Feb 2007 00:40:51 -0800 (PST)
+In-Reply-To: <7vwt2i7bq7.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39907>
 
-Thanks.  Sign-off?
+On 2/16/07, Junio C Hamano <junkio@cox.net> wrote:
+> Santi B=E9jar <sbejar@gmail.com> writes:
+>
+> > This series implements the split of the fetch and merge logic.
+>
+> That's a description of what it does, but could you describe
+> what problem it solves, please?
+
+Sure.
+
+In the past we've had problems when we have changed the merge logic
+(as shows 4363dfbe3). This patch makes the two process completely
+independent, and concentrate the merge logic in one place (leaving
+git-parse-remote.sh independent of the merge logic).
+
+>
+> The approach of presentation to introduce the test and showing
+> the behavior change in a later patch is very good, though.
+
+Thanks.
+
+Santi
