@@ -1,57 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Error.pm: add configuration variable in Makefile
-Date: Fri, 16 Feb 2007 13:18:42 -0800
-Message-ID: <7vzm7d3iod.fsf@assigned-by-dhcp.cox.net>
-References: <200702162200.15241.barra_cuda@katamail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: monotone is slow
+Date: Fri, 16 Feb 2007 16:20:18 -0500
+Message-ID: <9e4733910702161320s12ba7a2boadaf075993579900@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 16 22:18:56 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Feb 16 22:20:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIATj-0006LT-BA
-	for gcvg-git@gmane.org; Fri, 16 Feb 2007 22:18:51 +0100
+	id 1HIAVS-0007Cr-3j
+	for gcvg-git@gmane.org; Fri, 16 Feb 2007 22:20:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946257AbXBPVSo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Feb 2007 16:18:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946258AbXBPVSo
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 16:18:44 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:34479 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946257AbXBPVSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Feb 2007 16:18:43 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070216211843.EJAT22948.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 16 Feb 2007 16:18:43 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id QMJj1W0031kojtg0000000; Fri, 16 Feb 2007 16:18:43 -0500
-In-Reply-To: <200702162200.15241.barra_cuda@katamail.com>
-	(barra_cuda@katamail.com's message of "Fri, 16 Feb 2007 22:00:15
-	+0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946258AbXBPVUW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Feb 2007 16:20:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946260AbXBPVUW
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 16:20:22 -0500
+Received: from ik-out-1112.google.com ([66.249.90.177]:35713 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946258AbXBPVUV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Feb 2007 16:20:21 -0500
+Received: by ik-out-1112.google.com with SMTP id c21so48718ika
+        for <git@vger.kernel.org>; Fri, 16 Feb 2007 13:20:19 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=fYYftUMKp95V3GoJ+7dii8hcqRLamMjWQrD/KfK8g9xlxRyWIgBOin8qOsF0IlJyAa88+HK9YaEBi/pc87LROxTBqS/MkAou9L8yc2pJwMbRTGL8nWinhN1zLRQonWEsG8m1U2HLyFXO2ukmAxxFwdhP95WFN9fwcLXAENmDWZE=
+Received: by 10.115.95.1 with SMTP id x1mr2191124wal.1171660818664;
+        Fri, 16 Feb 2007 13:20:18 -0800 (PST)
+Received: by 10.114.195.13 with HTTP; Fri, 16 Feb 2007 13:20:18 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39952>
 
-Michael <barra_cuda@katamail.com> writes:
+45 CPU minutes to do a pull. About 2hrs real time.
 
-> When compiling, we check in perl/Makefile.PL if Error.pm is available. If not, 
-> we use our Error.pm instead. So, after a "make install" the system does have 
-> an Error.pm. This is fine, unless we are used to create an 
-> rpm/deb/whatever-it-is by ourselves and install it with the system's package 
-> manager.
+jonsmirl@jonsmirl:~$ ps aux | grep mtn
+jonsmirl  8382 80.5  4.4 131444 115204 pts/0   S+   14:54  45:44 mtn pull
 
-The private copy is only to help people who build from the
-source _and_ are lazy enough to install Error.pm from more
-official sources (either CPAN or officially pacakged ones).
+And it worked, nothing was wrong. 1,500 revs pulled.
+Let's convert the world to git.
 
-My preference is to never allow out private copy to leak into
-binary packages, and have our binary packages _always_ depend on
-the officially packaged ones.
+-- 
+Jon Smirl
+jonsmirl@gmail.com
