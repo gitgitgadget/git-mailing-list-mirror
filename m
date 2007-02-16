@@ -1,67 +1,248 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for
- disconnected transfer
-Date: Fri, 16 Feb 2007 16:58:01 -0500
-Message-ID: <45D628E9.20605@verizon.net>
-References: <28763990.2658921171630394111.JavaMail.root@vms064.mailsrvcs.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: A note from the maintainer
+Date: Fri, 16 Feb 2007 14:31:39 -0800
+Message-ID: <7vire120qc.fsf@assigned-by-dhcp.cox.net>
+References: <7vlkj1v3av.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Fri Feb 16 23:18:16 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 16 23:31:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIBPE-0001Zn-54
-	for gcvg-git@gmane.org; Fri, 16 Feb 2007 23:18:16 +0100
+	id 1HIBcK-0008Qr-Id
+	for gcvg-git@gmane.org; Fri, 16 Feb 2007 23:31:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946146AbXBPWSN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Feb 2007 17:18:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946153AbXBPWSN
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 17:18:13 -0500
-Received: from vms044pub.verizon.net ([206.46.252.44]:38603 "EHLO
-	vms044pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946146AbXBPWSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Feb 2007 17:18:12 -0500
-Received: from [127.0.0.1] ([71.246.235.75])
- by vms044.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDK001YRT0O1YF0@vms044.mailsrvcs.net> for
- git@vger.kernel.org; Fri, 16 Feb 2007 15:58:04 -0600 (CST)
-In-reply-to: <28763990.2658921171630394111.JavaMail.root@vms064.mailsrvcs.net>
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S1946262AbXBPWbm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Feb 2007 17:31:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946263AbXBPWbm
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 17:31:42 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:59637 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946262AbXBPWbl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Feb 2007 17:31:41 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070216223141.FOHI21704.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 16 Feb 2007 17:31:41 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id QNXg1W00B1kojtg0000000; Fri, 16 Feb 2007 17:31:40 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39954>
 
-Mark Levedahl wrote:
->> Also as Shawn pointed out, the script too heavily depends on GNU
->> tar.  Can we do something about it
->>     
-This one is easy, make tmp a directory, then build the tar file in that 
-directory so the archive members don't include the tmp name, then just 
-move the tar file to where it is needed...
+It has been a while since I sent this message out the last time,
+so it may be a good time to send it with updates again.  There
+seem to be some new people on the git list, especially now the
+big release is out.
 
-tmp="$GIT_DIR/bundle_tmp$$"
-references="$tmp/references"
-pack="$tmp/pack"
-trap 'rm -rf "$tmp"' 0 1 2 3 15
+This message talks about how git.git is managed, and how you can
+work with it.
 
-mkdir "$tmp" &&
-echo "v1 git-bundle" > "$version" &&
-------
 
-# create the tar file, clean up
-cd "$tmp" &&
-tar cf bundle prerequisites references version pack &&
-cd - &&
-mv "$tmp/bundle" "$bfile" &&
-rm -rf "$tmp"
+* IRC and Mailing list
 
-I believe that as this works, tar needs only to understand c, f, and -O. 
-It is easy enough to search for gtar and use that, or allow user to 
-define TAR. So, I think this is a non-issue.
+Many active members of development community hang around on #git
+IRC channel.  Its log is available at:
 
-Mark
+	http://colabti.de/irclogger/irclogger_logs/git
+
+[jc: Does anybody know a shortcut for "Today's" page on this
+ site?  It irritates me having to click the latest link on this
+ page to get to the latest.]
+
+
+The development however is primarily done on this mailing list
+you are reading right now.  If you have patches, please send
+them to the list, following Documentation/SubmittingPatches.
+
+I usually read all patches posted to the list, and follow almost
+all the discussions on the list, unless the topic is about an
+obscure corner that I do not personally use.  But I am obviously
+not perfect.  If you sent a patch that you did not hear from
+anybody for three days, that is a very good indication that it
+was dropped on the floor --- please do not hesitate to remind
+me.
+
+The list archive is available at a few public sites as well:
+
+	http://marc.theaimsgroup.com/?l=git
+	http://news.gmane.org/gmane.comp.version-control.git
+
+and some people seem to prefer to read it over NNTP:
+
+	nntp://news.gmane.org/gmane.comp.version-control.git
+
+
+* Repositories, branches and documentation.
+
+My public git.git repository is at:
+
+	git://git.kernel.org/pub/scm/git/git.git/
+
+This is mirrored at Pasky's site at
+
+	git://repo.or.cz/git.git/
+
+but the first has a few hours mirroring delay after I publish
+updates, and the latter, being a mirror of former, lags behind
+it further.  Immediately after I publish to the primary
+repository at kernel.org, I also push into an alternate here:
+
+	git://repo.or.cz/alt-git.git/
+
+Impatient people would have better lack with the last one (but
+the last repository does not have "html", "man" and "todo"
+branches, described next).
+
+
+There are three branches in git.git repository that are not
+about the source tree of git: "todo", "html" and "man".  The
+first one was meant to contain TODO list for me, but I am not
+good at maintaining such a list so it is not as often updated as
+it could/should be.  It also contains some helper scripts I use
+to maintain git.
+
+The "html" and "man" are autogenerated documentation from the
+tip of the "master" branch; the tip of "html" is extracted to be
+visible at kernel.org at:
+
+	http://www.kernel.org/pub/software/scm/git/docs/
+
+Starting from 1.5.0, the top-level documentation page has links
+to documentation of older releases.
+
+The script to maintain these two documentation branches are
+found in "todo" branch as dodoc.sh, if you are interested.  It
+is a good demonstration of how to use an update hook to automate
+a task.
+
+There are four branches in git.git repository that track the
+source tree of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are reasonably
+tested and ready to be used in a production setting.  There
+could occasionally be minor breakages or brown paper bag bugs
+but they are not expected to be anything major.  Every now and
+then, a "feature release" is cut from the tip of this branch and
+they typically are named with three dotted decimal digits.  The
+last such release was v1.5.0 done on Feb 14th this year.  The
+codename for that release is not "snog".
+
+Whenever a feature release is made, "maint" branch is forked off
+from "master" at that point.  Obvious, safe and urgent fixes
+after a feature release are applied to this branch and
+maintenance releases are cut from it.  The maintenance releases
+are typically named with four dotted decimal, named after the
+feature release they are updates to; the last such release was
+v1.4.4.4, and I am expecting to cut v1.5.0.1 sometime soon.
+Usually new development will never go to this branch.  This
+branch is also merged into "master" to propagate the fixes
+forward.
+
+A trivial and safe enhancement goes directly on top of "master".
+A new development, either initiated by myself or more often by
+somebody who found his or her own itch to scratch, does not
+usually happen on "master", however.  Instead, it is forked into
+a separate topic branch from the tip of "master", and first
+tested in isolation; I may make minimum fixups at this point.
+Usually there are a handful such topic branches that are running
+ahead of "master" in git.git repository.  I do not publish the
+tip of these branches in my public repository, however, partly
+to keep the number of branches that downstream developers need
+to worry about and primarily because I am lazy.
+
+I judge the quality of topic branches, taking advices from the
+mailing list discussions.  Some of them start out as "good idea
+but obviously is broken in some areas (e.g. breaks the existing
+testsuite)" and then with some more work (either by the original
+contributor or help from other people on the list) becomes "more
+or less done and can now be tested by wider audience".  Luckily,
+most of them start out in the latter, better shape.
+
+The "next" branch is to merge and test topic branches in the
+latter category.  In general it should always contain the tip of
+"master".  They might not be quite production ready, but are
+expected to work more or less without major breakage.  I usually
+use "next" version of git for my own work, so it cannot be
+_that_ broken to prevent me from pushing the changes out.
+The "next" branch is where new and exciting things take place.
+
+The above three branches, "master", "maint" and "next" are never
+rewound, so you should be able to safely track them (that means
+the topics that have been merged into "next" are not rebased).
+
+The "pu" (proposed updates) branch bundles all the remainder of
+topic branches.  The "pu" branch, and topic branches that are
+only in "pu", are subject to rebasing in general.
+
+When a topic that was in "pu" proves to be in testable shape, it
+graduates to "next".  I do this with:
+
+	git checkout next
+        git merge that-topic-branch
+
+Sometimes, an idea that looked promising turns out to be not so
+hot and the topic can be dropped from "pu" in such a case.
+
+A topic that is in "next" is expected to be tweaked and fixed to
+perfection before it is merged to "master".  However, being in
+"next" is not a guarantee to appear in the next release (being
+in "master" is such a guarantee, unless it is later found
+seriously broken and reverted), or even in any future release.
+There even were cases that topics needed a few reverting before
+graduating to "master", or a topic that already was in "next"
+were reverted from "next" because fatal flaws were found in them
+later.
+
+Starting from v1.5.0, "master" and "maint" have release notes
+for the next release in Documentation/RelNotes-* files, so that
+I do not have to run around summarizing what happened just
+before the release.
+
+
+* Other people's trees, trusted lieutenants and credits.
+
+Documentation/SubmittingPatches outlines who your changes should
+be sent to.  As described in contrib/README, I would delegate
+fixes and enhancements in contrib/ area to primary contributors
+of them.
+
+Although the following are included in git.git repository, they
+have their own authoritative repository and maintainers:
+
+ git-gui/ -- this subdirectory comes from Shawn Pearce's git-gui
+             project, which is found at:
+
+             git://repo.or.cz/git-gui.git
+
+ gitk     -- this file is maintained by Paul Packerras, at:
+
+	     git://git.kernel.org/pub/scm/gitk/gitk.git
+
+I would like to thank everybody who helped to raise git into the
+current shape.  Especially I would like to thank the git list
+regulars whose help I have relied on and expect to continue
+relying on heavily:
+
+ - Linus on general design issues.
+
+ - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre, and
+   Rene Scharfe on general implementation issues.
+
+ - Shawn and Nicolas Pitre on pack issues.
+
+ - Martin Langhoff on cvsserver and cvsimport.
+
+ - Paul Packerras on gitk.
+
+ - Eric Wong on git-svn.
+
+ - Jakub Narebski and Luben Tuikov on gitweb.
+
+ - J. Bruce Fields on documentaton issues.
