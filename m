@@ -1,82 +1,73 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Dangers of working on a tracking branch
-Date: Thu, 15 Feb 2007 17:49:02 -0500
-Message-ID: <20070215224902.GB27992@spearce.org>
-References: <17876.51013.561979.431717@lisa.zopyra.com> <Pine.LNX.4.64.0702151557410.1757@xanadu.home> <17876.52962.662946.582507@lisa.zopyra.com> <17876.53654.426022.454712@lisa.zopyra.com> <20070215214352.GA2980@coredump.intra.peff.net> <17876.54845.708466.669437@lisa.zopyra.com> <20070215215816.GA3757@coredump.intra.peff.net> <17876.55542.236594.121347@lisa.zopyra.com> <20070215220918.GB27526@spearce.org> <17876.57692.818802.89118@lisa.zopyra.com>
+From: SungHyun Nam <goweol@gmail.com>
+Subject: Re: GIT+CYGWIN annoying test failure
+Date: Fri, 16 Feb 2007 09:04:14 +0900
+Message-ID: <45D4F4FE.3010405@gmail.com>
+References: <45B6C1FB.7060005@gmail.com> <Pine.LNX.4.63.0701241041190.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45BD4AA9.5090400@gmail.com> <45D3AF9B.40205@gmail.com> <Pine.LNX.4.63.0702150236590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Feb 15 23:49:13 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, GIT <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 16 01:04:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHpPd-0007UL-4l
-	for gcvg-git@gmane.org; Thu, 15 Feb 2007 23:49:13 +0100
+	id 1HHqaq-0002AR-46
+	for gcvg-git@gmane.org; Fri, 16 Feb 2007 01:04:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161620AbXBOWtJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 17:49:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161624AbXBOWtJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 17:49:09 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:34859 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161620AbXBOWtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 17:49:08 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HHpPL-0002lq-Fp; Thu, 15 Feb 2007 17:48:55 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D2D3920FBAE; Thu, 15 Feb 2007 17:49:02 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <17876.57692.818802.89118@lisa.zopyra.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1422770AbXBPAEd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 19:04:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422771AbXBPAEd
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 19:04:33 -0500
+Received: from relaygw1.kornet.net ([61.74.75.196]:60626 "EHLO
+	relaygw1.kornet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422770AbXBPAEc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 19:04:32 -0500
+Received: from [211.48.62.136] ([211.48.62.136]) 
+          by relaygw1.kornet.net ([61.74.75.196]) 
+          with ESMTP id 2007021609:04:23:370697.2057.13286320
+          Fri, 16 Feb 2007 09:04:23 +0900 (KST) 
+Received: from [61.83.195.103] ([61.83.195.103]) 
+          by relay8.kornet.net ([211.48.62.136]) 
+          with ESMTP id 2007021609:04:23:263775.25806.31472560
+          Fri, 16 Feb 2007 09:04:16 +0900 (KST) 
+User-Agent: Thunderbird 2.0b1 (Windows/20061223)
+In-Reply-To: <Pine.LNX.4.63.0702150236590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Enigmail-Version: 0.94.1.2
+OpenPGP: id=8509C67F
+X-TERRACE-SPAMMARK: NOT spam-marked.                              
+  (by Terrace)                                            
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39864>
 
-Bill Lear <rael@zopyra.com> wrote:
-> On Thursday, February 15, 2007 at 17:09:18 (-0500) Shawn O. Pearce writes:
-> >...
-> >Lets say you patch git-clone to create these branches under
-> >refs/heads, and also under refs/remotes/origin.  Now someone else
-> >modifies one of those branches, and you do a git-fetch to get the
-> >latest.  The tracking branch under refs/remotes/origin would update,
-> >but not the one in refs/heads.  Which means "jumping right in" may
-> >actually cost you a lot more time, because you are now starting on
-> >something that is several days old.
+Hello,
+
+Johannes Schindelin wrote:
 > 
-> Granted, but this would be the same as creating the branch by hand,
-> then going rock-climbing over the weekend, while my colleagues toiled,
-> and coming back on Monday to find 15 checkins on that branch, right?
+> On Thu, 15 Feb 2007, SungHyun Nam wrote:
+> 
+>>  check_result () {
+>> +    [ -r current ] && rm -f current
+>>      git-ls-files --stage | sed -e 's/ '"$_x40"' / X /' >current &&
+>>      diff -u expected current
+>>  }
+> 
+> Are you having a restrictive umask, or what are the permissions on that 
+> file?
 
-Yes.  Although if you pull something like that, your colleagues
-may also be muttering things about you near the water cooler...
-So Git may be the least of your problems.  ;-)
- 
-> At which point I could .... rebase?  Do a pull?
+There's no problem with the umask.
 
-Rebase or pull, either would work.  Rebase would clutter the
-history less (no merge) but also tosses some history (no merge).
-Its a tossup.
+$ umask
+0022
 
-All I was trying to say was this may be more likely to happen,
-as you will clone, work in that repository for a couple of weeks,
-then get told to look at the `frotz` branch, as it has all the cool
-stuff you were looking for.  You peek at refs/heads/frotz, and
-it has some cool stuff, but its 2 weeks out of date.  Unless you
-remember to pull `origin/frotz` to `frotz` first, you might spend
-a while looking at stale code.
+I guess there is some race condition in CYGWIN or windows. And my system
+triggers that condition.
 
--- 
-Shawn.
+Check the logic above. I cannot think there is any chance that 'rm -f
+current && echo x >current' is success, but 'echo x >current' is fail?
+
+Thanks,
+namsh
