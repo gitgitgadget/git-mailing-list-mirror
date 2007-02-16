@@ -1,84 +1,78 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for
- disconnected transfer
-Date: Fri, 16 Feb 2007 18:21:30 -0500
-Message-ID: <45D63C7A.4050300@verizon.net>
-References: <28763990.2658921171630394111.JavaMail.root@vms064.mailsrvcs.net>
- <7vhctl50zc.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] Fix incorrect diff of a link -> file change if core.filemode = false.
+Date: Sat, 17 Feb 2007 00:30:03 +0100
+Message-ID: <200702170030.04014.johannes.sixt@telecom.at>
+References: <200702170009.02500.johannes.sixt@telecom.at> <7vejop1ysu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 17 00:21:42 2007
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 17 00:30:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HICOa-00073U-Js
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 00:21:40 +0100
+	id 1HICX4-0002mD-S5
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 00:30:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946277AbXBPXVg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Feb 2007 18:21:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751686AbXBPXVg
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 18:21:36 -0500
-Received: from vms040pub.verizon.net ([206.46.252.40]:52192 "EHLO
-	vms040pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751682AbXBPXVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Feb 2007 18:21:35 -0500
-Received: from [127.0.0.1] ([71.246.235.75])
- by vms040.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDK00E6CWVT6GK0@vms040.mailsrvcs.net> for
- git@vger.kernel.org; Fri, 16 Feb 2007 17:21:30 -0600 (CST)
-In-reply-to: <7vhctl50zc.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+	id S1946284AbXBPXaJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Feb 2007 18:30:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbXBPXaJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 18:30:09 -0500
+Received: from smtp1.noc.eunet-ag.at ([193.154.160.117]:44188 "EHLO
+	smtp1.noc.eunet-ag.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751685AbXBPXaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Feb 2007 18:30:07 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp1.noc.eunet-ag.at (Postfix) with ESMTP
+	id A2ECE33C6B; Sat, 17 Feb 2007 00:30:05 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 3D9DB3B46C;
+	Sat, 17 Feb 2007 00:30:04 +0100 (CET)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vejop1ysu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39960>
 
-Junio C Hamano wrote:
-> Mark, how urgent do you want to have "bundle" in my tree?  As I
-> understand it, this came out of your working zip based
-> implementation your group already use, so I am suspecting that
-> you do not have urgent need to have a different one in git.git
-> in a half-baked shape.
->   
-I can get my work done today with what I have. However, I really believe 
-bundle is a good addition to git, and I don't want to maintain an 
-out-of-tree patch to git to add this capability.
-> Wouldn't it be nice if you can treat a bundle as just a
-> different kind of git URL that you can "git fetch"?
+On Saturday 17 February 2007 00:13, Junio C Hamano wrote:
+> Johannes Sixt <johannes.sixt@telecom.at> writes:
+> > After this sequence:
+> >
+> > $ ln -s foo A
+> > $ git add A
+> > $ git commit -m link
+> > $ rm A && echo bar > A
+> >
+> > the working copy contains a regular file A but HEAD contains A as a link.
+> >
+> > Normally, at this point 'git diff HEAD' displays this change as a removal
+> > of the link followed by an addition of a new file. But in a repository
+> > where core.filemode is false this is displayed as a modification of the
+> > link. The reason is that the check when the cached mode is allowed to
+> > override the file's actual mode is not strict enough.
+> >
+> > Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 >
-> 	$ git fetch file.bdl 'refs/heads/*:refs/heads/*'
->   
-yes
->
-> Then git-ls-remote can be taught about a bundle file and use the
-> 'git bundle --list-heads'.  Also, with something like this in
-> your config:
->
-> 	[remote "bundle"]
->         	url = /home/me/tmp/file.bdl
->                 fetch = refs/heads/*:refs/remotes/origin/*
->
-> You can first sneakernet the bundle file to ~/tmp/file.bdl and
-> then these commands:
->
-> 	$ git ls-remote bundle
->         $ git fetch bundle
-> 	$ git pull bundle
->
-> would treat it as if it is talking with a remote side over the
-> network.
->
-> Hmm?
->
->   
-As long as I can still do a "git fetch file.bdl" and without having to 
-do the config stuff. I'm happy. Integrating this bundle with basic git 
-approaches to things is obviously good. The frontend you outlined seems 
-a trivial rearrangement of what I already have, but I'll let this 
-discussion progress a bit further before I start doing that.
+> I do not follow.  core.filemode aka trust_executable_bit is
+> about executable bit and not symlink.
 
-Mark
+Correct. But the breakage is still there. As you recall, the properties 
+S_IFREG and S_IFLNK are recorded in the st_mode, and the line of code that I 
+fixed trusts the index in too many cases, and copies the index's S_IFLNK over 
+the the stat() result, which said S_IFREG. So the diff engine loses the 
+information that it is should diff against a regular file, and thinks that 
+the working copy is a symlink.
+
+Please change the last sentence of the commit message, which hopefully makes 
+the issue a bit clearer:
+
+The fix is that the cached mode must only be allowed to override the file's 
+actual mode (which includes the type information) if _both_ the working tree 
+entry and the cached entry are regular files.
+
+-- Hannes
