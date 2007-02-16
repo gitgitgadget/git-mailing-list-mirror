@@ -1,69 +1,103 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCH/RFC 0/3] Split fetch and merge logic
-Date: Fri, 16 Feb 2007 21:30:25 +0100
-Message-ID: <8aa486160702161230r6f5825a2v861315c1aa52520e@mail.gmail.com>
-References: <874ppmplw7.fsf@gmail.com>
-	 <7vwt2i7bq7.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160702160040t3f42b5a0xbd12f333805ad4d7@mail.gmail.com>
-	 <7vd54950ed.fsf@assigned-by-dhcp.cox.net>
+From: Michael <barra_cuda@katamail.com>
+Subject: Error.pm: add configuration variable in Makefile
+Date: Fri, 16 Feb 2007 22:00:15 +0100
+Message-ID: <200702162200.15241.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 16 21:30:30 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 16 21:54:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HI9iw-0007CM-De
-	for gcvg-git@gmane.org; Fri, 16 Feb 2007 21:30:30 +0100
+	id 1HIA5r-0002NB-ED
+	for gcvg-git@gmane.org; Fri, 16 Feb 2007 21:54:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946131AbXBPUa1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 16 Feb 2007 15:30:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946132AbXBPUa1
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 15:30:27 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:61376 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946131AbXBPUa0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Feb 2007 15:30:26 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so265268uga
-        for <git@vger.kernel.org>; Fri, 16 Feb 2007 12:30:25 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=juw7Pmf2DdYauEGAuiRPrk6mfvpBb1CsFZQJjgQgxrdnpb8O+qDzzT+/zipJeNErXBXGuLRZbHqT5YpyZZmjdWb2WZSEXN01Fvt9M+Apvt7/Y84ctJ3h2AvFec8vpVOrMKFLWyhlcYQd7wRY9XT70ZijT4ECsoVZx8kWhZQXces=
-Received: by 10.78.204.7 with SMTP id b7mr672494hug.1171657825167;
-        Fri, 16 Feb 2007 12:30:25 -0800 (PST)
-Received: by 10.78.69.4 with HTTP; Fri, 16 Feb 2007 12:30:25 -0800 (PST)
-In-Reply-To: <7vd54950ed.fsf@assigned-by-dhcp.cox.net>
+	id S1946163AbXBPUyH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Feb 2007 15:54:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946164AbXBPUyH
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 15:54:07 -0500
+Received: from slim-3a.inet.it ([213.92.5.124]:60479 "EHLO slim-3a.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1946163AbXBPUyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Feb 2007 15:54:06 -0500
+Received: from dial-up-mi-344.lombardiacom.it ([::ffff:212.34.226.90]) by slim-3a.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:212.34.226.90+i5xRj7YrCyl; Fri, 16 Feb 2007 21:54:01 +0100
+User-Agent: KMail/1.9.4
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39949>
 
-On 2/16/07, Junio C Hamano <junkio@cox.net> wrote:
-> "Santi B=E9jar" <sbejar@gmail.com> writes:
->
-> > In the past we've had problems when we have changed the merge logic
-> > (as shows 4363dfbe3). This patch makes the two process completely
-> > independent, and concentrate the merge logic in one place (leaving
-> > git-parse-remote.sh independent of the merge logic).
->
-> But that is a solved problem, isn't it?  What else does it
-> solve?  The justification for moving around the logic could be
-> something like "these three patches do not do that themselves,
-> but it opens a door for further work such as ...", but without
-> something concrete in "..." part, your response makes the patch
-> look mostly needless code churn.
->
-> I was hoping to hear something like "now git-fetch has to do
-> much less than before, eventual C-rewrite of the command, which
-> can borrow some code already written for 'pu' branch, will
-> become much easier" ;-).
+When compiling, we check in perl/Makefile.PL if Error.pm is available. If not, 
+we use our Error.pm instead. So, after a "make install" the system does have 
+an Error.pm. This is fine, unless we are used to create an 
+rpm/deb/whatever-it-is by ourselves and install it with the system's package 
+manager: in this case, in fact, the git package we are building will have an 
+Error.pm only if the package currently installed does not. Of course, once we 
+install the new package, the next one won't ship Error.pm because 
+perl/Makefile.PL thinks it doesn't need to; but that's obviously wrong, since 
+the package manager will delete the old Error.pm when installing the new git 
+package.
 
-This sounds like a good justification, also :-)
+I guess we should use at least a configuration variable
+(USE_PRIVATE_ERROR_PERL?) to let the user decide what to do: either force
+the use of Error.pm shipped with git or just go on as we do today.
 
-Santi
+Something like the following, but less ugly...
+
+---
+diff --git a/Makefile b/Makefile
+index 40bdcff..ff886df 100644
+--- a/Makefile
++++ b/Makefile
+@@ -101,6 +101,9 @@ all::
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+ # MakeMaker (e.g. using ActiveState under Cygwin).
+ #
++# Define USE_PRIVATE_ERROR_PERL if you want to force the use of
++# perl/private-Error.pm (e.g. for packaging purposes).
++#
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -580,6 +583,9 @@ endif
+ ifdef NO_PERL_MAKEMAKER
+ 	export NO_PERL_MAKEMAKER
+ endif
++ifdef USE_PRIVATE_ERROR_PERL
++	export USE_PRIVATE_ERROR_PERL
++endif
+ 
+ # Shell quote (do not use $(call) to accommodate ancient setups);
+ 
+diff --git a/perl/Makefile b/perl/Makefile
+index 099beda..84b16f9 100644
+--- a/perl/Makefile
++++ b/perl/Makefile
+@@ -27,6 +27,9 @@ $(makfile): ../GIT-CFLAGS Makefile
+ 	cp private-Error.pm $(instdir_SQ)/Error.pm' >> $@
+ 	echo instlibdir: >> $@
+ 	echo '	echo $(instdir_SQ)' >> $@
++else ifdef USE_PRIVATE_ERROR_PERL
++$(makfile): Makefile.PL ../GIT-CFLAGS
++	'$(PERL_PATH_SQ)' $< useerror PREFIX='$(prefix_SQ)'
+ else
+ $(makfile): Makefile.PL ../GIT-CFLAGS
+ 	'$(PERL_PATH_SQ)' $< PREFIX='$(prefix_SQ)'
+diff --git a/perl/Makefile.PL b/perl/Makefile.PL
+index 9b117fd..f11affc 100644
+--- a/perl/Makefile.PL
++++ b/perl/Makefile.PL
+@@ -13,7 +13,7 @@ my %pm = ('Git.pm' => '$(INST_LIBDIR)/Git.pm');
+ # We come with our own bundled Error.pm. It's not in the set of default
+ # Perl modules so install it if it's not available on the system yet.
+ eval { require Error };
+-if ($@) {
++if ($@ || $ARGV[0] eq 'useerror') {
+ 	$pm{'private-Error.pm'} = '$(INST_LIBDIR)/Error.pm';
+ }
+ 
