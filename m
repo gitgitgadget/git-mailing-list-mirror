@@ -1,83 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for disconnected transfer
-Date: Fri, 16 Feb 2007 02:45:03 -0500
-Message-ID: <20070216074503.GH28894@spearce.org>
-References: <Pine.LNX.4.64.0702151838250.20368@woody.linux-foundation.org> <11716079211954-git-send-email-mdl123@verizon.net> <20070216064852.GF28894@spearce.org> <7v4ppma788.fsf@assigned-by-dhcp.cox.net>
+From: Tommi Kyntola <tommi.kyntola@ray.fi>
+Subject: [PATCH] git-blame: prevent argument parsing segfault
+Date: Fri, 16 Feb 2007 09:38:21 +0200
+Message-ID: <45D55F6D.5090900@ray.fi>
+Reply-To: tommi.kyntola@ray.fi
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark Levedahl <mdl123@verizon.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 16 08:45:31 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 16 08:46:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHxmY-0007uG-4D
-	for gcvg-git@gmane.org; Fri, 16 Feb 2007 08:45:26 +0100
+	id 1HHxnu-000086-0g
+	for gcvg-git@gmane.org; Fri, 16 Feb 2007 08:46:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932445AbXBPHpM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Feb 2007 02:45:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751329AbXBPHpM
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 02:45:12 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:48000 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751326AbXBPHpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Feb 2007 02:45:11 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HHxmD-0005z7-Kh; Fri, 16 Feb 2007 02:45:05 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 024E520FBAE; Fri, 16 Feb 2007 02:45:03 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v4ppma788.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751886AbXBPHqh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Feb 2007 02:46:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751887AbXBPHqg
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 02:46:36 -0500
+Received: from pontus.edelkey.net ([213.138.147.130]:47601 "EHLO
+	pontus.edelkey.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751886AbXBPHqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Feb 2007 02:46:35 -0500
+X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Feb 2007 02:46:35 EST
+Received: from raysrv05.ray.fi (213138149030.edelkey.net [213.138.149.30])
+	by pontus.edelkey.net (8.13.7/8.13.7) with ESMTP id l1G7cNZn020825
+	for <git@vger.kernel.org>; Fri, 16 Feb 2007 09:38:23 +0200
+Received: from ts.ray.fi ([192.56.100.161])
+          by raysrv05.ray.fi (Lotus Domino Release 6.5.5 HF456)
+          with ESMTP id 2007021609382207-45649 ;
+          Fri, 16 Feb 2007 09:38:22 +0200 
+Received: from [192.56.100.120] by ts.ray.fi (8.9.3+Sun/SMI-SVR4)
+	id JAA16137; Fri, 16 Feb 2007 09:38:21 +0200 (EET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
+X-MIMETrack: Itemize by SMTP Server on raysrv05/RAY(Release 6.5.5 HF456|May 19, 2006) at
+ 16.02.2007 09:38:22,
+	Serialize by Router on raysrv05/RAY(Release 6.5.5 HF456|May 19, 2006) at
+ 16.02.2007 09:38:23,
+	Serialize complete at 16.02.2007 09:38:23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39899>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > Mark Levedahl <mdl123@verizon.net> wrote:
-> >> +        # update only if non-fastforward
-> >> +        local=$(git-rev-parse --verify "$ref^0" 2>/dev/null)
-> >> ...
-> >> +        git-update-ref -m "git-unbundle update" $ref $sha1
-> >
-> > What about passing $local as the final argument to update-ref,
-> > so that the ref won't be modified if someone changed it while
-> > an unbundle was running?  Sure its mostly a manual operation,
-> > but imagine running it on a bare repository while someone else
-> > is pushing into it...
-> 
-> The script already has $local at that point, so adding it to
-> update-ref is a no-cost change to make things safer.  I think it
-> makes sense.
 
-Actually that's only if --force was not given.  If --force was
-given, rev-parse wasn't run, so local is not populated.  So maybe
-its not trivial.
- 
-> But I have to wonder...  While someone else is _pushing_ into
-> it?  Why are _you_ sneakernetting, then?
+Description:
+k@samael /localhome/k/git.git/git/gitweb % git-blame --incremental
+zsh: segmentation fault  git blame --incremental
 
-People do weird things.  I agree, its probably unlikely to ever
-happen.  But give a user a length of rope, they will find a way to
-hang themselves...
+The 3rd branch in builtin-blame.c should also check for lacking
+arguments. Running that in top dir avoids the problem because
+the 'prefix' is NULL. The --incremental is no to blame here,
+it only triggers the segfault and even without that flag it goes
+checking argv too far.
 
-I can see someone trying to use an update hook with bundle/unbundle
-to move stuff from one repository to another, despite the fact that
-are better ways to do that.  Better that we fail when an update
-might lose changes.
+I didn't check the pu branch, and I'm sorry if this is a dupe.
 
--- 
-Shawn.
+cheers,
+Tommi "Kynde" Kyntola
+
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 7a5665f..6d51b1f 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -2211,6 +2211,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+                 }
+                 else {
+                         /* (3) */
++                       if (argc <= i)
++                               usage(blame_usage);
+                         path = add_prefix(prefix, argv[i]);
+                         if (i + 1 == argc - 1) {
+                                 final_commit_name = argv[i + 1];
