@@ -1,59 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for
- disconnected transfer
-Date: Fri, 16 Feb 2007 23:51:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702162348380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <28763990.2658921171630394111.JavaMail.root@vms064.mailsrvcs.net>
- <45D628E9.20605@verizon.net>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] Fix incorrect diff of a link -> file change if core.filemode = false.
+Date: Sat, 17 Feb 2007 00:09:02 +0100
+Message-ID: <200702170009.02500.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Fri Feb 16 23:51:23 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 17 00:09:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIBv1-0000qP-N1
-	for gcvg-git@gmane.org; Fri, 16 Feb 2007 23:51:08 +0100
+	id 1HICCW-0000se-La
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 00:09:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751618AbXBPWvE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Feb 2007 17:51:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751619AbXBPWvE
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 17:51:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47906 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751615AbXBPWvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Feb 2007 17:51:01 -0500
-Received: (qmail invoked by alias); 16 Feb 2007 22:51:00 -0000
-X-Provags-ID: V01U2FsdGVkX1+l0M82Q4ylYP2eox+Uk0edbzWpkCluSdV4LIJR+x
-	nbLA==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45D628E9.20605@verizon.net>
-X-Y-GMX-Trusted: 0
+	id S1946263AbXBPXJI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Feb 2007 18:09:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751637AbXBPXJI
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Feb 2007 18:09:08 -0500
+Received: from smtp4.noc.eunet-ag.at ([193.154.160.226]:38231 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1751635AbXBPXJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Feb 2007 18:09:07 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id D4D21974EB
+	for <git@vger.kernel.org>; Sat, 17 Feb 2007 00:09:04 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 27EC84CB68
+	for <git@vger.kernel.org>; Sat, 17 Feb 2007 00:09:03 +0100 (CET)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39957>
 
-Hi,
+After this sequence:
 
-On Fri, 16 Feb 2007, Mark Levedahl wrote:
+$ ln -s foo A
+$ git add A
+$ git commit -m link
+$ rm A && echo bar > A
 
-> Mark Levedahl wrote:
-> > > Also as Shawn pointed out, the script too heavily depends on GNU 
-> > > tar.  Can we do something about it
-> > >     
-> This one is easy, make tmp a directory, then build the tar file in that
-> directory so the archive members don't include the tmp name, then just move
-> the tar file to where it is needed...
+the working copy contains a regular file A but HEAD contains A as a link.
 
-Why not just get rid of this unneeded dependency? It is _unneeded_. Maybe 
-you never suffered dependency hell (this is the only way I can explain 
-your resistance). It is _good_ to get rid of dependencies.
+Normally, at this point 'git diff HEAD' displays this change as a removal
+of the link followed by an addition of a new file. But in a repository where
+core.filemode is false this is displayed as a modification of the link.
+The reason is that the check when the cached mode is allowed to override the
+file's actual mode is not strict enough.
 
-Ah whatever, if you don't just get rid of that tar dependency, I'll just 
-do it.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ diff-lib.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/diff-lib.c b/diff-lib.c
+index 91cd877..5fc1910 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -171,7 +171,8 @@ static int get_stat_data(struct cache_entry *ce,
+ 		changed = ce_match_stat(ce, &st, 0);
+ 		if (changed) {
+ 			mode = create_ce_mode(st.st_mode);
+-			if (!trust_executable_bit && S_ISREG(st.st_mode))
++			if (!trust_executable_bit &&
++			    S_ISREG(st.st_mode) && S_ISREG(ntohl(ce->ce_mode)))
+ 				mode = ce->ce_mode;
+ 			sha1 = no_sha1;
+ 		}
+-- 
+1.5.0.19.gddff
