@@ -1,59 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for disconnected transfer
-Date: Thu, 15 Feb 2007 18:24:45 -0800
-Message-ID: <7vire2c00i.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for
+ disconnected transfer
+Date: Thu, 15 Feb 2007 18:40:32 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702151838250.20368@woody.linux-foundation.org>
 References: <11715851974102-git-send-email-mdl123@verizon.net>
-	<11715851972838-git-send-email-mdl123@verizon.net>
-	<11715851973802-git-send-email-mdl123@verizon.net>
+ <11715851972838-git-send-email-mdl123@verizon.net>
+ <11715851973802-git-send-email-mdl123@verizon.net> <7vire2c00i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Fri Feb 16 03:25:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mark Levedahl <mdl123@verizon.net>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Feb 16 03:41:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HHsmP-0008GO-6R
-	for gcvg-git@gmane.org; Fri, 16 Feb 2007 03:24:57 +0100
+	id 1HHt1y-0007Ls-UZ
+	for gcvg-git@gmane.org; Fri, 16 Feb 2007 03:41:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423056AbXBPCYr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Feb 2007 21:24:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423062AbXBPCYr
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 21:24:47 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:43605 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423056AbXBPCYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Feb 2007 21:24:46 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070216022447.HHOI1300.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 15 Feb 2007 21:24:47 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Q2Ql1W00m1kojtg0000000; Thu, 15 Feb 2007 21:24:46 -0500
-In-Reply-To: <11715851973802-git-send-email-mdl123@verizon.net> (Mark
-	Levedahl's message of "Thu, 15 Feb 2007 19:19:53 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932500AbXBPCkw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Feb 2007 21:40:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932503AbXBPCkw
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Feb 2007 21:40:52 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:46853 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932500AbXBPCkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Feb 2007 21:40:51 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1G2eehB005459
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Feb 2007 18:40:40 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1G2eXVY017211;
+	Thu, 15 Feb 2007 18:40:36 -0800
+In-Reply-To: <7vire2c00i.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.433 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.117__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39880>
 
-Mark Levedahl <mdl123@verizon.net> writes:
 
-> +# check that the prerequisites exist before unbundling.
-> +for sha1 in $prereqs ; do
-> +	git-rev-parse --verify $sha1 >& /dev/null || die "Prerequisite commit $sha1 not found."
-> +done
 
-If you are checking only boundary commits this is too weak a
-check and unsafe (we used to have the same bug in http fetch
-long time ago).  You have to make sure not only the object
-exists, but also it is reachable by one of the refs.
+On Thu, 15 Feb 2007, Junio C Hamano wrote:
+> 
+> One way to check that would be to ask "describe --all" if it can
+> find a ref that can reach that commit.  It would error out if
+> the commit object exists but is not reachable from any of the
+> refs.
 
-One way to check that would be to ask "describe --all" if it can
-find a ref that can reach that commit.  It would error out if
-the commit object exists but is not reachable from any of the
-refs.
+Actually, more efficient and to the point:
+
+	list-all-boundary-sha1s |
+		git-rev-list --stdin --not --all
+
+should return empty. Or something like that.
+
+		Linus
