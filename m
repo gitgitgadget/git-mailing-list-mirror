@@ -1,64 +1,120 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Sat, 17 Feb 2007 15:31:18 -0800
-Message-ID: <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net>
-	<7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
-	<20070217232603.GB30839@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Teach name-rev to identify revisions containing a
+ certain blob
+Date: Sun, 18 Feb 2007 00:31:34 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702180026000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702171838510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vire0tz51.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Feb 18 00:31:24 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Mike Coleman <tutufan@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Feb 18 00:31:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIZ1X-0007H5-BQ
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 00:31:23 +0100
+	id 1HIZ21-0007Uz-EI
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 00:31:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992875AbXBQXbU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 18:31:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992876AbXBQXbU
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 18:31:20 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:54994 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992875AbXBQXbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 18:31:19 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070217233119.DTZK21177.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 17 Feb 2007 18:31:19 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id QnXJ1W00C1kojtg0000000; Sat, 17 Feb 2007 18:31:18 -0500
-In-Reply-To: <20070217232603.GB30839@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 17 Feb 2007 18:26:03 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S2992877AbXBQXbh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 18:31:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992878AbXBQXbh
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 18:31:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33460 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S2992877AbXBQXbg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 18:31:36 -0500
+Received: (qmail invoked by alias); 17 Feb 2007 23:31:35 -0000
+X-Provags-ID: V01U2FsdGVkX1/ooNxQYhnoUA7Tbz74USzWwiKB5tQ2OKD6vC+A3X
+	cHow==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vire0tz51.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40026>
 
-Jeff King <peff@peff.net> writes:
+Hi,
 
-> On Sat, Feb 17, 2007 at 01:12:52PM -0800, Junio C Hamano wrote:
->
->> +	prefix = setup_git_directory_gently(&is_not_gitdir);
->> +	prefix_length = prefix ? strlen(prefix) : 0;
->> +	if (!is_not_gitdir) {
->> +		git_config(git_apply_config);
->> +		if (apply_default_whitespace)
->> +			parse_whitespace_option(apply_default_whitespace);
->> +	}
->> +
->
-> If I read this correctly, running 'git apply' inside a git repository
-> will parse $GIT_DIR/config and $HOME/.gitconfig. However, outside of a
-> repository it will parse neither. It would make more sense to me to
-> still parse $HOME/.gitconfig to pick up the user's global options.
+On Sat, 17 Feb 2007, Junio C Hamano wrote:
 
-I thought about that, but decided against it.  If you are truly
-operating outside a git managed repository, it does not feel
-right to apply configuration user has for git.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > +static struct object_hash file_trees = { 0, 0, NULL };
+> > +static struct object_array file_commits = { 0, 0, NULL };
+> 
+> These don't look good for two reasons: (1) you could leave BSS
+> to do the 0 initialization; (2) you need to change this if you
+> need to change the shape of "struct object_hash" later.
+
+Yes, you are right on both accounts. Can you please just ammend the 
+commit?
+
+> > +#define CONTAINS_FILE (1u<<10)
+> 
+> I am partly at fault, but I think we should have a consolidated
+> bit assignment policy in place before introducing new users of
+> object flags.  Some older code says in their comments that
+> revision.h reserves lower 8 bits while others say 16.  I offhand
+> know who is correct X-<.
+
+Something like this? (I did not know where to put the comment, so I let it 
+be...)
+
+--
+[PATCH] The lower 16 bits of the object flags are reserved for rev_walk
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+
+---
+
+ builtin-blame.c    |    4 ++--
+ builtin-describe.c |    2 +-
+ builtin-reflog.c   |    4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 7a5665f..8323dbf 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -66,8 +66,8 @@ static unsigned blame_copy_score;
+ #define BLAME_DEFAULT_COPY_SCORE	40
+ 
+ /* bits #0..7 in revision.h, #8..11 used for merge_bases() in commit.c */
+-#define METAINFO_SHOWN		(1u<<12)
+-#define MORE_THAN_ONE_PATH	(1u<<13)
++#define METAINFO_SHOWN		(1u<<16)
++#define MORE_THAN_ONE_PATH	(1u<<17)
+ 
+ /*
+  * One blob in a commit that is being suspected
+diff --git a/builtin-describe.c b/builtin-describe.c
+index bcc6456..07a96a4 100644
+--- a/builtin-describe.c
++++ b/builtin-describe.c
+@@ -4,7 +4,7 @@
+ #include "refs.h"
+ #include "builtin.h"
+ 
+-#define SEEN		(1u<<0)
++#define SEEN		(1u<<16)
+ #define MAX_TAGS	(FLAG_BITS - 1)
+ 
+ static const char describe_usage[] =
+diff --git a/builtin-reflog.c b/builtin-reflog.c
+index 3415551..3aa6902 100644
+--- a/builtin-reflog.c
++++ b/builtin-reflog.c
+@@ -34,8 +34,8 @@ struct expire_reflog_cb {
+ 	struct cmd_reflog_expire_cb *cmd;
+ };
+ 
+-#define INCOMPLETE	(1u<<10)
+-#define STUDYING	(1u<<11)
++#define INCOMPLETE	(1u<<16)
++#define STUDYING	(1u<<17)
+ 
+ static int tree_is_complete(const unsigned char *sha1)
+ {
