@@ -1,81 +1,60 @@
-From: Martin Waitz <tali@admingilde.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [PATCH] Support for large files on 32bit systems.
-Date: Sat, 17 Feb 2007 11:46:32 +0100
-Message-ID: <20070217104632.GF21842@admingilde.org>
-References: <20070217091310.GD21842@admingilde.org> <20070217093953.GE21842@admingilde.org> <20070217094959.GH27864@spearce.org>
+Date: Sat, 17 Feb 2007 08:32:06 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702170830280.31945@xanadu.home>
+References: <20070217091310.GD21842@admingilde.org>
+ <20070217093953.GE21842@admingilde.org> <20070217094959.GH27864@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Feb 17 11:46:37 2007
+X-From: git-owner@vger.kernel.org Sat Feb 17 14:32:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIN5R-0004Qd-BF
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 11:46:37 +0100
+	id 1HIPfg-00067d-I1
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 14:32:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946634AbXBQKqe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 05:46:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946636AbXBQKqe
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 05:46:34 -0500
-Received: from mail.admingilde.org ([213.95.32.147]:55729 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946634AbXBQKqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 05:46:33 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HIN5M-0001gp-Mw; Sat, 17 Feb 2007 11:46:32 +0100
-Content-Disposition: inline
-In-Reply-To: <20070217094959.GH27864@spearce.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S1946731AbXBQNcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 08:32:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946728AbXBQNcI
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 08:32:08 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:20335 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946731AbXBQNcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 08:32:07 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JDM00K7509IV8C0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 17 Feb 2007 08:32:06 -0500 (EST)
+In-reply-to: <20070217094959.GH27864@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39986>
 
-hoi :)
+On Sat, 17 Feb 2007, Shawn O. Pearce wrote:
 
-On Sat, Feb 17, 2007 at 04:49:59AM -0500, Shawn O. Pearce wrote:
+> Martin Waitz <tali@admingilde.org> wrote:
+> > arg, this patch is completely broken.
+> > I tested it by setting the macro via the command line and the
+> > = is still left in there.  And __GLIBC__ is not yet defined at this
+> > point.
+> > 
+> > However, we need to set _FILE_OFFSET_BITS for glibc somehow.
+> > What is the best way to do so?
+> 
 > I think the only way to do with this is to have the Makefile detect
 > if -D_FILE_OFFSET_BITS=64 is required to be added to CFLAGS based on
 > some rule (e.g. uname output?), then add that to CFLAGS when needed.
 
-something like this?
+Why not simply defining _FILE_OFFSET_BITS=64 unconditionally?
 
-(I'm just testing it with a large data transfer, which will take some
-time..., will report success later)
-
-+++
-Support for large files on 32bit systems.
-
-Glibc uses the same size for int and off_t by default.
-In order to support large pack sizes (>2GB) we force Glibc to a 64bit off_t.
-
-Signed-off-by: Martin Waitz <tali@admingilde.org>
----
- Makefile |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index ebecbbd..325c19f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -334,9 +334,11 @@ EXTLIBS = -lz
- 
- ifeq ($(uname_S),Linux)
- 	NO_STRLCPY = YesPlease
-+	BASIC_CFLAGS = -D_FILE_OFFSET_BITS=64
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	NO_STRLCPY = YesPlease
-+	BASIC_CFLAGS = -D_FILE_OFFSET_BITS=64
- endif
- ifeq ($(uname_S),Darwin)
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
--- 
-1.5.0.80.g42d14
+It certainly won't cause GIT to explode if compiled against something 
+else than glibc.
 
 
--- 
-Martin Waitz
+Nicolas
