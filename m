@@ -1,170 +1,215 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] Add `struct object_hash`
-Date: Sat, 17 Feb 2007 18:38:50 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702171838150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH 2/2] Teach name-rev to identify revisions containing a certain
+ blob
+Date: Sat, 17 Feb 2007 18:39:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702171838510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org, Mike Coleman <tutufan@gmail.com>,
 	junkio@cox.net
-X-From: git-owner@vger.kernel.org Sat Feb 17 18:38:56 2007
+X-From: git-owner@vger.kernel.org Sat Feb 17 18:39:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HITWR-0000Ze-LK
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 18:38:56 +0100
+	id 1HITXP-00011M-VT
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 18:39:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992954AbXBQRiw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 12:38:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992802AbXBQRiw
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 12:38:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41460 "HELO mail.gmx.net"
+	id S2992964AbXBQRjx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 12:39:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992965AbXBQRjx
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 12:39:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55837 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2992954AbXBQRiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 12:38:52 -0500
-Received: (qmail invoked by alias); 17 Feb 2007 17:38:50 -0000
-X-Provags-ID: V01U2FsdGVkX199QbdOEZl9NaNCoy8IxXf1OlL+rx0TZQapB3FUcZ
-	NtOw==
+	id S2992964AbXBQRjw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 12:39:52 -0500
+Received: (qmail invoked by alias); 17 Feb 2007 17:39:50 -0000
+X-Provags-ID: V01U2FsdGVkX1/1sl92fdP1UlyDa+S/eLOvEd/jVWw7tjmAOtWrHy
+	ayYg==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39994>
 
 
-Using object_hash, you can store interesting information about
-objects in a private hash map. This makes up for the lack of a
-`util` member of `struct object`.
+If you want to know which revisions contained a certain version
+of a file, just say
+
+	git name-rev --file <filename>
+
+which will read the file, and give you a list of revisions
+containing a file with the same contents. If <filename> is "-",
+it will read the contents from stdin. Of course, this is a really
+expensive operation.
+
+This feature was suggested by Mike Coleman.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
+ builtin-name-rev.c |  118 +++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 117 insertions(+), 1 deletions(-)
 
-	We should have done that earlier. Now, git.git already
-	contains two specialised versions of an object hash map:
-	obj_hash and refs_hash.
-
-	obj_hash is not really a hash map, but rather a hash set,
-	but there is no excuse for refs_hash having its own little
-	private implementation nobody else can reuse.
-
- Makefile      |    2 +-
- object-hash.c |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- object-hash.h |   19 ++++++++++++++++
- 3 files changed, 87 insertions(+), 1 deletions(-)
- create mode 100644 object-hash.c
- create mode 100644 object-hash.h
-
-diff --git a/Makefile b/Makefile
-index dfe226f..e53a5ad 100644
---- a/Makefile
-+++ b/Makefile
-@@ -267,7 +267,7 @@ LIB_OBJS = \
- 	write_or_die.o trace.o list-objects.o grep.o \
- 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
- 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
--	convert.o
-+	convert.o object-hash.o
- 
- BUILTIN_OBJS = \
- 	builtin-add.o \
-diff --git a/object-hash.c b/object-hash.c
-new file mode 100644
-index 0000000..2295e33
---- /dev/null
-+++ b/object-hash.c
-@@ -0,0 +1,67 @@
-+#include "cache.h"
-+#include "object.h"
+diff --git a/builtin-name-rev.c b/builtin-name-rev.c
+index 89ea95d..f08b065 100644
+--- a/builtin-name-rev.c
++++ b/builtin-name-rev.c
+@@ -3,10 +3,95 @@
+ #include "commit.h"
+ #include "tag.h"
+ #include "refs.h"
++#include "tree-walk.h"
 +#include "object-hash.h"
+ #include <regex.h>
+ 
+ static const char name_rev_usage[] =
+-	"git-name-rev [--tags | --ref-filter=<regexp>] ( --all | --stdin | committish [committish...] )\n";
++	"git-name-rev [--tags | --ref-filter=<regexp>] ( --all | --stdin | committish [committish...] | --file <filename> )\n";
 +
-+static unsigned int hash_obj(struct object *obj, unsigned int n)
++static unsigned char *file_sha1;
++static struct object_hash file_trees = { 0, 0, NULL };
++static struct object_array file_commits = { 0, 0, NULL };
++#define CONTAINS_FILE (1u<<10)
++
++static int get_file(const char *path)
 +{
-+	unsigned int hash = *(unsigned int *)obj->sha1;
-+	return hash % n;
-+}
++	int fd, ret;
++	struct stat st;
 +
-+static void insert_object_into_hash(struct object *object, void *util,
-+		struct object_hash *hash)
-+{
-+	int j = hash_obj(object, hash->size);
-+
-+	while (hash->hash[j].object) {
-+		j++;
-+		if (j >= hash->size)
-+			j = 0;
++	file_sha1 = xmalloc(20);
++	if (!strcmp(path, "-"))
++		ret = index_pipe(file_sha1, 0, "blob", 0);
++	else {
++		if ((fd = open(path, O_RDONLY)) < 0 || fstat(fd, &st) < 0)
++			return -1;
++		ret = index_fd(file_sha1, fd, &st, 0, "blob");
 +	}
-+	hash->hash[j].object = object;
-+	hash->hash[j].util = util;
++	if (ret)
++		return ret;
++	if (!parse_object(file_sha1))
++		return error("Object not found for '%s'", path);
++	return 0;
 +}
 +
-+static void grow_object_hash(struct object_hash *hash)
++struct object_name {
++	int len;
++	char *name;
++};
++
++static struct object_name *name_file(struct tree *tree)
 +{
-+	struct object_hash_entry *old_hash = hash->hash;
-+	int new_size = (hash->size + 1000) * 3 / 2, i;
++	static struct object_name null_name = { 0, NULL };
++	struct object_name *name;
++	struct tree_desc desc;
++	struct name_entry entry;
 +
-+	hash->hash = xcalloc(sizeof(struct object_hash_entry), new_size);
-+	for (i = 0; i < hash->size; i++) {
-+		struct object_hash_entry *entry = old_hash + i;
-+		if (!entry->object)
-+			continue;
-+		insert_object_into_hash(entry->object, entry->util, hash);
-+	}
-+	hash->size = new_size;
-+	free(old_hash);
-+}
++	if (!tree->object.parsed)
++		parse_tree(tree);
++	else if ((name = lookup_object_in_hash(&tree->object, &file_trees)))
++		return name->len ? name : NULL;
 +
-+void add_object_to_hash(struct object *obj, void *util,
-+		struct object_hash *hash)
-+{
-+	if (++hash->nr > hash->size * 2 / 3)
-+		grow_object_hash(hash);
-+	insert_object_into_hash(obj, util, hash);
-+}
-+
-+void *lookup_object_in_hash(struct object *obj, struct object_hash *hash)
-+{
-+	int j;
-+
-+	/* nothing to lookup */
-+	if (!hash->size)
++	if (!tree->buffer) {
++		add_object_to_hash(&tree->object, &null_name, &file_trees);
 +		return NULL;
-+	j = hash_obj(obj, hash->size);
-+	while (hash->hash[j].object) {
-+		if (hash->hash[j].object == obj)
-+			return hash->hash[j].util;
-+		j++;
-+		if (j >= hash->size)
-+			j = 0;
 +	}
-+	return NULL;
++
++	desc.buf = tree->buffer;
++	desc.size = tree->size;
++
++	while (tree_entry(&desc, &entry))
++		if (!hashcmp(file_sha1, entry.sha1)) {
++			name = xcalloc(sizeof(struct object_name), 1);
++			name->len = entry.pathlen;
++			name->name = xstrdup(entry.path);
++			break;
++		} else if (S_ISDIR(entry.mode)) {
++			struct object *subtree = parse_object(entry.sha1);
++			struct object_name *subname;
++
++			/* just to be safe */
++			if (subtree->type != OBJ_TREE)
++				die("%s is not a tree?",
++						sha1_to_hex(entry.sha1));
++
++			subname = name_file((struct tree *)subtree);
++			if (!subname)
++				continue;
++			name = xcalloc(sizeof(struct object_name), 1);
++			name->len = entry.pathlen + 1 + subname->len;
++			name->name = xmalloc(name->len + 1);
++			memcpy(name->name, entry.path, entry.pathlen);
++			name->name[entry.pathlen] = '/';
++			strncpy(name->name + entry.pathlen + 1,
++					subname->name, subname->len);
++			break;
++		}
++	add_object_to_hash(&tree->object, name ? name : &null_name,
++			&file_trees);
++
++	return name;
 +}
+ 
+ typedef struct rev_name {
+ 	const char *tip_name;
+@@ -23,6 +108,7 @@ static void name_rev(struct commit *commit,
+ 	struct rev_name *name = (struct rev_name *)commit->util;
+ 	struct commit_list *parents;
+ 	int parent_number = 1;
++	struct object_name *file_name;
+ 
+ 	if (!commit->object.parsed)
+ 		parse_commit(commit);
+@@ -54,6 +140,12 @@ copy_data:
+ 	} else
+ 		return;
+ 
++	if (file_sha1 && !(commit->object.flags & CONTAINS_FILE) &&
++			(file_name = name_file(commit->tree))) {
++		commit->object.flags |= CONTAINS_FILE;
++		add_object_array(&commit->object, NULL, &file_commits);
++	}
 +
+ 	for (parents = commit->parents;
+ 			parents;
+ 			parents = parents->next, parent_number++) {
+@@ -175,6 +267,14 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 				transform_stdin = 1;
+ 				cutoff = 0;
+ 				continue;
++			} else if (!strcmp(*argv, "--file")) {
++				if (argc != 2)
++					usage(name_rev_usage);
++				if (get_file(argv[1]))
++					die("Could not read '%s'", argv[1]);
++				cutoff = 0;
++				argc = 1;
++				continue;
+ 			}
+ 			usage(name_rev_usage);
+ 		}
+@@ -202,6 +302,22 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 
+ 	for_each_ref(name_ref, &data);
+ 
++	if (file_sha1) {
++		int i;
++		for (i = 0; i < file_commits.nr; i++) {
++			struct commit *commit =
++				(struct commit *)file_commits.objects[i].item;
++			struct rev_name *rev_name = commit->util;
++			struct object_name *obj_name = name_file(commit->tree);
 +
-diff --git a/object-hash.h b/object-hash.h
-new file mode 100644
-index 0000000..0da7824
---- /dev/null
-+++ b/object-hash.h
-@@ -0,0 +1,19 @@
-+#ifndef OBJECT_HASH_H
-+#define OBJECT_HASH_H
++			printf("%s", rev_name->tip_name);
++			if (rev_name->generation)
++				printf("^%d", rev_name->generation);
++			printf(":%s\n", obj_name->name);
++		}
++		return 0;
++	}
 +
-+struct object_hash_entry {
-+	struct object *object;
-+	void *util;
-+};
-+
-+struct object_hash {
-+	unsigned int size, nr;
-+	struct object_hash_entry *hash;
-+};
-+
-+extern void add_object_to_hash(struct object *obj, void *util,
-+		struct object_hash *hash);
-+extern void *lookup_object_in_hash(struct object *obj,
-+		struct object_hash *hash);
-+
-+#endif
+ 	if (transform_stdin) {
+ 		char buffer[2048];
+ 		char *p, *p_start;
 -- 
 1.5.0.2139.gdafc9-dirty
