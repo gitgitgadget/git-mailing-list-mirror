@@ -1,95 +1,53 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] A new merge stragety 'subtree'.
-Date: Sat, 17 Feb 2007 02:14:25 -0500
-Message-ID: <20070217071425.GD27864@spearce.org>
-References: <7vfy95y2n9.fsf@assigned-by-dhcp.cox.net>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: qgit4 segfault
+Date: Sat, 17 Feb 2007 08:14:56 +0100
+Message-ID: <e5bfff550702162314t36fa557dh77eca0ed1215d39@mail.gmail.com>
+References: <cc723f590702151108u1bb8e9e8se72e9f216a23d2f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 17 08:14:37 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 17 08:15:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIJmG-00047O-QK
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 08:14:37 +0100
+	id 1HIJme-0004HX-W0
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 08:15:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946444AbXBQHOa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 02:14:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946445AbXBQHOa
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 02:14:30 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:60734 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946444AbXBQHO3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 02:14:29 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HIJm7-0006EC-83; Sat, 17 Feb 2007 02:14:27 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CE45C20FBAE; Sat, 17 Feb 2007 02:14:25 -0500 (EST)
+	id S1946452AbXBQHO6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 02:14:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946453AbXBQHO6
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 02:14:58 -0500
+Received: from wx-out-0506.google.com ([66.249.82.235]:48659 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946452AbXBQHO5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 02:14:57 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so1112731wxd
+        for <git@vger.kernel.org>; Fri, 16 Feb 2007 23:14:57 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dv6RXv1WjCvliiRk+3UuAV/q8LjIBlr04F9OccqPg3IyB+AaufAQibDGVGdn9dX7R25iakvgathdsPdZiHz9jWen3mkZbC2QgudxkIq1QcRWIFJlYDAlTUH3vT+QNmaxaeDch0AyuF7g1KO6O/8rNVvqCQJiUcrC3x8FdcQkBV0=
+Received: by 10.115.60.1 with SMTP id n1mr2286813wak.1171696496362;
+        Fri, 16 Feb 2007 23:14:56 -0800 (PST)
+Received: by 10.114.60.16 with HTTP; Fri, 16 Feb 2007 23:14:56 -0800 (PST)
+In-Reply-To: <cc723f590702151108u1bb8e9e8se72e9f216a23d2f@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <7vfy95y2n9.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39972>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> For normal merge strategies, if you are on branch A and merge
-> branch B into it, what you will get is exactly the same as what
-> you would get by merging branch A while being on branch A
-> (modulo the direction of conflict markers).  With the subtree
-> merge, it is not the case anymore.  If I pull from git-gui.git,
-> the resulting tree look like git.git with Shawn's updates.  If
-> Shawn pulls from git.git, even after I did some changes on my
-> own to git-gui subdirectory, bypassing his tree, he will get a
-> merged result pertaining to git-gui.git repository
-> (i.e. git-gui/ subdirectory of what I have).  This way, we can
-> continue merging from each other.
-> 
-> Although I do not plan to commit anything in git-gui/ part of my
-> tree myself, bypassing Shawn, it is nice to know that it will
-> not introduce problems down the road.
+On 2/15/07, Aneesh Kumar <aneesh.kumar@gmail.com> wrote:
+> on a linux-2.6 repo it fails during exit
+>
+> Done.
+> QProcess: Destroyed while process is still running.
+> Segmentation fault (core dumped)
 
-This does actually cause a problem if you merge a git.git commit
-into git-gui.git (by stripping the git-gui/ part off).  The problem
-is the entire git.git history would then become the second parent
-of the git-gui.git merge commit, and suddenly the git-gui.git
-repository increases by >11 MiB in size...  ;-)
+Patch pushed. Should be fixed now.
 
-With regards to maintaining git-gui: I'll apply all patches to my
-tree and do testing there, then ask Junio to merge a tagged release
-over to git.git for inclusion in the next git release.
 
-To avoid pulling the entire git.git history into git-gui, I'd ask
-that anyone bypassing me (e.g. if I'm being horribly unresponsive
-one week) checkout the git-gui branch from git.git, apply the
-change(s) there, then merge that branch into git.git using the
-subtree strategy.  This way I can later fast-forward git-gui.git
-to the fixed commit, without sucking in more than I bargained for.
-
-For example:
-
-	git log -n1 -- git-gui
-	# copy the second parent...
-	git checkout -b fixgg <secondparent>
-	# do fixes...
-	git checkout master
-	git merge -s subtree fixgg
-
-Then I can later obtain `fixgg` from the merge commit in git.git
-and update git-gui.git, without sucking in git.git's objects.
-
--- 
-Shawn.
+   Marco
