@@ -1,215 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 2/2] Teach name-rev to identify revisions containing a certain
- blob
-Date: Sat, 17 Feb 2007 18:39:50 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702171838510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] name-rev: introduce the --ref-filter=<regex> option
+Date: Sat, 17 Feb 2007 09:42:26 -0800
+Message-ID: <7vlkiwvfy5.fsf@assigned-by-dhcp.cox.net>
+References: <20070127040618.GA14205@fieldses.org>
+	<Pine.LNX.4.64.0701262022230.25027@woody.linux-foundation.org>
+	<20070127044246.GC14205@fieldses.org>
+	<20070127045552.GB9966@spearce.org>
+	<7vhcudoxfj.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0701271334410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.63.0702171502040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, Mike Coleman <tutufan@gmail.com>,
-	junkio@cox.net
-X-From: git-owner@vger.kernel.org Sat Feb 17 18:39:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 17 18:42:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HITXP-00011M-VT
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 18:39:56 +0100
+	id 1HITZv-0002D1-U5
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 18:42:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992964AbXBQRjx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 12:39:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992965AbXBQRjx
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 12:39:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55837 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2992964AbXBQRjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 12:39:52 -0500
-Received: (qmail invoked by alias); 17 Feb 2007 17:39:50 -0000
-X-Provags-ID: V01U2FsdGVkX1/1sl92fdP1UlyDa+S/eLOvEd/jVWw7tjmAOtWrHy
-	ayYg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+	id S2992970AbXBQRm2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 12:42:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992972AbXBQRm2
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 12:42:28 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:61605 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992970AbXBQRm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 12:42:27 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070217174227.TPKR1300.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 17 Feb 2007 12:42:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id QhiS1W00S1kojtg0000000; Sat, 17 Feb 2007 12:42:27 -0500
+In-Reply-To: <Pine.LNX.4.63.0702171502040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 17 Feb 2007 15:02:36 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39995>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-If you want to know which revisions contained a certain version
-of a file, just say
+>> Instead of (or, in addition to) --tags, to use only tags for naming,
+>> you can now use --ref-filter=<regex> to specify which refs are
+>> used for naming.
+>> 
+>> Example:
+>> 
+>> 	$ git name-rev --ref-filter='/v1' 33db5f4d
+>> 	33db5f4d tags/v1.0rc1^0~1593
+>
+> Likes, dislikes?
 
-	git name-rev --file <filename>
+"Describe these objects in terms of these refs -- do not use any
+other random refs, even if they are closer" was sorely lacking
+for it to be usable for me, so I like what it does.
 
-which will read the file, and give you a list of revisions
-containing a file with the same contents. If <filename> is "-",
-it will read the contents from stdin. Of course, this is a really
-expensive operation.
-
-This feature was suggested by Mike Coleman.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin-name-rev.c |  118 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 117 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-name-rev.c b/builtin-name-rev.c
-index 89ea95d..f08b065 100644
---- a/builtin-name-rev.c
-+++ b/builtin-name-rev.c
-@@ -3,10 +3,95 @@
- #include "commit.h"
- #include "tag.h"
- #include "refs.h"
-+#include "tree-walk.h"
-+#include "object-hash.h"
- #include <regex.h>
- 
- static const char name_rev_usage[] =
--	"git-name-rev [--tags | --ref-filter=<regexp>] ( --all | --stdin | committish [committish...] )\n";
-+	"git-name-rev [--tags | --ref-filter=<regexp>] ( --all | --stdin | committish [committish...] | --file <filename> )\n";
-+
-+static unsigned char *file_sha1;
-+static struct object_hash file_trees = { 0, 0, NULL };
-+static struct object_array file_commits = { 0, 0, NULL };
-+#define CONTAINS_FILE (1u<<10)
-+
-+static int get_file(const char *path)
-+{
-+	int fd, ret;
-+	struct stat st;
-+
-+	file_sha1 = xmalloc(20);
-+	if (!strcmp(path, "-"))
-+		ret = index_pipe(file_sha1, 0, "blob", 0);
-+	else {
-+		if ((fd = open(path, O_RDONLY)) < 0 || fstat(fd, &st) < 0)
-+			return -1;
-+		ret = index_fd(file_sha1, fd, &st, 0, "blob");
-+	}
-+	if (ret)
-+		return ret;
-+	if (!parse_object(file_sha1))
-+		return error("Object not found for '%s'", path);
-+	return 0;
-+}
-+
-+struct object_name {
-+	int len;
-+	char *name;
-+};
-+
-+static struct object_name *name_file(struct tree *tree)
-+{
-+	static struct object_name null_name = { 0, NULL };
-+	struct object_name *name;
-+	struct tree_desc desc;
-+	struct name_entry entry;
-+
-+	if (!tree->object.parsed)
-+		parse_tree(tree);
-+	else if ((name = lookup_object_in_hash(&tree->object, &file_trees)))
-+		return name->len ? name : NULL;
-+
-+	if (!tree->buffer) {
-+		add_object_to_hash(&tree->object, &null_name, &file_trees);
-+		return NULL;
-+	}
-+
-+	desc.buf = tree->buffer;
-+	desc.size = tree->size;
-+
-+	while (tree_entry(&desc, &entry))
-+		if (!hashcmp(file_sha1, entry.sha1)) {
-+			name = xcalloc(sizeof(struct object_name), 1);
-+			name->len = entry.pathlen;
-+			name->name = xstrdup(entry.path);
-+			break;
-+		} else if (S_ISDIR(entry.mode)) {
-+			struct object *subtree = parse_object(entry.sha1);
-+			struct object_name *subname;
-+
-+			/* just to be safe */
-+			if (subtree->type != OBJ_TREE)
-+				die("%s is not a tree?",
-+						sha1_to_hex(entry.sha1));
-+
-+			subname = name_file((struct tree *)subtree);
-+			if (!subname)
-+				continue;
-+			name = xcalloc(sizeof(struct object_name), 1);
-+			name->len = entry.pathlen + 1 + subname->len;
-+			name->name = xmalloc(name->len + 1);
-+			memcpy(name->name, entry.path, entry.pathlen);
-+			name->name[entry.pathlen] = '/';
-+			strncpy(name->name + entry.pathlen + 1,
-+					subname->name, subname->len);
-+			break;
-+		}
-+	add_object_to_hash(&tree->object, name ? name : &null_name,
-+			&file_trees);
-+
-+	return name;
-+}
- 
- typedef struct rev_name {
- 	const char *tip_name;
-@@ -23,6 +108,7 @@ static void name_rev(struct commit *commit,
- 	struct rev_name *name = (struct rev_name *)commit->util;
- 	struct commit_list *parents;
- 	int parent_number = 1;
-+	struct object_name *file_name;
- 
- 	if (!commit->object.parsed)
- 		parse_commit(commit);
-@@ -54,6 +140,12 @@ copy_data:
- 	} else
- 		return;
- 
-+	if (file_sha1 && !(commit->object.flags & CONTAINS_FILE) &&
-+			(file_name = name_file(commit->tree))) {
-+		commit->object.flags |= CONTAINS_FILE;
-+		add_object_array(&commit->object, NULL, &file_commits);
-+	}
-+
- 	for (parents = commit->parents;
- 			parents;
- 			parents = parents->next, parent_number++) {
-@@ -175,6 +267,14 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 				transform_stdin = 1;
- 				cutoff = 0;
- 				continue;
-+			} else if (!strcmp(*argv, "--file")) {
-+				if (argc != 2)
-+					usage(name_rev_usage);
-+				if (get_file(argv[1]))
-+					die("Could not read '%s'", argv[1]);
-+				cutoff = 0;
-+				argc = 1;
-+				continue;
- 			}
- 			usage(name_rev_usage);
- 		}
-@@ -202,6 +302,22 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 
- 	for_each_ref(name_ref, &data);
- 
-+	if (file_sha1) {
-+		int i;
-+		for (i = 0; i < file_commits.nr; i++) {
-+			struct commit *commit =
-+				(struct commit *)file_commits.objects[i].item;
-+			struct rev_name *rev_name = commit->util;
-+			struct object_name *obj_name = name_file(commit->tree);
-+
-+			printf("%s", rev_name->tip_name);
-+			if (rev_name->generation)
-+				printf("^%d", rev_name->generation);
-+			printf(":%s\n", obj_name->name);
-+		}
-+		return 0;
-+	}
-+
- 	if (transform_stdin) {
- 		char buffer[2048];
- 		char *p, *p_start;
--- 
-1.5.0.2139.gdafc9-dirty
+When we talk about path and path-like things including refs
+I think we consistently use fnmatch not regexp.  At least I
+think we try to.
