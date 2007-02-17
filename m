@@ -1,57 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] name-rev: introduce the --ref-filter=<regex> option
-Date: Sat, 17 Feb 2007 15:02:36 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702171502040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070127040618.GA14205@fieldses.org>
- <Pine.LNX.4.64.0701262022230.25027@woody.linux-foundation.org>
- <20070127044246.GC14205@fieldses.org> <20070127045552.GB9966@spearce.org>
- <7vhcudoxfj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0701271334410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for
+ disconnected transfer
+Date: Sat, 17 Feb 2007 09:40:00 -0500
+Message-ID: <45D713C0.1010401@verizon.net>
+References: <28763990.2658921171630394111.JavaMail.root@vms064.mailsrvcs.net>
+ <7vhctl50zc.fsf@assigned-by-dhcp.cox.net>	<45D63C7A.4050300@verizon.net>
+ <7vfy95w9sc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 17 15:03:13 2007
+X-From: git-owner@vger.kernel.org Sat Feb 17 15:40:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIQ9D-00025q-4o
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 15:02:43 +0100
+	id 1HIQjR-0001V6-VB
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 15:40:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030193AbXBQOCi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 09:02:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030195AbXBQOCi
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 09:02:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50332 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030193AbXBQOCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 09:02:37 -0500
-Received: (qmail invoked by alias); 17 Feb 2007 14:02:36 -0000
-X-Provags-ID: V01U2FsdGVkX18rjQRNC/wrUZ/NuDTGNVpfSiwAB3bGtMq8wXB1gD
-	P1Fg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.63.0701271334410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+	id S965265AbXBQOkG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 09:40:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965264AbXBQOkG
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 09:40:06 -0500
+Received: from vms042pub.verizon.net ([206.46.252.42]:36466 "EHLO
+	vms042pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965265AbXBQOkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 09:40:04 -0500
+Received: from [127.0.0.1] ([71.246.235.75])
+ by vms042.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JDM008TP3ENVZ60@vms042.mailsrvcs.net> for
+ git@vger.kernel.org; Sat, 17 Feb 2007 08:40:00 -0600 (CST)
+In-reply-to: <7vfy95w9sc.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39989>
 
-Hi,
+Junio C Hamano wrote:
+> I do not think your patch (original or respun) checks if it is
+> overwriting the current branch.  Even if it is a fast forward,
+> it should check this condition and prevent the end user from
+> getting confused.  The above sample command line you quoted from
+> my message can potentially have the same problem, but "git
+> fetch" checks and refuses.
+>   
+True. I've been using this to mirror remote/* and tags. Making this just 
+an alternate transport behind fetch and pull is clearly the cleanest way 
+to deal with non-remote branches.
+> A final note.  A real 'mirror' mode should also remove stale
+> refs that do not exist on the remote side anymore, which is a
+> different use case as your bundle, which presumably is primarily
+> meant to carry not all but only selected set of refs, and most
+> likely not the 'master' branch head (and I am guessing that that
+> is why you forgot to make sure you are not overwriting the
+> current branch in the unbundle script).  A real 'mirror' mode
+> would use a separate option to remove a ref that does not exist
+> on the remote end anymore, like:
+>
+> 	$ git fetch --mirror-all git://git.kernel.org/pub/scm/git/git.git
+>   
+Perhaps "git fetch --mirror --delete" would be more suggestive of the 
+difference to "git fetch --mirror"?
 
-On Sat, 27 Jan 2007, Johannes Schindelin wrote:
-
-> Instead of (or, in addition to) --tags, to use only tags for naming,
-> you can now use --ref-filter=<regex> to specify which refs are
-> used for naming.
-> 
-> Example:
-> 
-> 	$ git name-rev --ref-filter='/v1' 33db5f4d
-> 	33db5f4d tags/v1.0rc1^0~1593
-
-Likes, dislikes?
-
-Ciao,
-Dscho
+Mark
