@@ -1,79 +1,159 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [PATCH] A new merge stragety 'subtree'.
-Date: Sat, 17 Feb 2007 00:29:24 -0800
-Message-ID: <7vzm7duqzf.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 17 Feb 2007 03:45:58 -0500
+Message-ID: <20070217084558.GE27864@spearce.org>
 References: <7vfy95y2n9.fsf@assigned-by-dhcp.cox.net>
-	<20070217071425.GD27864@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Feb 17 09:29:29 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Feb 17 09:46:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIKwi-0002Wk-SP
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 09:29:29 +0100
+	id 1HILCy-0001kw-Fa
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 09:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946435AbXBQI30 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 03:29:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946454AbXBQI30
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 03:29:26 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:57815 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946435AbXBQI3Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 03:29:25 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070217082924.OIIW21177.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 17 Feb 2007 03:29:24 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id QYVQ1W00N1kojtg0000000; Sat, 17 Feb 2007 03:29:25 -0500
-In-Reply-To: <20070217071425.GD27864@spearce.org> (Shawn O. Pearce's message
-	of "Sat, 17 Feb 2007 02:14:25 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946464AbXBQIqF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 03:46:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946506AbXBQIqF
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 03:46:05 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34007 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946464AbXBQIqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 03:46:03 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HILCi-0000ss-2o; Sat, 17 Feb 2007 03:46:00 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3E3B020FBAE; Sat, 17 Feb 2007 03:45:59 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vfy95y2n9.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39975>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> The detection of corresponding subtree is done by comparing the
+> pathnames and types in the toplevel of the tree.
+> 
+> Heuristics galore!  That's the git way ;-).
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> ...
->> Although I do not plan to commit anything in git-gui/ part of my
->> tree myself, bypassing Shawn, it is nice to know that it will
->> not introduce problems down the road.
->
-> This does actually cause a problem if you merge a git.git commit
-> into git-gui.git (by stripping the git-gui/ part off).  The problem
-> is the entire git.git history would then become the second parent
-> of the git-gui.git merge commit, and suddenly the git-gui.git
-> repository increases by >11 MiB in size...  ;-)
+I have some concerns about the match-tree heuristic you are using here.
 
-Don't worry.  I am not asking you to actually perform such a merge
-and make the relut as a part of _official_ git-gui.git history.
+For example, it is very common for Java projects to have the same
+tree "shape".  Just look at egit/jgit for an example, the three
+top level directories are:
 
-> To avoid pulling the entire git.git history into git-gui, I'd ask
-> that anyone bypassing me (e.g. if I'm being horribly unresponsive
-> one week) checkout the git-gui branch from git.git, apply the
-> change(s) there, then merge that branch into git.git using the
-> subtree strategy.
+	org.spearce.egit.core/
+		META-INF/
+		build.properties
+		plugin.xml
+		src/
 
-Actually, I do not think you even need to ask them to do that.
-I am not planning to apply patches to git.git that touch
-git-gui/ subdirectory myself, but if you see such a patch on the
-list, you could first apply it to your copy of git.git
-repository, and run your private edition of cherry-pick that
-uses merge-subtree instead of merge-recursive to pick it out
-onto your 'master' branch of git-gui.git repository.  That way,
-the next time I'll pull from your git-gui.git repository, I will
-get the change through you.
+	org.spearce.egit.ui/
+		META-INF/
+		build.properties
+		plugin.xml
+		src/
 
-And the procedure would actually work _even_ _if_ (repeat, I do
-not plan to do this) I applied such a patch to my tree before I
-pull from you --- it will just result in an accidental clean
-merge.
+	org.spearce.jgit
+		META-INF/
+		src/
+
+If I were to treat the first two as subprojects this new subtree
+merge strategy might fail here as it could easily match to the
+wrong directory.
+
+
+What about a different approach?
+
+In a merge of commit#1 (parent project) and commit#2 (subroject)...
+
+We have the set of merge bases readily available.  We just have
+to find out in each merge base where the files went from commit#2,
+then modify commit#2 to conform to that same shape.
+
+Really that isn't too different from a rename detection.  In other
+words do something like the following:
+
+  a) Scan the parents of the merge base B for a commit that is
+  in commit#2's ancestory but not commit#1's ancestory, except by
+  the merge commit B.  Such a parent must be from the project that
+  commit#2 is also from.  For sake of explaining this, lets call
+  this parent B^2.
+
+  b) Perform a partial rename-diff between B^2 and B.  The magic
+  here is we need to discard any path in B that also appears in
+  B^1 and B^2, and that has the same SHA-1 as in B^1, before we do
+  the rename-diff.
+
+  c) Find the most common prefix within the renamed files.
+
+  d) Fit commit#2 to use that prefix, and merge.
+
+
+Here's a real example.  In 67c75759 you merged git-gui.git.
+67c75759^1 is from git.git, 67c75759^2 is from git-gui.git.
+
+The stock rename-diff:
+
+  $ git diff-tree --abbrev -r -M --diff-filter=MRD 67c75759^2 67c75759
+  :100644 100644 c714d38... d99372a... M  .gitignore
+  :100755 100755 8fac8cb... 7a10b60... M  GIT-VERSION-GEN
+  :100644 100644 fd82d9d... 5d31e6d... M  Makefile
+  :100644 100644 b95a137... b95a137... R100       TODO    git-gui/TODO
+  :100755 100755 f5010dd... f5010dd... R100       git-gui.sh      git-gui/git-gui.sh
+
+The problem here is both ^1 and ^2 defines the first three paths,
+so we think we modified them in the merge rather than moved them.
+But these three files match ^1, as we did not do an evil merge here.
+That's why they are showing as modified in this diff.
+
+Now take 67c7 and whack those three files (step b above), and rediff:
+
+  $ C=$(git ls-tree 67c75759 | sed '
+          /       .gitignore$/d
+          /       GIT-VERSION-GEN$/d
+          /       Makefile$/d' | git mktree)
+  $ git diff-tree --abbrev -r -M --diff-filter=MRD 67c75759^2 $C
+  :100644 100644 c714d38... c714d38... R100       .gitignore      git-gui/.gitignore
+  :100755 100755 8fac8cb... 8fac8cb... R100       GIT-VERSION-GEN git-gui/GIT-VERSION-GEN
+  :100644 100644 fd82d9d... fd82d9d... R100       Makefile        git-gui/Makefile
+  :100644 100644 b95a137... b95a137... R100       TODO    git-gui/TODO
+  :100755 100755 f5010dd... f5010dd... R100       git-gui.sh      git-gui/git-gui.sh
+
+Wow, look at that, everything starts with 'git-gui/'!  ;-)
+
+Then we just need to pick the most popular common prefix of all
+renamed paths and fit commit#2 to conform to that structure.
+Finally we can run the merge through.
+
+The (now functional) pretend object stuff can be useful here,
+such as to make $C above so we can pass it off to diffcore.
+
+
+I think popping off the 'git-gui/' prefix would be the same deal,
+only we'd be looking at the old names to determine the prefix to pop,
+rather than the new names.
+
+We already do rename detection in merge-recursive.  Slapping an extra
+rename pass in front of things when it is invoked as merge-subtree
+can't performance hurt that much.
+
+Thoughts?
+
+-- 
+Shawn.
