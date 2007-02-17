@@ -1,57 +1,200 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: test suite failures because cmp behaves oddly
-Date: Sat, 17 Feb 2007 15:03:32 -0800
-Message-ID: <7v3b54s7y3.fsf@assigned-by-dhcp.cox.net>
-References: <200702172225.12758.johannes.sixt@telecom.at>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-name-rev: accept list of refs from user
+Date: Sat, 17 Feb 2007 18:13:28 -0500
+Message-ID: <20070217231327.GA5382@coredump.intra.peff.net>
+References: <7vmz3ctzer.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun Feb 18 00:03:42 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Feb 18 00:13:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIYag-000490-Gb
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 00:03:38 +0100
+	id 1HIYkJ-0008Dx-Fo
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 00:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751769AbXBQXDe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 18:03:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751771AbXBQXDe
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 18:03:34 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:47461 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751769AbXBQXDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 18:03:34 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070217230333.DEYZ21177.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 17 Feb 2007 18:03:33 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Qn3Z1W0061kojtg0000000; Sat, 17 Feb 2007 18:03:33 -0500
-In-Reply-To: <200702172225.12758.johannes.sixt@telecom.at> (Johannes Sixt's
-	message of "Sat, 17 Feb 2007 22:25:12 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933085AbXBQXNc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 18:13:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933082AbXBQXNc
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 18:13:32 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1851 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933085AbXBQXNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 18:13:31 -0500
+Received: (qmail 14293 invoked from network); 17 Feb 2007 18:13:37 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 17 Feb 2007 18:13:37 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Feb 2007 18:13:28 -0500
+Content-Disposition: inline
+In-Reply-To: <7vmz3ctzer.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40019>
 
-Johannes Sixt <johannes.sixt@telecom.at> writes:
+This lets you do things like
 
-> Does anyone know how 'cmp' can signal success when its output is redirected 
-> to /dev/null, even if the compared files are different?
->
-> $ cmp M.sum actual7.sum; echo $?
-> M.sum actual7.sum differ: char 20, line 2
-> 1
-> $ cmp M.sum actual7.sum > /dev/null; echo $?
-> 0
-> ...
-> Has anyone seen something like this?
+  git show-ref | grep /v1 | git name-rev --refs-from=- $commit
 
-I vaguely recall this reported long time ago from one of the
-regulars on the list, but googling or gmane search came up
-empty.
+or even
+
+  git show-ref | ./some_complex_ref_filter >refs
+  git name-rev --refs-from=refs --stdin <list_of_commits
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+On Sat, Feb 17, 2007 at 10:25:00AM -0800, Junio C Hamano wrote:
+>> git show-ref | grep tags/v1.4 | git name-rev --stdin-refs 33db5f4d
+> FWIW, I like that.
+
+Here it is (I chose --refs-from= so you could use it with the existing
+--stdin flag). We might want to do the same for git-describe, I would
+think (they can probably share the for_each_ref_from_file code).
+
+The input format is "sha1 ref"; clearly it could also accept just "ref",
+and look up the sha1, but I expect most people will just be piping from
+git-show-ref anyway.
+
+ Documentation/git-name-rev.txt |   16 +++++++++++-
+ builtin-name-rev.c             |   54 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 67 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-name-rev.txt b/Documentation/git-name-rev.txt
+index 37fbf66..d2fb3bb 100644
+--- a/Documentation/git-name-rev.txt
++++ b/Documentation/git-name-rev.txt
+@@ -8,7 +8,7 @@ git-name-rev - Find symbolic names for given revs
+ 
+ SYNOPSIS
+ --------
+-'git-name-rev' [--tags] ( --all | --stdin | <committish>... )
++'git-name-rev' [--tags] [--refs-from=<file>] ( --all | --stdin | <committish>... )
+ 
+ DESCRIPTION
+ -----------
+@@ -22,6 +22,13 @@ OPTIONS
+ --tags::
+ 	Do not use branch names, but only tags to name the commits
+ 
++--refs-from=<file>::
++	Instead of choosing a name based on all refs, read refs from <file>,
++	one per line, in the form "sha1 ref". This is the same as the
++	default output generated by "git show-ref". If <file> is "-",
++	read from stdin. The --tags option is still respected when using
++	--refs-from.
++
+ --all::
+ 	List all commits reachable from all refs
+ 
+@@ -52,6 +59,13 @@ Another nice thing you can do is:
+ % git log | git name-rev --stdin
+ ------------
+ 
++You can filter the commits used to describe a commit using the --refs-from
++option:
++
++------------
++% git show-ref | grep tags/v1 | git name-rev --refs-from=- 26cfcfbf
++------------
++
+ 
+ Author
+ ------
+diff --git a/builtin-name-rev.c b/builtin-name-rev.c
+index b4f15cc..c8480d2 100644
+--- a/builtin-name-rev.c
++++ b/builtin-name-rev.c
+@@ -5,7 +5,7 @@
+ #include "refs.h"
+ 
+ static const char name_rev_usage[] =
+-	"git-name-rev [--tags] ( --all | --stdin | committish [committish...] )\n";
++"git-name-rev [--tags] [--refs-from=<file>] ( --all | --stdin | committish ... )";
+ 
+ typedef struct rev_name {
+ 	const char *tip_name;
+@@ -14,6 +14,7 @@ typedef struct rev_name {
+ } rev_name;
+ 
+ static long cutoff = LONG_MAX;
++static const char *refs_from = NULL;
+ 
+ static void name_rev(struct commit *commit,
+ 		const char *tip_name, int merge_traversals, int generation,
+@@ -103,6 +104,46 @@ static int name_ref(const char *path, const unsigned char *sha1, int flags, void
+ 	return 0;
+ }
+ 
++static void trim_trailing_whitespace(char *buf)
++{
++	int i = strlen(buf) - 1;
++	while(i >= 0 && isspace(buf[i]))
++		buf[i--] = '\0';
++}
++
++static void for_each_ref_from_file(const char *filename, each_ref_fn fn, void *data)
++{
++	FILE *fh;
++	char buf[PATH_MAX + 40 + 3]; /* "PATH SHA1\n\0" */
++	unsigned char sha1[20];
++
++	if (!strcmp(filename, "-"))
++		fh = stdin;
++	else {
++		fh = fopen(filename, "r");
++		if (!fh)
++			die("unable to open %s: %s", filename, strerror(errno));
++	}
++
++	while (fgets(buf, sizeof buf, fh)) {
++		char *name;
++
++		trim_trailing_whitespace(buf);
++
++		name = strchr(buf, ' ');
++		if (!name)
++			die("invalid input ref format: %s\n", buf);
++		*name++ = '\0';
++
++		if (get_sha1_hex(buf, sha1) < 0)
++			die("invalid sha1: %s\n", buf);
++
++		name_ref(name, sha1, 0, data);
++	}
++
++	fclose(fh);
++}
++
+ /* returns a static buffer */
+ static const char* get_rev_name(struct object *o)
+ {
+@@ -160,6 +201,9 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 				transform_stdin = 1;
+ 				cutoff = 0;
+ 				continue;
++			} else if (!strncmp(*argv, "--refs-from=", 12)) {
++				refs_from = (*argv)+12;
++				continue;
+ 			}
+ 			usage(name_rev_usage);
+ 		}
+@@ -185,7 +229,13 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		add_object_array((struct object *)commit, *argv, &revs);
+ 	}
+ 
+-	for_each_ref(name_ref, &tags_only);
++	if (refs_from && !strcmp(refs_from, "-") && transform_stdin)
++		die("--refs-from=- and --stdin are incompatible!");
++
++	if (refs_from)
++		for_each_ref_from_file(refs_from, name_ref, &tags_only);
++	else
++		for_each_ref(name_ref, &tags_only);
+ 
+ 	if (transform_stdin) {
+ 		char buffer[2048];
+-- 
+1.5.0.552.ge1b1c-dirty
