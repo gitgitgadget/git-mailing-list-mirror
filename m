@@ -1,82 +1,53 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: Re: Error.pm: add configuration variable in Makefile
-Date: Sat, 17 Feb 2007 14:38:58 +0000 (UTC)
-Message-ID: <loom.20070217T152508-6@post.gmane.org>
-References: <200702162200.15241.barra_cuda@katamail.com>
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for
+ disconnected transfer
+Date: Sat, 17 Feb 2007 09:50:04 -0500
+Message-ID: <45D7161C.3050604@verizon.net>
+References: <28763990.2658921171630394111.JavaMail.root@vms064.mailsrvcs.net>
+ <7vhctl50zc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 17 15:45:19 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Feb 17 15:50:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIQoP-0003cm-Pn
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 15:45:18 +0100
+	id 1HIQtH-0005jz-3L
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 15:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946765AbXBQOpO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 09:45:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946762AbXBQOpO
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 09:45:14 -0500
-Received: from main.gmane.org ([80.91.229.2]:55490 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1946765AbXBQOpM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 09:45:12 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HIQoB-0000QG-Na
-	for git@vger.kernel.org; Sat, 17 Feb 2007 15:45:04 +0100
-Received: from mars-fw.arces.unibo.it ([137.204.143.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 17 Feb 2007 15:45:03 +0100
-Received: from scallegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 17 Feb 2007 15:45:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.1) Gecko/20060601 Firefox/2.0.0.1 (Ubuntu-edgy))
+	id S1946766AbXBQOuP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 09:50:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946769AbXBQOuP
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 09:50:15 -0500
+Received: from vms040pub.verizon.net ([206.46.252.40]:38688 "EHLO
+	vms040pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946766AbXBQOuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 09:50:14 -0500
+Received: from [127.0.0.1] ([71.246.235.75])
+ by vms040.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JDM00EJD3VF8213@vms040.mailsrvcs.net> for
+ git@vger.kernel.org; Sat, 17 Feb 2007 08:50:04 -0600 (CST)
+In-reply-to: <7vhctl50zc.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39991>
 
-Michael <barra_cuda <at> katamail.com> writes:
+Junio C Hamano wrote:
+> I haven't thought things through, but I think something like this
+> would be sufficient:
+>
+> 	# create a bundle.
+> 	$ git bundle --create v1.5.0..maint master next >file.bdl
+>
+>   
+In this vein, would it make sense to let git-push be the front end to 
+create the bundle? I'm not sure git-push really contributes anything, 
+but the interface would then be consistent across all transports. Just a 
+thought.
 
-> 
-> When compiling, we check in perl/Makefile.PL if Error.pm is available. If not, 
-> we use our Error.pm instead. So, after a "make install" the system does have 
-> an Error.pm. This is fine, unless we are used to create an 
-> rpm/deb/whatever-it-is by ourselves and install it with the system's package 
-> manager: in this case, in fact, the git package we are building will have an 
-> Error.pm only if the package currently installed does not. Of course, once we 
-> install the new package, the next one won't ship Error.pm because 
-> perl/Makefile.PL thinks it doesn't need to; but that's obviously wrong, since 
-> the package manager will delete the old Error.pm when installing the new git 
-> package.
-> 
-> 
-
-Apart from those making rpm/deb/whatever, I see another scenario where the
-current selection logic for systemwide Error.pm and private Error.pm may fail.
-This is if one uses GNU Stow for managing software that is not managed by the
-distro packaging system... whatever.
-
-A typical upgrade flow would be:
-
-You have Git version X installed in /usr/local/stow/Git-X and stowed.
-You now compile version X+1 of git, with prefix /usr/local/stow/Git-X+1
-(here the current Error.pm logic thinks that there is no need for the private  
- Error.pm since it finds an Error.pm -- only it is the Error.pm from the Git-X
-stowing)
-You install Git version X+1 in /usr/local/stow/Git-X+1
-You unstow Git version X
-You stow Git version X+1
-Git version X+1 fails because of missing Error.pm
-
-I.e. identical problem as with a true package manager.
-Problem is that the "private" Error.pm is put in a "public" location and not
-kept private with the current installation of Git.
-  
+Mark
