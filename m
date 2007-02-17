@@ -1,68 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] name-rev: introduce the --ref-filter=<regex> option
-Date: Sat, 17 Feb 2007 18:50:51 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702171840140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070127040618.GA14205@fieldses.org>
- <Pine.LNX.4.64.0701262022230.25027@woody.linux-foundation.org>
- <20070127044246.GC14205@fieldses.org> <20070127045552.GB9966@spearce.org>
- <7vhcudoxfj.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0701271334410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0702171502040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070217145921.GA16747@coredump.intra.peff.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add git-unbundle - unpack objects and references for disconnected transfer
+Date: Sat, 17 Feb 2007 09:53:56 -0800
+Message-ID: <7v8xewvfez.fsf@assigned-by-dhcp.cox.net>
+References: <28763990.2658921171630394111.JavaMail.root@vms064.mailsrvcs.net>
+	<7vhctl50zc.fsf@assigned-by-dhcp.cox.net>
+	<45D63C7A.4050300@verizon.net>
+	<7vfy95w9sc.fsf@assigned-by-dhcp.cox.net>
+	<45D713C0.1010401@verizon.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 17 18:50:58 2007
+To: Mark Levedahl <mdl123@verizon.net>
+X-From: git-owner@vger.kernel.org Sat Feb 17 18:54:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HITi5-0005mQ-CI
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 18:50:57 +0100
+	id 1HITlJ-0007GU-9i
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 18:54:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992995AbXBQRuy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 12:50:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992996AbXBQRuy
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 12:50:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56756 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2992995AbXBQRux (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 12:50:53 -0500
-Received: (qmail invoked by alias); 17 Feb 2007 17:50:52 -0000
-X-Provags-ID: V01U2FsdGVkX18boEFji88bmIiVHPOP5ZyKNAzfGq7NaG+nARzY90
-	on+A==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070217145921.GA16747@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1030223AbXBQRx6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 12:53:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030224AbXBQRx6
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 12:53:58 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:36483 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030223AbXBQRx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 12:53:57 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070217175358.XGOM21704.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 17 Feb 2007 12:53:58 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Qhtw1W00R1kojtg0000000; Sat, 17 Feb 2007 12:53:57 -0500
+In-Reply-To: <45D713C0.1010401@verizon.net> (Mark Levedahl's message of "Sat,
+	17 Feb 2007 09:40:00 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39998>
 
-Hi,
+Mark Levedahl <mdl123@verizon.net> writes:
 
-On Sat, 17 Feb 2007, Jeff King wrote:
+> Junio C Hamano wrote:
+> ...
+>> A final note.  A real 'mirror' mode should also remove stale
+>> refs that do not exist on the remote side anymore, which is a
+>> different use case as your bundle,...
+>> ...  A real 'mirror' mode
+>> would use a separate option to remove a ref that does not exist
+>> on the remote end anymore, like:
+>>
+>> 	$ git fetch --mirror-all git://git.kernel.org/pub/scm/git/git.git
+>>
+> Perhaps "git fetch --mirror --delete" would be more suggestive of the
+> difference to "git fetch --mirror"?
 
-> On Sat, Feb 17, 2007 at 03:02:36PM +0100, Johannes Schindelin wrote:
-> 
-> > > Instead of (or, in addition to) --tags, to use only tags for naming,
-> > > you can now use --ref-filter=<regex> to specify which refs are
-> > > used for naming.
-> > > 
-> > > Example:
-> > > 
-> > > 	$ git name-rev --ref-filter='/v1' 33db5f4d
-> > > 	33db5f4d tags/v1.0rc1^0~1593
-> > 
-> > Likes, dislikes?
-> 
-> It's a neat idea, but I wonder if you could make it even more flexible
-> by simply accepting a list of possible refs, and then you could filter
-> using grep, or your own more complex selection algorithm.
-
-You can do that with regexps also. And you're right, my code was meant to 
-be simple...
-
-Ciao,
-Dscho
+I think that is a good suggestion, as people familiar with rsync
+already know what --delete means in such a context.
