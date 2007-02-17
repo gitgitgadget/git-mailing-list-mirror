@@ -1,67 +1,170 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] name-rev: introduce the --ref-filter=<regex> option
-Date: Sat, 17 Feb 2007 09:59:21 -0500
-Message-ID: <20070217145921.GA16747@coredump.intra.peff.net>
-References: <20070127040618.GA14205@fieldses.org> <Pine.LNX.4.64.0701262022230.25027@woody.linux-foundation.org> <20070127044246.GC14205@fieldses.org> <20070127045552.GB9966@spearce.org> <7vhcudoxfj.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0701271334410.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0702171502040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/2] Add `struct object_hash`
+Date: Sat, 17 Feb 2007 18:38:50 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702171838150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Feb 17 15:59:30 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, Mike Coleman <tutufan@gmail.com>,
+	junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Feb 17 18:38:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIR27-00019g-9o
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 15:59:27 +0100
+	id 1HITWR-0000Ze-LK
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 18:38:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965283AbXBQO7Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 09:59:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965282AbXBQO7Y
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 09:59:24 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2892 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965283AbXBQO7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 09:59:24 -0500
-Received: (qmail 30661 invoked from network); 17 Feb 2007 09:59:31 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 17 Feb 2007 09:59:31 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Feb 2007 09:59:21 -0500
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702171502040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S2992954AbXBQRiw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 12:38:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992802AbXBQRiw
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 12:38:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41460 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S2992954AbXBQRiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 12:38:52 -0500
+Received: (qmail invoked by alias); 17 Feb 2007 17:38:50 -0000
+X-Provags-ID: V01U2FsdGVkX199QbdOEZl9NaNCoy8IxXf1OlL+rx0TZQapB3FUcZ
+	NtOw==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/39993>
 
-On Sat, Feb 17, 2007 at 03:02:36PM +0100, Johannes Schindelin wrote:
 
-> > Instead of (or, in addition to) --tags, to use only tags for naming,
-> > you can now use --ref-filter=<regex> to specify which refs are
-> > used for naming.
-> > 
-> > Example:
-> > 
-> > 	$ git name-rev --ref-filter='/v1' 33db5f4d
-> > 	33db5f4d tags/v1.0rc1^0~1593
-> 
-> Likes, dislikes?
+Using object_hash, you can store interesting information about
+objects in a private hash map. This makes up for the lack of a
+`util` member of `struct object`.
 
-It's a neat idea, but I wonder if you could make it even more flexible
-by simply accepting a list of possible refs, and then you could filter
-using grep, or your own more complex selection algorithm.
-Unfortunately, --stdin is already taken, but something like:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-git show-ref | grep tags/v1.4 | git name-rev --stdin-refs 33db5f4d
+	We should have done that earlier. Now, git.git already
+	contains two specialised versions of an object hash map:
+	obj_hash and refs_hash.
 
-If the stdin ref format includes both the refname and the hash, you
-could even find 'fake' refs that don't exist in git (e.g., that you get
-from a foreign SCM; though why you wouldn't just make git tags for them,
-I don't know).
+	obj_hash is not really a hash map, but rather a hash set,
+	but there is no excuse for refs_hash having its own little
+	private implementation nobody else can reuse.
 
-Or maybe this is just making the problem too complex, and nobody really
-wants to do it. I certainly don't have a use at this point, but if
-you're going to do ref filtering, it seems like making it as general as
-(painlessly) possible is useful.
+ Makefile      |    2 +-
+ object-hash.c |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ object-hash.h |   19 ++++++++++++++++
+ 3 files changed, 87 insertions(+), 1 deletions(-)
+ create mode 100644 object-hash.c
+ create mode 100644 object-hash.h
 
--Peff
+diff --git a/Makefile b/Makefile
+index dfe226f..e53a5ad 100644
+--- a/Makefile
++++ b/Makefile
+@@ -267,7 +267,7 @@ LIB_OBJS = \
+ 	write_or_die.o trace.o list-objects.o grep.o \
+ 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
+ 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
+-	convert.o
++	convert.o object-hash.o
+ 
+ BUILTIN_OBJS = \
+ 	builtin-add.o \
+diff --git a/object-hash.c b/object-hash.c
+new file mode 100644
+index 0000000..2295e33
+--- /dev/null
++++ b/object-hash.c
+@@ -0,0 +1,67 @@
++#include "cache.h"
++#include "object.h"
++#include "object-hash.h"
++
++static unsigned int hash_obj(struct object *obj, unsigned int n)
++{
++	unsigned int hash = *(unsigned int *)obj->sha1;
++	return hash % n;
++}
++
++static void insert_object_into_hash(struct object *object, void *util,
++		struct object_hash *hash)
++{
++	int j = hash_obj(object, hash->size);
++
++	while (hash->hash[j].object) {
++		j++;
++		if (j >= hash->size)
++			j = 0;
++	}
++	hash->hash[j].object = object;
++	hash->hash[j].util = util;
++}
++
++static void grow_object_hash(struct object_hash *hash)
++{
++	struct object_hash_entry *old_hash = hash->hash;
++	int new_size = (hash->size + 1000) * 3 / 2, i;
++
++	hash->hash = xcalloc(sizeof(struct object_hash_entry), new_size);
++	for (i = 0; i < hash->size; i++) {
++		struct object_hash_entry *entry = old_hash + i;
++		if (!entry->object)
++			continue;
++		insert_object_into_hash(entry->object, entry->util, hash);
++	}
++	hash->size = new_size;
++	free(old_hash);
++}
++
++void add_object_to_hash(struct object *obj, void *util,
++		struct object_hash *hash)
++{
++	if (++hash->nr > hash->size * 2 / 3)
++		grow_object_hash(hash);
++	insert_object_into_hash(obj, util, hash);
++}
++
++void *lookup_object_in_hash(struct object *obj, struct object_hash *hash)
++{
++	int j;
++
++	/* nothing to lookup */
++	if (!hash->size)
++		return NULL;
++	j = hash_obj(obj, hash->size);
++	while (hash->hash[j].object) {
++		if (hash->hash[j].object == obj)
++			return hash->hash[j].util;
++		j++;
++		if (j >= hash->size)
++			j = 0;
++	}
++	return NULL;
++}
++
++
+diff --git a/object-hash.h b/object-hash.h
+new file mode 100644
+index 0000000..0da7824
+--- /dev/null
++++ b/object-hash.h
+@@ -0,0 +1,19 @@
++#ifndef OBJECT_HASH_H
++#define OBJECT_HASH_H
++
++struct object_hash_entry {
++	struct object *object;
++	void *util;
++};
++
++struct object_hash {
++	unsigned int size, nr;
++	struct object_hash_entry *hash;
++};
++
++extern void add_object_to_hash(struct object *obj, void *util,
++		struct object_hash *hash);
++extern void *lookup_object_in_hash(struct object *obj,
++		struct object_hash *hash);
++
++#endif
+-- 
+1.5.0.2139.gdafc9-dirty
