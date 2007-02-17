@@ -1,62 +1,84 @@
-From: Bruno Haible <bruno@clisp.org>
-Subject: Re: how to speed up "git log"?
-Date: Sat, 17 Feb 2007 20:19:20 +0100
-Message-ID: <200702172019.20536.bruno@clisp.org>
-References: <200702111252.28393.bruno@clisp.org> <20070211152840.GA2781@steel.home>
+From: Martin Waitz <tali@admingilde.org>
+Subject: exception in git-gui when saving options
+Date: Sat, 17 Feb 2007 20:40:33 +0100
+Message-ID: <20070217194033.GH21842@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="xkXJwpr35CY/Lc3I"
 Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 17 20:12:09 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Feb 17 20:40:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIUyd-0006W6-9R
-	for gcvg-git@gmane.org; Sat, 17 Feb 2007 20:12:07 +0100
+	id 1HIVQE-0001gR-4s
+	for gcvg-git@gmane.org; Sat, 17 Feb 2007 20:40:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932775AbXBQTLy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 14:11:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932780AbXBQTLy
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 14:11:54 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:62574 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932775AbXBQTLx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 14:11:53 -0500
-Received: from linuix.haible.de (cable-139-176.iesy.net [81.210.139.176])
-	by post.webmailer.de (mrclete mo14) (RZmta 4.7) with ESMTP id B04907j1H9LDw7 
-	; Sat, 17 Feb 2007 20:11:51 +0100 (MET)
-In-Reply-To: <20070211152840.GA2781@steel.home>
+	id S932855AbXBQTkf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 14:40:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932858AbXBQTkf
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 14:40:35 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:59201 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932855AbXBQTke (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 14:40:34 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HIVQ9-0005t9-8x; Sat, 17 Feb 2007 20:40:33 +0100
 Content-Disposition: inline
-X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY4JDL5tImGAQ==
-X-RZG-CLASS-ID: mo07
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40011>
 
-Alex Riesen wrote:
-> MacOS X is famous for its bad perfomance when doing serious work.
-> The mmap(2) of it, in particular.
 
-You can't blame MacOS X mmap(2) for git's slow execution of "git log".
-Here are is execution times of "git log tr.c > output"
+--xkXJwpr35CY/Lc3I
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  - with git-1.5.0-rc4 built with -DNO_MMAP
+hoi :)
 
-      real    0m26.032s
-      user    0m13.580s
-      sys     0m11.730s
+I get the following backtrace when I want to save options in a
+git-gui which is started in blame mode:
 
-  - with git-1.5.0-rc4 built with the default settings:
+can't read "current_diff_path": no such variable
+    while executing
+"set p $current_diff_path"
+    (procedure "reshow_diff" line 5)
+    invoked from within
+"reshow_diff"
+    (procedure "do_save_config" line 5)
+    invoked from within
+"do_save_config .options_editor"
+    invoked from within
+".options_editor.buttons.save invoke"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel #0 [list $w invoke]"
+    (procedure "tk::ButtonUp" line 22)
+    invoked from within
+"tk::ButtonUp .options_editor.buttons.save"
+    (command bound to event)
 
-      real    0m25.469s
-      user    0m13.530s
-      sys     0m11.490s
+The options seem to be saved correctly.
 
-You can see that using mmap() provides a speedup of about 2% on MacOS X,
-which is similar to the 4% than Shawn measured on Linux.
+--=20
+Martin Waitz
 
-Bruno
+--xkXJwpr35CY/Lc3I
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFF11oxj/Eaxd/oD7IRArAPAJ4n47cEYmepXq3bT/wYZHhoTZ+MNQCcCH0p
+8BeXjAswKwA475zLfnp4kGw=
+=lGjs
+-----END PGP SIGNATURE-----
+
+--xkXJwpr35CY/Lc3I--
