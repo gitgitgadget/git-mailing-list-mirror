@@ -1,76 +1,50 @@
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: git-fast-export ?
-Date: Sun, 18 Feb 2007 13:45:31 +0100
-Message-ID: <45D84A6B.3060402@xs4all.nl>
-References: <eqoaf7$loq$1@sea.gmane.org> <20070212011401.GK31488@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Teach name-rev to identify revisions containing a
+ certain blob
+Date: Sun, 18 Feb 2007 16:41:17 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702181639480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702171838510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmz3bj248.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Feb 18 13:45:33 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Mike Coleman <tutufan@gmail.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Feb 18 16:41:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIlQ4-0005zE-JK
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 13:45:32 +0100
+	id 1HIoAM-0005UN-VL
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 16:41:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750926AbXBRMp3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 07:45:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750941AbXBRMp3
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 07:45:29 -0500
-Received: from smtp-vbr6.xs4all.nl ([194.109.24.26]:4043 "EHLO
-	smtp-vbr6.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750926AbXBRMp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 07:45:28 -0500
-Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
-	(authenticated bits=0)
-	by smtp-vbr6.xs4all.nl (8.13.8/8.13.8) with ESMTP id l1ICjJTb045311
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 18 Feb 2007 13:45:24 +0100 (CET)
-	(envelope-from hanwen@xs4all.nl)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
-In-Reply-To: <20070212011401.GK31488@spearce.org>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1751322AbXBRPlU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 10:41:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbXBRPlU
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 10:41:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38736 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751322AbXBRPlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 10:41:19 -0500
+Received: (qmail invoked by alias); 18 Feb 2007 15:41:18 -0000
+X-Provags-ID: V01U2FsdGVkX18bsnQple4bcgNQwa3ga29+5uNTFx4YPqTRFeZykK
+	yyRA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vmz3bj248.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40076>
 
-Shawn O. Pearce escreveu:
->> Regarding GFI, it's a breeze to work with; my compliments to its
->> author.
-> 
-> Hey, thanks!  ;-)
+Hi,
 
-BTW, I just had a brainwave
+On Sun, 18 Feb 2007, Junio C Hamano wrote:
 
-Wouldn't it make sense to build a git-fast-export, which 
-can be used to interrogate a git-repository: a GIT tool 
-could run a single git command, 
+> It's more like he learns the contents _and_ the path from an end-user 
+> who is having trouble with a tarball of unknown vintage, and wants to 
+> identify which snapshot had that contents at that path [*1*].
 
-  git-fast-export
+Ah! Then it would make more sense to make it a new revision-walk filter?
 
-and communicate with that process in a similar fashion, eg.
-
-  object-type SP 0ac9f9cb54e7cf400453b85a3ae5f63813f5fdae LF
-
-=>
-
-  show-raw SP 0ac9f9cb54e7cf400453b85a3ae5f63813f5fdae LF
-=>
-  data SP 235 LF 
-tree 76c9d63f83530851d911f6ead36e3899929e0cda
-parent e3559e3c52cf006a6b3b03ec083ed658ba1941ee
-author Han-Wen Nienhuys <hanwen@lilypond.org> 1171799942 +0100
-committer Han-Wen Nienhuys <hanwen@lilypond.org> 1171799942 +0100
-
-ignorance. LF
-
-this would make interfacing with Git from scripts more ergonomical, 
-less dependent on changes in the UI of porcelains, and in some cases
-more efficient.
-
--- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Ciao,
+Dscho
