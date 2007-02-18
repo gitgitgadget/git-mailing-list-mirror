@@ -1,94 +1,72 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH] Allow passing of an alternative CVSROOT via -d.
-Date: Sun, 18 Feb 2007 18:53:56 +0100
-Message-ID: <45D892B4.4000005@fs.ei.tum.de>
-References: <45D88A14.4040400@fs.ei.tum.de> <Pine.LNX.4.63.0702181834340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigCF36D2AE1C6456DA003CAEC8"
-Cc: git@vger.kernel.org, Martin Langhoff <martin@catalyst.net.nz>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Feb 18 18:54:10 2007
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: format-patch and send-email
+Date: Sun, 18 Feb 2007 19:17:25 +0100
+Message-ID: <9388.1171822645@localhost>
+References: <5680.1171788594@localhost> <7vps87hlbp.fsf@assigned-by-dhcp.cox.net>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Feb 18 19:20:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIqEk-00041n-6E
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 18:54:10 +0100
+	id 1HIqeC-00076V-DF
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 19:20:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751792AbXBRRyG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 12:54:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751791AbXBRRyG
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 12:54:06 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:41983 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751793AbXBRRyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 12:54:05 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 9221028170;
-	Sun, 18 Feb 2007 18:54:00 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id sde2qQ5oz038; Sun, 18 Feb 2007 18:54:00 +0100 (CET)
-Received: from [62.216.207.82] (ppp-62-216-207-82.dynamic.mnet-online.de [62.216.207.82])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 0C497280E4;
-	Sun, 18 Feb 2007 18:53:59 +0100 (CET)
-User-Agent: Mail/News 1.5.0.4 (X11/20060619)
-In-Reply-To: <Pine.LNX.4.63.0702181834340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Enigmail-Version: 0.94.0.0
+	id S1751816AbXBRSUI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 13:20:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751818AbXBRSUI
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 13:20:08 -0500
+Received: from smtp2-g19.free.fr ([212.27.42.28]:37911 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751816AbXBRSUH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 13:20:07 -0500
+Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id C790A7CE6;
+	Sun, 18 Feb 2007 19:20:05 +0100 (CET)
+Received: from localhost (IDENT:1001@localhost [127.0.0.1])
+	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1IIHP7o009390;
+	Sun, 18 Feb 2007 19:17:26 +0100
+In-reply-to: <7vps87hlbp.fsf@assigned-by-dhcp.cox.net> 
+Comments: In-reply-to Junio C Hamano <junkio@cox.net>
+   message dated "Sun, 18 Feb 2007 01:22:18 -0800."
+X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40083>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigCF36D2AE1C6456DA003CAEC8
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Hi Junio,
 
-Johannes Schindelin wrote:
->> This is necessary if using CVS in an asymmetric fashion, i.e. when the=
+Junio C Hamano <junkio@cox.net> wrote:
 
->> CVSROOT you are checking out from differs from the CVSROOT you have to=
+> Xavier Maillard <zedek@gnu.org> writes:
+>
+>> [SNIP SNIP] 
+> 
+> The "format-patch" output was designed to (minimally) mimic what
+> you would see in a UNIX mbox as if you (or whoever would apply
+> the e-mailed patches to repository) received it, so that anybody
+> can later run "am" on it.  The first "From " is what sometimes
+> is called "UNIX-From " line, which separates each piece of
+> e-mail in mbox formatted mailbox file.  The second one is used
+> to record the author of the patch.
+> 
+> The commit log message is expected to be:
+> 
+> 	A single line description of a patch
+> 
+> 	More detailed explanation of the patch with
+>         possibly multi-line or multi-paragraph text.
+> 
+> and the single line description becomes the subject.
 
->> commit to.
->=20
-> Does
->=20
-> 	CVSROOT=3Dbla git-cvsexportcommit...
->=20
-> not work?
+Ok so I need to revert my usual practise :)
 
-no, cvs seems to ignore the environment variable.  at least export CVSROO=
-T=3Dhost:/dir didn't have any effect.
+ 
+Thank you for your answers. I know have understood what was wrong
+;)
 
-cheers
-  simon
+Regards,
 
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enigCF36D2AE1C6456DA003CAEC8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFF2JK3r5S+dk6z85oRAl/DAJ0VNz5e/TG8H2k+Ehm6JXs4iCP6/wCgk24p
-mbh/hpZDPxMF78M8c0Wk5GI=
-=j/kJ
------END PGP SIGNATURE-----
-
---------------enigCF36D2AE1C6456DA003CAEC8--
+Xavier
