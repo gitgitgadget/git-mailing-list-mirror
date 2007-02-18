@@ -1,69 +1,62 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: git checkout won't detach head when a reference equals the detach point
-Date: Sun, 18 Feb 2007 18:41:34 +0000
-Message-ID: <200702181841.36203.andyparkins@gmail.com>
+From: Bryan Larsen <bryan@larsen.st>
+Subject: CURL_MULTI doesn't work on Mac OS X darwinports
+Date: Sun, 18 Feb 2007 15:11:51 -0500
+Message-ID: <45D8B307.4070003@larsen.st>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 18 19:44:47 2007
+X-From: git-owner@vger.kernel.org Sun Feb 18 21:11:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIr1g-0000bR-1o
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 19:44:44 +0100
+	id 1HIsNG-0002st-Kj
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 21:11:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832AbXBRSod (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 13:44:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751844AbXBRSod
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 13:44:33 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:50271 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751832AbXBRSoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 13:44:32 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so458187uga
-        for <git@vger.kernel.org>; Sun, 18 Feb 2007 10:44:31 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MYJGOfWFRqGKWehzLas73lBi+8jVVa57RiCm7IDWn6peZ6AZtLiSQTORU3l9Hc+4dEsOCA/SnSV6Lz6noqkVFckiF4Xb9YnXzcbA//HZqIe+D6zdWXz1VdWjXAFQgvo6RvMFTwkX8g5qaqZ3X7N7mMArmwCnceSLbrB9i5mD9Qo=
-Received: by 10.66.239.18 with SMTP id m18mr5794873ugh.1171824271393;
-        Sun, 18 Feb 2007 10:44:31 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id q1sm7807234uge.2007.02.18.10.44.29;
-        Sun, 18 Feb 2007 10:44:29 -0800 (PST)
-User-Agent: KMail/1.9.6
-Content-Disposition: inline
+	id S1752006AbXBRULB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 15:11:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752008AbXBRULB
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 15:11:01 -0500
+Received: from nz-out-0506.google.com ([64.233.162.224]:1930 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752006AbXBRULA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 15:11:00 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so1491117nze
+        for <git@vger.kernel.org>; Sun, 18 Feb 2007 12:10:59 -0800 (PST)
+Received: by 10.64.10.2 with SMTP id 2mr2358632qbj.1171829459366;
+        Sun, 18 Feb 2007 12:10:59 -0800 (PST)
+Received: from ?192.168.1.91? ( [206.248.190.98])
+        by mx.google.com with ESMTP id e18sm1032878qbe.2007.02.18.12.10.58;
+        Sun, 18 Feb 2007 12:10:58 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40085>
 
-Hello,
+CURL_MULTI causes a segfault on Mac OS X Darwin with MacPorts.  Disable.
 
-Kind of convoluted, and perhaps not even an error.
+From: Bryan Larsen <bryan@larsen.st>
+---
 
-On a repository with a remote tracking branch, say 
-remotes/origin/master, then do this:
+  http.h |    2 ++
+  1 files changed, 2 insertions(+), 0 deletions(-)
 
-git checkout -b temp origin/master
-git checkout origin/master
-git branch
- * temp
+diff --git a/http.h b/http.h
+index 324fcf4..60100a3 100644
+--- a/http.h
++++ b/http.h
+@@ -6,10 +6,12 @@
+  #include <curl/curl.h>
+  #include <curl/easy.h>
 
-This might seem like an odd thing to want to do, but I found this 
-because the next thing I wanted to do was
++#ifndef __DARWIN_UNIX03
+  #if LIBCURL_VERSION_NUM >= 0x070908
+  #define USE_CURL_MULTI
+  #define DEFAULT_MAX_REQUESTS 5
+  #endif
++#endif
 
-git branch -D temp
-
-Which won't work because the branch hasn't changed.
-
-
-
-
-Andy
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+  #if LIBCURL_VERSION_NUM < 0x070704
+  #define curl_global_cleanup() do { /* nothing */ } while(0)
