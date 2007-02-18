@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Attempt to improve git-rebase lead-in description.
-Date: Sun, 18 Feb 2007 01:31:24 -0500
-Message-ID: <20070218063124.GA31350@spearce.org>
-References: <20070217093150.GA25871@spearce.org> <er8d34$ssm$1@sea.gmane.org>
+Subject: Re: how to speed up "git log"?
+Date: Sun, 18 Feb 2007 01:33:51 -0500
+Message-ID: <20070218063351.GB31350@spearce.org>
+References: <200702111252.28393.bruno@clisp.org> <20070211152840.GA2781@steel.home> <200702172019.20536.bruno@clisp.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 18 07:31:39 2007
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Bruno Haible <bruno@clisp.org>
+X-From: git-owner@vger.kernel.org Sun Feb 18 07:34:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIfaF-0002FB-4G
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 07:31:39 +0100
+	id 1HIfcV-00034T-V7
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 07:34:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030351AbXBRGbb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 01:31:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030352AbXBRGbb
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 01:31:31 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38639 "EHLO
+	id S1030360AbXBRGd5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 01:33:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030358AbXBRGd5
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 01:33:57 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38701 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030354AbXBRGb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 01:31:29 -0500
+	with ESMTP id S1030360AbXBRGd4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 01:33:56 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HIfa2-00017i-Ro; Sun, 18 Feb 2007 01:31:27 -0500
+	id 1HIfcP-0001Ct-F0; Sun, 18 Feb 2007 01:33:53 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0D6BA20FBAE; Sun, 18 Feb 2007 01:31:24 -0500 (EST)
+	id CA6C120FBAE; Sun, 18 Feb 2007 01:33:51 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <er8d34$ssm$1@sea.gmane.org>
+In-Reply-To: <200702172019.20536.bruno@clisp.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,34 +43,17 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40058>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Shawn O. Pearce wrote:
-> > +
-> > +The commits that were previously saved into the temporary area are
-> > +then reapplied to the current branch, one by one, in order.
+Bruno Haible <bruno@clisp.org> wrote:
+> Alex Riesen wrote:
+> > MacOS X is famous for its bad perfomance when doing serious work.
+> > The mmap(2) of it, in particular.
 > 
-> Which is true for git-format-patch/git-am --3way driven "git rebase",
-> but not for git-merge driven "git rebase --merge".
-> 
-> The description is certainly more user-friendly, but I'd rather it avoid
-> mentioning saving to temporary area.
+> You can see that using mmap() provides a speedup of about 2% on MacOS X,
+> which is similar to the 4% than Shawn measured on Linux.
 
-[note: Jakub broke this thread and sent the message twice, once
- to me privately and again to the list.  I originally accidentally
- replied to Jakub's privately sent copy.]
-
-Uhhh...  go read the source for `git-rebase -m`.  We still put the
-commits into a temporary area (.git/.dotest-merge), except we store
-just their SHA-1 and message rather than the patch.  Its still a
-temporary area.
-
-Even if we did not store the commits in a temporary area, they
-still are conceptually, as the ODB is storing them, and they aren't
-connected to a ref anymore, as the ref was reset.
-
-My description is accurate, in either mode.
+Uh, I was testing on Mac OS X (G4 PowerBook).
 
 -- 
 Shawn.
