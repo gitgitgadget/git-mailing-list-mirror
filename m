@@ -1,91 +1,61 @@
-From: Fredrik Kuivinen <frekui@gmail.com>
-Subject: [PATCH] Documentation/i18n.txt: it is i18n.commitencoding not core.commitencoding
-Date: Sun, 18 Feb 2007 10:36:51 +0100
-Message-ID: <20070218093651.10173.51237.stgit@c165>
-Content-Type: text/plain; charset=utf-8; format=fixed
-Content-Transfer-Encoding: 8bit
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 1/3] Wrap the log text in some nice HTML to highlight the commit message
+Date: Sun, 18 Feb 2007 10:44:49 +0000
+Message-ID: <200702181044.53115.andyparkins@gmail.com>
+References: <200702172200.13461.andyparkins@gmail.com> <200702172202.25730.andyparkins@gmail.com> <e5bfff550702172325w32f980b3x58b05face97ec7d2@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Marco Costalba" <mcostalba@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 18 10:36:59 2007
+X-From: git-owner@vger.kernel.org Sun Feb 18 11:47:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIiTZ-0005m5-7D
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 10:36:57 +0100
+	id 1HIjaD-0008Tc-GC
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 11:47:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933130AbXBRJgy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 04:36:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933162AbXBRJgy
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 04:36:54 -0500
-Received: from mxfep02.bredband.com ([195.54.107.73]:58446 "EHLO
-	mxfep02.bredband.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933130AbXBRJgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 04:36:53 -0500
-Received: from ironport.bredband.com ([195.54.107.82] [195.54.107.82])
-          by mxfep02.bredband.com with ESMTP
-          id <20070218093651.YAXF2832.mxfep02.bredband.com@ironport.bredband.com>
-          for <git@vger.kernel.org>; Sun, 18 Feb 2007 10:36:51 +0100
-Received: from c-6466e455.09-360-6c6b701.cust.bredbandsbolaget.se (HELO c165) ([85.228.102.100])
-  by ironport.bredband.com with ESMTP; 18 Feb 2007 10:36:51 +0100
-Received: from c165 ([127.0.0.1])
-	by c165 with esmtp (Exim 3.36 #1 (Debian))
-	id 1HIiTT-0002eC-00
-	for <git@vger.kernel.org>; Sun, 18 Feb 2007 10:36:51 +0100
-User-Agent: StGIT/0.11
+	id S933199AbXBRKru (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 05:47:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933202AbXBRKru
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 05:47:50 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:52791 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933199AbXBRKrt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 05:47:49 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so427560uga
+        for <git@vger.kernel.org>; Sun, 18 Feb 2007 02:47:48 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Q4boQYIPZK84khs5X0aNaPajaPbumfGqWKGEPSXPqxunL37d8DPO3Jh5BZ/Om0ItXG95zNO84zAuY518PM5JTZfRK99HlC6kBULFlnckH61L519mdHj5tFz88YoV2btVQOaw6sAYBcc/BoUGGcCECvRRiGRfrDr8COGU8mXmnSE=
+Received: by 10.67.97.7 with SMTP id z7mr5422339ugl.1171795668167;
+        Sun, 18 Feb 2007 02:47:48 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id b23sm7277376ugd.2007.02.18.02.47.46;
+        Sun, 18 Feb 2007 02:47:46 -0800 (PST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <e5bfff550702172325w32f980b3x58b05face97ec7d2@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40071>
+
+On Sunday 2007, February 18, Marco Costalba wrote:
+
+> thanks for your patches, but I can see only this email and the
+> '[PATCH 2/3] Improve default column widths by changing resize modes',
+> I miss body of [PATCH 1/3]  and  [PATCH 3/3].
+
+I think that the mailing list spam filter is objecting because the email 
+contains HTML tags.  I'll send the patches to you directly to bypass 
+the spam filter.
 
 
-Similarly for i18n.logoutputencoding.
-
-Signed-off-by: Fredrik Kuivinen <frekui@gmail.com>
-
----
-
- Documentation/i18n.txt |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/i18n.txt b/Documentation/i18n.txt
-index b4cbb38..b95f99b 100644
---- a/Documentation/i18n.txt
-+++ b/Documentation/i18n.txt
-@@ -25,15 +25,15 @@ mind.
-   an warning if the commit log message given to it does not look
-   like a valid UTF-8 string, unless you explicitly say your
-   project uses a legacy encoding.  The way to say this is to
--  have core.commitencoding in `.git/config` file, like this:
-+  have i18n.commitencoding in `.git/config` file, like this:
- +
- ------------
--[core]
-+[i18n]
- 	commitencoding = ISO-8859-1
- ------------
- +
- Commit objects created with the above setting record the value
--of `core.commitencoding` in its `encoding` header.  This is to
-+of `i18n.commitencoding` in its `encoding` header.  This is to
- help other people who look at them later.  Lack of this header
- implies that the commit log message is encoded in UTF-8.
- 
-@@ -41,15 +41,15 @@ implies that the commit log message is encoded in UTF-8.
-   header of a commit object, and tries to re-code the log
-   message into UTF-8 unless otherwise specified.  You can
-   specify the desired output encoding with
--  `core.logoutputencoding` in `.git/config` file, like this:
-+  `i18n.logoutputencoding` in `.git/config` file, like this:
- +
- ------------
--[core]
-+[i18n]
- 	logoutputencoding = ISO-8859-1
- ------------
- +
- If you do not have this configuration variable, the value of
--`core.commitencoding` is used instead.
-+`i18n.commitencoding` is used instead.
- 
- Note that we deliberately chose not to re-code the commit log
- message when a commit is made to force UTF-8 at the commit
+Andy
+-- 
+Dr Andrew Parkins, M Eng (Hons), AMIEE
+andyparkins@gmail.com
