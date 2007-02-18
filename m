@@ -1,65 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Sun, 18 Feb 2007 02:29:17 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702180226480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
- <20070217232603.GB30839@coredump.intra.peff.net>
- <Pine.LNX.4.63.0702180105000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v64a0qpa8.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702180151060.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vhctkp8gk.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 18 Feb 2007 02:48:02 +0100
+Organization: At home
+Message-ID: <er8b4s$o7n$1@sea.gmane.org>
+References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net> <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702180107250.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vbqjsqpgs.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702180135240.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vsld4p99g.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 18 02:29:24 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 18 02:46:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIarj-0005kr-6l
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 02:29:23 +0100
+	id 1HIb8P-0004Bo-9E
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 02:46:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965540AbXBRB3U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 20:29:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965545AbXBRB3U
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 20:29:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45088 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965540AbXBRB3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 20:29:19 -0500
-Received: (qmail invoked by alias); 18 Feb 2007 01:29:18 -0000
-X-Provags-ID: V01U2FsdGVkX1/5aa00JX/5Xc1abCgwPz8ircTaahDfpefnYg8r8n
-	klzg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vhctkp8gk.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S2993033AbXBRBqe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 17 Feb 2007 20:46:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993035AbXBRBqe
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 20:46:34 -0500
+Received: from main.gmane.org ([80.91.229.2]:39456 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2993033AbXBRBqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 20:46:33 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HIb8A-0002MA-TV
+	for git@vger.kernel.org; Sun, 18 Feb 2007 02:46:23 +0100
+Received: from host-81-190-26-89.torun.mm.pl ([81.190.26.89])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Feb 2007 02:46:22 +0100
+Received: from jnareb by host-81-190-26-89.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 18 Feb 2007 02:46:22 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-26-89.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40049>
 
-Hi,
+Junio C Hamano wrote:
 
-On Sat, 17 Feb 2007, Junio C Hamano wrote:
+> I can do almost that with
+>=20
+> =A0=A0=A0=A0=A0=A0=A0=A0git diff --color-words :GIT-VERSION-GEN :git-=
+gui/GIT-VERSION-GEN
+>=20
+> but, it compares indexed ones, not from the working tree, so it
+> is not exactly the same.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > And I use git-apply to apply patches way more often than "patch" these 
-> > days. And I _think_ that it is a feature that it does not cd-up before 
-> > trying to apply the stuff. In git.git, I cannot think of a reasonable use 
-> > case for applying something not relative-to-root, but I had that use case 
-> > in some other (git-tracked) project.
-> >
-> > So my vote is to leave the cwd where it is in git-apply.
-> 
-> I strongly disagree from my recent day-job experience. [Explains a 
-> convincing use case in favour of cd-up.]
+Not ::GIT-VERSION-GEN?=20
 
-Hmm. I have to think about that. But a consequence of what you suggest 
-would be to disallow git-apply outside of a repository, because then you 
-would introduce _another_ inconsistency (git-apply without --index would 
-behave differently when inside a repo than when outside of one).
+We could use :-1: for filesystem (working directory, :-: in short, vers=
+ion.
 
-Ciao,
-Dscho
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
