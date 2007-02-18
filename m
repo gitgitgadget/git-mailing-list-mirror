@@ -1,67 +1,92 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH 1/3] Wrap the log text in some nice HTML to highlight the commit message
-Date: Sun, 18 Feb 2007 08:25:14 +0100
-Message-ID: <e5bfff550702172325w32f980b3x58b05face97ec7d2@mail.gmail.com>
-References: <200702172200.13461.andyparkins@gmail.com>
-	 <200702172202.25730.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/2] Teach name-rev to identify revisions containing a certain blob
+Date: Sun, 18 Feb 2007 00:34:15 -0800
+Message-ID: <7vmz3bj248.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702171838510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Andy Parkins" <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 18 08:25:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Mike Coleman <tutufan@gmail.com>,
+	junkio@cox.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 18 09:34:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIgQD-0005Xq-BY
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 08:25:21 +0100
+	id 1HIhUz-0006W3-8l
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 09:34:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030396AbXBRHZS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 02:25:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161086AbXBRHZS
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 02:25:18 -0500
-Received: from nz-out-0506.google.com ([64.233.162.231]:32585 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030396AbXBRHZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 02:25:16 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1360553nze
-        for <git@vger.kernel.org>; Sat, 17 Feb 2007 23:25:16 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tN5CuQZyXeAmE3a1c3ksTRuroPvhgWRkJz+W0joNA0bL6slu60DQY0Z9DTaPEzxuIYZtD7+0gQaOyzEltfg9g3ZaoOMkcf2LtFDSB9NY4Cv6TxN3Vnlxn2GPGRZuRcOY+YCyhp2iwWIkJQaXpIKjCwAGyYfI+57AeGDi6Mhf+NU=
-Received: by 10.114.254.1 with SMTP id b1mr2502605wai.1171783514971;
-        Sat, 17 Feb 2007 23:25:14 -0800 (PST)
-Received: by 10.114.60.16 with HTTP; Sat, 17 Feb 2007 23:25:14 -0800 (PST)
-In-Reply-To: <200702172202.25730.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S1161147AbXBRIeT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 03:34:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161149AbXBRIeT
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 03:34:19 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:45623 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161147AbXBRIeQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 03:34:16 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070218083415.LKIQ21704.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 18 Feb 2007 03:34:15 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id QwaF1W00W1kojtg0000000; Sun, 18 Feb 2007 03:34:16 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40061>
 
-On 2/17/07, Andy Parkins <andyparkins@gmail.com> wrote:
-> On Saturday 2007, February 17, Andy Parkins wrote:
-> > Signed-off-by: Andy Parkins <andyparkins@gmail.com>
-> > ---
-> > Hey Marco; I've finally got around to rebasing.  The problem I had
-> > was an error in my .git/config was making git-fetch just return
-> > without fetching so I wasn't getting your new master head.
->
-> Apologies all: this and following patches should have been marked qgit4;
-> not mainline git.
->
+Having said what I said in the comments on [PATCH 1/2], I think
+you are either solving a wrong problem, or even if you are
+solving the right problem, you are solving in a wrong way in
+this patch.
 
-Hi Andy,
+I do not think Mike wants a way to deal with what he gets in his
+mailbox from an end user who did this:
 
-thanks for your patches, but I can see only this email and the '[PATCH
-2/3] Improve default column widths by changing resize modes', I miss
-body of [PATCH 1/3]  and  [PATCH 3/3].
+	$ cat a-file-whose-name-was-not-told-to-mike >junk
+	$ mailx mike.coleman <junk
 
-Please take a look at http://marc.theaimsgroup.com/?l=git&r=1&b=200702&w=2
-to see what's landed on git list.
+It's more like he learns the contents _and_ the path from an
+end-user who is having trouble with a tarball of unknown
+vintage, and wants to identify which snapshot had that contents
+at that path [*1*].
 
-Marco
+So I do not think it is solving the right problem to run around
+all over the tree without knowing the path, looking for a
+particular object name.  It certainly makes the solution much
+more expensive.
 
-P.S: I will be on travel next week, so I won't be able to connect regularly.
+Even if that were Mike's problem, there is a problem that the
+same object can appear at different places in different trees.
+Keeping a single pathname registered in object_hash would mean
+the answer is "whatever happens to be found first", regardless
+of the path.
+
+To make "whatever happens to be found first" semantics useful, I
+think you would need to make the traversal more controllable by
+the user of name-rev.  For example, Mike may know what he gave
+the end user was from maintenance series of 1.4.4 software, in
+which case you would want to let him say "traverse from the tip
+of 1.4.4 maintenance branch down, do not worry about other
+branches such as 1.5.0 series or 1.4.3 maintenance series".
+
+Your earlier --ref-filter patch would certainly help it, but a
+solution based on grep over "rev-list | ls-tree --stdin" (which
+currently does not exist) might be more appropriate and
+flexible?  I dunno.
+
+[Footnote]
+
+*1* To find a revision that had a particular object at a known
+path, you should be able to do:
+
+	git rev-list <starting refs> |
+        git diff-tree --stdin --raw -r -Z |
+	grep -z that-object-name
+
+but an earlier commit abd4e222 needs to be further enhanced to
+add -Z option that means "output fields are not NUL terminated,
+output records are", which did not happen.
