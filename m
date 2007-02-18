@@ -1,62 +1,46 @@
-From: Bryan Larsen <bryan@larsen.st>
-Subject: CURL_MULTI doesn't work on Mac OS X darwinports
-Date: Sun, 18 Feb 2007 15:11:51 -0500
-Message-ID: <45D8B307.4070003@larsen.st>
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: Re: [PATCH] Add git-bundle: move objects and references by archive.
+Date: Sun, 18 Feb 2007 17:47:18 -0500
+Message-ID: <45D8D776.9040604@verizon.net>
+References: <7vejootynq.fsf@assigned-by-dhcp.cox.net>
+ <11718196342317-git-send-email-mdl123@verizon.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 18 21:11:08 2007
+Cc: git@vger.kernel.org
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Feb 18 23:47:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIsNG-0002st-Kj
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 21:11:07 +0100
+	id 1HIuop-0000Sk-6p
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 23:47:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752006AbXBRULB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 15:11:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752008AbXBRULB
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 15:11:01 -0500
-Received: from nz-out-0506.google.com ([64.233.162.224]:1930 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752006AbXBRULA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 15:11:00 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1491117nze
-        for <git@vger.kernel.org>; Sun, 18 Feb 2007 12:10:59 -0800 (PST)
-Received: by 10.64.10.2 with SMTP id 2mr2358632qbj.1171829459366;
-        Sun, 18 Feb 2007 12:10:59 -0800 (PST)
-Received: from ?192.168.1.91? ( [206.248.190.98])
-        by mx.google.com with ESMTP id e18sm1032878qbe.2007.02.18.12.10.58;
-        Sun, 18 Feb 2007 12:10:58 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070103)
+	id S1752359AbXBRWrj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 17:47:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752365AbXBRWrj
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 17:47:39 -0500
+Received: from vms040pub.verizon.net ([206.46.252.40]:59425 "EHLO
+	vms040pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752359AbXBRWri (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 17:47:38 -0500
+Received: from [127.0.0.1] ([71.246.235.75])
+ by vms040.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JDO00GQJKMRSPL1@vms040.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 18 Feb 2007 16:47:16 -0600 (CST)
+In-reply-to: <11718196342317-git-send-email-mdl123@verizon.net>
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40086>
 
-CURL_MULTI causes a segfault on Mac OS X Darwin with MacPorts.  Disable.
+Mark Levedahl wrote:
+> -	git-peek-remote $exec "$peek_repo" ||
+> +	if test -r "$peek_repo" ; then
+>   
+oops:                   test    -f
+actually works. Corrected patch follows.
 
-From: Bryan Larsen <bryan@larsen.st>
----
-
-  http.h |    2 ++
-  1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/http.h b/http.h
-index 324fcf4..60100a3 100644
---- a/http.h
-+++ b/http.h
-@@ -6,10 +6,12 @@
-  #include <curl/curl.h>
-  #include <curl/easy.h>
-
-+#ifndef __DARWIN_UNIX03
-  #if LIBCURL_VERSION_NUM >= 0x070908
-  #define USE_CURL_MULTI
-  #define DEFAULT_MAX_REQUESTS 5
-  #endif
-+#endif
-
-  #if LIBCURL_VERSION_NUM < 0x070704
-  #define curl_global_cleanup() do { /* nothing */ } while(0)
+Mark
