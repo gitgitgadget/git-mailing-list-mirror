@@ -1,68 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Sun, 18 Feb 2007 01:08:03 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702180107250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
- <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: piped to a pager (was: how to speed up "git log"?)
+Date: Sun, 18 Feb 2007 01:10:00 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702180109400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200702111252.28393.bruno@clisp.org> <200702172019.20536.bruno@clisp.org>
+ <Pine.LNX.4.63.0702180019040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200702180109.26412.bruno@clisp.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 18 01:08:11 2007
+Cc: git@vger.kernel.org
+To: Bruno Haible <bruno@clisp.org>
+X-From: git-owner@vger.kernel.org Sun Feb 18 01:10:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIZb7-0005uo-SW
-	for gcvg-git@gmane.org; Sun, 18 Feb 2007 01:08:10 +0100
+	id 1HIZd2-0006jW-IY
+	for gcvg-git@gmane.org; Sun, 18 Feb 2007 01:10:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965425AbXBRAIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Feb 2007 19:08:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965430AbXBRAIG
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 19:08:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57863 "HELO mail.gmx.net"
+	id S965437AbXBRAKF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Feb 2007 19:10:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965438AbXBRAKF
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Feb 2007 19:10:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52698 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965425AbXBRAIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Feb 2007 19:08:05 -0500
-Received: (qmail invoked by alias); 18 Feb 2007 00:08:03 -0000
-X-Provags-ID: V01U2FsdGVkX1+QozN/XvSQg3aIj/CuDvLdar1VSR5oKkMMMStR9z
-	2RiQ==
+	id S965437AbXBRAKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Feb 2007 19:10:03 -0500
+Received: (qmail invoked by alias); 18 Feb 2007 00:10:00 -0000
+X-Provags-ID: V01U2FsdGVkX18I4VR5FzMIPfJChIbrFdw7UrPxuXBFz55yWKesJw
+	eO6w==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <200702180109.26412.bruno@clisp.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40036>
 
 Hi,
 
-On Sat, 17 Feb 2007, Junio C Hamano wrote:
+On Sun, 18 Feb 2007, Bruno Haible wrote:
 
-> Jeff King <peff@peff.net> writes:
+> Johannes Schindelin wrote:
+> > you can blame the person calling git log and waiting until it 
+> > finishes. See the list archives for reasons why.
+> ... and earlier:
+> > Usually the output of git-log -- even with pathname 
+> > filtering -- starts almost instantaneous, and is piped to your pager.
 > 
-> > On Sat, Feb 17, 2007 at 01:12:52PM -0800, Junio C Hamano wrote:
-> >
-> >> +	prefix = setup_git_directory_gently(&is_not_gitdir);
-> >> +	prefix_length = prefix ? strlen(prefix) : 0;
-> >> +	if (!is_not_gitdir) {
-> >> +		git_config(git_apply_config);
-> >> +		if (apply_default_whitespace)
-> >> +			parse_whitespace_option(apply_default_whitespace);
-> >> +	}
-> >> +
-> >
-> > If I read this correctly, running 'git apply' inside a git repository
-> > will parse $GIT_DIR/config and $HOME/.gitconfig. However, outside of a
-> > repository it will parse neither. It would make more sense to me to
-> > still parse $HOME/.gitconfig to pick up the user's global options.
+> The pager ('less') in a console is not a good solution for everone:
+>   - People used to GUI editors (kate, nedit, ...) miss a scroll bar for
+>     navigation. You can't use kate or nedit as a pager.
+>   - PAGER="vi -" also reads all input before it displays anything.
+>   - PAGER="xless" likewise.
+>   - In Emacs shell-mode, with PAGER="", you see the output as it is produced,
+>     but it's disturbing to work in a buffer which is growing, where the scrollbar
+>     continues to change its position.
 > 
-> I thought about that, but decided against it.  If you are truly
-> operating outside a git managed repository, it does not feel
-> right to apply configuration user has for git.
+> It's OK for many people, but not for everyone.
 
-That is a good point. But in the same vein, why not have a flag to 
-git-apply, and let it ignore the configuration altogether?
+So why don't you go scratch that itch, and write a decent GUI pager?
 
 Ciao,
 Dscho
