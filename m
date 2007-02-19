@@ -1,86 +1,64 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] rev-list --max-age, --max-count: support --boundary
-Date: Mon, 19 Feb 2007 15:40:16 -0800
-Message-ID: <7v8xet67j3.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0702190312120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: removal of "percent done" messages from git pull
+Date: Tue, 20 Feb 2007 00:53:45 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702200053080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45D5E06B.6020706@lightspeed.com> <tnxr6sm5m2u.fsf@arm.com>
+ <Pine.LNX.4.63.0702191611410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vsld169cf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junkio@cox.net
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 20 00:40:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Larry Streepy <larry@lightspeed.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 00:53:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJI7M-0003P3-DA
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 00:40:24 +0100
+	id 1HJIKP-0000ms-5d
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 00:53:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965548AbXBSXkV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 18:40:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965551AbXBSXkV
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 18:40:21 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:55204 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965548AbXBSXkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 18:40:20 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070219234017.LLLM1300.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 19 Feb 2007 18:40:17 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id RbgF1W0131kojtg0000000; Mon, 19 Feb 2007 18:40:16 -0500
-In-Reply-To: <Pine.LNX.4.63.0702190312120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Mon, 19 Feb 2007 03:14:59 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965561AbXBSXxu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 18:53:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965565AbXBSXxu
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 18:53:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38206 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965561AbXBSXxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 18:53:49 -0500
+Received: (qmail invoked by alias); 19 Feb 2007 23:53:48 -0000
+X-Provags-ID: V01U2FsdGVkX18w5MM22/Iw6HydJvrddT5cM5V269ZdX/oJ8MwS6s
+	fy0g==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vsld169cf.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40165>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> Now, when saying --max-age=<timestamp>, or --max-count=<n>, together
-> with --boundary, rev-list prints the boundary commits, i.e. the
-> commits which are _just_ not shown without --boundary, i.e. their
-> children are, but they aren't.
->
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> ---
->
-> 	Of course, this is meant to speed up an otherwise expensive
-> 	operation in git-bundle.
->
-> 	However, this touches a very sensitive point in core git:
-> 	the revision walking machinery. It passes all tests, but
-> 	some eyeballing is much appreciated.
+On Mon, 19 Feb 2007, Junio C Hamano wrote:
 
-I think this looks fine.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Or (as done in StGIT for some messages), only print those interactive
+> >> messages when stdout is a tty, i.e. "if (isatty(1))".
+> >
+> > You mean something like this?
+> >
+> > --
+> > [PATCH] fetch: make things quiet when not outputting to a tty
+> >
+> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> 
+> Please grep for 'git.fetch-pack' again.  Its output is list of
+> object names and the refnames where they live in the remote and
+> consumed by the later stages of git-fetch script.
 
-Initially I thought setting BOUNDARY_SHOW unconditionally would
-be wrong (the "limited" case takes pains to avoid showing
-redundant boundary commits), and that was exactly why I said it
-would be a bit more involved change, but I do not think of a
-topology that needs redundancy removal outside of "limited" case.
+Ouch. Sorry. I'll try to come up with a better patch tomorrow, and I will 
+test that, too.
 
-> @@ -1336,7 +1342,17 @@ struct commit *get_revision(struct rev_info *revs)
->  	case -1:
->  		break;
->  	case 0:
-> -		return NULL;
-> +		if (revs->boundary) {
-> +			struct commit_list *list = revs->commits;
-> +			while (list) {
-> +				list->item->object.flags |=
-> +					BOUNDARY_SHOW | BOUNDARY;
-> +				list = list->next;
-> +			}
-> +			revs->max_count = -1;
-> +			revs->limited = 1;
-> +		} else
-> +			return NULL;
-
-The resetting of max_count and limited probably needs some
-commenting.
+Ciao,
+Dscho
