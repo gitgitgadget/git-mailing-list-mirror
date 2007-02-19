@@ -1,63 +1,78 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Mon, 19 Feb 2007 18:04:06 -0500
-Message-ID: <20070219230406.GC27722@spearce.org>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net> <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net> <20070217233203.GA6014@coredump.intra.peff.net> <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: StGIT discards local commits on "stg pull"
+Date: Mon, 19 Feb 2007 23:07:09 +0000
+Message-ID: <b0943d9e0702191507m636348e7yab2a712925f9f55@mail.gmail.com>
+References: <20070212022625.rvyyo0kc0wowgogc@webmail.spamcop.net>
+	 <b0943d9e0702120131r528fb29ete143b8ce5a0a99e9@mail.gmail.com>
+	 <20070212202634.GX4266@nan92-1-81-57-214-146.fbx.proxad.net>
+	 <20070212214704.GS5362@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 20 00:04:22 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Pavel Roskin" <proski@gnu.org>, git@vger.kernel.org
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Tue Feb 20 00:07:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJHYQ-00047D-RW
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 00:04:19 +0100
+	id 1HJHbM-0005SB-Rg
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 00:07:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965511AbXBSXEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 18:04:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965513AbXBSXEO
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 18:04:14 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56628 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965511AbXBSXEN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 18:04:13 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HJHY8-00052E-1O; Mon, 19 Feb 2007 18:04:00 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1B97120FBAE; Mon, 19 Feb 2007 18:04:07 -0500 (EST)
+	id S965517AbXBSXHR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 18:07:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965523AbXBSXHR
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 18:07:17 -0500
+Received: from an-out-0708.google.com ([209.85.132.241]:1159 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965517AbXBSXHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 18:07:15 -0500
+Received: by an-out-0708.google.com with SMTP id b33so252579ana
+        for <git@vger.kernel.org>; Mon, 19 Feb 2007 15:07:15 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Jb1C7DjKoCXDW5VEV57noiVvj1ZKeAC2mnJZFHkgclLa3n67jRubXJbIbGonS+hkVwrFADlScvz2GO87ehDE59L5i2eu+wauOo2CMIU834FRRG2nvi+CQ1B4TuwHSCAW0Gi9j0JyEESgBAZgX3DBfid63Lj5kEF9HraMh+izx4w=
+Received: by 10.114.205.1 with SMTP id c1mr3110718wag.1171926434698;
+        Mon, 19 Feb 2007 15:07:14 -0800 (PST)
+Received: by 10.115.110.12 with HTTP; Mon, 19 Feb 2007 15:07:09 -0800 (PST)
+In-Reply-To: <20070212214704.GS5362@nan92-1-81-57-214-146.fbx.proxad.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40159>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> (*) Although I have also noticed that even more often than using "git 
-> apply" outside a git thing, I just import everything into git these days. 
-> So I may not have actually used git-apply outside of a git project in a 
-> long time any more. But I did, a few times.
+On 12/02/07, Yann Dirson <ydirson@altern.org> wrote:
+> On Mon, Feb 12, 2007 at 09:26:34PM +0100, Yann Dirson wrote:
+> > No, I agree it's a bug.  Rebasing after a fetch should allow this
+> > workflow to work as well.  If the parent branch is not a rewinding
+> > one, we should ensure there is nothing lost.  And even for rewinding
+> > branches, we should probably keep track of the existence of commits,
+> > so we can warn and nothing gets lost without knowing.
+>
+> Thinking about it, detecting whether we're going to lose a commit is
+> just checking *before pulling* whether the current base is reachable
+> from the parent's current head.
 
-Which makes me wonder, have you looked at (or used)
-contrib/fast-import/import-tars.perl ?
+There is a potential problem with this approach - pulling/fetching
+from a tree which is always rebased (either managed with StGIT or
+simply running git-rebase before publishing it) would report an error
+since the old base is no longer reachable from the current head. In
+this case, the current fetch+rebase behaviour would be desirable.
 
-Its Perl, which I know is not your favorite language, but it should
-be a faster way to get a tar into a Git repository, as we never
-actually extract the files from the tar, or create loose objects.
+I think the fail-safe solution would be to leave the old behaviour
+(i.e. git-pull and pull-does-rebase=no) and people that need to pull
+from branches like that described above would use the fetch+rebase
+approach. Ideally, we'll have this configurable per-branch (and could
+leave the global one as well if the most specific is not available,
+but should default to git-pull).
+
+Let me know what you think so that I'll try to release a 0.12.1 update
+(I already have the simple patch for using git-pull by default if you
+are OK with this scenario).
+
+Thanks.
 
 -- 
-Shawn.
+Catalin
