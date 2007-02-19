@@ -1,92 +1,139 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-bundle: move objects and references by archive.
-Date: Mon, 19 Feb 2007 03:02:13 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702190257250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1171838852534-git-send-email-mdl123@verizon.net>
- <Pine.LNX.4.63.0702190126220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v7iuedif9.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [ANNOUNCE] GIT 1.5.0.1
+Date: Sun, 18 Feb 2007 18:07:42 -0800
+Message-ID: <7vwt2ec32p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mark Levedahl <mdl123@verizon.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 19 03:02:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 19 03:07:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIxr8-00023J-Cw
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 03:02:18 +0100
+	id 1HIxwZ-00044w-6g
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 03:07:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752710AbXBSCCP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 21:02:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752711AbXBSCCP
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 21:02:15 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59295 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752710AbXBSCCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 21:02:14 -0500
-Received: (qmail invoked by alias); 19 Feb 2007 02:02:13 -0000
-X-Provags-ID: V01U2FsdGVkX19MhGlJCPdMbFZEqFl/dtgQBchZx84Fz6cqYVCcYu
-	gV0Q==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v7iuedif9.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1752719AbXBSCHq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 21:07:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752718AbXBSCHq
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 21:07:46 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:48451 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752701AbXBSCHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 21:07:44 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070219020744.YBBS1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 18 Feb 2007 21:07:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id RE7j1W00F1kojtg0000000; Sun, 18 Feb 2007 21:07:44 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40093>
 
-Hi,
+The latest maintenance release GIT 1.5.0.1 is available at the
+usual places:
 
-On Sun, 18 Feb 2007, Junio C Hamano wrote:
+  http://www.kernel.org/pub/software/scm/git/
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Sorry to be such a PITA, but I really, really think that it is wrong to 
-> > make a tar dependency here. You said your cygwin has problems with binary 
-> > files. Could you please try this:
-> >
-> > 	$ echo -ne '\x1a\x1b\x15\x10\0abc' | cat | wc
-> 
-> It might be just me, but "echo -e" makes me feel much more
-> uneasy than explicitly saying "Sorry, we require GNU tar in
-> this little corner of the system".
+  git-1.5.0.1.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.0.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.0.1.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.5.0.1-1.$arch.rpm	(RPM)
 
-Hey, this was meant as a _test_ on why it fails for Mark, not as the end 
-result!
+GIT v1.5.0.1 Release Notes
+==========================
 
-> >> +            bfile=$1
-> >
-> > This can contain spaces (you are working on Windows, right? Windows users 
-> > _love_ spaces in their filenames).
-> 
-> Which is fine.  Try var1=$var2 with something with SP or TAB in var2
-> and later try running
-> 
-> 	$ echo "<$var1>"
-> 
-> to see what happens.
+Fixes since v1.5.0
+------------------
 
-Okay, I did not know that.
+* Documentation updates
 
-> >> +    gitrevargs=$(git-rev-parse --symbolic --revs-only $args) || exit 1
-> >
-> > Here, you rely again on the refs not containing spaces.
-> 
-> Which probably is fine, as refs cannot contain spaces ;-).
+  - Clarifications and corrections to 1.5.0 release notes.
 
-Ah! As we allow so many things in refnames, I assumed that spaces are 
-allowed also.
+  - The main documentation did not link to git-remote documentation.
 
-> >> +    # git-rev-list cannot determine edge objects if a date restriction is
-> >> +    # given...  we do things a slow way if max-age or min-age are given
-> >
-> > Might make sense to teach max-age about boundary commits instead...
-> 
-> You are talking about a rather extensive change, but could be
-> done.  But that is a separate issue, I think.
+  - Clarified introductory text of git-rebase documentation.
 
-I don't think it's so hard.
+  - Converted remaining mentions of update-index on Porcelain
+    documents to git-add/git-rm.
 
-Ciao,
-Dscho
+  - Some i18n.* configuration variables were incorrectly
+    described as core.*; fixed.
+
+* Bugfixes
+
+  - git-add and git-update-index on a filesystem on which
+    executable bits are unreliable incorrectly reused st_mode
+    bits even when the path changed between symlink and regular
+    file.
+
+  - git-daemon marks the listening sockets with FD_CLOEXEC so
+    that it won't be leaked into the children.
+
+  - segfault from git-blame when the mandatory pathname
+    parameter was missing was fixed; usage() message is given
+    instead.
+
+  - git-rev-list did not read $GIT_DIR/config file, which means
+    that did not honor i18n.logoutputencoding correctly.
+
+* Tweaks
+
+  - sliding mmap() inefficiently mmaped the same region of a
+    packfile with an access pattern that used objects in the
+    reverse order.  This has been made more efficient.
+
+----------------------------------------------------------------
+
+Changes since v1.5.0 are as follows (gitk changes were already
+in v1.5.0 -- listed below are the commits that came through
+Paul's official gitk repository):
+
+Alexandre Julliard (2):
+      git-daemon: Avoid leaking the listening sockets into child processes.
+      sha1_file.c: Round the mmap offset to half the window size.
+
+Fredrik Kuivinen (2):
+      Read the config in rev-list
+      Documentation/i18n.txt: it is i18n.commitencoding not core.commitencoding
+
+Junio C Hamano (15):
+      Documentation: Drop full-stop from git-fast-import title.
+      cmd-list: add git-remote
+      Makefile: update check-docs target
+      Clarify two backward incompatible repository options.
+      Still updating 1.5.0 release notes.
+      Add RelNotes 1.5.0.1
+      Make sure packedgitwindowsize is multiple of (pagesize * 2)
+      Make gitk work reasonably well on Cygwin.
+      gitk: Use show-ref instead of ls-remote
+      GIT-VERSION-FILE: check ./version first.
+      pretend-sha1: grave bugfix.
+      git-merge: minor fix for no_trivial_merge_strategies.
+      Do not take mode bits from index after type change.
+      Update draft release notes for 1.5.0.1
+      GIT 1.5.0.1
+
+Mark Levedahl (3):
+      gitk - remove trailing whitespace from a few lines.
+      Make gitk save and restore the user set window position.
+      Make gitk save and restore window pane position on Linux and Cygwin.
+
+Nicolas Pitre (1):
+      Minor corrections to release notes
+
+Paul Mackerras (1):
+      Change git repo-config to git config
+
+Shawn O. Pearce (2):
+      Attempt to improve git-rebase lead-in description.
+      Convert update-index references in docs to add.
+
+Tommi Kyntola (1):
+      git-blame: prevent argument parsing segfault
