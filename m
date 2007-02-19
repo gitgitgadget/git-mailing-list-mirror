@@ -1,96 +1,117 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Replace literal STRLEN_ #defines in refs.h with compiler evaluated expressions
-Date: Mon, 19 Feb 2007 20:01:46 +0000
-Message-ID: <200702192001.46669.andyparkins@gmail.com>
-References: <17881.62094.56975.799862@lisa.zopyra.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Change "refs/" references to symbolic constants
+Date: Mon, 19 Feb 2007 12:07:30 -0800
+Message-ID: <7vlkit7vy5.fsf@assigned-by-dhcp.cox.net>
+References: <200702191839.05784.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 19 21:04:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 19 21:07:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJEkh-0006u3-IP
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 21:04:47 +0100
+	id 1HJEnP-00082Z-HY
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 21:07:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932515AbXBSUEo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 15:04:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932529AbXBSUEo
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 15:04:44 -0500
-Received: from ug-out-1314.google.com ([66.249.92.175]:46796 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932515AbXBSUEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 15:04:43 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so653694uga
-        for <git@vger.kernel.org>; Mon, 19 Feb 2007 12:04:42 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=Je7KuiY7/5S98BFr7IBJaKRa2WEtsscJ7B1VT6cznuP00RlFJqFM4SPfBcx3qeD1z0nMGlKXOUqLodAs8ke6aOdlpzNmzCF7I/NvGfAeN2FNPRo58kn/CO6wOHTyJ4Cx/VL/CGHzVo/X1R+tUQVdvoSQWTmfr5cNao9JTZzp2xM=
-Received: by 10.67.106.3 with SMTP id i3mr7252203ugm.1171915481828;
-        Mon, 19 Feb 2007 12:04:41 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id o24sm9619437ugd.2007.02.19.12.04.39;
-        Mon, 19 Feb 2007 12:04:39 -0800 (PST)
-In-Reply-To: <17881.62094.56975.799862@lisa.zopyra.com>
-X-TUID: af43033f1fef53c1
-X-UID: 247
-X-Length: 1997
-Content-Disposition: inline
+	id S932474AbXBSUHc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 15:07:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932529AbXBSUHc
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 15:07:32 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:60995 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932474AbXBSUHb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 15:07:31 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070219200732.KITW21668.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 19 Feb 2007 15:07:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RY7W1W00Q1kojtg0000000; Mon, 19 Feb 2007 15:07:31 -0500
+In-Reply-To: <200702191839.05784.andyparkins@gmail.com> (Andy Parkins's
+	message of "Mon, 19 Feb 2007 18:39:05 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40143>
 
-Bill Lear pointed out that the following:
+Andy Parkins <andyparkins@gmail.com> writes:
 
- #define PATH_REMOTES             "remotes/"
- #define STRLEN_PATH_REMOTES      8
+> Changed repeated use of the same constants for the ref paths to be
+> symbolic constants.  I've defined them in refs.h
+>
+>   refs/ is now PATH_REFS
+>   refs/heads/ is now PATH_REFS_HEADS
+>   refs/tags/ is now PATH_REFS_TAGS
+>   refs/remotes/ is now PATH_REFS_REMOTES
 
-Could be replaced by the less error-prone
+Your example:
 
- #define PATH_REMOTES "remotes/"
- #define LIT_STRLEN(S) ((sizeof(S) / sizeof(S[0])) -1)
- #define STRLEN_PATH_REMOTES LIT_STRLEN(PATH_REMOTES)
+> ...  This has clarified the code in some places; for
+> example:
+>
+>  - len = strlen(refs[i]) + 11;
+>  + len = strlen(refs[i]) + STRLEN_PATH_REFS_TAGS + 1;
 
-which is what this patch does.
+shows that you've carefully looked at what the code does,
+instead of mindlessly replacing, which is a very good sign, but
+how much testing has this seen, I wonder.
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
+> diff --git a/builtin-describe.c b/builtin-describe.c
+> index bcc6456..0f78363 100644
+> --- a/builtin-describe.c
+> +++ b/builtin-describe.c
+> @@ -52,7 +52,7 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void
+>  	 * If --tags, then any tags are used.
+>  	 * Otherwise only annotated tags are used.
+>  	 */
+> -	if (!strncmp(path, "refs/tags/", 10)) {
+> +	if (!strncmp(path, PATH_TAGS, STRLEN_PATH_TAGS)) {
+>  		if (object->type == OBJ_TAG)
+>  			prio = 2;
+>  		else
 
-On top of my previous patch.
+This is PATH_REFS_TAGS isn't it?
 
+> @@ -231,7 +232,7 @@ static int create_default_files(const char *git_dir, const char *template_path)
+>  	strcpy(path + len, "HEAD");
+>  	reinit = !read_ref("HEAD", sha1);
+>  	if (!reinit) {
+> -		if (create_symref("HEAD", "refs/heads/master", NULL) < 0)
+> +		if (create_symref("HEAD", PATH_REFS_HEADS "master", NULL) < 0)
+>  			exit(1);
+>  	}
+>  
 
- refs.h |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
+I mildly mind this one, as it hurts grep-ability.  I know this is one
+of the the only two places in git that 'master' branch is treated
+specially (and I think we would like to keep it that way --- that's
+why I want to be able to grep for "refs/heads/master" and see very few
+hits), so introducing PATH_REFS_HEADS_MASTER is probably not very
+productive either, but...  hmmmm.
 
-diff --git a/refs.h b/refs.h
-index a986b42..6761095 100644
---- a/refs.h
-+++ b/refs.h
-@@ -13,16 +13,17 @@ struct ref_lock {
- #define REF_ISSYMREF 01
- #define REF_ISPACKED 02
- 
-+#define LIT_STRLEN(S)            ((sizeof(S) / sizeof(S[0])) -1)
- #define PATH_OBJECTS             "objects/"
--#define STRLEN_PATH_OBJECTS      8
-+#define STRLEN_PATH_OBJECTS      LIT_STRLEN(PATH_OBJECTS)
- #define PATH_REFS                "refs/"
--#define STRLEN_PATH_REFS         5
-+#define STRLEN_PATH_REFS         LIT_STRLEN(PATH_REFS)
- #define PATH_HEADS               "heads/"
--#define STRLEN_PATH_HEADS        6
-+#define STRLEN_PATH_HEADS        LIT_STRLEN(PATH_HEADS)
- #define PATH_TAGS                "tags/"
--#define STRLEN_PATH_TAGS         5
-+#define STRLEN_PATH_TAGS         LIT_STRLEN(PATH_TAGS)
- #define PATH_REMOTES             "remotes/"
--#define STRLEN_PATH_REMOTES      8
-+#define STRLEN_PATH_REMOTES      LIT_STRLEN(PATH_REMOTES)
- #define PATH_REFS_HEADS          PATH_REFS PATH_HEADS
- #define STRLEN_PATH_REFS_HEADS   (STRLEN_PATH_REFS+STRLEN_PATH_HEADS)
- #define PATH_REFS_TAGS           PATH_REFS PATH_TAGS
--- 
-1.5.0.rc4.gb4d2
+> diff --git a/builtin-pack-refs.c b/builtin-pack-refs.c
+> index 3de9b3e..ac7543d 100644
+> --- a/builtin-pack-refs.c
+> +++ b/builtin-pack-refs.c
+> @@ -36,7 +36,7 @@ static int handle_one_ref(const char *path, const unsigned char *sha1,
+>  	/* Do not pack the symbolic refs */
+>  	if ((flags & REF_ISSYMREF))
+>  		return 0;
+> -	is_tag_ref = !strncmp(path, "refs/tags/", 10);
+> +	is_tag_ref = !strncmp(path, PATH_REFS_TAGS, STRLEN_PATH_REFS_TAGS);
+
+These repeated strncmp(p, X, STRLEN_X) almost makes me wonder if we
+want to introduce:
+
+	inline int prefixcmp(a, b)
+        {
+        	return (strncmp(a, b, strlen(b));
+        }
+
+with clever preprocessor optimization to have compiler do strlen()
+when b is a string literal.
