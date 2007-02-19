@@ -1,89 +1,71 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Where/how to create tracking branches?
-Date: Mon, 19 Feb 2007 10:45:41 -0600
-Message-ID: <17881.54325.475907.468492@lisa.zopyra.com>
+From: Raimund Bauer <ray007@gmx.net>
+Subject: 2 things about branches
+Date: Mon, 19 Feb 2007 19:13:59 +0100
+Message-ID: <1171908840.10817.21.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 19 17:45:50 2007
+X-From: git-owner@vger.kernel.org Mon Feb 19 19:14:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJBe9-0001sy-2m
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 17:45:49 +0100
+	id 1HJD1d-0000CS-Aw
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 19:14:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932406AbXBSQpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 11:45:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932410AbXBSQpq
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 11:45:46 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60999 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932406AbXBSQpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 11:45:45 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1JGjiK22832;
-	Mon, 19 Feb 2007 10:45:44 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S932445AbXBSSOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 13:14:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932442AbXBSSOF
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 13:14:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41571 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932445AbXBSSOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 13:14:04 -0500
+Received: (qmail invoked by alias); 19 Feb 2007 18:14:01 -0000
+X-Provags-ID: V01U2FsdGVkX1/lKld/nPDlSmwbp9HMPfAgac29nCNfJ3JCymHznN
+	8NVQ==
+X-Mailer: Evolution 2.8.1 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40135>
 
-What is the recommended way to create tracking branches in my private
-repo if I first create the corresponding topic branch in my private
-repo and want to publish it via a public repo?
+I think it's a good idea to not list remote branches in 'git branch'
+output per default, but imho we should make an exception for the branch
+the user is currently on.
+Currently when I do 'git checkout origin/next' the checkout works fine
+and I get the warning about the remote branch, but an informational
+query 'git branch' right after that says
 
-Scenario:
-
-[my private repo]
-% git checkout -b topic
-[work, work, work, commit]
-% git push /public/repo/project topic:topic
-
-[somebody else:]
-% git clone /public/repo/project
-% git checkout -b topic origin/topic
-[work, work, work, commit]
-% git push /public/repo/project topic:topic
-
-[my private repo]
-% git checkout topic
-% git pull /public/repo/project topic
-remote: Generating pack...
-remote: Done counting 5 objects.
-Result has 3 objects.
-remote: Deltifying 3 objects.
-remote: /3) done/3) done
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Unpacking 3 objects
- 100% (3/3) done
-Updating 4751fcc..2d92737
-Fast forward
- A |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-% git branch
+* (no branch)
   master
-* topic
-% git branch -r
-  origin/HEAD
-  origin/master
 
-Now, I'm on my private repo, but I really want a tracking branch for
-doing pulls from my public repo, or peers, for this topic branch.
+'git branch -r' also doesn't mark me as being on origin/next.
+Maybe we could query the remote-branches for a matching ref this case?
 
-Do I have to create the topic branch in my public repo first?  This
-seems crazy, as our company repo is just another "global" public repo
-and each developer would need to create branches there instead of on
-their own machine.
+And another wish about branches:
+After a fresh clone of git, my .git/config contains a section
 
-I tried this:
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
 
-% git pull /public/repo/project topic:origin/topic
+so it's easy to keep the branch updated by just saying 'git pull' when
+on branch master.
 
-But it created a topic branch named "origin/topic" instead of a tracking
-branch.
+Doing 'git checkout -b next origin/next' gives me my own next-branch,
+but short of editing .git/config there seems to be no way to get a
+similar section [branch "next"] ... so I can follow next as easy as
+master.
+I'm not sure if there exists a sane default we could use automatically,
+but maybe a switch to git-checkout to write a config entry would be
+possible?
 
+Thanks for listening to my rambling
 
-Bill
+-- 
+best regards
+
+  Ray
