@@ -1,131 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Tue, 20 Feb 2007 01:16:59 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702200112500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
- <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
- <20070217233203.GA6014@coredump.intra.peff.net>
- <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
- <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
- <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 20 01:21:09 2007
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: git-blame.el won't run
+Date: Mon, 19 Feb 2007 22:32:15 +0100
+Message-ID: <24475.1171920735@localhost>
+References: <13283.1171492535@localhost> <87mz393mlo.fsf@morpheus.local>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 20 01:26:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJIkk-0003oF-KY
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:21:06 +0100
+	id 1HJIpo-0006Cb-Uj
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:26:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965628AbXBTARk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 19:17:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965622AbXBTARJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:17:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34941 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965625AbXBTARC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 19:17:02 -0500
-Received: (qmail invoked by alias); 20 Feb 2007 00:17:00 -0000
-X-Provags-ID: V01U2FsdGVkX1/jh3QbCwvjk2pL0LW1xEbk+OjhE491SLbN4A1dTJ
-	KEzA==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1750996AbXBTAV1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 19:21:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbXBTAU7
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:20:59 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:35183 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750938AbXBTAUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 19:20:48 -0500
+Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id B1A4351FD8
+	for <git@vger.kernel.org>; Mon, 19 Feb 2007 22:34:58 +0100 (CET)
+Received: from localhost (IDENT:1001@localhost [127.0.0.1])
+	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1JLWF6h024476
+	for <git@vger.kernel.org>; Mon, 19 Feb 2007 22:32:15 +0100
+In-reply-to: <87mz393mlo.fsf@morpheus.local> 
+Comments: In-reply-to =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+   message dated "Mon, 19 Feb 2007 21:42:59 +0100."
+X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40171>
 
 Hi,
 
-On Mon, 19 Feb 2007, Junio C Hamano wrote:
+> Can you please set debug-on-error to t and show me the backtrace you get?
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > On Mon, 19 Feb 2007, Junio C Hamano wrote:
-> >> > ...
-> >> > git-apply has much saner defaults (it defaults to something pretty safe, 
-> >> > and you can then make it less safe if the patch doesn't apply).
-> >> 
-> >> All true.
-> >
-> > One thing I forgot to mention: "git apply" doesn't apply *anything* unless 
-> > everything applies cleanly. In contrast, when "patch" fails in the middle, 
-> > it will have done part of the job, and then leaves a reject file. I much 
-> > prefer the "everything or nothing" approach of git-apply (again, obviously 
-> > with "--reject" you can make it work the bad old way too).
-> 
-> Yup.
+Nothing happens. I have to C-g after having waited for a few
+seconds.
+ 
+> And does M-! git-blame work in your emacs?
 
-That is important to keep in mind for the following:
+No it is not. It shows a help message (usage message).
 
-> > I _think_ that the right answer is to (a) yes, make it be consistent, but 
-> > (b) _not_ make it be the way we do "--index" now.
-
-BTW this is what I argued, too. But I am not hard minded.
-
-> > Right now, when we see "--index", we do the "setup_git_directory()" 
-> > and the git_config() stuff - which is (I think) something we should 
-> > always do, but then we do *not* prefix the patch itself with the 
-> > prefix we got. And I think that's wrong. I think we should always do 
-> > the "-p1" behaviour from where we started.
-> 
-> Hmm.  I am puzzled.  Are you suggesting to change behaviour of "git 
-> apply" with --index?
-> 
-> git generated patch, or patches on the kernel list that are not 
-> generated with git are always relative to the top-level, so I think the 
-> current --index behaviour makes tons of sense.
-
-But not all patches are generated by git. Unfortunately.
-
-> > Then, if somebody is in a sub/directory/, maybe they need to add a 
-> > "-p3" to indicate that, but at least that's better than having a patch 
-> > that just says "Makefile", and applying the patch to the *wrong* 
-> > "Makefile" (top-level one, rather than the one you were in).
-> 
-> I think it boils down to this question: when you have a patch on
-> hand that you are considering to apply to your tree, if the
-> patch talks about just "Makefile" (e.g. it says "a/Makefile
-> b/Makefile") which Makefile is more likely to be what the patch
-> is talking about -- the toplevel one or the one in the
-> subdirectory you happen to be in?
-> 
-> Both (1) diff generated by git are always relative to top, and
-> (2) the BCP on the kernel list (and I suspect many other
-> projects are run this way as well) is to have diff relative to
-> the toplevel, suggests that "a/Makefile b/Makefile" patch is
-> much more likely to be about the top-level Makefile no matter
-> where you happen to be.
-> 
-> Although the fact you *are* in the subdirectory when you are
-> considering that patch makes it a bit more plausible than
-> otherwise that the patch may be about sub/directory/Makefile, I
-> do not think that is strong enough hint to make it more
-> plausible to apply to the sub/directory one than to the
-> toplevel.
-> 
-> If the patch were what you made by running "GNU diff" inside a
-> corresponding subdirectory of another repository (perhaps you
-> wanted to feed uncommitted changes from there to this
-> repository), then you can always use "GNU patch" to apply.  If
-> you made such a one-shot patch using git-diff, it will tell you
-> the correct directory to apply to, so...
-
-... and here we come back to the argument that git-apply is so much saner 
-than patch.
-
-And yes, it happened to me a while ago that I used "patch", cursed for a 
-little moment, said "git reset --hard" and cursed even more when I 
-realized that I was not in a git-tracked working directory!
-
-My vote is for "take the current subdirectory as root for the patch", 
-since that is what I'd expect out of the box. But as I said: I am not 
-_that_ hard minded, at least on this issue.
-
-Ciao,
-Dscho
+Xavier
