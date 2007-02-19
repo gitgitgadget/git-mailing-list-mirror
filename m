@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Publishing Question: First time Pushing to nonexsiting directory
-Date: Mon, 19 Feb 2007 03:10:10 -0500
-Message-ID: <20070219081010.GC30030@spearce.org>
-References: <20070219073526.GA26531@cip.informatik.uni-erlangen.de>
+Subject: Re: git-fast-export ?
+Date: Mon, 19 Feb 2007 03:25:26 -0500
+Message-ID: <20070219082525.GD30030@spearce.org>
+References: <eqoaf7$loq$1@sea.gmane.org> <20070212011401.GK31488@spearce.org> <45D84A6B.3060402@xs4all.nl>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Mon Feb 19 09:10:22 2007
+Cc: git@vger.kernel.org
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Mon Feb 19 09:25:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJ3bJ-0000nT-GI
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 09:10:21 +0100
+	id 1HJ3q2-0007Fv-De
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 09:25:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750738AbXBSIKQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 03:10:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750739AbXBSIKQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 03:10:16 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53654 "EHLO
+	id S1750785AbXBSIZb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 03:25:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbXBSIZa
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 03:25:30 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:54102 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738AbXBSIKP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 03:10:15 -0500
+	with ESMTP id S1750785AbXBSIZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 03:25:30 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HJ3b9-0002aj-6o; Mon, 19 Feb 2007 03:10:11 -0500
+	id 1HJ3pv-0003AP-5U; Mon, 19 Feb 2007 03:25:27 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 69A0520FBAE; Mon, 19 Feb 2007 03:10:10 -0500 (EST)
+	id 67C0B20FBAE; Mon, 19 Feb 2007 03:25:26 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20070219073526.GA26531@cip.informatik.uni-erlangen.de>
+In-Reply-To: <45D84A6B.3060402@xs4all.nl>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,52 +43,42 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40104>
 
-Thomas Glanzmann <thomas@glanzmann.de> wrote:
-> I thought that there is a command available which I can use to push a
-> repository to a remote nonexisting location (that gets created on the
-> fly) like in the following scenario:
+Han-Wen Nienhuys <hanwen@xs4all.nl> wrote:
+> Wouldn't it make sense to build a git-fast-export, which 
+> can be used to interrogate a git-repository: a GIT tool 
+> could run a single git command, 
 > 
->         - Create a git project on my laptop
->         - Check in a few files
->         - Publish the git repository to 
-> 
->         (thinkpad) [~/work/astro-tg] git push 131.188.30.59:/home/cip/adm/sithglan/work/repositories/private/astro/
->         fatal: '/home/cip/adm/sithglan/work/repositories/private/astro': unable to chdir or not a git archive
->         fatal: The remote end hung up unexpectedly
-> 
-> I thought that I read a comment from Linus(?) long time ago to how to obtain
-> that. But I am unable to find the e-mail in my archives. If there is no
-> standard way, how do you do it? Just rsync the files and change the
-> 'origin'?
+> this would make interfacing with Git from scripts more ergonomical, 
+> less dependent on changes in the UI of porcelains, and in some cases
+> more efficient.
 
-SSH into the remote system that you want to push to, then run
-init-db there:
+Maybe.
 
-  $ ssh 131.188.30.59 git --git-dir=/home/cip/adm/sithglan/work/repositories/private/astro.git init-db
+But without knowing what the UI program wants, its hard to say what
+should be implemented there.  I'm not going to create something on
+a hunch that it will be useful someday - that's just not a practical
+use of my time.
 
-Configure that as a remote, e.g. origin:
+Worse, most scripting level languages have a hard time working
+with a bidirectional pipe to a process.  What you want here is
+stdin and stdout pipes, so you can send a command and then receive
+the response.  This can be a challenge in something like Tcl,
+maybe not fully portable in Perl, etc.
 
-  $ git remote add origin 131.188.30.59:/home/cip/adm/sithglan/work/repositories/private/astro.git
+Even worse, some parts of Git are not reentrant.  They are currently
+built to run once and have the UNIX process terminate quickly
+afterwards.  Keeping it running to answer more queries from the
+UI may cause the Git process to leak memory over a longer term,
+cause it to crash after a couple of successive repack/prune/gc, etc.
 
-Now push to there:
-
-  $ git push origin master:master
-
-And maybe fetch back to create the tracking branches:
-
-  $ git fetch
-
-
-Note that in my examples above I added ".git" to the end of the
-repository path, as this is rather typical for a 'bare repository'
-(that is, a repository without a working directory attached).
-You usually don't want to push into a repository with a working
-directory, but it is supported and a lot of folks do it.
-
-I also assumed Git 1.5.0 on your thinkpad end, as git-remote was
-recently added in that version.  Handy tool.  :)
+There are a number of interesting operations within Git that a UI
+would want to query, but that may not be a good idea to expose from
+a within a long running UNIX process, for those reasons.  fast-import
+doesn't do these, so its reasonable to keep up for extended periods,
+but even fast-import assumes it will terminate at some point as it
+hangs onto its object table for the entire lifespan of the process.
 
 -- 
 Shawn.
