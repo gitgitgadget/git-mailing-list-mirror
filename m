@@ -1,36 +1,34 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Teach git-remote to update existing remotes by fetching from them
-Date: Mon, 19 Feb 2007 02:32:38 -0500
-Message-ID: <20070219073238.GA30030@spearce.org>
-References: <E1HIzh2-0001Ph-T2@candygram.thunk.org> <7virdybu9a.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Work around missing strtoumax on Solaris.
+Date: Mon, 19 Feb 2007 02:36:13 -0500
+Message-ID: <20070219073613.GA30144@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 19 08:32:56 2007
+X-From: git-owner@vger.kernel.org Mon Feb 19 08:36:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJ315-0002E0-2g
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 08:32:55 +0100
+	id 1HJ34N-0003f3-UE
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 08:36:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750712AbXBSHcn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 02:32:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750722AbXBSHcn
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 02:32:43 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:52702 "EHLO
+	id S1750704AbXBSHgR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 02:36:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbXBSHgR
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 02:36:17 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:52791 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750712AbXBSHcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 02:32:43 -0500
+	with ESMTP id S1750704AbXBSHgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 02:36:16 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HJ30p-0001Bs-Uw; Mon, 19 Feb 2007 02:32:40 -0500
+	id 1HJ34I-0001IJ-Df; Mon, 19 Feb 2007 02:36:14 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9113720FBAE; Mon, 19 Feb 2007 02:32:38 -0500 (EST)
+	id 443A120FBAE; Mon, 19 Feb 2007 02:36:13 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <7virdybu9a.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,44 +41,69 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40100>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Theodore Ts'o" <tytso@mit.edu> writes:
-> 
-> > This allows users to use the command "git remote update" to update all
-> > remotes that are being tracked in the repository.
-> 
-> Sounds like a good idea.  Thanks.
+Solaris 9 apparently lacks the strtoumax function in its C library.
+But it does have strtoull and uintmax_t appears to be defined to
+be unsigned long long.
 
-<personalwishlist>
+We now set NO_STRTOUMAX in the Makefile for SunOS systems, and
+if this is set define strtoumax to be strtoull.
 
-It would be nice to define "gang remotes".  For example I want to
-be able to have:
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-  `git fetch cs`  ==  `git fetch cs-one; git fetch cs-two`
-  `git fetch jc`  ==  `git fetch origin; git fetch alt`
+ Too bad I missed 1.5.0.1!  Time for 1.5.0.2 ?  ;-)
 
-Why?  Well, I often have multiple remotes setup to the *same*
-repository depending on the SSH hostname I want to use to access
-that repository.  This has a lot to do with the way my firewalls
-are setup and where I'm physically connected at any given time.
+ Makefile          |    6 ++++++
+ git-compat-util.h |    4 ++++
+ 2 files changed, 10 insertions(+), 0 deletions(-)
 
-Yes, I really do have multiple remotes setup to the access the
-same (remote) physical disk.  :)
-
-Possible syntax:
-
-	[remote "cs"]
-		remote = cs-one
-		remote = cs-two
-	[remote "jc"]
-		remote = origin
-		remote = alt
-
-</personalwishlist>
-
-Obviously this is more work than Ted's nice little patch.  :)
-
+diff --git a/Makefile b/Makefile
+index ebecbbd..e8a827d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -28,6 +28,8 @@ all::
+ #
+ # Define NO_STRLCPY if you don't have strlcpy.
+ #
++# Define NO_STRTOUMAX if you don't have strtoumax.
++#
+ # Define NO_SETENV if you don't have setenv in the C library.
+ #
+ # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
+@@ -348,6 +350,7 @@ ifeq ($(uname_S),SunOS)
+ 	NEEDS_NSL = YesPlease
+ 	SHELL_PATH = /bin/bash
+ 	NO_STRCASESTR = YesPlease
++	NO_STRTOUMAX = YesPlease
+ 	ifeq ($(uname_R),5.8)
+ 		NEEDS_LIBICONV = YesPlease
+ 		NO_UNSETENV = YesPlease
+@@ -517,6 +520,9 @@ ifdef NO_STRLCPY
+ 	COMPAT_CFLAGS += -DNO_STRLCPY
+ 	COMPAT_OBJS += compat/strlcpy.o
+ endif
++ifdef NO_STRTOUMAX
++	COMPAT_CFLAGS += -DNO_STRTOUMAX
++endif
+ ifdef NO_SETENV
+ 	COMPAT_CFLAGS += -DNO_SETENV
+ 	COMPAT_OBJS += compat/setenv.o
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 105ac28..f812f8e 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -139,6 +139,10 @@ extern char *gitstrcasestr(const char *haystack, const char *needle);
+ extern size_t gitstrlcpy(char *, const char *, size_t);
+ #endif
+ 
++#ifdef NO_STRTOUMAX
++#define strtoumax strtoull
++#endif
++
+ extern void release_pack_memory(size_t);
+ 
+ static inline char* xstrdup(const char *str)
 -- 
-Shawn.
+1.5.0.552.ge1b1c
