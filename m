@@ -1,64 +1,115 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: removal of "percent done" messages from git pull
-Date: Tue, 20 Feb 2007 00:53:45 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702200053080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45D5E06B.6020706@lightspeed.com> <tnxr6sm5m2u.fsf@arm.com>
- <Pine.LNX.4.63.0702191611410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vsld169cf.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
+Date: Mon, 19 Feb 2007 15:57:15 -0800
+Message-ID: <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
+References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net>
+	<7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
+	<20070217232603.GB30839@coredump.intra.peff.net>
+	<7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+	<20070217233203.GA6014@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
+	<7vodnp68p8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Catalin Marinas <catalin.marinas@arm.com>,
-	Larry Streepy <larry@lightspeed.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 20 00:53:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Feb 20 00:57:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJIKP-0000ms-5d
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 00:53:53 +0100
+	id 1HJINj-0002GZ-HH
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 00:57:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965561AbXBSXxu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 18:53:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965565AbXBSXxu
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 18:53:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38206 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965561AbXBSXxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 18:53:49 -0500
-Received: (qmail invoked by alias); 19 Feb 2007 23:53:48 -0000
-X-Provags-ID: V01U2FsdGVkX18w5MM22/Iw6HydJvrddT5cM5V269ZdX/oJ8MwS6s
-	fy0g==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vsld169cf.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S965566AbXBSX5Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 18:57:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965567AbXBSX5Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 18:57:16 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:35541 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965566AbXBSX5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 18:57:16 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070219235716.RCBL21668.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 19 Feb 2007 18:57:16 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RbxE1W00W1kojtg0000000; Mon, 19 Feb 2007 18:57:15 -0500
+In-Reply-To: <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Mon, 19 Feb 2007 15:37:35 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40166>
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Mon, 19 Feb 2007, Junio C Hamano wrote:
+> On Mon, 19 Feb 2007, Junio C Hamano wrote:
+>> > ...
+>> > git-apply has much saner defaults (it defaults to something pretty safe, 
+>> > and you can then make it less safe if the patch doesn't apply).
+>> 
+>> All true.
+>
+> One thing I forgot to mention: "git apply" doesn't apply *anything* unless 
+> everything applies cleanly. In contrast, when "patch" fails in the middle, 
+> it will have done part of the job, and then leaves a reject file. I much 
+> prefer the "everything or nothing" approach of git-apply (again, obviously 
+> with "--reject" you can make it work the bad old way too).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> Or (as done in StGIT for some messages), only print those interactive
-> >> messages when stdout is a tty, i.e. "if (isatty(1))".
-> >
-> > You mean something like this?
-> >
-> > --
-> > [PATCH] fetch: make things quiet when not outputting to a tty
-> >
-> > Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> 
-> Please grep for 'git.fetch-pack' again.  Its output is list of
-> object names and the refnames where they live in the remote and
-> consumed by the later stages of git-fetch script.
+Yup.
 
-Ouch. Sorry. I'll try to come up with a better patch tomorrow, and I will 
-test that, too.
+> I _think_ that the right answer is to (a) yes, make it be consistent, but 
+> (b) _not_ make it be the way we do "--index" now.
+>
+> Right now, when we see "--index", we do the "setup_git_directory()" and 
+> the git_config() stuff - which is (I think) something we should always do, 
+> but then we do *not* prefix the patch itself with the prefix we got. And I 
+> think that's wrong. I think we should always do the "-p1" behaviour from 
+> where we started.
 
-Ciao,
-Dscho
+Hmm.  I am puzzled.  Are you suggesting to change behaviour of
+"git apply" with --index?
+
+git generated patch, or patches on the kernel list that are not
+generated with git are always relative to the top-level, so I
+think the current --index behaviour makes tons of sense.
+
+> Then, if somebody is in a sub/directory/, maybe they need to add a "-p3" 
+> to indicate that, but at least that's better than having a patch that just 
+> says "Makefile", and applying the patch to the *wrong* "Makefile" 
+> (top-level one, rather than the one you were in).
+>
+> Hmm?
+
+I think it boils down to this question: when you have a patch on
+hand that you are considering to apply to your tree, if the
+patch talks about just "Makefile" (e.g. it says "a/Makefile
+b/Makefile") which Makefile is more likely to be what the patch
+is talking about -- the toplevel one or the one in the
+subdirectory you happen to be in?
+
+Both (1) diff generated by git are always relative to top, and
+(2) the BCP on the kernel list (and I suspect many other
+projects are run this way as well) is to have diff relative to
+the toplevel, suggests that "a/Makefile b/Makefile" patch is
+much more likely to be about the top-level Makefile no matter
+where you happen to be.
+
+Although the fact you *are* in the subdirectory when you are
+considering that patch makes it a bit more plausible than
+otherwise that the patch may be about sub/directory/Makefile, I
+do not think that is strong enough hint to make it more
+plausible to apply to the sub/directory one than to the
+toplevel.
+
+If the patch were what you made by running "GNU diff" inside a
+corresponding subdirectory of another repository (perhaps you
+wanted to feed uncommitted changes from there to this
+repository), then you can always use "GNU patch" to apply.  If
+you made such a one-shot patch using git-diff, it will tell you
+the correct directory to apply to, so...
