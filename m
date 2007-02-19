@@ -1,84 +1,74 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-fast-export ?
-Date: Mon, 19 Feb 2007 03:25:26 -0500
-Message-ID: <20070219082525.GD30030@spearce.org>
-References: <eqoaf7$loq$1@sea.gmane.org> <20070212011401.GK31488@spearce.org> <45D84A6B.3060402@xs4all.nl>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Publishing Question: First time Pushing to nonexsiting directory
+Date: Mon, 19 Feb 2007 00:33:22 -0800
+Message-ID: <7vk5yea6nh.fsf@assigned-by-dhcp.cox.net>
+References: <20070219073526.GA26531@cip.informatik.uni-erlangen.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
-X-From: git-owner@vger.kernel.org Mon Feb 19 09:25:35 2007
+Cc: GIT <git@vger.kernel.org>
+To: Thomas Glanzmann <thomas@glanzmann.de>
+X-From: git-owner@vger.kernel.org Mon Feb 19 09:33:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJ3q2-0007Fv-De
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 09:25:34 +0100
+	id 1HJ3xf-00025X-R6
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 09:33:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750785AbXBSIZb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 03:25:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750786AbXBSIZa
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 03:25:30 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:54102 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750785AbXBSIZa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 03:25:30 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HJ3pv-0003AP-5U; Mon, 19 Feb 2007 03:25:27 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 67C0B20FBAE; Mon, 19 Feb 2007 03:25:26 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <45D84A6B.3060402@xs4all.nl>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750791AbXBSIdY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 03:33:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750793AbXBSIdY
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 03:33:24 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:43424 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750791AbXBSIdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 03:33:23 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070219083322.HDEF1306.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 19 Feb 2007 03:33:22 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id RLZN1W00F1kojtg0000000; Mon, 19 Feb 2007 03:33:23 -0500
+In-Reply-To: <20070219073526.GA26531@cip.informatik.uni-erlangen.de> (Thomas
+	Glanzmann's message of "Mon, 19 Feb 2007 08:35:26 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40105>
 
-Han-Wen Nienhuys <hanwen@xs4all.nl> wrote:
-> Wouldn't it make sense to build a git-fast-export, which 
-> can be used to interrogate a git-repository: a GIT tool 
-> could run a single git command, 
-> 
-> this would make interfacing with Git from scripts more ergonomical, 
-> less dependent on changes in the UI of porcelains, and in some cases
-> more efficient.
+Thomas Glanzmann <thomas@glanzmann.de> writes:
 
-Maybe.
+> I thought that there is a command available which I can use to push a
+> repository to a remote nonexisting location (that gets created on the
+> fly) ...
 
-But without knowing what the UI program wants, its hard to say what
-should be implemented there.  I'm not going to create something on
-a hunch that it will be useful someday - that's just not a practical
-use of my time.
+Sorry, there isn't.
 
-Worse, most scripting level languages have a hard time working
-with a bidirectional pipe to a process.  What you want here is
-stdin and stdout pipes, so you can send a command and then receive
-the response.  This can be a challenge in something like Tcl,
-maybe not fully portable in Perl, etc.
+> I thought that I read a comment from Linus(?) long time ago to how to obtain
+> that. But I am unable to find the e-mail in my archives. If there is no
+> standard way, how do you do it? Just rsync the files and change the
+> 'origin'?
 
-Even worse, some parts of Git are not reentrant.  They are currently
-built to run once and have the UNIX process terminate quickly
-afterwards.  Keeping it running to answer more queries from the
-UI may cause the Git process to leak memory over a longer term,
-cause it to crash after a couple of successive repack/prune/gc, etc.
+What you remember might be this one:
 
-There are a number of interesting operations within Git that a UI
-would want to query, but that may not be a good idea to expose from
-a within a long running UNIX process, for those reasons.  fast-import
-doesn't do these, so its reasonable to keep up for extended periods,
-but even fast-import assumes it will terminate at some point as it
-hangs onto its object table for the entire lifespan of the process.
+    http://thread.gmane.org/gmane.comp.version-control.git/31351/focus=31610
 
--- 
-Shawn.
+Even if it isn't, it is worth a read.  Look for "The creation of
+a new archive tends to" and "really _has_ to be separate".
+
+There was another discussion around this topic as well:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/32040/focus=32108
+
+which I think is a possible design in the right direction, but I
+did not hear much from the users (as you can see in the archive
+link above) so it hasn't materialized.  The only real improvement
+that came out of the thread is deletion of a branch at the remote
+site with "git-push :refs/heads/to-be-removed".
+
+Another ancient one is:
+
+    http://thread.gmane.org/gmane.comp.version-control.git/12651/focus=12667
