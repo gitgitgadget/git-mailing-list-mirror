@@ -1,77 +1,108 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Mon, 19 Feb 2007 15:12:49 -0500
-Message-ID: <20070219201249.GC27565@spearce.org>
-References: <200702191839.05784.andyparkins@gmail.com> <7vlkit7vy5.fsf@assigned-by-dhcp.cox.net>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Where/how to create tracking branches?
+Date: Mon, 19 Feb 2007 14:13:02 -0600
+Message-ID: <17882.1230.704770.12880@lisa.zopyra.com>
+References: <17881.54325.475907.468492@lisa.zopyra.com>
+	<7vy7mu6ihj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 19 21:12:58 2007
+X-From: git-owner@vger.kernel.org Mon Feb 19 21:13:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJEsa-0001tp-Uh
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 21:12:57 +0100
+	id 1HJEsv-00021x-LS
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 21:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932563AbXBSUMx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 15:12:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932569AbXBSUMx
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 15:12:53 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:50858 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932563AbXBSUMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 15:12:52 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HJEsN-0008RC-Id; Mon, 19 Feb 2007 15:12:43 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6410120FBAE; Mon, 19 Feb 2007 15:12:49 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vlkit7vy5.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932571AbXBSUNM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 15:13:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932572AbXBSUNL
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 15:13:11 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61336 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932571AbXBSUNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 15:13:10 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1JKD6A17129;
+	Mon, 19 Feb 2007 14:13:06 -0600
+In-Reply-To: <7vy7mu6ihj.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40147>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> > diff --git a/builtin-pack-refs.c b/builtin-pack-refs.c
-> > index 3de9b3e..ac7543d 100644
-> > --- a/builtin-pack-refs.c
-> > +++ b/builtin-pack-refs.c
-> > @@ -36,7 +36,7 @@ static int handle_one_ref(const char *path, const unsigned char *sha1,
-> >  	/* Do not pack the symbolic refs */
-> >  	if ((flags & REF_ISSYMREF))
-> >  		return 0;
-> > -	is_tag_ref = !strncmp(path, "refs/tags/", 10);
-> > +	is_tag_ref = !strncmp(path, PATH_REFS_TAGS, STRLEN_PATH_REFS_TAGS);
-> 
-> These repeated strncmp(p, X, STRLEN_X) almost makes me wonder if we
-> want to introduce:
-> 
-> 	inline int prefixcmp(a, b)
->         {
->         	return (strncmp(a, b, strlen(b));
->         }
-> 
-> with clever preprocessor optimization to have compiler do strlen()
-> when b is a string literal.
+On Monday, February 19, 2007 at 11:43:36 (-0800) Junio C Hamano writes:
+>...
+>Assuming your clone was initially made from /public/repo/project,
+>doesn't "git fetch" without _any_ parameter work?
+>
+>	$ git fetch
 
-This may be worthwhile.  We use strncmp so often in Git that I
-tend to write strncmp even when I mean strcmp.  Yes, my fingers are
-trained to write strncmp, and only strncmp...  *sigh* At least the
-compiler checks for me.  ;-)
+Short answer: yes, it does.  I had assumed I needed to create the
+tracking branch somehow since I created the topic branch in the first
+place in my private repo.  More detailed confirmation follows, but
+thank you for pointing out that git is in fact smarter than I gave
+it credit.
 
--- 
-Shawn.
+# set up a public repo with "master" branch and something in it...
+mkdir public_repo && cd public_repo && git --bare init
+cd ..
+mkdir a_repo && cd a_repo && git init
+echo A > A && git add A && git commit -a -m A
+git push ../public_repo master:master
+
+# clone public repo to get my private repo, create topic branch
+cd ..
+git clone public_repo private_repo
+cd private_repo
+git checkout -b topic
+echo change >> A && git commit -a -m change
+
+# publish my branch 'topic' to my public repo
+git push ../public_repo topic:topic
+
+# A peer grabs the topic branch, makes changes and pushes back to public
+cd ..
+git clone public_repo peer_repo
+cd peer_repo
+git checkout -b topic origin/topic
+echo more >> A && git commit -a -m more
+git push ../public_repo topic:topic
+
+# Go to my private repo, pull latest changes (show output this time...)
+cd ../private_repo
+git checkout master
+git pull
+remote: Generating pack...
+remote: Done counting 5 objects.
+Result has 3 objects.
+remote: Deltifying 3 objects.
+remote: /3) done/3) done
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking 3 objects
+ 100% (3/3) done
+* refs/remotes/origin/topic: storing branch 'topic' of /home/blear/test/public_repo
+  commit: 4a8e157
+Already up-to-date.
+
+# Now, switch to topic branch
+git checkout topic
+cat A
+A
+change
+
+# Ok, now I get it:
+git diff origin/topic
+[changes listed]
+git merge origin/topic
+cat A
+A
+change
+more
+
+
+Bill
