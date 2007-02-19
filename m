@@ -1,78 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: removal of "percent done" messages from git pull
-Date: Mon, 19 Feb 2007 16:12:18 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702191611410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45D5E06B.6020706@lightspeed.com> <tnxr6sm5m2u.fsf@arm.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Optimizing repository speed
+Date: Mon, 19 Feb 2007 10:14:10 -0500
+Message-ID: <20070219151410.GG25490@thunk.org>
+References: <17881.46642.843674.49482@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Larry Streepy <larry@lightspeed.com>, git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@arm.com>
-X-From: git-owner@vger.kernel.org Mon Feb 19 16:12:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Mon Feb 19 16:14:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJABn-00060n-0j
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 16:12:27 +0100
+	id 1HJADb-0006j7-OL
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 16:14:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932330AbXBSPMX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 10:12:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932335AbXBSPMW
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 10:12:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37050 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932330AbXBSPMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 10:12:22 -0500
-Received: (qmail invoked by alias); 19 Feb 2007 15:12:21 -0000
-X-Provags-ID: V01U2FsdGVkX18/0SkH+CU/YaiGUX+zFXRiteDcyadm9x+VBrn+T/
-	3qzw==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <tnxr6sm5m2u.fsf@arm.com>
-X-Y-GMX-Trusted: 0
+	id S932335AbXBSPOQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 10:14:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932339AbXBSPOQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 10:14:16 -0500
+Received: from thunk.org ([69.25.196.29]:43623 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932335AbXBSPOP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 10:14:15 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HJAIm-0006YB-NG; Mon, 19 Feb 2007 10:19:40 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HJADS-000553-Dh; Mon, 19 Feb 2007 10:14:10 -0500
+Content-Disposition: inline
+In-Reply-To: <17881.46642.843674.49482@lisa.zopyra.com>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40132>
 
-Hi,
-
-On Mon, 19 Feb 2007, Catalin Marinas wrote:
-
-> Larry Streepy <larry@lightspeed.com> wrote:
-> > I run a nightly script to build and test our product.  I capture all
-> > the output and email it to interested parties.  One very annoying
-> > thing is the "percent done" messages that come out of git pull.  It
-> > results in log files that look like this:
-> [...]
-> > I have found no way to make these messages go away.  When running in a
-> > "batch" mode, IMHO, interactive messages like these should not be
-> > emitted. At least there should be a switch to suppress them.
+On Mon, Feb 19, 2007 at 08:37:38AM -0600, Bill Lear wrote:
+> As part of our conversion to git 1.5, I would like to ensure that
+> our code repository does not get crufty and slow.  Currently, I have
+> a cron job that runs each morning that does a 'git repack -a -d'.
 > 
-> Or (as done in StGIT for some messages), only print those interactive
-> messages when stdout is a tty, i.e. "if (isatty(1))".
+> I know there is 'git-gc', and it appears to do all sorts of good
+> things.  Can I simply replace my call to 'git repack -d -a' with 'git
+> gc', or is there anything else I might want to do?
 
-You mean something like this?
+git-gc is a strict superset of git repack -a -d.  Specifically, what
+it does is:
 
---
-[PATCH] fetch: make things quiet when not outputting to a tty
+git-pack-refs --prune
+git-reflog expire --al 
+git-repack -a -d -l
+git-rerere gc
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+It will also through in a git-prune if you do add --prune to the
+git-gc call, but you really don't want to run that out of a cron job.
 
----
+Regards,
 
- fetch-pack.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index c787106..9ec5479 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -725,6 +725,8 @@ int main(int argc, char **argv)
- 		nr_heads = argc - i - 1;
- 		break;
- 	}
-+	if (!verbose && !isatty(1))
-+		quiet = 1;
- 	if (!dest)
- 		usage(fetch_pack_usage);
- 	pid = git_connect(fd, dest, uploadpack);
+						- Ted
