@@ -1,68 +1,89 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: removal of "percent done" messages from git pull
-Date: Mon, 19 Feb 2007 15:30:33 +0000
-Message-ID: <1171899033.5129.13.camel@pc1117>
-References: <45D5E06B.6020706@lightspeed.com> <tnxr6sm5m2u.fsf@arm.com>
-	 <Pine.LNX.4.63.0702191611410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: catalin.marinas@gmail.com
+From: Bill Lear <rael@zopyra.com>
+Subject: Where/how to create tracking branches?
+Date: Mon, 19 Feb 2007 10:45:41 -0600
+Message-ID: <17881.54325.475907.468492@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Larry Streepy <larry@lightspeed.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 19 16:31:10 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 19 17:45:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJATq-0004zd-E7
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 16:31:06 +0100
+	id 1HJBe9-0001sy-2m
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 17:45:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932332AbXBSPa5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 10:30:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932362AbXBSPa5
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 10:30:57 -0500
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:65351 "EHLO
-	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932332AbXBSPa5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Feb 2007 10:30:57 -0500
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id l1JFUYYo010394;
-	Mon, 19 Feb 2007 15:30:34 GMT
-Received: from pc1117.cambridge.arm.com ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Mon, 19 Feb 2007 15:31:33 +0000
-In-Reply-To: <Pine.LNX.4.63.0702191611410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: Evolution 2.0.4 
-X-OriginalArrivalTime: 19 Feb 2007 15:31:33.0383 (UTC) FILETIME=[08FB2970:01C7543B]
+	id S932406AbXBSQpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 11:45:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932410AbXBSQpq
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 11:45:46 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60999 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932406AbXBSQpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 11:45:45 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1JGjiK22832;
+	Mon, 19 Feb 2007 10:45:44 -0600
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40134>
 
-On Mon, 2007-02-19 at 16:12 +0100, Johannes Schindelin wrote:
-> > Larry Streepy <larry@lightspeed.com> wrote:
-> > > I run a nightly script to build and test our product.  I capture all
-> > > the output and email it to interested parties.  One very annoying
-> > > thing is the "percent done" messages that come out of git pull.  It
-> > > results in log files that look like this:
-> > [...]
-> > > I have found no way to make these messages go away.  When running in a
-> > > "batch" mode, IMHO, interactive messages like these should not be
-> > > emitted. At least there should be a switch to suppress them.
-> > 
-> > Or (as done in StGIT for some messages), only print those interactive
-> > messages when stdout is a tty, i.e. "if (isatty(1))".
-> 
-> You mean something like this?
-[...]
-> +	if (!verbose && !isatty(1))
-> +		quiet = 1;
+What is the recommended way to create tracking branches in my private
+repo if I first create the corresponding topic branch in my private
+repo and want to publish it via a public repo?
 
-Well, you might not want this to be the equivalent of --quiet as you
-already have an option for it. I'm not familiar to the GIT internals but
-it seems a bit more complicated since those messages are sent by the
-server. Maybe some modification to the sideband.c but both error
-messages and progress percentage seem to be sent on the same band #2.
+Scenario:
 
--- 
-Catalin
+[my private repo]
+% git checkout -b topic
+[work, work, work, commit]
+% git push /public/repo/project topic:topic
+
+[somebody else:]
+% git clone /public/repo/project
+% git checkout -b topic origin/topic
+[work, work, work, commit]
+% git push /public/repo/project topic:topic
+
+[my private repo]
+% git checkout topic
+% git pull /public/repo/project topic
+remote: Generating pack...
+remote: Done counting 5 objects.
+Result has 3 objects.
+remote: Deltifying 3 objects.
+remote: /3) done/3) done
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking 3 objects
+ 100% (3/3) done
+Updating 4751fcc..2d92737
+Fast forward
+ A |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+% git branch
+  master
+* topic
+% git branch -r
+  origin/HEAD
+  origin/master
+
+Now, I'm on my private repo, but I really want a tracking branch for
+doing pulls from my public repo, or peers, for this topic branch.
+
+Do I have to create the topic branch in my public repo first?  This
+seems crazy, as our company repo is just another "global" public repo
+and each developer would need to create branches there instead of on
+their own machine.
+
+I tried this:
+
+% git pull /public/repo/project topic:origin/topic
+
+But it created a topic branch named "origin/topic" instead of a tracking
+branch.
+
+
+Bill
