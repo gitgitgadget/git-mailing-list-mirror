@@ -1,71 +1,123 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Support for large files on 32bit systems.
-Date: Sun, 18 Feb 2007 18:44:29 -0800
-Message-ID: <7vr6smc1de.fsf@assigned-by-dhcp.cox.net>
-References: <20070217091310.GD21842@admingilde.org>
-	<20070217093953.GE21842@admingilde.org>
-	<20070217094959.GH27864@spearce.org>
-	<alpine.LRH.0.82.0702170830280.31945@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Feb 19 03:44:42 2007
+From: "Theodore Ts'o" <tytso@mit.edu>
+Subject: [PATCH] Teach git-remote to update existing remotes by fetching from them
+Date: Sun, 18 Feb 2007 23:00:00 -0500
+Message-ID: <E1HIzh2-0001Ph-T2@candygram.thunk.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 19 05:00:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HIyWA-0000rN-0Q
-	for gcvg-git@gmane.org; Mon, 19 Feb 2007 03:44:42 +0100
+	id 1HIzhR-0002zo-6o
+	for gcvg-git@gmane.org; Mon, 19 Feb 2007 05:00:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752734AbXBSCob (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Feb 2007 21:44:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752744AbXBSCob
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 21:44:31 -0500
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:59943 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752734AbXBSCoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Feb 2007 21:44:30 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070219024429.ROEQ1349.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 18 Feb 2007 21:44:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id REkV1W0181kojtg0000000; Sun, 18 Feb 2007 21:44:30 -0500
-In-Reply-To: <alpine.LRH.0.82.0702170830280.31945@xanadu.home> (Nicolas
-	Pitre's message of "Sat, 17 Feb 2007 08:32:06 -0500 (EST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752802AbXBSEAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Feb 2007 23:00:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752807AbXBSEAF
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Feb 2007 23:00:05 -0500
+Received: from thunk.org ([69.25.196.29]:43169 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752802AbXBSEAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Feb 2007 23:00:03 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HIzmM-0003WC-SK; Sun, 18 Feb 2007 23:05:31 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HIzh2-0001Ph-T2; Sun, 18 Feb 2007 23:00:00 -0500
+Full-Name: Theodore Ts'o
+Phone: (781) 391-3464
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40095>
 
-Nicolas Pitre <nico@cam.org> writes:
 
->> I think the only way to do with this is to have the Makefile detect
->> if -D_FILE_OFFSET_BITS=64 is required to be added to CFLAGS based on
->> some rule (e.g. uname output?), then add that to CFLAGS when needed.
->
-> Why not simply defining _FILE_OFFSET_BITS=64 unconditionally?
->
-> It certainly won't cause GIT to explode if compiled against something 
-> else than glibc.
+This allows users to use the command "git remote update" to update all
+remotes that are being tracked in the repository.
 
-I like the simplicity of that approach.  Like this?
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
+---
+ Documentation/config.txt     |    4 ++++
+ Documentation/git-remote.txt |   10 +++++++++-
+ git-remote.perl              |   13 +++++++++++++
+ 3 files changed, 26 insertions(+), 1 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 105ac28..dd5f369 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1,6 +1,8 @@
- #ifndef GIT_COMPAT_UTIL_H
- #define GIT_COMPAT_UTIL_H
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 3865535..d8e696f 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -439,6 +439,10 @@ pull.octopus::
+ pull.twohead::
+ 	The default merge strategy to use when pulling a single branch.
  
-+#define _FILE_OFFSET_BITS 64
++remote.fetch::
++	The list of remotes which are fetched by "git remote update".
++	See gitlink:git-remote[1].
 +
- #ifndef FLEX_ARRAY
- #if defined(__GNUC__) && (__GNUC__ < 3)
- #define FLEX_ARRAY 0
+ remote.<name>.url::
+ 	The URL of a remote repository.  See gitlink:git-fetch[1] or
+ 	gitlink:git-push[1].
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index a60c31a..eed7aa2 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -13,6 +13,7 @@ SYNOPSIS
+ 'git-remote' add <name> <url>
+ 'git-remote' show <name>
+ 'git-remote' prune <name>
++'git-remote' update
+ 
+ DESCRIPTION
+ -----------
+@@ -40,7 +41,14 @@ Gives some information about the remote <name>.
+ 
+ Deletes all stale tracking branches under <name>.
+ These stale branches have already been removed from the remote repository
+-referenced by <name>, but are still locally available in "remotes/<name>".
++referenced by <name>, but are still locally available in
++"remotes/<name>".
++
++'update'::
++
++Fetch updates for the remotes in the repository.  By default all remotes
++are updated, but this can be configured via the configuration parameter 
++'remote.fetch'.   (See gitlink:git-config[1]).
+ 
+ 
+ DISCUSSION
+diff --git a/git-remote.perl b/git-remote.perl
+index c56c5a8..1db9901 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -303,6 +303,18 @@ elsif ($ARGV[0] eq 'show') {
+ 		show_remote($ARGV[$i], $ls_remote);
+ 	}
+ }
++elsif ($ARGV[0] eq 'update') {
++        my $conf = $git->config("remote.fetch");
++	if (defined($conf)) {
++	    	@remotes = split(' ', $conf);
++	} else {
++	        @remotes = sort keys %$remote;
++	}
++	for (@remotes) {
++		print "Fetching $_\n";
++		$git->command('fetch', "$_");
++	}
++}
+ elsif ($ARGV[0] eq 'prune') {
+ 	my $ls_remote = 1;
+ 	my $i;
+@@ -360,5 +372,6 @@ else {
+ 	print STDERR "       git remote add <name> <url>\n";
+ 	print STDERR "       git remote show <name>\n";
+ 	print STDERR "       git remote prune <name>\n";
++	print STDERR "       git remote update\n";
+ 	exit(1);
+ }
+-- 
+1.5.0.50.gb75812-dirty
