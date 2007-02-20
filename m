@@ -1,91 +1,118 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Mon, 19 Feb 2007 23:32:22 -0800
-Message-ID: <7vbqjp1dyx.fsf@assigned-by-dhcp.cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Mon, 19 Feb 2007 23:42:57 -0800
+Message-ID: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 08:32:27 2007
+X-From: git-owner@vger.kernel.org Tue Feb 20 08:43:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJPUA-0003uP-Uo
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 08:32:27 +0100
+	id 1HJPeV-0000QH-4K
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 08:43:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964851AbXBTHcY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 02:32:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964854AbXBTHcY
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 02:32:24 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39588 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964851AbXBTHcX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 02:32:23 -0500
+	id S932849AbXBTHm7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 02:42:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932709AbXBTHm7
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 02:42:59 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:59718 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932599AbXBTHm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 02:42:58 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070220073223.VPNT21704.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 20 Feb 2007 02:32:23 -0500
+          id <20070220074258.KXJJ1349.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 20 Feb 2007 02:42:58 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id RjYN1W0031kojtg0000000; Tue, 20 Feb 2007 02:32:23 -0500
-X-maint-at: e326bce65c2a8b10f40c1869e13c7450a243b109
+	id Rjix1W0011kojtg0000000; Tue, 20 Feb 2007 02:42:57 -0500
 X-master-at: 1e592d65b50dbec87fde9f4ef1b7fd8d90bf7b8c
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+X-next-at: e5a1adc4486fabd0d06dd77b9e5e16649ee846a7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40207>
 
-* The 'maint' branch has these fixes since v1.5.0.1
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
- Christian Schlotter (1):
-  git-clone: Sync documentation to usage note.
+* jc/apply-config (Tue Feb 20 03:45:49 2007 +0100) 5 commits
+ - apply: fix memory leak in prefix_one()
+ + git-apply: require -p<n> when working in a subdirectory.
+ + git-apply: do not lose cwd when run from a subdirectory.
+ + Teach 'git apply' to look at $HOME/.gitconfig even outside of a
+   repository
+ + Teach 'git apply' to look at $GIT_DIR/config
 
- Jason Riedy (2):
-  Add a compat/strtoumax.c for Solaris 8.
-  Obey NO_C99_FORMAT in fast-import.c.
+* lt/crlf (Sat Feb 17 12:37:25 2007 -0800) 4 commits
+ + Teach core.autocrlf to 'git apply'
+ + t0020: add test for auto-crlf
+ + Make AutoCRLF ternary variable.
+ + Lazy man's auto-CRLF
 
+The above two series are to help MinGW and people who suffer
+from CRLF in general.  I think they are good enough for general
+consumption now.  Will perhaps push them out sometime this week.
 
-* The 'master' branch has these since the last announcement, in
-  addition to the above.
+* js/fetch-progress (Tue Feb 20 03:01:44 2007 +0100) 1 commit
+ - fetch & clone: do not output progress when not on a tty
+* js/name-rev-fix (Tue Feb 20 01:08:48 2007 +0100) 1 commit
+ + name-rev: avoid "^0" when unneeded
+* js/grep-pager (Mon Feb 19 15:56:04 2007 +0100) 1 commit
+ - git grep: use pager
+* js/no-limit-boundary (Mon Feb 19 03:14:59 2007 +0100) 1 commit
+ + rev-list --max-age, --max-count: support --boundary
+* fk/autoconf (Sun Feb 18 09:44:42 2007 +0100) 1 commit
+ + New autoconf test for iconv
+* js/etc-config (Wed Feb 14 12:48:14 2007 +0100) 1 commit
+ - config: read system-wide defaults from /etc/gitconfig
+* mw/64bit (Sat Feb 17 10:13:10 2007 +0100) 1 commit
+ - Support for large files on 32bit systems.
+* sb/merge (Thu Feb 15 16:39:53 2007 +0100) 1 commit
+ - t/t5515-fetch-merge-logic.sh: Added tests for the merge logic in
+   git-fetch
 
- Andy Parkins (1):
-  Have git-cvsserver call hooks/update before really altering the ref
+These should be Ok.  All should cook in 'next' and graduate to
+'master' by end of next week at the latest.
 
- Fredrik Kuivinen (2):
-  Read the config in rev-list
-  Documentation/i18n.txt: it is i18n.commitencoding not core.commitencoding
+* jc/fetch (Tue Feb 13 01:21:41 2007 +0000) 8 commits
+ - Use stdin reflist passing in git-fetch.sh
+ - Use stdin reflist passing in parse-remote
+ - Allow fetch--tool to read from stdin
+ - git-fetch: rewrite expand_ref_wildcard in C
+ - git-fetch: rewrite another shell loop in C
+ - git-fetch: move more code into C.
+ - git-fetch--tool: start rewriting parts of git-fetch in C.
+ - git-fetch: split fetch_main into fetch_dumb and fetch_native
 
- Johannes Schindelin (2):
-  name-rev: introduce the --refs=<pattern> option
-  diff --check: use colour
+Stalled.  If somebody wants to take this over I'll push this out
+to 'next'.
 
- Junio C Hamano (9):
-  Make gitk work reasonably well on Cygwin.
-  gitk: Use show-ref instead of ls-remote
-  remotes.not-origin.tagopt
-  pretend-sha1: grave bugfix.
-  git-merge: minor fix for no_trivial_merge_strategies.
-  Do not take mode bits from index after type change.
-  Update draft release notes for 1.5.0.1
-  Update draft release notes for 1.5.1
-  GIT 1.5.0.1
+* js/diff-2 (Sun Feb 18 12:44:43 2007 +0100) 1 commit
+ - Add `git diff2`, a GNU diff workalike
 
- Mark Levedahl (3):
-  gitk - remove trailing whitespace from a few lines.
-  Make gitk save and restore the user set window position.
-  Make gitk save and restore window pane position on Linux and Cygwin.
+Undecided.  Perhaps will merge to 'next' to see if somebody else
+comes up with a better naming idea.
 
- Paul Mackerras (1):
-  Change git repo-config to git config
+* jc/merge-subtree (Thu Feb 15 16:32:45 2007 -0800) 1 commit
+ - A new merge stragety 'subtree'.
 
- Shawn O. Pearce (2):
-  Attempt to improve git-rebase lead-in description.
-  Convert update-index references in docs to add.
+Seems to work very well, but I do not see great urgency to merge
+this to 'next' yet.
 
- Theodore Ts'o (1):
-  Teach git-remote to update existing remotes by fetching from them
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
 
- Tommi Kyntola (1):
-  git-blame: prevent argument parsing segfault
+Stalled.
+
+* js/objhash (Sat Feb 17 18:38:50 2007 +0100) 2 commits
+ . Add `struct object_hash` (fixup)
+ . Add `struct object_hash`
+
+Stalled.
