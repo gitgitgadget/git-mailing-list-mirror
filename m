@@ -1,59 +1,62 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Mon, 19 Feb 2007 17:29:11 -0800
-Message-ID: <7v3b514nx4.fsf@assigned-by-dhcp.cox.net>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net>
-	<7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
-	<20070217232603.GB30839@coredump.intra.peff.net>
-	<7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
-	<20070217233203.GA6014@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
-	<7vodnp68p8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
-	<7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
-	<7vps854qf8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0702200152230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: [PATCH] Add a compat/strtoumax.c for Solaris 8.
+Date: Mon, 19 Feb 2007 17:29:35 -0800
+Message-ID: <7vy7mt39c0.fsf@assigned-by-dhcp.cox.net>
+References: <17777.1171930976@lotus.CS.Berkeley.EDU>
+	<20070220003533.GB28314@spearce.org>
+	<7virdx4pl2.fsf@assigned-by-dhcp.cox.net>
+	<20070220005821.GC28314@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 20 02:29:36 2007
+Cc: Jason Riedy <ejr@EECS.Berkeley.EDU>, git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 20 02:29:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJJp2-0008EA-9H
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 02:29:36 +0100
+	id 1HJJpE-0008J4-T7
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 02:29:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932779AbXBTB3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 20:29:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932791AbXBTB3O
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 20:29:14 -0500
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:44057 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932779AbXBTB3N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 20:29:13 -0500
+	id S932791AbXBTB3h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 20:29:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932793AbXBTB3h
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 20:29:37 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:39475 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932791AbXBTB3g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 20:29:36 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070220012912.UEXF21668.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 19 Feb 2007 20:29:12 -0500
+          id <20070220012936.OQCQ1300.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 19 Feb 2007 20:29:36 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id RdVB1W00F1kojtg0000000; Mon, 19 Feb 2007 20:29:12 -0500
-In-Reply-To: <Pine.LNX.4.63.0702200152230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Tue, 20 Feb 2007 01:53:04 +0100
-	(CET)")
+	id RdVa1W00c1kojtg0000000; Mon, 19 Feb 2007 20:29:35 -0500
+In-Reply-To: <20070220005821.GC28314@spearce.org> (Shawn O. Pearce's message
+	of "Mon, 19 Feb 2007 19:58:22 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40192>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Wouldn't it be easier to just cd to the prefix?
+> Junio C Hamano <junkio@cox.net> wrote:
+>> "Shawn O. Pearce" <spearce@spearce.org> writes:
+>> 
+>> > This is a better version than the patch I sent out last night,
+>> > so Junio please drop my patch in favor of Jason's.
+>> 
+>> Agh.  Too late...
+>> 
+>> I need some rewinding and reshuffling.
+>
+> Whoops.  :-)
+>
+> I hear Git is good at rewinding and reshuffling.  Provided you have
+> not pushed the commits out yet.  Maybe that will help you here?  ;-)
 
-I do not think so.  Think of what you need to do to the index.
+That's what I'll do later.
