@@ -1,69 +1,54 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: git-blame.el won't run
-Date: Tue, 20 Feb 2007 08:50:26 +0100
-Message-ID: <87abz92rp9.fsf@morpheus.local>
-References: <13283.1171492535@localhost> <87mz393mlo.fsf@morpheus.local> <24475.1171920735@localhost>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 20 Feb 2007 00:20:20 -0800
+Message-ID: <20070220082020.GA27084@localdomain>
+References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 08:50:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 09:20:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJPlr-0003ku-9B
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 08:50:43 +0100
+	id 1HJQF6-0008Nr-Li
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 09:20:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932825AbXBTHuk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Feb 2007 02:50:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964854AbXBTHuk
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 02:50:40 -0500
-Received: from main.gmane.org ([80.91.229.2]:43669 "EHLO ciao.gmane.org"
+	id S965235AbXBTIUZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 03:20:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965253AbXBTIUY
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 03:20:24 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:33199 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932825AbXBTHuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 02:50:39 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HJPli-00054H-2v
-	for git@vger.kernel.org; Tue, 20 Feb 2007 08:50:34 +0100
-Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 08:50:34 +0100
-Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 08:50:34 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:EnFqmgP6qeKnPu7jG5Lo8dpopVY=
+	id S965235AbXBTIUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 03:20:23 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 58FDD7DC091;
+	Tue, 20 Feb 2007 00:20:21 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 20 Feb 2007 00:20:20 -0800
+Content-Disposition: inline
+In-Reply-To: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40209>
 
-Xavier Maillard <zedek@gnu.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> * js/diff-2 (Sun Feb 18 12:44:43 2007 +0100) 1 commit
+>  - Add `git diff2`, a GNU diff workalike
+> 
+> Undecided.  Perhaps will merge to 'next' to see if somebody else
+> comes up with a better naming idea.
 
-> Hi,
->
->> Can you please set debug-on-error to t and show me the backtrace you=
- get?
->
-> Nothing happens. I have to C-g after having waited for a few
-> seconds.
+With this, we can get rid of any test dependency on an external diff
+and have a consistent replacement for cmp[1], as well.
 
-I'm not sure my instructions were very clear.  Did you try M-x
-git-blame-mode after enabling debug-on-error?
+`git gdiff`?  `git xdiff`?  `gdiff` would be easier on the fingers
+(assuming querty), but `xdiff` is probably a more accurate name.
 
->> And does M-! git-blame work in your emacs?
->
-> No it is not. It shows a help message (usage message).
-
-But if the help message is for git-blame, it did work.  I wanted to
-check that you could run git-blame from your emacs, and if it printed
-a usage message, it did run.  If you want it to produce some real
-output, you have to give it a file name as well.
-
---=20
-David K=C3=A5gedal
+[1] - <200702172225.12758.johannes.sixt@telecom.at>
+-- 
+Eric Wong
