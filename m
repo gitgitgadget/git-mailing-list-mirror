@@ -1,84 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 1/4] Add prefixcmp()
-Date: Tue, 20 Feb 2007 02:20:54 -0800
-Message-ID: <7vfy91w2nt.fsf@assigned-by-dhcp.cox.net>
-References: <200702191839.05784.andyparkins@gmail.com>
-	<7vlkit7vy5.fsf@assigned-by-dhcp.cox.net>
-	<200702200942.18654.andyparkins@gmail.com>
-	<7vbqjpxilh.fsf_-_@assigned-by-dhcp.cox.net>
-	<87mz3916xh.fsf@morpheus.local>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Change "refs/" references to symbolic constants
+Date: Tue, 20 Feb 2007 10:21:57 +0000
+Message-ID: <200702201021.58754.andyparkins@gmail.com>
+References: <200702191839.05784.andyparkins@gmail.com> <200702200942.18654.andyparkins@gmail.com> <7vfy91ximy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Junio C. Hamano" <junkio@cox.net>
-To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Tue Feb 20 11:21:06 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 20 11:22:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJS7I-0006P8-4V
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:21:00 +0100
+	id 1HJS8Q-0006yG-1H
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:22:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932842AbXBTKU5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Feb 2007 05:20:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932845AbXBTKU5
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:20:57 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:46460 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932842AbXBTKU4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Feb 2007 05:20:56 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070220102056.GBGB21177.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 20 Feb 2007 05:20:56 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id RmLv1W0061kojtg0000000; Tue, 20 Feb 2007 05:20:56 -0500
-In-Reply-To: <87mz3916xh.fsf@morpheus.local> (David =?utf-8?Q?K=C3=A5gedal?=
- =?utf-8?Q?'s?= message of
-	"Tue, 20 Feb 2007 11:04:26 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932850AbXBTKWG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 05:22:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932845AbXBTKWG
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:22:06 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:48935 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932850AbXBTKWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 05:22:04 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2698277nfa
+        for <git@vger.kernel.org>; Tue, 20 Feb 2007 02:22:03 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=jjxjXU/AQysAGIabhZu9ca55pRbMKSnoRWIVzb+y9LDJoLyH+hhrDM23K4nODRq9Q0SNnYLm5dFGGzjPG8jPnXOyfmMCOMDQSmJVmkzl7HL6zbNTL0K0nmER286OC3dmSUBgjrv7/b34mxaJluo1rhztQUjnaRNJvJ2N5FryS4o=
+Received: by 10.48.217.11 with SMTP id p11mr6631603nfg.1171966923429;
+        Tue, 20 Feb 2007 02:22:03 -0800 (PST)
+Received: from davejones ( [194.70.53.227])
+        by mx.google.com with ESMTP id x24sm30042569nfb.2007.02.20.02.22.00;
+        Tue, 20 Feb 2007 02:22:00 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vfy91ximy.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40228>
 
-David K=C3=A5gedal <davidk@lysator.liu.se> writes:
+On Tuesday 2007 February 20 09:50, Junio C Hamano wrote:
 
-> Junio C Hamano <junkio@cox.net> writes:
->
->> We have too many strncmp(a, b, strlen(b)).
->>
->> Signed-off-by: Junio C Hamano <junkio@cox.net>
->> ---
->>  git-compat-util.h |    5 +++++
->>  1 files changed, 5 insertions(+), 0 deletions(-)
->>
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index 9863cf6..0a9ac56 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -279,4 +279,9 @@ static inline int sane_case(int x, int high)
->>  	return x;
->>  }
->> =20
->> +static inline int prefixcmp(const char *a, const char *b)
->> +{
->> +	return strncmp(a, b, strlen(b));
->> +}
->> +
->>  #endif
->
-> Is it just me, or coudln't this be a little more self-documenting.  I
-> find it annoying to have to read through a functions implementation t=
-o
-> figure out what to pass to it.
->
-> If a doc comment is too much, just naming the parameters is often
-> enough.
->
-> +static inline int prefixcmp(const char *s, const char *prefix)
+> I'd send the prefixcmp() patches first, as yours would touch the
+> same lines.
 
-Thanks.  That is much much better.
+Okay.
+
+Your prefixcmp() point about them being used so regularly made me wonder if 
+the following would improve readability:
+
+static inline ref_is_head(const char *a)
+{
+    return (prefixcmp(a, PATH_REFS_HEADS) == 0);
+}
+static inline ref_is_tag(const char *a)
+{
+    return (prefixcmp(a, PATH_REFS_TAGS) == 0);
+}
+static inline ref_is_remote(const char *a)
+{
+    return (prefixcmp(a, PATH_REFS_REMOTES) == 0);
+}
+
+which would in turn convert:
+
+   if (!strncmp(head, "refs/heads/", 11))
+       head += 11;
+
+into
+
+   if (ref_is_head(head))
+       head += STRLEN_PATH_REFS_HEADS;
+
+which expresses the intent of the code far more clearly.
+
+
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
