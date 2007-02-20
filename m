@@ -1,60 +1,131 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Support for pre-1.5 git in stgit tests.
-Date: Mon, 19 Feb 2007 23:22:54 +0100
-Message-ID: <20070219222221.23578.86170.stgit@gandelf.nowhere.earth>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
+Date: Tue, 20 Feb 2007 01:16:59 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702200112500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
+ <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+ <20070217233203.GA6014@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
+ <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
+ <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 20 01:13:44 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 01:21:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJIdc-0000iW-AB
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:13:44 +0100
+	id 1HJIkk-0003oF-KY
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:21:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965621AbXBTAMd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 19:12:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965613AbXBTAL5
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:11:57 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:53480 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965611AbXBTALN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 19:11:13 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 9C9C54B1F9;
-	Mon, 19 Feb 2007 23:24:06 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id EB34F1F084;
-	Mon, 19 Feb 2007 23:22:54 +0100 (CET)
-User-Agent: StGIT/0.12
+	id S965628AbXBTARk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 19:17:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965622AbXBTARJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:17:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34941 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965625AbXBTARC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 19:17:02 -0500
+Received: (qmail invoked by alias); 20 Feb 2007 00:17:00 -0000
+X-Provags-ID: V01U2FsdGVkX1/jh3QbCwvjk2pL0LW1xEbk+OjhE491SLbN4A1dTJ
+	KEzA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40170>
 
+Hi,
 
-Support for older Git versions was broken in
-5cd9e87faa0a116ce2b378be6a5c89d5f20629f1 (post 0.12).
+On Mon, 19 Feb 2007, Junio C Hamano wrote:
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+> > On Mon, 19 Feb 2007, Junio C Hamano wrote:
+> >> > ...
+> >> > git-apply has much saner defaults (it defaults to something pretty safe, 
+> >> > and you can then make it less safe if the patch doesn't apply).
+> >> 
+> >> All true.
+> >
+> > One thing I forgot to mention: "git apply" doesn't apply *anything* unless 
+> > everything applies cleanly. In contrast, when "patch" fails in the middle, 
+> > it will have done part of the job, and then leaves a reject file. I much 
+> > prefer the "everything or nothing" approach of git-apply (again, obviously 
+> > with "--reject" you can make it work the bad old way too).
+> 
+> Yup.
 
- t/t1900-mail.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+That is important to keep in mind for the following:
 
-diff --git a/t/t1900-mail.sh b/t/t1900-mail.sh
-index 4be7270..3eed7f8 100755
---- a/t/t1900-mail.sh
-+++ b/t/t1900-mail.sh
-@@ -6,7 +6,7 @@ test_description='Test the mail command'
- test_expect_success \
-     'Initialize the StGIT repository' \
-     '
--    git config stgit.sender "A U Thor <author@example.com>" &&
-+    git repo-config stgit.sender "A U Thor <author@example.com>" &&
-     for i in 1 2 3 4 5; do
-       touch foo.txt &&
-       echo "line $i" >> foo.txt &&
+> > I _think_ that the right answer is to (a) yes, make it be consistent, but 
+> > (b) _not_ make it be the way we do "--index" now.
+
+BTW this is what I argued, too. But I am not hard minded.
+
+> > Right now, when we see "--index", we do the "setup_git_directory()" 
+> > and the git_config() stuff - which is (I think) something we should 
+> > always do, but then we do *not* prefix the patch itself with the 
+> > prefix we got. And I think that's wrong. I think we should always do 
+> > the "-p1" behaviour from where we started.
+> 
+> Hmm.  I am puzzled.  Are you suggesting to change behaviour of "git 
+> apply" with --index?
+> 
+> git generated patch, or patches on the kernel list that are not 
+> generated with git are always relative to the top-level, so I think the 
+> current --index behaviour makes tons of sense.
+
+But not all patches are generated by git. Unfortunately.
+
+> > Then, if somebody is in a sub/directory/, maybe they need to add a 
+> > "-p3" to indicate that, but at least that's better than having a patch 
+> > that just says "Makefile", and applying the patch to the *wrong* 
+> > "Makefile" (top-level one, rather than the one you were in).
+> 
+> I think it boils down to this question: when you have a patch on
+> hand that you are considering to apply to your tree, if the
+> patch talks about just "Makefile" (e.g. it says "a/Makefile
+> b/Makefile") which Makefile is more likely to be what the patch
+> is talking about -- the toplevel one or the one in the
+> subdirectory you happen to be in?
+> 
+> Both (1) diff generated by git are always relative to top, and
+> (2) the BCP on the kernel list (and I suspect many other
+> projects are run this way as well) is to have diff relative to
+> the toplevel, suggests that "a/Makefile b/Makefile" patch is
+> much more likely to be about the top-level Makefile no matter
+> where you happen to be.
+> 
+> Although the fact you *are* in the subdirectory when you are
+> considering that patch makes it a bit more plausible than
+> otherwise that the patch may be about sub/directory/Makefile, I
+> do not think that is strong enough hint to make it more
+> plausible to apply to the sub/directory one than to the
+> toplevel.
+> 
+> If the patch were what you made by running "GNU diff" inside a
+> corresponding subdirectory of another repository (perhaps you
+> wanted to feed uncommitted changes from there to this
+> repository), then you can always use "GNU patch" to apply.  If
+> you made such a one-shot patch using git-diff, it will tell you
+> the correct directory to apply to, so...
+
+... and here we come back to the argument that git-apply is so much saner 
+than patch.
+
+And yes, it happened to me a while ago that I used "patch", cursed for a 
+little moment, said "git reset --hard" and cursed even more when I 
+realized that I was not in a git-tracked working directory!
+
+My vote is for "take the current subdirectory as root for the patch", 
+since that is what I'd expect out of the box. But as I said: I am not 
+_that_ hard minded, at least on this issue.
+
+Ciao,
+Dscho
