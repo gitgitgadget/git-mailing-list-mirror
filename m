@@ -1,95 +1,60 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Tue, 20 Feb 2007 01:36:40 +0100
-Message-ID: <45DA4298.7010002@fs.ei.tum.de>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net>	<7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>	<20070217232603.GB30839@coredump.intra.peff.net>	<7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>	<20070217233203.GA6014@coredump.intra.peff.net>	<Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>	<7vodnp68p8.fsf@assigned-by-dhcp.cox.net>	<Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org> <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: StGIT discards local commits on "stg pull"
+Date: Tue, 20 Feb 2007 01:00:59 +0100
+Message-ID: <20070220000059.GK4248@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070212022625.rvyyo0kc0wowgogc@webmail.spamcop.net> <b0943d9e0702120131r528fb29ete143b8ce5a0a99e9@mail.gmail.com> <20070212202634.GX4266@nan92-1-81-57-214-146.fbx.proxad.net> <20070212214704.GS5362@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0702191507m636348e7yab2a712925f9f55@mail.gmail.com> <1171927720.2257.41.camel@dv>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig7D3ED837B8E80E5AAB889052"
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, peff@peff.net,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 20 01:36:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 20 01:49:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJJ02-0002Oi-S5
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:36:55 +0100
+	id 1HJJC1-0007vO-K9
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:49:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965750AbXBTAgu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 19:36:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965751AbXBTAgu
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:36:50 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:59578 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965750AbXBTAgs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 19:36:48 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 30FF8280DD;
-	Tue, 20 Feb 2007 01:36:44 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id pA02vAOF9c9c; Tue, 20 Feb 2007 01:36:44 +0100 (CET)
-Received: from [62.216.203.216] (ppp-62-216-203-216.dynamic.mnet-online.de [62.216.203.216])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 707CB280D8;
-	Tue, 20 Feb 2007 01:36:43 +0100 (CET)
-User-Agent: Mail/News 1.5.0.4 (X11/20060619)
-In-Reply-To: <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
+	id S965804AbXBTAtG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 19:49:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965805AbXBTAtG
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:49:06 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:40004 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965804AbXBTAtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 19:49:04 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 1388455312;
+	Tue, 20 Feb 2007 01:02:11 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 95D681F087; Tue, 20 Feb 2007 01:00:59 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <1171927720.2257.41.camel@dv>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40179>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig7D3ED837B8E80E5AAB889052
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+On Mon, Feb 19, 2007 at 06:28:40PM -0500, Pavel Roskin wrote:
+> > I think the fail-safe solution would be to leave the old behaviour
+> > (i.e. git-pull and pull-does-rebase=no) and people that need to pull
+> > from branches like that described above would use the fetch+rebase
+> > approach. Ideally, we'll have this configurable per-branch (and could
+> > leave the global one as well if the most specific is not available,
+> > but should default to git-pull).
+> 
+> By the way, it would be great to reduce all complexity to "one bit" per
+> branch.  If stgit.internal-pull (the name is subject to improvement) is
+> on, "stgit pull" calls git-fetch and does rebase.  Otherwise, it calls
+> git-pull.  No need to configure two variables per branch.
 
-Junio C Hamano wrote:
-> If the patch were what you made by running "GNU diff" inside a
-> corresponding subdirectory of another repository (perhaps you
-> wanted to feed uncommitted changes from there to this
-> repository), then you can always use "GNU patch" to apply.  If
-> you made such a one-shot patch using git-diff, it will tell you
-> the correct directory to apply to, so...
+Being able to specify the command to use makes it possible to hook to
+other SCM's (eg. using git-cvsimport, git-svn or similar).
 
-The difference there is that GNU/Larry Wall diff does not prepend a/ and =
-b/ to the paths.  Maybe use this as an indicator for "this patch is relat=
-ive to project root" vs. "this patch doesn't know where it wants to be ap=
-plied".
+I'll try to adapt by stg-cvs script to fit into this model some day
+(indeed, "pullcmd = stg-cvs fetch" may indeed already work).
 
-A parameter --subdir, or even plain -pN could mean "apply this patch here=
-, now."
-
-cheers
-  simon
-
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enig7D3ED837B8E80E5AAB889052
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFF2kKar5S+dk6z85oRAv2DAKCY5g/2NA7RGss1MfFQVfWMwxgT8ACg88uP
-Ot28Hbj49M14tqw9dj7EIXE=
-=y+Gr
------END PGP SIGNATURE-----
-
---------------enig7D3ED837B8E80E5AAB889052--
+Best regards,
+-- 
+Yann.
