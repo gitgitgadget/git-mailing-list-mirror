@@ -1,57 +1,60 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: git installation (as private user) should NEVER write site_perl
-Date: Tue, 20 Feb 2007 09:18:15 -0800
-Message-ID: <86sld0sq7c.fsf@blue.stonehenge.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Xavier Maillard <maillaxa@gmail.com>
+Subject: Re: git-blame.el won't run
+Date: Tue, 20 Feb 2007 18:28:54 +0100
+Message-ID: <4157.1171992534@localhost>
+References: <13283.1171492535@localhost> <87mz393mlo.fsf@morpheus.local> <24475.1171920735@localhost> <87abz92rp9.fsf@morpheus.local>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 18:18:46 2007
+X-From: git-owner@vger.kernel.org Tue Feb 20 18:31:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJYdS-0006dX-2S
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 18:18:38 +0100
+	id 1HJYqG-0003z3-0V
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 18:31:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030333AbXBTRS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 12:18:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030330AbXBTRS0
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 12:18:26 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:49001 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030318AbXBTRSQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 12:18:16 -0500
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id E99101DE781; Tue, 20 Feb 2007 09:18:15 -0800 (PST)
-x-mayan-date: Long count = 12.19.14.1.9; tzolkin = 5 Muluc; haab = 2 Kayab
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S932773AbXBTRbs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 12:31:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932782AbXBTRbs
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 12:31:48 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:2202 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932773AbXBTRbr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 12:31:47 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so844543uga
+        for <git@vger.kernel.org>; Tue, 20 Feb 2007 09:31:46 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:subject:in-reply-to:references:comments:x-mailer:date:message-id:from;
+        b=TbzcNJQv4pIe9aoYXJOebrKPbPvxfmXD3n+isUVwp2r5zXkyjuzz3ugAR89z/gopkq0RLhhZLVoEkgiKEfh3E1no/D5ESZYF/o78EMvYos6tOS203bJhpINGuFfztNn3oFqXCemB+UDrJjfNj7sJJN51Kzi/Di6dXeclXCgqvEU=
+Received: by 10.67.121.15 with SMTP id y15mr8422531ugm.1171992706062;
+        Tue, 20 Feb 2007 09:31:46 -0800 (PST)
+Received: from localhost.zogzog.HOME ( [88.163.173.156])
+        by mx.google.com with ESMTP id y7sm11079257ugc.2007.02.20.09.31.44;
+        Tue, 20 Feb 2007 09:31:45 -0800 (PST)
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.zogzog.HOME (8.13.8/8.13.8) with ESMTP id l1KHSsE0004158
+	for <git@vger.kernel.org>; Tue, 20 Feb 2007 18:29:04 +0100
+In-reply-to: <87abz92rp9.fsf@morpheus.local> 
+Comments: In-reply-to =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+   message dated "Tue, 20 Feb 2007 08:50:26 +0100."
+X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40243>
 
+Hi,
 
-I tried to install git on a system where I was a normal user.  Of course,
-this step fails:
+> >> Can you please set debug-on-error to t and show me the backtrace you get?
+> >
+> > Nothing happens. I have to C-g after having waited for a few
+> > seconds.
+> 
+> I'm not sure my instructions were very clear.  Did you try M-x
+> git-blame-mode after enabling debug-on-error?
 
-     Installing /usr/perl5/site_perl/5.6.1/Error.pm
-     Installing /usr/perl5/site_perl/5.6.1/Git.pm
+I did it. And I had to kill (C-g) after having waited for several
+long seconds.
 
-But on a larger level, this should never have even been attempted, whether I
-was a private user OR the box administrator.  The git installation should NOT
-be installing things into the site_perl directory, which is owned by the CPAN
-installation tools, and also by the various packaging tools, and is also seen
-by non-git users of Perl on the machine.  (It would be bad to have two
-different versions of Error.pm now being seen by all users.)
-
-If git wants to add local Perl modules, they belong in ${prefix}/lib/perl/
-or something, with the appropriate "use lib" added to the Perl scripts.
-
-No patches attached, but this is a showstopper for my client, and a bit of a
-shocker for me.
-
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Xavier
+ 
