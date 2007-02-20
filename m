@@ -1,110 +1,112 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Tue, 20 Feb 2007 10:57:06 +0000
-Message-ID: <200702201057.21398.andyparkins@gmail.com>
-References: <200702191839.05784.andyparkins@gmail.com> <200702201021.58754.andyparkins@gmail.com> <7vabz9w270.fsf@assigned-by-dhcp.cox.net>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Re: [PATCH/RFC 2/3] git-fetch: Split fetch and merge logic
+Date: Tue, 20 Feb 2007 12:21:56 +0100
+Message-ID: <8aa486160702200321l35e309eeqe5799dc56be5dac6@mail.gmail.com>
+References: <874ppmplw7.fsf@gmail.com> <87vei2o75x.fsf@gmail.com>
+	 <7v649x7u90.fsf@assigned-by-dhcp.cox.net>
+	 <8aa486160702191413p10c8ca0ek949580ffe953ea79@mail.gmail.com>
+	 <7vfy91684y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 11:57:37 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 12:22:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJSgg-0006al-2L
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:57:34 +0100
+	id 1HJT4P-0000V7-UJ
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 12:22:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932732AbXBTK5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 05:57:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932870AbXBTK5a
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:57:30 -0500
-Received: from nz-out-0506.google.com ([64.233.162.225]:54336 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932732AbXBTK5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 05:57:30 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1919384nze
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 02:57:29 -0800 (PST)
+	id S964783AbXBTLV7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Feb 2007 06:21:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964774AbXBTLV7
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 06:21:59 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:55046 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964795AbXBTLV5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Feb 2007 06:21:57 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so761171uga
+        for <git@vger.kernel.org>; Tue, 20 Feb 2007 03:21:56 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RVVBvBOaAiRK6POO0Px+uHgoVBhY8P5Lz6UXx44SsTY7nvjCUEZNvlghF99KhDb1TBLDKz0bQnLr3C5lmkHFED4MdF39Re3C3pi+YrfYuQdOl52pwzraxEUlHtP47bb6lGPtrjn++UjEEIutuLyBCXIJ+kXK/BkWM2uQ/xwD96U=
-Received: by 10.64.185.7 with SMTP id i7mr11516544qbf.1171969049247;
-        Tue, 20 Feb 2007 02:57:29 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id l21sm20734243nfc.2007.02.20.02.57.26;
-        Tue, 20 Feb 2007 02:57:26 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vabz9w270.fsf@assigned-by-dhcp.cox.net>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rjyIOqcvQIo/HWkd9tM6Y6tgMMzEWEuOHGDmml1THWK72JcryuSGFwifOp+dTb5ieonUnG5ZVhqovLzwHe11z6QbF7agTKClfNkESvr+oMDiViXRQ0/m3DEQ/wv8s7zsspZKn1vKoXhjGQEOJycVh/uBNytcXLQfsXDOXiCdYyc=
+Received: by 10.78.193.19 with SMTP id q19mr1213164huf.1171970516325;
+        Tue, 20 Feb 2007 03:21:56 -0800 (PST)
+Received: by 10.78.69.4 with HTTP; Tue, 20 Feb 2007 03:21:56 -0800 (PST)
+In-Reply-To: <7vfy91684y.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40231>
 
-On Tuesday 2007 February 20 10:30, Junio C Hamano wrote:
-
-> If we _were_ doing the inline function, I would actually prefer:
+On 2/20/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Santi B=E9jar" <sbejar@gmail.com> writes:
 >
->         static inline ref_is_head(const char *ref)
->         {
-> 		return !prefixcmp(ref, PATH_REFS_HEADS);
->         }
-
-As you brought it up...
-
-I've never really liked "!" on strcmp() lines (but I accept that that is the 
-tradition in git) because it implies the the output of prefixcmp is boolean, 
-but it's actually ternary.  strcmp() (I think), should be thought of as 
-outputting
-
-enum {
- STRING1_LESS_THAN_STRING2,
- STRINGS_EQUAL,
- STRING1_GREATER_THAN_STRING2
-}
-
-Given that, it makes me uncomfortable to use !strcmp().  Of course in the case 
-of strcmp(), that form is so well known that it makes very little difference 
-to the reader.
-
-I have similar feelings about
-
- if( !something )
-
-being incorrect when you meant
-
- if( something == NULL )
-
-While they are identical in what they generate, they send a different message 
-to someone reading the code.
-
-Regardless, I'm not so stubborn as to refuse to go with the flow...
-
-> But at least to me,
+> >> > There are two cases where the behaviour is changed:
+> >> >
+> >> > 1) branch.*.merge no longer must exactly match the remote part
+> >> >    of the branch fetched. Both are expanded in full (as refs/hea=
+ds/...)
+> >> >    and matched afterwards.
+> > ...
+> >>  I see this as a regression.
+> >> If you are setting configuration, wouldn't you rather see the
+> >> behaviour consistent even when remote adds new refs?
 >
-> 	if (!prefixcmp(head, PATH_REFS_HEADS))
-> 		head += strlen(PATH_REFS_HEADS);
+> Maybe I misread your description, but I took it to mean that you
+> are allowing:
 >
-> is easier to follow than:
+>         branch.master.merge =3D a
 >
->         if (ref_is_head(head))
->                 head += STRLEN_PATH_REFS_HEADS;
+> to mean what we traditionally spelled
+>
+>         branch.master.merge =3D refs/heads/a
+>
+> and guessed (I haven't looked for where it happens in the code)
+> the way you do that conversion is by tail-matching the ref; if
+> the other end creates "refs/heads/b/a", suddenly remote branch
+> b/a starts matching that pattern wouldn't it?
 
-Fine.  I don't really mind - and it's less work on my patch :-)
+No. branch.master.merge =3D a is equivalent to refs/heads/a and only
+matches with the remote branch refs/heads/a. It continues to exactly
+match the two branches, but with the full patch (refs/...). So now it
+is possible to have:
 
-My argument in favour of the ref_is_head() method is that the prefixcmp() 
-method requires knowledge from the caller about how you tell whether a given 
-ref is a head - the second pushes that information further down the call 
-tree, abstracting it out just a little more.
+[remote "origin"]
+url =3D ...
+fetch =3D refs/heads/*:refs/heads/origin/*
 
-As I say though - it's not a problem for me.
+[branch "master"]
+remote =3D origin
+merge =3D master
 
+or the other way:
 
+[remote "origin"]
+url =3D ...
+fetch =3D master:refs/heads/origin
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+[branch "master"]
+remote =3D origin
+merge =3D refs/heads/master
+
+>
+> Earlier we fixed the ambiguous use of branch.*.merge in
+> 756373da; I think the same reasoning should apply here.
+>
+> Configuration is something you set once because you want to
+> forget about it afterwards (iow, not having to type every time),
+> and I think making sure it names things unambiguously outweighs
+> one-time convenience of being able to write the configuration in
+> a looser fashion.
+
+It is unambiguous.
+
+But if it is problematic I'll try to keep the current behaviour.
+
+Santi
