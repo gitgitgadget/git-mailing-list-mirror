@@ -1,60 +1,86 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Erik Mouw <mouw@nl.linux.org>
 Subject: Re: git installation (as private user) should NEVER write site_perl
-Date: Tue, 20 Feb 2007 09:57:46 -0800
-Message-ID: <86abz8sodh.fsf@blue.stonehenge.com>
+Date: Tue, 20 Feb 2007 18:55:37 +0100
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20070220175536.GC26444@gateway.home>
 References: <86sld0sq7c.fsf@blue.stonehenge.com>
-	<20070220175536.GC26444@gateway.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="bAmEntskrkuBymla"
 Cc: git@vger.kernel.org
-To: Erik Mouw <mouw@nl.linux.org>
-X-From: git-owner@vger.kernel.org Tue Feb 20 18:58:17 2007
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Tue Feb 20 19:02:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJZFn-0007OE-72
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 18:58:15 +0100
+	id 1HJZJc-0000a5-1O
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 19:02:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932988AbXBTR6L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 12:58:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932989AbXBTR6L
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 12:58:11 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:11253 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932988AbXBTR6K (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 12:58:10 -0500
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 1B4951DE520; Tue, 20 Feb 2007 09:57:47 -0800 (PST)
-x-mayan-date: Long count = 12.19.14.1.9; tzolkin = 5 Muluc; haab = 2 Kayab
-In-Reply-To: <20070220175536.GC26444@gateway.home> (Erik Mouw's message of "Tue, 20 Feb 2007 18:55:37 +0100")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1030327AbXBTSCH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 13:02:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932975AbXBTSCG
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 13:02:06 -0500
+Received: from smtp-vbr14.xs4all.nl ([194.109.24.34]:1818 "EHLO
+	smtp-vbr14.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933001AbXBTSCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 13:02:05 -0500
+X-Greylist: delayed 372 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Feb 2007 13:02:05 EST
+Received: from gateway.home (a82-92-155-199.adsl.xs4all.nl [82.92.155.199])
+	by smtp-vbr14.xs4all.nl (8.13.8/8.13.8) with ESMTP id l1KHtbAN086118;
+	Tue, 20 Feb 2007 18:55:46 +0100 (CET)
+	(envelope-from mouw@nl.linux.org)
+Received: from erik by gateway.home with local (Exim 3.36 #1 (Debian))
+	id 1HJZDF-0000RC-00; Tue, 20 Feb 2007 18:55:37 +0100
+Content-Disposition: inline
+In-Reply-To: <86sld0sq7c.fsf@blue.stonehenge.com>
+X-Eric-Conspiracy: There is no conspiracy!
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40247>
 
->>>>> "Erik" == Erik Mouw <mouw@nl.linux.org> writes:
 
-Erik> On Tue, Feb 20, 2007 at 09:18:15AM -0800, Randal L. Schwartz wrote:
->> I tried to install git on a system where I was a normal user.  Of course,
->> this step fails:
->> 
->> Installing /usr/perl5/site_perl/5.6.1/Error.pm
->> Installing /usr/perl5/site_perl/5.6.1/Git.pm
+--bAmEntskrkuBymla
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Erik> It gets installed in ~/share/perl/5.8.4/ when I compile as a normal
-Erik> user (git-1.5.0.1):
+On Tue, Feb 20, 2007 at 09:18:15AM -0800, Randal L. Schwartz wrote:
+> I tried to install git on a system where I was a normal user.  Of course,
+> this step fails:
+>=20
+>      Installing /usr/perl5/site_perl/5.6.1/Error.pm
+>      Installing /usr/perl5/site_perl/5.6.1/Git.pm
 
-Erik> Installing /home/erik/share/perl/5.8.4/Error.pm
-Erik> Installing /home/erik/share/perl/5.8.4/Git.pm
-Erik> Installing /home/erik/man/man3/private-Error.3pm
-Erik> Installing /home/erik/man/man3/Git.3pm
+It gets installed in ~/share/perl/5.8.4/ when I compile as a normal
+user (git-1.5.0.1):
 
-Is that a personally-installed Perl though?  Those paths look suspicious.
+Installing /home/erik/share/perl/5.8.4/Error.pm
+Installing /home/erik/share/perl/5.8.4/Git.pm
+Installing /home/erik/man/man3/private-Error.3pm
+Installing /home/erik/man/man3/Git.3pm
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+
+Erik
+
+--=20
+They're all fools. Don't worry. Darwin may be slow, but he'll
+eventually get them. -- Matthew Lammers in alt.sysadmin.recovery
+
+--bAmEntskrkuBymla
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFF2zYY/PlVHJtIto0RAvaoAJ9WV0sgA6NK5/VZDWzUPp2KJSKJJACffi+G
+Ov3eUz6n7lqzG0rIlygnvz8=
+=66xI
+-----END PGP SIGNATURE-----
+
+--bAmEntskrkuBymla--
