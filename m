@@ -1,55 +1,117 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: Erik Mouw <mouw@nl.linux.org>
 Subject: Re: git installation (as private user) should NEVER write site_perl
-Date: Tue, 20 Feb 2007 10:08:20 -0800
-Message-ID: <863b50snvv.fsf@blue.stonehenge.com>
-References: <86sld0sq7c.fsf@blue.stonehenge.com>
+Date: Tue, 20 Feb 2007 19:12:24 +0100
+Organization: Eric Conspiracy Secret Labs
+Message-ID: <20070220181224.GD26444@gateway.home>
+References: <86sld0sq7c.fsf@blue.stonehenge.com> <20070220175536.GC26444@gateway.home> <86abz8sodh.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 19:08:26 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7DO5AaGCk89r4vaK"
+Cc: git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Tue Feb 20 19:12:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJZPd-0003Hm-6O
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 19:08:25 +0100
+	id 1HJZTg-00054I-Hu
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 19:12:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030338AbXBTSIW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 13:08:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030339AbXBTSIW
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 13:08:22 -0500
-Received: from blue.stonehenge.com ([209.223.236.162]:31705 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030338AbXBTSIV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 13:08:21 -0500
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id EDD571DE9D2; Tue, 20 Feb 2007 10:08:20 -0800 (PST)
-x-mayan-date: Long count = 12.19.14.1.9; tzolkin = 5 Muluc; haab = 2 Kayab
-In-Reply-To: <86sld0sq7c.fsf@blue.stonehenge.com> (Randal L. Schwartz's message of "Tue, 20 Feb 2007 09:18:15 -0800")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1030339AbXBTSMd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 13:12:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030340AbXBTSMd
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 13:12:33 -0500
+Received: from smtp-vbr3.xs4all.nl ([194.109.24.23]:3550 "EHLO
+	smtp-vbr3.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030339AbXBTSMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 13:12:33 -0500
+Received: from gateway.home (a82-92-155-199.adsl.xs4all.nl [82.92.155.199])
+	by smtp-vbr3.xs4all.nl (8.13.8/8.13.8) with ESMTP id l1KICOgY041464;
+	Tue, 20 Feb 2007 19:12:29 +0100 (CET)
+	(envelope-from mouw@nl.linux.org)
+Received: from erik by gateway.home with local (Exim 3.36 #1 (Debian))
+	id 1HJZTU-0000Ya-00; Tue, 20 Feb 2007 19:12:24 +0100
+Content-Disposition: inline
+In-Reply-To: <86abz8sodh.fsf@blue.stonehenge.com>
+X-Eric-Conspiracy: There is no conspiracy!
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40249>
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
 
-Randal> If git wants to add local Perl modules, they belong in
-Randal> ${prefix}/lib/perl/ or something, with the appropriate "use lib" added
-Randal> to the Perl scripts.
+--7DO5AaGCk89r4vaK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->From a bit further research, it looks like git prefers installing git-only
-Perl modules using the standard MakeMaker, which of course will try to
-install them in site_lib.
+On Tue, Feb 20, 2007 at 09:57:46AM -0800, Randal L. Schwartz wrote:
+> >>>>> "Erik" =3D=3D Erik Mouw <mouw@nl.linux.org> writes:
+>=20
+> Erik> On Tue, Feb 20, 2007 at 09:18:15AM -0800, Randal L. Schwartz wrote:
+> >> I tried to install git on a system where I was a normal user.  Of cour=
+se,
+> >> this step fails:
+> >>=20
+> >> Installing /usr/perl5/site_perl/5.6.1/Error.pm
+> >> Installing /usr/perl5/site_perl/5.6.1/Git.pm
+>=20
+> Erik> It gets installed in ~/share/perl/5.8.4/ when I compile as a normal
+> Erik> user (git-1.5.0.1):
+>=20
+> Erik> Installing /home/erik/share/perl/5.8.4/Error.pm
+> Erik> Installing /home/erik/share/perl/5.8.4/Git.pm
+> Erik> Installing /home/erik/man/man3/private-Error.3pm
+> Erik> Installing /home/erik/man/man3/Git.3pm
+>=20
+> Is that a personally-installed Perl though?  Those paths look suspicious.
 
-Oddly enough, if I define NO_PERL_MAKEMAKER, I get the behavior I want.
+No, just standard Debian stable packages:
 
-I suggest that NO_PERL_MAKEMAKER is the *only* correct behavior in this case,
-so I propose that the code be made unconditional, and the Makemaker stuff be
-pulled out.
+  erik@zurix:~> which perl
+  /usr/bin/perl
+  erik@zurix:~> dpkg -S /usr/bin/perl
+  perl-base: /usr/bin/perl
+  perl-base: /usr/bin/perl
+  erik@zurix:~> dpkg -l perl-base
+  Desired=3DUnknown/Install/Remove/Purge/Hold
+  | Status=3DNot/Installed/Config-files/Unpacked/Failed-config/Half-install=
+ed
+  |/ Err?=3D(none)/Hold/Reinst-required/X=3Dboth-problems (Status,Err: uppe=
+rcase=3Dbad)
+  ||/ Name           Version        Description
+  +++-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D-=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+  ii  perl-base      5.8.4-8sarge5  The Pathologically Eclectic Rubbish Lis=
+ter
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+Git is installed in my home directory:
+
+  erik@zurix:~ > which git
+  /home/erik/bin/git
+
+
+Erik
+
+--=20
+They're all fools. Don't worry. Darwin may be slow, but he'll
+eventually get them. -- Matthew Lammers in alt.sysadmin.recovery
+
+--7DO5AaGCk89r4vaK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFF2zoI/PlVHJtIto0RArCqAKCJOObd4UtjrH5Em4Lu7ocyPWk+0wCfXhHe
+SU3XYUDH1IFxbAUKVh2pv34=
+=E4G8
+-----END PGP SIGNATURE-----
+
+--7DO5AaGCk89r4vaK--
