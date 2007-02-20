@@ -1,88 +1,75 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Tue, 20 Feb 2007 10:21:57 +0000
-Message-ID: <200702201021.58754.andyparkins@gmail.com>
-References: <200702191839.05784.andyparkins@gmail.com> <200702200942.18654.andyparkins@gmail.com> <7vfy91ximy.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 20 Feb 2007 02:30:59 -0800
+Message-ID: <7vabz9w270.fsf@assigned-by-dhcp.cox.net>
+References: <200702191839.05784.andyparkins@gmail.com>
+	<200702200942.18654.andyparkins@gmail.com>
+	<7vfy91ximy.fsf@assigned-by-dhcp.cox.net>
+	<200702201021.58754.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 11:22:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 20 11:31:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJS8Q-0006yG-1H
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:22:10 +0100
+	id 1HJSH4-00036g-5b
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:31:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932850AbXBTKWG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 05:22:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932845AbXBTKWG
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:22:06 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:48935 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932850AbXBTKWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 05:22:04 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so2698277nfa
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 02:22:03 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=jjxjXU/AQysAGIabhZu9ca55pRbMKSnoRWIVzb+y9LDJoLyH+hhrDM23K4nODRq9Q0SNnYLm5dFGGzjPG8jPnXOyfmMCOMDQSmJVmkzl7HL6zbNTL0K0nmER286OC3dmSUBgjrv7/b34mxaJluo1rhztQUjnaRNJvJ2N5FryS4o=
-Received: by 10.48.217.11 with SMTP id p11mr6631603nfg.1171966923429;
-        Tue, 20 Feb 2007 02:22:03 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id x24sm30042569nfb.2007.02.20.02.22.00;
-        Tue, 20 Feb 2007 02:22:00 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vfy91ximy.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932822AbXBTKbD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 05:31:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932857AbXBTKbC
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:31:02 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:54965 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932822AbXBTKbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 05:31:00 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070220103059.OWBZ27628.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 20 Feb 2007 05:30:59 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RmWz1W0061kojtg0000000; Tue, 20 Feb 2007 05:31:00 -0500
+In-Reply-To: <200702201021.58754.andyparkins@gmail.com> (Andy Parkins's
+	message of "Tue, 20 Feb 2007 10:21:57 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40229>
 
-On Tuesday 2007 February 20 09:50, Junio C Hamano wrote:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> I'd send the prefixcmp() patches first, as yours would touch the
-> same lines.
+> Your prefixcmp() point about them being used so regularly made me wonder if 
+> the following would improve readability:
+>
+> static inline ref_is_head(const char *a)
+> {
+>     return (prefixcmp(a, PATH_REFS_HEADS) == 0);
+> }
+> ...
+>    if (ref_is_head(head))
+>        head += STRLEN_PATH_REFS_HEADS;
+>
+> which expresses the intent of the code far more clearly.
 
-Okay.
+If we _were_ doing the inline function, I would actually prefer:
 
-Your prefixcmp() point about them being used so regularly made me wonder if 
-the following would improve readability:
+        static inline ref_is_head(const char *ref)
+        {
+		return !prefixcmp(ref, PATH_REFS_HEADS);
+        }
 
-static inline ref_is_head(const char *a)
-{
-    return (prefixcmp(a, PATH_REFS_HEADS) == 0);
-}
-static inline ref_is_tag(const char *a)
-{
-    return (prefixcmp(a, PATH_REFS_TAGS) == 0);
-}
-static inline ref_is_remote(const char *a)
-{
-    return (prefixcmp(a, PATH_REFS_REMOTES) == 0);
-}
+But at least to me,
 
-which would in turn convert:
+	if (!prefixcmp(head, PATH_REFS_HEADS))
+		head += strlen(PATH_REFS_HEADS);
 
-   if (!strncmp(head, "refs/heads/", 11))
-       head += 11;
+is easier to follow than:
 
-into
-
-   if (ref_is_head(head))
-       head += STRLEN_PATH_REFS_HEADS;
-
-which expresses the intent of the code far more clearly.
-
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIEE
-andyparkins@gmail.com
+        if (ref_is_head(head))
+                head += STRLEN_PATH_REFS_HEADS;
