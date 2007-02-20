@@ -1,81 +1,93 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH 1/4] Add prefixcmp()
-Date: Tue, 20 Feb 2007 11:04:26 +0100
-Message-ID: <87mz3916xh.fsf@morpheus.local>
-References: <200702191839.05784.andyparkins@gmail.com> <7vlkit7vy5.fsf@assigned-by-dhcp.cox.net> <200702200942.18654.andyparkins@gmail.com> <7vbqjpxilh.fsf_-_@assigned-by-dhcp.cox.net>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [BUG] diff -B does not (always?) use colors
+Date: Tue, 20 Feb 2007 11:08:46 +0100
+Message-ID: <20070220100846.GA7928@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Junio C. Hamano" <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 11:04:57 2007
+X-From: git-owner@vger.kernel.org Tue Feb 20 11:08:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJRrk-0006FS-P2
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:04:57 +0100
+	id 1HJRva-0008Ov-GS
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:08:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932721AbXBTKEx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Feb 2007 05:04:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932732AbXBTKEx
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:04:53 -0500
-Received: from main.gmane.org ([80.91.229.2]:43550 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932721AbXBTKEw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 05:04:52 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HJRrV-0008OI-48
-	for git@vger.kernel.org; Tue, 20 Feb 2007 11:04:41 +0100
-Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 11:04:41 +0100
-Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 11:04:41 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:lkUCEvR8rhXn0t1bNeQ2KN5TMhg=
+	id S932816AbXBTKIv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 05:08:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932809AbXBTKIv
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:08:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60382 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932816AbXBTKIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 05:08:50 -0500
+Received: (qmail invoked by alias); 20 Feb 2007 10:08:49 -0000
+X-Provags-ID: V01U2FsdGVkX1+DUDUTBAmDNKYNV3FWUfFzHruIrWF1qcJVoIJr8H
+	/dWA==
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40225>
 
-Junio C Hamano <junkio@cox.net> writes:
+I found that git diff -B does not always use colors and I don't have
+time to figure out what it is atm.
 
-> We have too many strncmp(a, b, strlen(b)).
->
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> ---
->  git-compat-util.h |    5 +++++
->  1 files changed, 5 insertions(+), 0 deletions(-)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 9863cf6..0a9ac56 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -279,4 +279,9 @@ static inline int sane_case(int x, int high)
->  	return x;
->  }
-> =20
-> +static inline int prefixcmp(const char *a, const char *b)
-> +{
-> +	return strncmp(a, b, strlen(b));
-> +}
-> +
->  #endif
+The bug can be triggered by this two files and running git diff with
+-B.  You can also just clone the repository from
+git://igit.ath.cx/~matled/tmp/break/
 
-Is it just me, or coudln't this be a little more self-documenting.  I
-find it annoying to have to read through a functions implementation to
-figure out what to pass to it.
+% git cat-file -p HEAD~1:test
+def test(p)
+    if p
+        Array.new
+        Array.new(2)
+        Array.new(5, "A")
 
-If a doc comment is too much, just naming the parameters is often
-enough.
+        # only one copy of the object is created
+        a = Array.new(2, Hash.new)
+        a[0]['cat'] = 'feline'
+        a
+        a[1]['cat'] = 'Felix'
+        a
 
-+static inline int prefixcmp(const char *s, const char *prefix)
+        # here multiple copies are created
+        a = Array.new(2) { Hash.new }
+        a[0]['cat'] = 'feline'
+        a
 
---=20
-David K=C3=A5gedal
+        squares = Array.new(5) {|i| i*i}
+        squares
+
+        copy = Array.new(squares)
+    end
+end
+% git cat-file -p HEAD:test  
+def test(p)
+    test_bla if p
+end
+
+def test_bla
+    Array.new
+    Array.new(2)
+    Array.new(5, "A")
+
+    # only one copy of the object is created
+    a = Array.new(2, Hash.new)
+    a[0]['cat'] = 'feline'
+    a
+    a[1]['cat'] = 'Felix'
+    a
+
+    # here multiple copies are created
+    a = Array.new(2) { Hash.new }
+    a[0]['cat'] = 'feline'
+    a
+
+    squares = Array.new(5) {|i| i*i}
+    squares
+
+    copy = Array.new(squares)
+end
