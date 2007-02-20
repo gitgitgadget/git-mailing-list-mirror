@@ -1,75 +1,50 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Tue, 20 Feb 2007 01:53:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702200152230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
- <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
- <20070217233203.GA6014@coredump.intra.peff.net>
- <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
- <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
- <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
- <7vps854qf8.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add a compat/strtoumax.c for Solaris 8.
+Date: Mon, 19 Feb 2007 16:53:13 -0800
+Message-ID: <7virdx4pl2.fsf@assigned-by-dhcp.cox.net>
+References: <17777.1171930976@lotus.CS.Berkeley.EDU>
+	<20070220003533.GB28314@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 20 01:53:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jason Riedy <ejr@EECS.Berkeley.EDU>, git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 20 01:53:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJJFr-0001K5-19
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:53:15 +0100
+	id 1HJJG1-0001OY-Ey
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:53:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965831AbXBTAxL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 19:53:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965832AbXBTAxK
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:53:10 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55098 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965831AbXBTAxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 19:53:07 -0500
-Received: (qmail invoked by alias); 20 Feb 2007 00:53:06 -0000
-X-Provags-ID: V01U2FsdGVkX1+9nyNZea69uxWkyUOslkTVd6BfLbs9AgebnkAf7Q
-	w3vg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vps854qf8.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S965793AbXBTAxR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 19:53:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965832AbXBTAxQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:53:16 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:52008 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965793AbXBTAxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 19:53:15 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070220005314.RCHD21177.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 19 Feb 2007 19:53:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RctD1W00D1kojtg0000000; Mon, 19 Feb 2007 19:53:13 -0500
+In-Reply-To: <20070220003533.GB28314@spearce.org> (Shawn O. Pearce's message
+	of "Mon, 19 Feb 2007 19:35:33 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40188>
 
-Hi,
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-On Mon, 19 Feb 2007, Junio C Hamano wrote:
+> This is a better version than the patch I sent out last night,
+> so Junio please drop my patch in favor of Jason's.
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > I agree that it is sensible, but it's sensible only within the context of 
-> > purely self-generated patches, where the patch itself was generated not 
-> > just with git, but with that exact project.
-> 
-> That makes sense, except that the patch could be made with any
-> other tools; it just has to follow the "patch is from the top of
-> the tree, with -p1" convention.
-> 
-> I think it might make sense to change (this might have to be
-> read "break", unfortunately) "git apply" for all three cases.
+Agh.  Too late...
 
-Just for the subdirectory case.
-
-> So the new rule, which would affect only when you run from a 
-> subdirectory, would be that "diff -u a/foo b/foo" would be parsed, 1 
-> level (or -p <n> levels) of leading paths stripped, and then prefix is 
-> added to form "new" and "old" filenames.
-
-Wouldn't it be easier to just cd to the prefix?
-
-> And I think Johannes is happy with that change as well.
-
-Yes, thank you.
-
-Ciao,
-Dscho
+I need some rewinding and reshuffling.
