@@ -1,254 +1,161 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Rework of the 'stg pull' policy.
-Date: Wed, 21 Feb 2007 00:16:11 +0100
-Message-ID: <20070220231407.3194.1053.stgit@gandelf.nowhere.earth>
+From: Peter Simons <simons@cryp.to>
+Subject: [PATCH] Makefile: Improve support for static linking.
+Date: 21 Feb 2007 00:43:13 +0100
+Organization: private
+Message-ID: <87ps84v1im.fsf@write-only.cryp.to>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 21 00:48:00 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 21 00:55:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJeiF-0006YK-S7
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 00:48:00 +0100
+	id 1HJepP-0001RR-MR
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 00:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161095AbXBTXry (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 18:47:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161091AbXBTXry
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 18:47:54 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:60262 "EHLO smtp3-g19.free.fr"
+	id S1161101AbXBTXzU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 18:55:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161102AbXBTXzU
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 18:55:20 -0500
+Received: from main.gmane.org ([80.91.229.2]:38787 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161095AbXBTXrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 18:47:53 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id BF6DA59C6F;
-	Wed, 21 Feb 2007 00:47:51 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 2E7701F084;
-	Wed, 21 Feb 2007 00:16:12 +0100 (CET)
-User-Agent: StGIT/0.12
+	id S1161101AbXBTXzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 18:55:19 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1HJep4-0001up-5W
+	for git@vger.kernel.org; Wed, 21 Feb 2007 00:55:03 +0100
+Received: from e178091029.adsl.alicedsl.de ([85.178.91.29])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 21 Feb 2007 00:55:02 +0100
+Received: from simons by e178091029.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 21 Feb 2007 00:55:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: e178091029.adsl.alicedsl.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40266>
 
+The naive approach to build a statically linked git toolset, "make
+LDFLAGS=-static", fails for two reasons:
 
-This patch changes the way "stg pull" behaviour is selected, by
-replacing stgit.pull-does-rebase and stgit.pullcmd with
-stgit.pull-policy, stgit.pullcmd and stgit.fetchcmd.  In the standard
-case, only pull-policy needs to be set.
+ * Libraries git depends on might depend on other libraries this
+   Makefile can't know about. Curl, for example, can be compiled with or
+   without support for international domain names. If that capability is
+   compiled in, linking curl needs "-lidn". Also, static linking often
+   adds a dependency on dlopen() and friends, so "-ldl" must be
+   specified too.
 
-Those 3 config variables are also available per-branch as
-branch.*.stgit.<name>.
+ * Linking statically requires the libraries to be specified in top-down
+   order.
 
-This patch also add a set of tests for the fetch-rebase policy,
-including interferences with "stg commit" occuring with 0.12.
+Guessing how to build a static binary on any given platform is quite
+difficult, but this patch gets us a littler closer to that goal. The
+changes are:
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
+ * Support "make LIBS=-ldl".
+
+ * Use curl-config(1) to determine $CURL_LIBCURL defaults.
+
+ * Reorder $LIB_4_CRYPTO to "-lssl -lcrypto" (if NEEDS_SSL_WITH_CRYPTO).
+
+ * Always specify $BASIC_LIBS (formerly $LIBS) last.
 ---
+ Makefile |   22 ++++++++++++----------
+ 1 files changed, 12 insertions(+), 10 deletions(-)
 
-This is an implementation of the solution described in my previous
-mail.
-
- examples/gitconfig           |   17 ++++++----
- stgit/commands/pull.py       |   23 +++++++++++--
- stgit/config.py              |    5 ++-
- stgit/git.py                 |   19 +++++++++++
- t/t2100-pull-policy-fetch.sh |   72 ++++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 123 insertions(+), 13 deletions(-)
-
-diff --git a/examples/gitconfig b/examples/gitconfig
-index 4e775fc..637f153 100644
---- a/examples/gitconfig
-+++ b/examples/gitconfig
-@@ -33,14 +33,19 @@
- 	#pager = ~/share/stgit/contrib/diffcol.sh
- 	#pager = filterdiff --annotate | colordiff | less -FRX
+diff --git a/Makefile b/Makefile
+index 289decd..b07b2b8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -167,6 +167,7 @@ SPARSE_FLAGS = -D__BIG_ENDIAN__ -D__powerpc__
+ # but it still might be nice to keep that distinction.)
+ BASIC_CFLAGS =
+ BASIC_LDFLAGS =
++BASIC_LIBS =
  
--	# GIT pull command (should take the same arguments as
-+	# GIT pull and fetch commands (should take the same arguments as
- 	# git-fetch or git-pull).  By default:
--	#pullcmd = git-fetch
--	#pull-does-rebase = yes
--	# Alternative (old behaviour), less intuitive but maybe useful
--	# for some workflows:
- 	#pullcmd = git-pull
--	#pull-does-rebase = no
-+	#fetchcmd = git-fetch
-+
-+	# "stg pull" policy.  This is the repository default, which can be
-+	# overriden on a per-branch basis using branch.*.stgit.pull-policy
-+	# By default:
-+	#pull-policy = pull
-+	# To support remote rewinding parent branches:
-+	#pull-policy = fetch-rebase
-+	# To support local parent branches:
-+	#pull-policy = rebase
+ SCRIPT_SH = \
+ 	git-bisect.sh git-checkout.sh \
+@@ -454,7 +455,8 @@ ifndef NO_CURL
+ 	ifdef CURLDIR
+ 		# Try "-Wl,-rpath=$(CURLDIR)/lib" in such a case.
+ 		BASIC_CFLAGS += -I$(CURLDIR)/include
+-		CURL_LIBCURL = -L$(CURLDIR)/lib $(CC_LD_DYNPATH)$(CURLDIR)/lib -lcurl
++		CURL_LIBCURL  = $(shell curl-config --libs)
++		CURL_LIBCURL += -L$(CURLDIR)/lib $(CC_LD_DYNPATH)$(CURLDIR)/lib -lcurl
+ 	else
+ 		CURL_LIBCURL = -lcurl
+ 	endif
+@@ -484,7 +486,7 @@ else
+ 	OPENSSL_LIBSSL =
+ endif
+ ifdef NEEDS_SSL_WITH_CRYPTO
+-	LIB_4_CRYPTO = $(OPENSSL_LINK) -lcrypto -lssl
++	LIB_4_CRYPTO = $(OPENSSL_LINK) -lssl -lcrypto
+ else
+ 	LIB_4_CRYPTO = $(OPENSSL_LINK) -lcrypto
+ endif
+@@ -607,7 +609,7 @@ prefix_SQ = $(subst ','\'',$(prefix))
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+ PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
  
- 	# The three-way merge tool. Note that the 'output' file contains the
- 	# same data as 'branch1'. This is useful for tools that do not take an
-diff --git a/stgit/commands/pull.py b/stgit/commands/pull.py
-index 990244e..e4a2b62 100644
---- a/stgit/commands/pull.py
-+++ b/stgit/commands/pull.py
-@@ -64,14 +64,29 @@ def func(parser, options, args):
-     check_conflicts()
-     check_head_top_equal()
+-LIBS = $(GITLIBS) $(EXTLIBS)
++BASIC_LIBS += $(GITLIBS) $(EXTLIBS) $(LIBS)
  
--    must_rebase = (config.get('stgit.pull-does-rebase') == 'yes')
-+    policy = config.get('branch.%s.stgit.pull-policy' % crt_series.get_branch()) or \
-+             config.get('stgit.pull-policy')
-+    if policy == 'pull':
-+        must_rebase = 0
-+    elif policy == 'fetch-rebase':
-+        must_rebase = 1
-+    elif policy == 'rebase':
-+        must_rebase = 1
-+    else:
-+        raise config.ConfigException, 'Unsupported pull-policy "%s"' % policy
-+
-     applied = prepare_rebase(real_rebase=must_rebase, force=options.force)
+ BASIC_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' $(COMPAT_CFLAGS)
+ LIB_OBJS += $(COMPAT_OBJS)
+@@ -636,7 +638,7 @@ strip: $(PROGRAMS) git$X
+ git$X: git.c common-cmds.h $(BUILTIN_OBJS) $(GITLIBS) GIT-CFLAGS
+ 	$(CC) -DGIT_VERSION='"$(GIT_VERSION)"' \
+ 		$(ALL_CFLAGS) -o $@ $(filter %.c,$^) \
+-		$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(LIBS)
++		$(BUILTIN_OBJS) $(ALL_LDFLAGS) $(BASIC_LIBS)
  
-     # pull the remote changes
--    print 'Pulling from "%s"...' % repository
--    git.fetch(repository)
--    if must_rebase:
-+    if policy == 'pull':
-+        print 'Pulling from "%s"...' % repository
-+        git.pull(repository)
-+    elif policy == 'fetch-rebase':
-+        print 'Fetching from "%s"...' % repository
-+        git.fetch(repository)
-         rebase(git.fetch_head())
-+    elif policy == 'rebase':
-+        rebase(crt_series.get_parent_branch())
+ help.o: common-cmds.h
  
-     post_rebase(applied, options.nopush, options.merged)
+@@ -754,7 +756,7 @@ http-fetch.o: http-fetch.c http.h GIT-CFLAGS
+ endif
  
-diff --git a/stgit/config.py b/stgit/config.py
-index fb38932..b016fbd 100644
---- a/stgit/config.py
-+++ b/stgit/config.py
-@@ -29,8 +29,9 @@ class GitConfig:
-         'stgit.autoresolved':	'no',
-         'stgit.smtpserver':	'localhost:25',
-         'stgit.smtpdelay':	'5',
--        'stgit.pullcmd':	'git-fetch',
--        'stgit.pull-does-rebase': 'yes',
-+        'stgit.pullcmd':	'git-pull',
-+        'stgit.fetchcmd':	'git-fetch',
-+        'stgit.pull-policy':	'pull',
-         'stgit.merger':		'diff3 -L current -L ancestor -L patched -m -E ' \
- 				'"%(branch1)s" "%(ancestor)s" "%(branch2)s" > "%(output)s"',
-         'stgit.autoimerge':	'no',
-diff --git a/stgit/git.py b/stgit/git.py
-index 46ba5c8..458eb97 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -817,7 +817,24 @@ def fetch(repository = 'origin', refspec = None):
-     if refspec:
-         args.append(refspec)
+ git-%$X: %.o $(GITLIBS)
+-	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
++	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(BASIC_LIBS)
  
--    command = config.get('stgit.pullcmd')
-+    command = config.get('branch.%s.stgit.fetchcmd' % get_head_file()) or \
-+              config.get('stgit.fetchcmd')
-+    if __run(command, args) != 0:
-+        raise GitException, 'Failed "%s %s"' % (command, repository)
-+
-+def pull(repository = 'origin', refspec = None):
-+    """Fetches changes from the remote repository, using 'git-pull'
-+    by default.
-+    """
-+    # we update the HEAD
-+    __clear_head_cache()
-+
-+    args = [repository]
-+    if refspec:
-+        args.append(refspec)
-+
-+    command = config.get('branch.%s.stgit.pullcmd' % get_head_file()) or \
-+              config.get('stgit.pullcmd')
-     if __run(command, args) != 0:
-         raise GitException, 'Failed "%s %s"' % (command, repository)
+ ssh-pull.o: ssh-fetch.c
+ ssh-push.o: ssh-upload.c
+@@ -769,11 +771,11 @@ git-imap-send$X: imap-send.o $(LIB_FILE)
+ http.o http-fetch.o http-push.o: http.h
+ git-http-fetch$X: fetch.o http.o http-fetch.o $(GITLIBS)
+ 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
++		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(BASIC_LIBS)
  
-diff --git a/t/t2100-pull-policy-fetch.sh b/t/t2100-pull-policy-fetch.sh
-new file mode 100755
-index 0000000..e1398a3
---- /dev/null
-+++ b/t/t2100-pull-policy-fetch.sh
-@@ -0,0 +1,72 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Yann Dirson
-+#
-+
-+test_description='Excercise pull-policy "fetch-rebase".'
-+
-+. ./test-lib.sh
-+
-+# don't need this repo, but better not drop it, see t1100
-+#rm -rf .git
-+
-+# Need a repo to clone
-+test_create_repo upstream
-+
-+test_expect_success \
-+    'Setup upstream repo, clone it, and add patches to the clone' \
-+    '
-+    (cd upstream && stg init) &&
-+    stg clone upstream clone &&
-+    (cd clone &&
-+     git repo-config branch.master.stgit.pull-policy fetch-rebase &&
-+     git repo-config --list &&
-+     stg new c1 -m c1 &&
-+     echo a > file && stg add file && stg refresh
-+    )
-+    '
-+
-+test_expect_success \
-+    'Add non-rewinding commit upstream and pull it from clone' \
-+    '
-+    (cd upstream && stg new u1 -m u1 &&
-+     echo a > file2 && stg add file2 && stg refresh) &&
-+    (cd clone && stg pull) &&
-+    test -e clone/file2
-+    '
-+
-+# note: with pre-1.5 Git the clone is not automatically recorded
-+# as rewinding, and thus heads/origin is not moved, but the stack
-+# is still correctly rebased
-+test_expect_success \
-+    'Rewind/rewrite upstream commit and pull it from clone' \
-+    '
-+    (cd upstream && echo b >> file2 && stg refresh) &&
-+    (cd clone && stg pull) &&
-+    test `wc -l <clone/file2` = 2
-+    '
-+
-+# this one ensures the guard against commits does not unduly trigger
-+test_expect_success \
-+    'Rewind/rewrite upstream commit and fetch it from clone before pulling' \
-+    '
-+    (cd upstream && echo c >> file2 && stg refresh) &&
-+    (cd clone && git fetch && stg pull) &&
-+    test `wc -l <clone/file2` = 3
-+    '
-+
-+# this one exercises the guard against commits
-+# (use a new file to avoid mistaking a conflict for a success)
-+test_expect_success \
-+    'New upstream commit and commit a patch in clone' \
-+    '
-+    (cd upstream && stg new u2 -m u2 &&
-+     echo a > file3 && stg add file3 && stg refresh) &&
-+    (cd clone && stg commit && stg new c2 -m c2 &&
-+     echo a >> file && stg refresh)
-+    '
-+test_expect_failure \
-+    'Try to  and commit a patch in clone' \
-+    '(cd clone && stg pull)'
-+
-+test_done
+ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
+ 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+-		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
++		$(CURL_LIBCURL) $(EXPAT_LIBEXPAT) $(BASIC_LIBS)
+ 
+ $(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
+ $(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H) $(wildcard */*.h)
+@@ -832,13 +834,13 @@ test-date$X: test-date.c date.o ctype.o
+ 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) test-date.c date.o ctype.o
+ 
+ test-delta$X: test-delta.o diff-delta.o patch-delta.o $(GITLIBS)
+-	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
++	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(BASIC_LIBS)
+ 
+ test-dump-cache-tree$X: dump-cache-tree.o $(GITLIBS)
+-	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
++	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(BASIC_LIBS)
+ 
+ test-sha1$X: test-sha1.o $(GITLIBS)
+-	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
++	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(BASIC_LIBS)
+ 
+ check-sha1:: test-sha1$X
+ 	./test-sha1.sh
+-- 
+1.5.0
