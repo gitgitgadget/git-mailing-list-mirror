@@ -1,66 +1,97 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: git-blame.el won't run
-Date: Tue, 20 Feb 2007 18:34:45 +0100
-Message-ID: <87fy9020ne.fsf@morpheus.local>
-References: <13283.1171492535@localhost> <87mz393mlo.fsf@morpheus.local> <24475.1171920735@localhost> <87abz92rp9.fsf@morpheus.local> <4157.1171992534@localhost>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Unresolved issues
+Date: Tue, 20 Feb 2007 09:41:44 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702200934270.20368@woody.linux-foundation.org>
+References: <7virdx1e58.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 18:35:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 18:41:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJYtT-0005Nt-LA
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 18:35:11 +0100
+	id 1HJYzv-0008J8-SP
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 18:41:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932585AbXBTRfF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Feb 2007 12:35:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932630AbXBTRfF
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 12:35:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:33584 "EHLO ciao.gmane.org"
+	id S932960AbXBTRls (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 12:41:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932965AbXBTRls
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 12:41:48 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:41647 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932585AbXBTRfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 12:35:03 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HJYtF-0001vd-VS
-	for git@vger.kernel.org; Tue, 20 Feb 2007 18:34:57 +0100
-Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 18:34:57 +0100
-Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 18:34:57 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:Lm0aTXcBm3VUW7EFmU4P+HoBnGI=
+	id S932960AbXBTRlr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 12:41:47 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1KHfjhB016382
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 20 Feb 2007 09:41:45 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1KHficW014619;
+	Tue, 20 Feb 2007 09:41:44 -0800
+In-Reply-To: <7virdx1e58.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.459 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40245>
 
-Xavier Maillard <maillaxa@gmail.com> writes:
 
-> Hi,
->
->> >> Can you please set debug-on-error to t and show me the backtrace =
-you get?
->> >
->> > Nothing happens. I have to C-g after having waited for a few
->> > seconds.
->>=20
->> I'm not sure my instructions were very clear.  Did you try M-x
->> git-blame-mode after enabling debug-on-error?
->
-> I did it. And I had to kill (C-g) after having waited for several
-> long seconds.
 
-OK, then set debug-on-quit to t and do it again, and send me the
-backtrace you get when you press C-g.
+On Mon, 19 Feb 2007, Junio C Hamano wrote:
+> 
+> * core.autocrlf
+> 
+>   What's still missing is support for .gitignore like "these files are
+>   text" information.
 
---=20
-David K=C3=A5gedal
+Well, we could actually just do that in stages.
+
+We might start off with just saying "unlike .gitignore", we only support 
+one top-level ".gitattributes" file. That makes the problem space much 
+simpler, and then we can have code like
+
+	enum file_type {
+		FILE_AUTO,
+		FILE_BINARY,
+		FILE_TEXT
+	};
+
+	static enum file_type get_file_type(const char *pathname)
+	{
+		static int has_initialized = 0;
+
+		if (!has_initialized) {
+			has_initialized = 1;
+			read_file_attributes_file();
+		}
+		... check the filename against our attribute rules ..
+	}
+
+which would be fairly straightforward, and efficient.
+
+It gets more complicated with per-directory attributes files, because then 
+you need to either open those files *all* the time (stupid and expensive 
+if you have thousands of files and hundreds of directories), or you need 
+to have some way to cache just the ones you need.
+
+(In fact, it might be perfectly fine to have just a *single* cache, which 
+is keyed on the dirname of the pathname: if the dirname changes, just 
+throw the cache away, and read it in from all the subdirectories leading 
+to that directory - you'd still re-read stuff, but all the common cases 
+will walk the directory structure in a nice pattern, so you'd have a very 
+simple cache that actually gets good cache hit behaviour)
+
+>   One thing that might be tricky is what should be done while making a
+>   merge or checking out from a tree.  Ideally, the information should be
+>   read from the tree that is being extracted, but that would make the
+>   code structure a little bit, eh, "interesting".
+
+No, that would be pretty horrid. So just tell everybody that it's based on 
+the working tree. I don't think it's likely to be a problem in practice.
+
+		Linus
