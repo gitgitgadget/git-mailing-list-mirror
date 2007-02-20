@@ -1,71 +1,57 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Tue, 20 Feb 2007 10:46:07 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702201040460.31945@xanadu.home>
-References: <200702191839.05784.andyparkins@gmail.com>
- <200702201021.58754.andyparkins@gmail.com>
- <7vabz9w270.fsf@assigned-by-dhcp.cox.net>
- <200702201057.21398.andyparkins@gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: git installation (as private user) should NEVER write site_perl
+Date: Tue, 20 Feb 2007 09:18:15 -0800
+Message-ID: <86sld0sq7c.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 20 16:46:19 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 20 18:18:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJXC2-0000U2-Go
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 16:46:14 +0100
+	id 1HJYdS-0006dX-2S
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 18:18:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965021AbXBTPqL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 10:46:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965096AbXBTPqK
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 10:46:10 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:36601 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965021AbXBTPqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 10:46:09 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDR00AQCQGVCEA0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 20 Feb 2007 10:46:07 -0500 (EST)
-In-reply-to: <200702201057.21398.andyparkins@gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1030333AbXBTRS1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 12:18:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030330AbXBTRS0
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 12:18:26 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:49001 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030318AbXBTRSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 12:18:16 -0500
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id E99101DE781; Tue, 20 Feb 2007 09:18:15 -0800 (PST)
+x-mayan-date: Long count = 12.19.14.1.9; tzolkin = 5 Muluc; haab = 2 Kayab
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40241>
-
-On Tue, 20 Feb 2007, Andy Parkins wrote:
-
-> On Tuesday 2007 February 20 10:30, Junio C Hamano wrote:
-> 
-> > But at least to me,
-> >
-> > 	if (!prefixcmp(head, PATH_REFS_HEADS))
-> > 		head += strlen(PATH_REFS_HEADS);
-> >
-> > is easier to follow than:
-> >
-> >         if (ref_is_head(head))
-> >                 head += STRLEN_PATH_REFS_HEADS;
-
-Ditto for me.
-
-> Fine.  I don't really mind - and it's less work on my patch :-)
-> 
-> My argument in favour of the ref_is_head() method is that the prefixcmp() 
-> method requires knowledge from the caller about how you tell whether a given 
-> ref is a head - the second pushes that information further down the call 
-> tree, abstracting it out just a little more.
-
-That's the problem though.  Too much abstraction hides away the purpose.  
-With prefixcmp() it shows that the code cares about a string prefix.  
-With ref_is_head() you don't know what is happening there since that 
-might be many things like a pointer comparison, etc. and you have to 
-look ref_is_head() implementation to be sure.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40242>
 
 
-Nicolas
+I tried to install git on a system where I was a normal user.  Of course,
+this step fails:
+
+     Installing /usr/perl5/site_perl/5.6.1/Error.pm
+     Installing /usr/perl5/site_perl/5.6.1/Git.pm
+
+But on a larger level, this should never have even been attempted, whether I
+was a private user OR the box administrator.  The git installation should NOT
+be installing things into the site_perl directory, which is owned by the CPAN
+installation tools, and also by the various packaging tools, and is also seen
+by non-git users of Perl on the machine.  (It would be bad to have two
+different versions of Error.pm now being seen by all users.)
+
+If git wants to add local Perl modules, they belong in ${prefix}/lib/perl/
+or something, with the appropriate "use lib" added to the Perl scripts.
+
+No patches attached, but this is a showstopper for my client, and a bit of a
+shocker for me.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
