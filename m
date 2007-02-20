@@ -1,75 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Tue, 20 Feb 2007 02:30:59 -0800
-Message-ID: <7vabz9w270.fsf@assigned-by-dhcp.cox.net>
-References: <200702191839.05784.andyparkins@gmail.com>
-	<200702200942.18654.andyparkins@gmail.com>
-	<7vfy91ximy.fsf@assigned-by-dhcp.cox.net>
-	<200702201021.58754.andyparkins@gmail.com>
+Date: Tue, 20 Feb 2007 10:57:06 +0000
+Message-ID: <200702201057.21398.andyparkins@gmail.com>
+References: <200702191839.05784.andyparkins@gmail.com> <200702201021.58754.andyparkins@gmail.com> <7vabz9w270.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 20 11:31:06 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 20 11:57:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJSH4-00036g-5b
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:31:06 +0100
+	id 1HJSgg-0006al-2L
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932822AbXBTKbD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 05:31:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932857AbXBTKbC
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:31:02 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:54965 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932822AbXBTKbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 05:31:00 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070220103059.OWBZ27628.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 20 Feb 2007 05:30:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id RmWz1W0061kojtg0000000; Tue, 20 Feb 2007 05:31:00 -0500
-In-Reply-To: <200702201021.58754.andyparkins@gmail.com> (Andy Parkins's
-	message of "Tue, 20 Feb 2007 10:21:57 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932732AbXBTK5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 05:57:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932870AbXBTK5a
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:57:30 -0500
+Received: from nz-out-0506.google.com ([64.233.162.225]:54336 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932732AbXBTK5a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 05:57:30 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so1919384nze
+        for <git@vger.kernel.org>; Tue, 20 Feb 2007 02:57:29 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RVVBvBOaAiRK6POO0Px+uHgoVBhY8P5Lz6UXx44SsTY7nvjCUEZNvlghF99KhDb1TBLDKz0bQnLr3C5lmkHFED4MdF39Re3C3pi+YrfYuQdOl52pwzraxEUlHtP47bb6lGPtrjn++UjEEIutuLyBCXIJ+kXK/BkWM2uQ/xwD96U=
+Received: by 10.64.185.7 with SMTP id i7mr11516544qbf.1171969049247;
+        Tue, 20 Feb 2007 02:57:29 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id l21sm20734243nfc.2007.02.20.02.57.26;
+        Tue, 20 Feb 2007 02:57:26 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vabz9w270.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40230>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On Tuesday 2007 February 20 10:30, Junio C Hamano wrote:
 
-> Your prefixcmp() point about them being used so regularly made me wonder if 
-> the following would improve readability:
+> If we _were_ doing the inline function, I would actually prefer:
 >
-> static inline ref_is_head(const char *a)
-> {
->     return (prefixcmp(a, PATH_REFS_HEADS) == 0);
-> }
-> ...
->    if (ref_is_head(head))
->        head += STRLEN_PATH_REFS_HEADS;
+>         static inline ref_is_head(const char *ref)
+>         {
+> 		return !prefixcmp(ref, PATH_REFS_HEADS);
+>         }
+
+As you brought it up...
+
+I've never really liked "!" on strcmp() lines (but I accept that that is the 
+tradition in git) because it implies the the output of prefixcmp is boolean, 
+but it's actually ternary.  strcmp() (I think), should be thought of as 
+outputting
+
+enum {
+ STRING1_LESS_THAN_STRING2,
+ STRINGS_EQUAL,
+ STRING1_GREATER_THAN_STRING2
+}
+
+Given that, it makes me uncomfortable to use !strcmp().  Of course in the case 
+of strcmp(), that form is so well known that it makes very little difference 
+to the reader.
+
+I have similar feelings about
+
+ if( !something )
+
+being incorrect when you meant
+
+ if( something == NULL )
+
+While they are identical in what they generate, they send a different message 
+to someone reading the code.
+
+Regardless, I'm not so stubborn as to refuse to go with the flow...
+
+> But at least to me,
 >
-> which expresses the intent of the code far more clearly.
+> 	if (!prefixcmp(head, PATH_REFS_HEADS))
+> 		head += strlen(PATH_REFS_HEADS);
+>
+> is easier to follow than:
+>
+>         if (ref_is_head(head))
+>                 head += STRLEN_PATH_REFS_HEADS;
 
-If we _were_ doing the inline function, I would actually prefer:
+Fine.  I don't really mind - and it's less work on my patch :-)
 
-        static inline ref_is_head(const char *ref)
-        {
-		return !prefixcmp(ref, PATH_REFS_HEADS);
-        }
+My argument in favour of the ref_is_head() method is that the prefixcmp() 
+method requires knowledge from the caller about how you tell whether a given 
+ref is a head - the second pushes that information further down the call 
+tree, abstracting it out just a little more.
 
-But at least to me,
+As I say though - it's not a problem for me.
 
-	if (!prefixcmp(head, PATH_REFS_HEADS))
-		head += strlen(PATH_REFS_HEADS);
 
-is easier to follow than:
 
-        if (ref_is_head(head))
-                head += STRLEN_PATH_REFS_HEADS;
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
