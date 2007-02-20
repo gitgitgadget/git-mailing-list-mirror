@@ -1,118 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Mon, 19 Feb 2007 23:42:57 -0800
-Message-ID: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: git-blame.el won't run
+Date: Tue, 20 Feb 2007 08:50:26 +0100
+Message-ID: <87abz92rp9.fsf@morpheus.local>
+References: <13283.1171492535@localhost> <87mz393mlo.fsf@morpheus.local> <24475.1171920735@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 08:43:08 2007
+X-From: git-owner@vger.kernel.org Tue Feb 20 08:50:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJPeV-0000QH-4K
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 08:43:07 +0100
+	id 1HJPlr-0003ku-9B
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 08:50:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932849AbXBTHm7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 02:42:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932709AbXBTHm7
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 02:42:59 -0500
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:59718 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932599AbXBTHm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 02:42:58 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070220074258.KXJJ1349.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 20 Feb 2007 02:42:58 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Rjix1W0011kojtg0000000; Tue, 20 Feb 2007 02:42:57 -0500
-X-master-at: 1e592d65b50dbec87fde9f4ef1b7fd8d90bf7b8c
-X-next-at: e5a1adc4486fabd0d06dd77b9e5e16649ee846a7
+	id S932825AbXBTHuk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Feb 2007 02:50:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964854AbXBTHuk
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 02:50:40 -0500
+Received: from main.gmane.org ([80.91.229.2]:43669 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932825AbXBTHuj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 02:50:39 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HJPli-00054H-2v
+	for git@vger.kernel.org; Tue, 20 Feb 2007 08:50:34 +0100
+Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Feb 2007 08:50:34 +0100
+Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Feb 2007 08:50:34 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:EnFqmgP6qeKnPu7jG5Lo8dpopVY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40208>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+Xavier Maillard <zedek@gnu.org> writes:
 
-* jc/apply-config (Tue Feb 20 03:45:49 2007 +0100) 5 commits
- - apply: fix memory leak in prefix_one()
- + git-apply: require -p<n> when working in a subdirectory.
- + git-apply: do not lose cwd when run from a subdirectory.
- + Teach 'git apply' to look at $HOME/.gitconfig even outside of a
-   repository
- + Teach 'git apply' to look at $GIT_DIR/config
+> Hi,
+>
+>> Can you please set debug-on-error to t and show me the backtrace you=
+ get?
+>
+> Nothing happens. I have to C-g after having waited for a few
+> seconds.
 
-* lt/crlf (Sat Feb 17 12:37:25 2007 -0800) 4 commits
- + Teach core.autocrlf to 'git apply'
- + t0020: add test for auto-crlf
- + Make AutoCRLF ternary variable.
- + Lazy man's auto-CRLF
+I'm not sure my instructions were very clear.  Did you try M-x
+git-blame-mode after enabling debug-on-error?
 
-The above two series are to help MinGW and people who suffer
-from CRLF in general.  I think they are good enough for general
-consumption now.  Will perhaps push them out sometime this week.
+>> And does M-! git-blame work in your emacs?
+>
+> No it is not. It shows a help message (usage message).
 
-* js/fetch-progress (Tue Feb 20 03:01:44 2007 +0100) 1 commit
- - fetch & clone: do not output progress when not on a tty
-* js/name-rev-fix (Tue Feb 20 01:08:48 2007 +0100) 1 commit
- + name-rev: avoid "^0" when unneeded
-* js/grep-pager (Mon Feb 19 15:56:04 2007 +0100) 1 commit
- - git grep: use pager
-* js/no-limit-boundary (Mon Feb 19 03:14:59 2007 +0100) 1 commit
- + rev-list --max-age, --max-count: support --boundary
-* fk/autoconf (Sun Feb 18 09:44:42 2007 +0100) 1 commit
- + New autoconf test for iconv
-* js/etc-config (Wed Feb 14 12:48:14 2007 +0100) 1 commit
- - config: read system-wide defaults from /etc/gitconfig
-* mw/64bit (Sat Feb 17 10:13:10 2007 +0100) 1 commit
- - Support for large files on 32bit systems.
-* sb/merge (Thu Feb 15 16:39:53 2007 +0100) 1 commit
- - t/t5515-fetch-merge-logic.sh: Added tests for the merge logic in
-   git-fetch
+But if the help message is for git-blame, it did work.  I wanted to
+check that you could run git-blame from your emacs, and if it printed
+a usage message, it did run.  If you want it to produce some real
+output, you have to give it a file name as well.
 
-These should be Ok.  All should cook in 'next' and graduate to
-'master' by end of next week at the latest.
-
-* jc/fetch (Tue Feb 13 01:21:41 2007 +0000) 8 commits
- - Use stdin reflist passing in git-fetch.sh
- - Use stdin reflist passing in parse-remote
- - Allow fetch--tool to read from stdin
- - git-fetch: rewrite expand_ref_wildcard in C
- - git-fetch: rewrite another shell loop in C
- - git-fetch: move more code into C.
- - git-fetch--tool: start rewriting parts of git-fetch in C.
- - git-fetch: split fetch_main into fetch_dumb and fetch_native
-
-Stalled.  If somebody wants to take this over I'll push this out
-to 'next'.
-
-* js/diff-2 (Sun Feb 18 12:44:43 2007 +0100) 1 commit
- - Add `git diff2`, a GNU diff workalike
-
-Undecided.  Perhaps will merge to 'next' to see if somebody else
-comes up with a better naming idea.
-
-* jc/merge-subtree (Thu Feb 15 16:32:45 2007 -0800) 1 commit
- - A new merge stragety 'subtree'.
-
-Seems to work very well, but I do not see great urgency to merge
-this to 'next' yet.
-
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- - test-para: combined diff between HEAD, index and working tree.
- - para-walk: walk n trees, index and working tree in parallel
-
-Stalled.
-
-* js/objhash (Sat Feb 17 18:38:50 2007 +0100) 2 commits
- . Add `struct object_hash` (fixup)
- . Add `struct object_hash`
-
-Stalled.
+--=20
+David K=C3=A5gedal
