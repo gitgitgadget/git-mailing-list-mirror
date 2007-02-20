@@ -1,103 +1,55 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] apply: fix memory leak in prefix_one()
-Date: Tue, 20 Feb 2007 03:45:49 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702200345070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
- <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
- <20070217233203.GA6014@coredump.intra.peff.net>
- <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
- <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
- <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
- <7vps854qf8.fsf@assigned-by-dhcp.cox.net> <7vr6sl381i.fsf_-_@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702200332090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vbqjp3630.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Add a compat/strtoumax.c for Solaris 8.
+Date: Mon, 19 Feb 2007 21:51:10 -0500
+Message-ID: <20070220025110.GA28797@spearce.org>
+References: <17777.1171930976@lotus.CS.Berkeley.EDU> <20070220003533.GB28314@spearce.org> <7vfy9136zu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jason Riedy <ejr@EECS.Berkeley.EDU>, git <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 20 03:46:03 2007
+X-From: git-owner@vger.kernel.org Tue Feb 20 03:51:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJL11-000542-9r
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 03:46:03 +0100
+	id 1HJL67-0007FQ-2C
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 03:51:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965589AbXBTCpw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 21:45:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932812AbXBTCpw
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 21:45:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48737 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932806AbXBTCpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 21:45:52 -0500
-Received: (qmail invoked by alias); 20 Feb 2007 02:45:50 -0000
-X-Provags-ID: V01U2FsdGVkX1/zvTQT1azztbQuG6WF8Nn78Cf/YX46CILfFW4t7b
-	pEfQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vbqjp3630.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S965593AbXBTCvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 21:51:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932815AbXBTCvP
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 21:51:15 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34925 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932812AbXBTCvP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 21:51:15 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HJL5p-0007PC-TN; Mon, 19 Feb 2007 21:51:01 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1834B20FBAE; Mon, 19 Feb 2007 21:51:11 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vfy9136zu.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40203>
 
-Hi,
+Junio C Hamano <junkio@cox.net> wrote:
+> Yours talk about Sol 9 and Jason talks about Sol 8.  Should I
+> take your ack to mean you want this patch on top of Jason's?
 
-On Mon, 19 Feb 2007, Junio C Hamano wrote:
+Yes, indeed.  Please apply that.  :-)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > 	This is on top of them.
-> 
-> I am not sure if this is correct.  Don't we do some point
-> new_name = old_name = blah?
-
-Yes, you're right. I missed that. The change is in the last hunk:
-
---
-
-[PATCH] apply: fix memory leak in prefix_one()
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
- builtin-apply.c |   15 +++++++++------
- 1 files changed, 9 insertions(+), 6 deletions(-)
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index e01969f..2a23138 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -2516,11 +2516,13 @@ static int use_patch(struct patch *p)
- 	return 1;
- }
- 
--static char *prefix_one(char *name)
-+static void prefix_one(char **name)
- {
--	if (!name)
--		return name;
--	return xstrdup(prefix_filename(prefix, prefix_length, name));
-+	char *old_name = *name;
-+	if (!old_name)
-+		return;
-+	*name = xstrdup(prefix_filename(prefix, prefix_length, *name));
-+	free(old_name);
- }
- 
- static void prefix_patches(struct patch *p)
-@@ -2528,8 +2530,9 @@ static void prefix_patches(struct patch *p)
- 	if (!prefix)
- 		return;
- 	for ( ; p; p = p->next) {
--		p->new_name = prefix_one(p->new_name);
--		p->old_name = prefix_one(p->old_name);
-+		if (p->new_name != p->old_name)
-+			prefix_one(&p->new_name);
-+		prefix_one(&p->old_name);
- 	}
- }
- 
 -- 
-1.5.0.1.2141.gc066
+Shawn.
