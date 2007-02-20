@@ -1,62 +1,57 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add a compat/strtoumax.c for Solaris 8.
-Date: Mon, 19 Feb 2007 17:29:35 -0800
-Message-ID: <7vy7mt39c0.fsf@assigned-by-dhcp.cox.net>
-References: <17777.1171930976@lotus.CS.Berkeley.EDU>
-	<20070220003533.GB28314@spearce.org>
-	<7virdx4pl2.fsf@assigned-by-dhcp.cox.net>
-	<20070220005821.GC28314@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
+Date: Mon, 19 Feb 2007 17:38:17 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702191737150.20368@woody.linux-foundation.org>
+References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
+ <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+ <20070217233203.GA6014@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
+ <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
+ <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
+ <7v7iud4nyo.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jason Riedy <ejr@EECS.Berkeley.EDU>, git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 20 02:29:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 02:38:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJJpE-0008J4-T7
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 02:29:49 +0100
+	id 1HJJxa-0003Sg-8v
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 02:38:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932791AbXBTB3h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 20:29:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932793AbXBTB3h
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 20:29:37 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:39475 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932791AbXBTB3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 20:29:36 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070220012936.OQCQ1300.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 19 Feb 2007 20:29:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id RdVa1W00c1kojtg0000000; Mon, 19 Feb 2007 20:29:35 -0500
-In-Reply-To: <20070220005821.GC28314@spearce.org> (Shawn O. Pearce's message
-	of "Mon, 19 Feb 2007 19:58:22 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932754AbXBTBiX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 20:38:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932756AbXBTBiX
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 20:38:23 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:46113 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932754AbXBTBiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 20:38:22 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1K1cIhB020290
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 19 Feb 2007 17:38:18 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1K1cHvl027300;
+	Mon, 19 Feb 2007 17:38:17 -0800
+In-Reply-To: <7v7iud4nyo.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.457 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40193>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Junio C Hamano <junkio@cox.net> wrote:
->> "Shawn O. Pearce" <spearce@spearce.org> writes:
->> 
->> > This is a better version than the patch I sent out last night,
->> > so Junio please drop my patch in favor of Jason's.
->> 
->> Agh.  Too late...
->> 
->> I need some rewinding and reshuffling.
->
-> Whoops.  :-)
->
-> I hear Git is good at rewinding and reshuffling.  Provided you have
-> not pushed the commits out yet.  Maybe that will help you here?  ;-)
 
-That's what I'll do later.
+On Mon, 19 Feb 2007, Junio C Hamano wrote:
+> 
+> I think use_patch() has always took care of that.
+
+Ahh, right you are. 
+
+		Linus
