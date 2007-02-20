@@ -1,75 +1,68 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: [PATCH] disable t4016-diff-quote.sh on some filesystems
-Date: Tue, 20 Feb 2007 10:27:40 +0100
-Message-ID: <81b0412b0702200127m231425d6p67d2d67e6d7d9b04@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Change "refs/" references to symbolic constants
+Date: Tue, 20 Feb 2007 09:42:17 +0000
+Message-ID: <200702200942.18654.andyparkins@gmail.com>
+References: <200702191839.05784.andyparkins@gmail.com> <7vlkit7vy5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_33569_19868642.1171963660472"
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 20 10:27:47 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 20 10:42:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJRHm-0004pp-Bj
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 10:27:46 +0100
+	id 1HJRWE-0003Zp-FB
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 10:42:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932438AbXBTJ1n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 04:27:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932508AbXBTJ1n
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 04:27:43 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:27475 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932438AbXBTJ1m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 04:27:42 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so747139uga
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 01:27:40 -0800 (PST)
+	id S932796AbXBTJmZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 04:42:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932205AbXBTJmZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 04:42:25 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:8902 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932796AbXBTJmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 04:42:24 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2689351nfa
+        for <git@vger.kernel.org>; Tue, 20 Feb 2007 01:42:23 -0800 (PST)
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=MT0X23jrh0So/39v6aHB/OAOl8O6LAyfJwP0S1U2Ty6lLaLeFwKimdpT+et9U4VfFBIuQ5Z/7HRNFR26QCyLnIIfnCc/e+WWhV7KbIDUbwGzLyRBciGCCfpWX8qCnaqhIA+kVHcc0voTjMI943cxgrTvxqCbzWpM6JfgArjxcJU=
-Received: by 10.78.151.3 with SMTP id y3mr1194182hud.1171963660528;
-        Tue, 20 Feb 2007 01:27:40 -0800 (PST)
-Received: by 10.78.139.9 with HTTP; Tue, 20 Feb 2007 01:27:40 -0800 (PST)
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Rztgqj7phnHQuM5gf9KktvnYunBCLt3rMPBP6xme/9EiNbzzxxXG/C8Tj7H/zFWa3wj6kjH/bRnSqAFiK7HY5pBpM2T1JUPu3iQPEurOFWmAJzSP3TckNyNNjk4CBe/NtHMMBktfz7YUrD21JZptctMh+6qGDSajj0LHSE6SiJc=
+Received: by 10.49.55.13 with SMTP id h13mr6616861nfk.1171964543048;
+        Tue, 20 Feb 2007 01:42:23 -0800 (PST)
+Received: from davejones ( [194.70.53.227])
+        by mx.google.com with ESMTP id x1sm30007571nfb.2007.02.20.01.42.20;
+        Tue, 20 Feb 2007 01:42:21 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vlkit7vy5.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40217>
 
-------=_Part_33569_19868642.1171963660472
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+On Monday 2007 February 19 20:07, Junio C Hamano wrote:
 
-because the filesystems (most typically FAT and NTFS) do not support
-HT nor LF in filenames.
+> > -	if (!strncmp(path, "refs/tags/", 10)) {
+> > +	if (!strncmp(path, PATH_TAGS, STRLEN_PATH_TAGS)) {
+> >  		if (object->type == OBJ_TAG)
+> >  			prio = 2;
+> >  		else
+>
+> This is PATH_REFS_TAGS isn't it?
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+I'm uncomfortable that this one managed to get through; in view of this 
+mistake if you are thinking of applying this - don't.  I'm going to review 
+the patch itself line by line.
 
----
-God help me...
+Also - I should learn how to run the tests - is "make test" good enough or is 
+there something special I should do?
 
-  t/t4016-diff-quote.sh |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
 
-------=_Part_33569_19868642.1171963660472
-Content-Type: text/plain; name="0001-disable-t4016-diff-quote.sh-on-some-filesystems.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="0001-disable-t4016-diff-quote.sh-on-some-filesystems.txt"
-X-Attachment-Id: f_eye4y34j
-
-RnJvbSAwZWRiYzZkZjk3N2U3ZDk1NDAzMmVhZjcyNzIwYzkzYjg2YWI0YzBmIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBUdWUsIDIwIEZlYiAyMDA3IDEwOjA0OjMyICswMTAwClN1YmplY3Q6IFtQQVRDSF0gZGlzYWJs
-ZSB0NDAxNi1kaWZmLXF1b3RlLnNoIG9uIHNvbWUgZmlsZXN5c3RlbXMKCi0tLQogdC90NDAxNi1k
-aWZmLXF1b3RlLnNoIHwgICAgNCArKysrCiAxIGZpbGVzIGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygr
-KSwgMCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS90L3Q0MDE2LWRpZmYtcXVvdGUuc2ggYi90
-L3Q0MDE2LWRpZmYtcXVvdGUuc2gKaW5kZXggZWRkZThmNS4uOGU5NDIyYyAxMDA3NTUKLS0tIGEv
-dC90NDAxNi1kaWZmLXF1b3RlLnNoCisrKyBiL3QvdDQwMTYtZGlmZi1xdW90ZS5zaApAQCAtMTMs
-NiArMTMsMTAgQEAgUDE9J3BhdGhuYW1lCXdpdGggSFQnCiBQMj0ncGF0aG5hbWUgd2l0aCBTUCcK
-IFAzPSdwYXRobmFtZQogd2l0aCBMRicKK2lmICEgdGVzdCA6IDI+L2Rldi9udWxsID4iJFAxIiA7
-IHRoZW4KKwllY2hvID4mMiAnRmlsZXN5c3RlbSBkb2VzIG5vdCBzdXBwb3J0IHRhYnMgaW4gbmFt
-ZXMnCisJdGVzdF9kb25lCitmaQogCiB0ZXN0X2V4cGVjdF9zdWNjZXNzIHNldHVwICcKIAllY2hv
-IFAwLjAgPiIkUDAuMCIgJiYKLS0gCjEuNS4wLnJjNC44NC5nNjdmYzEKCg==
-------=_Part_33569_19868642.1171963660472--
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIEE
+andyparkins@gmail.com
