@@ -1,93 +1,83 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [BUG] diff -B does not (always?) use colors
-Date: Tue, 20 Feb 2007 11:08:46 +0100
-Message-ID: <20070220100846.GA7928@moooo.ath.cx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/4] Mechanical conversion to use prefixcmp()
+Date: Tue, 20 Feb 2007 02:19:47 -0800
+Message-ID: <7vk5ydw2po.fsf@assigned-by-dhcp.cox.net>
+References: <200702191839.05784.andyparkins@gmail.com>
+	<7vlkit7vy5.fsf@assigned-by-dhcp.cox.net>
+	<200702200942.18654.andyparkins@gmail.com>
+	<7v3b51xihy.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 11:08:56 2007
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 20 11:20:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJRva-0008Ov-GS
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:08:54 +0100
+	id 1HJS6D-0005lq-I4
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 11:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932816AbXBTKIv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 05:08:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932809AbXBTKIv
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:08:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60382 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932816AbXBTKIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 05:08:50 -0500
-Received: (qmail invoked by alias); 20 Feb 2007 10:08:49 -0000
-X-Provags-ID: V01U2FsdGVkX1+DUDUTBAmDNKYNV3FWUfFzHruIrWF1qcJVoIJr8H
-	/dWA==
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S932820AbXBTKTt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 05:19:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932842AbXBTKTs
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 05:19:48 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:46352 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932820AbXBTKTs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 05:19:48 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070220101948.GBBE21177.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 20 Feb 2007 05:19:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id RmKn1W0011kojtg0000000; Tue, 20 Feb 2007 05:19:47 -0500
+In-Reply-To: <7v3b51xihy.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Tue, 20 Feb 2007 01:53:29 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40226>
 
-I found that git diff -B does not always use colors and I don't have
-time to figure out what it is atm.
+Junio C Hamano <junkio@cox.net> writes:
 
-The bug can be triggered by this two files and running git diff with
--B.  You can also just clone the repository from
-git://igit.ath.cx/~matled/tmp/break/
+> This mechanically converts strncmp() to use prefixcmp(),
+> ...
+>  * This was done by using this script in px.perl
+>
+>    #!/usr/bin/perl -i.bak -p
+>    if (/strncmp\(([^,]+), "([^\\"]*)", (\d+)\)/ && (length($2) == $3)) {
+>            s|strncmp\(([^,]+), "([^\\"]*)", (\d+)\)|prefixcmp($1, "$2")|;
+>    }
+>    if (/strncmp\("([^\\"]*)", ([^,]+), (\d+)\)/ && (length($1) == $3)) {
+>            s|strncmp\("([^\\"]*)", ([^,]+), (\d+)\)|(-prefixcmp($2, "$1"))|;
+>    }
+>
+>    and running:
+>
+>    $ git grep -l strncmp -- '*.c' | xargs perl px.perl
 
-% git cat-file -p HEAD~1:test
-def test(p)
-    if p
-        Array.new
-        Array.new(2)
-        Array.new(5, "A")
+Two useless comments to add.
 
-        # only one copy of the object is created
-        a = Array.new(2, Hash.new)
-        a[0]['cat'] = 'feline'
-        a
-        a[1]['cat'] = 'Felix'
-        a
+ (1) Yes, I have seen the "Oh, I lost my data doing this silly
+     thing" thread that mentioned the risk of using xargs ;-).
+     In general, piping output from git commands that give list
+     of paths (e.g. "grep", "ls-files", "diff --name-only" and
+     "ls-tree -r --name-only") to xargs should be a much safer
+     practice, and people should get into the habit of doing so,
+     instead of using "find | xargs".
 
-        # here multiple copies are created
-        a = Array.new(2) { Hash.new }
-        a[0]['cat'] = 'feline'
-        a
-
-        squares = Array.new(5) {|i| i*i}
-        squares
-
-        copy = Array.new(squares)
-    end
-end
-% git cat-file -p HEAD:test  
-def test(p)
-    test_bla if p
-end
-
-def test_bla
-    Array.new
-    Array.new(2)
-    Array.new(5, "A")
-
-    # only one copy of the object is created
-    a = Array.new(2, Hash.new)
-    a[0]['cat'] = 'feline'
-    a
-    a[1]['cat'] = 'Felix'
-    a
-
-    # here multiple copies are created
-    a = Array.new(2) { Hash.new }
-    a[0]['cat'] = 'feline'
-    a
-
-    squares = Array.new(5) {|i| i*i}
-    squares
-
-    copy = Array.new(squares)
-end
+ (2) This multi-step "mechanical conversion followed by manual
+     fixup" is a trick I picked up from Linus.  The replacement
+     regexp quoted above are designed to be stricter than
+     necessary to catch only the safe conversion target, while
+     accepting false negatives.  Doing the conversion this way,
+     I do not have to worry too much about auditing 1800 lines
+     of diff in [PATCH 2/4], as long as I make sure the above
+     regexp is strict enough (although I did look at all 1800
+     lines of diff before committing this).  Manual conversions
+     in later steps do need to be looked at much more carefully
+     than the result of this step, of course.
