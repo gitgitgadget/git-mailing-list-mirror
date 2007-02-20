@@ -1,77 +1,86 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Use git-update-ref to update a ref during commit in git-cvsserver
-Date: Tue, 20 Feb 2007 20:10:01 +0000
-Message-ID: <200702202010.02128.andyparkins@gmail.com>
-References: <200702200857.02779.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: [PATCH 1/2] Add config_boolean() method to the Git perl module
+Date: Tue, 20 Feb 2007 15:13:42 -0500
+Message-ID: <11720024233629-git-send-email-tytso@mit.edu>
+Cc: Theodore Ts'o <tytso@mit.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 20 21:13:41 2007
+X-From: git-owner@vger.kernel.org Tue Feb 20 21:13:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJbMq-0001Lw-3p
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 21:13:40 +0100
+	id 1HJbN4-0001TE-9H
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 21:13:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030417AbXBTUM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 15:12:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030413AbXBTUM4
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 15:12:56 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:16149 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030417AbXBTUMz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 15:12:55 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so887707uga
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 12:12:54 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=rf/71g4gJt9to1Qqj5Ce/OD8/ntVvWROx45SFTITkEG5oBL+jShEuSLGcIfeuUFV2XyKUoEv5y+D9KopplFXU1tH0XxNiFhlwCx2RsJIlvCbJn6PrnRs3UHrVz1jY0ApOxihbvY8Djq6+u+2WIY2goS7aSB170oRAhq6f/GHPY0=
-Received: by 10.66.239.18 with SMTP id m18mr2143644ugh.1172002374310;
-        Tue, 20 Feb 2007 12:12:54 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id g30sm11346461ugd.2007.02.20.12.12.52;
-        Tue, 20 Feb 2007 12:12:52 -0800 (PST)
-In-Reply-To: <200702200857.02779.andyparkins@gmail.com>
-X-TUID: 235a41573f2f2145
-X-UID: 248
-X-Length: 1205
-Content-Disposition: inline
+	id S1030413AbXBTUNr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 15:13:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030410AbXBTUNr
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 15:13:47 -0500
+Received: from thunk.org ([69.25.196.29]:52686 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030413AbXBTUNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 15:13:46 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HJbSF-0005KJ-Bs; Tue, 20 Feb 2007 15:19:15 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HJbMt-0003hG-BF; Tue, 20 Feb 2007 15:13:43 -0500
+X-Mailer: git-send-email 1.5.0.1.38.g392d-dirty
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40258>
 
-Nicholas Pitre mentioned that updating a reference should be done with
-git-update-ref.
-
-This patch does that and includes the -m option to have the reflog
-updated as a bonus.
-
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
 ---
-As promised...
+ perl/Git.pm |   30 ++++++++++++++++++++++++++++++
+ 1 files changed, 30 insertions(+), 0 deletions(-)
 
- git-cvsserver.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index b4ef6bc..54d943a 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -1216,9 +1216,9 @@ sub req_ci
-     }
+diff --git a/perl/Git.pm b/perl/Git.pm
+index f2c156c..51bd73e 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -516,6 +516,36 @@ sub config {
+ }
  
-     close LOCKFILE;
--    my $reffile = "$ENV{GIT_DIR}refs/heads/$state->{module}";
--    unlink($reffile);
--    rename($lockfile, $reffile);
-+    my $reffile = "refs/heads/$state->{module}";
-+	`git-update-ref -m "git-cvsserver commit" $reffile $commithash $parenthash`;
-+	unlink($lockfile);
-     chdir "/";
  
-     print "ok\n";
++=item config_boolean ( VARIABLE )
++
++Retrieve the boolean configuration C<VARIABLE>.
++
++Must be called on a repository instance.
++
++This currently wraps command('config') so it is not so fast.
++
++=cut
++
++sub config_boolean {
++	my ($self, $var) = @_;
++	$self->repo_path()
++		or throw Error::Simple("not a repository");
++
++	try {
++		return $self->command_oneline('config', '--bool', '--get', 
++					      $var);
++	} catch Git::Error::Command with {
++		my $E = shift;
++		if ($E->value() == 1) {
++			# Key not found.
++			return undef;
++		} else {
++			throw $E;
++		}
++	};
++}
++
++
+ =item ident ( TYPE | IDENTSTR )
+ 
+ =item ident_person ( TYPE | IDENTSTR | IDENTARRAY )
 -- 
-1.5.0.rc4.gb4d2
+1.5.0.1.38.g392d-dirty
