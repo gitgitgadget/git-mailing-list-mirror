@@ -1,66 +1,63 @@
-From: Alexander Litvinov <litvinov2004@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 20 Feb 2007 14:30:54 +0600
-Message-ID: <200702201430.54852.litvinov2004@gmail.com>
+Date: Tue, 20 Feb 2007 00:35:00 -0800
+Message-ID: <7v1wklz0p7.fsf@assigned-by-dhcp.cox.net>
 References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
+	<20070220082020.GA27084@localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 20 09:31:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 09:35:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJQOy-0004QV-Bg
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 09:31:08 +0100
+	id 1HJQSq-0006An-G2
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 09:35:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965294AbXBTIbF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Feb 2007 03:31:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965301AbXBTIbF
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 03:31:05 -0500
-Received: from ug-out-1314.google.com ([66.249.92.174]:44822 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965294AbXBTIbD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Feb 2007 03:31:03 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so739752uga
-        for <git@vger.kernel.org>; Tue, 20 Feb 2007 00:31:02 -0800 (PST)
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qdOUEVXN7eaxl0NHqQCA2vfLefT4cm2Styzqy6b/hPufDFOWftCiohub6MzQyUtaIZKPHByVhHDXHQySmbXqW0fEj6QWWqfZyXYdq8Q23GZu0rWC8i0wsxVsBhlodF5Q4CZT+Oyx9RO0tv5hjMg8bEvHaO9AxYVStasgnOCTw+g=
-Received: by 10.67.40.12 with SMTP id s12mr1456603ugj.1171960262410;
-        Tue, 20 Feb 2007 00:31:02 -0800 (PST)
-Received: from lan.ac-sw.lcl ( [81.1.223.2])
-        by mx.google.com with ESMTP id 39sm8330004ugb.2007.02.20.00.31.00;
-        Tue, 20 Feb 2007 00:31:01 -0800 (PST)
-User-Agent: KMail/1.8
-In-Reply-To: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S965301AbXBTIfE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 03:35:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965311AbXBTIfE
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 03:35:04 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:44639 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965301AbXBTIfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 03:35:02 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070220083500.NGRL27628.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 20 Feb 2007 03:35:00 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Rkb11W0011kojtg0000000; Tue, 20 Feb 2007 03:35:01 -0500
+In-Reply-To: <20070220082020.GA27084@localdomain> (Eric Wong's message of
+	"Tue, 20 Feb 2007 00:20:20 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40211>
 
-=D0=92 =D1=81=D0=BE=D0=BE=D0=B1=D1=89=D0=B5=D0=BD=D0=B8=D0=B8 =D0=BE=D1=
-=82 Tuesday 20 February 2007 13:42 Junio C Hamano =D0=BD=D0=B0=D0=BF=D0=
-=B8=D1=81=D0=B0=D0=BB:
+Eric Wong <normalperson@yhbt.net> writes:
+
+> Junio C Hamano <junkio@cox.net> wrote:
+>> * js/diff-2 (Sun Feb 18 12:44:43 2007 +0100) 1 commit
+>>  - Add `git diff2`, a GNU diff workalike
+>> 
+>> Undecided.  Perhaps will merge to 'next' to see if somebody else
+>> comes up with a better naming idea.
 >
-> * lt/crlf (Sat Feb 17 12:37:25 2007 -0800) 4 commits
->  + Teach core.autocrlf to 'git apply'
->  + t0020: add test for auto-crlf
->  + Make AutoCRLF ternary variable.
->  + Lazy man's auto-CRLF
+> With this, we can get rid of any test dependency on an external diff
+> and have a consistent replacement for cmp[1], as well.
 >
-> The above two series are to help MinGW and people who suffer
-> from CRLF in general.  I think they are good enough for general
-> consumption now.  Will perhaps push them out sometime this week.
+> `git gdiff`?  `git xdiff`?  `gdiff` would be easier on the fingers
+> (assuming querty), but `xdiff` is probably a more accurate name.
 
-I use the auto crlf convertion as far as Linus made it. Under cygwin it=
- works=20
-and I have not seen any problems except converting repo from \r\n to \n=
-=20
-style. Convertion produce a lot of confilcts then merge branches.
+Well, my trouble was that it is anything other than "diff".
 
-All other sides of git I am using works well.
+An obvious alternative is the same command name (at least
+superficially) with an option, such as "diff --fs".  I am not
+sure if that is any better than "git {something}diff", though.
