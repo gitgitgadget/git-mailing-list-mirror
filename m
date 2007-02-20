@@ -1,69 +1,65 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Mon, 19 Feb 2007 16:35:07 -0800
-Message-ID: <7vps854qf8.fsf@assigned-by-dhcp.cox.net>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net>
-	<7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
-	<20070217232603.GB30839@coredump.intra.peff.net>
-	<7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
-	<20070217233203.GA6014@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
-	<7vodnp68p8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
-	<7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Add a compat/strtoumax.c for Solaris 8.
+Date: Mon, 19 Feb 2007 19:35:33 -0500
+Message-ID: <20070220003533.GB28314@spearce.org>
+References: <17777.1171930976@lotus.CS.Berkeley.EDU>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 20 01:35:20 2007
+Cc: git <git@vger.kernel.org>
+To: Jason Riedy <ejr@EECS.Berkeley.EDU>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 01:36:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJIyS-0001gK-4H
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:35:16 +0100
+	id 1HJIzA-0001zQ-Fz
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:36:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965742AbXBTAfM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 19:35:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965741AbXBTAfM
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:35:12 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:51338 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965742AbXBTAfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 19:35:10 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070220003507.RPPB22948.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 19 Feb 2007 19:35:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Rcb71W00N1kojtg0000000; Mon, 19 Feb 2007 19:35:08 -0500
-In-Reply-To: <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Mon, 19 Feb 2007 16:11:02 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965745AbXBTAfj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 19:35:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965747AbXBTAfj
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:35:39 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:59709 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965745AbXBTAfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 19:35:38 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HJIyb-0002io-Qc; Mon, 19 Feb 2007 19:35:25 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B9BAE20FBAE; Mon, 19 Feb 2007 19:35:33 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <17777.1171930976@lotus.CS.Berkeley.EDU>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40177>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Jason Riedy <ejr@EECS.Berkeley.EDU> wrote:
+> Solaris 8 was pre-c99, and they weren't willing to commit to
+> the strtoumax definition according to /usr/include/inttypes.h.
+> 
+> This adds NO_STRTOUMAX and NO_STRTOULL for ancient systems.
+> If NO_STRTOUMAX is defined, the routine in compat/strtoumax.c
+> will be used instead.  That routine passes its arguments to
+> strtoull unless NO_STRTOULL is defined.  If NO_STRTOULL, then
+> the routine uses strtoul (unsigned long).
 
-> I agree that it is sensible, but it's sensible only within the context of 
-> purely self-generated patches, where the patch itself was generated not 
-> just with git, but with that exact project.
+Ack'd (this and the fast-import patch that follows).
 
-That makes sense, except that the patch could be made with any
-other tools; it just has to follow the "patch is from the top of
-the tree, with -p1" convention.
+This is a better version than the patch I sent out last night,
+so Junio please drop my patch in favor of Jason's.
 
-I think it might make sense to change (this might have to be
-read "break", unfortunately) "git apply" for all three cases.
-
-So the new rule, which would affect only when you run from a
-subdirectory, would be that "diff -u a/foo b/foo" would be
-parsed, 1 level (or -p <n> levels) of leading paths stripped,
-and then prefix is added to form "new" and "old" filenames.
-
-And I think Johannes is happy with that change as well.
+-- 
+Shawn.
