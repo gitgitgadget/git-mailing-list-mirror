@@ -1,70 +1,75 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 3/5] Various cleanups for clarity.
-Date: Tue, 20 Feb 2007 01:14:13 +0100
-Message-ID: <20070220001413.31139.18688.stgit@gandelf.nowhere.earth>
-References: <20070220000908.31139.36841.stgit@gandelf.nowhere.earth>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
+Date: Tue, 20 Feb 2007 01:53:04 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702200152230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
+ <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+ <20070217233203.GA6014@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
+ <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
+ <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
+ <7vps854qf8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 20 01:51:24 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 20 01:53:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJJE0-0000P4-SD
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:51:21 +0100
+	id 1HJJFr-0001K5-19
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:53:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965816AbXBTAul (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 19:50:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965814AbXBTAul
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:50:41 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:43666 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965816AbXBTAuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 19:50:40 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id C632B591D9;
-	Tue, 20 Feb 2007 01:15:37 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id DCB551F090;
-	Tue, 20 Feb 2007 01:14:13 +0100 (CET)
-In-Reply-To: <20070220000908.31139.36841.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.12
+	id S965831AbXBTAxL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 19:53:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965832AbXBTAxK
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:53:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55098 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965831AbXBTAxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 19:53:07 -0500
+Received: (qmail invoked by alias); 20 Feb 2007 00:53:06 -0000
+X-Provags-ID: V01U2FsdGVkX1+9nyNZea69uxWkyUOslkTVd6BfLbs9AgebnkAf7Q
+	w3vg==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vps854qf8.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40187>
 
+Hi,
 
+On Mon, 19 Feb 2007, Junio C Hamano wrote:
 
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> 
+> > I agree that it is sensible, but it's sensible only within the context of 
+> > purely self-generated patches, where the patch itself was generated not 
+> > just with git, but with that exact project.
+> 
+> That makes sense, except that the patch could be made with any
+> other tools; it just has to follow the "patch is from the top of
+> the tree, with -p1" convention.
+> 
+> I think it might make sense to change (this might have to be
+> read "break", unfortunately) "git apply" for all three cases.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+Just for the subdirectory case.
 
- stgit/stack.py |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+> So the new rule, which would affect only when you run from a 
+> subdirectory, would be that "diff -u a/foo b/foo" would be parsed, 1 
+> level (or -p <n> levels) of leading paths stripped, and then prefix is 
+> added to form "new" and "old" filenames.
 
-diff --git a/stgit/stack.py b/stgit/stack.py
-index dc6caa6..3185d64 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -518,8 +518,6 @@ class Series(StgitObject):
-     def init(self, create_at=False, parent_remote=None, parent_branch=None):
-         """Initialises the stgit series
-         """
--        bases_dir = os.path.join(self.__base_dir, 'refs', 'bases')
--
-         if os.path.exists(self.__patch_dir):
-             raise StackException, self.__patch_dir + ' already exists'
-         if os.path.exists(self.__refs_dir):
-@@ -534,7 +532,7 @@ class Series(StgitObject):
- 
-         self.set_parent(parent_remote, parent_branch)
-         
--        create_dirs(bases_dir)
-+        create_dirs(os.path.join(self.__base_dir, 'refs', 'bases'))
- 
-         self.create_empty_field('applied')
-         self.create_empty_field('unapplied')
+Wouldn't it be easier to just cd to the prefix?
+
+> And I think Johannes is happy with that change as well.
+
+Yes, thank you.
+
+Ciao,
+Dscho
