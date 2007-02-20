@@ -1,115 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Mon, 19 Feb 2007 15:57:15 -0800
-Message-ID: <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net>
-	<7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
-	<20070217232603.GB30839@coredump.intra.peff.net>
-	<7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
-	<20070217233203.GA6014@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
-	<7vodnp68p8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] name-rev: avoid "^0" when unneeded
+Date: Tue, 20 Feb 2007 01:08:48 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702200108250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 20 00:57:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Feb 20 01:11:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJINj-0002GZ-HH
-	for gcvg-git@gmane.org; Tue, 20 Feb 2007 00:57:19 +0100
+	id 1HJIb5-00082S-Q0
+	for gcvg-git@gmane.org; Tue, 20 Feb 2007 01:11:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965566AbXBSX5Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Feb 2007 18:57:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965567AbXBSX5Q
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 18:57:16 -0500
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:35541 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965566AbXBSX5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Feb 2007 18:57:16 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070219235716.RCBL21668.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 19 Feb 2007 18:57:16 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id RbxE1W00W1kojtg0000000; Mon, 19 Feb 2007 18:57:15 -0500
-In-Reply-To: <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Mon, 19 Feb 2007 15:37:35 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965608AbXBTAKO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Feb 2007 19:10:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965600AbXBTAJm
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Feb 2007 19:09:42 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57324 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965603AbXBTAIv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Feb 2007 19:08:51 -0500
+Received: (qmail invoked by alias); 20 Feb 2007 00:08:49 -0000
+X-Provags-ID: V01U2FsdGVkX1+6Cu0l5Bu6IvxKlEbIHYWvwZ/kfR9W4VsOn8H6k8
+	1O9Q==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40167>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Mon, 19 Feb 2007, Junio C Hamano wrote:
->> > ...
->> > git-apply has much saner defaults (it defaults to something pretty safe, 
->> > and you can then make it less safe if the patch doesn't apply).
->> 
->> All true.
->
-> One thing I forgot to mention: "git apply" doesn't apply *anything* unless 
-> everything applies cleanly. In contrast, when "patch" fails in the middle, 
-> it will have done part of the job, and then leaves a reject file. I much 
-> prefer the "everything or nothing" approach of git-apply (again, obviously 
-> with "--reject" you can make it work the bad old way too).
+When naming by a tag, we used to add "^0" even if this was not really
+necessary. For example, `git name-rev de6f0def` now outputs
 
-Yup.
+	de6f0def tags/v1.5.0.1~9
 
-> I _think_ that the right answer is to (a) yes, make it be consistent, but 
-> (b) _not_ make it be the way we do "--index" now.
->
-> Right now, when we see "--index", we do the "setup_git_directory()" and 
-> the git_config() stuff - which is (I think) something we should always do, 
-> but then we do *not* prefix the patch itself with the prefix we got. And I 
-> think that's wrong. I think we should always do the "-p1" behaviour from 
-> where we started.
+instead of
 
-Hmm.  I am puzzled.  Are you suggesting to change behaviour of
-"git apply" with --index?
+	de6f0def tags/v1.5.0.1^0~9
 
-git generated patch, or patches on the kernel list that are not
-generated with git are always relative to the top-level, so I
-think the current --index behaviour makes tons of sense.
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ builtin-name-rev.c |   23 ++++++++++++++++-------
+ 1 files changed, 16 insertions(+), 7 deletions(-)
 
-> Then, if somebody is in a sub/directory/, maybe they need to add a "-p3" 
-> to indicate that, but at least that's better than having a patch that just 
-> says "Makefile", and applying the patch to the *wrong* "Makefile" 
-> (top-level one, rather than the one you were in).
->
-> Hmm?
-
-I think it boils down to this question: when you have a patch on
-hand that you are considering to apply to your tree, if the
-patch talks about just "Makefile" (e.g. it says "a/Makefile
-b/Makefile") which Makefile is more likely to be what the patch
-is talking about -- the toplevel one or the one in the
-subdirectory you happen to be in?
-
-Both (1) diff generated by git are always relative to top, and
-(2) the BCP on the kernel list (and I suspect many other
-projects are run this way as well) is to have diff relative to
-the toplevel, suggests that "a/Makefile b/Makefile" patch is
-much more likely to be about the top-level Makefile no matter
-where you happen to be.
-
-Although the fact you *are* in the subdirectory when you are
-considering that patch makes it a bit more plausible than
-otherwise that the patch may be about sub/directory/Makefile, I
-do not think that is strong enough hint to make it more
-plausible to apply to the sub/directory one than to the
-toplevel.
-
-If the patch were what you made by running "GNU diff" inside a
-corresponding subdirectory of another repository (perhaps you
-wanted to feed uncommitted changes from there to this
-repository), then you can always use "GNU patch" to apply.  If
-you made such a one-shot patch using git-diff, it will tell you
-the correct directory to apply to, so...
+diff --git a/builtin-name-rev.c b/builtin-name-rev.c
+index bb6cfe7..cf666d1 100644
+--- a/builtin-name-rev.c
++++ b/builtin-name-rev.c
+@@ -58,13 +58,17 @@ copy_data:
+ 			parents;
+ 			parents = parents->next, parent_number++) {
+ 		if (parent_number > 1) {
+-			char *new_name = xmalloc(strlen(tip_name)+8);
++			int len = strlen(tip_name);
++			char *new_name = xmalloc(len + 8);
+ 
++			if (len > 2 && !strcmp(tip_name + len - 2, "^0"))
++				len -= 2;
+ 			if (generation > 0)
+-				sprintf(new_name, "%s~%d^%d", tip_name,
++				sprintf(new_name, "%.*s~%d^%d", len, tip_name,
+ 						generation, parent_number);
+ 			else
+-				sprintf(new_name, "%s^%d", tip_name, parent_number);
++				sprintf(new_name, "%.*s^%d", len, tip_name,
++						parent_number);
+ 
+ 			name_rev(parents->item, new_name,
+ 				merge_traversals + 1 , 0, 0);
+@@ -128,10 +132,15 @@ static const char* get_rev_name(struct object *o)
+ 
+ 	if (!n->generation)
+ 		return n->tip_name;
+-
+-	snprintf(buffer, sizeof(buffer), "%s~%d", n->tip_name, n->generation);
+-
+-	return buffer;
++	else {
++		int len = strlen(n->tip_name);
++		if (len > 2 && !strcmp(n->tip_name + len - 2, "^0"))
++			len -= 2;
++		snprintf(buffer, sizeof(buffer), "%.*s~%d", len, n->tip_name,
++				n->generation);
++
++		return buffer;
++	}
+ }
+ 
+ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+-- 
+1.5.0.1.2139.ge3fc7
