@@ -1,71 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-remote: support remotes with a dot in the name
-Date: Tue, 20 Feb 2007 21:21:46 -0800
-Message-ID: <7vwt2ct79x.fsf@assigned-by-dhcp.cox.net>
-References: <20070221050336.26431.46485.stgit@dv.roinet.com>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
+Date: Wed, 21 Feb 2007 00:39:16 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702210014140.6485@iabervon.org>
+References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
+ <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+ <20070217233203.GA6014@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
+ <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
+ <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pavel Roskin <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Feb 21 06:21:52 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 21 06:39:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJjvL-0007Ul-Ee
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 06:21:51 +0100
+	id 1HJkCN-0006RK-4p
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 06:39:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030224AbXBUFVs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 00:21:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030228AbXBUFVs
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 00:21:48 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:45899 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030224AbXBUFVr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 00:21:47 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070221052146.XGMK1300.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 21 Feb 2007 00:21:46 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id S5Ml1W00Q1kojtg0000000; Wed, 21 Feb 2007 00:21:46 -0500
-In-Reply-To: <20070221050336.26431.46485.stgit@dv.roinet.com> (Pavel Roskin's
-	message of "Wed, 21 Feb 2007 00:03:36 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030188AbXBUFjS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 00:39:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030228AbXBUFjS
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 00:39:18 -0500
+Received: from iabervon.org ([66.92.72.58]:2298 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030188AbXBUFjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 00:39:17 -0500
+Received: (qmail 1469 invoked by uid 1000); 21 Feb 2007 00:39:16 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 21 Feb 2007 00:39:16 -0500
+In-Reply-To: <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40279>
 
-Pavel Roskin <proski@gnu.org> writes:
+On Mon, 19 Feb 2007, Linus Torvalds wrote:
 
-> Ignore configuration data other that "url" and "fetch" for the remote. 
-> We cannot process it to extract the remote name from it reliably. 
-> Besides, a remote without "url" is currently invalid, so we are not
-> missing anything.
->
-> Signed-off-by: Pavel Roskin <proski@gnu.org>
+> Imagine somebody sending you a patch to a set of files, and they didn't 
+> use git to generate that patch. What would it look right? Right, it might 
+> well look like
+> 
+> 	diff -u file.c.orig file.c
+> 	--- file.c.orig
+> 	+++ file.c
+> 	@@ -29,6 +29,7 @@
+> 	...
+> 
+> and it happens to be in some subdirectory. What would you do?
+> 
+> I'd use "git apply". And I would be really upset *if* git-apply actually 
+> applied the patch to some *other* subdirectory than the one I was in.
 
-I do not think we ever officially "supported" remotes with a dot
-in their names since $GIT_DIR/remotes/ or $GIT_DIR/branches
-days.  
+"git apply" should be able to notice the many clues that this patch 
+doesn't go at the root: (1) it's not -r; (2) it's not a rename, but the 
+filenames aren't the same; (3) there isn't an extra path element to 
+remove.
 
->  	for (@remotes) {
-> -		if (/^remote\.([^.]*)\.(\S*)\s+(.*)$/) {
-> +		if (/^remote\.(\S*)\.(fetch|url)\s+(.*)$/) {
->  			add_remote_config(\%seen, $1, $2, $3);
->  		}
+Wouldn't the patch author have to do something like 
+"cd drivers; diff -ur usb.orig usb > patch" (i.e., have old and new 
+_directories_ in the _same_ source tree, rather than just files, or 
+separate source trees) in order to generate a patch that would be confusing?
 
-I do not strongly oppose to allowing it now, but I suspect this
-is probably less impact:
+I think "git apply" should just know that if the filenames don't match, 
+and it's not a rename, and the --- filename isn't /dev/null, then add the 
+current directory and use -p0.
 
-	if (/^remote\.(\S+?)\.([^.\s]+)\s+(.*)$/) {
-        	...
-	}
-
-With this, we disallow whitespaces in remote names, but we leave
-the door open for supporting variables other than fetch and url
-by accepting the third token that matches any sequence of
-non-dot, non-whitespace letters.
+	-Daniel
+*This .sig left intentionally blank*
