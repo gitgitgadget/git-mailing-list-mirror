@@ -1,103 +1,88 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Unresolved issues
-Date: Wed, 21 Feb 2007 12:05:39 -0500
-Message-ID: <20070221170539.GI25559@spearce.org>
-References: <7virdx1e58.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702200934270.20368@woody.linux-foundation.org> <7vfy90v729.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702201621050.4043@woody.linux-foundation.org> <Pine.LNX.4.63.0702210136050.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070221104209.GM21842@admingilde.org> <Pine.LNX.4.63.0702211348060.22628@wbgn013.biozentrum.uni-wuerzburg.de> <09D527A1-43E2-41A1-AC46-71F64BC409C2@silverinsanity.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: removing content from git history
+Date: Wed, 21 Feb 2007 09:14:44 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702210904350.4043@woody.linux-foundation.org>
+References: <20070221164527.GA8513@ginosko.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Martin Waitz <tali@admingilde.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Wed Feb 21 18:05:57 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Michael Hendricks <michael@ndrix.org>
+X-From: git-owner@vger.kernel.org Wed Feb 21 18:14:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJuui-0005zK-9J
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 18:05:56 +0100
+	id 1HJv3M-0001Bd-32
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 18:14:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422696AbXBURFx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 12:05:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422698AbXBURFx
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 12:05:53 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42872 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422696AbXBURFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 12:05:52 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HJuuN-00088h-OD; Wed, 21 Feb 2007 12:05:35 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 01FBD20FBAE; Wed, 21 Feb 2007 12:05:39 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <09D527A1-43E2-41A1-AC46-71F64BC409C2@silverinsanity.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1422718AbXBUROu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 12:14:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422719AbXBUROu
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 12:14:50 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:33877 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422715AbXBUROq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 12:14:46 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1LHEhhB028043
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 21 Feb 2007 09:14:43 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1LHEgNC020164;
+	Wed, 21 Feb 2007 09:14:43 -0800
+In-Reply-To: <20070221164527.GA8513@ginosko.local>
+X-Spam-Status: No, hits=-0.465 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40307>
 
-Brian Gernhardt <benji@silverinsanity.com> wrote:
-> It seems to me that a tracked .gitattributes file should have things  
-> like
+
+
+On Wed, 21 Feb 2007, Michael Hendricks wrote:
+>
+> I assume that this question has already been addressed on the mailing
+> list, but I wasn't able to find anything about it in the archives.
 > 
-> *.txt: text
-> *.gif: binary
-> *.[ch]: text
-> 
-> And the .git/config should have
-> 
-> [attribute "text"]
->    mangle = crlf
-> 
-> [attribute "binary"]
->    merge = none
-> 
-> The type of each file should be tracked, but what to do with each  
-> type is a local issue.  Trying to merge the two is madness.
+> Is it possible to remove content entirely from git's history?
 
-Yes, exactly.  :-)
+It's been discussed.
 
-I would also recommend that we encourage use of standard MIME types
-to define the file types, but don't enforce it.  Thus I can setup
-something like:
+There are two options for doing it:
 
-  cat >.gitattributes <<EOF
-  *.txt: text/plain
-  *.java: text/java-source
-  *.xml: text/xml
-  *.bin: mycompany-binary
-  EOF
+ - rewriting history. There are a few tools for this already, and for 
+   specific needs it would be fairly easy to resurrect git-convert-objects 
+   to do it for any kind of object.
 
-  cat >>.git/config <<EOF
-  [attribute "text/*"]
-    mangle = crlf
-  [attribute "text/xml"]
-    merge = better-xml-mergething
-  [attribute "mycompany-binary"]
-    mangle = no
-    merge = mycompany-binarymerge
-  EOF
+   See "cg-admin-rewritehist" from cogito for an example of a tool that 
+   would do what you need done. In fact, it has this exact thing as the 
+   first example.
 
-And have all three classes of files be mangled with CRLF, but
-XML files are also merged with the external merge process, and the
-special type mycompany-binary might be a local file format that comes
-with its own merge tools, but is not exactly a registered MIME type.
+   (Btw, I think cg-admin-rewritehist is one of the few things that cogito 
+   had that was really a good idea. Not that people probably _used_ it 
+   much, but it's somethign that makes sense in the plumbing)
 
-One advantage here is we can setup attribute.text/*.mangle=crlf on
-Windows platforms by default for users, as we can reasonably assume
-all text content falls into this MIME type...
+ - explicit support for "missing objects". We don't do it right now, but 
+   we could add it. It was discussed for things like limited history etc 
+   (the "shallow clone" kind of thing, before people actually added 
+   shallow clones), and it would support the notion of "we export all our 
+   history, but for internal reasons we cannot make certain objects 
+   available" kinds of workflows.
 
--- 
-Shawn.
+So right now, rewriting history is an option that you can do. It will 
+effectively create a totally new branch (which you can then make into a 
+new repository) which has nothing in common with the old branch from the 
+point where it was modified. So you can never really merge the two ever 
+again, and you need to make sure that everybody who had the old repo 
+contents will destroy it.
+
+But at least in theory, it wouldn't be impossible to extend on the 
+".git/grafts" kind of setup to say "this object has been consciously 
+deleted", and that could in some circumstances be a better model. The 
+biggest headache there would be the need to extend the native git protocol 
+with a way to add such objects.
+
+			Linus
