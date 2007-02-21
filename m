@@ -1,56 +1,82 @@
-From: Theodore Tso <tytso@mit.edu>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Unresolved issues
-Date: Tue, 20 Feb 2007 20:49:24 -0500
-Message-ID: <20070221014924.GC27391@thunk.org>
-References: <7virdx1e58.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702200934270.20368@woody.linux-foundation.org> <7vfy90v729.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702201621050.4043@woody.linux-foundation.org> <Pine.LNX.4.63.0702210136050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Tue, 20 Feb 2007 20:51:31 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702202003370.31945@xanadu.home>
+References: <7virdx1e58.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0702200934270.20368@woody.linux-foundation.org>
+ <7vfy90v729.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0702201621050.4043@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702210136050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702201648000.4043@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 21 02:49:44 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 21 02:58:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJgc2-0007s8-8Z
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 02:49:42 +0100
+	id 1HJgko-00034O-KJ
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 02:58:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751081AbXBUBtd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 20:49:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbXBUBtd
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 20:49:33 -0500
-Received: from thunk.org ([69.25.196.29]:50310 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751081AbXBUBtc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 20:49:32 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HJgh6-0006ju-FD; Tue, 20 Feb 2007 20:54:56 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HJgbk-0004jZ-Ae; Tue, 20 Feb 2007 20:49:24 -0500
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702210136050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S964838AbXBUB5B (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Feb 2007 20:57:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964852AbXBUBvq
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 20:51:46 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:11048 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964824AbXBUBvc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Feb 2007 20:51:32 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JDS00APBIHV94G0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 20 Feb 2007 20:51:32 -0500 (EST)
+In-reply-to: <Pine.LNX.4.64.0702201648000.4043@woody.linux-foundation.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40275>
 
-On Wed, Feb 21, 2007 at 01:39:48AM +0100, Johannes Schindelin wrote:
-> In that case, .gitattributes (I mean a tracked one) would be wrong, wrong, 
-> wrong.
+On Tue, 20 Feb 2007, Linus Torvalds wrote:
 
-Well, some of the uses of .gitattributes that I had propose was to
-associate file types (and from the file types, a set of check-in,
-check-out, diff, and pretty-print helper progams) for things like
-OpenOffice files.
+> 
+> > It's a local setup if you want auto-CRLF or not. So, why not just make it 
+> > a local setting (if in config or $GIT_DIR/info/gitattributes, I don't 
+> > care) which shell patterns are to be transformed on input and/or output?
+> 
+> That is a good point. We *could* just make it a ".git/config" issue, which 
+> has the nice benefit that you can just set up some user-wide rules rather 
+> than making it be per-repo.
+> 
+> Of course, the config language may not be wonderful for this. But we could 
+> certainly have something like
+> 
+> 	[format "crlf"]
+> 		enable = true
+> 		text = *.[ch]
+> 		binary = *.jpg
 
-For those a tracked .gitattributes makes a lot of sense.
+I think this is not generic enough.  For one thing this should not be 
+used for crlf only.  There is also the binary patch generation code that 
+wants to know if a file is binary or not.
 
-						- Ted
+What about:
+
+	[filetype "text"]
+		match=*.[ch]
+		attribute=text
+		crlfmangle=true
+
+	[filetype "images"]
+		match=*.jpg
+		attribute=binary
+		merge=special_jpg_merger
+
+etc.
+
+
+Nicolas
