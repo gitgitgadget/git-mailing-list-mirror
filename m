@@ -1,73 +1,73 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
-Date: Wed, 21 Feb 2007 00:39:16 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702210014140.6485@iabervon.org>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
- <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
- <20070217233203.GA6014@coredump.intra.peff.net>
- <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
- <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
- <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] git-remote: support remotes with a dot in the name
+Date: Wed, 21 Feb 2007 00:46:31 -0500
+Message-ID: <20070221004631.q4npyww808k88s0o@webmail.spamcop.net>
+References: <20070221050336.26431.46485.stgit@dv.roinet.com>
+	<7vwt2ct79x.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 21 06:39:28 2007
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 21 06:46:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJkCN-0006RK-4p
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 06:39:27 +0100
+	id 1HJkJP-0000ww-0C
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 06:46:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030188AbXBUFjS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 00:39:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030228AbXBUFjS
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 00:39:18 -0500
-Received: from iabervon.org ([66.92.72.58]:2298 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030188AbXBUFjR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 00:39:17 -0500
-Received: (qmail 1469 invoked by uid 1000); 21 Feb 2007 00:39:16 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 21 Feb 2007 00:39:16 -0500
-In-Reply-To: <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
+	id S932338AbXBUFqc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 00:46:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932359AbXBUFqc
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 00:46:32 -0500
+Received: from mailgate.cesmail.net ([216.154.195.36]:38664 "HELO
+	mailgate.cesmail.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S932338AbXBUFqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 00:46:32 -0500
+Received: (qmail 18579 invoked from network); 21 Feb 2007 05:46:31 -0000
+Received: from unknown (HELO delta.cesmail.net) (192.168.1.30)
+  by mailgate.cesmail.net with SMTP; 21 Feb 2007 05:46:31 -0000
+Received: (qmail 14985 invoked by uid 99); 21 Feb 2007 05:46:31 -0000
+Received: from c-71-230-131-166.hsd1.pa.comcast.net
+	(c-71-230-131-166.hsd1.pa.comcast.net [71.230.131.166]) by
+	webmail.spamcop.net (Horde) with HTTP for <proski@spamcop.net@cesmail.net>;
+	Wed, 21 Feb 2007 00:46:31 -0500
+In-Reply-To: <7vwt2ct79x.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) 4.0-cvs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40280>
 
-On Mon, 19 Feb 2007, Linus Torvalds wrote:
+Quoting Junio C Hamano <junkio@cox.net>:
 
-> Imagine somebody sending you a patch to a set of files, and they didn't 
-> use git to generate that patch. What would it look right? Right, it might 
-> well look like
-> 
-> 	diff -u file.c.orig file.c
-> 	--- file.c.orig
-> 	+++ file.c
-> 	@@ -29,6 +29,7 @@
-> 	...
-> 
-> and it happens to be in some subdirectory. What would you do?
-> 
-> I'd use "git apply". And I would be really upset *if* git-apply actually 
-> applied the patch to some *other* subdirectory than the one I was in.
+> I do not think we ever officially "supported" remotes with a dot
+> in their names since $GIT_DIR/remotes/ or $GIT_DIR/branches
+> days.
 
-"git apply" should be able to notice the many clues that this patch 
-doesn't go at the root: (1) it's not -r; (2) it's not a rename, but the 
-filenames aren't the same; (3) there isn't an extra path element to 
-remove.
+On the other hand, I've been tracking "wireless-2.6" for months without even
+realizing that the name could be a problem.  It is only when I tried the new
+"git-remote update" that I noticed that it tries to update "wireless-2" and
+fails.
 
-Wouldn't the patch author have to do something like 
-"cd drivers; diff -ur usb.orig usb > patch" (i.e., have old and new 
-_directories_ in the _same_ source tree, rather than just files, or 
-separate source trees) in order to generate a patch that would be confusing?
+> I do not strongly oppose to allowing it now, but I suspect this
+> is probably less impact:
+>
+> 	if (/^remote\.(\S+?)\.([^.\s]+)\s+(.*)$/) {
+>         	...
+> 	}
+>
+> With this, we disallow whitespaces in remote names, but we leave
+> the door open for supporting variables other than fetch and url
+> by accepting the third token that matches any sequence of
+> non-dot, non-whitespace letters.
 
-I think "git apply" should just know that if the filenames don't match, 
-and it's not a rename, and the --- filename isn't /dev/null, then add the 
-current directory and use -p0.
+It would be great as long as we don't use names with more than one dot after the
+remote name (e.g. remote.wireless-2.6.url.push), but if you think it's unlikely,
+I agree that your code is better.
 
-	-Daniel
-*This .sig left intentionally blank*
+--
+Regards,
+Pavel Roskin
