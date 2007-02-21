@@ -1,203 +1,416 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-apply: notice "diff --git" patch again
-Date: Wed, 21 Feb 2007 14:31:10 -0800
-Message-ID: <7vy7mrm9ch.fsf@assigned-by-dhcp.cox.net>
-References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net>
-	<7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
-	<20070217232603.GB30839@coredump.intra.peff.net>
-	<7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
-	<20070217233203.GA6014@coredump.intra.peff.net>
-	<Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
-	<7vodnp68p8.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
-	<7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0702210014140.6485@iabervon.org>
-	<Pine.LNX.4.64.0702210836210.4043@woody.linux-foundation.org>
-	<7vr6sjnw15.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [RFC PATCH] Add a stgit Documentation directory inspired by the git
+	one.
+Date: Wed, 21 Feb 2007 23:53:01 +0100
+Message-ID: <20070221224531.7956.4335.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 21 23:31:17 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 21 23:53:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJzzY-0004mQ-54
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 23:31:16 +0100
+	id 1HK0Kn-0007BG-Tz
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 23:53:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1423192AbXBUWbN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 17:31:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423208AbXBUWbN
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 17:31:13 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:37313 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423192AbXBUWbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 17:31:11 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070221223112.MALE2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 21 Feb 2007 17:31:12 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id SNX91W00W1kojtg0000000; Wed, 21 Feb 2007 17:31:10 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1423241AbXBUWxJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 17:53:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423254AbXBUWxI
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 17:53:08 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:46795 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1423241AbXBUWxG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 17:53:06 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 3416F4A0E7;
+	Wed, 21 Feb 2007 23:53:03 +0100 (CET)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id DAD6C1F084;
+	Wed, 21 Feb 2007 23:53:01 +0100 (CET)
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40329>
 
-Earlier one that tried to be too consistent with GNU patch by
-not stripping the leading path when we _know_ we are in a
-subdirectory and the patch is relative to the toplevel was a
-mistake.  This fixes it.
-
- - No change to behaviour when it is run from the toplevel of
-   the repository.
-
- - When run from a subdirectory to apply a git-generated patch, 
-   it uses the right -p<n> value automatically, with or without
-   --index nor --cached option.
-
- - When run from a subdirectory to apply a randomly generated
-   patch, it wants the right -p<n> value to be given by the
-   user.
-
-The second one is a pure improvement to correct inconsistency
-between --index and non --index case, compared with 1.5.0.  The
-third point could be further improved to guess what the right
-value for -p<n> should be by looking at the patch, but should be
-a topic of a separate patch.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
- builtin-apply.c         |   23 ++++++++++++++++-------
- t/t4119-apply-config.sh |    4 ++--
- 2 files changed, 18 insertions(+), 9 deletions(-)
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 1beebe5..12f00e3 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -144,6 +144,7 @@ struct patch {
- 	unsigned long deflate_origlen;
- 	int lines_added, lines_deleted;
- 	int score;
-+	unsigned int is_toplevel_relative:1;
- 	unsigned int inaccurate_eof:1;
- 	unsigned int is_binary:1;
- 	unsigned int is_copy:1;
-@@ -362,7 +363,7 @@ static int gitdiff_hdrend(const char *line, struct patch *patch)
- static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name, const char *oldnew)
- {
- 	if (!orig_name && !isnull)
--		return find_name(line, NULL, p_value, TERM_TAB);
-+		return find_name(line, NULL, 1, TERM_TAB);
- 
- 	if (orig_name) {
- 		int len;
-@@ -372,7 +373,7 @@ static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name,
- 		len = strlen(name);
- 		if (isnull)
- 			die("git-apply: bad git-diff - expected /dev/null, got %s on line %d", name, linenr);
--		another = find_name(line, NULL, p_value, TERM_TAB);
-+		another = find_name(line, NULL, 1, TERM_TAB);
- 		if (!another || memcmp(another, name, len))
- 			die("git-apply: bad git-diff - inconsistent %s filename on line %d", oldnew, linenr);
- 		free(another);
-@@ -427,28 +428,28 @@ static int gitdiff_newfile(const char *line, struct patch *patch)
- static int gitdiff_copysrc(const char *line, struct patch *patch)
- {
- 	patch->is_copy = 1;
--	patch->old_name = find_name(line, NULL, p_value-1, 0);
-+	patch->old_name = find_name(line, NULL, 0, 0);
- 	return 0;
- }
- 
- static int gitdiff_copydst(const char *line, struct patch *patch)
- {
- 	patch->is_copy = 1;
--	patch->new_name = find_name(line, NULL, p_value-1, 0);
-+	patch->new_name = find_name(line, NULL, 0, 0);
- 	return 0;
- }
- 
- static int gitdiff_renamesrc(const char *line, struct patch *patch)
- {
- 	patch->is_rename = 1;
--	patch->old_name = find_name(line, NULL, p_value-1, 0);
-+	patch->old_name = find_name(line, NULL, 0, 0);
- 	return 0;
- }
- 
- static int gitdiff_renamedst(const char *line, struct patch *patch)
- {
- 	patch->is_rename = 1;
--	patch->new_name = find_name(line, NULL, p_value-1, 0);
-+	patch->new_name = find_name(line, NULL, 0, 0);
- 	return 0;
- }
- 
-@@ -787,6 +788,7 @@ static int find_header(char *line, unsigned long size, int *hdrsize, struct patc
- {
- 	unsigned long offset, len;
- 
-+	patch->is_toplevel_relative = 0;
- 	patch->is_rename = patch->is_copy = 0;
- 	patch->is_new = patch->is_delete = -1;
- 	patch->old_mode = patch->new_mode = 0;
-@@ -831,6 +833,7 @@ static int find_header(char *line, unsigned long size, int *hdrsize, struct patc
- 					die("git diff header lacks filename information (line %d)", linenr);
- 				patch->old_name = patch->new_name = patch->def_name;
- 			}
-+			patch->is_toplevel_relative = 1;
- 			*hdrsize = git_hdr_len;
- 			return offset;
- 		}
-@@ -2499,6 +2502,12 @@ static int use_patch(struct patch *p)
- 			return 0;
- 		x = x->next;
- 	}
-+	if (0 < prefix_length) {
-+		int pathlen = strlen(pathname);
-+		if (pathlen <= prefix_length ||
-+		    memcmp(prefix, pathname, prefix_length))
-+			return 0;
+[Please don't apply yet - this is a proof of concept to gather
+feedback before I invest more time in this]
+
+This is an early sketch of a Documentation directory for StGIT.  I
+mostly took the Documentation directory from Git and adapted it
+slightly.
+
+It is not 100% suited to stgit yet, because 1) unlike git, the StGIT
+main command is named "stg" and not "stgit", and 2) the various
+commands are not available individually as stg-<name>.
+
+Because of manpage namespace consideration, the manpages will still
+have to be named stg-*.1 of something similar, so the issue left is
+how to handle the presentation, in docbook/man and in html.  I had a
+try at a simple adaptation of the gitlink macro (as stglink), but it
+will surely need tuning (eg. we'll probably want to avoid passing the
+man section as argument, it will be a constant).
+
+
+ Documentation/Makefile          |   62 ++++++++++++++++++++++++++++++++
+ Documentation/asciidoc.conf     |   52 +++++++++++++++++++++++++++
+ Documentation/build-docdep.perl |   50 ++++++++++++++++++++++++++
+ Documentation/callouts.xsl      |   30 ++++++++++++++++
+ Documentation/stg-new.txt       |   43 ++++++++++++++++++++++
+ Documentation/stg.txt           |   75 +++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 312 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+new file mode 100644
+index 0000000..670bfd3
+--- /dev/null
++++ b/Documentation/Makefile
+@@ -0,0 +1,62 @@
++MAN1_TXT=$(wildcard stg-*.txt)
++MAN7_TXT=stg.txt
++
++DOC_HTML=$(patsubst %.txt,%.html,$(MAN1_TXT) $(MAN7_TXT))
++
++DOC_MAN1=$(patsubst %.txt,%.1,$(MAN1_TXT))
++DOC_MAN7=$(patsubst %.txt,%.7,$(MAN7_TXT))
++
++prefix?=$(HOME)
++mandir?=$(prefix)/man
++man1dir=$(mandir)/man1
++man7dir=$(mandir)/man7
++# DESTDIR=
++
++ASCIIDOC=asciidoc
++ASCIIDOC_EXTRA =
++INSTALL?=install
++
++#
++# Please note that there is a minor bug in asciidoc.
++# The version after 6.0.3 _will_ include the patch found here:
++#   http://marc.theaimsgroup.com/?l=git&m=111558757202243&w=2
++#
++# Until that version is released you may have to apply the patch
++# yourself - yes, all 6 characters of it!
++#
++
++all: html man
++
++html: $(DOC_HTML)
++
++$(DOC_HTML) $(DOC_MAN1) $(DOC_MAN7): asciidoc.conf
++
++man: man1 man7
++man1: $(DOC_MAN1)
++man7: $(DOC_MAN7)
++
++install: man
++	$(INSTALL) -d -m755 $(DESTDIR)$(man1dir) $(DESTDIR)$(man7dir)
++	$(INSTALL) -m644 $(DOC_MAN1) $(DESTDIR)$(man1dir)
++	$(INSTALL) -m644 $(DOC_MAN7) $(DESTDIR)$(man7dir)
++#
++# Determine "include::" file references in asciidoc files.
++#
++doc.dep : $(wildcard *.txt) build-docdep.perl
++	rm -f $@+ $@
++	perl ./build-docdep.perl >$@+
++	mv $@+ $@
++
++-include doc.dep
++
++clean:
++	rm -f *.xml *.html *.1 *.7 doc.dep
++
++%.html : %.txt
++	$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf $(ASCIIDOC_EXTRA) $<
++
++%.1 %.7 : %.xml
++	xmlto -m callouts.xsl man $<
++
++%.xml : %.txt
++	$(ASCIIDOC) -b docbook -d manpage -f asciidoc.conf $<
+diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
+new file mode 100644
+index 0000000..e019a0e
+--- /dev/null
++++ b/Documentation/asciidoc.conf
+@@ -0,0 +1,52 @@
++## gitlink: macro
++#
++# Usage: gitlink:command[manpage-section]
++#
++# Note, {0} is the manpage section, while {target} is the command.
++#
++# Show GIT link as: <command>(<section>); if section is defined, else just show
++# the command.
++
++[attributes]
++caret=^
++startsb=&#91;
++endsb=&#93;
++tilde=&#126;
++
++ifdef::backend-docbook[]
++[gitlink-inlinemacro]
++{0%{target}}
++{0#<citerefentry>}
++{0#<refentrytitle>{target}</refentrytitle><manvolnum>{0}</manvolnum>}
++{0#</citerefentry>}
++endif::backend-docbook[]
++
++ifdef::backend-docbook[]
++# "unbreak" docbook-xsl v1.68 for manpages. v1.69 works with or without this.
++[listingblock]
++<example><title>{title}</title>
++<literallayout>
++|
++</literallayout>
++{title#}</example>
++endif::backend-docbook[]
++
++ifdef::backend-xhtml11[]
++[gitlink-inlinemacro]
++<a href="{target}.html">{target}{0?({0})}</a>
++endif::backend-xhtml11[]
++
++# stglink
++
++ifdef::backend-docbook[]
++[stglink-inlinemacro]
++{0%{target}}
++{0#<citerefentry>}
++{0#<refentrytitle>stg-{target}</refentrytitle><manvolnum>{0}</manvolnum>}
++{0#</citerefentry>}
++endif::backend-docbook[]
++
++ifdef::backend-xhtml11[]
++[stglink-inlinemacro]
++<a href="stg-{target}.html">{target}{0?({0})}</a>
++endif::backend-xhtml11[]
+diff --git a/Documentation/build-docdep.perl b/Documentation/build-docdep.perl
+new file mode 100755
+index 0000000..489389c
+--- /dev/null
++++ b/Documentation/build-docdep.perl
+@@ -0,0 +1,50 @@
++#!/usr/bin/perl
++
++my %include = ();
++my %included = ();
++
++for my $text (<*.txt>) {
++    open I, '<', $text || die "cannot read: $text";
++    while (<I>) {
++	if (/^include::/) {
++	    chomp;
++	    s/^include::\s*//;
++	    s/\[\]//;
++	    $include{$text}{$_} = 1;
++	    $included{$_} = 1;
 +	}
- 	return 1;
- }
- 
-@@ -2513,7 +2522,7 @@ static void prefix_one(char **name)
- 
- static void prefix_patches(struct patch *p)
- {
--	if (!prefix)
-+	if (!prefix || p->is_toplevel_relative)
- 		return;
- 	for ( ; p; p = p->next) {
- 		if (p->new_name == p->old_name) {
-diff --git a/t/t4119-apply-config.sh b/t/t4119-apply-config.sh
-index f9b9425..32e0d71 100755
---- a/t/t4119-apply-config.sh
-+++ b/t/t4119-apply-config.sh
-@@ -78,7 +78,7 @@ test_expect_success 'apply --whitespace=strip in subdir' '
- 	git update-index --refresh &&
- 
- 	cd sub &&
--	git apply --whitespace=strip -p2 ../patch.file &&
-+	git apply --whitespace=strip ../patch.file &&
- 	if grep " " file1
- 	then
- 		echo "Eh?"
-@@ -101,7 +101,7 @@ test_expect_success 'apply --whitespace=strip from config in subdir' '
- 	git update-index --refresh &&
- 
- 	cd sub &&
--	git apply -p2 ../patch.file &&
-+	git apply ../patch.file &&
- 	if grep " " file1
- 	then
- 		echo "Eh?"
++    }
++    close I;
++}
++
++# Do we care about chained includes???
++my $changed = 1;
++while ($changed) {
++    $changed = 0;
++    while (my ($text, $included) = each %include) {
++	for my $i (keys %$included) {
++	    # $text has include::$i; if $i includes $j
++	    # $text indirectly includes $j.
++	    if (exists $include{$i}) {
++		for my $j (keys %{$include{$i}}) {
++		    if (!exists $include{$text}{$j}) {
++			$include{$text}{$j} = 1;
++			$included{$j} = 1;
++			$changed = 1;
++		    }
++		}
++	    }
++	}
++    }
++}
++
++while (my ($text, $included) = each %include) {
++    if (! exists $included{$text} &&
++	(my $base = $text) =~ s/\.txt$//) {
++	my ($suffix) = '1';
++	if ($base eq 'git') {
++	    $suffix = '7'; # yuck...
++	}
++	print "$base.html $base.$suffix : ", join(" ", keys %$included), "\n";
++    }
++}
+diff --git a/Documentation/callouts.xsl b/Documentation/callouts.xsl
+new file mode 100644
+index 0000000..6a361a2
+--- /dev/null
++++ b/Documentation/callouts.xsl
+@@ -0,0 +1,30 @@
++<!-- callout.xsl: converts asciidoc callouts to man page format -->
++<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
++<xsl:template match="co">
++	<xsl:value-of select="concat('\fB(',substring-after(@id,'-'),')\fR')"/>
++</xsl:template>
++<xsl:template match="calloutlist">
++	<xsl:text>.sp&#10;</xsl:text>
++	<xsl:apply-templates/>
++	<xsl:text>&#10;</xsl:text>
++</xsl:template>
++<xsl:template match="callout">
++	<xsl:value-of select="concat('\fB',substring-after(@arearefs,'-'),'. \fR')"/>
++	<xsl:apply-templates/>
++	<xsl:text>.br&#10;</xsl:text>
++</xsl:template>
++
++<!-- sorry, this is not about callouts, but attempts to work around
++ spurious .sp at the tail of the line docbook stylesheets seem to add -->
++<xsl:template match="simpara">
++  <xsl:variable name="content">
++    <xsl:apply-templates/>
++  </xsl:variable>
++  <xsl:value-of select="normalize-space($content)"/>
++  <xsl:if test="not(ancestor::authorblurb) and
++                not(ancestor::personblurb)">
++    <xsl:text>&#10;&#10;</xsl:text>
++  </xsl:if>
++</xsl:template>
++
++</xsl:stylesheet>
+diff --git a/Documentation/stg-new.txt b/Documentation/stg-new.txt
+new file mode 100644
+index 0000000..225ce3d
+--- /dev/null
++++ b/Documentation/stg-new.txt
+@@ -0,0 +1,43 @@
++stg-new(1)
++==========
++
++NAME
++----
++stg-new - create a new patch
++
++SYNOPSIS
++--------
++stg new [OPTIONS] <name>
++
++DESCRIPTION
++-----------
++
++'stg new' creates a new patch with the given <name> on the current
++stack.  The new patch is created on top of the currently applied
++patches, and is made the new top of the stack.
++
++An editor will be launched to edit the commit message to be used for
++the patch, unless the '-m' flag already specified one.
++
++The message and other GIT commit attributes can be modified later
++using stglink:refresh[1].
++
++OPTIONS
++-------
++<name>::
++	The short name that will be used as to identify the patch in
++	other StGIT commands.  Must be unique in the stack.  May only
++	contain alphanumeric characters, dashes and underscores.
++
++--message=<message>::
++-m <message>::
++	Use <message> as the patch description.
++
++--showpatch::
++-s::
++	Show the patch content in the editor buffer.  This flag does
++	nothing if '-m' is also specified.
++
++StGIT
++-----
++Part of the StGIT suite - see gitlink:stg[7]
+diff --git a/Documentation/stg.txt b/Documentation/stg.txt
+new file mode 100644
+index 0000000..d5a61b2
+--- /dev/null
++++ b/Documentation/stg.txt
+@@ -0,0 +1,75 @@
++stg(7)
++======
++
++NAME
++----
++stg - manage stacks of patches using the GIT content tracker
++
++SYNOPSIS
++--------
++[verse]
++'stg' [--version] [--help] <command> [OPTIONS] [ARGS]
++
++DESCRIPTION
++-----------
++
++StGIT (Stacked GIT) is a Python application providing similar
++functionality to Quilt (i.e. pushing/popping patches to/from a stack)
++on top of GIT. These operations are performed using GIT commands and
++the patches are stored as GIT commit objects, allowing easy merging of
++the StGIT patches into other repositories using standard GIT
++functionality.
++
++OPTIONS
++-------
++
++--version::
++	Prints the StGIT suite version that the 'stg' program came
++	from, as well as version of other components used, such as GIT
++	and Python.
++
++--help::
++	Prints the synopsis and a list of all commands.  If a git
++	command is given this option will display the specific help
++	for that command.
++
++STGIT COMMANDS
++--------------
++
++We divide StGIT commands in thematic groups, according to the primary
++type of object they create or change.
++
++Generic commands
++----------------
++
++Informational commands not touching the repository.
++
++Repository commands
++-------------------
++
++stglink:clone[1]::
++	clone a remote repository into local storage
++
++Stack commands
++--------------
++
++stglink:branch[1]::
++	manage patch series
++
++Patch commands
++--------------
++
++stglink:new[1]::
++	create a new patch and make it the topmost one
++
++Working-copy commands
++---------------------
++
++stglink:status[1]::
++	show the tree status
++
++CONFIGURATION MECHANISM
++-----------------------
++
++Starting with 0.12, StGIT uses the same configuration mechanism as
++GIT.  See gitlink:git[7] for more details.
