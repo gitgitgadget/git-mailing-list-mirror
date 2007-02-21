@@ -1,79 +1,63 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Unresolved issues
-Date: Tue, 20 Feb 2007 18:03:59 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702201758560.4043@woody.linux-foundation.org>
-References: <7virdx1e58.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702200934270.20368@woody.linux-foundation.org>
- <7vfy90v729.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702201621050.4043@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702210136050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702201648000.4043@woody.linux-foundation.org>
- <alpine.LRH.0.82.0702202003370.31945@xanadu.home>
+From: Pavel Roskin <proski@gnu.org>
+Subject: [PATCH] git-remote: support remotes with a dot in the name
+Date: Wed, 21 Feb 2007 00:03:36 -0500
+Message-ID: <20070221050336.26431.46485.stgit@dv.roinet.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Feb 21 03:04:43 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 21 06:03:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJgqY-0005bf-Jt
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 03:04:42 +0100
+	id 1HJjdm-0000eC-1z
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 06:03:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030532AbXBUCEi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Feb 2007 21:04:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030531AbXBUCEi
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Feb 2007 21:04:38 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:33659 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030509AbXBUCEh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Feb 2007 21:04:37 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1L240hB001564
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 20 Feb 2007 18:04:00 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1L23xwn029704;
-	Tue, 20 Feb 2007 18:03:59 -0800
-In-Reply-To: <alpine.LRH.0.82.0702202003370.31945@xanadu.home>
-X-Spam-Status: No, hits=-0.456 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750991AbXBUFDj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 00:03:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbXBUFDj
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 00:03:39 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:44612 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991AbXBUFDi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 00:03:38 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1HJjcI-0005LY-3N
+	for git@vger.kernel.org; Wed, 21 Feb 2007 00:02:10 -0500
+Received: from localhost ([127.0.0.1] helo=dv.roinet.com)
+	by gnu.org with esmtp (Exim 4.66)
+	(envelope-from <proski@gnu.org>)
+	id 1HJjdg-0006sa-T8
+	for git@vger.kernel.org; Wed, 21 Feb 2007 00:03:36 -0500
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40277>
 
+Ignore configuration data other that "url" and "fetch" for the remote. 
+We cannot process it to extract the remote name from it reliably. 
+Besides, a remote without "url" is currently invalid, so we are not
+missing anything.
 
+Signed-off-by: Pavel Roskin <proski@gnu.org>
+---
 
-On Tue, 20 Feb 2007, Nicolas Pitre wrote:
->
-> I think this is not generic enough.  For one thing this should not be 
-> used for crlf only.  There is also the binary patch generation code that 
-> wants to know if a file is binary or not.
-> 
-> What about:
-> 
-> 	[filetype "text"]
-> 		match=*.[ch]
-> 		attribute=text
-> 		crlfmangle=true
-> 
-> 	[filetype "images"]
-> 		match=*.jpg
-> 		attribute=binary
-> 		merge=special_jpg_merger
+ git-remote.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Yes, that's a much nicer format - both more readable, and more generic. 
-
-Although I'd just suggest skipping the "crlfmangle". Just document the 
-fact that for "attribute=text", we mangle line-endings as per the rules 
-defined elsewhere (which is possibly different for input/output in 
-addition for the normal unix/windows rule changes)
-
-And then you can just have multiple "match=" rules, so that you don't need 
-to make one complex one. 
-
-		Linus
+diff --git a/git-remote.perl b/git-remote.perl
+index 6e473ec..97b5f6c 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -67,7 +67,7 @@ sub list_remote {
+ 		$git->command(qw(config --get-regexp), '^remote\.');
+ 	};
+ 	for (@remotes) {
+-		if (/^remote\.([^.]*)\.(\S*)\s+(.*)$/) {
++		if (/^remote\.(\S*)\.(fetch|url)\s+(.*)$/) {
+ 			add_remote_config(\%seen, $1, $2, $3);
+ 		}
+ 	}
