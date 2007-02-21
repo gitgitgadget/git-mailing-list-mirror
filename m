@@ -1,85 +1,113 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Unresolved issues
-Date: Wed, 21 Feb 2007 17:32:37 +0100
-Organization: Dewire
-Message-ID: <200702211732.38268.robin.rosenberg.lists@dewire.com>
-References: <7virdx1e58.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702210136050.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0702201648000.4043@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
+Date: Wed, 21 Feb 2007 08:44:05 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702210836210.4043@woody.linux-foundation.org>
+References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net> <7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
+ <20070217232603.GB30839@coredump.intra.peff.net> <7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+ <20070217233203.GA6014@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
+ <7vodnp68p8.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
+ <7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0702210014140.6485@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 21 17:31:24 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Feb 21 17:44:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJuNH-0000C8-Lb
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 17:31:24 +0100
+	id 1HJuZk-0005XE-EP
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 17:44:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030360AbXBUQbU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 11:31:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030573AbXBUQbU
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 11:31:20 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:20060 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1030360AbXBUQbT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 11:31:19 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id DBA2A802651;
-	Wed, 21 Feb 2007 17:26:19 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 20829-08; Wed, 21 Feb 2007 17:26:19 +0100 (CET)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 7E487802640;
-	Wed, 21 Feb 2007 17:26:17 +0100 (CET)
-User-Agent: KMail/1.9.4
-In-Reply-To: <Pine.LNX.4.64.0702201648000.4043@woody.linux-foundation.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1422666AbXBUQoN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 11:44:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422668AbXBUQoN
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 11:44:13 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:32786 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422666AbXBUQoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 11:44:12 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1LGi4hB027036
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 21 Feb 2007 08:44:05 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1LGi38x019399;
+	Wed, 21 Feb 2007 08:44:04 -0800
+In-Reply-To: <Pine.LNX.4.64.0702210014140.6485@iabervon.org>
+X-Spam-Status: No, hits=-2.462 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40301>
 
-onsdag 21 februari 2007 01:56 skrev Linus Torvalds:
-> 
-> On Wed, 21 Feb 2007, Johannes Schindelin wrote:
-> >
-> > Um, I don't want to spoil the party, but was not the original idea of this 
-> > auto-CRLF thing some sort of "emulation" of the CVS text checkout 
-> > behaviour?
+
+
+On Wed, 21 Feb 2007, Daniel Barkalow wrote:
+
+> On Mon, 19 Feb 2007, Linus Torvalds wrote:
+> > Imagine somebody sending you a patch to a set of files, and they didn't 
+> > use git to generate that patch. What would it look right? Right, it might 
+> > well look like
 > > 
-> > In that case, .gitattributes (I mean a tracked one) would be wrong, wrong, 
-> > wrong.
+> > 	diff -u file.c.orig file.c
+> > 	--- file.c.orig
+> > 	+++ file.c
+> > 	@@ -29,6 +29,7 @@
+> > 	...
 > > 
-> > It's a local setup if you want auto-CRLF or not. So, why not just make it 
-> > a local setting (if in config or $GIT_DIR/info/gitattributes, I don't 
-> > care) which shell patterns are to be transformed on input and/or output?
+> > and it happens to be in some subdirectory. What would you do?
+> > 
+> > I'd use "git apply". And I would be really upset *if* git-apply actually 
+> > applied the patch to some *other* subdirectory than the one I was in.
 > 
-> That is a good point. We *could* just make it a ".git/config" issue, which 
-> has the nice benefit that you can just set up some user-wide rules rather 
-> than making it be per-repo.
-> 
-> Of course, the config language may not be wonderful for this. But we could 
-> certainly have something like
-> 
-> 	[format "crlf"]
-> 		enable = true
-> 		text = *.[ch]
-> 		binary = *.jpg
+> "git apply" should be able to notice the many clues that this patch 
+> doesn't go at the root: (1) it's not -r; (2) it's not a rename, but the 
+> filenames aren't the same; (3) there isn't an extra path element to 
+> remove.
 
-The decision whether to mangel at all shoule be local. Which files to mangle, if mangle is "on",
-should be a per version (not like CVS' setting for all versions). Otherwise it won't
-be propagated properly on push/pull, and people *will* get it wrong over and over. 
+(4): it doesn't say "diff --git" with all the git-specific info.
 
-It it's .gitattributes or similar it can be merged as any other file and conflicts can be resolved like
-any other file. For efficiency you can have one .gitattributes.
+We actually already *do* act differently for native git patches and for 
+"traditional unified diffs", and yeah, we could certainly extend that to 
+the whole "what to do about subdirectories" thing.
 
-Hopefully it won't happen often because autodetection is soo good, but when it get's 
-wrong it's important that it can be fixed and distributed properly.
+For traditional unified diffs, we already have extra rules about guessing 
+the pathname, so this isn't even really a "new" rule, it's just an 
+extension of the old ones. With traditional diffs, you *have* to guess at 
+the pathnames, because the pathnames aren't well-defined (never mind 
+renames, it's true for file create/delete events too, and it's true 
+exactly because you often have two different filenames for the *same* 
+file, like in my example).
 
--- robin
+> I think "git apply" should just know that if the filenames don't match, 
+> and it's not a rename, and the --- filename isn't /dev/null, then add the 
+> current directory and use -p0.
+
+Well, "-p1" is still the saner default - even unified diff people tend to 
+use that (and if there is no path at all, it's still safe - there's 
+nothing to remove).
+
+As to the traditional vs git patches: we already have totally separate 
+functions for parsing what they are:
+
+ - parse_git_header() parses git-only patches and understands all the 
+   extended syntax, and has sanity checks
+
+ - parse_traditional_patch() has this magic heuristic which knows about 
+   the "/dev/null" special cases, and uses a magic "find_name()" function 
+   that will choose whichever name makes more sense.
+
+We could just make "parse_traditional_patch()" try to take the prefix 
+information into account instead. That would be a better choice than doing 
+it unconditionally even for native git patches.
+
+Junio?
+
+		Linus
