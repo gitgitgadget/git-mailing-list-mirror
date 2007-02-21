@@ -1,73 +1,78 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: removing content from git history
-Date: Wed, 21 Feb 2007 14:33:11 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702211414410.31945@xanadu.home>
-References: <20070221164527.GA8513@ginosko.local>
- <Pine.LNX.4.64.0702210904350.4043@woody.linux-foundation.org>
- <7vy7mrnxlo.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Teach 'git apply' to look at $GIT_DIR/config
+Date: Wed, 21 Feb 2007 11:35:50 -0800
+Message-ID: <7vr6sjnw15.fsf@assigned-by-dhcp.cox.net>
+References: <7vlkiwsepm.fsf@assigned-by-dhcp.cox.net>
+	<7v8xewsd2j.fsf@assigned-by-dhcp.cox.net>
+	<20070217232603.GB30839@coredump.intra.peff.net>
+	<7vmz3cqs3d.fsf@assigned-by-dhcp.cox.net>
+	<20070217233203.GA6014@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0702191450580.20368@woody.linux-foundation.org>
+	<7vodnp68p8.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702191527320.20368@woody.linux-foundation.org>
+	<7vwt2d4s6c.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702191601300.20368@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0702210014140.6485@iabervon.org>
+	<Pine.LNX.4.64.0702210836210.4043@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Michael Hendricks <michael@ndrix.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 21 20:33:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 21 20:35:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJxDI-00025b-GB
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 20:33:16 +0100
+	id 1HJxFu-0003Lq-MV
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 20:35:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422827AbXBUTdN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 14:33:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422832AbXBUTdN
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 14:33:13 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:39803 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422827AbXBUTdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 14:33:12 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDT00IQ4VNBPD20@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 21 Feb 2007 14:33:11 -0500 (EST)
-In-reply-to: <7vy7mrnxlo.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1422835AbXBUTfx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 14:35:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422832AbXBUTfw
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 14:35:52 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:43586 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422835AbXBUTfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 14:35:51 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070221193551.IPYW2394.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 21 Feb 2007 14:35:51 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SKbq1W00B1kojtg0000000; Wed, 21 Feb 2007 14:35:51 -0500
+In-Reply-To: <Pine.LNX.4.64.0702210836210.4043@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 21 Feb 2007 08:44:05 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40322>
 
-On Wed, 21 Feb 2007, Junio C Hamano wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> While I agree in principle to the argument that there is no
-> taking it back what's already published, I've heard people
-> wanting to just stop distributing further, without worrying
-> about copies already out there.  'missing objects' support would
-> help us in such a situation.
+> We could just make "parse_traditional_patch()" try to take the prefix 
+> information into account instead. That would be a better choice than doing 
+> it unconditionally even for native git patches.
+>
+> Junio?
 
-I still think this is a "put your head in the sand and pretend that some 
-sensitive data never existed in the wild" attitude.  And I really don't 
-see the point of supporting that illusion in GIT with technical means.
+I guess I took your suggestion too literally while being blinded
+by the thought to make things consistent.
 
-Either you care about published data or you don't.
+>> I _think_ that the right answer is to (a) yes, make it be consistent, but 
+>> (b) _not_ make it be the way we do "--index" now.
+>>
+>> Right now, when we see "--index", we do the "setup_git_directory()" and 
+>> the git_config() stuff - which is (I think) something we should always do, 
+>> but then we do *not* prefix the patch itself with the prefix we got. And I 
+>> think that's wrong. I think we should always do the "-p1" behaviour from 
+>> where we started.
+>
+>Hmm.  I am puzzled.  Are you suggesting to change behaviour of
+>"git apply" with --index?
 
-If you do then you are screwed anyway irrespective of any missing object 
-support we might implement.  There will always be someone somewhere with 
-the real thing, and we all know how faster forbidden material does travel 
-on the Internet.
-
-If you don't then it is just better to rewrite history and have a clean 
-and unambiguous repository.  And because you don't care about existing 
-copies you shouldn't bother with the fact that the rewritten repo is not 
-compatible with the previously published one.
-
-Sure rewriting history is a potentially expensive operation depending on 
-the size and nature of the change, but it is done only once.  And 
-actually it can't be _that_ much expensive than a git-repack -a -f.
-
-I think it is much better to provide a tool to properly rewrite history 
-than adding support for missing objects and be stuck with them forever.
-
-
-Nicolas
+We can (and should) obviously do different things depending on
+"diff --git".  Let me see.
