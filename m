@@ -1,57 +1,58 @@
-From: Xavier Maillard <zedek@gnu.org>
-Subject: Re: git-blame.el won't run
-Date: Wed, 21 Feb 2007 18:21:20 +0100
-Message-ID: <1272.1172078480@localhost>
-References: <13283.1171492535@localhost> <87mz393mlo.fsf@morpheus.local> <24475.1171920735@localhost> <87abz92rp9.fsf@morpheus.local> <4157.1171992534@localhost> <87fy9020ne.fsf@morpheus.local> <13478.1172059706@localhost> <87vehvsjho.fsf@morpheus.local>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 21 18:24:08 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: removing content from git history
+Date: Wed, 21 Feb 2007 13:02:08 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702211236180.31945@xanadu.home>
+References: <20070221164527.GA8513@ginosko.local>
+ <Pine.LNX.4.64.0702210904350.4043@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Michael Hendricks <michael@ndrix.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 21 19:02:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJvCJ-0004vL-Gs
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 18:24:07 +0100
+	id 1HJvnF-00048y-9e
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 19:02:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422644AbXBURYD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 12:24:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422719AbXBURYD
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 12:24:03 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:46926 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422644AbXBURYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 12:24:01 -0500
-Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id A11E635AF5
-	for <git@vger.kernel.org>; Wed, 21 Feb 2007 18:23:59 +0100 (CET)
-Received: from localhost (IDENT:1001@localhost [127.0.0.1])
-	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1LHLKiq001273
-	for <git@vger.kernel.org>; Wed, 21 Feb 2007 18:21:20 +0100
-In-reply-to: <87vehvsjho.fsf@morpheus.local> 
-Comments: In-reply-to =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-   message dated "Wed, 21 Feb 2007 14:55:31 +0100."
-X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
+	id S1422676AbXBUSCK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 13:02:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422736AbXBUSCK
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 13:02:10 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:39089 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422676AbXBUSCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 13:02:09 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JDT00E1XRFKHSA0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 21 Feb 2007 13:02:08 -0500 (EST)
+In-reply-to: <Pine.LNX.4.64.0702210904350.4043@woody.linux-foundation.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40310>
 
-Hi,
+On Wed, 21 Feb 2007, Linus Torvalds wrote:
 
-> If you switch to the buffer called " git blame for <filename>" (notice
-> the leading space, you will probably see a usage/error message from
-> git.
+> But at least in theory, it wouldn't be impossible to extend on the 
+> ".git/grafts" kind of setup to say "this object has been consciously 
+> deleted", and that could in some circumstances be a better model. The 
+> biggest headache there would be the need to extend the native git protocol 
+> with a way to add such objects.
 
-Seen it.
- 
-> Maybe your git blame doesn't like the --incremental flag or the
-> --contents flag.  But the problem is that I'm not sure how to make
-> emacs not hang.
+I think that would be a big security issue.  Right now the GIT history 
+can be validated and more importantly trusted from a single commit 
+signature.  If poking holes in that model is allowed by the graft 
+mechanism, it must remain a local thing and a very conscious one 
+otherwise the GIT trust model would be greatly weakened.
 
-Ok. I fixed this by upgrading to latest stable release of Git
-(according to website it is 1.5.0).
+If your goal is to remove content froma repository then the only 
+sensible way is to rewrite history before publishing.  It is pointless 
+to add mechanisms to remove content after it has been distributed.
 
-It now works as expected !
 
-Thank you very much for your time and patience.
-
-Xavier
+Nicolas
