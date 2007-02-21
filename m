@@ -1,49 +1,57 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: removing content from git history
-Date: Wed, 21 Feb 2007 12:17:38 -0500
-Message-ID: <20070221171738.GA9112@fieldses.org>
-References: <20070221164527.GA8513@ginosko.local> <20070221165636.GH25559@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Hendricks <michael@ndrix.org>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 21 18:17:42 2007
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: git-blame.el won't run
+Date: Wed, 21 Feb 2007 18:21:20 +0100
+Message-ID: <1272.1172078480@localhost>
+References: <13283.1171492535@localhost> <87mz393mlo.fsf@morpheus.local> <24475.1171920735@localhost> <87abz92rp9.fsf@morpheus.local> <4157.1171992534@localhost> <87fy9020ne.fsf@morpheus.local> <13478.1172059706@localhost> <87vehvsjho.fsf@morpheus.local>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 21 18:24:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJv64-0002GT-Lg
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 18:17:41 +0100
+	id 1HJvCJ-0004vL-Gs
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 18:24:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422720AbXBURRh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 12:17:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422719AbXBURRg
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 12:17:36 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:45228 "EHLO fieldses.org"
+	id S1422644AbXBURYD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 12:24:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422719AbXBURYD
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 12:24:03 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:46926 "EHLO smtp5-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422716AbXBURRf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 12:17:35 -0500
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HJv62-0002YH-HY; Wed, 21 Feb 2007 12:17:38 -0500
-Content-Disposition: inline
-In-Reply-To: <20070221165636.GH25559@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1422644AbXBURYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 12:24:01 -0500
+Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id A11E635AF5
+	for <git@vger.kernel.org>; Wed, 21 Feb 2007 18:23:59 +0100 (CET)
+Received: from localhost (IDENT:1001@localhost [127.0.0.1])
+	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1LHLKiq001273
+	for <git@vger.kernel.org>; Wed, 21 Feb 2007 18:21:20 +0100
+In-reply-to: <87vehvsjho.fsf@morpheus.local> 
+Comments: In-reply-to =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+   message dated "Wed, 21 Feb 2007 14:55:31 +0100."
+X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40309>
 
-On Wed, Feb 21, 2007 at 11:56:36AM -0500, Shawn O. Pearce wrote:
-> Now this is actually not a huge deal if you do it on your local
-> repository and go "whoops, I should not have committed that".  If you
-> have not yet pushed the commit to another repository (and someone
-> has not yet fetched it from you either) you can use git-rebase to
-> discard it.
+Hi,
 
-Also it can't have done any (non-fast-forward) merges since then.
+> If you switch to the buffer called " git blame for <filename>" (notice
+> the leading space, you will probably see a usage/error message from
+> git.
 
-Reconstructing history with a bunch of merges seems like something that
-could be a huge pain.  (Though with some tools it might be doable.)
+Seen it.
+ 
+> Maybe your git blame doesn't like the --incremental flag or the
+> --contents flag.  But the problem is that I'm not sure how to make
+> emacs not hang.
 
---b.
+Ok. I fixed this by upgrading to latest stable release of Git
+(according to website it is 1.5.0).
+
+It now works as expected !
+
+Thank you very much for your time and patience.
+
+Xavier
