@@ -1,57 +1,87 @@
-From: Xavier Maillard <zedek@gnu.org>
-Subject: Re: git-blame.el won't run
-Date: Wed, 21 Feb 2007 13:08:26 +0100
-Message-ID: <13478.1172059706@localhost>
-References: <13283.1171492535@localhost> <87mz393mlo.fsf@morpheus.local> <24475.1171920735@localhost> <87abz92rp9.fsf@morpheus.local> <4157.1171992534@localhost> <87fy9020ne.fsf@morpheus.local>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 21 13:11:31 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/4] Mechanical conversion to use prefixcmp()
+Date: Wed, 21 Feb 2007 13:41:25 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702211340490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200702191839.05784.andyparkins@gmail.com>
+ <7vlkit7vy5.fsf@assigned-by-dhcp.cox.net> <200702200942.18654.andyparkins@gmail.com>
+ <7v3b51xihy.fsf_-_@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702201243000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v7iuct3ic.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 21 13:41:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJqJm-0004u2-QW
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 13:11:31 +0100
+	id 1HJqn6-0001Uw-Ew
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 13:41:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226AbXBUML2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 07:11:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751239AbXBUML1
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 07:11:27 -0500
-Received: from smtp2-g19.free.fr ([212.27.42.28]:32815 "EHLO smtp2-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751226AbXBUML1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 07:11:27 -0500
-Received: from localhost.localdomain (cha51-2-82-244-211-40.fbx.proxad.net [82.244.211.40])
-	by smtp2-g19.free.fr (Postfix) with ESMTP id A36C281142
-	for <git@vger.kernel.org>; Wed, 21 Feb 2007 13:11:25 +0100 (CET)
-Received: from localhost (IDENT:1001@localhost [127.0.0.1])
-	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l1LC8QZl013479
-	for <git@vger.kernel.org>; Wed, 21 Feb 2007 13:08:46 +0100
-In-reply-to: <87fy9020ne.fsf@morpheus.local> 
-Comments: In-reply-to =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-   message dated "Tue, 20 Feb 2007 18:34:45 +0100."
-X-Mailer: MH-E 8.0.2; nmh 1.2; GNU Emacs 22.0.51
+	id S1751243AbXBUMlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 07:41:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbXBUMlc
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 07:41:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52481 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751243AbXBUMl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 07:41:27 -0500
+Received: (qmail invoked by alias); 21 Feb 2007 12:41:25 -0000
+X-Provags-ID: V01U2FsdGVkX1/cAV4iGOLciVPoBDPJdta01PNAlid47SKGcRa98+
+	8pYA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v7iuct3ic.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40296>
 
 Hi,
 
-This is the backtrace after C-g (after a few minutes):
+On Tue, 20 Feb 2007, Junio C Hamano wrote:
 
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Ha, I did it by
+> >
+> > $ perl -pi.bup -e \
+> >  's/strncmp\( *("[^"]*"), *([^"]*), *[0-9]* *\)/prefixcmp\($2, $1\)/g' \
+> >  $(git ls-files)
+> >
+> > and
+> >
+> > $ perl -pi.bup -e \
+> >  's/strncmp\( *([^"]*), *("[^"]*"), *[0-9]* *\)/prefixcmp\($1, $2\)/g' \
+> >  $(git-ls-files)
+> >
+> > Of course, I missed the two ,ofs ones, but a git grep -n strncmp brought 
+> > these up.
+> 
+> I think you totally missed my point.  I wanted to make sure that
+> things like these do not go unnoticed:
+> 
+>         if (!strncmp(arg, "--foo==", 6))
+> 	if (strncmp(line, "foo\nbar", 8))
+> 
+> Both are probably incorrectly written code in the original, but
+> probably would _happen_ to be working (for a certain definition
+> of "working" -- the former probably wanted to make sure the
+> parameter is of form "--foo=something", and the latter wanted to
+> check the line has the 7 bytes terminated with NUL).  But your
+> conversion would make them actually start behaving incorrectly.
+> 
+> And the worst part of this is that the change that caused to
+> expose these bugs would be literally _buried_ in 1800 lines of
+> "mechanical conversion" patch which is mind-numbing to audit.
+> 
+> That's why you are better off writing mechanical conversion
+> script in stricter than seemingly necessary to catch only the
+> safe conversion target, while accepting false negatives.
 
-Debugger entered--Lisp error: (quit)
-  process-send-region(#<process git-blame> 1 28910)
-  (let ((display-buf ...) (blame-buf ...) (args ...)) (if startline (setq args ...)) (setq args (append args ...)) (setq git-blame-proc (apply ... "git-blame" blame-buf "git" "blame" args)) (with-current-buffer blame-buf (erase-buffer) (make-local-variable ...) (make-local-variable ...) (setq git-blame-file display-buf) (setq git-blame-current nil)) (set-process-filter git-blame-proc (quote git-blame-filter)) (set-process-sentinel git-blame-proc (quote git-blame-sentinel)) (process-send-region git-blame-proc (point-min) (point-max)) (process-send-eof git-blame-proc))
-  (if git-blame-proc (message "Already running git blame") (let (... ... ...) (if startline ...) (setq args ...) (setq git-blame-proc ...) (with-current-buffer blame-buf ... ... ... ... ...) (set-process-filter git-blame-proc ...) (set-process-sentinel git-blame-proc ...) (process-send-region git-blame-proc ... ...) (process-send-eof git-blame-proc)))
-  git-blame-run()
-  (progn (let (...) (if ... ... ...)) (setq git-blame-cache (make-hash-table :test ...)) (git-blame-run))
-  (if git-blame-mode (progn (let ... ...) (setq git-blame-cache ...) (git-blame-run)) (cancel-timer git-blame-idle-timer))
-  git-blame-mode(nil)
-  call-interactively(git-blame-mode)
-  execute-extended-command(nil)
-  call-interactively(execute-extended-command)
+All true. I thought fixing them without checking was fine, but you are 
+right: better safe than sorry.
 
-Regards,
-
-Xavier
+Ciao,
+Dscho
