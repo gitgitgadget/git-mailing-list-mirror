@@ -1,73 +1,93 @@
-From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
-Subject: [ANNOUNCE] Guilt v0.20
-Date: Wed, 21 Feb 2007 01:08:49 -0500
-Message-ID: <20070221060849.GA3856@filer.fsl.cs.sunysb.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-remote: support remotes with a dot in the name
+Date: Tue, 20 Feb 2007 22:18:55 -0800
+Message-ID: <7vfy90t4mo.fsf@assigned-by-dhcp.cox.net>
+References: <20070221050336.26431.46485.stgit@dv.roinet.com>
+	<7vwt2ct79x.fsf@assigned-by-dhcp.cox.net>
+	<20070221004631.q4npyww808k88s0o@webmail.spamcop.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 21 07:09:14 2007
+Cc: git@vger.kernel.org
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Feb 21 07:19:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJkfA-00019C-Rz
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 07:09:13 +0100
+	id 1HJkon-00053W-IC
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 07:19:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751135AbXBUGIy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 01:08:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbXBUGIy
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 01:08:54 -0500
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:39956 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751130AbXBUGIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 01:08:53 -0500
-Received: from filer.fsl.cs.sunysb.edu (IDENT:5a7cTDwWffBqA1ClJWItxr1Yc/z0TwZK@localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l1L68oVq004970;
-	Wed, 21 Feb 2007 01:08:50 -0500
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l1L68nW1004968;
-	Wed, 21 Feb 2007 01:08:49 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S1751133AbXBUGS5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 01:18:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751132AbXBUGS5
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 01:18:57 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:34145 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136AbXBUGS4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 01:18:56 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070221061857.UHEN21704.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 21 Feb 2007 01:18:57 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id S6Jv1W00D1kojtg0000000; Wed, 21 Feb 2007 01:18:56 -0500
+In-Reply-To: <20070221004631.q4npyww808k88s0o@webmail.spamcop.net> (Pavel
+	Roskin's message of "Wed, 21 Feb 2007 00:46:31 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40283>
 
-Guilt v0.20 is available for download (once it mirrors out on kernel.org).
+Pavel Roskin <proski@gnu.org> writes:
 
-Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
-queues-like functionality and interface to git.
+> On the other hand, I've been tracking "wireless-2.6" for months without even
+> realizing that the name could be a problem.
 
-Tarballs:
-http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
+Ah, sorry.  You are absolutely right.  Using wireless-2.6 to
+name wireless-2.6 repository (or linux-2.6 to name linux-2.6
+repository) makes perfect sense.
 
-Git repo:
-git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
+>> I do not strongly oppose to allowing it now, but I suspect this
+>> is probably less impact:
+>>
+>> 	if (/^remote\.(\S+?)\.([^.\s]+)\s+(.*)$/) {
+>>         	...
+>> 	}
+>>
+>> With this, we disallow whitespaces in remote names, but we leave
+>> the door open for supporting variables other than fetch and url
+>> by accepting the third token that matches any sequence of
+>> non-dot, non-whitespace letters.
+>
+> It would be great as long as we don't use names with more than
+> one dot after the remote name
+> (e.g. remote.wireless-2.6.url.push),...
 
- 
-Pretty much all the changes are related to the patchbomb and import-commit
-scripts. They now take a range of commits in one of these formats:
+Do you mean:
 
-      <hash>		- one commit
-      <hash>..		- hash until head (excludes hash, includes head)
-      ..<hash>		- until hash (includes hash)
-      <hash1>..<hash2>	- from hash to hash (inclusive)
+	[remote "wireless-2.6.url"]
+		url = wire.less:/repo/sito/ry.git
+        	fetch = +refs/heads/*:refs/remotes/wireless-2.6.url/*
 
-Josef "Jeff" Sipek.
+If so I think my replacement would match it.  It will be
+returned from "git config --get-regexp '^remote\.'"  like this:
 
-------------
-Changes since v0.19:
+remote.wireless-2.6.url.url wire.less:/repo/sito/ry.git
+remote.wireless-2.6.url.fetch +refs/heads/*:refs/remotes/wireless-2.6.url/*
 
-Brandon Philips (1):
-      guilt: Silence command echoing for echos in Makefile
+and in:
 
-Josef 'Jeff' Sipek (7):
-      import-commit: simple commit to patch importer
-      munge_hash_range: Helper function
-      patchbomb: Use munge_hash_range
-      import-commit: Use munge_hash_range
-      patchbomb: Don't ask for the intro email if sending only one patch
-      Centralize pager determining code
-      Guilt v0.20
+ 	/^remote\.(\S+?)\.([^.\s]+)\s+(.*)$/
+
+$1 would match shortest non-whitespace sequence after "remote.",
+$2 would match longuest non-dot, non-whitespace sequence before
+a sequence of whitespaces, and
+$3 would match everything after that sequence of whitespaces.
+
+So, $1 = "wireless-2.6.url", $2 = "url", $3 = "wire.less:/repo/sito/ry.git"
+or $1 = "wireless-2.6.url", $2 = "fetch", $3 = "+refs/heads/...."
+
+But my Perl is rusty, so please double check it.
