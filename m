@@ -1,83 +1,67 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: removing content from git history
-Date: Wed, 21 Feb 2007 11:56:36 -0500
-Message-ID: <20070221165636.GH25559@spearce.org>
-References: <20070221164527.GA8513@ginosko.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Hendricks <michael@ndrix.org>
-X-From: git-owner@vger.kernel.org Wed Feb 21 17:56:48 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Unresolved issues
+Date: Wed, 21 Feb 2007 11:57:06 -0500
+Message-ID: <09D527A1-43E2-41A1-AC46-71F64BC409C2@silverinsanity.com>
+References: <7virdx1e58.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702200934270.20368@woody.linux-foundation.org> <7vfy90v729.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702201621050.4043@woody.linux-foundation.org> <Pine.LNX.4.63.0702210136050.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070221104209.GM21842@admingilde.org> <Pine.LNX.4.63.0702211348060.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Martin Waitz <tali@admingilde.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 21 17:57:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJulr-0002Ys-Dv
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 17:56:47 +0100
+	id 1HJumM-0002lc-B3
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 17:57:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422681AbXBUQ4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 11:56:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422684AbXBUQ4n
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 11:56:43 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42485 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422681AbXBUQ4m (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 11:56:42 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HJuld-0007Wj-5V; Wed, 21 Feb 2007 11:56:33 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 25F7920FBAE; Wed, 21 Feb 2007 11:56:37 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20070221164527.GA8513@ginosko.local>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1422684AbXBUQ5N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 11:57:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422685AbXBUQ5N
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 11:57:13 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:54325 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422684AbXBUQ5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 11:57:12 -0500
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 86F601FFC132;
+	Wed, 21 Feb 2007 16:57:09 +0000 (UTC)
+In-Reply-To: <Pine.LNX.4.63.0702211348060.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40304>
 
-Michael Hendricks <michael@ndrix.org> wrote:
-> Is it possible to remove content entirely from git's history?
 
-No, not once it has been published around to another repository.
-Since every developer has a copy of the repository its very difficult
-to remove something, as it must be removed from every developer's
-repository, and each developer must perform an action to agree to
-that removal.  So just one hold-out will keep the bad content around.
+On Feb 21, 2007, at 7:55 AM, Johannes Schindelin wrote:
 
-> I have a
-> client who does not use git for version control.  A couple months ago
-> they committed some sensitive client information which should never have
-> been committed.  Recently, they realized the mistake and now want to
-> remove all traces of the mistake from history.
-> 
-> I would like to migrate them to git at some point.  However, if they had
-> been using git for version control already, I'm not sure how I would
-> solved this particular problem.  Any suggestions?
+> What you conveniently "forgot" to quote was the case: if we want  
+> this to
+> decide on when to use crlf<->lf transformation, we should decide that
+> locally.
 
-The *only* way to do this in Git is to completely recreate every
-commit after that point.  This changes all commit IDs and basically
-forks the project into two completely different histories: the
-one with the bad thing in it, and the one without the bad thing.
-Users who have the bad thing will continue to have the bad thing
-until they take explicit action to throw away all of that history
-and switch to the other one.
+It seems to me that a tracked .gitattributes file should have things  
+like
 
-Now this is actually not a huge deal if you do it on your local
-repository and go "whoops, I should not have committed that".  If you
-have not yet pushed the commit to another repository (and someone
-has not yet fetched it from you either) you can use git-rebase to
-discard it.  But once its been pushed/fetched the genie is out of
-the bottle, and its not going back in.
+*.txt: text
+*.gif: binary
+*.[ch]: text
 
--- 
-Shawn.
+And the .git/config should have
+
+[attribute "text"]
+    mangle = crlf
+
+[attribute "binary"]
+    merge = none
+
+The type of each file should be tracked, but what to do with each  
+type is a local issue.  Trying to merge the two is madness.
+
+~~ Brian
