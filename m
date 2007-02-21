@@ -1,80 +1,118 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: removing content from git history
-Date: Wed, 21 Feb 2007 10:56:11 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702211048220.4043@woody.linux-foundation.org>
+Date: Wed, 21 Feb 2007 11:01:55 -0800
+Message-ID: <7vy7mrnxlo.fsf@assigned-by-dhcp.cox.net>
 References: <20070221164527.GA8513@ginosko.local>
- <Pine.LNX.4.64.0702210904350.4043@woody.linux-foundation.org>
- <20070221183028.GA9088@ginosko.local> <Pine.LNX.4.64.0702211041500.4043@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0702210904350.4043@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Michael Hendricks <michael@ndrix.org>
-X-From: git-owner@vger.kernel.org Wed Feb 21 19:57:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Hendricks <michael@ndrix.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 21 20:02:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HJwea-0002rQ-Tx
-	for gcvg-git@gmane.org; Wed, 21 Feb 2007 19:57:25 +0100
+	id 1HJwj2-0004wR-OL
+	for gcvg-git@gmane.org; Wed, 21 Feb 2007 20:02:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422811AbXBUS4O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 13:56:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422809AbXBUS4O
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 13:56:14 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:37808 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422812AbXBUS4M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 13:56:12 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1LIuAhB031860
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 21 Feb 2007 10:56:10 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1LIu9q5022832;
-	Wed, 21 Feb 2007 10:56:10 -0800
-In-Reply-To: <Pine.LNX.4.64.0702211041500.4043@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.461 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422795AbXBUTB5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 14:01:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbXBUTB5
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 14:01:57 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:46082 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751332AbXBUTB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 14:01:56 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070221190155.IBCI2670.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 21 Feb 2007 14:01:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SK1v1W0091kojtg0000000; Wed, 21 Feb 2007 14:01:55 -0500
+In-Reply-To: <Pine.LNX.4.64.0702210904350.4043@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 21 Feb 2007 09:14:44 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40320>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+>  - explicit support for "missing objects". We don't do it right now, but 
+>    we could add it. It was discussed for things like limited history etc 
+>    (the "shallow clone" kind of thing, before people actually added 
+>    shallow clones), and it would support the notion of "we export all our 
+>    history, but for internal reasons we cannot make certain objects 
+>    available" kinds of workflows.
+> ...
+> But at least in theory, it wouldn't be impossible to extend on the 
+> ".git/grafts" kind of setup to say "this object has been consciously 
+> deleted", and that could in some circumstances be a better model. The 
+> biggest headache there would be the need to extend the native git protocol 
+> with a way to add such objects.
 
-On Wed, 21 Feb 2007, Linus Torvalds wrote:
+While I agree in principle to the argument that there is no
+taking it back what's already published, I've heard people
+wanting to just stop distributing further, without worrying
+about copies already out there.  'missing objects' support would
+help us in such a situation.
 
-> 
-> 
-> On Wed, 21 Feb 2007, Michael Hendricks wrote:
-> > 
-> > What's a decent way to make a branch into a new repository?  My first
-> > inclination is to "cp -a" the existing repository, checkout the branch,
-> > delete all other branches and repack.  That seems to have worked in my
-> > quick test, but is there a better way?
-> 
-> That works.
+Supporting 'missing objects' in general would be painful, when
+they contain pointers to other objects (i.e. tags, commits, and
+trees).
 
-Btw, when I say "works", I do mean that "yeah, 'cp -a' works, but 
-generally you're better off cloning".
+Thinking aloud...
 
-When you use 'cp -a' you have to re-build the index at the very least. It 
-so happens that since you checked out the branch explicitly, that will do 
-it for you anyway, but it's still often a good idea to just *not* use the 
-regular "copy everything by hand" approach.
+ * missing blob: we can have 'stub blob' objects.  Probably the
+   object header for such an object would look like:
 
-If you want to be really efficient, there are actually better ways. For 
-example, since you want to avoid having any of the old objects even 
-reachable by mistake), you're probably better off with an explicit pull of 
-the explicit branch, if only because that also involves a re-pack of only 
-the reachable objects, and you know that there won't be any reflogs etc 
-that might still make the object you try to remove be accessible to people 
-who can access the resulting repository directly.
+	stub <length> NUL
+	-----------------
+        object <object name of the real blob object>
+        type blob
 
-(Yeah, the "cp -a" is faster than the "git pull", but since you want to do 
-the packing that git pull does for you *anyway* to get rid of the old 
-objects, "git pull" actually ends up being better).
+   Hashing a 'stub' object (along with its header as usual, in
+   write_sha1_file_prepare()) would instead just report the
+   object name recorded there.
 
-			Linus
+   When packing (this applies both to local repacking and
+   push/fetch object transfer to other repositories), the stub
+   object is included.  delta algorithm would probably not to
+   delta other objects with it.
+
+ * missing commit and tag: 'stub object' needs to be extended to
+   include these object types, and we would also need 'stub
+   commit' and 'stub tag' objects, that copy the structural
+   fields from the corresponding true object.  So a stub commit
+   would probably look like:
+
+	stub <length> NUL
+	-----------------
+        object <object name of the real commit object>
+        type commit
+        tree <object name of the tree contained in the real commit object>
+        parent <object name of the first parent in the real commit object>
+        parent <object name of the first second in the real commit object>
+
+ * missing tree would only be useful to conceal pathnames
+   recorded in the real tree object.  I am not sure if that is
+   needed.
+
+ * fsck and verify-pack needs to be taught about 'stub' objects,
+   so that they know that their filenames (or the data pointed
+   at by pack .idx) do not match the result of hashing them.
+
+If we were to do this, I suspect we can probably do nothing but
+'missing blob' first to cover a lot of ground, but we would
+eventually need 'missing commit' to replace real commit objects
+that has sensitive information in its log message.
+
+As Nico pointed out, this has serious security implications.  We
+would need a separate list of objects that are Ok to be stubbed
+out, with probably explanation of why they are stubbed out, and
+fsck should compare the stub objects found in the repository
+against that list.
