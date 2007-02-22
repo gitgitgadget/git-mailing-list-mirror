@@ -1,77 +1,86 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Add git-bundle: move objects and references by archive
-Date: Thu, 22 Feb 2007 18:09:02 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702221805070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702220157130.22628@wbgn013.biozentrum.uni-wuerz
- burg.de> <alpine.LRH.0.82.0702212224510.31945@xanadu.home>
+Date: Thu, 22 Feb 2007 18:12:10 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702221811130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <alpine.LRH.0.82.0702212224510.31945@xanadu.home>
  <Pine.LNX.4.63.0702221654131.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45DDC158.9090902@fs.ei.tum.de> <Pine.LNX.4.63.0702221735130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45DDC8D7.60902@fs.ei.tum.de>
+ <alpine.LRH.0.82.0702221117080.27932@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Mark Levedahl <mdl123@verizon.net>,
+Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>,
 	Junio C Hamano <junkio@cox.net>
-To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-X-From: git-owner@vger.kernel.org Thu Feb 22 18:09:16 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Feb 22 18:12:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKHRP-0004Ci-7X
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 18:09:12 +0100
+	id 1HKHUR-0005YK-MW
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 18:12:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750857AbXBVRJH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 12:09:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751105AbXBVRJH
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 12:09:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37985 "HELO mail.gmx.net"
+	id S1751254AbXBVRMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 12:12:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751276AbXBVRMO
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 12:12:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51340 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750857AbXBVRJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 12:09:06 -0500
-Received: (qmail invoked by alias); 22 Feb 2007 17:09:03 -0000
-X-Provags-ID: V01U2FsdGVkX180bdY5GnM0HdG9h+6MGWeaUOJnilOfD2xMGv/4Ar
-	ZYaQ==
+	id S1751254AbXBVRMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 12:12:12 -0500
+Received: (qmail invoked by alias); 22 Feb 2007 17:12:11 -0000
+X-Provags-ID: V01U2FsdGVkX1+LFeQTBgiLebOucWDiFZHg6NkaDpHT7uOdOfNjXN
+	gizA==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45DDC8D7.60902@fs.ei.tum.de>
+In-Reply-To: <alpine.LRH.0.82.0702221117080.27932@xanadu.home>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40362>
 
 Hi,
 
-On Thu, 22 Feb 2007, Simon 'corecode' Schubert wrote:
+On Thu, 22 Feb 2007, Nicolas Pitre wrote:
 
-> Johannes Schindelin wrote:
-> > 
-> > On Thu, 22 Feb 2007, Simon 'corecode' Schubert wrote:
-> > 
-> > > Maybe something like this would be cleaner:
-> > > 
-> > > if (IS_REF(st.st_mode) && lseek(input_fd, 0, SEEK_CUR) != st.st_size)
-> > > 	die("...");
-> > 
-> > The lseek would fail whenever the input is _not_ a file, dying. Since
-> > index-pack is called from fetch-pack, with a socket instead of a file, it
-> > would fail for the most common user.
+> On Thu, 22 Feb 2007, Johannes Schindelin wrote:
 > 
-> that's why i put IS_REF (should read IS_REG) there.
+> > Hi,
+> > 
+> > On Wed, 21 Feb 2007, Nicolas Pitre wrote:
+> > 
+> > > On Thu, 22 Feb 2007, Johannes Schindelin wrote:
+> > > 
+> > > > diff --git a/index-pack.c b/index-pack.c
+> > > > index fa9a0e7..5ccf4c4 100644
+> > > > --- a/index-pack.c
+> > > > +++ b/index-pack.c
+> > > > @@ -457,8 +457,8 @@ static void parse_pack_objects(unsigned char *sha1)
+> > > >  	/* If input_fd is a file, we should have reached its end now. */
+> > > >  	if (fstat(input_fd, &st))
+> > > >  		die("cannot fstat packfile: %s", strerror(errno));
+> > > > -	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
+> > > > -		die("pack has junk at the end");
+> > > > +	if (input_fd && S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
+> > > > +		die("pack has junk at the end: 0%o, %d, %d %d", st.st_mode, (int)st.st_size, (int)consumed_bytes, input_fd);
+> > > >  
+> > > >  	if (!nr_deltas)
+> > > >  		return;
+> > > 
+> > > What is this supposed to mean?
+> > 
+> > The funny thing is, if you stream part of the bundle file to index-pack, 
+> > S_ISREG(st.st_mode) is true, even if input_fd == 0.
+> 
+> Hmmmm. indeed..
+> 
+> Could you please make the test, including the call to fstat(), 
+> conditional on !from_stdin instead?
 
-Ah, yes, I understand.
+How about using Simon's idea instead (subtracting input_len)?
 
-> but as nicolas pointed out, this won't work for read-ahead.
+> Also I don't see the point of displaying the mode since we know that 
+> S_ISREG(st.st_mode) is true, and input_fd is of little interest as well.
 
-Well, you could do this:
-
-if (S_ISREG(st.st_mode) &&
-		lseek(input_fd, 0, SEEK_CUR) - input_len != st.st_size)
-	die("...");
-
-Of course, this suggests that a file containing a pack must not have 
-_anything_ after the pack. But AFAIR the reading part chokes on "garbage 
-after pack" anyway.
+As you probably guessed, these are debug remnants. Will fix.
 
 Ciao,
 Dscho
