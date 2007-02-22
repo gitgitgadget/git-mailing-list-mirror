@@ -1,62 +1,87 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Fix 'git commit -a' in a newly initialized repository
-Date: Thu, 22 Feb 2007 15:54:37 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702221550290.27932@xanadu.home>
-References: <20070222202812.8882.44375.stgit@c165>
- <Pine.LNX.4.63.0702222140360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: How to say HEAD~"all the way back - 1"
+Date: Thu, 22 Feb 2007 12:59:23 -0800
+Message-ID: <7vr6shdi38.fsf@assigned-by-dhcp.cox.net>
+References: <17885.60477.53356.123095@lisa.zopyra.com>
+	<7vodnmdk8y.fsf@assigned-by-dhcp.cox.net>
+	<17885.64501.15547.465411@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 22 21:54:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Thu Feb 22 21:59:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKKxe-0003ju-Gg
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:54:42 +0100
+	id 1HKL2G-0005Z4-ER
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:59:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880AbXBVUyj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 15:54:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751882AbXBVUyj
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:54:39 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:12624 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751880AbXBVUyi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 15:54:38 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDV002PNU31H100@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 22 Feb 2007 15:54:38 -0500 (EST)
-In-reply-to: <Pine.LNX.4.63.0702222140360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+	id S1751883AbXBVU7Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 15:59:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbXBVU7Z
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:59:25 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:37648 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751883AbXBVU7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 15:59:24 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070222205923.IVAF3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 22 Feb 2007 15:59:23 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SkzP1W00E1kojtg0000000; Thu, 22 Feb 2007 15:59:23 -0500
+In-Reply-To: <17885.64501.15547.465411@lisa.zopyra.com> (Bill Lear's message
+	of "Thu, 22 Feb 2007 14:24:21 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40390>
 
-On Thu, 22 Feb 2007, Johannes Schindelin wrote:
+Bill Lear <rael@zopyra.com> writes:
 
-> Hi,
-> 
-> On Thu, 22 Feb 2007, Fredrik Kuivinen wrote:
-> 
-> > +		die 'nothing to commit (use "git add file1 file2" to include for commit)'
-> 
-> Would it not make more sense to tell the user about "git add ."?
+> % git log -p HEAD~"All the way back" update
+>
+> or something similar.
 
-Isn't what the patch does?  IMHO it looks just like the empty commit 
-message which is good.
+But in that use case "root" commit is not necessarily what you
+wanted to say, isn't it?  It is more like "I want *earlier*
+history, not latest ones as the command usually gives, of this
+file".
 
-> Maybe 
-> together with a hint about .gitignore?
-> 
-> This error message is important. The most likely recipients are total git 
-> newsters, and we really should try to help them here.
+$ git log --reverse -p HEAD -- update
 
-Sure.  But to really help newsters it is better _not_ to talk about 
-.gitignore at all.  It certainly won't exist at that point anyway.
+would give you the changes that touch the path in the reverse
+order than usual (I think this was merged post 1.5.0).
 
+But my point is, you may happen to know it was in your root
+commit, but that is a special case.  You may happen to know
+other things to limit the output.  The timeperiod you made that
+change (e.g. --until=2006-05-31), for example.
 
-Nicolas
+By the way, on the face of it:
+
+$ git log --reverse -4 -p HEAD -- update
+
+(or whatever number of commits you are interested in viewing)
+might be closer to what you want to express, but the --reverse
+option does not work like that, unfortunately for this
+particular use case, because the way the semantics of
+interaction between --reverse and --max-count is defined.
+
+Given the above command line, the current implementation limits
+the traversal to four items and then reverses the output,
+instead of traversing normally as if --max-count limitation is
+not there, reversing the result and then limiting the output to
+four items, which would have made the sample command line above
+a bit more useful.
+
+But I would recommend against changing it.  Being able to view
+the latest four commits in reverse is much more useful in
+practice than being able to view the four commits at the
+beginning of time in reverse.  Having both options is certainly
+a possibility but I doubt it is worth it.
