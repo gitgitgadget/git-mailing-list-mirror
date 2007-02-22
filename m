@@ -1,69 +1,143 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add git-bundle: move objects and references by archive
-Date: Thu, 22 Feb 2007 16:55:29 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702221654131.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702220157130.22628@wbgn013.biozentrum.uni-wuerz
- burg.de> <alpine.LRH.0.82.0702212224510.31945@xanadu.home>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] Added "-kb" to all the entries lines sent to the client
+Date: Thu, 22 Feb 2007 16:06:42 +0000
+Message-ID: <200702221606.42638.andyparkins@gmail.com>
+References: <200702221504.32848.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>,
-	Junio C Hamano <junkio@cox.net>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Feb 22 16:55:53 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 22 17:08:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKGIP-0000i9-K1
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 16:55:49 +0100
+	id 1HKGT9-0004Pp-Gh
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 17:06:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933101AbXBVPze (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 10:55:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933103AbXBVPze
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 10:55:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35981 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933101AbXBVPzb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 10:55:31 -0500
-Received: (qmail invoked by alias); 22 Feb 2007 15:55:29 -0000
-X-Provags-ID: V01U2FsdGVkX1845RcmRLo4pVTpKnf1qW5NcJmooSYIuB7eWiT5nF
-	Vgkg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <alpine.LRH.0.82.0702212224510.31945@xanadu.home>
-X-Y-GMX-Trusted: 0
+	id S933107AbXBVQGs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 11:06:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933111AbXBVQGs
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 11:06:48 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:63809 "EHLO
+	369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933107AbXBVQGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 11:06:47 -0500
+Received: from dvr.360vision.com ([192.189.1.65]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Thu, 22 Feb 2007 16:08:59 +0000
+Received: from localhost ([127.0.0.1])
+	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1HKGSz-0005Dh-00
+	for <git@vger.kernel.org>; Thu, 22 Feb 2007 16:06:45 +0000
+In-Reply-To: <200702221504.32848.andyparkins@gmail.com>
+X-TUID: 0bf9f15ad583d21f
+X-UID: 250
+X-Length: 3383
+Content-Disposition: inline
+X-OriginalArrivalTime: 22 Feb 2007 16:08:59.0750 (UTC) FILETIME=[C328D060:01C7569B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40351>
 
-Hi,
+git doesn't distinguish between binary and text files - so force the
+client to do the same by sending everything as a binary.
 
-On Wed, 21 Feb 2007, Nicolas Pitre wrote:
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+DON'T APPLY TO REPOSITORY
 
-> On Thu, 22 Feb 2007, Johannes Schindelin wrote:
-> 
-> > diff --git a/index-pack.c b/index-pack.c
-> > index fa9a0e7..5ccf4c4 100644
-> > --- a/index-pack.c
-> > +++ b/index-pack.c
-> > @@ -457,8 +457,8 @@ static void parse_pack_objects(unsigned char *sha1)
-> >  	/* If input_fd is a file, we should have reached its end now. */
-> >  	if (fstat(input_fd, &st))
-> >  		die("cannot fstat packfile: %s", strerror(errno));
-> > -	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
-> > -		die("pack has junk at the end");
-> > +	if (input_fd && S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
-> > +		die("pack has junk at the end: 0%o, %d, %d %d", st.st_mode, (int)st.st_size, (int)consumed_bytes, input_fd);
-> >  
-> >  	if (!nr_deltas)
-> >  		return;
-> 
-> What is this supposed to mean?
+Turns out the CVS protocol isn't as hard as I thought.
 
-The funny thing is, if you stream part of the bundle file to index-pack, 
-S_ISREG(st.st_mode) is true, even if input_fd == 0.
+http://soc.if.usp.br/doc/cvs/html-cvsclient/cvsclient_5.html#SEC6
 
-Then, because it is only part of the bundle file, the size check fails.
+Was all I needed.  I've changed every entries line to send "-kb" as one of
+options.  I believe this will make all files into binaries as far as CVS
+clients are concerned.
 
-Ciao,
-Dscho
+I am certain this is too heavy handed for most users.  I submit this patch
+only to help other poor souls who might have the same problem in the
+future.  (Hello poor soul).
+
+Perhaps when the whole .gitattributes system has settled down that could be
+used to conditionally set -kb
+
+ git-cvsserver.perl |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index f6ddf34..e8d74ae 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -374,7 +374,7 @@ sub req_add
+ 
+         print "Checked-in $dirpart\n";
+         print "$filename\n";
+-        print "/$filepart/0///\n";
++        print "/$filepart/0//-kb/\n";
+ 
+         $addcount++;
+     }
+@@ -455,7 +455,7 @@ sub req_remove
+ 
+         print "Checked-in $dirpart\n";
+         print "$filename\n";
+-        print "/$filepart/-1.$wrev///\n";
++        print "/$filepart/-1.$wrev//-kb/\n";
+ 
+         $rmcount++;
+     }
+@@ -726,7 +726,7 @@ sub req_co
+        print $state->{CVSROOT} . "/$module/" . ( defined ( $git->{dir} ) and 
+$git->{dir} ne "./" ? $git->{dir} . "/" : "" ) . "$git->{name}\n";
+ 
+         # this is an "entries" line
+-        print "/$git->{name}/1.$git->{revision}///\n";
++        print "/$git->{name}/1.$git->{revision}//-kb/\n";
+         # permissions
+         print "u=$git->{mode},g=$git->{mode},o=$git->{mode}\n";
+ 
+@@ -917,8 +917,8 @@ sub req_update
+ 		print $state->{CVSROOT} . "/$state->{module}/$filename\n";
+ 
+ 		# this is an "entries" line
+-		$log->debug("/$filepart/1.$meta->{revision}///");
+-		print "/$filepart/1.$meta->{revision}///\n";
++		$log->debug("/$filepart/1.$meta->{revision}//-kb/");
++		print "/$filepart/1.$meta->{revision}//-kb/\n";
+ 
+ 		# permissions
+ 		$log->debug("SEND : u=$meta->{mode},g=$meta->{mode},o=$meta->{mode}");
+@@ -961,8 +961,8 @@ sub req_update
+                     print "Update-existing $dirpart\n";
+                     
+$log->debug($state->{CVSROOT} . "/$state->{module}/$filename");
+                     print 
+$state->{CVSROOT} . "/$state->{module}/$filename\n";
+-                    $log->debug("/$filepart/1.$meta->{revision}///");
+-                    print "/$filepart/1.$meta->{revision}///\n";
++                    $log->debug("/$filepart/1.$meta->{revision}//-kb/");
++                    print "/$filepart/1.$meta->{revision}//-kb/\n";
+                 }
+             }
+             elsif ( $return == 1 )
+@@ -975,7 +975,7 @@ sub req_update
+                 {
+                     print "Update-existing $dirpart\n";
+                     print 
+$state->{CVSROOT} . "/$state->{module}/$filename\n";
+-                    print "/$filepart/1.$meta->{revision}/+//\n";
++                    print "/$filepart/1.$meta->{revision}/+/-kb/\n";
+                 }
+             }
+             else
+@@ -1207,7 +1207,7 @@ sub req_ci
+         } else {
+             print "Checked-in $dirpart\n";
+             print "$filename\n";
+-            print "/$filepart/1.$meta->{revision}///\n";
++            print "/$filepart/1.$meta->{revision}//-kb/\n";
+         }
+     }
+ 
+-- 
+1.5.0.1.51.g5a369
