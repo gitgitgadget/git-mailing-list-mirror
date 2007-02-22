@@ -1,61 +1,47 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix 'git commit -a' in a newly initialized repository
-Date: Thu, 22 Feb 2007 13:36:00 -0800
-Message-ID: <7vhctddge7.fsf@assigned-by-dhcp.cox.net>
-References: <20070222202812.8882.44375.stgit@c165>
-	<Pine.LNX.4.63.0702222140360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<alpine.LRH.0.82.0702221550290.27932@xanadu.home>
-	<Pine.LNX.4.63.0702222157000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<alpine.LRH.0.82.0702221605080.27932@xanadu.home>
+Subject: Re: git-send-email
+Date: Thu, 22 Feb 2007 13:38:17 -0800
+Message-ID: <7vd541dgae.fsf@assigned-by-dhcp.cox.net>
+References: <20070222211313.GA23674@informatik.uni-freiburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Feb 22 22:36:09 2007
+Cc: git@vger.kernel.org
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Thu Feb 22 22:38:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKLbk-0003YE-7Z
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 22:36:08 +0100
+	id 1HKLdw-0004Yv-8Z
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 22:38:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918AbXBVVgE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 16:36:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751920AbXBVVgE
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 16:36:04 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:63809 "EHLO
+	id S1751931AbXBVViT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 16:38:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbXBVViT
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 16:38:19 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:64771 "EHLO
 	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751918AbXBVVgB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 16:36:01 -0500
+	with ESMTP id S1751931AbXBVViS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 16:38:18 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao105.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070222213601.JLLF233.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 22 Feb 2007 16:36:01 -0500
+          id <20070222213818.JMUR233.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 22 Feb 2007 16:38:18 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id Slc01W00D1kojtg0000000; Thu, 22 Feb 2007 16:36:00 -0500
-In-Reply-To: <alpine.LRH.0.82.0702221605080.27932@xanadu.home> (Nicolas
-	Pitre's message of "Thu, 22 Feb 2007 16:09:55 -0500 (EST)")
+	id SleH1W00R1kojtg0000000; Thu, 22 Feb 2007 16:38:18 -0500
+In-Reply-To: <20070222211313.GA23674@informatik.uni-freiburg.de> (Uwe
+	=?utf-8?Q?Kleine-K=C3=B6nig's?= message of "Thu, 22 Feb 2007 22:13:14
+ +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40396>
 
-If we want to limit the help to lone liner, I am with Nicolas and
-Fredrik on this one.  Suggesting only "git add ." does not feel
-helpful.
-
-However, because ! test -f "$THIS_INDEX" is such a special case
-(totally new check-in), we can afford to be verbose if we wanted
-to, and offer tons of possibilities, say:
-
-	die 'nothing to commit.  You can use "git add file..."
-to include individual files, or use "git add ." if you want to 
-include all files in the current directory, for your first
-commit.'
-
-But if we want to say "for your first commit" in the message, we
-should also be checking if HEAD commit really does not exist.
+When git-send-email reads from the mbox, it should expect From:
+to be in 2047 (because the input is in Unix mbox format) and
+unwrap it before doing the comparison.  Perhaps it is not doing
+that.
