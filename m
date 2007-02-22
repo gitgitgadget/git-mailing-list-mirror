@@ -1,94 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [PATCH] Add git-bundle: move objects and references by archive
-Date: Thu, 22 Feb 2007 17:20:22 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702221719030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702220157130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xeqllxk.fsf@assigned-by-dhcp.cox.net> <7v4ppellev.fsf@assigned-by-dhcp.cox.net>
+Date: Thu, 22 Feb 2007 11:24:32 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702221117080.27932@xanadu.home>
+References: <alpine.LRH.0.82.0702212224510.31945@xanadu.home>
+ <Pine.LNX.4.63.0702221654131.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 22 17:20:32 2007
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>,
+	Junio C Hamano <junkio@cox.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Feb 22 17:25:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKGgG-0001LG-67
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 17:20:28 +0100
+	id 1HKGlF-0003Ru-8q
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 17:25:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750881AbXBVQUZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 11:20:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbXBVQUZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 11:20:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55946 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750881AbXBVQUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 11:20:24 -0500
-Received: (qmail invoked by alias); 22 Feb 2007 16:20:23 -0000
-X-Provags-ID: V01U2FsdGVkX18Eq+takgIEg/bvSXGYXpKnEeI8PAMwK6XGsOzZq3
-	fj+w==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v4ppellev.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751012AbXBVQZe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 11:25:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751048AbXBVQZe
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 11:25:34 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:62059 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750944AbXBVQZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 11:25:33 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JDV00B1RHKWFFM0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 22 Feb 2007 11:24:32 -0500 (EST)
+In-reply-to: <Pine.LNX.4.63.0702221654131.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40356>
 
-Hi,
+On Thu, 22 Feb 2007, Johannes Schindelin wrote:
 
-On Wed, 21 Feb 2007, Junio C Hamano wrote:
-
-> Junio C Hamano <junkio@cox.net> writes:
+> Hi,
 > 
-> >> +static int verify_bundle(struct bundle_header *header)
-> >> +{
-> >> +	/*
-> >> +	 * Do fast check, then if any prereqs are missing then go line by line
-> >> +	 * to be verbose about the errors
-> >> +	 */
-> >> +	struct ref_list *p = &header->prerequisites;
-> >> +	const char *argv[5] = {"rev-list", "--stdin", "--not", "--all", NULL};
-> >> +	int pid, in, out, i, ret = 0;
-> >> +	char buffer[1024];
-> >> +
-> >> +	in = out = -1;
-> >> +	pid = fork_with_pipe(argv, &in, &out);
-> >> +	if (pid < 0)
-> >> +		return error("Could not fork rev-list");
-> >> +	if (!fork()) {
-> >> +		for (i = 0; i < p->nr; i++) {
-> >> +			write(in, sha1_to_hex(p->list[i].sha1), 40);
-> >> +			write(in, "\n", 1);
-> >> +		}
-> >> +		close(in);
-> >> +		exit(0);
-> >> +	}
-> >> +	close(in);
-> >
-> > What if write() fails?  That can happen when one of the objects
-> > you feed here, or its parent objects, is missing from your
-> > repository -- receiving rev-list would die() and the writing
-> > child would sigpipe.
-> >
-> > I also wonder who waits for this child...
+> On Wed, 21 Feb 2007, Nicolas Pitre wrote:
 > 
-> In general, fork() to avoid bidirectional pipe deadlock is a
-> good discipline, but in this particular case I think it would be
-> easier to handle errors if you don't (and it would save another
-> process).  The other side "rev-list --stdin --not --all" is
-> running a limited traversal, and would not emit anything until
-> you stop feeding it from --stdin, or until it dies because you
-> fed it a commit that does not exist.  So as long as you check
-> the error condition from write() for EPIPE to notice the other
-> end died, I think you are Ok.
+> > On Thu, 22 Feb 2007, Johannes Schindelin wrote:
+> > 
+> > > diff --git a/index-pack.c b/index-pack.c
+> > > index fa9a0e7..5ccf4c4 100644
+> > > --- a/index-pack.c
+> > > +++ b/index-pack.c
+> > > @@ -457,8 +457,8 @@ static void parse_pack_objects(unsigned char *sha1)
+> > >  	/* If input_fd is a file, we should have reached its end now. */
+> > >  	if (fstat(input_fd, &st))
+> > >  		die("cannot fstat packfile: %s", strerror(errno));
+> > > -	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
+> > > -		die("pack has junk at the end");
+> > > +	if (input_fd && S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
+> > > +		die("pack has junk at the end: 0%o, %d, %d %d", st.st_mode, (int)st.st_size, (int)consumed_bytes, input_fd);
+> > >  
+> > >  	if (!nr_deltas)
+> > >  		return;
+> > 
+> > What is this supposed to mean?
+> 
+> The funny thing is, if you stream part of the bundle file to index-pack, 
+> S_ISREG(st.st_mode) is true, even if input_fd == 0.
 
-Thinking about this deeper, I have to say I find my decision to use 
-"--stdin" rather silly, given that I know the exact number of revisions, 
-and their SHA1s.
+Hmmmm. indeed..
 
-But it might make more sense to rewrite the checking part, instead of 
-fork()ing it.
+Could you please make the test, including the call to fstat(), 
+conditional on !from_stdin instead?
 
-Ciao,
-Dscho
+Also I don't see the point of displaying the mode since we know that 
+S_ISREG(st.st_mode) is true, and input_fd is of little interest as well.
+
+
+Nicolas
