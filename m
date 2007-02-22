@@ -1,71 +1,129 @@
-From: "Francis Moreau" <francis.moro@gmail.com>
-Subject: git-am failed, what's next ?
-Date: Thu, 22 Feb 2007 09:22:27 +0100
-Message-ID: <38b2ab8a0702220022wab25519hbb57629934e7f104@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-status: do not be totally useless in a read-only repository.
+Date: Thu, 22 Feb 2007 00:28:49 -0800
+Message-ID: <7vmz36k33y.fsf@assigned-by-dhcp.cox.net>
+References: <7virdx1e58.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 22 09:22:35 2007
+X-From: git-owner@vger.kernel.org Thu Feb 22 09:29:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HK9Dm-0004Nf-Gu
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 09:22:34 +0100
+	id 1HK9K1-0007FI-25
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 09:29:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476AbXBVIWb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 03:22:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751484AbXBVIWb
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 03:22:31 -0500
-Received: from qb-out-0506.google.com ([72.14.204.234]:16526 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751476AbXBVIWa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 03:22:30 -0500
-Received: by qb-out-0506.google.com with SMTP id z8so48367qbc
-        for <git@vger.kernel.org>; Thu, 22 Feb 2007 00:22:28 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Tr4yLwRsilUIRXe9niXloAlk0HG6kr4OE7eK/+WWvAj2JR6h5M/zVKGFNeq6aRh0Q2i06oe2LzeyojKmPSjJmUxlCwZWXLIwXJcTUvyfmyt8GbSxi2AAy8qMjCIuSaAL/kerUHLPe4z3RKYJEm62YPeYHiry4nci37zMGnG1xeo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=VCc6MVq4tpikKVyA7D2RVkfsotAI8zI1wjGdMNfk8qAOimpuXXEha5mWNumg0Vrd4QtyGstEOhxJK9QFkThjZON2FXDS8xzkk4k6vx8Gn8NPEocCG5Q31fOnFhj7scc9gqLUY88ZJ8H8fMMnvYTGZ6T41MVdMm9zPNu0QfHyJ9A=
-Received: by 10.114.73.1 with SMTP id v1mr149638waa.1172132547550;
-        Thu, 22 Feb 2007 00:22:27 -0800 (PST)
-Received: by 10.115.47.14 with HTTP; Thu, 22 Feb 2007 00:22:27 -0800 (PST)
-Content-Disposition: inline
+	id S1751494AbXBVI2x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 03:28:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751498AbXBVI2x
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 03:28:53 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:38245 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751494AbXBVI2w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 03:28:52 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070222082850.XMOP3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 22 Feb 2007 03:28:50 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SYUp1W0051kojtg0000000; Thu, 22 Feb 2007 03:28:50 -0500
+In-Reply-To: <7virdx1e58.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 19 Feb 2007 23:28:35 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40339>
 
-Hi,
+This makes git-status work semi-decently in a read-only
+repository.  Earlier, the command simply died with "cannot lock
+the index file" before giving any useful information to the
+user.
 
-I'm a bit clueless when git-am failed to apply a patch. I dunno what I
-should do at this point since errors reported by git-am are not
-usefull for me. For example I got:
+Because index won't be updated in a read-only repository,
+stat-dirty paths appear in the "Changed but not updated" list.
 
-----
-error: patch failed: foo:1
-error: foo: patch does not apply
-
-Patch failed at 0001.
-When you have resolved this problem run "git-am --resolved".
-If you would prefer to skip this patch, instead run "git-am --skip".
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
-I know that git-am let some information in '.dotest' directory and
-that I can find in it the plain patch file. I can use 'patch' command
-to apply it and see which part of the patch is conflicting. But I
-would like to know if there are other ways to do it specially by using
-git ?
+  Junio C Hamano <junkio@cox.net> writes:
 
-BTW, would it be possible to be more verbose when describing the error ?
+  >  [gmane=http://thread.gmane.org/gmane.comp.version-control.git]
+  >
+  > * "git status" is not a read-only operation.
+  >
+  >   It needs to do enough lstat(2) to run "update-index --refresh" to come
+  >   up with the information it needs to give.  We could do so internally
+  >   without writing out the result to the index (there is a patch to do
+  >   this) even if a repository is not writable.
+  >
+  >     $gmane/39205
+  >     $gmane/39206
+  >
+  >   However, a big downside of this approach is that doing so
+  >   unconditionally would mean the expensive lstat(2) is wasted
+  >   afterwards.
+  >
+  >     $gmane/39246
+  >
+  >   Currently an workaround is to run git-runstatus and live with the fact
+  >   that otherwise unmodified but stat-dirty paths to show up in the
+  >   output.  I think (iff somebody feels strongly about it) a possible
+  >   compromise would be to see if we can update the index, and do what the
+  >   current code does if we can, and otherwise fall back on the new code
+  >   that does the internal "update-index --refresh".
 
-thanks
+  I did not feel strongly enough about it, so here is another
+  approach.
+
+ git-commit.sh |   21 +++++++++++----------
+ 1 files changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/git-commit.sh b/git-commit.sh
+index ec506d9..cfa1511 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -13,10 +13,10 @@ git-rev-parse --verify HEAD >/dev/null 2>&1 || initial_commit=t
+ case "$0" in
+ *status)
+ 	status_only=t
+-	unmerged_ok_if_status=--unmerged ;;
++	;;
+ *commit)
+ 	status_only=
+-	unmerged_ok_if_status= ;;
++	;;
+ esac
+ 
+ refuse_partial () {
+@@ -389,16 +389,17 @@ else
+ 	USE_INDEX="$THIS_INDEX"
+ fi
+ 
+-GIT_INDEX_FILE="$USE_INDEX" \
+-	git-update-index -q $unmerged_ok_if_status --refresh || exit
+-
+-################################################################
+-# If the request is status, just show it and exit.
+-
+-case "$0" in
+-*status)
++case "$status_only" in
++t)
++	# This will silently fail in a read-only repository, which is
++	# what we want.
++	GIT_INDEX_FILE="$USE_INDEX" git-update-index -q --unmerged --refresh
+ 	run_status
+ 	exit $?
++	;;
++'')
++	GIT_INDEX_FILE="$USE_INDEX" git-update-index -q --refresh || exit
++	;;
+ esac
+ 
+ ################################################################
 -- 
-Francis
-
-PS: git rocks !
+1.5.0.1.619.g04c5c
