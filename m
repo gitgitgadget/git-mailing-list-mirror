@@ -1,75 +1,50 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Added "-kb" to all the entries lines sent to the client
-Date: Thu, 22 Feb 2007 12:37:28 -0800
-Message-ID: <7v4ppedj3r.fsf@assigned-by-dhcp.cox.net>
-References: <200702221504.32848.andyparkins@gmail.com>
-	<200702221606.42638.andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix 'git commit -a' in a newly initialized repository
+Date: Thu, 22 Feb 2007 21:42:33 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702222140360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070222202812.8882.44375.stgit@c165>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 22 21:37:38 2007
+To: Fredrik Kuivinen <frekui@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 22 21:42:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKKh6-0005dm-90
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:37:36 +0100
+	id 1HKKly-0007ah-CU
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:42:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854AbXBVUha (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 15:37:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751856AbXBVUha
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:37:30 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:37330 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751854AbXBVUh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 15:37:29 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070222203728.IPVZ6078.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 22 Feb 2007 15:37:28 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id SkdU1W00J1kojtg0000000; Thu, 22 Feb 2007 15:37:29 -0500
-In-Reply-To: <200702221606.42638.andyparkins@gmail.com> (Andy Parkins's
-	message of "Thu, 22 Feb 2007 16:06:42 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751856AbXBVUmf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 15:42:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbXBVUmf
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:42:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34475 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751856AbXBVUme (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 15:42:34 -0500
+Received: (qmail invoked by alias); 22 Feb 2007 20:42:33 -0000
+X-Provags-ID: V01U2FsdGVkX1/5eNgKLCz5sFnckCyYy3fjmfnDbd22nOU4KhiMoP
+	2lAw==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070222202812.8882.44375.stgit@c165>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40384>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Hi,
 
-> Perhaps when the whole .gitattributes system has settled down that could be
-> used to conditionally set -kb
+On Thu, 22 Feb 2007, Fredrik Kuivinen wrote:
 
-Indeed.  And this patch is a great help by identifying where to
-insert necessary '-kb'.
+> +		die 'nothing to commit (use "git add file1 file2" to include for commit)'
 
-If the patch had a stub implementation to determine if -kb is
-needed (and the stub always says "yes" for your purpose, or "no"
-for backward compatibility for non-text files), it could be
-applied to the mainline for wider testing.
+Would it not make more sense to tell the user about "git add ."? Maybe 
+together with a hint about .gitignore?
 
-sub path_is_binary {
-        my ($filename) = @_;
+This error message is important. The most likely recipients are total git 
+newsters, and we really should try to help them here.
 
-	# If you do not mind LF lineendings and care more about
-        # binary files, return true from here; otherwise you may
-        # want to change this to return false.
-        # We'll ask the much talked about .gitattributes
-        # mechanism when it's ready.
-        return 1;
-}
-
-sub req_add {
-        ...
-        $kb = path_is_binary($filename) ? "-kb" : "";
-        print "Checked-in $dirpart\n";
-        print "$filename\n";
-        print "/$filepart/0//$kb/\n";
-
-        $addcount++;
-}
+Ciao,
+Dscho
