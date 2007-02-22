@@ -1,104 +1,143 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Teach git-diff{,-files} the new option `--no-index`
-Date: Thu, 22 Feb 2007 21:01:59 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702222051490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702201944340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzm76fpia.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702221724090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vvehuf4ic.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702221926390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vmz36f1bv.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-am failed, what's next ?
+Date: Thu, 22 Feb 2007 12:02:23 -0800
+Message-ID: <7v3b4yezao.fsf@assigned-by-dhcp.cox.net>
+References: <38b2ab8a0702220022wab25519hbb57629934e7f104@mail.gmail.com>
+	<7v8xeqh6bj.fsf@assigned-by-dhcp.cox.net>
+	<200702221113.44338.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Feb 22 21:02:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Francis Moreau" <francis.moro@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 22 21:02:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKK8m-0008Eh-2E
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:02:08 +0100
+	id 1HKK97-0008MO-7z
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:02:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751818AbXBVUCE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 15:02:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751817AbXBVUCE
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:02:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35261 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751810AbXBVUCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 15:02:01 -0500
-Received: (qmail invoked by alias); 22 Feb 2007 20:02:00 -0000
-X-Provags-ID: V01U2FsdGVkX1/6Aesv97f6hTzOQc5/UjyjUXIkOLl4tCQ7jPDYl/
-	vQ2Q==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vmz36f1bv.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751810AbXBVUCZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 15:02:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbXBVUCZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:02:25 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:46832 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810AbXBVUCY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 15:02:24 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070222200224.HTDR3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 22 Feb 2007 15:02:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Sk2P1W00B1kojtg0000000; Thu, 22 Feb 2007 15:02:23 -0500
+In-Reply-To: <200702221113.44338.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 22 Feb 2007 11:13:42 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40376>
 
-Hi,
+Andy Parkins <andyparkins@gmail.com> writes:
 
-On Thu, 22 Feb 2007, Junio C Hamano wrote:
+> On Thursday 2007 February 22 09:47, Junio C Hamano wrote:
+>
+>> If you have the pre-image blobs the patch was created against,
+>> and the patch was created with git and records "index" lines
+>> like these correctly:
+>>
+>>         diff --git a/builtin-config.c b/builtin-config.c
+>>         index 0f9051d..f1433a4 100644
+>>
+>> then you can tell git to fall back on 3-way merge to apply the
+>> patch.  After seeing "git am ./mbox" fail, you could try
+>
+> Magic.  I had no idea about this.  Could it be made even more
+> magical by doing this for you?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> Can't they made to call a new function, which has the option
-> >> parsing followed by the switch between magic max_count==-2
-> >> codepath and run_diff_files()?
-> >
-> > How about adding "int always_use_index" to the signature of 
-> > run_diff_files()?
-> 
-> The "magic" part is not about the index at all (it is about
-> using only that magic part to do diff on filesystem), and the
-> original code is about "index vs filesystem".
+You can start with --3way from the beginning, not just after
+seeing it fail.
 
-I don't understand. diff-files until --no-index _always_ diffed against 
-the index. Now, if "allow_no_index" is non-zero, under very special 
-circumstances diff-files does the DWIMery.
+In the earlier description, I made it sound as if "-3" is an
+option for recovery, but that is not the case.
 
-> I would rather keep them in separate function.  That is:
-> 
-> 	run_diff_files(); /* compares index vs filesystem */
->                 
-> 	run_diff_filesystem(); /* runs diff2 */
-> 
->         run_diff_files_cmd() {
->              	/* a new helper */
-> 		parse args;
-> 		if (magic)
->                 	run_diff_filesystem();
-> 		else
->                 	run_diff_files();
-> 	}
-> 
-> 	builtin_diff() {
->         	if (not about two trees nor two blobs ...)
->                 	run_diff_files_cmd();
-> 		else if (about two trees)
->                 	run_diff_tree();
-> 		else if (about tree and index)
->                 	run_diff_index();
-> 	}
-> 
->         wt_status() {
->         	run_diff_files();
->                 run_diff_index();
-> 	}
+Running "git am" without mbox parameter and an existing .dotest/
+is the instruction for "git am" to continue, and the first thing
+it does when told to continue is different depending on if
+either --skip or --resolved is given.  --skip makes it skip the
+patch.  --resolved takes the index, uses the metainfo to make a
+commit.  Lack of these options makes it re-try the one recorded
+in .dotest/next file.  After that, if it fails (and --skip would
+not fail), it stops.  Otherwise it goes on to the next patch.
 
-So you mean only add run_diff_files_cmd(), called by diff and diff-files?
+The example you referred to as "magic" is just a normal "retry it"
+codepath but running with the "--3way" option.
 
-> For one thing, I want to move read_cache() out of run_diff_files() and 
-> run_diff_index() to their callers, so that the caller can use a 
-> handcrafted active_cache[] that is somewhat different from what 
-> read_cache() originally read.
+The 3-way fallback is not enabled by default.  A minor reason
+for this is that it did not exist in the original and is an
+optional feature that was added later on.
 
-I don't understand. Would it not be easier to "return active_nr" in 
-read_cache_from(path) _also_ when active_cache is set? Or alternatively 
-check if active_alloc is set?
+But the real reason is that as a principle, git tools err on the
+safe side by default, just like our use of "git-apply" in
+"git-am" does not allow fuzz in the patch nor reducing context
+by default for strictness.  That way, the patch application
+process is stopped and gives the non-interactive user a chance
+to inspect _why_ the patch does not apply, before deciding to
+continue, either with fuzz'ed patch application, fixing the
+patch text, or falling back on 3-way.
 
-Ciao,
-Dscho
+But these days, I almost always run:
+
+	$ git am -3 -s ./mbox
+
+and inspect the ones that actually used 3-way fallback after the
+fact.  It _might_ make sense to add a configuration option to
+default to -3 (or -s for that matter), like:
+
+	[am]
+		signoff
+                threeway
+
+and do something like this:
+
+---
+ git-am.sh |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
+
+diff --git a/git-am.sh b/git-am.sh
+index 6db9cb5..c0395f5 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -109,6 +109,7 @@ prec=4
+ dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary= resolvemsg=
+ git_apply_opt=
+ 
++has_opt=
+ while case "$#" in 0) break;; esac
+ do
+ 	case "$1" in
+@@ -155,8 +156,21 @@ do
+ 	*)
+ 	break ;;
+ 	esac
++	has_opt=t
+ done
+ 
++if test -z "$has_opt"
++then
++	if test true = "$(git config --bool am.signoff)"
++	then
++		sign=t
++	fi
++	if test true = "$(git config --bool am.threeway)"
++	then
++		threeway=t
++	fi
++fi
++
+ # If the dotest directory exists, but we have finished applying all the
+ # patches in them, clear it out.
+ if test -d "$dotest" &&
