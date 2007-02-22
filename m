@@ -1,80 +1,69 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: git-cvsserver and binary files
-Date: Thu, 22 Feb 2007 15:04:30 +0000
-Message-ID: <200702221504.32848.andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-bundle: move objects and references by archive
+Date: Thu, 22 Feb 2007 16:55:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702221654131.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702220157130.22628@wbgn013.biozentrum.uni-wuerz
+ burg.de> <alpine.LRH.0.82.0702212224510.31945@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 22 16:04:46 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>,
+	Junio C Hamano <junkio@cox.net>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Feb 22 16:55:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKFV0-0006sN-4k
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 16:04:46 +0100
+	id 1HKGIP-0000i9-K1
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 16:55:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbXBVPEk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 10:04:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932167AbXBVPEk
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 10:04:40 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:37432 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932160AbXBVPEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 10:04:39 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so549992nfa
-        for <git@vger.kernel.org>; Thu, 22 Feb 2007 07:04:38 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=XF28OPMvWwVuXNEPQMQMvbU/QSvJ1j5OP1dFLM9EAZJlhr3HUJJU2yw+JG9Fxnw49p7AYARCm1HmytPORmvuu3QrALCAgnkORguyNXetX3lFhQS7hygOVNc2J5RK31z1ERfrrMEVaQWmOehj9UUW/N1lPaLryYUhdV+zAtoqHGo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=lPX2/+3WrhCo2a52LFYLZ1DkiRkBVMIVD+8SAue6Sf2syGiJtYTKQrph+dZl3FBAsLq7Kn/wrCSnJWVbI7tNbyLeswxcrfycnxDaoRsnnYbmauUbgmYNOOXWcG1lg5CR6w6L0wpy8Ktvoq3wnlXw0uUmDHbmMAGUlR8N/XEsX1I=
-Received: by 10.48.230.5 with SMTP id c5mr3703723nfh.1172156678003;
-        Thu, 22 Feb 2007 07:04:38 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id a23sm5979480nfc.2007.02.22.07.04.35;
-        Thu, 22 Feb 2007 07:04:35 -0800 (PST)
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+	id S933101AbXBVPze (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 10:55:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933103AbXBVPze
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 10:55:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35981 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933101AbXBVPzb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 10:55:31 -0500
+Received: (qmail invoked by alias); 22 Feb 2007 15:55:29 -0000
+X-Provags-ID: V01U2FsdGVkX1845RcmRLo4pVTpKnf1qW5NcJmooSYIuB7eWiT5nF
+	Vgkg==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <alpine.LRH.0.82.0702212224510.31945@xanadu.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40350>
 
-Hello,
+Hi,
 
-A colleague of mine is using TortoiseCVS to access git-cvserver on my system 
-to do development on Windows with a repository stored on my machine.
+On Wed, 21 Feb 2007, Nicolas Pitre wrote:
 
-It's all gone fairly well, nice and easy to use.  However, we've found that 
-images stored in the repository are being corrupted on checkout to the 
-Windows machine.  Even though they are binary files, they're having the line 
-endings rewritten (in a really strange way as well).
+> On Thu, 22 Feb 2007, Johannes Schindelin wrote:
+> 
+> > diff --git a/index-pack.c b/index-pack.c
+> > index fa9a0e7..5ccf4c4 100644
+> > --- a/index-pack.c
+> > +++ b/index-pack.c
+> > @@ -457,8 +457,8 @@ static void parse_pack_objects(unsigned char *sha1)
+> >  	/* If input_fd is a file, we should have reached its end now. */
+> >  	if (fstat(input_fd, &st))
+> >  		die("cannot fstat packfile: %s", strerror(errno));
+> > -	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
+> > -		die("pack has junk at the end");
+> > +	if (input_fd && S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
+> > +		die("pack has junk at the end: 0%o, %d, %d %d", st.st_mode, (int)st.st_size, (int)consumed_bytes, input_fd);
+> >  
+> >  	if (!nr_deltas)
+> >  		return;
+> 
+> What is this supposed to mean?
 
-I don't think git itself is at fault; the source files are all retaining their 
-original unix line endings, and the images are uncorrupted when I check them 
-out.  I've done a bit of research though and found that CVS marks binary 
-files in the repository, not in the client, so I assume that git-cvsserver is 
-at fault.  It's telling the client side that the image files are text.
+The funny thing is, if you stream part of the bundle file to index-pack, 
+S_ISREG(st.st_mode) is true, even if input_fd == 0.
 
-To be as close to git as possible, I reckon that git-cvsserver should be 
-telling the remote that /every/ file is binary and leave the line endings 
-alone (although that would perhaps annoy some windows users).  I'd much 
-prefer it if what was checked out was what was checked in.  I'm at a bit of a 
-loss as to how to do it though.  I don't know enough about the CVS protocol 
-to know which part of git-cvsserver is telling the client the file type.
+Then, because it is only part of the bundle file, the size check fails.
 
-Should I even try to make all binary checkouts via CVS or should I try and use 
-the auocrlf work that's going on now?
-
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Ciao,
+Dscho
