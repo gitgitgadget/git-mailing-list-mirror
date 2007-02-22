@@ -1,87 +1,71 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: How to say HEAD~"all the way back - 1"
-Date: Thu, 22 Feb 2007 12:59:23 -0800
-Message-ID: <7vr6shdi38.fsf@assigned-by-dhcp.cox.net>
-References: <17885.60477.53356.123095@lisa.zopyra.com>
-	<7vodnmdk8y.fsf@assigned-by-dhcp.cox.net>
-	<17885.64501.15547.465411@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix 'git commit -a' in a newly initialized repository
+Date: Thu, 22 Feb 2007 21:59:33 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702222157000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070222202812.8882.44375.stgit@c165>
+ <Pine.LNX.4.63.0702222140360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <alpine.LRH.0.82.0702221550290.27932@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Feb 22 21:59:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Fredrik Kuivinen <frekui@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Feb 22 21:59:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKL2G-0005Z4-ER
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:59:28 +0100
+	id 1HKL2S-0005du-4V
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:59:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751883AbXBVU7Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 15:59:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751885AbXBVU7Z
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:59:25 -0500
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:37648 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751883AbXBVU7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 15:59:24 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070222205923.IVAF3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 22 Feb 2007 15:59:23 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id SkzP1W00E1kojtg0000000; Thu, 22 Feb 2007 15:59:23 -0500
-In-Reply-To: <17885.64501.15547.465411@lisa.zopyra.com> (Bill Lear's message
-	of "Thu, 22 Feb 2007 14:24:21 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751885AbXBVU7f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 15:59:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751887AbXBVU7f
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:59:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36688 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751885AbXBVU7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 15:59:34 -0500
+Received: (qmail invoked by alias); 22 Feb 2007 20:59:33 -0000
+X-Provags-ID: V01U2FsdGVkX1/19ecsWA31pQVvZRberH6FVUMcpU9I8CCn4s/mFx
+	+XqA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <alpine.LRH.0.82.0702221550290.27932@xanadu.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40391>
 
-Bill Lear <rael@zopyra.com> writes:
+Hi,
 
-> % git log -p HEAD~"All the way back" update
->
-> or something similar.
+On Thu, 22 Feb 2007, Nicolas Pitre wrote:
 
-But in that use case "root" commit is not necessarily what you
-wanted to say, isn't it?  It is more like "I want *earlier*
-history, not latest ones as the command usually gives, of this
-file".
+> On Thu, 22 Feb 2007, Johannes Schindelin wrote:
+> 
+> > On Thu, 22 Feb 2007, Fredrik Kuivinen wrote:
+> > 
+> > > +		die 'nothing to commit (use "git add file1 file2" to include for commit)'
+> > 
+> > Would it not make more sense to tell the user about "git add ."?
+> 
+> Isn't what the patch does?  IMHO it looks just like the empty commit 
+> message which is good.
 
-$ git log --reverse -p HEAD -- update
+I wanted to get at the "." thing. You know, when I start a project with 
+git, there are usually some files there already. Provided I have a 
+.gitignore there, I can just say "git add ." and be done.
 
-would give you the changes that touch the path in the reverse
-order than usual (I think this was merged post 1.5.0).
+But maybe that is _not_ common practice?
 
-But my point is, you may happen to know it was in your root
-commit, but that is a special case.  You may happen to know
-other things to limit the output.  The timeperiod you made that
-change (e.g. --until=2006-05-31), for example.
+> > Maybe together with a hint about .gitignore?
+> > 
+> > This error message is important. The most likely recipients are total 
+> > git newsters, and we really should try to help them here.
+> 
+> Sure.  But to really help newsters it is better _not_ to talk about 
+> .gitignore at all.  It certainly won't exist at that point anyway.
 
-By the way, on the face of it:
+Hmm. That is a really good point. Hmmm. I think you're right.
 
-$ git log --reverse -4 -p HEAD -- update
-
-(or whatever number of commits you are interested in viewing)
-might be closer to what you want to express, but the --reverse
-option does not work like that, unfortunately for this
-particular use case, because the way the semantics of
-interaction between --reverse and --max-count is defined.
-
-Given the above command line, the current implementation limits
-the traversal to four items and then reverses the output,
-instead of traversing normally as if --max-count limitation is
-not there, reversing the result and then limiting the output to
-four items, which would have made the sample command line above
-a bit more useful.
-
-But I would recommend against changing it.  Being able to view
-the latest four commits in reverse is much more useful in
-practice than being able to view the four commits at the
-beginning of time in reverse.  Having both options is certainly
-a possibility but I doubt it is worth it.
+Ciao,
+Dscho
