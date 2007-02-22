@@ -1,47 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-send-email
-Date: Thu, 22 Feb 2007 13:38:17 -0800
-Message-ID: <7vd541dgae.fsf@assigned-by-dhcp.cox.net>
-References: <20070222211313.GA23674@informatik.uni-freiburg.de>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn + svn:externals
+Date: Thu, 22 Feb 2007 13:48:54 -0800
+Message-ID: <20070222214854.GA32195@localdomain>
+References: <51167308-9E52-4E46-80A0-70A3C255C081@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Thu Feb 22 22:38:24 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Thu Feb 22 22:49:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKLdw-0004Yv-8Z
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 22:38:24 +0100
+	id 1HKLoC-0000km-Bc
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 22:49:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751931AbXBVViT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 16:38:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751932AbXBVViT
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 16:38:19 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:64771 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751931AbXBVViS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 16:38:18 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070222213818.JMUR233.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 22 Feb 2007 16:38:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id SleH1W00R1kojtg0000000; Thu, 22 Feb 2007 16:38:18 -0500
-In-Reply-To: <20070222211313.GA23674@informatik.uni-freiburg.de> (Uwe
-	=?utf-8?Q?Kleine-K=C3=B6nig's?= message of "Thu, 22 Feb 2007 22:13:14
- +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751949AbXBVVs5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 16:48:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbXBVVs5
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 16:48:57 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:34802 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751949AbXBVVs4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 16:48:56 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 019BF7DC091;
+	Thu, 22 Feb 2007 13:48:54 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 22 Feb 2007 13:48:54 -0800
+Content-Disposition: inline
+In-Reply-To: <51167308-9E52-4E46-80A0-70A3C255C081@silverinsanity.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40397>
 
-When git-send-email reads from the mbox, it should expect From:
-to be in 2047 (because the input is in Unix mbox format) and
-unwrap it before doing the comparison.  Perhaps it is not doing
-that.
+Brian Gernhardt <benji@silverinsanity.com> wrote:
+> Is there any plan or shell incantation to get git-svn working nicely  
+> with SVN externals?  I'm working a Ruby on Rails application  
+> (radiantcms.org), which uses the externals to track library  
+> versions.  I don't mind reading from an SVN repository, but would  
+> much much rather use git to track my local changes.
+> 
+> Also, is it possible for git-svn to at least warn when the repo  
+> you're importing has externals?  It would be nicer than randomly  
+> having hunks of the project missing.
+
+The latest versions of git-svn should warn about externals (among some
+other things that we currently don't support).  They are logged in
+.git/svn/$refname/unhandled.log with newlines (and some other
+characters) URI-encoded out.  I've been planning on having something
+parse the unhandled.log but have not gotten around to it.
+
+I'm still waiting on subproject support in git to seriously look at
+svn:externals; but it's not a high priority for me.  You could probably
+look at the code that does 'git svn show-ignore' which reads the
+svn:ignore properties and expand it to support svn:externals.
+
+-- 
+Eric Wong
