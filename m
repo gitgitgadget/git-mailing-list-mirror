@@ -1,61 +1,76 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Add git-bundle: move objects and references by archive
-Date: Wed, 21 Feb 2007 22:28:05 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702212224510.31945@xanadu.home>
-References: <Pine.LNX.4.63.0702220157130.22628@wbgn013.biozentrum.uni-wuerz
- burg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Include git-gui credits file in dist.
+Date: Wed, 21 Feb 2007 23:49:51 -0500
+Message-ID: <20070222044951.GA28013@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Mark Levedahl <mdl123@verizon.net>,
-	Junio C Hamano <junkio@cox.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Feb 22 04:28:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 22 05:50:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HK4cw-00060F-DM
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 04:28:14 +0100
+	id 1HK5uJ-0004Az-6i
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 05:50:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751340AbXBVD2I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Feb 2007 22:28:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbXBVD2I
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 22:28:08 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:37267 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751340AbXBVD2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Feb 2007 22:28:07 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDU00KADHMTHRQ0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 21 Feb 2007 22:28:06 -0500 (EST)
-In-reply-to: <Pine.LNX.4.63.0702220157130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-X-Sender: nico@xanadu.home
+	id S1751405AbXBVEt6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Feb 2007 23:49:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbXBVEt6
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Feb 2007 23:49:58 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:37017 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751405AbXBVEt5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Feb 2007 23:49:57 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HK5tl-0004n6-E8; Wed, 21 Feb 2007 23:49:41 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BBDC420FBAE; Wed, 21 Feb 2007 23:49:51 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40334>
 
-On Thu, 22 Feb 2007, Johannes Schindelin wrote:
+The Makefile for the git-gui subproject will fail to execute if run
+outside of a git.git directory, such as when building from a .tar.gz
+or .tar.bz2.  This is because it is looking for the credits file,
+which was created but omitted from the tarball by the toplevel
+Makefile.
 
-> diff --git a/index-pack.c b/index-pack.c
-> index fa9a0e7..5ccf4c4 100644
-> --- a/index-pack.c
-> +++ b/index-pack.c
-> @@ -457,8 +457,8 @@ static void parse_pack_objects(unsigned char *sha1)
->  	/* If input_fd is a file, we should have reached its end now. */
->  	if (fstat(input_fd, &st))
->  		die("cannot fstat packfile: %s", strerror(errno));
-> -	if (S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
-> -		die("pack has junk at the end");
-> +	if (input_fd && S_ISREG(st.st_mode) && st.st_size != consumed_bytes)
-> +		die("pack has junk at the end: 0%o, %d, %d %d", st.st_mode, (int)st.st_size, (int)consumed_bytes, input_fd);
->  
->  	if (!nr_deltas)
->  		return;
+---
 
-What is this supposed to mean?
+ This has to go on `maint` before you create the release tarball
+ for 1.5.0.2, otherwise 1.5.0.2 cannot be compiled outside of a
+ git.git repository.
 
+ Makefile |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Nicolas
+diff --git a/Makefile b/Makefile
+index 289decd..35be5e2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -895,7 +895,8 @@ dist: git.spec git-archive
+ 	$(TAR) rf $(GIT_TARNAME).tar \
+ 		$(GIT_TARNAME)/git.spec \
+ 		$(GIT_TARNAME)/version \
+-		$(GIT_TARNAME)/git-gui/version
++		$(GIT_TARNAME)/git-gui/version \
++		$(GIT_TARNAME)/git-gui/credits
+ 	@rm -rf $(GIT_TARNAME)
+ 	gzip -f -9 $(GIT_TARNAME).tar
+ 
+-- 
+1.5.0.61.ga0bf
