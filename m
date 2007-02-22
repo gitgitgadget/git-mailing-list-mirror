@@ -1,50 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix 'git commit -a' in a newly initialized repository
-Date: Thu, 22 Feb 2007 21:42:33 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702222140360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070222202812.8882.44375.stgit@c165>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: How to say HEAD~"all the way back - 1"
+Date: Thu, 22 Feb 2007 15:47:37 -0500
+Message-ID: <20070222204737.GC18622@fieldses.org>
+References: <17885.60477.53356.123095@lisa.zopyra.com> <7vodnmdk8y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Fredrik Kuivinen <frekui@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 22 21:42:45 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Feb 22 21:47:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKKly-0007ah-CU
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:42:38 +0100
+	id 1HKKqn-000135-EC
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 21:47:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751856AbXBVUmf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 15:42:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbXBVUmf
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:42:35 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34475 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751856AbXBVUme (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 15:42:34 -0500
-Received: (qmail invoked by alias); 22 Feb 2007 20:42:33 -0000
-X-Provags-ID: V01U2FsdGVkX1/5eNgKLCz5sFnckCyYy3fjmfnDbd22nOU4KhiMoP
-	2lAw==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070222202812.8882.44375.stgit@c165>
-X-Y-GMX-Trusted: 0
+	id S1751863AbXBVUrd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 15:47:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbXBVUrd
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 15:47:33 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:50248 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751863AbXBVUrd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 15:47:33 -0500
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HKKqn-0007ox-PQ; Thu, 22 Feb 2007 15:47:37 -0500
+Content-Disposition: inline
+In-Reply-To: <7vodnmdk8y.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40385>
 
-Hi,
+On Thu, Feb 22, 2007 at 12:12:45PM -0800, Junio C Hamano wrote:
+> Sorry, there is no such shorthand, but you could obviously say:
+> 
+> 	$ git rev-list --parents HEAD | grep -v ' '
+> 
+> A way to find the root commit seems to be one of the things
+> people new to git want at least once, once they start futzing
+> with the tool.  But I suspect that is only because they need
+> that information to see how the tool works (say "what different
+> output would I get out of 'git show $commit' for root and other
+> commits?"), and not because they need that information for any
+> real life use.
+> 
+> Really, what useful purpose does it serve for you to find out
+> the root commit, OTHER THAN being able to say "the development
+> history of this project starts at this commit"?
 
-On Thu, 22 Feb 2007, Fredrik Kuivinen wrote:
+I occasionally want to reference commits not relative to "all the way
+back" but to "all the way back on this branch".  So, e.g., what's the
+next-to-last commit before "topic" meets up with "origin"?
 
-> +		die 'nothing to commit (use "git add file1 file2" to include for commit)'
+I can do something like
 
-Would it not make more sense to tell the user about "git add ."? Maybe 
-together with a hint about .gitignore?
+	git rev-list origin..topic | tail -2 | head -1
 
-This error message is important. The most likely recipients are total git 
-newsters, and we really should try to help them here.
+but in practice it's faster just to fire up gitk origin.. and
+cut-n-paste object id's.
 
-Ciao,
-Dscho
+--b.
