@@ -1,61 +1,81 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn + svn:externals
-Date: Thu, 22 Feb 2007 13:48:54 -0800
-Message-ID: <20070222214854.GA32195@localdomain>
-References: <51167308-9E52-4E46-80A0-70A3C255C081@silverinsanity.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: RFC: script to add another remote
+Date: Thu, 22 Feb 2007 17:16:35 -0500
+Message-ID: <1172182595.20817.26.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Thu Feb 22 22:49:01 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Feb 22 23:16:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKLoC-0000km-Bc
-	for gcvg-git@gmane.org; Thu, 22 Feb 2007 22:49:00 +0100
+	id 1HKMEz-0004aM-AE
+	for gcvg-git@gmane.org; Thu, 22 Feb 2007 23:16:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751949AbXBVVs5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 16:48:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751903AbXBVVs5
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 16:48:57 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:34802 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751949AbXBVVs4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 16:48:56 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 019BF7DC091;
-	Thu, 22 Feb 2007 13:48:54 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 22 Feb 2007 13:48:54 -0800
-Content-Disposition: inline
-In-Reply-To: <51167308-9E52-4E46-80A0-70A3C255C081@silverinsanity.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751976AbXBVWQi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 17:16:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbXBVWQi
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 17:16:38 -0500
+Received: from fencepost.gnu.org ([199.232.76.164]:59636 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751976AbXBVWQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 17:16:37 -0500
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1HKMDS-00012Z-UK
+	for git@vger.kernel.org; Thu, 22 Feb 2007 17:15:06 -0500
+Received: from proski by gnu.org with local (Exim 4.66)
+	(envelope-from <proski@gnu.org>)
+	id 1HKMEt-0001yQ-KN
+	for git@vger.kernel.org; Thu, 22 Feb 2007 17:16:35 -0500
+X-Mailer: Evolution 2.9.91 (2.9.91-3.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40398>
 
-Brian Gernhardt <benji@silverinsanity.com> wrote:
-> Is there any plan or shell incantation to get git-svn working nicely  
-> with SVN externals?  I'm working a Ruby on Rails application  
-> (radiantcms.org), which uses the externals to track library  
-> versions.  I don't mind reading from an SVN repository, but would  
-> much much rather use git to track my local changes.
-> 
-> Also, is it possible for git-svn to at least warn when the repo  
-> you're importing has externals?  It would be nicer than randomly  
-> having hunks of the project missing.
+Hello!
 
-The latest versions of git-svn should warn about externals (among some
-other things that we currently don't support).  They are logged in
-.git/svn/$refname/unhandled.log with newlines (and some other
-characters) URI-encoded out.  I've been planning on having something
-parse the unhandled.log but have not gotten around to it.
+I'm trying to find the best way to add a new remote to an existing
+repository, create a local branch for it and make it easy to switch to
+that branch and back and to update all branches.
 
-I'm still waiting on subproject support in git to seriously look at
-svn:externals; but it's not a high priority for me.  You could probably
-look at the code that does 'git svn show-ignore' which reads the
-svn:ignore properties and expand it to support svn:externals.
+This is important because some Linux developers want to publish their
+branches without having to serve the whole Linux repository, which is
+about 175Mb even if packed with repack.usedeltabaseoffset=true.
+
+I have written a simple script "git-clone-more" to help users who want
+to track more than one remote:
+
+
+#!/bin/sh
+set -e
+if test $# -lt 2 || test $# -gt 4; then
+	echo "Usage: git-clone-more URL REMOTE [BRANCH [REMBRANCH]]" >&2
+	exit 1
+fi
+URL=$1
+REMOTE=$2
+BRANCH=${3-$REMOTE}
+REMBRANCH=${4-master}
+git-remote add "$REMOTE" "$URL"
+git-fetch "$REMOTE"
+git-config branch."$BRANCH".remote "$REMOTE"
+git-config branch."$BRANCH".merge refs/heads/"$REMBRANCH"
+git-checkout -b "$BRANCH" remotes/"$REMOTE"/"$REMBRANCH"
+
+
+If there is any easier way to do the same thing?  Maybe we could extend
+one of the git commands or make the above script another git command?
+
+It's interesting that git-clone-more can be used instead of git-clone.
+I can use it e.g. to check out git in an empty directory:
+
+git-init
+git-clone-more git://www.kernel.org/pub/scm/git/git.git git
 
 -- 
-Eric Wong
+Regards,
+Pavel Roskin
