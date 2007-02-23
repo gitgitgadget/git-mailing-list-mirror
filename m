@@ -1,89 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH for "next"] pretty-formats: add 'format:<string>'
-Date: Fri, 23 Feb 2007 19:38:46 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702231935560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <87k61yt1x2.wl%cworth@cworth.org> <87hcx1u934.wl%cworth@cworth.org>
- <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org>
- <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home>
- <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home>
- <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home>
- <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <455BBCE9.4050503@xs4all.nl>
- <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org> <455C412D.1030408@xs4all.nl>
- <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net> <455C618A.7080309@xs4all.nl>
- <ejkd6g$vog$1@sea.gmane.org> <4566E512.4010405@xs4all.nl>
- <Pine.LNX.4.63.0702230125270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vslcx9ywx.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702231237500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vabz44tgh.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] core.legacyheaders: Use the description used in RelNotes-1.5.0
+Date: Fri, 23 Feb 2007 10:44:22 -0800
+Message-ID: <7vwt283e9l.fsf@assigned-by-dhcp.cox.net>
+References: <87d540oo80.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Han-Wen Nienhuys <hanwen@xs4all.nl>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 23 19:39:04 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 23 19:44:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKfJv-0000cb-7T
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 19:39:03 +0100
+	id 1HKfPG-0002xP-2U
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 19:44:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932583AbXBWSit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 13:38:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932481AbXBWSit
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 13:38:49 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40390 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932583AbXBWSis (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 13:38:48 -0500
-Received: (qmail invoked by alias); 23 Feb 2007 18:38:47 -0000
-X-Provags-ID: V01U2FsdGVkX1/lsT9qQtHlNUyO1bRiZYlyfYNRzp7tKh8DREzz//
-	zAoA==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vabz44tgh.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S932481AbXBWSoZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 23 Feb 2007 13:44:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932572AbXBWSoZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 13:44:25 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:49716 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932481AbXBWSoZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Feb 2007 13:44:25 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070223184424.FNWI2394.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 23 Feb 2007 13:44:24 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id T6kQ1W0031kojtg0000000; Fri, 23 Feb 2007 13:44:24 -0500
+In-Reply-To: <87d540oo80.fsf@gmail.com> (Santi =?utf-8?Q?B=C3=A9jar's?=
+ message of "Fri, 23
+	Feb 2007 17:03:43 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40463>
 
-Hi,
+Santi B=C3=A9jar <sbejar@gmail.com> writes:
 
-On Fri, 23 Feb 2007, Junio C Hamano wrote:
+> +	A boolean which
+> +	changes the format of loose objects so that they are more
+> +	efficient to pack and to send out of the repository over git
+> +	native protocol, since v1.4.2.  However, loose objects
+> +	written in the new format cannot be read by git older than
+> +	that version; people fetching from your repository using
+> +	older clients over dumb transports (e.g. http) using older
+> +	versions of git will also be affected.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> > The supported placeholders are:
-> >> >
-> >> > 	'%H': commit hash
-> >> >...
-> >> > 	'%b': body
-> >> 
-> >> Hmmm.  Would we want to make them somehow interoperable with 
-> >> git-for-each-ref format atoms?
-> >
-> > But those placeholders are so long! Not even GNU date supports such 
-> > long placeholders... And I could not reuse interpolate.[ch] as is for 
-> > that.
-> 
-> What I was hinting at was to fix (or extend) for-each-ref to accept 
-> these short-and-sweet placeholders.
+Much better than the original but "using older clients" and
+"using older versions of git" sounds duplicated.
 
-Ah, the other way round...
-
-> >> Also, it _might_ be worthwhile to do something like "%+4b" which 
-> >> means "indent each line of this field with 4 spaces", for a 
-> >> multi-line field like "%b".
-> >
-> > Same goes here: interpolate.[ch] does not (yet) allow for that.
-> 
-> Nah, if you feel it is too much work, I trust your judgement (I
-> do not recall details of how interpolate.c does its thing).  I
-> do not think it's worth it.
-
-Sure, it _would_ be nice to let interpolate call back, instead of having 
-to fill a table with static strings (xstrdup()ing them, no less).
-
-However, I want to go play Snooker tonight, so this is up-for-grabs.
-
-Ciao,
-Dscho
+> ++
+> +To let git use the new loose object format, you have to
+> +set core.legacyheaders to false.
+> =20
+>  core.packedGitWindowSize::
+>  	Number of bytes of a pack file to map into memory in a
+> --=20
+> 1.5.0.1.576.g78541
