@@ -1,54 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-diff: fix combined diff
-Date: Fri, 23 Feb 2007 00:34:28 -0500
-Message-ID: <20070223053428.GA13301@coredump.intra.peff.net>
-References: <Pine.LNX.4.63.0702230517480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: A note from the maintainer
+Date: Thu, 22 Feb 2007 22:03:17 -0800
+Message-ID: <7v7iu9beca.fsf@assigned-by-dhcp.cox.net>
+References: <7vlkj1v3av.fsf@assigned-by-dhcp.cox.net>
+	<7vire120qc.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702170334140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junkio@cox.net
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 23 06:34:36 2007
+X-From: git-owner@vger.kernel.org Fri Feb 23 07:03:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKT4j-0003Ty-Up
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 06:34:34 +0100
+	id 1HKTWj-00062R-8T
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 07:03:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750916AbXBWFeb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 00:34:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbXBWFeb
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 00:34:31 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3368 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750895AbXBWFea (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 00:34:30 -0500
-Received: (qmail 6130 invoked from network); 23 Feb 2007 00:34:41 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 23 Feb 2007 00:34:41 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Feb 2007 00:34:28 -0500
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0702230517480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751615AbXBWGDS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 01:03:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751621AbXBWGDS
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 01:03:18 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:33300 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751615AbXBWGDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 01:03:18 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070223060318.TEXC2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 23 Feb 2007 01:03:18 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Su3G1W00m1kojtg0000000; Fri, 23 Feb 2007 01:03:17 -0500
+In-Reply-To: <Pine.LNX.4.63.0702170334140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 17 Feb 2007 03:35:01 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40417>
 
-On Fri, Feb 23, 2007 at 05:20:32AM +0100, Johannes Schindelin wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> With "const unsigned (*parent)[20]", "parent + 1" is not the
-> same as "&parent[1]"...
+> Hi,
+>
+> On Fri, 16 Feb 2007, Junio C Hamano wrote:
+>
+>> Many active members of development community hang around on #git
+>> IRC channel.  Its log is available at:
+>> 
+>> 	http://colabti.de/irclogger/irclogger_logs/git
+>> 
+>> [jc: Does anybody know a shortcut for "Today's" page on this
+>>  site?  It irritates me having to click the latest link on this
+>>  page to get to the latest.]
+>
+> [jes: just stumbled over it: 
+> http://colabti.de/irclogger/irclogger_log/git?date=]
 
-Actually, they _are_ the same (the C standard definition of A[B] is *(A+B)).
-The problem is the operator precedence of the cast:
-
-> -		hashcpy((unsigned char*)parent + i, ent[ents - 1 - i].item->sha1);
-
-which translates to "cast parent to an unsigned char pointer, and then
-add i * sizeof(unsigned char) to it".
-
-Your fix works because [] binds more tightly, fixing the precedence
-problem. You could also do this:
-  hashcpy((unsigned char*)(parent + i), ...
-
--Peff
+This (or its variant, just removing "?date=" at the end) seems
+to work most of the time, except for close to day boundary.  I
+do not know why.
