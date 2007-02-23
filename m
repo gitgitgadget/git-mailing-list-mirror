@@ -1,63 +1,69 @@
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH for "next"] pretty-formats: add 'format:<string>'
-Date: Fri, 23 Feb 2007 02:03:24 +0100
-Message-ID: <45DE3D5C.5060105@xs4all.nl>
-References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org> <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home> <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org> <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org> <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org> <455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net> <455C618A.7080309@xs4all.nl> <ejkd6g$vog$1@sea.gmane.org> <4566E512.4010405@xs4all.nl> <Pine.LNX.4.63.0702230125270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 23 Feb 2007 02:07:59 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702230204190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <87k61yt1x2.wl%cworth@cworth.org> <455A1137.8030301@shadowen.org>
+ <87hcx1u934.wl%cworth@cworth.org> <Pine.LNX.4.64.0611141518590.2591@xanadu.home>
+ <87bqn9u43s.wl%cworth@cworth.org> <ejdcg5$4fl$1@sea.gmane.org>
+ <Pine.LNX.4.64.0611141633430.2591@xanadu.home> <7vbqn9y6w6.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142007010.2591@xanadu.home> <7v3b8ltq7r.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0611142306090.2591@xanadu.home> <Pine.LNX.4.64.0611150950170.3349@woody.osdl.org>
+ <455BBCE9.4050503@xs4all.nl> <Pine.LNX.4.64.0611151908130.3349@woody.osdl.org>
+ <455C412D.1030408@xs4all.nl> <7v7ixvbq80.fsf@assigned-by-dhcp.cox.net>
+ <455C618A.7080309@xs4all.nl> <ejkd6g$vog$1@sea.gmane.org> <4566E512.4010405@xs4all.nl>
+ <Pine.LNX.4.63.0702230125270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45DE3D5C.5060105@xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, junkio@cox.net
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Feb 23 02:03:22 2007
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Fri Feb 23 02:08:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKOqG-0008UH-JK
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 02:03:20 +0100
+	id 1HKOv0-0001xE-IG
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 02:08:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105AbXBWBDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 20:03:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbXBWBDR
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 20:03:17 -0500
-Received: from smtp-vbr11.xs4all.nl ([194.109.24.31]:4449 "EHLO
-	smtp-vbr11.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752105AbXBWBDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 20:03:16 -0500
-Received: from [192.168.123.187] (muurbloem.xs4all.nl [213.84.26.127])
-	(authenticated bits=0)
-	by smtp-vbr11.xs4all.nl (8.13.8/8.13.8) with ESMTP id l1N13CqE071405
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 23 Feb 2007 02:03:12 +0100 (CET)
-	(envelope-from hanwen@xs4all.nl)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
-In-Reply-To: <Pine.LNX.4.63.0702230125270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1752094AbXBWBIE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 20:08:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbXBWBID
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 20:08:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46516 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752094AbXBWBIB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 20:08:01 -0500
+Received: (qmail invoked by alias); 23 Feb 2007 01:07:59 -0000
+X-Provags-ID: V01U2FsdGVkX18yQwd4WtAyP+JCjyGxX/4t3g5dXRh/UPM2QstGnk
+	yMrA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45DE3D5C.5060105@xs4all.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40405>
 
-Johannes Schindelin escreveu:
-> With this patch,
+Hi,
+
+On Fri, 23 Feb 2007, Han-Wen Nienhuys wrote:
+
+> nitpick:
 > 
-> $ git show -s \
-> 	--pretty=format:'  Ze komit %h woss%n  dunn buy ze great %an'
+>   \n
 > 
-> shows something like
-> 
->   Ze komit 04c5c88 woss
->   dunn buy ze great Junio C Hamano
-> 
-> The supported placeholders are:
+> for newline would be nice. Similar for backslash, formfeed, alarm, etc.
 
-nitpick:
+Yes, I thought about that. But it would change behaviour (even if I don't 
+think it would do serious damage; the only user of interpolate.[ch] I saw 
+is git-daemon, and that does not need \n, I guess).
 
-  \n
+Besides, "%n" is
 
-for newline would be nice. Similar for backslash, formfeed, alarm, etc.
+- more consistent,
+- date(1) does it the same way, and
+- you can put BS, FF, AL, etc. into the format string before passing 
+  it as an option to git; git does not have to help you there.
 
- 
-
--- 
- Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+Ciao,
+Dscho
