@@ -1,87 +1,126 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH 1/3] Wrap the log text in some nice HTML to highlight the commit message
-Date: Fri, 23 Feb 2007 09:03:10 +0100
-Message-ID: <e5bfff550702230003o5a24a422h7c52a544318da1d4@mail.gmail.com>
-References: <200702172200.13461.andyparkins@gmail.com>
-	 <200702172202.25730.andyparkins@gmail.com>
-	 <e5bfff550702172325w32f980b3x58b05face97ec7d2@mail.gmail.com>
-	 <200702181044.53115.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: RFC: [PATCH] Support incremental pack files
+Date: Fri, 23 Feb 2007 00:10:35 -0800
+Message-ID: <7vfy8x9tvo.fsf@assigned-by-dhcp.cox.net>
+References: <20070223071344.GA21107@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Andy Parkins" <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 23 09:03:22 2007
+To: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+X-From: git-owner@vger.kernel.org Fri Feb 23 09:10:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKVOj-0001io-QL
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 09:03:22 +0100
+	id 1HKVVn-0004gC-U0
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 09:10:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbXBWIDN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 03:03:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752158AbXBWIDN
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 03:03:13 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:34912 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752140AbXBWIDM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 03:03:12 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so307131uga
-        for <git@vger.kernel.org>; Fri, 23 Feb 2007 00:03:11 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=R7+QrNiOU+x1TAdCwH6fa2I3sWGb3uTaYbVh7Uy43X6ePA3cz0FzPyoIO4Cn+wDJACu842vegxF8MiKoDUtaah6L0lEvwIiZcQRovKG8JpCkMKGRl0bpxX6PnTLCyyLXLL1JAqVgfvT55NX2KIdZGPT96WfvPRgt3if02sVnfJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pXkC1XaLRpdxXf0XdKE8zYBCgWpCVgwXLnQYc6RQ2w/Hqk71lXVFAsJgMqpPa1+OEbCNR6KRn8B0pNHBEZynFw439eZJjB9BWPCWQvqEyEzjIvEcxTTB1Zhqa/30PvZg/7KYelKDJi09QLyGx8euAg2M9KJgLnKADxTShB/8YBs=
-Received: by 10.114.183.1 with SMTP id g1mr717177waf.1172217790229;
-        Fri, 23 Feb 2007 00:03:10 -0800 (PST)
-Received: by 10.114.60.16 with HTTP; Fri, 23 Feb 2007 00:03:10 -0800 (PST)
-In-Reply-To: <200702181044.53115.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S1752164AbXBWIKh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 03:10:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbXBWIKh
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 03:10:37 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:55019 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164AbXBWIKg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 03:10:36 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070223081036.UUPB3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 23 Feb 2007 03:10:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id SwAb1W0051kojtg0000000; Fri, 23 Feb 2007 03:10:36 -0500
+In-Reply-To: <20070223071344.GA21107@auto.tuwien.ac.at> (Martin Koegler's
+	message of "Fri, 23 Feb 2007 08:13:44 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40422>
 
-On 2/18/07, Andy Parkins <andyparkins@gmail.com> wrote:
-> On Sunday 2007, February 18, Marco Costalba wrote:
+mkoegler@auto.tuwien.ac.at (Martin Koegler) writes:
+
+> Commiting a new version in GIT increases the storage by the compressed
+> size of each changed blob. Packing all unpacked objects decreases the
+> required storage, but does not generate deltas against objects in
+> packs. You need to repack all objects to get around this.
 >
-> > thanks for your patches, but I can see only this email and the
-> > '[PATCH 2/3] Improve default column widths by changing resize modes',
-> > I miss body of [PATCH 1/3]  and  [PATCH 3/3].
->
-> I think that the mailing list spam filter is objecting because the email
-> contains HTML tags.  I'll send the patches to you directly to bypass
-> the spam filter.
->
->
+> For normal source code, this is not a problem.  But if you want to use
+> git for big files, you waste storage (or CPU time for everything
+> repacking).
 
-Hi Andy,
+Three points that might help you without any code change.
 
- I finally apply and pushed your patches to
-git://repo.or.cz/qgit4.git, I have to say I really like your fancy
-html log message.
+ - Have you run "git repack -a -d" without "-f"?  Reusing of
+   existing delta is specifically designed to avoid the "CPU
+   time for everything repacking" problem.
 
-Just a couple of notes:
+ - If you are dealing with something other than "normal source
+   code", do you know if your objects delta against each other
+   well?  If not, turning core.legacyheaders off might be a
+   win.  It allows the objects that are recorded as non-delta in
+   resulting pack to be copied straight from loose objects.
 
-- Font family is set to TYPE_WRITER_FONT, but font size is not taken
-into account and seems fixed.
+ - Once you accumulated large enough packs with existing
+   objects, marking them with .keep would leave them untouched
+   during subsequent repack.  When "git repack -a -d" repacks
+   "everything", its definition of "everything" becomes "except
+   things that are in packs marked with .keep files".
 
-- There are some alignement issues in the header, sometimes author,
-date, etc.. are left shifted without a clear reason wasting valuable
-screen space.
+Side note: Is the .keep mechanism sufficiently documented?  I am
+too lazy to check that right now, but here is a tip.  After
+releasing the big one, line v1.5.0, I do:
 
-Here are some snapshots to better clarify the points.
+  $ P=.git/objects/pack
+  $ git rev-list --objects v1.5.0 |
+    git pack-objects --delta-base-offset \
+          --depth=30 --window=100 --no-reuse-delta pack
+  ...
+  6fba5cb8ed92dfef71ff47def9f95fa1e703ba59
+  $ mv pack-6fba5cb8ed92dfef71ff47def9f95fa1e703ba59.* $P/
+  $ echo 'Post 1.5.0' >$P/pack-6fba5cb8ed92dfef71ff47def9f95fa1e703ba59.keep
+  $ git gc --prune
 
-http://digilander.libero.it/mcostalba/andy1.png
-http://digilander.libero.it/mcostalba/andy2.png
-http://digilander.libero.it/mcostalba/andy3.png
+This does three things:
 
-Anyway a nice job.
+ - It packs everything reachable from v1.5.0 with delta chain
+   that is deeper than the default.
 
-Thanks
-Marco
+ - The pack is installed in the object store; the presence of
+   .keep file (the contents of it does not matter) tells
+   subsequent repack not to touch it.
+
+ - Then the remaining objects are packed into different pack.
+
+With this, the repository uses two packs, one is what I'll keep
+until it's time to do the big repack again, another is what's
+constantly recreated by repacking but contains only "recent"
+object.
+
+> It only permits, that the base commit of a delta is located in a
+> different pack or as unpacked object.
+
+This "only" change needs to be done _very_ carefully, since
+self-containedness of pack files is one of the important
+elements of the stability of a git repository.
+
+In effect, you are making the delta and its base object into a
+new type of "reachability" for the purpose of fsck/prune by
+allowing incremental pack to contain a delta against a loose
+object.  I am not saying it is a bad idea, but making sure you
+covered every case you could lose necessary objects will be a
+lot of work.
+
+For example, suppose a delta in your incremental pack is based
+on a loose object.  That loose object can become unreachable
+after rewinding or rebasing your refs.  You have to somehow
+arrange that git-prune knows this situation and prevent it from
+getting pruned -- otherwise your incremental pack becomes
+corrupt.
+
+And that is just one example I could come up with after seeing
+your message in 3 minutes while watching TV ;-).  I would
+usually say "I am sure there will be more...", but in this
+particular case, I am inclined to say that I do not even want to
+start thinking about possible fallout from this.  It's scary.
