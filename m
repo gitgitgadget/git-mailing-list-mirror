@@ -1,60 +1,85 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] gitk: bind <F5> key to Update (reread commits)
-Date: Fri, 23 Feb 2007 15:41:13 -0500
-Message-ID: <20070223204113.GA27261@spearce.org>
-References: <11722629943386-git-send-email-normalperson@yhbt.net>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Limit filename for format-patch
+Date: Fri, 23 Feb 2007 22:39:18 +0100
+Message-ID: <200702232239.19504.robin.rosenberg@dewire.com>
+References: <20070223003711.6895.24185.stgit@lathund.dewire.com> <Pine.LNX.4.63.0702230143370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Feb 23 21:41:25 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 23 22:37:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKhEI-00028s-0M
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 21:41:22 +0100
+	id 1HKi74-00016p-Fd
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 22:37:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932643AbXBWUlT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 15:41:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933202AbXBWUlS
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 15:41:18 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:32891 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932643AbXBWUlS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 15:41:18 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HKhE6-0007gg-50; Fri, 23 Feb 2007 15:41:10 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id C4FB720FBAE; Fri, 23 Feb 2007 15:41:13 -0500 (EST)
+	id S932237AbXBWVhz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 16:37:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932313AbXBWVhz
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 16:37:55 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:12578 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S932237AbXBWVhz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 16:37:55 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 91588802E11;
+	Fri, 23 Feb 2007 22:32:53 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 18136-06; Fri, 23 Feb 2007 22:32:53 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 3D21B802AB6;
+	Fri, 23 Feb 2007 22:32:51 +0100 (CET)
+User-Agent: KMail/1.9.4
+In-Reply-To: <Pine.LNX.4.63.0702230143370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-In-Reply-To: <11722629943386-git-send-email-normalperson@yhbt.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40469>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> I chose <F5> because it's also the key to reload the current
-> page in web browsers such as Konqueror and Firefox, so users
-> are more likely to be familiar with it.
+fredag 23 februari 2007 01:49 skrev Johannes Schindelin:
+> Hi,
+> 
+> I agree that your patch fixes a long-time issue.
+> 
+> On Fri, 23 Feb 2007, Robin Rosenberg wrote:
+> 
+> > +		if (strlen(output_directory) > sizeof filename - suffix_len)
+> 
+> I know that "sizeof filename" works, but in git.git, `git grep sizeof' 
+> returns > 700 instances, only 23 of which do not use the 
+> "sizeof(filename)" form. It's just a style issue, but I prefer the latter 
+> nevertheless...
+Actually there are (only) about 500 of them that are not the sizeof(type) kind.
 
-It is also the key for rescan in git-gui.  :-)
+I prefer not to use extra parentheses except for grouping complex expressions 
+for readability.
 
-Though I have to admit, I chose F5 there for the exact reason you
-mention above.
+> >  		for (j = 0;
+> 
+> Does this:
+> 
+> > +		     j< 64-suffix_len-5 && 
+> >  		     len < sizeof(filename) - suffix_len &&
+> >  			     sol[j] && sol[j] != '\n';
+> >  		     j++) {
+> 
+> not make this:
+> 
+> > +	if (len + strlen(fmt_patch_suffix) >= sizeof filename)
+> > +		return error("Patch pathname too long");
+> 
+> unnecessary for the case that there _was_ an output directory specified? 
+> I'd make that an "else if"... But I might be missing something.
 
--- 
-Shawn.
+The last statement errs out if the total length is too long which is a different
+issue than truncating the patch name. There is no reason to two paths when
+one does perfectly well.  But I could replace strlen there.
+
+-- robin
