@@ -1,71 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-push hook to update remote working copy safely
-Date: Fri, 23 Feb 2007 19:13:35 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702231910270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1172220709.10221.1176113191@webmail.messagingengine.com>     
- <7v649t5ebq.fsf@assigned-by-dhcp.cox.net>     
- <1172248500.32514.1176151445@webmail.messagingengine.com>     
- <Pine.LNX.4.63.0702231737300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <1172250283.5505.1176180417@webmail.messagingengine.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 23 Feb 2007 10:12:58 -0800
+Message-ID: <7virds4uad.fsf@assigned-by-dhcp.cox.net>
+References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
+	<7v8xep8dfk.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702231258400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sam Watkins <swatkins@fastmail.fm>
-X-From: git-owner@vger.kernel.org Fri Feb 23 19:14:26 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 23 19:14:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKew5-0007HO-3w
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 19:14:25 +0100
+	id 1HKew4-0007HO-2Y
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 19:14:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933158AbXBWSNi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 13:13:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933131AbXBWSNi
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 13:13:38 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58211 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933158AbXBWSNh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 13:13:37 -0500
-Received: (qmail invoked by alias); 23 Feb 2007 18:13:35 -0000
-X-Provags-ID: V01U2FsdGVkX19DM042OkRDT8ef+dYkPd1bZTPGgV3+3s2bKrTrYJ
-	FN7g==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <1172250283.5505.1176180417@webmail.messagingengine.com>
-X-Y-GMX-Trusted: 0
+	id S933153AbXBWSNB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 13:13:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933152AbXBWSNA
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 13:13:00 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:47378 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933153AbXBWSM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 13:12:59 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070223181258.GUMA3767.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 23 Feb 2007 13:12:58 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id T6Cy1W00i1kojtg0000000; Fri, 23 Feb 2007 13:12:59 -0500
+In-Reply-To: <Pine.LNX.4.63.0702231258400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 23 Feb 2007 15:48:33 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40458>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sat, 24 Feb 2007, Sam Watkins wrote:
+> On Fri, 23 Feb 2007, Junio C Hamano wrote:
+>
+>> * js/fetch-progress (Tue Feb 20 03:01:44 2007 +0100) 1 commit
+>>  + fetch & clone: do not output progress when not on a tty
+>> 
+>> I'll see it in action from my cron job.
+>
+> That's how I tried to test it. It does not work. The problem is that the 
+> remote git-upload-pack is unlikely to understand the option 
+> "--no-progress".
+>
+> So maybe we have to make this a new pack protocol option?
 
-> On Fri, 23 Feb 2007 17:40:02 +0100 (CET), "Johannes Schindelin"
-> <Johannes.Schindelin@gmx.de> said:
-> >
-> > On Sat, 24 Feb 2007, Sam Watkins wrote:
-> >
-> > > it should merge the changes as if I'd run git-pull on the remote
-> > > box, and handle conflicts in the same way.
-> >
-> > But that leaves conflicts in the working directory! You _have_ to
-> > resolve them (or reset) before proceding.
-> 
-> I think it's ok for our application if the push+hook leaves conflicts in 
-> the working directory, I just want to replicate the effect of running 
-> git-pull remotely without actually having to go through ssh contortions 
-> to achieve that.
-
-I don't really see what you want to do there (and you don't want to tell 
-me:-)). Nevertheless, it seems that Junio's script would help you. You 
-cannot run a pull sanely when the working directory is dirty, and 
-therefore the hook does not allow that.
-
-BTW the easiest way to do what you apparently want is to push to a 
-"remotely tracking" branch, i.e. a branch in the remotes/ hierarchy, and 
-_then_ make an update hook which says "git merge remotes/<uploadbranch>".
-
-Ciao,
-Dscho
+Yes.
