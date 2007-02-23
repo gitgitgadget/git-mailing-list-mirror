@@ -1,69 +1,71 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: How to say HEAD~"all the way back - 1"
-Date: Fri, 23 Feb 2007 11:56:10 -0600
-Message-ID: <17887.10938.419368.304761@lisa.zopyra.com>
-References: <17885.60477.53356.123095@lisa.zopyra.com>
-	<20070222193625.GA4489@pasky.or.cz>
-	<ern9gn$h4d$1@sea.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-push hook to update remote working copy safely
+Date: Fri, 23 Feb 2007 19:13:35 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702231910270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <1172220709.10221.1176113191@webmail.messagingengine.com>     
+ <7v649t5ebq.fsf@assigned-by-dhcp.cox.net>     
+ <1172248500.32514.1176151445@webmail.messagingengine.com>     
+ <Pine.LNX.4.63.0702231737300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <1172250283.5505.1176180417@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 23 18:57:11 2007
+To: Sam Watkins <swatkins@fastmail.fm>
+X-From: git-owner@vger.kernel.org Fri Feb 23 19:14:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKefO-0000M5-LT
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 18:57:11 +0100
+	id 1HKew5-0007HO-3w
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 19:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932505AbXBWR4Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 12:56:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932501AbXBWR4Q
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 12:56:16 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:61803 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932500AbXBWR4P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 12:56:15 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1NHuDl06850;
-	Fri, 23 Feb 2007 11:56:13 -0600
-In-Reply-To: <ern9gn$h4d$1@sea.gmane.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S933158AbXBWSNi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 13:13:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933131AbXBWSNi
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 13:13:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58211 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933158AbXBWSNh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 13:13:37 -0500
+Received: (qmail invoked by alias); 23 Feb 2007 18:13:35 -0000
+X-Provags-ID: V01U2FsdGVkX19DM042OkRDT8ef+dYkPd1bZTPGgV3+3s2bKrTrYJ
+	FN7g==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <1172250283.5505.1176180417@webmail.messagingengine.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40457>
 
-On Friday, February 23, 2007 at 18:52:22 (+0100) Jakub Narebski writes:
->Petr Baudis wrote:
->
->> On Thu, Feb 22, 2007 at 08:17:17PM CET, Bill Lear wrote:
->>> Git "indexing" of commits has a way to "go back":
->>> 
->>> % git diff HEAD~3
->>> 
->>> Can I say "all the way back", or "all the way back - 1" somehow?
->> 
->> What would that mean? :)
->> 
->> Do you mean to the "root" of the history? The trouble is, there can be
->> many of such roots (coming up from merges of previously disjunct
->> histories); even the git project itself has several. Which one to
->> choose?
->
->Actually HEAD~n follows first parent, so it would be only one such root.
+Hi,
 
-Exactly what I was after.  Something like:
+On Sat, 24 Feb 2007, Sam Watkins wrote:
 
-% git diff HEAD~-1
+> On Fri, 23 Feb 2007 17:40:02 +0100 (CET), "Johannes Schindelin"
+> <Johannes.Schindelin@gmx.de> said:
+> >
+> > On Sat, 24 Feb 2007, Sam Watkins wrote:
+> >
+> > > it should merge the changes as if I'd run git-pull on the remote
+> > > box, and handle conflicts in the same way.
+> >
+> > But that leaves conflicts in the working directory! You _have_ to
+> > resolve them (or reset) before proceding.
+> 
+> I think it's ok for our application if the push+hook leaves conflicts in 
+> the working directory, I just want to replicate the effect of running 
+> git-pull remotely without actually having to go through ssh contortions 
+> to achieve that.
 
-or
+I don't really see what you want to do there (and you don't want to tell 
+me:-)). Nevertheless, it seems that Junio's script would help you. You 
+cannot run a pull sanely when the working directory is dirty, and 
+therefore the hook does not allow that.
 
-% git diff ^HEAD~0
+BTW the easiest way to do what you apparently want is to push to a 
+"remotely tracking" branch, i.e. a branch in the remotes/ hierarchy, and 
+_then_ make an update hook which says "git merge remotes/<uploadbranch>".
 
-whatever ...
-
-
-Bill
+Ciao,
+Dscho
