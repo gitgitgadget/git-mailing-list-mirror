@@ -1,90 +1,83 @@
 From: Mark Levedahl <mdl123@verizon.net>
-Subject: Re: [PATCH] Add git-bundle: move objects and references by archive
-Date: Thu, 22 Feb 2007 21:32:57 -0500
-Message-ID: <45DE5259.6090502@verizon.net>
+Subject: Re: [PATCH] git-bundle: assorted fixes
+Date: Thu, 22 Feb 2007 22:37:53 -0500
+Message-ID: <45DE6191.5030200@verizon.net>
 References: <Pine.LNX.4.63.0702220157130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xeqllxk.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702221913250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45DE4507.7090206@verizon.net>
+ <Pine.LNX.4.63.0702230249340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45DE4D85.3000906@verizon.net>
+ <Pine.LNX.4.63.0702230316570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 23 03:33:14 2007
+Cc: git@vger.kernel.org, junkio@cox.net, Nicolas Pitre <nico@cam.org>,
+	Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 23 04:38:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKQFF-0002aj-AD
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 03:33:13 +0100
+	id 1HKRG1-0001SU-2f
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 04:38:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750755AbXBWCdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Feb 2007 21:33:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750730AbXBWCdJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 21:33:09 -0500
-Received: from vms044pub.verizon.net ([206.46.252.44]:58674 "EHLO
-	vms044pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750755AbXBWCdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Feb 2007 21:33:09 -0500
+	id S1750812AbXBWDiB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Feb 2007 22:38:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750816AbXBWDiB
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Feb 2007 22:38:01 -0500
+Received: from vms046pub.verizon.net ([206.46.252.46]:58419 "EHLO
+	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750812AbXBWDiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Feb 2007 22:38:00 -0500
 Received: from [127.0.0.1] ([71.246.235.75])
- by vms044.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
- 3 2006)) with ESMTPA id <0JDW00BLS9QTNN09@vms044.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 22 Feb 2007 20:32:55 -0600 (CST)
-In-reply-to: <7v8xeqllxk.fsf@assigned-by-dhcp.cox.net>
+ by vms046.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JDW007R0CR3GQJ9@vms046.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 22 Feb 2007 21:37:52 -0600 (CST)
+In-reply-to: <Pine.LNX.4.63.0702230316570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Newsgroups: gmane.comp.version-control.git
 User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40411>
 
-Junio C Hamano wrote:
->> diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
->> index a2d6268..f61c77a 100755
->> --- a/Documentation/cmd-list.perl
->> +++ b/Documentation/cmd-list.perl
->> @@ -70,6 +70,7 @@ git-archive                             mainporcelain
->>  git-bisect                              mainporcelain
->>  git-blame                               ancillaryinterrogators
->>  git-branch                              mainporcelain
->> +git-bundle                              mainporcelain
->>  git-cat-file                            plumbinginterrogators
->>  git-checkout-index                      plumbingmanipulators
->>  git-checkout                            mainporcelain
->>     
+Johannes Schindelin wrote:
+> 
+> On Thu, 22 Feb 2007, Mark Levedahl wrote:
+> 
+>> Johannes Schindelin wrote:
+>>
+>>> Mark wrote:
+>>>
+>>>> 2) git bundle verify reports only a single sha1 if prerequisites are 
+>>>> not met.
+>>> With the two follow-up patches I sent, this issue should be resolved, 
+>>> no?
+>>>
+>>   I missed one of your patches, adding that, the problem is incompletely 
+>> fixed: all missing commits are shown, but only as raw hashes (e.g., the 
+>> 1-line commit message is not there to describe what is missing).
+> 
+> Okay, how about this on top:
+> 
 >
-> Is this really a mainporcelain?
-> I would say ancillarymanipulators (or perhaps synchelpers).
->
->   
-git bundle has four commands: create, verify, list-heads, and unbundle. 
-The last two are pure helper functions, basically plumbing. Verify is 
-questionable as to where it lies. But, create is the only way to create 
-a bundle, is logically equivalent to git push as a user command to move 
-data,  so I called it mainporcelain because that is how git push is 
-classified.
 
+That works. I would change your error message slightly, perhaps...
 
->> +	/* write prerequisites */
->> +	memcpy(argv_boundary + 2, argv + 1, argc * sizeof(const char *));
->> +	argv_boundary[0] = "rev-list";
->> +	argv_boundary[1] = "--boundary";
->> +	argv_boundary[argc + 1] = NULL;
->> +	out = -1;
->> +	pid = fork_with_pipe(argv_boundary, NULL, &out);
->> +	if (pid < 0)
->> +		return -1;
->> +	while ((i = read_string(out, buffer, sizeof(buffer))) > 0)
->> +		if (buffer[0] == '-')
->> +			write(bundle_fd, buffer, i);
->>     
->
-> It would be helpful for the recipient if you can append output
-> from git-describe (or name-rev) when the buffer lacks "name".
->   
-I found the actual commit summary message (i.e., git-rev-list 
---pretty=one --max-count=1 sha1) the most useful of the various 
-summaries available.
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index d74afaa..e115feb 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -172,7 +172,7 @@ static int verify_bundle(struct bundle_header *header)
+     struct object_array refs;
+     struct commit *commit;
+     int i, ret = 0, req_nr;
+-   const char *message = "The bundle requires these lacking revs:";
++   const char *message = "Your repository lacks these prerequisite 
+commits:";
 
-
+     init_revisions(&revs, NULL);
+     for (i = 0; i < p->nr; i++) {
 
 Mark
