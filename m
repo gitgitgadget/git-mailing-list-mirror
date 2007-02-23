@@ -1,212 +1,127 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: [PATCHv3] git-fetch: Split fetch and merge logic
-Date: Fri, 23 Feb 2007 11:42:05 +0100
-Message-ID: <8aa486160702230242r4059811ewbc4cb5c6d33500df@mail.gmail.com>
-References: <87wt29i7hg.fsf@gmail.com>
-	 <7vabz56vyq.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-push hook to update remote working copy safely
+Date: Fri, 23 Feb 2007 03:00:09 -0800
+Message-ID: <7v649t5ebq.fsf@assigned-by-dhcp.cox.net>
+References: <1172220709.10221.1176113191@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Feb 23 11:42:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Sam Watkins" <swatkins@fastmail.fm>
+X-From: git-owner@vger.kernel.org Fri Feb 23 12:00:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKXsS-0008G5-OT
-	for gcvg-git@gmane.org; Fri, 23 Feb 2007 11:42:13 +0100
+	id 1HKYA7-0007UO-2j
+	for gcvg-git@gmane.org; Fri, 23 Feb 2007 12:00:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932225AbXBWKmJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 23 Feb 2007 05:42:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932228AbXBWKmJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 05:42:09 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:51847 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932225AbXBWKmH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Feb 2007 05:42:07 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so328883uga
-        for <git@vger.kernel.org>; Fri, 23 Feb 2007 02:42:06 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=D/fC7Wy2GZfN4hJm670lDR2hfNP2u9oq2cLhv0SBdde4422yoAhBdVt2HiyMXqTD5xhCl0PuMTglfGh1qMTUlzilORLQ0E0S7LA2fcseIfhZqrxgjZx4FY7Pj8DaHYu3kXzuKoHIGr9IGJwNF6B2JeyOUb1R+XzRasRS1dpaCXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lF1ITotxAofDEJ0+hPx0QDs17Lrt73CedqLLLwB9iTTZjEJIcjxRo2OFuuVxIQJKXxWKiDjupaUQ+mcPARe1LQkooQFxT7kMzNhsS57XqMVfVKOb5S1n+P66UB9FxoI3wBMhxkoZ+z433jxdMBdopHuxr8RQ8bEHjB9FISv1tDM=
-Received: by 10.78.149.15 with SMTP id w15mr150616hud.1172227325557;
-        Fri, 23 Feb 2007 02:42:05 -0800 (PST)
-Received: by 10.78.69.4 with HTTP; Fri, 23 Feb 2007 02:42:05 -0800 (PST)
-In-Reply-To: <7vabz56vyq.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S932249AbXBWLAL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 06:00:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932264AbXBWLAL
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 06:00:11 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:44101 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932249AbXBWLAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 06:00:10 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070223110011.WFCP2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 23 Feb 2007 06:00:11 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Sz091W0011kojtg0000000; Fri, 23 Feb 2007 06:00:09 -0500
+In-Reply-To: <1172220709.10221.1176113191@webmail.messagingengine.com> (Sam
+	Watkins's message of "Fri, 23 Feb 2007 19:51:49 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40438>
 
-On 2/23/07, Junio C Hamano <junkio@cox.net> wrote:
-> Santi B=E9jar <sbejar@gmail.com> writes:
->
-> > It makes git-parse-remote.sh and almost all git-fetch independent
-> > of the merge logic.
-> >
-> > git-fetch fetches the branches from the remote and saves this
-> > information in .git/FETCH_FETCHED, and at the end it generates
-> > the file .git/FETCH_HEAD.
->
-> I might have some more comments after actually applying this and
-> reviewing it with wider contexts, but it looks nice overall.
+"Sam Watkins" <swatkins@fastmail.fm> writes:
 
-Thanks.
+> I'm looking for a command that will update the remote working copy after
+> a "git push", without damaging any changes that may have been made to
+> the working copy.
 
->
-> I am wondering if FETCH_FETCHED is purely for internal use by
-> git-fetch (it appears so), and if so if it is worth trying to do
-> without the temporary file, but that is a minor detail.
+Define "without damaging".  If there are changes to paths that
+are modified by the pushed commit since the current HEAD, what
+should your "update the remote working copy" procedure would
+do?
 
-Yes, it's purely internal. With "without the temporary file" you mean
-to put the content in a variable or removing at the end?
+ * Abort the push and refuse to update branch head?
 
-> > diff --git a/git-fetch.sh b/git-fetch.sh
-> > index d230995..637d732 100755
-> > --- a/git-fetch.sh
-> > +++ b/git-fetch.sh
-> > @@ -491,3 +467,44 @@ case "$orig_head" in
-> >       fi
-> >       ;;
-> >  esac
-> > +
-> > +# Generate $GIT_DIR/FETCH_HEAD
-> > +case ",$#,$remote_nick," in
-> > +,1,$origin,)
-> > +     curr_branch=3D$(git-symbolic-ref -q HEAD | sed -e 's|^refs/he=
-ads/||')
-> > +     merge_branches=3D$(git-repo-config \
-> > +             --get-all "branch.${curr_branch}.merge" | sort -u)
->
-> Why "sort -u" (instead of erroring out if the repository is
-> misconfigured)?
+ * Run file-level merge and leave the conflicted results on the
+   working tree, in the $GIT_DIR/index and leave the pushed
+   commit object name in $GIT_DIR/MERGE_HEAD?
 
-It is consistent with the current code and I needed it for the
-intersection below. The check could be added later.
+I think the latter is just crazy, as you would then have to
+think about cases where you already have $GIT_DIR/MERGE_HEAD
+when you attempt to push.
 
->
-> > +     fetch_branches=3D$(get_remote_default_refs_for_fetch -n $remo=
-te_nick |
-> > +             sed 's/:.*$//g;s/^+//' | sort -u)
->
-> GNU sed users do not have problems with this, but I recall that
-> we had to rewrite our sed scripts not to use multiple commands
-> concatenated with ';' for portability, like:
->
->         sed -e 's/:.*$//g' -e 's/^+//'
+Why in the first place does checking out need to perform a
+possibly conflicting update?  Unless it is _also_ modified by
+something other than push (i.e. some human user modifies it in
+the editor, iow active development happening in the repository),
+you can assume that when a push tries to update the working
+tree, the working tree is clean (i.e. the index matches HEAD and
+the working tree files match the index).  And in such a case,
+you can set receive.denyNonFastForwards, and push will not even
+call the update hook unless it is fast-forward.  And checking
+out a fast-forward in a clean working tree should always succeed
+without conflicts.  So I am puzzled what you are really trying
+to achieve here.
 
-OK.
+The only thing you need to protect against is simultaneous push,
+and I think that can be solved by holding a lock file while your
+update hook runs a checkout.
 
->
-> Again why "sort -u"?
+So it might be just the matter of something like this totally
+untested script:
 
-=46or the intersection below. Moreover, it make sense because
-remotes.${remote}.fetch could be of the form:
+	#!/bin/sh
+        # Assumes that the repository has its own working tree and
+	# $GIT_DIR is "/path/to/repository/.git".  update hook
+        # is always called with `pwd` the same as $GIT_DIR.
 
-[remote "origin"]
-url=3D...
-fetch=3D refs/heads/master:refs/remotes/origin/master
-fetch=3D refs/heads/*:refs/remotes/origin/*
+        GIT_DIR=`pwd`
 
-to have a well defined first refspec. In this case refs/heads/master
-appears twice.
+	cd .. ;# to the top of working tree
+        BRANCH="$1"
+        OLDREV="$2"
+        NEWREV="$3"
 
->
-> > +     test "$merge_branches" && test "$fetch_branches" &&
->
-> We probably would want to be defensive by saying "test -n".
->
+	# Do not bother with non branch push.
+        case "$BRANCH" in refs/heads/*) ;; *) exit 0 ;; esac
 
-Ok.
+	# Make sure it is a fast-forward, unless totally new.
+	if test "0000000000000000000000000000000000000000" = "$OLDREV"
+	then
+		MB=$(git merge-base "$OLDREV" "$NEWREV") &&
+	        test "$OLDREV" = "$NEWREV" || exit 1
+	fi
 
-> > +     merge_branches=3D$(echo -e "$merge_branches\n$fetch_branches"=
- | sort | uniq -d)
->
-> I appreciate the cleverness of the intersection.  However, is
-> "echo -e" portable?  I think we have avoided it so far (we have
-> avoided even "echo -n" which is traditionally much more
-> available).
+	# Pushing into a non-checked-out branch -- no need to
+        # do anything.
+        HEAD_BRANCH=`git symbolic-ref HEAD`
+        test "z$HEAD_BRANCH" = "z$BRANCH" || exit 0
 
-printf '%s\n%s' "$merge_branches" "$fetch_branches"
+	# Could we have a lock please?
+	lock="$GIT_DIR/push-update.lock"
+        lockfile "$lock"
+        trap 'rm -f "$lock"' 0
 
-is OK?
+        # Make sure the index, working tree and HEAD all match.
+	HEAD=`git rev-parse --verify HEAD` &&
+        test "z$HEAD" = "z$OLDREV" &&
+        git update-index --refresh &&
+        test -z "`git diff-files --name-only`" &&
+        test -z "`git diff-index --cached --name-only $HEAD`" ||
+	exit 1
 
->
-> > +cat "$GIT_DIR"/FETCH_FETCHED | while IFS=3D'   ' read sha1 ref not=
-e ; do
-> > +     remote_branch=3D$(expr "z$ref" : 'z\([^:]*\):')
-> > +     for merge_branch in $merge_branches ; do
-> > +             [ "$merge_branch" =3D=3D "$remote_branch" ] &&
-> > +                     echo "$sha1             $note" && continue 2
-> > +     done
-> > +     if ! test "$merge_first" || test "$merge_first" =3D=3D "done"=
- ; then
-> > +             echo "$sha1     not-for-merge   $note"
-> > +     else
-> > +             echo "$sha1             $note"
-> > +             merge_first=3Ddone
-> > +     fi
-> > +done >> "$GIT_DIR/FETCH_HEAD"
->
-> You can do:
->
->         while ...
->         do
->         done < "$GIT_DIR/FETCH_FETCHED"
->
-> which is easier on the eye.
->
-> I often see a buggy shell script that expects assignment in a
-> while loop to survive after the loop finished, when the loop is
-> on the downstream side of a pipe (e.g. the loop is run in a
-> subshell so merge_first after this loop is finished will never
-> be 'done').  You do not use the variable after the loop so your
-> script is not buggy, but avoiding a pipe into while loop is a
-> good habit to get into.
-
-OK, and thanks for the explanation.
-
->
-> > diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-> > index 5208ee6..691d46c 100755
-> > --- a/git-parse-remote.sh
-> > +++ b/git-parse-remote.sh
-> > @@ -196,32 +159,43 @@ canon_refs_list_for_fetch () {
->
-> >       config)
-> > -             canon_refs_list_for_fetch -d "$1" \
-> > -                     $(git-config --get-all "remote.$1.fetch") ;;
-> > +             set $(expand_refs_wildcard "$1" \
-> > +                     $(git-repo-config --get-all "remote.$1.fetch"=
-)) ;;
->
-> Oops?  It is not buggy but it's better to set an example by
-> using git-config consistenty.  You have another mention of
-> repo-config above.
-
-Yes, of course.
-
->
-> >       remotes)
-> > -             canon_refs_list_for_fetch -d "$1" $(sed -ne '/^Pull: =
-*/{
-> > +             set $(expand_refs_wildcard "$1" $(sed -ne '/^Pull: */=
-{
-> >                                               s///p
-> > -                                     }' "$GIT_DIR/remotes/$1")
-> > +                                     }' "$GIT_DIR/remotes/$1"))
->
-> Hmph.  I wonder why the original author did not do '/^Pull: */s///p'.=
-=2E.
-
-I don't know, I'll do.
-
-Santi
+	# Update the working tree -- we do not do git-checkout
+        # because updating the ref in 'update' hook is a big
+        # No-no.  It would screw up the lockless update in
+        # receive-pack that happens after update hook returns.
+        git read-tree -m -u "$OLDREV" "$NEWREV"
