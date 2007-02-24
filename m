@@ -1,90 +1,64 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Limit filename for format-patch
-Date: Sat, 24 Feb 2007 12:24:40 +0100
-Message-ID: <200702241224.41208.robin.rosenberg@dewire.com>
-References: <200702232239.19504.robin.rosenberg@dewire.com> <20070223222606.28660.46208.stgit@lathund.dewire.com> <7vtzxcym3t.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCHv3] git-fetch: Split fetch and merge logic
+Date: Sat, 24 Feb 2007 04:32:11 -0800
+Message-ID: <7v1wkfzqgk.fsf@assigned-by-dhcp.cox.net>
+References: <87wt29i7hg.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 24 12:23:38 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 24 13:33:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKv05-0004al-T6
-	for gcvg-git@gmane.org; Sat, 24 Feb 2007 12:23:38 +0100
+	id 1HKw5E-0006SY-67
+	for gcvg-git@gmane.org; Sat, 24 Feb 2007 13:33:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932825AbXBXLXQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 24 Feb 2007 06:23:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933506AbXBXLXQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 06:23:16 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:23072 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S932825AbXBXLXP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Feb 2007 06:23:15 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C2400803393;
-	Sat, 24 Feb 2007 12:18:13 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 24985-08; Sat, 24 Feb 2007 12:18:13 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 6C25E8027F8;
-	Sat, 24 Feb 2007 12:18:11 +0100 (CET)
-User-Agent: KMail/1.9.4
-In-Reply-To: <7vtzxcym3t.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S932382AbXBXMcP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 24 Feb 2007 07:32:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932353AbXBXMcO
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 07:32:14 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:37690 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932411AbXBXMcN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Feb 2007 07:32:13 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070224123214.XKAP2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 24 Feb 2007 07:32:14 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id TQYC1W0021kojtg0000000; Sat, 24 Feb 2007 07:32:12 -0500
+In-Reply-To: <87wt29i7hg.fsf@gmail.com> (Santi =?utf-8?Q?B=C3=A9jar's?=
+ message of "Fri, 23
+	Feb 2007 09:49:31 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40514>
 
-l=F6rdag 24 februari 2007 09:51 skrev Junio C Hamano:
-> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
->=20
-> > -static void reopen_stdout(struct commit *commit, int nr, int keep_=
-subject)
-> > +static int reopen_stdout(struct commit *commit, int nr, int keep_s=
-ubject)
-> >  {
-> > -	char filename[1024];
-> > +	char filename[PATH_MAX];
-> >  	char *sol;
-> >  	int len =3D 0;
-> > -	int suffix_len =3D strlen(fmt_patch_suffix) + 10; /* ., NUL and s=
-lop */
-> > +	int suffix_len =3D strlen(fmt_patch_suffix) + 1;
-> > =20
-> >  	if (output_directory) {
-> > -		strlcpy(filename, output_directory, 1000);
-> > +		if (strlen(output_directory) >=3D sizeof(filename) - 64 - suffix=
-_len)
-> > +			return error("name of output directory is too long");
-> > +		strlcpy(filename, output_directory, sizeof(filename) - suffix_le=
-n);
->=20
-> Sorry for a late doubt, but I started wondering if we should use
-> NAME_MAX instead of hardcoded 64.  Purists might argue for using
-> pathconf() but I think it is an overkill.
-I think it'd sane to keep the name much shorter than what is actually p=
-ossible. The
-patches will have a counter to keep the names unique anyway.
+Santi B=C3=A9jar <sbejar@gmail.com> writes:
 
->=20
-> NAME_MAX is 255 on Linux, POSIX says it should be 14 at least
-> (and further says if the platform supports only smaller max,
-> NAME_MAX should not be defined -- heh).  I do not know how
-> universal NAME_MAX is defined, and I hate dealing with header
-> incompatibility across different systems, so I am tempted to
-> just do something like:
->=20
-> #define FORMAT_PATCH_NAME_MAX 64
->=20
-> locally, and use that instead.
-Ok with me.
+> It makes git-parse-remote.sh and almost all git-fetch independent
+> of the merge logic.
+>
+> git-fetch fetches the branches from the remote and saves this
+> information in .git/FETCH_FETCHED, and at the end it generates
+> the file .git/FETCH_HEAD.
+>
+> The current merge behaviour is unchanged.
 
--- robin
+I overlooked your earlier huge testcase patch, but I noticed it
+does not include any test that fetches an annotated tag that
+points at a commit or a non-commit, nor an unannotated tag that
+is a tree or a blob.  I am too tired to check them right now,
+but are you sure you are not regressing with them?
+
+It is sometimes handy to be able to say:
+
+	$ git fetch git-gui tag spearce-gpg-pub
+        $ git cat-file -p FETCH_HEAD
