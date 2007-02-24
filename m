@@ -1,88 +1,54 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] object name: introduce ':::<oneline prefix>' notation
-Date: Sat, 24 Feb 2007 02:35:25 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702240229540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 23 Feb 2007 17:46:58 -0800
+Message-ID: <7vk5y81g4t.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0702231930290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0702232347310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzm741hfx.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702232347310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vzm741hfx.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702240229540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Feb 24 02:35:31 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 24 02:47:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKlow-0004dM-7Z
-	for gcvg-git@gmane.org; Sat, 24 Feb 2007 02:35:30 +0100
+	id 1HKm07-0000Vp-MO
+	for gcvg-git@gmane.org; Sat, 24 Feb 2007 02:47:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933319AbXBXBf1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 20:35:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933320AbXBXBf1
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 20:35:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:57364 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933319AbXBXBf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 20:35:26 -0500
-Received: (qmail invoked by alias); 24 Feb 2007 01:35:25 -0000
-X-Provags-ID: V01U2FsdGVkX1/uexcPoMPuK18JnwseswQ7jDvb5S0yeYFgxfxP/a
-	CJxg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vzm741hfx.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S932739AbXBXBrA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 20:47:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932744AbXBXBrA
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 20:47:00 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:46103 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932739AbXBXBq7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 20:46:59 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070224014659.NOBI3546.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 23 Feb 2007 20:46:59 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id TDmy1W00s1kojtg0000000; Fri, 23 Feb 2007 20:46:59 -0500
+In-Reply-To: <Pine.LNX.4.63.0702240229540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sat, 24 Feb 2007 02:35:25 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40485>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 23 Feb 2007, Junio C Hamano wrote:
+>> By the way, where do you start digging from?  From all refs?
+>
+> Yes, all refs. In order of the date.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Fri, 23 Feb 2007, Johannes Schindelin wrote:
-> >
-> >> To name a commit, you can now say
-> >> 
-> >> 	git rev-parse ':::Initial revision of "git"'
-> >
-> > Alex Riesen and Shawn Pearce suggested ":/" instead of ":::", to reflect 
-> > the searching nature ("/" is the key to search in "less" output).
-> >
-> > Comments?
-> 
-> Sounds good.  "git show :/path" does not currently mean "find /path in 
-> the index", so I do not see offhand it would interfere with anything.
-
-That's also what Shawn said.
-
-> However, it would be worthwhile to plant an escape hatch for future 
-> extension.  Using short-and-sweet ":/" for the most common case such as 
-> exact prefix match would be fine, but we might want to say:
-> 
-> 	':/!' syntax is reserved for future extension and does
-> 	not look for a string that begins with "!".
-
-Okay. Will rework.
-
-> Obvious extension possibilities include:
-> 
-> 	":/!(r=regexp)"
->         ":/!(a=author)"
-> 	":/!(d=2001-09-17)"
-> 	":/!(p=Documentation/)"
-> 
-> or various combination of them e.g.
-> 
-> 	":!(p=Documentation/)!(a=Johannes)Update command list"
-
-They are much harder to implement. So I'll leave that to others :-)
-
-> By the way, where do you start digging from?  From all refs?
-
-Yes, all refs. In order of the date.
-
-Ciao,
-Dscho
+Then, another possibly useful extension is "start from this ref"
+(you can give multiple and if no such refs are given keep the
+current "from all refs" behaviour).
