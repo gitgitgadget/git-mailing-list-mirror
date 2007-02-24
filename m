@@ -1,58 +1,67 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] object name: introduce ':::<oneline prefix>' notation
-Date: Fri, 23 Feb 2007 20:53:38 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702232049590.29426@xanadu.home>
-References: <Pine.LNX.4.63.0702231930290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0702232347310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070224011214.GA8369@coredump.intra.peff.net>
- <Pine.LNX.4.63.0702240220300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070224013015.GA9021@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fixup no-progress for fetch & clone
+Date: Sat, 24 Feb 2007 02:47:42 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702240245500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702232002480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vfy8w3add.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702240217550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vvehs1gxy.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 24 02:53:55 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Feb 24 02:56:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKm6h-000313-Gi
-	for gcvg-git@gmane.org; Sat, 24 Feb 2007 02:53:51 +0100
+	id 1HKm9B-0003xI-MK
+	for gcvg-git@gmane.org; Sat, 24 Feb 2007 02:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933328AbXBXBxk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 20:53:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933329AbXBXBxk
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 20:53:40 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:30846 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933328AbXBXBxj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 20:53:39 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JDY00B192LE50G0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 23 Feb 2007 20:53:38 -0500 (EST)
-In-reply-to: <20070224013015.GA9021@coredump.intra.peff.net>
-X-X-Sender: nico@xanadu.home
+	id S933324AbXBXB4X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 20:56:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933329AbXBXB4X
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 20:56:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45378 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933324AbXBXB4W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 20:56:22 -0500
+Received: (qmail invoked by alias); 24 Feb 2007 01:47:42 -0000
+X-Provags-ID: V01U2FsdGVkX1/r9Z9NtQjrFTC+OriLFcfOw9kXBfH3GTuRO8o4eR
+	oKRA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vvehs1gxy.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40489>
 
-On Fri, 23 Feb 2007, Jeff King wrote:
+Hi,
 
-> I think :/ is slightly easier on the eyes than :::. Plus it opens the
-> door for :? to find the oldest such match (though I'm not sure if it
-> would be by topology or date).
+On Fri, 23 Feb 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Of course it's starting to look a bit like line noise...maybe we just
-> need :-/ and :-).
+> > Since most servers will not have a no-progress aware upload-pack, how 
+> > about this? (It is slightly ugly, but at least works...)
+> 
+> Please no.
+> 
+> What's "slight" about this ugliness?
+> 
+> > +		if (no_progress && band != 3 && len > 7 + 5 &&
+> > +				!prefixcmp(buf + 7 + len - 5, "done\r"))
+> > +			continue;
 
-LOL!  ;-D
+This is not the part I found ugly. In sideband, there is a lot of 7+len, 
+8+len, buf+7.
 
-I was looking at that :/!!P=(blah) and my yuck-o-meter was going up 
-quickly.  But I'd use :-) anytime!
+The part I found ugly is having to touch builtin-archive.c
 
+But I agree that we should not include that in mainline git. But at least 
+this patch is in the open for people who care deeply about no-progress 
+_now_...
 
-Nicolas
+Ciao,
+Dscho
