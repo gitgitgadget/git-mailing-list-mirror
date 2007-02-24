@@ -1,128 +1,74 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: [RFC/PATCH] Fix git-diff --cached to not error out if HEAD points to a nonexistant branch
-Date: Sat, 24 Feb 2007 18:20:37 +0100
-Message-ID: <20070224172037.GA31963@xp.machine.xx>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Fixup no-progress for fetch & clone
+Date: Sat, 24 Feb 2007 18:56:29 +0100
+Organization: At home
+Message-ID: <erpu4b$daa$1@sea.gmane.org>
+References: <Pine.LNX.4.63.0702232002480.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vfy8w3add.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702240217550.22628@wbgn013.biozentrum.uni-wuerzburg.de> <alpine.LRH.0.82.0702232046300.29426@xanadu.home> <Pine.LNX.4.63.0702240314250.22628@wbgn013.biozentrum.uni-wuerzburg.de> <alpine.LRH.0.82.0702232123110.29426@xanadu.home> <Pine.LNX.4.63.0702240336130.22628@wbgn013.biozentrum.uni-wuerzburg.de> <alpine.LRH.0.82.0702232141040.29426@xanadu.home> <7vbqjk17a8.fsf@assigned-by-dhcp.cox.net> <alpine.LRH.0.82.0702240005270.29426@xanadu.home> <7v7iu80y6i.fsf@assigned-by-dhcp.cox.net> <alpine.LRH.0.82.0702240922250.29426@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 24 18:24:58 2007
+X-From: git-owner@vger.kernel.org Sat Feb 24 18:55:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HL0di-0004Zp-7Y
-	for gcvg-git@gmane.org; Sat, 24 Feb 2007 18:24:55 +0100
+	id 1HL17c-0008Va-4d
+	for gcvg-git@gmane.org; Sat, 24 Feb 2007 18:55:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932617AbXBXRYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Feb 2007 12:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932742AbXBXRYM
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 12:24:12 -0500
-Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34]:47229 "HELO
-	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S932617AbXBXRYL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Feb 2007 12:24:11 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Feb 2007 12:24:10 EST
-Received: (qmail 21848 invoked by uid 0); 24 Feb 2007 17:17:28 -0000
-Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 24 Feb 2007 17:17:28 -0000
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S933527AbXBXRzB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Feb 2007 12:55:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933529AbXBXRzB
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 12:55:01 -0500
+Received: from main.gmane.org ([80.91.229.2]:57986 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933528AbXBXRzA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Feb 2007 12:55:00 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HL16V-0001cE-6P
+	for git@vger.kernel.org; Sat, 24 Feb 2007 18:54:39 +0100
+Received: from host-89-229-2-22.torun.mm.pl ([89.229.2.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 24 Feb 2007 18:54:39 +0100
+Received: from jnareb by host-89-229-2-22.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 24 Feb 2007 18:54:39 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-2-22.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40521>
 
-The documentation mentions "git-diff --cached" to see what is staged for
-the next commit. But this failes if you haven't done any commits yet.
-So lets fix it.
+Nicolas Pitre wrote:
 
-Signed-off-by: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
----
+> On Sat, 24 Feb 2007, Junio C Hamano wrote:
+> 
+>> Nicolas Pitre <nico@cam.org> writes:
+>> 
+>>> How does that solve the issue with servers (currently all of them) that 
+>>> don't know about the new sideband?
+>> 
+>> I actually happen to consider that a non problem.
+>> 
+>> It is true that you can only prepare the client and server side
+>> by 1.5.1, and new clients talking to 1.5.0 or older servers
+>> would not be able to squelch the noise.  But that is _not_ a new
+>> problem anyway, and given time the server side will eventually
+>> be updated to 1.5.1 or later.  If anything else, it would give
+>> incentive to people to upgrade their servers to 1.5.1 ;-)
+> 
+> Well... for such a special case feature I doubt this might be such a 
+> great insentive.  And since locally filtering on '\r' is so simple I 
+> wonder what the complexity of the alternative solution really buys us.
 
-I was bitten by this during explaining a total git newbie the index and
-the several ways to diff index <-> wd, index <-> commit, commit <-> commit.
-I posted this example
+Slighly less bandwidth used (we don't send progress report)?
 
- mkdir testrepo && cd testrepo
- git init
- echo foo > test.txt
- git add test.txt
-
- git diff --cached
- usage: git-diff <options> <rev>{0,2} -- <path>*
-
-and was totaly shocked to see the above error message.
-I am not sure if this is the right fix and/or if git-diff-index
-should also be fixed. I decided against it and let the core cmd git-diff-index
-stay as it is now.
-
- builtin-diff.c         |   22 +++++++++++++++++++---
- t/t4017-diff-cached.sh |   21 +++++++++++++++++++++
- 2 files changed, 40 insertions(+), 3 deletions(-)
- create mode 100755 t/t4017-diff-cached.sh
-
-diff --git a/builtin-diff.c b/builtin-diff.c
-index c387ebb..aace507 100644
---- a/builtin-diff.c
-+++ b/builtin-diff.c
-@@ -203,11 +203,27 @@ void add_head(struct rev_info *revs)
- {
- 	unsigned char sha1[20];
- 	struct object *obj;
--	if (get_sha1("HEAD", sha1))
-+	int ret = get_sha1("HEAD", sha1);
-+	if (ret > 0)
- 		return;
--	obj = parse_object(sha1);
--	if (!obj)
-+
-+	if (ret == 0)
-+		obj = parse_object(sha1);
-+	else {
-+		/* HEAD exists but the branch it points to does not;
-+		 * we haven't done any commit yet => create an empty tree
-+		 * to make git diff --cached work
-+		 */
-+		obj = xcalloc(1, sizeof(struct object));
-+	        obj->parsed = 1;
-+		obj->type = OBJ_TREE;
-+
-+		pretend_sha1_file(NULL, 0, tree_type, obj->sha1);
-+	}
-+
-+	if (!obj) {
- 		return;
-+	}
- 	add_pending_object(revs, obj, "HEAD");
- }
- 
-diff --git a/t/t4017-diff-cached.sh b/t/t4017-diff-cached.sh
-new file mode 100755
-index 0000000..39fc32f
---- /dev/null
-+++ b/t/t4017-diff-cached.sh
-@@ -0,0 +1,21 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Peter Baumann
-+#
-+
-+test_description='Test diff --cached without inital commit.
-+
-+'
-+. ./test-lib.sh
-+
-+test_expect_success \
-+    'setup' \
-+    'echo frotz >rezrov &&
-+     git-update-index --add rezrov'
-+
-+test_expect_success \
-+    'git-diff --cached' \
-+    'git-diff --cached'
-+
-+test_done
-+
 -- 
-1.5.0.1.213.g509b-dirty
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
