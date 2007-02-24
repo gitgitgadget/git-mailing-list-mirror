@@ -1,75 +1,50 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Better icon for qgit
-Date: Fri, 23 Feb 2007 20:06:42 -0500
-Message-ID: <1172279202.19767.12.camel@dv>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] object name: introduce ':::<oneline prefix>' notation
+Date: Fri, 23 Feb 2007 20:12:15 -0500
+Message-ID: <20070224011214.GA8369@coredump.intra.peff.net>
+References: <Pine.LNX.4.63.0702231930290.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0702232347310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-Z6GUdKTDDmPivJCde5f9"
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 24 02:07:13 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Feb 24 02:12:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HKlNY-0002AH-2X
-	for gcvg-git@gmane.org; Sat, 24 Feb 2007 02:07:12 +0100
+	id 1HKlSX-00045O-8Z
+	for gcvg-git@gmane.org; Sat, 24 Feb 2007 02:12:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933303AbXBXBGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Feb 2007 20:06:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933308AbXBXBGq
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 20:06:46 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:52544 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933303AbXBXBGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Feb 2007 20:06:45 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <proski@gnu.org>)
-	id 1HKlLd-00054z-Nk
-	for git@vger.kernel.org; Fri, 23 Feb 2007 20:05:13 -0500
-Received: from proski by gnu.org with local (Exim 4.66)
-	(envelope-from <proski@gnu.org>)
-	id 1HKlN5-0008AC-1t; Fri, 23 Feb 2007 20:06:43 -0500
-X-Mailer: Evolution 2.9.91 (2.9.91-3.fc7) 
+	id S933307AbXBXBMS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Feb 2007 20:12:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933300AbXBXBMS
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Feb 2007 20:12:18 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3690 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933307AbXBXBMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Feb 2007 20:12:17 -0500
+Received: (qmail 19474 invoked from network); 23 Feb 2007 20:12:28 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 23 Feb 2007 20:12:28 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 23 Feb 2007 20:12:15 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702232347310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40476>
 
+On Fri, Feb 23, 2007 at 11:48:38PM +0100, Johannes Schindelin wrote:
 
---=-Z6GUdKTDDmPivJCde5f9
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+> > To name a commit, you can now say
+> > 
+> > 	git rev-parse ':::Initial revision of "git"'
+> 
+> Alex Riesen and Shawn Pearce suggested ":/" instead of ":::", to reflect 
+> the searching nature ("/" is the key to search in "less" output).
 
-Hi, Marco!
+Is there a particular argument for using a special syntax in the commit
+argument? Why not just add a '--grep' or similar option to indicate that
+we will be grepping the commits logs?
 
-I see that qgit got its own icon, but I think it's confusing to reuse an
-icon used by another project.  I'm attaching what I think would be a
-better qgit icon.  I tried to use the same gamma but represent the
-unique qgit look.
-
-I understand that only one icon can be used, and it should better be a
-16x16 icon to avoid scaling.
-
-I'm copying the git list in case somebody could improve the icon or
-suggest something better.
-
--- 
-Regards,
-Pavel Roskin
-
---=-Z6GUdKTDDmPivJCde5f9
-Content-Disposition: attachment; filename=qgit.xpm
-Content-Type: image/x-xpixmap; name=qgit.xpm
-Content-Transfer-Encoding: base64
-
-LyogWFBNICovCnN0YXRpYyBjaGFyICogcWdpdF94cG1bXSA9IHsKIjE2IDE2IDQgMSIsCiIgCWMg
-Tm9uZSIsCiIuCWMgIzAwQTAwMCIsCiIrCWMgIzAwMDAwMCIsCiJACWMgI0MwMDAwMCIsCiIgIC4g
-ICAgICAgICAgICAgIiwKIiAuLi4gICAgICAgICAgICAiLAoiLi4uLi4gICAgICAgICAgICIsCiIu
-Li4uLi4uLiAgICAgICAgIiwKIi4uLi4uICArICAgICAgICAiLAoiIC4uLiAgKysrICAgICAgICIs
-CiIgIC4gICsrKysrICAgICAgIiwKIiAgLiAgKysrKysrKysgICAiLAoiICAuICArKysrKyAgQCAg
-ICIsCiIgIC4gICArKysgIEBAQCAgIiwKIiAgLiAgICArICBAQEBAQCAiLAoiICAuICAgICsgIEBA
-QEBAICIsCiIgIC4gICAgKyAgQEBAQEAgIiwKIiAgLiAgICArICAgQEBAICAiLAoiICAuICAgICsg
-ICAgQCAgICIsCiIgIC4gICAgKyAgICBAICAgIn07Cg==
-
-
---=-Z6GUdKTDDmPivJCde5f9--
+-Peff
