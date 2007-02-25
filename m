@@ -1,165 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 7/8] convert users of "cmp -s" to "git diff"
-Date: Sun, 25 Feb 2007 23:37:14 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702252337010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/8] diff: support reading a file from stdin via "-"
+Date: Sun, 25 Feb 2007 14:57:08 -0800
+Message-ID: <7vvehprgl7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702252335410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Feb 25 23:51:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, junkio@cox.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Feb 25 23:57:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLSCw-0001yE-PH
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 23:51:07 +0100
+	id 1HLSIv-0004ci-A2
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 23:57:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750991AbXBYWvE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 17:51:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751099AbXBYWvD
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 17:51:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45893 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750991AbXBYWvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 17:51:01 -0500
-Received: (qmail invoked by alias); 25 Feb 2007 22:37:14 -0000
-X-Provags-ID: V01U2FsdGVkX1+ArdlRwUeAsS/82QKWetomkYS6vcjGsNrGboFIS8
-	IxBQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+	id S965182AbXBYW5L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 17:57:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965193AbXBYW5L
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 17:57:11 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:37659 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965182AbXBYW5K (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 17:57:10 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070225225708.OFUA2670.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 25 Feb 2007 17:57:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Tyx81W00K1kojtg0000000; Sun, 25 Feb 2007 17:57:09 -0500
+In-Reply-To: <Pine.LNX.4.63.0702252335410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Sun, 25 Feb 2007 23:36:10 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40592>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This is really just
+> This allows you to say
+>
+> 	echo Hello World | git diff x -
+>
+> to compare the contents of file "x" with the line "Hello World".
+> This automatically switches to --no-index mode.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+> 	Since the revision machinery checks for the presence of files,
+> 	diff_populate_filespec() will only change behaviour when there
+> 	is a file "-"... I have yet to think of an elegant fix for that.
 
-$ perl -pi.bak -e "s/(^\s*|'|&&\s*)cmp -s /\1git diff /" *.sh
+Another thing is that at some point diff_populate_filespec()
+needs to have a way to discard what was cached if memory
+pressure gets tight, and we would want to keep this data read
+from the standard input.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	We should probably add a "--quiet" flag for the diff family
-	first, and use that...
-
- t/t0000-basic.sh      |    4 ++--
- t/t4002-diff-basic.sh |   26 +++++++++++++-------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 186de70..743ee03 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -37,7 +37,7 @@ fi
- find .git/objects -type f -print >should-be-empty
- test_expect_success \
-     '.git/objects should be empty after git-init in an empty repo.' \
--    'cmp -s /dev/null should-be-empty' 
-+    'git diff /dev/null should-be-empty' 
- 
- # also it should have 2 subdirectories; no fan-out anymore, pack, and info.
- # 3 is counting "objects" itself
-@@ -242,7 +242,7 @@ test_expect_success \
- 
- test_expect_success \
-     'no diff after checkout and git-update-index --refresh.' \
--    'git-diff-files >current && cmp -s current /dev/null'
-+    'git-diff-files >current && git diff current /dev/null'
- 
- ################################################################
- P=087704a96baf1c2d1c869a8b084481e121c88b5b
-diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
-index 56eda63..50e9922 100755
---- a/t/t4002-diff-basic.sh
-+++ b/t/t4002-diff-basic.sh
-@@ -141,50 +141,50 @@ cmp_diff_files_output () {
- test_expect_success \
-     'diff-tree of known trees.' \
-     'git-diff-tree $tree_O $tree_A >.test-a &&
--     cmp -s .test-a .test-plain-OA'
-+     git diff .test-a .test-plain-OA'
- 
- test_expect_success \
-     'diff-tree of known trees.' \
-     'git-diff-tree -r $tree_O $tree_A >.test-a &&
--     cmp -s .test-a .test-recursive-OA'
-+     git diff .test-a .test-recursive-OA'
- 
- test_expect_success \
-     'diff-tree of known trees.' \
-     'git-diff-tree $tree_O $tree_B >.test-a &&
--     cmp -s .test-a .test-plain-OB'
-+     git diff .test-a .test-plain-OB'
- 
- test_expect_success \
-     'diff-tree of known trees.' \
-     'git-diff-tree -r $tree_O $tree_B >.test-a &&
--     cmp -s .test-a .test-recursive-OB'
-+     git diff .test-a .test-recursive-OB'
- 
- test_expect_success \
-     'diff-tree of known trees.' \
-     'git-diff-tree $tree_A $tree_B >.test-a &&
--     cmp -s .test-a .test-plain-AB'
-+     git diff .test-a .test-plain-AB'
- 
- test_expect_success \
-     'diff-tree of known trees.' \
-     'git-diff-tree -r $tree_A $tree_B >.test-a &&
--     cmp -s .test-a .test-recursive-AB'
-+     git diff .test-a .test-recursive-AB'
- 
- test_expect_success \
-     'diff-cache O with A in cache' \
-     'git-read-tree $tree_A &&
-      git-diff-index --cached $tree_O >.test-a &&
--     cmp -s .test-a .test-recursive-OA'
-+     git diff .test-a .test-recursive-OA'
- 
- test_expect_success \
-     'diff-cache O with B in cache' \
-     'git-read-tree $tree_B &&
-      git-diff-index --cached $tree_O >.test-a &&
--     cmp -s .test-a .test-recursive-OB'
-+     git diff .test-a .test-recursive-OB'
- 
- test_expect_success \
-     'diff-cache A with B in cache' \
-     'git-read-tree $tree_B &&
-      git-diff-index --cached $tree_A >.test-a &&
--     cmp -s .test-a .test-recursive-AB'
-+     git diff .test-a .test-recursive-AB'
- 
- test_expect_success \
-     'diff-files with O in cache and A checked out' \
-@@ -224,24 +224,24 @@ test_expect_success \
-     'diff-tree O A == diff-tree -R A O' \
-     'git-diff-tree $tree_O $tree_A >.test-a &&
-     git-diff-tree -R $tree_A $tree_O >.test-b &&
--    cmp -s .test-a .test-b'
-+    git diff .test-a .test-b'
- 
- test_expect_success \
-     'diff-tree -r O A == diff-tree -r -R A O' \
-     'git-diff-tree -r $tree_O $tree_A >.test-a &&
-     git-diff-tree -r -R $tree_A $tree_O >.test-b &&
--    cmp -s .test-a .test-b'
-+    git diff .test-a .test-b'
- 
- test_expect_success \
-     'diff-tree B A == diff-tree -R A B' \
-     'git-diff-tree $tree_B $tree_A >.test-a &&
-     git-diff-tree -R $tree_A $tree_B >.test-b &&
--    cmp -s .test-a .test-b'
-+    git diff .test-a .test-b'
- 
- test_expect_success \
-     'diff-tree -r B A == diff-tree -r -R A B' \
-     'git-diff-tree -r $tree_B $tree_A >.test-a &&
-     git-diff-tree -r -R $tree_A $tree_B >.test-b &&
--    cmp -s .test-a .test-b'
-+    git diff .test-a .test-b'
- 
- test_done
--- 
-1.5.0.1.788.g8ca52
+One solution would be to add a "const char *stdin_data" to diffopts
+and read the data from stdin when you parse the options, and
+have populate_filespec point at that with s->data (setting
+should_free and should_munmap both to 0).
