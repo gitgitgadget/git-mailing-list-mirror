@@ -1,197 +1,107 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Add a testcase for the safety of pull-policy='pull'.
-Date: Sun, 25 Feb 2007 23:11:33 +0100
-Message-ID: <20070225220853.31361.7201.stgit@gandelf.nowhere.earth>
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: Re: autoCRLF, git status, git-gui, what is the desired behavior?
+Date: Sun, 25 Feb 2007 17:20:50 -0500
+Message-ID: <45E20BC2.3000305@verizon.net>
+References: <45E1E47C.5090908@verizon.net>	<7vlkimrp1f.fsf@assigned-by-dhcp.cox.net>	<7vfy8urngi.fsf@assigned-by-dhcp.cox.net>	<45E1FC1C.4090409@verizon.net> <7v649qrkzg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 25 23:11:46 2007
+Cc: Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 25 23:21:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLRap-0000zo-NY
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 23:11:44 +0100
+	id 1HLRkB-0005U2-SP
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 23:21:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965158AbXBYWLl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 17:11:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965163AbXBYWLl
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 17:11:41 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:34723 "EHLO smtp3-g19.free.fr"
+	id S965160AbXBYWVN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 17:21:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965170AbXBYWVN
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 17:21:13 -0500
+Received: from main.gmane.org ([80.91.229.2]:57307 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965158AbXBYWLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 17:11:39 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 93E1F59C9D;
-	Sun, 25 Feb 2007 23:11:38 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 684751F084;
-	Sun, 25 Feb 2007 23:11:33 +0100 (CET)
-User-Agent: StGIT/0.12
+	id S965160AbXBYWVM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 17:21:12 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HLRjm-0007io-DX
+	for git@vger.kernel.org; Sun, 25 Feb 2007 23:20:59 +0100
+Received: from pool-71-246-235-75.washdc.fios.verizon.net ([71.246.235.75])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 25 Feb 2007 23:20:58 +0100
+Received: from mdl123 by pool-71-246-235-75.washdc.fios.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 25 Feb 2007 23:20:58 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pool-71-246-235-75.washdc.fios.verizon.net
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+In-Reply-To: <7v649qrkzg.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40581>
 
+Junio C Hamano wrote:
+> Mark Levedahl <mlevedahl@verizon.net> writes:
+> 
+>> ... Is it the case that
+>> the size info stored in the index reflects the size of the blob rather
+>> than of the working copy?
+> 
+> The size field among other fields is to cache the last lstat(2)
+> information so that later "is the path modified?" question can
+> be answered efficiently.  So the size should in general match
+> both blob and filesystem but on CRLF filesystems it is compared
+> against and updated with the data from the filesystem.  There
+> could be a subtle bug that when updating an index entry we might
+> be incorrectly storing the size of the blob, but I haven't
+> checked.
+> 
+> 
+> 
+I instrumented read-cache.c with:
 
-This testcase demonstrates a long-standing problem with the handling
-of conflicts on a rewinding branch, when "stg pull" calls git-pull.
+@@ -818,6 +822,8 @@ int read_cache_from(const char *path)
+         struct cache_entry *ce = (struct cache_entry *) ((char *) 
+cache_mmap + offset);
+         offset = offset + ce_size(ce);
+         active_cache[i] = ce;
++       printf("name: %s\n", ce->name);
++       printf("size: %u\n", ntohl(ce->ce_size)
+     }
+     index_file_timestamp = st.st_mtime;
+     while (offset <= cache_mmap_size - 20 - 8) {
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+And I get, post commit:
+name: foo
+size: 21452
 
-This is precisely the problem that made me believe using "git-pull"
-was a wrong idea to start with.  Since it seems there are uses for the
-"git-pull" mode, this particular issue has to be addressed - I'm
-however not sure how.
+$ git-update-index
+$ git-runstatus
+...
+name: foo
+size: 20517
+...
 
- t/t2101-pull-policy-pull.sh   |   60 ++++++++++++++++++++++++++++++++++
- t/t2102-pull-policy-rebase.sh |   72 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 132 insertions(+), 0 deletions(-)
+Note:  foo's size with lf endings is 20517
+                   with crlf endings is 21452
 
-diff --git a/t/t2101-pull-policy-pull.sh b/t/t2101-pull-policy-pull.sh
-new file mode 100755
-index 0000000..368d7d4
---- /dev/null
-+++ b/t/t2101-pull-policy-pull.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Yann Dirson
-+#
-+
-+test_description='Excercise pull-policy "fetch-rebase".'
-+
-+. ./test-lib.sh
-+
-+# don't need this repo, but better not drop it, see t1100
-+#rm -rf .git
-+
-+# Need a repo to clone
-+test_create_repo upstream
-+
-+test_expect_success \
-+    'Setup upstream repo, clone it, and add patches to the clone' \
-+    '
-+    (cd upstream && stg init) &&
-+    stg clone upstream clone &&
-+    (cd clone &&
-+     git repo-config branch.master.stgit.pull-policy pull &&
-+     git repo-config --list &&
-+     stg new c1 -m c1 &&
-+     echo a > file && stg add file && stg refresh
-+    )
-+    '
-+
-+test_expect_success \
-+    'Add non-rewinding commit upstream and pull it from clone' \
-+    '
-+    (cd upstream && stg new u1 -m u1 &&
-+     echo a > file2 && stg add file2 && stg refresh) &&
-+    (cd clone && stg pull) &&
-+     test -e clone/file2
-+    '
-+
-+# note: with pre-1.5 Git the clone is not automatically recorded
-+# as rewinding, and thus heads/origin is not moved, but the stack
-+# is still correctly rebased
-+
-+test_expect_failure \
-+    'Rewind/rewrite upstream commit and pull it from clone, without --merged' \
-+    '
-+    (cd upstream && echo b >> file2 && stg refresh) &&
-+    (cd clone && stg pull)
-+    '
-+
-+test_expect_success \
-+    'Undo the conflicted pull' \
-+    '(cd clone && stg push --undo)'
-+
-+test_expect_success \
-+    'Pull the rewinded commit, with --merged' \
-+    '
-+    (cd clone && stg pull --merged) &&
-+    test `wc -l <clone/file2` = 2
-+    '
-+
-+test_done
-diff --git a/t/t2102-pull-policy-rebase.sh b/t/t2102-pull-policy-rebase.sh
-new file mode 100755
-index 0000000..e1398a3
---- /dev/null
-+++ b/t/t2102-pull-policy-rebase.sh
-@@ -0,0 +1,72 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Yann Dirson
-+#
-+
-+test_description='Excercise pull-policy "fetch-rebase".'
-+
-+. ./test-lib.sh
-+
-+# don't need this repo, but better not drop it, see t1100
-+#rm -rf .git
-+
-+# Need a repo to clone
-+test_create_repo upstream
-+
-+test_expect_success \
-+    'Setup upstream repo, clone it, and add patches to the clone' \
-+    '
-+    (cd upstream && stg init) &&
-+    stg clone upstream clone &&
-+    (cd clone &&
-+     git repo-config branch.master.stgit.pull-policy fetch-rebase &&
-+     git repo-config --list &&
-+     stg new c1 -m c1 &&
-+     echo a > file && stg add file && stg refresh
-+    )
-+    '
-+
-+test_expect_success \
-+    'Add non-rewinding commit upstream and pull it from clone' \
-+    '
-+    (cd upstream && stg new u1 -m u1 &&
-+     echo a > file2 && stg add file2 && stg refresh) &&
-+    (cd clone && stg pull) &&
-+    test -e clone/file2
-+    '
-+
-+# note: with pre-1.5 Git the clone is not automatically recorded
-+# as rewinding, and thus heads/origin is not moved, but the stack
-+# is still correctly rebased
-+test_expect_success \
-+    'Rewind/rewrite upstream commit and pull it from clone' \
-+    '
-+    (cd upstream && echo b >> file2 && stg refresh) &&
-+    (cd clone && stg pull) &&
-+    test `wc -l <clone/file2` = 2
-+    '
-+
-+# this one ensures the guard against commits does not unduly trigger
-+test_expect_success \
-+    'Rewind/rewrite upstream commit and fetch it from clone before pulling' \
-+    '
-+    (cd upstream && echo c >> file2 && stg refresh) &&
-+    (cd clone && git fetch && stg pull) &&
-+    test `wc -l <clone/file2` = 3
-+    '
-+
-+# this one exercises the guard against commits
-+# (use a new file to avoid mistaking a conflict for a success)
-+test_expect_success \
-+    'New upstream commit and commit a patch in clone' \
-+    '
-+    (cd upstream && stg new u2 -m u2 &&
-+     echo a > file3 && stg add file3 && stg refresh) &&
-+    (cd clone && stg commit && stg new c2 -m c2 &&
-+     echo a >> file && stg refresh)
-+    '
-+test_expect_failure \
-+    'Try to  and commit a patch in clone' \
-+    '(cd clone && stg pull)'
-+
-+test_done
+So, what I think is happening:
+
+I add a file with crlf endings: it gets converted to lf, but the file 
+size with crlf is saved in the index.
+
+Post commit, the file is replaced with lf endings in the working 
+directory and now has size 205167. However, the index reflects the 
+pre-converted file with crlf endings, not the post-converted with lf 
+endings.
+
+Remember: I have core.autocrlf=input, so all files have lf on output. 
+Apparently the working file is updated by this process. The problem is 
+the index is not updated to reflect that.
+
+Mark
