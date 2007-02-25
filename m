@@ -1,160 +1,69 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH (try 2)] Add test-chmtime: a utility to change mtime on files
-Date: Sat, 24 Feb 2007 18:18:22 -0800
-Message-ID: <20070225021822.GA31876@mayonaise.dyndns.org>
-References: <11723651923476-git-send-email-normalperson@yhbt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 25 03:18:28 2007
+From: bob <kranki@mac.com>
+Subject: Centralized repository
+Date: Sat, 24 Feb 2007 21:14:27 -0500
+Message-ID: <EF7846A2-C573-4018-B399-EBBEEE2812A4@mac.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 25 03:28:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HL8y3-0005hV-Ai
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 03:18:27 +0100
+	id 1HL985-00015m-St
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 03:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933629AbXBYCSY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Feb 2007 21:18:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933633AbXBYCSY
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 21:18:24 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:35780 "EHLO hand.yhbt.net"
+	id S933632AbXBYC2h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Feb 2007 21:28:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933633AbXBYC2h
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 21:28:37 -0500
+Received: from smtpout.mac.com ([17.250.248.175]:57834 "EHLO smtpout.mac.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933629AbXBYCSX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Feb 2007 21:18:23 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 62F172DC032;
-	Sat, 24 Feb 2007 18:18:22 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 24 Feb 2007 18:18:22 -0800
-Content-Disposition: inline
-In-Reply-To: <11723651923476-git-send-email-normalperson@yhbt.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S933632AbXBYC2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Feb 2007 21:28:36 -0500
+X-Greylist: delayed 840 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Feb 2007 21:28:36 EST
+Received: from mac.com (smtpin06-en2 [10.13.10.151])
+	by smtpout.mac.com (Xserve/8.12.11/smtpout05/MantshX 4.0) with ESMTP id l1P2EauT022668
+	for <git@vger.kernel.org>; Sat, 24 Feb 2007 18:14:36 -0800 (PST)
+Received: from [192.168.2.23] (c-71-196-35-31.hsd1.fl.comcast.net [71.196.35.31])
+	(authenticated bits=0)
+	by mac.com (Xserve/smtpin06/MantshX 4.0) with ESMTP id l1P2EWMi014161
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Sat, 24 Feb 2007 18:14:35 -0800 (PST)
+X-Mailer: Apple Mail (2.752.3)
+X-Brightmail-Tracker: AAAAAA==
+X-Brightmail-scanned: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40533>
 
-This is intended to be a portable replacement for our usage
-of date(1), touch(1), and Perl one-liners in tests.
+I know that this has been mentioned before.  So, I will only bring it  
+up once (from me at least).
 
-Usage: test-chtime (+|=|-)<seconds> <file_1> [<file_2>]"
+I have a project that is currently over 2gigs without .git and  
+growing.  It is a personal website that I use to provide/remind me of  
+things that I used to remember when I was younger.  When you put a  
+GIT repostitory in it, you get almost 4gigs of space taken (and this  
+amount is growing all the time).  Then I keep it centralized, because  
+I own several machines (OK, way too many, over 20 currently,  
+dedicated to Folding@Home).  So, it takes up a lot of disk space over  
+all those machines.
 
-  '+' increments the mtime on the file by <seconds>
-  '-' decrements the mtime on the file by <seconds>
-  '=' sets the mtime on the file to exactly <seconds>
+Because it is so big, cloning no longer works.  I can't remember the  
+exact errors, but I gave up and now tar up  a semi-current version  
+and untar it on a new/re-installed machine.  Then I do a "pull" to  
+update it and that works when the clone doesn't.  I should mention  
+that I have only 2 windows machines, but run GIT on all the rest  
+which are Linux and MacOSX machines.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- Fixing an ugly dependency in the original, the .o file is never used.
+Anyway, for this one repository, I would really like GIT to support  
+the CVS/SVN central repository system.  The rest of the time, I am  
+quite happy with GIT's distributed system even though all of my  
+repositories are really just for me.
 
- Eric Wong <normalperson@yhbt.net> wrote:
- > --- a/Makefile
- > +++ b/Makefile
- > @@ -844,6 +844,8 @@ test-dump-cache-tree$X: dump-cache-tree.o $(GITLIBS)
- >  test-sha1$X: test-sha1.o $(GITLIBS)
- >  	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
- >  
- > +test-chmtime$X: test-chmtime.o
- > +
- >  check-sha1:: test-sha1$X
- >  	./test-sha1.sh
- > 
+Last, thanks for GIT.  I really enjoy it and use it daily and have  
+never had it fail on me (no matter what I did!)!
 
- .gitignore     |    1 +
- Makefile       |    5 ++++-
- test-chmtime.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+), 1 deletions(-)
- create mode 100644 test-chmtime.c
-
-diff --git a/.gitignore b/.gitignore
-index f15155d..eb8a1f8 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -139,6 +139,7 @@ git-whatchanged
- git-write-tree
- git-core-*/?*
- gitweb/gitweb.cgi
-+test-chmtime
- test-date
- test-delta
- test-dump-cache-tree
-diff --git a/Makefile b/Makefile
-index e51b448..8a42be9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -829,7 +829,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
- 
- export NO_SVN_TESTS
- 
--test: all
-+test: all test-chmtime$X
- 	$(MAKE) -C t/ all
- 
- test-date$X: test-date.c date.o ctype.o
-@@ -844,6 +844,9 @@ test-dump-cache-tree$X: dump-cache-tree.o $(GITLIBS)
- test-sha1$X: test-sha1.o $(GITLIBS)
- 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
- 
-+test-chmtime$X: test-chmtime.c
-+	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $<
-+
- check-sha1:: test-sha1$X
- 	./test-sha1.sh
- 
-diff --git a/test-chmtime.c b/test-chmtime.c
-new file mode 100644
-index 0000000..69b3ba9
---- /dev/null
-+++ b/test-chmtime.c
-@@ -0,0 +1,48 @@
-+#include "git-compat-util.h"
-+#include <utime.h>
-+
-+static const char usage_str[] = "(+|=|-)<seconds> <file_1> [<file_2>]";
-+
-+int main(int argc, const char *argv[])
-+{
-+	int i;
-+	int set_eq;
-+	long int set_time;
-+	char *test;
-+
-+	if (argc < 3)
-+		goto usage;
-+
-+	set_eq = (argv[1][0] == '=') ? 1 : 0;
-+	set_time = strtol(argv[1] + set_eq, &test, 10);
-+	if (*test) {
-+		fprintf(stderr, "Not a base-10 integer: %s\n", argv[1] + 1);
-+		goto usage;
-+	}
-+
-+	for (i = 2; i < argc; i++) {
-+		struct stat sb;
-+		struct utimbuf utb;
-+
-+		if (stat(argv[i], &sb) < 0) {
-+			fprintf(stderr, "Failed to stat %s: %s\n",
-+			        argv[i], strerror(errno));
-+			return -1;
-+		}
-+
-+		utb.actime = sb.st_atime;
-+		utb.modtime = set_eq ? set_time : sb.st_mtime + set_time;
-+
-+		if (utime(argv[i], &utb) < 0) {
-+			fprintf(stderr, "Failed to modify time on %s: %s\n",
-+			        argv[i], strerror(errno));
-+			return -1;
-+		}
-+	}
-+
-+	return 0;
-+
-+usage:
-+	fprintf(stderr, "Usage: %s %s\n", argv[0], usage_str);
-+	return -1;
-+}
--- 
-1.5.0.137.ge6502
+Bob White
