@@ -1,125 +1,63 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] Update tests to use test-chmtime
-Date: Sat, 24 Feb 2007 16:59:52 -0800
-Message-ID: <11723651934078-git-send-email-normalperson@yhbt.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add test-chmtime: a utility to change mtime on files
+Date: Sun, 25 Feb 2007 02:27:28 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702250220130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <11723651923476-git-send-email-normalperson@yhbt.net>
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 25 02:00:14 2007
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Feb 25 02:27:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HL7kJ-0000xs-W4
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 02:00:12 +0100
+	id 1HL8Az-0003Ll-Rr
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 02:27:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932934AbXBYA75 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Feb 2007 19:59:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932931AbXBYA74
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 19:59:56 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:35751 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932934AbXBYA7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Feb 2007 19:59:55 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id C552E2DC032;
-	Sat, 24 Feb 2007 16:59:53 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 24 Feb 2007 16:59:53 -0800
-X-Mailer: git-send-email 1.5.0.137.ge6502
+	id S932943AbXBYB1d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Feb 2007 20:27:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932945AbXBYB1d
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 20:27:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59056 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932943AbXBYB1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Feb 2007 20:27:32 -0500
+Received: (qmail invoked by alias); 25 Feb 2007 01:27:31 -0000
+X-Provags-ID: V01U2FsdGVkX19ne50C/vtnB7JqVv/iSPwseRJvHGGr7LDw9pFqII
+	qlPA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
 In-Reply-To: <11723651923476-git-send-email-normalperson@yhbt.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40530>
 
-t4200-rerere:
-  Removed non-portable date dependency and avoid touch
-  Avoid "test -a" which isn't portable, either
+Hi,
 
-lib-git-svn:
-  Use test-chmtime instead of Perl one-liner to poke
+On Sat, 24 Feb 2007, Eric Wong wrote:
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- t/lib-git-svn.sh  |    2 +-
- t/t4200-rerere.sh |   54 ++++++++++++++++++++--------------------------------
- 2 files changed, 22 insertions(+), 34 deletions(-)
+> This is intended to be a portable replacement for our usage
+> of date(1), touch(1), and Perl one-liners in tests.
 
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index 27ad3b7..f6fe78c 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -46,5 +46,5 @@ rawsvnrepo="$svnrepo"
- svnrepo="file://$svnrepo"
- 
- poke() {
--	perl -e '@x = stat($ARGV[0]); utime($x[8], $x[9] + 1, $ARGV[0])' "$1"
-+	test-chmtime +1 "$1"
- }
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index c571a1b..d5bb6ec 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -112,39 +112,27 @@ rr2=.git/rr-cache/$sha2
- mkdir $rr2
- echo Hello > $rr2/preimage
- 
--case "$(date -d @11111111 +%s 2>/dev/null)" in
--11111111)
--	# 'date' must be able to take arbitrary input with @11111111 notation.
--	# for this test to succeed.  We should fix this part using more
--	# portable script someday.
--
--	now=$(date +%s)
--	almost_15_days_ago=$(($now+60-15*86400))
--	just_over_15_days_ago=$(($now-1-15*86400))
--	almost_60_days_ago=$(($now+60-60*86400))
--	just_over_60_days_ago=$(($now-1-60*86400))
--	predate1="$(date -d "@$almost_60_days_ago" +%Y%m%d%H%M.%S)"
--	predate2="$(date -d "@$almost_15_days_ago" +%Y%m%d%H%M.%S)"
--	postdate1="$(date -d "@$just_over_60_days_ago" +%Y%m%d%H%M.%S)"
--	postdate2="$(date -d "@$just_over_15_days_ago" +%Y%m%d%H%M.%S)"
--
--	touch -m -t "$predate1" $rr/preimage
--	touch -m -t "$predate2" $rr2/preimage
--
--	test_expect_success 'garbage collection (part1)' 'git rerere gc'
--
--	test_expect_success 'young records still live' \
--		"test -f $rr/preimage -a -f $rr2/preimage"
--
--	touch -m -t "$postdate1" $rr/preimage
--	touch -m -t "$postdate2" $rr2/preimage
--
--	test_expect_success 'garbage collection (part2)' 'git rerere gc'
--
--	test_expect_success 'old records rest in peace' \
--		"test ! -f $rr/preimage -a ! -f $rr2/preimage"
--	;;
--esac
-+now=$(date +%s)
-+almost_15_days_ago=$(($now+60-15*86400))
-+just_over_15_days_ago=$(($now-1-15*86400))
-+almost_60_days_ago=$(($now+60-60*86400))
-+just_over_60_days_ago=$(($now-1-60*86400))
-+
-+test-chmtime =$almost_60_days_ago $rr/preimage
-+test-chmtime =$almost_15_days_ago $rr2/preimage
-+
-+test_expect_success 'garbage collection (part1)' 'git rerere gc'
-+
-+test_expect_success 'young records still live' \
-+	"test -f $rr/preimage && test -f $rr2/preimage"
-+
-+test-chmtime =$just_over_60_days_ago $rr/preimage
-+test-chmtime =$just_over_15_days_ago $rr2/preimage
-+
-+test_expect_success 'garbage collection (part2)' 'git rerere gc'
-+
-+test_expect_success 'old records rest in peace' \
-+	"test ! -f $rr/preimage && test ! -f $rr2/preimage"
- 
- test_done
- 
--- 
-1.5.0.137.ge6502
+This is a cute idea!
+
+> diff --git a/Makefile b/Makefile
+> index e51b448..105f3ec 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -829,7 +829,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
+>  
+>  export NO_SVN_TESTS
+>  
+> -test: all
+> +test: all test-chmtime$X
+
+That is nice! This says that the program should be only compiled before 
+running the tests. However, you can run the tests also by "cd t; make", 
+and even by "cd t; sh tDDDD-*.sh", so I think a check in the tests should 
+be added, which tests for executability of test-chmtime.
+
+Ciao,
+Dscho
