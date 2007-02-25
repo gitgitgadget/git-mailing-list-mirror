@@ -1,56 +1,104 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Centralized repository
-Date: Sun, 25 Feb 2007 01:04:00 -0500
-Message-ID: <20070225060400.GB17031@coredump.intra.peff.net>
-References: <EF7846A2-C573-4018-B399-EBBEEE2812A4@mac.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Problems installing as root
+Date: Sun, 25 Feb 2007 01:12:58 -0500
+Message-ID: <20070225061258.GA1415@spearce.org>
+References: <erpljl$ln9$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: bob <kranki@mac.com>
-X-From: git-owner@vger.kernel.org Sun Feb 25 07:04:26 2007
+To: walt <wa1ter@myrealbox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 25 07:13:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLCUk-00051T-4o
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 07:04:26 +0100
+	id 1HLCdK-0008Tt-A5
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 07:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933668AbXBYGEN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 01:04:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933669AbXBYGEM
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 01:04:12 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3104 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933668AbXBYGEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 01:04:04 -0500
-Received: (qmail 26631 invoked from network); 25 Feb 2007 01:04:14 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 25 Feb 2007 01:04:14 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 25 Feb 2007 01:04:00 -0500
+	id S932630AbXBYGNF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 01:13:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932773AbXBYGNF
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 01:13:05 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:32831 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932630AbXBYGND (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 01:13:03 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HLCd2-00071t-F7; Sun, 25 Feb 2007 01:13:00 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 61CA720FBAE; Sun, 25 Feb 2007 01:12:58 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <EF7846A2-C573-4018-B399-EBBEEE2812A4@mac.com>
+In-Reply-To: <erpljl$ln9$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40536>
 
-On Sat, Feb 24, 2007 at 09:14:27PM -0500, bob wrote:
+walt <wa1ter@myrealbox.com> wrote:
+> I'm current as of this morning (7bd59dee...) and I'm still seeing
+> two problems with doing 'make' as myself but 'make install' as
+> root.
+> 
+> First, 'make install' as root leaves dozens of files owned by root
+> in my personal source directory.  A minor nit, but inconvenient
+> during the next 'make'.
 
-> Anyway, for this one repository, I would really like GIT to support  
-> the CVS/SVN central repository system.  The rest of the time, I am  
-> quite happy with GIT's distributed system even though all of my  
-> repositories are really just for me.
+Which files, specifically?  I'm sure that the following would be
+built as root during 'make install':
 
-For a while I was running git with an 80-gig repository of media files.
-I found it useful to network mount the central git repo (I used SMB),
-and clone to the local machine using alternates (i.e., "git clone -s
-/net/mounted/git /local/git").  It should work as a normal git repo,
-except that all object accesses will transparently go over the network,
-which obviously slows things down a bit (but no slower than CVS!).
+  GIT-CFLAGS
+  GIT-VERSION-FILE
+  git-gui/GIT-VERSION-FILE
+  git-gui/CREDITS-FILE
 
-You should be able to pack at your size of repo (I obviously couldn't,
-but I was working with a few very large files, so the overhead wasn't
-too bad).
+as these are rebuilt automatically everytime the Makefile runs,
+as they are embedding version data from HEAD.  But others would be
+interesting to know about.
+ 
+> Second, this is a more recent problem with 'make install':
+> make -C git-gui all
+> make[1]: Entering directory `/usr/local/mnt/wa1ter/src/git/git-gui'
+> GITGUI_VERSION = 0.6.GITGUI
 
-HTH,
--Peff
+Hmm.  You can't get the right version number for git-gui.  Do you
+have tags fetched?
+
+In order to build completely from source git-gui needs its gitgui-*
+tags in refs/tags.  Junio pushed the gitgui-0.6.1 tag when he merged
+that version into `maint`.
+
+> make[1]: Leaving directory `/usr/local/mnt/wa1ter/src/git/git-gui'
+> make[1]: Entering directory `/usr/local/mnt/wa1ter/src/git/git-gui'
+> /bin/sh ./CREDITS-GEN
+> error: Cannot locate authorship information.
+> make[1]: *** [CREDITS-FILE] Error 1
+
+Same error as above.  Only this time it made the build stop, rather
+than assuming some default version (0.6.GITGUI).
+ 
+> Now, CREDITS-FILE was generated during 'make' (I checked) so there
+> was no need to generate it again during 'make install', yes?
+
+Odd.  We created the CREDITS-FILE during `make` but then barfed
+during `make install` by acting like we cannot locate the gitgui tag?
+
+What does `git tag -l | grep gitgui-` give you when run as root?
+
+
+As a workaround you may be able to copy `git-gui/CREDITS-FILE` to
+`git-gui/credits`, then run `make install`.  CREDITS-GEN defaults
+to the credits file, as that is shipped in the tarfile.
+
+-- 
+Shawn.
