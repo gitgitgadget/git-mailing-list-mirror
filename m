@@ -1,76 +1,111 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: qgit4 and top of git tree
-Date: Sun, 25 Feb 2007 19:34:42 +0000
-Message-ID: <200702251934.45234.andyparkins@gmail.com>
-References: <cc723f590702240803o24ca01ffxfea904bf7b11c05@mail.gmail.com> <e5bfff550702250939m14e27e21m88078aad1bb1c72a@mail.gmail.com> <cc723f590702251025h1af7922ob379f8b0dfd29cc@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: autoCRLF, git status, git-gui, what is the desired behavior?
+Date: Sun, 25 Feb 2007 11:54:36 -0800
+Message-ID: <7vlkimrp1f.fsf@assigned-by-dhcp.cox.net>
+References: <45E1E47C.5090908@verizon.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Aneesh Kumar" <aneesh.kumar@gmail.com>,
-	"Marco Costalba" <mcostalba@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 25 20:37:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@verizon.net>
+X-From: git-owner@vger.kernel.org Sun Feb 25 20:54:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLPBk-0008KB-4l
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 20:37:40 +0100
+	id 1HLPSD-0007QO-7J
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 20:54:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbXBYThh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 14:37:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752392AbXBYThh
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 14:37:37 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:55759 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750948AbXBYThg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 14:37:36 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so650578uga
-        for <git@vger.kernel.org>; Sun, 25 Feb 2007 11:37:35 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=IqI7CJxt3H1FetNNsp92N55BmPO+bDAo88oUoDMzICyfPYyv8/LQ8W+drDpPkSxWFn0qHyxW3//haXKhz3qUS7F0DDxiqScs3YTX2WA+DAtLhcVkK2Rsnyr1k/3meJFg1pXYJKJ6pVTeD+ewQSjCU8eo3JiUrqYLfwa33V3kWN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RcFjAjOtD1Q69mq4gYHWnfn6ZR71Se0i+zTCLL1tANTMoYMTs3xUaPRvJhvSP30ng29+WkMc24Hfoj6XM4CshYI4bPb/HhovLuFZpaj+Qnq+yIZnFhWMZTXDsjeYaTKF1c7b/KyWKJhmINb7yonrIztMQamcR080Jfel592+Bbc=
-Received: by 10.67.26.7 with SMTP id d7mr5356463ugj.1172432255081;
-        Sun, 25 Feb 2007 11:37:35 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id o24sm4888212ugd.2007.02.25.11.37.32;
-        Sun, 25 Feb 2007 11:37:32 -0800 (PST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <cc723f590702251025h1af7922ob379f8b0dfd29cc@mail.gmail.com>
-Content-Disposition: inline
+	id S1752421AbXBYTyi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 14:54:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752422AbXBYTyi
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 14:54:38 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:52124 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752420AbXBYTyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 14:54:37 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070225195437.IVJB2670.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 25 Feb 2007 14:54:37 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Tvuc1W0091kojtg0000000; Sun, 25 Feb 2007 14:54:37 -0500
+In-Reply-To: <45E1E47C.5090908@verizon.net> (Mark Levedahl's message of "Sun,
+	25 Feb 2007 14:33:16 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40572>
 
-On Sunday 2007, February 25, Aneesh Kumar wrote:
+Mark Levedahl <mlevedahl@verizon.net> writes:
 
-> With my limitted GUI prg experience i would guess it would be set in
-> qt. That width would be the fill horizontal attribute for the
-> frame/canvas that carry the html object.
+> I am trying autoCRLF in git compiled from next (75415c455dd307), find
+> some behavior that is probably different than desired dealing with a
+> file where the only changes are to line endings:
+>
+> create a text file (foo) with \n endings, check it in.
+> $ u2d foo
+> $ git diff foo
+> diff --git a/foo b/foo
+> $ git status
+> # On branch master
+> # Changed but not updated:
+> #   (use "git add <file>..." to update what will be committed)
+> #
+> #       modified:   foo
+> #
+> $ git ci -m 'x' foo
+> # On branch master
+> nothing to commit (working directory clean)
+>
+> So, git commit will not check in the file, but git status shows an
+> unclean file and git diff shows no actual differences.
 
-It is set in Qt, however it's not set by a widget size.  The text box 
-holding the log is a rich text box which supports a limited subset of 
-HTML.  Unfortunately it seems that despite the Qt documentation 
-claiming that the width attribute for tables is supported - it isn't.
+Unless you are doing something other than what you demonstrated
+above, I think what 'diff' and 'commit' steps show is expected,
+even without autoCRLF.  'git status' might be buggy.
 
-I know exactly what you're after, as it's what I wanted too, but Qt is 
-ignoring it.  So the options become:
- - Write our own HTML parsing engine - yuck.
- - Wait for the next Qt and hope that the renderer has improved.
+	create a file (foo), check it in.
+	$ touch foo
+        $ git diff foo
+        diff --git a/foo b/foo
+        $ git commit -m 'x' foo
+        # On branch master
+        nothing to commit (working directory clean)
 
-Sorry.  I'll keep trying things, and of course send a patch if I find a 
-workaround.
+So in order to validate my conjecture that 'git-status' is
+buggy, can you try this:
 
+	(1) Do your sequence from "create a text file (foo) with
+            \n endings" to "git ci -m 'x' foo", as you depicted
+            above.
 
-Andy
+	(2) Without doing anything else, run "git diff" again, 
 
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+With my sequence above, "git diff" should say nothing because 
+"update-index --refresh" run inside "git-status" (and "git-commit")
+would notice 'foo' has not changed.
+
+Ah, I know what is going on.  "update-index --refresh" notices
+that lstat(2) says the size is different between what is
+recorded in the index, and does not actually compare and refresh
+the entry.
+
+But that is a very important optimization, and I do not think we
+would want to cripple that for autoCRLF.
+
+I think this should work for you.
+
+        create a text file (foo) with \n endings, check it in.
+        $ u2d foo
+	$ git update-index foo
+        $ git diff foo
+        $ git status
+	$ git commit
+
+I think the same --refresh check kicks in for "git add" (I did
+not try), so if you replace the above "git update-index foo"
+with "git add foo" it may not work.  You would want to try that,
+too.
