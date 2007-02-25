@@ -1,70 +1,53 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Centralized repository
-Date: Sun, 25 Feb 2007 22:08:34 +0100
-Message-ID: <20070225210834.GQ21842@admingilde.org>
-References: <EF7846A2-C573-4018-B399-EBBEEE2812A4@mac.com>
+From: Mark Levedahl <mlevedahl@verizon.net>
+Subject: Re: autoCRLF, git status, git-gui, what is the desired behavior?
+Date: Sun, 25 Feb 2007 16:14:04 -0500
+Message-ID: <45E1FC1C.4090409@verizon.net>
+References: <45E1E47C.5090908@verizon.net>
+ <7vlkimrp1f.fsf@assigned-by-dhcp.cox.net>
+ <7vfy8urngi.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DRfr/2Y1Zz/5r+Kb"
-Cc: git@vger.kernel.org
-To: bob <kranki@mac.com>
-X-From: git-owner@vger.kernel.org Sun Feb 25 22:08:42 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Feb 25 22:14:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLQbn-0006Xp-UP
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 22:08:40 +0100
+	id 1HLQhN-0000dz-C1
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 22:14:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965116AbXBYVIh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 16:08:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965122AbXBYVIh
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 16:08:37 -0500
-Received: from mail.admingilde.org ([213.95.32.147]:55521 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965116AbXBYVIg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 16:08:36 -0500
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HLQbi-0007FL-Nc; Sun, 25 Feb 2007 22:08:34 +0100
-Content-Disposition: inline
-In-Reply-To: <EF7846A2-C573-4018-B399-EBBEEE2812A4@mac.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S965058AbXBYVOM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 16:14:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965119AbXBYVOL
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 16:14:11 -0500
+Received: from vms042pub.verizon.net ([206.46.252.42]:39185 "EHLO
+	vms042pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965058AbXBYVOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 16:14:10 -0500
+Received: from [127.0.0.1] ([71.246.235.75])
+ by vms042.mailsrvcs.net (Sun Java System Messaging Server 6.2-6.01 (built Apr
+ 3 2006)) with ESMTPA id <0JE100G3MEZA7STE@vms042.mailsrvcs.net> for
+ git@vger.kernel.org; Sun, 25 Feb 2007 15:13:59 -0600 (CST)
+In-reply-to: <7vfy8urngi.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40576>
 
+Junio C Hamano wrote:
+> Junio C Hamano <junkio@cox.net> writes:
+>   
+> It might be interesting to try this patch.
+>   
+This patch makes no difference to the problems I noted in my second 
+message where the file undergoes crlf->lf translation on commit, so 
+working copy is known to be different than blob. Is it the case that the 
+size info stored in the index reflects the size of the blob rather than 
+of the working copy? Absent autoCRLF these are of course identical, but 
+with autoCRLF they are not and what we need stored is the working file 
+info (at least for checking dirty-ness).
 
---DRfr/2Y1Zz/5r+Kb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-hoi :)
-
-On Sat, Feb 24, 2007 at 09:14:27PM -0500, bob wrote:
-> Because it is so big, cloning no longer works.  I can't remember the =20
-> exact errors, but I gave up and now tar up  a semi-current version =20
-> and untar it on a new/re-installed machine.  Then I do a "pull" to =20
-> update it and that works when the clone doesn't.
-
-this is fixed in the master branch now.
-
---=20
-Martin Waitz
-
---DRfr/2Y1Zz/5r+Kb
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFF4frSj/Eaxd/oD7IRAnRjAJ9YdTvoaaa3H3P9kowMZiiQDqz5zgCeMwMX
-9bpcrpHND+pz8Hd7h23FZJ0=
-=acW1
------END PGP SIGNATURE-----
-
---DRfr/2Y1Zz/5r+Kb--
+Mark
