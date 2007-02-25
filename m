@@ -1,80 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH/RFC 0/8] use "git diff" in the test suite
-Date: Mon, 26 Feb 2007 00:19:52 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702260015560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702252329550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vps7xrfxa.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 4/8] diff: support reading a file from stdin via "-"
+Date: Sun, 25 Feb 2007 15:41:22 -0800
+Message-ID: <7virdprejh.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702252335410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vvehprgl7.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0702260009530.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 26 00:20:16 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 26 00:41:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLSf7-0006Iv-DA
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 00:20:13 +0100
+	id 1HLSze-0006V0-Op
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 00:41:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965271AbXBYXT4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 18:19:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965223AbXBYXTz
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 18:19:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45991 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965243AbXBYXTx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 18:19:53 -0500
-Received: (qmail invoked by alias); 25 Feb 2007 23:19:52 -0000
-X-Provags-ID: V01U2FsdGVkX1/juRwKV+Djmci6KgDudo9Nup3qOyLa94G38tm411
-	xbjg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vps7xrfxa.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751133AbXBYXlY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 18:41:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751136AbXBYXlY
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 18:41:24 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:57558 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751133AbXBYXlX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 18:41:23 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070225234123.RSPA6078.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 25 Feb 2007 18:41:23 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id TzhN1W00A1kojtg0000000; Sun, 25 Feb 2007 18:41:22 -0500
+In-Reply-To: <Pine.LNX.4.63.0702260009530.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Mon, 26 Feb 2007 00:11:38 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40596>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sun, 25 Feb 2007, Junio C Hamano wrote:
+> I see this purely for purposes of --no-index diff. And in that case, we 
+> only compare one file pair. Either one of them is from stdin, or it is 
+> not. Therefore, if memory gets tight, we cannot compare that file pair 
+> anyway, and have to error out.
+>
+> Maybe I missed something obvious?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Now that --no-index is supported by git's diff, we can use much of the 
-> > test suite to do the job, instead of relying on GNU diff.
-> >
-> > This is a bit work-in-progress, since the handling of "-" as a 
-> > filename is not fleshed out yet, and we really should have the 
-> > "--quiet" option. But I got side-tracked by the edit-patch-series 
-> > script, and did not want to hold these patches off any longer.
-> 
-> As you said yourself [6/8], [7/8], and [8/8] are mechanical conversions, 
-> and I do not think it is too much effort involved on your side to "hold 
-> these patches off".
-> 
-> My preference is to apply [1/8] now, cook the result in 'next' for a few 
-> days longer to see if anybody complains or finds glitches in the diff-ni 
-> series so far, push it out to 'master' and then apply [2/8] and [3/8] 
-> while on 'master'.  The remainder would be forked into a topic branch 
-> and cooked in 'pu' and then 'next' as usual.
+I think the responsibility to mark if a path whose name is "-"
+is a filesystem object or stdin lies within the option parser.
+If the user says "diff - a" or diff a -" then the user clearly
+means the stdin, while if the user says "diff ./- a" it is a
+path (and the later stages like populate_filespec() would see
+canonicalized "-" as the filename).  The point is that the
+disambiguation must be done by somebody, and I think the option
+parser, who calls get_pathspec(), should be the one that does
+it.
 
-I fully agree.
+So we at least need a bit in diff_options that lets the option
+parser to tell the later stages "if you see - in pathspec, the
+user means stdin".  And my suggestion was that if you are going
+to do that in the option parser anyway, you could read stdin in
+the option parser and hang that data in diff_options, and the
+presence of that stdin data (pointer being non NULL) can be used
+as that signal.
 
-BTW I think that using 020600 as mode for "-" when it means stdin would 
-fix [4/8]...
-
-> Also I do not think we would necessarily want [7/8] and [8/8]. It would 
-> help with tests on broken distributions whose 'cmp' misbehaves when the 
-> output is redirected to /dev/null, but I do not think it is a good 
-> enough reason to make the tests slower.
-
-I think with the upcoming "--quiet", which exits early on error, 
-performance should be about par. Actually, I went off in this direction 
-because I still use an OpenSUSE 10.1 install DVD, which has this broken 
-cmp...
-
-But I do not care deeply. (It was a good test case for diff-ni, though...)
-
-Ciao,
-Dscho
+I think the callers of populate_filespec() may need to pass
+around diff_options as a parameter for the above to work, but
+hopefully that should not be a rocket surgery.
