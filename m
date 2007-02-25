@@ -1,89 +1,61 @@
-From: Roland Dreier <roland@digitalvampire.org>
-Subject: [PATCH] Allow arbitrary number of arguments to git-pack-objects
-Date: Sun, 25 Feb 2007 09:34:27 -0800
-Message-ID: <871wkep2e4.fsf@digitalvampire.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: qgit4 and top of git tree
+Date: Sun, 25 Feb 2007 18:39:40 +0100
+Message-ID: <e5bfff550702250939m14e27e21m88078aad1bb1c72a@mail.gmail.com>
+References: <cc723f590702240803o24ca01ffxfea904bf7b11c05@mail.gmail.com>
+	 <e5bfff550702250902q11b74fecvce1ea9d79dec8f92@mail.gmail.com>
+	 <cc723f590702250925m3795ca58w7e276d2c61fa8f19@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 25 18:34:35 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Andy Parkins" <andyparkins@gmail.com>
+To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 25 18:39:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLNGb-0005Rw-2Z
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 18:34:33 +0100
+	id 1HLNLd-0007Zf-R5
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 18:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965028AbXBYRea (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 12:34:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965031AbXBYRea
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 12:34:30 -0500
-Received: from sccrmhc11.comcast.net ([204.127.200.81]:35159 "EHLO
-	sccrmhc11.comcast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965028AbXBYRe3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 12:34:29 -0500
-Received: from hellmouth.digitalvampire.org ([67.169.18.80])
-          by comcast.net (sccrmhc11) with ESMTP
-          id <2007022517342801100ilpfie>; Sun, 25 Feb 2007 17:34:28 +0000
-Received: from localhost.localdomain (shaolin.home.digitalvampire.org [10.1.0.2])
-	by hellmouth.digitalvampire.org (Postfix) with ESMTP id C81C982D4D;
-	Sun, 25 Feb 2007 09:34:27 -0800 (PST)
-Received: by localhost.localdomain (Postfix, from userid 1000)
-	id 803CE1DF73; Sun, 25 Feb 2007 09:34:27 -0800 (PST)
-X-Message-Flag: Warning: May contain useful information
-X-Priority: 1
-X-MSMail-Priority: High
-User-Agent: Gnus/5.1006 (Gnus v5.10.6) XEmacs/21.4 (Jumbo Shrimp, linux)
+	id S965019AbXBYRjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 12:39:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965031AbXBYRjn
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 12:39:43 -0500
+Received: from wr-out-0506.google.com ([64.233.184.229]:29446 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965019AbXBYRjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 12:39:42 -0500
+Received: by wr-out-0506.google.com with SMTP id 37so341682wra
+        for <git@vger.kernel.org>; Sun, 25 Feb 2007 09:39:42 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Dd8Q/vD3W3J74jgDWrj0S09y34wASYFi2pTKofmM4hWSc0XSj7uRdorzUcGx0wOIY7cU3Ql7taeb9sgk2ayPJ/qllB/sAmrh05CPpWAAkqCXR/y/kfyS6vzfs9fsIRV4AYhCzMHQm/FpJFG8o1qnQr11q3O2D8mxMnRNIXnnmO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JwuDd79MaSS7Vn2Yn0OyoPD1IzQSPcrYkF8hzmKvXLTwIQeoOLE8e/xT2NWs1pJ35R15H5HY5fQakClGlZThiVFt0KBnzjlpLzzLpmpCRTATidEJupBeRzEQQ6w1TLjmyrbK1FlcGbfrF6aoMkQBdYoiGhwVpZgHXoP2jdUy0Uo=
+Received: by 10.114.155.1 with SMTP id c1mr1036959wae.1172425180287;
+        Sun, 25 Feb 2007 09:39:40 -0800 (PST)
+Received: by 10.114.60.16 with HTTP; Sun, 25 Feb 2007 09:39:40 -0800 (PST)
+In-Reply-To: <cc723f590702250925m3795ca58w7e276d2c61fa8f19@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40560>
 
-If a repository ever gets in a situation where there are too many
-packs (more than 60 or so), perhaps because of frequent use of
-git-fetch -k or incremental git-repack, then it becomes impossible to
-fully repack the repository with git-repack -a.  That command just
-dies with the cryptic message
+On 2/25/07, Aneesh Kumar <aneesh.kumar@gmail.com> wrote:
+>
+> I liked the new look. Is it possible to make the header background
+> color fill horizontally.
+>
 
-    fatal: too many internal rev-list options
+I'm absolutely zero with HTML, all the credits goes to Andy.
 
-This message comes from git-pack-objects, which is passed one command
-line option like --unpacked=pack-<SHA1>.pack for each pack file to be
-repacked.  However, the current code has a static limit of 64 command
-line arguments and just aborts if more arguments are passed to it.
+In case you would like to try yourself, corresponding code is in git.cpp,
+function Git::getDesc(), otherwise I would ask to Andy ;-)
 
-Fix this by dynamically allocating the array of command line
-arguments, and doubling the size each time it overflows.
-
-Signed-off-by: Roland Dreier <roland@digitalvampire.org>
----
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index b5ed9ce..c4bbe43 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1551,9 +1551,12 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	int use_internal_rev_list = 0;
- 	int thin = 0;
- 	int i;
--	const char *rp_av[64];
-+	const char **rp_av;
-+	int rp_ac_max = 64;
- 	int rp_ac;
- 
-+	rp_av = xcalloc(rp_ac_max, sizeof *rp_av);
-+
- 	rp_av[0] = "pack-objects";
- 	rp_av[1] = "--objects"; /* --thin will make it --objects-edge */
- 	rp_ac = 2;
-@@ -1626,8 +1629,10 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		    !strcmp("--reflog", arg) ||
- 		    !strcmp("--all", arg)) {
- 			use_internal_rev_list = 1;
--			if (ARRAY_SIZE(rp_av) - 1 <= rp_ac)
--				die("too many internal rev-list options");
-+			if (rp_ac_max - 1 <= rp_ac) {
-+				rp_ac_max *= 2;
-+				rp_av = xrealloc(rp_av, rp_ac_max * sizeof *rp_av);
-+			}
- 			rp_av[rp_ac++] = arg;
- 			continue;
- 		}
+Marco
