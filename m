@@ -1,68 +1,115 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Problems installing as root
-Date: Sun, 25 Feb 2007 02:08:11 -0500
-Message-ID: <20070225070811.GA1676@spearce.org>
-References: <erpljl$ln9$1@sea.gmane.org> <20070225061258.GA1415@spearce.org> <7vabz2wxi4.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Update tests to use test-chmtime
+Date: Sat, 24 Feb 2007 23:09:43 -0800
+Message-ID: <7vzm72vhl4.fsf@assigned-by-dhcp.cox.net>
+References: <11723651923476-git-send-email-normalperson@yhbt.net>
+	<11723651934078-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Feb 25 08:08:32 2007
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Feb 25 08:09:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLDUi-00043K-Ge
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 08:08:28 +0100
+	id 1HLDVz-0004XF-0r
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 08:09:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933669AbXBYHIQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 02:08:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933671AbXBYHIQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 02:08:16 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33543 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933669AbXBYHIP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 02:08:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HLDUT-00025H-JS; Sun, 25 Feb 2007 02:08:13 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 27A1420FBAE; Sun, 25 Feb 2007 02:08:12 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vabz2wxi4.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S933671AbXBYHJo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 02:09:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933672AbXBYHJo
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 02:09:44 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:63328 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933671AbXBYHJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 02:09:44 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070225070943.WNQB3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 25 Feb 2007 02:09:43 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Tj9j1W0011kojtg0000000; Sun, 25 Feb 2007 02:09:43 -0500
+In-Reply-To: <11723651934078-git-send-email-normalperson@yhbt.net> (Eric
+	Wong's message of "Sat, 24 Feb 2007 16:59:52 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40540>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> How about doing something like this (you would need -p2 to apply
-> to your tree)?
-> 
-> diff --git a/git-gui/CREDITS-GEN b/git-gui/CREDITS-GEN
+Eric Wong <normalperson@yhbt.net> writes:
 
-No dice:
+> -case "$(date -d @11111111 +%s 2>/dev/null)" in
+> -11111111)
+> ...
+> -	touch -m -t "$predate1" $rr/preimage
+> -	touch -m -t "$predate2" $rr2/preimage
+> ...
+> -esac
+> +now=$(date +%s)
+> +almost_15_days_ago=$(($now+60-15*86400))
+> +just_over_15_days_ago=$(($now-1-15*86400))
+> +almost_60_days_ago=$(($now+60-60*86400))
+> +just_over_60_days_ago=$(($now-1-60*86400))
+> +
+> +test-chmtime =$almost_60_days_ago $rr/preimage
+> +test-chmtime =$almost_15_days_ago $rr2/preimage
 
-	$ git apply -p2 e
-	error: git-gui/CREDITS-GEN: Not a directory
+Very nice.
+I've been wanting to get rid of this part for quite a while.
 
-	$ git version
-	git version 1.5.0.1.641.g3d8a
+However, is '+%s' output portable enough for this change to be
+an improvement?
 
-Anyway - I'm applying that now (hand editing the patch), and will
-do the same in GIT-VERSION-GEN for git-gui.
+I would suggest changing "test-chmtime =-200 file" to set the
+mtime of the file to 200 seconds in the past, relative to
+present.
 
-What about the top level GIT-VERSION-GEN in git.git?
-
--- 
-Shawn.
+---
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index d5bb6ec..639d45f 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -112,11 +112,10 @@ rr2=.git/rr-cache/$sha2
+ mkdir $rr2
+ echo Hello > $rr2/preimage
+ 
+-now=$(date +%s)
+-almost_15_days_ago=$(($now+60-15*86400))
+-just_over_15_days_ago=$(($now-1-15*86400))
+-almost_60_days_ago=$(($now+60-60*86400))
+-just_over_60_days_ago=$(($now-1-60*86400))
++almost_15_days_ago=$((60-15*86400))
++just_over_15_days_ago=$((-1-15*86400))
++almost_60_days_ago=$((60-60*86400))
++just_over_60_days_ago=$((-1-60*86400))
+ 
+ test-chmtime =$almost_60_days_ago $rr/preimage
+ test-chmtime =$almost_15_days_ago $rr2/preimage
+diff --git a/test-chmtime.c b/test-chmtime.c
+index 69b3ba9..2a1d00d 100644
+--- a/test-chmtime.c
++++ b/test-chmtime.c
+@@ -1,7 +1,7 @@
+ #include "git-compat-util.h"
+ #include <utime.h>
+ 
+-static const char usage_str[] = "(+|=|-)<seconds> <file_1> [<file_2>]";
++static const char usage_str[] = "(+|=|-)<seconds> <file_1>...";
+ 
+ int main(int argc, const char *argv[])
+ {
+@@ -19,6 +19,10 @@ int main(int argc, const char *argv[])
+ 		fprintf(stderr, "Not a base-10 integer: %s\n", argv[1] + 1);
+ 		goto usage;
+ 	}
++	if (set_eq && set_time < 0) {
++		time_t now = time(NULL);
++		set_time += now;
++	}
+ 
+ 	for (i = 2; i < argc; i++) {
+ 		struct stat sb;
