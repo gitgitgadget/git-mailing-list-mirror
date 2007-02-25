@@ -1,69 +1,78 @@
-From: bob <kranki@mac.com>
-Subject: Centralized repository
-Date: Sat, 24 Feb 2007 21:14:27 -0500
-Message-ID: <EF7846A2-C573-4018-B399-EBBEEE2812A4@mac.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 25 03:28:51 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCHv3] git-fetch: Split fetch and merge logic
+Date: Sat, 24 Feb 2007 21:07:38 -0800
+Message-ID: <7vlkimx1t1.fsf@assigned-by-dhcp.cox.net>
+References: <87wt29i7hg.fsf@gmail.com>
+	<7v1wkfzqgk.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 25 06:07:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HL985-00015m-St
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 03:28:50 +0100
+	id 1HLBbs-0000g5-58
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 06:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933632AbXBYC2h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Feb 2007 21:28:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933633AbXBYC2h
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 21:28:37 -0500
-Received: from smtpout.mac.com ([17.250.248.175]:57834 "EHLO smtpout.mac.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933632AbXBYC2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Feb 2007 21:28:36 -0500
-X-Greylist: delayed 840 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Feb 2007 21:28:36 EST
-Received: from mac.com (smtpin06-en2 [10.13.10.151])
-	by smtpout.mac.com (Xserve/8.12.11/smtpout05/MantshX 4.0) with ESMTP id l1P2EauT022668
-	for <git@vger.kernel.org>; Sat, 24 Feb 2007 18:14:36 -0800 (PST)
-Received: from [192.168.2.23] (c-71-196-35-31.hsd1.fl.comcast.net [71.196.35.31])
-	(authenticated bits=0)
-	by mac.com (Xserve/smtpin06/MantshX 4.0) with ESMTP id l1P2EWMi014161
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Sat, 24 Feb 2007 18:14:35 -0800 (PST)
-X-Mailer: Apple Mail (2.752.3)
-X-Brightmail-Tracker: AAAAAA==
-X-Brightmail-scanned: yes
+	id S1752316AbXBYFHl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 25 Feb 2007 00:07:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752315AbXBYFHl
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 00:07:41 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:38277 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751387AbXBYFHk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Feb 2007 00:07:40 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070225050740.TSQI6078.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 25 Feb 2007 00:07:40 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Th7f1W00A1kojtg0000000; Sun, 25 Feb 2007 00:07:40 -0500
+In-Reply-To: <7v1wkfzqgk.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sat, 24 Feb 2007 04:32:11 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40534>
 
-I know that this has been mentioned before.  So, I will only bring it  
-up once (from me at least).
+Junio C Hamano <junkio@cox.net> writes:
 
-I have a project that is currently over 2gigs without .git and  
-growing.  It is a personal website that I use to provide/remind me of  
-things that I used to remember when I was younger.  When you put a  
-GIT repostitory in it, you get almost 4gigs of space taken (and this  
-amount is growing all the time).  Then I keep it centralized, because  
-I own several machines (OK, way too many, over 20 currently,  
-dedicated to Folding@Home).  So, it takes up a lot of disk space over  
-all those machines.
+> Santi B=C3=A9jar <sbejar@gmail.com> writes:
+> ...
+>> The current merge behaviour is unchanged.
+>
+> I overlooked your earlier huge testcase patch, but I noticed it
+> does not include any test that fetches an annotated tag that
+> points at a commit or a non-commit, nor an unannotated tag that
+> is a tree or a blob.
 
-Because it is so big, cloning no longer works.  I can't remember the  
-exact errors, but I gave up and now tar up  a semi-current version  
-and untar it on a new/re-installed machine.  Then I do a "pull" to  
-update it and that works when the clone doesn't.  I should mention  
-that I have only 2 windows machines, but run GIT on all the rest  
-which are Linux and MacOSX machines.
+A couple of other things I think the users of information in
+=46ETCH_HEAD rely on need to be checked by the test suite.
 
-Anyway, for this one repository, I would really like GIT to support  
-the CVS/SVN central repository system.  The rest of the time, I am  
-quite happy with GIT's distributed system even though all of my  
-repositories are really just for me.
+ * Automated following of tags when a branch head is fetched.
+   When this happens, I think the users (not just git-pull
+   script but end users) expect the branch head to be listed
+   first in the FETCH_HEAD file, so that:
 
-Last, thanks for GIT.  I really enjoy it and use it daily and have  
-never had it fail on me (no matter what I did!)!
+	$ git fetch git://some.repo/
+	$ git show FETCH_HEAD
 
-Bob White
+   gives stable and useful result.
+
+ * When two refs are listed on the command line explicitly, are
+   they listed in the order given by the user in the resulting
+   FETCH_HEAD file?
+
+	$ git fetch git://some.repo/ one two
+	$ git fetch git://some.repo/ two one
+
+   Again, "git show FETCH_HEAD" after that expects the first one
+   to show 'one' and the second one 'two'.  Replacing 'fetch'
+   with 'pull' in the example would affect the parent order in
+   the resulting Octopus.
