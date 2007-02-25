@@ -1,70 +1,104 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Centralized repository
-Date: Sun, 25 Feb 2007 09:51:34 +0000
-Message-ID: <200702250951.37867.andyparkins@gmail.com>
-References: <EF7846A2-C573-4018-B399-EBBEEE2812A4@mac.com>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [RFC/PATCH] Fix git-diff --cached to not error out if HEAD points to a nonexistant branch
+Date: Sun, 25 Feb 2007 11:24:31 +0100
+Message-ID: <20070225102431.GC3897@xp.machine.xx>
+References: <20070224172037.GA31963@xp.machine.xx> <7vvehrw9mz.fsf@assigned-by-dhcp.cox.net> <20070224221622.GA3897@xp.machine.xx> <7vvehqtzns.fsf@assigned-by-dhcp.cox.net> <20070225091302.GB3897@xp.machine.xx> <7vlkimtvsn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: bob <kranki@mac.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 25 10:54:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Feb 25 11:21:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLG5W-0000rm-9s
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 10:54:38 +0100
+	id 1HLGVb-0003Pz-1n
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 11:21:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752329AbXBYJy3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 04:54:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752331AbXBYJy3
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 04:54:29 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:19496 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752329AbXBYJy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 04:54:28 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so604465uga
-        for <git@vger.kernel.org>; Sun, 25 Feb 2007 01:54:27 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=grghGqEt1QL9xRKeHbd1RQloHusx/rC5HyBiLbgOyZ3nhImu2go7fDtnMhv63Dhq2J5kjjNgW9hYyGgNeMVMb2Xc9Y/n6Gpy1PVWUIW8qulQNbSoQ7SQ0eo4OH4ak1b4RJhDn6QiN3w9MwuzMVyeOEe72bS0BzZRxy9G1gznE2M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=CWjfz/z9Y7cpXfFMYZD/OR+tyFM0yl4b2CyGHtEpAWLRjj7dr7HrgwEcVkRHPh5wds0n4e4atNkZj8cbqhEggdjwTKWWEJqAOoifzqfxs8RncCkAEzPhYjcIWAtPRnfFF2rCDmyd6742+Gff3/8my4z6z/6QuEm+wTHn2z48hl0=
-Received: by 10.67.100.17 with SMTP id c17mr4478300ugm.1172397267274;
-        Sun, 25 Feb 2007 01:54:27 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id j1sm4262256ugf.2007.02.25.01.54.24;
-        Sun, 25 Feb 2007 01:54:25 -0800 (PST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <EF7846A2-C573-4018-B399-EBBEEE2812A4@mac.com>
+	id S1752336AbXBYKVX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 05:21:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbXBYKVX
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 05:21:23 -0500
+Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34]:47272 "HELO
+	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with SMTP id S1752334AbXBYKVW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Feb 2007 05:21:22 -0500
+Received: (qmail 27976 invoked by uid 0); 25 Feb 2007 10:21:20 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 25 Feb 2007 10:21:20 -0000
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vlkimtvsn.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40549>
 
-On Sunday 2007, February 25, bob wrote:
+On Sun, Feb 25, 2007 at 01:45:44AM -0800, Junio C Hamano wrote:
+> Peter Baumann <waste.manager@gmx.de> writes:
+> 
+> > ..., but in the same sentence you have to say
+> > "Oh, did I mention that it doesn't work until you have made a first commit?"
+> 
+> Well, you do not even have to mention that if you are explaining
+> things correctly.  If something does its thing relative to the
+> latest commit, then it obviously would not work until you have
+> that "latest commit".  There is _no_ initial "empty" commit in
+> git.
+> 
 
-> Anyway, for this one repository, I would really like GIT to support
-> the CVS/SVN central repository system.  The rest of the time, I am
+Yes. I know that there is no empty commit. But at least it's me thinking
+that I start with "nothing" from the beginning.
 
-In the case of subversion: you really /wouldn't/ want that model.  
-Subversion keeps a local pristine copy in the .svn directory of every 
-file.  This makes local diffs and stats fast and not require network 
-access, but also doubles the storage requirements of your working 
-directory.
+But thats how people learn git! I _know_ of three people who just want
+to play with it by creating a new repo with git-init-db (yes, that was
+v1.4.4.4), doing git-add etc and start wondering why git diff didn't
+show what the expected. After mentioning the index they realised that
+they have to specify --cached to diff to get what they want (they have
+used svn). Starting from a freshly initalized repo they played some more
+and actually got _bitten_ by the confussing error message. At least put
+your patch with the sane error message into git, so they would have
+gotten a clou what went wrong if I couldn't convince you otherwise.
 
-I've found that a packed git repository is often smaller than a full 
-checkout of the project (it's almost scary actually - your entire 
-project's history in less space than the project).
+But I _really_ think that making it the same behaviour as in
+"log.showroot = true" to show a diff against an empty tree.
 
+> I think getting people used to that concept early on would
+> actually avoid such confusion.  In that sense,...
+> 
 
-Andy
--- 
-Dr Andrew Parkins, M Eng (Hons), AMIEE
-andyparkins@gmail.com
+But people will start using git in newly created repos! You don't want
+to clone the kernel to just see if that new SCM system fits your needs.
+You start by creating some test repos to fool around and later throw
+them away. They did it that way and so was I.
+
+Not to mention that I think the majority of the users don't even have a
+_need_ to go down to the plumbing commands! At least I am totally happy
+with what the porcelain offers me and I could get all my work done with
+it (commit, diff, rebase, merge, log ...)
+
+Side note: Not that it matters, but they gave up on git because they found
+it to confusing (remember, it was v1.4.4.4). All those "strange" concepts
+like the index, diff not working as expected and those strange errors ...
+and they actually had some work to do and didn't have the time to fully
+master git, so they staid with svn.
+
+I'll try to convince them again that git is much
+superiour to svn, after git-core 1.5.0 is available in debian because I
+_know_ the won't bother to compile it themself. For them, a SCM is just
+a tool to get the work done. But with the new git-gui I have convincing
+argument to try git again and it gives them time to acomodate to the
+"new" behaviour of their SCM.
+And obviously the learning curve is now much flatter than in v1.4.x.
+
+-Peter
+
+> > The plumbing commands are a diffrent story.
+> 
+> ... I do not think the plumbing should be a different story.
+> Otherwise you would confuse people when they start learning the
+> plumbing.
+> 
+
+see above
