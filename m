@@ -1,75 +1,139 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [RFC/PATCH] git-repack: shortcut in case of just one pack, and no
- loose objects
-Date: Sun, 25 Feb 2007 01:49:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702250144530.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Feb 25 01:49:21 2007
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] Add test-chmtime: a utility to change mtime on files
+Date: Sat, 24 Feb 2007 16:59:51 -0800
+Message-ID: <11723651923476-git-send-email-normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Feb 25 02:00:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HL7Zl-000552-Nu
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 01:49:18 +0100
+	id 1HL7k6-0000sp-Q6
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 01:59:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932869AbXBYAtO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Feb 2007 19:49:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933606AbXBYAtO
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 19:49:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46737 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932869AbXBYAtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Feb 2007 19:49:13 -0500
-Received: (qmail invoked by alias); 25 Feb 2007 00:49:12 -0000
-X-Provags-ID: V01U2FsdGVkX186dmQEh046Hpxds0pTjPXZeiXGo1rrNe9lj71kij
-	0hcg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+	id S932928AbXBYA7z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Feb 2007 19:59:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932941AbXBYA7z
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Feb 2007 19:59:55 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:35749 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932928AbXBYA7y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Feb 2007 19:59:54 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 821532DC01A;
+	Sat, 24 Feb 2007 16:59:52 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 24 Feb 2007 16:59:52 -0800
+X-Mailer: git-send-email 1.5.0.137.ge6502
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40528>
 
+This is intended to be a portable replacement for our usage
+of date(1), touch(1), and Perl one-liners in tests.
 
-When there is at most one pack, and there are no loose objects,
-the result should be one pack _and_ reuse of deltas is allowed,
-there is no need to repack, really.
+Usage: test-chtime (+|=|-)<seconds> <file_1> [<file_2>]"
 
-The code does not check for *.keep files; they are either sign of
-an ongoing repack, or of packs which do not matter for repacking
-purposes.
+  '+' increments the mtime on the file by <seconds>
+  '-' decrements the mtime on the file by <seconds>
+  '=' sets the mtime on the file to exactly <seconds>
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
+ .gitignore     |    1 +
+ Makefile       |    4 +++-
+ test-chmtime.c |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 52 insertions(+), 1 deletions(-)
+ create mode 100644 test-chmtime.c
 
-	I _think_ this is correct, but I might have missed something 
-	obvious...
-
- git-repack.sh |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
-
-diff --git a/git-repack.sh b/git-repack.sh
-index ddfa8b4..15094b3 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -25,6 +25,16 @@ do
- 	shift
- done
+diff --git a/.gitignore b/.gitignore
+index f15155d..eb8a1f8 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -139,6 +139,7 @@ git-whatchanged
+ git-write-tree
+ git-core-*/?*
+ gitweb/gitweb.cgi
++test-chmtime
+ test-date
+ test-delta
+ test-dump-cache-tree
+diff --git a/Makefile b/Makefile
+index e51b448..105f3ec 100644
+--- a/Makefile
++++ b/Makefile
+@@ -829,7 +829,7 @@ GIT-CFLAGS: .FORCE-GIT-CFLAGS
  
-+if test "z$all_into_one" = zt -a "z$no_reuse_delta" = z; then
-+	# check if no loose objects are around, and only up to one pack
-+	objdirs="$(ls "$GIT_DIR"/objects/?? 2>/dev/null)"
-+	packs="$(cd "$GIT_DIR/objects/pack/"; ls *.pack 2>/dev/null)"
-+	case "$objdirs,$packs" in
-+	*.pack*.pack*) ;;
-+	,*) echo "No need to repack" >&2; exit 0
-+	esac
-+fi
+ export NO_SVN_TESTS
+ 
+-test: all
++test: all test-chmtime$X
+ 	$(MAKE) -C t/ all
+ 
+ test-date$X: test-date.c date.o ctype.o
+@@ -844,6 +844,8 @@ test-dump-cache-tree$X: dump-cache-tree.o $(GITLIBS)
+ test-sha1$X: test-sha1.o $(GITLIBS)
+ 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
+ 
++test-chmtime$X: test-chmtime.o
 +
- # Later we will default repack.UseDeltaBaseOffset to true
- default_dbo=false
+ check-sha1:: test-sha1$X
+ 	./test-sha1.sh
  
+diff --git a/test-chmtime.c b/test-chmtime.c
+new file mode 100644
+index 0000000..69b3ba9
+--- /dev/null
++++ b/test-chmtime.c
+@@ -0,0 +1,48 @@
++#include "git-compat-util.h"
++#include <utime.h>
++
++static const char usage_str[] = "(+|=|-)<seconds> <file_1> [<file_2>]";
++
++int main(int argc, const char *argv[])
++{
++	int i;
++	int set_eq;
++	long int set_time;
++	char *test;
++
++	if (argc < 3)
++		goto usage;
++
++	set_eq = (argv[1][0] == '=') ? 1 : 0;
++	set_time = strtol(argv[1] + set_eq, &test, 10);
++	if (*test) {
++		fprintf(stderr, "Not a base-10 integer: %s\n", argv[1] + 1);
++		goto usage;
++	}
++
++	for (i = 2; i < argc; i++) {
++		struct stat sb;
++		struct utimbuf utb;
++
++		if (stat(argv[i], &sb) < 0) {
++			fprintf(stderr, "Failed to stat %s: %s\n",
++			        argv[i], strerror(errno));
++			return -1;
++		}
++
++		utb.actime = sb.st_atime;
++		utb.modtime = set_eq ? set_time : sb.st_mtime + set_time;
++
++		if (utime(argv[i], &utb) < 0) {
++			fprintf(stderr, "Failed to modify time on %s: %s\n",
++			        argv[i], strerror(errno));
++			return -1;
++		}
++	}
++
++	return 0;
++
++usage:
++	fprintf(stderr, "Usage: %s %s\n", argv[0], usage_str);
++	return -1;
++}
 -- 
-1.5.0.1.2390.g7757
+1.5.0.137.ge6502
