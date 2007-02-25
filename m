@@ -1,104 +1,60 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Problems installing as root
-Date: Sun, 25 Feb 2007 01:12:58 -0500
-Message-ID: <20070225061258.GA1415@spearce.org>
+Date: Sat, 24 Feb 2007 22:23:35 -0800
+Message-ID: <7vejoewyag.fsf@assigned-by-dhcp.cox.net>
 References: <erpljl$ln9$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: walt <wa1ter@myrealbox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 25 07:13:19 2007
+X-From: git-owner@vger.kernel.org Sun Feb 25 07:23:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLCdK-0008Tt-A5
-	for gcvg-git@gmane.org; Sun, 25 Feb 2007 07:13:18 +0100
+	id 1HLCnM-00041N-63
+	for gcvg-git@gmane.org; Sun, 25 Feb 2007 07:23:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932630AbXBYGNF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 01:13:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932773AbXBYGNF
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 01:13:05 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:32831 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932630AbXBYGND (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 01:13:03 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HLCd2-00071t-F7; Sun, 25 Feb 2007 01:13:00 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 61CA720FBAE; Sun, 25 Feb 2007 01:12:58 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <erpljl$ln9$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932782AbXBYGXh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 01:23:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932933AbXBYGXh
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 01:23:37 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:55962 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932782AbXBYGXg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 01:23:36 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070225062335.VUFE3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 25 Feb 2007 01:23:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id TiPb1W00G1kojtg0000000; Sun, 25 Feb 2007 01:23:36 -0500
+In-Reply-To: <erpljl$ln9$1@sea.gmane.org> (wa1ter@myrealbox.com's message of
+	"Sat, 24 Feb 2007 07:28:56 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40537>
 
-walt <wa1ter@myrealbox.com> wrote:
+walt <wa1ter@myrealbox.com> writes:
+
 > I'm current as of this morning (7bd59dee...) and I'm still seeing
 > two problems with doing 'make' as myself but 'make install' as
 > root.
-> 
+>
 > First, 'make install' as root leaves dozens of files owned by root
 > in my personal source directory.  A minor nit, but inconvenient
 > during the next 'make'.
-
-Which files, specifically?  I'm sure that the following would be
-built as root during 'make install':
-
-  GIT-CFLAGS
-  GIT-VERSION-FILE
-  git-gui/GIT-VERSION-FILE
-  git-gui/CREDITS-FILE
-
-as these are rebuilt automatically everytime the Makefile runs,
-as they are embedding version data from HEAD.  But others would be
-interesting to know about.
- 
+> ...
 > Second, this is a more recent problem with 'make install':
-> make -C git-gui all
-> make[1]: Entering directory `/usr/local/mnt/wa1ter/src/git/git-gui'
-> GITGUI_VERSION = 0.6.GITGUI
 
-Hmm.  You can't get the right version number for git-gui.  Do you
-have tags fetched?
+Does 'make all' followed by 'make install' do the same?  If so
+these are indeed very bad.
 
-In order to build completely from source git-gui needs its gitgui-*
-tags in refs/tags.  Junio pushed the gitgui-0.6.1 tag when he merged
-that version into `maint`.
-
-> make[1]: Leaving directory `/usr/local/mnt/wa1ter/src/git/git-gui'
-> make[1]: Entering directory `/usr/local/mnt/wa1ter/src/git/git-gui'
-> /bin/sh ./CREDITS-GEN
-> error: Cannot locate authorship information.
-> make[1]: *** [CREDITS-FILE] Error 1
-
-Same error as above.  Only this time it made the build stop, rather
-than assuming some default version (0.6.GITGUI).
- 
-> Now, CREDITS-FILE was generated during 'make' (I checked) so there
-> was no need to generate it again during 'make install', yes?
-
-Odd.  We created the CREDITS-FILE during `make` but then barfed
-during `make install` by acting like we cannot locate the gitgui tag?
-
-What does `git tag -l | grep gitgui-` give you when run as root?
-
-
-As a workaround you may be able to copy `git-gui/CREDITS-FILE` to
-`git-gui/credits`, then run `make install`.  CREDITS-GEN defaults
-to the credits file, as that is shipped in the tarfile.
-
--- 
-Shawn.
+If you run 'make all', and then if you run, without changing
+anything to cause rebuilding, run 'make install', the build
+procedure should not create _any_ new file.  Otherwise the build
+procedure is broken and needs to be fixed.
