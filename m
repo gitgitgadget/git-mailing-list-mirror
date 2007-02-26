@@ -1,80 +1,108 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] qgit-1.5.5
-Date: Mon, 26 Feb 2007 20:37:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702262035480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <e5bfff550702250958n6cddc5b5lec4badf1f7fc8231@mail.gmail.com> 
- <46a038f90702251623h5944a085m514418cb5f530e7f@mail.gmail.com> 
- <e5bfff550702252219m352c03ady2d810e051bd62a37@mail.gmail.com> 
- <Pine.LNX.4.63.0702261218430.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
- <e5bfff550702260939t4a071d34o6bbf3dcd4ad5b67c@mail.gmail.com> 
- <Pine.LNX.4.63.0702261846010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <e5bfff550702261129p5085bd22gae11c81b401d3591@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] fetch--tool: fix uninitialized buffer when reading from stdin
+Date: Mon, 26 Feb 2007 11:37:43 -0800
+Message-ID: <7vfy8sn20o.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702261306140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0702260821310.12485@woody.linux-foundation.org>
+	<Pine.LNX.4.63.0702261741360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0702260905420.12485@woody.linux-foundation.org>
+	<Pine.LNX.4.63.0702261827510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0702261003480.12485@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 26 20:37:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, junkio@cox.net
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Feb 26 20:38:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLlf7-0004Ux-Um
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 20:37:30 +0100
+	id 1HLlfh-0004jz-56
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 20:38:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030479AbXBZTh0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 14:37:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030491AbXBZTh0
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 14:37:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48500 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030479AbXBZThZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 14:37:25 -0500
-Received: (qmail invoked by alias); 26 Feb 2007 19:37:24 -0000
-X-Provags-ID: V01U2FsdGVkX18pEk4TYzIpwo5pABFWCdchZ9BtRVKu4PPvpBZ0xo
-	pDfQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <e5bfff550702261129p5085bd22gae11c81b401d3591@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1030493AbXBZThq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 14:37:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030494AbXBZThp
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 14:37:45 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41317 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030493AbXBZTho (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 14:37:44 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070226193744.ZRMV6078.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 26 Feb 2007 14:37:44 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id UKdj1W00x1kojtg0000000; Mon, 26 Feb 2007 14:37:44 -0500
+In-Reply-To: <Pine.LNX.4.64.0702261003480.12485@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Mon, 26 Feb 2007 10:05:59 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40649>
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Mon, 26 Feb 2007, Marco Costalba wrote:
+> Well, that CHUNK_SIZE is just silly. I don't see why you'd have a 
+> chunk-size of a megabyte to begin with, IO doesn't really get any more 
+> efficient that way. And yeah, in this case it would easily hide the bug, 
+> because in practice nobody would ever test with that much input data.
+>
+> It might make sense to make the chunk-size smaller just from a testability 
+> standpoint (not to mention that it's probably currently just wasting 
+> memory for most users - although at least under Linux, if you never use a 
+> page, none will be allocated for you, so the OS may hide the wastage).
 
-> On 2/26/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> > 
-> > On Mon, 26 Feb 2007, Marco Costalba wrote:
-> > 
-> > > Actually, I didn't test with MinGW port of Git but I would be surprised
-> > > if it doesn't work (famous last words ;-)  )
-> > 
-> > You don't use cygpath to translate between Windows <-> POSIX filenames?
-> > 
-> > AFAICT this is the single most important user-visible difference 
-> > between Cygwin Git and MinGW Git.
-> > 
-> 
-> I call git programs as if they were native windows programs. I run git 
-> programs without requiring cygwin shell or something similar.
+How about doing this instead?
 
-Actually, what I was getting at is the silly "Drive:\bla" filename syntax 
-on Windows boxen. But
+-- >8 --
+[PATCH] fetch--tool: fix uninitialized buffer when reading from stdin
 
-- you have to cd to the working directory in order to start the git 
-  programs, and
-- AFAIK Windows is not stupid enough to forbid "dir/name" syntax.
+The original code allocates too much space and forgets to NUL
+terminate the string.
 
-So, all my objections are invalid.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-> I hope I have understood correctly your answer.
+ builtin-fetch--tool.c |   19 +++++++++++++------
+ 1 files changed, 13 insertions(+), 6 deletions(-)
 
-Yes ;-)
-
-Ciao,
-Dscho
+diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
+index 48de08d..a068f8d 100644
+--- a/builtin-fetch--tool.c
++++ b/builtin-fetch--tool.c
+@@ -2,17 +2,24 @@
+ #include "refs.h"
+ #include "commit.h"
+ 
+-#define CHUNK_SIZE (1048576)
++#define CHUNK_SIZE 1024
+ 
+ static char *get_stdin(void)
+ {
++	int offset = 0;
+ 	char *data = xmalloc(CHUNK_SIZE);
+-	int offset = 0, read = 0;
+-	read = xread(0, data, CHUNK_SIZE);
+-	while (read == CHUNK_SIZE) {
+-		offset += CHUNK_SIZE;
++
++	while (1) {
++		int cnt = xread(0, data + offset, CHUNK_SIZE);
++		if (cnt < 0)
++			die("error reading standard input: %s",
++			    strerror(errno));
++		if (cnt == 0) {
++			data[offset] = 0;
++			break;
++		}
++		offset += cnt;
+ 		data = xrealloc(data, offset + CHUNK_SIZE);
+-		read = xread(0, data + offset, CHUNK_SIZE);
+ 	}
+ 	return data;
+ }
