@@ -1,141 +1,62 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Factorize editor handling.
-Date: Mon, 26 Feb 2007 20:48:12 +0100
-Message-ID: <20070226194812.28907.80551.stgit@gandelf.nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: RFC: Patch editing
+Date: Mon, 26 Feb 2007 11:51:01 -0800
+Message-ID: <7vveholmu2.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20070226180314.GA2108@spearce.org>
+	<Pine.LNX.4.63.0702261949560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20070226185655.GB2108@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 26 20:48:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 26 20:51:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLlps-0000vf-OS
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 20:48:37 +0100
+	id 1HLlsL-0001x3-9n
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 20:51:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467AbXBZTsV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 14:48:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752465AbXBZTsV
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 14:48:21 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:59168 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752467AbXBZTsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 14:48:20 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 06F1159E77;
-	Mon, 26 Feb 2007 20:48:19 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 01AEE1F084;
-	Mon, 26 Feb 2007 20:48:12 +0100 (CET)
-User-Agent: StGIT/0.12
+	id S1752464AbXBZTvF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 14:51:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752465AbXBZTvF
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 14:51:05 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:42396 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752464AbXBZTvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 14:51:04 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070226195102.EWHQ3767.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 26 Feb 2007 14:51:02 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id UKr11W00v1kojtg0000000; Mon, 26 Feb 2007 14:51:02 -0500
+In-Reply-To: <20070226185655.GB2108@spearce.org> (Shawn O. Pearce's message of
+	"Mon, 26 Feb 2007 13:56:55 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40651>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-At the same time we trap the editor error for all editor calls, not
-just when called from "stg mail".  We may want to define a new
-exception for this though.
+> Yea - this is a lot like rebase.  I was also thinking that the -m
+> (merge mode) in rebase probably should be the only option offered.
+> I don't see why rebase should format-patch|am when we have the
+> whole commit available and merge-recursive does an excellent job
+> on tree level merges.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+One reason is that it just matches the practice to the mental
+model.  Rebasing is like sending yourself a patch series and
+applying with 'am' on top of a known commit afresh, which is
+exactly what the command without -m does.
 
- stgit/commands/mail.py |   17 +----------------
- stgit/stack.py         |   14 +-------------
- stgit/utils.py         |   23 ++++++++++++++++++++++-
- 3 files changed, 24 insertions(+), 30 deletions(-)
-
-diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
-index 762829c..151a408 100644
---- a/stgit/commands/mail.py
-+++ b/stgit/commands/mail.py
-@@ -272,22 +272,7 @@ def __edit_message(msg):
-     f.write(msg)
-     f.close()
- 
--    # the editor
--    editor = config.get('stgit.editor')
--    if editor:
--        pass
--    elif 'EDITOR' in os.environ:
--        editor = os.environ['EDITOR']
--    else:
--        editor = 'vi'
--    editor += ' %s' % fname
--
--    print 'Invoking the editor: "%s"...' % editor,
--    sys.stdout.flush()
--    err = os.system(editor)
--    if err:
--        raise CmdException, 'editor failed, exit code: %d' % err
--    print 'done'
-+    call_editor(fname)
- 
-     # read the message back
-     f = file(fname)
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 99f10e5..feb77e3 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -91,19 +91,7 @@ def edit_file(series, line, comment, show_patch = True):
-     print >> f, __comment_prefix, 'vi: set textwidth=75 filetype=diff nobackup:'
-     f.close()
- 
--    # the editor
--    editor = config.get('stgit.editor')
--    if editor:
--        pass
--    elif 'EDITOR' in os.environ:
--        editor = os.environ['EDITOR']
--    else:
--        editor = 'vi'
--    editor += ' %s' % fname
--
--    print 'Invoking the editor: "%s"...' % editor,
--    sys.stdout.flush()
--    print 'done (exit code: %d)' % os.system(editor)
-+    call_editor(fname)
- 
-     f = file(fname, 'r+')
- 
-diff --git a/stgit/utils.py b/stgit/utils.py
-index 67431ec..d7d4777 100644
---- a/stgit/utils.py
-+++ b/stgit/utils.py
-@@ -1,7 +1,8 @@
- """Common utility functions
- """
- 
--import errno, os, os.path
-+import errno, os, os.path, sys
-+from stgit.config import config
- 
- __copyright__ = """
- Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
-@@ -152,3 +153,23 @@ def rename(basedir, file1, file2):
-     create_dirs(os.path.dirname(full_file2))
-     os.rename(os.path.join(basedir, file1), full_file2)
-     remove_dirs(basedir, os.path.dirname(file1))
-+
-+def call_editor(filename):
-+    """Run the editor on the specified filename."""
-+
-+    # the editor
-+    editor = config.get('stgit.editor')
-+    if editor:
-+        pass
-+    elif 'EDITOR' in os.environ:
-+        editor = os.environ['EDITOR']
-+    else:
-+        editor = 'vi'
-+    editor += ' %s' % filename
-+
-+    print 'Invoking the editor: "%s"...' % editor,
-+    sys.stdout.flush()
-+    err = os.system(editor)
-+    if err:
-+        raise Exception, 'editor failed, exit code: %d' % err
-+    print 'done'
+The other historical reason is that reconstructing (with -3) the
+only part of the tree that matters in the 3-way merge and
+running the merge was a lot faster with the merge tool we had,
+than a full 3-way merge.
