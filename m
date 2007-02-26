@@ -1,91 +1,88 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: autoCRLF, git status, git-gui, what is the desired behavior?
-Date: Mon, 26 Feb 2007 10:54:42 -0500
-Message-ID: <20070226155442.GA1639@spearce.org>
-References: <45E1E47C.5090908@verizon.net> <7vlkimrp1f.fsf@assigned-by-dhcp.cox.net> <45E1F6B5.8030907@verizon.net> <20070226020657.GA1884@spearce.org> <7v649pr60q.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] fetch--tool: fix uninitialized buffer when reading from
+ stdin
+Date: Mon, 26 Feb 2007 08:24:35 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702260821310.12485@woody.linux-foundation.org>
+References: <Pine.LNX.4.63.0702261306140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Mark Levedahl <mdl123@verizon.net>,
-	Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Feb 26 16:55:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, junkio@cox.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Feb 26 17:24:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLiBj-0007Mq-PP
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 16:54:56 +0100
+	id 1HLieU-0002Zo-8l
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 17:24:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbXBZPyw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 10:54:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbXBZPyw
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 10:54:52 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39636 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751295AbXBZPyt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 10:54:49 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HLiBT-0004eC-28; Mon, 26 Feb 2007 10:54:39 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9D20B20FBAE; Mon, 26 Feb 2007 10:54:42 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v649pr60q.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752445AbXBZQYc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 11:24:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030309AbXBZQYb
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 11:24:31 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:51695 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752442AbXBZQY0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 11:24:26 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1QGOJhB030065
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 26 Feb 2007 08:24:20 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1QGOJHj024469;
+	Mon, 26 Feb 2007 08:24:19 -0800
+In-Reply-To: <Pine.LNX.4.63.0702261306140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-2.445 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40625>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
+
+
+On Mon, 26 Feb 2007, Johannes Schindelin wrote:
 > 
-> > Hmm.  Probably not.  In pg I used to compare HEAD^{tree} to the
-> > tree output by git-write-tree and refuse to make the commit if
-> > they had the same value.  git-gui just blindly assumes that if a
-> > file is staged for committing then it won't make an empty commit;
-> > this is also the behavior in git-commit.sh.
-> >
-> > Yet in the case of a merge you may want the same tree and not even
-> > realize it...
+> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> ---
+>  builtin-fetch--tool.c |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
 > 
-> git-commit has been raised with all of these logic during its
-> evolution.  Is it a possibility to reuse it somehow?
- 
-Anything's possible.  ;-)
+> diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
+> index 48de08d..e5bb560 100644
+> --- a/builtin-fetch--tool.c
+> +++ b/builtin-fetch--tool.c
+> @@ -14,6 +14,10 @@ static char *get_stdin(void)
+>  		data = xrealloc(data, offset + CHUNK_SIZE);
+>  		read = xread(0, data + offset, CHUNK_SIZE);
+>  	}
+> +	if (read > 0 && data[read - 1] == '\n')
+> +		data[read - 1] = '\0';
+> +	else
+> +		data[read] = '\0';
+>  	return data;
+>  }
 
-I'd rather not reuse git-commit in git-gui.  git-commit is strictly
-porcelain-ish, while git-gui tries hard to only rely on the plumbing
-layer[*1*], while also trying to autodetect and honor status data
-used in the porcelain-ish (e.g. MERGE_HEAD, MERGE_MSG).
+This is horrible crap.
 
-With the exception of this empty-commit case git-gui's commit
-path is stable and doing the same actions as git-commit, only the
-git-gui way.  I'd rather not churn that code just to avoid an empty
-commit case.  Its easy enough to check the trees, and git-gui knows
-if there are additional parents (and what those are) at the time of
-commit, so its easy enough to not do the tree comparsion if there
-is more than one parent.
+First off, "read" here may be -1.
 
+Secondly, "data[read]", even if read is positive, is in the *middle* of a 
+buffer.
 
-I actually just found another way to make git-gui create an empty
-commit.  I'm going to patch it to check the trees - because this
-shouldn't be allowed.
+It should probably be something like
 
+	if (read > 0)
+		offset += read;
 
-*1*: With the exception of git-fetch, git-push, git-merge and
-     git-repack.  The latter two of which I would like to get
-	 rewritten in pure Tcl, as I want more control over what
-	 is happening.
--- 
-Shawn.
+	/* Why do this? Because Dscho did.. */
+	if (offset && data[offset-1] == '\n')
+		offset--;
+
+	data[offset] = 0;
+
+which at least seems to be potentially sane.
+
+		Linus
