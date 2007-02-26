@@ -1,82 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH] commit-tree: bump MAX_PARENTS to 128
-Date: Mon, 26 Feb 2007 07:15:57 -0500
-Message-ID: <20070226121557.GA18114@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
+Subject: Re: RFC: Patch editing
+Date: Mon, 26 Feb 2007 14:18:14 +0100
+Message-ID: <slrneu5ngm.s8g.siprbaum@xp.machine.xx>
+References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 26 13:16:06 2007
+X-From: git-owner@vger.kernel.org Mon Feb 26 14:15:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLelx-0005ZP-FF
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 13:16:05 +0100
+	id 1HLfhc-0005cL-RL
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 14:15:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030194AbXBZMQC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 07:16:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbXBZMQB
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 07:16:01 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2877 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751222AbXBZMQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 07:16:00 -0500
-Received: (qmail 28528 invoked from network); 26 Feb 2007 07:16:12 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 26 Feb 2007 07:16:12 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Feb 2007 07:15:57 -0500
-Content-Disposition: inline
+	id S1030206AbXBZNPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 08:15:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030221AbXBZNPh
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 08:15:37 -0500
+Received: from main.gmane.org ([80.91.229.2]:33801 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030206AbXBZNPh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 08:15:37 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HLfhR-0003uW-C7
+	for git@vger.kernel.org; Mon, 26 Feb 2007 14:15:29 +0100
+Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Feb 2007 14:15:29 +0100
+Received: from siprbaum by magnum.hofmann.stw.uni-erlangen.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Feb 2007 14:15:29 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: magnum.hofmann.stw.uni-erlangen.de
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40621>
 
-This limit doesn't seem to come into effect anywhere else; it's simply
-an arbitrary limit to make memory allocation easier. It's used to
-declare a single static array of 20-byte hashes, so this increase wastes
-about 2K.
----
-This limit is arbitrary; should it be ridiculously high (I think 128 is
-already ridiculous, but we could go to 1024 and waste 20K). Or
-should it simply allocate dynamically?
+Johannes Schindelin <Johannes.Schindelin@gmx.de> schrieb:
+> Hi list,
+>
+> while I was hacking on another issue, I realized just how often I would 
+> like to stash away a fix which is unrelated (but often triggered) by the 
+> theme of the current topic branch. Or I fix an earlier commit, which is 
+> not the tip of the branch, so I cannot --amend it.
+>
+> My common practice is to commit it nevertheless, and sort the topic 
+> branches out later, by cherry-picking my way through the commits.
+>
+> This is a tedious and error-prone procedure, and I often wished I knew how 
+> to use StGIT. But then, StGIT is overkill for me: on some machines I work 
+> on, there is no Python installed, I do not really need to have a history 
+> on the order and version of patches, and I do not need to preserve author 
+> and committer information *1*.
+>
+> Therefore, I wrote this extremely simple script to sort out the order of 
+> commits, and possibly merging some. The script lets you edit the commit 
+> list upon start (reordering it, or removing commits), and then works on 
+> that list. It has three subcommands:
+>
+> 	start <base>
+> 	continue
+> 	reset [-f]
+>
+> The subcommand "start" takes a base commit (actually, it will take the 
+> merge base of HEAD and that base commit) from which to start. It builds a 
+> commit list and opens it in an editor. The rows of the list have the form 
+> "<action> <sha1> <oneline>". The oneline description is purely for ease of 
+> use.
+>
+> The three possible actions are "pick" (the default), "edit" and "merge". 
+> "pick" will just cherry-pick that commit, "edit" will stop after 
+> cherry-picking so that you can make a small fixup (in the code or in the 
+> commit message), and "merge" will try to apply the corresponding patch, 
+> amend the previous commit with the result, and let you edit the combined 
+> commit message.
+>
+> If a patch fails, or "edit" was specified, the loop is interrupted for 
+> fixups. Use the subcommand "continue" to restart the loop (the working 
+> tree has to be clean, though).
+>
+> Once there are no more commits to be picked, the original branch is 
+> updated to that new tip.
+>
+> If you decide at some point that you do not want to rewrite the patches 
+> after all, you can use the subcommand "reset".
+>
+> To see which commits were already applied, you can inspect .series/done, 
+> and likewise .series/todo for what is to be applied yet. You can even edit 
+> .series/todo if you decide on another course of action.
+>
+> Anyway, it is a relatively short and stupid script.
+>
 
-I ran into this while trying to make an octopus with 25 heads. I have a
-set of 25 small repositories imported from CVS. They no longer see
-active development, but I want to keep them around for historical
-purposes. Checking out 25 repos is a pain, so I wanted to put them all
-in one repo. However, I didn't just want the histories on separate
-branches; I wanted everything checked out at once. So I did:
+Nice.  I tried it on a simple testcase to just rearrange some commits
+and it worked as expected. That was exactly what I was looking for!
 
-  rm -f .git/MERGE_HEAD
-  for i in $repos; do
-    git fetch ../$i $i
-    git read-tree --prefix=$i/ $i
-    git checkout -- $i
-    git rev-parse $i >>.git/MERGE_HEAD
-  done
-  git commit
+I tried for a while stgit, but it seemed like overkill to me and I messed
+up my test repo several times, propably because I have done something wrong
+so I gave up.
 
-Which of course barfed on the giant octopus. Bumping up the limit
-allowed it to happen with no visible problems (the history browsing code
-works fine). Yes, I obviously could have done a series of 25 pair-wise
-merges (or even 2 16-way octopus merges), but I think this more closely
-represents what I'm trying to accomplish.
-
- builtin-commit-tree.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-commit-tree.c b/builtin-commit-tree.c
-index 2a818a0..48dbf1d 100644
---- a/builtin-commit-tree.c
-+++ b/builtin-commit-tree.c
-@@ -60,7 +60,7 @@ static void check_valid(unsigned char *sha1, const char *expect)
-  * Having more than two parents is not strange at all, and this is
-  * how multi-way merges are represented.
-  */
--#define MAXPARENT (16)
-+#define MAXPARENT (128)
- static unsigned char parent_sha1[MAXPARENT][20];
- 
- static const char commit_tree_usage[] = "git-commit-tree <sha1> [-p <sha1>]* < changelog";
--- 
-1.5.0.1.793.gedfd5-dirty
+-Peter
