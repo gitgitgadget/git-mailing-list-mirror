@@ -1,61 +1,90 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [ANNOUNCE] qgit-1.5.5
-Date: Mon, 26 Feb 2007 07:19:50 +0100
-Message-ID: <e5bfff550702252219m352c03ady2d810e051bd62a37@mail.gmail.com>
-References: <e5bfff550702250958n6cddc5b5lec4badf1f7fc8231@mail.gmail.com>
-	 <46a038f90702251623h5944a085m514418cb5f530e7f@mail.gmail.com>
+From: Paul Collins <paul@briny.ondioline.org>
+Subject: git-remote and remotes with '.' in their names
+Date: Mon, 26 Feb 2007 20:36:26 +1300
+Message-ID: <87k5y5tlol.fsf@briny.internal.ondioline.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 26 07:19:58 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 26 09:10:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLZDI-0000qM-2y
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 07:19:56 +0100
+	id 1HLawK-0005No-QW
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 09:10:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933774AbXBZGTw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 01:19:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933776AbXBZGTw
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 01:19:52 -0500
-Received: from wr-out-0506.google.com ([64.233.184.225]:17348 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933774AbXBZGTv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 01:19:51 -0500
-Received: by wr-out-0506.google.com with SMTP id 58so1373826wri
-        for <git@vger.kernel.org>; Sun, 25 Feb 2007 22:19:51 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qcjj/Gto2fb7Qn/vQnApc2c+OpKM9eW0RBTh6b1ka0+RZA8eU533vE/6P2sksZEZjQqc3UA88bYhKAwXTVkIgh+wmJxIO4CCZNci7I6UNANpBUoEzORpwVHZXby5gQlSYF9bb7uKVw95BMA3u2HTuxnaP0UBfgLhP12d8MdGJ0k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eMttFyDezDZ4UpSUlaCmCUiIgS36f5EOQ5rlSCV0Se2KrVgWg70sYi+NrN6vNJt2C6/ot03+MDtnoucJ1CEJ8ta8aE1wt6PZyS/LXq4ygZX0lvzbfv91QL0gVuvppUhFvudzHeOjP6sFdYbmyOCccMu1oTW5yFzmjwFFUPs86rE=
-Received: by 10.114.137.2 with SMTP id k2mr532653wad.1172470790426;
-        Sun, 25 Feb 2007 22:19:50 -0800 (PST)
-Received: by 10.114.60.16 with HTTP; Sun, 25 Feb 2007 22:19:50 -0800 (PST)
-In-Reply-To: <46a038f90702251623h5944a085m514418cb5f530e7f@mail.gmail.com>
-Content-Disposition: inline
+	id S932359AbXBZIKR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 03:10:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933791AbXBZIKR
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 03:10:17 -0500
+Received: from jenny.ondioline.org ([66.220.1.122]:3627 "EHLO
+	jenny.ondioline.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932359AbXBZIKP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 03:10:15 -0500
+X-Greylist: delayed 1682 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Feb 2007 03:10:15 EST
+Received: by jenny.ondioline.org (Postfix, from userid 10)
+	id 79AC68CD98; Mon, 26 Feb 2007 20:41:32 +1300 (NZDT)
+Received: by briny.internal.ondioline.org (Postfix, from userid 1000)
+	id 1FD75C655; Mon, 26 Feb 2007 20:36:26 +1300 (NZDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.94 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40613>
 
-On 2/26/07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> On 2/26/07, Marco Costalba <mcostalba@gmail.com> wrote:
-> > P.S: There is also a Qt4 version (works under Windows) downloadable
-> > from git://repo.or.cz/qgit4.git  it is a little bit experimental
-> > tough.
->
-> Is the QT4 Windows port working against the MinGW port of GIT?
->
+I just switched my remotes over to the git-remote way (which is very
+nice!) and was looking for a way to list all of the known remotes.
+git-remote with no arguments almost does it, but I get the following:
 
-Yes, Qt4Windows does not need cygwin at all and is compiled itself with MinGW.
+  [briny(linux-2.6)] git --version
+  git version 1.5.0.1
+  [briny(linux-2.6)] cat .git/config
+  [core]
+          repositoryformatversion = 0
+          filemode = true
+
+  [user]
+          email = "paul@briny.ondioline.org"
+  [remote "origin"]
+          url = git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+          fetch = +refs/heads/*:refs/remotes/origin/*
+  [remote "wireless-dev"]
+          url = git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-dev.git
+          fetch = +refs/heads/*:refs/remotes/wireless-dev/*
+  [remote "stable-2.6.19"]
+          url = git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.19.y.git
+          fetch = +refs/heads/*:refs/remotes/stable-2.6.19/*
+  [remote "stable-2.6.20"]
+          url = git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.20.y.git
+          fetch = +refs/heads/*:refs/remotes/stable-2.6.20/*
+  [remote "wireless-2.6"]
+          url = git://git.kernel.org/pub/scm/linux/kernel/git/linville/wireless-2.6.git
+          fetch = +refs/heads/*:refs/remotes/wireless-2.6/*
+  [briny(linux-2.6)] git-remote
+  origin
+  stable-2
+  wireless-2
+  wireless-dev
+
+With this patch I get the correct list, but then it will break if
+there are ever config keys like "remote.$remote_name.foo.bar".
 
 
-Marco
+--- git-remote~	2007-02-26 01:15:33.000000000 +1300
++++ git-remote	2007-02-26 20:31:20.000000000 +1300
+@@ -68,7 +68,7 @@
+ 		$git->command(qw(config --get-regexp), '^remote\.');
+ 	};
+ 	for (@remotes) {
+-		if (/^remote\.([^.]*)\.(\S*)\s+(.*)$/) {
++		if (/^remote\.(.*)\.(\S*)\s+(.*)$/) {
+ 			add_remote_config(\%seen, $1, $2, $3);
+ 		}
+ 	}
+
+
+-- 
+Paul Collins
+Wellington, New Zealand
+
+Dag vijandelijk luchtschip de huismeester is dood
