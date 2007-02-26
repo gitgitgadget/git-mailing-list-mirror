@@ -1,108 +1,141 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] fetch--tool: fix uninitialized buffer when reading from stdin
-Date: Mon, 26 Feb 2007 11:37:43 -0800
-Message-ID: <7vfy8sn20o.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0702261306140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0702260821310.12485@woody.linux-foundation.org>
-	<Pine.LNX.4.63.0702261741360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0702260905420.12485@woody.linux-foundation.org>
-	<Pine.LNX.4.63.0702261827510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0702261003480.12485@woody.linux-foundation.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH] Factorize editor handling.
+Date: Mon, 26 Feb 2007 20:48:12 +0100
+Message-ID: <20070226194812.28907.80551.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, junkio@cox.net
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Feb 26 20:38:06 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 26 20:48:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLlfh-0004jz-56
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 20:38:05 +0100
+	id 1HLlps-0000vf-OS
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 20:48:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030493AbXBZThq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 14:37:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030494AbXBZThp
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 14:37:45 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41317 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030493AbXBZTho (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 14:37:44 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070226193744.ZRMV6078.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 26 Feb 2007 14:37:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id UKdj1W00x1kojtg0000000; Mon, 26 Feb 2007 14:37:44 -0500
-In-Reply-To: <Pine.LNX.4.64.0702261003480.12485@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Mon, 26 Feb 2007 10:05:59 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752467AbXBZTsV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 14:48:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752465AbXBZTsV
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 14:48:21 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:59168 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752467AbXBZTsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 14:48:20 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 06F1159E77;
+	Mon, 26 Feb 2007 20:48:19 +0100 (CET)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 01AEE1F084;
+	Mon, 26 Feb 2007 20:48:12 +0100 (CET)
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40650>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Well, that CHUNK_SIZE is just silly. I don't see why you'd have a 
-> chunk-size of a megabyte to begin with, IO doesn't really get any more 
-> efficient that way. And yeah, in this case it would easily hide the bug, 
-> because in practice nobody would ever test with that much input data.
->
-> It might make sense to make the chunk-size smaller just from a testability 
-> standpoint (not to mention that it's probably currently just wasting 
-> memory for most users - although at least under Linux, if you never use a 
-> page, none will be allocated for you, so the OS may hide the wastage).
+At the same time we trap the editor error for all editor calls, not
+just when called from "stg mail".  We may want to define a new
+exception for this though.
 
-How about doing this instead?
-
--- >8 --
-[PATCH] fetch--tool: fix uninitialized buffer when reading from stdin
-
-The original code allocates too much space and forgets to NUL
-terminate the string.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
 
- builtin-fetch--tool.c |   19 +++++++++++++------
- 1 files changed, 13 insertions(+), 6 deletions(-)
+ stgit/commands/mail.py |   17 +----------------
+ stgit/stack.py         |   14 +-------------
+ stgit/utils.py         |   23 ++++++++++++++++++++++-
+ 3 files changed, 24 insertions(+), 30 deletions(-)
 
-diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
-index 48de08d..a068f8d 100644
---- a/builtin-fetch--tool.c
-+++ b/builtin-fetch--tool.c
-@@ -2,17 +2,24 @@
- #include "refs.h"
- #include "commit.h"
+diff --git a/stgit/commands/mail.py b/stgit/commands/mail.py
+index 762829c..151a408 100644
+--- a/stgit/commands/mail.py
++++ b/stgit/commands/mail.py
+@@ -272,22 +272,7 @@ def __edit_message(msg):
+     f.write(msg)
+     f.close()
  
--#define CHUNK_SIZE (1048576)
-+#define CHUNK_SIZE 1024
+-    # the editor
+-    editor = config.get('stgit.editor')
+-    if editor:
+-        pass
+-    elif 'EDITOR' in os.environ:
+-        editor = os.environ['EDITOR']
+-    else:
+-        editor = 'vi'
+-    editor += ' %s' % fname
+-
+-    print 'Invoking the editor: "%s"...' % editor,
+-    sys.stdout.flush()
+-    err = os.system(editor)
+-    if err:
+-        raise CmdException, 'editor failed, exit code: %d' % err
+-    print 'done'
++    call_editor(fname)
  
- static char *get_stdin(void)
- {
-+	int offset = 0;
- 	char *data = xmalloc(CHUNK_SIZE);
--	int offset = 0, read = 0;
--	read = xread(0, data, CHUNK_SIZE);
--	while (read == CHUNK_SIZE) {
--		offset += CHUNK_SIZE;
+     # read the message back
+     f = file(fname)
+diff --git a/stgit/stack.py b/stgit/stack.py
+index 99f10e5..feb77e3 100644
+--- a/stgit/stack.py
++++ b/stgit/stack.py
+@@ -91,19 +91,7 @@ def edit_file(series, line, comment, show_patch = True):
+     print >> f, __comment_prefix, 'vi: set textwidth=75 filetype=diff nobackup:'
+     f.close()
+ 
+-    # the editor
+-    editor = config.get('stgit.editor')
+-    if editor:
+-        pass
+-    elif 'EDITOR' in os.environ:
+-        editor = os.environ['EDITOR']
+-    else:
+-        editor = 'vi'
+-    editor += ' %s' % fname
+-
+-    print 'Invoking the editor: "%s"...' % editor,
+-    sys.stdout.flush()
+-    print 'done (exit code: %d)' % os.system(editor)
++    call_editor(fname)
+ 
+     f = file(fname, 'r+')
+ 
+diff --git a/stgit/utils.py b/stgit/utils.py
+index 67431ec..d7d4777 100644
+--- a/stgit/utils.py
++++ b/stgit/utils.py
+@@ -1,7 +1,8 @@
+ """Common utility functions
+ """
+ 
+-import errno, os, os.path
++import errno, os, os.path, sys
++from stgit.config import config
+ 
+ __copyright__ = """
+ Copyright (C) 2005, Catalin Marinas <catalin.marinas@gmail.com>
+@@ -152,3 +153,23 @@ def rename(basedir, file1, file2):
+     create_dirs(os.path.dirname(full_file2))
+     os.rename(os.path.join(basedir, file1), full_file2)
+     remove_dirs(basedir, os.path.dirname(file1))
 +
-+	while (1) {
-+		int cnt = xread(0, data + offset, CHUNK_SIZE);
-+		if (cnt < 0)
-+			die("error reading standard input: %s",
-+			    strerror(errno));
-+		if (cnt == 0) {
-+			data[offset] = 0;
-+			break;
-+		}
-+		offset += cnt;
- 		data = xrealloc(data, offset + CHUNK_SIZE);
--		read = xread(0, data + offset, CHUNK_SIZE);
- 	}
- 	return data;
- }
++def call_editor(filename):
++    """Run the editor on the specified filename."""
++
++    # the editor
++    editor = config.get('stgit.editor')
++    if editor:
++        pass
++    elif 'EDITOR' in os.environ:
++        editor = os.environ['EDITOR']
++    else:
++        editor = 'vi'
++    editor += ' %s' % filename
++
++    print 'Invoking the editor: "%s"...' % editor,
++    sys.stdout.flush()
++    err = os.system(editor)
++    if err:
++        raise Exception, 'editor failed, exit code: %d' % err
++    print 'done'
