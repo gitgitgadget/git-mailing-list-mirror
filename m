@@ -1,96 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Problems installing as root
-Date: Sun, 25 Feb 2007 21:10:53 -0500
-Message-ID: <20070226021053.GB1884@spearce.org>
-References: <erpljl$ln9$1@sea.gmane.org> <20070225061258.GA1415@spearce.org> <ersapr$bu5$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: autoCRLF, git status, git-gui, what is the desired behavior?
+Date: Sun, 25 Feb 2007 18:45:25 -0800
+Message-ID: <7v649pr60q.fsf@assigned-by-dhcp.cox.net>
+References: <45E1E47C.5090908@verizon.net>
+	<7vlkimrp1f.fsf@assigned-by-dhcp.cox.net>
+	<45E1F6B5.8030907@verizon.net> <20070226020657.GA1884@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: walt <wa1ter@myrealbox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 26 03:11:10 2007
+Cc: Mark Levedahl <mdl123@verizon.net>,
+	Mark Levedahl <mlevedahl@verizon.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 26 03:45:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLVKW-0001gg-MM
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 03:11:09 +0100
+	id 1HLVrs-0006iH-4n
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 03:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932270AbXBZCLF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 21:11:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbXBZCLF
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 21:11:05 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38727 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751057AbXBZCLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 21:11:04 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HLVKD-0007JB-TD; Sun, 25 Feb 2007 21:10:50 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1BD9B20FBAE; Sun, 25 Feb 2007 21:10:55 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <ersapr$bu5$1@sea.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932356AbXBZCp1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 21:45:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933699AbXBZCp1
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 21:45:27 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48720 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932356AbXBZCp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 21:45:27 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070226024527.XXRL233.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 25 Feb 2007 21:45:27 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id U2lR1W00J1kojtg0000000; Sun, 25 Feb 2007 21:45:26 -0500
+In-Reply-To: <20070226020657.GA1884@spearce.org> (Shawn O. Pearce's message of
+	"Sun, 25 Feb 2007 21:06:57 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40605>
 
-walt <wa1ter@myrealbox.com> wrote:
-> Shawn O. Pearce wrote:
-> > walt <wa1ter@myrealbox.com> wrote:
-> >> First, 'make install' as root leaves dozens of files owned by root
-> >> in my personal source directory.
-> 
-> > Which files, specifically? ...
-> 
-> ~/src/git $find . -user 0
-> ./git-fsck-objects
-...+100 files...
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-This is caused by below...
+> Hmm.  Probably not.  In pg I used to compare HEAD^{tree} to the
+> tree output by git-write-tree and refuse to make the commit if
+> they had the same value.  git-gui just blindly assumes that if a
+> file is staged for committing then it won't make an empty commit;
+> this is also the behavior in git-commit.sh.
+>
+> Yet in the case of a merge you may want the same tree and not even
+> realize it...
 
-> >> Second, this is a more recent problem with 'make install':
-> >> make -C git-gui all
-> >> make[1]: Entering directory `/usr/local/mnt/wa1ter/src/git/git-gui'
-> >> GITGUI_VERSION = 0.6.GITGUI
-> 
-> > Hmm.  You can't get the right version number for git-gui.  Do you
-> > have tags fetched?
-> 
-> Oops.  I stupidly forgot to tell you the reason for the failure
-> when running the script as root:  /usr/local is not in root's path,
-> and thus /usr/local/bin/git-* can't be found.  Since the script
-> assumes that git is already installed and working, I would guess
-> that it would also fail if I had just fetched Junio's repository
-> for the first time and attempted an initial install.
-
-Right.  So what is happening is the toplevel Makefile tries to run
-GIT-VERSION-GEN to obtain the version, that calls git-describe,
-which does not exist, fails, and falls back on the hardcoded version
-number.  That version number differs from what the software was
-compiled with, so it gets recompiled.  Instant set of +100 files
-owned by root.
-
-Same issue happens down inside of git-gui.
-
-I think the only answer I have for you is the following:
-
-  If you want to run the Makefile without having git in your path
-  then make a tarball first (make dist) with Git in your path,
-  then unpack the tarball and compile that.
-
-  This works as the tarball embeds version and credits files that
-  sidestep the need for git-describe.
-
--- 
-Shawn.
+git-commit has been raised with all of these logic during its
+evolution.  Is it a possibility to reuse it somehow?
