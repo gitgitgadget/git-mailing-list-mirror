@@ -1,113 +1,59 @@
-From: Ed Schouten <ed@fxq.nl>
-Subject: Syntax highlighting for gitweb
-Date: Mon, 26 Feb 2007 19:18:58 +0100
-Message-ID: <20070226181858.GC11232@hoeg.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: RFC: Patch editing
+Date: Mon, 26 Feb 2007 19:52:35 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702261949560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070226180314.GA2108@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Sr1nOIr3CvdE5hEN"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 26 19:49:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Feb 26 19:52:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLkuo-0002Cl-Jm
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 19:49:38 +0100
+	id 1HLkxl-0003NZ-DG
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 19:52:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030447AbXBZSt1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 13:49:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030452AbXBZSt1
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 13:49:27 -0500
-Received: from palm.hoeg.nl ([83.98.131.212]:64018 "EHLO palm.hoeg.nl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030447AbXBZSt0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 13:49:26 -0500
-X-Greylist: delayed 1827 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Feb 2007 13:49:26 EST
-Received: by palm.hoeg.nl (Postfix, from userid 1000)
-	id 3D2401CF06; Mon, 26 Feb 2007 19:18:58 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1030427AbXBZSwi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 13:52:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030449AbXBZSwi
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 13:52:38 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54255 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030427AbXBZSwh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 13:52:37 -0500
+Received: (qmail invoked by alias); 26 Feb 2007 18:52:35 -0000
+X-Provags-ID: V01U2FsdGVkX19uMXZTLgluGW6hEEhl8avdNN1vtuGRxi5aOw51hQ
+	NnDA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070226180314.GA2108@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40641>
 
+Hi,
 
---Sr1nOIr3CvdE5hEN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 26 Feb 2007, Shawn O. Pearce wrote:
 
-Hello everyone,
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Therefore, I wrote this extremely simple script to sort out the order of 
+> > commits, and possibly merging some. The script lets you edit the commit 
+> > list upon start (reordering it, or removing commits), and then works on 
+> > that list. It has three subcommands:
+> 
+> This simple tool rocks.  Thank you!  ;-)
 
-I just wrote a really awful patch to add syntax highlighting to gitweb:
+I am undecided how to continue. Originally, I wanted to add an "--onto 
+<commit>" option, and maybe an "edit" subcommand, but since Junio made me 
+realize that it is more similar to git-rebase than I previously thought, 
+and that they should merge, possibly in the form of a builtin...
 
-%%%
---- gitweb	Mon Feb 26 18:36:42 2007
-+++ gitweb	Mon Feb 26 19:12:20 2007
-@@ -16,6 +16,7 @@
- use Fcntl ':mode';
- use File::Find qw();
- use File::Basename qw(basename);
-+use IPC::Open2;
- binmode STDOUT, ':utf8';
-=20
- our $cgi =3D new CGI;
-@@ -3186,15 +3187,25 @@
- 	git_print_page_path($file_name, "blob", $hash_base);
- 	print "<div class=3D\"page_body\">\n";
- 	my $nr;
-+
-+	my $pid;
-+	local (*HLR, *HLW);
-+	$pid =3D open2(\*HLR, \*HLW, "highlight -f --syntax c");
- 	while (my $line =3D <$fd>) {
--		chomp $line;
--		$nr++;
--		$line =3D untabify($line);
--		printf "<div class=3D\"pre\"><a id=3D\"l%i\" href=3D\"#l%i\" class=3D\"l=
-inenr\">%4i</a> %s</div>\n",
--		       $nr, $nr, $nr, esc_html($line, -nbsp=3D>1);
-+		print HLW $line;
- 	}
-+	close HLW
-+		or print "Failed to start highlight.\n";
- 	close $fd
- 		or print "Reading blob failed.\n";
-+
-+	while (my $line =3D <HLR>) {
-+		$nr++;
-+		printf "<div class=3D\"pre\"><a id=3D\"l%i\" href=3D\"#l%i\" class=3D\"l=
-inenr\">%4i</a> %s</div>\n",
-+		       $nr, $nr, $nr, $line;
-+	}
-+	close HLR
-+		or print "Failed to highlight blob.\n";
- 	print "</div>";
- 	git_footer_html();
- }
-%%%
+But in order to merge the two, I have to learn about rebase's syntax first 
+;-)
 
-I am not a Perl programmer, so I kept it really simple by just
-hardcoding '--syntax c'. Would it be possible for some real Perl
-programmer to clean this up? I think a feature like this would be really
-cool to have.
-
-Yours,
---=20
- Ed Schouten <ed@fxq.nl>
- WWW: http://g-rave.nl/
-
---Sr1nOIr3CvdE5hEN
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (FreeBSD)
-
-iD8DBQFF4ySS52SDGA2eCwURAj3rAJ9LoU1zJ0jc5uwrHpof1f1zGYYTjgCeP7/c
-4ZABd/QKeKTAqKlh0aBDYi4=
-=l+tc
------END PGP SIGNATURE-----
-
---Sr1nOIr3CvdE5hEN--
+Ciao,
+Dscho
