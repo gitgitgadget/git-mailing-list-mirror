@@ -1,38 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: autoCRLF, git status, git-gui, what is the desired behavior?
-Date: Sun, 25 Feb 2007 21:06:57 -0500
-Message-ID: <20070226020657.GA1884@spearce.org>
-References: <45E1E47C.5090908@verizon.net> <7vlkimrp1f.fsf@assigned-by-dhcp.cox.net> <45E1F6B5.8030907@verizon.net>
+Subject: Re: Problems installing as root
+Date: Sun, 25 Feb 2007 21:10:53 -0500
+Message-ID: <20070226021053.GB1884@spearce.org>
+References: <erpljl$ln9$1@sea.gmane.org> <20070225061258.GA1415@spearce.org> <ersapr$bu5$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Mark Levedahl <mlevedahl@verizon.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Mark Levedahl <mdl123@verizon.net>
-X-From: git-owner@vger.kernel.org Mon Feb 26 03:07:10 2007
+Cc: git@vger.kernel.org
+To: walt <wa1ter@myrealbox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 26 03:11:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLVGf-000074-1c
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 03:07:09 +0100
+	id 1HLVKW-0001gg-MM
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 03:11:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbXBZCHF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Feb 2007 21:07:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751050AbXBZCHF
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 21:07:05 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:38612 "EHLO
+	id S932270AbXBZCLF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Feb 2007 21:11:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751060AbXBZCLF
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Feb 2007 21:11:05 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:38727 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042AbXBZCHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Feb 2007 21:07:04 -0500
+	with ESMTP id S1751057AbXBZCLE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Feb 2007 21:11:04 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HLVGL-0006O4-Jt; Sun, 25 Feb 2007 21:06:49 -0500
+	id 1HLVKD-0007JB-TD; Sun, 25 Feb 2007 21:10:50 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 63C0020FBAE; Sun, 25 Feb 2007 21:06:58 -0500 (EST)
+	id 1BD9B20FBAE; Sun, 25 Feb 2007 21:10:55 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <45E1F6B5.8030907@verizon.net>
+In-Reply-To: <ersapr$bu5$1@sea.gmane.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -45,33 +43,54 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40604>
 
-Mark Levedahl <mdl123@verizon.net> wrote:
-> Also, if I invoke git-gui on the above repository showing foo as modified...
+walt <wa1ter@myrealbox.com> wrote:
+> Shawn O. Pearce wrote:
+> > walt <wa1ter@myrealbox.com> wrote:
+> >> First, 'make install' as root leaves dozens of files owned by root
+> >> in my personal source directory.
 > 
-> 1) foo shows up in the "Changed But Not Updated" list.
-> 2) Clicking on foo gives message box with "No differences detected. ...
->    Clicking the "ok" button invokes a rescan, back to step 1.
-> 3) Adding foo to the commit list in git-gui works.
-> 4) Committing the above from git-gui gives a commit with no
->    changes (commit is made, shows up in git log, but has no
->    changes associated).
+> > Which files, specifically? ...
 > 
-> --- I don't think git-gui should make create an empty commit in the 
-> above case.
+> ~/src/git $find . -user 0
+> ./git-fsck-objects
+...+100 files...
 
-Hmm.  Probably not.  In pg I used to compare HEAD^{tree} to the
-tree output by git-write-tree and refuse to make the commit if
-they had the same value.  git-gui just blindly assumes that if a
-file is staged for committing then it won't make an empty commit;
-this is also the behavior in git-commit.sh.
+This is caused by below...
 
-Yet in the case of a merge you may want the same tree and not even
-realize it.  Like if I merge a commit from a coworker, get a merge
-conflict, pick my version, but that just modified the tree to match
-mine, effectively doing an `-s ours` style merge.  Of course here
-we have MERGE_HEAD and know we are merging...
+> >> Second, this is a more recent problem with 'make install':
+> >> make -C git-gui all
+> >> make[1]: Entering directory `/usr/local/mnt/wa1ter/src/git/git-gui'
+> >> GITGUI_VERSION = 0.6.GITGUI
+> 
+> > Hmm.  You can't get the right version number for git-gui.  Do you
+> > have tags fetched?
+> 
+> Oops.  I stupidly forgot to tell you the reason for the failure
+> when running the script as root:  /usr/local is not in root's path,
+> and thus /usr/local/bin/git-* can't be found.  Since the script
+> assumes that git is already installed and working, I would guess
+> that it would also fail if I had just fetched Junio's repository
+> for the first time and attempted an initial install.
+
+Right.  So what is happening is the toplevel Makefile tries to run
+GIT-VERSION-GEN to obtain the version, that calls git-describe,
+which does not exist, fails, and falls back on the hardcoded version
+number.  That version number differs from what the software was
+compiled with, so it gets recompiled.  Instant set of +100 files
+owned by root.
+
+Same issue happens down inside of git-gui.
+
+I think the only answer I have for you is the following:
+
+  If you want to run the Makefile without having git in your path
+  then make a tarball first (make dist) with Git in your path,
+  then unpack the tarball and compile that.
+
+  This works as the tarball embeds version and credits files that
+  sidestep the need for git-describe.
 
 -- 
 Shawn.
