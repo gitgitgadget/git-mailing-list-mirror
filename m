@@ -1,86 +1,113 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Increase some limits in git-mailinfo
-Date: Mon, 26 Feb 2007 10:43:03 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702261036550.12485@woody.linux-foundation.org>
+From: Ed Schouten <ed@fxq.nl>
+Subject: Syntax highlighting for gitweb
+Date: Mon, 26 Feb 2007 19:18:58 +0100
+Message-ID: <20070226181858.GC11232@hoeg.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Feb 26 19:43:19 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Sr1nOIr3CvdE5hEN"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 26 19:49:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLkof-0008CB-Md
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 19:43:18 +0100
+	id 1HLkuo-0002Cl-Jm
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 19:49:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030428AbXBZSmv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 13:42:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030430AbXBZSmv
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 13:42:51 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:56442 "EHLO smtp.osdl.org"
+	id S1030447AbXBZSt1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 13:49:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030452AbXBZSt1
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 13:49:27 -0500
+Received: from palm.hoeg.nl ([83.98.131.212]:64018 "EHLO palm.hoeg.nl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030428AbXBZSmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 13:42:50 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1QIglhB002063
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 26 Feb 2007 10:42:47 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1QIgkqd027697;
-	Mon, 26 Feb 2007 10:42:47 -0800
-X-Spam-Status: No, hits=-0.449 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030447AbXBZSt0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 13:49:26 -0500
+X-Greylist: delayed 1827 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Feb 2007 13:49:26 EST
+Received: by palm.hoeg.nl (Postfix, from userid 1000)
+	id 3D2401CF06; Mon, 26 Feb 2007 19:18:58 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40640>
 
 
-I'm not proud of this patch, and I think we should do this better, but I 
-just had trouble with an email that Eric Biederman sent me for the kernel, 
-and this is the simplest and most obvious fix..
+--Sr1nOIr3CvdE5hEN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What happened is that Eric's email had a long and complex "References:" 
-line in his email headers, and the way git-mailinfo parses email headers, 
-it will combine these multi-line headers into one single long line (which 
-is appropriate for things like Subject lines etc, where everybody really 
-wants to just have one long subject rather than know about rfc822 email 
-message rules).
+Hello everyone,
 
-However, with the extensive references, the end result was longer than the 
-one thousand character line limit we had, and what git-mailinfo did was to 
-just stop parsing header lines. The end result: it never parsed the 
-"Date:" line at all, and it left all subsequent email header lines as 
-"commit info" contents instead. Very ugly.
+I just wrote a really awful patch to add syntax highlighting to gitweb:
 
-Arguably that is the real bug (we should continue with header parsing), 
-but the trivial work-around is to just make the line buffer bigger.
+%%%
+--- gitweb	Mon Feb 26 18:36:42 2007
++++ gitweb	Mon Feb 26 19:12:20 2007
+@@ -16,6 +16,7 @@
+ use Fcntl ':mode';
+ use File::Find qw();
+ use File::Basename qw(basename);
++use IPC::Open2;
+ binmode STDOUT, ':utf8';
+=20
+ our $cgi =3D new CGI;
+@@ -3186,15 +3187,25 @@
+ 	git_print_page_path($file_name, "blob", $hash_base);
+ 	print "<div class=3D\"page_body\">\n";
+ 	my $nr;
++
++	my $pid;
++	local (*HLR, *HLW);
++	$pid =3D open2(\*HLR, \*HLW, "highlight -f --syntax c");
+ 	while (my $line =3D <$fd>) {
+-		chomp $line;
+-		$nr++;
+-		$line =3D untabify($line);
+-		printf "<div class=3D\"pre\"><a id=3D\"l%i\" href=3D\"#l%i\" class=3D\"l=
+inenr\">%4i</a> %s</div>\n",
+-		       $nr, $nr, $nr, esc_html($line, -nbsp=3D>1);
++		print HLW $line;
+ 	}
++	close HLW
++		or print "Failed to start highlight.\n";
+ 	close $fd
+ 		or print "Reading blob failed.\n";
++
++	while (my $line =3D <HLR>) {
++		$nr++;
++		printf "<div class=3D\"pre\"><a id=3D\"l%i\" href=3D\"#l%i\" class=3D\"l=
+inenr\">%4i</a> %s</div>\n",
++		       $nr, $nr, $nr, $line;
++	}
++	close HLR
++		or print "Failed to highlight blob.\n";
+ 	print "</div>";
+ 	git_footer_html();
+ }
+%%%
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
+I am not a Perl programmer, so I kept it really simple by just
+hardcoding '--syntax c'. Would it be possible for some real Perl
+programmer to clean this up? I think a feature like this would be really
+cool to have.
 
-I'll look at making the parsing more robust too, but thought I'd send this 
-out asap.
+Yours,
+--=20
+ Ed Schouten <ed@fxq.nl>
+ WWW: http://g-rave.nl/
 
-		Linus
+--Sr1nOIr3CvdE5hEN
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
----
- builtin-mailinfo.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (FreeBSD)
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 6ee6b0b..3f0e08a 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -10,7 +10,7 @@ static FILE *cmitmsg, *patchfile, *fin, *fout;
- 
- static int keep_subject;
- static const char *metainfo_charset;
--static char line[1000];
-+static char line[10000];
- static char date[1000];
- static char name[1000];
- static char email[1000];
+iD8DBQFF4ySS52SDGA2eCwURAj3rAJ9LoU1zJ0jc5uwrHpof1f1zGYYTjgCeP7/c
+4ZABd/QKeKTAqKlh0aBDYi4=
+=l+tc
+-----END PGP SIGNATURE-----
+
+--Sr1nOIr3CvdE5hEN--
