@@ -1,61 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] qgit-1.5.5
-Date: Mon, 26 Feb 2007 12:19:28 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702261218430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <e5bfff550702250958n6cddc5b5lec4badf1f7fc8231@mail.gmail.com> 
- <46a038f90702251623h5944a085m514418cb5f530e7f@mail.gmail.com>
- <e5bfff550702252219m352c03ady2d810e051bd62a37@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git-remote and remotes with '.' in their names
+Date: Mon, 26 Feb 2007 12:28:27 +0100
+Organization: At home
+Message-ID: <erug4s$kn7$1@sea.gmane.org>
+References: <87k5y5tlol.fsf@briny.internal.ondioline.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 26 12:19:37 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 26 12:27:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLdtI-0000oo-5O
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 12:19:36 +0100
+	id 1HLe15-0003x3-Nx
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 12:27:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932468AbXBZLTb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 06:19:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932771AbXBZLTb
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 06:19:31 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43532 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932468AbXBZLTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 06:19:30 -0500
-Received: (qmail invoked by alias); 26 Feb 2007 11:19:28 -0000
-X-Provags-ID: V01U2FsdGVkX18+4MxjH38+cAlQmZTnr5n4vRqP5rw7A7V7WA6FdV
-	cc0A==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <e5bfff550702252219m352c03ady2d810e051bd62a37@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S965240AbXBZL1R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 06:27:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965241AbXBZL1R
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 06:27:17 -0500
+Received: from main.gmane.org ([80.91.229.2]:56692 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965240AbXBZL1Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 06:27:16 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HLe0F-0002ZF-US
+	for git@vger.kernel.org; Mon, 26 Feb 2007 12:26:48 +0100
+Received: from host-89-229-2-22.torun.mm.pl ([89.229.2.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Feb 2007 12:26:47 +0100
+Received: from jnareb by host-89-229-2-22.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Feb 2007 12:26:47 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-2-22.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40617>
 
-Hi,
+Paul Collins wrote:
 
-On Mon, 26 Feb 2007, Marco Costalba wrote:
+> With this patch I get the correct list, but then it will break if
+> there are ever config keys like "remote.$remote_name.foo.bar".
 
-> On 2/26/07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> > On 2/26/07, Marco Costalba <mcostalba@gmail.com> wrote:
-> > > P.S: There is also a Qt4 version (works under Windows) downloadable
-> > > from git://repo.or.cz/qgit4.git  it is a little bit experimental
-> > > tough.
-> > 
-> > Is the QT4 Windows port working against the MinGW port of GIT?
-> > 
-> 
-> Yes, Qt4Windows does not need cygwin at all and is compiled itself with
-> MinGW.
-
-I think what Martin was getting at is if you can use the MinGW port of 
-_Git_, not if Qt4Windows or qgit needs cygwin.
-
-Ciao,
-Dscho
+I don't think there would ever be key (variable) names with dots in them;
+if I remember correctly we don't allow this now.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
