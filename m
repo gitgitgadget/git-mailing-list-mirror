@@ -1,64 +1,54 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Add missing files to stgit manifest.
-Date: Mon, 26 Feb 2007 23:13:06 +0100
-Message-ID: <20070226221305.12278.49103.stgit@gandelf.nowhere.earth>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Merge doc/ and Documentation/ directories.
+Date: Mon, 26 Feb 2007 23:14:32 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702262312100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070226220929.12064.98992.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 26 23:13:19 2007
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Mon Feb 26 23:15:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLo5s-0004Tl-NR
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 23:13:17 +0100
+	id 1HLo7j-0005NA-QC
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 23:15:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161274AbXBZWNO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 17:13:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161281AbXBZWNO
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 17:13:14 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:54121 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161274AbXBZWNN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 17:13:13 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 2A27D49F44;
-	Mon, 26 Feb 2007 23:13:12 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 1A7851F084;
-	Mon, 26 Feb 2007 23:13:06 +0100 (CET)
-User-Agent: StGIT/0.12
+	id S1161289AbXBZWOf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 17:14:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161293AbXBZWOf
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 17:14:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33303 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161289AbXBZWOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 17:14:34 -0500
+Received: (qmail invoked by alias); 26 Feb 2007 22:14:32 -0000
+X-Provags-ID: V01U2FsdGVkX1/SjF9HR+zS2JZJnCB5EodxBE0ft5Op3jebk3m8jT
+	ymZQ==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070226220929.12064.98992.stgit@gandelf.nowhere.earth>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40671>
 
+Hi,
 
-Many things, including Makefile and all documentation were left out of
-various packaging because they're not included in the tarball.
+On Mon, 26 Feb 2007, Yann Dirson wrote:
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+>  Documentation/tutorial.txt  |  413 +++++++++++++++++++++++++++++++++++++++++++
+>  doc/tutorial.txt            |  413 -------------------------------------------
+>
+> [...]
+> 
+> diff --git a/Documentation/tutorial.txt b/Documentation/tutorial.txt
+> new file mode 100644
+> index 0000000..5899c38
 
- MANIFEST.in |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+AFAICT the diff option "--no-renames" can override "-M", so why turn "-M" 
+on by default for format-patch and show?
 
-diff --git a/MANIFEST.in b/MANIFEST.in
-index c720022..6b634e0 100644
---- a/MANIFEST.in
-+++ b/MANIFEST.in
-@@ -1,4 +1,4 @@
--include README MANIFEST.in AUTHORS COPYING INSTALL ChangeLog TODO
-+include README Makefile MANIFEST.in AUTHORS COPYING INSTALL ChangeLog TODO
- include stg-prof
- include templates/*.tmpl
- include examples/*.tmpl
-@@ -6,3 +6,6 @@ include examples/gitconfig
- include contrib/diffcol.sh
- include contrib/stgbashprompt.sh
- include contrib/stgit-completion.bash
-+include t/t*.sh t/t*/* t/Makefile t/README
-+include Documentation/*.txt Documentation/Makefile Documentation/*.conf
-+include Documentation/build-docdep.perl Documentation/callouts.xsl
+Ciao,
+Dscho
