@@ -1,73 +1,112 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [ANNOUNCE] qgit-1.5.5
-Date: Mon, 26 Feb 2007 20:29:10 +0100
-Message-ID: <e5bfff550702261129p5085bd22gae11c81b401d3591@mail.gmail.com>
-References: <e5bfff550702250958n6cddc5b5lec4badf1f7fc8231@mail.gmail.com>
-	 <46a038f90702251623h5944a085m514418cb5f530e7f@mail.gmail.com>
-	 <e5bfff550702252219m352c03ady2d810e051bd62a37@mail.gmail.com>
-	 <Pine.LNX.4.63.0702261218430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <e5bfff550702260939t4a071d34o6bbf3dcd4ad5b67c@mail.gmail.com>
-	 <Pine.LNX.4.63.0702261846010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Increase some limits in git-mailinfo
+Date: Mon, 26 Feb 2007 20:34:22 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702262020590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0702261036550.12485@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0702261107060.12485@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Martin Langhoff" <martin.langhoff@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	linux-kernel@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 26 20:29:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Feb 26 20:34:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLlXC-000177-J8
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 20:29:18 +0100
+	id 1HLlcC-0003Fv-39
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 20:34:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030406AbXBZT3O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 14:29:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030481AbXBZT3O
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 14:29:14 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:13269 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030406AbXBZT3N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 14:29:13 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so890903uga
-        for <git@vger.kernel.org>; Mon, 26 Feb 2007 11:29:11 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YVsRoMpKgp09Djril5dClnATJhbP/dezhBo2iOO+Nu0qQn3z41n6+1Fmj+hDjxnPhTgN+jcF2yJfJxf0x31gdlBEMiEOdanzvqdGTgUC251v1yaOZCbn9uSw/KdzA0vGxfXbeERG8ENi1eQu1kVM+Heej0UVaWHciHTQQc1uHNQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Fq/FwTJAq/v7+uXhEc9bjiu0YVgK1NIgptKQ/1hDOvVzdNCCRrUW5g4T4Unn1cmCpFH0n6L8GN0iYMC7Iajz9gFxOg6W+cx5IfCJ8kxlgCqwH/mp/Ur0cW6/B/bafi48Eb18bJ3SmKe4YqOL7/uV5cnX+/obMfzVX7W3GX92bRg=
-Received: by 10.114.151.13 with SMTP id y13mr1479346wad.1172518150232;
-        Mon, 26 Feb 2007 11:29:10 -0800 (PST)
-Received: by 10.114.60.16 with HTTP; Mon, 26 Feb 2007 11:29:10 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.63.0702261846010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1030486AbXBZTeZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 14:34:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030487AbXBZTeZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 14:34:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33117 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030486AbXBZTeY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 14:34:24 -0500
+Received: (qmail invoked by alias); 26 Feb 2007 19:34:22 -0000
+X-Provags-ID: V01U2FsdGVkX1/FqJ9jtQnFaL+l9rTTHWVZl6s4QUu9+je4y1T3dZ
+	N3sQ==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0702261107060.12485@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40647>
 
-On 2/26/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 26 Feb 2007, Marco Costalba wrote:
->
-> > Actually, I didn't test with MinGW port of Git but I would be surprised
-> > if it doesn't work (famous last words ;-)  )
->
-> You don't use cygpath to translate between Windows <-> POSIX filenames?
->
-> AFAICT this is the single most important user-visible difference between
-> Cygwin Git and MinGW Git.
->
+Hi,
 
-I call git programs as if they were native windows programs. I run git
-programs without requiring cygwin shell or something similar.
+On Mon, 26 Feb 2007, Linus Torvalds wrote:
 
-I hope I have understood correctly your answer.
+> +
+> +	/* Count mbox From headers as headers */
+> +	if (!memcmp(line, "From ", 5) || !memcmp(line, ">From ", 6))
 
-Marco
+I know that you copied that, but why not use the new prefixcmp() function?
+
+>  static int read_one_header_line(char *line, int sz, FILE *in)
+>  {
+> -	int ofs = 0;
+> -	while (ofs < sz) {
+> -		int peek, len;
+> -		if (fgets(line + ofs, sz - ofs, in) == NULL)
+> -			break;
+> -		len = eatspace(line + ofs);
+> -		if ((len == 0) || !is_rfc2822_header(line)) {
+> -			/* Re-add the newline */
+> -			line[ofs + len] = '\n';
+> -			line[ofs + len + 1] = '\0';
+> -			break;
+> -		}
+> -		ofs += len;
+> -		/* Yuck, 2822 header "folding" */
+> +	int len;
+> +
+> +	/* Get the first part of the line.. */
+> +	if (!fgets(line, sz, in))
+> +		return 0;
+> +
+> +	/*
+> +	 * Is it an empty line or not a valid rfc2822 header?
+> +	 * If so, stop here, and return false ("not a header")
+> +	 */
+> +	len = eatspace(line);
+> +	if (!len || !is_rfc2822_header(line)) {
+> +		/* Re-add the newline */
+> +		line[len] = '\n';
+> +		line[len + 1] = '\0';
+
+Just a micro-issue: if the input ends in the middle of a header line, 
+_and_ this line is of exactly the right size (sz), then len + 1 is not 
+necessarily smaller than sz, right?
+
+It's not like this can be used for a DOS or stuff, but I try to get more 
+aware of off-by-one bugs, which I introduced all too often...
+
+> +		addlen = eatspace(continuation);
+> +		if (len < sz) {
+
+Shouldn't this be "sz - 1"? We are setting "line[len] = 0;" later... While 
+at it, we can always check for "addlen > 0", just in case?
+
+But then, should it not be rather "sz - 2", because we want to _add_ 
+something to the line?
+
+> +			if (addlen >= sz - len)
+> +				addlen = sz - len - 1;
+> +			memcpy(line + len, continuation, addlen);
+> +			len += addlen;
+> +		}
+>  	}
+> -	/* Count mbox From headers as headers */
+> -	if (!ofs && (!memcmp(line, "From ", 5) || !memcmp(line, ">From ", 6)))
+> -		ofs = 1;
+> -	return ofs;
+> +	line[len] = 0;
+> +
+> +	return 1;
+
+Ciao,
+Dscho
