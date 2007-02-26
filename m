@@ -1,105 +1,114 @@
-From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
-Subject: Re: RFC: Patch editing
-Date: Mon, 26 Feb 2007 14:18:14 +0100
-Message-ID: <slrneu5ngm.s8g.siprbaum@xp.machine.xx>
-References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Problems importing git-cur into git
+Date: Mon, 26 Feb 2007 15:11:25 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070226141125.GA12506@informatik.uni-freiburg.de>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="G4iJoqBmSsgzjUCe"
+Content-Transfer-Encoding: 8bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 26 14:15:42 2007
+X-From: git-owner@vger.kernel.org Mon Feb 26 15:19:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLfhc-0005cL-RL
-	for gcvg-git@gmane.org; Mon, 26 Feb 2007 14:15:41 +0100
+	id 1HLgZh-0001ZQ-Cj
+	for gcvg-git@gmane.org; Mon, 26 Feb 2007 15:11:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030206AbXBZNPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 08:15:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030221AbXBZNPh
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 08:15:37 -0500
-Received: from main.gmane.org ([80.91.229.2]:33801 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030206AbXBZNPh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 08:15:37 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HLfhR-0003uW-C7
-	for git@vger.kernel.org; Mon, 26 Feb 2007 14:15:29 +0100
-Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 26 Feb 2007 14:15:29 +0100
-Received: from siprbaum by magnum.hofmann.stw.uni-erlangen.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 26 Feb 2007 14:15:29 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: magnum.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1030257AbXBZOLa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 09:11:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030258AbXBZOLa
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 09:11:30 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:45170 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1030257AbXBZOL3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Feb 2007 09:11:29 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HLgZc-0007PI-0y
+	for git@vger.kernel.org; Mon, 26 Feb 2007 15:11:28 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11) with ESMTP id l1QEBPlc014138
+	for <git@vger.kernel.org>; Mon, 26 Feb 2007 15:11:25 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.7+Sun/8.12.11/Submit) id l1QEBPIe014137
+	for git@vger.kernel.org; Mon, 26 Feb 2007 15:11:25 +0100 (MET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40622>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> schrieb:
-> Hi list,
->
-> while I was hacking on another issue, I realized just how often I would 
-> like to stash away a fix which is unrelated (but often triggered) by the 
-> theme of the current topic branch. Or I fix an earlier commit, which is 
-> not the tip of the branch, so I cannot --amend it.
->
-> My common practice is to commit it nevertheless, and sort the topic 
-> branches out later, by cherry-picking my way through the commits.
->
-> This is a tedious and error-prone procedure, and I often wished I knew how 
-> to use StGIT. But then, StGIT is overkill for me: on some machines I work 
-> on, there is no Python installed, I do not really need to have a history 
-> on the order and version of patches, and I do not need to preserve author 
-> and committer information *1*.
->
-> Therefore, I wrote this extremely simple script to sort out the order of 
-> commits, and possibly merging some. The script lets you edit the commit 
-> list upon start (reordering it, or removing commits), and then works on 
-> that list. It has three subcommands:
->
-> 	start <base>
-> 	continue
-> 	reset [-f]
->
-> The subcommand "start" takes a base commit (actually, it will take the 
-> merge base of HEAD and that base commit) from which to start. It builds a 
-> commit list and opens it in an editor. The rows of the list have the form 
-> "<action> <sha1> <oneline>". The oneline description is purely for ease of 
-> use.
->
-> The three possible actions are "pick" (the default), "edit" and "merge". 
-> "pick" will just cherry-pick that commit, "edit" will stop after 
-> cherry-picking so that you can make a small fixup (in the code or in the 
-> commit message), and "merge" will try to apply the corresponding patch, 
-> amend the previous commit with the result, and let you edit the combined 
-> commit message.
->
-> If a patch fails, or "edit" was specified, the loop is interrupted for 
-> fixups. Use the subcommand "continue" to restart the loop (the working 
-> tree has to be clean, though).
->
-> Once there are no more commits to be picked, the original branch is 
-> updated to that new tip.
->
-> If you decide at some point that you do not want to rewrite the patches 
-> after all, you can use the subcommand "reset".
->
-> To see which commits were already applied, you can inspect .series/done, 
-> and likewise .series/todo for what is to be applied yet. You can even edit 
-> .series/todo if you decide on another course of action.
->
-> Anyway, it is a relatively short and stupid script.
->
 
-Nice.  I tried it on a simple testcase to just rearrange some commits
-and it worked as expected. That was exactly what I was looking for!
+--G4iJoqBmSsgzjUCe
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-I tried for a while stgit, but it seemed like overkill to me and I messed
-up my test repo several times, propably because I have done something wrong
-so I gave up.
+Hello,
 
--Peter
+I tried to apply Russell King's git-cur[1] to my linux-2.6 repo.  The
+problem I was faced there is that git-am isn't able to parse the date in
+the "From " lines.
+
+arm.mbox uses e.g.
+
+	From rmk Sun Feb 25 22:32:59 GMT 2007
+
+while git-am (or more exactly git-mailsplit) expects to find the year
+directly after the time.
+
+The output of date specifies the timezone between time and year, too.
+
+The next problem is that once more that my 'ö' is not correctly taken in
+the commit.  I didn't debug that yet, but probably inserting a
+Content-Type header helps here?
+
+I'll debug that further, but at the moment I don't have the time.  Just
+send out my current status, maybe someone else wants to look after that
+issue.
+
+Attached is the current script to reproduce it.
+
+Best regards
+Uwe
+
+[1] ftp://ftp.arm.linux.org.uk/pub/armlinux/kernel/git-cur/arm.mbox
+
+-- 
+Uwe Kleine-König
+
+http://www.google.com/search?q=gigabyte+in+bit
+
+--G4iJoqBmSsgzjUCe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=get-armgitcur
+
+#! /bin/sh
+
+MBOX="ftp://ftp.arm.linux.org.uk/pub/armlinux/kernel/git-cur/arm.mbox";
+DIFF="ftp://ftp.arm.linux.org.uk/pub/armlinux/kernel/git-cur/arm.diff";
+
+LINUX_GIT="${HOME}/gsrc/linux-2.6";
+
+tempfile=$(mktemp)
+trap 'rm -f "${tempfile}"' INT QUIT TERM EXIT 
+
+# Fix Date format for git-mailsplit that assumes that the year directly follows
+# the time ...
+wget -O - "${MBOX}" | sed "s/^\\(From .*:[0-9][0-9]\) GMT/\\1/" > "${tempfile}"
+
+cd "${LINUX_GIT}";
+git am "${tempfile}";
+
+echo "${tempfile}";
+
+
+
+--G4iJoqBmSsgzjUCe--
