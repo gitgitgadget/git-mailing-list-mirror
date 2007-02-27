@@ -1,69 +1,63 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] show_date(): rename the "relative" parameter to "mode"
-Date: Tue, 27 Feb 2007 15:04:41 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702271503140.12485@woody.linux-foundation.org>
+Date: Tue, 27 Feb 2007 15:09:07 -0800
+Message-ID: <7vslcrb3l8.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.63.0702271620390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271339550.12485@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702271356300.12485@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702272322590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0702271339550.12485@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0702271356300.12485@woody.linux-foundation.org>
+	<Pine.LNX.4.63.0702272322590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>,
 	junkio@cox.net
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Feb 28 00:04:44 2007
+X-From: git-owner@vger.kernel.org Wed Feb 28 00:09:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMBNC-0005YR-LB
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:04:42 +0100
+	id 1HMBRY-0007SF-L1
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:09:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751997AbXB0XEk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 18:04:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbXB0XEk
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:04:40 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:56316 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751997AbXB0XEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 18:04:39 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1RN4LhB021656
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 27 Feb 2007 15:04:22 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1RN4KPv031555;
-	Tue, 27 Feb 2007 15:04:21 -0800
+	id S1752002AbXB0XJJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 18:09:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752008AbXB0XJJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:09:09 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:48405 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752002AbXB0XJI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 18:09:08 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070227230908.TDEE2670.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 27 Feb 2007 18:09:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Un971W00L1kojtg0000000; Tue, 27 Feb 2007 18:09:07 -0500
 In-Reply-To: <Pine.LNX.4.63.0702272322590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-2.441 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	(Johannes Schindelin's message of "Tue, 27 Feb 2007 23:24:10 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40836>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-
-On Tue, 27 Feb 2007, Johannes Schindelin wrote:
-
-> Hi,
-> 
-> On Tue, 27 Feb 2007, Linus Torvalds wrote:
-> 
-> > Side note: one of the reasons I like having more fine-grained date flags 
-> > is that I've occasionally wanted a "show in UTC time" or "show 
-> > everything in *my* local time" option.
-> 
+>> Side note: one of the reasons I like having more fine-grained date flags 
+>> is that I've occasionally wanted a "show in UTC time" or "show 
+>> everything in *my* local time" option.
+>
 > I found the --relative-date option very useful to that end, if a bit long 
 > to type.
 
-That really doesn't work for stuff that is more than a day old. The 
-difference between "3 weeks ago" and "3 weeks ago" is not usually very 
-obvious.
+How about --ago as a synonym, and --my-date for obeying TZ?
+"show in UTC time" can be had by something like:
 
-(Hint: often they are days apart, but the relative date-format will just 
-hide any differences due to excessive granularity).
+	$ TZ=UTC git log --my-date
 
-			Linus
+I personally am not very happy that "reflog show @{now}" gives
+relative date and not the full datestamp.
