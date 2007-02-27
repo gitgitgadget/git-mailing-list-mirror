@@ -1,81 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Support 64-bit indexes for pack files.
-Date: Tue, 27 Feb 2007 21:35:53 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702272134040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200702261540.27080.ttelford.groups@gmail.com>
- <20070226235510.GF1639@spearce.org> <alpine.LRH.0.82.0702261916560.29426@xanadu.home>
- <20070227003118.GH1639@spearce.org> <alpine.LRH.0.82.0702262306100.29426@xanadu.home>
- <79B129C3-C1B5-43E3-97DA-1ADC70642B88@adacore.com>
- <alpine.LRH.0.82.0702270002100.29426@xanadu.home>
- <5FE0C988-0DA8-4BFB-8F0C-42F97808E6F8@adacore.com>
- <Pine.LNX.4.63.0702272102440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <F4EA27AD-EF1C-4BF2-8D52-945E0AE51006@adacore.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Organizing (large) test data in git
+Date: Tue, 27 Feb 2007 14:41:12 -0600
+Message-ID: <17892.38760.241965.552855@lisa.zopyra.com>
+References: <17892.28995.328911.23188@lisa.zopyra.com>
+	<Pine.LNX.4.63.0702272049560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17892.36336.249022.904854@lisa.zopyra.com>
+	<Pine.LNX.4.63.0702272113430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17892.37416.358405.211524@lisa.zopyra.com>
+	<Pine.LNX.4.63.0702272119430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Tue Feb 27 21:36:01 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 27 21:42:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM93J-0005h1-CO
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:36:01 +0100
+	id 1HM99H-0008Mh-Fo
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:42:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933076AbXB0Uf6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 15:35:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933085AbXB0Uf6
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:35:58 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56642 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933076AbXB0Uf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 15:35:57 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 20:35:55 -0000
-X-Provags-ID: V01U2FsdGVkX1/opngFRujownRrQH6KjnndbUTNWh7o4/XpDW8EGx
-	PTBg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <F4EA27AD-EF1C-4BF2-8D52-945E0AE51006@adacore.com>
-X-Y-GMX-Trusted: 0
+	id S933098AbXB0UlT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 15:41:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933092AbXB0UlT
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:41:19 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61289 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933098AbXB0UlR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 15:41:17 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1RKfFa10354;
+	Tue, 27 Feb 2007 14:41:15 -0600
+In-Reply-To: <Pine.LNX.4.63.0702272119430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40791>
 
-Hi,
+On Tuesday, February 27, 2007 at 21:22:31 (+0100) Johannes Schindelin writes:
+>...
+>Basically, shallow clones cut off branches at some point, even if those 
+>commits have references to their parents.
 
-On Tue, 27 Feb 2007, Geert Bosch wrote:
+Ah, so a sort of temporal surgery.
 
-> 
-> On Feb 27, 2007, at 15:05, Johannes Schindelin wrote:
-> > On Tue, 27 Feb 2007, Geert Bosch wrote:
-> > 
-> > > The object-count at the beginning of the pack is a little strange 
-> > > for local on-disk pack files, as it is data that can easily be 
-> > > derived.
-> > 
-> > The SHA1 is also easily derived. So think of it as a doubly secure way 
-> > to ensure integrity.
-> > 
-> > Remember, there were some people unable to accept that SHA1 collisions 
-> > are _unlikely_...
-> 
-> Ah, you include the count because you don't trust the SHA1 and now you 
-> can count that you got the right number of objects ;-)
+I don't think this will help, and I don't think this is a unique
+git issue, either.  It happens with any system, I would think.
 
-I don't know if it was included for that reason, but you can excuse it 
-that way. :-)
+Let's say I have 6 code repos on my system and one data repo.  If I
+make changes in one of my code repos that requires a test data
+change, I have to move to my test data repo, make the change
+there, and commit there.  Then, back in my code repo, I commit also.
 
-> It's just that I don't see a use for the count in a local on-disk pack. 
-> In these cases we'll always have an index. We can keep the current 
-> protocol for sending/receiving packs, no need to ever upgrade to v4 
-> there.
+Now, instead of one tidy package (a commit) that holds code and test
+together in a coherent package, I have two separate commits in two
+repos that now have to be coordinated.  Imagine I do more changes in
+similar fashion, and others do as well.  Now our lead of the QA
+department is pulling his hair out, trying to figure out which commits
+in the data directory match those in the code directory so he can do
+regressions properly.
 
-But the protocol expects a valid pack! (Including a count...)
+As I said, I don't think this is a git-specific issue, but more one
+of organizational techniques.  Perhaps there is no good answer...
 
-Besides, the pack index is a purely local thin, reconstructed from the 
-pack when fetching...
 
-Ciao,
-Dscho
+Bill
