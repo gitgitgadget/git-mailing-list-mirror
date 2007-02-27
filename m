@@ -1,98 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] fetch--tool: fix uninitialized buffer when reading from
- stdin
-Date: Tue, 27 Feb 2007 20:35:08 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702272034010.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702261306140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702260821310.12485@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702261741360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702260905420.12485@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702261827510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702261003480.12485@woody.linux-foundation.org>
- <7vfy8sn20o.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Replacement for cvs2cl, for generating ChangeLog
+Date: Tue, 27 Feb 2007 20:45:03 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702272040440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <877iu3q13r.fsf@latte.josefsson.org>
+ <Pine.LNX.4.63.0702271336050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v8xejflk2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+Cc: Simon Josefsson <simon@josefsson.org>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 27 20:35:20 2007
+X-From: git-owner@vger.kernel.org Tue Feb 27 20:45:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM86Z-0005Em-Ma
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 20:35:20 +0100
+	id 1HM8G8-0000q6-U7
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 20:45:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068AbXB0TfM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 14:35:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752054AbXB0TfM
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 14:35:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42593 "HELO mail.gmx.net"
+	id S1751755AbXB0TpH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 14:45:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751792AbXB0TpH
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 14:45:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60816 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751755AbXB0TfK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 14:35:10 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 19:35:09 -0000
-X-Provags-ID: V01U2FsdGVkX18jWGkgcE4jxL3NpqJqmFlUU2NFAkrL0F1e4p2ZjR
-	TaUA==
+	id S1751755AbXB0TpF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 14:45:05 -0500
+Received: (qmail invoked by alias); 27 Feb 2007 19:45:03 -0000
+X-Provags-ID: V01U2FsdGVkX1/jg44Cairj57aTVkSiuR35oqNxk3jYvyVC5GaI6u
+	oU7A==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vfy8sn20o.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <7v8xejflk2.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40774>
 
-Hi
+Hi,
 
-On Mon, 26 Feb 2007, Junio C Hamano wrote:
+On Tue, 27 Feb 2007, Junio C Hamano wrote:
 
-> [PATCH] fetch--tool: fix uninitialized buffer when reading from stdin
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> The original code allocates too much space and forgets to NUL
-> terminate the string.
+> > On Tue, 27 Feb 2007, Simon Josefsson wrote:
+> >
+> >> * Is there a tool that produce ChangeLog files in the GNU format,
+> >>   based on the git logs?  Similar to the 'cvs2cl' tool.  The output
+> >>   should look like:
+> >> ...
+> > Let me hack something.
 > 
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
-> ---
+> I do not know why you want to pile something like this into builtin-log.  
+> It would add maintenance burden and I do not see a gain from it.
 > 
->  builtin-fetch--tool.c |   19 +++++++++++++------
->  1 files changed, 13 insertions(+), 6 deletions(-)
-> 
-> diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
-> index 48de08d..a068f8d 100644
-> --- a/builtin-fetch--tool.c
-> +++ b/builtin-fetch--tool.c
-> @@ -2,17 +2,24 @@
->  #include "refs.h"
->  #include "commit.h"
->  
-> -#define CHUNK_SIZE (1048576)
-> +#define CHUNK_SIZE 1024
->  
->  static char *get_stdin(void)
->  {
-> +	int offset = 0;
->  	char *data = xmalloc(CHUNK_SIZE);
-> -	int offset = 0, read = 0;
-> -	read = xread(0, data, CHUNK_SIZE);
-> -	while (read == CHUNK_SIZE) {
-> -		offset += CHUNK_SIZE;
-> +
-> +	while (1) {
-> +		int cnt = xread(0, data + offset, CHUNK_SIZE);
-> +		if (cnt < 0)
-> +			die("error reading standard input: %s",
-> +			    strerror(errno));
-> +		if (cnt == 0) {
-> +			data[offset] = 0;
-> +			break;
-> +		}
-> +		offset += cnt;
->  		data = xrealloc(data, offset + CHUNK_SIZE);
-> -		read = xread(0, data + offset, CHUNK_SIZE);
->  	}
->  	return data;
->  }
+> One beauty of git is being scriptable.  When somebody new asks for 
+> something like this, I think it is much more productive to demonstrate 
+> the power of scriptability than piling random crap in the core.
 
-Me-liked-by: Dscho. And maybe people forget about my silly "fix"...
+Well, I briefly considered writing a little Perl script using the output 
+of "git log --stat".
+
+BUT. GNU ChangeLog is a really often asked-for feature. And before risking 
+some Haskell script producing GNU ChangeLog output in git.git, which I 
+have to rewrite as plugin eventually anyway, I thought that I include it 
+right away.
+
+Demonstrating the ease of Git's core, and hacking on Git was a benefit 
+from it.
+
+As were the first two patches: I think print_wrapped_text() only now got 
+usable. And show_date() with an enum should be an improvement, too.
+
+Anyway, it was the third time I read about such a request, and I had a go 
+at it. If you don't like it, don't take it. I have no problems with that.
 
 Ciao,
 Dscho
