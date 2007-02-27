@@ -1,89 +1,79 @@
 From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [PATCH] Support 64-bit indexes for pack files.
-Date: Mon, 26 Feb 2007 23:56:23 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702262333240.29426@xanadu.home>
+Date: Tue, 27 Feb 2007 00:11:20 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702270002100.29426@xanadu.home>
 References: <200702261540.27080.ttelford.groups@gmail.com>
  <20070226235510.GF1639@spearce.org>
+ <alpine.LRH.0.82.0702261916560.29426@xanadu.home>
+ <20070227003118.GH1639@spearce.org>
+ <alpine.LRH.0.82.0702262306100.29426@xanadu.home>
+ <79B129C3-C1B5-43E3-97DA-1ADC70642B88@adacore.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
-Cc: Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 05:56:29 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
+To: Geert Bosch <bosch@adacore.com>
+X-From: git-owner@vger.kernel.org Tue Feb 27 06:11:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLuO4-0007QG-HJ
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 05:56:28 +0100
+	id 1HLucg-0005BR-HB
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 06:11:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbXB0E4Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 23:56:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751498AbXB0E4Z
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 23:56:25 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:9000 "EHLO
+	id S1751567AbXB0FLW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 00:11:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751569AbXB0FLW
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 00:11:22 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:19245 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751404AbXB0E4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 23:56:24 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+	with ESMTP id S1751564AbXB0FLV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 00:11:21 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JE3002AEV1ZQJT1@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Feb 2007 23:56:23 -0500 (EST)
-In-reply-to: <20070226235510.GF1639@spearce.org>
+ with ESMTP id <0JE300GVNVQWAJZ1@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Feb 2007 00:11:20 -0500 (EST)
+In-reply-to: <79B129C3-C1B5-43E3-97DA-1ADC70642B88@adacore.com>
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40695>
 
-On Mon, 26 Feb 2007, Shawn O. Pearce wrote:
+On Mon, 26 Feb 2007, Geert Bosch wrote:
 
-> Nico and I are neck deep in our pack version 4 topic.  That topic
-> hits all of the same code you touched with your patch.
+> Why can't we do it with the current 1<<8 entry fan-out?
+> This would allow increases of pack file size up to 1 TB.
 
-Although a good deal of code has been written already, we're still 
-throwing completely crazy ideas back and forth which, if they survive 
-the reality test, might change things quite a lot for the index.
+I had the exact same thought while I was writing the previous mail.
+It is indeed perfectly fine and would require less than 10 lines of code 
+to implement.
 
-> Our topic also requires us to change the index file format, and
-> in doing so we have decided to extend the index records to look
-> something like the following[*1*]:
+> BTW, here are a few issues with the current pack file format:
+>  - The final SHA1 consists of the count of objects in the file
+>    and all compressed data. Why? This is horrible for streaming
+>    applications where you only know the count of objects at the
+>    end, then you need to access *all* data to compute the SHA-1.
+>    Much better to just use compute a SHA1 over the SHA1's of each
+>    object. That way at least the data streamed can be streamed to
+>    disk. Buffering one SHA1 per object is probably going to be OK.
 
-[ delete new index format layout description ]
+We always know the number of objects before actually constructing or 
+streaming a pack.  Finding best delta matches require that we sort the 
+object list by type, but for good locality we need to re-sort that list 
+by recency.  So we always know the number of objects before starting to 
+write since we need to have the list of objects in memory anyway.
 
-Although I suggested that format... like... yesterday, I'm already 
-dismissing it now.  I'd go with what I just posted instead.
+Also the receiving end of a streamed pack wants to know the number of 
+objects first if only to provide the user with some progress report.
 
-But yet this depends on whether or not we consider this latest idea of 
-ours a good thing or not, which require some math to be done to prove 
-its usefulness.
+>  - The object count is implicit in the SHA1 of all objects and the
+>    objects we find in the file. Why do we need it in the first place?
+>    Better to recompute it when necessary. This makes true streaming
+>    possible.
 
-Maybe we should post our notes here in order to gather extra comments 
-from people or to debunk some of our insane ideas faster.
-
-> I want to say your patch shouldn't be merged without even bothering
-> to review it.  The last time I was in this part of the git code
-> (implementing sliding mmap window) Nico and Junio also both went in
-> here and rewrote huge chunks.  Their changes prevented sliding mmap
-> window from applying.  It was 6 months before I got back around to
-> rewriting the patch.
-
-The thing is, regardless of the pack v4 work, I think the approach used 
-is not the best one.  And because of the pack v4 work, we'll have to 
-settle on something before too long anyway.
-
-> So would you mind waiting a couple of weeks for 64 bit indexes?
-
-Of course Troy's patch might be used by those who need it now.  I think 
-Junio might even park it in pu for reference.  The pack index is not a 
-precious piece of information and it can be thrown away and recreated 
-with git-index-pack whenever there is an officially supported new index 
-format.
-
-> *1*: This was Nico's idea; I'm in agreement with him about it.
-
-As mentioned above I'm not in agreement with myself anymore about it.  
-;-)
+Sorry, I don't follow you here.
 
 
 Nicolas
