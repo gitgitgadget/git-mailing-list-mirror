@@ -1,62 +1,58 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Worrisome bug trend
-Date: Tue, 27 Feb 2007 21:00:54 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702272057220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <7vodnfg4sy.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Support 64-bit indexes for pack files.
+Date: Tue, 27 Feb 2007 21:05:02 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702272102440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200702261540.27080.ttelford.groups@gmail.com>
+ <20070226235510.GF1639@spearce.org> <alpine.LRH.0.82.0702261916560.29426@xanadu.home>
+ <20070227003118.GH1639@spearce.org> <alpine.LRH.0.82.0702262306100.29426@xanadu.home>
+ <79B129C3-C1B5-43E3-97DA-1ADC70642B88@adacore.com>
+ <alpine.LRH.0.82.0702270002100.29426@xanadu.home>
+ <5FE0C988-0DA8-4BFB-8F0C-42F97808E6F8@adacore.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 27 21:01:07 2007
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
+To: Geert Bosch <bosch@adacore.com>
+X-From: git-owner@vger.kernel.org Tue Feb 27 21:05:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM8VX-0007n3-4b
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:01:07 +0100
+	id 1HM8ZS-00013M-Ad
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:05:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521AbXB0UA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 15:00:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752522AbXB0UA4
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:00:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:51304 "HELO mail.gmx.net"
+	id S1751814AbXB0UFG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 15:05:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752525AbXB0UFG
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:05:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34395 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752521AbXB0UA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 15:00:56 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 20:00:54 -0000
-X-Provags-ID: V01U2FsdGVkX1/7slZ9zS77Oq+r2YFaKFRF5/j2fL3BstVhPNeHTV
-	lmlg==
+	id S1751814AbXB0UFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 15:05:04 -0500
+Received: (qmail invoked by alias); 27 Feb 2007 20:05:03 -0000
+X-Provags-ID: V01U2FsdGVkX19HUXcb2rpHNfX1XMlVbkJrcpYLnfcBav6kjmCF0b
+	lZWQ==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vodnfg4sy.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <5FE0C988-0DA8-4BFB-8F0C-42F97808E6F8@adacore.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40779>
 
 Hi,
 
-On Tue, 27 Feb 2007, Junio C Hamano wrote:
+On Tue, 27 Feb 2007, Geert Bosch wrote:
 
-> I was reviewing the bugs we fixed since v1.5.0 and noticed almost all of 
-> them are ancient ones.  We do have small number of bugs introduced by 
-> recently added commands and options, but I see quite a few that are from 
-> 2005.
+> The object-count at the beginning of the pack is a little strange for 
+> local on-disk pack files, as it is data that can easily be derived.
 
-I tend to agree with all the answers that this trend is to be expected.
+The SHA1 is also easily derived. So think of it as a doubly secure way to 
+ensure integrity.
 
-Especially since we seem to attract more and more users who are unable or 
-unwilling to fix the bugs themselves (up until recently, most bug reports 
-seemed to me to be accompanied by patches).
-
-So, it does not appear worrisome to me.
-
-However, I would like to see people thinking about how to teach "sparse" 
-to catch those kind of errors so that we can actually learn in an 
-efficient way from our mistakes.
-
-For example, I refuse to believe that an error like checking int against 
-ssize_t cannot be found by "sparse".
+Remember, there were some people unable to accept that SHA1 collisions are 
+_unlikely_...
 
 Ciao,
 Dscho
