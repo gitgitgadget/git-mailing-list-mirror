@@ -1,77 +1,66 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Organizing (large) test data in git
-Date: Tue, 27 Feb 2007 11:58:27 -0600
-Message-ID: <17892.28995.328911.23188@lisa.zopyra.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: How do get a specific version of a particular file?
+Date: Tue, 27 Feb 2007 10:42:41 -0500
+Message-ID: <20070227154241.GA8228@thunk.org>
+References: <E1HM1XL-00071C-N5@candygram.thunk.org> <Pine.LNX.4.63.0702271356040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 27 18:58:38 2007
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 27 19:38:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM6ay-0006YN-Mk
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 18:58:37 +0100
+	id 1HM7Dh-0006wu-PU
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 19:38:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751723AbXB0R6d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 12:58:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751728AbXB0R6d
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 12:58:33 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60808 "EHLO zopyra.com"
+	id S1751968AbXB0SiY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 13:38:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbXB0SiY
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 13:38:24 -0500
+Received: from thunk.org ([69.25.196.29]:39835 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751710AbXB0R6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 12:58:32 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1RHwVo27555;
-	Tue, 27 Feb 2007 11:58:31 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1751968AbXB0SiX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 13:38:23 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HM7It-00030L-KQ; Tue, 27 Feb 2007 13:43:59 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HM4TR-0003Mw-I6; Tue, 27 Feb 2007 10:42:41 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702271356040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40767>
 
-In my company we generate test data that we want coupled with test
-code, and despite the size, we have historically kept our test data
-with our code base.
+On Tue, Feb 27, 2007 at 01:57:18PM +0100, Johannes Schindelin wrote:
+> git-show, of all, is _not_ plumbing. It is one of the foremost porcelain 
+> programs core Git ships.
 
-This is becoming a problem.
+Maybe, but its man page doesn't show it.  The average end-user isn't
+going to be thinking about blobs, tree objects, and tag objects.
+Furthermore, the EXAMPLES section in the man page is misformatted due
+to some ASCII doc issues.  I'll send a patch to correct the EXAMPLES
+section, but if git-show is a foremost porecelain program the
+DISCRIPTION section probably needs to be rewritten as well.
 
-95% of the size of our 500 meg "code" base is actually test data, and
-the size of the test data is likely to increase, perhaps radically.
-We are contemplating files on the order of 500 megabytes a piece.
+> git show v.37:e2fsck/pass1.c
 
-Many of our developers have multiple copies of our code base checked
-out, duplicating the test data, so we would like to come up with a
-solution to this that minimizes the amount of data we have to check
-out.
+Thanks, I just didn't know about tree-ish:pathname syntax, and I've
+been playing with git for a while.
 
-Personally, I dislike having separate test data and code repos.
-Keeping the two synchronized seems like a real pain.  I like to be
-able to do things like:
+As a suggestion, maybe we should be moving (or at least copying)
+things like the <object> identifier syntax from the git-rev-parse
+manpage (which is plumbing, right?) to the top-level git manpage?  I
+don't think it's a good idea to force users to read man pages for
+plumbing commands in order to learn key git command-line concepts.
 
-cd component_x
-[muck muck muck on part "y"]
-mkdir testsuite/component_x.part_y
-cd testsuite/component_x.part_y
-[muck muck muck]
-git commit -a -m "Finished mucking with part y of component x"
-
-Where the directory structure is, essentially:
-
-      component_x/
-          testsuite/component_x.part_y
-
-If we separate out the test data, for the above I would have to do
-two commits in two repos, switching directories, etc.  And then, there
-is the issue of ensuring that checkouts of code also get the associated
-data needed.  I can see this being a potential nightmare.
-
-Have others on the list grappled with this and come up with good
-solutions with git?
-
-I know there was some talk of sub-modules, but not sure if that is
-working or even a viable option here.
-
-
-Bill
+						- Ted
