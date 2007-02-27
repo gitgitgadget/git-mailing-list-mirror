@@ -1,62 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] show_date(): rename the "relative" parameter to "mode"
-Date: Tue, 27 Feb 2007 13:59:03 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702271356300.12485@woody.linux-foundation.org>
-References: <Pine.LNX.4.63.0702271620390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271339550.12485@woody.linux-foundation.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: RFC: Patch editing
+Date: Tue, 27 Feb 2007 17:07:11 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0702271651500.6485@iabervon.org>
+References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702270205540.6485@iabervon.org>
+ <Pine.LNX.4.63.0702271247000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702271201400.6485@iabervon.org>
+ <Pine.LNX.4.63.0702272106150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>,
-	junkio@cox.net
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 27 22:59:10 2007
+X-From: git-owner@vger.kernel.org Tue Feb 27 23:07:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMALk-0000QZ-Nv
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:59:09 +0100
+	id 1HMATe-00049A-ET
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:07:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbXB0V7E (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 16:59:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751838AbXB0V7E
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:59:04 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:53994 "EHLO smtp.osdl.org"
+	id S1751869AbXB0WHO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 17:07:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbXB0WHO
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:07:14 -0500
+Received: from iabervon.org ([66.92.72.58]:2417 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751857AbXB0V7C (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 16:59:02 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1RLwihB019695
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 27 Feb 2007 13:58:44 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1RLwhQo029941;
-	Tue, 27 Feb 2007 13:58:44 -0800
-In-Reply-To: <Pine.LNX.4.64.0702271339550.12485@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.436 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751869AbXB0WHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 17:07:13 -0500
+Received: (qmail 9750 invoked by uid 1000); 27 Feb 2007 17:07:11 -0500
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Feb 2007 17:07:11 -0500
+In-Reply-To: <Pine.LNX.4.63.0702272106150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40820>
 
+On Tue, 27 Feb 2007, Johannes Schindelin wrote:
 
-
-On Tue, 27 Feb 2007, Linus Torvalds wrote:
+> Hi,
 > 
-> Ack. I think this kind of thing is worth it regardless of any of the other 
-> issues (ie the whole "changelog" thing). 
+> On Tue, 27 Feb 2007, Daniel Barkalow wrote:
+> 
+> > One nice thing about my method is that, if you've had to make a dozen 
+> > unrelated changes to get something to compile and run far enough to test 
+> > whether any of the changes are actually correct, you can be sure to get 
+> > that work preserved. I'd be a lot less comfortable preparing 
+> > intermediate states if I didn't have the final state securely tucked 
+> > away.
+> 
+> You _could_ still ensure that by looking in the reflog which was your old 
+> tip-of-branch, and git-diff with that.
+> 
+> But I agree. That is why I commit _everything_ before rearranging.
 
-Side note: one of the reasons I like having more fine-grained date flags 
-is that I've occasionally wanted a "show in UTC time" or "show everything 
-in *my* local time" option. Sometimes it's a bit hard to compare dates 
-just because we show them as they were for the people who did them, not 
-in any unified format ;)
+I think you're misunderstanding me; I want to use git's 
+archival/distribution functionality before I have a commit that I can put 
+a useful message on. This means that, at some point, I'm making real 
+commits, and I know what final state I want, but that final state involves 
+unrelated changes.
 
-I'm not sure how useful that really would end up being, but the whole 
-approach of just having a "date mode" flag should at least make those 
-kinds of things trivial if we ever really want it.
+I think I usually come up with something like: 7 patches related to the 
+functionality I'm working on, 1 patch that fixes an old bug that became 
+important due to the change, and 2 patches which improve the debugging 
+infrastructure. And the actual sequence of intermediate states that my 
+code was in is something like: API written, stub implementations, some 
+code that suggests what should happen; program calling the API and 
+crashing; version that is written but buggy; version that's buggy but 
+verbose; version that's working but verbose. In refining the work, I drop 
+or "if (DEFINED_TO_0_DEBUG)" the messages, split out the patches that 
+support the new kinds of messages, and include only working versions of 
+functions. And then I write commit messages that talk about the code and 
+sign them.
 
-		Linus
+Am I unusual in being afraid of losing work in a state that contains 3 
+different half-features?
+
+	-Daniel
+*This .sig left intentionally blank*
