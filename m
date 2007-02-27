@@ -1,171 +1,58 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] cvsserver: Make always-binary mode a config file option
-Date: Tue, 27 Feb 2007 13:46:55 +0000
-Message-ID: <200702271346.55520.andyparkins@gmail.com>
-References: <7v4ppedj3r.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] Make 'cvs ci' lockless in git-cvsserver by using git-update-ref
+Date: Tue, 27 Feb 2007 14:55:09 +0100
+Organization: At home
+Message-ID: <es1d3n$kt6$1@sea.gmane.org>
+References: <200702210908.59579.andyparkins@gmail.com> <200702271248.59652.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 27 14:47:10 2007
+X-From: git-owner@vger.kernel.org Tue Feb 27 14:53:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM2fV-0006yY-Dl
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 14:47:01 +0100
+	id 1HM2lo-0001Ja-Mk
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 14:53:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751603AbXB0Nq6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 08:46:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751609AbXB0Nq6
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 08:46:58 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:41260 "EHLO
-	369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751603AbXB0Nq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 08:46:58 -0500
-Received: from dvr.360vision.com ([192.189.1.65]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
-	 Tue, 27 Feb 2007 13:49:05 +0000
-Received: from localhost ([127.0.0.1])
-	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1HM2fQ-0007zo-00
-	for <git@vger.kernel.org>; Tue, 27 Feb 2007 13:46:56 +0000
-In-Reply-To: <7v4ppedj3r.fsf@assigned-by-dhcp.cox.net>
-X-TUID: 76411e9017d65585
-X-UID: 268
-X-Length: 5185
-Content-Disposition: inline
-X-OriginalArrivalTime: 27 Feb 2007 13:49:05.0718 (UTC) FILETIME=[0BFDED60:01C75A76]
+	id S1751601AbXB0NxW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 08:53:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751623AbXB0NxW
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 08:53:22 -0500
+Received: from main.gmane.org ([80.91.229.2]:44910 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751601AbXB0NxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 08:53:21 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HM2lT-00025T-97
+	for git@vger.kernel.org; Tue, 27 Feb 2007 14:53:11 +0100
+Received: from host-89-229-2-22.torun.mm.pl ([89.229.2.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 14:53:11 +0100
+Received: from jnareb by host-89-229-2-22.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 14:53:11 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-2-22.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40733>
 
-The config option gitcvs.allbinary may be set to force all entries to
-get the -kb flag.
+Andy Parkins wrote:
 
-In the future the gitattributes system will probably be a more
-appropriate way of doing this, but that will easily slot in as the
-entries lines sent to the CVS client now have their kopts set via the
-function kopts_from_path().
+> ---
+> This patch is actually yours (with one extra removal of lock file reference
+> that you'd missed, and a change of shortlog), but I don't know how to send
+> an email that comes from me but attributes authorship to you.
 
-In the interim it might be better to not just have a all-or-nothing
-approach, but rather detect based on file extension (or file contents?).
-That would slot in easily here as well.  However, I personally prefer
-everything to be binary-safe, so I just switch the switch.
-
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
-This time with word wrap turned off.  Sorry Junio.
-
-
- git-cvsserver.perl |   47 ++++++++++++++++++++++++++++++++++++++---------
- 1 files changed, 38 insertions(+), 9 deletions(-)
-
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 56f21b6..15b9443 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -374,7 +374,8 @@ sub req_add
- 
-         print "Checked-in $dirpart\n";
-         print "$filename\n";
--        print "/$filepart/0//-kb/\n";
-+        my $kopts = kopts_from_path($filepart);
-+        print "/$filepart/0//$kopts/\n";
- 
-         $addcount++;
-     }
-@@ -455,7 +456,8 @@ sub req_remove
- 
-         print "Checked-in $dirpart\n";
-         print "$filename\n";
--        print "/$filepart/-1.$wrev//-kb/\n";
-+        my $kopts = kopts_from_path($filepart);
-+        print "/$filepart/-1.$wrev//$kopts/\n";
- 
-         $rmcount++;
-     }
-@@ -726,7 +728,8 @@ sub req_co
-        print $state->{CVSROOT} . "/$module/" . ( defined ( $git->{dir} ) and $git->{dir} ne "./" ? $git->{dir} . "/" : "" ) . "$git->{name}\n";
- 
-         # this is an "entries" line
--        print "/$git->{name}/1.$git->{revision}//-kb/\n";
-+        my $kopts = kopts_from_path($git->{name});
-+        print "/$git->{name}/1.$git->{revision}//$kopts/\n";
-         # permissions
-         print "u=$git->{mode},g=$git->{mode},o=$git->{mode}\n";
- 
-@@ -917,8 +920,9 @@ sub req_update
- 		print $state->{CVSROOT} . "/$state->{module}/$filename\n";
- 
- 		# this is an "entries" line
--		$log->debug("/$filepart/1.$meta->{revision}//-kb/");
--		print "/$filepart/1.$meta->{revision}//-kb/\n";
-+		my $kopts = kopts_from_path($filepart);
-+		$log->debug("/$filepart/1.$meta->{revision}//$kopts/");
-+		print "/$filepart/1.$meta->{revision}//$kopts/\n";
- 
- 		# permissions
- 		$log->debug("SEND : u=$meta->{mode},g=$meta->{mode},o=$meta->{mode}");
-@@ -961,8 +965,9 @@ sub req_update
-                     print "Update-existing $dirpart\n";
-                     $log->debug($state->{CVSROOT} . "/$state->{module}/$filename");
-                     print $state->{CVSROOT} . "/$state->{module}/$filename\n";
--                    $log->debug("/$filepart/1.$meta->{revision}//-kb/");
--                    print "/$filepart/1.$meta->{revision}//-kb/\n";
-+                    my $kopts = kopts_from_path($filepart);
-+                    $log->debug("/$filepart/1.$meta->{revision}//$kopts/");
-+                    print "/$filepart/1.$meta->{revision}//$kopts/\n";
-                 }
-             }
-             elsif ( $return == 1 )
-@@ -975,7 +980,8 @@ sub req_update
-                 {
-                     print "Update-existing $dirpart\n";
-                     print $state->{CVSROOT} . "/$state->{module}/$filename\n";
--                    print "/$filepart/1.$meta->{revision}/+/-kb/\n";
-+                    my $kopts = kopts_from_path($filepart);
-+                    print "/$filepart/1.$meta->{revision}/+/$kopts/\n";
-                 }
-             }
-             else
-@@ -1206,7 +1212,8 @@ sub req_ci
-         } else {
-             print "Checked-in $dirpart\n";
-             print "$filename\n";
--            print "/$filepart/1.$meta->{revision}//-kb/\n";
-+            my $kopts = kopts_from_path($filepart);
-+            print "/$filepart/1.$meta->{revision}//$kopts/\n";
-         }
-     }
- 
-@@ -1887,6 +1894,28 @@ sub filecleanup
-     return $filename;
- }
- 
-+# Given a path, this function returns a string containing the kopts
-+# that should go into that path's Entries line.  For example, a binary
-+# file should get -kb.
-+sub kopts_from_path
-+{
-+	my ($path) = @_;
-+
-+	# Once it exists, the git attributes system should be used to look up
-+	# what attributes apply to this path.
-+
-+	# Until then, take the setting from the config file
-+    unless ( defined ( $cfg->{gitcvs}{allbinary} ) and $cfg->{gitcvs}{allbinary} =~ /^\s*(1|true|yes)\s*$/i )
-+    {
-+		# Return "" to give no special treatment to any path
-+		return "";
-+    } else {
-+		# Alternatively, to have all files treated as if they are binary (which
-+		# is more like git itself), always return the "-kb" option
-+		return "-kb";
-+    }
-+}
-+
- package GITCVS::log;
- 
- ####
+You just leave From: header in the body of message...
 -- 
-1.5.0.2.778.gdcb06
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
