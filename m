@@ -1,90 +1,79 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 5/6] convert object type handling from a string to a number
-Date: Tue, 27 Feb 2007 08:58:32 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702270856360.29426@xanadu.home>
-References: <11725197603476-git-send-email-nico@cam.org>
- <1172519760216-git-send-email-nico@cam.org>
- <11725197613482-git-send-email-nico@cam.org>
- <11725197622423-git-send-email-nico@cam.org>
- <11725197633144-git-send-email-nico@cam.org>
- <11725197632516-git-send-email-nico@cam.org>
- <7vejobhor2.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] commit-tree: bump MAX_PARENTS to 128
+Date: Tue, 27 Feb 2007 15:04:56 +0100
+Organization: At home
+Message-ID: <es1dm2$kt6$2@sea.gmane.org>
+References: <20070226121557.GA18114@coredump.intra.peff.net> <7virdnhpbt.fsf@assigned-by-dhcp.cox.net> <20070227105212.GA21757@coredump.intra.peff.net> <200702271131.57856.andyparkins@gmail.com> <20070227113938.GA5423@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 27 14:58:41 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 27 15:03:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM2qj-0003c0-Ak
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 14:58:37 +0100
+	id 1HM2vC-0005Xw-Cc
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 15:03:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635AbXB0N6e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 08:58:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751653AbXB0N6e
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 08:58:34 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:39896 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630AbXB0N6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 08:58:33 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JE400ILQK5KCDW1@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 27 Feb 2007 08:58:32 -0500 (EST)
-In-reply-to: <7vejobhor2.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1750897AbXB0ODK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 09:03:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751157AbXB0ODK
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 09:03:10 -0500
+Received: from main.gmane.org ([80.91.229.2]:42280 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750897AbXB0ODH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 09:03:07 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HM2ut-0003GV-TZ
+	for git@vger.kernel.org; Tue, 27 Feb 2007 15:02:55 +0100
+Received: from host-89-229-2-22.torun.mm.pl ([89.229.2.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 15:02:55 +0100
+Received: from jnareb by host-89-229-2-22.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 15:02:55 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-2-22.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40735>
 
-On Tue, 27 Feb 2007, Junio C Hamano wrote:
+Jeff King wrote:
 
-> Nicolas Pitre <nico@cam.org> writes:
+> On Tue, Feb 27, 2007 at 11:31:52AM +0000, Andy Parkins wrote:
 > 
-> > We currently have two parallel notation for dealing with object types
-> > in the code: a string and a numerical value.  One of them is obviously
-> > redundent, and the most used one requires more stack space and a bunch
-> > of strcmp() all over the place.
-> >
-> > This is an initial step for the removal of the version using a char array
-> > found in object reading code paths.  The patch is unfortunately large but
-> > there is no sane way to split it in smaller parts without breaking the
-> > system.
-> > ...
-> > diff --git a/builtin-cat-file.c b/builtin-cat-file.c
-> > index 6c16bfa..d61d3d5 100644
-> > --- a/builtin-cat-file.c
-> > +++ b/builtin-cat-file.c
-> > @@ -79,7 +79,7 @@ static void pprint_tag(const unsigned char *sha1, const char *buf, unsigned long
-> >  int cmd_cat_file(int argc, const char **argv, const char *prefix)
-> >  {
-> >  	unsigned char sha1[20];
-> > -	char type[20];
-> > +	enum object_type type;
-> >  	void *buf;
-> >  	unsigned long size;
-> >  	int opt;
-> > ...
-> >  	case 'p':
-> > -		if (sha1_object_info(sha1, type, NULL))
-> > +		type = sha1_object_info(sha1, NULL);
-> > +		if (type < 0)
-> >  			die("Not a valid object name %s", argv[2]);
+>>> there are dozens of repositories; I would now like to group them in the
+>>> same repo for ease of clone/fetch.
+>> 
+>> It doesn't have fetch or clone support, but perhaps my poorman's submodule 
+>> code will help you a bit, until real submodule support appears in git.
 > 
-> I am wondering if "enum object_type" and signed comparison here
-> are compatible.
+> Thanks for the pointer, but it doesn't handle one of my pet peeves with
+> many repositories: fetching 25 repositories takes a long time. I have a
+> "look at every repository and see if anything needs fetched or pushed"
+> script; it takes about 0.5-1.0 seconds per repository. Turning 25
+> fetches into 1 makes it a lot nicer to use.
+> 
+> So of all the problems hoped to be solved by submodule support, I think
+> your poor man's submodule support solves the ones I don't care about
+> (tracking external repositories with merge resolution) but not the one I
+> do (fetch/clone effort). :)
 
-Enums are signed as far as I know.
+See http://git.or.cz/gitwiki/SubprojectSupport which mentions prototype
+submodules/subprojects implementation by Martin Waitz, with having link
+to submodule commit in the tree (so tree have links to trees, to blobs,
+and to submodules/commits).
 
-> sha1_object_info() is of type "int" so that is
-> clearly signed, but are we safe assuming this would not result
-> in "type is unsigned and condition is always false"?
+BTW. Andy, could you add note about your lightweight submodule support
+to this page? TIA.
 
-gcc would have warned about it if it was the case.
-
-
-Nicolas
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
