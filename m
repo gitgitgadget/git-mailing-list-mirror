@@ -1,80 +1,66 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: RFC: Patch editing
-Date: Tue, 27 Feb 2007 17:07:11 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0702271651500.6485@iabervon.org>
-References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702270205540.6485@iabervon.org>
- <Pine.LNX.4.63.0702271247000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271201400.6485@iabervon.org>
- <Pine.LNX.4.63.0702272106150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Replacement for cvs2cl, for generating ChangeLog
+Date: Tue, 27 Feb 2007 23:12:39 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702272227500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <877iu3q13r.fsf@latte.josefsson.org> <200702271257.37437.andyparkins@gmail.com>
+ <200702272227.05244.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 27 23:07:19 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Simon Josefsson <simon@josefsson.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Feb 27 23:12:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMATe-00049A-ET
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:07:18 +0100
+	id 1HMAZ0-0006lP-Ig
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:12:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751869AbXB0WHO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 17:07:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbXB0WHO
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:07:14 -0500
-Received: from iabervon.org ([66.92.72.58]:2417 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751869AbXB0WHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 17:07:13 -0500
-Received: (qmail 9750 invoked by uid 1000); 27 Feb 2007 17:07:11 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Feb 2007 17:07:11 -0500
-In-Reply-To: <Pine.LNX.4.63.0702272106150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751923AbXB0WMo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 17:12:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbXB0WMn
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:12:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46448 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751923AbXB0WMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 17:12:43 -0500
+Received: (qmail invoked by alias); 27 Feb 2007 22:12:41 -0000
+X-Provags-ID: V01U2FsdGVkX1+Wztd9TLmW5vzl98k3qiQuTRrJkDToWQeWscncHC
+	LBQA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200702272227.05244.robin.rosenberg.lists@dewire.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40821>
 
-On Tue, 27 Feb 2007, Johannes Schindelin wrote:
+Hi,
 
-> Hi,
+On Tue, 27 Feb 2007, Robin Rosenberg wrote:
+
+> tisdag 27 februari 2007 13:57 skrev Andy Parkins:
 > 
-> On Tue, 27 Feb 2007, Daniel Barkalow wrote:
+> > Not that I know of, but git has some lovely log generation tools, so 
+> > I'm sure it could be easily done with a snippet of perl - or perhaps a 
+> > change to git's own log generator to support
+> > 
+> >  git-rev-list --pretty=gnucl
+> > 
+> gir-rev-list ??
 > 
-> > One nice thing about my method is that, if you've had to make a dozen 
-> > unrelated changes to get something to compile and run far enough to test 
-> > whether any of the changes are actually correct, you can be sure to get 
-> > that work preserved. I'd be a lot less comfortable preparing 
-> > intermediate states if I didn't have the final state securely tucked 
-> > away.
-> 
-> You _could_ still ensure that by looking in the reflog which was your old 
-> tip-of-branch, and git-diff with that.
-> 
-> But I agree. That is why I commit _everything_ before rearranging.
+> Extend git-shortlog with --gnucl instead. What seems missing is the 
+> grouping of changes by date. git-shortlog only groups by author.
 
-I think you're misunderstanding me; I want to use git's 
-archival/distribution functionality before I have a commit that I can put 
-a useful message on. This means that, at some point, I'm making real 
-commits, and I know what final state I want, but that final state involves 
-unrelated changes.
+No, the revision walker groups by commit (not by date, but you don't want 
+that anyway). git-shortlog works _on top_ of the revision walker.
 
-I think I usually come up with something like: 7 patches related to the 
-functionality I'm working on, 1 patch that fixes an old bug that became 
-important due to the change, and 2 patches which improve the debugging 
-infrastructure. And the actual sequence of intermediate states that my 
-code was in is something like: API written, stub implementations, some 
-code that suggests what should happen; program calling the API and 
-crashing; version that is written but buggy; version that's buggy but 
-verbose; version that's working but verbose. In refining the work, I drop 
-or "if (DEFINED_TO_0_DEBUG)" the messages, split out the patches that 
-support the new kinds of messages, and include only working versions of 
-functions. And then I write commit messages that talk about the code and 
-sign them.
+The sane thing _is_ to use the revision walker.
 
-Am I unusual in being afraid of losing work in a state that contains 3 
-different half-features?
+Given the amount of projects using cvs2cl (I personally saw a couple), I 
+expect a couple of people to speak up in favour of including support for 
+--pretty=cl or =changelog or =gnucl or whatever.
 
-	-Daniel
-*This .sig left intentionally blank*
+Ciao,
+Dscho
