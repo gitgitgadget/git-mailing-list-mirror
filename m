@@ -1,76 +1,49 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH] Add a testcase for the safety of pull-policy='pull'.
-Date: Tue, 27 Feb 2007 14:25:57 +0000
-Message-ID: <b0943d9e0702270625o5a9ef8b4xd0fa5df68e2b805a@mail.gmail.com>
-References: <20070225220853.31361.7201.stgit@gandelf.nowhere.earth>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 1/2] Make 'cvs ci' lockless in git-cvsserver by using
+ git-update-ref
+Date: Tue, 27 Feb 2007 09:35:25 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702270933060.29426@xanadu.home>
+References: <200702210908.59579.andyparkins@gmail.com>
+ <200702271248.59652.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 15:26:05 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 27 15:35:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM3HH-0006c3-FE
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 15:26:03 +0100
+	id 1HM3QR-0002Cc-PT
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 15:35:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751675AbXB0O0A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 09:26:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751708AbXB0O0A
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 09:26:00 -0500
-Received: from an-out-0708.google.com ([209.85.132.247]:9111 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751675AbXB0OZ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 09:25:59 -0500
-Received: by an-out-0708.google.com with SMTP id b33so1132568ana
-        for <git@vger.kernel.org>; Tue, 27 Feb 2007 06:25:58 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=B8pKete92oxsvx+diIEHg3EFUOQf9LMwAAW1+Su/DEEUGDMK1V6cVypqgilo9cqFqAwayQUnTUk/ft5HzNCK9A/0rUvUvxhFzmg2RVSkgm7loUGF+ohKBQOIW7JtazyjBD0a7gHDLGfZq1HUyPjhQT0/LNbUqp+NopgpqYuvpGs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uueWUlqYLJqS/9gbIKA9Z2YP9JGG2LQnN4dR7qTOkuz+alfb7MEB36BcX2tzDLfrO07rRx5fq5peRabJT6dGNuLlsLi9nsricSsfeYlEUoQ/WPRvJi+aKWFg+Xm0L0elbPY/ca5GfUhB70sJEcV+YnUVNP6FXjXCcsHLPhS3tbo=
-Received: by 10.114.52.1 with SMTP id z1mr443724waz.1172586357741;
-        Tue, 27 Feb 2007 06:25:57 -0800 (PST)
-Received: by 10.115.110.12 with HTTP; Tue, 27 Feb 2007 06:25:57 -0800 (PST)
-In-Reply-To: <20070225220853.31361.7201.stgit@gandelf.nowhere.earth>
-Content-Disposition: inline
+	id S1751775AbXB0Of1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 09:35:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751777AbXB0Of1
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 09:35:27 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:19595 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751775AbXB0Of0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 09:35:26 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JE4002S0LV114Y1@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Feb 2007 09:35:25 -0500 (EST)
+In-reply-to: <200702271248.59652.andyparkins@gmail.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40739>
 
-On 25/02/07, Yann Dirson <ydirson@altern.org> wrote:
-> This testcase demonstrates a long-standing problem with the handling
-> of conflicts on a rewinding branch, when "stg pull" calls git-pull.
-[...]
-> diff --git a/t/t2101-pull-policy-pull.sh b/t/t2101-pull-policy-pull.sh
-[...]
-> +test_expect_failure \
-> +    'Rewind/rewrite upstream commit and pull it from clone, without --merged' \
-> +    '
-> +    (cd upstream && echo b >> file2 && stg refresh) &&
-> +    (cd clone && stg pull)
-> +    '
+On Tue, 27 Feb 2007, Andy Parkins wrote:
 
-This fails (with git 1.5), as expected, but probably not for the same
-reason. See below.
+> This patch is actually yours (with one extra removal of lock file reference
+> that you'd missed, and a change of shortlog), but I don't know how to send
+> an email that comes from me but attributes authorship to you.
 
-> +test_expect_success \
-> +    'Undo the conflicted pull' \
-> +    '(cd clone && stg push --undo)'
+Start your email body with a "From: " and the address of the person.
 
-This actually fails in my tests because the git-pull failed previously
-(and not the patch pushing) and there is no patch on the stack to
-undo. BTW, push --undo now requires a status --reset beforehand.
 
-I can merge the patch as it is and you can send me another one for this issue.
-
-Thanks.
-
--- 
-Catalin
+Nicolas
