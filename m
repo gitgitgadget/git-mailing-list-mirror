@@ -1,69 +1,89 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Replacement for cvs2cl, for generating ChangeLog
-Date: Tue, 27 Feb 2007 13:37:23 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702271336050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <877iu3q13r.fsf@latte.josefsson.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Simon Josefsson <simon@josefsson.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 13:37:30 2007
+From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
+Subject: Re: How do get a specific version of a particular file?
+Date: Tue, 27 Feb 2007 13:44:43 +0100
+Message-ID: <slrneu89tr.24s.siprbaum@xp.machine.xx>
+References: <E1HM1XL-00071C-N5@candygram.thunk.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 27 13:42:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM1aD-0001r1-6B
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 13:37:29 +0100
+	id 1HM1eo-0003vg-Gc
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 13:42:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933040AbXB0Mh0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 07:37:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933069AbXB0Mh0
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 07:37:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:54407 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933040AbXB0MhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 07:37:25 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 12:37:24 -0000
-X-Provags-ID: V01U2FsdGVkX18xWR8Ns/gxLYkeS2eCAuuwyOT233xEIF5k7k7HzJ
-	lwDQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <877iu3q13r.fsf@latte.josefsson.org>
-X-Y-GMX-Trusted: 0
+	id S1030215AbXB0Mlz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 07:41:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030596AbXB0Mlz
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 07:41:55 -0500
+Received: from main.gmane.org ([80.91.229.2]:44118 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030215AbXB0Mly (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 07:41:54 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HM1eI-0002zE-GZ
+	for git@vger.kernel.org; Tue, 27 Feb 2007 13:41:42 +0100
+Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.24.33])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 13:41:42 +0100
+Received: from siprbaum by magnum.hofmann.stw.uni-erlangen.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 13:41:42 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: magnum.hofmann.stw.uni-erlangen.de
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40721>
 
-Hi,
+Theodore Ts'o <tytso@mit.edu> schrieb:
+>
+> So given a particular tree-ish and a pathname, I'd like get the contents
+> of that particular file as of a particular revision.  i.e., the
+> equivalent of:
+>
+> 	cvs -r v1.37 -p e2fsck/pass1.c
+> or
+> 	bk cat -r 2345 e2fsck/pass1.c
+>
+> The closest I've been able to come is to use
+>
+> 	git archive --format=zip v1.37 e2fsck/pass1.c | gunzip
+>
+> But that seems kinda silly.  
+>
+> git-checkout will only write the output to the working tree.
+> git-cat-file and git-show only work on a object identifier (they are
+> low-level plumbing commands).  
+>
+> So if it is a matter of we don't have an easy way to do this (as opposed
+> to me being stupid or the git documentation just failing to mention it
+> in the right places), what's the best way to add it?
+>
+> One easy way would be to add --format=raw to git-archive, but that might
+> seem counter-intuitive to an average git user; they just want to see the
+> output of a file at a particular point in time, which doesn't have much
+> to do with archiving.   
+>
+> Should we add a new command like "git-cat"?   Should we add a -p option
+> to the "git-checkout <treeish> <path>" form of git-checkout?
+>
+> I'm currently leaning towards the last; it would be pretty simple to
+> enhance git-checkout so that a -p option would run "git archive
+> --format=zip ...", even though that would be a pretty nasty hack, and it
+> wouldn't be much harder to add --format=raw support to git-archive, but
+> I still think that's not a intuitive place to find that particular
+> functionality.
+>
+> 						- Ted
 
-On Tue, 27 Feb 2007, Simon Josefsson wrote:
+You you could do this with
 
-> Hi!  I'm considering switching to git for my projects (shishi, gsasl,
-> gnutls, libtasn1, opencdk, ...) and I have some questions:
-> 
-> * How do I discard all locally modified or added files?  'cvs upd -C'
->   does some of that, but I've been using a tool 'cvsco' which quickly
->   restore a CVS checkout into a pristine state.
+	git show v1.5.0:Makefile
 
-The command in git is called "git reset --hard". Beware: this really, 
-really loses _all_ local changes. And no need to worry when it completes 
-much faster than you expected it to... See "git status" to see that it 
-worked, indeed.
- 
-> * Is there a tool that produce ChangeLog files in the GNU format,
->   based on the git logs?  Similar to the 'cvs2cl' tool.  The output
->   should look like:
-> 
-> 2007-02-22  Simon Josefsson <simon@josefsson.org>
-> 
-> 	* link-warning.h, gl/getaddrinfo.c, gl/gnulib.mk, gl/string_.h,
-> 	gl/m4/gnulib-comp.m4, gl/m4/string_h.m4, lgl/Makefile.am,
-> 	lgl/snprintf.c, lgl/snprintf.h, lgl/stdio_.h, lgl/string_.h,
-> 	lgl/unistd_.h, lgl/m4/gnulib-comp.m4, lgl/m4/intdiv0.m4,
-> 	lgl/m4/snprintf.m4, lgl/m4/stdio_h.m4, lgl/m4/string_h.m4,
-> 	lgl/m4/unistd_h.m4: Update.
+to show you the Makefile in revision v1.5.0.
 
-Let me hack something.
-
-Ciao,
-Dscho
+-Peter
