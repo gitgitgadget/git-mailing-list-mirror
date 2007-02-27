@@ -1,55 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] show_date(): rename the "relative" parameter to "mode"
-Date: Tue, 27 Feb 2007 23:24:10 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702272322590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702271620390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271339550.12485@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702271356300.12485@woody.linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: pack v4 status
+Date: Tue, 27 Feb 2007 17:32:00 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702271717080.29426@xanadu.home>
+References: <20070227155042.GB3230@spearce.org>
+ <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>,
-	junkio@cox.net
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 23:24:17 2007
+X-From: git-owner@vger.kernel.org Tue Feb 27 23:32:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMAk3-0003gn-Ti
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:24:16 +0100
+	id 1HMAsA-0007TW-B6
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751947AbXB0WYN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 17:24:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbXB0WYN
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:24:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47258 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751947AbXB0WYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 17:24:12 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 22:24:11 -0000
-X-Provags-ID: V01U2FsdGVkX1993dAFJll9OSrT1X5796uAxGl1ztGEgaRYssA6Dw
-	efhQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0702271356300.12485@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1751963AbXB0WcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 17:32:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751964AbXB0WcE
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:32:04 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:40673 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751963AbXB0WcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 17:32:03 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JE5000IY7XCIA53@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Feb 2007 17:32:00 -0500 (EST)
+In-reply-to: <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40825>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40826>
 
 On Tue, 27 Feb 2007, Linus Torvalds wrote:
 
-> Side note: one of the reasons I like having more fine-grained date flags 
-> is that I've occasionally wanted a "show in UTC time" or "show 
-> everything in *my* local time" option.
+> 
+> 
+> On Tue, 27 Feb 2007, Shawn O. Pearce wrote:
+> > 
+> > We have thus far reformatted OBJ_TREEs with a new dictionary based
+> > compression scheme.  In this scheme we pool the filenames and modes
+> > that appear within trees into a single table within the packfile.
+> > All trees are then converted to use a 22 byte record format:
+> > 
+> >   - 2 byte network byte order index into the string pool
+> >   - 20 byte SHA-1
+> 
+> Umm. Am I missing something, or is this totally braindamaged?
+> 
+> Are you really expecting there to never be more than 64k basenames? Trust 
+> me, that's a totally broken assumption. Anything that tracks generated 
+> stuff will _easily_ have several tens of thousands of random filenames 
+> even in a single tree, much less over the whole history of the repository.
 
-I found the --relative-date option very useful to that end, if a bit long 
-to type.
+The idea is to deal with only tree objects containing the 64K most 
+frequently used base names and fall back to the current tree object 
+encoding for objects that couldn't be represented that way.
 
-Ciao,
-Dscho
+For reference the GIT tree itself has 585 unique names.
 
-P.S.: It is refreshing to see somebody using the same convention of 
-one-space-after-full-stop as me. Europeans...
+The Linux kernel has 12263 of them.
+
+If we eventually find it is common and performance critical to have more 
+bits to represent those indices because the number of unique path 
+components far exceeds that limit with an even distribution then we 
+might just add another tree encoding with a 3-byte index for those.
+
+In the end everything translates back to the same object.
+
+
+Nicolas
