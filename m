@@ -1,64 +1,82 @@
-From: "Raimund Bauer" <ray007@gmx.net>
-Subject: Problems with git cvsimport
-Date: Tue, 27 Feb 2007 12:13:35 +0100
-Message-ID: <001f01c75a60$53443e10$0b0aa8c0@abf.local>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC/PATCH] commit-tree: bump MAX_PARENTS to 128
+Date: Tue, 27 Feb 2007 11:31:52 +0000
+Message-ID: <200702271131.57856.andyparkins@gmail.com>
+References: <20070226121557.GA18114@coredump.intra.peff.net> <7virdnhpbt.fsf@assigned-by-dhcp.cox.net> <20070227105212.GA21757@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
-	charset="us-ascii"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 12:13:43 2007
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 27 12:33:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM0H8-0006kX-Ap
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 12:13:42 +0100
+	id 1HM0Zq-0006bc-Kb
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 12:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932184AbXB0LNj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 06:13:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932997AbXB0LNj
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 06:13:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50469 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932184AbXB0LNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 06:13:38 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 11:13:36 -0000
-X-Provags-ID: V01U2FsdGVkX1+j11hfv6WjhxqH7B29bJK6i49RWpX15wNCSPIf3c
-	Yjmw==
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.6626
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
-Importance: Normal
-X-Y-GMX-Trusted: 0
+	id S933013AbXB0LcS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 06:32:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933051AbXB0LcS
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 06:32:18 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:64801 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933013AbXB0LcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 06:32:03 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so149015nfa
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 03:32:03 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rCfw/H+Zbx3vCEOQTRI0XoBjNADWCvoTmOTqitl//ILGDYt4FKr1TZxbIVVnGfZghE/WexOZp0cMr2TKYC3FOaM62XAzzQ2DTOEuzhBHvJ/cEbboFtgR2OLc9a43hCMQHmezQOAnwHbZbObUhsYFdBgzsCRhQLaN1OmZdiolkNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tdVOEajIQQ7tWr4v1yovUGBFbus3mCv1rjK9c0dgzCoIFVEsO86bRq77PngkKiAZLKTfVoDAeeGl3b/AYrOhM/DX4+sIqmuMzDDIBLJEXQt5tyuyAeZKvB+0kWN8yB+FQtUfaGMh36+doFUG37GL4lFjAeeo4rgFeqhhOOgwFSs=
+Received: by 10.49.19.18 with SMTP id w18mr929842nfi.1172575922975;
+        Tue, 27 Feb 2007 03:32:02 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id q28sm1548517nfc.2007.02.27.03.32.00;
+        Tue, 27 Feb 2007 03:32:00 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <20070227105212.GA21757@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40711>
 
-When trying to cvsimport a project into git, I get an error from cvsps:
+On Tuesday 2007 February 27 10:52, Jeff King wrote:
 
-bad usage: invalid argument -A
+> A year or so ago, I started using git, and imported all of my CVS repos
+> to git. I did each class directory separately, reasoning that each
+> represented a separate history. This can end up being unwieldy, because
+> there are dozens of repositories; I would now like to group them in the
+> same repo for ease of clone/fetch.
 
-Usage: cvsps [-h] [-x] [-u] [-z <fuzz>] [-g] [-s <range>[,<range>]]
-             [-a <author>] [-f <file>] [-d <date1> [-d <date2>]]
-             [-b <branch>]  [-l <regex>] [-r <tag> [-r <tag>]]
-             [-p <directory>] [-v] [-t] [--norc] [--summary-first]
-             [--test-log <captured cvs log file>] [--bkcvs]
-             [--no-rlog] [--diff-opts <option string>] [--cvs-direct]
-             [--debuglvl <bitmask>] [-Z <compression>] [--root <cvsroot>]
-             [<repository>] [-q]
+It doesn't have fetch or clone support, but perhaps my poorman's submodule 
+code will help you a bit, until real submodule support appears in git.
 
-<-- cut option explanation -->
+http://marc2.theaimsgroup.com/?l=git&m=116662031219222&w=2
 
-There is cvsps version 2.0rc1 installed on our server (a Suse 9.3 I
-believe),
-and using git version 1.5.0.2.775.g1a500 (next from a few minutes ago).
+I've found it useful for myself, and with a little bit of massaging I don't 
+think it would be hard to put fetch support in.  I think it just needs a way 
+of telling the remote end to switch GIT_DIR to a different directory.
 
-Many thanx in advance for any hints on how to make this work
+"Merges" are handled by simply sorting out any conflicts in the module file 
+(basically you pick one of the submodule commits) just as you would with any 
+other file.
+
+As I say - not fabulous, but gets me by.
+
+
+
+Andy
 
 -- 
-best regards
-
-  Ray
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
