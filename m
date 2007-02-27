@@ -1,68 +1,85 @@
-From: "Raimund Bauer" <ray@softwarelandschaft.com>
-Subject: RE: Problems with git cvsimport
-Date: Tue, 27 Feb 2007 17:15:50 +0100
-Organization: Softwarelandschaft
-Message-ID: <002d01c75a8a$8c664dd0$0b0aa8c0@abf.local>
-References: <Pine.LNX.4.63.0702271700300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 5/6] convert object type handling from a string to a
+ number
+Date: Tue, 27 Feb 2007 08:24:32 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702270816350.12485@woody.linux-foundation.org>
+References: <11725197603476-git-send-email-nico@cam.org>
+ <1172519760216-git-send-email-nico@cam.org> <11725197613482-git-send-email-nico@cam.org>
+ <11725197622423-git-send-email-nico@cam.org> <11725197633144-git-send-email-nico@cam.org>
+ <11725197632516-git-send-email-nico@cam.org> <7vejobhor2.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LRH.0.82.0702270856360.29426@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 27 17:16:08 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Feb 27 17:25:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM4zc-0003FL-GO
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 17:15:56 +0100
+	id 1HM58M-0007Ms-Iu
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 17:24:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750782AbXB0QPx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 11:15:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750827AbXB0QPx
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 11:15:53 -0500
-Received: from s15211414.onlinehome-server.info ([87.106.16.196]:33978 "EHLO
-	s15211414.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750782AbXB0QPw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Feb 2007 11:15:52 -0500
-Received: (qmail 24385 invoked from network); 27 Feb 2007 17:21:06 +0100
-Received: from host-62-245-155-90.customer.m-online.net (HELO swl011) (62.245.155.90)
-  by s15211414.onlinehome-server.info with SMTP; 27 Feb 2007 17:21:06 +0100
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.6626
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
-In-Reply-To: <Pine.LNX.4.63.0702271700300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Importance: Normal
+	id S1751860AbXB0QYm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 11:24:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXB0QYm
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 11:24:42 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:39114 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751860AbXB0QYl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 11:24:41 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1RGOEhB008721
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Feb 2007 08:24:14 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1RGODvL021373;
+	Tue, 27 Feb 2007 08:24:13 -0800
+In-Reply-To: <alpine.LRH.0.82.0702270856360.29426@xanadu.home>
+X-Spam-Status: No, hits=-0.936 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40758>
 
-> > > > When trying to cvsimport a project into git, I get an error from
-> > > > cvsps:
-> > > > 
-> > > > bad usage: invalid argument -A
-> > > 
-> > > What was your command line?
+
+
+On Tue, 27 Feb 2007, Nicolas Pitre wrote:
 > > 
-> > The complete command line was
-> > 
-> > git-cvsimport -d 
-> :pserver:ray007@cvs.drupal.org:/cvs/drupal-contrib -C 
-> > views -k contributions/modules/views
+> > I am wondering if "enum object_type" and signed comparison here
+> > are compatible.
 > 
-> Sorry to have missed that earlier. AFAIR cvsimport _needs_ 
-> cvsps 2.1. You 
-> have version 2.0rc1, which is not sufficient...
+> Enums are signed as far as I know.
 
-Thanks, I will make sure we get a new cvsps on the server.
+No they are not.
 
-> Ciao,
-> Dscho
+"enums" are traditionally "int", but it's not a requirement, and the 
+technical C requirement is that they be "an integral size sufficiently 
+large to hold all the possible values".
 
--- 
-best regards
+In other words, with a small set of values, it's entirely possible that 
+the integral type in question be "unsigned char", for example.
 
-  Ray
+It so happens that gcc will never *by*default* pick such a type for the 
+particular set of values you have. By default (to match traditions) gcc 
+will always pick "int" (or, thanks to a gcc extension, a bigger type if 
+the values require it), but if you pass it "-fshort-enums" it will pick a 
+smaller type. 
+
+And yes, it will actually pick "unsigned char", I think. Try it to be 
+sure.
+
+So to be portable, and to be safe, you really should make the error values 
+part of the enum, ie you should add a
+
+	OBJ_ERROR = -1,
+
+if you want to make sure that the enum really can hold a negative number!
+
+(In fact, on some embedded platforms, "-fshort-enums" is actually on by 
+default - in order to keep data structures smaller)
+
+		Linus
