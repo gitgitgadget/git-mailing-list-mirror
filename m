@@ -1,74 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Syntax highlighting for gitweb
-Date: Tue, 27 Feb 2007 02:45:10 +0100
-Organization: At home
-Message-ID: <es02au$ocf$1@sea.gmane.org>
-References: <20070226181858.GC11232@hoeg.nl> <Pine.LNX.4.63.0702261953420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Trivia: When did git self-host?
+Date: Mon, 26 Feb 2007 17:58:57 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702261722310.12485@woody.linux-foundation.org>
+References: <3c6c07c20702261551u55ec2ea7mde4075b1c929cf87@mail.gmail.com>
+ <Pine.LNX.4.64.0702261650120.12485@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 27 02:43:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Mike Coleman <tutufan@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 27 02:58:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLrNE-00058y-FU
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 02:43:24 +0100
+	id 1HLrc6-0002zN-Ad
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 02:58:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476AbXB0BnW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 20:43:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752479AbXB0BnV
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 20:43:21 -0500
-Received: from main.gmane.org ([80.91.229.2]:45636 "EHLO ciao.gmane.org"
+	id S1751065AbXB0B6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 20:58:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751455AbXB0B6o
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 20:58:44 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:42918 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752476AbXB0BnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 20:43:20 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HLrN5-0008Bl-Ex
-	for git@vger.kernel.org; Tue, 27 Feb 2007 02:43:15 +0100
-Received: from host-89-229-2-22.torun.mm.pl ([89.229.2.22])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Feb 2007 02:43:15 +0100
-Received: from jnareb by host-89-229-2-22.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 27 Feb 2007 02:43:15 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-2-22.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751065AbXB0B6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 20:58:43 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1R1wehB015643
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 26 Feb 2007 17:58:41 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1R1weYf005584;
+	Mon, 26 Feb 2007 17:58:40 -0800
+In-Reply-To: <Pine.LNX.4.64.0702261650120.12485@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-0.437 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40690>
 
-Johannes Schindelin wrote:
 
-> On Mon, 26 Feb 2007, Ed Schouten wrote:
+
+On Mon, 26 Feb 2007, Linus Torvalds wrote:
 > 
->> I just wrote a really awful patch to add syntax highlighting to gitweb:
->> 
->> [...]
->>
->> +    $pid = open2(\*HLR, \*HLW, "highlight -f --syntax c");
+> The first commit was already self-hosted. It was done manually (write-tree 
+> etc by hand), but yes, the first commit really is:
 > 
-> Since this fork()s an external program, which is possibly expensive, or 
-> can fail because the program is not there, you should at least
+> 	Thu Apr 7 15:13:13 2005 -0700
 > 
-> - document it, and
-> - make it optional.
+> and the second one (add copyright notices) was done a few minutes later.
+> 
+> So git was self-hosting since April 7, 2005.
+> 
+> Now, exactly when I started git development (ie how long it took before it 
+> got to that self-hosting stage), I can't remember. I'd say about two 
+> weeks, probably.
 
-It was planned (search for "[RFC] gitweb wishlist and TODO list" in
-archives), and gitweb-xmms2 (http://git.xmms.se/?p=gitweb-xmms2.git)
-has it: see http://git.or.cz/gitwiki/InterfacesFrontendsAndTools#gitweb
-but it was postponed together with committags support to have git config
-reader in Perl to use in gitweb.
+Actually, it must have been less than that.
 
-Hmmm... perhaps we should use open2 in few places where we use non-list form
-of magic open "-|" (the one which spawns shell)?
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+The first version of git was just ~1300 lines of code, and I have reason 
+to believe that I started it at or around April 3rd. The reason: I made 
+the last BK release on that day, and I also remember aiming for having 
+something usable in two weeks. 
+
+And hosting git itself was not that important for me - hosting the kernel 
+was. And the first kernel commit was April 16 (with the first merges being 
+a few days later). Which meshes with my "two week goal" recollection.
+
+Not that I'd normally be entirely sure I hit any time goals I set, but I 
+*am* pretty sure that I decided that in order to be effective, I didn't 
+want to do kernel development at the same time as git development, so the 
+"April 3" date of the 2.6.12-rc2 release is fairly significant.
+
+			Linus
