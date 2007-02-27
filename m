@@ -1,101 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: RFC: Patch editing
-Date: Tue, 27 Feb 2007 23:37:15 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702272332440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702270205540.6485@iabervon.org>
- <Pine.LNX.4.63.0702271247000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271201400.6485@iabervon.org>
- <Pine.LNX.4.63.0702272106150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271651500.6485@iabervon.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: How do get a specific version of a particular file?
+Date: Tue, 27 Feb 2007 17:39:29 -0500
+Message-ID: <20070227223929.GA9027@thunk.org>
+References: <E1HM1XL-00071C-N5@candygram.thunk.org> <Pine.LNX.4.63.0702271356040.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070227154241.GA8228@thunk.org> <Pine.LNX.4.63.0702272053080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 23:37:34 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 27 23:39:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMAwp-00017a-6W
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:37:27 +0100
+	id 1HMAyx-00025v-Vm
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751965AbXB0WhS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 17:37:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751981AbXB0WhS
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:37:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52441 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751965AbXB0WhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 17:37:17 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 22:37:15 -0000
-X-Provags-ID: V01U2FsdGVkX1+Pwth6dkOPugIYtcp4Zm5oWi56XUF1m54F2kNxmF
-	IQAQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0702271651500.6485@iabervon.org>
-X-Y-GMX-Trusted: 0
+	id S1751980AbXB0Wjh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 17:39:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751981AbXB0Wjh
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:39:37 -0500
+Received: from thunk.org ([69.25.196.29]:41003 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751980AbXB0Wjh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 17:39:37 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HMB4M-0003al-8R; Tue, 27 Feb 2007 17:45:14 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HMAyn-0002vx-VC; Tue, 27 Feb 2007 17:39:29 -0500
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702272053080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.12-2006-07-14
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40831>
 
-Hi,
+On Tue, Feb 27, 2007 at 08:55:41PM +0100, Johannes Schindelin wrote:
+> Since you seem to be no old-timer who cannot remember how she learnt about 
+> certain Git concepts: What documentation did you read, an in which order? 
+> This might help us making the parts likely to be seen by new users 
+> better...
 
-On Tue, 27 Feb 2007, Daniel Barkalow wrote:
+I started using Everyday git, and the git(7) man page, and the
+tutorials.  I tried using some of the git manpages, but many of them
+were so inpenetrable that I would just skip over that bit and hope the
+rest of the man page would make sense or would just try searching
+somewhere for the information.  To be honest, some of the best
+documentation was Linus's email messages on the git mailing list,
+especially the ones about git philosophy and examples about how to do
+things.
 
-> On Tue, 27 Feb 2007, Johannes Schindelin wrote:
+For example, the man page of git-rev-parse will give you a very dry
+description of ".." and "...", but absolutely no examples of when you
+would you might use one or the other.  The only place where I learned
+about this was from some of Linus's e-mail messages, and even then I'm
+still a little shaky on when you might use '...'.   
+
+And I'm still not sure why
+
+	git show v1.5.0..v1.5.0.1 
+
+doesn't throw an error, and why it prints what it does...
+
+> > As a suggestion, maybe we should be moving (or at least copying) things 
+> > like the <object> identifier syntax from the git-rev-parse manpage 
+> > (which is plumbing, right?) to the top-level git manpage?
 > 
-> > On Tue, 27 Feb 2007, Daniel Barkalow wrote:
-> > 
-> > > One nice thing about my method is that, if you've had to make a dozen 
-> > > unrelated changes to get something to compile and run far enough to test 
-> > > whether any of the changes are actually correct, you can be sure to get 
-> > > that work preserved. I'd be a lot less comfortable preparing 
-> > > intermediate states if I didn't have the final state securely tucked 
-> > > away.
-> > 
-> > You _could_ still ensure that by looking in the reflog which was your old 
-> > tip-of-branch, and git-diff with that.
-> > 
-> > But I agree. That is why I commit _everything_ before rearranging.
+> My vote is for moving, and referencing (kind of mv && ln -s).
 > 
-> I think you're misunderstanding me; I want to use git's 
-> archival/distribution functionality before I have a commit that I can put 
-> a useful message on. This means that, at some point, I'm making real 
-> commits, and I know what final state I want, but that final state involves 
-> unrelated changes.
-> 
-> I think I usually come up with something like: 7 patches related to the 
-> functionality I'm working on, 1 patch that fixes an old bug that became 
-> important due to the change, and 2 patches which improve the debugging 
-> infrastructure.
+> But that means that you have to explain in a really concise way that Git 
+> repositories contain blob, tree, commit and tag objects. And what they 
+> are.
 
-Same for me.
+Well, git(7) already has an extraordinary verbose description of glob,
+tree, commit, and tag options, so if we move the object id syntax to
+git(7) that wouldn't be a problem.  :-)
 
-> And the actual sequence of intermediate states that my 
-> code was in is something like: API written, stub implementations, some 
-> code that suggests what should happen; program calling the API and 
-> crashing; version that is written but buggy;
-
-Still same for me.
-
-> version that's buggy but verbose;
-
-I don't commit that.
-
-However, if I _do_, it _only_ contains the messages. And in that case 
-rebase--interactive (this is the new working title for edit-patch-series) 
-allows you to just kill these commits...
-
-> version that's working but verbose.
-
-Would be handled by (3way) cherry-pick.
-
-> Am I unusual in being afraid of losing work in a state that contains 3 
-> different half-features?
-
-Not at all. I often do "git checkout -b temp && git commit -a -m temp && 
-git checkout <oldname>".
-
-Ciao,
-Dscho
+						- Ted
