@@ -1,77 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: How do get a specific version of a particular file?
-Date: Tue, 27 Feb 2007 20:55:41 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702272053080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <E1HM1XL-00071C-N5@candygram.thunk.org>
- <Pine.LNX.4.63.0702271356040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070227154241.GA8228@thunk.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Organizing (large) test data in git
+Date: Tue, 27 Feb 2007 14:00:48 -0600
+Message-ID: <17892.36336.249022.904854@lisa.zopyra.com>
+References: <17892.28995.328911.23188@lisa.zopyra.com>
+	<Pine.LNX.4.63.0702272049560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Feb 27 20:55:47 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Feb 27 21:00:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM8QN-0005Zd-1l
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 20:55:47 +0100
+	id 1HM8VM-0007iT-HY
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:00:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751796AbXB0Tzo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 14:55:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752506AbXB0Tzo
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 14:55:44 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45926 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751796AbXB0Tzn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 14:55:43 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 19:55:42 -0000
-X-Provags-ID: V01U2FsdGVkX1+9AW5iNTK9oaEebJpMK0LUlU7t7yYjqOJZvT3HIr
-	Y6bw==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070227154241.GA8228@thunk.org>
-X-Y-GMX-Trusted: 0
+	id S1752520AbXB0UAy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 15:00:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752521AbXB0UAy
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:00:54 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61034 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752520AbXB0UAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 15:00:53 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1RK0oP06846;
+	Tue, 27 Feb 2007 14:00:50 -0600
+In-Reply-To: <Pine.LNX.4.63.0702272049560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40777>
 
-Hi,
+On Tuesday, February 27, 2007 at 20:52:38 (+0100) Johannes Schindelin writes:
+>Hi,
+>
+>On Tue, 27 Feb 2007, Bill Lear wrote:
+>
+>> We are contemplating files on the order of 500 megabytes a piece.
+>
+>I recommend splitting the files so that no file is that large (but the sum 
+>of them can be). But I think that you really wanted to say that.
+>
+>I think the problem of large packs is tackled right now by Troy, Shawn and 
+>Nico. Troy had exactly the same problem AFAIU, and Nico and Shawn are 
+>working on a new pack file format, which would lift the 4GB limit on packs 
+>while at it.
+>
+>This should solve your problems.
 
-On Tue, 27 Feb 2007, Theodore Tso wrote:
+Welll... it's not really a matter of capacity, though I do agree that
+lifting that limit will help.  We are more concerned with time to
+clone the repos over the (often very slow) corporate network, for
+example.  With future ratios of about 1% code to 99% test data, we
+really would like to have a light-weight code repo that we can throw
+hither and yon with little care, and a monster data repo that is
+(somehow) sanely managed with git as well.  I was just curious if
+others had run into the management problems that I mentioned with
+separating test data from code and what they may have done to surmount
+them.
 
-> On Tue, Feb 27, 2007 at 01:57:18PM +0100, Johannes Schindelin wrote:
-> > git-show, of all, is _not_ plumbing. It is one of the foremost porcelain 
-> > programs core Git ships.
-> 
-> Maybe, but its man page doesn't show it.  The average end-user isn't 
-> going to be thinking about blobs, tree objects, and tag objects. 
-> Furthermore, the EXAMPLES section in the man page is misformatted due to 
-> some ASCII doc issues.  I'll send a patch to correct the EXAMPLES 
-> section, but if git-show is a foremost porecelain program the 
-> DISCRIPTION section probably needs to be rewritten as well.
 
-Thank you for the patch.
-
-Since you seem to be no old-timer who cannot remember how she learnt about 
-certain Git concepts: What documentation did you read, an in which order? 
-This might help us making the parts likely to be seen by new users 
-better...
-
-> > git show v.37:e2fsck/pass1.c
-> 
-> Thanks, I just didn't know about tree-ish:pathname syntax, and I've
-> been playing with git for a while.
-> 
-> As a suggestion, maybe we should be moving (or at least copying) things 
-> like the <object> identifier syntax from the git-rev-parse manpage 
-> (which is plumbing, right?) to the top-level git manpage?
-
-My vote is for moving, and referencing (kind of mv && ln -s).
-
-But that means that you have to explain in a really concise way that Git 
-repositories contain blob, tree, commit and tag objects. And what they 
-are.
-
-Ciao,
-Dscho
+Bill
