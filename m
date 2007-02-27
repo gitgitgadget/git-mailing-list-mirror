@@ -1,73 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Broken dependencies..
-Date: Wed, 28 Feb 2007 00:55:48 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702280053140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0702271543080.12485@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cvsserver: Make always-binary mode a config file option
+Date: Tue, 27 Feb 2007 15:56:38 -0800
+Message-ID: <7vslcr9mtl.fsf@assigned-by-dhcp.cox.net>
+References: <7v4ppedj3r.fsf@assigned-by-dhcp.cox.net>
+	<200702271346.55520.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 00:56:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 00:56:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMCAq-0003Yn-EA
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:56:00 +0100
+	id 1HMCBe-0003xu-JN
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752658AbXB0Xzv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 18:55:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbXB0Xzv
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:55:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46610 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752658AbXB0Xzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 18:55:50 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 23:55:48 -0000
-X-Provags-ID: V01U2FsdGVkX19m9XY4s2NmRTd58jhgzQxS2ycNw6Co52ihDLo3H/
-	VsHQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0702271543080.12485@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1752654AbXB0X4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 18:56:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752660AbXB0X4n
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:56:43 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38910 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752654AbXB0X4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 18:56:41 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070227235638.UGZU2670.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 27 Feb 2007 18:56:38 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Unwe1W0141kojtg0000000; Tue, 27 Feb 2007 18:56:39 -0500
+In-Reply-To: <200702271346.55520.andyparkins@gmail.com> (Andy Parkins's
+	message of "Tue, 27 Feb 2007 13:46:55 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40855>
 
-Hi,
+Andy Parkins <andyparkins@gmail.com> writes:
 
-On Tue, 27 Feb 2007, Linus Torvalds wrote:
+> +    unless ( defined ( $cfg->{gitcvs}{allbinary} ) and $cfg->{gitcvs}{allbinary} =~ /^\s*(1|true|yes)\s*$/i )
+> +    {
+> +		# Return "" to give no special treatment to any path
+> +		return "";
+> +    } else {
+> +		# Alternatively, to have all files treated as if they are binary (which
+> +		# is more like git itself), always return the "-kb" option
+> +		return "-kb";
+> +    }
+> +}
 
-> 	/home/torvalds/git/fetch.c:137: undefined reference to `type_names'
-> 	fetch.o: In function `typename':
+This is not your fault as you copied existing code to check
+boolean, but I am unhappy every time I see "git-config -l"
+forces such an eyesore on us X-<.
 
-I realized that too, and forgot to send out the patch:
-
--- snip --
-[PATCH] fetch.o depends on the headers, too.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 20acc78..ce284fa 100644
---- a/Makefile
-+++ b/Makefile
-@@ -788,7 +788,7 @@ git-http-push$X: revision.o http.o http-push.o $(GITLIBS)
- 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
- 		$(LIBS) $(CURL_LIBCURL) $(EXPAT_LIBEXPAT)
- 
--$(LIB_OBJS) $(BUILTIN_OBJS): $(LIB_H)
-+$(LIB_OBJS) $(BUILTIN_OBJS) fetch.o: $(LIB_H)
- $(patsubst git-%$X,%.o,$(PROGRAMS)): $(LIB_H) $(wildcard */*.h)
- $(DIFF_OBJS): diffcore.h
- 
--- snap --
-
-Ciao,
-Dscho
+Anyway, will apply.  Thanks.
