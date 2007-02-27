@@ -1,91 +1,74 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] Add a flag core.symlinks analogous to core.filemode.
-Date: Tue, 27 Feb 2007 22:41:37 +0100
-Message-ID: <11726125033437-git-send-email-johannes.sixt@telecom.at>
-References: <11726125012895-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH] Describe core.symlinks in the man pages.
+Date: Tue, 27 Feb 2007 22:41:41 +0100
+Message-ID: <11726125071378-git-send-email-johannes.sixt@telecom.at>
+References: <11726125012895-git-send-email-johannes.sixt@telecom.at> <11726125033437-git-send-email-johannes.sixt@telecom.at> <1172612504272-git-send-email-johannes.sixt@telecom.at> <11726125052184-git-send-email-johannes.sixt@telecom.at> <11726125062739-git-send-email-johannes.sixt@telecom.at>
 Cc: Johannes Sixt <johannes.sixt@telecom.at>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 27 22:42:05 2007
+X-From: git-owner@vger.kernel.org Tue Feb 27 22:42:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMA56-0000yR-Vv
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:41:57 +0100
+	id 1HMA59-0000yR-3e
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:41:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750817AbXB0Vlq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 16:41:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbXB0Vlq
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:41:46 -0500
-Received: from smtp4.noc.eunet-ag.at ([193.154.160.226]:46973 "EHLO
-	smtp4.srv.eunet.at" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1750835AbXB0Vlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 16:41:45 -0500
+	id S1750855AbXB0Vlw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 16:41:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbXB0Vlv
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:41:51 -0500
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:46978 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750821AbXB0Vls (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 16:41:48 -0500
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 8A628976B8;
-	Tue, 27 Feb 2007 22:41:43 +0100 (CET)
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 8A6F297694;
+	Tue, 27 Feb 2007 22:41:47 +0100 (CET)
 X-Mailer: git-send-email 1.5.0.19.gddff
-In-Reply-To: <11726125012895-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <11726125062739-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40814>
 
-The new flag core.symlinks (which is true by default) can be set to false
-to indicate that the filesystem does not support symbolic links. In this
-case, symbolic links that exist in the trees are checked out as small plain
-files and checking in modifications of these files preserve the symlink
-property in the database (as long as an entry exists in the index).
-
-This commit as the first of a series starts by adding and initializing
-the global flag variable.
-
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- cache.h       |    1 +
- config.c      |    5 +++++
- environment.c |    1 +
- 3 files changed, 7 insertions(+), 0 deletions(-)
+ Documentation/config.txt           |    7 +++++++
+ Documentation/git-update-index.txt |    5 +++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 04f8e63..6cbb9d8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -202,6 +202,7 @@ extern int delete_ref(const char *, unsigned char *sha1);
- /* Environment bits from configuration mechanism */
- extern int use_legacy_headers;
- extern int trust_executable_bit;
-+extern int trust_symlink_fmt;
- extern int assume_unchanged;
- extern int prefer_symlink_refs;
- extern int log_all_ref_updates;
-diff --git a/config.c b/config.c
-index c938aa0..749bec3 100644
---- a/config.c
-+++ b/config.c
-@@ -269,6 +269,11 @@ int git_default_config(const char *var, const char *value)
- 		return 0;
- 	}
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 9fec769..08d13ca 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -116,6 +116,13 @@ core.fileMode::
+ 	the working copy are ignored; useful on broken filesystems like FAT.
+ 	See gitlink:git-update-index[1]. True by default.
  
-+	if (!strcmp(var, "core.symlinks")) {
-+		trust_symlink_fmt = git_config_bool(var, value);
-+		return 0;
-+	}
++core.symlinks::
++	If false, symbolic links are checked out as small plain files that
++	contain the link text. gitlink:git-update-index[1] and
++	gitlink:git-add[1] will not change the recorded type to regular
++	file. Useful on filesystems like FAT that do not support
++	symbolic links. True by default.
 +
- 	if (!strcmp(var, "core.bare")) {
- 		is_bare_repository_cfg = git_config_bool(var, value);
- 		return 0;
-diff --git a/environment.c b/environment.c
-index 54c22f8..1e8292a 100644
---- a/environment.c
-+++ b/environment.c
-@@ -13,6 +13,7 @@ char git_default_email[MAX_GITNAME];
- char git_default_name[MAX_GITNAME];
- int use_legacy_headers = 1;
- int trust_executable_bit = 1;
-+int trust_symlink_fmt = 1;
- int assume_unchanged;
- int prefer_symlink_refs;
- int is_bare_repository_cfg = -1; /* unspecified */
+ core.gitProxy::
+ 	A "proxy command" to execute (as 'command host port') instead
+ 	of establishing direct connection to the remote server when
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
+index b161c8b..cd5e014 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -295,6 +295,11 @@ in the index and the file mode on the filesystem if they differ only on
+ executable bit.   On such an unfortunate filesystem, you may
+ need to use `git-update-index --chmod=`.
+ 
++Quite similarly, if `core.symlinks` configuration variable is set
++to 'false' (see gitlink:git-config[1]), symbolic links are checked out
++as plain files, and this command does not modify a recorded file mode
++from symbolic link to regular file.
++
+ The command looks at `core.ignorestat` configuration variable.  See
+ 'Using "assume unchanged" bit' section above.
+ 
 -- 
 1.5.0.19.gddff
