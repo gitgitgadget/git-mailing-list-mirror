@@ -1,89 +1,62 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Replacement for cvs2cl, for generating ChangeLog
-Date: Tue, 27 Feb 2007 13:50:29 -0800
-Message-ID: <7v649nclsq.fsf@assigned-by-dhcp.cox.net>
-References: <877iu3q13r.fsf@latte.josefsson.org>
-	<200702271257.37437.andyparkins@gmail.com>
-	<200702272227.05244.robin.rosenberg.lists@dewire.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: pack v4 status
+Date: Tue, 27 Feb 2007 13:51:03 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org>
+References: <20070227155042.GB3230@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Simon Josefsson <simon@josefsson.org>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Feb 27 22:51:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 27 22:51:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMAE2-0005JI-VB
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:51:11 +0100
+	id 1HMAE8-0005JI-HC
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751911AbXB0Vue (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 16:50:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbXB0Vue
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:50:34 -0500
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:43325 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751911AbXB0Vud (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 16:50:33 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070227215030.RACI2670.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 27 Feb 2007 16:50:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id UlqV1W00F1kojtg0000000; Tue, 27 Feb 2007 16:50:29 -0500
-In-Reply-To: <200702272227.05244.robin.rosenberg.lists@dewire.com> (Robin
-	Rosenberg's message of "Tue, 27 Feb 2007 22:27:05 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751797AbXB0VvB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 16:51:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750916AbXB0VvB
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:51:01 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:53677 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751665AbXB0VvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 16:51:00 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1RLoihB019388
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Feb 2007 13:50:44 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1RLohYv029724;
+	Tue, 27 Feb 2007 13:50:43 -0800
+In-Reply-To: <20070227155042.GB3230@spearce.org>
+X-Spam-Status: No, hits=-0.436 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40817>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-> tisdag 27 februari 2007 13:57 skrev Andy Parkins:
->> On Tuesday 2007 February 27 11:41, Simon Josefsson wrote:
->> 
->> > * How do I discard all locally modified or added files?  'cvs upd -C'
->> >   does some of that, but I've been using a tool 'cvsco' which quickly
->> >   restore a CVS checkout into a pristine state.
->> 
->> Not that I know of, but git has some lovely log generation tools, so I'm sure 
->> it could be easily done with a snippet of perl - or perhaps a change to git's 
->> own log generator to support
->> 
->>  git-rev-list --pretty=gnucl
->> 
-> gir-rev-list ??
->
-> Extend git-shortlog with --gnucl instead. What seems missing is the grouping
-> of changes by date. git-shortlog only groups by author.
 
-If GNU changelog _were_ to have one entry per day, mixing
-changes from different commits together, that might be a good
-approach. I do not think GNU changelog guideline can be _THAT_
-broken.
+On Tue, 27 Feb 2007, Shawn O. Pearce wrote:
+> 
+> We have thus far reformatted OBJ_TREEs with a new dictionary based
+> compression scheme.  In this scheme we pool the filenames and modes
+> that appear within trees into a single table within the packfile.
+> All trees are then converted to use a 22 byte record format:
+> 
+>   - 2 byte network byte order index into the string pool
+>   - 20 byte SHA-1
 
-Listing of filenames of changed files in the log, followed by
-short description of the nature of the change (e.g. "Updated to
-do blah", "New File"), shows the CVS mentality "File matters",
-and that was what Simon's original example showed.  It's been a
-while I looked at the coding guideline the last time, but I
-think GNU convention wants you to say "filename (function)" when
-applicable.  Which I happen to think makes much more sense than
-the filename alone.
+Umm. Am I missing something, or is this totally braindamaged?
 
-The information that would appear in "log -p --pretty" output
-needs to be condensed to obtain such a log entry.  You _could_
-still do that as a built-in if you really wanted to, but I tend
-to think that it is much better to implement such a specialized
-processing (for one thing, what a function is depends on the
-programming language you are reading from) as an external
-postprocessing filter that people can more easily tweak for
-their specific needs.
+Are you really expecting there to never be more than 64k basenames? Trust 
+me, that's a totally broken assumption. Anything that tracks generated 
+stuff will _easily_ have several tens of thousands of random filenames 
+even in a single tree, much less over the whole history of the repository.
 
-That's why I keep stressing that one good thing about git is it
-is easily scriptable.
+			Linus
