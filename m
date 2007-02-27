@@ -1,58 +1,51 @@
-From: Sam Vilain <sam@vilain.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Worrisome bug trend
-Date: Wed, 28 Feb 2007 09:25:55 +1300
-Message-ID: <45E493D3.7060407@vilain.net>
-References: <7vodnfg4sy.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 27 Feb 2007 21:30:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702272129070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vodnfg4sy.fsf@assigned-by-dhcp.cox.net> <86odnfr625.fsf@blue.stonehenge.com>
+ <7vzm6zcpv0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 27 21:29:00 2007
+X-From: git-owner@vger.kernel.org Tue Feb 27 21:32:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM8wW-0002cJ-HX
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:29:00 +0100
+	id 1HM8zc-000412-SX
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:32:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751831AbXB0U0m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 15:26:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751829AbXB0U0m
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:26:42 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:55881 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752546AbXB0U01 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 15:26:27 -0500
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 8248A13A384; Wed, 28 Feb 2007 09:26:23 +1300 (NZDT)
-Received: from [192.168.1.4] (unknown [203.110.28.85])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id BA5E513A342;
-	Wed, 28 Feb 2007 09:26:12 +1300 (NZDT)
-User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
-In-Reply-To: <7vodnfg4sy.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=failed 
-	version=3.0.2
+	id S1751806AbXB0Ua6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 15:30:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751834AbXB0Ua6
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:30:58 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51678 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751806AbXB0Uaz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 15:30:55 -0500
+Received: (qmail invoked by alias); 27 Feb 2007 20:30:54 -0000
+X-Provags-ID: V01U2FsdGVkX18S59MidQcSr2R5kihtjjgawfbLkyaMmCLR+Mpo16
+	njYA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vzm6zcpv0.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40788>
 
-Junio C Hamano wrote:
-> I take that as a sign that git hasn't been exercised well and
-> yet more ancient bugs are sleeping, waiting to be triggered, not
-> as a sign that we are very careful and adding only small number
-> of risky new code in the releases.
->   
+Hi,
 
-No! It's a sign that there aren't enough tests :)
+On Tue, 27 Feb 2007, Junio C Hamano wrote:
 
-Maybe investigate the coverage of the test suite?
+> 75b62b48 (combine-diff broken cast)
+> 	e702496e Aug 23 2006 (memcpy->hashcpy)
+> 	funny thing is that another similar cast is correct.
+> 
+> Johannes Schindelin.
 
-Sam.
+... while working on some diff --no-index code. (Strangely enough.)
+
+Ciao,
+Dscho
