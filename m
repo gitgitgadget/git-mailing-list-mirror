@@ -1,53 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] show_date(): rename the "relative" parameter to "mode"
-Date: Wed, 28 Feb 2007 00:10:58 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702280010020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702271620390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271339550.12485@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702272313020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271453030.12485@woody.linux-foundation.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Add --pretty=changelog
+Date: Tue, 27 Feb 2007 15:11:00 -0800
+Message-ID: <20070227231100.GA25782@localdomain>
+References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de> <alpine.LRH.0.82.0702271036010.29426@xanadu.home> <Pine.LNX.4.63.0702271656540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>,
-	junkio@cox.net
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 00:11:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Simon Josefsson <simon@josefsson.org>, junkio@cox.net
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 28 00:11:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMBTM-0008Ed-Jb
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:11:04 +0100
+	id 1HMBTU-0008IW-Td
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:11:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008AbXB0XLB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 18:11:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752013AbXB0XLA
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:11:00 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40732 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752008AbXB0XLA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 18:11:00 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 23:10:58 -0000
-X-Provags-ID: V01U2FsdGVkX18tiDRcyX0tHA+d8Zuz4ZsekyOEKtK0y1dqx+scB2
-	omWA==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0702271453030.12485@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1752013AbXB0XLF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 18:11:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752014AbXB0XLF
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:11:05 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:33966 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752013AbXB0XLE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 18:11:04 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 5F3167DC091;
+	Tue, 27 Feb 2007 15:11:02 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 27 Feb 2007 15:11:00 -0800
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0702271656540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40838>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+> 
+> On Tue, 27 Feb 2007, Nicolas Pitre wrote:
+> 
+> > On Tue, 27 Feb 2007, Johannes Schindelin wrote:
+> > 
+> > > 
+> > > This outputs the log in GNU ChangeLog format.
+> > 
+> > Please don't call it "changelog".  I personally find this format horrid 
+> > and "changelog" is too generic for such a specific format.  
+> > "gnu_changelog" maybe...
+> 
+> Fair enough. Maybe with a dash, so it is easier to type?
 
-On Tue, 27 Feb 2007, Linus Torvalds wrote:
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -38,6 +38,7 @@ struct cmt_fmt_map {
+>  	{ "fuller",	5,	CMIT_FMT_FULLER },
+>  	{ "oneline",	1,	CMIT_FMT_ONELINE },
+>  	{ "format:",	7,	CMIT_FMT_USERFORMAT},
+> +	{ "changelog",	9,	CMIT_FMT_CHANGELOG}
+                        ^- that should be a 1
 
-> But the "short date + author name" on one line part I certainly don't 
-> disagree with.
+'gnu[_-]changelog' or 'changelog' would all uniquely abbreviate to a
+single character.
 
-If you use "next" Git:
+--pretty=gnu sounds nice, however :)
 
-	$ git log --pretty=format:"%h %ad %an"
-
-Ciao,
-Dscho
+-- 
+Eric Wong
