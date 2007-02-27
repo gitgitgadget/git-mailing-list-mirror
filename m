@@ -1,65 +1,70 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Replacement for cvs2cl, for generating ChangeLog
-Date: Tue, 27 Feb 2007 22:27:05 +0100
-Organization: Dewire
-Message-ID: <200702272227.05244.robin.rosenberg.lists@dewire.com>
-References: <877iu3q13r.fsf@latte.josefsson.org> <200702271257.37437.andyparkins@gmail.com>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: Re: Worrisome bug trend
+Date: Wed, 28 Feb 2007 00:30:49 +0300
+Message-ID: <20070227213049.GA6505@basalt.office.altlinux.org>
+References: <7vodnfg4sy.fsf@assigned-by-dhcp.cox.net> <86odnfr625.fsf@blue.stonehenge.com> <7vzm6zcpv0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 27 22:25:35 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="OXfL5xGRrasGEqWY"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 27 22:30:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM9pE-0001uv-Nn
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:25:33 +0100
+	id 1HM9uT-0004PE-Ms
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556AbXB0VZa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 16:25:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbXB0VZa
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:25:30 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:21696 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752556AbXB0VZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 16:25:29 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C17BE80339E;
-	Tue, 27 Feb 2007 22:20:24 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 04483-09; Tue, 27 Feb 2007 22:20:24 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 742B6802E29;
-	Tue, 27 Feb 2007 22:20:24 +0100 (CET)
-User-Agent: KMail/1.9.4
-In-Reply-To: <200702271257.37437.andyparkins@gmail.com>
+	id S1751901AbXB0Vay (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 16:30:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbXB0Vay
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:30:54 -0500
+Received: from mh.altlinux.org ([217.16.24.5]:60704 "EHLO
+	sendmail.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751901AbXB0Vax (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 16:30:53 -0500
+Received: from basalt.office.altlinux.org (localhost.localdomain [127.0.0.1])
+	by sendmail.altlinux.org (Postfix) with ESMTP id ABC1D427801F
+	for <git@vger.kernel.org>; Wed, 28 Feb 2007 00:30:51 +0300 (MSK)
+Received: by basalt.office.altlinux.org (Postfix, from userid 501)
+	id 03CCAB0D92; Wed, 28 Feb 2007 00:30:50 +0300 (MSK)
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+In-Reply-To: <7vzm6zcpv0.fsf@assigned-by-dhcp.cox.net>
+X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40808>
 
-tisdag 27 februari 2007 13:57 skrev Andy Parkins:
-> On Tuesday 2007 February 27 11:41, Simon Josefsson wrote:
-> 
-> > * How do I discard all locally modified or added files?  'cvs upd -C'
-> >   does some of that, but I've been using a tool 'cvsco' which quickly
-> >   restore a CVS checkout into a pristine state.
-> 
-> Not that I know of, but git has some lovely log generation tools, so I'm sure 
-> it could be easily done with a snippet of perl - or perhaps a change to git's 
-> own log generator to support
-> 
->  git-rev-list --pretty=gnucl
-> 
-gir-rev-list ??
 
-Extend git-shortlog with --gnucl instead. What seems missing is the grouping
-of changes by date. git-shortlog only groups by author.
+--OXfL5xGRrasGEqWY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--- robin
+On Tue, Feb 27, 2007 at 12:22:43PM -0800, Junio C Hamano wrote:
+[...]
+> 8ab40a20 (show-ref --verify)
+> 	26cdd1e7 Dec 17 2006
+>=20
+> Dmitry V Levin.
+
+=2E.. while playing with new utilities (introduced after v1.4.4.x).
+
+
+--=20
+ldv
+
+--OXfL5xGRrasGEqWY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFF5KMJfKvmrJ41Nh4RAhX8AJ4+VlE/M0HOcPGGuGl9ZF+vF8/QggCgx6NG
+nEtKruWv5gBKl4zO2rMW2vE=
+=jQQp
+-----END PGP SIGNATURE-----
+
+--OXfL5xGRrasGEqWY--
