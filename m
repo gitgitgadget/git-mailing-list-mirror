@@ -1,90 +1,83 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Geert Bosch <bosch@adacore.com>
 Subject: Re: [PATCH] Support 64-bit indexes for pack files.
-Date: Mon, 26 Feb 2007 23:32:43 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702262306100.29426@xanadu.home>
-References: <200702261540.27080.ttelford.groups@gmail.com>
- <20070226235510.GF1639@spearce.org>
- <alpine.LRH.0.82.0702261916560.29426@xanadu.home>
- <20070227003118.GH1639@spearce.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 05:32:58 2007
+Date: Mon, 26 Feb 2007 23:55:58 -0500
+Message-ID: <79B129C3-C1B5-43E3-97DA-1ADC70642B88@adacore.com>
+References: <200702261540.27080.ttelford.groups@gmail.com> <20070226235510.GF1639@spearce.org> <alpine.LRH.0.82.0702261916560.29426@xanadu.home> <20070227003118.GH1639@spearce.org> <alpine.LRH.0.82.0702262306100.29426@xanadu.home>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Feb 27 05:56:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLu1H-0006SB-O2
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 05:32:56 +0100
+	id 1HLuNl-0007IL-2N
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 05:56:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751493AbXB0Ecq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 23:32:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbXB0Ecq
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 23:32:46 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:37984 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751493AbXB0Ecp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 23:32:45 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JE300GGATYJ1QQ1@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Feb 2007 23:32:44 -0500 (EST)
-In-reply-to: <20070227003118.GH1639@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S1751386AbXB0E4F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 23:56:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751404AbXB0E4F
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 23:56:05 -0500
+Received: from nile.gnat.com ([205.232.38.5]:53454 "EHLO nile.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751386AbXB0E4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 23:56:04 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by filtered-nile.gnat.com (Postfix) with ESMTP id 2AE3F48CC1C;
+	Mon, 26 Feb 2007 23:56:01 -0500 (EST)
+Received: from nile.gnat.com ([127.0.0.1])
+ by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 10315-01-10; Mon, 26 Feb 2007 23:56:00 -0500 (EST)
+Received: from [172.16.1.4] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	by nile.gnat.com (Postfix) with ESMTP id 0AB8248CC7C;
+	Mon, 26 Feb 2007 23:55:59 -0500 (EST)
+In-Reply-To: <alpine.LRH.0.82.0702262306100.29426@xanadu.home>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40692>
-
-On Mon, 26 Feb 2007, Shawn O. Pearce wrote:
-
-> Nicolas Pitre <nico@cam.org> wrote:
-> > Actually I've been thinking about another format already.
-> > 
-> > What about keeping the pack offset as 32 bits like it is today, but for 
-> > index v2 if the top bit is set then this become an index into another 
-> > table containing 64-bit offsets as needed.  This way there is no waste 
-> > of space for most projects where the pack has yet to reach the 2GB limit 
-> > for many years to come.
-> 
-> Actually Troy's patch tries to do this by using the current format
-> and only switching to the new one if the packfile exceeds 4 GiB.
-> Rather smart.
-
-Yes I saw the patch.  But what I propose is different.  In fact I'd 
-require far less changes to the existing code.  The idea is to continue 
-to store a 32-bit value along with the SHA1 just like we do today.  
-Then, appended to that would be another table containing a list of 
-64-bit offsets.
-
-Now if the offset stored in the index is smaller than 2GB you store it 
-as we do today.  If it is >= 2GB then a 64-bit index would be added to 
-the extra offset table and the 32-bit entry along with the SHA1 would be 
-an index into that second table instead, with the top bit set to 
-distinguish it from a normal 32-bit offset (actually 31 bits).  So for 
-offsets larger than 31 bits then they have an additional level of 
-indirection.
-
-The code to implement this would be minimal.  And since objects placed 
-at the end of a pack (those more likely to incure the indirection 
-overhead) are further back in history they won't get accessed 
-very often anyway.
-
-Then nothing prevents us from inserting the next-object-index table in 
-between (its size is known while the 64-bit offset one may vary) then 
-the code that doesn't care about it need no look at it. 
-
-> One thought I had here was to expand the fan-out table from 1<<8
-> entries to 1<<16 entries, then store only the low 18 bytes of
-> the SHA-1.  We would have another 2 bytes worth of space to store
-> the offset, pushing our total offset up to 48 bits.
-
-That would penalize small packs a lot.  the index would always start 
-from 256KB in size.  With a pack of 100 objects (our current treshold 
-for keeping a pack) that means a 258KB index file.  Currently the index 
-file for a 100-object pack is 3.4KB.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40693>
 
 
-Nicolas
+On Feb 26, 2007, at 23:32, Nicolas Pitre wrote:
+
+>> One thought I had here was to expand the fan-out table from 1<<8
+>> entries to 1<<16 entries, then store only the low 18 bytes of
+>> the SHA-1.  We would have another 2 bytes worth of space to store
+>> the offset, pushing our total offset up to 48 bits.
+>
+> That would penalize small packs a lot.  the index would always start
+> from 256KB in size.  With a pack of 100 objects (our current treshold
+> for keeping a pack) that means a 258KB index file.  Currently the  
+> index
+> file for a 100-object pack is 3.4KB.
+
+Why can't we do it with the current 1<<8 entry fan-out?
+This would allow increases of pack file size up to 1 TB.
+For larger repositories, we just need to use multiple
+pack files. A couple hundred 1 TB pack files doesn't seem
+to be a big issue.
+
+Say a couple years from now, we can write data to stable storage
+(disks/flash/holograms or whatever) at 1 GB/sec, then it would still
+take 16 minutes to write a 1 TB file. At that point we'd need a
+bigger overhaul than just larger offsets in the pack file.
+
+BTW, here are a few issues with the current pack file format:
+   - The final SHA1 consists of the count of objects in the file
+     and all compressed data. Why? This is horrible for streaming
+     applications where you only know the count of objects at the
+     end, then you need to access *all* data to compute the SHA-1.
+     Much better to just use compute a SHA1 over the SHA1's of each
+     object. That way at least the data streamed can be streamed to
+     disk. Buffering one SHA1 per object is probably going to be OK.
+
+   - The object count is implicit in the SHA1 of all objects and the
+     objects we find in the file. Why do we need it in the first place?
+     Better to recompute it when necessary. This makes true streaming
+     possible.
+
+   -Geert
