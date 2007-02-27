@@ -1,65 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Worrisome bug trend
-Date: Tue, 27 Feb 2007 12:42:30 -0800
-Message-ID: <7vodnfcoy1.fsf@assigned-by-dhcp.cox.net>
-References: <7vodnfg4sy.fsf@assigned-by-dhcp.cox.net>
-	<45E493D3.7060407@vilain.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Support 64-bit indexes for pack files.
+Date: Tue, 27 Feb 2007 11:11:22 -0500
+Message-ID: <20070227161122.GE3230@spearce.org>
+References: <200702261540.27080.ttelford.groups@gmail.com> <20070226235510.GF1639@spearce.org> <alpine.LRH.0.82.0702261916560.29426@xanadu.home> <20070227003118.GH1639@spearce.org> <alpine.LRH.0.82.0702262306100.29426@xanadu.home> <79B129C3-C1B5-43E3-97DA-1ADC70642B88@adacore.com> <alpine.LRH.0.82.0702270002100.29426@xanadu.home> <5FE0C988-0DA8-4BFB-8F0C-42F97808E6F8@adacore.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Feb 27 21:43:04 2007
+Cc: Nicolas Pitre <nico@cam.org>,
+	Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
+To: Geert Bosch <bosch@adacore.com>
+X-From: git-owner@vger.kernel.org Tue Feb 27 21:44:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM9A8-0000J2-1c
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:43:04 +0100
+	id 1HM9BC-0000mq-Ad
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 21:44:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933092AbXB0Umc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 15:42:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933099AbXB0Umc
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:42:32 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:59658 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933092AbXB0Umb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 15:42:31 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070227204146.BPDE1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 27 Feb 2007 15:41:46 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id UkiW1W00e1kojtg0000000; Tue, 27 Feb 2007 15:42:31 -0500
-In-Reply-To: <45E493D3.7060407@vilain.net> (Sam Vilain's message of "Wed, 28
-	Feb 2007 09:25:55 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933804AbXB0Unf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 15:43:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933483AbXB0Unf
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 15:43:35 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:45634 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933808AbXB0Une (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 15:43:34 -0500
+X-Greylist: delayed 657 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Feb 2007 15:43:33 EST
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HM4v9-0003pa-5x; Tue, 27 Feb 2007 11:11:19 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0A74E20FBAE; Tue, 27 Feb 2007 11:11:23 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <5FE0C988-0DA8-4BFB-8F0C-42F97808E6F8@adacore.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40794>
 
-Sam Vilain <sam@vilain.net> writes:
+Geert Bosch <bosch@adacore.com> wrote:
+> When I import a large code-base (such as a *.tar.gz), I don't know
+> beforehand how many objects I'm going to create. Ideally, I'd like
+> to stream them directly into a new pack without ever having to write
+> the expanded source to the filesystem.
 
-> Junio C Hamano wrote:
->> I take that as a sign that git hasn't been exercised well and
->> yet more ancient bugs are sleeping, waiting to be triggered, not
->> as a sign that we are very careful and adding only small number
->> of risky new code in the releases.
->>   
->
-> No! It's a sign that there aren't enough tests :)
->
-> Maybe investigate the coverage of the test suite?
+See git-fast-import.  If you are coming from a tar, also see
+contrib/fast-import/import-tars.perl.  :-)
+ 
+> So for creating a large pack from a stream of data, you have to do  
+> the following:
+>   1. write out a temporary pack file to disk without correct count
+>   2. fix-up the count
+>   3. read the entire temporary pack file to compute the final SHA-1
+>   4. fix-up the SHA1 at the end of the file
+>   5. construct and write out the index
 
-I know we cover most of the success (expected) cases for things
-we care about, but at the same time I personally find that tests
-for failure cases (insane input, dataset expected to fail) are
-missing.
+Yes, this is exactly what git-fast-import does.  Yes, it sort of
+sucks.  But its not as bad as you think.
+ 
+> There are a few ways to fixing this:
+>   - Have a count of 0xffffffff mean: look in the index for the count.
+>     Pulling/pushing would still use regular counted pack files.
+>   - Have the pack file checksum be the SHA1 of (the count followed
+>     by the SHA1 of the compressed data of each object). This would  
+> allow 3.
+>     to be done without reading back all data.
 
-We do not need investigation.  We need a volunteer.
+I don't think it is worth it.  Aside from git-fast-import we
+always know the object count before we start writing any data.
+But despite that, fast-import runs quite well.
 
-And perhaps a new patch/feature acceptance criteria that
-requires both expected behaviour and expected failure tests, but
-I am lazy ;-).
+-- 
+Shawn.
