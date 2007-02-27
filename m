@@ -1,111 +1,68 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] commit-tree: bump MAX_PARENTS to 128
-Date: Tue, 27 Feb 2007 16:46:27 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702271624000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070226121557.GA18114@coredump.intra.peff.net>
- <20070226143142.GA1390@spearce.org> <Pine.LNX.4.63.0702261736570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vr6scj9qt.fsf@assigned-by-dhcp.cox.net> <20070227081933.GA13021@coredump.intra.peff.net>
- <7virdnhpbt.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Replacement for cvs2cl, for generating ChangeLog
+Date: Tue, 27 Feb 2007 16:56:32 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702271648430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <877iu3q13r.fsf@latte.josefsson.org> <200702271257.37437.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Feb 27 16:46:37 2007
+Cc: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 27 16:56:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM4XE-0007cc-RJ
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 16:46:37 +0100
+	id 1HM4gw-0003W0-5J
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 16:56:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751650AbXB0Pqa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 10:46:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751651AbXB0Pqa
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 10:46:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38762 "HELO mail.gmx.net"
+	id S1751627AbXB0P4f (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 10:56:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751642AbXB0P4f
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 10:56:35 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41117 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751650AbXB0Pq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 10:46:29 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 15:46:28 -0000
-X-Provags-ID: V01U2FsdGVkX1/swEREQw3s8NWNrJxG2Qg0rxWdCm91YYD1tGBc6x
-	BJqQ==
+	id S1751627AbXB0P4e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 10:56:34 -0500
+Received: (qmail invoked by alias); 27 Feb 2007 15:56:32 -0000
+X-Provags-ID: V01U2FsdGVkX1+VUVNCT0iVGRR4gX9J3ZEIzkgk7YTxrQsE0e4M69
+	Q1dw==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7virdnhpbt.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <200702271257.37437.andyparkins@gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40751>
 
 Hi,
 
-On Tue, 27 Feb 2007, Junio C Hamano wrote:
+On Tue, 27 Feb 2007, Andy Parkins wrote:
 
-> Jeff King <peff@peff.net> writes:
+> [...] perhaps a change to git's own log generator to support
 > 
-> > On Tue, Feb 27, 2007 at 12:16:42AM -0800, Junio C Hamano wrote:
-> >
-> >> But as Shawn pointed out, Octopus makes bisect less (much less)
-> >> efficient for the end users, I tend to think the current 16 is
-> >> already insanely large.
-> >
-> > Did you look at my "why I need a huge octopus" description? Is there a 
-> > better way to do it? Should I simply do a bunch of pair-wise merges? 
-> > I'll almost certainly never bisect it,...
+>  git-rev-list --pretty=gnucl
 > 
-> I hate having to compose this message because I know I will end up 
-> saying negative things without offering anything constructive.
+> would be more appropriate.
 
-IMHO this discussion is anything but not constructive.
+I was already hacking on a builtin changelog command, because I was 
+convinced that this breaks our model in builtin-log: We show the commit 
+information first, and _then_ we call the diff machinery. And GNU 
+ChangeLog format mixes these informations: the date and the author are 
+commit information, but the files are tree information, and the oneline is 
+commit information again.
 
-> I do not think bundling commits from unrelated multiple projects in one 
-> commit (some people seem to have called this Hydra in the past) is a 
-> good practice, regardless of size.
+However, your mail made me think again.
 
-Yesterday, I kicked an idea around on IRC with Sam: Darcs does not have 
-branches as we do. Sam was nice enough to show me a picture:
+I now reused (AKA misused) the stats separator to take the oneline 
+description, which is set in show_log() when revs->commit_format == 
+CMIT_FMT_CHANGELOG, which is output by diff_flush() when the 
+diff_options->output_format == DIFF_FORMAT_CHANGELOG.
 
-	http://utsl.gen.nz/git/hydra-vs-regular.png
+BTW I already found a subtle bug. In finalize_changelog(), 
+options->stat_sep can be NULL, if no oneline was found.
 
-For those poor souls stuck with a text terminal, it looks like this:
-
-Right image:
-
-A-B-C-D-E-F-G-H-I-J-K-L-M-N-O-P-Q-R-S-T-U-V-W-X-Y-Z-a-b-c-d-e
-
-Left image:
-
-A-B---------------------------------------------------------e
-                                                            |
-    C     F-G-H-I------------------------------------------/|
-    |\    |                                                 |
-    |  ---+-_   --J----------------------------------------/|
-     \   /   --/                                            |
-      D-E      \----K--------------------------------------/|
-         \         \_                                       |
-          \          -L------------------------------------/|
-           \                                                |
-            \           M----------------------------------/|
-             \                                              |
-              \               P-----_           Y----------/|
-               \              |      \         /            |
-                --------------+-------T-U-V-W-X---Z---b-c--/|
-                             /        |  \           /     /
-                          N-O   Q----/|   ----------a     d
-                             \        |
-                              ----R--/|
-                                     /
-                                    S
-
-(Puh! Can you believe how much time such a picture takes?)
-
-So, the right image is what it would look like of you just committed 
-everything with Git, and the left image how it would look like with Darcs.
-
-Now, I never have worked with Darcs, but I _could_ imagine that it would 
-be useful for some workflows to generate the Darcs layout automatically 
-from the Git layout. In that case, a _lot_ of parents should be allowed.
+But AFAIK we do not allow empty commit messages, so this bug would never 
+have been triggered.
 
 Ciao,
 Dscho
