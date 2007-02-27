@@ -1,76 +1,45 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: pack v4 status
-Date: Tue, 27 Feb 2007 17:32:00 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702271717080.29426@xanadu.home>
-References: <20070227155042.GB3230@spearce.org>
- <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Error.pm leaking
+Date: Tue, 27 Feb 2007 14:32:54 -0800
+Message-ID: <86zm6znsdl.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 23:32:39 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 27 23:33:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMAsA-0007TW-B6
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:32:38 +0100
+	id 1HMAsV-0007eJ-Fz
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963AbXB0WcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 17:32:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751964AbXB0WcE
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:32:04 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:40673 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751963AbXB0WcD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 17:32:03 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JE5000IY7XCIA53@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 27 Feb 2007 17:32:00 -0500 (EST)
-In-reply-to: <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S1751913AbXB0Wc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 17:32:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751964AbXB0Wc4
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:32:56 -0500
+Received: from blue.stonehenge.com ([209.223.236.162]:42657 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751913AbXB0Wcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 17:32:55 -0500
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id E5C421DEE9E; Tue, 27 Feb 2007 14:32:54 -0800 (PST)
+x-mayan-date: Long count = 12.19.14.1.16; tzolkin = 12 Cib; haab = 9 Kayab
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40826>
-
-On Tue, 27 Feb 2007, Linus Torvalds wrote:
-
-> 
-> 
-> On Tue, 27 Feb 2007, Shawn O. Pearce wrote:
-> > 
-> > We have thus far reformatted OBJ_TREEs with a new dictionary based
-> > compression scheme.  In this scheme we pool the filenames and modes
-> > that appear within trees into a single table within the packfile.
-> > All trees are then converted to use a 22 byte record format:
-> > 
-> >   - 2 byte network byte order index into the string pool
-> >   - 20 byte SHA-1
-> 
-> Umm. Am I missing something, or is this totally braindamaged?
-> 
-> Are you really expecting there to never be more than 64k basenames? Trust 
-> me, that's a totally broken assumption. Anything that tracks generated 
-> stuff will _easily_ have several tens of thousands of random filenames 
-> even in a single tree, much less over the whole history of the repository.
-
-The idea is to deal with only tree objects containing the 64K most 
-frequently used base names and fall back to the current tree object 
-encoding for objects that couldn't be represented that way.
-
-For reference the GIT tree itself has 585 unique names.
-
-The Linux kernel has 12263 of them.
-
-If we eventually find it is common and performance critical to have more 
-bits to represent those indices because the number of unique path 
-components far exceeds that limit with an even distribution then we 
-might just add another tree encoding with a 3-byte index for those.
-
-In the end everything translates back to the same object.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40827>
 
 
-Nicolas
+There was a thread a while back about why I said not to use Error.pm, because
+it could leak, and I failed to provide proof.  Found it, finally!
+
+<http://perl.apache.org/docs/tutorials/apps/scale_etoys/etoys.html>
+
+Nested try blocks, it seems.
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
