@@ -1,71 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] git-apply: do not fix whitespaces on context lines.
-Date: Tue, 27 Feb 2007 01:33:33 -0800
-Message-ID: <7vzm70hrma.fsf@assigned-by-dhcp.cox.net>
+From: Bernhard Walle <bwalle@suse.de>
+Subject: Re: Better icon for qgit
+Date: Tue, 27 Feb 2007 10:34:38 +0100
+Message-ID: <20070227093438.GA13149@strauss.suse.de>
+References: <1172279202.19767.12.camel@dv> <e5bfff550702232247k447cf33asc47db99165eb7e4d@mail.gmail.com> <20070226094345.GA10518@strauss.suse.de> <1172548300.5835.48.camel@dv>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 27 10:33:39 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CE+1k2dSO48ffgeK"
+Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+To: Pavel Roskin <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Feb 27 10:34:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLyiI-0005lL-AC
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 10:33:38 +0100
+	id 1HLyjM-0006FM-3p
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 10:34:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161102AbXB0Jdf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 04:33:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161108AbXB0Jde
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 04:33:34 -0500
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:40557 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161102AbXB0Jde (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 04:33:34 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070227093333.EGTY2670.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 27 Feb 2007 04:33:33 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id UZZZ1W0081kojtg0000000; Tue, 27 Feb 2007 04:33:33 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161088AbXB0Jel (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 04:34:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161101AbXB0Jel
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 04:34:41 -0500
+Received: from mx1.suse.de ([195.135.220.2]:34036 "EHLO mx1.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161088AbXB0Jek (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 04:34:40 -0500
+Received: from Relay1.suse.de (mail2.suse.de [195.135.221.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 7605412205;
+	Tue, 27 Feb 2007 10:34:39 +0100 (CET)
+Mail-Followup-To: Pavel Roskin <proski@gnu.org>,
+	Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1172548300.5835.48.camel@dv>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40703>
 
-Internal function apply_line() is called to copy both context lines
-and added lines to the output buffer, while possibly fixing the
-whitespace breakages depending on --whitespace=strip settings.
-However, it did its fix-up on both context lines and added lines.
 
-This resulted in two symptoms:
+--CE+1k2dSO48ffgeK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- (1) The number of lines reported to have been fixed up included
-     these context lines.
+* Pavel Roskin <proski@gnu.org> [2007-02-27 04:51]:
+>=20
+> Then please set up your window manager or design an icon.  Stealing some
+> other project's icon is not nice.
 
- (2) However, the lines actually shown were limited to the added
-     lines that had whitespace breakages.
+I considered as icon for git in general, not for webgit specifically.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- builtin-apply.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+Regards,
+Bernhard
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index abe3538..bec95d6 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -1539,7 +1539,8 @@ static int apply_line(char *output, const char *patch, int plen)
- 	int need_fix_leading_space = 0;
- 	char *buf;
- 
--	if ((new_whitespace != strip_whitespace) || !whitespace_error) {
-+	if ((new_whitespace != strip_whitespace) || !whitespace_error ||
-+	    *patch != '+') {
- 		memcpy(output, patch + 1, plen);
- 		return plen;
- 	}
--- 
-1.5.0.2.775.g1a500
+--CE+1k2dSO48ffgeK
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFF4/suiGU2lt2vZFQRAsyEAKCAdKih0AFvguVHzfhbM/LU24J2YACcCHdK
+DEvVkyDAiQ3RQ6RL8wMlPYc=
+=uYIH
+-----END PGP SIGNATURE-----
+
+--CE+1k2dSO48ffgeK--
