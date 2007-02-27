@@ -1,70 +1,67 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Implement core.symlinks to support filesystems without symlinks
-Date: Wed, 28 Feb 2007 00:13:45 +0100
-Organization: Dewire
-Message-ID: <200702280013.45598.robin.rosenberg.lists@dewire.com>
-References: <11726125012895-git-send-email-johannes.sixt@telecom.at>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] show_date(): rename the "relative" parameter to "mode"
+Date: Wed, 28 Feb 2007 00:13:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702280012250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702271620390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702271339550.12485@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0702271356300.12485@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0702272322590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0702271503140.12485@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Wed Feb 28 00:12:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>,
+	junkio@cox.net
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 00:13:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMBUX-0000N4-W2
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:12:18 +0100
+	id 1HMBVN-0000mC-B3
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:13:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752014AbXB0XMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 18:12:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbXB0XMO
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:12:14 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:22314 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752014AbXB0XMN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 18:12:13 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 5E2B680339E;
-	Wed, 28 Feb 2007 00:07:08 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 05504-05; Wed, 28 Feb 2007 00:07:08 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 10EE4802809;
-	Wed, 28 Feb 2007 00:07:06 +0100 (CET)
-User-Agent: KMail/1.9.4
-In-Reply-To: <11726125012895-git-send-email-johannes.sixt@telecom.at>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1752017AbXB0XNG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 18:13:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbXB0XNG
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:13:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53077 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752017AbXB0XNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 18:13:04 -0500
+Received: (qmail invoked by alias); 27 Feb 2007 23:13:01 -0000
+X-Provags-ID: V01U2FsdGVkX1+XCKUAwCiX2D5p/OvFwWfiogWGbcLd45tRbeCuDd
+	FUcA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0702271503140.12485@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40840>
 
-tisdag 27 februari 2007 22:41 skrev Johannes Sixt:
+Hi,
+
+On Tue, 27 Feb 2007, Linus Torvalds wrote:
+
+> On Tue, 27 Feb 2007, Johannes Schindelin wrote:
 > 
-> Here is a small patch series that adds a configuration variable 
-core.symlinks.
-> From the manual:
+> > On Tue, 27 Feb 2007, Linus Torvalds wrote:
+> > 
+> > > Side note: one of the reasons I like having more fine-grained date 
+> > > flags is that I've occasionally wanted a "show in UTC time" or "show 
+> > > everything in *my* local time" option.
+> > 
+> > I found the --relative-date option very useful to that end, if a bit 
+> > long to type.
 > 
-> core.symlinks::
-> 	If false, symbolic links are checked out as small plain files that
-> 	contain the link text. gitlink:git-update-index[1] and
-> 	gitlink:git-add[1] will not change the recorded type to regular
-> 	file. Useful on filesystems like FAT that do not support
-> 	symbolic links. True by default.
+> That really doesn't work for stuff that is more than a day old. The 
+> difference between "3 weeks ago" and "3 weeks ago" is not usually very 
+> obvious.
+> 
+> (Hint: often they are days apart, but the relative date-format will just 
+> hide any differences due to excessive granularity).
 
-How useful is that? The problem is that those links won't work so the checkout 
-will be broken. Creating copies would be less broken since the "links" could 
-still be used. It should be possible to use the index to see which file is an 
-original and which is a symblink, provided both are in the same repository.
-Then maybe fall back to this approach if the symlink target cannot be 
-resolved.
+Maybe we need --relative-but-verbose-date?
 
-I'm not sure how people use symbolic links in git, but I'd imagine they 
-typically point to a file  in the same repository.
-
--- robin
+Ciao,
+Dscho
