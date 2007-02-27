@@ -1,65 +1,77 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: pack v4 status
-Date: Tue, 27 Feb 2007 23:15:43 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702272314540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070227155042.GB3230@spearce.org>
- <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org>
+Subject: Re: Replacement for cvs2cl, for generating ChangeLog
+Date: Tue, 27 Feb 2007 23:22:11 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702272317510.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <877iu3q13r.fsf@latte.josefsson.org> <200702271257.37437.andyparkins@gmail.com>
+ <200702272227.05244.robin.rosenberg.lists@dewire.com>
+ <7v649nclsq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Nicolas Pitre <nico@cam.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Feb 27 23:15:55 2007
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Simon Josefsson <simon@josefsson.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Feb 27 23:22:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMAbw-0008Em-Um
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:15:53 +0100
+	id 1HMAiJ-0002ti-Cp
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 23:22:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbXB0WPp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 17:15:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbXB0WPp
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:15:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:43667 "HELO mail.gmx.net"
+	id S1751832AbXB0WWQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 17:22:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751916AbXB0WWQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 17:22:16 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54246 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751934AbXB0WPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 17:15:44 -0500
-Received: (qmail invoked by alias); 27 Feb 2007 22:15:43 -0000
-X-Provags-ID: V01U2FsdGVkX1/6N5Yt+uH6P6OLf0Iv/snCupn3PBex4SBL7kpR/3
-	COJA==
+	id S1751832AbXB0WWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 17:22:15 -0500
+Received: (qmail invoked by alias); 27 Feb 2007 22:22:14 -0000
+X-Provags-ID: V01U2FsdGVkX18GnL8LbRoGgArcdIFvooitgaUnY7j9em9bpicoTR
+	VG9w==
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org>
+In-Reply-To: <7v649nclsq.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40824>
 
 Hi,
 
-On Tue, 27 Feb 2007, Linus Torvalds wrote:
+On Tue, 27 Feb 2007, Junio C Hamano wrote:
 
-> On Tue, 27 Feb 2007, Shawn O. Pearce wrote:
-> > 
-> > We have thus far reformatted OBJ_TREEs with a new dictionary based
-> > compression scheme.  In this scheme we pool the filenames and modes
-> > that appear within trees into a single table within the packfile.
-> > All trees are then converted to use a 22 byte record format:
-> > 
-> >   - 2 byte network byte order index into the string pool
-> >   - 20 byte SHA-1
+> It's been a while I looked at the coding guideline the last time, but I 
+> think GNU convention wants you to say "filename (function)" when 
+> applicable.  Which I happen to think makes much more sense than the 
+> filename alone.
 > 
-> Umm. Am I missing something, or is this totally braindamaged?
-> 
-> Are you really expecting there to never be more than 64k basenames? 
-> Trust me, that's a totally broken assumption. Anything that tracks 
-> generated stuff will _easily_ have several tens of thousands of random 
-> filenames even in a single tree, much less over the whole history of the 
-> repository.
+> The information that would appear in "log -p --pretty" output needs to 
+> be condensed to obtain such a log entry.  You _could_ still do that as a 
+> built-in if you really wanted to, but I tend to think that it is much 
+> better to implement such a specialized processing (for one thing, what a 
+> function is depends on the programming language you are reading from) as 
+> an external postprocessing filter that people can more easily tweak for 
+> their specific needs.
 
-The sane thing, of course, is to use some sort of prefix coding, together 
-with an escape code.
+It would be easy to write a consume() function (called with context 
+== 0) which takes the information from the "@@" lines.
+
+But the builtin -- as the script -- would suffer from the following 
+problem:
+
+-- snip --
++}
++
++static int new_function(void)
+-- snap --
+
+> That's why I keep stressing that one good thing about git is it is 
+> easily scriptable.
+
+IMHO it is easier to get right as a builtin. But as I said, I am not 
+feeling too strongly about it.
 
 Ciao,
 Dscho
