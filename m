@@ -1,70 +1,64 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH 2/2] cvsserver: Remove trailing "\n" from commithash in checkin function
-Date: Tue, 27 Feb 2007 12:49:09 +0000
-Message-ID: <200702271249.09596.andyparkins@gmail.com>
-References: <200702210908.59579.andyparkins@gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: How do get a specific version of a particular file?
+Date: Tue, 27 Feb 2007 13:49:42 +0100
+Message-ID: <81b0412b0702270449r7aced195xa0a24af78d94243a@mail.gmail.com>
+References: <E1HM1XL-00071C-N5@candygram.thunk.org>
 Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 27 13:49:23 2007
+Cc: git@vger.kernel.org
+To: "Theodore Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Feb 27 13:49:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM1li-00077I-UL
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 13:49:23 +0100
+	id 1HM1m9-0007K4-9b
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 13:49:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030609AbXB0MtO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 07:49:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030614AbXB0MtN
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 07:49:13 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:39427 "EHLO
-	369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030609AbXB0MtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 07:49:13 -0500
-Received: from dvr.360vision.com ([192.189.1.65]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
-	 Tue, 27 Feb 2007 12:51:19 +0000
-Received: from localhost ([127.0.0.1])
-	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1HM1lW-0005oQ-00
-	for <git@vger.kernel.org>; Tue, 27 Feb 2007 12:49:10 +0000
-In-Reply-To: <200702210908.59579.andyparkins@gmail.com>
-X-TUID: 4ca6e8228c336785
-X-UID: 264
-X-Length: 1370
+	id S1030611AbXB0Mtq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 07:49:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030614AbXB0Mtp
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 07:49:45 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:12048 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030611AbXB0Mtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 07:49:45 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1093189uga
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 04:49:44 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XM1hXnlD0bM+FdtRLAcs93xqrpjPrHgFmXgnUGKFJW+T+A8/F+sHNI1wGEUJKggMc4zspistdkq/jxQUgm2PSi4BXPzppuxYlXHWK0hB5MXEmW1isfhjvUP4PGTLQMxJLVrk77CR370wld2NkOkQJ0MaMDKF7DRDy1liYI5gP68=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=H+3enU/3OIo9lmz/Sw8oq2A8Tp9EYCTzMDn17Rsvx4Q9hMGJN+ODnuCfUwn1UmE55aN0qAKbYv4u57tfvSYLGCBt6esndJlG9GHWe1DNe3y2PvaZ2vjQZCXvfNOrspCDMi9eSpH/QnsqL00UwvxWkx/IZKEurzj6/Wwr52BzOHw=
+Received: by 10.78.47.15 with SMTP id u15mr566681huu.1172580583067;
+        Tue, 27 Feb 2007 04:49:43 -0800 (PST)
+Received: by 10.78.139.9 with HTTP; Tue, 27 Feb 2007 04:49:42 -0800 (PST)
+In-Reply-To: <E1HM1XL-00071C-N5@candygram.thunk.org>
 Content-Disposition: inline
-X-OriginalArrivalTime: 27 Feb 2007 12:51:19.0890 (UTC) FILETIME=[FA328B20:01C75A6D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40725>
 
-The commithash for updating the ref is obtained from a call to
-git-commit-tree.  However, it was returned (and stored) with the
-trailing newline.  This meant that the later call to git-update-ref that
-was trying to update to $commithash was including the newline in the
-parameter - obviously that hash would never exist, and so git-update-ref
-would always fail.
+On 2/27/07, Theodore Ts'o <tytso@mit.edu> wrote:
+>
+> So given a particular tree-ish and a pathname, I'd like get the contents
+> of that particular file as of a particular revision.  i.e., the
+> equivalent of:
+>
+>         cvs -r v1.37 -p e2fsck/pass1.c
+> or
+>         bk cat -r 2345 e2fsck/pass1.c
+>
+> The closest I've been able to come is to use
+>
+>         git archive --format=zip v1.37 e2fsck/pass1.c | gunzip
+>
 
-The solution is to chomp() the commithash as soon as it is returned by
-git-commit-tree.
+git cat-file -p <objname>:file
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- git-cvsserver.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 8e12f81..f4b8bd2 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -1152,6 +1152,7 @@ sub req_ci
-     close $msg_fh;
- 
-     my $commithash = `git-commit-tree $treehash -p $parenthash < $msg_filename`;
-+	chomp($commithash);
-     $log->info("Commit hash : $commithash");
- 
-     unless ( $commithash =~ /[a-zA-Z0-9]{40}/ )
--- 
-1.5.0.2.778.gdcb06
+I.e.: git cat-file v1.37:e2fsck/pass1.c
