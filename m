@@ -1,58 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] commit-tree: bump MAX_PARENTS to 128
-Date: Tue, 27 Feb 2007 06:39:38 -0500
-Message-ID: <20070227113938.GA5423@coredump.intra.peff.net>
-References: <20070226121557.GA18114@coredump.intra.peff.net> <7virdnhpbt.fsf@assigned-by-dhcp.cox.net> <20070227105212.GA21757@coredump.intra.peff.net> <200702271131.57856.andyparkins@gmail.com>
+From: Simon Josefsson <simon@josefsson.org>
+Subject: Replacement for cvs2cl, for generating ChangeLog
+Date: Tue, 27 Feb 2007 12:41:28 +0100
+Message-ID: <877iu3q13r.fsf@latte.josefsson.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 27 12:39:48 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 27 12:51:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HM0gJ-0001MR-Nw
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 12:39:44 +0100
+	id 1HM0rk-0006J0-Vd
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 12:51:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030589AbXB0Ljl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 06:39:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933047AbXB0Ljl
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 06:39:41 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4956 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933044AbXB0Ljk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 06:39:40 -0500
-Received: (qmail 16752 invoked from network); 27 Feb 2007 06:39:53 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 27 Feb 2007 06:39:53 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Feb 2007 06:39:38 -0500
-Content-Disposition: inline
-In-Reply-To: <200702271131.57856.andyparkins@gmail.com>
+	id S1750741AbXB0Lva (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 06:51:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750810AbXB0Lva
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 06:51:30 -0500
+Received: from 178.230.13.217.in-addr.dgcsystems.net ([217.13.230.178]:59972
+	"EHLO yxa.extundo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbXB0Lv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 06:51:29 -0500
+X-Greylist: delayed 589 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Feb 2007 06:51:28 EST
+Received: from localhost.localdomain (yxa.extundo.com [217.13.230.178])
+	(authenticated bits=0)
+	by yxa.extundo.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l1RBfTS2005031
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Tue, 27 Feb 2007 12:41:29 +0100
+X-Hashcash: 1:22:070227:git@vger.kernel.org::LBC7E5EsssdPyLVO:Knko
+OpenPGP: id=B565716F; url=http://josefsson.org/key.txt
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.94 (gnu/linux)
+X-Spam-Status: No, score=-1.9 required=4.0 tests=AWL,BAYES_00,
+	FORGED_RCVD_HELO autolearn=ham version=3.1.1
+X-Spam-Checker-Version: SpamAssassin 3.1.1 (2006-03-10) on yxa-iv
+X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on yxa.extundo.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40713>
 
-On Tue, Feb 27, 2007 at 11:31:52AM +0000, Andy Parkins wrote:
+Hi!  I'm considering switching to git for my projects (shishi, gsasl,
+gnutls, libtasn1, opencdk, ...) and I have some questions:
 
-> > there are dozens of repositories; I would now like to group them in the
-> > same repo for ease of clone/fetch.
-> 
-> It doesn't have fetch or clone support, but perhaps my poorman's submodule 
-> code will help you a bit, until real submodule support appears in git.
+* How do I discard all locally modified or added files?  'cvs upd -C'
+  does some of that, but I've been using a tool 'cvsco' which quickly
+  restore a CVS checkout into a pristine state.
 
-Thanks for the pointer, but it doesn't handle one of my pet peeves with
-many repositories: fetching 25 repositories takes a long time. I have a
-"look at every repository and see if anything needs fetched or pushed"
-script; it takes about 0.5-1.0 seconds per repository. Turning 25
-fetches into 1 makes it a lot nicer to use.
+* Is there a tool that produce ChangeLog files in the GNU format,
+  based on the git logs?  Similar to the 'cvs2cl' tool.  The output
+  should look like:
 
-So of all the problems hoped to be solved by submodule support, I think
-your poor man's submodule support solves the ones I don't care about
-(tracking external repositories with merge resolution) but not the one I
-do (fetch/clone effort). :)
+2007-02-22  Simon Josefsson <simon@josefsson.org>
 
--Peff
+	* link-warning.h, gl/getaddrinfo.c, gl/gnulib.mk, gl/string_.h,
+	gl/m4/gnulib-comp.m4, gl/m4/string_h.m4, lgl/Makefile.am,
+	lgl/snprintf.c, lgl/snprintf.h, lgl/stdio_.h, lgl/string_.h,
+	lgl/unistd_.h, lgl/m4/gnulib-comp.m4, lgl/m4/intdiv0.m4,
+	lgl/m4/snprintf.m4, lgl/m4/stdio_h.m4, lgl/m4/string_h.m4,
+	lgl/m4/unistd_h.m4: Update.
+
+Thanks,
+Simon
