@@ -1,73 +1,89 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] Create a symbolic link as a regular file on filesystems without symlinks.
-Date: Tue, 27 Feb 2007 22:41:39 +0100
-Message-ID: <11726125052184-git-send-email-johannes.sixt@telecom.at>
-References: <11726125012895-git-send-email-johannes.sixt@telecom.at> <11726125033437-git-send-email-johannes.sixt@telecom.at> <1172612504272-git-send-email-johannes.sixt@telecom.at>
-Cc: Johannes Sixt <johannes.sixt@telecom.at>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 27 22:42:07 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Replacement for cvs2cl, for generating ChangeLog
+Date: Tue, 27 Feb 2007 13:50:29 -0800
+Message-ID: <7v649nclsq.fsf@assigned-by-dhcp.cox.net>
+References: <877iu3q13r.fsf@latte.josefsson.org>
+	<200702271257.37437.andyparkins@gmail.com>
+	<200702272227.05244.robin.rosenberg.lists@dewire.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Simon Josefsson <simon@josefsson.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Feb 27 22:51:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMA58-0000yR-2J
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:41:58 +0100
+	id 1HMAE2-0005JI-VB
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 22:51:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbXB0Vlt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 16:41:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbXB0Vlt
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:41:49 -0500
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:46978 "EHLO
-	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750835AbXB0Vlr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 16:41:47 -0500
-Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 8A92B976FC;
-	Tue, 27 Feb 2007 22:41:45 +0100 (CET)
-X-Mailer: git-send-email 1.5.0.19.gddff
-In-Reply-To: <1172612504272-git-send-email-johannes.sixt@telecom.at>
+	id S1751911AbXB0Vue (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 16:50:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbXB0Vue
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 16:50:34 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:43325 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751911AbXB0Vud (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 16:50:33 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070227215030.RACI2670.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 27 Feb 2007 16:50:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id UlqV1W00F1kojtg0000000; Tue, 27 Feb 2007 16:50:29 -0500
+In-Reply-To: <200702272227.05244.robin.rosenberg.lists@dewire.com> (Robin
+	Rosenberg's message of "Tue, 27 Feb 2007 22:27:05 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40816>
 
-If core.symlinks = false, the filesystem is actually populated with
-a regular file that contains the link text.
+Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- builtin-apply.c |    2 +-
- entry.c         |    5 +++++
- 2 files changed, 6 insertions(+), 1 deletions(-)
+> tisdag 27 februari 2007 13:57 skrev Andy Parkins:
+>> On Tuesday 2007 February 27 11:41, Simon Josefsson wrote:
+>> 
+>> > * How do I discard all locally modified or added files?  'cvs upd -C'
+>> >   does some of that, but I've been using a tool 'cvsco' which quickly
+>> >   restore a CVS checkout into a pristine state.
+>> 
+>> Not that I know of, but git has some lovely log generation tools, so I'm sure 
+>> it could be easily done with a snippet of perl - or perhaps a change to git's 
+>> own log generator to support
+>> 
+>>  git-rev-list --pretty=gnucl
+>> 
+> gir-rev-list ??
+>
+> Extend git-shortlog with --gnucl instead. What seems missing is the grouping
+> of changes by date. git-shortlog only groups by author.
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index bec95d6..1636807 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -2284,7 +2284,7 @@ static int try_create_file(const char *path, unsigned int mode, const char *buf,
- {
- 	int fd;
- 
--	if (S_ISLNK(mode))
-+	if (trust_symlink_fmt && S_ISLNK(mode))
- 		/* Although buf:size is counted string, it also is NUL
- 		 * terminated.
- 		 */
-diff --git a/entry.c b/entry.c
-index c2641dd..3d5c0e4 100644
---- a/entry.c
-+++ b/entry.c
-@@ -100,6 +100,11 @@ static int write_entry(struct cache_entry *ce, char *path, struct checkout *stat
- 		if (to_tempfile) {
- 			strcpy(path, ".merge_link_XXXXXX");
- 			fd = mkstemp(path);
-+		} else if (!trust_symlink_fmt) {
-+			/* write a regular file */
-+			fd = create_file(path, 0666);
-+		}
-+		if (to_tempfile || !trust_symlink_fmt) {
- 			if (fd < 0) {
- 				free(new);
- 				return error("git-checkout-index: unable to create "
--- 
-1.5.0.19.gddff
+If GNU changelog _were_ to have one entry per day, mixing
+changes from different commits together, that might be a good
+approach. I do not think GNU changelog guideline can be _THAT_
+broken.
+
+Listing of filenames of changed files in the log, followed by
+short description of the nature of the change (e.g. "Updated to
+do blah", "New File"), shows the CVS mentality "File matters",
+and that was what Simon's original example showed.  It's been a
+while I looked at the coding guideline the last time, but I
+think GNU convention wants you to say "filename (function)" when
+applicable.  Which I happen to think makes much more sense than
+the filename alone.
+
+The information that would appear in "log -p --pretty" output
+needs to be condensed to obtain such a log entry.  You _could_
+still do that as a built-in if you really wanted to, but I tend
+to think that it is much better to implement such a specialized
+processing (for one thing, what a function is depends on the
+programming language you are reading from) as an external
+postprocessing filter that people can more easily tweak for
+their specific needs.
+
+That's why I keep stressing that one good thing about git is it
+is easily scriptable.
