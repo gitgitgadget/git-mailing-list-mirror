@@ -1,63 +1,90 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: Better icon for qgit
-Date: Mon, 26 Feb 2007 22:51:40 -0500
-Message-ID: <1172548300.5835.48.camel@dv>
-References: <1172279202.19767.12.camel@dv>
-	 <e5bfff550702232247k447cf33asc47db99165eb7e4d@mail.gmail.com>
-	 <20070226094345.GA10518@strauss.suse.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Support 64-bit indexes for pack files.
+Date: Mon, 26 Feb 2007 23:32:43 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702262306100.29426@xanadu.home>
+References: <200702261540.27080.ttelford.groups@gmail.com>
+ <20070226235510.GF1639@spearce.org>
+ <alpine.LRH.0.82.0702261916560.29426@xanadu.home>
+ <20070227003118.GH1639@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-To: Bernhard Walle <bwalle@suse.de>
-X-From: git-owner@vger.kernel.org Tue Feb 27 04:51:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Feb 27 05:32:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HLtNU-0006JW-84
-	for gcvg-git@gmane.org; Tue, 27 Feb 2007 04:51:48 +0100
+	id 1HLu1H-0006SB-O2
+	for gcvg-git@gmane.org; Tue, 27 Feb 2007 05:32:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751375AbXB0Dvp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Feb 2007 22:51:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751398AbXB0Dvp
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 22:51:45 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:53304 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751375AbXB0Dvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Feb 2007 22:51:44 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <proski@gnu.org>)
-	id 1HLtLs-0003qd-UF
-	for git@vger.kernel.org; Mon, 26 Feb 2007 22:50:09 -0500
-Received: from proski by gnu.org with local (Exim 4.66)
-	(envelope-from <proski@gnu.org>)
-	id 1HLtNM-00047C-Np; Mon, 26 Feb 2007 22:51:40 -0500
-In-Reply-To: <20070226094345.GA10518@strauss.suse.de>
-X-Mailer: Evolution 2.9.91 (2.9.91-3.fc7) 
+	id S1751493AbXB0Ecq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Feb 2007 23:32:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751516AbXB0Ecq
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Feb 2007 23:32:46 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:37984 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751493AbXB0Ecp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Feb 2007 23:32:45 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JE300GGATYJ1QQ1@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 26 Feb 2007 23:32:44 -0500 (EST)
+In-reply-to: <20070227003118.GH1639@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40692>
 
-On Mon, 2007-02-26 at 10:43 +0100, Bernhard Walle wrote:
+On Mon, 26 Feb 2007, Shawn O. Pearce wrote:
 
-> > In particular your icon does not show well in ALT+TAB app chooser,
-> > while the Bernhard's one does.
+> Nicolas Pitre <nico@cam.org> wrote:
+> > Actually I've been thinking about another format already.
+> > 
+> > What about keeping the pack offset as 32 bits like it is today, but for 
+> > index v2 if the top bit is set then this become an index into another 
+> > table containing 64-bit offsets as needed.  This way there is no waste 
+> > of space for most projects where the pack has yet to reach the 2GB limit 
+> > for many years to come.
+> 
+> Actually Troy's patch tries to do this by using the current format
+> and only switching to the new one if the packfile exceeds 4 GiB.
+> Rather smart.
 
-That's probably because I was using circles that don't scale well.  I
-could try a bigger icon, but I don't know which size to use to make sure
-it looks good at all sizes.
+Yes I saw the patch.  But what I propose is different.  In fact I'd 
+require far less changes to the existing code.  The idea is to continue 
+to store a 32-bit value along with the SHA1 just like we do today.  
+Then, appended to that would be another table containing a list of 
+64-bit offsets.
 
-> I don't really care which icon, it just should have an icon because I
-> look always at the icon in the task switcher so I can better
-> distinguish qgit from other applications.
+Now if the offset stored in the index is smaller than 2GB you store it 
+as we do today.  If it is >= 2GB then a 64-bit index would be added to 
+the extra offset table and the 32-bit entry along with the SHA1 would be 
+an index into that second table instead, with the top bit set to 
+distinguish it from a normal 32-bit offset (actually 31 bits).  So for 
+offsets larger than 31 bits then they have an additional level of 
+indirection.
 
-Then please set up your window manager or design an icon.  Stealing some
-other project's icon is not nice.
+The code to implement this would be minimal.  And since objects placed 
+at the end of a pack (those more likely to incure the indirection 
+overhead) are further back in history they won't get accessed 
+very often anyway.
 
-Marco, I really appreciate that you have reverted that patch.
+Then nothing prevents us from inserting the next-object-index table in 
+between (its size is known while the 64-bit offset one may vary) then 
+the code that doesn't care about it need no look at it. 
 
--- 
-Regards,
-Pavel Roskin
+> One thought I had here was to expand the fan-out table from 1<<8
+> entries to 1<<16 entries, then store only the low 18 bytes of
+> the SHA-1.  We would have another 2 bytes worth of space to store
+> the offset, pushing our total offset up to 48 bits.
+
+That would penalize small packs a lot.  the index would always start 
+from 256KB in size.  With a pack of 100 objects (our current treshold 
+for keeping a pack) that means a 258KB index file.  Currently the index 
+file for a 100-object pack is 3.4KB.
+
+
+Nicolas
