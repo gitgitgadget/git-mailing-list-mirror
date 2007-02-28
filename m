@@ -1,79 +1,62 @@
-From: Bill Lear <rael@zopyra.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Error "fatal: cannot pread pack file: Success"
-Date: Wed, 28 Feb 2007 09:48:31 -0600
-Message-ID: <17893.42063.186763.291346@lisa.zopyra.com>
-References: <17892.64236.443170.43061@lisa.zopyra.com>
-	<20070228035713.GC5597@spearce.org>
-	<20070228044719.GA6068@spearce.org>
-	<17893.40847.313519.283218@lisa.zopyra.com>
+Date: Wed, 28 Feb 2007 10:54:12 -0500
+Message-ID: <20070228155412.GC5479@spearce.org>
+References: <17892.64236.443170.43061@lisa.zopyra.com> <20070228035713.GC5597@spearce.org> <20070228044719.GA6068@spearce.org> <17893.40847.313519.283218@lisa.zopyra.com> <17893.42063.186763.291346@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 16:48:37 2007
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 16:55:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMR2i-0007Vg-7s
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:48:36 +0100
+	id 1HMR8l-0001ji-1W
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:54:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750844AbXB1Pse (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 10:48:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750869AbXB1Pse
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:48:34 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60585 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750844AbXB1Pse (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 10:48:34 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1SFmXc21837;
-	Wed, 28 Feb 2007 09:48:33 -0600
-In-Reply-To: <17893.40847.313519.283218@lisa.zopyra.com>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1751966AbXB1PyQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 10:54:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbXB1PyQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:54:16 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:52631 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751966AbXB1PyP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 10:54:15 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HMR84-0000ja-Ce; Wed, 28 Feb 2007 10:54:08 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 36A6E20FBAE; Wed, 28 Feb 2007 10:54:12 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <17893.42063.186763.291346@lisa.zopyra.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40951>
 
-On Wednesday, February 28, 2007 at 09:28:15 (-0600) Bill Lear writes:
->On Tuesday, February 27, 2007 at 23:47:19 (-0500) Shawn O. Pearce writes:
->>"Shawn O. Pearce" <spearce@spearce.org> wrote:
->>> Bill Lear <rael@zopyra.com> wrote:
->>> > Using 1.5.0.1.  Can't see what is wrong with this clone...
->>> ...
->>> > Indexing 4589 objects.
->>> > remote: Total 4589 (delta 2209), reused 4589 (delta 2209)
->>> >  100% (4589/4589) done
->>> > Resolving 2209 deltas.
->>> > fatal: cannot pread pack file: Success
->>> > fatal: index-pack died with error code 128
->>> > fetch-pack from '/home/rael/devel/project/.git' failed.
->>> 
->>> I think the pread() in get_data_from_pack of index-pack is wrong,
->>> it really should be looping until we fill the buffer in case the
->>> OS doesn't fully satisfy our read request the first time.
->>
->>Does this fix your problem?
->
->Just got back: I will try applying this patch and testing with it
->and let you know.
+Bill Lear <rael@zopyra.com> wrote:
+> fatal: cannot pread pack file: Success [n=0; rdy=0; len=207]
+> fatal: index-pack died with error code 128
+> fetch-pack from '/home/rael/devel/fusion/.git' failed.
 
-No, does not fix.  I added a bit more printout on the error:
+Bwhat?!?  Can you print out the offset and the size of the packfile?
+It looks like your pack has been truncated?  Or is this just your
+filesystem saying "nahh, I'm not going to give you that data right
+now, try again later and maybe I will"?
 
-% git clone --bare ~/devel/project
-Initialized empty Git repository in /austin/users/rael/repos/git/project
-remote: Generating pack...
-remote: Done counting 4594 objects.
-remote: Deltifying 4594 objects.
-remote:  100% (4594/4594) done
-Indexing 4594 objects.
-remote: Total 4594 (delta 2210), reused 4591 (delta 2209)
- 100% (4594/4594) done
-Resolving 2210 deltas.
-fatal: cannot pread pack file: Success [n=0; rdy=0; len=207]
-fatal: index-pack died with error code 128
-fetch-pack from '/home/rael/devel/fusion/.git' failed.
+I fail to see how a pread with a length of 207 is getting an EOF
+return unless the packfile is short.
 
-
-Bill
+-- 
+Shawn.
