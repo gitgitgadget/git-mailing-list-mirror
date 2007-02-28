@@ -1,70 +1,66 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: defaults for where to merge from
-Date: Wed, 28 Feb 2007 15:30:42 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0702281526270.15314@reaper.quantumfyre.co.uk>
-References: <es450f$d58$1@sea.gmane.org> <200702281522.14965.andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Show binary file size change in diff --stat
+Date: Wed, 28 Feb 2007 16:37:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702281630430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702281535070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200702281515.10016.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org, Paolo Bonzini <bonzini@gnu.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 28 16:30:53 2007
+X-From: git-owner@vger.kernel.org Wed Feb 28 16:37:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMQlX-00007Q-A4
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:30:51 +0100
+	id 1HMQrb-0002iy-J4
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:37:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751876AbXB1Par (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 10:30:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751836AbXB1Par
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:30:47 -0500
-Received: from neutron.datavampyre.co.uk ([212.159.54.235]:49878 "EHLO
-	neutron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751876AbXB1Paq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 10:30:46 -0500
-Received: (qmail 31673 invoked by uid 103); 28 Feb 2007 15:30:44 +0000
-Received: from 192.168.0.16 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90/2668. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.16):. 
- Processed in 0.047437 secs); 28 Feb 2007 15:30:44 -0000
-Received: from unknown (HELO reaper.quantumfyre.co.uk) (192.168.0.16)
-  by neutron.datavampyre.co.uk with SMTP; 28 Feb 2007 15:30:44 +0000
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <200702281522.14965.andyparkins@gmail.com>
+	id S1751910AbXB1PhE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 10:37:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751922AbXB1PhE
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:37:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57693 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751910AbXB1PhD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 10:37:03 -0500
+Received: (qmail invoked by alias); 28 Feb 2007 15:37:02 -0000
+X-Provags-ID: V01U2FsdGVkX181A4EDlXQ1n3TJovF16fsHUmRGnKdJy8ch89Kg8U
+	KAaw==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200702281515.10016.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40942>
+
+Hi,
 
 On Wed, 28 Feb 2007, Andy Parkins wrote:
 
-> On Wednesday 2007 February 28 14:53, Paolo Bonzini wrote:
->> As can be seen from my other messages, I'm experimenting a little with
->> git and trying to understand how its workflow compares with arch.  Right
->> now, my procedure for branching off a remote archive is:
->>
->>    git checkout -b branchname remote/upstreambranch
->>    git config --add branch.branchname.remote remote
->>    git config --add branch.branchname.merge refs/heads/upstreambranch
->>
->> Is there a reason why "git branch" and "git checkout -b" should not
->> automatically do the two "git-config --add"s when the source branch is
->> remote?
->
-> I can see why that would be handy, but I often make short lived branches off a
-> remote; and I wouldn't want my config cluttered up with branch defintions.
+> +				printf("%s%i%s", add_c, added, reset);
 
-How about adding an option to tell checkout/branch that a tracking branch 
-is wanted (-t perhaps) - or perhaps a way to say that you don't want to 
-track the remote (depending on which is more popular)?
+Please use "%d" instead of "%i" (I forgot why, but I remember Junio saying 
+that we should do it...).
 
-Certainly would be a nice feature to have ...
+> +			if (added != 0 && deleted != 0 )
+> +				printf(" -> ");
 
--- 
-Julian
+Either you want to have
 
-  ---
-Meg Griffin:  Somebody's in the closet!
-Jeff Foxworthy:  You know you're a redneck when your gun rack has a gun rack on it.
-Stewie Griffin:  You suck!
+	Bin +123456 bytes
+
+or
+
+	Bin 0 -> 123456 bytes
+
+for added files (and the obvious thing for deleted ones), but with your 
+patch, both added and deleted get
+
+	Bin 123456 bytes
+
+which is not so optimal.
+
+Ciao,
+Dscho
