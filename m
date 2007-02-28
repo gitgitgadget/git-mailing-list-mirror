@@ -1,84 +1,85 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: pack v4 status
-Date: Tue, 27 Feb 2007 22:45:55 -0500
-Message-ID: <20070228034555.GA5597@spearce.org>
-References: <20070227155042.GB3230@spearce.org> <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org> <alpine.LRH.0.82.0702271717080.29426@xanadu.home> <7vwt23b54a.fsf@assigned-by-dhcp.cox.net>
+From: Bill Lear <rael@zopyra.com>
+Subject: Error "fatal: cannot pread pack file: Success"
+Date: Tue, 27 Feb 2007 21:45:48 -0600
+Message-ID: <17892.64236.443170.43061@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 28 04:46:21 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 28 04:46:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMFli-0008Aq-Of
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 04:46:19 +0100
+	id 1HMFls-0008FG-93
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 04:46:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750837AbXB1DqP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 22:46:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbXB1DqP
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 22:46:15 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:32922 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837AbXB1DqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 22:46:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HMFlE-00075h-Ag; Tue, 27 Feb 2007 22:45:48 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B06D520FBAE; Tue, 27 Feb 2007 22:45:55 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vwt23b54a.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750838AbXB1DqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 22:46:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbXB1DqT
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 22:46:19 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61859 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750838AbXB1DqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 22:46:17 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1S3k4310391;
+	Tue, 27 Feb 2007 21:46:04 -0600
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40885>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> Nicolas Pitre <nico@cam.org> writes:
-> > The idea is to deal with only tree objects containing the 64K most 
-> > frequently used base names and fall back to the current tree object 
-> > encoding for objects that couldn't be represented that way.
-> 
-> Ah, I was wondering the same thing as Linus after seeing shawn
-> talked about the 2-byte prefix on #git. Falling back to an
-> alternate encoding for rarer cases makes sense.
+Using 1.5.0.1.  Can't see what is wrong with this clone...
 
-Right.  Git is already fast, and already compresses the object data
-very well.  But I think we can make things faster without violating
-the basic assumptions of "whole project history", and it just turns
-out that those encodings are also making the data smaller for the
-common case of human maintained source code.  Which of course is
-one of the primary uses for Git, but is obviously not the only use.
+% df -h .
+Filesystem            Size  Used Avail Use% Mounted on
+store:/storage/disk1
+                      682G  113G  535G  18% /austin
 
-In the worst case scenario we'll be doing exactly what we are
-doing today with regards to encoding. That performance and disk
-space usage is already known and considered "very, very fast" and
-"very small".  ;-)
+% git clone --bare ~/devel/project
+Initialized empty Git repository in /austin/users/rael/repos/git/project/
+remote: Generating pack...
+remote: Done counting 4589 objects.
+remote: Deltifying 4589 objects.
+ 100% (4589/4589) done89) done
+Indexing 4589 objects.
+remote: Total 4589 (delta 2209), reused 4589 (delta 2209)
+ 100% (4589/4589) done
+Resolving 2209 deltas.
+fatal: cannot pread pack file: Success
+fatal: index-pack died with error code 128
+fetch-pack from '/home/rael/devel/project/.git' failed.
 
-In the best case scenario (human managed source like linux.git,
-git.git) we'll scream with pack v4.  The rev-list stats I posted
-from just the tree encoding switch not only saved 3 MiB of disk
-space but improved total running time by 12.5%.  Nico and I know
-we can still do better.
+% mkdir project
+% touch project/foo
+% ls -l project/foo
+-rw-r--r--  1 rael software 0 Feb 27 21:44 project/foo
+% rm -rf project
 
-With 15k basenames in linux.git we're filling only 23.6% of the
-available namespace within a single packfile.  I think that by the
-time we have enough basenames to break 64K we'll be several years
-out and be talking about historical packs vs. active packs.
+% cd ~/devel
+% df -h .
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda5             186G   82G   95G  47% /home
+% mkdir test
+% cd test
 
--- 
-Shawn.
+% git clone --bare ~/devel/project
+Initialized empty Git repository in /home/rael/test/project/
+remote: Generating pack...
+remote: Done counting 4589 objects.
+remote: Deltifying 4589 objects.
+  7Indexing 4589 objects. done
+ 100% (4589/4589) done89) done4589) done
+remote: Total 4589 (delta 2209), reused 4589 (delta 2209)
+ 100% (4589/4589) done
+Resolving 2209 deltas.
+ 100% (2209/2209) done
+
+This happens repeatedly.  git fsck of my repo shows no problems.
+
+Anything else I can check?
+
+
+Bill
