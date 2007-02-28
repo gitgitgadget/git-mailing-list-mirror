@@ -1,174 +1,147 @@
-From: Michael Coleman <tutufan@gmail.com>
-Subject: [PATCH] git-send-email: abort/usage on bad option
-Date: Tue, 27 Feb 2007 22:47:54 -0600
-Message-ID: <11726380742591-git-send-email-tutufan@gmail.com>
-Cc: Michael Coleman <tutufan@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 05:48:05 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: My git repo is broken, how to fix it ?
+Date: Tue, 27 Feb 2007 20:57:28 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702272039540.12485@woody.linux-foundation.org>
+References: <200702281036.30539.litvinov2004@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Alexander Litvinov <litvinov2004@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 05:57:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMGjU-0006sc-P1
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 05:48:05 +0100
+	id 1HMGsT-0002Nv-SL
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 05:57:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613AbXB1Er7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 23:47:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751630AbXB1Er7
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 23:47:59 -0500
-Received: from nz-out-0506.google.com ([64.233.162.231]:63028 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751613AbXB1Er6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 23:47:58 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so32320nze
-        for <git@vger.kernel.org>; Tue, 27 Feb 2007 20:47:57 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        b=FuYYEGyeJIb5mpeNcVvgN9T3T+zWpCGE436JCHUBPeIJFzjTY86mEZPIFuNGYbaBxYwtfO0tf2JojqxsaIKRwDRLtLBcpxR2xO4xyf0W9cp4n0QRqRqe8IS/BkPQ5FMl5/XRFNVKRe6FpugtJe240V0bWGv4oBkzrYrf6RrRNZw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=KG2RR6D+yEHpNs8wX5Bsp5Gd6Mqb67pgzvXv7heyhmgyzHyb7nKU7EhtH18luZZmTBFHEyMobb83lCKhOIPaqaILUhHY2IxR4HiyL77tyV7b+GOnY9stEQU48fziwjpm+D3+tutbV6x30UxW8bp9AUFtlpbksv4ooEYX6sNCcng=
-Received: by 10.35.9.15 with SMTP id m15mr160800pyi.1172638077492;
-        Tue, 27 Feb 2007 20:47:57 -0800 (PST)
-Received: from tutufan@gmail.com ( [69.154.17.234])
-        by mx.google.com with ESMTP id m2sm194911nzf.2007.02.27.20.47.55;
-        Tue, 27 Feb 2007 20:47:56 -0800 (PST)
-Received: by tutufan@gmail.com (sSMTP sendmail emulation); Tue, 27 Feb 2007 22:47:54 -0600
-X-Mailer: git-send-email 1.5.0.rc3
+	id S1751573AbXB1E5L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 23:57:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751640AbXB1E5L
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 23:57:11 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:39393 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751573AbXB1E5K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 23:57:10 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1S4v8hB031700
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Feb 2007 20:57:08 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1S4v76o007286;
+	Tue, 27 Feb 2007 20:57:07 -0800
+In-Reply-To: <200702281036.30539.litvinov2004@gmail.com>
+X-Spam-Status: No, hits=-0.443 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40896>
 
-Instead of proceeding, abort and give usage message when a bad option
-is seen.
----
- git-send-email.perl |   97 ++++++++++++++++++++++++++++-----------------------
- 1 files changed, 53 insertions(+), 44 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 6a285bf..a71a192 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -34,6 +34,53 @@ sub readline {
- }
- package main;
- 
-+
-+sub usage {
-+	print <<EOT;
-+git-send-email [options] <file | directory>...
-+Options:
-+   --from         Specify the "From:" line of the email to be sent.
-+
-+   --to           Specify the primary "To:" line of the email.
-+
-+   --cc           Specify an initial "Cc:" list for the entire series
-+                  of emails.
-+
-+   --bcc          Specify a list of email addresses that should be Bcc:
-+		  on all the emails.
-+
-+   --compose      Use \$EDITOR to edit an introductory message for the
-+                  patch series.
-+
-+   --subject      Specify the initial "Subject:" line.
-+                  Only necessary if --compose is also set.  If --compose
-+		  is not set, this will be prompted for.
-+
-+   --in-reply-to  Specify the first "In-Reply-To:" header line.
-+                  Only used if --compose is also set.  If --compose is not
-+		  set, this will be prompted for.
-+
-+   --chain-reply-to If set, the replies will all be to the previous
-+                  email sent, rather than to the first email sent.
-+                  Defaults to on.
-+
-+   --no-signed-off-cc Suppress the automatic addition of email addresses
-+                 that appear in a Signed-off-by: line, to the cc: list.
-+		 Note: Using this option is not recommended.
-+
-+   --smtp-server  If set, specifies the outgoing SMTP server to use.
-+                  Defaults to localhost.
-+
-+   --suppress-from Suppress sending emails to yourself if your address
-+                  appears in a From: line.
-+
-+   --quiet	  Make git-send-email less verbose.  One line per email
-+                  should be all that is output.
-+
-+EOT
-+	exit(1);
-+}
-+
- # most mail servers generate the Date: header, but not all...
- sub format_2822_time {
- 	my ($time) = @_;
-@@ -120,6 +167,10 @@ my $rc = GetOptions("from=s" => \$from,
- 		    "dry-run" => \$dry_run,
- 	 );
- 
-+unless ($rc) {
-+    usage();
-+}
-+
- # Verify the user input
- 
- foreach my $entry (@to) {
-@@ -311,50 +362,8 @@ if (@files) {
- 		print $_,"\n" for (@files);
- 	}
- } else {
--	print <<EOT;
--git-send-email [options] <file | directory> [... file | directory ]
--Options:
--   --from         Specify the "From:" line of the email to be sent.
--
--   --to           Specify the primary "To:" line of the email.
--
--   --cc           Specify an initial "Cc:" list for the entire series
--                  of emails.
--
--   --bcc          Specify a list of email addresses that should be Bcc:
--		  on all the emails.
--
--   --compose      Use \$EDITOR to edit an introductory message for the
--                  patch series.
--
--   --subject      Specify the initial "Subject:" line.
--                  Only necessary if --compose is also set.  If --compose
--		  is not set, this will be prompted for.
--
--   --in-reply-to  Specify the first "In-Reply-To:" header line.
--                  Only used if --compose is also set.  If --compose is not
--		  set, this will be prompted for.
--
--   --chain-reply-to If set, the replies will all be to the previous
--                  email sent, rather than to the first email sent.
--                  Defaults to on.
--
--   --no-signed-off-cc Suppress the automatic addition of email addresses
--                 that appear in a Signed-off-by: line, to the cc: list.
--		 Note: Using this option is not recommended.
--
--   --smtp-server  If set, specifies the outgoing SMTP server to use.
--                  Defaults to localhost.
--
--  --suppress-from Suppress sending emails to yourself if your address
--                  appears in a From: line.
--
--   --quiet	Make git-send-email less verbose.  One line per email should be
--		all that is output.
--
--Error: Please specify a file or a directory on the command line.
--EOT
--	exit(1);
-+	print STDERR "\nNo patch files specified!\n\n";
-+	usage();
- }
- 
- # Variables we set as part of the loop over files
--- 
-1.5.0.rc3
+
+On Wed, 28 Feb 2007, Alexander Litvinov wrote:
+> 
+> Some times ago I descide to run fsck and found that by working repo is broken, 
+> while imported repo is correct. Is there way to fix it ? 
+
+Generally, the best way to fix things is (I've written this up at 
+somewhat more length before, but I'm too lazy to find it):
+
+ - back up all your state so that anything you do is re-doable if you 
+   corrupt things more!
+
+ - explode any corrupt pack-files
+
+   See "man git-unpack-objects", and in particular the "-r" flag. Also, 
+   please realize that it only unpacks objects that aren't already 
+   available, so you need to move the pack-file away from its normal 
+   location first (otherwise git-unpack-objects will find all objects 
+   that are in the pack-file in the pack-file itself, and not unpack 
+   anything at all)
+
+ - replace any broken and/or missing objects
+
+   This is the challenging part. Sometimes (hopefully often!) you can find 
+   the missing objects in other copies of the repositories. At other 
+   times, you may need to try to find the data some other way (for 
+   example, maybe your checked-out copy contains the file content that 
+   when hashed will be the missing object?).
+
+ - make sure everything is happy with "git-fsck --full"
+
+ - repack everything to get back to an efficient state again.
+
+And remember: git does _not_ make backups pointless. It hopefully makes 
+backups *easy* (since cloning and pulling is easy), but the basic need for 
+backups does not go away!
+
+> By the way, several times I interrupt git's commands like commit and pull 
+> using Ctrl-C.
+
+Shouldn't matter, at least as long as you are using the native git 
+protocol: git will create objects fully under a temporary name, and then 
+atomically rename things to their right names. 
+
+Using rsync and/or http may not be as safe.
+
+HOWEVER! I do not know how well Windows and/or cygwin does file renames. 
+If cygwin does a rename as a copy + delete, a lot of the safety 
+assumptions just fly out the window.
+
+> I tried to unpack all objects:
+>
+> > git-unpack-objects -r < .git/objects/pack/pack-c4554978bbe079c9a43d6a13546a2fa314fe0884.pack; echo  $?
+> Unpacking 12868 objects
+>  100% (12868/12868) done
+
+Ok, that's a good thing, but see above: I don't think anything should have 
+gotten unpacked, because it found all objects already existing in the very 
+pack-file you tried to unpack.
+
+So you might well need to do
+
+	mv .git/objects/pack/pack-c4554978bbe079c9a43d6a13546a2fa314fe0884.pack oldpack
+	git-unpack-objects -r < oldpack
+
+(or rename the .idx file instead).
+
+Alternatively (and in many ways this migth be better when you're trying to 
+recover something) just create a totally *new* git repo, by doing
+
+	mkdir new-repo
+	cd new-repo
+	git init
+	git unpack-objects -r < ../other-repo/.git/pack/pack-.....pack
+
+and re-create the objects somewhere else - you can do all of this without 
+at all disturbing the old repository (but you'd need to copy all the refs 
+and all the loose objects by hand, of course!)
+
+> No erorts here. But fsck find that broken blob:
+> > git fsck 
+> dangling blob beb992198d4d8813ea51fd1cbbf38313ef490c22
+> 
+> git-cat-file shows me this this is a broken object with correct sha1 sum.
+> 
+> As a cunclusion: my repo has broken file and I don't see there is the brakage. 
+> Can I reconstruct file by sha1 sum :-) or can I do something to stop fsck 
+> warn me ?
+
+You didn't do "--full", so it's not looking inside your pack, so the fsck 
+wasn't very interesting in this case.
+
+And no, you cannot reconstruct the file by sha1 sum, although you may be 
+able to reconstruct the file some *other* way (by looking at the other 
+blobs and remembering what the missing case is), and then you can 
+obviously use the sha1-sum to *confirm* that you reconstructed the file 
+exactly as it was!
+
+So yes, reconstruction of missing objects is possible, but no, you can't 
+do it based purely based on SHA1, you need to base reconstruction on some 
+other information. That's kind of what "cryptographically secure hash" 
+means ;^p
+
+			Linus
