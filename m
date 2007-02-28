@@ -1,69 +1,75 @@
-From: Michael Poole <mdpoole@troilus.org>
-Subject: [PATCH] Correct ordering in git-cvsimport's option documentation
-Date: Tue, 27 Feb 2007 22:27:44 -0500
-Message-ID: <87r6sb6jwv.fsf@graviton.dyn.troilus.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Error "fatal: cannot pread pack file: Success"
+Date: Tue, 27 Feb 2007 22:57:13 -0500
+Message-ID: <20070228035713.GC5597@spearce.org>
+References: <17892.64236.443170.43061@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 04:53:54 2007
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 04:57:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMFt3-0002jW-8X
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 04:53:53 +0100
+	id 1HMFwP-0004AN-1E
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 04:57:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751408AbXB1Dxp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 22:53:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbXB1Dxp
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 22:53:45 -0500
-Received: from 24-75-174-210-st.chvlva.adelphia.net ([24.75.174.210]:54722
-	"EHLO sanosuke.troilus.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751408AbXB1Dxp (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Feb 2007 22:53:45 -0500
-X-Greylist: delayed 1561 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Feb 2007 22:53:45 EST
-Received: by sanosuke.troilus.org (Postfix, from userid 1000)
-	id 1F9FB89C03B; Tue, 27 Feb 2007 22:27:44 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) XEmacs/21.4.19 (linux)
+	id S1751418AbXB1D5S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 22:57:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751443AbXB1D5S
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 22:57:18 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:33234 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751418AbXB1D5R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 22:57:17 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HMFw7-0007Sh-S6; Tue, 27 Feb 2007 22:57:03 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 4BD3D20FBAE; Tue, 27 Feb 2007 22:57:14 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <17892.64236.443170.43061@lisa.zopyra.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40888>
 
-A pair of commits on January 8th added option documentation (for -a,
--S and -L) in the middle of the documentation for the -A option.  This
-makes -A's documentation contiguous again.
+Bill Lear <rael@zopyra.com> wrote:
+> Using 1.5.0.1.  Can't see what is wrong with this clone...
+...
+> Indexing 4589 objects.
+> remote: Total 4589 (delta 2209), reused 4589 (delta 2209)
+>  100% (4589/4589) done
+> Resolving 2209 deltas.
+> fatal: cannot pread pack file: Success
+> fatal: index-pack died with error code 128
+> fetch-pack from '/home/rael/devel/project/.git' failed.
 
-Signed-off-by: Michael Poole <mdpoole@troilus.org>
+What platform is this?  index-pack failed to read using pread(),
+but the error code in errno was 0 (success)?  Huh?
 
----
- git-cvsimport.txt |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+It turns out this is steaming from a short read; we asked for some
+length of bytes but did not get that exact value.  That sounds like
+the packfile is truncated.
 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index f5450de..0d59c06 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -96,11 +96,6 @@ If you need to pass multiple options, separate them with a comma.
- -s <subst>::
- 	Substitute the character "/" in branch names with <subst>
- 
---A <author-conv-file>::
--	CVS by default uses the Unix username when writing its
--	commit logs. Using this option and an author-conv-file
--	in this format
--
- -a::
- 	Import all commits, including recent ones. cvsimport by default
- 	skips commits that have a timestamp less than 10 minutes ago.
-@@ -112,6 +107,10 @@ If you need to pass multiple options, separate them with a comma.
- 	Limit the number of commits imported. Workaround for cases where
- 	cvsimport leaks memory.
- 
-+-A <author-conv-file>::
-+	CVS by default uses the Unix username when writing its
-+	commit logs. Using this option and an author-conv-file
-+	in this format
- +
- ---------
- 	exon=Andreas Ericsson <ae@op5.se>
+Ohh - is this repository on NFS, or some other sort of network
+filesystem?  Maybe the FS couldn't give us the entire pread request
+in one shot...
+
+I think the pread() in get_data_from_pack of index-pack is wrong,
+it really should be looping until we fill the buffer in case the
+OS doesn't fully satisfy our read request the first time.
+
+-- 
+Shawn.
