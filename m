@@ -1,123 +1,75 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix git-archimport on empty summary
-Date: Wed, 28 Feb 2007 11:29:12 -0800
-Message-ID: <7vd53u13p3.fsf@assigned-by-dhcp.cox.net>
-References: <es39f9$sqh$1@sea.gmane.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Error "fatal: cannot pread pack file: Success"
+Date: Wed, 28 Feb 2007 14:40:25 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702281439410.29426@xanadu.home>
+References: <17893.42063.186763.291346@lisa.zopyra.com>
+ <20070228155412.GC5479@spearce.org>
+ <17893.43522.511785.121778@lisa.zopyra.com>
+ <17893.44181.129918.669187@lisa.zopyra.com>
+ <20070228163256.GD5479@spearce.org>
+ <118833cc0702280842g3e121fg601d7e102956ba93@mail.gmail.com>
+ <20070228164922.GB5924@spearce.org>
+ <17893.46083.869042.467318@lisa.zopyra.com>
+ <20070228170641.GC5924@spearce.org>
+ <17893.47007.136145.112498@lisa.zopyra.com>
+ <20070228174339.GE5924@spearce.org>
+ <17893.54640.150106.294218@lisa.zopyra.com>
+ <17893.54980.672279.633902@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 20:29:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 20:40:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMUUX-0003DN-F9
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:29:33 +0100
+	id 1HMUfB-0007Xs-Hi
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:40:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932406AbXB1T3T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 14:29:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932409AbXB1T3T
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:29:19 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:38409 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932406AbXB1T3S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 14:29:18 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070228192918.QVZU2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 28 Feb 2007 14:29:18 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id V7VH1W00X1kojtg0000000; Wed, 28 Feb 2007 14:29:18 -0500
-In-Reply-To: <es39f9$sqh$1@sea.gmane.org> (Paolo Bonzini's message of "Wed, 28
-	Feb 2007 08:03:04 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751126AbXB1Tk1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 14:40:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbXB1Tk1
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:40:27 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:34042 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751126AbXB1Tk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 14:40:26 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JE600HL3UND8S10@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 28 Feb 2007 14:40:25 -0500 (EST)
+In-reply-to: <17893.54980.672279.633902@lisa.zopyra.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40996>
 
-Paolo Bonzini <bonzini@gnu.org> writes:
+On Wed, 28 Feb 2007, Bill Lear wrote:
 
-> The patch seems pretty obvious to me, and Martin Langhoff has already
-> seen it in private e-mail.
->    
-> Thanks,
->
-> Paolo
->
-> 2007-02-27  Paolo Bonzini  <bonzini@gnu.org>
->
->         * git-archimport (parselog): Cope with an empty summary.
->
+> On Wednesday, February 28, 2007 at 13:18:08 (-0600) Bill Lear writes:
+> >
+> >% ls -l objects
+> >total 88088
+> >drwxr-xr-x  2 rael  software     4096 Feb 28 13:05 info/
+> >drwxr-xr-x  2 rael  software     4096 Feb 28 13:05 pack/
+> >-rw-------  1 rael  software 90099505 Feb 28 13:06 pack_eZwOnG
+> 
+> I should have added:
+> 
+> % ls -l ~/devel/fusion/.git/objects/pack/pack-fe532a54e5d549f1cfc70a4ab2c5f4eaac8897a5.pack
+> -r--r--r--  1 rael software 90099525 Feb 27 21:36 /home/rael/devel/project/.git/objects/pack/pack-fe532a54e5d549f1cfc70a4ab2c5f4eaac8897a5.pack
+> 
+> That's 20 bytes of difference.
 
-I would have liked a proposed commit message that is more in
-line with the rest of the git.git history.
+That is actually OK.  This is the temporary pack file the fetch received 
+but which final SHA1 has not been written yet.  Normally, after the 
+delta resolution has finished (the part that requires the pread() calls) 
+then the final SHA1 is written and the pack is moved to its final 
+location under an appropriate name.  But in your case index-pack bailed 
+out on the failing pread() and left its incomplete temporary pack there.
 
-The patch seems pretty obvious and does not do any _worse_ than
-the existing code.
 
-> --- /usr/bin/git-archimport     2007-01-09 21:15:39.000000000 +0100
-> +++ ./git-archimport    2007-02-27 14:28:33.000000000 +0100
-> @@ -780,7 +780,11 @@
->      }
->
->      # post-processing:
-> -    $ps->{summary} = join("\n",@{$ps->{summary}})."\n";
-> +    if (defined $ps->{summary}) {
-> +        $ps->{summary} = join("\n",@{$ps->{summary}})."\n";
-> +    } else {
-> +        $ps->{summary} = "\n";
-> +    }
->      $ps->{message} = join("\n",@$log);
->
->      # skip Arch control files, unescape pika-escaped files
-
-However, I see that the result is used this way:
-
-    my $pid = open2(*READER, *WRITER,'git-commit-tree',$tree,@par) 
-        or die $!;
-    print WRITER $ps->{summary},"\n";
-    print WRITER $ps->{message},"\n";
-
-What's the arch way of formatting log messages?  Are summary
-lines expected to be multi-line?  I see that there is a
-continuation line handling that builds @{$ps->{summary}} array.
-What does a summary line like this mean to an arch person?
-
-	Summary: Fix git-archimport's handling of a commit that
-	 lack a "Summary:" line.
- 	Creator: Paolo Bonzini <bonzini@gnu.org>
-
-Does it mean the Summary is logically two lines, or it is
-logically one line but linewrapped into two physical lines?  If
-that is the case, I would almost suggest to update the part your
-patch touches to read like:
-
-	chomp(@$log);
-	while ($_ = shift @$log) {
-        	...
-	}
-	# drop leading empty lines from the log message
-	while (@$log && $log->[0] ne '') {
-        	shift @$log;
-	}
-	if (exists $ps->{summary} && @{$ps->{summary}}) {
-        	$ps->{summary} = join(' ', @{$ps->{summary}});
-        }
-	else {
-        	$ps->{summary} = $log->[0] . '...';
-	}
-	$ps->{message} = join("\n",@$log);
-
-and then update the user of these two to:
-
-    my $pid = open2(*READER, *WRITER,'git-commit-tree',$tree,@par) 
-        or die $!;
-    print WRITER $ps->{summary},"\n\n";
-    print WRITER $ps->{message},"\n";
-
-That way, you will always have a one-line that can sensibly
-serve as a summary to appear in "git shortlog".
+Nicolas
