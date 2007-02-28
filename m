@@ -1,68 +1,61 @@
-From: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
-Subject: Re: bug report, error : Unable to find 000000000.....
-Date: Wed, 28 Feb 2007 22:09:33 +0100
-Message-ID: <slrneubrsd.2pm.siprbaum@xp.machine.xx>
-References: <BAY120-W200B9984A9E70409399666AE810@phx.gbl>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 22:06:55 2007
+From: Rogan Dawes <discard@dawes.za.net>
+Subject: Re: [PATCH] Show binary file size change in diff --stat
+Date: Wed, 28 Feb 2007 23:27:48 +0200
+Message-ID: <45E5F3D4.8000509@dawes.za.net>
+References: <200702281303.11951.andyparkins@gmail.com> <45E5D0D7.5070305@dawes.za.net> <Pine.LNX.4.63.0702282042000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 28 22:28:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMW0j-0000J8-3T
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 22:06:53 +0100
+	id 1HMWLB-0000ML-0z
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 22:28:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964AbXB1VGv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 16:06:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbXB1VGv
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 16:06:51 -0500
-Received: from main.gmane.org ([80.91.229.2]:52269 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751964AbXB1VGu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 16:06:50 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HMW0V-0007SY-LK
-	for git@vger.kernel.org; Wed, 28 Feb 2007 22:06:39 +0100
-Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 22:06:39 +0100
-Received: from siprbaum by magnum.hofmann.stw.uni-erlangen.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 22:06:39 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: magnum.hofmann.stw.uni-erlangen.de
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1752041AbXB1V16 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 16:27:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752068AbXB1V16
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 16:27:58 -0500
+Received: from sd-green-bigip-81.dreamhost.com ([208.97.132.81]:34017 "EHLO
+	spunkymail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752041AbXB1V16 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Feb 2007 16:27:58 -0500
+X-Greylist: delayed 8952 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Feb 2007 16:27:58 EST
+Received: from [192.168.201.100] (dsl-146-24-85.telkomadsl.co.za [165.146.24.85])
+	by spunkymail-a12.g.dreamhost.com (Postfix) with ESMTP id 65B4C7FA7;
+	Wed, 28 Feb 2007 13:27:54 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+In-Reply-To: <Pine.LNX.4.63.0702282042000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41007>
 
-Jeremy Sw <kertejeremy@hotmail.com> schrieb:
->
-> By running  # git clone http://intellinuxwireless.org/repos/ipwraw.git
-> git return an error when trying to Get alternates list.
-> the error is :
-> "error: Unable to find 0000000000000000000000000000000000000000 under http://intellinuxwireless.org/repos/ipwraw.git/
-> Cannot obtain needed object 0000000000000000000000000000000000000000"
-> apparently caused by a weird architecture of the tree !
-> there is 4 or 5 diffrents projects, but they have commun files because firmwares are related !
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Wed, 28 Feb 2007, Rogan Dawes wrote:
+> 
+>> How about showing the size of the changes between the 2 files via the 
+>> libxdiff binary patch function?
+> 
+> I briefly considered this, too. But what would it tell you in the case of 
+> a jpg? I think it has more disadvantages than advantages...
+> 
+> Ciao,
+> Dscho
 
-I suggested on IRC to try this (I reproduced the error)
+It would still tell you the extent of the changes. i.e. Did we change 
+only 10 bytes of the file, or is it a dramatic change?
 
-mkdir test && cd test && \
-git-init && \
-git fetch http://intellinuxwireless.org/repos/ipwraw.git master:master
+This is exactly what the text statistics show. +(new lines + modified 
+lines) -(deleted lines + modified lines)
 
-and it works. Ok, fist I thought the error is in another branch, but
+Instead of having a "line-based" record size, simply use individual 
+bytes, since binary files don't have lines (most of them, anyway!).
 
-git-ls-remote http://intellinuxwireless.org/repos/ipwraw.git
-7e85b2032a864fcfe489085b768eea4b3a3a9d0b        refs/heads/master
-7e85b2032a864fcfe489085b768eea4b3a3a9d0b        refs/heads/origin
-7e85b2032a864fcfe489085b768eea4b3a3a9d0b        refs/tags/ipwraw-0.0.1
-7e85b2032a864fcfe489085b768eea4b3a3a9d0b        refs/tags/ipwraw-0.0.2
-
-there is no other branch, at least as I could see.
-
--Peter
+Rogan
