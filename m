@@ -1,68 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Questions about git-rev-parse
-Date: Wed, 28 Feb 2007 08:00:32 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702280751000.12485@woody.linux-foundation.org>
-References: <E1HMETh-0004BO-Lw@candygram.thunk.org> <20070228025258.GD2178@thunk.org>
- <Pine.LNX.4.64.0702271921110.12485@woody.linux-foundation.org>
- <200702280854.32440.andyparkins@gmail.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Error "fatal: cannot pread pack file: Success"
+Date: Wed, 28 Feb 2007 10:12:50 -0600
+Message-ID: <17893.43522.511785.121778@lisa.zopyra.com>
+References: <17892.64236.443170.43061@lisa.zopyra.com>
+	<20070228035713.GC5597@spearce.org>
+	<20070228044719.GA6068@spearce.org>
+	<17893.40847.313519.283218@lisa.zopyra.com>
+	<17893.42063.186763.291346@lisa.zopyra.com>
+	<20070228155412.GC5479@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>,
-	Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 28 17:00:38 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 17:13:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMRE9-000401-4e
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 17:00:25 +0100
+	id 1HMRQM-0000bZ-PH
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 17:13:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969AbXB1QAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 11:00:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbXB1QAS
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 11:00:18 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:59171 "EHLO smtp.osdl.org"
+	id S1751418AbXB1QM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 11:12:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbXB1QM4
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 11:12:56 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60603 "EHLO zopyra.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751969AbXB1QAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 11:00:16 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1SG0BhB018876
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 28 Feb 2007 08:00:11 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1SG0AUV019087;
-	Wed, 28 Feb 2007 08:00:10 -0800
-In-Reply-To: <200702280854.32440.andyparkins@gmail.com>
-X-Spam-Status: No, hits=-0.441 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751418AbXB1QM4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 11:12:56 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1SGCqL23597;
+	Wed, 28 Feb 2007 10:12:52 -0600
+In-Reply-To: <20070228155412.GC5479@spearce.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40954>
+
+On Wednesday, February 28, 2007 at 10:54:12 (-0500) Shawn O. Pearce writes:
+>Bill Lear <rael@zopyra.com> wrote:
+>> fatal: cannot pread pack file: Success [n=0; rdy=0; len=207]
+>> fatal: index-pack died with error code 128
+>> fetch-pack from '/home/rael/devel/project/.git' failed.
+>
+>Bwhat?!?  Can you print out the offset and the size of the packfile?
+>It looks like your pack has been truncated?  Or is this just your
+>filesystem saying "nahh, I'm not going to give you that data right
+>now, try again later and maybe I will"?
+
+The code has this:
+
+        unsigned long from = obj[0].offset + obj[0].hdr_size;
+        unsigned long len = obj[1].offset - from;
+
+by "offset", do you want obj[0].offset and obj[1].offset?
+
+How do I get the size of the packfile?  Is it obj->size?
+
+Well, I went ahead and did that.  Here are the results:
+
+% git clone --bare ~/devel/project
+[...]
+Resolving 2210 deltas.
+fatal: cannot pread pack file: Success [obj[0].offset=39393; obj[1].offset=39602; n=305; obj->size=0; rdy=0; len=207]
+fatal: index-pack died with error code 128
+
+Let me know if that is not what you intended.
 
 
-
-On Wed, 28 Feb 2007, Andy Parkins wrote:
-> 
-> Funny; I'd always guessed that it came from Lord of the Rings, which (I think) 
-> often mentioned "Ent-ish" as being the language of the trees.
-
-Yeah, we for a while had that overly geekish thing, but we didn't use 
-"entish", we used just "ent". Because an "ent" is "tree-ish".
-
-So when we used "ent", we didn't have the "-ish" there at all, and at some 
-point all the ents got search-and-replaced into "tree-ish".
-
-But "treeish" actually came before, and the "ent" thing was just a 
-temporary pun that got dropped.
-
-Looking at the git log, the first time we use "tree-ish" is fairly early: 
-apparently May 5, 2005. Commit ac4e0869 introduces it instead of 
-<tree/commit> (probably because the tag part got added, and to explain 
-that we only care about the resulting tree and won't actually *use* any 
-of the commit/tag information except to get to it).
-
-			Linus
+Bill
