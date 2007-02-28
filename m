@@ -1,99 +1,101 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 4/3] Rename --pretty=changelog to --pretty=gnucl, and fix a
- bug
-Date: Wed, 28 Feb 2007 02:58:43 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0702280258200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: junkio@cox.net
-To: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 02:58:56 2007
+From: "Theodore Ts'o" <tytso@mit.edu>
+Subject: Questions about git-rev-parse
+Date: Tue, 27 Feb 2007 21:23:37 -0500
+Message-ID: <E1HMETh-0004BO-Lw@candygram.thunk.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 28 03:23:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HME5o-0004mQ-E1
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 02:58:56 +0100
+	id 1HMETo-0006uo-A5
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 03:23:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbXB1B6q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 20:58:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbXB1B6q
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 20:58:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38971 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750985AbXB1B6p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 20:58:45 -0500
-Received: (qmail invoked by alias); 28 Feb 2007 01:58:44 -0000
-X-Provags-ID: V01U2FsdGVkX18z+KpTw4IzbC5CAYW9W1Fa2ylSZJoOgjTzoa2d1x
-	onhQ==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+	id S1751109AbXB1CXl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 21:23:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbXB1CXl
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 21:23:41 -0500
+Received: from thunk.org ([69.25.196.29]:42293 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751109AbXB1CXk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 21:23:40 -0500
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HMEZC-0004Gq-7g; Tue, 27 Feb 2007 21:29:18 -0500
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HMETh-0004BO-Lw; Tue, 27 Feb 2007 21:23:37 -0500
+Full-Name: Theodore Ts'o
+Phone: (781) 391-3464
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40874>
 
 
-It was pointed out that this format is rather specific. So, rename it
-to "gnucl".
+So I was looking at git-rev-parse trying to understand the man page, as
+I was trying to understand how various commands can accept lists (or
+ranges) of commits, and the man page raised a number of questions.
+First of all, the DESCRIPTION section doesn't quite parse as English:
 
-Also fix a bug where it would crash with an empty commit message.
+       Many  git  porcelainish commands take mixture of flags (i.e. parameters
+       that  begin  with  a  dash  -)  and  parameters  meant  for  underlying
+       git-rev-list  command  they use internally and flags and parameters for
+       other commands they use as the downstream of git-rev-list. 
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/pretty-formats.txt |   10 ++++++++++
- commit.c                         |    2 +-
- diff.c                           |    2 ++
- 3 files changed, 13 insertions(+), 1 deletions(-)
+But, as best as I can gather that it's a helper function meant to do
+some basic options parsing for those git porcelain commands that expect
+to take a set of revision ID's.
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 2fe6c31..f9ce4fb 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -77,6 +77,16 @@ displayed in full, regardless of whether --abbrev or
- true parent commits, without taking grafts nor history
- simplification into account.
- 
-+	* 'gnucl'
-++
-+--------------------------------------------------------------
-+2007-02-22  Simon Josefsson <simon@josefsson.org>
-+
-+    * link-warning.h, gl/getaddrinfo.c, gl/gnulib.mk,
-+         gl/string_.h, lgl/m4/unistd_h.m4: Update.
-+--------------------------------------------------------------
-+
-+
- 	* 'format:'
- +
- The 'format:' format allows you to specify which information
-diff --git a/commit.c b/commit.c
-index 64ddb56..abd84a8 100644
---- a/commit.c
-+++ b/commit.c
-@@ -38,7 +38,7 @@ struct cmt_fmt_map {
- 	{ "fuller",	5,	CMIT_FMT_FULLER },
- 	{ "oneline",	1,	CMIT_FMT_ONELINE },
- 	{ "format:",	7,	CMIT_FMT_USERFORMAT},
--	{ "changelog",	9,	CMIT_FMT_CHANGELOG}
-+	{ "gnucl",	1,	CMIT_FMT_CHANGELOG}
- };
- 
- static char *user_format;
-diff --git a/diff.c b/diff.c
-index aed5388..f2d162f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1892,6 +1892,8 @@ static void run_changelog(struct diff_filepair *p, struct diff_options *o,
- static void finalize_changelog(struct diff_options *options,
- 		struct changelog_t *changelog)
- {
-+	if (!options->stat_sep)
-+		return;
- 	changelog->offset = print_wrapped_text(": ", -changelog->offset,
- 		CHANGELOG_TAB_SIZE + 2, CHANGELOG_WIDTH);
- 	changelog->offset = print_wrapped_text(options->stat_sep,
--- 
-1.5.0.2.778.g534f-dirty
+This raises some additional questions, though.  If the goal of this
+command is to parse out those options and arguments which are meant for
+git-rev-list, why does it translate tag names to SHA id's:
+
+% git-rev-parse v1.5.0..v1.5.0.1
+dedb0faa48787839dbc47b7ca2507bda5924ec2c
+^6db027ffe03210324939b3dd655c4223ca023b45
+
+After all, git-rev-list can just as easily accept:
+
+	git-rev-list dedb0faa48787839dbc47b7ca2507bda5924ec2c \
+		^6db027ffe03210324939b3dd655c4223ca023b45
+
+as
+
+	git-rev-list v1.5.0..v1.5.0.1
+
+Also, there are a number of options in git-rev-list which make it appear
+to be a general dumping ground of miscellaneous options.  
+
+For example, it's not clear what 
+
+	git-rev-parse --show-prefix
+
+and
+
+	git-rev-parse --show-cdup
+
+have to do with the description of git-rev-parse as described in the
+DESCRIPTION section.  It seems to be completely miscellaneous extras
+that were tacked on.  Or am I missing something?
+
+Finally, it seems rather unfortunate that certain bits of functionality
+such as --since and --until were hidden into git-rev-parse, since it
+means that some commands which are implemented as shell scripts are more
+likely to use git-rev-parse, and will therefore support --since and
+--until, where as other commands which are implemented as built-in's,
+such as git-log, don't accept --since and --until.
+
+So I'm wondering if I'm missing something about historical context,
+since from looking at git-rev-parse, it looks like not a lot of thought
+went into its design, and it has a bunch of stuff that grew via
+accretion; or maybe I'm not understanding why it was designed the way it
+was?
+
+Regards,
+
+						- Ted
