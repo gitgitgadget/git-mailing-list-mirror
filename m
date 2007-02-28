@@ -1,74 +1,65 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH] Fix git-archimport on empty summary
-Date: Wed, 28 Feb 2007 08:03:04 +0100
-Message-ID: <es39f9$sqh$1@sea.gmane.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Better icon for qgit
+Date: Wed, 28 Feb 2007 08:26:20 +0100
+Message-ID: <e5bfff550702272326r7e2479a6ldd365f9f153a40a9@mail.gmail.com>
+References: <1172279202.19767.12.camel@dv>
+	 <e5bfff550702232247k447cf33asc47db99165eb7e4d@mail.gmail.com>
+	 <1172559445.19312.15.camel@dv>
+	 <20070227093534.GB13149@strauss.suse.de> <1172621880.3291.37.camel@dv>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 08:05:30 2007
+Cc: "Bernhard Walle" <bwalle@suse.de>, git@vger.kernel.org
+To: "Pavel Roskin" <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 08:26:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMIsF-0003hs-5e
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 08:05:24 +0100
+	id 1HMJCx-000450-3z
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 08:26:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254AbXB1HFL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 02:05:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751837AbXB1HFL
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 02:05:11 -0500
-Received: from main.gmane.org ([80.91.229.2]:56259 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751254AbXB1HFJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 02:05:09 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HMIs2-0007iC-4w
-	for git@vger.kernel.org; Wed, 28 Feb 2007 08:05:02 +0100
-Received: from 213-140-22-65.fastres.net ([213.140.22.65])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 08:05:02 +0100
-Received: from bonzini by 213-140-22-65.fastres.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 08:05:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 213-140-22-65.fastres.net
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+	id S1750967AbXB1H0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 02:26:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750970AbXB1H0g
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 02:26:36 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:32038 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750967AbXB1H0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 02:26:35 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so45612uga
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 23:26:34 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=YztVWscqXRHIO0kVjNURhLaFgkv+wztQaEFFq/avbr9vNP8fCQ0oVM116cKzwhrUu7aVmZ0HVtx07PWADT+9E6D3jBKKlsk0hAKB4J5NcQ3/+ZrvQx5DrMWcZYgyYXqTMePupyGRq/eNi5UbrJOmX55tPy2nwZDSWu3YGKP3A2E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BQdVQNDCWDCRUsdVB6Sy4mmhR/brxlFbOSgou8PugZdE+doPjh7vBZkaDryPUa9ZqaG4s9xPcAZJtV1lLw4Qo59uuf+5apRwAGivHUAkWxSHqAY4YUi+B3XUF/1THo+/2f3xyyIXhRfoyV4+NNXgfVVzkW3muvII5Gj3EGZxlMo=
+Received: by 10.114.208.8 with SMTP id f8mr2862402wag.1172647580178;
+        Tue, 27 Feb 2007 23:26:20 -0800 (PST)
+Received: by 10.114.60.16 with HTTP; Tue, 27 Feb 2007 23:26:20 -0800 (PST)
+In-Reply-To: <1172621880.3291.37.camel@dv>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40903>
 
-I got this while importing bonzini@gnu.org--2004b/lightning--stable--1.2 
-(archive available at 
-http://www.inf.unisi.ch/phd/bonzini/webdav/bonzini@gnu.org--2004b via 
-webdav).
+On 2/28/07, Pavel Roskin <proski@gnu.org> wrote:
+>
+> * The gradients are improved to be noticeable along the lines, not just
+> in the squares.
+> * Saturation is reduced to make the icon easier on the eye.
+> * The actual qgit colors are used (black, red, green).  Blue is avoided
+> as it may be hard to distinguish on the title bar.
+> * The top and left borders are made white to improve 3D effect and
+> counteract apparent widening of the black line on white background.
+>
+Thanks Pavel,
 
-The patch seems pretty obvious to me, and Martin Langhoff has already 
-seen it in private e-mail.
+  I have applied and pushed your very nice icon to both qgit and qgit4
 
-Thanks,
 
-Paolo
-
-2007-02-27  Paolo Bonzini  <bonzini@gnu.org>
-
-         * git-archimport (parselog): Cope with an empty summary.
-
---- /usr/bin/git-archimport     2007-01-09 21:15:39.000000000 +0100
-+++ ./git-archimport    2007-02-27 14:28:33.000000000 +0100
-@@ -780,7 +780,11 @@
-      }
-
-      # post-processing:
--    $ps->{summary} = join("\n",@{$ps->{summary}})."\n";
-+    if (defined $ps->{summary}) {
-+        $ps->{summary} = join("\n",@{$ps->{summary}})."\n";
-+    } else {
-+        $ps->{summary} = "\n";
-+    }
-      $ps->{message} = join("\n",@$log);
-
-      # skip Arch control files, unescape pika-escaped files
+Marco
