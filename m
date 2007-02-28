@@ -1,88 +1,99 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: How do get a specific version of a particular file?
-Date: Tue, 27 Feb 2007 20:48:44 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702272040050.29426@xanadu.home>
-References: <E1HM1XL-00071C-N5@candygram.thunk.org>
- <Pine.LNX.4.63.0702271356040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070227154241.GA8228@thunk.org>
- <Pine.LNX.4.63.0702272053080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070227223929.GA9027@thunk.org> <86vehnnpy2.fsf@blue.stonehenge.com>
- <7vfy8rb2do.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702271605290.12485@woody.linux-foundation.org>
- <7vejob9l70.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0702271643080.12485@woody.linux-foundation.org>
- <alpine.LRH.0.82.0702272004370.29426@xanadu.home>
- <Pine.LNX.4.64.0702271719300.12485@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 4/3] Rename --pretty=changelog to --pretty=gnucl, and fix a
+ bug
+Date: Wed, 28 Feb 2007 02:58:43 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702280258200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 02:48:53 2007
+Cc: junkio@cox.net
+To: git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 02:58:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMDw1-0000o9-5s
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 02:48:49 +0100
+	id 1HME5o-0004mQ-E1
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 02:58:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751028AbXB1Bsq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 20:48:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbXB1Bsq
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 20:48:46 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:63110 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750998AbXB1Bsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 20:48:45 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JE500GOSH18AJH3@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 27 Feb 2007 20:48:44 -0500 (EST)
-In-reply-to: <Pine.LNX.4.64.0702271719300.12485@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S1751049AbXB1B6q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 20:58:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751061AbXB1B6q
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 20:58:46 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38971 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750985AbXB1B6p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 20:58:45 -0500
+Received: (qmail invoked by alias); 28 Feb 2007 01:58:44 -0000
+X-Provags-ID: V01U2FsdGVkX18z+KpTw4IzbC5CAYW9W1Fa2ylSZJoOgjTzoa2d1x
+	onhQ==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40872>
-
-On Tue, 27 Feb 2007, Linus Torvalds wrote:
-
-> 
-> 
-> On Tue, 27 Feb 2007, Nicolas Pitre wrote:
-> > 
-> > /me wonders why Linux wasn't written in C++ with overloaded operators...
-> 
-> Actually, there was a short while that we tried it.
-
-I know.  Amusing piece of history.
-
-> Overloading of operators wouldn't be very useful, though: it really only 
-> pays in either real math (where having "+" etc do the right thing for 
-> complex numbers/vectors/matrices/whatever is totally unambiguous and just 
-> makes code a lot more readable) or with really trivial stuff (ie "+" for 
-> string concatenation).
-
-Well...   We could have >> and << to replace memcpy(), copy_to_user(), 
-copy_from_user(), and select the appropriate method depending on whether 
-one is a user space pointer.
-
-Or spin_lock++ and spin_lock--.
-
-Or written_data >> file >> filesystem, replacing all fops methods with 
-operators as well.
-
-;-)
-
-> Outside of math and really trivial stuff, it's just a horribly bad idea, 
-> because it just makes for subtle and hard to understand code.
-
-Indeed.  Well it can make the intent of the code clearer but certainly 
-not its implementation.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40873>
 
 
-Nicolas
+It was pointed out that this format is rather specific. So, rename it
+to "gnucl".
+
+Also fix a bug where it would crash with an empty commit message.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/pretty-formats.txt |   10 ++++++++++
+ commit.c                         |    2 +-
+ diff.c                           |    2 ++
+ 3 files changed, 13 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 2fe6c31..f9ce4fb 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -77,6 +77,16 @@ displayed in full, regardless of whether --abbrev or
+ true parent commits, without taking grafts nor history
+ simplification into account.
+ 
++	* 'gnucl'
+++
++--------------------------------------------------------------
++2007-02-22  Simon Josefsson <simon@josefsson.org>
++
++    * link-warning.h, gl/getaddrinfo.c, gl/gnulib.mk,
++         gl/string_.h, lgl/m4/unistd_h.m4: Update.
++--------------------------------------------------------------
++
++
+ 	* 'format:'
+ +
+ The 'format:' format allows you to specify which information
+diff --git a/commit.c b/commit.c
+index 64ddb56..abd84a8 100644
+--- a/commit.c
++++ b/commit.c
+@@ -38,7 +38,7 @@ struct cmt_fmt_map {
+ 	{ "fuller",	5,	CMIT_FMT_FULLER },
+ 	{ "oneline",	1,	CMIT_FMT_ONELINE },
+ 	{ "format:",	7,	CMIT_FMT_USERFORMAT},
+-	{ "changelog",	9,	CMIT_FMT_CHANGELOG}
++	{ "gnucl",	1,	CMIT_FMT_CHANGELOG}
+ };
+ 
+ static char *user_format;
+diff --git a/diff.c b/diff.c
+index aed5388..f2d162f 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1892,6 +1892,8 @@ static void run_changelog(struct diff_filepair *p, struct diff_options *o,
+ static void finalize_changelog(struct diff_options *options,
+ 		struct changelog_t *changelog)
+ {
++	if (!options->stat_sep)
++		return;
+ 	changelog->offset = print_wrapped_text(": ", -changelog->offset,
+ 		CHANGELOG_TAB_SIZE + 2, CHANGELOG_WIDTH);
+ 	changelog->offset = print_wrapped_text(options->stat_sep,
+-- 
+1.5.0.2.778.g534f-dirty
