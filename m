@@ -1,59 +1,73 @@
-From: "Morten Welinder" <mwelinder@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Error "fatal: cannot pread pack file: Success"
-Date: Wed, 28 Feb 2007 11:42:39 -0500
-Message-ID: <118833cc0702280842g3e121fg601d7e102956ba93@mail.gmail.com>
-References: <17892.64236.443170.43061@lisa.zopyra.com>
-	 <20070228035713.GC5597@spearce.org>
-	 <20070228044719.GA6068@spearce.org>
-	 <17893.40847.313519.283218@lisa.zopyra.com>
-	 <17893.42063.186763.291346@lisa.zopyra.com>
-	 <20070228155412.GC5479@spearce.org>
-	 <17893.43522.511785.121778@lisa.zopyra.com>
-	 <17893.44181.129918.669187@lisa.zopyra.com>
-	 <20070228163256.GD5479@spearce.org>
+Date: Wed, 28 Feb 2007 08:47:44 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702280843030.12485@woody.linux-foundation.org>
+References: <17892.64236.443170.43061@lisa.zopyra.com> <20070228035713.GC5597@spearce.org>
+ <20070228044719.GA6068@spearce.org> <17893.40847.313519.283218@lisa.zopyra.com>
+ <17893.42063.186763.291346@lisa.zopyra.com> <20070228155412.GC5479@spearce.org>
+ <17893.43522.511785.121778@lisa.zopyra.com>
+ <Pine.LNX.4.64.0702280830030.12485@woody.linux-foundation.org>
+ <17893.44936.525606.74693@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Bill Lear" <rael@zopyra.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 17:42:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 17:47:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMRtB-0004Nt-C7
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 17:42:49 +0100
+	id 1HMRxm-0006DK-7h
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 17:47:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752264AbXB1Qmp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 11:42:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752265AbXB1Qmp
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 11:42:45 -0500
-Received: from wr-out-0506.google.com ([64.233.184.237]:63344 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752259AbXB1Qmo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 11:42:44 -0500
-Received: by wr-out-0506.google.com with SMTP id 58so283667wri
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 08:42:43 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dq1qx6s6AZZA20DJ/7l1mTxT7oeyBdmXX/u3ZZnTFmwfBMt9SlOIyJGgU9VKdtJnK9aOSraYSf8qtZ//u+k/gxH7pgQ4I+bSou5J545vgJEuoiOVgwSnMEeWWwOoMuqg/x7+4a2HpujiYO2S6XT3UZ/e7D/i7Cd+R0XPyRUCW9U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gK+370g+NkKezaah7u0Ub4ntlcFCLbSpGu1Nyu3Is9E4E1LSeEijulptR0CXZ1l0rDVOrs2EKhX2WBeQlbkfkbdyfV3OzN4wrs65Bdd8M68REYOuge1r2TpgRGOjD0L5FGkS1nhgNrDa2BKnBwAJDLGNAsO1nSVicaszHqMvnSY=
-Received: by 10.114.72.1 with SMTP id u1mr122595waa.1172680959989;
-        Wed, 28 Feb 2007 08:42:39 -0800 (PST)
-Received: by 10.115.109.18 with HTTP; Wed, 28 Feb 2007 08:42:39 -0800 (PST)
-In-Reply-To: <20070228163256.GD5479@spearce.org>
-Content-Disposition: inline
+	id S1752270AbXB1Qrc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 11:47:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752288AbXB1Qrc
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 11:47:32 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:33090 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752269AbXB1Qrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 11:47:31 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1SGlMhB020525
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 28 Feb 2007 08:47:22 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1SGlLHo020317;
+	Wed, 28 Feb 2007 08:47:22 -0800
+In-Reply-To: <17893.44936.525606.74693@lisa.zopyra.com>
+X-Spam-Status: No, hits=-0.439 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40962>
 
-> +                       die("cannot pread pack file: %s from=%lu, packfile size=%lu", strerror(errno), from, lseek(pack_fd, SEEK_END, 0));
 
-That might give you the errno from the lseek call.
 
-Morten
+On Wed, 28 Feb 2007, Bill Lear wrote:
+
+> On Wednesday, February 28, 2007 at 08:34:18 (-0800) Linus Torvalds writes:
+> >> [...]
+> >> Resolving 2210 deltas.
+> >> fatal: cannot pread pack file: Success [obj[0].offset=39393; obj[1].offset=39602; n=305; obj->size=0; rdy=0; len=207]
+> >> fatal: index-pack died with error code 128
+> >
+> >What's "n"? Is that the return value from pread? Or was that "rdy"?
+> 
+> Yes, n is the value from pread.
+
+Ok, that's just ODD. 
+
+Getting 305 bytes back when you asked for 207 is a bad bad bad thing. It's 
+also really really odd and unexpected. 
+
+What filesystem? And could you strace this and actually see the pread() 
+system call?
+
+(use "strace -f -o tracefile" to follow all forks and to put the end 
+result in a trace file)
+
+			Linus
