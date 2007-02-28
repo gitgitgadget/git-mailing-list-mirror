@@ -1,66 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: using the same repo with different OS
-Date: Wed, 28 Feb 2007 13:12:51 -0500
-Message-ID: <20070228181251.GG5924@spearce.org>
-References: <906f26060702250913g41658be6mffea613f25f9a847@mail.gmail.com> <Pine.LNX.4.63.0702251829530.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v3b4ut7yq.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702251929170.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vy7mmrspw.fsf@assigned-by-dhcp.cox.net> <906f26060702281006l794173e8uea0f7174dd712e32@mail.gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Error "fatal: cannot pread pack file: Success"
+Date: Wed, 28 Feb 2007 13:18:10 -0500 (EST)
+Message-ID: <alpine.LRH.0.82.0702281315480.29426@xanadu.home>
+References: <17892.64236.443170.43061@lisa.zopyra.com>
+ <20070228035713.GC5597@spearce.org> <20070228044719.GA6068@spearce.org>
+ <17893.40847.313519.283218@lisa.zopyra.com>
+ <17893.42063.186763.291346@lisa.zopyra.com>
+ <20070228155412.GC5479@spearce.org>
+ <17893.43522.511785.121778@lisa.zopyra.com>
+ <Pine.LNX.4.64.0702280830030.12485@woody.linux-foundation.org>
+ <17893.44936.525606.74693@lisa.zopyra.com>
+ <Pine.LNX.4.64.0702280843030.12485@woody.linux-foundation.org>
+ <17893.45903.748382.298137@lisa.zopyra.com>
+ <Pine.LNX.4.64.0702280910330.12485@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Stefano Spinucci <virgo977virgo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 28 19:13:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Bill Lear <rael@zopyra.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 19:22:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMTIQ-0006jQ-BW
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 19:12:58 +0100
+	id 1HMTRm-00029Z-Ty
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 19:22:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443AbXB1SM4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 13:12:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbXB1SM4
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 13:12:56 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58648 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751443AbXB1SM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 13:12:56 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HMTIE-00037v-4Z; Wed, 28 Feb 2007 13:12:46 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 223B620FBAE; Wed, 28 Feb 2007 13:12:51 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <906f26060702281006l794173e8uea0f7174dd712e32@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932212AbXB1SW0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 13:22:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932213AbXB1SWZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 13:22:25 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:53207 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932212AbXB1SWY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 13:22:24 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JE6001WAQUA8GA4@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 28 Feb 2007 13:18:10 -0500 (EST)
+In-reply-to: <Pine.LNX.4.64.0702280910330.12485@woody.linux-foundation.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40984>
 
-Stefano Spinucci <virgo977virgo@gmail.com> wrote:
-> I noticed today that my notes about compiling Git on cygwin to work
-> with FAT32 (export NO_MMAP=1) on the Wiki page WindowsInstall were
-> removed.
+On Wed, 28 Feb 2007, Linus Torvalds wrote:
 
-That was me.  NO_MMAP=1 is now the default on Cygwin.
- 
-> Than I'm asking how you'd setup repos to work on some linux/windows
-> machines, transferring data only with an USB disk.
+> Well, if the return value was 0, it wasn't as odd any more, and the reason 
+> seems to be a file truncate error. Shawn seems to be on that one.
+> 
+> (The "return 305 when asked for 207" seemed like a kernel bug, which was 
+> why I got really interested ;)
 
-Just create a bare repository on the USB stick and push/fetch to it.
-It won't have a checkout directory or an index, the two sticking
-points with mmap() on Windows and with a FAT32 filesystem being
-accessed through Git by both Linux and Windows.
+I wouldn't dismiss a kernel bug just yet.
 
--- 
-Shawn.
+Bill already said the same operation, when not performed over NFS, works 
+just fine.
+
+He also mentioned that version 1.4.4, which uses mmap() instead of 
+pread(), works also fine even over NFS.
+
+
+Nicolas
