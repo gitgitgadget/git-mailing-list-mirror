@@ -1,75 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Error "fatal: cannot pread pack file: Success"
-Date: Wed, 28 Feb 2007 14:40:25 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702281439410.29426@xanadu.home>
-References: <17893.42063.186763.291346@lisa.zopyra.com>
- <20070228155412.GC5479@spearce.org>
- <17893.43522.511785.121778@lisa.zopyra.com>
- <17893.44181.129918.669187@lisa.zopyra.com>
- <20070228163256.GD5479@spearce.org>
- <118833cc0702280842g3e121fg601d7e102956ba93@mail.gmail.com>
- <20070228164922.GB5924@spearce.org>
- <17893.46083.869042.467318@lisa.zopyra.com>
- <20070228170641.GC5924@spearce.org>
- <17893.47007.136145.112498@lisa.zopyra.com>
- <20070228174339.GE5924@spearce.org>
- <17893.54640.150106.294218@lisa.zopyra.com>
- <17893.54980.672279.633902@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Show binary file size change in diff --stat
+Date: Wed, 28 Feb 2007 20:41:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702282040430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0702281535070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200702281515.10016.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0702281630430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200702281842.15147.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Feb 28 20:40:38 2007
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 20:41:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMUfB-0007Xs-Hi
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:40:33 +0100
+	id 1HMUgN-00082u-QY
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:41:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751126AbXB1Tk1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 14:40:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbXB1Tk1
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:40:27 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:34042 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751126AbXB1Tk0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 14:40:26 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JE600HL3UND8S10@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 28 Feb 2007 14:40:25 -0500 (EST)
-In-reply-to: <17893.54980.672279.633902@lisa.zopyra.com>
-X-X-Sender: nico@xanadu.home
+	id S1751631AbXB1Tlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 14:41:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638AbXB1Tlc
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:41:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48097 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751631AbXB1Tla (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 14:41:30 -0500
+Received: (qmail invoked by alias); 28 Feb 2007 19:41:29 -0000
+X-Provags-ID: V01U2FsdGVkX18QF3lMnAoQQ+AvAhWapUUiprh1QGNS+aGFycObho
+	LYXA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200702281842.15147.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40997>
 
-On Wed, 28 Feb 2007, Bill Lear wrote:
+Hi,
 
-> On Wednesday, February 28, 2007 at 13:18:08 (-0600) Bill Lear writes:
+On Wed, 28 Feb 2007, Andy Parkins wrote:
+
+> On Wednesday 2007, February 28, Johannes Schindelin wrote:
+> 
+> > for added files (and the obvious thing for deleted ones), but with
+> > your patch, both added and deleted get
 > >
-> >% ls -l objects
-> >total 88088
-> >drwxr-xr-x  2 rael  software     4096 Feb 28 13:05 info/
-> >drwxr-xr-x  2 rael  software     4096 Feb 28 13:05 pack/
-> >-rw-------  1 rael  software 90099505 Feb 28 13:06 pack_eZwOnG
+> > 	Bin 123456 bytes
+> >
+> > which is not so optimal.
 > 
-> I should have added:
+> See my corrected patch.  However, while you're interested: how would one 
+> tell the difference between 0 bytes and (no file).  I'm thinking of 
+> these possibilities:
 > 
-> % ls -l ~/devel/fusion/.git/objects/pack/pack-fe532a54e5d549f1cfc70a4ab2c5f4eaac8897a5.pack
-> -r--r--r--  1 rael software 90099525 Feb 27 21:36 /home/rael/devel/project/.git/objects/pack/pack-fe532a54e5d549f1cfc70a4ab2c5f4eaac8897a5.pack
+>  new -> 123456
+>  0 -> 123456
+>  123456 -> deleted
+>  123456 -> 0
 > 
-> That's 20 bytes of difference.
+> For example - does mmfile_t.ptr set to NULL mean anything?
 
-That is actually OK.  This is the temporary pack file the fetch received 
-but which final SHA1 has not been written yet.  Normally, after the 
-delta resolution has finished (the part that requires the pread() calls) 
-then the final SHA1 is written and the pack is moved to its final 
-location under an appropriate name.  But in your case index-pack bailed 
-out on the failing pread() and left its incomplete temporary pack there.
+In non-binary case, we have only plusses or minusses, so you cannot tell 
+either. You have to look into the summary for that.
 
-
-Nicolas
+Ciao,
+Dscho
