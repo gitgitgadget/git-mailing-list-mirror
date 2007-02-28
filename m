@@ -1,98 +1,73 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: OT: Favourite log message layout
-Date: Wed, 28 Feb 2007 09:48:01 +0000
-Message-ID: <200702280948.05391.andyparkins@gmail.com>
-References: <Pine.LNX.4.63.0702271620390.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.63.0702272313020.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0702271453030.12485@woody.linux-foundation.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: RFC: Patch editing
+Date: Wed, 28 Feb 2007 11:13:15 +0100
+Message-ID: <20070228101315.GA18444@diana.vm.bytemark.co.uk>
+References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0702270205540.6485@iabervon.org> <Pine.LNX.4.63.0702271247000.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0702271201400.6485@iabervon.org> <Pine.LNX.4.63.0702272106150.22628@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0702271651500.6485@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Simon Josefsson <simon@josefsson.org>, junkio@cox.net
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 10:48:17 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 11:13:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMLPy-0004RZ-K6
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 10:48:14 +0100
+	id 1HMLoM-00063E-Ae
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 11:13:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932103AbXB1JsM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 04:48:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932105AbXB1JsM
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 04:48:12 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:16559 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932103AbXB1JsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 04:48:11 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so498828nfa
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 01:48:09 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=q0xzA52l1RxRF6ZEIAzm9ciHzzMp4zBGe2WG9wvGQphsBCgLoD4K0zP9Mhch+gLHedcyL96RY/E4VCT3wmEyrCDrJKBXrFBRf1qCDyXeWY0abQuEiDN9qIDw1q7LO/YNBzDKmXs4TTMYDcwztUVm955WuL0Ms/gRZANyATa7LDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=ZwyUsQn2ysZtndbTMahfNVfxpcl/Yr0lJOeoxsX/yBHm25fSXRixMKVAllaX2k/sqEmE9oNw1JBt42jHVCh41QauPX6rWQfG07q/45zaB4ooeyMJ4WPEUX0ucuRufrVjmMwgfjyWAsVPpR/l9Ab2G9DtmFK8COO6cptOxWQHsJk=
-Received: by 10.48.202.14 with SMTP id z14mr3201936nff.1172656089910;
-        Wed, 28 Feb 2007 01:48:09 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id p72sm5192489nfc.2007.02.28.01.48.07;
-        Wed, 28 Feb 2007 01:48:07 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0702271453030.12485@woody.linux-foundation.org>
+	id S932129AbXB1KNY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Feb 2007 05:13:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932131AbXB1KNY
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 05:13:24 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2177 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932129AbXB1KNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 05:13:23 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HMLoB-0004y1-00; Wed, 28 Feb 2007 10:13:15 +0000
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0702271651500.6485@iabervon.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40913>
 
-On Tuesday 2007 February 27 23:02, Linus Torvalds wrote:
+On 2007-02-27 17:07:11 -0500, Daniel Barkalow wrote:
 
-> I don't think the GNU style ChangeLog is particularly good. In fact, I
-> think it has an unfortunate tendency (thanks to being per-file-log) to
-> encourage people to commit unrelated changes and then explain them per
-> file.
+> I think I usually come up with something like: 7 patches related to
+> the functionality I'm working on, 1 patch that fixes an old bug that
+> became important due to the change, and 2 patches which improve the
+> debugging infrastructure. And the actual sequence of intermediate
+> states that my code was in is something like: API written, stub
+> implementations, some code that suggests what should happen; program
+> calling the API and crashing; version that is written but buggy;
+> version that's buggy but verbose; version that's working but
+> verbose. In refining the work, I drop or "if (DEFINED_TO_0_DEBUG)"
+> the messages, split out the patches that support the new kinds of
+> messages, and include only working versions of functions. And then I
+> write commit messages that talk about the code and sign them.
+>
+> Am I unusual in being afraid of losing work in a state that contains
+> 3 different half-features?
 
-Me either; however, I do like per-file information.  My own favoured format 
-for log messages is (with all but the shortlog optional)
+My usual workflow looks like this too. I start out with a rough plan
+of how to accomplish my goal with a number of smaller changes, but it
+always turns out that I need more debug code, need to fix old bugs in
+the middle of the process, need to fix silly bugs in earlier commits
+in the series I'm building, and so on. I record this work with lots of
+small commits. When I'm done, and usually at some intermediate stages
+as well, I coalesce and reorder these commits to get a history
+resembling my initial plan.
 
----- 8< ----
-Short log message summarises changes in one line
+StGit is really helpful here. It doesn't actually do anything I
+couldn't do manually with just git, but it makes it _simple_, and
+tracks all the metadata for me so that I don't get a chance to make a
+mess of things.
 
-Longer message summarises changes, perhaps with reasons for change and why 
-this change fixes something.
-
-file1.c
- * detailed description of change to this file
- * more changes
-
-file2.c
- * detailed description of change to this file
----- >8 ----
-
-That's not to say that this is an excuse to lump unrelated changes together, 
-but it does allow one to say
-
- file1.c
-  * Added function xyz()
-
- file2.c
-  * Call new function xyz() to achieve clever feature
-
-when it's appropriate.  I've found this particularly useful in conjunction 
-with git-blame.  You find the revision that made a change in a particular 
-file then the log message is easily searched to find the exact reasons for 
-that change on that line in that file.
-
-Perhaps I'm overly verbose though.  I do like the sound of my own voice - even 
-on log messages :-)
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
