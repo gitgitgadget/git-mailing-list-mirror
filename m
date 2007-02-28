@@ -1,53 +1,58 @@
-From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
-Subject: Re: git-remote and remotes with '.' in their names
-Date: Wed, 28 Feb 2007 15:55:11 +0100
-Message-ID: <45E597CF.9000009@lu.unisi.ch>
-References: <87k5y5tlol.fsf@briny.internal.ondioline.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Broken dependencies..
+Date: Wed, 28 Feb 2007 16:00:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702281600280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0702271543080.12485@woody.linux-foundation.org>
+ <200702280900.22982.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Paul Collins <paul@briny.ondioline.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 15:56:04 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 16:01:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMQDi-0003MM-1B
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 15:55:54 +0100
+	id 1HMQIf-0005NS-B0
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:01:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932943AbXB1OzQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 09:55:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932945AbXB1OzP
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 09:55:15 -0500
-Received: from server.usilu.net ([195.176.178.200]:45578 "EHLO mail.usilu.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932943AbXB1OzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 09:55:14 -0500
-Received: from [192.168.76.141] ([192.168.76.141] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 28 Feb 2007 15:55:11 +0100
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
-In-Reply-To: <87k5y5tlol.fsf@briny.internal.ondioline.org>
-X-OriginalArrivalTime: 28 Feb 2007 14:55:11.0495 (UTC) FILETIME=[72313970:01C75B48]
+	id S932484AbXB1PA7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 10:00:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932487AbXB1PA7
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:00:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40805 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932484AbXB1PA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 10:00:58 -0500
+Received: (qmail invoked by alias); 28 Feb 2007 15:00:57 -0000
+X-Provags-ID: V01U2FsdGVkX1/Ycyxi3I3Y92q13bO/F49WGOu4mkwP1iZjAEnYTG
+	7SnA==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200702280900.22982.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40931>
 
-Hello,
+Hi,
 
->  	for (@remotes) {
-> -		if (/^remote\.([^.]*)\.(\S*)\s+(.*)$/) {
-> +		if (/^remote\.(.*)\.(\S*)\s+(.*)$/) {
+On Wed, 28 Feb 2007, Andy Parkins wrote:
 
-You probably want either
+> On Tuesday 2007 February 27 23:46, Linus Torvalds wrote:
+> 
+> > doing proper dependencies, but I'm too lazy to fix it. Any ideas on 
+> > how to generate real dependency data so that we don't have these kinds 
+> > of things (I bet there are other files than just fetch.c that lack the 
+> > full header file dependencies, this one just happened to trigger now)?
+> 
+> Would gcc's "-MM" help?  I think qmake uses them when it's generating 
+> Makefiles.
 
-+		if (/^remote\.(\S*)\.(\S*)\s+(.*)$/) {
+Would that play nicely with Sun' CC some people seem to use to compile 
+Git?
 
-or
-
-+		if (/^remote\.(\S*)\.([^.]*)\s+(.*)$/) {
-
-here.
-
-Paolo
+Ciao,
+Dscho
