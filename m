@@ -1,92 +1,67 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Questions about git-rev-parse
-Date: Wed, 28 Feb 2007 01:40:36 -0500
-Message-ID: <20070228064036.GF2178@thunk.org>
-References: <E1HMETh-0004BO-Lw@candygram.thunk.org> <7vvehn2eds.fsf@assigned-by-dhcp.cox.net> <20070228025258.GD2178@thunk.org> <Pine.LNX.4.64.0702271921110.12485@woody.linux-foundation.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Trivia: When did git self-host?
+Date: Wed, 28 Feb 2007 19:48:47 +1300
+Message-ID: <46a038f90702272248m4b4af750y4069d726e6e7f6e@mail.gmail.com>
+References: <3c6c07c20702261551u55ec2ea7mde4075b1c929cf87@mail.gmail.com>
+	 <Pine.LNX.4.63.0702270100360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <3c6c07c20702272157l5ee9a8b7y218e86ecb079a9fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 07:40:57 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Mike Coleman" <tutufan@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 07:48:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMIUf-0002T1-4Q
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 07:40:53 +0100
+	id 1HMIcT-0005jT-Kc
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 07:48:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751200AbXB1Gkl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 01:40:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbXB1Gkl
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 01:40:41 -0500
-Received: from thunk.org ([69.25.196.29]:35899 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751209AbXB1Gkk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 01:40:40 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HMIZs-000560-T4; Wed, 28 Feb 2007 01:46:17 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HMIUO-0001w6-3I; Wed, 28 Feb 2007 01:40:36 -0500
+	id S1751422AbXB1Gst (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 01:48:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXB1Gst
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 01:48:49 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:21124 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751422AbXB1Gss (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 01:48:48 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so459880nfa
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 22:48:47 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qBhKbjeSGgKUMEMU5OPFsQMV+Jdhv/BMclyH3YOQq9ramqryUyGyD5aA7tmbfi/2Ng1fTOMLfzlS5+ADegSyazmmHkzQvkzyxeZ6Gtbjz1jk/d6Btj8rxS3kRVbeoUlMlSb5dlb1CJ6d8rZCoLmQhrFHApRWQJ1z5WYICc+5bRw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cErmyTFYVfYM1YYW6yfjASlvhPz0Z5hZKRgjWGv8UVScgqGgewu8+9GaI11keSfyANNAGBWASZi58h5pSvJ3iu+0Myhwu+y2FRBE4+1G32P4xgjGQUA9hd0Pe2AqQH8H8DumUFzLCroFLCgWYtCgjFwYhfRCh2PkDwUawOoTF4o=
+Received: by 10.48.254.1 with SMTP id b1mr2982775nfi.1172645327182;
+        Tue, 27 Feb 2007 22:48:47 -0800 (PST)
+Received: by 10.48.215.2 with HTTP; Tue, 27 Feb 2007 22:48:47 -0800 (PST)
+In-Reply-To: <3c6c07c20702272157l5ee9a8b7y218e86ecb079a9fc@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0702271921110.12485@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40901>
 
-On Tue, Feb 27, 2007 at 07:33:03PM -0800, Linus Torvalds wrote:
-> No, it really is English. At least grammatically.
-> 
-> A "tree-ish" is "like a tree", exactly like "sheepish" is "like a sheep". 
-> Nothing really git-specific about it, except for it certainly having 
-> become common usage in a way that it may not be normally ;)
+On 2/28/07, Mike Coleman <tutufan@gmail.com> wrote:
+> On another topic, it might amuse you to know that there's yet another
+> 'git' floating around.  It's part of a bioinformatics package called
+> SEALS.  Though it hasn't been maintained in several years, we have it
+> installed at work.
 
-Well, in the randomhouse web page you quoted:
+There is also GNU Interactive Tools, and some fun flamewars about name
+clashes, package conflicts and more... See
 
-	Our -ish is a suffix that forms adjectives from nouns or other
-	adjectives. Some of the senses existed in Old English (then
-	spelled -isc but pronounced the same way), such as 'of, being,
-	or pertaining to', used to form adjectives indicating a
-	national, ethnic, or religious origin (British, Jewish).
+  http://lkml.org/lkml/2005/4/13/110
+  http://www.gelato.unsw.edu.au/archives/git/0508/7477.html
 
-it claims that the -ish suffix forms an _adjective_.   But in the sense of
+for the tip of the iceberg.
 
-	git describe <committish>
+cheers,
 
-In the git world we are using "committish" (and in the documentation
-sometimes we use committish and treeish, and other times we use
-commit-ish and tree-ish) as a _noun_, and not an adjective.  So I'm
-still going to take a bit of issue that it's grammatical English, and
-I still think that "tree_specifier" and "commit_specifier" would have
-been clearer.
 
-In any case, I note that in the git(7) man page, there is a formal
-definition of tree-ish, but not of commit-ish.  Would this patch to
-Documentation/git.txt be correct?
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 9a74747..ff693c3 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -241,6 +241,12 @@ Identifier Terminology
- 	operate on a <tree> object but automatically dereferences
- 	<commit> and <tag> objects that point at a <tree>.
- 
-+<commit-ish>::
-+	Indicates a commit or tag object name.  A
-+	command that takes a <commit-ish> argument ultimately wants to
-+	operate on a <commit> object but automatically dereferences
-+	<tag> objects that point at a <commit>.
-+
- <type>::
- 	Indicates that an object type is required.
- 	Currently one of: `blob`, `tree`, `commit`, or `tag`.
-
-							- Ted
+martin
