@@ -1,87 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Google Summer of Code 2007
-Date: Wed, 28 Feb 2007 10:03:31 +0100
-Message-ID: <vpq4pp6r6vw.fsf@olympe.imag.fr>
-References: <20070225075917.GC1676@spearce.org>
-	<200702280842.08279.andyparkins@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: OT: Funny tab behaviour on terminals
+Date: Wed, 28 Feb 2007 09:34:51 +0000
+Message-ID: <200702280934.52650.andyparkins@gmail.com>
+References: <200702271529.13258.andyparkins@gmail.com> <7v4pp7flew.fsf@assigned-by-dhcp.cox.net> <7vslcrcpeg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 10:04:01 2007
+X-From: git-owner@vger.kernel.org Wed Feb 28 10:35:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMKj9-0002Xa-9n
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 10:03:59 +0100
+	id 1HMLDB-0007Nj-0K
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 10:35:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070AbXB1JD5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 04:03:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbXB1JD4
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 04:03:56 -0500
-Received: from imag.imag.fr ([129.88.30.1]:34747 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752070AbXB1JDz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 04:03:55 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l1S93VK6029636
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 28 Feb 2007 10:03:31 +0100 (CET)
-Received: from olympe.imag.fr ([129.88.43.60])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HMKih-0000WT-8U
-	for git@vger.kernel.org; Wed, 28 Feb 2007 10:03:31 +0100
-Received: from moy by olympe.imag.fr with local (Exim 4.50)
-	id 1HMKih-0006UU-69
-	for git@vger.kernel.org; Wed, 28 Feb 2007 10:03:31 +0100
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <200702280842.08279.andyparkins@gmail.com> (Andy Parkins's message of "Wed\, 28 Feb 2007 08\:42\:07 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 28 Feb 2007 10:03:31 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S932097AbXB1Je7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 04:34:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932098AbXB1Je7
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 04:34:59 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:3262 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932097AbXB1Je6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 04:34:58 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so495876nfa
+        for <git@vger.kernel.org>; Wed, 28 Feb 2007 01:34:56 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=pYExGh9mBMenMD3uZNferLFi2jv+3AO5WzQx/ofbHQqwWvzeFlzEQ70XlVWYxnm1NFTY78uC+V1I24ZS6Ga7AgduT3g4orzwIUU58yeD9+SIvD2UYysv6t/Ya+jtPDi9blkTezfwGs1LLFIZJ7Z6wgkQ6nPksbSGPrE+4Z4mIgs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=qM50KyGTMaMVGv3xPX7KI7qUZf/6sKXfW6i2SWQn0W/OCczpo5sviXeMaFIcPFuGT7BVCNDxl8r/gJyw+PJamPgMra5nJF9RnTPsoSnNNMZj+U44w95qLHLJUesa4tDPtK5Wa1dIFDy0BrvR+nba5PLDNtiJ/Ys7LL2eT656yeU=
+Received: by 10.49.12.4 with SMTP id p4mr3210019nfi.1172655296912;
+        Wed, 28 Feb 2007 01:34:56 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id o9sm5137136nfa.2007.02.28.01.34.54;
+        Wed, 28 Feb 2007 01:34:54 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vslcrcpeg.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40910>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On Tuesday 2007 February 27 20:32, Junio C Hamano wrote:
 
-> What about the oft-asked for windows port?  From what I've seen, none of the 
-> Unix types have any incentive to do this, so a financial incentive might be 
-> just the thing.
+>  * refs.c::log_ref_write() gets an optional log message and
+>    writes it after the GMT offset, with an explicit "\t", so
+>    this is not it, either.
 
-+ 1. It seems the windows port somewhat has the status "we want it but
-I'm not going to do it" for most git contributors.
+Your mention of tabs set off alarm bells in my head.  I had another look at 
+the files with "less -S" instead of tail and lo-and-behold, the tab is shown.
 
-I'm personnally using unix 99% of the time, but I also have a piece of
-windows installed on my laptop. For example, I'm working on a small
-project using windows-only software, and being able to use git
-comfortably from this setup would be cool.
+Panic over.  This isn't a fault with git.  Stop reading now if you're only 
+interested in git.
 
-Also, I'm relucant to migrate to git completely even for unix-only
-projects, since I know that a hypothetical future windows-port will be
-made hard by the non-availability of the windows port.
+It's some weird interaction with tabs and my terminal and those particular 
+line lengths.  The two repositories I was comparing logs in have different 
+email addresses for me, so the column at which the tab activates is 
+different.  Bizarrely, in one case the tab appears swallowed, in the other it 
+appeared correctly.
 
-> Given that the best thing for git in the long term is more users, 
+-- time passes ---
 
-That's what I feel. The problem with distributed SCMs at the moment is
-that there are too many of them, not sharing enough users. For
-example, I had to choose a replacement for CVS with some colleagues
-recently. I argued about using a distributed one, but the argument
-against, and the decision was "SVN is what they're more likely to use
-later, let's go for SVN no matter how bad it is".
+It seems like a fault in terminals in general to me (perhaps it's specified in 
+a standard somewhere, so everyone just implements it):  if a tab is output in 
+the last column of the terminal, it's just swallowed - no space at all is 
+shown.
 
-> and that no windows support is the commonly given reason why other
-> SCMs are chosen instead, this would be a good use of the resources.
+It's easily repeatable.
+ * Open an xterm
+ * Resize it so that it's 50 columns wide.
+ * echo -e "0xxxxxxxxx1xxxxxxxxx2xxxxxxxxx3xxxxxxxxx4xxxxxxxx\t5xxxxxxxxx"
+ * Notice that the "5" is not on the next line where one might expect, but is
+   in column 49
 
-Sure. One of the best examples being Mozilla. I hardly see them using
-a piece of software that's not working properly on windows, since the
-majority of users (and probably of the developers, I don't know) are
-running windows.
+Am I wrong to think this is wrong?  I've always thought that there was an 
+implicit tab just off the end of a terminal line, which effectively brings 
+the output to the next tab stop (i.e. column 0 of the next line).
+
+
+Andy
 
 -- 
-Matthieu
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
