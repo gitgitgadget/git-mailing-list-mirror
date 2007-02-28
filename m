@@ -1,73 +1,106 @@
-From: Michael Coleman <tutufan@gmail.com>
-Subject: [PATCH] builtin-fmt-merge-msg: fix bugs in --file option
-Date: Tue, 27 Feb 2007 23:44:42 -0600
-Message-ID: <1172641482207-git-send-email-tutufan@gmail.com>
-Cc: Michael Coleman <tutufan@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 06:45:01 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Error "fatal: cannot pread pack file: Success"
+Date: Tue, 27 Feb 2007 21:55:46 -0800
+Message-ID: <7vbqje3jx9.fsf@assigned-by-dhcp.cox.net>
+References: <17892.64236.443170.43061@lisa.zopyra.com>
+	<20070228035713.GC5597@spearce.org>
+	<20070228044719.GA6068@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 06:55:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMHcb-0005Oc-FS
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 06:45:01 +0100
+	id 1HMHn6-0001PR-Ik
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 06:55:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750741AbXB1Fos (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 00:44:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750905AbXB1Fos
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 00:44:48 -0500
-Received: from nz-out-0506.google.com ([64.233.162.224]:14647 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750741AbXB1Foq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 00:44:46 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so43807nze
-        for <git@vger.kernel.org>; Tue, 27 Feb 2007 21:44:45 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        b=b5ZEI1rk5qPfb849252K0eMaSpxAqkav4MZpmPuHHSIUAcyJ8lk5bqdkYKI9VCrlsyz4y/cDVtUCIpZkpEohje73Oe90y3RErngtUZ/uQ42JVv+6fJkF0Hdp5KfzcvEk3CGUd4FUesaIlti+FZGn5OJbQhDTQ/SZWRP0tnOr+WQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=WSPidYEgxGKLnej3PP8MBSOCLa+sXhMMCs8D3K08ic0Gom067hpObktR7sO2rAlE1TDhw2xhXoTgw0ED2z22fJ7ajAliJZkf9/lecz05t+1NvulGu0QJu9Zt43UzgUDHZTSUYpfajofb9hB53njdZty0rBcqsxx4OJnndvD3Cdc=
-Received: by 10.65.180.7 with SMTP id h7mr146426qbp.1172641485630;
-        Tue, 27 Feb 2007 21:44:45 -0800 (PST)
-Received: from tutufan@gmail.com ( [69.154.17.234])
-        by mx.google.com with ESMTP id j4sm270847nzd.2007.02.27.21.44.43;
-        Tue, 27 Feb 2007 21:44:45 -0800 (PST)
-Received: by tutufan@gmail.com (sSMTP sendmail emulation); Tue, 27 Feb 2007 23:44:42 -0600
-X-Mailer: git-send-email 1.5.0.rc3
+	id S1750917AbXB1Fzs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 00:55:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750924AbXB1Fzs
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 00:55:48 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:35936 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750909AbXB1Fzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 00:55:47 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070228055547.ZGYR2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 28 Feb 2007 00:55:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Utvm1W00a1kojtg0000000; Wed, 28 Feb 2007 00:55:47 -0500
+In-Reply-To: <20070228044719.GA6068@spearce.org> (Shawn O. Pearce's message of
+	"Tue, 27 Feb 2007 23:47:19 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40898>
 
-If --file's argument is missing, don't crash.  If it cannot be opened,
-die with an error message.
----
- builtin-fmt-merge-msg.c |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-diff --git a/builtin-fmt-merge-msg.c b/builtin-fmt-merge-msg.c
-index 1489883..5c145d2 100644
---- a/builtin-fmt-merge-msg.c
-+++ b/builtin-fmt-merge-msg.c
-@@ -259,13 +259,15 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 		else if (!strcmp(argv[1], "--no-summary"))
- 			merge_summary = 0;
- 		else if (!strcmp(argv[1], "-F") || !strcmp(argv[1], "--file")) {
--			if (argc < 2)
-+			if (argc < 3)
- 				die ("Which file?");
- 			if (!strcmp(argv[2], "-"))
- 				in = stdin;
- 			else {
- 				fclose(in);
- 				in = fopen(argv[2], "r");
-+				if (!in)
-+					die("cannot open %s", argv[2]);
- 			}
- 			argc--; argv++;
- 		} else
--- 
-1.5.0.rc3
+> "Shawn O. Pearce" <spearce@spearce.org> wrote:
+>> Bill Lear <rael@zopyra.com> wrote:
+>> > Using 1.5.0.1.  Can't see what is wrong with this clone...
+>> ...
+>> > Indexing 4589 objects.
+>> > remote: Total 4589 (delta 2209), reused 4589 (delta 2209)
+>> >  100% (4589/4589) done
+>> > Resolving 2209 deltas.
+>> > fatal: cannot pread pack file: Success
+>> > fatal: index-pack died with error code 128
+>> > fetch-pack from '/home/rael/devel/project/.git' failed.
+>> 
+>> I think the pread() in get_data_from_pack of index-pack is wrong,
+>> it really should be looping until we fill the buffer in case the
+>> OS doesn't fully satisfy our read request the first time.
+
+The patch looks correct, even if this was not the problem Bill
+is suffering from.
+
+> [PATCH] index-pack: Loop over pread until data loading is complete.
+>
+> A filesystem might not be able to completely supply our pread
+> request in one system call, such as if we are reading data from a
+> network file system and the requested length is just simply huge.
+>
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+>  index-pack.c |   10 ++++++++--
+>  1 files changed, 8 insertions(+), 2 deletions(-)
+>
+> diff --git a/index-pack.c b/index-pack.c
+> index 859ec01..cf81a99 100644
+> --- a/index-pack.c
+> +++ b/index-pack.c
+> @@ -277,13 +277,19 @@ static void *get_data_from_pack(struct object_entry *obj)
+>  {
+>  	unsigned long from = obj[0].offset + obj[0].hdr_size;
+>  	unsigned long len = obj[1].offset - from;
+> +	unsigned long rdy = 0;
+>  	unsigned char *src, *data;
+>  	z_stream stream;
+>  	int st;
+>  
+>  	src = xmalloc(len);
+> -	if (pread(pack_fd, src, len, from) != len)
+> -		die("cannot pread pack file: %s", strerror(errno));
+> +	data = src;
+> +	do {
+> +		ssize_t n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
+> +		if (n <= 0)
+> +			die("cannot pread pack file: %s", strerror(errno));
+> +		rdy += n;
+> +	} while (rdy < len);
+>  	data = xmalloc(obj->size);
+>  	memset(&stream, 0, sizeof(stream));
+>  	stream.next_out = data;
+> -- 
+> 1.5.0.2.775.g1a500
+>
+> -- 
+> Shawn.
