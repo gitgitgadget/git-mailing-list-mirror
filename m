@@ -1,75 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Questions about git-rev-parse
-Date: Tue, 27 Feb 2007 19:33:03 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702271921110.12485@woody.linux-foundation.org>
-References: <E1HMETh-0004BO-Lw@candygram.thunk.org> <7vvehn2eds.fsf@assigned-by-dhcp.cox.net>
- <20070228025258.GD2178@thunk.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: pack v4 status
+Date: Tue, 27 Feb 2007 22:45:55 -0500
+Message-ID: <20070228034555.GA5597@spearce.org>
+References: <20070227155042.GB3230@spearce.org> <Pine.LNX.4.64.0702271348260.12485@woody.linux-foundation.org> <alpine.LRH.0.82.0702271717080.29426@xanadu.home> <7vwt23b54a.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Feb 28 04:33:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 28 04:46:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMFZ3-0002mh-Ge
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 04:33:13 +0100
+	id 1HMFli-0008Aq-Of
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 04:46:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbXB1DdK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 22:33:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751375AbXB1DdK
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 22:33:10 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:37177 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751360AbXB1DdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 22:33:09 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1S3WjhB029599
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 27 Feb 2007 19:32:45 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1S3WheM005433;
-	Tue, 27 Feb 2007 19:32:44 -0800
-In-Reply-To: <20070228025258.GD2178@thunk.org>
-X-Spam-Status: No, hits=-0.444 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750837AbXB1DqP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 22:46:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750838AbXB1DqP
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 22:46:15 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:32922 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750837AbXB1DqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 22:46:15 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HMFlE-00075h-Ag; Tue, 27 Feb 2007 22:45:48 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B06D520FBAE; Tue, 27 Feb 2007 22:45:55 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vwt23b54a.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40884>
 
-
-
-On Tue, 27 Feb 2007, Theodore Tso wrote:
+Junio C Hamano <junkio@cox.net> wrote:
+> Nicolas Pitre <nico@cam.org> writes:
+> > The idea is to deal with only tree objects containing the 64K most 
+> > frequently used base names and fall back to the current tree object 
+> > encoding for objects that couldn't be represented that way.
 > 
-> So while I'm asking questions, where did the "*-ish" terminology come 
-> from, anyway?
+> Ah, I was wondering the same thing as Linus after seeing shawn
+> talked about the 2-byte prefix on #git. Falling back to an
+> alternate encoding for rarer cases makes sense.
 
-It's means "approximate" or "having the character of". Quite like the 
-normal English meaning of "thirtyish" or "fortyish" when you talk about 
-approximate ages of people, or "tallish" when you talk about height. 
-Google for "ish suffix", and you'll get as your first hit:
+Right.  Git is already fast, and already compresses the object data
+very well.  But I think we can make things faster without violating
+the basic assumptions of "whole project history", and it just turns
+out that those encodings are also making the data smaller for the
+common case of human maintained source code.  Which of course is
+one of the primary uses for Git, but is obviously not the only use.
 
-	http://www.randomhouse.com/wotd/index.pperl?date=19990617
+In the worst case scenario we'll be doing exactly what we are
+doing today with regards to encoding. That performance and disk
+space usage is already known and considered "very, very fast" and
+"very small".  ;-)
 
-and the git usage is actually just a variation of that.
+In the best case scenario (human managed source like linux.git,
+git.git) we'll scream with pack v4.  The rev-list stats I posted
+from just the tree encoding switch not only saved 3 MiB of disk
+space but improved total running time by 12.5%.  Nico and I know
+we can still do better.
 
-So a "tree-ish" is not necessarily exactly a tree, but it has all the 
-characteristics of a tree (by virtue of there being a well-defined 1:1 
-relationship with a tree).
+With 15k basenames in linux.git we're filling only 23.6% of the
+available namespace within a single packfile.  I think that by the
+time we have enough basenames to break 64K we'll be several years
+out and be talking about historical packs vs. active packs.
 
-> I had the mental model (which I had intuited, since no git documentation 
-> I could find had bothered to explain it) that -ish meant something like 
-> specifier, so "tree-ish" meant tree specifier, so a commit id could get 
-> dereferenced into a tree id, so it could be used to specify a tree.
-
-No, it really is English. At least grammatically.
-
-A "tree-ish" is "like a tree", exactly like "sheepish" is "like a sheep". 
-Nothing really git-specific about it, except for it certainly having 
-become common usage in a way that it may not be normally ;)
-
-		Linus
+-- 
+Shawn.
