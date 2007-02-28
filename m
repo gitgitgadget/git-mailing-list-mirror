@@ -1,69 +1,54 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: gitco - replacement for cvsco
-Date: Wed, 28 Feb 2007 20:55:36 +0100
-Message-ID: <20070228195536.GB4149@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <877iu3q13r.fsf@latte.josefsson.org> <Pine.LNX.4.63.0702271336050.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070227174035.f85e8643.vsu@altlinux.ru> <87bqje74u5.fsf_-_@latte.josefsson.org>
+From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
+Subject: Re: defaults for where to merge from
+Date: Wed, 28 Feb 2007 20:56:58 +0100
+Message-ID: <45E5DE8A.2080101@lu.unisi.ch>
+References: <es450f$d58$1@sea.gmane.org>	 <200702281522.14965.andyparkins@gmail.com>	 <Pine.LNX.4.64.0702281526270.15314@reaper.quantumfyre.co.uk>	 <Pine.LNX.4.63.0702281643200.22628@wbgn013.biozentrum.uni-wuerzburg.de> <81b0412b0702281045u2e511ebfie14a7b718531f8c4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sergey Vlasov <vsu@altlinux.ru>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Simon Josefsson <simon@josefsson.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 20:55:53 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Paolo Bonzini <bonzini@gnu.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 20:57:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMUtz-0005Sd-TV
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:55:52 +0100
+	id 1HMUvJ-00061f-Nm
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122AbXB1Tzu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 14:55:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXB1Tzt
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:55:49 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:42853 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751122AbXB1Tzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 14:55:49 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id A022D6993;
-	Wed, 28 Feb 2007 20:55:44 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 2D19A1F08A; Wed, 28 Feb 2007 20:55:36 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <87bqje74u5.fsf_-_@latte.josefsson.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751861AbXB1T5M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 14:57:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbXB1T5M
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:57:12 -0500
+Received: from server.usilu.net ([195.176.178.200]:24699 "EHLO mail.usilu.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751861AbXB1T5L (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 14:57:11 -0500
+Received: from [1.240.182.245] ([213.140.22.65] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Wed, 28 Feb 2007 20:57:06 +0100
+User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+In-Reply-To: <81b0412b0702281045u2e511ebfie14a7b718531f8c4@mail.gmail.com>
+X-OriginalArrivalTime: 28 Feb 2007 19:57:06.0645 (UTC) FILETIME=[9FA9C050:01C75B72]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41001>
 
-As a big fan of cvsco and friends, I admit I often miss that one in
-git repos.
 
-On Wed, Feb 28, 2007 at 03:08:02PM +0100, Simon Josefsson wrote:
-> However, one problem with that, compared to 'cvsco', is that
-> 'git-reset --hard' does not tell me tell me which files were deleted
-> and which file were restored.  May I suggest a --verbose or similar?
+> As is an option to disable the feature. I.e. for scripts, which create 
+> branches
+> blindly, without knowing they working on a remote branch.
+> So, please, provide an option to do what git-checkout/git-branch did 
+> before:
+> which is just create the branch, nothing more.
 
-Here is a small change to your script that does just that.  It is far
-from perfect:
+This does create the branch and nothing more.  It sets up "git pull" to 
+do the obvious thing, but does not do anything more.  The branch is left 
+in the same state than without the patch.  So the scripts will still 
+work unless they create branches blindly, and blindly do a "git pull" 
+expecting it to do the unobvious thing.
 
-- uses cogito and not plain git.  Not sure how to achieve the same
-compact layout with plain git - both cogito and stgit forge this type
-of output themselves.  Would be great to get it directly from git
-itself...
-
-- not very efficient, and not very secure, since we scan the tree once
-for reporting and then once for deleting the files, leaving a window
-where files could be created by another program after the cg-status
-call, and then removed by git-reset.
-
-You've been warned :)
-
-#!/bin/sh
-# gitco - cruel checkout.  Discards everything that has not been
-# committed, and checkout missing files.
-git clean -d -x
-cg status -w
-git reset --hard
+Paolo
