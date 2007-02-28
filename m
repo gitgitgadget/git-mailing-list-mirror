@@ -1,96 +1,81 @@
-From: Simon Josefsson <simon@josefsson.org>
-Subject: Re: gitco - replacement for cvsco
-Date: Wed, 28 Feb 2007 22:31:27 +0100
-Message-ID: <87y7mirmts.fsf@latte.josefsson.org>
-References: <877iu3q13r.fsf@latte.josefsson.org>
-	<Pine.LNX.4.63.0702271336050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20070227174035.f85e8643.vsu@altlinux.ru>
-	<87bqje74u5.fsf_-_@latte.josefsson.org>
-	<20070228195536.GB4149@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: bug report, error : Unable to find 000000000.....
+Date: Wed, 28 Feb 2007 13:34:19 -0800
+Message-ID: <7v8xei0xwk.fsf@assigned-by-dhcp.cox.net>
+References: <BAY120-W200B9984A9E70409399666AE810@phx.gbl>
+	<slrneubrsd.2pm.siprbaum@xp.machine.xx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sergey Vlasov <vsu@altlinux.ru>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 22:32:18 2007
+Cc: git@vger.kernel.org, Jeremy Sw <kertejeremy@hotmail.com>,
+	James Ketrenos <jketreno@linux.intel.com>
+To: Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de>
+X-From: git-owner@vger.kernel.org Wed Feb 28 22:34:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMWPI-0002EP-2O
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 22:32:16 +0100
+	id 1HMWRZ-0003EA-PZ
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 22:34:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932117AbXB1VcO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 16:32:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932293AbXB1VcO
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 16:32:14 -0500
-Received: from 178.230.13.217.in-addr.dgcsystems.net ([217.13.230.178]:37661
-	"EHLO yxa.extundo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932117AbXB1VcN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 16:32:13 -0500
-Received: from extundo.com (yxa.extundo.com [217.13.230.178])
-	(authenticated bits=0)
-	by yxa.extundo.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l1SLVS2Y005773
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 28 Feb 2007 22:31:28 +0100
-OpenPGP: id=B565716F; url=http://josefsson.org/key.txt
-X-Hashcash: 1:22:070228:ydirson@altern.org::TLsmn3aOHnT/HOEI:GpR
-X-Hashcash: 1:22:070228:vsu@altlinux.ru::o//ZoRiHEV/7hsnT:3IY1
-X-Hashcash: 1:22:070228:git@vger.kernel.org::nR1muPFyhI+lr3vi:9+6n
-X-Hashcash: 1:22:070228:johannes.schindelin@gmx.de::9T0BjpiqJjmEs+O6:Aqaq
-In-Reply-To: <20070228195536.GB4149@nan92-1-81-57-214-146.fbx.proxad.net>
-	(Yann Dirson's message of "Wed\, 28 Feb 2007 20\:55\:36 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.94 (gnu/linux)
-X-Spam-Status: No, score=-0.7 required=4.0 tests=BAYES_20 autolearn=ham 
-	version=3.1.1
-X-Spam-Checker-Version: SpamAssassin 3.1.1 (2006-03-10) on yxa-iv
-X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on yxa.extundo.com
-X-Virus-Status: Clean
+	id S932274AbXB1Veg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 16:34:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932291AbXB1Veg
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 16:34:36 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:46628 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932274AbXB1Vef (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 16:34:35 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070228213434.HTKD1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 28 Feb 2007 16:34:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id V9aK1W00g1kojtg0000000; Wed, 28 Feb 2007 16:34:34 -0500
+In-Reply-To: <slrneubrsd.2pm.siprbaum@xp.machine.xx> (Peter Baumann's message
+	of "Wed, 28 Feb 2007 22:09:33 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41009>
 
-Yann Dirson <ydirson@altern.org> writes:
+Peter Baumann <siprbaum@stud.informatik.uni-erlangen.de> writes:
 
-> As a big fan of cvsco and friends, I admit I often miss that one in
-> git repos.
+> Jeremy Sw <kertejeremy@hotmail.com> schrieb:
+>>
+>> By running  # git clone http://intellinuxwireless.org/repos/ipwraw.git
+>> git return an error when trying to Get alternates list.
+>> the error is :
+>> "error: Unable to find 0000000000000000000000000000000000000000 under http://intellinuxwireless.org/repos/ipwraw.git/
+>> Cannot obtain needed object 0000000000000000000000000000000000000000"
+>> apparently caused by a weird architecture of the tree !
+>> there is 4 or 5 diffrents projects, but they have commun files because firmwares are related !
 >
-> On Wed, Feb 28, 2007 at 03:08:02PM +0100, Simon Josefsson wrote:
->> However, one problem with that, compared to 'cvsco', is that
->> 'git-reset --hard' does not tell me tell me which files were deleted
->> and which file were restored.  May I suggest a --verbose or similar?
+> I suggested on IRC to try this (I reproduced the error)
 >
-> Here is a small change to your script that does just that.  It is far
-> from perfect:
+> mkdir test && cd test && \
+> git-init && \
+> git fetch http://intellinuxwireless.org/repos/ipwraw.git master:master
 >
-> - uses cogito and not plain git.  Not sure how to achieve the same
-> compact layout with plain git - both cogito and stgit forge this type
-> of output themselves.  Would be great to get it directly from git
-> itself...
+> and it works. Ok, fist I thought the error is in another branch, but
 >
-> - not very efficient, and not very secure, since we scan the tree once
-> for reporting and then once for deleting the files, leaving a window
-> where files could be created by another program after the cg-status
-> call, and then removed by git-reset.
+> git-ls-remote http://intellinuxwireless.org/repos/ipwraw.git
+> 7e85b2032a864fcfe489085b768eea4b3a3a9d0b        refs/heads/master
+> 7e85b2032a864fcfe489085b768eea4b3a3a9d0b        refs/heads/origin
+> 7e85b2032a864fcfe489085b768eea4b3a3a9d0b        refs/tags/ipwraw-0.0.1
+> 7e85b2032a864fcfe489085b768eea4b3a3a9d0b        refs/tags/ipwraw-0.0.2
 >
-> You've been warned :)
->
-> #!/bin/sh
-> # gitco - cruel checkout.  Discards everything that has not been
-> # committed, and checkout missing files.
-> git clean -d -x
-> cg status -w
-> git reset --hard
+> there is no other branch, at least as I could see.
 
-jas@mocca:~/src/libtasn1$ gitco
-Removing foo
-M Makefile.am
-! gendocs.sh
-jas@mocca:~/src/libtasn1$
+The repository is seriously broken.  If you try wget to see
+refs/tags/* files, you will find out that they are not even
+tags; they are symrefs and both point at the master branch.
 
-Perfect!
+I do not think the Porcelain-ish shipped with git creates symref
+in refs/tags/, so it was done by somebody playing with symbolic-ref
+by hand perhaps?
 
-Thanks,
-Simon
+I'd suggest James to do delete these bogus refs/tags/* files and
+tag the correct commit with "git tag".
