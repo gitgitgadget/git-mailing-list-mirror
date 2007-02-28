@@ -1,100 +1,108 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: defaults for where to merge from
-Date: Wed, 28 Feb 2007 15:22:13 +0000
-Message-ID: <200702281522.14965.andyparkins@gmail.com>
-References: <es450f$d58$1@sea.gmane.org>
+Subject: [PATCH] Show binary file size change in diff --stat
+Date: Wed, 28 Feb 2007 15:26:26 +0000
+Message-ID: <200702281526.26247.andyparkins@gmail.com>
+References: <Pine.LNX.4.63.0702281535070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Paolo Bonzini <bonzini@gnu.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 16:22:54 2007
+X-From: git-owner@vger.kernel.org Wed Feb 28 16:26:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMQdN-00059h-Em
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:22:25 +0100
+	id 1HMQhL-0006oR-5c
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:26:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750829AbXB1PWX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 10:22:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751011AbXB1PWX
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:22:23 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:15439 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750829AbXB1PWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 10:22:22 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so584780nfa
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 07:22:20 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fOZcHLyCfC1uDbRYemEV0BHf+p0ptDqVzpjFXIX9btBw4zVPxu96ZulMQ8r9Ww1uB5prvz7TKSdEpku0w/EbA4B2/eGn6hDX6WNXddJhlts5ECCrTxtky+SEnEh6mxDoFzoyVgLWrlX72GB/EK2bl5CmUCRJKQcBiRrlhn4syUA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=K+BzN00ZcpDth95G2rnBroN81r1sxfURhX0zz3Wn/XCrfmNlJkRzUGe9wJKVhhH+HsGeQ6wzBEOJj2aDrHqRHQxovny/vuQ9SqfL9EJm180f4zqZhBWPllSgMI7ph6QHd3DwEkVHBsxc2ruofN7zIje8JiNrtnOiHf1skEcMcCY=
-Received: by 10.48.204.5 with SMTP id b5mr3808979nfg.1172676140683;
-        Wed, 28 Feb 2007 07:22:20 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id k24sm6067285nfc.2007.02.28.07.22.17;
-        Wed, 28 Feb 2007 07:22:18 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <es450f$d58$1@sea.gmane.org>
+	id S1751326AbXB1P03 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 10:26:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751346AbXB1P03
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:26:29 -0500
+Received: from mail.360visiontechnology.com ([194.70.53.226]:8286 "EHLO
+	369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751326AbXB1P02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 10:26:28 -0500
+Received: from dvr.360vision.com ([192.189.1.65]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
+	 Wed, 28 Feb 2007 15:28:33 +0000
+Received: from localhost ([127.0.0.1])
+	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
+	id 1HMQhH-0001PI-00
+	for <git@vger.kernel.org>; Wed, 28 Feb 2007 15:26:27 +0000
+In-Reply-To: <Pine.LNX.4.63.0702281535070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-TUID: 0ce8faf4f11db9c6
+X-UID: 271
+X-Length: 2512
 Content-Disposition: inline
+X-OriginalArrivalTime: 28 Feb 2007 15:28:33.0656 (UTC) FILETIME=[1B92BF80:01C75B4D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40937>
 
-On Wednesday 2007 February 28 14:53, Paolo Bonzini wrote:
-> As can be seen from my other messages, I'm experimenting a little with
-> git and trying to understand how its workflow compares with arch.  Right
-> now, my procedure for branching off a remote archive is:
->
->    git checkout -b branchname remote/upstreambranch
->    git config --add branch.branchname.remote remote
->    git config --add branch.branchname.merge refs/heads/upstreambranch
->
-> Is there a reason why "git branch" and "git checkout -b" should not
-> automatically do the two "git-config --add"s when the source branch is
-> remote?
+Previously, a binary file in the diffstat would show as:
 
-I can see why that would be handy, but I often make short lived branches off a 
-remote; and I wouldn't want my config cluttered up with branch defintions.
+ some-binary-file.bin       |  Bin
 
-> In case the source branch is not remote, would "origin" be a good choice
-> for the "branch.branchname.remote" variable?
+The space after the "Bin" was never used.  This patch changes binary
+lines in the diffstat to be:
 
-No.  That would still reference a remote.  As in:
+ some-binary-file.bin       |  Bin 12345 -> 123456 bytes
 
-[remote "origin"]
-        url = git://git.kernel.org/pub/scm/git/git.git
-        fetch = refs/heads/master:refs/remotes/origin/master
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
+The very nice "->" notation was suggested by Johannes Schindelin, and
+shows the before and after sizes more clearly than "+" and "-" would.
 
-The remote = origin tells git to use the [remote "origin"] section.
+The user can see what changed in the binary file, and how big the new
+file is.  This is in keeping with the information in the rest of the
+diffstat.
 
-I think what you want is something that I would like too.  If you specify "." 
-to a git-pull it means to use the local repository not a remote.  It would be 
-great if one could have:
+The diffstat_t members "added" and "deleted" were unused when the file
+was binary, so this patch loads them with the file sizes in
+builtin_diffstat().  These figures are then read in show_stats() when
+the file is marked binary.
 
-[remote "origin"]
-        url = git://git.kernel.org/pub/scm/git/git.git
-        fetch = refs/heads/master:refs/remotes/origin/master
-[branch "master"]
-        remote = .
-        merge = refs/remotes/origin/master
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
 
-That way a "git pull" on master wouldn't need to make a remote connection in 
-order to do a merge (which is the way I like it).  However, I remember there 
-was a reason this wouldn't work, but I don't remember what it was :-)
+GAHHH!!!
+
+Ignore previous; I forgot to swap the order of the added and deleted items.
+I've also removed the conditionals on the 0 byte sizes - they're always shown.
 
 
-Andy
+ diff.c |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index d1eae72..cfddbb4 100644
+--- a/diff.c
++++ b/diff.c
+@@ -808,7 +808,12 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
+ 
+ 		if (data->files[i]->is_binary) {
+ 			show_name(prefix, name, len, reset, set);
+-			printf("  Bin\n");
++			printf("  Bin ");
++			printf("%s%i%s", del_c, deleted, reset);
++			printf(" -> ");
++			printf("%s%i%s", add_c, added, reset);
++			printf(" bytes");
++			printf("\n");
+ 			goto free_diffstat_file;
+ 		}
+ 		else if (data->files[i]->is_unmerged) {
+@@ -1179,9 +1184,11 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
+ 	if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
+ 		die("unable to read files to diff");
+ 
+-	if (mmfile_is_binary(&mf1) || mmfile_is_binary(&mf2))
++	if (mmfile_is_binary(&mf1) || mmfile_is_binary(&mf2)) {
+ 		data->is_binary = 1;
+-	else {
++		data->added = mf2.size;
++		data->deleted = mf1.size;
++	} else {
+ 		/* Crazy xdl interfaces.. */
+ 		xpparam_t xpp;
+ 		xdemitconf_t xecfg;
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+1.5.0.2.205.gea888-dirty
