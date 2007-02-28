@@ -1,101 +1,169 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Support 64-bit indexes for pack files.
-Date: Tue, 27 Feb 2007 23:12:51 -0500 (EST)
-Message-ID: <alpine.LRH.0.82.0702272258080.29426@xanadu.home>
-References: <20070226235510.GF1639@spearce.org>
- <alpine.LRH.0.82.0702261916560.29426@xanadu.home>
- <20070227003118.GH1639@spearce.org>
- <alpine.LRH.0.82.0702262306100.29426@xanadu.home>
- <79B129C3-C1B5-43E3-97DA-1ADC70642B88@adacore.com>
- <alpine.LRH.0.82.0702270002100.29426@xanadu.home>
- <5FE0C988-0DA8-4BFB-8F0C-42F97808E6F8@adacore.com>
- <20070227161122.GE3230@spearce.org>
- <2BBADC5E-7188-4F77-BF5A-28131B435EF0@adacore.com>
- <alpine.LRH.0.82.0702271235260.29426@xanadu.home>
- <20070228035248.GB5597@spearce.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Geert Bosch <bosch@adacore.com>,
-	Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 05:13:18 2007
+From: Michael Coleman <tutufan@gmail.com>
+Subject: [PATCH] Fix minor typos/grammar in user-manual.txt
+Date: Tue, 27 Feb 2007 22:13:09 -0600
+Message-ID: <1172635989747-git-send-email-tutufan@gmail.com>
+Cc: Michael Coleman <tutufan@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 28 05:13:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMGBp-0001jt-OH
+	id 1HMGBq-0001jt-8l
 	for gcvg-git@gmane.org; Wed, 28 Feb 2007 05:13:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751468AbXB1EMy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 23:12:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbXB1EMy
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 23:12:54 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:33930 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbXB1EMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 23:12:53 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JE500ISQNPFCEM2@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 27 Feb 2007 23:12:52 -0500 (EST)
-In-reply-to: <20070228035248.GB5597@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S1751453AbXB1ENP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 23:13:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbXB1ENP
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 23:13:15 -0500
+Received: from nz-out-0506.google.com ([64.233.162.231]:53486 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751453AbXB1ENO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 23:13:14 -0500
+Received: by nz-out-0506.google.com with SMTP id s1so24652nze
+        for <git@vger.kernel.org>; Tue, 27 Feb 2007 20:13:13 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        b=TonC0mdPox9iZ90zQ3p6NBsGrqKfESSRQk/nr4O5DToZPFzT/ttAkRt1jtzzjkSJy/I1qM7nAp2ArxK8M96w1mfRM1hFinSpWxsNywvqzT2VLWQ5ysRurjFU2E5x6MdyFycOtt3g3icTg9IEe4Rc0gPhqAw5Iyz0iWHlJI0wZY4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=Jved+cQRqB6weeywzifo1J/rfDe/RQf4zqxnsbxNiPwigPNVfqzHG41v4qJS8jwp71xUzXaPc7/B9U2+GnLr41xwxepDCATeuBL3drZ5t+1bFIzHHLNi81BpNGi3CpH+ibsYUXpqtL2aU/RqgmxiTejf0UIf14yn5TqAiPKCxo0=
+Received: by 10.35.32.9 with SMTP id k9mr53910pyj.1172635993353;
+        Tue, 27 Feb 2007 20:13:13 -0800 (PST)
+Received: from tutufan@gmail.com ( [69.154.17.234])
+        by mx.google.com with ESMTP id n80sm123182pyh.2007.02.27.20.13.10;
+        Tue, 27 Feb 2007 20:13:12 -0800 (PST)
+Received: by tutufan@gmail.com (sSMTP sendmail emulation); Tue, 27 Feb 2007 22:13:09 -0600
+X-Mailer: git-send-email 1.5.0.rc3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40890>
 
-On Tue, 27 Feb 2007, Shawn O. Pearce wrote:
+---
+ Documentation/user-manual.txt |   31 ++++++++++++++-----------------
+ 1 files changed, 14 insertions(+), 17 deletions(-)
 
-> Nicolas Pitre <nico@cam.org> wrote:
-> > On Tue, 27 Feb 2007, Geert Bosch wrote:
-> > > For smaller packs, the I/O is all going to be buffered anyway,
-> > > but if we're going to have >4GB pack files, it adds a lot of real
-> > > I/O  and SHA1 computation for no good reason. If we get a rare chance
-> > > to have a new pack format, why not fix this wart at the same time?
-> > 
-> > Fair enough.
-> 
-> OK, so lets say that if both ends of a network transport support
-> pack v4 then we can use pack v4.  If pack v4 omits the count field
-> from its header (because its easily derived or obtained from the
-> index, and doesn't add any additional data protection over the
-> SHA-1s)
-
-I don't agree we should omit it at all.
-
-I agree it might just not be included in the whole pack SHA1. Actually 
-the whole pack header might be ommitted from the pack SHA1. This way, if 
-data is appended at the end like index-pack does in the thin pack case, 
-the header can be fixed up without invalidating the SHA1 that was 
-computed while receiving the pack.  Why the whole header?  Well who 
-knows if we won't dynamically change the pack version while receiving it 
-as well in the future.  In fact, we could just add the header to the 
-SHA1 checksum but after the data payload (for the checksum only not in 
-the actual pack).  this way we preserve the same protection/validity 
-strength as we have today.
-
-> why not add some machine-readable sideband that can provide
-> transfer progress?
-> 
-> I think we would want four values, number of objects (sent/total)
-> and uncompressed bytes (sent/total), to send to the client.
-
-Uncompressed bytes is meaningless when evaluating throughput of 
-compressed data since compression ratio is variable during a single 
-fetch.  It doesn't provide more accurate progress than what we have 
-today with number of objects either.
-
-> Estimating the total uncompressed bytes is very easy in pack-objects
-> before we start sending even the header; actually if we are reusing
-> a majority of the objects from an existing packfile we even have
-> a good approximation of the compressed size ready.  That would
-> give the client a reasonable progress meter; certainly better than
-> nothing at all!  ;-)
-
-IMHO it is not worth it.  And it won't help git-pack-index if run on a 
-local pack either.
-
-
-Nicolas
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 03736bb..34e9651 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -2,7 +2,7 @@ Git User's Manual
+ _________________
+ 
+ This manual is designed to be readable by someone with basic unix
+-commandline skills, but no previous knowledge of git.
++command-line skills, but no previous knowledge of git.
+ 
+ Chapter 1 gives a brief overview of git commands, without any
+ explanation; you may prefer to skip to chapter 2 on a first reading.
+@@ -1196,7 +1196,7 @@ will be HEAD, the tip of the current branch; the other will be the
+ tip of the other branch, which is stored temporarily in MERGE_HEAD.
+ 
+ The diff above shows the differences between the working-tree version
+-of file.txt and two previous version: one version from HEAD, and one
++of file.txt and two previous versions: one version from HEAD, and one
+ from MERGE_HEAD.  So instead of preceding each line by a single "+"
+ or "-", it now uses two columns: the first column is used for
+ differences between the first parent and the working directory copy,
+@@ -1479,7 +1479,7 @@ Examining dangling objects
+ 
+ In some situations the reflog may not be able to save you.  For
+ example, suppose you delete a branch, then realize you need the history
+-it pointed you.  The reflog is also deleted; however, if you have not
++it contained.  The reflog is also deleted; however, if you have not
+ yet pruned the repository, then you may still be able to find
+ the lost commits; run git-fsck and watch for output that mentions
+ "dangling commits":
+@@ -1505,7 +1505,7 @@ history that is described by all your existing branches and tags.  Thus
+ you get exactly the history reachable from that commit that is lost.
+ (And notice that it might not be just one commit: we only report the
+ "tip of the line" as being dangling, but there might be a whole deep
+-and complex commit history that was gotten dropped.)
++and complex commit history that was dropped.)
+ 
+ If you decide you want the history back, you can always create a new
+ reference pointing to it, for example, a new branch:
+@@ -1561,7 +1561,7 @@ repository that you pulled from.
+ 
+ (But note that no such commit will be created in the case of a
+ <<fast-forwards,fast forward>>; instead, your branch will just be
+-updated to point to the latest commit from the upstream branch).
++updated to point to the latest commit from the upstream branch.)
+ 
+ The git-pull command can also be given "." as the "remote" repository,
+ in which case it just merges in a branch from the current repository; so
+@@ -1638,8 +1638,8 @@ updates with git pull>>".
+ 
+ If you and maintainer both have accounts on the same machine, then
+ then you can just pull changes from each other's repositories
+-directly; note that all of the command (gitlink:git-clone[1],
+-git-fetch[1], git-pull[1], etc.) which accept a URL as an argument
++directly; note that all of the commands (gitlink:git-clone[1],
++git-fetch[1], git-pull[1], etc.) that accept a URL as an argument
+ will also accept a local file patch; so, for example, you can
+ use
+ 
+@@ -1832,7 +1832,7 @@ that makes it easy for them to read your changes, verify that they are
+ correct, and understand why you made each change.
+ 
+ If you present all of your changes as a single patch (or commit), they
+-may find it is too much to digest all at once.
++may find that it is too much to digest all at once.
+ 
+ If you present them with the entire history of your work, complete with
+ mistakes, corrections, and dead ends, they may be overwhelmed.
+@@ -1858,11 +1858,8 @@ you are rewriting history.
+ Keeping a patch series up to date using git-rebase
+ --------------------------------------------------
+ 
+-Suppose you have a series of commits in a branch "mywork", which
+-originally branched off from "origin".
+-
+-Suppose you create a branch "mywork" on a remote-tracking branch
+-"origin", and created some commits on top of it:
++Suppose that you create a branch "mywork" on a remote-tracking branch
++"origin", and create some commits on top of it:
+ 
+ -------------------------------------------------
+ $ git checkout -b mywork origin
+@@ -1966,7 +1963,7 @@ Other tools
+ -----------
+ 
+ There are numerous other tools, such as stgit, which exist for the
+-purpose of maintaining a patch series.  These are out of the scope of
++purpose of maintaining a patch series.  These are outside of the scope of
+ this manual.
+ 
+ Problems with rewriting history
+@@ -2088,7 +2085,7 @@ descendant of the old head, you may force the update with:
+ $ git fetch git://example.com/proj.git +master:refs/remotes/example/master
+ -------------------------------------------------
+ 
+-Note the addition of the "+" sign.  Be aware that commits which the
++Note the addition of the "+" sign.  Be aware that commits that the
+ old version of example/master pointed at may be lost, as we saw in
+ the previous section.
+ 
+@@ -2096,7 +2093,7 @@ Configuring remote branches
+ ---------------------------
+ 
+ We saw above that "origin" is just a shortcut to refer to the
+-repository which you originally cloned from.  This information is
++repository that you originally cloned from.  This information is
+ stored in git configuration variables, which you can see using
+ gitlink:git-config[1]:
+ 
+@@ -2407,7 +2404,7 @@ conflicts between different tree objects, allowing each pathname to be
+ associated with sufficient information about the trees involved that
+ you can create a three-way merge between them.'
+ 
+-Those are the three ONLY things that the directory cache does.  It's a
++Those are the ONLY three things that the directory cache does.  It's a
+ cache, and the normal operation is to re-generate it completely from a
+ known tree object, or update/compare it with a live tree that is being
+ developed.  If you blow the directory cache away entirely, you generally
+-- 
+1.5.0.rc3
