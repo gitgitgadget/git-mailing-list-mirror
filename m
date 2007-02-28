@@ -1,85 +1,107 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: My git repo is broken, how to fix it ?
-Date: Wed, 28 Feb 2007 20:12:03 +0100
-Message-ID: <81b0412b0702281112y714c3b0eread09ee9440d0537@mail.gmail.com>
-References: <200702281036.30539.litvinov2004@gmail.com>
-	 <Pine.LNX.4.64.0702272039540.12485@woody.linux-foundation.org>
-	 <200702281754.42383.litvinov2004@gmail.com>
-	 <Pine.LNX.4.64.0702280802150.12485@woody.linux-foundation.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Error "fatal: cannot pread pack file: Success"
+Date: Wed, 28 Feb 2007 13:18:08 -0600
+Message-ID: <17893.54640.150106.294218@lisa.zopyra.com>
+References: <17893.42063.186763.291346@lisa.zopyra.com>
+	<20070228155412.GC5479@spearce.org>
+	<17893.43522.511785.121778@lisa.zopyra.com>
+	<17893.44181.129918.669187@lisa.zopyra.com>
+	<20070228163256.GD5479@spearce.org>
+	<118833cc0702280842g3e121fg601d7e102956ba93@mail.gmail.com>
+	<20070228164922.GB5924@spearce.org>
+	<17893.46083.869042.467318@lisa.zopyra.com>
+	<20070228170641.GC5924@spearce.org>
+	<17893.47007.136145.112498@lisa.zopyra.com>
+	<20070228174339.GE5924@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Alexander Litvinov" <litvinov2004@gmail.com>, git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 20:12:12 2007
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 20:18:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMUDj-00050o-QA
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:12:12 +0100
+	id 1HMUJn-0007Nm-BJ
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:18:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932359AbXB1TMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 14:12:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932365AbXB1TMJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:12:09 -0500
-Received: from ug-out-1314.google.com ([66.249.92.173]:19673 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932359AbXB1TMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 14:12:05 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so206565uga
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 11:12:04 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mQx3Pbvttt91+PNrqKtd3mA+OUCU6V72QFpVYVb54r8i9+CqyWyx0MGZKXiE0LoMnSOIyqffSMggFtfGziMxJvVP0RbvYNqCtGz+mTG3GjaT1y398v5McLYeuXdL2PL9a6GnqZaI6Po3Rt1YkPNYBAPqT9mBD62mEj6w82oRS5k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=W86hbzZoQi0jZfuBMPkHl7bbvRRQpClHsOHrvqrnKIYYJbyVE1/EMM/Ao9YlMkudrSOkNjRnolTftYql+lcc64WoDKdvQrCvvA1VDNKwruT5GvsDbEN005l1J++3EtjdP0xgJfBFFMg3FtZQrLH7/uIaGiXRm+uD+bR6OsDRfMU=
-Received: by 10.78.160.2 with SMTP id i2mr75902hue.1172689924297;
-        Wed, 28 Feb 2007 11:12:04 -0800 (PST)
-Received: by 10.78.139.9 with HTTP; Wed, 28 Feb 2007 11:12:03 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0702280802150.12485@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1750717AbXB1TSZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 14:18:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750957AbXB1TSZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:18:25 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60904 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750717AbXB1TSY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 14:18:24 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l1SJILt07520;
+	Wed, 28 Feb 2007 13:18:21 -0600
+In-Reply-To: <20070228174339.GE5924@spearce.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40991>
 
-On 2/28/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->  - try to figure out why things got corrupted in the first place.
-> ...
->    But I would not be shocked to hear that the "link + unlink" sequence
->    ends up being emulated under cygwin as a "copy + delete" due to lack of
->    hardlinks or something.
-
-Well, cygwin has a whole rename implementation using wincalls (which
-may or maybe not syscalls). It's hard to tell whether micros$#%^ used
-link+unlink: windows traditionally had no link(2). It has it since W2K,
-allowed only on ntfs, and even there it spent some time undocumented :)
-
->    Also, even if the link fails, and git then falls back to "rename()"
->    (since some filesystems don't do hardlinks at all, or limit them to one
->    particular directory), I would _still_ not be totally surprised if the
->    rename got emulated as a copy/delete for some strange Windows reason.
+On Wednesday, February 28, 2007 at 12:43:39 (-0500) Shawn O. Pearce writes:
+>Bill Lear <rael@zopyra.com> wrote:
+>> Yes: 1.4.x worked fine.  This was actually my attempt to re-do the 1.4
+>> clone I had laying around, as I wanted my backup done with 1.5.  I
+>> still have the 1.4 cloned repo, just moved it out of the way...
 >
->    There are other possibilities for corruption, of course: just plain
->    disk corruption, or (again) some other subtle cygwin emulation or
->    Windows issue could bite us.
+>OK, is ~/devel/project fully packed?  If it isn't can you repack
+>it (or a clone of it) so that it is?
 
-It is very hard to tell: the rename function in cygwin is over 200 lines long,
-has multiple calls down to the kernel (or whatever it is), and there are two
-different wincalls used. It is hard to predict what path will be taken or
-whether there were actually any data copying happened.
-Of course, windows known to corrupt data just so...
+I did a git gc on this before starting, so I assume it is fully packed.
 
->  - It would probably be good to write up the "How to recover" thing,
->    regardless of why any corruption happens. It doesn't matter if you're
->    under UNIX and using native protocols, and just being careful as hell:
->    disks get corrupted, sh*t happens, alpha-particles in the wrong place
->    do bad things to memory cells. And bugs _are_ inevitable, even if
->    we've been pretty damn good about these things.
+I tried copying my backup 1.4 repo to my local drive and then cloning
+it with 1.5 onto my nfs-mounted drive.  This failed like this:
 
-It'd be a good start to link the recent disaster recoveries from
-git.or.cz wiki from the title page (unless it is already).
+% cp -rp project-/ ~/project-1.4
+% git clone --bare ~/project-1.4
+[...]
+Resolving 1286 deltas.
+fatal: cannot pread pack file: Success from=37269, packfile size=0
+fatal: index-pack died with error code 128
+
+Just to see what 1.4 will now do, I tried with 1.4, and it is now
+failing also:
+
+[Reset PATH]
+% git --version
+git version 1.4.4.1
+% git clone --bare ~/project-1.4
+[...]
+Resolving 1286 deltas.
+remote: Total 3165, written 3165 (delta 1286), reused 1840 (delta 488)
+fatal: index-pack died of signal 7
+
+>Then take the packfile and try to feed it right into index-pack:
+>
+>	mkdir /austin/users/rael/repos/git/project-test
+>	cd /austin/users/rael/repos/git/project-test
+>	git --bare init
+>	git --bare index-pack --stdin --fix-thin \
+>	  <~/devel/project/.git/objects/pack/pack-*.pack
+>
+>Now while that is running it should be creating pack_XXXXXX as a
+>temporary file (where XXXXXX is replaced with the temp string).
+>Its this file that we are seeing magically truncate to 0 in the
+>middle of running.
+
+Did that.  Still fails:
+
+% git --bare index-pack --stdin --fix-thin < ~/devel/project/.git/objects/pack/pack-fe532a54e5d549f1cfc70a4ab2c5f4eaac8897a5.pack
+fatal: cannot pread pack file: Success from=39215, packfile size=0
+
+I do see this:
+
+% ls -l objects
+total 88088
+drwxr-xr-x  2 rael  software     4096 Feb 28 13:05 info/
+drwxr-xr-x  2 rael  software     4096 Feb 28 13:05 pack/
+-rw-------  1 rael  software 90099505 Feb 28 13:06 pack_eZwOnG
+
+
+Bill
