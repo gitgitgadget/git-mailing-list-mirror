@@ -1,56 +1,64 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Google Summer of Code 2007
-Date: Wed, 28 Feb 2007 10:39:18 -0500
-Message-ID: <E2758E4F-DD4A-4CB1-AC32-F1B89EC7096B@silverinsanity.com>
-References: <000601c75b1b$cbc0e710$0b0aa8c0@abf.local>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "'Shawn O. Pearce'" <spearce@spearce.org>, <git@vger.kernel.org>
-To: Raimund Bauer <ray@softwarelandschaft.com>
-X-From: git-owner@vger.kernel.org Wed Feb 28 16:39:23 2007
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Memory overrun in http-push.c
+Date: Wed, 28 Feb 2007 15:41:38 +0000
+Message-ID: <200702281541.41164.andyparkins@gmail.com>
+References: <20070228151516.GC57456@codelabs.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eygene Ryabinkin <rea-git@codelabs.ru>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 28 16:41:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMQtm-0003d2-Fv
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:39:22 +0100
+	id 1HMQw9-0004dg-Ds
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 16:41:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1749667AbXB1PjV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 10:39:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbXB1PjU
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:39:20 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:35189 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1749667AbXB1PjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 10:39:20 -0500
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 44F161FFC02B;
-	Wed, 28 Feb 2007 15:39:19 +0000 (UTC)
-In-Reply-To: <000601c75b1b$cbc0e710$0b0aa8c0@abf.local>
-X-Priority: 3 (Normal)
-X-Mailer: Apple Mail (2.752.3)
+	id S1751804AbXB1Pls convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Feb 2007 10:41:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbXB1Pls
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 10:41:48 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:39956 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751804AbXB1Plr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Feb 2007 10:41:47 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so590419nfa
+        for <git@vger.kernel.org>; Wed, 28 Feb 2007 07:41:45 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WlPns2K9u/1FHYURuWzhapn35VsvND6bS/QylB3gnHBBGLLUc8EgvoEPWQ6iKDABvUigE3F6Xcn0x6Y5pvragPFNHbB2JKjKCMjGks2PuBW5bunf0HsiOmH/PibxY4D9tLluOgRvhAc0naX+nE4NRJFjmVhGYjXf93RNxmgGyO4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Y3ss8yH/2vgqQGy/XN799ekIcUDeuV8NTYQ7Z3qWW16C7wcgNTgExJSPCn5xq5pc560yJ4mt0g8r0I9jqs1UbY5ctWonIjQRrBPoYfcfSilC8WD/x8B4V//8E5LQN6PPCMyhcF3Z+rMFH7qvvXY97bAY55HIJ49G7AhKqgIve58=
+Received: by 10.49.91.6 with SMTP id t6mr3821625nfl.1172677305815;
+        Wed, 28 Feb 2007 07:41:45 -0800 (PST)
+Received: from 360run094l ( [194.70.53.227])
+        by mx.google.com with ESMTP id x27sm6092209nfb.2007.02.28.07.41.43;
+        Wed, 28 Feb 2007 07:41:43 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <20070228151516.GC57456@codelabs.ru>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40944>
+
+On Wednesday 2007 February 28 15:15, Eygene Ryabinkin wrote:
+> --- http-push.c.orig=A0=A0=A0=A0Wed Feb 28 15:15:01 2007
+> +++ http-push.c=A0Wed Feb 28 15:15:21 2007
+> @@ -1295,7 +1295,7 @@
+
+A patch for git that wasn't made with git.
+
+Don't take this the wrong way Eygene, but why?
 
 
-On Feb 28, 2007, at 4:35 AM, Raimund Bauer wrote:
 
-> On Sun, 25 Feb 2007, Shawn O. Pearce wrote:
->
->> Thoughts?
->
-> What about sub-project support?
-> Seems also to be on the list of things that would be nice to have,  
-> but not
-> needed enough by the people doing the heavy work here.
-
-+1.  Something I'd definitely work on myself...  But hacking git  
-isn't what I'm getting paid for.  :-(  So let's see if someone else  
-will do it.
-
-~~ Brian
+Andy
+--=20
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
