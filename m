@@ -1,67 +1,87 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Broken dependencies..
-Date: Wed, 28 Feb 2007 09:00:21 +0000
-Message-ID: <200702280900.22982.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0702271543080.12485@woody.linux-foundation.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Google Summer of Code 2007
+Date: Wed, 28 Feb 2007 10:03:31 +0100
+Message-ID: <vpq4pp6r6vw.fsf@olympe.imag.fr>
+References: <20070225075917.GC1676@spearce.org>
+	<200702280842.08279.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 10:00:34 2007
+X-From: git-owner@vger.kernel.org Wed Feb 28 10:04:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMKfq-00012u-Dt
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 10:00:34 +0100
+	id 1HMKj9-0002Xa-9n
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 10:03:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077AbXB1JAc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 04:00:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbXB1JAc
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 04:00:32 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:30433 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752077AbXB1JAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 04:00:31 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so488186nfa
-        for <git@vger.kernel.org>; Wed, 28 Feb 2007 01:00:28 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=kLpagcTS3ff4WY0gEkUVclqDCK71+9BpQ8o3vc+v7viqhdk8ct4cRidDZx3llGZQ+c1wJDuzX9xB+t+z0QmeG1F0kVaRAHpylXaJ08dZgIXpeSSIOnoii4WEBejyPu2IXOJfCMgDGGXYusMX/GieOcwb2KF+gUyd+FIUG8tm4Ys=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WQTphKqse8v+Qm1fY6N5tDpRLan1dnpeRTshB4BHH49A+1dzJ15jxdHQR9+CpcnvlHszG0tbEsTNaFaheof3LgnlTy9sD3utx4OCn7x9+XFW1tl6PV1h2l5JznOBFCYNmMiXbqIWaMA113P2oD8+gtagERvHXmsC434+0pKeO58=
-Received: by 10.49.21.8 with SMTP id y8mr3178745nfi.1172653228283;
-        Wed, 28 Feb 2007 01:00:28 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id q27sm5044251nfc.2007.02.28.01.00.25;
-        Wed, 28 Feb 2007 01:00:26 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0702271543080.12485@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1752070AbXB1JD5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 04:03:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbXB1JD4
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 04:03:56 -0500
+Received: from imag.imag.fr ([129.88.30.1]:34747 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752070AbXB1JDz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 04:03:55 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l1S93VK6029636
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 28 Feb 2007 10:03:31 +0100 (CET)
+Received: from olympe.imag.fr ([129.88.43.60])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HMKih-0000WT-8U
+	for git@vger.kernel.org; Wed, 28 Feb 2007 10:03:31 +0100
+Received: from moy by olympe.imag.fr with local (Exim 4.50)
+	id 1HMKih-0006UU-69
+	for git@vger.kernel.org; Wed, 28 Feb 2007 10:03:31 +0100
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <200702280842.08279.andyparkins@gmail.com> (Andy Parkins's message of "Wed\, 28 Feb 2007 08\:42\:07 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 28 Feb 2007 10:03:31 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40909>
 
-On Tuesday 2007 February 27 23:46, Linus Torvalds wrote:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> doing proper dependencies, but I'm too lazy to fix it. Any ideas on how to
-> generate real dependency data so that we don't have these kinds of things
-> (I bet there are other files than just fetch.c that lack the full header
-> file dependencies, this one just happened to trigger now)?
+> What about the oft-asked for windows port?  From what I've seen, none of the 
+> Unix types have any incentive to do this, so a financial incentive might be 
+> just the thing.
 
-Would gcc's "-MM" help?  I think qmake uses them when it's generating 
-Makefiles.
++ 1. It seems the windows port somewhat has the status "we want it but
+I'm not going to do it" for most git contributors.
 
+I'm personnally using unix 99% of the time, but I also have a piece of
+windows installed on my laptop. For example, I'm working on a small
+project using windows-only software, and being able to use git
+comfortably from this setup would be cool.
 
-Andy
+Also, I'm relucant to migrate to git completely even for unix-only
+projects, since I know that a hypothetical future windows-port will be
+made hard by the non-availability of the windows port.
+
+> Given that the best thing for git in the long term is more users, 
+
+That's what I feel. The problem with distributed SCMs at the moment is
+that there are too many of them, not sharing enough users. For
+example, I had to choose a replacement for CVS with some colleagues
+recently. I argued about using a distributed one, but the argument
+against, and the decision was "SVN is what they're more likely to use
+later, let's go for SVN no matter how bad it is".
+
+> and that no windows support is the commonly given reason why other
+> SCMs are chosen instead, this would be a good use of the resources.
+
+Sure. One of the best examples being Mozilla. I hardly see them using
+a piece of software that's not working properly on windows, since the
+majority of users (and probably of the developers, I don't know) are
+running windows.
 
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Matthieu
