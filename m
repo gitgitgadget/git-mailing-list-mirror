@@ -1,59 +1,75 @@
-From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
-Subject: [PATCH] git-archimport does not cope with empty summaries
-Date: Tue, 27 Feb 2007 14:34:17 +0100
-Message-ID: <45E43359.3030400@lu.unisi.ch>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [PATCH] Include config.mak in doc/Makefile
+Date: Wed, 28 Feb 2007 21:57:42 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070228205742.GA19489@lala>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 21:36:02 2007
+X-From: git-owner@vger.kernel.org Wed Feb 28 21:58:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMVWh-0004Ff-2H
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 21:35:51 +0100
+	id 1HMVrw-0004r0-KU
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 21:57:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751949AbXB1Ufo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 15:35:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751947AbXB1Ufo
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 15:35:44 -0500
-Received: from server.usilu.net ([195.176.178.200]:46949 "EHLO mail.usilu.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751923AbXB1Ufn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 15:35:43 -0500
-Received: from [192.168.76.141] ([192.168.76.141] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Tue, 27 Feb 2007 14:34:17 +0100
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
-X-OriginalArrivalTime: 27 Feb 2007 13:34:17.0436 (UTC) FILETIME=[FA88D9C0:01C75A73]
+	id S1751891AbXB1U5r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Feb 2007 15:57:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbXB1U5r
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 15:57:47 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:63750 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751891AbXB1U5q (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Feb 2007 15:57:46 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HMVrt-0005R9-HJ
+	for git@vger.kernel.org; Wed, 28 Feb 2007 21:57:45 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l1SKvgSi027258
+	for <git@vger.kernel.org>; Wed, 28 Feb 2007 21:57:42 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l1SKvgHw027257
+	for git@vger.kernel.org; Wed, 28 Feb 2007 21:57:42 +0100 (MET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41005>
 
-I got this while importing bonzini@gnu.org--2004b/lightning--stable--1.2 
-(archive available at 
-http://www.inf.unisi.ch/phd/bonzini/webdav/bonzini@gnu.org--2004b via 
-webdav).
+config.mak.autogen is already there.  Without this change it is not
+possible to override mandir in config.mak.
 
-The patch seems pretty obvious to me:
+Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de>
+---
+ Documentation/Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-2007-02-27  Paolo Bonzini  <bonzini@gnu.org>
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index 9e7f2a7..b6d1d88 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -37,6 +37,7 @@ INSTALL?=3Dinstall
+ DOC_REF =3D origin/man
+=20
+ -include ../config.mak.autogen
++-include ../config.mak
+=20
+ #
+ # Please note that there is a minor bug in asciidoc.
+--=20
+1.5.0.rc2.gb4df
 
-         * git-archimport (parselog): Cope with an empty summary.
 
---- /usr/bin/git-archimport     2007-01-09 21:15:39.000000000 +0100
-+++ ./git-archimport    2007-02-27 14:28:33.000000000 +0100
-@@ -780,7 +780,11 @@
-      }
+--=20
+Uwe Kleine-K=F6nig
 
-      # post-processing:
--    $ps->{summary} = join("\n",@{$ps->{summary}})."\n";
-+    if (defined $ps->{summary}) {
-+        $ps->{summary} = join("\n",@{$ps->{summary}})."\n";
-+    } else {
-+        $ps->{summary} = "empty summary\n";
-+    }
-      $ps->{message} = join("\n",@$log);
-
-      # skip Arch control files, unescape pika-escaped files
+http://www.google.com/search?q=3D72+PS+point+in+inch
