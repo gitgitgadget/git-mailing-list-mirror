@@ -1,105 +1,87 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Show binary file size change in diff --stat
-Date: Wed, 28 Feb 2007 13:03:11 +0000
-Message-ID: <200702281303.11951.andyparkins@gmail.com>
+From: "Raimund Bauer" <ray@softwarelandschaft.com>
+Subject: RE: Problems with git cvsimport
+Date: Wed, 28 Feb 2007 14:27:29 +0100
+Organization: Softwarelandschaft
+Message-ID: <000c01c75b3c$31f91000$0b0aa8c0@abf.local>
+References: <Pine.LNX.4.63.0702271700300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 14:03:25 2007
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Feb 28 14:27:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMOSr-0001Vz-1l
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 14:03:25 +0100
+	id 1HMOqD-0003CW-L0
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 14:27:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932201AbXB1NDQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 08:03:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932202AbXB1NDQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 08:03:16 -0500
-Received: from mail.360visiontechnology.com ([194.70.53.226]:4670 "EHLO
-	369run02s.360vision.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932201AbXB1NDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 08:03:15 -0500
-Received: from dvr.360vision.com ([192.189.1.65]) by 369run02s.360vision.com with Microsoft SMTPSVC(5.0.2195.6713);
-	 Wed, 28 Feb 2007 13:05:19 +0000
-Received: from localhost ([127.0.0.1])
-	by dvr.360vision.com with esmtp (Exim 3.36 #1 (Debian))
-	id 1HMOSe-0007Tg-00
-	for <git@vger.kernel.org>; Wed, 28 Feb 2007 13:03:12 +0000
-X-TUID: 99b3adb3ae5db45e
-X-UID: 269
-X-Length: 2464
-Content-Disposition: inline
-X-OriginalArrivalTime: 28 Feb 2007 13:05:19.0281 (UTC) FILETIME=[18ED3210:01C75B39]
+	id S932272AbXB1N1b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 08:27:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932318AbXB1N1b
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 08:27:31 -0500
+Received: from s15211414.onlinehome-server.info ([87.106.16.196]:45432 "EHLO
+	s15211414.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932272AbXB1N1a convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 08:27:30 -0500
+Received: (qmail 19651 invoked from network); 28 Feb 2007 14:32:44 +0100
+Received: from host-62-245-155-90.customer.m-online.net (HELO swl011) (62.245.155.90)
+  by s15211414.onlinehome-server.info with SMTP; 28 Feb 2007 14:32:44 +0100
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.6626
+In-Reply-To: <Pine.LNX.4.63.0702271700300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40921>
 
-Previously, a binary file in the diffstat would show as:
+> Sorry to have missed that earlier. AFAIR cvsimport _needs_ 
+> cvsps 2.1. You 
+> have version 2.0rc1, which is not sufficient...
 
- some-binary-file.bin       |  Bin
+OK, thanks a lot, now that I'm using cvsps especially for git from
+http://ydirson.free.fr/en/software/scm/cvsps.html things are looking
+a bit better.
 
-The space after the "Bin" was never used.  This patch changes binary
-lines in the diffstat to be:
+There are some modules I can import with relative little noise. Not sure why
+I needed to do 'checkout -f' to get all the files in the working directory,
+but I got no problem with that.
 
- some-binary-file.bin       |  Bin +123456B -12345B
+For some other modules it doesn't work at all.
+I.e. trying
 
-The "+" item is the size of the new version, the "-" item is the size of
-the old version.  If a size is 0 it's not shown (although it would
-probably be better to treat no-file differently from zero-byte-file).
+$ git cvsimport -d :pserver:ray007@cvs.drupal.org:/cvs/drupal-contrib -C
+localizer -a contributions/modules/localizer
+Initialized empty Git repository in /home/ray/drupal/modules/localizer/.git/
+file 'CHANGELOG.txt; pre_rev:INITIAL; post_rev:1.1; dead:0; branch_point:0
+' not found in hash
+fatal: refs/heads/origin: not a valid SHA1
+fatal: master: not a valid SHA1
+warning: You appear to be on a branch yet to be born.
+warning: Forcing checkout of HEAD.
+fatal: just how do you expect me to merge 0 trees?
+checkout failed: 256
 
-The "B" (for bytes) is shown to highlight the fact that these numbers
-are not "number of lines", but actual bytes.
+Any hint what I have done wrong?
 
-The user can see what changed in the binary file, and how big the new
-file is.  This is in keeping with the information in the rest of the
-diffstat.
+Doing a normal cvs checkout works, trying to do a git-cvsimport in the
+checked-out directory fails with the same error again.
 
-The diffstat_t members "added" and "deleted" were unused when the file
-was binary, so this patch loads them with the file sizes in
-builtin_diffstat().  These figures are then read in show_stats() when
-the file is marked binary.
+For trying out, username=anonymous, password=anonymous should work.
+Or to just see what's in the repo, you can have a look at
+http://cvs.drupal.org/viewcvs/drupal/contributions/modules/localizer/
+to see the repo I tried in the example above.
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- diff.c |   15 ++++++++++++---
- 1 files changed, 12 insertions(+), 3 deletions(-)
+My perl knowledge is _very_ limited, but I'll have a look at the script too
+...
 
-diff --git a/diff.c b/diff.c
-index d1eae72..174b84e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -808,7 +808,14 @@ static void show_stats(struct diffstat_t* data, struct diff_options *options)
- 
- 		if (data->files[i]->is_binary) {
- 			show_name(prefix, name, len, reset, set);
--			printf("  Bin\n");
-+			printf("  Bin ");
-+			if (added != 0)
-+				printf("%s+%iB%s", add_c, added, reset);
-+			if (added != 0 && deleted != 0 )
-+				printf(" ");
-+			if (deleted != 0)
-+				printf("%s-%iB%s", del_c, deleted, reset);
-+			printf("\n");
- 			goto free_diffstat_file;
- 		}
- 		else if (data->files[i]->is_unmerged) {
-@@ -1179,9 +1186,11 @@ static void builtin_diffstat(const char *name_a, const char *name_b,
- 	if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
- 		die("unable to read files to diff");
- 
--	if (mmfile_is_binary(&mf1) || mmfile_is_binary(&mf2))
-+	if (mmfile_is_binary(&mf1) || mmfile_is_binary(&mf2)) {
- 		data->is_binary = 1;
--	else {
-+		data->added = mf2.size;
-+		data->deleted = mf1.size;
-+	} else {
- 		/* Crazy xdl interfaces.. */
- 		xpparam_t xpp;
- 		xdemitconf_t xecfg;
 -- 
-1.5.0.2.778.gdcb06
+best regards
+
+  Ray
