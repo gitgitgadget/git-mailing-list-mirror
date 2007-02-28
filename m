@@ -1,74 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] show_date(): rename the "relative" parameter to "mode"
-Date: Tue, 27 Feb 2007 15:59:43 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0702271554120.12485@woody.linux-foundation.org>
-References: <Pine.LNX.4.63.0702271620390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0702271339550.12485@woody.linux-foundation.org>
- <Pine.LNX.4.64.0702271356300.12485@woody.linux-foundation.org>
- <Pine.LNX.4.63.0702272322590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vslcrb3l8.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How do get a specific version of a particular file?
+Date: Wed, 28 Feb 2007 01:01:13 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0702280059050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <E1HM1XL-00071C-N5@candygram.thunk.org>
+ <Pine.LNX.4.63.0702271356040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070227154241.GA8228@thunk.org> <Pine.LNX.4.63.0702272053080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070227223929.GA9027@thunk.org> <86vehnnpy2.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Simon Josefsson <simon@josefsson.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Feb 28 00:59:57 2007
+Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 01:01:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMCEa-0005Ih-GQ
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 00:59:52 +0100
+	id 1HMCFy-0005yR-4g
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 01:01:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752665AbXB0X7q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 18:59:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbXB0X7q
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 18:59:46 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:58167 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752662AbXB0X7p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 18:59:45 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1RNxOhB023267
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 27 Feb 2007 15:59:24 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1RNxNTO000714;
-	Tue, 27 Feb 2007 15:59:23 -0800
-In-Reply-To: <7vslcrb3l8.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.445 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752661AbXB1ABP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 19:01:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752662AbXB1ABP
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 19:01:15 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55959 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752661AbXB1ABO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 19:01:14 -0500
+Received: (qmail invoked by alias); 28 Feb 2007 00:01:13 -0000
+X-Provags-ID: V01U2FsdGVkX18GrYhEfPUGZWzp3JoKsGK7CdSX0qxybHeYY0Ft8x
+	owow==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <86vehnnpy2.fsf@blue.stonehenge.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40857>
 
+Hi,
 
+On Tue, 27 Feb 2007, Randal L. Schwartz wrote:
 
-On Tue, 27 Feb 2007, Junio C Hamano wrote:
+> >>>>> "Theodore" == Theodore Tso <tytso@mit.edu> writes:
 > 
-> How about --ago as a synonym, and --my-date for obeying TZ?
-> "show in UTC time" can be had by something like:
+> Theodore> And I'm still not sure why
 > 
-> 	$ TZ=UTC git log --my-date
+> Theodore> 	git show v1.5.0..v1.5.0.1 
+> 
+> Theodore> doesn't throw an error, and why it prints what it does...
+> 
+> Wait, that doesn't throw an error?
+> 
+> (tries it)
+> 
+> OK, how is that different from git-diff ?
 
-Yes, although I would suggest that at that point we also use a shorter 
-date format, since the timezone (by definition) is no longer valid or 
-interesting.
+	$ git diff v1.5.0..v1.5.0.1
 
-But in general, there are other date issues - if we start showing the date 
-in other non-rfc2822 formats (like skipping the timezone), we migth as 
-well also support denser times..
+shows the differences between those two 
+versions;
 
-For example, I occasionally love seeing the seconds, especially when I 
-apply a series of patches from Andrew, and I see myself committing 5-6 
-patches per second - but it's just noise if you want a single-line thing. 
-So showing dates as "yyyy-mm-dd hh:mm" makes sense (and sorts properly).
+	$ git show v1.5.0..v1.5.0.1
 
-So instead of "--my-date", I'd suggest "--date[-format]=xyz" as an option, 
-possibly even with a way to set some defaults for "git log" using the 
-config file. 
+is _identical_ to
 
-		Linus
+	$ git show v1.5.0 v1.5.0.1
+
+and shows the same as
+
+	$ git show v1.5.0; git show v1.5.0.1
+
+i.e. the commit diffs of both commits.
+
+Ciao,
+Dscho
