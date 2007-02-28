@@ -1,63 +1,46 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Error "fatal: cannot pread pack file: Success"
-Date: Wed, 28 Feb 2007 13:23:48 -0600
-Message-ID: <17893.54980.672279.633902@lisa.zopyra.com>
-References: <17893.42063.186763.291346@lisa.zopyra.com>
-	<20070228155412.GC5479@spearce.org>
-	<17893.43522.511785.121778@lisa.zopyra.com>
-	<17893.44181.129918.669187@lisa.zopyra.com>
-	<20070228163256.GD5479@spearce.org>
-	<118833cc0702280842g3e121fg601d7e102956ba93@mail.gmail.com>
-	<20070228164922.GB5924@spearce.org>
-	<17893.46083.869042.467318@lisa.zopyra.com>
-	<20070228170641.GC5924@spearce.org>
-	<17893.47007.136145.112498@lisa.zopyra.com>
-	<20070228174339.GE5924@spearce.org>
-	<17893.54640.150106.294218@lisa.zopyra.com>
+From: Jeremy Sw <kertejeremy@hotmail.com>
+Subject: bug report, error : Unable to find 000000000.....
+Date: Wed, 28 Feb 2007 19:24:47 +0000
+Message-ID: <BAY120-W200B9984A9E70409399666AE810@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 20:23:55 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 20:25:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMUP4-00011H-6X
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:23:54 +0100
+	id 1HMUQF-0001Rn-No
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 20:25:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932386AbXB1TXu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 14:23:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932390AbXB1TXu
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:23:50 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60910 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932386AbXB1TXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 14:23:49 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1SJNmG08430;
-	Wed, 28 Feb 2007 13:23:48 -0600
-In-Reply-To: <17893.54640.150106.294218@lisa.zopyra.com>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S932388AbXB1TYt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 14:24:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932402AbXB1TYt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 14:24:49 -0500
+Received: from bay0-omc2-s4.bay0.hotmail.com ([65.54.246.140]:48258 "EHLO
+	bay0-omc2-s4.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932388AbXB1TYs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 14:24:48 -0500
+Received: from BAY120-W20 ([207.46.9.183]) by bay0-omc2-s4.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.2668);
+	 Wed, 28 Feb 2007 11:24:48 -0800
+X-Originating-IP: [213.48.73.91]
+Importance: Normal
+X-OriginalArrivalTime: 28 Feb 2007 19:24:48.0148 (UTC) FILETIME=[1C3A9540:01C75B6E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40992>
-
-On Wednesday, February 28, 2007 at 13:18:08 (-0600) Bill Lear writes:
->
->% ls -l objects
->total 88088
->drwxr-xr-x  2 rael  software     4096 Feb 28 13:05 info/
->drwxr-xr-x  2 rael  software     4096 Feb 28 13:05 pack/
->-rw-------  1 rael  software 90099505 Feb 28 13:06 pack_eZwOnG
-
-I should have added:
-
-% ls -l ~/devel/fusion/.git/objects/pack/pack-fe532a54e5d549f1cfc70a4ab2c5f4eaac8897a5.pack
--r--r--r--  1 rael software 90099525 Feb 27 21:36 /home/rael/devel/project/.git/objects/pack/pack-fe532a54e5d549f1cfc70a4ab2c5f4eaac8897a5.pack
-
-That's 20 bytes of difference.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40993>
 
 
-Bill
+By running  # git clone http://intellinuxwireless.org/repos/ipwraw.git
+git return an error when trying to Get alternates list.
+the error is :
+"error: Unable to find 0000000000000000000000000000000000000000 under http://intellinuxwireless.org/repos/ipwraw.git/
+Cannot obtain needed object 0000000000000000000000000000000000000000"
+apparently caused by a weird architecture of the tree !
+there is 4 or 5 diffrents projects, but they have commun files because firmwares are related !
+_________________________________________________________________
+Explore the seven wonders of the world
+http://search.msn.com/results.aspx?q=7+wonders+world&mkt=en-US&form=QBRE
