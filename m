@@ -1,85 +1,76 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Error "fatal: cannot pread pack file: Success"
-Date: Tue, 27 Feb 2007 21:45:48 -0600
-Message-ID: <17892.64236.443170.43061@lisa.zopyra.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Support 64-bit indexes for pack files.
+Date: Tue, 27 Feb 2007 22:52:48 -0500
+Message-ID: <20070228035248.GB5597@spearce.org>
+References: <20070226235510.GF1639@spearce.org> <alpine.LRH.0.82.0702261916560.29426@xanadu.home> <20070227003118.GH1639@spearce.org> <alpine.LRH.0.82.0702262306100.29426@xanadu.home> <79B129C3-C1B5-43E3-97DA-1ADC70642B88@adacore.com> <alpine.LRH.0.82.0702270002100.29426@xanadu.home> <5FE0C988-0DA8-4BFB-8F0C-42F97808E6F8@adacore.com> <20070227161122.GE3230@spearce.org> <2BBADC5E-7188-4F77-BF5A-28131B435EF0@adacore.com> <alpine.LRH.0.82.0702271235260.29426@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 28 04:46:28 2007
+Cc: Geert Bosch <bosch@adacore.com>,
+	Troy Telford <ttelford.groups@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Feb 28 04:53:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMFls-0008FG-93
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 04:46:28 +0100
+	id 1HMFsF-0002Pf-Mk
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 04:53:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750838AbXB1DqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 22:46:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbXB1DqT
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 22:46:19 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:61859 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750838AbXB1DqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 22:46:17 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l1S3k4310391;
-	Tue, 27 Feb 2007 21:46:04 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1751386AbXB1Dwz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 22:52:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbXB1Dwz
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 22:52:55 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:33095 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751386AbXB1Dwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 22:52:54 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HMFrq-0007IX-NC; Tue, 27 Feb 2007 22:52:38 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id F188220FBAE; Tue, 27 Feb 2007 22:52:48 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LRH.0.82.0702271235260.29426@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40886>
 
-Using 1.5.0.1.  Can't see what is wrong with this clone...
+Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 27 Feb 2007, Geert Bosch wrote:
+> > For smaller packs, the I/O is all going to be buffered anyway,
+> > but if we're going to have >4GB pack files, it adds a lot of real
+> > I/O  and SHA1 computation for no good reason. If we get a rare chance
+> > to have a new pack format, why not fix this wart at the same time?
+> 
+> Fair enough.
 
-% df -h .
-Filesystem            Size  Used Avail Use% Mounted on
-store:/storage/disk1
-                      682G  113G  535G  18% /austin
+OK, so lets say that if both ends of a network transport support
+pack v4 then we can use pack v4.  If pack v4 omits the count field
+from its header (because its easily derived or obtained from the
+index, and doesn't add any additional data protection over the
+SHA-1s) why not add some machine-readable sideband that can provide
+transfer progress?
 
-% git clone --bare ~/devel/project
-Initialized empty Git repository in /austin/users/rael/repos/git/project/
-remote: Generating pack...
-remote: Done counting 4589 objects.
-remote: Deltifying 4589 objects.
- 100% (4589/4589) done89) done
-Indexing 4589 objects.
-remote: Total 4589 (delta 2209), reused 4589 (delta 2209)
- 100% (4589/4589) done
-Resolving 2209 deltas.
-fatal: cannot pread pack file: Success
-fatal: index-pack died with error code 128
-fetch-pack from '/home/rael/devel/project/.git' failed.
+I think we would want four values, number of objects (sent/total)
+and uncompressed bytes (sent/total), to send to the client.
 
-% mkdir project
-% touch project/foo
-% ls -l project/foo
--rw-r--r--  1 rael software 0 Feb 27 21:44 project/foo
-% rm -rf project
+Estimating the total uncompressed bytes is very easy in pack-objects
+before we start sending even the header; actually if we are reusing
+a majority of the objects from an existing packfile we even have
+a good approximation of the compressed size ready.  That would
+give the client a reasonable progress meter; certainly better than
+nothing at all!  ;-)
 
-% cd ~/devel
-% df -h .
-Filesystem            Size  Used Avail Use% Mounted on
-/dev/sda5             186G   82G   95G  47% /home
-% mkdir test
-% cd test
-
-% git clone --bare ~/devel/project
-Initialized empty Git repository in /home/rael/test/project/
-remote: Generating pack...
-remote: Done counting 4589 objects.
-remote: Deltifying 4589 objects.
-  7Indexing 4589 objects. done
- 100% (4589/4589) done89) done4589) done
-remote: Total 4589 (delta 2209), reused 4589 (delta 2209)
- 100% (4589/4589) done
-Resolving 2209 deltas.
- 100% (2209/2209) done
-
-This happens repeatedly.  git fsck of my repo shows no problems.
-
-Anything else I can check?
-
-
-Bill
+-- 
+Shawn.
