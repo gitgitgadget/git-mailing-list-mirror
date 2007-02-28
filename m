@@ -1,63 +1,68 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Google Summer of Code 2007
-Date: Wed, 28 Feb 2007 11:00:01 -0500
-Message-ID: <AB86F2AB-7FF9-430E-9B6A-532977139114@silverinsanity.com>
-References: <000601c75b1b$cbc0e710$0b0aa8c0@abf.local> <E2758E4F-DD4A-4CB1-AC32-F1B89EC7096B@silverinsanity.com> <20070228154701.GB5479@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Raimund Bauer <ray@softwarelandschaft.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Feb 28 17:00:18 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Questions about git-rev-parse
+Date: Wed, 28 Feb 2007 08:00:32 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702280751000.12485@woody.linux-foundation.org>
+References: <E1HMETh-0004BO-Lw@candygram.thunk.org> <20070228025258.GD2178@thunk.org>
+ <Pine.LNX.4.64.0702271921110.12485@woody.linux-foundation.org>
+ <200702280854.32440.andyparkins@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <junkio@cox.net>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 28 17:00:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMRE1-0003w0-D3
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 17:00:17 +0100
+	id 1HMRE9-000401-4e
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 17:00:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751979AbXB1QAF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 11:00:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbXB1QAF
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 11:00:05 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:56546 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751979AbXB1QAE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 11:00:04 -0500
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 926A71FFC02B;
-	Wed, 28 Feb 2007 16:00:02 +0000 (UTC)
-In-Reply-To: <20070228154701.GB5479@spearce.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751969AbXB1QAS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 11:00:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751980AbXB1QAS
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 11:00:18 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:59171 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751969AbXB1QAQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 11:00:16 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1SG0BhB018876
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 28 Feb 2007 08:00:11 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1SG0AUV019087;
+	Wed, 28 Feb 2007 08:00:10 -0800
+In-Reply-To: <200702280854.32440.andyparkins@gmail.com>
+X-Spam-Status: No, hits=-0.441 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40953>
 
 
-On Feb 28, 2007, at 10:47 AM, Shawn O. Pearce wrote:
 
-> Most (if not all) Git hackers are unpaid.
->
-> Err, I think we are all paid by someone, but that pay is to produce
-> things totally unrelated to Git.  Because if we weren't paid,
-> we probably couldn't afford fancy luxuries like food.  :)
+On Wed, 28 Feb 2007, Andy Parkins wrote:
+> 
+> Funny; I'd always guessed that it came from Lord of the Rings, which (I think) 
+> often mentioned "Ent-ish" as being the language of the trees.
 
-I mostly meant that as a "I don't have the time to work on a large  
-project like that because I have to do other things for work".  And I  
-actually have non-computer related things to do when I'm not  
-working.  Shock and horror.  ;-)
+Yeah, we for a while had that overly geekish thing, but we didn't use 
+"entish", we used just "ent". Because an "ent" is "tree-ish".
 
-> Me, I hack on Git because I find it fun (it is a nice change of pace
-> from the dreary hacking I do for food) and I like using the software
-> to help me through my dreary hacking work.  But I'm certainly not
-> getting any money for my Git hacking.
+So when we used "ent", we didn't have the "-ish" there at all, and at some 
+point all the ents got search-and-replaced into "tree-ish".
 
-I hack on Git because I use it for work (yay being a contractor and  
-getting to pick my own tools!) and periodically need to fix a problem  
-here and there.  If I had more time, I'd probably do more.  But as is  
-small things I submit patches, large things I go "Please fix this".  :-)
+But "treeish" actually came before, and the "ent" thing was just a 
+temporary pun that got dropped.
 
-~~ Brian
+Looking at the git log, the first time we use "tree-ish" is fairly early: 
+apparently May 5, 2005. Commit ac4e0869 introduces it instead of 
+<tree/commit> (probably because the tag part got added, and to explain 
+that we only care about the resulting tree and won't actually *use* any 
+of the commit/tag information except to get to it).
+
+			Linus
