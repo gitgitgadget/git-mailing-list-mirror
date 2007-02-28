@@ -1,317 +1,109 @@
-From: Pavel Roskin <proski@gnu.org>
-Subject: Re: Better icon for qgit
-Date: Tue, 27 Feb 2007 19:18:00 -0500
-Message-ID: <1172621880.3291.37.camel@dv>
-References: <1172279202.19767.12.camel@dv>
-	 <e5bfff550702232247k447cf33asc47db99165eb7e4d@mail.gmail.com>
-	 <1172559445.19312.15.camel@dv>  <20070227093534.GB13149@strauss.suse.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: How do get a specific version of a particular file?
+Date: Tue, 27 Feb 2007 16:22:52 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0702271605290.12485@woody.linux-foundation.org>
+References: <E1HM1XL-00071C-N5@candygram.thunk.org>
+ <Pine.LNX.4.63.0702271356040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070227154241.GA8228@thunk.org> <Pine.LNX.4.63.0702272053080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070227223929.GA9027@thunk.org> <86vehnnpy2.fsf@blue.stonehenge.com>
+ <7vfy8rb2do.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-7SN0udyYjBvYY0bJPJBE"
-Cc: Marco Costalba <mcostalba@gmail.com>, git@vger.kernel.org
-To: Bernhard Walle <bwalle@suse.de>
-X-From: git-owner@vger.kernel.org Wed Feb 28 01:18:23 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Feb 28 01:22:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMCWU-0004xw-8K
-	for gcvg-git@gmane.org; Wed, 28 Feb 2007 01:18:22 +0100
+	id 1HMCai-0006wf-Dv
+	for gcvg-git@gmane.org; Wed, 28 Feb 2007 01:22:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750754AbXB1ASI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Feb 2007 19:18:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750873AbXB1ASI
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 19:18:08 -0500
-Received: from fencepost.gnu.org ([199.232.76.164]:55024 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750754AbXB1ASF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Feb 2007 19:18:05 -0500
-Received: from proski by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <proski@gnu.org>)
-	id 1HMCUe-0001P1-AT
-	for git@vger.kernel.org; Tue, 27 Feb 2007 19:16:28 -0500
-Received: from proski by gnu.org with local (Exim 4.66)
-	(envelope-from <proski@gnu.org>)
-	id 1HMCW9-0007zn-53; Tue, 27 Feb 2007 19:18:01 -0500
-In-Reply-To: <20070227093534.GB13149@strauss.suse.de>
-X-Mailer: Evolution 2.9.91 (2.9.91-3.fc7) 
+	id S1750952AbXB1AWm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Feb 2007 19:22:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750879AbXB1AWm
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Feb 2007 19:22:42 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:58965 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750918AbXB1AWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Feb 2007 19:22:41 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l1S0MXhB024001
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Feb 2007 16:22:33 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l1S0MWY1001267;
+	Tue, 27 Feb 2007 16:22:32 -0800
+In-Reply-To: <7vfy8rb2do.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.447 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/40860>
 
 
---=-7SN0udyYjBvYY0bJPJBE
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Tue, 2007-02-27 at 10:35 +0100, Bernhard Walle wrote:
-> * Pavel Roskin <proski@gnu.org> [2007-02-27 07:57]:
-> > On Sat, 2007-02-24 at 07:47 +0100, Marco Costalba wrote:
-> > >   it's ok for me to use your icon, I don't know if a 16x16 it's
-> > > enough, there is the window title but also application tool bar and
-> > > ALT+TAB application chooser where icons are bigger.
-> > > 
-> > > In particular your icon does not show well in ALT+TAB app chooser,
-> > > while the Bernhard's one does.
-> > 
-> > OK, I made another icon of the size 48x48 and ensured that it scales
-> > well to sizes 32x32, 24x24 and 16x16.  I used borders and gradients so
-> > that the colors of the title bars don't hide one of the stripes.  I
-> > replaced black with cyan-blue, since black draws too much attention from
-> > other bars, and gray would look thicker with gray borders.
+On Tue, 27 Feb 2007, Junio C Hamano wrote:
+
+> merlyn@stonehenge.com (Randal L. Schwartz) writes:
 > 
-> I like the first icon. :)
+> >>>>>> "Theodore" == Theodore Tso <tytso@mit.edu> writes:
+> >
+> > Theodore> And I'm still not sure why
+> >
+> > Theodore> 	git show v1.5.0..v1.5.0.1 
+> >
+> > Theodore> doesn't throw an error, and why it prints what it does...
+> >
+> > Wait, that doesn't throw an error?
+> >
+> > (tries it)
+> >
+> > OK, how is that different from git-diff ?
+> 
+> I do not think there is any difference.  "show" is about
+> multiple points, not ranges.  "diff" is about multiple
+> (typically two) points, and not ranges.
 
-Thanks.  So I'm ditching the "text" edition.  Here's the next iteration:
+Well, I do think Ted has a good point. Having negative refs makes no sense 
+for the "no-walk" case (aka "git show").
 
-* The gradients are improved to be noticeable along the lines, not just
-in the squares.
-* Saturation is reduced to make the icon easier on the eye.
-* The actual qgit colors are used (black, red, green).  Blue is avoided
-as it may be hard to distinguish on the title bar.
-* The top and left borders are made white to improve 3D effect and
-counteract apparent widening of the black line on white background.
+So when we do
 
--- 
-Regards,
-Pavel Roskin
+	git show v1.4.4..v1.5.0
 
---=-7SN0udyYjBvYY0bJPJBE
-Content-Disposition: attachment; filename=qgit48d.png
-Content-Type: image/png; name=qgit48d.png
-Content-Transfer-Encoding: base64
+that's an illogical thing to do, since "git show" is defined to be a 
+non-revision-walking action, which means the range operator be pointless 
+and wrong. The fact that we happily accept it (and then _only_ show 
+v1.5.0, which is the positive end of the range) is quite arguably not very 
+logical.
 
-iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAAACXBI
-WXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH1wIbFyUyB3oxWwAAA79JREFUaN7VWblu20AQnSX4F/ZX
-+ICaFJZby+4VIIg6uQ9SRE0SpxAQIEgXgAYSwGkS10rvyoWBuLc6Ff4A19w5UuzyEEVRXB4yswAl
-2RJXc7yZ92alILNEZHB+fj4LwxC01qC1huvr6zEAXEIHlwf/+fJFZFDmg9nPKaX+dMEBJSKDyWQy
-IyLQWkMYhoCIkIZQ9vXNzU1nIFUCQtJpCHlr4JJ6vfweEXWrBlyCj4SAiLk1UQqvLdSNX2x/4gEi
-AmoEIoKDg4Pg8PCwBPjs/aLg/v7vePsZiGCDBIgESAQaEbhDMPLXYX8p8oRAhEBoLmYCAGUhJs9a
-5oUZIDKQQcTkIupuBtKZMAYnxhMSEBEQIjw8PGzE8+z0NEjzx6vtOSAW8zoT+eRvuy6LWHt2dmZg
-1jKTeNl+b4oV46Ile8XZIHTY3myqtkNkkoKLcYA0LmfBtlKHzr+dGphOp0uYHg6HgQgD2+vu7s65
-hyujtFrvUH6WHUVkMBy+zGNjd/EmqvUc+E0IuDxZITkIakOS+01F4nY0mjEzaNs6VUYJfu/1gmB/
-P5bkb+bzccNF3KyIluw+qh1x7hVaUPfbVH5EWKTtGrAaR9V0QlYbqTADNSjJN8wD1omqXV+l/VfA
-zDEZftjZCT7u7pZgCxU/vX98HLsXccV0K/sYJZGFY1YnpDgLOeThRIN+gzbnFLF5ZOIVRYspRas2
-M2K7PFAEJ2ZOZglreDRX5N6l3ESIX0BOtfwQAGASIwzJRt1KciSCz09PG3ng5MtJEMlxrUOAi9vq
-M7FL7zewoWSOsJhH1NnoF0rywdfBRky0crRIHBVsgvdImkcZqUMprTmgAICIbbTtTKGTqMcnG0g1
-qspZC5WD0YurqyVM/+r3AyPHBZgZJovF8xyrlGmpeZL89/FxXtwut+KASDNc4DILVD0lX88DShqx
-3mWX0c/RTCOC1kaSZ1fvXS/Ye7sHqDWEWsP823y8QY3W5wLl7HfxXVl96W0yoPJUK6tfVtYFVYDD
-eM5gaY8HysWyejEJc6ylvCYVaJN6yuRBrcpza3zE5l47Uq6Z0Ge34EhP2cO3Vmfi6jWQbwFzcsSP
-lLC5V4TgJgZ71UD846NNQmBrfLkMdOD3vXiCs8+RI0RU4lQCpFY914UQpqIdzdLx/8oXsVQ2Xyoj
-R+IBKIp2ep4uUQPP10ZFxLZJsqPostHRkBTVQL4WEtUY/F2K+Or1siQ/ujgykpwJmBkWPxZlj1WM
-HK3Xh9z6T54k73/qW2vUWknutUamDZ6FFoXiH5h1beKJuBu9AAAAAElFTkSuQmCC
+We should complain, and say that you can only do "no_walk" with positive 
+refs. Negative object refs really don't make any sense unless you walk 
+the obejct list (or you're "git diff" and know about ranges explicitly).
 
+Something like this (although I don't know if my message is necessarily 
+the best possible one).
 
---=-7SN0udyYjBvYY0bJPJBE
-Content-Disposition: attachment; filename=qgit48d.xcf
-Content-Type: image/x-xcf; name=qgit48d.xcf
-Content-Transfer-Encoding: base64
+		Linus
 
-Z2ltcCB4Y2YgZmlsZQAAAAAwAAAAMAAAAAAAAAARAAAAAQEAAAATAAAACEKQAABCkAAAAAAAFAAA
-AAQAAACLAAAAFgAAAAQAAAABAAAAFwAABqEAAAAAAAAAAwAAAAVsZWZ0AAAAAAAEAAAAAQAAADAA
-AAADAAAAAQAAACQAAAABQKAAAAAAAAAAAAACQKAAAAAAAAAAAAACQKAAAEBAAAAAAAABQKAAAEBA
-AAAAAAACQKAAAEBAAAAAAAACP4AAAEBAAAAAAAABP4AAAEBAAAAAAAACP4AAAEBAAAAAAAACP4AA
-AEFwAAAAAAABP4AAAEFwAAAAAAACP4AAAEFwAAAAAAACQKAAAEFwAAAAAAABQKAAAEFwAAAAAAAC
-QKAAAEFwAAAAAAACQKAAAEJAAAAAAAABQKAAAEJAAAAAAAACQKAAAEJAAAAAAAACQRAAAEJAAAAA
-AAABQRAAAEJAAAAAAAACQRAAAEJAAAAAAAACQRAAAEFwAAAAAAABQRAAAEFwAAAAAAACQRAAAEFw
-AAAAAAACQVAAAEFwAAAAAAABQVAAAEFwAAAAAAACQVAAAEFwAAAAAAACQVAAAEEwAAAAAAABQVAA
-AEEwAAAAAAACQVAAAEEwAAAAAAACQdAAAEEwAAAAAAABQdAAAEEwAAAAAAACQdAAAEEwAAAAAAAC
-QdAAAEDgAAAAAAABQdAAAEDgAAAAAAACQdAAAEDgAAAAAAACQVAAAEDgAAAAAAABQVAAAEDgAAAA
-AAACQVAAAEDgAAAAAAACQVAAAEBAAAAAAAABQVAAAEBAAAAAAAACQVAAAEBAAAAAAAACQRAAAEBA
-AAAAAAABQRAAAEBAAAAAAAACQRAAAEBAAAAAAAACQRAAAAAAAAAAAAABQRAAAAAAAAAAAAACQRAA
-AAAAAAAAAAACQKAAAAAAAAAAAAAHbWlkZGxlAAAAAAAEAAAAAQAAADAAAAADAAAAAQAAACUAAAAB
-QbAAAEEwAAAAAAACQbAAAEEwAAAAAAACQbAAAEGQAAAAAAABQbAAAEGQAAAAAAACQbAAAEGQAAAA
-AAACQZAAAEGQAAAAAAABQZAAAEGQAAAAAAACQZAAAEGQAAAAAAACQZAAAEHwAAAAAAABQZAAAEHw
-AAAAAAACQZAAAEHwAAAAAAACQbAAAEHwAAAAAAABQbAAAEHwAAAAAAACQbAAAEHwAAAAAAACQbAA
-AEJAAAAAAAABQbAAAEJAAAAAAAACQbAAAEJAAAAAAAACQdAAAEJAAAAAAAABQdAAAEJAAAAAAAAC
-QdAAAEJAAAAAAAACQdAAAEHwAAAAAAABQdAAAEHwAAAAAAACQdAAAEHwAAAAAAACQfAAAEHwAAAA
-AAABQfAAAEHwAAAAAAACQfAAAEHwAAAAAAACQfAAAEHQAAAAAAABQfAAAEHQAAAAAAACQfAAAEHQ
-AAAAAAACQiwAAEHQAAAAAAABQiwAAEHQAAAAAAACQiwAAEHQAAAAAAACQiwAAEGwAAAAAAABQiwA
-AEGwAAAAAAACQiwAAEGwAAAAAAACQfAAAEGwAAAAAAABQfAAAEGwAAAAAAACQfAAAEGwAAAAAAAC
-QfAAAEGQAAAAAAABQfAAAEGQAAAAAAACQfAAAEGQAAAAAAACQdAAAEGQAAAAAAABQdAAAEGQAAAA
-AAACQdAAAEGQAAAAAAACQdAAAEEwAAAAAAABQdAAAEEwAAAAAAACQdAAAEEwAAAAAAACQbAAAEEw
-AAAAAAAGcmlnaHQAAAAAAAQAAAABAAAAJAAAAAMAAAABAAAAJwAAAAFCHAAAQdAAAAAAAAJCHAAA
-QdAAAAAAAAJCHAAAQgQAAAAAAAFCHAAAQgQAAAAAAAJCHAAAQgQAAAAAAAJCDAAAQgQAAAAAAAFC
-DAAAQgQAAAAAAAJCDAAAQgQAAAAAAAJCDAAAQjQAAAAAAAFCDAAAQjQAAAAAAAJCDAAAQjQAAAAA
-AAJCHAAAQjQAAAAAAAFCHAAAQjQAAAAAAAJCHAAAQjQAAAAAAAJCHAAAQkAAAAAAAAFCHAAAQkAA
-AAAAAAJCHAAAQkAAAAAAAAJCLAAAQkAAAAAAAAFCLAAAQkAAAAAAAAJCLAAAQkAAAAAAAAJCLAAA
-QjQAAAAAAAFCLAAAQjQAAAAAAAJCLAAAQjQAAAAAAAJCPAAAQjQAAAAAAAFCPAAAQjQAAAAAAAJC
-PAAAQjQAAAAAAAJCPAAAQgQAAAAAAAFCPAAAQgQAAAAAAAJCPAAAQgQAAAAAAAJCLAAAQgQAAAAA
-AAFCLAAAQgQAAAAAAAJCLAAAQgQAAAAAAAJCLAAAQdAAAAAAAAFCLAAAQdAAAAAAAAJCLAAAQdAA
-AAAAAAJCHAAAQdAAAAAAABUAAAEkAAAAEGdpbXAtaW1hZ2UtZ3JpZAAAAAABAAABCChzdHlsZSBp
-bnRlcnNlY3Rpb25zKQooZmdjb2xvciAoY29sb3ItcmdiYSAwLjAwMDAwMCAwLjAwMDAwMCAwLjAw
-MDAwMCAxLjAwMDAwMCkpCihiZ2NvbG9yIChjb2xvci1yZ2JhIDEuMDAwMDAwIDEuMDAwMDAwIDEu
-MDAwMDAwIDEuMDAwMDAwKSkKKHhzcGFjaW5nIDEwLjAwMDAwMCkKKHlzcGFjaW5nIDEwLjAwMDAw
-MCkKKHNwYWNpbmctdW5pdCBpbmNoZXMpCih4b2Zmc2V0IDAuMDAwMDAwKQooeW9mZnNldCAwLjAw
-MDAwMCkKKG9mZnNldC11bml0IGluY2hlcykKAAAAAAAAAAAAAAAISAAADK4AABMNAAAahgAAI9EA
-ACbIAAAAAAAAAAAAAAAwAAAAMAAAAAEAAAAGcmlnaHQAAAAAAgAAAAAAAAAGAAAABAAAAL8AAAAI
-AAAABAAAAAEAAAAJAAAABAAAAAAAAAAKAAAABAAAAAAAAAALAAAABAAAAAAAAAAMAAAABAAAAAAA
-AAANAAAABAAAAAAAAAAPAAAACAAAAAAAAAAAAAAABwAAAAQAAAAAAAAAFAAAAAQAAABjAAAAAAAA
-AAAAAAjyAAAAAAAAADAAAAAwAAAABAAACQYAAAAAAAAAMAAAADAAAAkWAAAAAH8FBwD7yr2vogAq
-APvKva+hACoA+8u9r6IAKgD7y72vogAqAPvLva+iACoA+8u9r6IAKgD7y72vogAmAPP/9ObYy72v
-opSGeWsAIgDz//Xm2Mu9r6KUh3hrACIA8//159nLvrCilYZ4ZwAiAPP/9efZy76vopSGdF0AIgDz
-//Xn2su+sKKVgWlUACIA8//16NrMvrCjj3hhSgAiAPP/9ejazL6xnIVuV0EAIgDz//Xo2sy+qZJ7
-Zk43ACIA8//16NrMtp+JclxFLwAiAPP/9ejaw62Wf2hRPCUAIgDz//Xn0LmjjHdgSTIcACIA8//z
-3cewmoRsVj8pEgAmAPuslX9oACoA+6yWfmgAKgD7rJZ/aAADAH8FBwD7yr2vogAqAPvLva+hACoA
-+8u9r6IAKgD7y72vogAqAPvLva+iACoA+8u9r6IAKgD7y72vogAmAPP/9OfZy72vopSGeGsAIgDz
-//Tm2cu9r6KUh3hrACIA8//159nLvq+ilIZ5ZgAiAPP/9efZzL6wopSHc14AIgDz//Xn2sy+sKKV
-gWtUACIA8//159rMvrCij3dhSgAiAPP/9efazL6xm4RuWEEAIgDz//Xo2sy+qJF7ZU43ACIA8//1
-6NrMtp+JcltFLwAiAPP/9ejZw6yWf2hSPCUAIgDz//bm0LqjjXZgSTIcACIA8//13sawmYRtVj8o
-EgAmAPusln9oACoA+6yWfmgAKgD7rZZ+aAADAH8FBwD7y7yvoQAqAPvLva+hACoA+8u9r6EAKgD7
-y72vogAqAPvLva+iACoA+8u9r6IAKgD7y72vogAmAPP/9ebZy72vopSGeGsAIgDz//Tn2cu9r6KU
-hnhrACIA8//159nLvrCilIZ4ZwAiAPP/9efZy76wopSGc14AIgDz//Xn2sy+sKKUgGtUACIA8//1
-6NrMvrCijnhhSwAiAPP/9ejZzL6xm4RvWEEAIgDz//Xo2sy+qZJ7ZU83ACIA8//16NrMtZ+JclxF
-LgAiAPP/9ejZwq2WgGhSPCUAIgDz//Xm0LqjjXdfSTIcACIA8//03sewmoRsVj8qEgAmAPusln5o
-ACoA+6yVf2gAKgD7rZV/aAADAH8FBwADfysAA38rAAN/KwADfysAA38rAAN/KwADfycAC38jAAt/
-IwALfyMAC38jAAt/IwALfyMAC38jAAt/IwALfyMAC38jAAt/IwALfycAA38rAAN/KwADfwQAAAAA
-MAAAADAAAAABAAAAB21pZGRsZQAAAAAGAAAABAAAAL8AAAAIAAAABAAAAAEAAAAJAAAABAAAAAAA
-AAAKAAAABAAAAAAAAAALAAAABAAAAAAAAAAMAAAABAAAAAAAAAANAAAABAAAAAAAAAAPAAAACAAA
-AAAAAAAAAAAABwAAAAQAAAAAAAAAFAAAAAQAAAA/AAAAAAAAAAAAAA1RAAAAAAAAADAAAAAwAAAA
-BAAADWUAAAAAAAAAMAAAADAAAA11AAAAAH8CJgD70MGzpQAqAPvPwrOkACoA+8/Bs6UAKgD7z8Gz
-pQAqAPvQwrKlACoA+9DBs6UAKgD7z8GzpQAmAPP/+uze0MGzpZaIemsAIgDz//rs3s/BsqWWiHlr
-ACIA8//67N7PwbKlloh5ZgAiAPP/+uzez8GzpZaIdV0AIgDz//vs3s/BsqWWgmtSSQFJA0oDSwFM
-FgDy//vs3tDBs6SRemJKP0ADQAJBA0IWAPP/++zez8Gzn4dvWEE2ATYCN/04NzgBOAE5FgDz//vs
-3tDBrZV9Z044LQMtAi4ELxYA8//77N7Pu6OMdF5GLgAiAPP/+uzeybGagmtUPCQAIgDz//rs18Go
-kXlhSjMbACIA8//75c62n4ZwWEAoEgAmAPuymYFqACoA+7GZgmoAKgD7sZqCagAqAPuxmoFqACoA
-+7GZgmoAKgD7sZqBagAqAPuxmYJqACoA+7GZgmoAKgD7sZmCagAqAPuxmoFqACoA+7GZgmoAKgD7
-sZmCagAqAPuxmoFqACoA+7GZgWoAKgD7sZmBagAqAPuxmYJqACoA+7GZgmoAKgD7sZmBagAUAH8C
-JgD7z8GzpQAqAPvPwbOlACoA+8/Bs6UAKgD7z8GzpQAqAPvPwrOlACoA+8/BsqUAKgD7z8KzpQAm
-APP/+uzez8GzpZaIemsAIgDz//rs3s/Bs6WXiHlrACIA8//67N7PwrKlloh6ZgAiAPP/++zez8Gz
-pZaIdF0AIgDz//vs3s/Cs6WWg2tUSQFJBUoCS/5MABUA8v/67N7QwrKlkXliSj9AAkADQQNCFgDz
-//vs3s/Cs56Ib1dBNgE2BDcBOAI5FgDz//vs3s/CrZV9Zk83LQQtAi4DLxYA8//67N7QuqSMdF1G
-LgAiAPP/+uzeybGagWtTPCUAIgDz//vs18CokXliSjMbACIA8//65M62noZvWEAoEQAmAPuxmYFq
-ACoA+7GZgmoAKgD7sZmCaQAqAPuymYJqACoA+7KZgmoAKgD7sZmCagAqAPuxmYFqACoA+7GagWoA
-KgD7spmBaQAqAPuxmoFqACoA+7GagmoAKgD7sZmCagAqAPuxmYJqACoA+7GZgmkAKgD7sZmCagAq
-APuxmYFqACoA+7GZgmoAKgD7spmCagAUAH8CJgD70MGypQAqAPvPwrOlACoA+8/BsqUAKgD7z8Kz
-pQAqAPvQwbKlACoA+9DCs6UAKgD70MKzpQAmAPP/++zez8GypZaIeWsAIgDz//rs3s/Bs6WWiHpr
-ACIA8//77N7PwbOlloh6ZgAiAPP/++zez8GzpZaIdV0AIgDz//vs3tDBsqWXg2tTSQFJBEoBSwJM
-FgDy//rs3s/Cs6WReWJKP0ADQAJBA0IWAPH/+uzez8Gzn4dvWEE2NjcENwI4ATkWAPP/++ze0MGt
-lX1mTzgtAy0DLgMvFgDz//vs3tC8o4t0XkYuACIA8//77N7JspmCa1M8JAAiAPP/++zYwKmReWFK
-MhoAIgDz//rmzrafhnBYQCgSACYA+7GZgmoAKgD7sZqCagAqAPuxmoFqACoA+7GZgmkAKgD7sZmB
-agAqAPuxmoJqACoA+7KagWoAKgD7sZmCaQAqAPuxmYJqACoA+7GZgmoAKgD7sZqCagAqAPuxmYJq
-ACoA+7GZgmoAKgD7spqBagAqAPuxmoFqACoA+7GagWoAKgD7spqCagAqAPuymYJqABQAfwImAAN/
-KwADfysAA38rAAN/KwADfysAA38rAAN/JwALfyMAC38jAAt/IwALfyMAGH8WABh/FgAYfxYAGH8W
-AAt/IwALfyMAC38jAAt/JwADfysAA38rAAN/KwADfysAA38rAAN/KwADfysAA38rAAN/KwADfysA
-A38rAAN/KwADfysAA38rAAN/KwADfysAA38rAAN/FQAAAAAwAAAAMAAAAAEAAAAFbGVmdAAAAAAG
-AAAABAAAAL8AAAAIAAAABAAAAAEAAAAJAAAABAAAAAAAAAAKAAAABAAAAAAAAAALAAAABAAAAAAA
-AAAMAAAABAAAAAAAAAANAAAABAAAAAAAAAAPAAAACAAAAAAAAAAAAAAABwAAAAQAAAAAAAAAFAAA
-AAQAAAAuAAAAAAAAAAAAABOuAAAAAAAAADAAAAAwAAAABAAAE8IAAAAAAAAAMAAAADAAABPSAAAA
-AAQA+87AsqMAKgD7zsCxowAqAPvOwLGjACYA8//46tvOv7GjlIZ4agAiAPP/+Orbzr+xo5SGeGkA
-IgDz//jp282/saKUhnhhACIA8//36dvMv7GilIZvVwAiAO7/9+nbzb6wopR8ZE1GRkVFRkUDRQJE
-FgDz//fp2sy+sKKLclpCPAc8AzsWAPP/9+jazL6vmIBpUTkzAjMGMgExFgDz//bo2sy+po92X0cv
-KQUpBSgWAPP/9ujayrOchGxVPSYAIgDz//bo2cKpkXliSzMbACIA8//15s63n4dxWEEpEQAiAPP/
-9N3FrpV+Zk42HwcAJgD7qZF6YgAqAPuokXpiACoA+6iQeWEAKgD7p5B4YQAqAPunj3hhACoA+6eP
-eGEAKgD7p493YAAqAPumj3dfACoA+6aOdl8AKgD7pY52XgAqAPuljnZfACoA+6WNdl4AKgD7pI11
-XgAqAPukjHRdACoA+6SMdF0AKgD7o4x0XQAqAPuji3NcACoA+6KKc1wAKgD7oYpzWwAqAPuiinNb
-ACoA+6GKcloAKgD7oYlyWgAqAPuhiHFZACoA+6CIcFkAKgD7oIdwWQAqAPufiG9YACoA+5+Hb1gA
-KgD7n4dvVwAqAPudhm5XACoA+52Gb1cAKgD7nYVuVwAqAPudhW1WACoA+52FbVYAJQAEAPvOwLKj
-ACoA+87AsaMAKgD7zsCxowAmAPP/+OrbzsCxo5WGeGoAIgDz//jp286/saOVhnhpACIA8//36dvN
-v7GilIZ4YQAiAPP/9+nbzL+wopSGcFcAIgDx//fp28y/sKKUfGRORkZFCEX+RAAVAPP/9+nazL6w
-oopyW0M8BTwFOxYA8f/36NrMvq+XgGhROTMzMggy/jEAFQDz//bo2sy+po93XkcwKQUp/CgpKSgB
-KBYA8//26NrLs5uEbFQ9JgAiAPP/9ujZwKmRemFLMxwAIgDz//Xmz7afiHBYQSkSACIA8//03cWt
-lX1mTzYfBwAmAPupknljACoA+6iRemIAKgD7qJF5YQAqAPuokHhhACoA+6eQeGAAKgD7p493YAAq
-APumj3hfACoA+6ePd2AAKgD7po52XwAqAPuljndfACoA+6WOdl4AKgD7pY11XQAqAPukjXVdACoA
-+6SMdF0AKgD7pIt0XQAqAPuji3RdACoA+6OLc1wAKgD7oopzWwAqAPuhi3NbACoA+6GKcloAKgD7
-oYlyWgAqAPuhiXFaACoA+6CJcVoAKgD7oIhwWQAqAPufiHBZACoA+5+IcFkAKgD7nohvWAAqAPue
-h29XACoA+56HblcAKgD7noZvVgAqAPudhm5XACoA+52FblYAKgD7nIRtVgAlAAQA+87AsaMAKgD7
-zsCxowAqAPvOv7GjACYA8//46tvOv7GjlYZ4aQAiAPP/+Orbzr+xopSGeGoAIgDz//jp282/saKU
-hnhhACIA8//36dvNv7GilIZvVwAiAO//9+nbzL+wopR9ZU1GRkVGRQRFAUT+RQAVAPP/9+nbzL6w
-oYtzW0M8BDwGOxYA8P/36NrMvq+YgGlROTIzMzIGMgExFgDz//fo2sy+pY53XkYwKQUpBSgWAPP/
-9ujayrObhGxVPSYAIgDz//bo2MGokXphSjMbACIA8//25s+3n4hwWEEpEQAiAPP/9N3FrZZ+Zk83
-HwcAJgD7qZF6YgAqAPupkXpiACoA+6iReWEAKgD7qJF5YQAqAPuokHhhACoA+6eQeGAAKgD7p494
-YAAqAPumj3dgACoA+6aOdl8AKgD7po52XwAqAPuljnZeACoA+6WNdl4AKgD7pIx1XQAqAPukjHVe
-ACoA+6OMdF0AKgD7pIx0XAAqAPuji3RcACoA+6OLdFsAKgD7oYpzWwAqAPuhinJbACoA+6GJcloA
-KgD7oYlyWgAqAPugiHFaACoA+6CIcVkAKgD7oIhwWQAqAPufh3BZACoA+5+HcFgAKgD7n4dvWAAq
-APuehm9XACoA+52GblcAKgD7noZuVgAqAPudhW1WACoA+5yEbVUAJQAEAAN/KwADfysAA38nAAt/
-IwALfyMAC38jAAt/IwAYfxYAGH8WABh/FgAYfxYAC38jAAt/IwALfyMAC38nAAN/KwADfysAA38r
-AAN/KwADfysAA38rAAN/KwADfysAA38rAAN/KwADfysAA38rAAN/KwADfysAA38rAAN/KwADfysA
-A38rAAN/KwADfysAA38rAAN/KwADfysAA38rAAN/KwADfysAA38rAAN/KwADfysAA38rAAN/KwAD
-fysAA38mAAAAADAAAAAwAAAAAQAAAAtib3JkZXJzLXJiAAAAAAYAAAAEAAAAZgAAAAgAAAAEAAAA
-AQAAAAkAAAAEAAAAAAAAAAoAAAAEAAAAAAAAAAsAAAAEAAAAAAAAAAwAAAAEAAAAAAAAAA0AAAAE
-AAAAAAAAAA8AAAAIAAAAAAAAAAAAAAAHAAAABAAAAAAAAAAUAAAABAAAACgAAAAAAAAAAAAAGy0A
-AAAAAAAAMAAAADAAAAAEAAAbQQAAAAAAAAAwAAAAMAAAG1EAAAAACP/+AP8t//4A/y3//gD/Mf/+
-AP8t//4A/y3//gD/Lf/+AP86//4A/y3//gD/Lf/+AP8t//4A/yD/CAAD//4A/yD//gD/Cv/+AP8g
-//4A/wr//gD/IP/+AP8K//4A/xT/AwAD/wQAC//+AP8c//4A/w7//gD/HP/+AP8O//4A/xz//gD/
-Ev/+AP8Y//4A/xL//gD/GP/+AP8S//4A/xj//gD/Ev/+AP8Y//4A/x///gD/C//+AP8f//4A/wv/
-/gD/H//+AP8L//4A/x///gD/C//+AP8S/wgAA//+AP8L//4A/xL//gD/Cv/+AP8L//4A/xL//gD/
-Cv/+AP8L//4A/xL//gD/Cv/+AP8L//4A/wb/AwAD/wQAC//+AP8L//4A/w7//gD/Dv/+AP8L//4A
-/w7//gD/Dv/+AP8L//4A/w7//gD/Ev/+AP8H//4A/w7//gD/Ev/+AP8H//4A/w7//gD/Ev/+AP8H
-//4A/w7//gD/Ev/+AP8H//4A/w7//gD/Ev/+AP8H//4A/w7//gD/Ev/+AP8H//4A/w7//gD/Ev/+
-AP8H//4A/w7//gD/Ev/+AP8H//4A/w7//gD/Ev/+AP8H//4A/w7//gD/Ev/+AP8H//4A/w7//gD/
-Ev/+AP8H//4A/w7//gD/Ev/+AP8H//4A/w7//gD/Bv8DAAP/BAAI//4A/w7//gD/Dv/+AP8L//4A
-/w7//gD/Dv/+AP8C/wj//gD/Lf/+AP8t//4A/zH//gD/Lf/+AP8t//4A/y3//gD/Ov/+AP8t//4A
-/y3//gD/Lf/+AP8g/wgAA//+AP8g//4A/wr//gD/IP/+AP8K//4A/yD//gD/Cv/+AP8U/wMAA/8E
-AAv//gD/HP/+AP8O//4A/xz//gD/Dv/+AP8c//4A/xL//gD/GP/+AP8S//4A/xj//gD/Ev/+AP8Y
-//4A/xL//gD/GP/+AP8f//4A/wv//gD/H//+AP8L//4A/x///gD/C//+AP8f//4A/wv//gD/Ev8I
-AAP//gD/C//+AP8S//4A/wr//gD/C//+AP8S//4A/wr//gD/C//+AP8S//4A/wr//gD/C//+AP8G
-/wMAA/8EAAv//gD/C//+AP8O//4A/w7//gD/C//+AP8O//4A/w7//gD/C//+AP8O//4A/xL//gD/
-B//+AP8O//4A/xL//gD/B//+AP8O//4A/xL//gD/B//+AP8O//4A/xL//gD/B//+AP8O//4A/xL/
-/gD/B//+AP8O//4A/xL//gD/B//+AP8O//4A/xL//gD/B//+AP8O//4A/xL//gD/B//+AP8O//4A
-/xL//gD/B//+AP8O//4A/xL//gD/B//+AP8O//4A/xL//gD/B//+AP8O//4A/xL//gD/B//+AP8O
-//4A/wb/AwAD/wQACP/+AP8O//4A/w7//gD/C//+AP8O//4A/w7//gD/Av8I//4A/y3//gD/Lf/+
-AP8x//4A/y3//gD/Lf/+AP8t//4A/zr//gD/Lf/+AP8t//4A/y3//gD/IP8IAAP//gD/IP/+AP8K
-//4A/yD//gD/Cv/+AP8g//4A/wr//gD/FP8DAAP/BAAL//4A/xz//gD/Dv/+AP8c//4A/w7//gD/
-HP/+AP8S//4A/xj//gD/Ev/+AP8Y//4A/xL//gD/GP/+AP8S//4A/xj//gD/H//+AP8L//4A/x//
-/gD/C//+AP8f//4A/wv//gD/H//+AP8L//4A/xL/CAAD//4A/wv//gD/Ev/+AP8K//4A/wv//gD/
-Ev/+AP8K//4A/wv//gD/Ev/+AP8K//4A/wv//gD/Bv8DAAP/BAAL//4A/wv//gD/Dv/+AP8O//4A
-/wv//gD/Dv/+AP8O//4A/wv//gD/Dv/+AP8S//4A/wf//gD/Dv/+AP8S//4A/wf//gD/Dv/+AP8S
-//4A/wf//gD/Dv/+AP8S//4A/wf//gD/Dv/+AP8S//4A/wf//gD/Dv/+AP8S//4A/wf//gD/Dv/+
-AP8S//4A/wf//gD/Dv/+AP8S//4A/wf//gD/Dv/+AP8S//4A/wf//gD/Dv/+AP8S//4A/wf//gD/
-Dv/+AP8S//4A/wf//gD/Dv/+AP8S//4A/wf//gD/Dv/+AP8G/wMAA/8EAAj//gD/Dv/+AP8O//4A
-/wv//gD/Dv/+AP8O//4A/wL/CAD+/wAtAP7/AC0A/v8AMQD+/wAtAP7/AC0A/v8ALQD+/wA6AP7/
-AC0A/v8ALQD+/wAtAP7/ACAACP8DAP7/ACAA/v8ACgD+/wAgAP7/AAoA/v8AIAD+/wAKAP7/ABQA
-A/8DAAT/CwD+/wAcAP7/AA4A/v8AHAD+/wAOAP7/ABwA/v8AEgD+/wAYAP7/ABIA/v8AGAD+/wAS
-AP7/ABgA/v8AEgD+/wAYAP7/AB8A/v8ACwD+/wAfAP7/AAsA/v8AHwD+/wALAP7/AB8A/v8ACwD+
-/wASAAj/AwD+/wALAP7/ABIA/v8ACgD+/wALAP7/ABIA/v8ACgD+/wALAP7/ABIA/v8ACgD+/wAL
-AP7/AAYAA/8DAAT/CwD+/wALAP7/AA4A/v8ADgD+/wALAP7/AA4A/v8ADgD+/wALAP7/AA4A/v8A
-EgD+/wAHAP7/AA4A/v8AEgD+/wAHAP7/AA4A/v8AEgD+/wAHAP7/AA4A/v8AEgD+/wAHAP7/AA4A
-/v8AEgD+/wAHAP7/AA4A/v8AEgD+/wAHAP7/AA4A/v8AEgD+/wAHAP7/AA4A/v8AEgD+/wAHAP7/
-AA4A/v8AEgD+/wAHAP7/AA4A/v8AEgD+/wAHAP7/AA4A/v8AEgD+/wAHAP7/AA4A/v8AEgD+/wAH
-AP7/AA4A/v8ABgAD/wMABP8IAP7/AA4A/v8ADgD+/wALAP7/AA4A/v8ADgD+/wACAAAAADAAAAAw
-AAAAAQAAAAtib3JkZXJzLWx0AAAAAAYAAAAEAAAATAAAAAgAAAAEAAAAAQAAAAkAAAAEAAAAAAAA
-AAoAAAAEAAAAAAAAAAsAAAAEAAAAAAAAAAwAAAAEAAAAAAAAAA0AAAAEAAAAAAAAAA8AAAAIAAAA
-AAAAAAAAAAAHAAAABAAAAAAAAAAUAAAABAAAAGYAAAAAAAAAAAAAJHgAAAAAAAAAMAAAADAAAAAE
-AAAkjAAAAAAAAAAwAAAAMAAAJJwAAAAAfwkA/38JAP9/CQD/AwD+/wAtAP7/ACkABP8EAAP/IQD+
-/wAtAP7/AC0A/v8ALQD+/wALAAz/FAD+/wAtAP7/AC0A/v8ALQD+/wAtAP7/AC0A/v8AEgD+/wAY
-AP7/ABIA/v8AGAD+/wASAP7/ABgA/v8AEgD+/wAcAP7/AA4A/v8AHAD+/wAKAAT/BAAD/xQA/v8A
-CgD+/wAgAP7/AAoA/v8AIAD+/wAKAP7/ACAA/v8ACgD+/wALAAz/BwD+/wAKAP7/ACAA/v8ACgD+
-/wAgAP7/AAoA/v8AIAD+/wAKAP7/ACAA/v8ACgD+/wAgAP7/AAoA/v8AEgD+/wALAP7/AAoA/v8A
-EgD+/wALAP7/AAoA/v8AEgD+/wALAP7/AAoA/v8AEgD+/wALAP7/AA4A/v8ADgD+/wALAP7/AA4A
-/v8ACgAE/wQAA/8DAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ACgD+/wAP
-AP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ACgD+
-/wAPAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8A
-CgD+/wAPAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ACgD+/wAPAP7/AA4A/v8ADgD+/wALAP7/AA4A
-/v8ADgD+/wAHAAAAADAAAAAwAAAAAQAAAAdjb2xvcnMAAAAABgAAAAQAAAD/AAAACAAAAAQAAAAB
-AAAACQAAAAQAAAAAAAAACgAAAAQAAAAAAAAACwAAAAQAAAAAAAAADAAAAAQAAAAAAAAADQAAAAQA
-AAAAAAAADwAAAAgAAAAAAAAAAAAAAAcAAAAEAAAAAAAAABQAAAAEAAAAAgAAAAAAAAAAAAAnawAA
-AAAAAAAwAAAAMAAAAAQAACd/AAAAAAAAADAAAAAwAAAnjwAAAAAEAAMqKwADKisAAyonAAsqIwAL
-KiMACyojAAsqIwAYKhYAGCoWABgqFgAYKhYACyoIAAOiFgALKggAA6IWAAsqCAADohYACyoIAAOi
-GgADKgwAA6IaAAMqDAADohoAAyoMAAOiGgADKggAC6IWAAMqCAALohYAAyoIAAuiFgADKggAC6IW
-AAMqCAAYogkAAyoIABiiCQADKggAGKIJAAMqCAAYogkAAyoIAAuiBgABfw0AAyoIAAuiBgD9f4MA
-DAADKggAC6IGAP2DhwAMAAMqCAALogYA/YeLAAwAAyoMAAOiCgD9i5AADAADKgwAA6IGAPl/gn+C
-h4wAAgD7oaaqrwAEAAMqDAADogYA+YKGgoaLjwACAPumqq6zAAQAAyoMAAOiBgD9hosAEAADKgwA
-A6IGAP2LkAAQAAMqDAADogYA/ZCTABAAAyoMAAOiBgD9lJgAEAADKgwAA6IGAP2YnQAQAAMqDAAD
-ogYA/ZygABAAAyoMAAOiBgD9oKUAEAADKgwAA6IGAP2lqgAQAAMqDAADogYA/amuABAAAyoMAAOi
-BgD9rbIAEAADKgwAA6IaAAMqDAADohoAAyoMAAOiCgD9zdEADAADKgwAA6IKAP3R1QAMAAMqDAAD
-ogoA/dXaAAcABAADKv2AggAoAAMq/YOFACgAAyr9hYcAJAALKiMACyojAAsq/ZOWACAACyr9lpkA
-IAAYKhYAGCoWABgqFgAYKhYACyr2pqemp6qsrq+vABkACyr5p6qnqqyurwGvGgALKv2mqAAgAAsq
-/aeqACAA+5SXmJsqAir5paiqraqtACAA+5aYm50qAir5qKqsrqyuACQAAyr9pqgAKAADKv2oqgAo
-AAMq/aqsACgAAyr9rK4AKAADKgGvKQADKgGvKQADKgGvKQADKgGvKQADKgGvKQADKgGvGwADagkA
-AyoBrxsAA2oJAAMqAa8bAANqCQADKgGvGwADagkAAyoBrxsAA2oJAAMqAa8bAANqCQADKgGvGwAD
-agkAAyoBrxcAC2oFAAMqAa8XAAtqBQADKgGvFwALagUAAyoBrxcAC2oFAAMqAa8XAAtqBQADKgGv
-FwALagUAAyoBrxcAC2oFAAMqAa8XAAtqBQADKgGvFwALagUAAyoBrxcAC2oFAAMqAa8XAAtqBQAD
-KgGvFwALagUAAyoBrxsAA2oJAAMqAa8bAANqCQADKgGvGwADagQABAADKisAAyorAAMqJwALKiMA
-CyojAAsqIwALKiMAGCoWABgqFgAYKhYAGCoWAAsqIwALKiMACyojAAsqJwADKisAAyorAAMqKwAD
-KisAAyorAAMqKwADKisAAyorAAMqKwADKisAAyorAAMqKwADKisAAyorAAMqKwADKisAAyorAAMq
-KwADKisAAyorAAMqKwADKisAAyorAAMqKwADKisAAyorAAMqKwADKisAAyorAAMqKwADKisAAyor
-AAMqJgAEAAP/KwAD/ysAA/8nAAv/IwAL/yMAC/8jAAv/IwAY/xYAGP8WABj/FgAY/xYAC/8IAAP/
-FgAL/wgAA/8WAAv/CAAD/xYAC/8IAAP/GgAD/wwAA/8aAAP/DAAD/xoAA/8MAAP/GgAD/wgAC/8W
-AAP/CAAL/xYAA/8IAAv/FgAD/wgAC/8WAAP/CAAY/wkAA/8IABj/CQAD/wgAGP8JAAP/CAAY/wkA
-A/8IAAv/CAAD/wkAA/8IAAv/CAAD/wkAA/8IAAv/CAAD/wkAA/8IAAv/CAAD/wkAA/8MAAP/DAAD
-/wkAA/8MAAP/DAAD/wkAA/8MAAP/DAAD/wkAA/8MAAP/CAAL/wUAA/8MAAP/CAAL/wUAA/8MAAP/
-CAAL/wUAA/8MAAP/CAAL/wUAA/8MAAP/CAAL/wUAA/8MAAP/CAAL/wUAA/8MAAP/CAAL/wUAA/8M
-AAP/CAAL/wUAA/8MAAP/CAAL/wUAA/8MAAP/CAAL/wUAA/8MAAP/CAAL/wUAA/8MAAP/CAAL/wUA
-A/8MAAP/DAAD/wkAA/8MAAP/DAAD/wkAA/8MAAP/DAAD/wQA
-
-
---=-7SN0udyYjBvYY0bJPJBE--
+---
+diff --git a/revision.c b/revision.c
+index 4cf697e..b84c066 100644
+--- a/revision.c
++++ b/revision.c
+@@ -116,6 +116,8 @@ void mark_parents_uninteresting(struct commit *commit)
+ 
+ void add_pending_object(struct rev_info *revs, struct object *obj, const char *name)
+ {
++	if (revs->no_walk && (obj->flags & UNINTERESTING))
++		die("object ranges do not make sense when not walking revisions");
+ 	add_object_array(obj, name, &revs->pending);
+ 	if (revs->reflog_info && obj->type == OBJ_COMMIT)
+ 		add_reflog_for_walk(revs->reflog_info,
