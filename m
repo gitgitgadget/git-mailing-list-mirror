@@ -1,60 +1,60 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 4/4] Documentation/git-svn.txt: Fix formatting errors
-Date: Thu, 1 Mar 2007 12:38:33 -0800
-Message-ID: <20070301203833.GB25782@localdomain>
-References: <1172778077659-git-send-email-vsu@altlinux.ru> <11727780872894-git-send-email-vsu@altlinux.ru> <11727780982140-git-send-email-vsu@altlinux.ru> <11727781092949-git-send-email-vsu@altlinux.ru>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Memory overrun in http-push.c
+Date: Thu, 1 Mar 2007 21:43:17 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703012140370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070228151516.GC57456@codelabs.ru> <200703011831.29321.andyparkins@gmail.com>
+ <Pine.LNX.4.63.0703011941020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200703011931.32170.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Sergey Vlasov <vsu@altlinux.ru>
-X-From: git-owner@vger.kernel.org Thu Mar 01 21:38:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Eygene Ryabinkin <rea-git@codelabs.ru>,
+	Junio C Hamano <junkio@cox.net>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 21:43:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMs2z-00040K-Qg
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 21:38:42 +0100
+	id 1HMs7Y-0006GZ-0b
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 21:43:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030228AbXCAUii (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 15:38:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030206AbXCAUii
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 15:38:38 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:34999 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030228AbXCAUii (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 15:38:38 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 674257DC094;
-	Thu,  1 Mar 2007 12:38:36 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Thu, 01 Mar 2007 12:38:33 -0800
-Content-Disposition: inline
-In-Reply-To: <11727781092949-git-send-email-vsu@altlinux.ru>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1030231AbXCAUnV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 15:43:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030232AbXCAUnV
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 15:43:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48327 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030231AbXCAUnU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 15:43:20 -0500
+Received: (qmail invoked by alias); 01 Mar 2007 20:43:18 -0000
+X-Provags-ID: V01U2FsdGVkX18Ptao0fbQPpZuyHMZgpHtuAsoVv/VNW9aJlek4b0
+	QLDN0md9eTR+u1
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200703011931.32170.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41125>
 
-Sergey Vlasov <vsu@altlinux.ru> wrote:
-> Fix some formatting problems:
-> 
->   - Some list labels were missing their "::" characters.
->   - Some of continuation paragraphs in labeled lists were incorrectly
->     formatted as literal paragraphs.
->   - In one case "[verse]" was missing before the config key list.
->   - The "Basic Examples" section was incorrectly nested inside the
->     "Config File-Only Options" section.
+Hi,
 
-Thanks.  However, are the indentation changes in the source absolutely
-necessary for asciidoc to correctly format these things?  I try to
-avoid building the docs because my computers are too slow.
+On Thu, 1 Mar 2007, Andy Parkins wrote:
 
-If so:
+> Putting $Id$ $Rev$ in a git managed file would have far more meaning 
+> that it does in a CVS managed file.
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+No. My point was that you do not even have to have an id. The hash of the 
+object is the id.
 
-> Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
-> Cc: Eric Wong <normalperson@yhbt.net>
+This is obviously much better than the mess of CVS/SVN's file ids. There 
+is an option, even, to switch off key expansion, so you can have erroneous 
+ids. That just cannot happen with hashes.
 
--- 
-Eric Wong
+Of course, it does not give you any hint about when this file was current. 
+But there is no way to tell in distributed development _anyway_. You have 
+to look it up, when, and who, changed the file to the current state.
+
+Ciao,
+Dscho
