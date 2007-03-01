@@ -1,285 +1,99 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH] Add git-config --remove-section, document --rename-section
-Date: Thu, 01 Mar 2007 10:39:09 +0100
-Message-ID: <es66vt$jej$1@sea.gmane.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] cvsserver: Make always-binary mode a config file option
+Date: Thu, 1 Mar 2007 09:41:16 +0000
+Message-ID: <200703010941.20161.andyparkins@gmail.com>
+References: <7v4ppedj3r.fsf@assigned-by-dhcp.cox.net> <200703010840.54377.andyparkins@gmail.com> <46a038f90703010113o256f19a2qb1c16f4c85e5bd1c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080109050306050904020707"
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Martin Langhoff" <martin.langhoff@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 10:39:28 2007
+X-From: git-owner@vger.kernel.org Thu Mar 01 10:41:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMhl1-000695-TV
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 10:39:28 +0100
+	id 1HMhmw-00077n-Lb
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 10:41:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933226AbXCAJj1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 04:39:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933227AbXCAJj0
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 04:39:26 -0500
-Received: from main.gmane.org ([80.91.229.2]:55253 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933226AbXCAJj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 04:39:26 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HMhks-0008Qn-Jr
-	for git@vger.kernel.org; Thu, 01 Mar 2007 10:39:18 +0100
-Received: from usilu-ge.ti-edu.ch ([195.176.176.226])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Mar 2007 10:39:18 +0100
-Received: from bonzini by usilu-ge.ti-edu.ch with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Mar 2007 10:39:18 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: usilu-ge.ti-edu.ch
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+	id S933227AbXCAJl0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 04:41:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933235AbXCAJl0
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 04:41:26 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:15809 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933227AbXCAJlZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 04:41:25 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so838154nfa
+        for <git@vger.kernel.org>; Thu, 01 Mar 2007 01:41:23 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Rff9hHRrDlXx9o9z/+jA48fXaqJ5zop5iXoykiotaw0XfxuCx6rUMjeDFfFiCdbExImjRzoltdlfTKbX2e47+sOXudpFqk1KgaxwyOHYxw5eHRe/eZr1kKuQHsRwsBRjdFlW814eXzi4REuYIgGdmWEfLhtbO6I5czpAqU/ZZE8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NaHai1bpi47uRRpmniFLK4wa8BrFCLl/KX953tA5cHpBtvlxRZn278kcH+ytI0aFu+/sdmRGD/uaBiu0mOtKeQUVTjUULIYF6oXjcRv2HKutP2q3ZohFdlgGGnJy9Cn1iNndI79TehDe5favjzfyxNbDji07pF4rQ+2pNepwepA=
+Received: by 10.49.13.14 with SMTP id q14mr5307576nfi.1172742083880;
+        Thu, 01 Mar 2007 01:41:23 -0800 (PST)
+Received: from davejones ( [194.70.53.227])
+        by mx.google.com with ESMTP id q28sm8460658nfc.2007.03.01.01.41.21;
+        Thu, 01 Mar 2007 01:41:22 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <46a038f90703010113o256f19a2qb1c16f4c85e5bd1c@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41069>
 
-This is a multi-part message in MIME format.
---------------080109050306050904020707
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+On Thursday 2007 March 01 09:13, Martin Langhoff wrote:
 
-As per the subject.  The existing --rename-section option is 
-undocumented, while --remove-section is added by this patch based on the 
-code I had written for the "git branch" patch.
+> Well... the guys working on the MinGW port of git have railroaded us
+> with the opposite position. If it's going to work in Windows, you
+> better accept it has to handle newline conversion correctly or it's
+> broken...
 
-Paolo
+I do accept that, but as you said - it's broken whether you pick all binary or 
+all text.  I'm not advocating that my solution is final, but it is better to 
+not convert text than to mangle binary.
 
---------------080109050306050904020707
-Content-Type: text/plain; x-mac-type="0"; x-mac-creator="0";
- name="git-builtin-config-removesec.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-builtin-config-removesec.patch"
+> The interesting case to fix this for is a mixed binary and text repo
+> with windows users wanting newline conversion (if they really don't,
+> they can tell TortoiseCVS as much). For that scenario, current
+> behaviour is broken (binaries get mangled), and setting -kb on
+> everything breaks newline conversion.
+>
+> And that scenario can only be addressed sending appropriate flags for
+> each file, not with a blanket switch.
 
-* git-config: document --rename-section, provide --remove-section
+Erm, yes, I know that.  But who is going to set that switch?  This isn't real 
+CVS where the repository records that information.  At the moment git does 
+not know whether any given file is binary or text.
 
-This patch documents the previously undocumented option --rename-section
-and adds a new option to zap an entire section.
+> Except that it's not that hard to do something better -- I was hoping
+> to prep a patch today, but things got frantic at the office.
+
+I think it is hard; as git doesn't supply the needed information.  I suppose 
+it could be stored in the SQLlite table, but that is seriously borked.  That 
+table is a necessary evil, not a place to start storing any old flag.
+
+> Just that I think it's easy enough to implement something that sets
+> -k mode on file extension, which is actually _much_ better and makes
+> the blanket setting pointless. And perhaps we can get binary
+> autodetection working well but accepting overrides.
+
+As I said, I don't like autodetection.  It /will/ get it wrong.  As for using 
+file extension - well that's wrong too if it's coded into the source.
+
+In a previous life, I used to develop a unix program on a windows computer; 
+the UNIX directory was mounted as a samba share and built and run via an ssh 
+connection.  How is git-cvsserver meant to know about a crazy situation like 
+that and "auto-detect" the right thing?  It can't.
 
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 6624484..68de588 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -16,6 +16,8 @@ SYNOPSIS
- 'git-config' [--global] [type] --get-all name [value_regex]
- 'git-config' [--global] [type] --unset name [value_regex]
- 'git-config' [--global] [type] --unset-all name [value_regex]
-+'git-config' [--global] [type] --rename-section old_name new_name
-+'git-config' [--global] [type] --remove-section name
- 'git-config' [--global] -l | --list
- 
- DESCRIPTION
-@@ -74,6 +76,12 @@ OPTIONS
- --global::
- 	Use global ~/.gitconfig file rather than the repository .git/config.
- 
-+--remove-section::
-+	Remove the given section from the configuration file.
-+
-+--rename-section::
-+	Rename the given section to a new name.
-+
- --unset::
- 	Remove the line matching the key from config file.
- 
-diff --git a/builtin-config.c b/builtin-config.c
-index f1433a4..6b12fa1 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -2,7 +2,7 @@
- #include "cache.h"
- 
- static const char git_config_set_usage[] =
--"git-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --list";
-+"git-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
- 
- static char *key;
- static regex_t *key_regexp;
-@@ -168,6 +168,19 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			}
- 			return 0;
- 		}
-+		else if (!strcmp(argv[1], "--remove-section")) {
-+			int ret;
-+			if (argc != 3)
-+				usage(git_config_set_usage);
-+			ret = git_config_remove_section(argv[2]);
-+			if (ret < 0)
-+				return ret;
-+			if (ret == 0) {
-+				fprintf(stderr, "No such section!\n");
-+				return 1;
-+			}
-+			return 0;
-+		}
- 		else
- 			break;
- 		argc--;
-diff --git a/config.c b/config.c
-index 0ff413b..49df7bd 100644
---- a/config.c
-+++ b/config.c
-@@ -854,6 +859,33 @@ write_err_out:
- 
- }
- 
-+static int section_name_match (const char *buf, const char *name)
-+{
-+	int i = 0, j = 0, dot = 0;
-+	for (; buf[i] && buf[i] != ']'; i++) {
-+		if (!dot && isspace(buf[i])) {
-+			dot = 1;
-+			if (name[j++] != '.')
-+				break;
-+			for (i++; isspace(buf[i]); i++)
-+				; /* do nothing */
-+			if (buf[i] != '"')
-+				break;
-+			continue;
-+		}
-+		if (buf[i] == '\\' && dot)
-+			i++;
-+		else if (buf[i] == '"' && dot) {
-+			for (i++; isspace(buf[i]); i++)
-+				; /* do_nothing */
-+			break;
-+		}
-+		if (buf[i] != name[j++])
-+			break;
-+	}
-+	return (buf[i] == ']' && name[j] == 0);
-+}
-+
- int git_config_rename_section(const char *old_name, const char *new_name)
- {
- 	int ret = 0;
-@@ -885,40 +917,15 @@ int git_config_rename_section(const char *old_name, const char *new_name)
- 		int length;
- 		for (i = 0; buf[i] && isspace(buf[i]); i++)
- 			; /* do nothing */
--		if (buf[i] == '[') {
-+		if (buf[i] == '[' && section_name_match (&buf[i+1], old_name)) {
- 			/* it's a section */
--			int j = 0, dot = 0;
--			for (i++; buf[i] && buf[i] != ']'; i++) {
--				if (!dot && isspace(buf[i])) {
--					dot = 1;
--					if (old_name[j++] != '.')
--						break;
--					for (i++; isspace(buf[i]); i++)
--						; /* do nothing */
--					if (buf[i] != '"')
--						break;
--					continue;
--				}
--				if (buf[i] == '\\' && dot)
--					i++;
--				else if (buf[i] == '"' && dot) {
--					for (i++; isspace(buf[i]); i++)
--						; /* do_nothing */
--					break;
--				}
--				if (buf[i] != old_name[j++])
--					break;
--			}
--			if (buf[i] == ']' && old_name[j] == 0) {
--				/* old_name matches */
--				ret++;
--				store.baselen = strlen(new_name);
--				if (!store_write_section(out_fd, new_name)) {
--					ret = write_error();
--					goto out;
--				}
--				continue;
-+			ret++;
-+			store.baselen = strlen(new_name);
-+			if (!store_write_section(out_fd, new_name)) {
-+				ret = write_error();
-+				goto out;
- 			}
-+			continue;
- 		}
- 		length = strlen(buf);
- 		if (write_in_full(out_fd, buf, length) != length) {
-@@ -934,3 +941,58 @@ int git_config_rename_section(const char *old_name, const char *new_name)
- 	return ret;
- }
- 
-+int git_config_remove_section(const char *name)
-+{
-+	int ret = 0;
-+	char *config_filename;
-+	struct lock_file *lock = xcalloc(sizeof(struct lock_file), 1);
-+	int out_fd;
-+	int removing = 0;
-+	char buf[1024];
-+
-+	config_filename = getenv(CONFIG_ENVIRONMENT);
-+	if (!config_filename) {
-+		config_filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
-+		if (!config_filename)
-+			config_filename  = git_path("config");
-+	}
-+	config_filename = xstrdup(config_filename);
-+	out_fd = hold_lock_file_for_update(lock, config_filename, 0);
-+	if (out_fd < 0) {
-+		ret = error("Could not lock config file!");
-+		goto out;
-+	}
-+
-+	if (!(config_file = fopen(config_filename, "rb"))) {
-+		ret = error("Could not open config file!");
-+		goto out;
-+	}
-+
-+	while (fgets(buf, sizeof(buf), config_file)) {
-+		int i;
-+		int length;
-+		for (i = 0; buf[i] && isspace(buf[i]); i++)
-+			; /* do nothing */
-+		if (buf[i] == '[') {
-+			if (section_name_match (&buf[i + 1], name)) {
-+				/* name matches */
-+				ret++;
-+				removing = 1;
-+			} else
-+				removing = 0;
-+		}
-+		if (removing)
-+			continue;
-+		length = strlen(buf);
-+		if (write_in_full(out_fd, buf, length) != length) {
-+			ret = write_error();
-+			goto out;
-+		}
-+	}
-+	fclose(config_file);
-+	if (close(out_fd) || commit_lock_file(lock) < 0)
-+			ret = error("Cannot commit config file!");
-+ out:
-+	free(config_filename);
-+	return ret;
-+}
-diff --git a/cache.h b/cache.h
-index 8bbc142..585a9b4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -438,6 +439,7 @@ extern int git_config_bool(const char *, const char *);
- extern int git_config_set(const char *, const char *);
- extern int git_config_set_multivar(const char *, const char *, const char *, int);
- extern int git_config_rename_section(const char *, const char *);
-+extern int git_config_remove_section(const char *);
- extern int check_repository_format_version(const char *var, const char *value);
- 
- #define MAX_GITNAME (1000)
-
---------------080109050306050904020707--
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
