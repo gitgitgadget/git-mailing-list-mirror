@@ -1,69 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: defaults for where to merge from
-Date: Thu, 01 Mar 2007 00:18:58 -0800
-Message-ID: <7vejo9xtot.fsf@assigned-by-dhcp.cox.net>
-References: <es450f$d58$1@sea.gmane.org>
-	<200702281522.14965.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0702281526270.15314@reaper.quantumfyre.co.uk>
-	<Pine.LNX.4.63.0702281643200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<81b0412b0702281045u2e511ebfie14a7b718531f8c4@mail.gmail.com>
-	<45E5DE8A.2080101@lu.unisi.ch>
-	<81b0412b0702281607l6f9b1cadg9f3a84b06b9acd7d@mail.gmail.com>
-	<Pine.LNX.4.63.0703010221000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<81b0412b0702282355i176ad7e5t7b9e417b27e524fb@mail.gmail.com>
-	<45E68897.8000607@lu.unisi.ch>
-	<81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [EGIT PATCH 6/9] Add branch and StGit patch to decorator
+Date: Thu, 1 Mar 2007 09:22:17 +0100
+Message-ID: <200703010922.18149.robin.rosenberg@dewire.com>
+References: <20070228222355.12021.13029.stgit@lathund.dewire.com> <20070228222637.12021.63285.stgit@lathund.dewire.com> <20070301035909.GA8103@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: bonzini@gnu.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Julian Phillips" <julian@quantumfyre.co.uk>,
-	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 09:19:28 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 01 09:20:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMgVE-00053c-H2
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 09:19:04 +0100
+	id 1HMgWo-0005Qk-9Q
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 09:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932993AbXCAITC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 03:19:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933001AbXCAITC
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 03:19:02 -0500
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:43004 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932993AbXCAITA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 03:19:00 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070301081900.UXTO2394.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 1 Mar 2007 03:19:00 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id VLJy1W00N1kojtg0000000; Thu, 01 Mar 2007 03:18:59 -0500
-In-Reply-To: <81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com>
-	(Alex Riesen's message of "Thu, 1 Mar 2007 09:10:25 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933001AbXCAIUl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 03:20:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933014AbXCAIUl
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 03:20:41 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:4052 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S933001AbXCAIUk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 03:20:40 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 4FE3C802E29;
+	Thu,  1 Mar 2007 09:15:34 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 23525-02; Thu,  1 Mar 2007 09:15:33 +0100 (CET)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id E8C1E802809;
+	Thu,  1 Mar 2007 09:15:31 +0100 (CET)
+User-Agent: KMail/1.9.4
+In-Reply-To: <20070301035909.GA8103@spearce.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41050>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+torsdag 01 mars 2007 04:59 skrev Shawn O. Pearce:
+> Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> > +	public String getPatch() throws IOException {
+> > +		final File ptr = new File(getDirectory(),"patches/"+getBranch()+"/current");
+> > +		final BufferedReader br = new BufferedReader(new FileReader(ptr));
+> > +		final String line = br.readLine();
+> > +		return line;
+> > +	}
+> 
+> Last time I checked leaking a file descriptor was a bad idea.
+It's a hallmark of mine. Sooner or later the GC picks them up :), but you're right.
 
->> If everyone hated the old behavior, old users should already be careful
->> about not git-pull'ing (without options) from any branch but master.  So
->> they won't see any difference.
->
-> except for .git/config growing uncontrollably
+> I fixed it (in both methods) when I applied the patch.
+> 
+> Your whole series is now pushed. Thanks for the cleanups.
+> 
 
-I think this should be a new option, not the _modified default_.
-Otherwise it would be harder to sell to olde timers.
-
-	$ git checkout -B <newbranch> remotes/<blah>
-        $ git branch --track <newbranch> remotes/<blah>
-
-might be a good compromise.
+-- robin
