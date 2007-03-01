@@ -1,526 +1,347 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH/RFC] statplot: a tool for mining repository statistics.
-Date: Thu, 1 Mar 2007 02:29:53 -0500
-Message-ID: <20070301072953.GA8730@spearce.org>
+From: Paolo Bonzini <paolo.bonzini@gmail.com>
+Subject: [PATCH] defaults for where to merge from (take 2)
+Date: Thu, 01 Mar 2007 08:52:40 +0100
+Message-ID: <45E68648.6090407@lu.unisi.ch>
+References: <es450f$d58$1@sea.gmane.org> <200702281522.14965.andyparkins@gmail.com> <Pine.LNX.4.64.0702281526270.15314@reaper.quantumfyre.co.uk> <Pine.LNX.4.63.0702281643200.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45E5B7B4.9080605@lu.unisi.ch> <Pine.LNX.4.63.0702281903470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/mixed;
+ boundary="------------010901030009050405090305"
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 01 08:30:04 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 01 08:53:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMfjk-0002Dk-WB
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 08:30:01 +0100
+	id 1HMg6C-0003qQ-NZ
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 08:53:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933077AbXCAH37 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 02:29:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933040AbXCAH37
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 02:29:59 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:51130 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933077AbXCAH36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 02:29:58 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HMfjf-0007Rk-M5; Thu, 01 Mar 2007 02:29:56 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0AAFC20FBAE; Thu,  1 Mar 2007 02:29:53 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752344AbXCAHxL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 02:53:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbXCAHxL
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 02:53:11 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:36263 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752344AbXCAHxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 02:53:10 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so814763nfa
+        for <git@vger.kernel.org>; Wed, 28 Feb 2007 23:52:46 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:from;
+        b=BUOIFz+WU4C4Q1nPY4+ZY+7/eoyVK/nmQxdG9ts1swZBlDoNMn18vnCif/0pt3bHHfXvqIHARYFeVvjZ7JRHIJXsbuHZn15WkdsNiMME8bPZs761uPBfxkVW2srxK5sgEmbXGDJnpqO8dFuppajMomu6dqu8x1x3ExablgcvX0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:from;
+        b=KxciwkMeXYWDmjAABT5MqlhpuBGi4slwYyJghumFPoL2s+e4zFqLN0xRIHIwEeNperiOSsdpZq589y4xLhLRhBfQSjnLr8/syNXS/MMX1wbYWgMwU9LSThXm/HqyEcVZp6kF0NMZs1r76qwJInr0/wnUyXEqXTSoKzJHE9fH8wU=
+Received: by 10.48.14.4 with SMTP id 4mr5207586nfn.1172735566360;
+        Wed, 28 Feb 2007 23:52:46 -0800 (PST)
+Received: from ?192.168.76.141? ( [195.176.176.226])
+        by mx.google.com with ESMTP id y2sm6084464mug.2007.02.28.23.52.43;
+        Wed, 28 Feb 2007 23:52:44 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+In-Reply-To: <Pine.LNX.4.63.0702281903470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41043>
 
-This is a simple program to dump statistics about number of objects
-per day, and how much disk space is used per day.  It can be used
-to generate data files suitable for plotting repository growth
-over time.
+This is a multi-part message in MIME format.
+--------------010901030009050405090305
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This program avoids displaying information about tags, but it does
-cover the commits referenced by those tags.  Since annotated tags
-are a very small portion of most projects I don't consider this to
-be a major issue at this time.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+> I'd rather remove the complete section (However, that means that you have 
+> to introduce a function to do that in config.c)
 
- This is on top of Nico's cleanups that are currently in next,
- as I'm using the newer read_sha1_file interface.  Otherwise it
- has no dependencies on stuff in next.
+No problem.
 
- I am normally very anti-self-linking, but I have posted graphs from
- git.git and linux-2.6.git on my website if people are interested,
- so I'm self-linking:
+> Also, the second part of your patch would be clearer (methinks) if you 
+> replaced the call to get_sha1() with dwim_ref(). You'd get the real 
+> refname for free...
 
-   http://www.spearce.org/2007/03/git-and-linux-repository-growth.html
+Not only that, my previous version did not work if somebody specified
+remotes/remote/upstreambranch instead of remote/upstreambranch.
 
- I figured a link in email would be better than an attachment.  ;-)
+Updated version attached.
 
- This is a toy, but its more than good enough for production, so uh,
- here it is.  Should it be included in git.git?  Don't know....
+Paolo
 
- .gitignore                     |    1 +
- Documentation/git-statplot.txt |   63 ++++++++
- Makefile                       |    1 +
- builtin-statplot.c             |  318 ++++++++++++++++++++++++++++++++++++++++
- builtin.h                      |    1 +
- git.c                          |    1 +
- 6 files changed, 385 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-statplot.txt
- create mode 100644 builtin-statplot.c
 
-diff --git a/.gitignore b/.gitignore
-index 0eaba0a..4c73efb 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -119,6 +119,7 @@ git-ssh-fetch
- git-ssh-pull
- git-ssh-push
- git-ssh-upload
-+git-statplot
- git-status
- git-stripspace
- git-svn
-diff --git a/Documentation/git-statplot.txt b/Documentation/git-statplot.txt
-new file mode 100644
-index 0000000..77dd0d4
---- /dev/null
-+++ b/Documentation/git-statplot.txt
-@@ -0,0 +1,63 @@
-+git-statplot(1)
-+=========
+
+--------------010901030009050405090305
+Content-Type: text/plain; x-mac-type="0"; x-mac-creator="0";
+ name="git-builtin-branch-config-2.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="git-builtin-branch-config-2.patch"
+
+* git-branch: register where to merge from, when branching off a remote branch.
+
+A rather standard (in 1.5) procedure for branching off a remote archive is:
+
+  git checkout -b branchname remote/upstreambranch
+  git config --add branch.branchname.remote remote
+  git config --add branch.branchname.merge refs/heads/upstreambranch
+
+In this case, we can save the user some effort if "git branch" (and
+"git checkout -b") automatically do the two "git-config --add"s when the
+source branch is remote.  There is a good chance that some user wants
+to merge something different, but in that case they have to specify what
+to merge _anyway_.
+
+Dually, we remove the branch.branchname section when the user does
+"git branch -d".
+
+
+diff --git a/builtin-branch.c b/builtin-branch.c
+index d0179b0..c1563cf 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -147,8 +147,16 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+ 			error("Error deleting %sbranch '%s'", remote,
+ 			       argv[i]);
+ 			ret = 1;
+-		} else
++		} else {
++			/* Remove git-config keys.  */
++			if (kinds == REF_LOCAL_BRANCH) {
++				char *config_key = xmalloc(strlen(argv[i]) + 8);
++				sprintf(config_key, "branch.%s", argv[i]);
++				git_config_remove_section(config_key);
++			}
 +
-+NAME
-+----
-+git-statplot - Generate repository statistics for plotting
-+
-+
-+SYNOPSIS
-+--------
-+'git-statplot' [<commit-ish>*] >repo.dat
-+
-+DESCRIPTION
-+-----------
-+Scans all current packs and all reachable objects (optionally
-+starting from <object>* rather than all refs) and determines the
-+earliest date that each object was referenced by a commit.
-+
-+For each date, the number of new commits, number of new objects,
-+and total bytes used within the packfile are reported to standard
-+output.  The output format is suitable for plotting with Gnuplot,
-+or any number of other popular plotting and analysis tools.
-+
-+A sample output follows, taken from the early days of git's own
-+history:
-+
-+....
-+	# Total days:    2
-+	# Total commits: 5
-+	# Date range: ["2005-04-06":"2005-04-07"]
-+	# <date> <new_commits> <new_trees> <new_blobs> <new_objects> <new_bytes>
-+	2005-04-06 2 2 19 23 8219
-+	2005-04-07 3 3 11 17 4742
-+....
-+
-+Here we see that during Git's first day developers created 23 objects
-+(2 commits, 2 trees, 19 blobs), and these objects currently occupy
-+8,219 bytes of disk space.
-+
-+During the second day an additional 17 objects and these objects
-+currently occupy 4,742 bytes of disk space.
-+
-+Notes
-+-----
-+This program only examines packed objects.  If unpacked objects
-+are reachable from the input arguments these will not be counted in
-+the output.  Running only on a fully packed repository is suggested.
-+
-+Commit counts, object counts and bytes can vary between runs
-+for several reasons.  One cause of this change can be merging of
-+long-lived branches. The merged commits will count on the day they
-+were committed, not on the day they arrived in this repository.
-+Another cause can be from repacking with the -f option, as deltas
-+may be recomputed and recompressed, possibly altering the amount
-+of space used by an object.
-+
-+Author
-+------
-+Written by Shawn O. Pearce <spearce@spearce.org>
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-diff --git a/Makefile b/Makefile
-index e4bb865..83da7fd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -317,6 +317,7 @@ BUILTIN_OBJS = \
- 	builtin-runstatus.o \
- 	builtin-shortlog.o \
- 	builtin-show-branch.o \
-+	builtin-statplot.o \
- 	builtin-stripspace.o \
- 	builtin-symbolic-ref.o \
- 	builtin-tar-tree.o \
-diff --git a/builtin-statplot.c b/builtin-statplot.c
-new file mode 100644
-index 0000000..7f5323f
---- /dev/null
-+++ b/builtin-statplot.c
-@@ -0,0 +1,318 @@
-+/*
-+ * Computes the earliest commit that can reach each object, then
-+ * summarizes this for each day found within the commit history.
-+ *
-+ * Produces a datafile to stdout suitable for Gnuplot.
-+ */
-+#include "cache.h"
-+#include "commit.h"
-+#include "refs.h"
-+#include "pack.h"
-+#include "tree-walk.h"
-+
-+#define SEEN      (1u<<0)
-+
-+struct packed_object {
-+	unsigned char sha1[20];
-+	unsigned int packed_bytes;
-+	unsigned int type : 2;
-+	unsigned int date : 30;
-+};
-+
-+struct days_total {
-+	unsigned long packed_bytes;
-+	unsigned long new_objects[4];
-+};
-+
-+static const unsigned long one_day = 24 * 60 * 60;
-+static struct commit **all_commits;
-+static struct packed_object *all_objs;
-+static unsigned long nr_commits;
-+static unsigned long max_commits;
-+static unsigned long nr_objects;
-+static unsigned long nr_unpacked;
-+static unsigned int earliest_date;
-+static unsigned int latest_date;
-+
-+static int sort_by_sha1(const void *a_, const void *b_)
-+{
-+	const struct packed_object *a = a_;
-+	const struct packed_object *b = b_;
-+	return hashcmp(a->sha1, b->sha1);
-+}
-+
-+static int sort_by_offset(const void *a_, const void *b_)
-+{
-+	const struct packed_object *a = a_;
-+	const struct packed_object *b = b_;
-+	if (a->packed_bytes < b->packed_bytes)
-+		return -1;
-+	else if (a->packed_bytes > b->packed_bytes)
-+		return 1;
-+	return 0;
-+}
-+
-+static void index_one_pack(struct packed_git *p)
-+{
-+	int i, num = num_packed_objects(p);
-+	unsigned long s = nr_objects;
-+	struct packed_object *o, *last;
-+
-+	if (num < 1)
-+		return;
-+
-+	nr_objects += num;
-+	all_objs = xrealloc(all_objs, nr_objects * sizeof(*all_objs));
-+	for (i = 0, o = all_objs + s; i < num; i++, o++) {
-+		nth_packed_object_sha1(p, i, o->sha1);
-+		o->packed_bytes = find_pack_entry_one(o->sha1, p);
-+		o->type = 0;
-+		o->date = 0;
-+	}
-+
-+	qsort(all_objs + s, num, sizeof(*all_objs), sort_by_offset);
-+
-+	last = all_objs + s;
-+	for (i = 1, o = last + 1; i < num; i++, o++) {
-+		last->packed_bytes = o->packed_bytes - last->packed_bytes;
-+		last = o;
-+	}
-+	last->packed_bytes = p->pack_size - last->packed_bytes - 32;
-+}
-+
-+static void scan_commit(struct commit *commit)
-+{
-+	if (!commit || commit->object.flags & SEEN)
-+		return;
-+
-+	parse_commit(commit);
-+	commit->object.flags |= SEEN;
-+
-+	if (nr_commits == max_commits) {
-+		max_commits *= 2;
-+		if (max_commits < 1024)
-+			max_commits = 1024;
-+		all_commits = xrealloc(all_commits,
-+			sizeof(*all_commits) * max_commits);
-+	}
-+	all_commits[nr_commits++] = commit;
-+}
-+
-+static int stat_handle_reflog_ent(unsigned char *osha1,
-+	unsigned char *nsha1,
-+	const char *email,
-+	unsigned long timestamp,
-+	int tz,
-+	const char *message,
-+	void *cb_data)
-+{
-+	scan_commit(lookup_commit_reference_gently(nsha1, 1));
-+	return 0;
-+}
-+
-+static int stat_handle_reflog(const char *logname,
-+	const unsigned char *sha1,
-+	int flag,
-+	void *cb_data)
-+{
-+	for_each_reflog_ent(logname, stat_handle_reflog_ent, NULL);
-+	return 0;
-+}
-+
-+static int stat_handle_ref(const char *refname,
-+	const unsigned char *sha1,
-+	int flag,
-+	void *cb_data)
-+{
-+	scan_commit(lookup_commit_reference_gently(sha1, 1));
-+	return 0;
-+}
-+
-+static int sort_by_cdate(const void *a_, const void *b_)
-+{
-+	const struct commit *a = *((const struct commit**)a_);
-+	const struct commit *b = *((const struct commit**)b_);
-+	if (a->date < b->date)
-+		return -1;
-+	else if (a->date > b->date)
-+		return 1;
-+	return 0;
-+}
-+
-+static void list_all_commits()
-+{
-+	unsigned long i;
-+
-+	for (i = 0; i < nr_commits; i++) {
-+		struct commit_list *parents = all_commits[i]->parents;
-+		while (parents) {
-+			scan_commit(parents->item);
-+			parents = parents->next;
+ 			printf("Deleted %sbranch %s.\n", remote, argv[i]);
 +		}
-+	}
+ 
+ 	}
+ 
+@@ -308,6 +316,27 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev)
+ 	free_ref_list(&ref_list);
+ }
+ 
++static void register_branch_pull (const char *name, const char *remote_name)
++{
++	char *slash = strchr(remote_name, '/');
 +
-+	qsort(all_commits, nr_commits, sizeof(*all_commits), sort_by_cdate);
++	char *config_key = xmalloc(strlen(name) + 15);
++	char *merge_value = xmalloc(strlen(remote_name) + 10);
++
++	char *remote_value = xstrdup(remote_name);
++	remote_value[slash - remote_name] = 0;
++	sprintf(config_key, "branch.%s.remote", name);
++	git_config_set(config_key, remote_value);
++
++	sprintf(merge_value, "refs/heads/%s", slash + 1);
++	sprintf(config_key, "branch.%s.merge", name);
++	git_config_set(config_key, merge_value);
++
++	free (config_key);
++	free (remote_value);
++	free (merge_value);
 +}
 +
-+static struct packed_object* find_one(const unsigned char *sha1)
+ static void create_branch(const char *name, const char *start_name,
+ 			  unsigned char *start_sha1,
+ 			  int force, int reflog)
+@@ -315,8 +344,8 @@ static void create_branch(const char *name, const char *start_name,
+ 	struct ref_lock *lock;
+ 	struct commit *commit;
+ 	unsigned char sha1[20];
+-	char ref[PATH_MAX], msg[PATH_MAX + 20];
+-	int forcing = 0;
++	char *real_ref = NULL, ref[PATH_MAX], msg[PATH_MAX + 20];
++	int forcing = 0, remote = 0;
+ 
+ 	snprintf(ref, sizeof ref, "refs/heads/%s", name);
+ 	if (check_ref_format(ref))
+@@ -333,7 +362,9 @@ static void create_branch(const char *name, const char *start_name,
+ 	if (start_sha1)
+ 		/* detached HEAD */
+ 		hashcpy(sha1, start_sha1);
+-	else if (get_sha1(start_name, sha1))
++	else if (dwim_ref(start_name, strlen (start_name), sha1, &real_ref))
++		remote = !prefixcmp(real_ref, "refs/remotes/");
++	else
+ 		die("Not a valid object name: '%s'.", start_name);
+ 
+ 	if ((commit = lookup_commit_reference(sha1)) == NULL)
+@@ -354,8 +385,16 @@ static void create_branch(const char *name, const char *start_name,
+ 		snprintf(msg, sizeof msg, "branch: Created from %s",
+ 			 start_name);
+ 
++	/* When branching off a remote branch, set up so that git-pull
++	   automatically merges from there.  */
++	if (remote)
++		register_branch_pull (name, real_ref + 13);
++
+ 	if (write_ref_sha1(lock, sha1, msg) < 0)
+ 		die("Failed to write ref: %s.", strerror(errno));
++
++	if (real_ref)
++		free (real_ref);
+ }
+ 
+ static void rename_branch(const char *oldname, const char *newname, int force)
+diff --git a/cache.h b/cache.h
+index 8bbc142..797483b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -438,6 +438,7 @@ extern int git_config_bool(const char *, const char *);
+ extern int git_config_set(const char *, const char *);
+ extern int git_config_set_multivar(const char *, const char *, const char *, int);
+ extern int git_config_rename_section(const char *, const char *);
++extern int git_config_remove_section(const char *);
+ extern int check_repository_format_version(const char *var, const char *value);
+ 
+ #define MAX_GITNAME (1000)
+diff --git a/config.c b/config.c
+index 0ff413b..acd83aa 100644
+--- a/config.c
++++ b/config.c
+@@ -854,6 +854,33 @@ write_err_out:
+ 
+ }
+ 
++static int section_name_match (const char *buf, const char *name)
 +{
-+	unsigned long hi = nr_objects;
-+	unsigned long lo = 0;
-+	do {
-+		unsigned long mi = (lo + hi) / 2;
-+		int cmp = hashcmp(all_objs[mi].sha1, sha1);
-+		if (!cmp)
-+			return all_objs + mi;
-+		if (cmp > 0)
-+			hi = mi;
-+		else
-+			lo = mi + 1;
-+	} while (lo < hi);
-+	return NULL;
-+}
-+
-+static int mark_one(
-+	const unsigned char *sha1,
-+	unsigned int date,
-+	enum object_type type)
-+{
-+	struct packed_object *obj = find_one(sha1);
-+	if (!obj) {
-+		nr_unpacked++;
-+		return 1;
-+	}
-+	if (obj->type)
-+		return 1;
-+	obj->date = date;
-+	obj->type = type;
-+	return 0;
-+}
-+
-+static void mark_tree(const unsigned char *sha1, unsigned int date)
-+{
-+	struct tree_desc desc;
-+	struct name_entry name_entry;
-+	enum object_type type;
-+	void *buf;
-+
-+	if (mark_one(sha1, date, OBJ_TREE))
-+		return;
-+
-+	buf = read_sha1_file(sha1, &type, &desc.size);
-+	if (!buf || type != OBJ_TREE)
-+		die("missing/corrupt tree object %s", sha1_to_hex(sha1));
-+	desc.buf = buf;
-+	while (tree_entry(&desc, &name_entry)) {
-+		if (S_ISDIR(name_entry.mode))
-+			mark_tree(name_entry.sha1, date);
-+		else
-+			mark_one(name_entry.sha1, date, OBJ_BLOB);
-+	}
-+	free(buf);
-+}
-+
-+static void compute_earliest_dates()
-+{
-+	unsigned long i;
-+
-+	if (!nr_commits)
-+		die("No commits?");
-+
-+	for (i = 0; i < nr_commits; i++) {
-+		struct commit *commit = all_commits[i];
-+		unsigned int day = commit->date / one_day;
-+		mark_one(commit->object.sha1, day, OBJ_COMMIT);
-+		mark_tree(commit->tree->object.sha1, day);
-+	}
-+
-+	earliest_date = all_commits[0]->date / one_day;
-+	latest_date = all_commits[nr_commits - 1]->date / one_day;
-+}
-+
-+static void print_yyyymmdd(unsigned int day)
-+{
-+	time_t date = day * one_day;
-+	struct tm *when = localtime(&date);
-+	printf("%4.4i-%2.2i-%2.2i",
-+		when->tm_year + 1900,
-+		when->tm_mon + 1,
-+		when->tm_mday);
-+}
-+
-+static void compute_date_buckets()
-+{
-+	unsigned long days = latest_date - earliest_date + 1;
-+	unsigned long i;
-+	struct days_total *totals;
-+	struct packed_object *o;
-+
-+	totals = xcalloc(days, sizeof(*totals));
-+	for (i = 0, o = all_objs; i < nr_objects; i++, o++) {
-+		if (o->date) {
-+			struct days_total* t = &totals[o->date - earliest_date];
-+			t->packed_bytes += o->packed_bytes;
-+			t->new_objects[OBJ_NONE]++;
-+			t->new_objects[o->type]++;
-+		}
-+	}
-+
-+	printf("# Total days:    %lu\n", days);
-+	printf("# Total commits: %lu\n", nr_commits);
-+	printf("# Date range: [\"");
-+	print_yyyymmdd(earliest_date);
-+	printf("\":\"");
-+	print_yyyymmdd(latest_date);
-+	printf("\"]\n");
-+
-+	printf("# <date> <new_commits> <new_trees> <new_blobs>"
-+		" <new_objects> <new_bytes>\n");
-+	for (i = 0; i < days; i++) {
-+		print_yyyymmdd(earliest_date + i);
-+		printf(" %lu %lu %lu %lu %lu\n",
-+			totals[i].new_objects[OBJ_COMMIT],
-+			totals[i].new_objects[OBJ_TREE],
-+			totals[i].new_objects[OBJ_BLOB],
-+			totals[i].new_objects[OBJ_NONE],
-+			totals[i].packed_bytes);
-+	}
-+
-+	free(totals);
-+}
-+
-+int cmd_statplot(int argc, char **argv, const char *prefix)
-+{
-+	int i;
-+	struct packed_git *p;
-+
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		unsigned char head_sha1[20];
-+
-+		if (*arg == '-')
++	int i = 0, j = 0, dot = 0;
++	for (; buf[i] && buf[i] != ']'; i++) {
++		if (!dot && isspace(buf[i])) {
++			dot = 1;
++			if (name[j++] != '.')
++				break;
++			for (i++; isspace(buf[i]); i++)
++				; /* do nothing */
++			if (buf[i] != '"')
++				break;
 +			continue;
-+		else if (!get_sha1(arg, head_sha1))
-+			scan_commit(lookup_commit_reference(head_sha1));
-+		else
-+			error("invalid parameter: expected sha1, got '%s'", arg);
++		}
++		if (buf[i] == '\\' && dot)
++			i++;
++		else if (buf[i] == '"' && dot) {
++			for (i++; isspace(buf[i]); i++)
++				; /* do_nothing */
++			break;
++		}
++		if (buf[i] != name[j++])
++			break;
 +	}
-+
-+	if (!nr_commits) {
-+		for_each_ref(stat_handle_ref, NULL);
-+		for_each_reflog(stat_handle_reflog, NULL);
-+	}
-+
-+	prepare_packed_git();
-+	for (p = packed_git; p; p = p->next)
-+		index_one_pack(p);
-+	qsort(all_objs, nr_objects, sizeof(*all_objs), sort_by_sha1);
-+
-+	list_all_commits();
-+	compute_earliest_dates();
-+	compute_date_buckets();
-+
-+	if (nr_unpacked)
-+		warn("%lu unpacked objects were not included in output.\n",
-+			nr_unpacked);
-+
-+	return 0;
++	return (buf[i] == ']' && name[j] == 0);
 +}
-diff --git a/builtin.h b/builtin.h
-index 48d68c8..8a6ee95 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -66,6 +66,7 @@ extern int cmd_runstatus(int argc, const char **argv, const char *prefix);
- extern int cmd_shortlog(int argc, const char **argv, const char *prefix);
- extern int cmd_show(int argc, const char **argv, const char *prefix);
- extern int cmd_show_branch(int argc, const char **argv, const char *prefix);
-+extern int cmd_statplot(int argc, const char **argv, const char *prefix);
- extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
- extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
- extern int cmd_tar_tree(int argc, const char **argv, const char *prefix);
-diff --git a/git.c b/git.c
-index 008e016..994f22e 100644
---- a/git.c
-+++ b/git.c
-@@ -278,6 +278,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
- 		{ "shortlog", cmd_shortlog, RUN_SETUP | USE_PAGER },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
- 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
-+		{ "statplot", cmd_statplot, RUN_SETUP },
- 		{ "stripspace", cmd_stripspace },
- 		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
- 		{ "tar-tree", cmd_tar_tree },
--- 
-1.5.0.2.809.g0f936
++
+ int git_config_rename_section(const char *old_name, const char *new_name)
+ {
+ 	int ret = 0;
+@@ -885,40 +912,15 @@ int git_config_rename_section(const char *old_name, const char *new_name)
+ 		int length;
+ 		for (i = 0; buf[i] && isspace(buf[i]); i++)
+ 			; /* do nothing */
+-		if (buf[i] == '[') {
++		if (buf[i] == '[' && section_name_match (&buf[i+1], old_name)) {
+ 			/* it's a section */
+-			int j = 0, dot = 0;
+-			for (i++; buf[i] && buf[i] != ']'; i++) {
+-				if (!dot && isspace(buf[i])) {
+-					dot = 1;
+-					if (old_name[j++] != '.')
+-						break;
+-					for (i++; isspace(buf[i]); i++)
+-						; /* do nothing */
+-					if (buf[i] != '"')
+-						break;
+-					continue;
+-				}
+-				if (buf[i] == '\\' && dot)
+-					i++;
+-				else if (buf[i] == '"' && dot) {
+-					for (i++; isspace(buf[i]); i++)
+-						; /* do_nothing */
+-					break;
+-				}
+-				if (buf[i] != old_name[j++])
+-					break;
+-			}
+-			if (buf[i] == ']' && old_name[j] == 0) {
+-				/* old_name matches */
+-				ret++;
+-				store.baselen = strlen(new_name);
+-				if (!store_write_section(out_fd, new_name)) {
+-					ret = write_error();
+-					goto out;
+-				}
+-				continue;
++			ret++;
++			store.baselen = strlen(new_name);
++			if (!store_write_section(out_fd, new_name)) {
++				ret = write_error();
++				goto out;
+ 			}
++			continue;
+ 		}
+ 		length = strlen(buf);
+ 		if (write_in_full(out_fd, buf, length) != length) {
+@@ -934,3 +936,58 @@ int git_config_rename_section(const char *old_name, const char *new_name)
+ 	return ret;
+ }
+ 
++int git_config_remove_section(const char *name)
++{
++	int ret = 0;
++	char *config_filename;
++	struct lock_file *lock = xcalloc(sizeof(struct lock_file), 1);
++	int out_fd;
++	int removing = 0;
++	char buf[1024];
++
++	config_filename = getenv(CONFIG_ENVIRONMENT);
++	if (!config_filename) {
++		config_filename = getenv(CONFIG_LOCAL_ENVIRONMENT);
++		if (!config_filename)
++			config_filename  = git_path("config");
++	}
++	config_filename = xstrdup(config_filename);
++	out_fd = hold_lock_file_for_update(lock, config_filename, 0);
++	if (out_fd < 0) {
++		ret = error("Could not lock config file!");
++		goto out;
++	}
++
++	if (!(config_file = fopen(config_filename, "rb"))) {
++		ret = error("Could not open config file!");
++		goto out;
++	}
++
++	while (fgets(buf, sizeof(buf), config_file)) {
++		int i;
++		int length;
++		for (i = 0; buf[i] && isspace(buf[i]); i++)
++			; /* do nothing */
++		if (buf[i] == '[') {
++			if (section_name_match (&buf[i + 1], name)) {
++				/* name matches */
++				ret++;
++				removing = 1;
++			} else
++				removing = 0;
++		}
++		if (removing)
++			continue;
++		length = strlen(buf);
++		if (write_in_full(out_fd, buf, length) != length) {
++			ret = write_error();
++			goto out;
++		}
++	}
++	fclose(config_file);
++	if (close(out_fd) || commit_lock_file(lock) < 0)
++			ret = error("Cannot commit config file!");
++ out:
++	free(config_filename);
++	return ret;
++}
+
+
+
+--------------010901030009050405090305--
