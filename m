@@ -1,67 +1,218 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 4/2] pathattr: allow piping to external program.
-Date: Thu, 01 Mar 2007 01:37:28 -0800
-Message-ID: <7vodnduwx3.fsf@assigned-by-dhcp.cox.net>
-References: <7vodndxwia.fsf@assigned-by-dhcp.cox.net>
-	<7vzm6xux9o.fsf@assigned-by-dhcp.cox.net>
+From: Paolo Bonzini <paolo.bonzini@gmail.com>
+Subject: [PATCH] defaults for where to merge from (take 3)
+Date: Thu, 01 Mar 2007 10:37:50 +0100
+Message-ID: <45E69EEE.8070905@lu.unisi.ch>
+References: <es450f$d58$1@sea.gmane.org> <45E5DE8A.2080101@lu.unisi.ch>	 <81b0412b0702281607l6f9b1cadg9f3a84b06b9acd7d@mail.gmail.com>	 <Pine.LNX.4.63.0703010221000.22628@wbgn013.biozentrum.uni-wuerzburg.de>	 <81b0412b0702282355i176ad7e5t7b9e417b27e524fb@mail.gmail.com>	 <45E68897.8000607@lu.unisi.ch>	 <81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com>	 <45E68EDE.2090405@lu.unisi.ch>	 <81b0412b0703010033w2e1079a3l6ac6e38c59bdefd5@mail.gmail.com>	 <45E69297.8070001@lu.unisi.ch> <81b0412b0703010059w52a33b54n4d3c25ada6b96369@mail.gmail.com>
+Reply-To: bonzini@gnu.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 10:37:37 2007
+Content-Type: multipart/mixed;
+ boundary="------------080203070508010605080408"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 10:38:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMhjE-0005Ik-8s
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 10:37:36 +0100
+	id 1HMhjb-0005VS-Bw
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 10:37:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933223AbXCAJha (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 04:37:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933224AbXCAJha
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 04:37:30 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42849 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933223AbXCAJh3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 04:37:29 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070301093729.RCMS24587.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 1 Mar 2007 04:37:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id VMdU1W00a1kojtg0000000; Thu, 01 Mar 2007 04:37:29 -0500
-In-Reply-To: <7vzm6xux9o.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 01 Mar 2007 01:29:55 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933224AbXCAJh6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 04:37:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933226AbXCAJh5
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 04:37:57 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:11955 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933224AbXCAJh4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 04:37:56 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so837448nfa
+        for <git@vger.kernel.org>; Thu, 01 Mar 2007 01:37:54 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:from;
+        b=Lr9N3X42KnU7OG9lH2IT1FiDPGruII5ba8FnYBPZjtEJOw3vBm/1Y3dx9wN9IvafvH3xfohFDYUt6s1p1X9KISk3dneKTTlsx7Gc/sbrlrV0xc9FR0MSTxtPbFzscSyhNYd2vezJGtrcYLD6o9YtDL08HEs1BwaXf2t+5I+Zns8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:from;
+        b=IDaCeeRwE8fmthoNGGOYlD2BfMupK/S6ziUyQjFttKYcFrLlylEReWjp7BvynXeNE5KTsHgLq/LXjbQ7Ctf9LJr1Lve9ke6RYL2MzKHNL7MImqfcYDLlYWc+PtFN5bes3zgLbA2bxoLcT0YsqNjOxXqjfZbd/cYv8H7Ul3dO4i0=
+Received: by 10.48.202.18 with SMTP id z18mr5363778nff.1172741874506;
+        Thu, 01 Mar 2007 01:37:54 -0800 (PST)
+Received: from ?192.168.76.141? ( [195.176.176.226])
+        by mx.google.com with ESMTP id e9sm6450482muf.2007.03.01.01.37.51;
+        Thu, 01 Mar 2007 01:37:53 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+In-Reply-To: <81b0412b0703010059w52a33b54n4d3c25ada6b96369@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41067>
 
-Junio C Hamano <junkio@cox.net> writes:
+This is a multi-part message in MIME format.
+--------------080203070508010605080408
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> This sets up capability for various traits to be an external
-> process, accessed via pipe.  conv-i and conv-o need to spawn
-> bidirectional pipe, but I have not coded that part yet.
->
-> You can try running:
->
->     $ git show HEAD:Documentation/*.txt
 
-... obviously I meant
+> Actually, how about making the default configurable _AND_ have
+> the --no-track option (for scripting)?
 
-	$ git show HEAD:Documentation/git.txt
+Fine by me.  And also --track in case you want to try it out.  ;-)
 
-or something a bit more concrete than '*' here.
+I made it default true, environment.c can be changed by Junio if he 
+applies the patch.
 
->
-> with:
->
->     [pathattr "kludge"]
->         path = Documentation/*.txt
->         pretty = "pipe sed -e 's/^/>> /'"
->
-> to see what it does.
->
-> Signed-off-by: Junio C Hamano <junkio@cox.net>
+Patch attached.  --remove-section will go in a separate patch.
+
+Paolo
+
+--------------080203070508010605080408
+Content-Type: text/plain; x-mac-type="0"; x-mac-creator="0";
+ name="git-builtin-branch-config-3.patch"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="git-builtin-branch-config-3.patch"
+
+KiBnaXQtYnJhbmNoOiByZWdpc3RlciB3aGVyZSB0byBtZXJnZSBmcm9tLCB3aGVuIGJyYW5j
+aGluZyBvZmYgYSByZW1vdGUgYnJhbmNoLgoKQSByYXRoZXIgc3RhbmRhcmQgKGluIDEuNSkg
+cHJvY2VkdXJlIGZvciBicmFuY2hpbmcgb2ZmIGEgcmVtb3RlIGFyY2hpdmUgaXM6CgogIGdp
+dCBjaGVja291dCAtYiBicmFuY2huYW1lIHJlbW90ZS91cHN0cmVhbWJyYW5jaAogIGdpdCBj
+b25maWcgLS1hZGQgYnJhbmNoLmJyYW5jaG5hbWUucmVtb3RlIHJlbW90ZQogIGdpdCBjb25m
+aWcgLS1hZGQgYnJhbmNoLmJyYW5jaG5hbWUubWVyZ2UgcmVmcy9oZWFkcy91cHN0cmVhbWJy
+YW5jaAoKSW4gdGhpcyBjYXNlLCB3ZSBjYW4gc2F2ZSB0aGUgdXNlciBzb21lIGVmZm9ydCBp
+ZiAiZ2l0IGJyYW5jaCIgKGFuZAoiZ2l0IGNoZWNrb3V0IC1iIikgYXV0b21hdGljYWxseSBk
+byB0aGUgdHdvICJnaXQtY29uZmlnIC0tYWRkInMgd2hlbiB0aGUKc291cmNlIGJyYW5jaCBp
+cyByZW1vdGUuICBUaGVyZSBpcyBhIGdvb2QgY2hhbmNlIHRoYXQgc29tZSB1c2VyIHdhbnRz
+CnRvIG1lcmdlIHNvbWV0aGluZyBkaWZmZXJlbnQsIGJ1dCBpbiB0aGF0IGNhc2UgdGhleSBo
+YXZlIHRvIHNwZWNpZnkgd2hhdAp0byBtZXJnZSBfYW55d2F5Xy4KClRoZSBiZWhhdmlvciBp
+cyBjb250cm9sbGVkIGJ5IGNvcmUudHJhY2tyZW1vdGVicmFuY2hlcywgYW5kIGNhbiBiZQpm
+aW5lLWdyYWluZWQgdG8gYSBzcGVjaWZpYyBpbnZvY2F0aW9uIG9mICJnaXQgYnJhbmNoIiB1
+c2luZyB0aGUgbmV3Ci0tdHJhY2sgYW5kIC0tbm8tdHJhY2sgb3B0aW9ucy4KCmRpZmYgLS1n
+aXQgYS9Eb2N1bWVudGF0aW9uL2dpdC1icmFuY2gudHh0IGIvRG9jdW1lbnRhdGlvbi9naXQt
+YnJhbmNoLnR4dAppbmRleCBhYTFmZGQ0Li4xNGRjMDdkIDEwMDY0NAotLS0gYS9Eb2N1bWVu
+dGF0aW9uL2dpdC1icmFuY2gudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZ2l0LWJyYW5jaC50
+eHQKQEAgLTksNyArOSw3IEBAIFNZTk9QU0lTCiAtLS0tLS0tLQogW3ZlcnNlXQogJ2dpdC1i
+cmFuY2gnIFstLWNvbG9yIHwgLS1uby1jb2xvcl0gWy1yIHwgLWFdIFstdiBbLS1hYmJyZXY9
+PGxlbmd0aD5dXQotJ2dpdC1icmFuY2gnIFstbF0gWy1mXSA8YnJhbmNobmFtZT4gWzxzdGFy
+dC1wb2ludD5dCisnZ2l0LWJyYW5jaCcgWy0tdHJhY2sgfCAtLW5vLXRyYWNrXSBbLWxdIFst
+Zl0gPGJyYW5jaG5hbWU+IFs8c3RhcnQtcG9pbnQ+XQogJ2dpdC1icmFuY2gnICgtbSB8IC1N
+KSBbPG9sZGJyYW5jaD5dIDxuZXdicmFuY2g+CiAnZ2l0LWJyYW5jaCcgKC1kIHwgLUQpIFst
+cl0gPGJyYW5jaG5hbWU+Li4uCiAKQEAgLTI1LDYgKzI1LDEyIEBAIEl0IHdpbGwgc3RhcnQg
+b3V0IHdpdGggYSBoZWFkIGVxdWFsIHRvIHRoZSBvbmUgZ2l2ZW4gYXMgPHN0YXJ0LXBvaW50
+Pi4KIElmIG5vIDxzdGFydC1wb2ludD4gaXMgZ2l2ZW4sIHRoZSBicmFuY2ggd2lsbCBiZSBj
+cmVhdGVkIHdpdGggYSBoZWFkCiBlcXVhbCB0byB0aGF0IG9mIHRoZSBjdXJyZW50bHkgY2hl
+Y2tlZCBvdXQgYnJhbmNoLgogCitXaGVuIGEgbG9jYWwgYnJhbmNoIGlzIHN0YXJ0ZWQgb2Zm
+IGEgcmVtb3RlIGJyYW5jaCwgZ2l0IHdpbGwgc2V0dXAKK3RoZSBicmFuY2ggc28gdGhhdCBn
+aXRsaW5rOmdpdC1wdWxsWzFdIHdpbGwgYXBwcm9wcmlhdGVseSBtZXJnZSBmcm9tCit0aGF0
+IHJlbW90ZSBicmFuY2guICBJZiB0aGlzIGJlaGF2aW9yIGlzIHVuZGVzaXJlZCwgaXQgaXMg
+cG9zc2libGUKK3RvIGNoYW5nZSBpdCB1c2luZyB0aGUgYGNvcmUudHJhY2tyZW1vdGVicmFu
+Y2hlc2Agb3B0aW9uLCBvciB0aGUKK2AtLXRyYWNrYCBhbmQgYC0tbm8tdHJhY2tgIG9wdGlv
+bnMuCisKIFdpdGggYSAnLW0nIG9yICctTScgb3B0aW9uLCA8b2xkYnJhbmNoPiB3aWxsIGJl
+IHJlbmFtZWQgdG8gPG5ld2JyYW5jaD4uCiBJZiA8b2xkYnJhbmNoPiBoYWQgYSBjb3JyZXNw
+b25kaW5nIHJlZmxvZywgaXQgaXMgcmVuYW1lZCB0byBtYXRjaAogPG5ld2JyYW5jaD4sIGFu
+ZCBhIHJlZmxvZyBlbnRyeSBpcyBjcmVhdGVkIHRvIHJlbWVtYmVyIHRoZSBicmFuY2gKZGlm
+ZiAtLWdpdCBhL2J1aWx0aW4tYnJhbmNoLmMgYi9idWlsdGluLWJyYW5jaC5jCmluZGV4IGQw
+MTc5YjAuLjIwZGUwNDkgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tYnJhbmNoLmMKKysrIGIvYnVp
+bHRpbi1icmFuY2guYwpAQCAtMTIsNyArMTIsNyBAQAogI2luY2x1ZGUgImJ1aWx0aW4uaCIK
+IAogc3RhdGljIGNvbnN0IGNoYXIgYnVpbHRpbl9icmFuY2hfdXNhZ2VbXSA9Ci0gICJnaXQt
+YnJhbmNoIFstcl0gKC1kIHwgLUQpIDxicmFuY2huYW1lPiB8IFstbF0gWy1mXSA8YnJhbmNo
+bmFtZT4gWzxzdGFydC1wb2ludD5dIHwgKC1tIHwgLU0pIFs8b2xkYnJhbmNoPl0gPG5ld2Jy
+YW5jaD4gfCBbLS1jb2xvciB8IC0tbm8tY29sb3JdIFstciB8IC1hXSBbLXYgWy0tYWJicmV2
+PTxsZW5ndGg+XV0iOworICAiZ2l0LWJyYW5jaCBbLXJdICgtZCB8IC1EKSA8YnJhbmNobmFt
+ZT4gfCBbLS10cmFjayB8IC0tbm8tdHJhY2tdIFstbF0gWy1mXSA8YnJhbmNobmFtZT4gWzxz
+dGFydC1wb2ludD5dIHwgKC1tIHwgLU0pIFs8b2xkYnJhbmNoPl0gPG5ld2JyYW5jaD4gfCBb
+LS1jb2xvciB8IC0tbm8tY29sb3JdIFstciB8IC1hXSBbLXYgWy0tYWJicmV2PTxsZW5ndGg+
+XV0iOwogCiAjZGVmaW5lIFJFRl9VTktOT1dOX1RZUEUgICAgMHgwMAogI2RlZmluZSBSRUZf
+TE9DQUxfQlJBTkNIICAgIDB4MDEKQEAgLTMwOCwxNSArMzA3LDM2IEBAIHN0YXRpYyB2b2lk
+IHByaW50X3JlZl9saXN0KGludCBraW5kcywgaW50IGRldGFjaGVkLCBpbnQgdmVyYm9zZSwg
+aW50IGFiYnJldikKIAlmcmVlX3JlZl9saXN0KCZyZWZfbGlzdCk7CiB9CiAKK3N0YXRpYyB2
+b2lkIHJlZ2lzdGVyX2JyYW5jaF9wdWxsIChjb25zdCBjaGFyICpuYW1lLCBjb25zdCBjaGFy
+ICpyZW1vdGVfbmFtZSkKK3sKKwljaGFyICpzbGFzaCA9IHN0cmNocihyZW1vdGVfbmFtZSwg
+Jy8nKTsKKworCWNoYXIgKmNvbmZpZ19rZXkgPSB4bWFsbG9jKHN0cmxlbihuYW1lKSArIDE1
+KTsKKwljaGFyICptZXJnZV92YWx1ZSA9IHhtYWxsb2Moc3RybGVuKHJlbW90ZV9uYW1lKSAr
+IDEwKTsKKworCWNoYXIgKnJlbW90ZV92YWx1ZSA9IHhzdHJkdXAocmVtb3RlX25hbWUpOwor
+CXJlbW90ZV92YWx1ZVtzbGFzaCAtIHJlbW90ZV9uYW1lXSA9IDA7CisJc3ByaW50Zihjb25m
+aWdfa2V5LCAiYnJhbmNoLiVzLnJlbW90ZSIsIG5hbWUpOworCWdpdF9jb25maWdfc2V0KGNv
+bmZpZ19rZXksIHJlbW90ZV92YWx1ZSk7CisKKwlzcHJpbnRmKG1lcmdlX3ZhbHVlLCAicmVm
+cy9oZWFkcy8lcyIsIHNsYXNoICsgMSk7CisJc3ByaW50Zihjb25maWdfa2V5LCAiYnJhbmNo
+LiVzLm1lcmdlIiwgbmFtZSk7CisJZ2l0X2NvbmZpZ19zZXQoY29uZmlnX2tleSwgbWVyZ2Vf
+dmFsdWUpOworCisJZnJlZSAoY29uZmlnX2tleSk7CisJZnJlZSAocmVtb3RlX3ZhbHVlKTsK
+KwlmcmVlIChtZXJnZV92YWx1ZSk7Cit9CisKIHN0YXRpYyB2b2lkIGNyZWF0ZV9icmFuY2go
+Y29uc3QgY2hhciAqbmFtZSwgY29uc3QgY2hhciAqc3RhcnRfbmFtZSwKIAkJCSAgdW5zaWdu
+ZWQgY2hhciAqc3RhcnRfc2hhMSwKLQkJCSAgaW50IGZvcmNlLCBpbnQgcmVmbG9nKQorCQkJ
+ICBpbnQgZm9yY2UsIGludCByZWZsb2csIGludCB0cmFjaykKIHsKIAlzdHJ1Y3QgcmVmX2xv
+Y2sgKmxvY2s7CiAJc3RydWN0IGNvbW1pdCAqY29tbWl0OwogCXVuc2lnbmVkIGNoYXIgc2hh
+MVsyMF07Ci0JY2hhciByZWZbUEFUSF9NQVhdLCBtc2dbUEFUSF9NQVggKyAyMF07Ci0JaW50
+IGZvcmNpbmcgPSAwOworCWNoYXIgKnJlYWxfcmVmID0gTlVMTCwgcmVmW1BBVEhfTUFYXSwg
+bXNnW1BBVEhfTUFYICsgMjBdOworCWludCBmb3JjaW5nID0gMCwgcmVtb3RlID0gMDsKIAog
+CXNucHJpbnRmKHJlZiwgc2l6ZW9mIHJlZiwgInJlZnMvaGVhZHMvJXMiLCBuYW1lKTsKIAlp
+ZiAoY2hlY2tfcmVmX2Zvcm1hdChyZWYpKQpAQCAtMzMzLDcgKzM1Myw5IEBAIHN0YXRpYyB2
+b2lkIGNyZWF0ZV9icmFuY2goY29uc3QgY2hhciAqbmFtZSwgY29uc3QgY2hhciAqc3RhcnRf
+bmFtZSwKIAlpZiAoc3RhcnRfc2hhMSkKIAkJLyogZGV0YWNoZWQgSEVBRCAqLwogCQloYXNo
+Y3B5KHNoYTEsIHN0YXJ0X3NoYTEpOwotCWVsc2UgaWYgKGdldF9zaGExKHN0YXJ0X25hbWUs
+IHNoYTEpKQorCWVsc2UgaWYgKGR3aW1fcmVmKHN0YXJ0X25hbWUsIHN0cmxlbiAoc3RhcnRf
+bmFtZSksIHNoYTEsICZyZWFsX3JlZikpCisJCXJlbW90ZSA9ICFwcmVmaXhjbXAocmVhbF9y
+ZWYsICJyZWZzL3JlbW90ZXMvIik7CisJZWxzZQogCQlkaWUoIk5vdCBhIHZhbGlkIG9iamVj
+dCBuYW1lOiAnJXMnLiIsIHN0YXJ0X25hbWUpOwogCiAJaWYgKChjb21taXQgPSBsb29rdXBf
+Y29tbWl0X3JlZmVyZW5jZShzaGExKSkgPT0gTlVMTCkKQEAgLTM1NCw4ICszNzYsMTYgQEAg
+c3RhdGljIHZvaWQgY3JlYXRlX2JyYW5jaChjb25zdCBjaGFyICpuYW1lLCBjb25zdCBjaGFy
+ICpzdGFydF9uYW1lLAogCQlzbnByaW50Zihtc2csIHNpemVvZiBtc2csICJicmFuY2g6IENy
+ZWF0ZWQgZnJvbSAlcyIsCiAJCQkgc3RhcnRfbmFtZSk7CiAKKwkvKiBXaGVuIGJyYW5jaGlu
+ZyBvZmYgYSByZW1vdGUgYnJhbmNoLCBzZXQgdXAgc28gdGhhdCBnaXQtcHVsbAorCSAgIGF1
+dG9tYXRpY2FsbHkgbWVyZ2VzIGZyb20gdGhlcmUuICAqLworCWlmIChyZW1vdGUgJiYgdHJh
+Y2spCisJCXJlZ2lzdGVyX2JyYW5jaF9wdWxsIChuYW1lLCByZWFsX3JlZiArIDEzKTsKKwog
+CWlmICh3cml0ZV9yZWZfc2hhMShsb2NrLCBzaGExLCBtc2cpIDwgMCkKIAkJZGllKCJGYWls
+ZWQgdG8gd3JpdGUgcmVmOiAlcy4iLCBzdHJlcnJvcihlcnJubykpOworCisJaWYgKHJlYWxf
+cmVmKQorCQlmcmVlIChyZWFsX3JlZik7CiB9CiAKIHN0YXRpYyB2b2lkIHJlbmFtZV9icmFu
+Y2goY29uc3QgY2hhciAqb2xkbmFtZSwgY29uc3QgY2hhciAqbmV3bmFtZSwgaW50IGZvcmNl
+KQpAQCAtMzk3LDExICs0MjcsMTIgQEAgaW50IGNtZF9icmFuY2goaW50IGFyZ2MsIGNvbnN0
+IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJaW50IGRlbGV0ZSA9IDAsIGZv
+cmNlX2RlbGV0ZSA9IDAsIGZvcmNlX2NyZWF0ZSA9IDA7CiAJaW50IHJlbmFtZSA9IDAsIGZv
+cmNlX3JlbmFtZSA9IDA7CiAJaW50IHZlcmJvc2UgPSAwLCBhYmJyZXYgPSBERUZBVUxUX0FC
+QlJFViwgZGV0YWNoZWQgPSAwOwotCWludCByZWZsb2cgPSAwOworCWludCByZWZsb2cgPSAw
+LCB0cmFjazsKIAlpbnQga2luZHMgPSBSRUZfTE9DQUxfQlJBTkNIOwogCWludCBpOwogCiAJ
+Z2l0X2NvbmZpZyhnaXRfYnJhbmNoX2NvbmZpZyk7CisJdHJhY2sgPSB0cmFja19yZW1vdGVf
+YnJhbmNoZXM7CiAKIAlmb3IgKGkgPSAxOyBpIDwgYXJnYzsgaSsrKSB7CiAJCWNvbnN0IGNo
+YXIgKmFyZyA9IGFyZ3ZbaV07CkBAIC00MTIsNiArNDQzLDE0IEBAIGludCBjbWRfYnJhbmNo
+KGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQogCQkJ
+aSsrOwogCQkJYnJlYWs7CiAJCX0KKwkJaWYgKCFzdHJjbXAoYXJnLCAiLS10cmFjayIpKSB7
+CisJCQl0cmFjayA9IDE7CisJCQljb250aW51ZTsKKwkJfQorCQlpZiAoIXN0cmNtcChhcmcs
+ICItLW5vLXRyYWNrIikpIHsKKwkJCXRyYWNrID0gMDsKKwkJCWNvbnRpbnVlOworCQl9CiAJ
+CWlmICghc3RyY21wKGFyZywgIi1kIikpIHsKIAkJCWRlbGV0ZSA9IDE7CiAJCQljb250aW51
+ZTsKQEAgLTQ5MCw5ICs1MjksMTEgQEAgaW50IGNtZF9icmFuY2goaW50IGFyZ2MsIGNvbnN0
+IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJZWxzZSBpZiAocmVuYW1lICYm
+IChpID09IGFyZ2MgLSAyKSkKIAkJcmVuYW1lX2JyYW5jaChhcmd2W2ldLCBhcmd2W2kgKyAx
+XSwgZm9yY2VfcmVuYW1lKTsKIAllbHNlIGlmIChpID09IGFyZ2MgLSAxKQotCQljcmVhdGVf
+YnJhbmNoKGFyZ3ZbaV0sIGhlYWQsIGhlYWRfc2hhMSwgZm9yY2VfY3JlYXRlLCByZWZsb2cp
+OworCQljcmVhdGVfYnJhbmNoKGFyZ3ZbaV0sIGhlYWQsIGhlYWRfc2hhMSwgZm9yY2VfY3Jl
+YXRlLCByZWZsb2csCisJCQkgICAgICB0cmFjayk7CiAJZWxzZSBpZiAoaSA9PSBhcmdjIC0g
+MikKLQkJY3JlYXRlX2JyYW5jaChhcmd2W2ldLCBhcmd2W2krMV0sIE5VTEwsIGZvcmNlX2Ny
+ZWF0ZSwgcmVmbG9nKTsKKwkJY3JlYXRlX2JyYW5jaChhcmd2W2ldLCBhcmd2W2krMV0sIE5V
+TEwsIGZvcmNlX2NyZWF0ZSwgcmVmbG9nLAorCQkJICAgICAgdHJhY2spOwogCWVsc2UKIAkJ
+dXNhZ2UoYnVpbHRpbl9icmFuY2hfdXNhZ2UpOwogCmRpZmYgLS1naXQgYS9jYWNoZS5oIGIv
+Y2FjaGUuaAppbmRleCA4YmJjMTQyLi41ODVhOWI0IDEwMDY0NAotLS0gYS9jYWNoZS5oCisr
+KyBiL2NhY2hlLmgKQEAgLTIwNSw2ICsyMDUsNyBAQCBleHRlcm4gaW50IHRydXN0X2V4ZWN1
+dGFibGVfYml0OwogZXh0ZXJuIGludCBhc3N1bWVfdW5jaGFuZ2VkOwogZXh0ZXJuIGludCBw
+cmVmZXJfc3ltbGlua19yZWZzOwogZXh0ZXJuIGludCBsb2dfYWxsX3JlZl91cGRhdGVzOwor
+ZXh0ZXJuIGludCB0cmFja19yZW1vdGVfYnJhbmNoZXM7CiBleHRlcm4gaW50IHdhcm5fYW1i
+aWd1b3VzX3JlZnM7CiBleHRlcm4gaW50IHNoYXJlZF9yZXBvc2l0b3J5OwogZXh0ZXJuIGNv
+bnN0IGNoYXIgKmFwcGx5X2RlZmF1bHRfd2hpdGVzcGFjZTsKZGlmZiAtLWdpdCBhL2NvbmZp
+Zy5jIGIvY29uZmlnLmMKaW5kZXggMGZmNDEzYi4uNDlkZjdiZCAxMDA2NDQKLS0tIGEvY29u
+ZmlnLmMKKysrIGIvY29uZmlnLmMKQEAgLTI5NCw2ICsyOTQsMTEgQEAgaW50IGdpdF9kZWZh
+dWx0X2NvbmZpZyhjb25zdCBjaGFyICp2YXIsIGNvbnN0IGNoYXIgKnZhbHVlKQogCQlyZXR1
+cm4gMDsKIAl9CiAKKwlpZiAoIXN0cmNtcCh2YXIsICJjb3JlLnRyYWNrcmVtb3RlYnJhbmNo
+ZXMiKSkgeworCQl0cmFja19yZW1vdGVfYnJhbmNoZXMgPSBnaXRfY29uZmlnX2Jvb2wodmFy
+LCB2YWx1ZSk7CisJCXJldHVybiAwOworCX0KKwogCWlmICghc3RyY21wKHZhciwgImNvcmUu
+bGVnYWN5aGVhZGVycyIpKSB7CiAJCXVzZV9sZWdhY3lfaGVhZGVycyA9IGdpdF9jb25maWdf
+Ym9vbCh2YXIsIHZhbHVlKTsKIAkJcmV0dXJuIDA7CmRpZmYgLS1naXQgYS9lbnZpcm9ubWVu
+dC5jIGIvZW52aXJvbm1lbnQuYwppbmRleCA1NzBlMzJhLi5lNDQwZDA1IDEwMDY0NAotLS0g
+YS9lbnZpcm9ubWVudC5jCisrKyBiL2Vudmlyb25tZW50LmMKQEAgLTE3LDYgKzE3LDcgQEAg
+aW50IGFzc3VtZV91bmNoYW5nZWQ7CiBpbnQgcHJlZmVyX3N5bWxpbmtfcmVmczsKIGludCBp
+c19iYXJlX3JlcG9zaXRvcnlfY2ZnID0gLTE7IC8qIHVuc3BlY2lmaWVkICovCiBpbnQgbG9n
+X2FsbF9yZWZfdXBkYXRlcyA9IC0xOyAvKiB1bnNwZWNpZmllZCAqLworaW50IHRyYWNrX3Jl
+bW90ZV9icmFuY2hlcyA9IDE7CiBpbnQgd2Fybl9hbWJpZ3VvdXNfcmVmcyA9IDE7CiBpbnQg
+cmVwb3NpdG9yeV9mb3JtYXRfdmVyc2lvbjsKIGNoYXIgKmdpdF9jb21taXRfZW5jb2Rpbmc7
+Cg==
+--------------080203070508010605080408--
