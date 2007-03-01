@@ -1,88 +1,62 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Another memory overrun in http-push.c
-Date: Thu, 1 Mar 2007 19:09:12 +0300
-Message-ID: <20070301160911.GU57456@codelabs.ru>
+From: Bill Lear <rael@zopyra.com>
+Subject: How to effectively undo a part of a commit
+Date: Thu, 1 Mar 2007 10:33:12 -0600
+Message-ID: <17895.72.525085.734138@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 17:09:20 2007
+X-From: git-owner@vger.kernel.org Thu Mar 01 17:33:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMnqK-0001eY-0F
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 17:09:20 +0100
+	id 1HMoDY-0002Xw-6x
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 17:33:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965304AbXCAQJT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 11:09:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965315AbXCAQJT
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 11:09:19 -0500
-Received: from pobox.codelabs.ru ([144.206.177.45]:60409 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965304AbXCAQJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 11:09:18 -0500
-Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HMnqH-000HDb-8z for git@vger.kernel.org; Thu, 01 Mar 2007 19:09:17 +0300
-Content-Disposition: inline
-X-Spam-Status: No, score=-2.1 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_20
+	id S965331AbXCAQdQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 11:33:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965341AbXCAQdQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 11:33:16 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60031 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965331AbXCAQdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 11:33:15 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l21GXEL08818;
+	Thu, 1 Mar 2007 10:33:14 -0600
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41103>
 
-Me again ;))
+A colleague made a change to a file and committed it.  Then, he
+made another change to the file and somehow undid the previous work,
+then he committed the file.  Now, he would like to get the first change
+he made and reapply it.
 
-Spotted another memory overrun in the http-push.c. In principle,
-it is the read-only overrun, but it provokes the coredump on my
-system.  The problem is that strlcpy(dst, src, size) returns the
-length of the 'src' and demands it to be NULL-terminated (see
-'man strlcpy' and http://www.gratisoft.us/todd/papers/strlcpy.html).
-It is not the case for the xml_cdata and possibly other places. So
-I've just replaced strlcpy with memcpy + zero termination all over
-the http-push.c. The patch is below.
+So, the changes look like this:
 
---- http-push.c.orig	Thu Mar  1 18:48:19 2007
-+++ http-push.c	Thu Mar  1 18:55:24 2007
-@@ -1271,7 +1271,9 @@
- 	struct xml_ctx *ctx = (struct xml_ctx *)userData;
- 	free(ctx->cdata);
- 	ctx->cdata = xmalloc(len + 1);
--	strlcpy(ctx->cdata, s, len + 1);
-+	/* NB: 's' is not null-terminated, can not use strlcpy here */
-+	memcpy(ctx->cdata, s, len);
-+	ctx->cdata[len] = '\0';
- }
- 
- static struct remote_lock *lock_remote(const char *path, long timeout)
-@@ -1473,7 +1475,8 @@
- 		return;
- 	path += 8;
- 	obj_hex = xmalloc(strlen(path));
--	strlcpy(obj_hex, path, 3);
-+	/* NB: path is not null-terminated, can not use strlcpy here */
-+	memcpy(obj_hex, path, 2);
- 	strcpy(obj_hex + 2, path + 3);
- 	one_remote_object(obj_hex);
- 	free(obj_hex);
-@@ -2170,7 +2173,8 @@
- 	/* If it's a symref, set the refname; otherwise try for a sha1 */
- 	if (!strncmp((char *)buffer.buffer, "ref: ", 5)) {
- 		*symref = xmalloc(buffer.posn - 5);
--		strlcpy(*symref, (char *)buffer.buffer + 5, buffer.posn - 5);
-+		memcpy(*symref, (char *)buffer.buffer + 5, buffer.posn - 6);
-+		(*symref)[buffer.posn - 6] = '\0';
- 	} else {
- 		get_sha1_hex(buffer.buffer, sha1);
- 	}
+F1 -> delta 1 -> F2
+F2 -> delta 2 -> F3
 
-memcpy(obj_hex, path, 2) is not followed by zero-termination since
-it will be done by the strcpy that is following.
+So, starting with F, he applies delta 1 to get F2.
+Then, he applies delta 2 to get F3.
 
-This cured my git-http-push and let it do all PROPFINDS on the rather
-large repository (175 Mb). Now I have only one SEGV that is happening
-inside the libcurl both in http-push.c and http-fetch.c. Already
-talking to CURL people and trying to write the clear testcase for
-the problem.
--- 
-Eygene
+He says that using cvs he would do something like this:
+
+% cvs update -j F1 -j F2
+
+To apply delta 1 to F3.
+
+We tried using git to get the delta 1 as a patch --- that went fine.
+Then we used git-apply to apply the patch, but it refused, and it was
+obvious that the line numbers of the patch no longer corresponded to
+the line numbers in the file in his working tree.
+
+Is there a way in git to do this, or is this an inherently unworkable
+problem, as for some reason, I suspect?
+
+
+Bill
