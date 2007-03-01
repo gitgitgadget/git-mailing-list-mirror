@@ -1,230 +1,92 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: [PATCH 4/4] Documentation/git-svn.txt: Fix formatting errors
-Date: Thu,  1 Mar 2007 22:41:17 +0300
-Message-ID: <11727781092949-git-send-email-vsu@altlinux.ru>
-References: <1172778077659-git-send-email-vsu@altlinux.ru> <11727780872894-git-send-email-vsu@altlinux.ru> <11727780982140-git-send-email-vsu@altlinux.ru>
-Cc: git@vger.kernel.org, Sergey Vlasov <vsu@altlinux.ru>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 01 20:42:42 2007
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH] Add a testcase for the safety of pull-policy='pull'.
+Date: Thu, 1 Mar 2007 21:10:47 +0100
+Message-ID: <20070301201047.GD4149@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070225220853.31361.7201.stgit@gandelf.nowhere.earth> <b0943d9e0702270625o5a9ef8b4xd0fa5df68e2b805a@mail.gmail.com> <20070227210906.GH4045@nan92-1-81-57-214-146.fbx.proxad.net> <b0943d9e0702271538q32e6a9d5y6ac73adfc4854ab6@mail.gmail.com> <20070228214851.GC4149@nan92-1-81-57-214-146.fbx.proxad.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 21:11:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMrAn-0004Zx-NS
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 20:42:42 +0100
+	id 1HMrcM-0000CR-21
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 21:11:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965539AbXCATmk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 14:42:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965540AbXCATmk
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 14:42:40 -0500
-Received: from master.altlinux.org ([62.118.250.235]:4151 "EHLO
-	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965539AbXCATmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 14:42:39 -0500
-Received: by master.altlinux.org (Postfix, from userid 584)
-	id C2779E34CD; Thu,  1 Mar 2007 22:42:37 +0300 (MSK)
-X-Mailer: git-send-email 1.5.0.2.285.g5347
-In-Reply-To: <11727780982140-git-send-email-vsu@altlinux.ru>
+	id S965552AbXCAUK7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 15:10:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965555AbXCAUK7
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 15:10:59 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:46372 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965552AbXCAUK6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 15:10:58 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id EF2D7398F;
+	Thu,  1 Mar 2007 21:10:56 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 01AD21F08A; Thu,  1 Mar 2007 21:10:47 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20070228214851.GC4149@nan92-1-81-57-214-146.fbx.proxad.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41123>
 
-Fix some formatting problems:
+On Wed, Feb 28, 2007 at 10:48:51PM +0100, Yann Dirson wrote:
+> On Tue, Feb 27, 2007 at 11:38:45PM +0000, Catalin Marinas wrote:
+> > >> BTW, push --undo now requires a status --reset beforehand.
+> > >
+> > >Oh, I had not noticed that.  Why so ?  It's not like if "push --undo"
+> > >would lose any valuable data...
+> > 
+> > I added it so that one cannot remove the local changes by doing a
+> > "push --undo" in error. You would have to explicitly ask for local
+> > changes removing with status --reset.
+> 
+> At least, the message in that case should probably be made better,
+> when undoing to avoid having to resolve a conflict: the message says I
+> cannot undo because I have a conflict, whereas it is the exact reason
+> why I want to undo.
+> Especially, since the conflict markers are now auto-recorded, we could
+> simply allow undo in that case.
 
-  - Some list labels were missing their "::" characters.
-  - Some of continuation paragraphs in labeled lists were incorrectly
-    formatted as literal paragraphs.
-  - In one case "[verse]" was missing before the config key list.
-  - The "Basic Examples" section was incorrectly nested inside the
-    "Config File-Only Options" section.
+Actually, I find the behaviour to be much worse than before: forcing
+the user to run "status --reset" before "push --undo" indeed brings
+the patch that conflicted in a state where it is partly committed.
+That is, if the user is interrupted in her work after resetting, and
+later comes back, it is not unlikely that she forget that an operation
+has not been finished, and eg. run "stg pop", in which case the patch
+would be left in an unwanted state.  Eg, I just caused the problem
+when pushing those patches of mine you integrated: the "editor" patch,
+which is later modified by one of yours, caused a conflict on puch,
+which causes an empty patch to be recorded (no idea why there was no
+conflict markers recorded, BTW).
 
-Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
-Cc: Eric Wong <normalperson@yhbt.net>
----
- Documentation/git-svn.txt |  119 +++++++++++++++++++++++++--------------------
- 1 files changed, 67 insertions(+), 52 deletions(-)
+Indeed, the problem may well be that we should not commit the
+unresolved conflict.  Why it has some value, recording it as if the
+user had refreshed the patch is probably not a good idea at all,
+precisely because we're mid-way in the push, and that the operation
+can be aborted without stgit knowing.
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index cf094ca..06b49b0 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -63,7 +63,7 @@ COMMANDS
- 	transports (eg svn+ssh://), you must include the username in
- 	the URL, eg svn+ssh://foo@svn.bar.com/project
- 
----prefix=<prefix>
-+--prefix=<prefix>::
- 	This allows one to specify a prefix which is prepended
- 	to the names of remotes if trunk/branches/tags are
- 	specified.  The prefix does not automatically include a
-@@ -94,16 +94,16 @@ COMMANDS
- 	This fetches revisions from the SVN parent of the current HEAD
- 	and rebases the current (uncommitted to SVN) work against it.
- 
--	This works similarly to 'svn update' or 'git-pull' except that
--	it preserves linear history with 'git-rebase' instead of
--	'git-merge' for ease of dcommit-ing with git-svn.
-+This works similarly to 'svn update' or 'git-pull' except that
-+it preserves linear history with 'git-rebase' instead of
-+'git-merge' for ease of dcommit-ing with git-svn.
- 
--	This accepts all options that 'git-svn fetch' and 'git-rebase'
--	accepts.  However '--fetch-all' only fetches from the current
--	[svn-remote], and not all [svn-remote] definitions.
-+This accepts all options that 'git-svn fetch' and 'git-rebase'
-+accepts.  However '--fetch-all' only fetches from the current
-+[svn-remote], and not all [svn-remote] definitions.
- 
--	Like 'git-rebase'; this requires that the working tree be clean
--	and have no uncommitted changes.
-+Like 'git-rebase'; this requires that the working tree be clean
-+and have no uncommitted changes.
- 
- 'dcommit'::
- 	Commit each diff from a specified head directly to the SVN
-@@ -117,29 +117,40 @@ COMMANDS
- 	alternative to HEAD.
- 	This is advantageous over 'set-tree' (below) because it produces
- 	cleaner, more linear history.
-+--
- 
- 'log'::
- 	This should make it easy to look up svn log messages when svn
- 	users refer to -r/--revision numbers.
-++
-+The following features from `svn log' are supported:
-++
-+--
-+--revision=<n>[:<n>];;
-+	is supported, non-numeric args are not:
-+	HEAD, NEXT, BASE, PREV, etc ...
-+-v/--verbose;;
-+	it's not completely compatible with the --verbose
-+	output in svn log, but reasonably close.
-+--limit=<n>;;
-+	is NOT the same as --max-count, doesn't count
-+	merged/excluded commits
-+--incremental;;
-+	supported
-+--
-++
-+New features:
-++
-+--
-+--show-commit;;
-+	shows the git commit sha1, as well
-+--oneline;;
-+	our version of --pretty=oneline
-+--
-++
-+Any other arguments are passed directly to `git log'
- 
--	The following features from `svn log' are supported:
--
--	--revision=<n>[:<n>] - is supported, non-numeric args are not:
--	                       HEAD, NEXT, BASE, PREV, etc ...
--	-v/--verbose         - it's not completely compatible with
--	                       the --verbose output in svn log, but
--			       reasonably close.
--	--limit=<n>          - is NOT the same as --max-count,
--	                       doesn't count merged/excluded commits
--	--incremental        - supported
--
--	New features:
--
--	--show-commit        - shows the git commit sha1, as well
--	--oneline            - our version of --pretty=oneline
--
--	Any other arguments are passed directly to `git log'
--
-+--
- 'set-tree'::
- 	You should consider using 'dcommit' instead of this command.
- 	Commit specified commit or tree objects to SVN.  This relies on
-@@ -256,16 +267,18 @@ config key: svn.authorsfile
- 	Make git-svn less verbose.
- 
- --repack[=<n>]::
----repack-flags=<flags>
--	These should help keep disk usage sane for large fetches
--	with many revisions.
-+--repack-flags=<flags>::
-+
-+These should help keep disk usage sane for large fetches
-+with many revisions.
- 
--	--repack takes an optional argument for the number of revisions
--	to fetch before repacking.  This defaults to repacking every
--	1000 commits fetched if no argument is specified.
-+--repack takes an optional argument for the number of revisions
-+to fetch before repacking.  This defaults to repacking every
-+1000 commits fetched if no argument is specified.
- 
--	--repack-flags are passed directly to gitlink:git-repack[1].
-+--repack-flags are passed directly to gitlink:git-repack[1].
- 
-+[verse]
- config key: svn.repack
- config key: svn.repackflags
- 
-@@ -323,28 +336,30 @@ CONFIG FILE-ONLY OPTIONS
- 
- svn.noMetadata::
- svn-remote.<name>.noMetadata::
--	This gets rid of the git-svn-id: lines at the end of every commit.
- 
--	If you lose your .git/svn/git-svn/.rev_db file, git-svn will not
--	be able to rebuild it and you won't be able to fetch again,
--	either.  This is fine for one-shot imports.
-+This gets rid of the git-svn-id: lines at the end of every commit.
-+
-+If you lose your .git/svn/git-svn/.rev_db file, git-svn will not
-+be able to rebuild it and you won't be able to fetch again,
-+either.  This is fine for one-shot imports.
- 
--	The 'git-svn log' command will not work on repositories using
--	this, either.  Using this conflicts with the 'useSvmProps'
--	option for (hopefully) obvious reasons.
-+The 'git-svn log' command will not work on repositories using
-+this, either.  Using this conflicts with the 'useSvmProps'
-+option for (hopefully) obvious reasons.
- 
- svn.useSvmProps::
- svn-remote.<name>.useSvmProps::
--	This allows git-svn to re-map repository URLs and UUIDs from
--	mirrors created using SVN::Mirror (or svk) for metadata.
- 
--	If an SVN revision has a property, "svm:headrev", it is likely
--	that the revision was created by SVN::Mirror (also used by SVK).
--	The property contains a repository UUID and a revision.  We want
--	to make it look like we are mirroring the original URL, so
--	introduce a helper function that returns the original identity
--	URL and UUID, and use it when generating metadata in commit
--	messages.
-+This allows git-svn to re-map repository URLs and UUIDs from
-+mirrors created using SVN::Mirror (or svk) for metadata.
-+
-+If an SVN revision has a property, "svm:headrev", it is likely
-+that the revision was created by SVN::Mirror (also used by SVK).
-+The property contains a repository UUID and a revision.  We want
-+to make it look like we are mirroring the original URL, so
-+introduce a helper function that returns the original identity
-+URL and UUID, and use it when generating metadata in commit
-+messages.
- 
- svn.useSvnsyncProps::
- svn-remote.<name>.useSvnsyncprops::
-@@ -369,8 +384,8 @@ section because they affect the 'git-svn-id:' metadata line.
- 
- --
- 
--Basic Examples
--~~~~~~~~~~~~~~
-+BASIC EXAMPLES
-+--------------
- 
- Tracking and contributing to a the trunk of a Subversion-managed project:
- 
+Maybe with transactions we could manage to make something sensible
+here, but even then, I'm not sure if we would be able to detect that
+the user's actions should abort the push transaction and rollback to
+the previous state.  Sounds really too much DWIM in the end.
+
+Maybe instead we should write such a commit, but not as if it was a
+refresh.  Maybe under some .../patches/name.conflict ref, leaving the
+patch itself untouched, but causing the stack to be blocked until the
+push gets undone (in which case things look simple), or the patch gets
+resolved+refreshed (in which case, both the conflict and its
+resolution can appear in the patchlog, but things should be made so
+"push --undo" would rollback the 2 ones as a whole).
+
+Does that sound sensible ?
+
+Best regards,
 -- 
-1.5.0.2.285.g5347
+Yann.
