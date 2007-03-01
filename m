@@ -1,88 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make git-revert & git-cherry-pick a builtin
-Date: Thu, 1 Mar 2007 23:24:27 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703012318020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0703010526080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzm6xqj0d.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0703012230290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070301215123.GB9254@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git checkout preserve timestamp?
+Date: Thu, 1 Mar 2007 14:25:56 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703011409220.12485@woody.linux-foundation.org>
+References: <17895.18265.710811.536526@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 01 23:24:35 2007
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 23:25:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMthR-0002Dk-3q
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 23:24:33 +0100
+	id 1HMtiS-0002m6-IK
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 23:25:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161022AbXCAWYa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 17:24:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161005AbXCAWYa
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 17:24:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41833 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161027AbXCAWY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 17:24:29 -0500
-Received: (qmail invoked by alias); 01 Mar 2007 22:24:27 -0000
-X-Provags-ID: V01U2FsdGVkX1/qEb5YdmPqyWSsCAGDI4paa8Z4K2+piCCCO9fRlr
-	2Om233Z7NJv2nj
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070301215123.GB9254@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1161020AbXCAWZd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 17:25:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161006AbXCAWZd
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 17:25:33 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:45163 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161020AbXCAWZc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 17:25:32 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l21MPVhB023761
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 1 Mar 2007 14:25:31 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l21MPUVX024464;
+	Thu, 1 Mar 2007 14:25:30 -0800
+In-Reply-To: <17895.18265.710811.536526@lisa.zopyra.com>
+X-Spam-Status: No, hits=-0.439 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41138>
 
-Hi,
 
-On Thu, 1 Mar 2007, Shawn O. Pearce wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > +static int merge_recursive(const char *base_sha1,
-> > > > +		const char *head_sha1, const char *head_name,
-> > > > +		const char *next_sha1, const char *next_name)
-> > > > +{
-> > > > + ...
-> > > > +}
-> > > 
-> > > Somehow I would have expected you to call merge-recursive not spawn, 
-> > > but this is saner ;-).
-> > 
-> > I briefly considered this, until I realized that merge-recursive is no 
-> > builtin yet!
+On Thu, 1 Mar 2007, Bill Lear wrote:
+>
+> I often find myself in branch A, with everything checked in and
+> compiled, wanting to look at something on branch B.  I hop to branch
+> B, look, and come back to branch A.  Unfortunately, when I then do a
+> make, files that differed between A and B will be recompiled, as well as
+> any further dependencies.
 > 
-> Heh, I expected the same thing as Junio when I first read through the 
-> patch.  But then I realized that doing so right now might not be a great 
-> idea; normally if merge-recursive aborts we say "fix up and commit" and 
-> do a few things still in cherry-pick/revert before giving the shell back 
-> to the user.
+> I wonder if it would be possible or desirable to have a config flag
+> that told git to restore the timestamps across branch checkouts in
+> order to prevent this perturbation.
 
-IIRC merge-recursive does not quit early with an exit(), rather returns 
-the exit status from the main() routine. So, it would be a matter of 
-making merge-recursive a builtin, separating the main() method in 
-merge_recursive() and an option parsing cmd_merge_recursive(), and call it 
-from revert.
+I think you're much better off just using multiple repositories instead, 
+if this is something common.
 
-I admit that I was a little too uneasy to do that, what with the object 
-flags and all, but it _should_ work. After all, merge-recursive is 
-_recursive_, so we had to make sure that everything was properly cleaned 
-up after each iteration.
+Messing with timestamps is not going to work in general. It's just going 
+to guarantee you that "make" gets confused in a really bad way, and does 
+not recompile *enough* instead of recompiling *too much*.
 
-> > Speaking of this issue: Would it be conceivable to make the 
-> > standalones into builtins? (This adds a dependency on libcurl to core 
-> > Git programs, but I could live with that... It would make a builtin 
-> > fetch easier, too.)
-> 
-> Please don't make libcurl required.  I don't build with it on Solaris, 
-> because its not there, and I don't need it there.
+Git does make it possible to do your "check the other branch out" thing  
+very easily, in many different ways.
 
-I don't mean to make it required. I mean to link git$X to it. That would 
-mean that even a silly git-rev-parse dynamically links to libcurl, iff 
-curl support is enabled...
+You could create some trivial script that does any of the following 
+(ranging from the trivial to the more exotic):
 
-Ciao,
-Dscho
+ - just create a new repo:
+
+	git clone old new
+	cd new
+	git checkout origin/<branch>
+
+   and there you are. The old timestamps are fine in your old repo, and 
+   you can work (and compile) in the new one, without affectign the old 
+   one at all.
+
+   Use the flags "-n -l -s" to "git clone" to basically make this 
+   instantaneous. For lots of files (eg big repos like the kernel), it's 
+   not going to be as fast as just switching branches, but havign a second 
+   copy of the working tree can be quite powerful.
+
+ - do the same thing with just a tar-ball instead, if you want to
+
+	git archive --format=tar --prefix=new-tree/ <branchname> |
+		(cd .. ; tar xvf -)
+
+   which is really quite fast, if you just want a snapshot.
+
+ - get used to "git show", and just look at individual files.
+
+   This is actually *really* useful at times. You just do
+
+	git show otherbranch:filename
+
+   in one xterm window, and look at the same file in your current branch 
+   in another window. In particular, this should be trivial to do with 
+   scriptable editors (ie GNU emacs), where it should be possible to 
+   basically have a whole "dired mode" for other branches within the 
+   editor, using this. For all I know, the emacs git mode already offers 
+   something like this (I'm not an emacs user)
+
+ - and in the extreme example of that "virtual directory" thing, there was 
+   at least somebody working on a git plugin for FUSE, ie you could 
+   literally just have virtual directories showing *all* your branches.
+
+and I'm sure any of the above are better alternatives than playing games 
+with file timestamps.
+
+		Linus
