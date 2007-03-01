@@ -1,56 +1,53 @@
-From: "Raimund Bauer" <ray@softwarelandschaft.com>
-Subject: RE: gitweb not friendly to firefox?
-Date: Thu, 1 Mar 2007 15:26:43 +0100
-Organization: Softwarelandschaft
-Message-ID: <001001c75c0d$a2840600$0b0aa8c0@abf.local>
-References: <20070301140046.GM57456@codelabs.ru>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: gitweb not friendly to firefox?
+Date: Thu, 1 Mar 2007 17:00:47 +0300
+Message-ID: <20070301140046.GM57456@codelabs.ru>
+References: <989B956029373F45A0B8AF02970818902DA70E@zch01exm26.fsl.freescale.net> <000f01c75c06$555d5e50$0b0aa8c0@abf.local>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: "'Li Yang-r58472'" <LeoLi@freescale.com>, <git@vger.kernel.org>
-To: "'Eygene Ryabinkin'" <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Thu Mar 01 15:56:28 2007
+Content-Type: text/plain; charset=koi8-r
+Cc: 'Li Yang-r58472' <LeoLi@freescale.com>, git@vger.kernel.org
+To: Raimund Bauer <ray@softwarelandschaft.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 16:03:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMmFH-0000Yu-1v
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 15:26:59 +0100
+	id 1HMlqD-0007DV-Qv
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 15:01:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965084AbXCAO0q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 09:26:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965088AbXCAO0q
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 09:26:46 -0500
-Received: from s15211414.onlinehome-server.info ([87.106.16.196]:58127 "EHLO
-	s15211414.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965084AbXCAO0p (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Mar 2007 09:26:45 -0500
-Received: (qmail 23644 invoked from network); 1 Mar 2007 15:31:59 +0100
-Received: from host-62-245-155-90.customer.m-online.net (HELO swl011) (62.245.155.90)
-  by s15211414.onlinehome-server.info with SMTP; 1 Mar 2007 15:31:59 +0100
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.6626
-In-Reply-To: <20070301140046.GM57456@codelabs.ru>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
-Importance: Normal
+	id S1752421AbXCAOAz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 09:00:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752425AbXCAOAz
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 09:00:55 -0500
+Received: from pobox.codelabs.ru ([144.206.177.45]:57948 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752423AbXCAOAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 09:00:55 -0500
+Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HMlpz-000H1G-SO; Thu, 01 Mar 2007 17:00:52 +0300
+Content-Disposition: inline
+In-Reply-To: <000f01c75c06$555d5e50$0b0aa8c0@abf.local>
+X-Spam-Status: No, score=-1.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41098>
 
-> I think that the situation is simpler: <LeoLi@....> is taken 
-> as the XML/HTML tag and it
-> - does not closed anywhere,
-> - has the wrong syntax, since "@" and "." can not live inside 
-> the tag name if memory serves me right.
+> > Line Number 43, Column 38:<tr><td>author</td><td>Li Yang
+> <LeoLi@freescale.com></td></tr> -------------------------------------^
 > 
-> The proper thing is to replace "<" with "&lt;" and ">" with "&gt;".
+> Try to save the output and verify it with some other xml-parser. The
+> "<LeoLi@freescale.com>" seems to be the culprit here, since "@" is no
+> allowed character for a xml-tag, and there maybe is some html-escaping of
+> the email address missing?
 
-Yes ... I should learn to write out what I mean and not only hint at it ;-)
+I think that the situation is simpler: <LeoLi@....> is taken as the
+XML/HTML tag and it
+- does not closed anywhere,
+- has the wrong syntax, since "@" and "." can not live inside the
+tag name if memory serves me right.
 
+The proper thing is to replace "<" with "&lt;" and ">" with "&gt;".
 -- 
-best regards
-
-  Ray
+Eygene
