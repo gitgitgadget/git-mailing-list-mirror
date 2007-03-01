@@ -1,52 +1,62 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add --pretty=changelog
-Date: Thu, 1 Mar 2007 19:40:31 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703011940000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <87y7mhrnrc.fsf@latte.josefsson.org> <Pine.LNX.4.63.0703011912090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070301182710.GA8858@spearce.org>
+Subject: Re: Memory overrun in http-push.c
+Date: Thu, 1 Mar 2007 19:41:35 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703011941020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070228151516.GC57456@codelabs.ru> <20070301120042.GD63606@codelabs.ru>
+ <Pine.LNX.4.63.0703011802130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200703011831.29321.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 01 19:40:56 2007
+Cc: git@vger.kernel.org, Eygene Ryabinkin <rea-git@codelabs.ru>,
+	Junio C Hamano <junkio@cox.net>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 19:41:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMqD0-0003Ix-NA
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 19:40:55 +0100
+	id 1HMqE1-0003kP-KR
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 19:41:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965498AbXCASke (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 13:40:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965499AbXCASkd
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 13:40:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58600 "HELO mail.gmx.net"
+	id S965502AbXCASlk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 13:41:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965504AbXCASlj
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 13:41:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37146 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965498AbXCASkd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 13:40:33 -0500
-Received: (qmail invoked by alias); 01 Mar 2007 18:40:31 -0000
-X-Provags-ID: V01U2FsdGVkX1+ukvUYyjeuAryYuzQcvUJDmpGFYBhUPRp/6ueBUR
-	+M29wgJ1dJlLzd
+	id S965502AbXCASlj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 13:41:39 -0500
+Received: (qmail invoked by alias); 01 Mar 2007 18:41:37 -0000
+X-Provags-ID: V01U2FsdGVkX18YP/1qdN4YI8Nxp7JP6F0PfhMbqxZL3pvjnVZT1L
+	AGpH4u7hnv4PEf
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070301182710.GA8858@spearce.org>
+In-Reply-To: <200703011831.29321.andyparkins@gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41116>
 
 Hi,
 
-On Thu, 1 Mar 2007, Shawn O. Pearce wrote:
+On Thu, 1 Mar 2007, Andy Parkins wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > No, I don't have a public Git tree.
+> On Thursday 2007, March 01, Johannes Schindelin wrote:
 > 
-> Shame on you Dscho!  Even Junio has a public git tree!  ;-)
+> > The problem is: Git does not track files, but rather trees. So, there
+> > is no sane way to add an Id.
+> 
+> > If the file is too big, your colleague can run it herself and send
+> > you the object name (it is a 40 character hex string, but the first 8
+> > or so should really be sufficient).
+> 
+> So when you say "there is no sane way to add an Id", you meant "here is 
+> a perfect string that would act as an Id"?  ;-)
 
-What would I do with a public git tree? It would only attract the svn 
-dogs, who would cvs piss on it...
+Got it.
+
+So, in a very real sense, we have file ids. Even tree ids. And commit ids.
 
 Ciao,
 Dscho
