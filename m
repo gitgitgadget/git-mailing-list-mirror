@@ -1,187 +1,74 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] defaults for where to merge from (take 3, inline)
-Date: Thu, 1 Mar 2007 23:01:14 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703012240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <es450f$d58$1@sea.gmane.org>
- <Pine.LNX.4.63.0703010221000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0702282355i176ad7e5t7b9e417b27e524fb@mail.gmail.com>
- <45E68897.8000607@lu.unisi.ch> <81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com>
- <45E68EDE.2090405@lu.unisi.ch> <81b0412b0703010033w2e1079a3l6ac6e38c59bdefd5@mail.gmail.com>
- <45E69297.8070001@lu.unisi.ch> <81b0412b0703010059w52a33b54n4d3c25ada6b96369@mail.gmail.com>
- <45E69EEE.8070905@lu.unisi.ch> <81b0412b0703010212w5367c8cek51f22e9098f8e22f@mail.gmail.com>
- <7vvehls1h9.fsf@assigned-by-dhcp.cox.net> <45E70041.1030705@lu.unisi.ch>
+Subject: Re: Git checkout preserve timestamp?
+Date: Thu, 1 Mar 2007 23:13:27 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703012304200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <17895.18265.710811.536526@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
-	Julian Phillips <julian@quantumfyre.co.uk>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Paolo Bonzini <paolo.bonzini@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 23:01:21 2007
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 23:13:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMtKz-0008Lg-6e
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 23:01:21 +0100
+	id 1HMtWo-0005hE-TJ
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 23:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030396AbXCAWBR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 17:01:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030399AbXCAWBR
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 17:01:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56744 "HELO mail.gmx.net"
+	id S1030435AbXCAWNc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 17:13:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030447AbXCAWNc
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 17:13:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53731 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030396AbXCAWBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 17:01:16 -0500
-Received: (qmail invoked by alias); 01 Mar 2007 22:01:14 -0000
-X-Provags-ID: V01U2FsdGVkX1+66aJXkY66nUVo4WGe8hcCNupMEKBPUVZxkmL9K7
-	M1zIlEWohOs1TQ
+	id S1030435AbXCAWNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 17:13:31 -0500
+Received: (qmail invoked by alias); 01 Mar 2007 22:13:29 -0000
+X-Provags-ID: V01U2FsdGVkX1+7TmZdPFq7hrq3sNrD/xji9Rf+CGfGH0zAYPWKgO
+	iecYcEkXuqOXm1
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45E70041.1030705@lu.unisi.ch>
+In-Reply-To: <17895.18265.710811.536526@lisa.zopyra.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41136>
 
-Hi,
+Hi Bill,
 
-please don't take my comments as insults or even strict rules. It is 
-purely for your consideration. (I say this because I haven't seen you so 
-often on this list, so you might not know that discussions about patches 
-are sometimes, erm, lively...)
+On Thu, 1 Mar 2007, Bill Lear wrote:
 
-On Thu, 1 Mar 2007, Paolo Bonzini wrote:
+> I often find myself in branch A, with everything checked in and 
+> compiled, wanting to look at something on branch B.
 
-> >  (2) by reviewing the changes to the .config writer.  That
-> >      traditionally has been one of the more fragile parts of the
-> >      system, and I am reluctant to look at it.
-> 
-> Just FYI, this was broken into a separate patch.
-> 
-> > I would just feel better to see a patch like this, which is a
-> > significant improvement to the system, to be properly signed-off
-> > by the submitter.
-> 
-> I hope this is better, I tried to follow the steps in
-> SubmittingPatches properly.  The code is actually the same
-> as take 3.
+I did that, too, until git-show learnt about the nice ":" syntax.
 
-According to SubmittingPatches, this is a cover letter.
+For example, if I want to know what is in branch B, I do
 
-	You often want to add additional explanation about the patch, 
-	other than the commit message itself.  Place such "cover letter" 
-	material between the three dash lines and the diffstat.
+	$ git show B:
 
-So, please put it after the three dashes and the diffstat next time.
+which shows the root directory of the revision "B" (this is in line with 
+<commit>:<pathspec> if you interpret "" as the root path). The subtrees 
+are all identified by trailing slashes. Then you can say
 
-> * git-branch: register where to merge from, when branching off a remote branch.
+	$ git show B:Documentation/Makefile
 
-This is the oneline description, which should have been the Subject of the 
-mail, preferably prefixed by "[PATCH]" to make it obvious that it is not 
-yet another reply in a medium-sized thread, but actually a code 
-contribution. SubmittingPatches is not clear about this: you can write 
-_anything_ in brackets, and it will be stripped from the commit message 
-automatically. In your case, I would have preferred "[PATCH, 3rd 
-version]".
+If you want to know the differences to the file "doc/GNUMakefile" in your 
+current working tree, do
 
-> A rather standard (in 1.5) procedure for branching off a remote archive is:
+	$ git diff B:Documentation/Makefile -- doc/GNUMakefile
 
-Since this will go into the commit message, which is usually shown in the 
-output of "git log", indented, it would be nice to break lines early.
+No need to switch branches.
 
-Again, I think that SubmittingPatches is not totally clear about this: I 
-try to maintain a maximum width of 76 characters (which seems to be the 
-default with pine -- my mail program -- anyway).
+And if you _do_ need to switch branches, why not make a local clone, 
+sharing the object database:
 
-> The behavior is controlled by core.trackremotebranches,
+	$ git clone -l -s . test-directory
 
-I'd make it obvious here that it is on by default -- even if you state 
-that earlier, too.
+This is _very_ fast, since it basically checks out the branches in 
+test-directory/. Right now, you have to go to the test-directory, and 
+switch the branches manually (I think), but talk has been that you may be 
+able to tell git-clone which branch you really want.
 
-[I leave comments on documentation to others, since I cannot write them 
-myself.]
-
-> diff --git a/builtin-branch.c b/builtin-branch.c
-> index d0179b0..20de049 100644
-> --- a/builtin-branch.c
-> +++ b/builtin-branch.c
-> @@ -12,7 +12,7 @@
->  #include "builtin.h"
->  
->  static const char builtin_branch_usage[] =
-> -  "git-branch [-r] (-d | -D) <branchname> | [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [--color | --no-color] [-r | -a] [-v [--abbrev=<length>]]";
-> +  "git-branch [-r] (-d | -D) <branchname> | [--track | --no-track] [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [--color | --no-color] [-r | -a] [-v [--abbrev=<length>]]";
->  
->  #define REF_UNKNOWN_TYPE    0x00
->  #define REF_LOCAL_BRANCH    0x01
-> @@ -308,15 +307,36 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev)
->  	free_ref_list(&ref_list);
->  }
->  
-> +static void register_branch_pull (const char *name, const char *remote_name)
-
-It is not yet remote_name, right? it is branch_name. You extract the 
-remote_name by finding the first slash.
-
-> +{
-> +	char *slash = strchr(remote_name, '/');
-> +
-> +	char *config_key = xmalloc(strlen(name) + 15);
-> +	char *merge_value = xmalloc(strlen(remote_name) + 10);
-> +
-> +	char *remote_value = xstrdup(remote_name);
-
-I'd use "char key[1024], value[1024]" instead, erroring out if one of the 
-buffers are too small. It's not like you have to be memory efficient, and 
-it is easier to read.
-
-> +	remote_value[slash - remote_name] = 0;
-
-You should check if slash == NULL and error out before using it.
-
-> +	sprintf(config_key, "branch.%s.remote", name);
-
-This would be a snprintf(key, sizeof(key), "branch.%s.remote", name); and 
-snprintf(value, sizeof(value), "%.*s", slash - branch_name, branch_name);
-
-> +	git_config_set(config_key, remote_value);
-> +
-> +	sprintf(merge_value, "refs/heads/%s", slash + 1);
-> +	sprintf(config_key, "branch.%s.merge", name);
-> +	git_config_set(config_key, merge_value);
-> +
-> +	free (config_key);
-> +	free (remote_value);
-> +	free (merge_value);
-> +}
-> +
->  static void create_branch(const char *name, const char *start_name,
->  			  unsigned char *start_sha1,
-> -			  int force, int reflog)
-> +			  int force, int reflog, int track)
->  {
->  	struct ref_lock *lock;
->  	struct commit *commit;
->  	unsigned char sha1[20];
-> -	char ref[PATH_MAX], msg[PATH_MAX + 20];
-> -	int forcing = 0;
-> +	char *real_ref = NULL, ref[PATH_MAX], msg[PATH_MAX + 20];
-> +	int forcing = 0, remote = 0;
->  
->  	snprintf(ref, sizeof ref, "refs/heads/%s", name);
->  	if (check_ref_format(ref))
-> @@ -333,7 +353,9 @@ static void create_branch(const char *name, const char *start_name,
->  	if (start_sha1)
->  		/* detached HEAD */
->  		hashcpy(sha1, start_sha1);
-> -	else if (get_sha1(start_name, sha1))
-> +	else if (dwim_ref(start_name, strlen (start_name), sha1, &real_ref))
-> +		remote = !prefixcmp(real_ref, "refs/remotes/");
-> +	else
->  		die("Not a valid object name: '%s'.", start_name);
-
-Yes, that is how I imagined it. The rest of your patch looks perfect to 
-me.
-
-Ciao,
+Hth,
 Dscho
