@@ -1,159 +1,78 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH] add commit --interactive
-Date: Thu, 01 Mar 2007 11:56:21 +0100
-Message-ID: <es6bgl$t3f$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cvsserver: Make always-binary mode a config file option
+Date: Thu, 01 Mar 2007 03:03:11 -0800
+Message-ID: <7vhct5rztc.fsf@assigned-by-dhcp.cox.net>
+References: <7v4ppedj3r.fsf@assigned-by-dhcp.cox.net>
+	<200703010840.54377.andyparkins@gmail.com>
+	<46a038f90703010113o256f19a2qb1c16f4c85e5bd1c@mail.gmail.com>
+	<200703010941.20161.andyparkins@gmail.com>
+	<7vk5y1uwhg.fsf@assigned-by-dhcp.cox.net>
+	<7vr6s9th4f.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------080600000704060909090700"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 11:56:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Martin Langhoff" <martin.langhoff@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 12:03:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMixj-0008Bs-56
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 11:56:39 +0100
+	id 1HMj4S-0002wF-AR
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 12:03:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964959AbXCAK4h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 05:56:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964960AbXCAK4h
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 05:56:37 -0500
-Received: from main.gmane.org ([80.91.229.2]:52010 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964959AbXCAK4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 05:56:36 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HMixY-0003iR-RV
-	for git@vger.kernel.org; Thu, 01 Mar 2007 11:56:28 +0100
-Received: from usilu-ge.ti-edu.ch ([195.176.176.226])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Mar 2007 11:56:28 +0100
-Received: from bonzini by usilu-ge.ti-edu.ch with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Mar 2007 11:56:28 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: usilu-ge.ti-edu.ch
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+	id S964962AbXCALDP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 06:03:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbXCALDP
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 06:03:15 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:50298 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964962AbXCALDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 06:03:13 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070301110312.SFBK24587.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 1 Mar 2007 06:03:12 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id VP3B1W00L1kojtg0000000; Thu, 01 Mar 2007 06:03:12 -0500
+In-Reply-To: <7vr6s9th4f.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 01 Mar 2007 02:04:00 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41083>
 
-This is a multi-part message in MIME format.
---------------080600000704060909090700
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Junio C Hamano <junkio@cox.net> writes:
 
-The --interactive option behaves like "git commit", except that
-"git add --interactive" is executed before committing.  It is
-incompatible with -a and -i.
+> we should make two kinds of configuration.  Classification of
+> paths is property of the project and does not depend on where
+> the user uses the paths from the project:
+> ...
+> while how they are handled can be platform dependent.  On UNIX,
+> you might have this in $HOME/.gitconfig:
+>
+> 	[handler "a/v"]
+>         	pretty = "cmd xine %s" ; nb. there is no 'cmd' yet...
+> 	[handler "text"]
+> 		pretty = "pipe fmt -"
+>
+> while on another system, you might have:
+>
+> 	[handler "a/v"]
+>         	pretty = "cmd mediaplayer %s"
+> 	[handler "text"]
+>                 conv_i = crlf
+>                 conv_o = crlf
 
-Paolo
+Once we separate out the handler section, we can introduce more
+useful variables in it (not the "pretty", whose sole purpose was
+to have fun and serve as a demonstration).  Obvious ones are:
 
---------------080600000704060909090700
-Content-Type: text/plain; x-mac-type="0"; x-mac-creator="0";
- name="git-commit-interactive.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline;
- filename="git-commit-interactive.patch"
+	; takes temporary files old, mine, his and writes the
+        ; result in another
+	merge = "cmd external-merge-command %s %s %s %s"
 
-* git-commit: add a --interactive option.
-    
-The --interactive option behaves like "git commit", except that
-"git add --interactive" is executed before committing.  It is
-incompatible with -a and -i.
-
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 2187eee..3a4d456 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -8,8 +8,9 @@ git-commit - Record changes to the repository
- SYNOPSIS
- --------
- [verse]
--'git-commit' [-a] [-s] [-v] [(-c | -C) <commit> | -F <file> | -m <msg> |
--	    --amend] [--no-verify] [-e] [--author <author>]
-+'git-commit' [-a | --interactive] [-s] [-v]
-+	   [(-c | -C) <commit> | -F <file> | -m <msg> | --amend]
-+	   [--no-verify] [-e] [--author <author>]
- 	   [--] [[-i | -o ]<file>...]
- 
- DESCRIPTION
-@@ -35,6 +36,10 @@ methods:
-    before, and to automatically "rm" files that have been
-    removed from the working tree, and perform the actual commit.
- 
-+5. by using the --interactive switch with the 'commit' command to invoke "add"
-+   in interactive mode, which lets the user decide one by one which files
-+   to add or remove.
-+
- The gitlink:git-status[1] command can be used to obtain a
- summary of what is included by any of the above for the next
- commit by giving the same set of parameters you would give to
-diff --git a/git-commit.sh b/git-commit.sh
-index be3677c..e8ec3b9 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -3,7 +3,7 @@
- # Copyright (c) 2005 Linus Torvalds
- # Copyright (c) 2006 Junio C Hamano
- 
--USAGE='[-a] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit> | --amend] [-u] [-e] [--author <author>] [[-i | -o] <path>...]'
-+USAGE='[-a | --interactive] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit> | --amend] [-u] [-e] [--author <author>] [[-i | -o] <path>...]'
- SUBDIRECTORY_OK=Yes
- . git-sh-setup
- require_work_tree
-@@ -71,6 +71,7 @@ trap '
- 
- all=
- also=
-+interactive=
- only=
- logfile=
- use_commit=
-@@ -131,6 +132,11 @@ do
- 		also=t
- 		shift
- 		;;
-+	--int|--inte|--inter|--intera|--interac|--interact|--interacti|\
-+	--interactiv|--interactive)
-+		interactive=t
-+		shift
-+		;;
- 	-o|--o|--on|--onl|--only)
- 		only=t
- 		shift
-@@ -304,12 +310,14 @@ case "$#,$also,$only,$amend" in
- 	;;
- esac
- unset only
--case "$all,$also,$#" in
--t,t,*)
--	die "Cannot use -a and -i at the same time." ;;
-+case "$all,$interactive,$also,$#" in
-+*t,*t,*)
-+	die "Cannot use -a, --interactive or -i at the same time." ;;
- t,,[1-9]*)
- 	die "Paths with -a does not make sense." ;;
--,t,0)
-+,t,[1-9]*)
-+	die "Paths with --interactive does not make sense." ;;
-+,,t,0)
- 	die "No paths with -i does not make sense." ;;
- esac
- 
-@@ -344,6 +352,9 @@ t,)
- 	) || exit
- 	;;
- ,)
-+	if test "$interactive" = t; then
-+		git add --interactive || exit
-+	fi
- 	case "$#" in
- 	0)
- 		;; # commit as-is
-
---------------080600000704060909090700--
+	; takes two temporary files
+        diff = "cmd external-diff-command %s %s"
