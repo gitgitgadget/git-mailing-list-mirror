@@ -1,60 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Memory overrun in http-push.c
-Date: Thu, 1 Mar 2007 21:43:17 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703012140370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070228151516.GC57456@codelabs.ru> <200703011831.29321.andyparkins@gmail.com>
- <Pine.LNX.4.63.0703011941020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200703011931.32170.andyparkins@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Google Summer of Code 2007
+Date: Thu, 1 Mar 2007 16:34:41 -0500
+Message-ID: <20070301213441.GA9254@spearce.org>
+References: <20070225075917.GC1676@spearce.org> <es5cdl$nhn$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Eygene Ryabinkin <rea-git@codelabs.ru>,
-	Junio C Hamano <junkio@cox.net>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 21:43:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 01 22:34:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMs7Y-0006GZ-0b
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 21:43:24 +0100
+	id 1HMsvI-00040g-W7
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 22:34:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030231AbXCAUnV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 15:43:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030232AbXCAUnV
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 15:43:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48327 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030231AbXCAUnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 15:43:20 -0500
-Received: (qmail invoked by alias); 01 Mar 2007 20:43:18 -0000
-X-Provags-ID: V01U2FsdGVkX18Ptao0fbQPpZuyHMZgpHtuAsoVv/VNW9aJlek4b0
-	QLDN0md9eTR+u1
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200703011931.32170.andyparkins@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1030312AbXCAVep (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 16:34:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030309AbXCAVep
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 16:34:45 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49176 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030306AbXCAVep (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 16:34:45 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HMsv5-0006oc-7v; Thu, 01 Mar 2007 16:34:35 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id ACE5F20FBAE; Thu,  1 Mar 2007 16:34:41 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <es5cdl$nhn$1@sea.gmane.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41126>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> wrote:
+> Shawn O. Pearce wrote:
+> > ShadeHawk and robinr brought up Google's Summer of Code on #git the
+> > other day.  I had also been thinking about seeing if we cannot get
+> > Git involved with SoC, so here goes... ;-)
+> > 
+> > The application deadline for organizations is March 12th.
+> > The earliest that we can submit an application is March 5th, so we
+> > still have time to kick ideas around and see if the community is
+> > interested in participating in SoC.
 
-On Thu, 1 Mar 2007, Andy Parkins wrote:
+I've put together the list of ideas posted to the mailing list on
+the Git Wiki:
 
-> Putting $Id$ $Rev$ in a git managed file would have far more meaning 
-> that it does in a CVS managed file.
+  http://git.or.cz/gitwiki/SoC2007Ideas
 
-No. My point was that you do not even have to have an id. The hash of the 
-object is the id.
+Links to each message on gmane are also included.  The ideas need
+to be extended out some, as many of them might not be recognized
+or understood by someone from outside of the Git community.
 
-This is obviously much better than the mess of CVS/SVN's file ids. There 
-is an option, even, to switch off key expansion, so you can have erroneous 
-ids. That just cannot happen with hashes.
-
-Of course, it does not give you any hint about when this file was current. 
-But there is no way to tell in distributed development _anyway_. You have 
-to look it up, when, and who, changed the file to the current state.
-
-Ciao,
-Dscho
+-- 
+Shawn.
