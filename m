@@ -1,74 +1,88 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git checkout preserve timestamp?
-Date: Thu, 1 Mar 2007 23:13:27 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703012304200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <17895.18265.710811.536526@lisa.zopyra.com>
+Subject: Re: [PATCH] Make git-revert & git-cherry-pick a builtin
+Date: Thu, 1 Mar 2007 23:24:27 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703012318020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0703010526080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vzm6xqj0d.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0703012230290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070301215123.GB9254@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 23:13:38 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 01 23:24:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMtWo-0005hE-TJ
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 23:13:35 +0100
+	id 1HMthR-0002Dk-3q
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 23:24:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030435AbXCAWNc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 17:13:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030447AbXCAWNc
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 17:13:32 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53731 "HELO mail.gmx.net"
+	id S1161022AbXCAWYa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 17:24:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161005AbXCAWYa
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 17:24:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41833 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030435AbXCAWNb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 17:13:31 -0500
-Received: (qmail invoked by alias); 01 Mar 2007 22:13:29 -0000
-X-Provags-ID: V01U2FsdGVkX1+7TmZdPFq7hrq3sNrD/xji9Rf+CGfGH0zAYPWKgO
-	iecYcEkXuqOXm1
+	id S1161027AbXCAWY3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 17:24:29 -0500
+Received: (qmail invoked by alias); 01 Mar 2007 22:24:27 -0000
+X-Provags-ID: V01U2FsdGVkX1/qEb5YdmPqyWSsCAGDI4paa8Z4K2+piCCCO9fRlr
+	2Om233Z7NJv2nj
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <17895.18265.710811.536526@lisa.zopyra.com>
+In-Reply-To: <20070301215123.GB9254@spearce.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41137>
 
-Hi Bill,
+Hi,
 
-On Thu, 1 Mar 2007, Bill Lear wrote:
+On Thu, 1 Mar 2007, Shawn O. Pearce wrote:
 
-> I often find myself in branch A, with everything checked in and 
-> compiled, wanting to look at something on branch B.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > > +static int merge_recursive(const char *base_sha1,
+> > > > +		const char *head_sha1, const char *head_name,
+> > > > +		const char *next_sha1, const char *next_name)
+> > > > +{
+> > > > + ...
+> > > > +}
+> > > 
+> > > Somehow I would have expected you to call merge-recursive not spawn, 
+> > > but this is saner ;-).
+> > 
+> > I briefly considered this, until I realized that merge-recursive is no 
+> > builtin yet!
+> 
+> Heh, I expected the same thing as Junio when I first read through the 
+> patch.  But then I realized that doing so right now might not be a great 
+> idea; normally if merge-recursive aborts we say "fix up and commit" and 
+> do a few things still in cherry-pick/revert before giving the shell back 
+> to the user.
 
-I did that, too, until git-show learnt about the nice ":" syntax.
+IIRC merge-recursive does not quit early with an exit(), rather returns 
+the exit status from the main() routine. So, it would be a matter of 
+making merge-recursive a builtin, separating the main() method in 
+merge_recursive() and an option parsing cmd_merge_recursive(), and call it 
+from revert.
 
-For example, if I want to know what is in branch B, I do
+I admit that I was a little too uneasy to do that, what with the object 
+flags and all, but it _should_ work. After all, merge-recursive is 
+_recursive_, so we had to make sure that everything was properly cleaned 
+up after each iteration.
 
-	$ git show B:
+> > Speaking of this issue: Would it be conceivable to make the 
+> > standalones into builtins? (This adds a dependency on libcurl to core 
+> > Git programs, but I could live with that... It would make a builtin 
+> > fetch easier, too.)
+> 
+> Please don't make libcurl required.  I don't build with it on Solaris, 
+> because its not there, and I don't need it there.
 
-which shows the root directory of the revision "B" (this is in line with 
-<commit>:<pathspec> if you interpret "" as the root path). The subtrees 
-are all identified by trailing slashes. Then you can say
+I don't mean to make it required. I mean to link git$X to it. That would 
+mean that even a silly git-rev-parse dynamically links to libcurl, iff 
+curl support is enabled...
 
-	$ git show B:Documentation/Makefile
-
-If you want to know the differences to the file "doc/GNUMakefile" in your 
-current working tree, do
-
-	$ git diff B:Documentation/Makefile -- doc/GNUMakefile
-
-No need to switch branches.
-
-And if you _do_ need to switch branches, why not make a local clone, 
-sharing the object database:
-
-	$ git clone -l -s . test-directory
-
-This is _very_ fast, since it basically checks out the branches in 
-test-directory/. Right now, you have to go to the test-directory, and 
-switch the branches manually (I think), but talk has been that you may be 
-able to tell git-clone which branch you really want.
-
-Hth,
+Ciao,
 Dscho
