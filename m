@@ -1,74 +1,130 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH/RFC] statplot: a tool for mining repository statistics.
-Date: Thu, 1 Mar 2007 10:58:52 +0100
-Message-ID: <81b0412b0703010158i1a3963f4wabda2f72c1fd0bc4@mail.gmail.com>
-References: <20070301072953.GA8730@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] cvsserver: Make always-binary mode a config file option
+Date: Thu, 01 Mar 2007 02:04:00 -0800
+Message-ID: <7vr6s9th4f.fsf@assigned-by-dhcp.cox.net>
+References: <7v4ppedj3r.fsf@assigned-by-dhcp.cox.net>
+	<200703010840.54377.andyparkins@gmail.com>
+	<46a038f90703010113o256f19a2qb1c16f4c85e5bd1c@mail.gmail.com>
+	<200703010941.20161.andyparkins@gmail.com>
+	<7vk5y1uwhg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 01 10:58:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Martin Langhoff" <martin.langhoff@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 11:05:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMi3u-0006XQ-3i
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 10:58:58 +0100
+	id 1HMiAC-0001FT-A7
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 11:05:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964789AbXCAJ6z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 04:58:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964791AbXCAJ6z
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 04:58:55 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:30956 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964789AbXCAJ6y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 04:58:54 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so327176uga
-        for <git@vger.kernel.org>; Thu, 01 Mar 2007 01:58:53 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IupO11jVb/GusHxc9GXFxJ5Fd86oEQuXLMqgJ+hIpf8wdIs+p3YWFhXcEHAL53tt8N5O6eny7j7iY+ALeandXQ4Hf/l9wdGrgvEUZuI7dA20c7oivN4wPFMdJPtghlHgnGPoeIrUWAuVKAKqBjUWAhOn+k3iB+lL8rTj4Nqm/us=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tigf+v18GR+jewb1yFc0hPfrS9sUzkC/fH2oS4fYdIpT1osFP2qSAhIhS5wVK51edFx5jd/8f+By3a/SIYu2E3kYHghJkzUyeRnPnaA79xpwewrJCgbLtk5bcI0s+cAvn9c36B/wRDAei/Qbvb8roSq5pP8MiCR+VbHnkWE6FVk=
-Received: by 10.78.158.11 with SMTP id g11mr143301hue.1172743132670;
-        Thu, 01 Mar 2007 01:58:52 -0800 (PST)
-Received: by 10.78.139.9 with HTTP; Thu, 1 Mar 2007 01:58:52 -0800 (PST)
-In-Reply-To: <20070301072953.GA8730@spearce.org>
-Content-Disposition: inline
+	id S964813AbXCAKEp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 05:04:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964825AbXCAKE1
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 05:04:27 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40041 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964810AbXCAKEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 05:04:01 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070301100401.PZMI748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 1 Mar 2007 05:04:01 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id VN401W00W1kojtg0000000; Thu, 01 Mar 2007 05:04:01 -0500
+In-Reply-To: <7vk5y1uwhg.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 01 Mar 2007 01:46:51 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41072>
 
-On 3/1/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> This is a simple program to dump statistics about number of objects
-> per day, and how much disk space is used per day.  It can be used
-> to generate data files suitable for plotting repository growth
-> over time.
+Junio C Hamano <junkio@cox.net> writes:
+
+> Andy Parkins <andyparkins@gmail.com> writes:
 >
-> This program avoids displaying information about tags, but it does
-> cover the commits referenced by those tags.  Since annotated tags
-> are a very small portion of most projects I don't consider this to
-> be a major issue at this time.
+>> Erm, yes, I know that.  But who is going to set that switch?
+>> This isn't real CVS where the repository records that
+>> information.  At the moment git does not know whether any
+>> given file is binary or text.
 >
+> What do you think I have been hacking around pathattr stuff
+> today for ;-)? 
 
-Tried it on my repo but the program produced some records with
-all zeros. I.e.:
-2005-11-10 6 222 235 463 1785888
-2005-11-11 3 34 2 39 9729
-2005-11-12 0 0 0 0 0
-2005-11-13 0 0 0 0 0
-2005-11-14 6 227 330 563 716230
-2005-11-15 3 121 209 333 1162839
+A bit more clarification.  Although I won't be hacking on it
+anymore since it is almost my bedtime,...
 
-What could this possibly mean?
+I think the 4 patch series I sent out tonight was fun but
+slightly misdesigned.  I should have made the classification of
+paths and actions on them separate sections.  That is, instead
+of saying:
 
->  This is a toy, but its more than good enough for production, so uh,
->  here it is.  Should it be included in git.git?  Don't know....
->
+	[pathattr "a/v"]
+        	path = "*.mpg"
+                path = "*.mp3"
+                path = "*.jpg"
+		conv_i = none
+                conv_o = none
+	[pathattr "text"]
+        	path = "*" ; all the rest
+                conv_i = crlf
+                conv_o = crlf
 
-Definitely! It's interesting, and fun.
+we should make two kinds of configuration.  Classification of
+paths is property of the project and does not depend on where
+the user uses the paths from the project:
+
+	[pathattr "a/v"]
+        	path = "*.mpg"
+                path = "*.mp3"
+                path = "*.jpg"
+	[pathattr "text"]
+        	path = "*" ; all the rest
+
+while how they are handled can be platform dependent.  On UNIX,
+you might have this in $HOME/.gitconfig:
+
+	[handler "a/v"]
+        	pretty = "cmd xine %s" ; nb. there is no 'cmd' yet...
+	[handler "text"]
+		pretty = "pipe fmt -"
+
+while on another system, you might have:
+
+	[handler "a/v"]
+        	pretty = "cmd mediaplayer %s"
+	[handler "text"]
+                conv_i = crlf
+                conv_o = crlf
+
+One thing to note is that [pathattr "kind"] may need to behave
+like existing .gitignore in that they are read from directories,
+but [handler "kind"] does not have to.
+
+We probably need to expose pathattr_lookup(path) to scripts, and
+cvsserver could use that interface to query.  The interface may
+look like this:
+
+	$ git pathattr --lookup porn.mpg
+        a/v
+        $ git config --get handler.a/v
+	cmd xine %s
+
+and kopts_from_path would look like:
+
+	sub kopts_from_path {
+        	my ($path) = shift;
+                my $kind = `git pathattr $path`;
+		my $conv_o = `git config --get "handler.$kind"`
+
+                if ($conv_o eq 'crlf') {
+			return '-kb';
+		}
+		return '';
+	}
+
+Hmm?
