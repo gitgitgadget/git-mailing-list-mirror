@@ -1,64 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Show binary file size change in diff --stat
-Date: Thu, 1 Mar 2007 02:09:56 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703010208070.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200702281303.11951.andyparkins@gmail.com> <45E5D0D7.5070305@dawes.za.net>
- <Pine.LNX.4.63.0702282042000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45E5F3D4.8000509@dawes.za.net>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH] git-cvsexportcommit: don't cleanup .msg if not yet committed
+ to cvs.
+Date: Thu, 01 Mar 2007 02:17:37 +0100
+Message-ID: <45E629B1.2050805@fs.ei.tum.de>
+References: <20070227181721.GA4244@bogon.ms20.nix> <20070228123539.23809.qmail@d6daeb0e3466c1.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Rogan Dawes <discard@dawes.za.net>
-X-From: git-owner@vger.kernel.org Thu Mar 01 02:10:03 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enigA0D624A238D31ADA5F2701A1"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 01 02:17:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMZo2-0004Bp-MG
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 02:10:03 +0100
+	id 1HMZvc-0007Vs-9b
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 02:17:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932886AbXCABJ7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 20:09:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932887AbXCABJ7
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 20:09:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41767 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932886AbXCABJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 20:09:59 -0500
-Received: (qmail invoked by alias); 01 Mar 2007 01:09:57 -0000
-X-Provags-ID: V01U2FsdGVkX1/bskA0yIjbEpKw4m3oZotK3OhtbfsHZtE9axqvPz
-	HPPg==
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45E5F3D4.8000509@dawes.za.net>
-X-Y-GMX-Trusted: 0
+	id S932889AbXCABRt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 20:17:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932894AbXCABRt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 20:17:49 -0500
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:42122 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932889AbXCABRs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 20:17:48 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 049F4284CA
+	for <git@vger.kernel.org>; Thu,  1 Mar 2007 02:17:47 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id GhWT-9DL-JFK for <git@vger.kernel.org>;
+	Thu,  1 Mar 2007 02:17:46 +0100 (CET)
+Received: from [62.216.208.146] (ppp-62-216-208-146.dynamic.mnet-online.de [62.216.208.146])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 56B27284C7
+	for <git@vger.kernel.org>; Thu,  1 Mar 2007 02:17:46 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+In-Reply-To: <20070228123539.23809.qmail@d6daeb0e3466c1.315fe32.mid.smarden.org>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41027>
 
-Hi,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enigA0D624A238D31ADA5F2701A1
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 28 Feb 2007, Rogan Dawes wrote:
+Gerrit Pape wrote:
+> Unless the -c option is given, and the commit to cvs was successful,
+> .msg shouldn't be deleted to be able to run the command suggested by
+> git-cvsexportcommit.
 
-> Johannes Schindelin wrote:
-> 
-> > On Wed, 28 Feb 2007, Rogan Dawes wrote:
-> > 
-> > > How about showing the size of the changes between the 2 files via 
-> > > the libxdiff binary patch function?
-> > 
-> > I briefly considered this, too. But what would it tell you in the case 
-> > of a jpg? I think it has more disadvantages than advantages...
-> 
-> It would still tell you the extent of the changes. i.e. Did we change 
-> only 10 bytes of the file, or is it a dramatic change?
+thanks, i've been meaning to search for the cause of this.
 
-I was not explicit enough, okay. I was not so worried about the case where 
-only 10 bytes changed. If you insert a single dot in a jpg image, chances 
-are that your binary content will change _a lot_.
+cheers
+  simon
 
-So, no problem deducing from 10 bytes changed that it was a minor change. 
-But you cannot deduce the opposite of a 1MB change!
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
 
-Hth,
-Dscho
+
+--------------enigA0D624A238D31ADA5F2701A1
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFF5im5r5S+dk6z85oRAqF4AKCMjSAytA4TpHo4jLT032W7JTW8iACgnRR/
+cVe1/+wPybhLw1pHQq6YjcQ=
+=gHdW
+-----END PGP SIGNATURE-----
+
+--------------enigA0D624A238D31ADA5F2701A1--
