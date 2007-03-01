@@ -1,70 +1,65 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 2/2] git-show: use pathattr to run "display"
-Date: Thu, 1 Mar 2007 09:04:44 +0000
-Message-ID: <200703010904.48146.andyparkins@gmail.com>
-References: <7vodndxwia.fsf@assigned-by-dhcp.cox.net>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: Memory overrun in http-push.c
+Date: Thu, 1 Mar 2007 12:11:00 +0300
+Message-ID: <20070301091058.GA63606@codelabs.ru>
+References: <20070228151516.GC57456@codelabs.ru> <200702281541.41164.andyparkins@gmail.com> <20070301051323.GG57456@codelabs.ru> <81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 10:05:04 2007
+Content-Type: text/plain; charset=koi8-r
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 10:11:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMhDh-0007qf-Is
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 10:05:01 +0100
+	id 1HMhJh-00023w-W0
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 10:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933153AbXCAJFA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 04:05:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933159AbXCAJFA
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 04:05:00 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:43812 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933153AbXCAJEy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 04:04:54 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so830319nfa
-        for <git@vger.kernel.org>; Thu, 01 Mar 2007 01:04:52 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=fFU7bK4A/+bwvfWEMRF82hEBwiG3YzyM8wiWJZmzEHpw4Yv1fczzhUEBj9UTnws9CGElFzMMxL02yBBsI3QmV26wttW6q7ZCm/GeJvNS4Re1FAGgGQDaZA+by8VHCZeL++13BmKySWkW9VCPhuSEe3x0BJCj3u02wKsyBk4ZDZg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Trko/RZU9ABTm9xWzy1Am1V4fgWwiWOgJGqpNUVvw5YLlaMlNF+yCl9Rmw/DhpIVUzA6XMwdNKgu/OLLaoB+ha1S1tSpDnML/u1aVUGURxMdKlV8KnMn1POxwp6l03xSUzWSiIkOJoCsCQfhf5hiL6J/fS3V8rJzrUHz6D+uD2k=
-Received: by 10.49.93.4 with SMTP id v4mr5250625nfl.1172739892823;
-        Thu, 01 Mar 2007 01:04:52 -0800 (PST)
-Received: from 360run094l ( [194.70.53.227])
-        by mx.google.com with ESMTP id b1sm8380844nfe.2007.03.01.01.04.50;
-        Thu, 01 Mar 2007 01:04:50 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vodndxwia.fsf@assigned-by-dhcp.cox.net>
+	id S933173AbXCAJLM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 04:11:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933174AbXCAJLM
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 04:11:12 -0500
+Received: from pobox.codelabs.ru ([144.206.177.45]:53697 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933173AbXCAJLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 04:11:10 -0500
+Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HMhJa-000Gef-R7; Thu, 01 Mar 2007 12:11:07 +0300
 Content-Disposition: inline
+In-Reply-To: <81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com>
+X-Spam-Status: No, score=-2.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_05
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41057>
 
-On Thursday 2007 March 01 07:18, Junio C Hamano wrote:
-> This is a bit of detour, to demonstrate a possible use of
-> pathattr infrastructure.  With this,
->
-> 	$ git show v1.4.4:t/test4012.png
->
-> would hopefully do what you would expect.
+> >As Johannes pointed out, old habits are still alive. And when some
+> >tool serves me the right way, I am happy with it. To make the patch
+> >with Git I should create repository, hack there, merge it to the
+> 
+> hacking on Git you already have a git repo, don't you?
 
-Is this serious?  This doesn't belong inside git does it?
+No, I was doing FreeBSD port of Git 1.5.0, so it was just the tarball.
+Old habits, you know ;))
 
-What if I don't want to run "display"?  What if I don't want to run anything, 
-and just want png files dumped raw to the terminal?
+> It should have been as simple as:
+> 
+> $ vi http-push.c
+> ...
+> $ git diff
+> 
+> :)
+> 
+> BTW, git diff works outside of a git repositories (well, very recent
+> git should).
 
+Once I will get Git working for me I will get used to it and will
+do many things in Git.
 
-
-Andy
-
+OK, I've forgot to ask in my previous letter: will the issue with
+'+11' instead of '+1' be fixed (or its already fixed)? Or 11 is 10 + 1,
+where 10 it strlen("git") trice plus one just to be sure? ;)))
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Eygene
