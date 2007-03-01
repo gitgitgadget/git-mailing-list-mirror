@@ -1,129 +1,84 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make git-revert & git-cherry-pick a builtin
-Date: Thu, 1 Mar 2007 22:37:20 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703012230290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0703010526080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vzm6xqj0d.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Memory overrun in http-push.c
+Date: Thu, 1 Mar 2007 22:43:00 +0100
+Message-ID: <81b0412b0703011343je4de3b6ra5c1d577da041dcf@mail.gmail.com>
+References: <200703011040.35971.andyparkins@gmail.com>
+	 <20070228151516.GC57456@codelabs.ru>
+	 <200702281541.41164.andyparkins@gmail.com>
+	 <20070301051323.GG57456@codelabs.ru>
+	 <81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com>
+	 <7vslcpux62.fsf@assigned-by-dhcp.cox.net>
+	 <20070301120042.GD63606@codelabs.ru>
+	 <Pine.LNX.4.63.0703011802130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 01 22:37:28 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Eygene Ryabinkin" <rea-git@codelabs.ru>,
+	"Junio C Hamano" <junkio@cox.net>,
+	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 01 22:43:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMsxr-0005JB-40
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 22:37:27 +0100
+	id 1HMt3O-0007zF-TE
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 22:43:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030300AbXCAVhX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 16:37:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030302AbXCAVhX
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 16:37:23 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45871 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030300AbXCAVhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 16:37:22 -0500
-Received: (qmail invoked by alias); 01 Mar 2007 21:37:21 -0000
-X-Provags-ID: V01U2FsdGVkX1/lHdJmZD3lXRBE/cRNJmRvGpQz9uca1LAE02lhCQ
-	Au0sCSzDdkUd2V
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vzm6xqj0d.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1030306AbXCAVnH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 16:43:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030314AbXCAVnH
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 16:43:07 -0500
+Received: from ug-out-1314.google.com ([66.249.92.168]:14732 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030306AbXCAVnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 16:43:05 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so487510uga
+        for <git@vger.kernel.org>; Thu, 01 Mar 2007 13:43:01 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Ik9k+qjDmmamD00O5DZNnBfIfjdyo8mUCb7KQW1sG4hSLCAVhvA0FsPJf8+445qrJfgZOVkRzjuivqaMANF/geOEfS0VM0+fNEuEivmRKrhO2S8AhHtTqBWfcjd3OinGWg2NqYh4AvgxSlCPAQEfJdzyRFsu/GvwlLLb4xqJzrU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AIFfjcIsEuIgZ+GZbEU5ZO6bZgNZiyAPHF8NYq9a61BHSP3CaHYaabBoElBSgSQwvN7m4FOVDuzWGR4/F9ZQHQwql8ofNUM9VgarEeLAocq8NOKuk+TTpWhR2tU4l8m5NXdXBXRaVW9z+D01QLdRsrWzvP7Gepx6umOOY7TzIAo=
+Received: by 10.78.180.18 with SMTP id c18mr203439huf.1172785380662;
+        Thu, 01 Mar 2007 13:43:00 -0800 (PST)
+Received: by 10.78.139.9 with HTTP; Thu, 1 Mar 2007 13:43:00 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.63.0703011802130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41130>
 
-Hi,
+On 3/1/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > By the way, I am missing one thing: the Id keyword in the file. The
+> > problem is that when some user is telling me: there is a bug in the
+> > function a() that is inside the file b.c, then I can ask him to give me
+> > the $Id$ tag of the file and I will have the full information about the
+> > file version.
+>
+> The problem is: Git does not track files, but rather trees. So, there is
+> no sane way to add an Id.
+>
+> But all is not lost! If your colleague sends you the offending file, you
+> can calculate the object name from it by
+>
+>         $ git-hash-object -t blob <filename>
+>
 
-On Thu, 1 Mar 2007, Junio C Hamano wrote:
+Wont work. The ids in question are really strings embedded into object.
+Something like:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  Makefile         |   11 +-
-> >  builtin-revert.c |  406 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  builtin.h        |    2 +
-> >  git-revert.sh    |  197 --------------------------
-> >  git.c            |    2 +
-> >  5 files changed, 414 insertions(+), 204 deletions(-)
-> >  create mode 100644 builtin-revert.c
-> >  delete mode 100755 git-revert.sh
-> 
-> Thanks.  I haven't looked the patch closely but I trust this
-> round is a fairly faithful straight translation from the shell
-> script, which is good.
+  $Id 1.2 user filename.c$
 
-I tried. Of course, it helped tremendously that there were test cases. 
-Nevertheless would I appreciate review from the list...
+They can be found, extracted from the binary and sent to developer
+with a bug report. It's more of a build signature.
+IOW, the colleague in question has to have the source, which,
+I suspect, he wont.
 
-> I have a few gripes on the behaviour of these commands, and it might be 
-> worthwhile to address them in the later rounds.
-
-Yes, that was part of the reason I rewrote these two in C: For example, I 
-would like a little bit better locking (double locking index would be a 
-good start).
-
-Of course, it makes it easier to write cmd_rebase(): I plan to put it into 
-the same file so that the function revert_or_cherry_pick() can easily be 
-reused.
-
-> > +static int merge_recursive(const char *base_sha1,
-> > +		const char *head_sha1, const char *head_name,
-> > +		const char *next_sha1, const char *next_name)
-> > +{
-> > + ...
-> > +}
-> 
-> Somehow I would have expected you to call merge-recursive not spawn, but 
-> this is saner ;-).
-
-I briefly considered this, until I realized that merge-recursive is no 
-builtin yet!
-
-Speaking of this issue: Would it be conceivable to make the standalones 
-into builtins? (This adds a dependency on libcurl to core Git programs, 
-but I could live with that... It would make a builtin fetch easier, too.)
-
-> > +static int revert_or_cherry_pick(int argc, const char **argv)
-> > +{
-> > + ...
-> > +	msg_fd = hold_lock_file_for_update(&msg_file, ".msg", 1);
-> 
-> Although the detailed reason escapes me, we earlier moved the
-> temporary files to $GIT_DIR/.  This .msg in the current
-> directory somehow survived.  It probably is a good idea to move
-> this to $GIT_DIR/ in later rounds.
-
-Okay. I have no idea how much the tests rely on that locations, let alone 
-other scripts. Therefore I think it is sane to do it in a separate step.
-
-> > +		if (action == CHERRY_PICK) {
-> > +			fprintf(stderr, "You may choose to use the following "
-> > +				"when making the commit:\n"
-> > +				"GIT_AUTHOR_NAME=\"%s\"\n",
-> > +				getenv("GIT_AUTHOR_NAME"));
-> > +			fprintf(stderr, "GIT_AUTHOR_EMAIL=\"%s\"\n",
-> > +				getenv("GIT_AUTHOR_EMAIL"));
-> > +			fprintf(stderr, "GIT_AUTHOR_DATE=\"%s\"\n"
-> > +				"export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL "
-> > +				"GIT_AUTHOR_DATE\n",
-> > +				getenv("GIT_AUTHOR_DATE"));
-> > +		}
-> > +		exit(1);
-> > +	}
-> 
-> I am to blame for this crap, but I think this part of code was done 
-> before we invented "git commit -C <commit>".  It would be a lot better 
-> to suggest using that command.
-
-Yeah, let's do that, too.
-
-BTW it took me so long because there was a hard-to-catch bug with the 
-encodings (of course!). In the end I realized that I only forgot to call 
-git_config(git_default_config)... D'oh.
-
-Ciao,
-Dscho
+Of course, it's very simple to embed the HEAD into build and
+tell the tester to send the SHA-1 in case of bug report.
