@@ -1,57 +1,95 @@
-From: Paolo Bonzini <paolo.bonzini@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] defaults for where to merge from (take 3)
-Date: Thu, 01 Mar 2007 11:17:28 +0100
-Message-ID: <45E6A838.60605@lu.unisi.ch>
-References: <es450f$d58$1@sea.gmane.org>	 <Pine.LNX.4.63.0703010221000.22628@wbgn013.biozentrum.uni-wuerzburg.de>	 <81b0412b0702282355i176ad7e5t7b9e417b27e524fb@mail.gmail.com>	 <45E68897.8000607@lu.unisi.ch>	 <81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com>	 <45E68EDE.2090405@lu.unisi.ch>	 <81b0412b0703010033w2e1079a3l6ac6e38c59bdefd5@mail.gmail.com>	 <45E69297.8070001@lu.unisi.ch>	 <81b0412b0703010059w52a33b54n4d3c25ada6b96369@mail.gmail.com>	 <45E69EEE.8070905@lu.unisi.ch> <81b0412b0703010212w5367c8cek51f22e9098f8e22f@mail.gmail.com>
-Reply-To: bonzini@gnu.org
+Date: Thu, 01 Mar 2007 02:27:14 -0800
+Message-ID: <7vvehls1h9.fsf@assigned-by-dhcp.cox.net>
+References: <es450f$d58$1@sea.gmane.org>
+	<Pine.LNX.4.63.0703010221000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0702282355i176ad7e5t7b9e417b27e524fb@mail.gmail.com>
+	<45E68897.8000607@lu.unisi.ch>
+	<81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com>
+	<45E68EDE.2090405@lu.unisi.ch>
+	<81b0412b0703010033w2e1079a3l6ac6e38c59bdefd5@mail.gmail.com>
+	<45E69297.8070001@lu.unisi.ch>
+	<81b0412b0703010059w52a33b54n4d3c25ada6b96369@mail.gmail.com>
+	<45E69EEE.8070905@lu.unisi.ch>
+	<81b0412b0703010212w5367c8cek51f22e9098f8e22f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 11:17:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: bonzini@gnu.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Julian Phillips" <julian@quantumfyre.co.uk>,
+	"Andy Parkins" <andyparkins@gmail.com>, git@vger.kernel.org,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 11:27:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMiM1-0007YT-UU
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 11:17:42 +0100
+	id 1HMiVJ-0003aX-Hj
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 11:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964869AbXCAKRi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 05:17:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964875AbXCAKRi
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 05:17:38 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:52263 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964869AbXCAKRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 05:17:36 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so845897nfa
-        for <git@vger.kernel.org>; Thu, 01 Mar 2007 02:17:35 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=nFiYSemQG0HiRMlf84Bldv3pl907PvyMIfvZdrtIZTRhZ+LNAZiTyTfU2yUzwmTJqUm+Lqd0zZh4MdaWgkigli3M+FhdbFj4DcYBP/XuujNfFIOVkdOPZqA5rsUKs2OvzGDzLvkjjA8RysuoQ/0EG4f6L7fW/SmCtOfHW+Q9BEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=upSsR5sq2o2rEVz5DN3W6ZxbsyFaSXT9qgBSTk1D0CyynEFhN62OSU454hAJJJbqQYJ47WbZejrxc/JzHJgbyi39YfrGZR/9/PDRp4y4uE9NVaFnF0oXKgoUp6wwwyFTqprMGU2LOL4VQiziXObo42zxt9K8E/WgkVs88BGw3K0=
-Received: by 10.49.29.3 with SMTP id g3mr5268110nfj.1172744255462;
-        Thu, 01 Mar 2007 02:17:35 -0800 (PST)
-Received: from ?192.168.76.141? ( [195.176.176.226])
-        by mx.google.com with ESMTP id e8sm6557711muf.2007.03.01.02.17.31;
-        Thu, 01 Mar 2007 02:17:32 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+	id S964875AbXCAK1Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 05:27:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964885AbXCAK1Q
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 05:27:16 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:41290 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964875AbXCAK1P (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 05:27:15 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070301102716.RZCU2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 1 Mar 2007 05:27:16 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id VNTE1W0061kojtg0000000; Thu, 01 Mar 2007 05:27:15 -0500
 In-Reply-To: <81b0412b0703010212w5367c8cek51f22e9098f8e22f@mail.gmail.com>
+	(Alex Riesen's message of "Thu, 1 Mar 2007 11:12:00 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41076>
 
+"Alex Riesen" <raa.lkml@gmail.com> writes:
+
+> On 3/1/07, Paolo Bonzini <paolo.bonzini@gmail.com> wrote:
+>> > Actually, how about making the default configurable _AND_ have
+>> > the --no-track option (for scripting)?
+>>
+>> Fine by me.  And also --track in case you want to try it out.  ;-)
+>
+> Ack. Thanks!
+
+Having both --track and --no-track options is a nice touch to
+give scripts dependable behaviour.  Well done.
 
 >> Patch attached.  --remove-section will go in a separate patch.
-> 
+>
 > Still think it is a very dangerous operation.
 
-Agreed, that's why I put it in git-config.
+I am going to bed now, but I would appreciate if the list could
+help Paolo:
 
-Paolo
+ (1) with styles.  I have only given a cursory look at the
+     patch, but I think people already know what I like and not
+     like.
+
+ (2) by reviewing the changes to the .config writer.  That
+     traditionally has been one of the more fragile parts of the
+     system, and I am reluctant to look at it.
+
+ (3) come up with a version that is easier-to-apply (including
+     sending an in-line patch).
+
+I would just feel better to see a patch like this, which is a
+significant improvement to the system, to be properly signed-off
+by the submitter.
+
+Also it would be nice if you guys can fight it out about the
+default value for 'tracked'.  I do not think _I_ can defend the
+position to create these tracking configurations by default to
+old timers (especially the ones that do not follow the git
+mailing list), as I am not convinced (not yet, anyway).
