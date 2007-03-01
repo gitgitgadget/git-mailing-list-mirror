@@ -1,86 +1,74 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: [PATCH] git-cvsexportcommit: don't cleanup .msg if not yet committed
- to cvs.
-Date: Thu, 01 Mar 2007 02:17:37 +0100
-Message-ID: <45E629B1.2050805@fs.ei.tum.de>
-References: <20070227181721.GA4244@bogon.ms20.nix> <20070228123539.23809.qmail@d6daeb0e3466c1.315fe32.mid.smarden.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Implement core.symlinks to support filesystems without symlinks
+Date: Thu, 1 Mar 2007 02:18:22 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703010213420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11726125012895-git-send-email-johannes.sixt@telecom.at>
+ <200702280013.45598.robin.rosenberg.lists@dewire.com>
+ <Pine.LNX.4.63.0702280101560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <200702282348.51478.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigA0D624A238D31ADA5F2701A1"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 01 02:17:53 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Mar 01 02:18:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMZvc-0007Vs-9b
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 02:17:52 +0100
+	id 1HMZwE-0007jt-2R
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 02:18:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932889AbXCABRt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Feb 2007 20:17:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932894AbXCABRt
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 20:17:49 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:42122 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932889AbXCABRs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Feb 2007 20:17:48 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 049F4284CA
-	for <git@vger.kernel.org>; Thu,  1 Mar 2007 02:17:47 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id GhWT-9DL-JFK for <git@vger.kernel.org>;
-	Thu,  1 Mar 2007 02:17:46 +0100 (CET)
-Received: from [62.216.208.146] (ppp-62-216-208-146.dynamic.mnet-online.de [62.216.208.146])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 56B27284C7
-	for <git@vger.kernel.org>; Thu,  1 Mar 2007 02:17:46 +0100 (CET)
-User-Agent: Mail/News 1.5.0.4 (X11/20060619)
-In-Reply-To: <20070228123539.23809.qmail@d6daeb0e3466c1.315fe32.mid.smarden.org>
-X-Enigmail-Version: 0.94.0.0
+	id S932897AbXCABS0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Feb 2007 20:18:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932896AbXCABS0
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Feb 2007 20:18:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51353 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932897AbXCABSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Feb 2007 20:18:25 -0500
+Received: (qmail invoked by alias); 01 Mar 2007 01:18:24 -0000
+X-Provags-ID: V01U2FsdGVkX1/g0yBwP0Pgizuj/itPaLsxKhaTh1HJOZvUgvLdtx
+	L+qw==
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200702282348.51478.robin.rosenberg.lists@dewire.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41028>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigA0D624A238D31ADA5F2701A1
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Gerrit Pape wrote:
-> Unless the -c option is given, and the commit to cvs was successful,
-> .msg shouldn't be deleted to be able to run the command suggested by
-> git-cvsexportcommit.
+On Wed, 28 Feb 2007, Robin Rosenberg wrote:
 
-thanks, i've been meaning to search for the cause of this.
+> onsdag 28 februari 2007 01:07 skrev Johannes Schindelin:
+>
+> > Your solution would fall short if one of the two files is changed. 
+> > Since they are supposed to be symlinks, the application expects them 
+> > to be identical, and weird sh*t happens.
+>
+> As will it when the file contain something completly different than 
+> expected.
 
-cheers
-  simon
+My points are these:
 
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+- If your project depends on symlinks, and you are on a system that does 
+  not do symlinks, you're screwed. However, you might want to checkout the 
+  project nevertheless.
 
+- If you have a symlink, and your system does not do symlinks, you want 
+  the information where the symlink points to, at least _somewhere_. 
+  Without digging deep into Git internals.
 
---------------enigA0D624A238D31ADA5F2701A1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+- If you have a symlink, and your system ..., you want it to fail _early_.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+The last point is reaaaaally important. There is a reason why we have 
+compiler errors, instead of just blindly compiling it, and if that 
+particular code path is triggered, explode in the face of the user.
 
-iD8DBQFF5im5r5S+dk6z85oRAqF4AKCMjSAytA4TpHo4jLT032W7JTW8iACgnRR/
-cVe1/+wPybhLw1pHQq6YjcQ=
-=gHdW
------END PGP SIGNATURE-----
+So, all I would like to do on top of Johannes' patch is to add a _big_ 
+_fat_ warning whenever Git realizes it has to substitute a file for a 
+link, but I DON'T WANT THE BLOODY FILE TO BE COPIED.
 
---------------enigA0D624A238D31ADA5F2701A1--
+Ciao,
+Dscho
