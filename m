@@ -1,76 +1,59 @@
-From: Xavier Maillard <zedek@gnu.org>
-Subject: [PATCH] Automatically add GIT as a VC backend
-Date: Fri, 02 Mar 2007 00:52:58 +0100
-Message-ID: <28587.1172793178@localhost>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 02 00:55:53 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Updated version, was Re: RFC: Patch editing
+Date: Thu, 01 Mar 2007 15:59:21 -0800
+Message-ID: <7vwt20o6qu.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702252156190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.63.0703020020470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 02 01:00:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMv7o-0002Ny-5w
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 00:55:52 +0100
+	id 1HMvC8-0004Hy-Cb
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 01:00:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161151AbXCAXzt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 18:55:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161261AbXCAXzt
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 18:55:49 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:55115 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161151AbXCAXzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 18:55:48 -0500
-Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 5BFEB71D3
-	for <git@vger.kernel.org>; Fri,  2 Mar 2007 00:55:47 +0100 (CET)
-Received: from localhost (IDENT:1001@localhost [127.0.0.1])
-	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l21Nqwoi028588
-	for <git@vger.kernel.org>; Fri, 2 Mar 2007 00:52:58 +0100
-X-Mailer: MH-E 8.0.3; nmh 1.2; GNU Emacs 23.0.51
+	id S1161289AbXCAX7q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 18:59:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161312AbXCAX72
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 18:59:28 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:59583 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161289AbXCAX7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 18:59:23 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070301235923.FUYC2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 1 Mar 2007 18:59:23 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id VbzM1W00C1kojtg0000000; Thu, 01 Mar 2007 18:59:22 -0500
+In-Reply-To: <Pine.LNX.4.63.0703020020470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Fri, 2 Mar 2007 00:30:03 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41153>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-A small patch with following changes:
+> My plans are _not_ to turn this into git-rebase--interactive.sh, as I 
+> originally planned. Instead, I will try to make git-rebase a builtin, and 
+> add a "-i" flag which does the equivalent of this script.
+>
+> BTW would people be mad at me if I did _not_ imitate git-rebase.sh (call 
+> format-patch and feed that into apply), but rather used cherry-pick 
+> throughout?
 
-Automatically add GIT as a VC backend
+Then that C built-in would not replace git-rebase but only
+"git-rebase -m".
 
-Remove byte-compiler warning with an eval of vc
----
- contrib/emacs/vc-git.el |   13 +++++++------
- 1 files changed, 7 insertions(+), 6 deletions(-)
-
-diff --git a/contrib/emacs/vc-git.el b/contrib/emacs/vc-git.el
-index e456ab9..a2d3932 100644
---- a/contrib/emacs/vc-git.el
-+++ b/contrib/emacs/vc-git.el
-@@ -22,18 +22,19 @@
- ;; This file contains a VC backend for the git version control
- ;; system.
- ;;
--;; To install: put this file on the load-path and add GIT to the list
--;; of supported backends in `vc-handled-backends'; the following line,
--;; placed in your ~/.emacs, will accomplish this:
--;;
--;;     (add-to-list 'vc-handled-backends 'GIT)
-+;; To install: put this file on the load-path.
- ;;
- ;; TODO
- ;;  - changelog generation
- ;;  - working with revisions other than HEAD
- ;;
- 
--(eval-when-compile (require 'cl))
-+(eval-when-compile 
-+  (require 'cl)
-+  (require 'vc))
-+
-+;; Add it automatically
-+(add-to-list 'vc-handled-backends 'GIT)
- 
- (defvar git-commits-coding-system 'utf-8
-   "Default coding system for git commits.")
--- 
-Xavier
+I very often find it easier to deal with a conflicting rebase by
+editing the patch text, so yes I would imagine I would be rather
+upset, but I do not know about others.
