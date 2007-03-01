@@ -1,117 +1,83 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: How to effectively undo a part of a commit
-Date: Thu, 01 Mar 2007 17:51:58 +0100
-Message-ID: <45E704AE.6000904@fs.ei.tum.de>
-References: <17895.72.525085.734138@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Memory overrun in http-push.c
+Date: Thu, 1 Mar 2007 18:11:26 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703011802130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070228151516.GC57456@codelabs.ru>
+ <81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com>
+ <7vslcpux62.fsf@assigned-by-dhcp.cox.net> <200703011040.35971.andyparkins@gmail.com>
+ <20070228151516.GC57456@codelabs.ru> <200702281541.41164.andyparkins@gmail.com>
+ <20070301051323.GG57456@codelabs.ru> <81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com>
+ <7vslcpux62.fsf@assigned-by-dhcp.cox.net> <20070301120042.GD63606@codelabs.ru>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enigAEEA66D0646720F85840E682"
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Mar 01 17:52:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Thu Mar 01 18:12:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HMoWI-0002bz-Cm
-	for gcvg-git@gmane.org; Thu, 01 Mar 2007 17:52:42 +0100
+	id 1HMooZ-0000af-9g
+	for gcvg-git@gmane.org; Thu, 01 Mar 2007 18:11:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965384AbXCAQwJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 1 Mar 2007 11:52:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965382AbXCAQwI
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 11:52:08 -0500
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:36092 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965389AbXCAQwG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Mar 2007 11:52:06 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 4819D2856D;
-	Thu,  1 Mar 2007 17:52:02 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id DsrLUhiM+EUi; Thu,  1 Mar 2007 17:52:02 +0100 (CET)
-Received: from [62.216.208.146] (ppp-62-216-208-146.dynamic.mnet-online.de [62.216.208.146])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id E2B402856C;
-	Thu,  1 Mar 2007 17:52:01 +0100 (CET)
-User-Agent: Mail/News 1.5.0.4 (X11/20060619)
-In-Reply-To: <17895.72.525085.734138@lisa.zopyra.com>
-X-Enigmail-Version: 0.94.0.0
+	id S965414AbXCARLe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 1 Mar 2007 12:11:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965413AbXCARLe
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Mar 2007 12:11:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50725 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965411AbXCARLd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Mar 2007 12:11:33 -0500
+Received: (qmail invoked by alias); 01 Mar 2007 17:11:29 -0000
+X-Provags-ID: V01U2FsdGVkX1/mRmEX1G7mwkeVZSCT9LBESAgo2LgjA04lEslExL
+	A3hgSFTXqTMS5X
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070301120042.GD63606@codelabs.ru>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41106>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigAEEA66D0646720F85840E682
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Bill Lear wrote:
-> So, starting with F, he applies delta 1 to get F2.
-> Then, he applies delta 2 to get F3.
+On Thu, 1 Mar 2007, Eygene Ryabinkin wrote:
 
-And delta 2 reverts delta 1 again, right?
+> By the way, I am missing one thing: the Id keyword in the file. The 
+> problem is that when some user is telling me: there is a bug in the 
+> function a() that is inside the file b.c, then I can ask him to give me 
+> the $Id$ tag of the file and I will have the full information about the 
+> file version.
 
-> He says that using cvs he would do something like this:
->=20
-> % cvs update -j F1 -j F2
->=20
-> To apply delta 1 to F3.
+The problem is: Git does not track files, but rather trees. So, there is 
+no sane way to add an Id.
 
-try git-cherry-pick -n F2.
+But all is not lost! If your colleague sends you the offending file, you 
+can calculate the object name from it by
 
-> We tried using git to get the delta 1 as a patch --- that went fine.
-> Then we used git-apply to apply the patch, but it refused, and it was
-> obvious that the line numbers of the patch no longer corresponded to
-> the line numbers in the file in his working tree.
+	$ git-hash-object -t blob <filename>
 
-patches don't care about line numbers (at least not so much).  you probab=
-ly have overlapping changes, so apply can't work without generating a col=
-lision.  try git-apply --reject and then merge the .rej file.
+If the file is too big, your colleague can run it herself and send you the 
+object name (it is a 40 character hex string, but the first 8 or so should 
+really be sufficient).
 
-> Is there a way in git to do this, or is this an inherently unworkable
-> problem, as for some reason, I suspect?
+Then you can run
 
-there are plenty of ways.  i think you could also do something like this =
-(untested):
+	$ git log -p HEAD <filename>
 
-git checkout F3
-git branch fixF3 F1
-git reset --soft fixF3
-git commit
-git checkout F2
-git cherry-pick fixF3
+in your repository, and search for "index <object name>". You will find 
+the commit which changed the file _from_ the state your colleague is 
+seeing.
 
-which first transplants F3 back on F1, removing the delta which reverted =
-F2.  then, having a nice patch now, applies it onto F2.
+The idea is that the diff shows not only the names, but also a line "index 
+<abbrev1>..<abbrev2>", where the abbrev's are the abbreviated object names 
+of the old and new versions of that file.
 
-cheers
-  simon
+BTW we had a similar discussion a while ago, which made me even write a 
+patch for git-name-rev to name objects, too, but it was rejected as the 
+workflow I outlined above is already sufficient for your use case.
 
---=20
-Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
-Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
-      Campaign     \ /
-Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
-Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
-
-
---------------enigAEEA66D0646720F85840E682
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.3 (DragonFly)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFF5wSxr5S+dk6z85oRAtbaAJ0bFDI9BCp3t9Zus7tXF6cTMdxMNwCgrTvD
-BAQ9m87wP3Uxtyhmith+/aw=
-=HAt2
------END PGP SIGNATURE-----
-
---------------enigAEEA66D0646720F85840E682--
+Hth,
+Dscho
