@@ -1,88 +1,74 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add --pretty=changelog
-Date: Fri, 2 Mar 2007 15:09:49 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703021419520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: [PATCH] print_wrapped_text: fix output for negative indent
+Date: Fri, 2 Mar 2007 15:28:00 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703021526210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <87y7mhrnrc.fsf@latte.josefsson.org> <Pine.LNX.4.63.0703011912090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <87hct4roqa.fsf@latte.josefsson.org>
+ <Pine.LNX.4.63.0702280258200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <alpine.LRH.0.82.0702272147590.29426@xanadu.home>
+ <Pine.LNX.4.63.0702281343200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vslcoghcd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, junkio@cox.net
-To: Simon Josefsson <simon@josefsson.org>
-X-From: git-owner@vger.kernel.org Fri Mar 02 15:09:57 2007
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Simon Josefsson <simon@josefsson.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 02 15:28:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HN8SK-0005nP-Fb
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 15:09:56 +0100
+	id 1HN8jw-0005Kn-Vj
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 15:28:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992465AbXCBOJx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 09:09:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992466AbXCBOJw
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 09:09:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45310 "HELO mail.gmx.net"
+	id S2992485AbXCBO2F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 09:28:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992484AbXCBO2F
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 09:28:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33588 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2992465AbXCBOJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 09:09:52 -0500
-Received: (qmail invoked by alias); 02 Mar 2007 14:09:50 -0000
-X-Provags-ID: V01U2FsdGVkX18GvuhBZQAGHjmmqQ+pkquoMSmCLeMp83T5pFsCoe
-	3wE7cZp69N4WJI
+	id S2992485AbXCBO2D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 09:28:03 -0500
+Received: (qmail invoked by alias); 02 Mar 2007 14:28:01 -0000
+X-Provags-ID: V01U2FsdGVkX1/hneRDxDfhtZVaHKLKPAYyVk9Ph0d7UrNarpvkmJ
+	Jg5v+McgWgi1ka
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <87hct4roqa.fsf@latte.josefsson.org>
+In-Reply-To: <7vslcoghcd.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41209>
 
-Hi,
 
-On Fri, 2 Mar 2007, Simon Josefsson wrote:
+When providing a negative indent, it means that -indent columns were
+already printed. Fix a bug where the function ate the first character
+if already the first word did not fit into the first line.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > I saw that in your mail already, and I find the style cvs2cl outputs 
-> > ugly.
-> 
-> Well, if you don't follow the GNU ChangeLog format, then please call it 
-> something else.  The format is well documented.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+	On Fri, 2 Mar 2007, Junio C Hamano wrote:
 
-Well, it is still ugly. I mean, really ugly. Like in "it's easier to 
-script, therefore I don't fix it" ugly.
+	> Is it just me or is your word wrapper misbehaving?
 
-And yes, the format is well documented. For example, it includes the 
-function names in brackets, which both my patch and cvs2cl do not do. 
-These function names actually got me interested, and I would have tried to 
-generate them automatically, too.
+	It was. It separated printing of the file name and of the comma. 
+	This is fixed with my next reply, but it triggered this small
+	bug.
 
-> > No charset problem. In Git commit messages, the first line is special. 
-> > It is the so called "oneline" description. If you wrap the oneline, 
-> > it's your fault, not Git's.
-> 
-> But I want more than the oneline comment in the ChangeLog?  There is no 
-> size limit on ChangeLog messages, and having as much information as 
-> possible available is better.
+ utf8.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-With Git, it is encouraged that you write useful commit messages. There 
-are commits where the patch consists of just a line change, and the 
-message of a really long text. For a good example, look at commit 
-v1.4.0-rc1~50: the commit message has 49 lines of text, but the patch only 
-changes 5 lines.
-
-If you are serious about "having as much information", include the 
-_complete_ commit message.
-
-> Anyway, for now I'll be settling with the (just announced) git2cl since 
-> it gives me the most flexibility.
-
-In hindsight I agree with Junio that a script is better for this purpose. 
-At least I tricked you into writing it yourself.
-
-> If/when git core includes your patch later on, and some of my pet 
-> problems are fixed, and my distribution catches up, I'll be back.
-
-FWIW I am now opposed to inclusion of --pretty=gnucl.
-
-Ciao,
-Dscho
+diff --git a/utf8.c b/utf8.c
+index ea23a6e..9e1a6d4 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -268,7 +268,7 @@ int print_wrapped_text(const char *text, int indent, int indent2, int width)
+ 			}
+ 			else {
+ 				putchar('\n');
+-				text = bol = space + 1;
++				text = bol = space + isspace(*space);
+ 				space = NULL;
+ 				w = indent = indent2;
+ 			}
+-- 
+1.5.0.2.780.g57e5-dirty
