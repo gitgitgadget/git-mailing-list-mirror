@@ -1,74 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git checkout preserve timestamp?
-Date: Fri, 2 Mar 2007 20:21:17 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703022018190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <17895.18265.710811.536526@lisa.zopyra.com>
- <20070302091426.GA2605@diana.vm.bytemark.co.uk> <17896.9631.316001.869157@lisa.zopyra.com>
- <Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070302162136.GA9593@diana.vm.bytemark.co.uk>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Fix typo on variable name $newref should be $newrev in sample update hook
+Date: Fri, 2 Mar 2007 19:25:05 +0000
+Message-ID: <200703021925.09441.andyparkins@gmail.com>
+References: <200703021027.00203.andyparkins@gmail.com> <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-737627751-1172863277=:22628"
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 20:21:25 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 02 20:28:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNDJl-0006Yr-DD
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 20:21:25 +0100
+	id 1HNDQC-0000tD-SK
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 20:28:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965145AbXCBTVW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 14:21:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965146AbXCBTVW
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 14:21:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53329 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965145AbXCBTVW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 14:21:22 -0500
-Received: (qmail invoked by alias); 02 Mar 2007 19:21:20 -0000
-X-Provags-ID: V01U2FsdGVkX1/R8YVAzxbR+V3YsdYJ9M4OaeNSRQxl+4m7bJ1/gq
-	L69Y3BdYIt650G
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070302162136.GA9593@diana.vm.bytemark.co.uk>
-X-Y-GMX-Trusted: 0
+	id S964838AbXCBT2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 14:28:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965193AbXCBT2A
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 14:28:00 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:36638 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964838AbXCBT17 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 14:27:59 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so792838uga
+        for <git@vger.kernel.org>; Fri, 02 Mar 2007 11:27:57 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Iz7+kr+CU+qYXyj+CCrddPQZ0pFtwBsXNthMT0WMwc0wR4eBUu38a206V8p2SYZYgQElXMYQQMwxgA5OQIvPmHiQEwLqfb6mCjOEPhU+cYmrtOEV485v/UIcsosrHOse7eCclxjg3q1qUanYaeg+TNvbLdTwlkRayBj8QW+AwEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bolJy90ru0IsIlLGuKAotyDXcjtcNCHrZmRAmCSFPGxSqN69YwcaEXxWIsuXWW5hAoYiCmDlaOv+Fql3rm7uHT29GdFfqBqSIetP9KdpFaEbZonlBgcHptHWvvTWLkPbhVWU1F7mmrTNpTO8QaO0CEcv0GlROtT2Uv1YTAJaO9g=
+Received: by 10.66.250.17 with SMTP id x17mr3781812ugh.1172863677900;
+        Fri, 02 Mar 2007 11:27:57 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id 27sm3411413ugp.2007.03.02.11.27.55;
+        Fri, 02 Mar 2007 11:27:55 -0800 (PST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41238>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Friday 2007, March 02, Linus Torvalds wrote:
 
----1148973799-737627751-1172863277=:22628
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+> Well, it should just avoid git-rev-parse these days and do
+>
+> 	git rev-list --pretty $newrev --not --all
 
-Hi,
+Ah - I didn't know that was possible.  I thought that the --not switch 
+would invert all the arguments not just those following it.
 
-On Fri, 2 Mar 2007, Karl Hasselström wrote:
+Patch to follow.
 
-> However, given that your file timestamps have been bumped (without file 
-> content changes),
 
-There were changes. Only that they have been taken back, but that is 
-_another_ change.
-
-> it's a performance bug in your make tool if this causes it to needlessly 
-> rebuild half the known universe. (Fixing the bug by using content hashes 
-> to detect changes may or may not be a good trade-off, depending on your 
-> workflow.)
-
-Getting dependencies right is sometimes not very easy. I participate in 
-projects which have _seriously_ broken dependencies. In these cases, I do 
-a quick "touch source.c" to force a recompilation.
-
-You'd break this workaround.
-
-Ciao,
-Dscho
-
-P.S.: yes, I know I could possibly find the object file and remove that, 
-too. But finding the source is often easier.
-
----1148973799-737627751-1172863277=:22628--
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
