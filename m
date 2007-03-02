@@ -1,86 +1,53 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] Quick description of possible gitattributes system
-Date: Fri, 2 Mar 2007 15:35:16 -0500
-Message-ID: <8CAB85E5-A98E-4A25-9CC2-3E59106E655C@silverinsanity.com>
-References: <200703011206.47213.andyparkins@gmail.com> <200703021200.35069.andyparkins@gmail.com> <E246B7BC-9C82-4F4E-93F0-60B3F1CA54F1@silverinsanity.com> <200703021935.58992.andyparkins@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Google Summer of Code 2007
+Date: Fri, 2 Mar 2007 21:36:54 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703022134460.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070225075917.GC1676@spearce.org> <200702280842.08279.andyparkins@gmail.com>
+ <vpq4pp6r6vw.fsf@olympe.imag.fr>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 21:35:30 2007
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Mar 02 21:37:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNETO-0004fj-GC
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 21:35:26 +0100
+	id 1HNEUt-0005LG-Iz
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 21:36:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965583AbXCBUfW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 15:35:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965584AbXCBUfW
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 15:35:22 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:54936 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965583AbXCBUfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 15:35:20 -0500
-Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id B3A511FFC142;
-	Fri,  2 Mar 2007 20:35:18 +0000 (UTC)
-In-Reply-To: <200703021935.58992.andyparkins@gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S933364AbXCBUg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 15:36:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932961AbXCBUg4
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 15:36:56 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52196 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933364AbXCBUg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 15:36:56 -0500
+Received: (qmail invoked by alias); 02 Mar 2007 20:36:54 -0000
+X-Provags-ID: V01U2FsdGVkX1+9XJUjfUS9rNxbMHIH8sdfXeW6hoF8vDOccpYJ5n
+	S4IPW1UnWXq6wf
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <vpq4pp6r6vw.fsf@olympe.imag.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41244>
 
+Hi,
 
-On Mar 2, 2007, at 2:35 PM, Andy Parkins wrote:
+On Wed, 28 Feb 2007, Matthieu Moy wrote:
 
->> .git/config:
->> [attribute "image"]
->>     show = ...
->>     merge = ...
->>
->> With the ability to have additional "path =" entries for *local*
->> overrides/additions.  Storing the handler information in
->
-> That's almost exactly it; but it makes the assumption that each
-> attribute will have one unique handler.  Separating them means that
-> multiple attributes can use one handler (or set of handlers).
+> It seems the windows port somewhat has the status "we want it but I'm 
+> not going to do it" for most git contributors.
 
-That's why I suggested keeping the handler section, but not tying  
-handlers to attributes in the attribute section.  I think it follows  
-the principle of least surprise to be able to do as I demonstrated  
-above, but allow reuse as I described originally (handler option in  
-the attribute section).  My major concern is how do you tell what  
-order handlers are run in for a given file if the handlers specify  
-the attributes rather than the other way around?  And why make the  
-user do things like:
+That is not really fair, is it? _Most_ git contributors have helped 
+Windows users in one way or another (why don't we have a symlink()ed HEAD 
+anymore, hmm?).
 
-[handler "text"]
-    attribute=text
-    ...
+However, I do have the impression that the percentage of people in 
+complain-only mode is way lower in the non-Windows camp.
 
-Instead of:
-
-[attribute "text"]
-    ...
-
-(The handler section could be called "mangle", "blah", or "why-do-I- 
-have-to-name-this", and the point would be the same.)  If you want to  
-run the same handlers/filters/whatever for multiple types, create a  
-handler section and reference it from all of those types or give all  
-the files a new attribute that explains why you'd want to handle them  
-identically and put the options on that attribute instead.
-
-The attribute is the important thing here, not the handlers, so they  
-should be primary, not secondary.  And that's my major point that I'm  
-trying to get around to I guess.  I don't care about naming handler  
-sections, searching through the file to find their order, or anything  
-other than *what git is doing to my files*.  The files (content,  
-actually) are king.
-
-~~ Brian
+Ciao,
+Dscho
