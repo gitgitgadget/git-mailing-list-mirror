@@ -1,81 +1,143 @@
-From: Paolo Bonzini <paolo.bonzini@gmail.com>
-Subject: Re: [PATCH] defaults for where to merge from (take 3, inline)
-Date: Fri, 02 Mar 2007 09:10:44 +0100
-Message-ID: <45E7DC04.5010701@lu.unisi.ch>
-References: <es450f$d58$1@sea.gmane.org> <Pine.LNX.4.63.0703010221000.22628@wbgn013.biozentrum.uni-wuerzburg.de> <81b0412b0702282355i176ad7e5t7b9e417b27e524fb@mail.gmail.com> <45E68897.8000607@lu.unisi.ch> <81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com> <45E68EDE.2090405@lu.unisi.ch> <81b0412b0703010033w2e1079a3l6ac6e38c59bdefd5@mail.gmail.com> <45E69297.8070001@lu.unisi.ch> <81b0412b0703010059w52a33b54n4d3c25ada6b96369@mail.gmail.com> <45E69EEE.8070905@lu.unisi.ch> <81b0412b0703010212w5367c8cek51f22e9098f8e22f@mail.gmail.com> <7vvehls1h9.fsf@assigned-by-dhcp.cox.net> <45E70041.1030705@lu.unisi.ch> <Pine.LNX.4.63.0703012240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: 2.6.21-rc1: known regressions (part 2)
+Date: Fri, 2 Mar 2007 09:04:41 +0100
+Message-ID: <20070302080441.GA12785@elte.hu>
+References: <20070227102109.GG6745@elf.ucw.cz>
+	<20070227103021.GA2250@kernel.dk> <20070227103407.GA17819@elte.hu>
+	<20070227105922.GD2250@kernel.dk> <20070227111515.GA4271@kernel.dk>
+	<20070301093450.GA8508@elte.hu> <20070301104117.GA22788@elte.hu>
+	<20070301145204.GA25304@elte.hu>
+	<Pine.LNX.4.64.0703011536450.12485@woody.linux-foundation.org>
+	<20070302072100.GB30634@elte.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 02 09:10:57 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Cc: Daniel Walker <dwalker@mvista.com>,
+   Michal Piotrowski <michal.k.k.piotrowski@gmail.com>,
+   linux-pm@lists.osdl.org,
+   Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+   Adrian Bunk <bunk@stusta.de>, Pavel Machek <pavel@ucw.cz>,
+   Jens Axboe <jens.axboe@oracle.com>,
+   "Michael S. Tsirkin" <mst@mellanox.co.il>,
+   Thomas Gleixner <tglx@linutronix.de>,
+   Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: linux-pm-bounces@lists.osdl.org Fri Mar 02 09:12:56 2007
+Return-path: <linux-pm-bounces@lists.osdl.org>
+Envelope-to: gll-linux-pm@gmane.org
+Received: from smtp.osdl.org ([65.172.181.24])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HN2qt-0004RT-JM
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 09:10:55 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932770AbXCBIKw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 03:10:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932776AbXCBIKw
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 03:10:52 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:58946 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932770AbXCBIKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 03:10:51 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1199689nfa
-        for <git@vger.kernel.org>; Fri, 02 Mar 2007 00:10:49 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=FlOYVcEax8oMAGmWlTVTF1pUCq5Sh9EfVz3ZtQFo7SxEhAKjjC4d9lmdPvgIV16DC86xx2b5XCXDz8JxVq4C7UkGaPAcReRiy3i69F9c15fEAWjK0fAYjv+bEqRHKP/wVvcEX/ecJRvykEAA/NyGDvplZLSio6dufdTTm1a5AY0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=AlqWVlts/7rJiBgXQ2WDKVbtJ3zHVJ3kXXS73j92e2kZi5sIUBAHnmez9rqvddKBVc/dC0Sx18+gLaKQvNCEmlpuRXZeWRU2XAJ+5hfMGhrQD9YeMh2NG0p5zCqlcwL1xsZruGjQhByXrdVH001WQ0U/AVnCmxB7ljHHak1jkiw=
-Received: by 10.49.27.11 with SMTP id e11mr7165506nfj.1172823049710;
-        Fri, 02 Mar 2007 00:10:49 -0800 (PST)
-Received: from ?192.168.68.211? ( [195.176.178.209])
-        by mx.google.com with ESMTP id y6sm4081036mug.2007.03.02.00.10.47;
-        Fri, 02 Mar 2007 00:10:48 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
-In-Reply-To: <Pine.LNX.4.63.0703012240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41163>
+	id 1HN2sl-0005R4-6e
+	for gll-linux-pm@gmane.org; Fri, 02 Mar 2007 09:12:51 +0100
+Received: from fire-2.osdl.org (localhost [127.0.0.1])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l228CdAb010347;
+	Fri, 2 Mar 2007 00:12:40 -0800
+Received: from mx2.mail.elte.hu (mx2.mail.elte.hu [157.181.151.9])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l228CZAb010340
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
+	for <linux-pm@lists.osdl.org>; Fri, 2 Mar 2007 00:12:37 -0800
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim) id 1HN2s7-0002Jv-Rz
+	from <mingo@elte.hu>; Fri, 02 Mar 2007 09:12:26 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 440183E2141; Fri,  2 Mar 2007 09:11:38 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20070302072100.GB30634@elte.hu>
+User-Agent: Mutt/1.4.2.2i
+Received-SPF: pass (localhost is always allowed.)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -2.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no
+	SpamAssassin version=3.1.7
+	-2.0 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
+X-Spam-Status: No, hits=-2.478 required=5 tests=AWL,OSDL_HEADER_LISTID_KNOWN,OSDL_HEADER_SPF_PASS,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-BeenThere: linux-pm@lists.osdl.org
+X-Mailman-Version: 2.1.8
+Precedence: list
+List-Id: Linux power management <linux-pm.lists.osdl.org>
+List-Unsubscribe: <https://lists.osdl.org/mailman/listinfo/linux-pm>,
+	<mailto:linux-pm-request@lists.osdl.org?subject=unsubscribe>
+List-Archive: <http://lists.osdl.org/pipermail/linux-pm>
+List-Post: <mailto:linux-pm@lists.osdl.org>
+List-Help: <mailto:linux-pm-request@lists.osdl.org?subject=help>
+List-Subscribe: <https://lists.osdl.org/mailman/listinfo/linux-pm>,
+	<mailto:linux-pm-request@lists.osdl.org?subject=subscribe>
+Sender: linux-pm-bounces@lists.osdl.org
+Errors-To: linux-pm-bounces@lists.osdl.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41164>
 
 
-> please don't take my comments as insults or even strict rules. It is 
-> purely for your consideration. (I say this because I haven't seen you so 
-> often on this list, so you might not know that discussions about patches 
-> are sometimes, erm, lively...)
+* Ingo Molnar <mingo@elte.hu> wrote:
 
-I absolutely haven't taken any of these comments in the thread as insults (the only thing I found a little dubious, was some usage of uppercase), and I got a lot of constructive criticism that outweighed the "lively" tone.  And as a mistake on my part, I probably should have lurked a bit longer than I did.
+> I'll try what i've described in the previous mail: mark all bisection =
 
->> +static void register_branch_pull (const char *name, const char *remote_name)
-> 
-> It is not yet remote_name, right? it is branch_name. You extract the 
-> remote_name by finding the first slash.
+> points that do not include f3ccb06f as 'good' - thus 'merging' the =
 
-Yeah, it's a remote_branch_name in fact.
+> known-bad area with the first known-good commit, and thus eliminating =
 
-> I'd use "char key[1024], value[1024]" instead, erroring out if one of the 
-> buffers are too small. It's not like you have to be memory efficient, and 
-> it is easier to read.
+> it from the bisection space.
 
-Ok.
+this got me quite a bit further:
 
->> +	remote_value[slash - remote_name] = 0;
-> 
-> You should check if slash == NULL and error out before using it.
+ git-bisect start
+ git-bisect bad       01363220f5d23ef68276db8974e46a502e43d01d
+ git-bisect good      f3ccb06f3b8e0cf42b579db21f3ca7f17fcc3f38 =
 
-remote_name is of the form "REMOTE/BRANCH", because it comes from dwim_ref's output after stripping "refs/remotes/" from the beginning.
+ git-bisect fake-good ee404566f97f9254433399fbbcfa05390c7c55f7
+ git-bisect bad       d43a338e395371733a80ec473b40baac5f74d768
+ git-bisect bad       255f0385c8e0d6b9005c0e09fffb5bd852f3b506
+ git-bisect fake-good f99c6bb6e2e9c35bd3dc0b1d0faa28bd6970930d
+ git-bisect fake-good 0187f221e96e3436d552c0c7143f183eb82fb658
+ git-bisect bad       81450b73dde07f473a4a7208b209b4c8b7251d90
+ git-bisect fake-good ef29498655b18d2bfd69048e20835d19333981ab
+ git-bisect fake-good 8a03d9a498eaf02c8a118752050a5154852c13bf
+ git-bisect good      5c95d3f5783ab184f64b7848f0a871352c35c3cf
+ git-bisect good      ecb5f7521a309cb9c5fc0832b9705cd2a03d7d45
+ git-bisect good      0539771d7236b425f285652f6f297cc7939c8f9a
 
-> Yes, that is how I imagined it. The rest of your patch looks perfect to 
-> me.
+ 81450b73dde07f473a4a7208b209b4c8b7251d90 is first bad commit
 
-I will submit again with the requested changes.  I guess the body of this message is too long to become a "cover letter".
+[ note: by having the "git-bisect must-have-bugfix f3ccb06f" =
 
-Paolo
+  functionality i mentioned in the previous mail git-bisect could
+  have eliminated the fake-good steps. ]
+
+it's not a resolution of this regression yet, because this commit is a =
+
+merge with upstream:
+
+|  commit 81450b73dde07f473a4a7208b209b4c8b7251d90
+|  Merge: 8a03d9a... 0539771...
+|  Author: Len Brown <len.brown@intel.com>
+|  Date:   Fri Feb 16 18:52:41 2007 -0500
+|
+|      Pull misc-for-upstream into release branch
+
+which means that the fix in Len's tree got broken by merging with =
+
+upstream. Note: this 'upstream' in isolation is broken too, due to not =
+
+having that essential fix from Len's tree!
+
+So we quite likely have /two/ bugs, any of which breaks resume (which =
+
+breakage looks the same, so no way to isolate them via testing).
+
+I'll now try the following: i'll try to manually apply Len's fix to =
+
+every tree that git-bisect offers me, in the hope of being able to =
+
+isolate the /other/ bug.
+
+[ But really, i'm not expecting any miracles because this is way out of
+  league for git-bisect which really depends on only having a binary =
+
+  space to search for. ]
+
+	Ingo
