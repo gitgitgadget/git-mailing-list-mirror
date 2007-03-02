@@ -1,83 +1,103 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitweb not friendly to firefox?
-Date: Fri, 02 Mar 2007 02:17:31 -0800
-Message-ID: <7vabyweypw.fsf@assigned-by-dhcp.cox.net>
-References: <989B956029373F45A0B8AF02970818902DA81B@zch01exm26.fsl.freescale.net>
+From: "Andreas Herrmann" <andreas.herrmann3@amd.com>
+Subject: Re: ANNOUNCE: git2cl
+Date: Fri, 2 Mar 2007 11:16:07 +0100
+Message-ID: <20070302101607.GA6811@alberich.amd.com>
+References: <87mz2wrp9u.fsf@latte.josefsson.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Jakub Narebski" <jnareb@gmail.com>, <rea-git@codelabs.ru>,
-	"Raimund Bauer" <ray@softwarelandschaft.com>, <git@vger.kernel.org>
-To: "Li Yang-r58472" <LeoLi@freescale.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 11:17:37 2007
+Content-Type: text/plain;
+ charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Simon Josefsson" <simon@josefsson.org>
+X-From: git-owner@vger.kernel.org Fri Mar 02 11:19:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HN4pT-0002s5-TO
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 11:17:36 +0100
+	id 1HN4rP-0003nE-Ce
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 11:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933299AbXCBKRd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 05:17:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933307AbXCBKRd
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 05:17:33 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:54823 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933299AbXCBKRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 05:17:32 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070302101732.MSDA748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 2 Mar 2007 05:17:32 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id VmHX1W00C1kojtg0000000; Fri, 02 Mar 2007 05:17:32 -0500
-In-Reply-To: <989B956029373F45A0B8AF02970818902DA81B@zch01exm26.fsl.freescale.net>
-	(Li Yang-r's message of "Fri, 2 Mar 2007 17:36:36 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933307AbXCBKTc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 05:19:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933308AbXCBKTc
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 05:19:32 -0500
+Received: from outbound-sin.frontbridge.com ([207.46.51.80]:7126 "EHLO
+	outbound4-sin-R.bigfish.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933307AbXCBKTb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2007 05:19:31 -0500
+Received: from outbound4-sin.bigfish.com (localhost.localdomain [127.0.0.1])
+	by outbound4-sin-R.bigfish.com (Postfix) with ESMTP id 4D84E903CF2;
+	Fri,  2 Mar 2007 10:19:25 +0000 (UTC)
+Received: from mail10-sin-R.bigfish.com (unknown [10.3.252.3])
+	by outbound4-sin.bigfish.com (Postfix) with ESMTP id 428B5280063;
+	Fri,  2 Mar 2007 10:19:25 +0000 (UTC)
+Received: from mail10-sin (localhost.localdomain [127.0.0.1])
+	by mail10-sin-R.bigfish.com (Postfix) with ESMTP id DCD891600425;
+	Fri,  2 Mar 2007 10:19:24 +0000 (UTC)
+X-BigFish: VP
+Received: by mail10-sin (MessageSwitch) id 1172830764719629_10640; Fri,  2 Mar 2007 10:19:24 +0000 (UCT)
+Received: from ausb3extmailp01.amd.com (unknown [163.181.251.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail10-sin.bigfish.com (Postfix) with ESMTP id 12ED38F0065;
+	Fri,  2 Mar 2007 10:19:23 +0000 (UTC)
+Received: from SAUSGW01.amd.com (sausgw01.amd.com [163.181.250.21])
+	by ausb3extmailp01.amd.com (Switch-3.2.5/Switch-3.2.5) with ESMTP id l22AGOml024276;
+	Fri, 2 Mar 2007 04:17:34 -0600
+Received: from 163.181.22.102 by SAUSGW01.amd.com with ESMTP (AMD SMTP
+ Relay (Email Firewall v6.1.0)); Fri, 02 Mar 2007 04:19:11 -0600
+X-Server-Uuid: 8C3DB987-180B-4465-9446-45C15473FD3E
+Received: from SAUSEXMB3.amd.com ([163.181.22.202]) by sausexbh2.amd.com
+ with Microsoft SMTPSVC(6.0.3790.2499); Fri, 2 Mar 2007 04:19:10 -0600
+Received: from SDRSEXMB1.amd.com ([172.20.3.116]) by SAUSEXMB3.amd.com
+ with Microsoft SMTPSVC(6.0.3790.2499); Fri, 2 Mar 2007 04:19:10 -0600
+Received: from amd.com ([165.204.85.18]) by SDRSEXMB1.amd.com with
+ Microsoft SMTPSVC(6.0.3790.2499); Fri, 2 Mar 2007 11:16:07 +0100
+Received: by amd.com (nbSMTP-1.00) for uid 41369 aherrma3@amd.com; Fri,
+ 2 Mar 2007 11:16:07 +0100 (CET)
+In-Reply-To: <87mz2wrp9u.fsf@latte.josefsson.org>
+User-Agent: mutt-ng/devel-r804 (Linux)
+X-OriginalArrivalTime: 02 Mar 2007 10:16:07.0408 (UTC)
+ FILETIME=[CAC3CF00:01C75CB3]
+X-WSS-ID: 69F925952KW9551440-01-01
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41182>
 
-"Li Yang-r58472" <LeoLi@freescale.com> writes:
+On Fri, Mar 02, 2007 at 10:03:09AM +0100, Simon Josefsson wrote:
+> Hi!  I really need proper GNU ChangeLog functionality for my projects,
+> so I ended up writing my own script to do this in Perl.  Below is the
+> README, but you can find more information at:
+> 
+> http://josefsson.org/git2cl/
+> 
 
-> Hi Jakub,
->
-> Problem sovled, using the following patch.  I'm not an expert of perl,
-> so I don't know if it is problem of the gitweb or problem with my perl
-> environment.  My environment is perl-5.8.0 and perl-CGI-2.81.
->
-> Signed-off-by: Li Yang<leoli@freecale.com>
-> ---
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 653ca3c..8c9a291 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -591,7 +591,7 @@ sub esc_html ($;%) {
->         my %opts = @_;
->
->         $str = to_utf8($str);
-> -       $str = escapeHTML($str);
-> +       $str = $cgi->escapeHTML($str);
->         if ($opts{'-nbsp'}) {
->                 $str =~ s/ /&nbsp;/g;
->         }
->
 
-This is puzzling....
+Hi,
 
- (1) we have two call sites of escapeHTML(), but your patch
-     touches only one.
+Just for your interest ...
+I downloaded git2cl version as of 02-Mar-2007 09:58, gave it a try and
+received the following (while running the script for an current git
+tree):
 
- (2) we do "use CGI qw(:standard :escapeHTML -nosticky);"
-     upfront, presumably after doing this when we say
-     escapeHTML() it means the same as CGI::escapeHTML().
 
- (3) we do "$cgi = new CGI" upfront.
 
-So I am wondering how the patch can have any effect...
+  #> git log --pretty --numstat --summary | ~/git2cl
+  2007-02-28  Junio C Hamano <junkio@cox.net>
 
-I am not saying that I do not believe you when you say the patch
-fixes the problem for you.  I just do not understand why and I
-hate not knowing why something works.
+          * : Add recent changes to draft 1.5.1 release notes.
+
+
+
+  Usage: POSIX::strftime(fmt, sec, min, hour, mday, mon, year, wday =
+  -1, yday = -1, isdst = -1)
+     at git2cl line 257, <> line 20.
+
+So it seems that your script needs some improvement.
+
+
+Regards,
+
+Andreas
