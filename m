@@ -1,88 +1,62 @@
 From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: [PATCH] Quick description of possible gitattributes system
-Date: Fri, 2 Mar 2007 19:35:57 +0000
-Message-ID: <200703021935.58992.andyparkins@gmail.com>
-References: <200703011206.47213.andyparkins@gmail.com> <200703021200.35069.andyparkins@gmail.com> <E246B7BC-9C82-4F4E-93F0-60B3F1CA54F1@silverinsanity.com>
+Date: Fri, 2 Mar 2007 19:37:31 +0000
+Message-ID: <200703021937.33648.andyparkins@gmail.com>
+References: <200703011206.47213.andyparkins@gmail.com> <es9aal$5gf$1@sea.gmane.org> <Pine.LNX.4.64.0703020850470.3953@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: Brian Gernhardt <benji@silverinsanity.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 02 20:38:53 2007
+X-From: git-owner@vger.kernel.org Fri Mar 02 20:40:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNDae-0005ax-OQ
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 20:38:53 +0100
+	id 1HNDcF-0006Fz-5V
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 20:40:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964852AbXCBTit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 14:38:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964982AbXCBTit
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 14:38:49 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:51262 "EHLO
+	id S965039AbXCBTk2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 14:40:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965185AbXCBTk2
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 14:40:28 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:52145 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964852AbXCBTis (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 14:38:48 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so795426uga
-        for <git@vger.kernel.org>; Fri, 02 Mar 2007 11:38:46 -0800 (PST)
+	with ESMTP id S965039AbXCBTk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 14:40:27 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so795832uga
+        for <git@vger.kernel.org>; Fri, 02 Mar 2007 11:40:26 -0800 (PST)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=j5o5CfmbWaFP709tbj2WVGaJoOPW1ijxZt9fmJ8T6E8bXSKP3juVaCB084sEJoxQws0srZgBYvgB2P5rfUk3ZDPGDyo7nfc1efitjYQF9GgNb2garzi6Mk/64F+aouiCXkn5zVuPShgYEFzu/X0I3tMpD/Os5TlSqaiHq9WDI1o=
+        b=dkGD6sR+Owb64iirF75mBTf3D4JydHJVN+J2kLf6KVKrdJizQ/7X/LxqHuYPvm/TTjVAvyZEgVKENaX8JneV+z97laVBPLWmHld4q/N8nb/WGw/Sfg57PdN10QirF0Vm22tDg5P12CX1PAjTsaSeStVzcGacnDzMOYmOKXK5bik=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Iq1NZGDzz3gvplAdQf1uHEL6vfwlKjMgDiR7GMZ3zaaUdhJWID9Bu3bDNnOS1hE4Y9FwUCPHV2RepXWoHUBUCfxar9UtpTUr3PoPKB6OiIZES2i9REwsA7NPi9oqsnR2epFDVab+NVu6cX1Wx0B/zk4I+H6QDU0bjwCZNsgT2zU=
-Received: by 10.67.119.9 with SMTP id w9mr3858746ugm.1172864326882;
-        Fri, 02 Mar 2007 11:38:46 -0800 (PST)
+        b=KwxKAZxGwUhDy3tI4CItpqaqxBeTCOuKcW9cjviDuQa3wiXPCMHIdiEeMMxj+y2teRAMEARS2u4W1rHGO+11gj2GBeOuznb0v+61UsKODpU3lio0PClyjLffBLBEzfsOcwLDWaGb5u3A4Tdtrmx4LZfGy0gn3uBT9ilGhy2MWMI=
+Received: by 10.67.117.2 with SMTP id u2mr3765634ugm.1172864426719;
+        Fri, 02 Mar 2007 11:40:26 -0800 (PST)
 Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id e23sm3390715ugd.2007.03.02.11.38.44;
-        Fri, 02 Mar 2007 11:38:45 -0800 (PST)
+        by mx.google.com with ESMTP id 29sm2822277uga.2007.03.02.11.40.24;
+        Fri, 02 Mar 2007 11:40:24 -0800 (PST)
 User-Agent: KMail/1.9.6
-In-Reply-To: <E246B7BC-9C82-4F4E-93F0-60B3F1CA54F1@silverinsanity.com>
+In-Reply-To: <Pine.LNX.4.64.0703020850470.3953@woody.linux-foundation.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41241>
 
-On Friday 2007, March 02, Brian Gernhardt wrote:
+On Friday 2007, March 02, Linus Torvalds wrote:
 
-> I'm sorry, I was assuming that information on what to do with each
-> attribute would be in the config file while a majority of the
-> attribute information was in an in-tree file.  I was actually
-> assuming:
+> Yes. How about just having the built-in git pager do the right thing?
 
-It's definitely in the .gitattributes file, but is also optionally in 
-the config as well.  This means that a user can always override 
-something locally - i.e. they're always in control of their own 
-repository, even when they disagree with upstream (perhaps).
-
-> .git/config:
-> [attribute "image"]
->     show = ...
->     merge = ...
->
-> With the ability to have additional "path =" entries for *local*
-> overrides/additions.  Storing the handler information in
-
-That's almost exactly it; but it makes the assumption that each 
-attribute will have one unique handler.  Separating them means that 
-multiple attributes can use one handler (or set of handlers).
-
-> the .gitattributes is one of the worst things you could do, IMHO.  It
-> assumes that people will have a homogenous environment to develop in,
-
-Oh definitely.  This is one thing that everybody absolutely agrees on.  
-The in-tree file /only/ adds attributes and never says what effect 
-those attributes have.
-
+Perfect.  This is absolutely the right thing to do I think.
 
 
 Andy
-
 -- 
 Dr Andy Parkins, M Eng (hons), MIET
 andyparkins@gmail.com
