@@ -1,57 +1,52 @@
-From: Bart Trojanowski <bart@jukie.net>
-Subject: Re: Git checkout preserve timestamp?
-Date: Fri, 2 Mar 2007 10:01:25 -0500
-Message-ID: <20070302150125.GF7671@jukie.net>
-References: <17895.18265.710811.536526@lisa.zopyra.com> <20070302091426.GA2605@diana.vm.bytemark.co.uk> <17896.9631.316001.869157@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Memory overrun in http-push.c
+Date: Fri, 2 Mar 2007 16:17:21 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703021617040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070228151516.GC57456@codelabs.ru> <200703011040.35971.andyparkins@gmail.com>
+ <200702281541.41164.andyparkins@gmail.com> <20070301051323.GG57456@codelabs.ru>
+ <81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com>
+ <7vslcpux62.fsf@assigned-by-dhcp.cox.net> <20070301120042.GD63606@codelabs.ru>
+ <es9cnt$egh$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Karl Hasselstr?m <kha@treskal.com>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 16:01:56 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 16:17:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HN9GK-0001o0-2H
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 16:01:36 +0100
+	id 1HN9Vf-00086i-ED
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 16:17:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992500AbXCBPBc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 2 Mar 2007 10:01:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992503AbXCBPBc
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 10:01:32 -0500
-Received: from bart.ott.istop.com ([66.11.172.99]:40143 "EHLO jukie.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992500AbXCBPBb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Mar 2007 10:01:31 -0500
-Received: from tau.jukie.net ([10.10.10.211]:37502)
-	by jukie.net with esmtp (Exim 4.50)
-	id 1HN9GA-00060g-KL; Fri, 02 Mar 2007 10:01:26 -0500
-Received: by tau.jukie.net (Postfix, from userid 1000)
-	id CDA702DC03C; Fri,  2 Mar 2007 10:01:25 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <17896.9631.316001.869157@lisa.zopyra.com>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S965388AbXCBPRX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 10:17:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965366AbXCBPRX
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 10:17:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51018 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965388AbXCBPRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 10:17:23 -0500
+Received: (qmail invoked by alias); 02 Mar 2007 15:17:21 -0000
+X-Provags-ID: V01U2FsdGVkX1+3A5USlCS3Y1cY6bXFEPeingDlTVC2n251nt56B0
+	crbBOK2Io3mgKS
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <es9cnt$egh$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41214>
 
-* Bill Lear <rael@zopyra.com> [070302 08:28]:
-> On Friday, March 2, 2007 at 10:14:26 (+0100) Karl Hasselstr=F6m write=
-s:
-> >                                     .... Of course, the proper fix =
-is
-> >to use a make-like tool that uses content hashes as well as timestam=
-ps
-> >to decide if a file has been updated ...
->=20
-> I like this idea...
+Hi,
 
-If the content is C, you can use ccache.  Which is pretty close to the
-"proper fix".
+On Fri, 2 Mar 2007, Jakub Narebski wrote:
 
--Bart
+> Second, there were some work on git mailing list to create git command 
+> which given a blob (or sha1 of a blob object) would list all commits (in 
+> date order) which have this exact version of a file (of a blob).
 
---=20
-				WebSig: http://www.jukie.net/~bart/sig/
+It was shot down, and rightly so.
+
+Ciao,
+Dscho
