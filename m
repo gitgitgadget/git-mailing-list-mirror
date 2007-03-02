@@ -1,89 +1,105 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Brian Gernhardt <benji@silverinsanity.com>
 Subject: Re: [PATCH] Quick description of possible gitattributes system
-Date: Fri, 2 Mar 2007 08:58:24 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0703020850470.3953@woody.linux-foundation.org>
-References: <200703011206.47213.andyparkins@gmail.com> <es9aal$5gf$1@sea.gmane.org>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-1763019354-1172854704=:3953"
+Date: Fri, 2 Mar 2007 13:05:06 -0500
+Message-ID: <E246B7BC-9C82-4F4E-93F0-60B3F1CA54F1@silverinsanity.com>
+References: <200703011206.47213.andyparkins@gmail.com> <CF579EA9-04AB-4B39-809F-650E611A8D6B@silverinsanity.com> <200703021200.35069.andyparkins@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 17:59:07 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 19:05:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNB5y-0006sF-5W
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 17:59:02 +0100
+	id 1HNC86-0008I6-B6
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 19:05:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992613AbXCBQ62 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 11:58:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992614AbXCBQ62
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 11:58:28 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:34502 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992613AbXCBQ61 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 11:58:27 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l22GwPAb026656
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 2 Mar 2007 08:58:25 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l22GwOY1013272;
-	Fri, 2 Mar 2007 08:58:25 -0800
-In-Reply-To: <es9aal$5gf$1@sea.gmane.org>
-X-Spam-Status: No, hits=-2.447 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S2992687AbXCBSFM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 13:05:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992689AbXCBSFM
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 13:05:12 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:37358 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992687AbXCBSFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 13:05:10 -0500
+Received: from [192.168.1.4] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 7D5441FFC02B;
+	Fri,  2 Mar 2007 18:05:09 +0000 (UTC)
+In-Reply-To: <200703021200.35069.andyparkins@gmail.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41230>
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
----1463790079-1763019354-1172854704=:3953
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41231>
 
 
+On Mar 2, 2007, at 7:00 AM, Andy Parkins wrote:
 
-On Fri, 2 Mar 2007, Jakub Narebski wrote:
+> On Thursday 2007, March 01, Brian Gernhardt wrote:
+>
+>> [attribute "image/png"]
+>>     path = *.png
+>>     show = "open %path%"
+>> [attribute "text/plain"]
+>>     path = *.c
+>>     checkout = eol_to_local
+>
+> The problem is that this flips the relationship.  What you want to  
+> do is
+> assign attributes to paths.  This is assigning paths to attributes.
+> What about this:
+>
+>   doc/*.txt = text/plain AND documentation
+>
+> In your system that would make
 
-> Andy Parkins wrote:
-> 
-> > + - prettyfilter
-> > +   Run by git-cat-file or git-show when content is being pretty-printed
-> > +   for display to the user.  If no prettyfilter is set, then it should
-> > +   default to outfilter.
-> 
-> I'd rather have plumbing operate without filters (if it is possible),
-> so git-cat-file would not run prettyfilter, and git-show would run it.
+I'm sorry, I was assuming that information on what to do with each  
+attribute would be in the config file while a majority of the  
+attribute information was in an in-tree file.  I was actually assuming:
 
-That really sucks. I do "git show xyz > filname" all the time, and while 
-it's been about diffs and commits, I could imagine doing the same thing 
-for things like "git show v2.6.17:Documentation/logo.gif > some.gif" too.
+.gitattributes:
+*.png: image/png
+logo.png: logo
+*.c: text/plain source
 
-Yes, I know could do "git cat-file -p .." instead, but since we added "git 
-show", and made it do the Right Thing (tm) for blobs, I've come to use it 
-more (which is as it should be: "cat-file" is low-level plumbing, while 
-"git show" is what you'd expect users to use.
+.git/config:
+[attribute "image"]
+    show = ...
+    merge = ...
 
-So I really think that the issue here is that the *pager* should do the 
-right thing. Which gets us to:
+With the ability to have additional "path =" entries for *local*  
+overrides/additions.  Storing the handler information in  
+the .gitattributes is one of the worst things you could do, IMHO.  It  
+assumes that people will have a homogenous environment to develop in,  
+and that every developer want to use the same tools.  In some cases,  
+this may be true (eol_lf on checking for everybody), but not in  
+others.  On my Mac, I'd like to use "open" for random file types, and  
+might want to use VERY different graphical merge than Linux users.   
+And OS X is a fairly Unix-like environment.  Let's not even ponder  
+those poor fools using MinGW.  ;-)
 
-> Or at least detect if output is tty, so one can do something like
-> "git cat-file -p v1.0.0:gitweb/git-logo.png > git-logo.png" and get
-> expected result, while "git show v1.0.0:gitweb/git-logo.png" would
-> show the image.
+>> Actually, shouldn't the files also be run through the infilter to
+>> check for changes caused by that, too?
+>
+> I don't think so.  The effect of the infilter will never be seen in  
+> the
+> working tree, because it's applied on git-add.  The previous  
+> content with the
+> old attributes are already in the repository.  However, it could be  
+> that we
+> would have to force those files to be marked dirty in the index  
+> (this is
+> already sounding bad), to force the application of the infilter on  
+> next
+> checkin.  Perhaps that's what you meant, and I'm being slow.
 
-Yes. How about just having the built-in git pager do the right thing?
+That's something like what I meant.  And it sounds bad.  Content  
+changes caused by attribute changes should likely be handled by the  
+user and made easy to detect instead of trying to handle it  
+automatically.  So ignore my original statement on the matter.
 
-Right now we actually wait for data to start arriving (commit 35ce862) due 
-to working around a bug in less. But what if we could make the pager 
-actually do the right thing here automatically? With "less" just being the 
-default action for *text*?
-
-			Linus
----1463790079-1763019354-1172854704=:3953--
+~~ Brian
