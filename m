@@ -1,112 +1,115 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add core.symlinks to mark filesystems that do not support
- symbolic links.
-Date: Fri, 2 Mar 2007 22:35:03 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703022219360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200703022211.30322.johannes.sixt@telecom.at>
+Subject: Re: [PATCH] Quick description of possible gitattributes system
+Date: Fri, 2 Mar 2007 22:45:10 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703022237000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200703011206.47213.andyparkins@gmail.com> <es9aal$5gf$1@sea.gmane.org>
+ <Pine.LNX.4.64.0703020850470.3953@woody.linux-foundation.org>
+ <200703021937.33648.andyparkins@gmail.com> <Pine.LNX.4.64.0703021249010.3953@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Fri Mar 02 22:35:15 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Mar 02 22:45:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNFPG-0005oc-9g
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 22:35:14 +0100
+	id 1HNFZA-00027H-E5
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 22:45:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030179AbXCBVfH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 16:35:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030181AbXCBVfG
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 16:35:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:38645 "HELO mail.gmx.net"
+	id S965674AbXCBVpO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 16:45:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965638AbXCBVpO
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 16:45:14 -0500
+Received: from mail.gmx.net ([213.165.64.20]:53163 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030179AbXCBVfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 16:35:04 -0500
-Received: (qmail invoked by alias); 02 Mar 2007 21:35:03 -0000
-X-Provags-ID: V01U2FsdGVkX19mxs0eUiNm3kLeIaq5GmZ64H5xathFFLhnbDLfHh
-	cpQ1areyTWUr1o
+	id S965666AbXCBVpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 16:45:12 -0500
+Received: (qmail invoked by alias); 02 Mar 2007 21:45:10 -0000
+X-Provags-ID: V01U2FsdGVkX1+I9AtyfZSIiKssKUqM97JP7sWWnKhOwesKmsBGed
+	jivpTpVhQED+vf
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <200703022211.30322.johannes.sixt@telecom.at>
+In-Reply-To: <Pine.LNX.4.64.0703021249010.3953@woody.linux-foundation.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41250>
 
 Hi,
 
-BTW since git.git's RelNotes is a symlink this patch is needed for MinGW. 
-I tried to commit something yesterday, and had to use cygwin to do it, 
-since MinGW Git always complained about "invalid tree d5e055...". For 
-those who don't know: try "git show d5e055" in your Git repository.
+On Fri, 2 Mar 2007, Linus Torvalds wrote:
 
-On Fri, 2 Mar 2007, Johannes Sixt wrote:
+> Doing the pager internally would obviously solve that issue,
 
-> diff --git a/cache.h b/cache.h
-> index 04f8e63..6f932fe 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -108,7 +108,10 @@ static inline unsigned int create_ce_mode(unsigned int mode)
->  }
->  static inline unsigned int ce_mode_from_stat(struct cache_entry *ce, unsigned int mode)
->  {
-> -	extern int trust_executable_bit;
-> +	extern int trust_executable_bit, has_symlinks;
+Ooooooh! A builtin! (Seriously, I thought about that already, but 
+dismissed it for the reasons you said, and more...)
 
-Would it not be better to move the global variables before this function?
-I.e. these:
+> So we're in the situation where:
+> 
+>  - the pager process *will* wait until actual data is starting to appear,
+>    so we *can* have some side-band channel to tell it "oh, btw, if there 
+>    is a pager, this is going to be image data, so start up an external 
+>    image viewer instead". 
+> 
+>  - but I don't have a good clue what side-band to use. We could use 
+>    a special "FILE *pagerdata", of course (which would just be fd#3 in 
+>    the pager). Then, "git show" could just do something like
+> 
+> 	if (pager_in_use)
+> 		fprintf(pagerdata, "'%s'\n", type);
+> 
+>    and we could change pager.c to do something like the appended patch.
+> 
+> but I have to say, it looks a bit strange.
 
-> @@ -202,6 +205,7 @@ extern int delete_ref(const char *, unsigned char *sha1);
->  /* Environment bits from configuration mechanism */
->  extern int use_legacy_headers;
->  extern int trust_executable_bit;
-> +extern int has_symlinks;
->  extern int assume_unchanged;
->  extern int prefer_symlink_refs;
->  extern int log_all_ref_updates;
->
-> [...]
->
-> diff --git a/t/t2102-update-index-symlinks.sh b/t/t2102-update-index-symlinks.sh
-> new file mode 100644
-> index 0000000..969ef89
-> --- /dev/null
-> +++ b/t/t2102-update-index-symlinks.sh
-> @@ -0,0 +1,31 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2007 Johannes Sixt
-> +#
-> +
-> +test_description='git-update-index on filesystem w/o symlinks test.
-> +
-> +This tests that git-update-index keeps the symbolic link property
-> +even if a plain file is in the working tree if core.symlinks is false.'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success \
-> +'preparation' '
-> +git-config core.symlinks false &&
-> +l=$(echo -n file | git-hash-object -t blob -w --stdin) &&
-> +echo "120000 $l	symlink" | git-update-index --index-info'
-> +
-> +test_expect_success \
-> +'modify the symbolic link' '
-> +echo -n new-file > symlink &&
-> +git-update-index symlink'
-> +
-> +test_expect_success \
-> +'the index entry must still be a symbolic link' '
-> +case "`git-ls-files --stage --cached symlink`" in
-> +120000" "*symlink) echo ok;;
-> +*) echo fail; git-ls-files --stage --cached symlink; (exit 1);;
-> +esac'
+The obvious thing, of course, is a git-show specific solution (this is no 
+patch, it only illustrates my idea):
 
-Please test also what happens if you replace a supposed symlink with a 
-directory and vice versa.
+ builtin-log.c |   11 +++++++++++
+ git.c         |    2 +-
+ 2 files changed, 12 insertions(+), 1 deletions(-)
 
-Ciao,
-Dscho
+diff --git a/builtin-log.c b/builtin-log.c
+index 1c9f7d0..83e6cea 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -123,6 +123,7 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 	struct rev_info rev;
+ 	struct object_array_entry *objects;
+ 	int i, count, ret = 0;
++	enum { NO_PAGER, TEXT_PAGER, OTHER_PAGER } pager_mode = NO_PAGER;
+ 
+ 	git_config(git_log_config);
+ 	init_revisions(&rev, prefix);
+@@ -140,6 +141,16 @@ int cmd_show(int argc, const char **argv, const char *prefix)
+ 	for (i = 0; i < count && !ret; i++) {
+ 		struct object *o = objects[i].item;
+ 		const char *name = objects[i].name;
++		if (o->type == OBJ_BLOB) {
++			/* determine if name falls into some special class */
++			if (pager_mode == NO_PAGER &&
++					setup_special_pager(name))
++				pager_mode = OTHER_PAGER;
++		}
++		if (pager_mode == NO_PAGER) {
++			setup_pager();
++			pager_mode = TEXT_PAGER;
++		}
+ 		switch (o->type) {
+ 		case OBJ_BLOB:
+ 			ret = show_object(o->sha1, 0);
+diff --git a/git.c b/git.c
+index 909adf2..a3811e6 100644
+--- a/git.c
++++ b/git.c
+@@ -291,7 +291,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
+ 		{ "runstatus", cmd_runstatus, RUN_SETUP | DISALLOW_IN_GIT_DIR },
+ 		{ "shortlog", cmd_shortlog, RUN_SETUP | USE_PAGER },
+ 		{ "show-branch", cmd_show_branch, RUN_SETUP },
+-		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
++		{ "show", cmd_show, RUN_SETUP },
+ 		{ "stripspace", cmd_stripspace },
+ 		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
+ 		{ "tar-tree", cmd_tar_tree },
