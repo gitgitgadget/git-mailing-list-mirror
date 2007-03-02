@@ -1,67 +1,67 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Quick description of possible gitattributes system
-Date: Fri, 2 Mar 2007 22:24:26 +0000
-Message-ID: <200703022224.28678.andyparkins@gmail.com>
-References: <200703011206.47213.andyparkins@gmail.com> <Pine.LNX.4.64.0703021249010.3953@woody.linux-foundation.org> <200703022221.38309.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: identifying blobs (was Re: Memory overrun in http-push.c)
+Date: Fri, 02 Mar 2007 14:52:34 -0800
+Message-ID: <7vr6s7dzrh.fsf@assigned-by-dhcp.cox.net>
+References: <20070228151516.GC57456@codelabs.ru>
+	<200703011040.35971.andyparkins@gmail.com>
+	<200702281541.41164.andyparkins@gmail.com>
+	<20070301051323.GG57456@codelabs.ru>
+	<81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com>
+	<7vslcpux62.fsf@assigned-by-dhcp.cox.net>
+	<20070301120042.GD63606@codelabs.ru> <es9cnt$egh$1@sea.gmane.org>
+	<Pine.LNX.4.63.0703021617040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 02 23:27:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 02 23:52:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNGDk-0004XK-MI
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 23:27:25 +0100
+	id 1HNGcC-0007fd-Nj
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 23:52:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030638AbXCBW1T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 17:27:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030640AbXCBW1S
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 17:27:18 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:5671 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030638AbXCBW1S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 17:27:18 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so832906uga
-        for <git@vger.kernel.org>; Fri, 02 Mar 2007 14:27:16 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=uuBA50ktlpu7vLxa5ZAjypBxErN1F4UZvHvOwHsh17XC1kwsbcbsELYTsJCGe4jY+6OghMwn8Vb+ht+zGGZdRENN62uucCFoXTuqhxXQnYHjNDAmr3y+C+ZiWZ+iyFJG5Xu75yT53Jrxa6ZDmqLzTUo5a0P/zp7Mygm/dpnLYlY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=e9+gGUgL09ytz6mbOtK/Z9pIAQfPR5NXqiWJZbDJ2zEubrZY+30L4TJdmchVm5dHRWLNylxK3ThVTt5y5syDw/1ezcJjNyq5iGyF27yYkg1yl+ru7LXJ6Evb+XpZP43PUZcYsbClEZvDxZCPgqArcGI6HPB+TRfDTjDJV2TZtCk=
-Received: by 10.67.19.20 with SMTP id w20mr3940685ugi.1172874436517;
-        Fri, 02 Mar 2007 14:27:16 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id l40sm2962930ugc.2007.03.02.14.27.14;
-        Fri, 02 Mar 2007 14:27:14 -0800 (PST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <200703022221.38309.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S2992703AbXCBWwh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 17:52:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992705AbXCBWwh
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 17:52:37 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:53554 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992703AbXCBWwg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 17:52:36 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070302225236.YVPV3546.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 2 Mar 2007 17:52:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Vysb1W0041kojtg0000000; Fri, 02 Mar 2007 17:52:35 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41256>
 
-On Friday 2007, March 02, Andy Parkins wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> There is an alternative.  pager.c:run_pager() runs a select() to wait
-> for data before it actually exec()s the pager.  What if after the
-> select() the process didn't exec(), but read the first line to decide
-> what pager to exec?
+> On Fri, 2 Mar 2007, Jakub Narebski wrote:
+>
+>> Second, there were some work on git mailing list to create git command 
+>> which given a blob (or sha1 of a blob object) would list all commits (in 
+>> date order) which have this exact version of a file (of a blob).
+>
+> It was shot down, and rightly so.
 
-Duh!  I see now that that is almost exactly what you did in your patch.  
-Ignore me.
+I think this "rightly" needs a clarification (otherwise Jakub
+wouldn't have said the above).
 
+It wasn't that identifying the commit that contained the version
+of the file was not needed.  It is just there already is a way
+to do so, and "to create git command" turns out to be
+unnecessary.  Something like:
 
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+	$ hash=`git hash-object --stdin <$file_in_question`
+	$ git log -z --raw -r --abbrev=40 |
+          grep -z '^:[0-7][0-7]* [0-7][0-7]* [0-9a-f][0-9a-f]* '"$hash"'
