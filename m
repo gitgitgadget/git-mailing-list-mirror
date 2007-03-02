@@ -1,241 +1,126 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git-config: document --rename-section, provide --remove-section
-Date: Fri, 2 Mar 2007 21:53:33 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703022152050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <es66vt$jej$1@sea.gmane.org>
- <Pine.LNX.4.63.0703012344270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45E7DDB5.9060009@lu.unisi.ch> <Pine.LNX.4.63.0703021220420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45E814D9.7020104@lu.unisi.ch> <Pine.LNX.4.63.0703021640440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45E850D8.4040306@lu.unisi.ch>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Quick description of possible gitattributes system
+Date: Fri, 2 Mar 2007 13:02:23 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703021249010.3953@woody.linux-foundation.org>
+References: <200703011206.47213.andyparkins@gmail.com> <es9aal$5gf$1@sea.gmane.org>
+ <Pine.LNX.4.64.0703020850470.3953@woody.linux-foundation.org>
+ <200703021937.33648.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Mar 02 21:53:41 2007
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 22:02:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNEl1-0004TV-Ba
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 21:53:39 +0100
+	id 1HNEtq-00009K-48
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 22:02:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965606AbXCBUxg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 15:53:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965607AbXCBUxg
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 15:53:36 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46623 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965606AbXCBUxe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 15:53:34 -0500
-Received: (qmail invoked by alias); 02 Mar 2007 20:53:33 -0000
-X-Provags-ID: V01U2FsdGVkX19of1dx0KpoFwkMoiaqAlCt0PEBpbWf9oIiG6V1CM
-	5MJtEaNthbNyxl
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45E850D8.4040306@lu.unisi.ch>
-X-Y-GMX-Trusted: 0
+	id S965625AbXCBVC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 16:02:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965620AbXCBVC2
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 16:02:28 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:41154 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965624AbXCBVC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 16:02:27 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l22L2Oq8001652
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 2 Mar 2007 13:02:25 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l22L2ONK018828;
+	Fri, 2 Mar 2007 13:02:24 -0800
+In-Reply-To: <200703021937.33648.andyparkins@gmail.com>
+X-Spam-Status: No, hits=-5.449 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL,PATCH_UNIFIED_DIFF_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41247>
 
 
-From: Paolo Bonzini <bonzini@gnu.org>
 
-This patch documents the previously undocumented option --rename-section
-and adds a new option to zap an entire section.
+On Fri, 2 Mar 2007, Andy Parkins wrote:
 
-Hopefully-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> On Friday 2007, March 02, Linus Torvalds wrote:
+> 
+> > Yes. How about just having the built-in git pager do the right thing?
+> 
+> Perfect.  This is absolutely the right thing to do I think.
+
+Well, it would be perfect, except it's rather hard to do. Right now we 
+simply don't have any way to tell the pager what to do with the data, and 
+we'd need to do some communications passing thing to let it know.
+
+It *could* just look at the data directly, but that's actually hard: if we 
+start looking at the data, there's no way to push the data back onto the 
+head of a pipe, and there's no really good way to tell an external pager 
+to "start off with this data that I already read earlier to figure out the 
+type, and then continue with that other file descriptor that I'm passing 
+in".
+
+So then we'd have to have a totally useless process in between the git 
+process and the external pager to just feed the data from one pipe to the 
+other..
+
+Doing the pager internally would obviously solve that issue, but I really 
+don't think we want to do that, especially since it's very 
+system-dependent. And temporary files suck for all the other reasons 
+(incrementally generated data).
+
+So we're in the situation where:
+
+ - the pager process *will* wait until actual data is starting to appear,
+   so we *can* have some side-band channel to tell it "oh, btw, if there 
+   is a pager, this is going to be image data, so start up an external 
+   image viewer instead". 
+
+ - but I don't have a good clue what side-band to use. We could use 
+   a special "FILE *pagerdata", of course (which would just be fd#3 in 
+   the pager). Then, "git show" could just do something like
+
+	if (pager_in_use)
+		fprintf(pagerdata, "'%s'\n", type);
+
+   and we could change pager.c to do something like the appended patch.
+
+but I have to say, it looks a bit strange.
+
+		Linus
+
 ---
-
-	I just made the changes to git_rename_section() myself, and added
-	the test case (which I made a little nastier, too), then made sure
-	that everything is fine.
-
-	Paolo, do you agree with this patch? I left you as the author, 
-	because you did all the hard work.
-
- Documentation/git-config.txt |    8 +++++
- builtin-config.c             |   15 ++++++++++-
- config.c                     |   60 +++++++++++++++++++++++++----------------
- t/t1300-repo-config.sh       |   16 +++++++++++
- 4 files changed, 74 insertions(+), 25 deletions(-)
-
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 6624484..68de588 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -16,6 +16,8 @@ SYNOPSIS
- 'git-config' [--global] [type] --get-all name [value_regex]
- 'git-config' [--global] [type] --unset name [value_regex]
- 'git-config' [--global] [type] --unset-all name [value_regex]
-+'git-config' [--global] [type] --rename-section old_name new_name
-+'git-config' [--global] [type] --remove-section name
- 'git-config' [--global] -l | --list
+diff --git a/pager.c b/pager.c
+index 5f280ab..b71dd44 100644
+--- a/pager.c
++++ b/pager.c
+@@ -9,6 +9,8 @@
  
- DESCRIPTION
-@@ -74,6 +76,12 @@ OPTIONS
- --global::
- 	Use global ~/.gitconfig file rather than the repository .git/config.
- 
-+--remove-section::
-+	Remove the given section from the configuration file.
-+
-+--rename-section::
-+	Rename the given section to a new name.
-+
- --unset::
- 	Remove the line matching the key from config file.
- 
-diff --git a/builtin-config.c b/builtin-config.c
-index f1433a4..dfa403b 100644
---- a/builtin-config.c
-+++ b/builtin-config.c
-@@ -2,7 +2,7 @@
- #include "cache.h"
- 
- static const char git_config_set_usage[] =
--"git-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --list";
-+"git-config [ --global ] [ --bool | --int ] [--get | --get-all | --get-regexp | --replace-all | --add | --unset | --unset-all] name [value [value_regex]] | --rename-section old_name new_name | --remove-section name | --list";
- 
- static char *key;
- static regex_t *key_regexp;
-@@ -168,6 +168,19 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			}
- 			return 0;
- 		}
-+		else if (!strcmp(argv[1], "--remove-section")) {
-+			int ret;
-+			if (argc != 3)
-+				usage(git_config_set_usage);
-+			ret = git_config_rename_section(argv[2], NULL);
-+			if (ret < 0)
-+				return ret;
-+			if (ret == 0) {
-+				fprintf(stderr, "No such section!\n");
-+				return 1;
-+			}
-+			return 0;
-+		}
- 		else
- 			break;
- 		argc--;
-diff --git a/config.c b/config.c
-index 0ff413b..5611d7a 100644
---- a/config.c
-+++ b/config.c
-@@ -854,9 +854,37 @@ write_err_out:
- 
- }
- 
-+static int section_name_match (const char *buf, const char *name)
-+{
-+	int i = 0, j = 0, dot = 0;
-+	for (; buf[i] && buf[i] != ']'; i++) {
-+		if (!dot && isspace(buf[i])) {
-+			dot = 1;
-+			if (name[j++] != '.')
-+				break;
-+			for (i++; isspace(buf[i]); i++)
-+				; /* do nothing */
-+			if (buf[i] != '"')
-+				break;
-+			continue;
-+		}
-+		if (buf[i] == '\\' && dot)
-+			i++;
-+		else if (buf[i] == '"' && dot) {
-+			for (i++; isspace(buf[i]); i++)
-+				; /* do_nothing */
-+			break;
-+		}
-+		if (buf[i] != name[j++])
-+			break;
-+	}
-+	return (buf[i] == ']' && name[j] == 0);
-+}
-+
-+/* if new_name == NULL, the section is removed instead */
- int git_config_rename_section(const char *old_name, const char *new_name)
+ static void run_pager(const char *pager)
  {
--	int ret = 0;
-+	int ret = 0, remove = 0;
- 	char *config_filename;
- 	struct lock_file *lock = xcalloc(sizeof(struct lock_file), 1);
- 	int out_fd;
-@@ -887,31 +915,12 @@ int git_config_rename_section(const char *old_name, const char *new_name)
- 			; /* do nothing */
- 		if (buf[i] == '[') {
- 			/* it's a section */
--			int j = 0, dot = 0;
--			for (i++; buf[i] && buf[i] != ']'; i++) {
--				if (!dot && isspace(buf[i])) {
--					dot = 1;
--					if (old_name[j++] != '.')
--						break;
--					for (i++; isspace(buf[i]); i++)
--						; /* do nothing */
--					if (buf[i] != '"')
--						break;
-+			if (section_name_match (&buf[i+1], old_name)) {
-+				ret++;
-+				if (new_name == NULL) {
-+					remove = 1;
- 					continue;
- 				}
--				if (buf[i] == '\\' && dot)
--					i++;
--				else if (buf[i] == '"' && dot) {
--					for (i++; isspace(buf[i]); i++)
--						; /* do_nothing */
--					break;
--				}
--				if (buf[i] != old_name[j++])
--					break;
--			}
--			if (buf[i] == ']' && old_name[j] == 0) {
--				/* old_name matches */
--				ret++;
- 				store.baselen = strlen(new_name);
- 				if (!store_write_section(out_fd, new_name)) {
- 					ret = write_error();
-@@ -919,7 +928,10 @@ int git_config_rename_section(const char *old_name, const char *new_name)
- 				}
- 				continue;
- 			}
-+			remove = 0;
- 		}
-+		if (remove)
-+			continue;
- 		length = strlen(buf);
- 		if (write_in_full(out_fd, buf, length) != length) {
- 			ret = write_error();
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 3753e9f..655d1e6 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -391,6 +391,22 @@ EOF
++	static char input_type[100] = "text";
++
+ 	/*
+ 	 * Work around bug in "less" by not starting it until we
+ 	 * have real input
+@@ -17,7 +19,16 @@ static void run_pager(const char *pager)
  
- test_expect_success "rename succeeded" "git diff expect .git/config"
+ 	FD_ZERO(&in);
+ 	FD_SET(0, &in);
+-	select(1, &in, NULL, &in, NULL);
++	FD_SET(3, &in);
++	select(4, &in, NULL, &in, NULL);
++	if (FS_ISSET(3, &in)) {
++		int n = read(3, input_type, sizeof(input_type)-1);
++		if (n > 0)
++			input_type[n] = 0;
++	}
++	close(3);
++
++	pager = select_pager(input_type, pager);
  
-+cat >> .git/config << EOF
-+  [branch "zwei"] a = 1 [branch "vier"]
-+EOF
-+
-+test_expect_success "remove section" "git config --remove-section branch.zwei"
-+
-+cat > expect << EOF
-+# Hallo
-+	#Bello
-+[branch "drei"]
-+weird
-+EOF
-+
-+test_expect_success "section was removed properly" \
-+	"diff -u expect .git/config"
-+
- test_expect_success numbers '
- 
- 	git-config kilo.gram 1k &&
--- 
-1.5.0.2.2488.gdffb-dirty
+ 	execlp(pager, pager, NULL);
+ 	execl("/bin/sh", "sh", "-c", pager, NULL);
