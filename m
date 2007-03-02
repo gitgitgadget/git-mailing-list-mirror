@@ -1,84 +1,59 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH 4/4] Documentation/git-svn.txt: Fix formatting errors
-Date: Fri, 2 Mar 2007 21:23:17 +0300
-Message-ID: <20070302182317.GB6811@procyon.home>
-References: <1172778077659-git-send-email-vsu@altlinux.ru> <11727780872894-git-send-email-vsu@altlinux.ru> <11727780982140-git-send-email-vsu@altlinux.ru> <11727781092949-git-send-email-vsu@altlinux.ru> <20070301203833.GB25782@localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] statplot: a tool for mining repository statistics.
+Date: Fri, 02 Mar 2007 19:32:17 +0100
+Organization: At home
+Message-ID: <es9qf4$cj0$1@sea.gmane.org>
+References: <20070301072953.GA8730@spearce.org> <81b0412b0703010158i1a3963f4wabda2f72c1fd0bc4@mail.gmail.com> <20070301183004.GB8858@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="lEGEL1/lMxI0MVQ2"
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Mar 02 19:24:02 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 02 19:30:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNCQE-0007L1-6A
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 19:24:02 +0100
+	id 1HNCWI-0001Xd-Qm
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 19:30:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019AbXCBSX7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 13:23:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751034AbXCBSX7
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 13:23:59 -0500
-Received: from master.altlinux.org ([62.118.250.235]:1606 "EHLO
-	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751019AbXCBSX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 13:23:58 -0500
-Received: by master.altlinux.org (Postfix, from userid 584)
-	id 6D756E4B21; Fri,  2 Mar 2007 21:23:57 +0300 (MSK)
-Content-Disposition: inline
-In-Reply-To: <20070301203833.GB25782@localdomain>
+	id S932315AbXCBSaO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 2 Mar 2007 13:30:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932321AbXCBSaN
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 13:30:13 -0500
+Received: from main.gmane.org ([80.91.229.2]:44145 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932315AbXCBSaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 13:30:12 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HNCW2-0003AN-KV
+	for git@vger.kernel.org; Fri, 02 Mar 2007 19:30:02 +0100
+Received: from host-81-190-30-210.torun.mm.pl ([81.190.30.210])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Mar 2007 19:30:02 +0100
+Received: from jnareb by host-81-190-30-210.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Mar 2007 19:30:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-30-210.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41233>
 
+Shawn O. Pearce wrote:
 
---lEGEL1/lMxI0MVQ2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Horribly simple code. =A0Maybe too dumb for inclusion in git.git.
 
-On Thu, Mar 01, 2007 at 12:38:33PM -0800, Eric Wong wrote:
-> Sergey Vlasov <vsu@altlinux.ru> wrote:
-> > Fix some formatting problems:
-> >=20
-> >   - Some list labels were missing their "::" characters.
-> >   - Some of continuation paragraphs in labeled lists were incorrectly
-> >     formatted as literal paragraphs.
-> >   - In one case "[verse]" was missing before the config key list.
-> >   - The "Basic Examples" section was incorrectly nested inside the
-> >     "Config File-Only Options" section.
->=20
-> Thanks.  However, are the indentation changes in the source absolutely
-> necessary for asciidoc to correctly format these things?
-
-Yes - normally asciidoc formats indented text as literal paragraphs;
-only the first paragraph after "tag::" is processed specially.
-And using a "+" line inside a "--" block also does not work.
-
-> I try to avoid building the docs because my computers are too slow.
-
-Yes, asciidoc is slow, and xmlto (xsltproc) is even slower :(
-
-> If so:
->=20
-> Acked-by: Eric Wong <normalperson@yhbt.net>
->=20
-> > Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
-> > Cc: Eric Wong <normalperson@yhbt.net>
-
---lEGEL1/lMxI0MVQ2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFF6GuVW82GfkQfsqIRAkYeAJsFopiYxX7ooXCAqBSmHj+H2wGVSQCeO/C6
-bMQWNpioRG29L9l3JS3NpnE=
-=e1Yt
------END PGP SIGNATURE-----
-
---lEGEL1/lMxI0MVQ2--
+Perhaps it would be better to include it (first) in contrib/ section, t=
+hen?
+It looks more like contrib, by the way, than something than should be i=
+n
+git.git core...
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
