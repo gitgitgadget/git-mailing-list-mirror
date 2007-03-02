@@ -1,150 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] --pretty=gnucl: avoid line wrapping before the comma
-Date: Fri, 2 Mar 2007 15:29:08 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703021528590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.63.0702280258200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <alpine.LRH.0.82.0702272147590.29426@xanadu.home>
- <Pine.LNX.4.63.0702281343200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vslcoghcd.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Memory overrun in http-push.c
+Date: Fri, 02 Mar 2007 15:38:01 +0100
+Organization: At home
+Message-ID: <es9cnt$egh$1@sea.gmane.org>
+References: <20070228151516.GC57456@codelabs.ru> <200703011040.35971.andyparkins@gmail.com> <200702281541.41164.andyparkins@gmail.com> <20070301051323.GG57456@codelabs.ru> <81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com> <7vslcpux62.fsf@assigned-by-dhcp.cox.net> <20070301120042.GD63606@codelabs.ru>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	Simon Josefsson <simon@josefsson.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 02 15:29:18 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 02 15:43:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HN8l0-0005oO-Q7
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 15:29:15 +0100
+	id 1HN8yq-000371-AQ
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 15:43:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992484AbXCBO3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 09:29:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992489AbXCBO3L
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 09:29:11 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44113 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2992484AbXCBO3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 09:29:10 -0500
-Received: (qmail invoked by alias); 02 Mar 2007 14:29:08 -0000
-X-Provags-ID: V01U2FsdGVkX1/J1lYyI5vJVtWAGkBo4Z2ZBep61qjpahD938AbSR
-	y/MI1PEnwBGc9e
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vslcoghcd.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S2992490AbXCBOn3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 09:43:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992491AbXCBOn3
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 09:43:29 -0500
+Received: from main.gmane.org ([80.91.229.2]:59401 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2992490AbXCBOn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 09:43:28 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HN8uO-0003G1-RG
+	for git@vger.kernel.org; Fri, 02 Mar 2007 15:38:58 +0100
+Received: from host-81-190-24-11.torun.mm.pl ([81.190.24.11])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Mar 2007 15:38:56 +0100
+Received: from jnareb by host-81-190-24-11.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 02 Mar 2007 15:38:56 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-24-11.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41211>
 
+Eygene Ryabinkin wrote:
 
-Earlier, this code played dumb by outputting the file name and the comma
-separately (to make it easier to determine when to output a colon
-instead of the comma). This misguided code is fixed by this patch.
+> By the way, I am missing one thing: the Id keyword in the file. The
+> problem is that when some user is telling me: there is a bug in the
+> function a() that is inside the file b.c, then I can ask him to
+> give me the $Id$ tag of the file and I will have the full information
+> about the file version. Can I have it with git if user has just the
+> sources without any signs of the file versions? I've glanced over
+> the git manual, but was unable to find anything usable.
+ 
+First, keyword expansion on checkout (CVS-like) is an abomination;
+the proper way is to do it on _build_ time, like git and Linux kernel
+do, so "git version" (or "git --version") and "uname -a" gives us
+the version which can be used with git to go to it.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
+Second, there were some work on git mailing list to create git command
+which given a blob (or sha1 of a blob object) would list all commits
+(in date order) which have this exact version of a file (of a blob).
 
-	I know that this is a dead topic branch, but I did not want
-	to leave buggy code behind for future reference.
-
- diff.c |   60 ++++++++++++++++++++++++++++++++++++------------------------
- 1 files changed, 36 insertions(+), 24 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 9f9cb34..d33242a 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1851,52 +1851,64 @@ static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
- 
- struct changelog_t {
- 	int offset, seen_first;
-+	char buffer[1024];
- };
- 
-+static void flush_changelog_file_entry(struct changelog_t *log, char delim) {
-+	if (!log->seen_first) {
-+		log->offset = print_wrapped_text("* ", -CHANGELOG_TAB_SIZE,
-+				CHANGELOG_TAB_SIZE + 2, CHANGELOG_WIDTH);
-+		log->seen_first = 1;
-+	}
-+
-+	if (log->buffer[0]) {
-+		int len = strlen(log->buffer);
-+		if (len + 3 < sizeof(log->buffer)) {
-+			log->buffer[len++] = delim;
-+			log->buffer[len++] = ' ';
-+			log->buffer[len++] = '\0';
-+		} else
-+			warn("Line too long: skipping delimiter");
-+
-+		log->offset = print_wrapped_text(log->buffer, -log->offset,
-+				CHANGELOG_TAB_SIZE + 2, CHANGELOG_WIDTH);
-+		log->buffer[0] = '\0';
-+	}
-+}
-+
- static void run_changelog(struct diff_filepair *p, struct diff_options *o,
--	struct changelog_t *changelog)
-+	struct changelog_t *log)
- {
- 	const char *name;
- 	const char *other;
--	static char buffer[1024];
- 
- 	if (DIFF_PAIR_UNMERGED(p)) {
- 		/* unmerged */
- 		return;
- 	}
- 
--	if (changelog->seen_first)
--		buffer[0] = ',';
--	else {
--		buffer[0] = '*';
--		changelog->offset = -CHANGELOG_TAB_SIZE;
--		changelog->seen_first = 1;
--	}
--
- 	name = p->one->path;
- 	other = p->two->path;
- 
--	if (!name) {
--		if (!other)
--			return;
--		snprintf(buffer + 1, sizeof(buffer) - 1, " %s", other);
--	} else if (!other || !strcmp(name, other))
--		snprintf(buffer + 1, sizeof(buffer) - 1, " %s", name);
-+	if (!name && !other)
-+		return;
-+
-+	flush_changelog_file_entry(log, ',');
-+	if (!name)
-+		snprintf(log->buffer, sizeof(log->buffer), "%s", other);
-+	else if (!other || !strcmp(name, other))
-+		snprintf(log->buffer, sizeof(log->buffer), "%s", name);
- 	else
--		snprintf(buffer + 1, sizeof(buffer) - 1, " %s => %s",
-+		snprintf(log->buffer, sizeof(log->buffer), "%s => %s",
- 				name, other);
--	changelog->offset = print_wrapped_text(buffer, -changelog->offset,
--		CHANGELOG_TAB_SIZE + 2, CHANGELOG_WIDTH);
- }
- 
- static void finalize_changelog(struct diff_options *options,
- 		struct changelog_t *changelog)
- {
--	if (!options->stat_sep)
--		return;
--	changelog->offset = print_wrapped_text(": ", -changelog->offset,
--		CHANGELOG_TAB_SIZE + 2, CHANGELOG_WIDTH);
--	changelog->offset = print_wrapped_text(options->stat_sep,
-+	flush_changelog_file_entry(changelog, ':');
-+	changelog->offset = print_wrapped_text(options->stat_sep ?
-+			options->stat_sep : "*** empty message ***",
- 			-changelog->offset,
- 			CHANGELOG_TAB_SIZE + 2, CHANGELOG_WIDTH);
- }
+Third, tar files generated by git-acrhive have version embedded as
+a comment in them.
 -- 
-1.5.0.2.780.g57e5-dirty
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
