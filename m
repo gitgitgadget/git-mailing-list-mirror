@@ -1,103 +1,88 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Remove use of git-rev-parse and replace git-rev-list --pretty with git-log
-Date: Fri, 2 Mar 2007 19:29:20 +0000
-Message-ID: <200703021929.20969.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org>
+Subject: Re: [PATCH] Quick description of possible gitattributes system
+Date: Fri, 2 Mar 2007 19:35:57 +0000
+Message-ID: <200703021935.58992.andyparkins@gmail.com>
+References: <200703011206.47213.andyparkins@gmail.com> <200703021200.35069.andyparkins@gmail.com> <E246B7BC-9C82-4F4E-93F0-60B3F1CA54F1@silverinsanity.com>
 Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
+Cc: Brian Gernhardt <benji@silverinsanity.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 02 20:32:21 2007
+X-From: git-owner@vger.kernel.org Fri Mar 02 20:38:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNDUH-0002gR-LE
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 20:32:18 +0100
+	id 1HNDae-0005ax-OQ
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 20:38:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965217AbXCBTcM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 14:32:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965224AbXCBTcM
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 14:32:12 -0500
-Received: from ug-out-1314.google.com ([66.249.92.172]:43000 "EHLO
+	id S964852AbXCBTit (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 14:38:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964982AbXCBTit
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 14:38:49 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:51262 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965217AbXCBTcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 14:32:10 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so793852uga
-        for <git@vger.kernel.org>; Fri, 02 Mar 2007 11:32:08 -0800 (PST)
+	with ESMTP id S964852AbXCBTis (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 14:38:48 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so795426uga
+        for <git@vger.kernel.org>; Fri, 02 Mar 2007 11:38:46 -0800 (PST)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=i9f3A2xx95NZvHkfunPVloT/eZcDwZN8WQFSU/bpT/DT5iMtkGsDAFHqHhF1Y7/sIT/MmjDDcp0RXynBBDFrkBRNhKS7htr3AFVxaALfOIigwYxnRFwJ8GuOd8iL0T3ZF0c/mjjePMQSK/72x02uakwPpJANYsjjtS81iHTffkg=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=j5o5CfmbWaFP709tbj2WVGaJoOPW1ijxZt9fmJ8T6E8bXSKP3juVaCB084sEJoxQws0srZgBYvgB2P5rfUk3ZDPGDyo7nfc1efitjYQF9GgNb2garzi6Mk/64F+aouiCXkn5zVuPShgYEFzu/X0I3tMpD/Os5TlSqaiHq9WDI1o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=qDyoOUUFLI4oMNEj/TPNNFUpAR3ZBkJQ1qDtfg0+bvI6JnXiRWIzryOVK48DyKFE0BkggX/n/L6n6KMuLNG7A2ySxHWoLuUrPUBPUyrhjKnvvTO0NJy3Q2xcwvNektoN0OmS+HPabliXpyJuzpmY6Q//DM0hgVEkE6YZwAAnnuM=
-Received: by 10.67.96.14 with SMTP id y14mr3837560ugl.1172863928784;
-        Fri, 02 Mar 2007 11:32:08 -0800 (PST)
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Iq1NZGDzz3gvplAdQf1uHEL6vfwlKjMgDiR7GMZ3zaaUdhJWID9Bu3bDNnOS1hE4Y9FwUCPHV2RepXWoHUBUCfxar9UtpTUr3PoPKB6OiIZES2i9REwsA7NPi9oqsnR2epFDVab+NVu6cX1Wx0B/zk4I+H6QDU0bjwCZNsgT2zU=
+Received: by 10.67.119.9 with SMTP id w9mr3858746ugm.1172864326882;
+        Fri, 02 Mar 2007 11:38:46 -0800 (PST)
 Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id j34sm2818224ugc.2007.03.02.11.32.06;
-        Fri, 02 Mar 2007 11:32:06 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org>
-X-TUID: 2184829c0ae518e5
-X-UID: 282
-X-Length: 2035
+        by mx.google.com with ESMTP id e23sm3390715ugd.2007.03.02.11.38.44;
+        Fri, 02 Mar 2007 11:38:45 -0800 (PST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <E246B7BC-9C82-4F4E-93F0-60B3F1CA54F1@silverinsanity.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41240>
 
-Linus noticed:
+On Friday 2007, March 02, Brian Gernhardt wrote:
 
---- >8 ---
-it should just avoid git-rev-parse these days and do
+> I'm sorry, I was assuming that information on what to do with each
+> attribute would be in the config file while a majority of the
+> attribute information was in an in-tree file.  I was actually
+> assuming:
 
-  git rev-list --pretty $newrev --not --all
+It's definitely in the .gitattributes file, but is also optionally in 
+the config as well.  This means that a user can always override 
+something locally - i.e. they're always in control of their own 
+repository, even when they disagree with upstream (perhaps).
 
-instead. And quite frankly, rather than "git rev-list --pretty", there's
-no real reason not to do
+> .git/config:
+> [attribute "image"]
+>     show = ...
+>     merge = ...
+>
+> With the ability to have additional "path =" entries for *local*
+> overrides/additions.  Storing the handler information in
 
-  git log $newrev --not --all
---- 8< ---
+That's almost exactly it; but it makes the assumption that each 
+attribute will have one unique handler.  Separating them means that 
+multiple attributes can use one handler (or set of handlers).
 
-This patch makes those changes.
+> the .gitattributes is one of the worst things you could do, IMHO.  It
+> assumes that people will have a homogenous environment to develop in,
 
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
----
- templates/hooks--update |    7 +++----
- 1 files changed, 3 insertions(+), 4 deletions(-)
+Oh definitely.  This is one thing that everybody absolutely agrees on.  
+The in-tree file /only/ adds attributes and never says what effect 
+those attributes have.
 
-diff --git a/templates/hooks--update b/templates/hooks--update
-index 2a707e5..f580360 100644
---- a/templates/hooks--update
-+++ b/templates/hooks--update
-@@ -148,7 +148,7 @@ case "$refname_type" in
- 			# This shows all log entries that are not already covered by
- 			# another ref - i.e. commits that are now accessible from this
- 			# ref that were previously not accessible
--			git-rev-parse --not --all | git-rev-list --stdin --pretty $newrev
-+			git log $newrev --not --all
- 			echo $LOGEND
- 		else
- 			# oldrev is valid
-@@ -165,7 +165,7 @@ case "$refname_type" in
- 			baserev=$(git-merge-base $oldrev $newrev)
- 
- 			# Commit with a parent
--			for rev in $(git-rev-parse --not --all | git-rev-list --stdin $newrev ^$baserev)
-+			for rev in $(git-rev-list $newrev ^$baserev --not --all)
- 			do
- 				revtype=$(git-cat-file -t "$rev")
- 				echo "       via  $rev ($revtype)"
-@@ -190,8 +190,7 @@ case "$refname_type" in
- 			fi
- 			echo ""
- 			echo $LOGBEGIN
--			git-rev-parse --not --all |
--			git-rev-list --stdin --pretty $newrev ^$baserev
-+			git log $newrev ^$baserev --not --all
- 			echo $LOGEND
- 			echo ""
- 			echo "Diffstat:"
+
+
+Andy
+
 -- 
-1.5.0.rc4.gb4d2
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
