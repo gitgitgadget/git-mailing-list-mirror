@@ -1,67 +1,53 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Git checkout preserve timestamp?
-Date: Fri, 2 Mar 2007 17:21:36 +0100
-Message-ID: <20070302162136.GA9593@diana.vm.bytemark.co.uk>
-References: <17895.18265.710811.536526@lisa.zopyra.com> <20070302091426.GA2605@diana.vm.bytemark.co.uk> <17896.9631.316001.869157@lisa.zopyra.com> <Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
+Subject: Re: [PATCH] Add git-config --remove-section, document --rename-section
+Date: Fri, 02 Mar 2007 17:29:12 +0100
+Message-ID: <45E850D8.4040306@lu.unisi.ch>
+References: <es66vt$jej$1@sea.gmane.org> <Pine.LNX.4.63.0703012344270.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45E7DDB5.9060009@lu.unisi.ch> <Pine.LNX.4.63.0703021220420.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45E814D9.7020104@lu.unisi.ch> <Pine.LNX.4.63.0703021640440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Reply-To: bonzini@gnu.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 02 17:22:19 2007
+X-From: git-owner@vger.kernel.org Fri Mar 02 17:29:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNAWA-0000Gx-Cj
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 17:22:02 +0100
+	id 1HNAdF-00039z-Di
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 17:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992580AbXCBQVr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 2 Mar 2007 11:21:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992582AbXCBQVr
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 11:21:47 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4947 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992580AbXCBQVq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 11:21:46 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HNAVk-0002Wk-00; Fri, 02 Mar 2007 16:21:36 +0000
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S2992588AbXCBQ3S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 11:29:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992584AbXCBQ3R
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 11:29:17 -0500
+Received: from server.usilu.net ([195.176.178.200]:16064 "EHLO mail.usilu.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S2992589AbXCBQ3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 11:29:17 -0500
+Received: from [192.168.76.141] ([192.168.76.141] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 2 Mar 2007 17:29:13 +0100
+User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+In-Reply-To: <Pine.LNX.4.63.0703021640440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-OriginalArrivalTime: 02 Mar 2007 16:29:13.0520 (UTC) FILETIME=[E9ED6B00:01C75CE7]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41226>
 
-On 2007-03-02 16:18:41 +0100, Johannes Schindelin wrote:
+> 	if (buf[i] == '[') {
+> 		if (section_name_match(&buf[i + 1], old_name) {
+> 			if (new_name == NULL)
+> 				remove = 1;
+> 			else
+> 				/* write new section */
+> 			continue;
+> 		}
+> 		remove = 0;
+> 	}
+> 	if (!remove)
+> 		/* write buf */
 
-> On Fri, 2 Mar 2007, Bill Lear wrote:
->
-> > On Friday, March 2, 2007 at 10:14:26 (+0100) Karl Hasselstr=F6m
-> > writes:
->
-> > > Of course, the proper fix is to use a make-like tool that uses
-> > > content hashes as well as timestamps to decide if a file has
-> > > been updated ...
-> >
-> > I like this idea...
->
-> I don't like it at all. The proper fix is to _not_ change the
-> contents of the current working directory, if you don't want to
-> change them to begin with.
+Try doing this and you'll see that the 8-character indentation makes it pretty hard. :-)
 
-Well, in a sense, yes. Not overwriting the current state when all you
-want to do is peek at some other state is obviously the better fix of
-the two.
-
-However, given that your file timestamps have been bumped (without
-file content changes), it's a performance bug in your make tool if
-this causes it to needlessly rebuild half the known universe. (Fixing
-the bug by using content hashes to detect changes may or may not be a
-good trade-off, depending on your workflow.)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Paolo
