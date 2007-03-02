@@ -1,92 +1,83 @@
-From: Simon Josefsson <simon@josefsson.org>
-Subject: Re: [PATCH] Add --pretty=changelog
-Date: Fri, 02 Mar 2007 11:15:03 +0100
-Message-ID: <87abywrly0.fsf@latte.josefsson.org>
-References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<87y7mhrnrc.fsf@latte.josefsson.org>
-	<Pine.LNX.4.63.0703011912090.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<87hct4roqa.fsf@latte.josefsson.org>
-	<7vejo8ezde.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: gitweb not friendly to firefox?
+Date: Fri, 02 Mar 2007 02:17:31 -0800
+Message-ID: <7vabyweypw.fsf@assigned-by-dhcp.cox.net>
+References: <989B956029373F45A0B8AF02970818902DA81B@zch01exm26.fsl.freescale.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 02 11:15:27 2007
+Cc: "Jakub Narebski" <jnareb@gmail.com>, <rea-git@codelabs.ru>,
+	"Raimund Bauer" <ray@softwarelandschaft.com>, <git@vger.kernel.org>
+To: "Li Yang-r58472" <LeoLi@freescale.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 11:17:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HN4nO-0001ug-S4
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 11:15:27 +0100
+	id 1HN4pT-0002s5-TO
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 11:17:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933303AbXCBKPV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 05:15:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1423003AbXCBKPV
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 05:15:21 -0500
-Received: from 178.230.13.217.in-addr.dgcsystems.net ([217.13.230.178]:46594
-	"EHLO yxa.extundo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1423002AbXCBKPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 05:15:19 -0500
-Received: from extundo.com (yxa.extundo.com [217.13.230.178])
-	(authenticated bits=0)
-	by yxa.extundo.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l22AF3mT000613
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 2 Mar 2007 11:15:06 +0100
-OpenPGP: id=B565716F; url=http://josefsson.org/key.txt
-X-Hashcash: 1:22:070302:junkio@cox.net::JyW7TFFdIFwNcRP7:0r8h
-X-Hashcash: 1:22:070302:git@vger.kernel.org::urwXVqxL0Snw3mtV:tOb
-X-Hashcash: 1:22:070302:johannes.schindelin@gmx.de::XYs968dqDmC9dRGw:ZxLn
-In-Reply-To: <7vejo8ezde.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Fri\, 02 Mar 2007 02\:03\:25 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.94 (gnu/linux)
-X-Spam-Status: No, score=-0.7 required=4.0 tests=AWL,BAYES_50 autolearn=ham 
-	version=3.1.1
-X-Spam-Checker-Version: SpamAssassin 3.1.1 (2006-03-10) on yxa-iv
-X-Virus-Scanned: ClamAV version 0.88.2, clamav-milter version 0.88.2 on yxa.extundo.com
-X-Virus-Status: Clean
+	id S933299AbXCBKRd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 05:17:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933307AbXCBKRd
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 05:17:33 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:54823 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933299AbXCBKRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 05:17:32 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070302101732.MSDA748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 2 Mar 2007 05:17:32 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id VmHX1W00C1kojtg0000000; Fri, 02 Mar 2007 05:17:32 -0500
+In-Reply-To: <989B956029373F45A0B8AF02970818902DA81B@zch01exm26.fsl.freescale.net>
+	(Li Yang-r's message of "Fri, 2 Mar 2007 17:36:36 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41181>
 
-Junio C Hamano <junkio@cox.net> writes:
+"Li Yang-r58472" <LeoLi@freescale.com> writes:
 
-> Simon Josefsson <simon@josefsson.org> writes:
+> Hi Jakub,
 >
->> The problem here is that CVS insert '*** empty log message ***' when
->> you didn't supply a log message, and doing something intelligent with
->> such logs would be useful.
+> Problem sovled, using the following patch.  I'm not an expert of perl,
+> so I don't know if it is problem of the gitweb or problem with my perl
+> environment.  My environment is perl-5.8.0 and perl-CGI-2.81.
 >
-> If that is indeed the case then I suspect that cvs-to-git
-> conversion should know about it and strip the artificial
-> string.
-
-Yes, actually, that seems like a better solution.
-
-Btw, there is a custom to work around cvs translating empty log
-messages into '*** empty log message ***' strings, and that is to
-commit a log consisting of '.'.  Translating both of those cvs log
-messages into a '' git log message, during cvs-import, seems like a
-useful change.
-
->> But I want more than the oneline comment in the ChangeLog?  There is
->> no size limit on ChangeLog messages, and having as much information as
->> possible available is better.
+> Signed-off-by: Li Yang<leoli@freecale.com>
+> ---
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 653ca3c..8c9a291 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -591,7 +591,7 @@ sub esc_html ($;%) {
+>         my %opts = @_;
 >
-> I think this was purely underspecification when your request was
-> passed to Johannes.
+>         $str = to_utf8($str);
+> -       $str = escapeHTML($str);
+> +       $str = $cgi->escapeHTML($str);
+>         if ($opts{'-nbsp'}) {
+>                 $str =~ s/ /&nbsp;/g;
+>         }
 >
-> I've merged Johannes's gnucl series to 'next' but haven't pushed
-> out, so I'll revert it.
 
-Sorry for the trouble!
+This is puzzling....
 
-Also thanks, Johannes, for working so quickly on this.  Seeing the
-first version of the ChangeLog output from your patched git allowed me
-to realize that the imported cvs history seemed ok.  After replacing
-'cvs2cl' and 'cvsco' I couldn't find any other more cvs-specific
-features in the project.  I have just released the first version of
-libtasn1 from git instead of cvs.  More projects will follow...
+ (1) we have two call sites of escapeHTML(), but your patch
+     touches only one.
 
-/Simon
+ (2) we do "use CGI qw(:standard :escapeHTML -nosticky);"
+     upfront, presumably after doing this when we say
+     escapeHTML() it means the same as CGI::escapeHTML().
+
+ (3) we do "$cgi = new CGI" upfront.
+
+So I am wondering how the patch can have any effect...
+
+I am not saying that I do not believe you when you say the patch
+fixes the problem for you.  I just do not understand why and I
+hate not knowing why something works.
