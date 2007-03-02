@@ -1,63 +1,81 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: gitweb not friendly to firefox?
-Date: Thu, 01 Mar 2007 22:51:06 -0800
-Message-ID: <7v1wk8i1et.fsf@assigned-by-dhcp.cox.net>
-References: <7v4pp4ntpo.fsf@assigned-by-dhcp.cox.net>
-	<989B956029373F45A0B8AF02970818902DA7E4@zch01exm26.fsl.freescale.net>
+From: Paolo Bonzini <paolo.bonzini@gmail.com>
+Subject: Re: [PATCH] defaults for where to merge from (take 3, inline)
+Date: Fri, 02 Mar 2007 09:10:44 +0100
+Message-ID: <45E7DC04.5010701@lu.unisi.ch>
+References: <es450f$d58$1@sea.gmane.org> <Pine.LNX.4.63.0703010221000.22628@wbgn013.biozentrum.uni-wuerzburg.de> <81b0412b0702282355i176ad7e5t7b9e417b27e524fb@mail.gmail.com> <45E68897.8000607@lu.unisi.ch> <81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com> <45E68EDE.2090405@lu.unisi.ch> <81b0412b0703010033w2e1079a3l6ac6e38c59bdefd5@mail.gmail.com> <45E69297.8070001@lu.unisi.ch> <81b0412b0703010059w52a33b54n4d3c25ada6b96369@mail.gmail.com> <45E69EEE.8070905@lu.unisi.ch> <81b0412b0703010212w5367c8cek51f22e9098f8e22f@mail.gmail.com> <7vvehls1h9.fsf@assigned-by-dhcp.cox.net> <45E70041.1030705@lu.unisi.ch> <Pine.LNX.4.63.0703012240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <rea-git@codelabs.ru>,
-	"Raimund Bauer" <ray@softwarelandschaft.com>,
-	<git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>
-To: "Li Yang-r58472" <LeoLi@freescale.com>
-X-From: git-owner@vger.kernel.org Fri Mar 02 07:51:13 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 02 09:10:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HN1bl-0003Im-2h
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 07:51:13 +0100
+	id 1HN2qt-0004RT-JM
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 09:10:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422975AbXCBGvJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 01:51:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422976AbXCBGvJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 01:51:09 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55049 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422975AbXCBGvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 01:51:08 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070302065107.LRST24587.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 2 Mar 2007 01:51:07 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Vir61W00A1kojtg0000000; Fri, 02 Mar 2007 01:51:07 -0500
-In-Reply-To: <989B956029373F45A0B8AF02970818902DA7E4@zch01exm26.fsl.freescale.net>
-	(Li Yang-r's message of "Fri, 2 Mar 2007 14:47:59 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932770AbXCBIKw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 03:10:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932776AbXCBIKw
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 03:10:52 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:58946 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932770AbXCBIKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 03:10:51 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so1199689nfa
+        for <git@vger.kernel.org>; Fri, 02 Mar 2007 00:10:49 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=FlOYVcEax8oMAGmWlTVTF1pUCq5Sh9EfVz3ZtQFo7SxEhAKjjC4d9lmdPvgIV16DC86xx2b5XCXDz8JxVq4C7UkGaPAcReRiy3i69F9c15fEAWjK0fAYjv+bEqRHKP/wVvcEX/ecJRvykEAA/NyGDvplZLSio6dufdTTm1a5AY0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=AlqWVlts/7rJiBgXQ2WDKVbtJ3zHVJ3kXXS73j92e2kZi5sIUBAHnmez9rqvddKBVc/dC0Sx18+gLaKQvNCEmlpuRXZeWRU2XAJ+5hfMGhrQD9YeMh2NG0p5zCqlcwL1xsZruGjQhByXrdVH001WQ0U/AVnCmxB7ljHHak1jkiw=
+Received: by 10.49.27.11 with SMTP id e11mr7165506nfj.1172823049710;
+        Fri, 02 Mar 2007 00:10:49 -0800 (PST)
+Received: from ?192.168.68.211? ( [195.176.178.209])
+        by mx.google.com with ESMTP id y6sm4081036mug.2007.03.02.00.10.47;
+        Fri, 02 Mar 2007 00:10:48 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
+In-Reply-To: <Pine.LNX.4.63.0703012240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41163>
 
-"Li Yang-r58472" <LeoLi@freescale.com> writes:
 
->> > Yes, you are right.  But why gitweb didn't do that for me?  I
-> observed
->> > that some early version of gitweb doesn't have this problem.  Is it
->> > possible that some new change caused this?
->> 
->> It's very possible.
->
-> Well, I had found out that the escapeHTML() is not functioning on my
-> server.  It leaves the "<", ">", "@" unchanged.  Does anyone have a clue
-> about it?  I'm using Redhat 9.0 full installation.
+> please don't take my comments as insults or even strict rules. It is 
+> purely for your consideration. (I say this because I haven't seen you so 
+> often on this list, so you might not know that discussions about patches 
+> are sometimes, erm, lively...)
 
-I am not sure offhand if escapeHTML implementation is wrong or
-the call site is calling escapeHTML when it should be using some
-other kinds of escape.
+I absolutely haven't taken any of these comments in the thread as insults (the only thing I found a little dubious, was some usage of uppercase), and I got a lot of constructive criticism that outweighed the "lively" tone.  And as a mistake on my part, I probably should have lurked a bit longer than I did.
 
-The person who knows about this issue the best, if I have to
-guess, would be Jakub Narebski.
+>> +static void register_branch_pull (const char *name, const char *remote_name)
+> 
+> It is not yet remote_name, right? it is branch_name. You extract the 
+> remote_name by finding the first slash.
+
+Yeah, it's a remote_branch_name in fact.
+
+> I'd use "char key[1024], value[1024]" instead, erroring out if one of the 
+> buffers are too small. It's not like you have to be memory efficient, and 
+> it is easier to read.
+
+Ok.
+
+>> +	remote_value[slash - remote_name] = 0;
+> 
+> You should check if slash == NULL and error out before using it.
+
+remote_name is of the form "REMOTE/BRANCH", because it comes from dwim_ref's output after stripping "refs/remotes/" from the beginning.
+
+> Yes, that is how I imagined it. The rest of your patch looks perfect to 
+> me.
+
+I will submit again with the requested changes.  I guess the body of this message is too long to become a "cover letter".
+
+Paolo
