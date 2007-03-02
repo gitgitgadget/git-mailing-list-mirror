@@ -1,85 +1,68 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH, 4th version] git-branch: register where to merge from,
-   when branching off a remote branch
-Date: Fri, 2 Mar 2007 20:06:44 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703022005080.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <es450f$d58$1@sea.gmane.org>
- <Pine.LNX.4.63.0703010221000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0702282355i176ad7e5t7b9e417b27e524fb@mail.gmail.com>
- <45E68897.8000607@lu.unisi.ch> <81b0412b0703010010o24513f60x937b5af52362e0c8@mail.gmail.com>
- <45E68EDE.2090405@lu.unisi.ch> <81b0412b0703010033w2e1079a3l6ac6e38c59bdefd5@mail.gmail.com>
- <45E69297.8070001@lu.unisi.ch> <81b0412b0703010059w52a33b54n4d3c25ada6b96369@mail.gmail.com>
- <45E69EEE.8070905@lu.unisi.ch> <81b0412b0703010212w5367c8cek51f22e9098f8e22f@mail.gmail.com>
- <7vvehls1h9.fsf@assigned-by-dhcp.cox.net> <45E70041.1030705@lu.unisi.ch>
- <Pine.LNX.4.63.0703012240210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45E7DC04.5010701@lu.unisi.ch> <45E7E53E.5020704@gnu.org>
- <7vtzx4ezvm.fsf@assigned-by-dhcp.cox.net> <45E8072A.2020303@lu.unisi.ch>
- <Pine.LNX.4.63.0703021647560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45E851F2.6010405@lu.unisi.ch>
+Subject: Re: [PATCH/RFC] statplot: a tool for mining repository statistics.
+Date: Fri, 2 Mar 2007 20:10:06 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703022008550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070301072953.GA8730@spearce.org>
+ <81b0412b0703010158i1a3963f4wabda2f72c1fd0bc4@mail.gmail.com>
+ <20070301183004.GB8858@spearce.org> <es9qf4$cj0$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paolo Bonzini <paolo.bonzini@gmail.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: bonzini@gnu.org
-X-From: git-owner@vger.kernel.org Fri Mar 02 20:07:01 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-79230542-1172862606=:22628"
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 20:10:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HND5p-0000ne-8o
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 20:07:01 +0100
+	id 1HND8w-00023Q-Gx
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 20:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964932AbXCBTGu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 14:06:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965069AbXCBTGu
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 14:06:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53515 "HELO mail.gmx.net"
+	id S965069AbXCBTKK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 14:10:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965143AbXCBTKK
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 14:10:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41676 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964932AbXCBTGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 14:06:46 -0500
-Received: (qmail invoked by alias); 02 Mar 2007 19:06:45 -0000
-X-Provags-ID: V01U2FsdGVkX18N2K4zKBgNzGqRV4ggdpCcWkWbJdDs88XXNagRI9
-	9nH+F8DzqHbKvN
+	id S965069AbXCBTKI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 14:10:08 -0500
+Received: (qmail invoked by alias); 02 Mar 2007 19:10:07 -0000
+X-Provags-ID: V01U2FsdGVkX19DE0Ab+v5DLwaqZlNm4TZezwDHbpofxYUisbSmgN
+	5oo422I3xWoAAW
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45E851F2.6010405@lu.unisi.ch>
+In-Reply-To: <es9qf4$cj0$1@sea.gmane.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41235>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+---1148973799-79230542-1172862606=:22628
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Fri, 2 Mar 2007, Paolo Bonzini wrote:
+On Fri, 2 Mar 2007, Jakub Narebski wrote:
 
-> >>>> +	else if (dwim_ref(start_name, strlen(start_name), sha1, &real_ref))
-> >>>> +		remote = !prefixcmp(real_ref, "refs/remotes/");
-> >>>  - (pure question) What happens if dwim_ref() returns more than one?
-> >> Then, real_ref is the one matching sha1.
-> > 
-> > Which one ;-)
+> Shawn O. Pearce wrote:
 > 
-> Matching "the variable named" sha1. :-)
+> > Horribly simple code.  Maybe too dumb for inclusion in git.git.
 > 
-> > What Junio tried to get at: if you have "refs/heads/my" and 
-> > "refs/remotes/origin/my", dwim_ref("my", ...) returns 2 (or even more, 
-> > if you have other refs ending in "/my").
-> 
-> But the sha1 and the real_ref are always consistent.  If I get 
-> refs/heads/my (and a non-remote will always override the remote), the 
-> sha1 is non remote.  If I get refs/remotes/origin/my (which triggers the 
-> magic), the sha1 is remote.
+> Perhaps it would be better to include it (first) in contrib/ section, 
+> then? It looks more like contrib, by the way, than something than should 
+> be in git.git core...
 
-Okay, but you can have "refs/remotes/origin/my" and 
-"refs/remotes/paolo/my".
+It depends not only on libgit.a, but also on being a builtin. I actually 
+_like_ writing builtins better than non-builtins, since the infrastructure 
+is so simple.
 
-> Still, let's put this patch on hold, I have to understand more about git 
-> before proposing something that is clearly beyond my knowledge (as the 
-> criticism shows).
-
-I think you are doing fine. Since there is a lot of discussion about this 
-feature, it does clearly not fail the mark. A little bit more work, and it 
-is ready for inclusion IMHO.
+If now only a unified option parser would appear out of the void, that'd 
+be perfect.
 
 Ciao,
 Dscho
+
+---1148973799-79230542-1172862606=:22628--
