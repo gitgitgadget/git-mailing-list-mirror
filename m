@@ -1,53 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Google Summer of Code 2007
-Date: Fri, 2 Mar 2007 21:36:54 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703022134460.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070225075917.GC1676@spearce.org> <200702280842.08279.andyparkins@gmail.com>
- <vpq4pp6r6vw.fsf@olympe.imag.fr>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Remove use of git-rev-parse and replace git-rev-list
+ --pretty with git-log
+Date: Fri, 2 Mar 2007 12:48:25 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703021246480.3953@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org>
+ <200703021929.20969.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Mar 02 21:37:01 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 02 21:48:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNEUt-0005LG-Iz
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 21:36:59 +0100
+	id 1HNEg3-00026J-IE
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 21:48:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933364AbXCBUg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 15:36:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932961AbXCBUg4
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 15:36:56 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52196 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933364AbXCBUg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 15:36:56 -0500
-Received: (qmail invoked by alias); 02 Mar 2007 20:36:54 -0000
-X-Provags-ID: V01U2FsdGVkX1+9XJUjfUS9rNxbMHIH8sdfXeW6hoF8vDOccpYJ5n
-	S4IPW1UnWXq6wf
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <vpq4pp6r6vw.fsf@olympe.imag.fr>
-X-Y-GMX-Trusted: 0
+	id S965111AbXCBUs2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 15:48:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965113AbXCBUs2
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 15:48:28 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:40840 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965111AbXCBUs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 15:48:28 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l22KmQq8001254
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 2 Mar 2007 12:48:26 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l22KmPJN018568;
+	Fri, 2 Mar 2007 12:48:25 -0800
+In-Reply-To: <200703021929.20969.andyparkins@gmail.com>
+X-Spam-Status: No, hits=-2.447 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41245>
 
-Hi,
 
-On Wed, 28 Feb 2007, Matthieu Moy wrote:
 
-> It seems the windows port somewhat has the status "we want it but I'm 
-> not going to do it" for most git contributors.
+On Fri, 2 Mar 2007, Andy Parkins wrote:
+>  			# Commit with a parent
+> -			for rev in $(git-rev-parse --not --all | git-rev-list --stdin $newrev ^$baserev)
+> +			for rev in $(git-rev-list $newrev ^$baserev --not --all)
 
-That is not really fair, is it? _Most_ git contributors have helped 
-Windows users in one way or another (why don't we have a symlink()ed HEAD 
-anymore, hmm?).
+Looks fine, and I don't think it's worth changing, but you can avoid the 
+extra caret by just moving "$baserev" to after the "--not", ie writing the 
+thing as
 
-However, I do have the impression that the percentage of people in 
-complain-only mode is way lower in the non-Windows camp.
+	git-rev-list $newrev --not $baserev --all
 
-Ciao,
-Dscho
+instead if you want to.
+
+> -			git-rev-parse --not --all |
+> -			git-rev-list --stdin --pretty $newrev ^$baserev
+> +			git log $newrev ^$baserev --not --all
+
+And that's true here too.
+
+		Linus
