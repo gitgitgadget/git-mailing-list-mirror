@@ -1,86 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: identifying blobs (was Re: Memory overrun in http-push.c)
-Date: Fri, 2 Mar 2007 15:10:30 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0703021505380.3953@woody.linux-foundation.org>
-References: <20070228151516.GC57456@codelabs.ru> <200703011040.35971.andyparkins@gmail.com>
- <200702281541.41164.andyparkins@gmail.com> <20070301051323.GG57456@codelabs.ru>
- <81b0412b0703010015l5c91c68pd4748ae379db98bb@mail.gmail.com>
- <7vslcpux62.fsf@assigned-by-dhcp.cox.net> <20070301120042.GD63606@codelabs.ru>
- <es9cnt$egh$1@sea.gmane.org> <Pine.LNX.4.63.0703021617040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vr6s7dzrh.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Remove use of git-rev-parse and replace git-rev-list --pretty with git-log
+Date: Fri, 02 Mar 2007 15:10:39 -0800
+Message-ID: <7vbqjbdyxc.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org>
+	<200703021929.20969.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Mar 03 00:10:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 03 00:11:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNGte-0007Qc-SF
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 00:10:43 +0100
+	id 1HNGuF-0007gD-6P
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 00:11:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992716AbXCBXKj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 18:10:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992720AbXCBXKj
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 18:10:39 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:46181 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992716AbXCBXKi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 18:10:38 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l22NAUq8005523
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 2 Mar 2007 15:10:31 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l22NAUdl021896;
-	Fri, 2 Mar 2007 15:10:30 -0800
-In-Reply-To: <7vr6s7dzrh.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.456 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S2992723AbXCBXK5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 18:10:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992722AbXCBXK5
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 18:10:57 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:54732 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992720AbXCBXKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 18:10:55 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070302231055.MCHL1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 2 Mar 2007 18:10:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id VzAp1W0051kojtg0000000; Fri, 02 Mar 2007 18:10:55 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41258>
 
+Andy Parkins <andyparkins@gmail.com> writes:
 
+> Linus noticed:
+>
+> --- >8 ---
+> it should just avoid git-rev-parse these days and do
+>
+>   git rev-list --pretty $newrev --not --all
+>
+> instead. And quite frankly, rather than "git rev-list --pretty", there's
+> no real reason not to do
+>
+>   git log $newrev --not --all
+> --- 8< ---
+>
+> This patch makes those changes.
+>
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 
-On Fri, 2 Mar 2007, Junio C Hamano wrote:
-> 
-> It wasn't that identifying the commit that contained the version
-> of the file was not needed.  It is just there already is a way
-> to do so, and "to create git command" turns out to be
-> unnecessary.  Something like:
-> 
-> 	$ hash=`git hash-object --stdin <$file_in_question`
-> 	$ git log -z --raw -r --abbrev=40 |
->           grep -z '^:[0-7][0-7]* [0-7][0-7]* [0-9a-f][0-9a-f]* '"$hash"'
+Please look at your Subject: line above and ponder how it would
+look in the next issue of "What's cooking in git.git".  Do I
+have to spend extra brain cycles to go back to "git log --stat"
+and realize that this one only updates a sample hook script?
 
-That's not very nice, because if the blob is already in the *top* commit, 
-and isn't changed in a long long time, you'll not see it until it changes 
-(which is potentially at the root commit when it was introduced).
+Also, please don't do "--- >8 ---".  If you want to, please use
+two dashes; this is purely for technical reasons.
 
-So it's better to do something like
-
- - get the hash
-
-	hash=`git hash-object --stdin <$file_in_question`
-
- - see if it is in the current top of the tree
-
-	git ls-tree -r HEAD | cut -d3- | grep ^$hash
-
- - after that, start doing the backwards searching for things where it 
-   went away if it was there before (roughly your "git log -z ...")
-
-which should be fairly simple and straightforward.
-
-For extra bonus points, the script could be trivially written so that it 
-allows the user to specify a path limiter, so that you say "can you tell 
-me which version this blob existed in, but I only want to know about 
-drivers/scsi/ and include/scsi/"
-
-		Linus
+I'll massage the log message and move "^$base --not" around as
+Linus suggested, but next time please be a bit more careful.
