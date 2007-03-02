@@ -1,63 +1,63 @@
-From: Paolo Bonzini <paolo.bonzini@gmail.com>
-Subject: Re: [PATCH] Add git-config --remove-section, document --rename-section
-Date: Fri, 02 Mar 2007 09:17:57 +0100
-Message-ID: <45E7DDB5.9060009@lu.unisi.ch>
-References: <es66vt$jej$1@sea.gmane.org> <Pine.LNX.4.63.0703012344270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: bonzini@gnu.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] --amend Rename --pretty=changelog to --pretty=gnucl
+Date: Fri, 02 Mar 2007 00:49:54 -0800
+Message-ID: <7vslcoghcd.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.63.0702280258200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<alpine.LRH.0.82.0702272147590.29426@xanadu.home>
+	<Pine.LNX.4.63.0702281343200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Paolo Bonzini <bonzini@gnu.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Simon Josefsson <simon@josefsson.org>, junkio@cox.net
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 02 09:18:10 2007
+X-From: git-owner@vger.kernel.org Fri Mar 02 09:50:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HN2xr-0007vq-V0
-	for gcvg-git@gmane.org; Fri, 02 Mar 2007 09:18:08 +0100
+	id 1HN3Si-0006G9-23
+	for gcvg-git@gmane.org; Fri, 02 Mar 2007 09:50:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932865AbXCBISE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 2 Mar 2007 03:18:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932867AbXCBISE
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 03:18:04 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:2301 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932865AbXCBISB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Mar 2007 03:18:01 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1201269nfa
-        for <git@vger.kernel.org>; Fri, 02 Mar 2007 00:18:00 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=mwqbwEm4X6S8v7ixUlCGQbJIbNOmPlxb0ZDWuZ6rmqh20kSHhpYbe/oi3hyBDuJY+0QeuaRDcpHWKVdnpwbWB79Z96DQZNZJhSySTxXPXP9yPihEJi5bOBx4/ZGWImtkuqlWcbejr2wUYiRt+FOVvRQpZQfV+NXfFb7Nrzfije4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:reply-to:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
-        b=dSvh2hyfs0jbojUMUfMhcOdeejBM7Nyfu97CPTI5FFexx6d/cySvtZvQr249tCqoIkG9k9N+yN7RDRzJ7jK/vVreeywOoGRmK5fns4lAUMyZ/4ZFKZY7eaXiQ147EQJOoR+6KLaKZffpD0Qxh/MUooSQbUEBtUHfoB4y8XmoIqM=
-Received: by 10.49.93.13 with SMTP id v13mr7265979nfl.1172823480741;
-        Fri, 02 Mar 2007 00:18:00 -0800 (PST)
-Received: from ?192.168.68.211? ( [195.176.178.209])
-        by mx.google.com with ESMTP id y2sm2895788mug.2007.03.02.00.17.59;
-        Fri, 02 Mar 2007 00:17:59 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.9 (Macintosh/20061207)
-In-Reply-To: <Pine.LNX.4.63.0703012344270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1422681AbXCBIt5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 2 Mar 2007 03:49:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422699AbXCBIt5
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Mar 2007 03:49:57 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:38682 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422681AbXCBIt4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Mar 2007 03:49:56 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070302084955.NTGT2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 2 Mar 2007 03:49:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id Vkpv1W0021kojtg0000000; Fri, 02 Mar 2007 03:49:55 -0500
+In-Reply-To: <Pine.LNX.4.63.0702281343200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 28 Feb 2007 13:44:46 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41168>
 
+Is it just me or is your word wrapper misbehaving?  Notice the
+line that ends with read-cache.c, and the line the comes after
+it, in the sample output.
 
-> Am I right assuming that you copied rename_section(), and modified it to 
-> be remove_section()?
+$ ./git show -s --pretty=gnucl ':/convert object type h'
+2007-02-26  Nicolas Pitre <nico@cam.org>
 
-Yes, after extracting section_name_match.
-
-> How about modifying rename_section() so that if new_name == NULL, it 
-> removes the section?
-
-It's not so immediate, because rename_section has to print all the non-section lines anyway, while remove_section has to remove them too.  I agree though that there is some duplicate code in getting the filename to open.
-
-Thanks for writing the test, having an example will make my future work easier.
-
-Paolo
+        * archive-tar.c, archive-zip.c, blob.c, builtin-apply.c,
+          builtin-blame.c, builtin-cat-file.c, builtin-commit-tree.c,
+          builtin-for-each-ref.c, builtin-grep.c, builtin-log.c,
+          builtin-pack-objects.c, builtin-prune.c, builtin-reflog.c,
+          builtin-unpack-objects.c, cache.h, combine-diff.c, commit.c,
+          convert-objects.c, diff.c, entry.c, fast-import.c, http-push.c,
+          index-pack.c, merge-file.c, merge-recursive.c, merge-tree.c,
+          mktag.c, mktree.c, object.c, object.h, pack-check.c, read-cache.c
+           sha1_file.c, tag.c, tree-diff.c, tree.c, unpack-file.c: convert
+          object type handling from a string to a number
