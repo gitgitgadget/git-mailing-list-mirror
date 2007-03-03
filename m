@@ -1,89 +1,92 @@
-From: Raimund Bauer <ray007@gmx.net>
-Subject: RE: Problems with git cvsimport
-Date: Sat, 03 Mar 2007 13:31:37 +0100
-Message-ID: <1172925097.11109.25.camel@localhost>
-References: <000c01c75b3c$31f91000$0b0aa8c0@abf.local>
-	 <Pine.LNX.4.63.0703030129220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] --amend Rename --pretty=changelog to --pretty=gnucl
+Date: Sat, 03 Mar 2007 04:38:35 -0800
+Message-ID: <7v649icxis.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0702271621120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.63.0702280258200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<alpine.LRH.0.82.0702272147590.29426@xanadu.home>
+	<Pine.LNX.4.63.0702281343200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vslcoghcd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	Simon Josefsson <simon@josefsson.org>, junkio@cox.net
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 03 13:31:42 2007
+X-From: git-owner@vger.kernel.org Sat Mar 03 13:38:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNTOo-00070x-24
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 13:31:42 +0100
+	id 1HNTVY-0001YI-6G
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 13:38:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965512AbXCCMbj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Mar 2007 07:31:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965540AbXCCMbj
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 07:31:39 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60882 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965512AbXCCMbi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2007 07:31:38 -0500
-Received: (qmail invoked by alias); 03 Mar 2007 12:31:36 -0000
-X-Provags-ID: V01U2FsdGVkX19nRxQNp/Bnk1Pk0KNVB0c4krGOSYjBLWxay/jlvN
-	nD4s4NwyLECwif
-In-Reply-To: <Pine.LNX.4.63.0703030129220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: Evolution 2.8.1 
-X-Y-GMX-Trusted: 0
+	id S1030220AbXCCMih (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 07:38:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030225AbXCCMih
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 07:38:37 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:52130 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030220AbXCCMig (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 07:38:36 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070303123835.HBXV3546.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 3 Mar 2007 07:38:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id WCeb1W00L1kojtg0000000; Sat, 03 Mar 2007 07:38:36 -0500
+In-Reply-To: <7vslcoghcd.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 02 Mar 2007 00:49:54 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41291>
 
-On Sat, 2007-03-03 at 01:30 +0100, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 28 Feb 2007, Raimund Bauer wrote:
-> 
-> > $ git cvsimport -d :pserver:ray007@cvs.drupal.org:/cvs/drupal-contrib -C
-> > localizer -a contributions/modules/localizer
-> > Initialized empty Git repository in /home/ray/drupal/modules/localizer/.git/
-> > file 'CHANGELOG.txt; pre_rev:INITIAL; post_rev:1.1; dead:0; branch_point:0
-> > ' not found in hash
-> > fatal: refs/heads/origin: not a valid SHA1
-> > fatal: master: not a valid SHA1
-> 
-> This looks to me as if you did not cleanup after failed attempts. I would 
-> try this in a fresh directory. Actually, I did, and I think it worked, 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-I always tried with a new directory, that's not the reason.
+> Earlier, this code played dumb by outputting the file name and the comma
+> separately (to make it easier to determine when to output a colon
+> instead of the comma). This misguided code is fixed by this patch.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>
+> 	I know that this is a dead topic branch, but I did not want
+> 	to leave buggy code behind for future reference.
 
-I've just tried it out on my home-box, which is a ubuntu edgy x86
-installation, and git-cvsimport seems to work quite fine here.
+Huh?  How did you measure bugginess before and after the change?
 
-On our server, which is a suse 9.3 amd64 installation (with the latest
-suse updates for that version), I just can't get it to run. Currently I
-wonder how I got _any_ git-cvsimport to work there. Still the same error
-256 ...
+$ ./git show -s --pretty=gnucl ':/convert object type h'
+2007-02-26  Nicolas Pitre <nico@cam.org>
 
-How do I find out the minimum-version of tools I need to use
-git-cvsimport? I already know about cvsps and did install a current
-version there, but there seem to be some more dependencies ...
-Or could it be a 64-bit issue somewhere?
+* archive-tar.c, archive-zip.c, blob.c, builtin-apply.c, 
+          uiltin-blame.c, builtin-cat-file.c, builtin-commit-tree.c, 
+          uiltin-for-each-ref.c, builtin-grep.c, builtin-log.c, 
+          uiltin-pack-objects.c, builtin-prune.c, builtin-reflog.c, 
+          uiltin-unpack-objects.c, cache.h, combine-diff.c, commit.c, 
+          onvert-objects.c, diff.c, entry.c, fast-import.c, http-push.c, 
+          ndex-pack.c, merge-file.c, merge-recursive.c, merge-tree.c, 
+          ktag.c, mktree.c, object.c, object.h, pack-check.c, read-cache.c,
+          sha1_file.c, tag.c, tree-diff.c, tree.c, unpack-file.c: convert
+          object type handling from a string to a number
 
-'make test' says everything is fine.
 
-If you can point me in the some direction on how to debug this, I'll
-give it a try, currently I have no clue where to start.
+Perhaps you would want something like this...
 
-> too... Latest commit is
-> 
-> commit 8fc1b3decbe961925e3d043f5e03b10e2093d72b
-> Author: robertogerola <robertogerola>
-> Date:   Tue Feb 13 13:22:53 2007 +0000
-
-Yes, that looks good. Which means something on our server is the reason
-for git-cvsimport not working.
-
-Continuing  investigation ...
-
--- 
-best regards
-
-  Ray
+diff --git a/utf8.c b/utf8.c
+index ea23a6e..3a7b923 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -268,7 +268,9 @@ int print_wrapped_text(const char *text, int indent, int indent2, int width)
+ 			}
+ 			else {
+ 				putchar('\n');
+-				text = bol = space + 1;
++				if (isspace(*space))
++					space++;
++				text = bol = space;
+ 				space = NULL;
+ 				w = indent = indent2;
+ 			}
