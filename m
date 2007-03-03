@@ -1,53 +1,53 @@
-From: Larry Streepy <larry@lightspeed.com>
-Subject: git pull fails to exit with non-zero status after fatal error
-Date: Sat, 03 Mar 2007 10:45:53 -0600
-Message-ID: <45E9A641.8020002@lightspeed.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 03 17:43:30 2007
+From: Matthias Kestenholz <matthias@spinlock.ch>
+Subject: [PATCH] Fix git-gc usage note
+Date: Sat,  3 Mar 2007 18:28:14 +0100
+Message-ID: <11729428941652-git-send-email-matthias@spinlock.ch>
+Cc: git@vger.kernel.org, Matthias Kestenholz <matthias@spinlock.ch>
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Sat Mar 03 18:35:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNXKP-0002nJ-GI
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 17:43:25 +0100
+	id 1HNY8U-00005x-HF
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 18:35:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030679AbXCCQnW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Mar 2007 11:43:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030681AbXCCQnW
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 11:43:22 -0500
-Received: from mailhost.lightspeed.com ([12.44.179.187]:34026 "EHLO
-	lightspeed.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030679AbXCCQnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2007 11:43:22 -0500
-Received: from [72.177.124.81] (account larry HELO [127.0.0.1])
-  by lightspeed.com (CommuniGate Pro SMTP 5.0.9)
-  with ESMTPA id 3618117 for git@vger.kernel.org; Sat, 03 Mar 2007 08:41:32 -0800
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+	id S1030696AbXCCRfG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 12:35:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030695AbXCCRfG
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 12:35:06 -0500
+Received: from mail17.bluewin.ch ([195.186.18.64]:61434 "EHLO
+	mail17.bluewin.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030696AbXCCRfF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 12:35:05 -0500
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Mar 2007 12:35:05 EST
+Received: from spinlock.ch (83.79.116.217) by mail17.bluewin.ch (Bluewin 7.3.121)
+        id 45C31E1C0087C036; Sat, 3 Mar 2007 17:28:20 +0000
+Received: (nullmailer pid 17424 invoked by uid 1000);
+	Sat, 03 Mar 2007 17:28:14 -0000
+X-Mailer: git-send-email 1.5.0.2.844.gcba8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41305>
 
-We have just upgraded to 1.5 (don't know if this is specific to 1.5, but 
-just in case).  When I perform a git-pull on a working repo that has a 
-modified file, git pull refuses to do the pull, as shown below:
+Signed-off-by: Matthias Kestenholz <matthias@spinlock.ch>
+---
+ git-gc.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-$ git pull
-Updating b5d9263..506b347
-tools/Pvt/Pvt.py: needs update
-fatal: Entry 'tools/Pvt/Pvt.py' not uptodate. Cannot merge.
-$ echo $?
-0
-
-Notice the exit status of 0.  The driver scripts I use rely on a 
-non-zero status to send me email when the git-pull fails, but this case 
-eludes detection.
-
-I'm assuming this is a bug, but if it's intended behavior I'd like to 
-understand why it would use a 0 exit status after a issuing a fatal error.
-
-Thanks,
-Larry.
+diff --git a/git-gc.sh b/git-gc.sh
+index 1a45de5..436d7ca 100755
+--- a/git-gc.sh
++++ b/git-gc.sh
+@@ -4,7 +4,7 @@
+ #
+ # Cleanup unreachable files and optimize the repository.
+ 
+-USAGE='git-gc [--prune]'
++USAGE='[--prune]'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+ 
+-- 
+1.5.0.2.844.gcba8
