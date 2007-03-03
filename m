@@ -1,91 +1,51 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Cygwin and git 1.5.0
-Date: Sat, 03 Mar 2007 18:31:02 +0000
-Message-ID: <45E9BEE6.8000506@ramsay1.demon.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Cygwin and git 1.5.0
+Date: Sat, 3 Mar 2007 19:40:05 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703031938310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <45E9BEE6.8000506@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <junkio@cox.net>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
 	GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Mar 03 19:31:15 2007
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sat Mar 03 19:40:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNZ0k-0008CB-5F
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 19:31:14 +0100
+	id 1HNZ9r-00046S-S8
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 19:40:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030367AbXCCSbL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Mar 2007 13:31:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030368AbXCCSbL
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 13:31:11 -0500
-Received: from anchor-post-31.mail.demon.net ([194.217.242.89]:3254 "EHLO
-	anchor-post-31.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1030367AbXCCSbK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Mar 2007 13:31:10 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-31.mail.demon.net with esmtp (Exim 4.42)
-	id 1HNZ0Z-000CSL-6A; Sat, 03 Mar 2007 18:31:04 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1030370AbXCCSkI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 13:40:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030371AbXCCSkI
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 13:40:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55113 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030370AbXCCSkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 13:40:07 -0500
+Received: (qmail invoked by alias); 03 Mar 2007 18:40:05 -0000
+X-Provags-ID: V01U2FsdGVkX196DkhDaEx6fs0f5z9PVRtTo62p9n3MG+phbfb/bV
+	0u0E6o0qLjx9QL
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45E9BEE6.8000506@ramsay1.demon.co.uk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41313>
 
-Hi Junio,
+Hi,
 
-At the end of last year I finally bought a new laptop (yay!). Much to my
-surprise, I haven't yet got around to installing Linux (The Ubuntu live DVD
-is the only one I have found which "works"; but it's so *slow* as to be
-unusable, so I still don't know if all my h/w works with it).
+On Sat, 3 Mar 2007, Ramsay Jones wrote:
 
-However, almost the first thing I did was to install Cygwin, which I have been
-using on windows since about beta-20 (back in the days of cygnus solutions).
-Cygwin has its problems, but I could not use windows without it.
+> As I note in the [PATCH 2/6] email, I should have deleted that setting 
+> from the Makefile, rather than commenting it out, but I didn't have the 
+> energy to re-do all the commits/emails. ;-)
 
-So naturally I tried building git on Cygwin (copying my git repo over from
-my old Linux system). I have to say that, after some initial problems, it
-went rather well. (hint: don't use a working directory backed up from Linux
-on cygwin; "make clean" didn't - among other things!).
+In these cases, I (carefully) edit the diffs. In your case, I would have 
+deleted the line starting with "+", and would have decreased the last 
+number on the line starting with "@@" by 1.
 
-I recently upgraded git using the 1.5.0 tarball. (Yes, since I now have git on
-windows, where I can access the internet, I could clone the git repo directly.
-However, since I'm still on dial-up, I can't spare the bandwidth. Maybe I will
-try shallow clone sometime.)
-
-As far as git 1.5.0 is concerned, the build/test went with only minor problems.
-I had to disable test t4016-diff-quote.sh, because it used tabs and LFs in filenames.
-I note that Alex Riesen already sent you a patch to cover that, so I won't send
-another one.
-
-However, since I like to have "ALL_CFLAGS+= -Werror" in my config.mak file, I had
-to get rid of the gcc warnings. This resulted in the following patch series:
-
-[PATCH 1/6] Fix some "printf format" warnings.
-[PATCH 2/6] Unset (comment out) NO_C99_FORMAT on Cygwin.
-[PATCH 3/6] Fix a "label defined but unreferenced" warning.
-[PATCH 4/6] Fix an "implicit function definition" warning.
-[PATCH 5/6] Fix some "comparison is always true/false" warnings.
-[PATCH 6/6] Fix a "pointer type missmatch" warning.
-
-As I note in the [PATCH 2/6] email, I should have deleted that setting from the
-Makefile, rather than commenting it out, but I didn't have the energy to re-do
-all the commits/emails. ;-)
-
-The patches are against 1.5.0 tarball which, hopefully, is not so long ago as to
-make them impossible to apply. Also, I'm hoping that my mail client (thunderbird 1.5.0.2)
-has not caused any whitespace damage. (I can resend as attachments if required).
-
-Also, I noticed that some recent changes seem to have made NO_C99_FORMAT somewhat
-redundant. I _suspect_ that the unconditional #include-ing of the C99 headers
-<inttypes.h> and (therefore also) <stdint.h>, has made it necessary to use a
-compiler/library combination which has pretty good, if not full, C99 support.
-IOW, if it has those headers, it almost definitely supports the C99 printf format
-specifiers. For example, my old Linux system would not be able to compile the
-current git. (Has anybody tried on SunOS 5.8 and 5.9?)
-
-This is not a problem, but I do wonder if it was a conscious decision.
-
-All the Best,
-
-Ramsay Jones
+Hth,
+Dscho
