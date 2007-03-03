@@ -1,143 +1,99 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 1/2] Handle core.symlinks=false case in merge-recursive.
-Date: Sat, 3 Mar 2007 20:32:46 +0100
-Message-ID: <200703032032.47158.johannes.sixt@telecom.at>
+Subject: [PATCH 2/2] Tell multi-parent diff about core.symlinks.
+Date: Sat, 3 Mar 2007 20:38:00 +0100
+Message-ID: <200703032038.00928.johannes.sixt@telecom.at>
+References: <200703032032.47158.johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="us-ascii"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 03 20:34:29 2007
+X-From: git-owner@vger.kernel.org Sat Mar 03 20:47:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNZzu-0002SS-4x
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 20:34:26 +0100
+	id 1HNaCU-0008O7-KB
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 20:47:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030391AbXCCTeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Mar 2007 14:34:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030394AbXCCTeX
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 14:34:23 -0500
-Received: from smtp4.noc.eunet-ag.at ([193.154.160.226]:44225 "EHLO
-	smtp4.srv.eunet.at" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1030391AbXCCTeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2007 14:34:22 -0500
+	id S1030410AbXCCTrN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 14:47:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030412AbXCCTrN
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 14:47:13 -0500
+Received: from smtp1.noc.eunet-ag.at ([193.154.160.117]:52516 "EHLO
+	smtp1.noc.eunet-ag.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030410AbXCCTrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 14:47:12 -0500
 Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 552089781C
-	for <git@vger.kernel.org>; Sat,  3 Mar 2007 20:32:49 +0100 (CET)
+	by smtp1.noc.eunet-ag.at (Postfix) with ESMTP id AA8B336887
+	for <git@vger.kernel.org>; Sat,  3 Mar 2007 20:38:02 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id D418F3B47A
-	for <git@vger.kernel.org>; Sat,  3 Mar 2007 20:32:47 +0100 (CET)
+	by dx.sixt.local (Postfix) with ESMTP id 359663B47A
+	for <git@vger.kernel.org>; Sat,  3 Mar 2007 20:38:01 +0100 (CET)
 User-Agent: KMail/1.9.3
+In-Reply-To: <200703032032.47158.johannes.sixt@telecom.at>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41319>
 
-If the file system does not support symbolic links (core.symlinks=false),
-merge-recursive must write the merged symbolic link text into a regular
-file.
-
-While we are here, fix a tiny memory leak in the if-branch that writes
-real symbolic links.
+When core.symlinks is false, and a merge of symbolic links had conflicts,
+the merge result is left as a file in the working directory. A decision
+must be made whether the file is treated as a regular file or as a
+symbolic link. This patch treats the file as a symbolic link only if
+all merge parents were also symbolic links.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- merge-recursive.c         |    3 +-
- t/t6025-merge-symlinks.sh |   62 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 64 insertions(+), 1 deletions(-)
- create mode 100644 t/t6025-merge-symlinks.sh
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 397a7ad..f8be72e 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -570,7 +570,7 @@ static void update_file_flags(const unsigned char *sha,
- 		if (strcmp(type, blob_type) != 0)
- 			die("blob expected for %s '%s'", sha1_to_hex(sha), path);
+I'm not quite sure whether this patch is worth it. The only thing it seems
+to do is to avoid the mode change line (this is after a merge where 'symlink'
+had a conflict):
+
+without the patch:
+
+  $ git diff
+  diff --cc symlink
+  index 1a010b1,30d67d4..0000000
+  mode 120000,120000..100644
+  --- a/symlink
+  +++ b/symlink
+
+with the patch:
+
+  $ git diff
+  diff --cc symlink
+  index 1a010b1,30d67d4..0000000
+  --- a/symlink
+  +++ b/symlink
+
+
+ combine-diff.c |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+diff --git a/combine-diff.c b/combine-diff.c
+index 044633d..e6e3969 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -699,8 +699,18 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			 !fstat(fd, &st)) {
+ 			size_t len = st.st_size;
+ 			size_t sz = 0;
++			int is_file, i;
  
--		if (S_ISREG(mode)) {
-+		if (S_ISREG(mode) || (!has_symlinks && S_ISLNK(mode))) {
- 			int fd;
- 			if (mkdir_p(path, 0777))
- 				die("failed to create path %s: %s", path, strerror(errno));
-@@ -591,6 +591,7 @@ static void update_file_flags(const unsigned char *sha,
- 			mkdir_p(path, 0777);
- 			unlink(path);
- 			symlink(lnk, path);
-+			free(lnk);
- 		} else
- 			die("do not know what to do with %06o %s '%s'",
- 			    mode, sha1_to_hex(sha), path);
-diff --git a/t/t6025-merge-symlinks.sh b/t/t6025-merge-symlinks.sh
-new file mode 100644
-index 0000000..3c1a697
---- /dev/null
-+++ b/t/t6025-merge-symlinks.sh
-@@ -0,0 +1,62 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Johannes Sixt
-+#
+ 			elem->mode = canon_mode(st.st_mode);
++			/* if symlinks don't work, assume symlink if all parents
++			 * are symlinks
++			 */
++			is_file = has_symlinks;
++			for (i = 0; !is_file && i < num_parent; i++)
++				is_file = !S_ISLNK(elem->parent[i].mode);
++			if (!is_file)
++				elem->mode = canon_mode(S_IFLNK);
 +
-+test_description='merging symlinks on filesystem w/o symlink support.
-+
-+This tests that git-merge-recursive writes merge results as plain files
-+if core.symlinks is false.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success \
-+'setup' '
-+git-config core.symlinks false &&
-+> file &&
-+git-add file &&
-+git-commit -m initial &&
-+git-branch b-symlink &&
-+git-branch b-file &&
-+l=$(echo -n file | git-hash-object -t blob -w --stdin) &&
-+echo "120000 $l	symlink" | git-update-index --index-info &&
-+git-commit -m master &&
-+git-checkout b-symlink &&
-+l=$(echo -n file-different | git-hash-object -t blob -w --stdin) &&
-+echo "120000 $l	symlink" | git-update-index --index-info &&
-+git-commit -m b-symlink &&
-+git-checkout b-file &&
-+echo plain-file > symlink &&
-+git-add symlink &&
-+git-commit -m b-file'
-+
-+test_expect_failure \
-+'merge master into b-symlink, which has a different symbolic link' '
-+! git-checkout b-symlink ||
-+git-merge master'
-+
-+test_expect_success \
-+'the merge result must be a file' '
-+test -f symlink'
-+
-+test_expect_failure \
-+'merge master into b-file, which has a file instead of a symbolic link' '
-+! (git-reset --hard &&
-+git-checkout b-file) ||
-+git-merge master'
-+
-+test_expect_success \
-+'the merge result must be a file' '
-+test -f symlink'
-+
-+test_expect_failure \
-+'merge b-file, which has a file instead of a symbolic link, into master' '
-+! (git-reset --hard &&
-+git-checkout master) ||
-+git-merge b-file'
-+
-+test_expect_success \
-+'the merge result must be a file' '
-+test -f symlink'
-+
-+test_done
+ 			result_size = len;
+ 			result = xmalloc(len + 1);
+ 			while (sz < len) {
 -- 
 1.5.0.2.4.gdd4e4-dirty
