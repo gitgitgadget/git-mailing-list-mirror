@@ -1,99 +1,60 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Remove use of git-rev-parse and replace git-rev-list --pretty with git-log
-Date: Sat, 3 Mar 2007 08:25:16 +0000
-Message-ID: <200703030825.18378.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org> <200703021929.20969.andyparkins@gmail.com> <7vbqjbdyxc.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 03 09:28:16 2007
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: [PATCH] Automatically add GIT as a VC backend
+Date: Sat, 03 Mar 2007 10:31:58 +0100
+Message-ID: <14819.1172914318@localhost>
+References: <28587.1172793178@localhost> <87zm6vvqzt.fsf@wine.dyndns.org>
+Cc: Xavier Maillard <zedek@gnu.org>, git@vger.kernel.org
+To: Alexandre Julliard <julliard@winehq.org>
+X-From: git-owner@vger.kernel.org Sat Mar 03 10:35:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNPbC-0001yv-D7
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 09:28:14 +0100
+	id 1HNQdx-0002cg-QS
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 10:35:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751250AbXCCI2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Mar 2007 03:28:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbXCCI2K
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 03:28:10 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:2547 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751250AbXCCI2I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2007 03:28:08 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so891021uga
-        for <git@vger.kernel.org>; Sat, 03 Mar 2007 00:28:07 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=j1VsmJl853MscKeCBaSSaG4JinzeOFX9UCiDkUZERnEzZAN8CZiCpS9Xl8ls3Qq9KpBrtBP2tDfQqas8G5c+B3D0tVwXNDYrCV6FjR+jSdKF6DwoErJ7KRgF3SdvWcVbC2AENWl8qtaBDaU+FfqakJqRGL/h5kd17Cb/WMKPrL0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=SrsJEUutAcPTwKKtNigPMCIOvgE+fN8zgj38L9iFCo+xuE2vYI3SUSstzY8Bm+y9cft38g/VlS571JAikC6Z4AJITUDTbGe87yZfh2M4fUSl9T2b4BkvmGCWnscMzeAj6ZS0/bYqv1/+egA3KjUPA7U1j1M4DYbNy6GDpKOOYgA=
-Received: by 10.67.92.1 with SMTP id u1mr4939498ugl.1172910487053;
-        Sat, 03 Mar 2007 00:28:07 -0800 (PST)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id b35sm3968855ugd.2007.03.03.00.28.04;
-        Sat, 03 Mar 2007 00:28:05 -0800 (PST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <7vbqjbdyxc.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1751289AbXCCJew (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 04:34:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbXCCJew
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 04:34:52 -0500
+Received: from smtp5-g19.free.fr ([212.27.42.35]:34446 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751289AbXCCJev (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 04:34:51 -0500
+Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id CD0167D18;
+	Sat,  3 Mar 2007 10:34:48 +0100 (CET)
+Received: from localhost (IDENT:1001@localhost [127.0.0.1])
+	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l239VwT1014820;
+	Sat, 3 Mar 2007 10:31:59 +0100
+In-reply-to: <87zm6vvqzt.fsf@wine.dyndns.org> 
+Comments: In-reply-to Alexandre Julliard <julliard@winehq.org>
+   message dated "Fri, 02 Mar 2007 12:12:22 +0100."
+X-Mailer: MH-E 8.0.3; nmh 1.2; GNU Emacs 23.0.51
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41278>
 
-On Friday 2007, March 02, Junio C Hamano wrote:
+Alexandre Julliard <julliard@winehq.org> wrote:
 
-> Please look at your Subject: line above and ponder how it would
-> look in the next issue of "What's cooking in git.git".  Do I
-> have to spend extra brain cycles to go back to "git log --stat"
-> and realize that this one only updates a sample hook script?
+> Xavier Maillard <zedek@gnu.org> writes:
+> 
+> > @@ -22,18 +22,19 @@
+> >  ;; This file contains a VC backend for the git version control
+> >  ;; system.
+> >  ;;
+> > -;; To install: put this file on the load-path and add GIT to the list
+> > -;; of supported backends in `vc-handled-backends'; the following line,
+> > -;; placed in your ~/.emacs, will accomplish this:
+> > -;;
+> > -;;     (add-to-list 'vc-handled-backends 'GIT)
+> > +;; To install: put this file on the load-path.
+> 
+> Simply putting it on the load-path is not enough to make it work,
+> you'd still have to load it explicitly; it's not clear to me that this
+> is better than adding it to vc-handled-backends. 
 
-Apologies.  It's easy to drop into focusing narrowly on on your own 
-patch and forget about the larger picture.
+You are right.
 
-> Also, please don't do "--- >8 ---".  If you want to, please use
-> two dashes; this is purely for technical reasons.
-
-I'm happy to comply of course.  However, this seems like a bug in git to 
-me.  This makes it so that some content is not allowed in a log 
-message, which seems very much out of keeping with git's normal "I can 
-handle anything" stance.
-
-Finding the "---" separator between diff and log message could at least 
-rely on finding "---" alone on a line so that "--- something else" 
-wouldn't trigger the end of log?
-
-I assume this is too simple?
-
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 766a37e..4e0795a 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -670,7 +670,7 @@ static int handle_commit_msg(int *seen)
-        return 0;
-    do {
-        if (!memcmp("diff -", line, 6) ||
--           !memcmp("---", line, 3) ||
-+           !memcmp("---\n", line, 4) ||
-            !memcmp("Index: ", line, 7))
-            break;
-        if ((multipart_boundary[0] && is_multipart_boundary(line))) {
-
-> I'll massage the log message and move "^$base --not" around as
-> Linus suggested, but next time please be a bit more careful.
-
-I will try.  Once again, my apologies.
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Xavier
