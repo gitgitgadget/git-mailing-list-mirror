@@ -1,102 +1,99 @@
-From: Avi Kivity <avi@qumranet.com>
-Subject: Re: [patch] KVM: T60 resume fix
-Date: Sat, 03 Mar 2007 10:22:13 +0200
-Message-ID: <45E93035.2070509@qumranet.com>
-References: <20070227105922.GD2250@kernel.dk> <20070227111515.GA4271@kernel.dk>
-	<20070301093450.GA8508@elte.hu> <20070301104117.GA22788@elte.hu>
-	<20070301145204.GA25304@elte.hu>
-	<Pine.LNX.4.64.0703011536450.12485@woody.linux-foundation.org>
-	<20070302072100.GB30634@elte.hu> <20070302080441.GA12785@elte.hu>
-	<20070302102018.GA11549@elte.hu> <20070302102216.GA13575@elte.hu>
-	<20070302113920.GB9367@mellanox.co.il>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Remove use of git-rev-parse and replace git-rev-list --pretty with git-log
+Date: Sat, 3 Mar 2007 08:25:16 +0000
+Message-ID: <200703030825.18378.andyparkins@gmail.com>
+References: <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org> <200703021929.20969.andyparkins@gmail.com> <7vbqjbdyxc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Cc: Daniel Walker <dwalker@mvista.com>,
-   Michal Piotrowski <michal.k.k.piotrowski@gmail.com>,
-   linux-pm@lists.osdl.org,
-   Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-   Andrew Morton <akpm@linux-foundation.org>, Adrian Bunk <bunk@stusta.de>,
-   Pavel Machek <pavel@ucw.cz>, Jens Axboe <jens.axboe@oracle.com>,
-   Thomas Gleixner <tglx@linutronix.de>,
-   Linus Torvalds <torvalds@linux-foundation.org>, Ingo Molnar <mingo@elte.hu>,
-   git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
-X-From: linux-pm-bounces@lists.osdl.org Sat Mar 03 09:22:39 2007
-Return-path: <linux-pm-bounces@lists.osdl.org>
-Envelope-to: gll-linux-pm@gmane.org
-Received: from smtp.osdl.org ([65.172.181.24])
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 03 09:28:16 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNPVm-0008Ff-M6
-	for gll-linux-pm@gmane.org; Sat, 03 Mar 2007 09:22:39 +0100
-Received: from fire-2.osdl.org (localhost [127.0.0.1])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l238MSq8019668;
-	Sat, 3 Mar 2007 00:22:28 -0800
-Received: from mis011-2.exch011.intermedia.net
-	(mis011-2.exch011.intermedia.net [64.78.21.129])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l238MPq7019660
-	for <linux-pm@lists.osdl.org>; Sat, 3 Mar 2007 00:22:25 -0800
-Received: from mis011-2.exch011.intermedia.net ([64.78.21.223]) by
-	mis011-2.exch011.intermedia.net with Microsoft
-	SMTPSVC(6.0.3790.1830); Sat, 3 Mar 2007 00:22:20 -0800
-Received: from [87.69.86.53] ([87.69.86.53]) by
-	mis011-2.exch011.intermedia.net over TLS secured channel with
-	Microsoft SMTPSVC(6.0.3790.1830); Sat, 3 Mar 2007 00:22:19 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
-In-Reply-To: <20070302113920.GB9367@mellanox.co.il>
-X-OriginalArrivalTime: 03 Mar 2007 08:22:20.0174 (UTC)
-	FILETIME=[0FD452E0:01C75D6D]
-Received-SPF: pass (localhost is always allowed.)
-X-Spam-Status: No, hits=-3.815 required=5 tests=AWL,MIME_QP_LONG_LINE,OSDL_HEADER_LISTID_KNOWN,OSDL_HEADER_SPF_PASS,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-BeenThere: linux-pm@lists.osdl.org
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: Linux power management <linux-pm.lists.osdl.org>
-List-Unsubscribe: <https://lists.osdl.org/mailman/listinfo/linux-pm>,
-	<mailto:linux-pm-request@lists.osdl.org?subject=unsubscribe>
-List-Archive: <http://lists.osdl.org/pipermail/linux-pm>
-List-Post: <mailto:linux-pm@lists.osdl.org>
-List-Help: <mailto:linux-pm-request@lists.osdl.org?subject=help>
-List-Subscribe: <https://lists.osdl.org/mailman/listinfo/linux-pm>,
-	<mailto:linux-pm-request@lists.osdl.org?subject=subscribe>
-Sender: linux-pm-bounces@lists.osdl.org
-Errors-To: linux-pm-bounces@lists.osdl.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41276>
+	id 1HNPbC-0001yv-D7
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 09:28:14 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751250AbXCCI2K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 03:28:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751253AbXCCI2K
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 03:28:10 -0500
+Received: from ug-out-1314.google.com ([66.249.92.170]:2547 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751250AbXCCI2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 03:28:08 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so891021uga
+        for <git@vger.kernel.org>; Sat, 03 Mar 2007 00:28:07 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=j1VsmJl853MscKeCBaSSaG4JinzeOFX9UCiDkUZERnEzZAN8CZiCpS9Xl8ls3Qq9KpBrtBP2tDfQqas8G5c+B3D0tVwXNDYrCV6FjR+jSdKF6DwoErJ7KRgF3SdvWcVbC2AENWl8qtaBDaU+FfqakJqRGL/h5kd17Cb/WMKPrL0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=SrsJEUutAcPTwKKtNigPMCIOvgE+fN8zgj38L9iFCo+xuE2vYI3SUSstzY8Bm+y9cft38g/VlS571JAikC6Z4AJITUDTbGe87yZfh2M4fUSl9T2b4BkvmGCWnscMzeAj6ZS0/bYqv1/+egA3KjUPA7U1j1M4DYbNy6GDpKOOYgA=
+Received: by 10.67.92.1 with SMTP id u1mr4939498ugl.1172910487053;
+        Sat, 03 Mar 2007 00:28:07 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id b35sm3968855ugd.2007.03.03.00.28.04;
+        Sat, 03 Mar 2007 00:28:05 -0800 (PST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vbqjbdyxc.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41277>
 
-Michael S. Tsirkin wrote:
->> Quoting Ingo Molnar <mingo@elte.hu>:
->> Subject: [patch] KVM: T60 resume fix
->> From: Ingo Molnar <mingo@elte.hu>
->>
->> my T60 laptop does not resume correctly due to KVM attempting to send an =
+On Friday 2007, March 02, Junio C Hamano wrote:
 
->> IPI to a CPU that might be down (or not up yet). (Doing so also triggers =
+> Please look at your Subject: line above and ponder how it would
+> look in the next issue of "What's cooking in git.git".  Do I
+> have to spend extra brain cycles to go back to "git log --stat"
+> and realize that this one only updates a sample hook script?
 
->> the send_IPI_mask_bitmask() warning in arch/i386/kernel/smp.c, line =
+Apologies.  It's easy to drop into focusing narrowly on on your own 
+patch and forget about the larger picture.
 
->> 732.)
->>
->> with this fix applied my laptop does not hang during resume.
->>
->> [ KVM will have to disable/enable virtualization on the CPU itself that
->>   goes down / comes up, not via an IPI sent from the requesting CPU. ]
->>
->> Signed-off-by: Ingo Molnar <mingo@elte.hu>
->>     =
+> Also, please don't do "--- >8 ---".  If you want to, please use
+> two dashes; this is purely for technical reasons.
 
->
-> Since I don't normally have kvm loaded, this patch is unlikely
-> to help me, is that right?
->
->   =
+I'm happy to comply of course.  However, this seems like a bug in git to 
+me.  This makes it so that some content is not allowed in a log 
+message, which seems very much out of keeping with git's normal "I can 
+handle anything" stance.
+
+Finding the "---" separator between diff and log message could at least 
+rely on finding "---" alone on a line so that "--- something else" 
+wouldn't trigger the end of log?
+
+I assume this is too simple?
+
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 766a37e..4e0795a 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -670,7 +670,7 @@ static int handle_commit_msg(int *seen)
+        return 0;
+    do {
+        if (!memcmp("diff -", line, 6) ||
+-           !memcmp("---", line, 3) ||
++           !memcmp("---\n", line, 4) ||
+            !memcmp("Index: ", line, 7))
+            break;
+        if ((multipart_boundary[0] && is_multipart_boundary(line))) {
+
+> I'll massage the log message and move "^$base --not" around as
+> Linus suggested, but next time please be a bit more careful.
+
+I will try.  Once again, my apologies.
 
 
-That is correct.
 
-
--- =
-
-Do not meddle in the internals of kernels, for they are subtle and quick to=
- panic.
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
