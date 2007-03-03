@@ -1,62 +1,83 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: Re: [PATCH 5/7] Try to do things in the right order
-Date: Sat, 03 Mar 2007 11:32:54 +0100
-Message-ID: <87ps7qty5l.fsf@wine.dyndns.org>
-References: <15303.1172917192@localhost>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Remove use of git-rev-parse and replace git-rev-list --pretty with git-log
+Date: Sat, 03 Mar 2007 03:52:51 -0800
+Message-ID: <7virdiczn0.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0703020839350.3953@woody.linux-foundation.org>
+	<200703021929.20969.andyparkins@gmail.com>
+	<7vbqjbdyxc.fsf@assigned-by-dhcp.cox.net>
+	<200703030825.18378.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Xavier Maillard <zedek@gnu.org>
-X-From: git-owner@vger.kernel.org Sat Mar 03 11:33:02 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 03 12:52:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNRXx-0000fK-Dy
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 11:33:01 +0100
+	id 1HNSnI-00081c-9c
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 12:52:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751546AbXCCKc6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Mar 2007 05:32:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbXCCKc6
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 05:32:58 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:32875 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751546AbXCCKc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2007 05:32:57 -0500
-Received: from adsl-89-217-4-70.adslplus.ch ([89.217.4.70] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HNRXs-0002ul-Dq; Sat, 03 Mar 2007 04:32:56 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 787D14F691; Sat,  3 Mar 2007 11:32:54 +0100 (CET)
-In-Reply-To: <15303.1172917192@localhost> (Xavier Maillard's message of "Sat\, 03 Mar 2007 11\:19\:52 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.93 (gnu/linux)
+	id S1752018AbXCCLwx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 06:52:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752111AbXCCLwx
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 06:52:53 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:64502 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018AbXCCLww (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 06:52:52 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070303115253.FIZC24587.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 3 Mar 2007 06:52:53 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id WBsr1W00U1kojtg0000000; Sat, 03 Mar 2007 06:52:52 -0500
+In-Reply-To: <200703030825.18378.andyparkins@gmail.com> (Andy Parkins's
+	message of "Sat, 3 Mar 2007 08:25:16 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41287>
 
-Xavier Maillard <zedek@gnu.org> writes:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> @@ -35,8 +36,14 @@
->    (require 'vc)
->    (require 'cl))
->  
-> -;; Add it automatically
-> -(add-to-list 'vc-handled-backends 'GIT)
-> +;; HACK: clear up the cache to force vc-call to check again and
-> +;; discover new functions when we reload this file.
-> +(put 'GIT 'vc-functions nil)
-> +
-> +;; Add it automatically when loading vc
-> +;; FIXME: should be directly put into vc.el
-> +(eval-after-load "vc"
-> +  '(add-to-list 'vc-handled-backends 'GIT))
+> Finding the "---" separator between diff and log message could at least 
+> rely on finding "---" alone on a line so that "--- something else" 
+> wouldn't trigger the end of log?
+>
+> I assume this is too simple?
+>
+> diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+> index 766a37e..4e0795a 100644
+> --- a/builtin-mailinfo.c
+> +++ b/builtin-mailinfo.c
+> @@ -670,7 +670,7 @@ static int handle_commit_msg(int *seen)
+>         return 0;
+>     do {
+>         if (!memcmp("diff -", line, 6) ||
+> -           !memcmp("---", line, 3) ||
+> +           !memcmp("---\n", line, 4) ||
+>             !memcmp("Index: ", line, 7))
+>             break;
+>         if ((multipart_boundary[0] && is_multipart_boundary(line))) {
 
-That's ugly. Simply recommending that users set vc-handled-backends in
-their .emacs is easier and cleaner, I still don't see why you want to
-change it.
+I think that would make us reject patches that we currently
+accept.  Today, you can submit a patch created this way:
 
--- 
-Alexandre Julliard
-julliard@winehq.org
+	$ cp Makefile Makefile.orig
+        $ edit Makefile
+
+	$ cat body-of-message
+        $ echo "Signed-off-by: $me"
+        $ diff -u Makefile.orig Makefile
+
+The first line of the diff part would be "--- Makefile.orig"
+(and the second one begins with "+++ Makefile").
+
+I do not think I've asked Linus about how he originally came up
+with "three dashes at the beginning of line" convention in the
+kernel circle, but my guess always have been that it would
+automatically allow us to accept patches prepared like this.
