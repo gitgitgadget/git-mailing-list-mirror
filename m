@@ -1,91 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git pull fails to exit with non-zero status after fatal error
-Date: Sat, 03 Mar 2007 12:56:06 -0800
-Message-ID: <7vabyu9hcp.fsf@assigned-by-dhcp.cox.net>
-References: <45E9A641.8020002@lightspeed.com>
-	<Pine.LNX.4.63.0703031913100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Panagiotis Issaris <takis.issaris@uhasselt.be>
+Subject: Creating attachments using git-format-patch
+Date: Sat, 3 Mar 2007 21:07:26 +0000 (UTC)
+Message-ID: <loom.20070303T215950-974@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Larry Streepy <larry@lightspeed.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 03 21:56:29 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 03 22:08:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNbHG-0004bo-Q1
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 21:56:27 +0100
+	id 1HNbSi-00011x-IM
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 22:08:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348AbXCCU4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Mar 2007 15:56:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932353AbXCCU4N
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 15:56:13 -0500
-Received: from fed1rmmtai111.cox.net ([68.230.241.49]:40518 "EHLO
-	fed1rmmtai111.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932348AbXCCU4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2007 15:56:13 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070303205610.NKPR3546.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 3 Mar 2007 15:56:10 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WLw61W00S1kojtg0000000; Sat, 03 Mar 2007 15:56:07 -0500
-In-Reply-To: <Pine.LNX.4.63.0703031913100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sat, 3 Mar 2007 19:13:41 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932898AbXCCVIN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 16:08:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932979AbXCCVIN
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 16:08:13 -0500
+Received: from main.gmane.org ([80.91.229.2]:47801 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932898AbXCCVIM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 16:08:12 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HNbSU-0006ct-7A
+	for git@vger.kernel.org; Sat, 03 Mar 2007 22:08:02 +0100
+Received: from 240.12-67-87.adsl-dyn.isp.belgacom.be ([87.67.12.240])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 03 Mar 2007 22:08:02 +0100
+Received: from takis.issaris by 240.12-67-87.adsl-dyn.isp.belgacom.be with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 03 Mar 2007 22:08:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 87.67.12.240 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1) Gecko/20060601 Firefox/2.0 (Ubuntu-edgy))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41327>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi,
 
-> On Sat, 3 Mar 2007, Larry Streepy wrote:
->
->> $ git pull
->> Updating b5d9263..506b347
->> tools/Pvt/Pvt.py: needs update
->> fatal: Entry 'tools/Pvt/Pvt.py' not uptodate. Cannot merge.
->> $ echo $?
->> 0
->> 
->> Notice the exit status of 0.
->
-> Does this fix it?
->
-> diff --git a/git-merge.sh b/git-merge.sh
-> index 498c938..6b23bf5 100755
-> --- a/git-merge.sh
-> +++ b/git-merge.sh
-> @@ -295,8 +295,9 @@ f,*)
->  	new_head=$(git-rev-parse --verify "$1^0") &&
->  	git-read-tree -v -m -u --exclude-per-directory=.gitignore $head "$new_head" &&
->  	finish "$new_head" "Fast forward"
-> +	ret=$?
->  	dropsave
-> -	exit 0
-> +	exit $ret
->  	;;
->  ?,1,?*"$LF"?*,*)
->  	# We are not doing octopus and not fast forward.  Need a
+I've been trying to start using git-format-patch together with git-send-email,
+but I've encountered some problems. The mailinglist I want to send the patches
+to, requires patches to be sent as attachments. So, I tried using the --attach
+option of git-format-patch.
+However its output does not seem to generate output which Thunderbird or Mutt
+recognize as attachments. Has anyone noticed similar problems or am I using it
+incorrectly?
 
-The cation "dropsave" takes is to remove the files that are not
-needed after a successful merge, so I think it is better to fail
-if the && chain that ends with finish, like this.
+I'm doing it as follows:
+takis@poseidon:/usr/local/src/ffmpeg-pi$ git-format-patch --attach HEAD^
+0001-Modify-av_pkt_dump-and-av_hex_dump-to-be-av_logish.patch
+takis@poseidon:/usr/local/src/ffmpeg-pi$ git-send-email
+0001-Modify-av_pkt_dump-and-av_hex_dump-to-be-av_logish.patch
 
-diff --git a/git-merge.sh b/git-merge.sh
-index 498c938..4afcd95 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -294,7 +294,7 @@ f,*)
- 	git-update-index --refresh 2>/dev/null
- 	new_head=$(git-rev-parse --verify "$1^0") &&
- 	git-read-tree -v -m -u --exclude-per-directory=.gitignore $head "$new_head" &&
--	finish "$new_head" "Fast forward"
-+	finish "$new_head" "Fast forward" || exit
- 	dropsave
- 	exit 0
- 	;;
+
+Mutt shows a message containing:
+This is a multi-part message in MIME format.
+--------------1.5.0.1.226.g7bd59
+Content-Type: text/plain; charset=UTF-8; format=fixed
+Content-Transfer-Encoding: 8bit
+...
+--------------1.5.0.1.226.g7bd59
+Content-Type: text/x-patch;
+ name="514f2915144861b6d69ef54bd8d392aa8b3a00e6.diff"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline;
+ filename="514f2915144861b6d69ef54bd8d392aa8b3a00e6.diff"
+...
+
+But it does not look like an attachment. Same happens when reading the email
+with Thunderbird: everything appears inline.
+
+Any suggestions?
+
+With friendly regards,
+Takis
