@@ -1,106 +1,76 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Quick description of possible gitattributes system
-Date: Sat, 03 Mar 2007 05:11:26 -0800
-Message-ID: <7vlkiebhfl.fsf@assigned-by-dhcp.cox.net>
-References: <200703011206.47213.andyparkins@gmail.com>
-	<es9aal$5gf$1@sea.gmane.org>
-	<Pine.LNX.4.64.0703020850470.3953@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: (Re: gitweb not friendly to firefox?) and unusable in the lynx
+Date: Sat, 3 Mar 2007 14:25:01 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703031424270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <989B956029373F45A0B8AF02970818902DA81B@zch01exm26.fsl.freescale.net>
+ <200703030357.18822.jnareb@gmail.com> <alpine.LRH.0.82.0703022223060.29426@xanadu.home>
+ <200703030441.36627.jnareb@gmail.com> <alpine.LRH.0.82.0703022242570.29426@xanadu.home>
+ <alpine.LRH.0.82.0703030005320.29426@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Mar 03 14:11:44 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Oleg Verych <olecom@flower.upol.cz>,
+	Junio C Hamano <junkio@cox.net>,
+	Li Yang-r58472 <LeoLi@freescale.com>, rea-git@codelabs.ru,
+	Raimund Bauer <ray@softwarelandschaft.com>,
+	git@vger.kernel.org, Alp Toker <alp@atoker.com>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Mar 03 14:25:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNU1X-0006bn-Pf
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 14:11:44 +0100
+	id 1HNUEe-0003jw-0T
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 14:25:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030234AbXCCNL3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 3 Mar 2007 08:11:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030230AbXCCNL3
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 08:11:29 -0500
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:50401 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030234AbXCCNL2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Mar 2007 08:11:28 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070303131127.MHHT2394.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 3 Mar 2007 08:11:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id WDBT1W00B1kojtg0000000; Sat, 03 Mar 2007 08:11:27 -0500
-In-Reply-To: <Pine.LNX.4.64.0703020850470.3953@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 2 Mar 2007 08:58:24 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030230AbXCCNZM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 08:25:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030241AbXCCNZL
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 08:25:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57181 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030230AbXCCNZK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 08:25:10 -0500
+Received: (qmail invoked by alias); 03 Mar 2007 13:25:09 -0000
+X-Provags-ID: V01U2FsdGVkX1+BdY9rWFyBPRDT0VxJR1HI0SCv7jQ56wtmiivOry
+	KioF0GVWUGhwEE
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <alpine.LRH.0.82.0703030005320.29426@xanadu.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41295>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Hi,
 
-> On Fri, 2 Mar 2007, Jakub Narebski wrote:
->
->> Andy Parkins wrote:
->>=20
->> > + - prettyfilter
->> > + =C2=A0 Run by git-cat-file or git-show when content is being pre=
-tty-printed
->> > + =C2=A0 for display to the user. =C2=A0If no prettyfilter is set,=
- then it should
->> > + =C2=A0 default to outfilter.
->>=20
->> I'd rather have plumbing operate without filters (if it is possible)=
-,
->> so git-cat-file would not run prettyfilter, and git-show would run i=
-t.
->
-> That really sucks. I do "git show xyz > filname" all the time, and wh=
-ile=20
-> it's been about diffs and commits, I could imagine doing the same thi=
-ng=20
-> for things like "git show v2.6.17:Documentation/logo.gif > some.gif" =
-too.
->
-> Yes, I know could do "git cat-file -p .." instead, but since we added=
- "git=20
-> show", and made it do the Right Thing (tm) for blobs, I've come to us=
-e it=20
-> more (which is as it should be: "cat-file" is low-level plumbing, whi=
-le=20
-> "git show" is what you'd expect users to use.
->
-> So I really think that the issue here is that the *pager* should do t=
-he=20
-> right thing...
+On Sat, 3 Mar 2007, Nicolas Pitre wrote:
 
-Sorry, but I do not think that would work because of the way we
-setup our pager.  The original process turns into the PAGER and
-child ships the data to it.
+> On Fri, 2 Mar 2007, Nicolas Pitre wrote:
+> 
+> > This is Lynx 2.8.5rel.1 (04 Feb 2004) on Fedora Core 6:
+> > 
+> > $ lynx http://www.kernel.org/git
+> > [...]
+> > application/xhtml+xml  D)ownload, or C)ancel
+> 
+> I also tried with elinks and it works fine.
+> 
+> Then I tried links2 and it gives:
+> 
+> |?? Unknown type 
+> |????????????????????????????????????????????????????????????????
+> |
+> |Content type is application/xhtml+xml.
+> |Do you want to save or display this file?
+> |
+> |[ Save ]  [ Display ]  [ Cancel ]
+> 
+> So gitweb is now broken for 2 out of 3 text based browsers that used to 
+> just work fine before.
 
-	$ git show -s master maint :t/test4012.png
+Just to fuel the fire: w3m also wants to download index.html. It also used 
+to work fine before. That makes 3 out of 4.
 
-I do not particularly think the prettyfilter is useful in
-practice (it was just a fun toy I did to convince me that I can
-use it for things other than input/output munging), but at least
-we could make it a bit more usable by this, on top of 'pu':
-
-diff --git a/builtin-log.c b/builtin-log.c
-index 86062d3..bc26358 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -116,7 +116,7 @@ static int show_object(const unsigned char *sha1, c=
-onst char *path, int nohead)
- 	if (size <=3D offset)
- 		goto finish;
-=20
--	if (path) {
-+	if (pager_in_use && path) {
- 		const struct pathattr *a =3D pathattr_lookup(path);
- 		if (a && a->pretty) {
- 			pretty =3D a->pretty;
+Ciao,
+Dscho
