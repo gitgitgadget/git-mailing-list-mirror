@@ -1,61 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johannes Sixt <johannes.sixt@telecom.at>
 Subject: Re: [PATCH 1/2] Handle core.symlinks=false case in merge-recursive.
-Date: Sat, 3 Mar 2007 21:11:58 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703032110200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Sat, 3 Mar 2007 21:21:59 +0100
+Message-ID: <200703032121.59468.johannes.sixt@telecom.at>
 References: <200703032032.47158.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1106613572-1172952718=:22628"
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sat Mar 03 21:12:19 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 03 21:24:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNaaX-0002Po-Vc
-	for gcvg-git@gmane.org; Sat, 03 Mar 2007 21:12:18 +0100
+	id 1HNamI-0007Xr-L9
+	for gcvg-git@gmane.org; Sat, 03 Mar 2007 21:24:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750879AbXCCUMB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 3 Mar 2007 15:12:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751458AbXCCUMB
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 15:12:01 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40604 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750879AbXCCUMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Mar 2007 15:12:00 -0500
-Received: (qmail invoked by alias); 03 Mar 2007 20:11:58 -0000
-X-Provags-ID: V01U2FsdGVkX18/yjY8RSI/kir8SPBajJRsp8h2gknpv6CZg7pTGf
-	WglLVGd2MEzMcR
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S932229AbXCCUYX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 3 Mar 2007 15:24:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932166AbXCCUYX
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Mar 2007 15:24:23 -0500
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:56650 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932229AbXCCUYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Mar 2007 15:24:23 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 77D2013C49F
+	for <git@vger.kernel.org>; Sat,  3 Mar 2007 21:22:01 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id BA61A3B47A
+	for <git@vger.kernel.org>; Sat,  3 Mar 2007 21:21:59 +0100 (CET)
+User-Agent: KMail/1.9.3
 In-Reply-To: <200703032032.47158.johannes.sixt@telecom.at>
-X-Y-GMX-Trusted: 0
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41322>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Saturday 03 March 2007 20:32, Johannes Sixt wrote:
+> If the file system does not support symbolic links (core.symlinks=false),
+> merge-recursive must write the merged symbolic link text into a regular
+> file.
 
----1148973799-1106613572-1172952718=:22628
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+But how to resolve such a conflict if core.symlinks=false?
 
-Hi,
+It turns out that git-add cannot honor the symlink property recorded in the 
+index because read_cache.c:add_file_to_index() will find only entries at 
+stage 0, but the conflicting entries are at stages 2 and 3. Can there be 
+something done about that?
 
-On Sat, 3 Mar 2007, Johannes Sixt wrote:
-
-> If the file system does not support symbolic links 
-> (core.symlinks=false), merge-recursive must write the merged symbolic 
-> link text into a regular file.
-
-I think regardless of the value of core.symlinks, merging symbolic links 
-does not make sense at all.
-
-I'd suggest having two versions of the syml√∂ink/file, <name>√~ours and 
-<name>~theirs instead.
-
-Ciao,
-Dscho
-
----1148973799-1106613572-1172952718=:22628--
+-- Hannes
