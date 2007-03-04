@@ -1,90 +1,62 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 04 Mar 2007 15:07:43 -0800
-Message-ID: <7vd53o4ngg.fsf@assigned-by-dhcp.cox.net>
-References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
-	<7v8xep8dfk.fsf@assigned-by-dhcp.cox.net>
-	<7v7itx5mep.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0703041321290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0703041401030.3953@woody.linux-foundation.org>
+Subject: Re: [PATCHv2] t/t5515-fetch-merge-logic.sh: Added tests for the merge login in git-fetch
+Date: Sun, 04 Mar 2007 15:30:28 -0800
+Message-ID: <7v8xec4mej.fsf@assigned-by-dhcp.cox.net>
+References: <87ps7oslwk.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Mar 05 00:07:48 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 00:30:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNznv-0000rB-W8
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 00:07:48 +0100
+	id 1HO09x-0001kX-Gg
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 00:30:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521AbXCDXHp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Mar 2007 18:07:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752525AbXCDXHp
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 18:07:45 -0500
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:65473 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752521AbXCDXHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2007 18:07:44 -0500
+	id S1752024AbXCDXaa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 4 Mar 2007 18:30:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbXCDXaa
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 18:30:30 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:63309 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752024AbXCDXaa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Mar 2007 18:30:30 -0500
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070304230744.DWLF26279.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 4 Mar 2007 18:07:44 -0500
+          id <20070304233029.DIFA2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 4 Mar 2007 18:30:29 -0500
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id Wn7j1W0071kojtg0000000; Sun, 04 Mar 2007 18:07:43 -0500
-In-Reply-To: <Pine.LNX.4.64.0703041401030.3953@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sun, 4 Mar 2007 14:26:05 -0800 (PST)")
+	id WnWU1W00U1kojtg0000000; Sun, 04 Mar 2007 18:30:29 -0500
+In-Reply-To: <87ps7oslwk.fsf@gmail.com> (Santi =?utf-8?Q?B=C3=A9jar's?=
+ message of "Sun, 04
+	Mar 2007 23:07:23 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41388>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Santi B=C3=A9jar <sbejar@gmail.com> writes:
 
-> On Sun, 4 Mar 2007, Johannes Schindelin wrote:
->> > 
->> > This is to output logs in the GNU ChangeLog format.
->> 
->> FWIW I am opposed to include that. After letting it sink in, Linus' 
->> remarks convinced me that this format is not as useful as our other log 
->> formats, and for those people who really want it, there is git2cl.
+> Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
+> ---
+>  Hi *,
 >
-> Side note: I would hate to be the person who torpedoes anything that some 
-> people actually find useful (my motto: "actually useful is a lot better 
-> than clean, but not as useful")
->
-> So in that sense, if people actually find GNU changelog format to be 
-> useful enough that they want a script for it, I don't think we should 
-> relegate it to second-class citizenship just because _we_ don't think it's 
-> a wonderful format.
+>    it is a much reduced version (63 instead of 400 tests) but contain=
+s
+>  also tests for the fetched tags (missing anything else?).
+>  I think it is suitable to be included.
 
-Oh, I certainly would not disagree.
+Thanks.
 
-But I do not think encouraging people to script is necessarily
-relegating it to second-class citizenship, as it appears there
-are rooms for project and language specific heuristics to come
-in for summarizing the real log into a variant of GNU changelog
-that is most useful for a particular project, I think it makes
-sense to implement it as a postprocessing filter to git-log -p
-(even "git-log -p -U999", if somebody want to do a language
-specific function labels), just like Simon did with his git2cl
-to output a particular variant (i.e. the one that lacks the
-function names) of GNU changelog to suit his projects' needs.
-
-Given time, Simon's script may be improved and prove to be
-flexible enough to accomodate the needs of all (or almost all)
-other projects that want to use GNU changelog format.  At that
-point, we might even want to include it in contrib/ of git.git,
-if enough people are interested in it and if distributing with
-the core helps the script gain wider exposure.
-
-> The fact that GNU changelog is then mis-designed to do per-file changelogs 
-> etc is more an effect of CVS misfeatures than anything else. But compared 
-> to all the other things CVS gets wrong, that's a very small detail ;)
-
-That part I 100% agree ;-).
+One thing I found lacking from the last round was that the test
+stripped the origin information later used by git-fmt-merge-msg
+(which made the test not very helpful when I tried to use it
+while working on the partial rewrite of git-fetch you see in the
+'next' branch).  I haven't checked your patch this round yet,
+but it would be nice to check for that to catch regressions.
