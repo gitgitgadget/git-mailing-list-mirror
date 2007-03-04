@@ -1,79 +1,80 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Memory overrun in http-push.c
-Date: Sun, 4 Mar 2007 04:18:52 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0703040335110.6485@iabervon.org>
-References: <20070228151516.GC57456@codelabs.ru> <200703011931.32170.andyparkins@gmail.com>
- <Pine.LNX.4.63.0703012140370.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <200703021005.13620.andyparkins@gmail.com> <Pine.LNX.4.64.0703040234510.6485@iabervon.org>
- <7virdh76kh.fsf@assigned-by-dhcp.cox.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: (Re: gitweb not friendly to firefox?) and unusable in the lynx
+Date: Sun, 4 Mar 2007 10:47:47 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070304094747.GA6550@informatik.uni-freiburg.de>
+References: <989B956029373F45A0B8AF02970818902DA81B@zch01exm26.fsl.freescale.net> <200703030458.58616.jnareb@gmail.com> <alpine.LRH.0.82.0703022328460.29426@xanadu.home> <200703040149.45713.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
+	James Cloos <cloos+vger-git@jhcloos.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Eygene Ryabinkin <rea-git@codelabs.ru>,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Mar 04 10:19:11 2007
+	Oleg Verych <olecom@flower.upol.cz>,
+	Junio C Hamano <junkio@cox.net>,
+	Li Yang-r58472 <LeoLi@freescale.com>, rea-git@codelabs.ru,
+	Raimund Bauer <ray@softwarelandschaft.com>,
+	Alp Toker <alp@atoker.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 04 10:48:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNms3-0002EO-7K
-	for gcvg-git@gmane.org; Sun, 04 Mar 2007 10:19:11 +0100
+	id 1HNnJv-0005C9-BY
+	for gcvg-git@gmane.org; Sun, 04 Mar 2007 10:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523AbXCDJS4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Mar 2007 04:18:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751526AbXCDJS4
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 04:18:56 -0500
-Received: from iabervon.org ([66.92.72.58]:3279 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751517AbXCDJSy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2007 04:18:54 -0500
-Received: (qmail 31445 invoked by uid 1000); 4 Mar 2007 04:18:52 -0500
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 4 Mar 2007 04:18:52 -0500
-In-Reply-To: <7virdh76kh.fsf@assigned-by-dhcp.cox.net>
+	id S1751547AbXCDJrz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 4 Mar 2007 04:47:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751553AbXCDJrz
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 04:47:55 -0500
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:53369 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751527AbXCDJry (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Mar 2007 04:47:54 -0500
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HNnJp-0000f6-BM; Sun, 04 Mar 2007 10:47:53 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l249lnsi006647;
+	Sun, 4 Mar 2007 10:47:49 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l249lldD006646;
+	Sun, 4 Mar 2007 10:47:47 +0100 (MET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Jakub Narebski <jnareb@gmail.com>, Nicolas Pitre <nico@cam.org>,
+	git@vger.kernel.org, James Cloos <cloos+vger-git@jhcloos.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Oleg Verych <olecom@flower.upol.cz>,
+	Junio C Hamano <junkio@cox.net>,
+	Li Yang-r58472 <LeoLi@freescale.com>, rea-git@codelabs.ru,
+	Raimund Bauer <ray@softwarelandschaft.com>,
+	Alp Toker <alp@atoker.com>
+Content-Disposition: inline
+In-Reply-To: <200703040149.45713.jnareb@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41352>
 
-On Sun, 4 Mar 2007, Junio C Hamano wrote:
+Hello,
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > Actually, how about doing keyword expansion just like the new CRLF
-> > handling?
-> 
-> That part is true, but practically speaking the only thing you
-> can honestly replace is $Id$ with blob object name, and nothing
-> else.  Trying to put anything that is available via commit would
-> at best telling a lie and at worst ending up denying the index
-> (and denying the index is denying git as somebody said).  You
-> could fake the values for $Author$ and $Date$ from HEAD commit,
-> but your index may or may not match HEAD commit when you check
-> out path from it.
+Jakub Narebski wrote:
+> There are two complications: first, sometimes http://www.kernel.org/g=
+it
+> works with lynx (and links2, and w3m), and sometimes do not.
+www.kernel.org is provided by 2 machines.  Some time ago I could fetch
+from the one but not from the other.  Maybe you want to try to address
+them explicitly?
 
-I was somehow expecting the index to be on the "working directory" side of 
-conversions, but that obviously doesn't work very well (since you'd get a 
-ton of unreachable blobs all the time that way). Even so, I think the 
-useful thing would the the "git-describe" for HEAD, if the index entry is 
-actually from HEAD (otherwise, it's a state that nobody else has seen, 
-right? No point in trying to specify further...). I don't think Author and 
-Date from a commit really works, because they wouldn't actually reflect 
-the last change to anything near the tag, necessarily. The commit hash, on 
-the other hand, tends you what to run blame on.
+Best regards
+Uwe
 
-But, in any case, $Id <blob hash>$ would put into the working directory 
-file (and suitable installed derivates thereof) something that would lead 
-people with the repository to the actual blob, with at least a possible 
-context. $Id <commit hash>:<path>$, for <commit hash>=HEAD, if HEAD:<path> 
-is <blob hash>, should be just right.
+--=20
+Uwe Kleine-K=F6nig
 
-Is it common to check out files from the index which don't match HEAD? The 
-only case I can think of is resetting to a state stored in the index with 
-update-index. I think my personal workflow is always HEAD->index->working 
-directory->index->new HEAD.
-
-	-Daniel
-*This .sig left intentionally blank*
+http://www.google.com/search?q=3De+%5E+%28i+pi%29
