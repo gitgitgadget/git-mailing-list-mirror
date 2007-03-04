@@ -1,62 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCHv2] t/t5515-fetch-merge-logic.sh: Added tests for the merge login in git-fetch
-Date: Sun, 04 Mar 2007 15:30:28 -0800
-Message-ID: <7v8xec4mej.fsf@assigned-by-dhcp.cox.net>
-References: <87ps7oslwk.fsf@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Conflict editing
+Date: Sun, 4 Mar 2007 18:40:30 -0500
+Message-ID: <20070304234030.GA20116@spearce.org>
+References: <Pine.LNX.4.63.0703041339350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 00:30:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 05 00:40:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HO09x-0001kX-Gg
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 00:30:33 +0100
+	id 1HO0Jk-0005sq-44
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 00:40:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbXCDXaa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 4 Mar 2007 18:30:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752026AbXCDXaa
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 18:30:30 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:63309 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752024AbXCDXaa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Mar 2007 18:30:30 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070304233029.DIFA2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 4 Mar 2007 18:30:29 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id WnWU1W00U1kojtg0000000; Sun, 04 Mar 2007 18:30:29 -0500
-In-Reply-To: <87ps7oslwk.fsf@gmail.com> (Santi =?utf-8?Q?B=C3=A9jar's?=
- message of "Sun, 04
-	Mar 2007 23:07:23 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752533AbXCDXkf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Mar 2007 18:40:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752518AbXCDXkf
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 18:40:35 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:50772 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752177AbXCDXke (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Mar 2007 18:40:34 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HO0JS-0000G5-Go; Sun, 04 Mar 2007 18:40:22 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8DCFF20FBAE; Sun,  4 Mar 2007 18:40:30 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0703041339350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41389>
 
-Santi B=C3=A9jar <sbejar@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> I often end up with conflicts, and I just want to edit the conflicting 
+> files, one after another. To make this easier, I wrote a script (yes, no 
+> builtin) to start the editor with the files having conflicts.
+> 
+> -- snipsnap --
+> #!/bin/sh
+> #
+> # Copyright (c) 2006, Shawn O. Pearce
 
-> Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
-> ---
->  Hi *,
->
->    it is a much reduced version (63 instead of 400 tests) but contain=
-s
->  also tests for the fetched tags (missing anything else?).
->  I think it is suitable to be included.
+Sweet!  My evil plan is working...  you do all of the work and I
+get all of the credit!  Last year to boot!  ;-)
 
-Thanks.
 
-One thing I found lacking from the last round was that the test
-stripped the origin information later used by git-fmt-merge-msg
-(which made the test not very helpful when I tried to use it
-while working on the partial rewrite of git-fetch you see in the
-'next' branch).  I haven't checked your patch this round yet,
-but it would be nice to check for that to catch regressions.
+Yes, I did see the other message about how you copied the preamble
+from git-gc.sh...  ;-)
+
+-- 
+Shawn.
