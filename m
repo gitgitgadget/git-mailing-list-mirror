@@ -1,59 +1,73 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Google Summer of Code 2007
-Date: Mon, 5 Mar 2007 11:10:03 +1300
-Message-ID: <46a038f90703041410p220db9f1x5ed56a0cc5fe9c3a@mail.gmail.com>
-References: <20070225075917.GC1676@spearce.org> <es5cdl$nhn$1@sea.gmane.org>
-	 <20070301213441.GA9254@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 4 Mar 2007 14:26:05 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703041401030.3953@woody.linux-foundation.org>
+References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net> <7v8xep8dfk.fsf@assigned-by-dhcp.cox.net>
+ <7v7itx5mep.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0703041321290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Jakub Narebski" <jnareb@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Mar 04 23:10:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 04 23:26:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNyu9-0000JG-Pm
-	for gcvg-git@gmane.org; Sun, 04 Mar 2007 23:10:10 +0100
+	id 1HNz9k-0007SU-CA
+	for gcvg-git@gmane.org; Sun, 04 Mar 2007 23:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915AbXCDWKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Mar 2007 17:10:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752664AbXCDWKG
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 17:10:06 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:11697 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbXCDWKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2007 17:10:05 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so1893013nfa
-        for <git@vger.kernel.org>; Sun, 04 Mar 2007 14:10:03 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lTO6lqXKXBFJK0hPFvHamjrRoKaStDzVq2/QHgnZ/Fkca1CwJ9E2d+lfyOJa1iKfEDwPSr21GTgayr8UGWi43Zdmgaqsr1YTcZk3bUlAfKhGGbthVoduu4/c/y0fvsdzZ4sNgbfkX5V8ITGik+Por6/bOnzx1N+vHve0X+kR7UA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hl6yOdI92MK2HKk3J7QeXFJyIXJgKCG09HJKsJnHmAQFQERtZfRiXaFDb0A22DaEX1uk3YvUWWSlza5GThyk7/wvMNnpJaB3cROA1fNJIvbpiazkBOg8SlVAr6yuw+Sp2tDXTtixi4l7a5JqgidBK+yvHaRpMdmDYXOA+Aaa5kg=
-Received: by 10.82.187.16 with SMTP id k16mr4210182buf.1173046203283;
-        Sun, 04 Mar 2007 14:10:03 -0800 (PST)
-Received: by 10.48.215.2 with HTTP; Sun, 4 Mar 2007 14:10:03 -0800 (PST)
-In-Reply-To: <20070301213441.GA9254@spearce.org>
-Content-Disposition: inline
+	id S1751878AbXCDW0N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Mar 2007 17:26:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751872AbXCDW0N
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 17:26:13 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:51104 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751878AbXCDW0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Mar 2007 17:26:13 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l24MQ6q8029619
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 4 Mar 2007 14:26:06 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l24MQ57t002605;
+	Sun, 4 Mar 2007 14:26:05 -0800
+In-Reply-To: <Pine.LNX.4.63.0703041321290.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-0.453 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41384>
-
-On 3/2/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> I've put together the list of ideas posted to the mailing list on
-> the Git Wiki:
->
->   http://git.or.cz/gitwiki/SoC2007Ideas
-
-There, I've added a couple I think I can help mentoring ;-)
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41385>
 
 
-martin
+
+On Sun, 4 Mar 2007, Johannes Schindelin wrote:
+> > 
+> > This is to output logs in the GNU ChangeLog format.
+> 
+> FWIW I am opposed to include that. After letting it sink in, Linus' 
+> remarks convinced me that this format is not as useful as our other log 
+> formats, and for those people who really want it, there is git2cl.
+
+Side note: I would hate to be the person who torpedoes anything that some 
+people actually find useful (my motto: "actually useful is a lot better 
+than clean, but not as useful")
+
+So in that sense, if people actually find GNU changelog format to be 
+useful enough that they want a script for it, I don't think we should 
+relegate it to second-class citizenship just because _we_ don't think it's 
+a wonderful format.
+
+The GNU code formatting guidelines are much much worse than the GNU 
+changelogs, yet we certainly allow people to check in their braindamage 
+into git if they want to. The GNU changelog format isn't horrid, and the 
+function names can be even nice as a way of seeing "what does this touch".
+
+The fact that GNU changelog is then mis-designed to do per-file changelogs 
+etc is more an effect of CVS misfeatures than anything else. But compared 
+to all the other things CVS gets wrong, that's a very small detail ;)
+
+		Linus
