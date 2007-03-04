@@ -1,169 +1,55 @@
-From: Panagiotis Issaris <takis.issaris@uhasselt.be>
-Subject: Re: Creating attachments using git-format-patch
-Date: Sun, 4 Mar 2007 20:56:41 +0100
-Message-ID: <20070304195641.GA16274@issaris.org>
-References: <loom.20070303T215950-974@post.gmane.org> <7vhct27xk2.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703032356050.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vslcl7jxo.fsf@assigned-by-dhcp.cox.net> <7vmz2t7i1x.fsf@assigned-by-dhcp.cox.net> <45EB2294.9040702@issaris.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Add dangling object and unreachable object in glossary.txt
+Date: Sun, 04 Mar 2007 13:27:36 -0800
+Message-ID: <7vvehg4s3b.fsf@assigned-by-dhcp.cox.net>
+References: <3c6c07c20702260835v4865ace1u18a20f6b1d0030b5@mail.gmail.com>
+	<7virdolm8u.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0702261216380.12485@woody.linux-foundation.org>
+	<87649g991s.wl@mail2.atmark-techno.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: takis@issaris.org
-X-From: git-owner@vger.kernel.org Sun Mar 04 20:56:38 2007
+Cc: git@vger.kernel.org
+To: Yasushi SHOJI <yashi@atmark-techno.com>
+X-From: git-owner@vger.kernel.org Sun Mar 04 22:27:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HNwot-0001kc-Me
-	for gcvg-git@gmane.org; Sun, 04 Mar 2007 20:56:36 +0100
+	id 1HNyF3-0006bH-Fu
+	for gcvg-git@gmane.org; Sun, 04 Mar 2007 22:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752455AbXCDT4c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Mar 2007 14:56:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752456AbXCDT4c
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 14:56:32 -0500
-Received: from outmx003.isp.belgacom.be ([195.238.4.100]:51156 "EHLO
-	outmx003.isp.belgacom.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752455AbXCDT4c (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2007 14:56:32 -0500
-Received: from outmx003.isp.belgacom.be (localhost.localdomain [127.0.0.1])
-        by outmx003.isp.belgacom.be (8.13.4/8.12.11/Skynet-OUT-2.22) with ESMTP id l24JuQDQ030123
-        for <git@vger.kernel.org>; Sun, 4 Mar 2007 20:56:27 +0100
-        (envelope-from <takis.issaris@uhasselt.be>)
-Received: from adsl-dyn.isp.belgacom.be (78.129-64-87.adsl-dyn.isp.belgacom.be [87.64.129.78])
-        by outmx003.isp.belgacom.be (8.13.4/8.13.4/Skynet-OUT-2.22) with SMTP id l24JuMKo030093;
-	Sun, 4 Mar 2007 20:56:23 +0100
-        (envelope-from <takis.issaris@uhasselt.be>)
-Received: by adsl-dyn.isp.belgacom.be (sSMTP sendmail emulation); Sun, 04 Mar 2007 20:56:41 +0100
-Content-Disposition: inline
-In-Reply-To: <45EB2294.9040702@issaris.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751908AbXCDV1i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Mar 2007 16:27:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751909AbXCDV1i
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 16:27:38 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:37801 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751908AbXCDV1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Mar 2007 16:27:37 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070304212736.CLXE26279.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 4 Mar 2007 16:27:36 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id WlTc1W0081kojtg0000000; Sun, 04 Mar 2007 16:27:36 -0500
+In-Reply-To: <87649g991s.wl@mail2.atmark-techno.com> (Yasushi SHOJI's message
+	of "Mon, 05 Mar 2007 03:07:43 +0900")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41369>
 
-Hi,
+Yasushi SHOJI <yashi@atmark-techno.com> writes:
 
-On Sun, Mar 04, 2007 at 08:48:36PM +0100, Panagiotis Issaris wrote:
-> Junio C Hamano schreef:
-> >The existing --attach option did not create a true "attachment"
-> >but multipart/mixed with Content-Disposition: inline.  It should
-> >have been with Content-Disposition: attachment.
-> >
-> >Introduce --inline to add multipart/mixed that is inlined, and
-> >make --attach to create an attachement.
-> >
-> >[...]
-> Thanks for the quick response and help! :-)
+> @@ -350,6 +355,9 @@ tag::
+>  unmerged index::
+>  	An index which contains unmerged index entries.
+>  
+> +unreachable object::
+> +	An object which is not reachable.
+> +
 
-Sorry for the attachment in the previous email...
-
-With friendly regards,
-
-Takis
-
-
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 59f34b9..dfdb652 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -9,7 +9,8 @@ git-format-patch - Prepare patches for e-mail submission
- SYNOPSIS
- --------
- [verse]
--'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--attach] [--thread]
-+'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--thread]
-+	           [--attach[=<boundary>] | --inline[=<boundary>]]
- 	           [-s | --signoff] [--diff-options] [--start-number <n>]
- 		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
- 		   [--ignore-if-in-upstream]
-@@ -68,8 +69,15 @@ OPTIONS
- 	Print all commits to the standard output in mbox format,
- 	instead of creating a file for each one.
- 
----attach::
--	Create attachments instead of inlining patches.
-+--attach[=<boundary>]::
-+	Create multipart/mixed attachment, the first part of
-+	which is the commit message and the patch itself in the
-+	second part, with "Content-Disposition: attachment".
-+
-+--inline[=<boundary>]::
-+	Create multipart/mixed attachment, the first part of
-+	which is the commit message and the patch itself in the
-+	second part, with "Content-Disposition: inline".
- 
- --thread::
- 	Add In-Reply-To and References headers to make the second and
-diff --git a/builtin-log.c b/builtin-log.c
-index 1c9f7d0..865832c 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -482,10 +482,22 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			memcpy(add_signoff, committer, endpos - committer + 1);
- 			add_signoff[endpos - committer + 1] = 0;
- 		}
--		else if (!strcmp(argv[i], "--attach"))
-+		else if (!strcmp(argv[i], "--attach")) {
- 			rev.mime_boundary = git_version_string;
--		else if (!prefixcmp(argv[i], "--attach="))
-+			rev.no_inline = 1;
-+		}
-+		else if (!prefixcmp(argv[i], "--attach=")) {
-+			rev.mime_boundary = argv[i] + 9;
-+			rev.no_inline = 1;
-+		}
-+		else if (!strcmp(argv[i], "--inline")) {
-+			rev.mime_boundary = git_version_string;
-+			rev.no_inline = 0;
-+		}
-+		else if (!prefixcmp(argv[i], "--inline=")) {
- 			rev.mime_boundary = argv[i] + 9;
-+			rev.no_inline = 0;
-+		}
- 		else if (!strcmp(argv[i], "--ignore-if-in-upstream"))
- 			ignore_if_in_upstream = 1;
- 		else if (!strcmp(argv[i], "--thread"))
-diff --git a/log-tree.c b/log-tree.c
-index 6ce239d..8797aa1 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -186,7 +186,7 @@ void show_log(struct rev_info *opt, const char *sep)
- 			snprintf(subject_buffer, sizeof(subject_buffer) - 1,
- 				 "%s"
- 				 "MIME-Version: 1.0\n"
--				 "Content-Type: multipart/mixed;\n"
-+				 "Content-Type: multipart/mixed;"
- 				 " boundary=\"%s%s\"\n"
- 				 "\n"
- 				 "This is a multi-part message in MIME "
-@@ -202,13 +202,15 @@ void show_log(struct rev_info *opt, const char *sep)
- 
- 			snprintf(buffer, sizeof(buffer) - 1,
- 				 "--%s%s\n"
--				 "Content-Type: text/x-patch;\n"
-+				 "Content-Type: text/x-patch;"
- 				 " name=\"%s.diff\"\n"
- 				 "Content-Transfer-Encoding: 8bit\n"
--				 "Content-Disposition: inline;\n"
-+				 "Content-Disposition: %s;"
- 				 " filename=\"%s.diff\"\n\n",
- 				 mime_boundary_leader, opt->mime_boundary,
--				 sha1, sha1);
-+				 sha1,
-+				 opt->no_inline ? "attachment" : "inline",
-+				 sha1);
- 			opt->diffopt.stat_sep = buffer;
- 		}
- 	} else if (opt->commit_format != CMIT_FMT_USERFORMAT) {
-diff --git a/revision.h b/revision.h
-index 5fec184..cf33713 100644
---- a/revision.h
-+++ b/revision.h
-@@ -74,6 +74,7 @@ struct rev_info {
- 	const char	*add_signoff;
- 	const char	*extra_headers;
- 	const char	*log_reencode;
-+	int		no_inline;
- 
- 	/* Filter by commit log message */
- 	struct grep_opt	*grep_filter;
+... from any ref.
