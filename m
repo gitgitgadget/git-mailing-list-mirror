@@ -1,86 +1,70 @@
-From: "Michael S. Tsirkin" <mst@mellanox.co.il>
-Subject: Re: 2.6.21-rc1: known regressions (part 2)
-Date: Mon, 5 Mar 2007 18:14:50 +0200
-Message-ID: <20070305161450.GA4972@mellanox.co.il>
-References: <20070227103021.GA2250@kernel.dk> <20070227103407.GA17819@elte.hu>
-	<20070227105922.GD2250@kernel.dk> <20070227111515.GA4271@kernel.dk>
-	<20070301093450.GA8508@elte.hu> <20070301104117.GA22788@elte.hu>
-	<20070301145204.GA25304@elte.hu>
-	<Pine.LNX.4.64.0703011536450.12485@woody.linux-foundation.org>
-	<20070302072100.GB30634@elte.hu> <20070302080441.GA12785@elte.hu>
-Reply-To: "Michael S. Tsirkin" <mst@mellanox.co.il>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Git checkout preserve timestamp?
+Date: Mon, 5 Mar 2007 10:28:56 -0600
+Message-ID: <17900.17736.918538.734811@lisa.zopyra.com>
+References: <17895.18265.710811.536526@lisa.zopyra.com>
+	<200703051213.52513.andyparkins@gmail.com>
+	<17900.11612.872928.633406@lisa.zopyra.com>
+	<200703051601.49370.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Cc: Daniel Walker <dwalker@mvista.com>,
-   Michal Piotrowski <michal.k.k.piotrowski@gmail.com>,
-   linux-pm@lists.osdl.org,
-   Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-   Adrian Bunk <bunk@stusta.de>, Pavel Machek <pavel@ucw.cz>,
-   Jens Axboe <jens.axboe@oracle.com>, Thomas Gleixner <tglx@linutronix.de>,
-   Linus Torvalds <torvalds@linux-foundation.org>,
-   Andrew Morton <akpm@linux-foundation.org>, git@vger.kernel.org
-To: Ingo Molnar <mingo@elte.hu>
-X-From: linux-pm-bounces@lists.osdl.org Mon Mar 05 17:14:33 2007
-Return-path: <linux-pm-bounces@lists.osdl.org>
-Envelope-to: gll-linux-pm@gmane.org
-Received: from smtp.osdl.org ([65.172.181.24])
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 17:29:55 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOFpX-0004Tu-Q8
-	for gll-linux-pm@gmane.org; Mon, 05 Mar 2007 17:14:32 +0100
-Received: from fire-2.osdl.org (localhost [127.0.0.1])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l25GEFq8030133;
-	Mon, 5 Mar 2007 08:14:16 -0800
-Received: from p02c11o142.mxlogic.net (p02c11o142.mxlogic.net [208.65.145.65])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l25GE8q8030121
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO)
-	for <linux-pm@lists.osdl.org>; Mon, 5 Mar 2007 08:14:09 -0800
-Received: from unknown [194.90.237.34] (EHLO mtlexch01.mtl.com)
-	by p02c11o142.mxlogic.net (mxl_mta-4.0.2-2)
-	with ESMTP id 4d14ce54.2680847280.655.00-011.p02c11o142.mxlogic.net
-	(envelope-from <mst@mellanox.co.il>); 
-	Mon, 05 Mar 2007 09:14:12 -0700 (MST)
-Received: from mellanox.co.il ([10.4.4.6]) by mtlexch01.mtl.com with Microsoft
-	SMTPSVC(6.0.3790.1830); Mon, 5 Mar 2007 18:16:53 +0200
-Received: by mellanox.co.il (sSMTP sendmail emulation);
-	Mon,  5 Mar 2007 18:13:03 +0200
-Content-Disposition: inline
-In-Reply-To: <20070302080441.GA12785@elte.hu>
-User-Agent: Mutt/1.5.11
-X-OriginalArrivalTime: 05 Mar 2007 16:16:53.0837 (UTC)
-	FILETIME=[B047FFD0:01C75F41]
-X-TM-AS-Product-Ver: SMEX-7.0.0.1526-3.6.1039-15036.000
-X-TM-AS-Result: No--4.715600-4.000000-4
-X-Spam: [F=0.3758793268; S=0.375(2007010901)]
-X-MAIL-FROM: <mst@mellanox.co.il>
-X-SOURCE-IP: [194.90.237.34]
-Received-SPF: pass (localhost is always allowed.)
-X-Spam-Status: No, hits=-1.894 required=5 tests=AWL,OSDL_HEADER_LISTID_KNOWN,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-BeenThere: linux-pm@lists.osdl.org
-X-Mailman-Version: 2.1.8
-Precedence: list
-List-Id: Linux power management <linux-pm.lists.osdl.org>
-List-Unsubscribe: <https://lists.osdl.org/mailman/listinfo/linux-pm>,
-	<mailto:linux-pm-request@lists.osdl.org?subject=unsubscribe>
-List-Archive: <http://lists.osdl.org/pipermail/linux-pm>
-List-Post: <mailto:linux-pm@lists.osdl.org>
-List-Help: <mailto:linux-pm-request@lists.osdl.org?subject=help>
-List-Subscribe: <https://lists.osdl.org/mailman/listinfo/linux-pm>,
-	<mailto:linux-pm-request@lists.osdl.org?subject=subscribe>
-Sender: linux-pm-bounces@lists.osdl.org
-Errors-To: linux-pm-bounces@lists.osdl.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41457>
+	id 1HOG4G-0002Ij-DE
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 17:29:44 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752777AbXCEQ3N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 11:29:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752799AbXCEQ3N
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 11:29:13 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:61887 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752777AbXCEQ3M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 11:29:12 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l25GSx732747;
+	Mon, 5 Mar 2007 10:28:59 -0600
+In-Reply-To: <200703051601.49370.andyparkins@gmail.com>
+X-Mailer: VM 7.18 under Emacs 21.1.1
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41458>
 
-> Quoting Ingo Molnar <mingo@elte.hu>:
->  git-bisect good      0539771d7236b425f285652f6f297cc7939c8f9a
-> =
+On Monday, March 5, 2007 at 16:01:45 (+0000) Andy Parkins writes:
+>On Monday 2007 March 05 14:46, Bill Lear wrote:
+>
+>> All very wrong if you ignore what I wrote as part of my original note:
+>> keep compilation products separated by branch name, not in the same
+>
+>I realise why it's causing you troubles.  However, I was hoping that that 
+>little example shows why it can never be right to use the timestamp out of 
+>the repository.
 
->  81450b73dde07f473a4a7208b209b4c8b7251d90 is first bad commit
+I don't understand then.  If the timestamp is stored per-branch, as it
+must be, then no effective change takes place whatsoever, and all
+products are compiled properly, and in their proper place.
 
-I have confirmed these two on my system.
+If master:source.c compiles to .master/source.o and has a timestamp
+.master/source.c.timestamp, switching to branch1 and back, and
+restoring the timestamp does not do anything wrong.  It just prevents
+a recompilation.
 
--- =
+>I'm afraid that the unnecessary recompile is just a by-product of that 
+>organisation.  I still say that git is correct to touch the file dates.
 
-MST
+Well, git is certainly correct for those who want the standard behavior.
+
+I don't think the current submodule support will help, but I am keen
+to see submodules for other reasons.
+
+
+Bill
