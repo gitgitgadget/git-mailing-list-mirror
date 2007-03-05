@@ -1,59 +1,56 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Git checkout preserve timestamp?
-Date: Mon, 5 Mar 2007 15:53:47 +0100
-Message-ID: <20070305145347.GC3481@diana.vm.bytemark.co.uk>
-References: <17895.18265.710811.536526@lisa.zopyra.com> <200703051213.52513.andyparkins@gmail.com> <20070305123348.GB3481@diana.vm.bytemark.co.uk> <200703051319.17046.andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Use non-interactive function to byte-compile files
+Date: Mon, 5 Mar 2007 15:54:46 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703051554240.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200703050823.l258NgT9008266@localhost.localdomain>
+ <20070305095101.GA792@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bill Lear <rael@zopyra.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 15:54:02 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-209053564-1173106486=:22628"
+Cc: Xavier Maillard <zedek@gnu.org>, git@vger.kernel.org
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 15:54:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOEZc-0005A8-QX
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 15:54:01 +0100
+	id 1HOEaT-0005XL-Eg
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 15:54:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933496AbXCEOx5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 5 Mar 2007 09:53:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933500AbXCEOx5
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 09:53:57 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4908 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933496AbXCEOx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 09:53:56 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HOEZQ-0001Zo-00; Mon, 05 Mar 2007 14:53:48 +0000
-Content-Disposition: inline
-In-Reply-To: <200703051319.17046.andyparkins@gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S933502AbXCEOys (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 09:54:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933503AbXCEOys
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 09:54:48 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59264 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933502AbXCEOys (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 09:54:48 -0500
+Received: (qmail invoked by alias); 05 Mar 2007 14:54:47 -0000
+X-Provags-ID: V01U2FsdGVkX1+Iw9N3wu2IF5TV6AVw2M8VjzsQ+JcCz2WF9ns04I
+	0POB/GDzAPZOXb
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070305095101.GA792@diana.vm.bytemark.co.uk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41447>
 
-On 2007-03-05 13:19:15 +0000, Andy Parkins wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Monday 2007 March 05 12:33, Karl Hasselstr=F6m wrote:
->
-> > Now, obviously "make" isn't such a make tool, since it goes only
-> > by timestamps.
->
-> Perhaps this will help you:
->
-> http://kolpackov.net/pipermail/notes/2004-September/000011.html
+---1148973799-209053564-1173106486=:22628
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: 8BIT
 
-Thanks for the pointer; I hadn't seen that technique before. But it
-isn't really worth it. The make tool going by hash rather than
-timestamp is a nice-to-have, not a must-have (for those projects I've
-been involved in anyway), so the cost of the solution proposed in that
-message is too high.
+Hi,
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+On Mon, 5 Mar 2007, Karl Hasselström wrote:
+
+> Yes, Documentation/SubmittingPatches is a loooong text ...
+
+Unless you count all the MUA specific things, it is just 162 lines...
+
+Ciao,
+Dscho
+
+---1148973799-209053564-1173106486=:22628--
