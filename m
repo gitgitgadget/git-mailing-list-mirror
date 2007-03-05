@@ -1,77 +1,54 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-cvsserver doesn't respect core.sharedrepository
-Date: Mon, 5 Mar 2007 18:15:43 +1300
-Message-ID: <46a038f90703042115r3ce1498cmdddc0dc11c9d4b2a@mail.gmail.com>
-References: <200702131438.30291.andyparkins@gmail.com>
-	 <200702131605.29088.andyparkins@gmail.com>
-	 <Pine.LNX.4.63.0702131910020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <200702131821.37284.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Conflict editing
+Date: Mon, 5 Mar 2007 01:25:09 -0500
+Message-ID: <190CCFDA-7BCC-4CC9-81D5-F38B14D8D54D@silverinsanity.com>
+References: <Pine.LNX.4.63.0703041339350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Andy Parkins" <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 06:15:50 2007
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 05 07:25:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HO5Y5-00043O-18
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 06:15:49 +0100
+	id 1HO6dY-00080b-4f
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 07:25:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752686AbXCEFPp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 00:15:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752687AbXCEFPp
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 00:15:45 -0500
-Received: from ug-out-1314.google.com ([66.249.92.168]:12883 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752686AbXCEFPo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 00:15:44 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so1143364uga
-        for <git@vger.kernel.org>; Sun, 04 Mar 2007 21:15:43 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=afoaTAoWWLyWq7Re/VBIEGuniGtffA/3JYaG+3sCu/au+OrM2BdtQ0+93RLYrsqpvpbS0GtpxLiH13dgbo21ivCYoJwnX5vR1PoqsvDQf/HaQ1cL3R6CyIn0r+j7bH0p2q+crnTLrnGG1zTqJax9/3nJYB+7zQMwaIvBMWYN6oE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=asoJG6bVJ12bJpNi9+B/NhnVsNJ6Pm9Hy79YcMxDxL25tuijRO7pIxwZ2QiFMFm+JDBEooVaNER/DWQyyGVFzbZLE/3KyC3drhIJ+jqiC9V3e9kxciW8YqmaPvVs/x6FYRxIv2SgsF5VC7SjZ0HZFUXl16QfeLgbL5ngX99TO2g=
-Received: by 10.67.40.12 with SMTP id s12mr9711290ugj.1173071743523;
-        Sun, 04 Mar 2007 21:15:43 -0800 (PST)
-Received: by 10.48.215.2 with HTTP; Sun, 4 Mar 2007 21:15:43 -0800 (PST)
-In-Reply-To: <200702131821.37284.andyparkins@gmail.com>
-Content-Disposition: inline
+	id S1750907AbXCEGZO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 01:25:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751570AbXCEGZO
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 01:25:14 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:46154 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750907AbXCEGZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 01:25:13 -0500
+Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id AE2131FFC02B;
+	Mon,  5 Mar 2007 06:25:12 +0000 (UTC)
+In-Reply-To: <Pine.LNX.4.63.0703041339350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41401>
-
-On 2/14/07, Andy Parkins <andyparkins@gmail.com> wrote:
-> On Tuesday 2007, February 13, Johannes Schindelin wrote:
->
-> > Ummm. What I tried to say is that this is intended behaviour, not bad
-> > behaviour. The file does not have to have write permissions for the
-> > group. The _directory_ has to have them.
->
-> It's not just write permissions.  The default umask could also prevent
-> read access by the group - the new ref needs to be readable by the
-> group.
-
-I agree. cvsserver depends on the user's umask just like an oldstyle
-cvs server. This is probably wrong, and you are right - we should
-respect core.sharedrepository.
-
-The recent change to use git-update-ref should have fixed part of the
-problem. The other part of the problem is the handling of the sqlite
-files. All the other operations that leave permanent files in the repo
-are using git plumbing so we are safe.
-
-To fix the sqlite files handling, the fix is to change the umask early
-on if core.sharedrepository is true.
-
-cheers,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41402>
 
 
-martin
+On Mar 4, 2007, at 7:43 AM, Johannes Schindelin wrote:
+
+> Of course, this script is dumb and has no way to edit files whose  
+> names
+> contain spaces
+
+Wouldn't using xargs fix that?
+
+> "${VISUAL:-${EDITOR:-vi}}" $(git ls-files --unmerged | cut -b51- |  
+> uniq)
+
+git ls-files --unmerged | cut -b51- | uniq | xargs "${VISUAL:-$ 
+{EDITOR:-vi}}"
+
+~~ Brian Gernhardt
