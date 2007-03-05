@@ -1,82 +1,104 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Git checkout preserve timestamp?
-Date: Mon, 5 Mar 2007 16:01:45 +0000
-Message-ID: <200703051601.49370.andyparkins@gmail.com>
-References: <17895.18265.710811.536526@lisa.zopyra.com> <200703051213.52513.andyparkins@gmail.com> <17900.11612.872928.633406@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] git-branch: add --track and --no-track options
+Date: Mon, 5 Mar 2007 17:09:30 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703051701331.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <esgm1m$33f$1@sea.gmane.org>
+ <Pine.LNX.4.63.0703051520340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45EC35B2.2070808@lu.unisi.ch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Bill Lear <rael@zopyra.com>,
-	Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 05 17:02:46 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Mar 05 17:10:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOFdl-0007w0-Qc
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 17:02:22 +0100
+	id 1HOFlL-0002jR-1j
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 17:10:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030579AbXCEQCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 11:02:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933593AbXCEQCO
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 11:02:14 -0500
-Received: from wx-out-0506.google.com ([66.249.82.232]:63367 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933594AbXCEQBz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 11:01:55 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so1609680wxd
-        for <git@vger.kernel.org>; Mon, 05 Mar 2007 08:01:55 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=W5ftF3BVffNqBwebCkTk/6umvjde9p4ySOJal3dcRxISTglUq55mv/IMqof0O57juWQxdnc9N30ug6V+PQJEj46o2WRrxUUGS/csPznVnFxTjYCghHCU6yKjXZkE9sRE4Id9IBG/Yc1p97qqtP3MlxBsYmKCD4oLAPLi87Exv9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=gGyrZKrw6XlOEFWNIC5iXMhPELdgkXeZQhceuTn8x4zRebIzHWA5tDOe3cTkLz0LY4W5bXgZvY/jbHMtTiYGZZZKOqBOPlegO084DVXy2tSe9TteDSXLkgWzlEQl9QUqlkjOQQaXKm1ZACXRqEzGKpamtJLYDHe4nfrWiaSDCOQ=
-Received: by 10.90.93.6 with SMTP id q6mr4721291agb.1173110514387;
-        Mon, 05 Mar 2007 08:01:54 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id n22sm23361283nfc.2007.03.05.08.01.51;
-        Mon, 05 Mar 2007 08:01:52 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <17900.11612.872928.633406@lisa.zopyra.com>
-Content-Disposition: inline
+	id S1751954AbXCEQJd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 11:09:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750909AbXCEQJd
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 11:09:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59169 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751954AbXCEQJc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 11:09:32 -0500
+Received: (qmail invoked by alias); 05 Mar 2007 16:09:30 -0000
+X-Provags-ID: V01U2FsdGVkX19omckyYYNoMb5VXGhLR+awimrsnDcRV+EoIbGhMi
+	4yI5XOIOQRIa85
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45EC35B2.2070808@lu.unisi.ch>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41456>
 
-On Monday 2007 March 05 14:46, Bill Lear wrote:
+Hi,
 
-> All very wrong if you ignore what I wrote as part of my original note:
-> keep compilation products separated by branch name, not in the same
+On Mon, 5 Mar 2007, Paolo Bonzini wrote:
 
-I realise why it's causing you troubles.  However, I was hoping that that 
-little example shows why it can never be right to use the timestamp out of 
-the repository.
+> >> +	/* Try an exact match first.  */
+> >> +	sscanf(value, "refs/%*[^:]:%n", &len_first);
+> > 
+> > This is the first time I saw that sscanf format type. How portable is it?
+> 
+> It is.  At the very least it is in OpenGroup.
 
-> place.  This is essential to my request: without it, it is indeed very
-> wrong.  We currently separate out by compiler, options, machine
-> architecture, and adding the branch to that is trivial.
+That is not very reassuring for me. However, I learnt something new about 
+sscanf(), so it was not lost on me.
 
-I'm afraid that the unnecessary recompile is just a by-product of that 
-organisation.  I still say that git is correct to touch the file dates.
+> >> +		/* Truncate the value before the colon.  */
+> >> +		asprintf(&config_repo, "%.*s", len_first - 1, value);
+> > 
+> > asprintf() is a GNU extension. I guess it is better to just
+> > 
+> > 	config_repo = xstrdup(value);
+> > 	config_repo[p - value] = '\0';
+> 
+> git has nfvasprintf -- I'll just use that one.
 
-[blatent plug]: perhaps my poorman's submodule support will get you by until 
-real submodule support is implemented?
+Which forces you to build a va_list first, and which is horribly 
+inefficient. Not that it matters for git-branch...
 
-http://lists.zerezo.com/git/msg334639.html
+> > FWIW I don't think .trackIntoLocalBranches" is needed. Opinions?
+> 
+> That's because I'd like to make it the default for me...  Also, look at 
+> patch 3/3.
 
-I doubt it though - as you would probably want automatic checkout in your 
-situation.
+I am not only mildly opposed to switching trackIntoLocalBranches off. It 
+is a _very_ useful feature for new Git users, as it will (I am sure) 
+reduce the number of "Huh?" moments dramatically.
 
+Also, I am opposed to make this a remote.<name>.trackIntoLocalBranches 
+variable.
 
+IMHO a global flag should be enough, if you really need it at all. Your 
+code now makes sure that the defaults will be set only if there is a 
+proper fetch entry for the corresponding remote name, so it is safe. 
+People wanting to prevent that behaviour can use "--no-track", and those 
+who don't know about "--no-track" are probably better off _with_ DWIM 
+defaults for the new branch.
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+> >> @@ -333,7 +424,9 @@ static void create_branch(const char *name, const char *start_name,
+> >>  	if (start_sha1)
+> >>  		/* detached HEAD */
+> >>  		hashcpy(sha1, start_sha1);
+> >> -	else if (get_sha1(start_name, sha1))
+> >> +	else if (dwim_ref(start_name, strlen(start_name), sha1, &real_ref) > 1)
+> >> +		die("Ambiguous object name: '%s'.", start_name);
+> > 
+> > I know, I should have said that earlier, but I just found out myself: 
+> > We have a config variable core.warnambiguousrefs, and maybe we should 
+> > _not_ complain and set the defaults when the global variable 
+> > warn_ambiguous_refs is 0.
+> 
+> If warn_ambiguous_ref == 0, dwim_ref is never going to answer anything > 
+> 1...
+
+Right. Thank you!
+
+Ciao,
+Dscho
