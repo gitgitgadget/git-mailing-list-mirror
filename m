@@ -1,93 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git checkout preserve timestamp?
-Date: Mon, 5 Mar 2007 20:16:35 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703052014020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <17895.18265.710811.536526@lisa.zopyra.com>
- <20070302091426.GA2605@diana.vm.bytemark.co.uk> <17896.9631.316001.869157@lisa.zopyra.com>
- <Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070302162136.GA9593@diana.vm.bytemark.co.uk>
- <Pine.LNX.4.63.0703022018190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070305072323.GA31169@diana.vm.bytemark.co.uk>
- <Pine.LNX.4.63.0703051230390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <17900.27067.247950.419438@lisa.zopyra.com>
-Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1519624341-1173122195=:22628"
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 20:16:44 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Conflict editing
+Date: Mon, 5 Mar 2007 14:27:48 -0500
+Message-ID: <CFF9D792-A563-408A-8E28-1F045B0952F8@silverinsanity.com>
+References: <Pine.LNX.4.63.0703041339350.22628@wbgn013.biozentrum.uni-wuerzburg.de> <190CCFDA-7BCC-4CC9-81D5-F38B14D8D54D@silverinsanity.com> <Pine.LNX.4.63.0703051223420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 05 20:28:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOIfp-0005NM-6I
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 20:16:41 +0100
+	id 1HOIqi-0001i5-Tt
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 20:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932290AbXCETQh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 14:16:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbXCETQh
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 14:16:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36437 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932270AbXCETQg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 14:16:36 -0500
-Received: (qmail invoked by alias); 05 Mar 2007 19:16:35 -0000
-X-Provags-ID: V01U2FsdGVkX1+vrhg3zt+vOu180thsFyzeZWESSyODEV5/PGPK5r
-	2NwkltIPOmdU0w
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <17900.27067.247950.419438@lisa.zopyra.com>
-X-Y-GMX-Trusted: 0
+	id S932283AbXCET1x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 14:27:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932289AbXCET1x
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 14:27:53 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:46524 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932283AbXCET1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 14:27:52 -0500
+Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 986B81FFC143;
+	Mon,  5 Mar 2007 19:27:51 +0000 (UTC)
+In-Reply-To: <Pine.LNX.4.63.0703051223420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41476>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----1148973799-1519624341-1173122195=:22628
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+On Mar 5, 2007, at 6:25 AM, Johannes Schindelin wrote:
 
-Hi,
+> Alas, vi complained to me by saying "Not started from a terminal", and
+> wrecking my terminal settings. For example, echo was set to off, and
+> Ctrl+C no longer worked.
 
-On Mon, 5 Mar 2007, Bill Lear wrote:
+Of course.  I use "xargs vim" on a semi-regular basis and have  
+forgotten that it mucks up some terms and behaves slightly oddly.   
+It's just one of the little things I deal with on a regular basis and  
+mostly ignore.
 
-> On Monday, March 5, 2007 at 12:32:07 (+0100) Johannes Schindelin writes:
->
-> >On Mon, 5 Mar 2007, Karl Hasselström wrote:
-> >
-> >> On 2007-03-02 20:21:17 +0100, Johannes Schindelin wrote:
-> >> 
-> >> > On Fri, 2 Mar 2007, Karl Hasselström wrote:
-> >> >
-> >> > > However, given that your file timestamps have been bumped (without
-> >> > > file content changes),
-> >> >
-> >> > There were changes. Only that they have been taken back, but that is
-> >> > _another_ change.
-> >> 
-> >> Since the content is exactly the same as before, I'd be of the strong
-> >> opinion that nothing has changed as far as the make system should be
-> >> concerned.
-> >
-> >You are missing an important point here: there _was_ a change.
-> 
-> Physically, yes, the bits were changed,
+> Since I am a nice person, I did not want you to have the same  
+> experience
+> with this dumb script.
 
-Yeah, I know people, who would like to change laws of physics, too.
+Yes, we should be nice and not screw with people's heads, even if  
+mine is already pretty screwy.
 
-> but logically nothing has changed, at least in the scenario I outlined.
-
-But it could! Even in the scenario you outlined. If somebody (might be 
-even you yourself) pushes into your repo, under the name of the branch to 
-which you switch back to right after that. Bingo. Files changed.
-
-See? That is what happens if you don't fix things the right way, you keep 
-getting problems. Yes, you can solve them in another tacky way, but you'll 
-only get different problems, then.
-
-Ciao,
-Dscho
-
----1148973799-1519624341-1173122195=:22628--
+~~ Brian
