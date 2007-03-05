@@ -1,83 +1,59 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] git-branch: add --track and --no-track options
-Date: Tue, 6 Mar 2007 00:09:45 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703052359440.13683@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <esgm1m$33f$1@sea.gmane.org>
- <Pine.LNX.4.63.0703051520340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45EC3905.7070406@lu.unisi.ch> <Pine.LNX.4.63.0703051648330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45EC4B55.3090505@lu.unisi.ch> <Pine.LNX.4.63.0703051812030.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45EC51C6.5080505@lu.unisi.ch> <Pine.LNX.4.63.0703051930560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45EC8959.1090303@lu.unisi.ch>
+Subject: Re: [PATCH] Begin SubmittingPatches with a check list
+Date: Tue, 6 Mar 2007 00:14:51 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703060013460.13683@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200703050823.l258NgT9008266@localhost.localdomain>
+ <20070305095101.GA792@diana.vm.bytemark.co.uk>
+ <Pine.LNX.4.63.0703051554240.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070305150418.GD3481@diana.vm.bytemark.co.uk>
+ <Pine.LNX.4.63.0703051631350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <86B5B6C7-F53E-4272-95F8-90DEA33430BA@silverinsanity.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: bonzini@gnu.org
-X-From: git-owner@vger.kernel.org Tue Mar 06 00:10:30 2007
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 00:15:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOMK5-0006Lu-P0
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 00:10:30 +0100
+	id 1HOMOR-0008NL-L1
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 00:15:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752251AbXCEXKG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 18:10:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752262AbXCEXKF
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 18:10:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34310 "HELO mail.gmx.net"
+	id S1752519AbXCEXO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 18:14:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbXCEXO4
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 18:14:56 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43700 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752251AbXCEXJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 18:09:46 -0500
-Received: (qmail invoked by alias); 05 Mar 2007 23:09:45 -0000
-X-Provags-ID: V01U2FsdGVkX18GtjBpLGsGEgC40kOvy7dAWu61F8CNHlHLPvWeAX
-	JhI0IEq+hKfNMG
+	id S1751926AbXCEXOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 18:14:55 -0500
+Received: (qmail invoked by alias); 05 Mar 2007 23:14:53 -0000
+X-Provags-ID: V01U2FsdGVkX19NPZ8S8HRNqUWE3Nv3ZsMk9fJKYyfP7r0hDwCeRL
+	+0Dww75WypSxTB
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45EC8959.1090303@lu.unisi.ch>
+In-Reply-To: <86B5B6C7-F53E-4272-95F8-90DEA33430BA@silverinsanity.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41501>
 
 Hi,
 
-On Mon, 5 Mar 2007, Paolo Bonzini wrote:
+On Mon, 5 Mar 2007, Brian Gernhardt wrote:
 
-> > Yes, this is what the source does. But again, the return value is what 
-> > you should -- and indeed forever can -- rely on. I am not really happy 
-> > that dwim_ref() touches ref, even if nothing was found, but it is an 
-> > _implementation detail_.
+> On Mar 5, 2007, at 10:37 AM, Johannes Schindelin wrote:
 > 
-> It's not fair to not have any documentation in the code, force the 
-> contributor to reverse engineer the documentation, and say it is relying 
-> on an implementation detail.  In otherwise undocumented code, 
-> implementation == interface.
+> > +	- use "git format-patch -M" to create the patch
+> 
+> The docco for git-format-patch doesn't list -M as one of it's options.  
+> Is this one of the diff-options, and does it take all of the options 
+> git-diff does?  If so, this should be mentioned in the documentation.
 
-Ah, sorry. The "return 0 on success, other values mean different sorts of 
-errors" concept is so ubiquituous in Unix-like systems, that nobody 
-bothered documenting that.
-
-Actually, we usually use "-1" to mean error, and depending on the function 
-have different meanings for ">0".
-
-But the best documentation for a function is actually the code using it, 
-and I thought that you had a look at them. Very often, I do "git grep bla" 
-to see where the function called "bla()" was used. For me, examples are 
-worth a thousand man pages...
-
-A supplemental remark on the sscanf() thing: when I was forced to work on 
-Windows, I made it a habit not to rely on specs. So often, things just did 
-not work as described, and complaining did not help. For example, we had 
-to throw out _all_ uses of templates in a certain project, because the C 
-compiler would choke with an internal error.
-
-So, my hesitation regarding sscanf() stems mainly from the fact that it 
-appears rarely used to me, and such constructs are more likely to break 
-expectations when trying to port to different architectures.
-
-And _that_ is why I do not hesitate using printf(): it is much more likely 
-that an incompatibility in printf() is fixed, whereas with sscanf() it 
-will likely end up worked-around all the time instead of being fixed.
+Actually, it is described briefly in the synopsis. But not in the options 
+section. Care to provide a patch (see git-log.txt for an example how to 
+include the diff options)?
 
 Ciao,
 Dscho
