@@ -1,59 +1,63 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Dry run flag for git-pull or git-fetch?
-Date: Mon, 05 Mar 2007 14:41:48 -0600
-Message-ID: <1173127307.23776.37.camel@ld0161-tx32>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git checkout preserve timestamp?
+Date: Mon, 5 Mar 2007 21:44:26 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703052143120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <17895.18265.710811.536526@lisa.zopyra.com>
+ <20070302091426.GA2605@diana.vm.bytemark.co.uk> <17896.9631.316001.869157@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070302162136.GA9593@diana.vm.bytemark.co.uk>
+ <Pine.LNX.4.63.0703022018190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070305072323.GA31169@diana.vm.bytemark.co.uk>
+ <Pine.LNX.4.63.0703051230390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.27067.247950.419438@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703052014020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.30394.172067.743310@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Mar 05 21:42:03 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 21:44:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOK0Q-0006Ni-8K
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 21:42:02 +0100
+	id 1HOK2p-0007Sa-Ut
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 21:44:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932346AbXCEUlw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 15:41:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932354AbXCEUlw
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 15:41:52 -0500
-Received: from de01egw01.freescale.net ([192.88.165.102]:55625 "EHLO
-	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932346AbXCEUlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 15:41:51 -0500
-Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
-	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id l25Kfmdu018795
-	for <git@vger.kernel.org>; Mon, 5 Mar 2007 13:41:49 -0700 (MST)
-Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
-	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id l25KfmMO013641
-	for <git@vger.kernel.org>; Mon, 5 Mar 2007 14:41:48 -0600 (CST)
-X-Mailer: Ximian Evolution 1.4.5 (1.4.5-17) 
+	id S932368AbXCEUo2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 15:44:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932371AbXCEUo2
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 15:44:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45978 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932368AbXCEUo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 15:44:27 -0500
+Received: (qmail invoked by alias); 05 Mar 2007 20:44:26 -0000
+X-Provags-ID: V01U2FsdGVkX1+Yk5BYkVKY12FTWX+jGsAqa0okLn2gyGT90GaB1U
+	QxRIFAqtCQQNoi
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <17900.30394.172067.743310@lisa.zopyra.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41484>
 
-Folks,
+Hi,
 
-Is there a "dry-run" flag for git-pull and git-fetch
-that I missed somewhere?
+On Mon, 5 Mar 2007, Bill Lear wrote:
 
-Specifically, I'm looking for a  "git pull -n foo"
-command that would tell me, as output, the gross-level
-effect without actually doing the steps.  That is,
-I'd expect something like:
+> On Monday, March 5, 2007 at 20:16:35 (+0100) Johannes Schindelin writes:
+>
+> >If somebody (might be even you yourself) pushes into your repo, under 
+> >the name of the branch to which you switch back to right after that. 
+> >Bingo. Files changed.
+> 
+> Yes, they change, and so would the timestamp.  So what?
 
-    Fetching from remote "foo"
-        URL: git://example.com/pub/foostuff.git
-        Remote branch: foo/main into remote/foo/main
-        Remote branch: foo/testing into remote/foo/testing
-    Merging:
-        Remote foo/main into local heads/master
+Think about it. Why would the timestamp change? Because Git wrote the 
+file? But that was exactly the behaviour you were complaining about.
 
-Or something down that line.  Basically parrot the
-config file plus command line effect back at the
-user as a sanity check first.
-
-Thanks,
-jdl
+Ciao,
+Dscho
