@@ -1,430 +1,107 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Creating attachments using git-format-patch
-Date: Sun, 04 Mar 2007 16:09:52 -0800
-Message-ID: <7vzm6s360f.fsf@assigned-by-dhcp.cox.net>
-References: <loom.20070303T215950-974@post.gmane.org>
-	<7vhct27xk2.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0703032356050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vslcl7jxo.fsf@assigned-by-dhcp.cox.net>
-	<7vmz2t7i1x.fsf@assigned-by-dhcp.cox.net>
-	<45EB2294.9040702@issaris.org>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: [ANNOUNCE] Guilt v0.21
+Date: Sun, 4 Mar 2007 19:44:00 -0500
+Message-ID: <20070305004400.GC11920@filer.fsl.cs.sunysb.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Panagiotis Issaris <takis.issaris@uhasselt.be>,
-	git@vger.kernel.org
-To: Panagiotis Issaris <takis@issaris.org>
-X-From: git-owner@vger.kernel.org Mon Mar 05 01:10:09 2007
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 05 01:44:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HO0mG-0001WR-V9
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 01:10:09 +0100
+	id 1HO1JN-00072k-35
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 01:44:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750740AbXCEAJ4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Mar 2007 19:09:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750858AbXCEAJ4
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 19:09:56 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:37961 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750740AbXCEAJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2007 19:09:54 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070305000954.FIFT748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 4 Mar 2007 19:09:54 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Wo9s1W00J1kojtg0000000; Sun, 04 Mar 2007 19:09:53 -0500
-In-Reply-To: <45EB2294.9040702@issaris.org> (Panagiotis Issaris's message of
-	"Sun, 04 Mar 2007 20:48:36 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750916AbXCEAoG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Mar 2007 19:44:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbXCEAoF
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 19:44:05 -0500
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:35361 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916AbXCEAoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Mar 2007 19:44:04 -0500
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l250i0wn021645;
+	Sun, 4 Mar 2007 19:44:00 -0500
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l250i0fl021643;
+	Sun, 4 Mar 2007 19:44:00 -0500
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41393>
 
-Panagiotis Issaris <takis@issaris.org> writes:
+Guilt v0.21 is available for download (once it mirrors out on kernel.org).
 
-> The patch did not work for me in the sense that the patches still
-> appeared as inline text in both Mutt (1.5.13) and Thunderbird (2 beta
-> 2).
+Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
+queues-like functionality and interface to git.
 
-Ok, I'll park this in 'next'.
+Tarballs:
+http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
 
--- >8 --
-From: Junio C Hamano <junkio@cox.net>
-Date: Sun, 4 Mar 2007 16:08:04 -0800
-Subject: [PATCH] format-patch --attach: not folding some long headers.
+Git repo:
+git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
 
-Panagiotis Issaris reports that some MUAs seem not to like
-folded "content-type" and "content-disposition" headers, so this
-makes format-patch --attach output to avoid them.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- log-tree.c                                         |    6 ++--
- t/t4013-diff-various.sh                            |    2 +-
- ....format-patch_--attach_--stdout_initial..master |   27 ++++++-------------
- ...format-patch_--attach_--stdout_initial..master^ |   18 ++++---------
- ...ff.format-patch_--attach_--stdout_initial..side |    9 ++----
- ....format-patch_--inline_--stdout_initial..master |   27 ++++++-------------
- ...format-patch_--inline_--stdout_initial..master^ |   18 ++++---------
- ...ff.format-patch_--inline_--stdout_initial..side |    9 ++----
- 8 files changed, 40 insertions(+), 76 deletions(-)
+There have been a lot of changes since v0.20. Some of the most important
+ones, include...
 
-diff --git a/log-tree.c b/log-tree.c
-index 7b3ad7d..8797aa1 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -186,7 +186,7 @@ void show_log(struct rev_info *opt, const char *sep)
- 			snprintf(subject_buffer, sizeof(subject_buffer) - 1,
- 				 "%s"
- 				 "MIME-Version: 1.0\n"
--				 "Content-Type: multipart/mixed;\n"
-+				 "Content-Type: multipart/mixed;"
- 				 " boundary=\"%s%s\"\n"
- 				 "\n"
- 				 "This is a multi-part message in MIME "
-@@ -202,10 +202,10 @@ void show_log(struct rev_info *opt, const char *sep)
- 
- 			snprintf(buffer, sizeof(buffer) - 1,
- 				 "--%s%s\n"
--				 "Content-Type: text/x-patch;\n"
-+				 "Content-Type: text/x-patch;"
- 				 " name=\"%s.diff\"\n"
- 				 "Content-Transfer-Encoding: 8bit\n"
--				 "Content-Disposition: %s;\n"
-+				 "Content-Disposition: %s;"
- 				 " filename=\"%s.diff\"\n\n",
- 				 mime_boundary_leader, opt->mime_boundary,
- 				 sha1,
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 28787a1..8345ef5 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -106,7 +106,7 @@ do
- 			echo "\$ git $cmd"
- 			git $cmd |
- 			sed -e "s/^\\(-*\\)$V\\(-*\\)\$/\\1g-i-t--v-e-r-s-i-o-n\2/" \
--			    -e "s/^\\( *boundary=\"-*\\)$V\\(-*\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
-+			    -e "s/^\\(.*mixed; boundary=\"-*\\)$V\\(-*\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
- 			echo "\$"
- 		} >"$actual" &&
- 		if test -f "$expect"
-diff --git a/t/t4013/diff.format-patch_--attach_--stdout_initial..master b/t/t4013/diff.format-patch_--attach_--stdout_initial..master
-index 33ce92d..cf6891f 100644
---- a/t/t4013/diff.format-patch_--attach_--stdout_initial..master
-+++ b/t/t4013/diff.format-patch_--attach_--stdout_initial..master
-@@ -4,8 +4,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:01:00 +0000
- Subject: [PATCH] Second
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -21,11 +20,9 @@ This is the second commit.
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
-+Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: attachment;
-- filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
-+Content-Disposition: attachment; filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 35d242b..8422d40 100644
-@@ -66,8 +63,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:02:00 +0000
- Subject: [PATCH] Third
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -80,11 +76,9 @@ Content-Transfer-Encoding: 8bit
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
-+Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: attachment;
-- filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
-+Content-Disposition: attachment; filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 8422d40..cead32e 100644
-@@ -115,8 +109,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:03:00 +0000
- Subject: [PATCH] Side
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -130,11 +123,9 @@ Content-Transfer-Encoding: 8bit
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
-+Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: attachment;
-- filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
-+Content-Disposition: attachment; filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 35d242b..7289e35 100644
-diff --git a/t/t4013/diff.format-patch_--attach_--stdout_initial..master^ b/t/t4013/diff.format-patch_--attach_--stdout_initial..master^
-index d97625a..fe02587 100644
---- a/t/t4013/diff.format-patch_--attach_--stdout_initial..master^
-+++ b/t/t4013/diff.format-patch_--attach_--stdout_initial..master^
-@@ -4,8 +4,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:01:00 +0000
- Subject: [PATCH] Second
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -21,11 +20,9 @@ This is the second commit.
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
-+Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: attachment;
-- filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
-+Content-Disposition: attachment; filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 35d242b..8422d40 100644
-@@ -66,8 +63,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:02:00 +0000
- Subject: [PATCH] Third
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -80,11 +76,9 @@ Content-Transfer-Encoding: 8bit
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
-+Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: attachment;
-- filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
-+Content-Disposition: attachment; filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 8422d40..cead32e 100644
-diff --git a/t/t4013/diff.format-patch_--attach_--stdout_initial..side b/t/t4013/diff.format-patch_--attach_--stdout_initial..side
-index 0b6853d..9ff828e 100644
---- a/t/t4013/diff.format-patch_--attach_--stdout_initial..side
-+++ b/t/t4013/diff.format-patch_--attach_--stdout_initial..side
-@@ -4,8 +4,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:03:00 +0000
- Subject: [PATCH] Side
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -19,11 +18,9 @@ Content-Transfer-Encoding: 8bit
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
-+Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: attachment;
-- filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
-+Content-Disposition: attachment; filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 35d242b..7289e35 100644
-diff --git a/t/t4013/diff.format-patch_--inline_--stdout_initial..master b/t/t4013/diff.format-patch_--inline_--stdout_initial..master
-index 68c9884..aa110c0 100644
---- a/t/t4013/diff.format-patch_--inline_--stdout_initial..master
-+++ b/t/t4013/diff.format-patch_--inline_--stdout_initial..master
-@@ -4,8 +4,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:01:00 +0000
- Subject: [PATCH] Second
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -21,11 +20,9 @@ This is the second commit.
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
-+Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: inline;
-- filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
-+Content-Disposition: inline; filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 35d242b..8422d40 100644
-@@ -66,8 +63,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:02:00 +0000
- Subject: [PATCH] Third
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -80,11 +76,9 @@ Content-Transfer-Encoding: 8bit
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
-+Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: inline;
-- filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
-+Content-Disposition: inline; filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 8422d40..cead32e 100644
-@@ -115,8 +109,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:03:00 +0000
- Subject: [PATCH] Side
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -130,11 +123,9 @@ Content-Transfer-Encoding: 8bit
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
-+Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: inline;
-- filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
-+Content-Disposition: inline; filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 35d242b..7289e35 100644
-diff --git a/t/t4013/diff.format-patch_--inline_--stdout_initial..master^ b/t/t4013/diff.format-patch_--inline_--stdout_initial..master^
-index 6008e77..95e9ea4 100644
---- a/t/t4013/diff.format-patch_--inline_--stdout_initial..master^
-+++ b/t/t4013/diff.format-patch_--inline_--stdout_initial..master^
-@@ -4,8 +4,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:01:00 +0000
- Subject: [PATCH] Second
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -21,11 +20,9 @@ This is the second commit.
-  3 files changed, 5 insertions(+), 3 deletions(-)
-  delete mode 100644 file2
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
-+Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: inline;
-- filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
-+Content-Disposition: inline; filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 35d242b..8422d40 100644
-@@ -66,8 +63,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:02:00 +0000
- Subject: [PATCH] Third
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -80,11 +76,9 @@ Content-Transfer-Encoding: 8bit
-  2 files changed, 5 insertions(+), 0 deletions(-)
-  create mode 100644 file1
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
-+Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: inline;
-- filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
-+Content-Disposition: inline; filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 8422d40..cead32e 100644
-diff --git a/t/t4013/diff.format-patch_--inline_--stdout_initial..side b/t/t4013/diff.format-patch_--inline_--stdout_initial..side
-index c4d3da9..86ae923 100644
---- a/t/t4013/diff.format-patch_--inline_--stdout_initial..side
-+++ b/t/t4013/diff.format-patch_--inline_--stdout_initial..side
-@@ -4,8 +4,7 @@ From: A U Thor <author@example.com>
- Date: Mon, 26 Jun 2006 00:03:00 +0000
- Subject: [PATCH] Side
- MIME-Version: 1.0
--Content-Type: multipart/mixed;
-- boundary="------------g-i-t--v-e-r-s-i-o-n"
-+Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
- 
- This is a multi-part message in MIME format.
- --------------g-i-t--v-e-r-s-i-o-n
-@@ -19,11 +18,9 @@ Content-Transfer-Encoding: 8bit
-  3 files changed, 9 insertions(+), 0 deletions(-)
-  create mode 100644 file3
- --------------g-i-t--v-e-r-s-i-o-n
--Content-Type: text/x-patch;
-- name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
-+Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- Content-Transfer-Encoding: 8bit
--Content-Disposition: inline;
-- filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
-+Content-Disposition: inline; filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
- 
- diff --git a/dir/sub b/dir/sub
- index 35d242b..7289e35 100644
--- 
-1.5.0.2.878.g38f47
+1) Allow command abbreviation: 'guilt ser' will have the same effect as
+   'guilt series'
+
+2) "guilt push" behavior now matches "quilt push" when patch doesn't apply
+
+3) guilt and guilt-init got a manpage (more will follow in future releases)
+
+4) guilt-import-commit now saves the git Author field as the 'From:' line in
+   the patch
+
+5) guilt-refresh checks if there is a patch applied before trying to refresh
+   changes
+
+6) Several sanity checks
+
+I know I either say it, or at least think it each time I make a release, but
+really, this is the best release of Guilt yet. :)
+
+As always, patches, and other feedback is welcome.
+
+Josef "Jeff" Sipek.
+
+------------
+Changes since v0.20:
+
+Brandon Philips (1):
+      Initial guilt documentation
+
+Josef 'Jeff' Sipek (14):
+      makefile: Include import-commit in list of scripts
+      Fixed do_make_header to include From:
+      push: Fixed unkown patchname pushing all patches
+      add/rm: Use print_usage instead of using $USAGE directly
+      guilt: Document push_patch's new argument
+      refresh: Make sure there is a patch applied before doing a refresh
+      Reorder makefile rules & use .PHONY
+      docs: Commands should be on a separate line
+      Ignore *.html, *.1 and *.7 in Documentation/
+      refresh: Use ~ as the backup file suffix
+      Install manpages to $(PREFIX)/man
+      Removed print_usage as it shouldn't be used
+      help: A simple help command
+      Guilt v0.21
+
+Theodore Ts'o (1):
+      Make "guilt push" match "quilt push" when the patch doesn't apply
+
+Yasushi SHOJI (7):
+      Allow command abbreviation
+      Guilt: Format command list in usage
+      Guilt: Do not allow patch name duplication
+      Guilt: Replace print_usage and exit 1 with usage and die in git-sh-setup
+      Guilt: add -v to guilt-series
+      Guilt: series -v: Fix zero applied patch case
+      Guilt: add a new command "files"
