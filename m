@@ -1,67 +1,177 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Git checkout preserve timestamp?
-Date: Mon, 5 Mar 2007 08:46:52 -0600
-Message-ID: <17900.11612.872928.633406@lisa.zopyra.com>
-References: <17895.18265.710811.536526@lisa.zopyra.com>
-	<Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20070302162136.GA9593@diana.vm.bytemark.co.uk>
-	<200703051213.52513.andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/3] git-branch: add --track and --no-track options
+Date: Mon, 5 Mar 2007 15:50:17 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703051520340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <esgm1m$33f$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 15:47:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Mar 05 15:50:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOETb-0002fa-MK
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 15:47:48 +0100
+	id 1HOEW7-0003ft-JJ
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 15:50:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933498AbXCEOrK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 09:47:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933496AbXCEOrK
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 09:47:10 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:61793 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933498AbXCEOrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 09:47:08 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l25Ekt527929;
-	Mon, 5 Mar 2007 08:46:55 -0600
-In-Reply-To: <200703051213.52513.andyparkins@gmail.com>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S933493AbXCEOuU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 09:50:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933496AbXCEOuU
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 09:50:20 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52487 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933493AbXCEOuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 09:50:19 -0500
+Received: (qmail invoked by alias); 05 Mar 2007 14:50:17 -0000
+X-Provags-ID: V01U2FsdGVkX1/rxmUF3ObrkuRA1AEL25nMfw6sXk7M5jnzXWbuTV
+	sNFAJl4nvnmPbc
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <esgm1m$33f$1@sea.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41444>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41445>
 
-On Monday, March 5, 2007 at 12:13:50 (+0000) Andy Parkins writes:
->...
->Now take the suggestion that timestamps from the repository version should be 
->restored and do the same thing:
->
-> git checkout branch1
-> # sourcefile.c changes, git sets the timestamp to $timestamp1
-> # make would rebuild sourcefile.o (setting its timestamp to $now)
-> git checkout branch2
-> # sourcefile.c changes, so sets the timestamp to $timestamp2
-> # make wouldn't rebuild sourcefile.o because $timestamp2 < $now
-> git checkout branch1
-> # sourcefile.c changes, so git sets the timestamp to $timestamp1
-> # make wouldn't rebuild sourcefile.o because $timestamp1 < $now
->
->All very wrong; in two out of the three builds, the wrong
->sourcefile.o ends up in the final object.
+Hi,
 
-All very wrong if you ignore what I wrote as part of my original note:
-keep compilation products separated by branch name, not in the same
-place.  This is essential to my request: without it, it is indeed very
-wrong.  We currently separate out by compiler, options, machine
-architecture, and adding the branch to that is trivial.
+it is a very good idea to read the information which remote tracks which 
+branch from the config, i.e. if you branch "refs/remotes/hallo", to look 
+if there is any remote information for that local ref.
+
+On Mon, 5 Mar 2007, Paolo Bonzini wrote:
+
+> diff --git a/builtin-branch.c b/builtin-branch.c
+> index d371849..f39759b 100644
+> --- a/builtin-branch.c
+> +++ b/builtin-branch.c
+> @@ -12,7 +12,7 @@
+>  #include "builtin.h"
+>  
+>  static const char builtin_branch_usage[] =
+> -  "git-branch [-r] (-d | -D) <branchname> | [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [--color | --no-color] [-r | -a] [-v [--abbrev=<length> | --no-abbrev]]";
+> +  "git-branch [-r] (-d | -D) <branchname> | [--track | --no-track] [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [--color | --no-color] [-r | -a] [-v [--abbrev=<length> | --no-abbrev]]";
+>  
+>  #define REF_UNKNOWN_TYPE    0x00
+>  #define REF_LOCAL_BRANCH    0x01
+> @@ -308,14 +308,105 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev)
+>  	free_ref_list(&ref_list);
+>  }
+>  
+> +
+
+extra empty line.
+
+> +static void get_remote_branch_name(const char* value)
+> +{
+> +	int len_first = -1, len_second = -1;
+> +	if (*value == '+')
+> +		value++;
+> +
+
+> +	/* Try an exact match first.  */
+> +	sscanf(value, "refs/%*[^:]:%n", &len_first);
+
+This is the first time I saw that sscanf format type. How portable is it?
+
+> +	if (len_first != -1
+> +	    && !strcmp(value + len_first, start_ref)) {
+
+I really would rather do
+
+	const char *p;
+	if (!prefixcmp(value, "refs/") && (p = strchr(value, ':')) &&
+			!strcmp(p + 1, start_ref)) {
+
+> +		/* Truncate the value before the colon.  */
+> +		asprintf(&config_repo, "%.*s", len_first - 1, value);
+
+asprintf() is a GNU extension. I guess it is better to just
+
+	config_repo = xstrdup(value);
+	config_repo[p - value] = '\0';
 
 
-Bill
+> +		return;
+> +	}
+> +
+> +	/* Try with a wildcard match now.  */
+> +	sscanf(value, "refs/%*[^/]/*:%nrefs/remotes/%*[^/]/*%n",
+> +	       &len_first, &len_second);
+> +	if (len_first != -1 && len_second != -1
+> +	    && (len_second - 2) - len_first == remote_len + 13
+> +	    && !strncmp(value + len_first, start_ref, remote_len + 13)) {
+> +		/* Replace the star with the remote branch name.  */
+> +		asprintf(&config_repo, "%.*s%s",
+> +			 len_first - 3, value,
+> +			 start_ref + remote_len + 13);
+
+Same here:
+
+	else if (!prefixcmp(value, "refs/") && (p = strchr(value, ':')) &&
+			!memcmp(p + 1, start_ref, remote_len) &&
+			!strcmp(p + 1 + remote_len, "/*")) {
+		config_repo = xstrdup(value);
+		config_repo[p - value] = '\0';
+	}
+
+BTW I prefer to skip the curly brackets when there is only one statement 
+in the block.
+
+Just to be on the safe side, you might want to check here if there are 
+more than one remotes "tracking" into start_ref. However, it might not be 
+relevant in practice.
+
+> +	}
+> +}
+> +
+> +static int get_remote_config(const char* key, const char* value)
+> +{
+> +        if (!prefixcmp(key, "remote.") &&
+> +            !strncmp(key + 7, start_ref + 13, remote_len)) {
+> +		if (config_track == -1
+> +		    && !strcmp(key + 7 + remote_len, ".trackintolocalbranches"))
+
+FWIW I don't think .trackIntoLocalBranches" is needed. Opinions?
+
+> +static void register_pull(const char *name, const char *real_ref, int track)
+
+Maybe call it "set_branch_defaults()"?
+
+> +			die("what a long branch name you have!");
+> +			goto out;
+
+die() does not return, so no need to "goto out;"... But then, it might be 
+nicer to return -1, i.e.
+
+			ret = error("what a long branch name you have!");
+
+and saying
+		if (!ret) {
+			git_config_set(key, value);
+			...
+			printf("Branch %s setup...
+		}
+	}
+	if (repo_config)
+		free(repo_config);
+	return ret;
+
+But I see you made it return "void", so you can skip the "return ret;".
+
+> @@ -333,7 +424,9 @@ static void create_branch(const char *name, const char *start_name,
+>  	if (start_sha1)
+>  		/* detached HEAD */
+>  		hashcpy(sha1, start_sha1);
+> -	else if (get_sha1(start_name, sha1))
+> +	else if (dwim_ref(start_name, strlen(start_name), sha1, &real_ref) > 1)
+> +		die("Ambiguous object name: '%s'.", start_name);
+
+I know, I should have said that earlier, but I just found out myself: We 
+have a config variable core.warnambiguousrefs, and maybe we should _not_ 
+complain and set the defaults when the global variable warn_ambiguous_refs 
+is 0.
+
+Ciao,
+Dscho
