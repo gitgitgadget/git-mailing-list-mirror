@@ -1,93 +1,99 @@
-From: Bill Lear <rael@zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Git checkout preserve timestamp?
-Date: Mon, 5 Mar 2007 17:27:19 -0600
-Message-ID: <17900.42839.514960.613003@lisa.zopyra.com>
+Date: Tue, 6 Mar 2007 00:32:28 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703060026340.13683@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <17895.18265.710811.536526@lisa.zopyra.com>
-	<20070302091426.GA2605@diana.vm.bytemark.co.uk>
-	<17896.9631.316001.869157@lisa.zopyra.com>
-	<Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20070302162136.GA9593@diana.vm.bytemark.co.uk>
-	<Pine.LNX.4.63.0703022018190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20070305072323.GA31169@diana.vm.bytemark.co.uk>
-	<Pine.LNX.4.63.0703051230390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<17900.27067.247950.419438@lisa.zopyra.com>
-	<Pine.LNX.4.63.0703052014020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<17900.30394.172067.743310@lisa.zopyra.com>
-	<Pine.LNX.4.63.0703052143120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<17900.36569.805689.922989@lisa.zopyra.com>
-	<Pine.LNX.4.64.0703051347490.3998@woody.linux-foundation.org>
-	<17900.39124.763603.695942@lisa.zopyra.com>
-	<Pine.LNX.4.63.0703052339050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070302091426.GA2605@diana.vm.bytemark.co.uk> <17896.9631.316001.869157@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070302162136.GA9593@diana.vm.bytemark.co.uk>
+ <Pine.LNX.4.63.0703022018190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070305072323.GA31169@diana.vm.bytemark.co.uk>
+ <Pine.LNX.4.63.0703051230390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.27067.247950.419438@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703052014020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.30394.172067.743310@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703052143120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.36569.805689.922989@lisa.zopyra.com>
+ <Pine.LNX.4.64.0703051347490.3998@woody.linux-foundation.org>
+ <17900.39124.763603.695942@lisa.zopyra.com>
+ <Pine.LNX.4.64.0703051431130.3998@woody.linux-foundation.org>
+ <17900.42415.750335.329874@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
 	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 06 00:27:42 2007
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 00:32:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOMag-0005m2-Pz
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 00:27:39 +0100
+	id 1HOMfc-000824-43
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 00:32:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752246AbXCEX1Y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 18:27:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752527AbXCEX1X
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 18:27:23 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60360 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752507AbXCEX1W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 18:27:22 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l25NRKw12965;
-	Mon, 5 Mar 2007 17:27:20 -0600
-In-Reply-To: <Pine.LNX.4.63.0703052339050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1751913AbXCEXcb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 18:32:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbXCEXcb
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 18:32:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33189 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751913AbXCEXca (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 18:32:30 -0500
+Received: (qmail invoked by alias); 05 Mar 2007 23:32:29 -0000
+X-Provags-ID: V01U2FsdGVkX1/3M8oykN/3r6Yep+ZBxr62cQYiq3BrazVbXpEFWA
+	ZwFccnRerSUOHo
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <17900.42415.750335.329874@lisa.zopyra.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41505>
 
-On Monday, March 5, 2007 at 23:56:02 (+0100) Johannes Schindelin writes:
->...
->It may not be infeasible.
->
->But it is wrong. It "fixes" a totallc clear idiom, ...
+Hi,
 
-A very valid point.  I dislike breaking clear idioms also.
+On Mon, 5 Mar 2007, Bill Lear wrote:
 
->> the timestamp for that file on that branch would be invalidated, and the 
->> file would get whatever timestamp it got when it was written to disk.
->
->This approach is so fragile! It is invasive, easy to get wrong (count the 
->ways how to invalidate the timestamp), and serves only an obscure use 
->case, which is better solved otherwise to begin with.
+> On Monday, March 5, 2007 at 14:37:15 (-0800) Linus Torvalds writes:
+> >On Mon, 5 Mar 2007, Bill Lear wrote:
+> >> I edit sourcefile.c, compile it, then commit it with
+> >> N=timestamp(sourcefile.c) on master.  N is <
+> >> timestamp(.master/sourcefile.o).  I then switch to branchX.  N is
+> >> stored by git for master:sourcefile.c.  No stored timestamp are on
+> >> this branch, so the file gets the timestamp it gets on checkout
+> >> M=timestamp(sourcefile.c).  I compile the file again, all is well.  I
+> >> move back to master branch.  Git stores M as branchX:sourcefile.c Git
+> >> checks out the file, and stamps it with N.  I do a make.  No
+> >> recompilation happens.
+> >
+> >WHICH IS WRONG! You need to recompile, since the compile you did on the 
+> >other branch DOES NOT MATCH in "sourcefile.c" any more. 
+> 
+> Well, I'll let it drop after this, but I think you're wrong.  I do NOT
+> need it to recompile when I do the third make above.
 
-More very valid points.
+Bill, maybe you don't want to hear it, but for all those following this 
+thread, here is why you are wrong:
 
->> >So stop even asking for this. We'd have to be totally and utterly 
->> >incompetent to do what you ask for. We're simply not that stupid. 
->
->FWIW I have to agree here. I saw quite a few projects go wrong, because 
->management insisted on abolishing a perfectly good design, just because 
->they had this pet idea.
+"make" does _not_ match the time stamps of xyz.c and xyz.o. After you 
+"make", the only thing which is guaranteed is that if xyz.c is _newer_ 
+than xyz.o, the compiler is started.
 
-This is not my "pet idea".  I could care less about it: I have other
-alternatives.  I was just engaging in what I hoped would be a friendly
-exchange about this, but it seems to have touched a nerve, and then
-invective with unsubtle charges of STUPID was loaded into the
-catapult and flung across the sea ...
+Example:
 
-I loathe politics getting in the way of something clean, robust, and
-useful.  I would be the last to advocate it: besides were I really
-convinced that git MUST have this or die, I would try to write it
-myself --- I was just hoping for an argument showing why it was such a
-lame-brained idea from a logical, not implementation, standpoint.
+00:05 you pull upstream into your master branch, which has a newer xzy.c
+00:07 you type make. xyz.o is built, because make sees that xyz.c is 
+      newer than xyz.o
+00:12 you checkout your side branch, xyz.c is updated.
+00:13 you type make, and again xzy.o is built, because xyz.c is newer than 
+      xyz.o
+00:25 you switch back to your master branch.
 
-Thanks again for your time.
+Now, if your wish would be granted, and xyz.c has the same timestamp as 
+before, then it _still_ is older than xyz.o. So make will not rebuild it.
 
+BUT xyz.o is actually compiled from the side branch's version of xyz.c!
 
-Bill
+Hth,
+Dscho
