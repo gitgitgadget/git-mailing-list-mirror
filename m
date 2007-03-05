@@ -1,78 +1,56 @@
-From: Xavier Maillard <zedek@gnu.org>
-Subject: [PATCH] Use non-interactive function to byte-compile files
-Date: Mon, 5 Mar 2007 09:23:42 +0100
-Organization: GNU's Not UNIX!
-Message-ID: <200703050823.l258NgT9008266@localhost.localdomain>
-Reply-To: Xavier Maillard <zedek@gnu.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 05 09:27:09 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCHv2] t/t5515-fetch-merge-logic.sh: Added tests for the merge login in git-fetch
+Date: Mon, 05 Mar 2007 00:28:28 -0800
+Message-ID: <7vodn814cz.fsf@assigned-by-dhcp.cox.net>
+References: <87ps7oslwk.fsf@gmail.com> <87abyskt6k.fsf@gmail.com>
+	<7vslck14ly.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Junio C. Hamano" <junkio@cox.net>
+To: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 05 09:28:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HO8XE-0001ZJ-AM
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 09:27:08 +0100
+	id 1HO8Yb-0002D4-Dx
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 09:28:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932272AbXCEI1F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 03:27:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932359AbXCEI1E
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 03:27:04 -0500
-Received: from smtp5-g19.free.fr ([212.27.42.35]:57006 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932272AbXCEI1D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 03:27:03 -0500
-Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 965017D32
-	for <git@vger.kernel.org>; Mon,  5 Mar 2007 09:27:01 +0100 (CET)
-Received: from localhost.localdomain (IDENT:1001@localhost [127.0.0.1])
-	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l258Ngdl008269
-	for <git@vger.kernel.org>; Mon, 5 Mar 2007 09:23:42 +0100
-Received: (from zedek@localhost)
-	by localhost.localdomain (8.13.8/8.13.8/Submit) id l258NgT9008266;
-	Mon, 5 Mar 2007 09:23:42 +0100
-X-Authentication-Warning: localhost.localdomain: zedek set sender to zedek@gnu.org using -f
-Jabber-ID: zedek@im.lolica.org
-User-Agent: Rmail in GNU Emacs 23.0.51.1 on GNU/Linux
+	id S932273AbXCEI2a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 5 Mar 2007 03:28:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932359AbXCEI2a
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 03:28:30 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:60939 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932273AbXCEI23 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2007 03:28:29 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070305082830.LUDS26279.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 5 Mar 2007 03:28:30 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id WwUU1W00N1kojtg0000000; Mon, 05 Mar 2007 03:28:29 -0500
+In-Reply-To: <7vslck14ly.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 05 Mar 2007 00:23:05 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41418>
 
-Hi,
+Junio C Hamano <junkio@cox.net> writes:
 
-Ihope this one is more closed to what you expect to see in a
-commit log.
+> Santi B=C3=A9jar <sbejar@gmail.com> writes:
+>
+>> P.D.: When sended this way the From: must be quoted or in UTF-8?
+>
+> Absolutely not.
 
-* contrib/emacs/Makefile: add git-blame as a candidate to the
-   	    byte-compilation.  batch-byte-compile is the prefered way
-   	    to byte-compile files in batch mode. Use it instead of the
-   	    interactive function.
+But there is no need to resend.  I'll apply it to 'master'
+before going to bed.
 
-Signed-off-by: Xavier Maillard <zedek@gnu.org>
----
- contrib/emacs/Makefile |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/emacs/Makefile b/contrib/emacs/Makefile
-index 350846d..8554e39 100644
---- a/contrib/emacs/Makefile
-+++ b/contrib/emacs/Makefile
-@@ -2,7 +2,7 @@
- 
- EMACS = emacs
- 
--ELC = git.elc vc-git.elc
-+ELC = git.elc vc-git.elc git-blame.elc
- INSTALL ?= install
- INSTALL_ELC = $(INSTALL) -m 644
- prefix ?= $(HOME)
-@@ -15,6 +15,6 @@ install: all
- 	$(INSTALL_ELC) $(ELC) $(emacsdir)
- 
- %.elc: %.el
--	$(EMACS) --batch --eval '(byte-compile-file "$<")'
-+	$(EMACS) -batch -f batch-byte-compile $<
- 
- clean:; rm -f $(ELC)
--- 
-1.5.0
+Thanks.
