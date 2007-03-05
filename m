@@ -1,91 +1,82 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] git-branch: add --track and --no-track options
-Date: Mon, 5 Mar 2007 16:58:05 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703051648330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <esgm1m$33f$1@sea.gmane.org>
- <Pine.LNX.4.63.0703051520340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45EC3905.7070406@lu.unisi.ch>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Git checkout preserve timestamp?
+Date: Mon, 5 Mar 2007 16:01:45 +0000
+Message-ID: <200703051601.49370.andyparkins@gmail.com>
+References: <17895.18265.710811.536526@lisa.zopyra.com> <200703051213.52513.andyparkins@gmail.com> <17900.11612.872928.633406@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: bonzini@gnu.org
-X-From: git-owner@vger.kernel.org Mon Mar 05 16:58:34 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Bill Lear <rael@zopyra.com>,
+	Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 05 17:02:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOFa6-0006Rg-4V
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 16:58:34 +0100
+	id 1HOFdl-0007w0-Qc
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 17:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933564AbXCEP6I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 10:58:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933568AbXCEP6I
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 10:58:08 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44003 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933564AbXCEP6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 10:58:07 -0500
-Received: (qmail invoked by alias); 05 Mar 2007 15:58:05 -0000
-X-Provags-ID: V01U2FsdGVkX1/2PMU4EJP2YD1z39ToOau4FeewtZMACKXhyymyjF
-	KLk77Q9gQVH9ca
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45EC3905.7070406@lu.unisi.ch>
-X-Y-GMX-Trusted: 0
+	id S1030579AbXCEQCQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 11:02:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933593AbXCEQCO
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 11:02:14 -0500
+Received: from wx-out-0506.google.com ([66.249.82.232]:63367 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933594AbXCEQBz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 11:01:55 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so1609680wxd
+        for <git@vger.kernel.org>; Mon, 05 Mar 2007 08:01:55 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=W5ftF3BVffNqBwebCkTk/6umvjde9p4ySOJal3dcRxISTglUq55mv/IMqof0O57juWQxdnc9N30ug6V+PQJEj46o2WRrxUUGS/csPznVnFxTjYCghHCU6yKjXZkE9sRE4Id9IBG/Yc1p97qqtP3MlxBsYmKCD4oLAPLi87Exv9s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=gGyrZKrw6XlOEFWNIC5iXMhPELdgkXeZQhceuTn8x4zRebIzHWA5tDOe3cTkLz0LY4W5bXgZvY/jbHMtTiYGZZZKOqBOPlegO084DVXy2tSe9TteDSXLkgWzlEQl9QUqlkjOQQaXKm1ZACXRqEzGKpamtJLYDHe4nfrWiaSDCOQ=
+Received: by 10.90.93.6 with SMTP id q6mr4721291agb.1173110514387;
+        Mon, 05 Mar 2007 08:01:54 -0800 (PST)
+Received: from davejones ( [194.70.53.227])
+        by mx.google.com with ESMTP id n22sm23361283nfc.2007.03.05.08.01.51;
+        Mon, 05 Mar 2007 08:01:52 -0800 (PST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <17900.11612.872928.633406@lisa.zopyra.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41455>
 
-Hi,
+On Monday 2007 March 05 14:46, Bill Lear wrote:
 
-On Mon, 5 Mar 2007, Paolo Bonzini wrote:
+> All very wrong if you ignore what I wrote as part of my original note:
+> keep compilation products separated by branch name, not in the same
 
-> >> +	/* Try with a wildcard match now.  */
-> >> +	sscanf(value, "refs/%*[^/]/*:%nrefs/remotes/%*[^/]/*%n",
-> >> +	       &len_first, &len_second);
-> >> +	if (len_first != -1 && len_second != -1
-> >> +	    && (len_second - 2) - len_first == remote_len + 13
-> >> +	    && !strncmp(value + len_first, start_ref, remote_len + 13)) {
-> >> +		/* Replace the star with the remote branch name.  */
-> >> +		asprintf(&config_repo, "%.*s%s",
-> >> +			 len_first - 3, value,
-> >> +			 start_ref + remote_len + 13);
-> > 
-> > Same here:
-> > 
-> > 	else if (!prefixcmp(value, "refs/") && (p = strchr(value, ':')) &&
-> > 			!memcmp(p + 1, start_ref, remote_len) &&
-> > 			!strcmp(p + 1 + remote_len, "/*")) {
-> > 		config_repo = xstrdup(value);
-> > 		config_repo[p - value] = '\0';
-> > 	}
-> 
-> This is not what my code does.
+I realise why it's causing you troubles.  However, I was hoping that that 
+little example shows why it can never be right to use the timestamp out of 
+the repository.
 
-You are completely correct. I overlooked the need to check for "/*" 
-in the first part. So, this should go before the memcmp() line:
+> place.  This is essential to my request: without it, it is indeed very
+> wrong.  We currently separate out by compiler, options, machine
+> architecture, and adding the branch to that is trivial.
 
-			!prefixcmp(p - 2, "/*") &&
+I'm afraid that the unnecessary recompile is just a by-product of that 
+organisation.  I still say that git is correct to touch the file dates.
 
-I also forgot to replace "*" by the branch name. The if block should look 
-like this, then:
+[blatent plug]: perhaps my poorman's submodule support will get you by until 
+real submodule support is implemented?
 
-		config_repo = xmalloc(p - value + start_len - remote_len);
-		strncpy(config_repo, value, p - 1 - value);
-		strcat(config_repo, start_ref + remote_len);
+http://lists.zerezo.com/git/msg334639.html
 
-As usual, completely untested.
+I doubt it though - as you would probably want automatic checkout in your 
+situation.
 
-> Are you saying that yours is correct, or that it should actually be the 
-> same in practice, or just that I should avoid sscanf/asprintf (which I 
-> won't do, since I got mildly insane after writing half of the function 
-> without sscanf -- and then decided that the C library is there to be 
-> used).
 
-Well, you make a good case there. I am only mildly concerned that this 
-might not work on some obscure platforms (including Windows and SunOS), 
-and that we are not even realizing that because you do not check the 
-return value of sscanf().
 
-Ciao,
-Dscho
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
