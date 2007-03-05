@@ -1,66 +1,77 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Git checkout preserve timestamp?
-Date: Mon, 5 Mar 2007 13:19:15 +0000
-Message-ID: <200703051319.17046.andyparkins@gmail.com>
-References: <17895.18265.710811.536526@lisa.zopyra.com> <200703051213.52513.andyparkins@gmail.com> <20070305123348.GB3481@diana.vm.bytemark.co.uk>
+From: Ingo Molnar <mingo@elte.hu>
+Subject: Re: 2.6.21-rc1: known regressions (part 2)
+Date: Mon, 5 Mar 2007 15:04:59 +0100
+Message-ID: <20070305140459.GA8464@elte.hu>
+References: <20070227105922.GD2250@kernel.dk> <20070227111515.GA4271@kernel.dk> <20070301093450.GA8508@elte.hu> <20070301104117.GA22788@elte.hu> <20070301145204.GA25304@elte.hu> <Pine.LNX.4.64.0703011536450.12485@woody.linux-foundation.org> <20070302072100.GB30634@elte.hu> <20070302080441.GA12785@elte.hu> <20070302102018.GA11549@elte.hu> <Pine.LNX.4.64.0703020824580.3953@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Karl =?iso-8859-1?q?Hasselstr=F6m?= <kha@treskal.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bill Lear <rael@zopyra.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 05 14:19:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Mar 05 15:13:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOD6E-0008Rg-8x
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 14:19:34 +0100
+	id 1HODwN-0005NT-Ap
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 15:13:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933467AbXCENTY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 5 Mar 2007 08:19:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933470AbXCENTX
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 08:19:23 -0500
-Received: from nz-out-0506.google.com ([64.233.162.224]:64525 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933467AbXCENTW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2007 08:19:22 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so1754374nze
-        for <git@vger.kernel.org>; Mon, 05 Mar 2007 05:19:22 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=D3IVEtRuRuf5jClEHUwY8/hkvDl3A3T4zunQO3fGnwqkyUoLV5TIt/imGwfzigLRoo8oTEvqdijxgVTFFYcEAfsuw8gF7UL+pjv7VAfoBPgLmTcGPSJXjip/Bf8MCsCBkUVMeGQTfA/wS7qdAhLfI3pGx9ut/dmgIDRy1O3RmvI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=PExnNF2SOdg1nMAnANi9ygcEUpLizArucKBTxJQZG6dK8lFbFz0A5lQ2C32jEdJFlmc9PIASQK7eEuQurkuzYlwlUmKYZ81Elh7ink/4HTZquplGlXjMSiU75ZzvCgOcRK5y+xuTLetCLtNoNBp3lsbgCMYf/rvbMc9sz8poON4=
-Received: by 10.64.125.17 with SMTP id x17mr3434060qbc.1173100762028;
-        Mon, 05 Mar 2007 05:19:22 -0800 (PST)
-Received: from davejones ( [194.70.53.227])
-        by mx.google.com with ESMTP id k9sm22837667nfc.2007.03.05.05.19.19;
-        Mon, 05 Mar 2007 05:19:20 -0800 (PST)
-User-Agent: KMail/1.9.5
-In-Reply-To: <20070305123348.GB3481@diana.vm.bytemark.co.uk>
+	id S933426AbXCEONN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 09:13:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933454AbXCEONN
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 09:13:13 -0500
+Received: from mx2.mail.elte.hu ([157.181.151.9]:40281 "EHLO mx2.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933426AbXCEONL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 09:13:11 -0500
+Received: from elvis.elte.hu ([157.181.1.14])
+	by mx2.mail.elte.hu with esmtp (Exim)
+	id 1HODvt-0005gB-BD
+	from <mingo@elte.hu>; Mon, 05 Mar 2007 15:13:07 +0100
+Received: by elvis.elte.hu (Postfix, from userid 1004)
+	id 525633E2141; Mon,  5 Mar 2007 15:12:55 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0703020824580.3953@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.2.2i
+Received-SPF: softfail (mx2: transitioning domain of elte.hu does not designate 157.181.1.14 as permitted sender) client-ip=157.181.1.14; envelope-from=mingo@elte.hu; helo=elvis.elte.hu;
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -2.0
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-2.0 required=5.9 tests=BAYES_00 autolearn=no SpamAssassin version=3.1.7
+	-2.0 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41442>
-
-On Monday 2007 March 05 12:33, Karl Hasselstr=F6m wrote:
-
-> Now, obviously "make" isn't such a make tool, since it goes only by
-> timestamps.
-
-Perhaps this will help you:
-
-http://kolpackov.net/pipermail/notes/2004-September/000011.html
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41443>
 
 
-Andy
+* Linus Torvalds <torvalds@linux-foundation.org> wrote:
 
---=20
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+> On Fri, 2 Mar 2007, Ingo Molnar wrote:
+> > 
+> > but the conclusion is clear: if multiple bugs are present in the 
+> > search area then it gets quite difficult to sort it out via 
+> > git-bisect - but it's not impossible either. The following 
+> > git-bisect enhancement could have made things easier for me:
+> > 
+> >    git-bisect mark-must-have <tree>
+> 
+> It's not quite that easy.
+> 
+> In _your_ case, you always just wanted to try to apply a particular 
+> patch if it applied cleanly.
+
+ok, agreed.
+
+Suspend/resume bugs are a bit special anyway because so much stuff 
+happens in an 'invisible' way during suspend/resume that any 
+problem/hang during that 'looks like' the same bug symtpom: a hung 
+resume.
+
+so i'll put more effort into providing more suspend/resume debugging 
+facilities - we have way too few tools of directly debugging them.
+
+	Ingo
