@@ -1,107 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [BUG] git-rev-list: --topo-order --boundary and --max-count
-Date: Mon, 05 Mar 2007 04:15:24 -0800
-Message-ID: <7vhcszzy1v.fsf@assigned-by-dhcp.cox.net>
-References: <8aa486160703050202y5ee159d2i42a2859a00b41679@mail.gmail.com>
-	<7vlkicynwm.fsf@assigned-by-dhcp.cox.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Git checkout preserve timestamp?
+Date: Mon, 5 Mar 2007 13:28:28 +0100
+Message-ID: <20070305122828.GA3481@diana.vm.bytemark.co.uk>
+References: <17895.18265.710811.536526@lisa.zopyra.com> <20070302091426.GA2605@diana.vm.bytemark.co.uk> <17896.9631.316001.869157@lisa.zopyra.com> <Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070302162136.GA9593@diana.vm.bytemark.co.uk> <Pine.LNX.4.63.0703022018190.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070305072323.GA31169@diana.vm.bytemark.co.uk> <Pine.LNX.4.63.0703051230390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 05 13:16:13 2007
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 05 13:29:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOC6n-0005br-4D
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 13:16:05 +0100
+	id 1HOCJa-0003Gl-Mi
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 13:29:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933293AbXCEMP1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 5 Mar 2007 07:15:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933326AbXCEMP1
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 07:15:27 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:41779 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933293AbXCEMP0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Mar 2007 07:15:26 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070305121527.LKAC2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 5 Mar 2007 07:15:27 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id X0FR1W00D1kojtg0000000; Mon, 05 Mar 2007 07:15:25 -0500
-In-Reply-To: <7vlkicynwm.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 05 Mar 2007 02:39:53 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933405AbXCEM2f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 5 Mar 2007 07:28:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933408AbXCEM2e
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 07:28:34 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4548 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933405AbXCEM2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 07:28:33 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HOCIm-0000vS-00; Mon, 05 Mar 2007 12:28:28 +0000
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0703051230390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41440>
 
-Junio C Hamano <junkio@cox.net> writes:
+On 2007-03-05 12:32:07 +0100, Johannes Schindelin wrote:
 
-> "Santi B=C3=A9jar" <sbejar@gmail.com> writes:
+> On Mon, 5 Mar 2007, Karl Hasselstr=F6m wrote:
 >
->>  the --topo-order does not play well with --boundary and --max-count=
-=2E
->>
->> $ git-rev-list --boundary --max-count=3D50 5ced0 | wc -l
->> 56
->> $ git-rev-list --topo-order --boundary --max-count=3D50 5ced0 | wc -=
-l
->> 8846
->>
->> (5ced0 is git.git's master). I think it should be 56 for both. It
->> presents this behaviour since c4025103fa, when was added --boundary
->> support for git-rev-list --max-count and --max-age.
+> > Since the content is exactly the same as before, I'd be of the
+> > strong opinion that nothing has changed as far as the make system
+> > should be concerned.
 >
-> I think the code that does --boundary when the list is limited
-> with --max-count is not quite right, even without topo-order.
-> Only when the traversal is not limited, the code happens to work
-> correctly because in that case alone we pick up positive commits
-> one by one up to the specified count, and do not place anything
-> other than their immediate parents in the list.
+> You are missing an important point here: there _was_ a change.
 
-This is not even correct.  Let's see an extreme example.
-Suppose you have something like this:
+But I don't want my make tool to care! I want it to rebuild if and
+only if the file contents now are different from the file contents as
+of the last rebuild.
 
- ---o---o---o---x---A
-=20
-   ---o---o---o---y---B
+Just like if I change a git-tracked file, then change it back, git
+will _not_ claim that the file has changed; it will compute its sha1,
+see that it is identical to what's in HEAD, and from there on consider
+that file not changed even thogh its timestamp was changed.
 
-and think about what "rev-list --boundary --max-count=3D1 A B"
-should return.  It does not matter how branches A and B are
-related in the past because we are showing only one.
-
-Without --boundary, it is clear we will show B (time flows from
-left to right).  With --boundary, the current code would show B,
-and show -y and -A as boundaries, and I think that is wrong.
-
-Originally --boundary was invented for the specific purpose of
-supporting thin packs.  It worked on the set of commits
-resulting from a limited traversal (that is, you have at least
-one negative, iow UNINTERESTING, commit and one or more positive
-commits), and it showed the negative commit that is a parent of
-a positive commit.
-
-There are two primary users of --boundary right now.  gitk wants
-to show where the partial traversal ends (although it can figure
-it out itself without help from --boundary), and thin pack
-generation wants to have it upfront so that it can see which
-trees and blobs can be used as the bases of delta.  In both
-cases, the semantics desired is to show commits that are _not_
-included in the usual (i.e. non --boundary) results that are
-immediate parents of the commits that are included in the
-result.
-
-So with that definition, the above example should show B and
-then -y as boundary, and should not even talk about A nor -x.
-This may affect the git-bundle's computation of references
-included in the bundle (I think the current code assumes that if
-you do "git bundle --max-count=3D1 A B" the resulting bundle says
-its set of tips consists of A and B) but if that is broken it
-also needs to be fixed.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
