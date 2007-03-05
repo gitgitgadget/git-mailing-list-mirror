@@ -1,48 +1,57 @@
-From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
-Subject: Re: [PATCH 1/3] git-branch: add --track and --no-track options
-Date: Mon, 05 Mar 2007 18:22:24 +0100
-Message-ID: <45EC51D0.7000406@lu.unisi.ch>
-References: <esgm1m$33f$1@sea.gmane.org> <Pine.LNX.4.63.0703051520340.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45EC35B2.2070808@lu.unisi.ch> <Pine.LNX.4.63.0703051701331.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: bonzini@gnu.org
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Begin SubmittingPatches with a check list
+Date: Mon, 5 Mar 2007 18:28:21 +0100
+Message-ID: <81b0412b0703050928p441f8105m61b75f08958d9bb4@mail.gmail.com>
+References: <200703050823.l258NgT9008266@localhost.localdomain>
+	 <20070305095101.GA792@diana.vm.bytemark.co.uk>
+	 <Pine.LNX.4.63.0703051554240.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070305150418.GD3481@diana.vm.bytemark.co.uk>
+	 <Pine.LNX.4.63.0703051631350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 05 18:22:40 2007
+Cc: "=?UTF-8?Q?Karl_Hasselstr=C3=B6m?=" <kha@treskal.com>,
+	"Xavier Maillard" <zedek@gnu.org>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 05 18:28:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOGtL-0007j2-Ab
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 18:22:31 +0100
+	id 1HOGzA-0001zO-FV
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 18:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752812AbXCERW0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 12:22:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbXCERW0
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 12:22:26 -0500
-Received: from server.usilu.net ([195.176.178.200]:38163 "EHLO mail.usilu.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752812AbXCERWZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 12:22:25 -0500
-Received: from [192.168.68.211] ([192.168.68.211] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Mon, 5 Mar 2007 18:22:24 +0100
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
-In-Reply-To: <Pine.LNX.4.63.0703051701331.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-OriginalArrivalTime: 05 Mar 2007 17:22:24.0073 (UTC) FILETIME=[D6E26B90:01C75F4A]
+	id S1752814AbXCER22 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 12:28:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752816AbXCER22
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 12:28:28 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:31923 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752814AbXCER21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 12:28:27 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2166874nfa
+        for <git@vger.kernel.org>; Mon, 05 Mar 2007 09:28:22 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FpGFeClZvkT3W95jJ5tr3Tw4ImJxOPkJkKuga3kv4pyA0VaXVJ0yJnjUvcbOsR/tHTiOqvdqI0fFTLnJy+ZYhpQF28naaiWkkbi4r3KSww0WfSzY2BIwiGN26oJb9lWwjN9+foYSiSjtpLfBtsIXt6HEG63dY6e72XVozuxDT0w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=j9JN9WZD971i7GIVI77YP7VRy8mhp0e6DPybJ6rSLNE6Epql79MF1xlHIjfFF9DUh5SlTWMs2OFUOkCgDfp3KnWBkD8bqTsKIdlXGr5TeD9hfo0QPQW9T87VD+yKv7IeuFZ4p1r1dhgz9h8N9r06yTsVqpI0hCbv/tgCv8l+iGg=
+Received: by 10.78.164.9 with SMTP id m9mr660274hue.1173115701633;
+        Mon, 05 Mar 2007 09:28:21 -0800 (PST)
+Received: by 10.78.138.5 with HTTP; Mon, 5 Mar 2007 09:28:21 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.63.0703051631350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41465>
 
->>>> +	/* Try an exact match first.  */
->>>> +	sscanf(value, "refs/%*[^:]:%n", &len_first);
->>> This is the first time I saw that sscanf format type. How portable is it?
->> It is.  At the very least it is in OpenGroup.
-> 
-> That is not very reassuring for me. However, I learnt something new about 
-> sscanf(), so it was not lost on me.
+On 3/5/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> +       - do not attach your patch, but paste it in the mail
+> +         mail body, unless you cannot teach your mailer to
+> +         leave the formatting of the patch alone
 
-Google books reveals that it's called a "scanset" (I didn't know that either).  I found it in "C: The Complete Reference" by Herb Schildt (2000) and "POSIX Programmer's Guide" by D.A. Lewine (1991).  I don't have K&R at hand to check.
-
-Paolo
+"mail" twice in the first and seconf line
