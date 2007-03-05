@@ -1,48 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Julian Phillips <julian@quantumfyre.co.uk>
 Subject: Re: Sending a thread of patches
-Date: Mon, 5 Mar 2007 03:25:16 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703050324220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Mon, 5 Mar 2007 02:42:05 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0703050240360.5733@beast.quantumfyre.co.uk>
 References: <45EB4F98.7030206@issaris.org> <Pine.LNX.4.64.0703042354250.15433@beast.quantumfyre.co.uk>
+ <Pine.LNX.4.63.0703050324220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: Panagiotis Issaris <takis@issaris.org>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon Mar 05 03:25:26 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 05 03:42:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HO2tA-0004NS-7c
-	for gcvg-git@gmane.org; Mon, 05 Mar 2007 03:25:24 +0100
+	id 1HO39Q-0002N9-09
+	for gcvg-git@gmane.org; Mon, 05 Mar 2007 03:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752560AbXCECZU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 4 Mar 2007 21:25:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752582AbXCECZU
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 21:25:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42081 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752560AbXCECZS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Mar 2007 21:25:18 -0500
-Received: (qmail invoked by alias); 05 Mar 2007 02:25:17 -0000
-X-Provags-ID: V01U2FsdGVkX18JoAUjkOIJ0Ck8/JAwu6KHRmx3/obzc+PaBiHWPc
-	HhQuoLqL3J+A3+
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0703042354250.15433@beast.quantumfyre.co.uk>
-X-Y-GMX-Trusted: 0
+	id S1751473AbXCECmI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 4 Mar 2007 21:42:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751806AbXCECmI
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Mar 2007 21:42:08 -0500
+Received: from neutron.datavampyre.co.uk ([212.159.54.235]:43196 "EHLO
+	neutron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751473AbXCECmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Mar 2007 21:42:07 -0500
+Received: (qmail 1321 invoked by uid 103); 5 Mar 2007 02:42:05 +0000
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90/2713. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.031189 secs); 05 Mar 2007 02:42:05 -0000
+Received: from unknown (HELO beast.quantumfyre.co.uk) (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 5 Mar 2007 02:42:05 +0000
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <Pine.LNX.4.63.0703050324220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41396>
 
-Hi,
+On Mon, 5 Mar 2007, Johannes Schindelin wrote:
 
-On Sun, 4 Mar 2007, Julian Phillips wrote:
+> Hi,
+>
+> On Sun, 4 Mar 2007, Julian Phillips wrote:
+>
+>> As far as I can figure, you don't want to use the --thread option to
+>> git-format-patch when using git-send-email.
+>
+> That might be true. However, I consider it a bug when git-send-email does
+> not replace the In-Reply-To: header, but adds a second one.
 
-> As far as I can figure, you don't want to use the --thread option to 
-> git-format-patch when using git-send-email.
+I wouldn't disagree with that.
 
-That might be true. However, I consider it a bug when git-send-email does 
-not replace the In-Reply-To: header, but adds a second one.
+FWIW, I seem to remember noticing that it did the same for References too 
+...
 
-Ciao,
-Dscho
+-- 
+Julian
+
+  ---
+BOFH Excuse #323:
+
+Your processor has processed too many instructions.  Turn it off immediately, do not type any commands!!
