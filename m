@@ -1,54 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] gitweb: Change to use explicitly function call cgi->escapHTML()
-Date: Tue, 6 Mar 2007 06:07:54 -0500
-Message-ID: <20070306110754.GA13470@coredump.intra.peff.net>
-References: <20070306093917.GA1761@coredump.intra.peff.net> <989B956029373F45A0B8AF02970818902DAA12@zch01exm26.fsl.freescale.net> <20070306104127.GA13096@coredump.intra.peff.net> <7vveheprsc.fsf@assigned-by-dhcp.cox.net> <20070306105629.GA13285@coredump.intra.peff.net> <7vps7mprj6.fsf@assigned-by-dhcp.cox.net> <20070306110156.GA13380@coredump.intra.peff.net> <7vlkiapr70.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/4] revision traversal: retire BOUNDARY_SHOW
+Date: Tue, 06 Mar 2007 03:34:32 -0800
+Message-ID: <7vd53mppvb.fsf@assigned-by-dhcp.cox.net>
+References: <8aa486160703050202y5ee159d2i42a2859a00b41679@mail.gmail.com>
+	<7vlkicynwm.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0703051951340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<Pine.LNX.4.64.0703051130090.3998@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703051145210.3998@woody.linux-foundation.org>
+	<Pine.LNX.4.63.0703060016020.13683@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vk5xvw6mg.fsf@assigned-by-dhcp.cox.net>
+	<7vzm6rurst.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0703060253140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v4pozuncr.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0703060322270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Li Yang-r58472 <LeoLi@freescale.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 06 12:08:03 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Santi =?utf-8?Q?B?= =?utf-8?Q?=C3=A9jar?= <sbejar@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 06 12:34:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOXWQ-00030M-Pr
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 12:07:59 +0100
+	id 1HOXwN-0006Wo-2Z
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 12:34:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964953AbXCFLH5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 06:07:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964958AbXCFLH5
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 06:07:57 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2797 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964953AbXCFLH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 06:07:56 -0500
-Received: (qmail 12322 invoked from network); 6 Mar 2007 06:08:13 -0500
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 6 Mar 2007 06:08:13 -0500
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Mar 2007 06:07:54 -0500
-Content-Disposition: inline
-In-Reply-To: <7vlkiapr70.fsf@assigned-by-dhcp.cox.net>
+	id S965852AbXCFLef (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 06:34:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965865AbXCFLef
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 06:34:35 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62709 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964980AbXCFLed (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 06:34:33 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070306113433.JBRQ2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 6 Mar 2007 06:34:33 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id XPaY1W00A1kojtg0000000; Tue, 06 Mar 2007 06:34:33 -0500
+In-Reply-To: <Pine.LNX.4.63.0703060322270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Tue, 6 Mar 2007 03:29:38 +0100
+	(CET)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41579>
 
-On Tue, Mar 06, 2007 at 03:05:55AM -0800, Junio C Hamano wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> > Ah, I understand your point now. Yes, if other mod_perl CGIs can impact
-> > the value, then we should definitely set it explicitly, as per your
-> > patch (and we should use Li's patch for safety, then, not mine).
-> 
-> Reading "sub autoEscape", "sub escapeHTML" and "sub
-> self_or_default" again, I think other people cannot affect the
-> value of our $cgi->{'escape'} by calling autoEscape, so what I
-> said is probably bogus.  Let's use Li's original patch.
+>> > This should help performance, as not all reachable commits are traversed 
+>> > any more.
+>> 
+>> You prevented that with "while (i &&" part already, didn't you?
+>
+> Well, yes. I also wanted to prevent going down all paths, though.
 
-Er, sorry, yes, I just accidentally agreed with your bogosity (while
-figuring out what you originally meant, I forgot which CGI we were
-talking about!). So I agree, Li's original is sufficient. Sorry for the
-noise. :)
+If we wanted to bundle "-8 A B", I think we would make 'x' and
+'y' prereqs, as they are the direct parents commits that are
+shown, and that themselves are not shown.
 
--Peff
+         .---*---*---*---*---* A
+        /
+    ---x---y---*---*---* B
+
+If we say upon hitting prereq (x and y) we stop traversal by
+marking the parent UNINTERESTING, I suspected that we may not
+find out 'x' with get_revision() loop, and that was why I chose
+not to.  Instead the loop stops by finding y and then x (and by
+saying "ok I needed to find two and now I have two".
+
+But this probably needs more optimization.
