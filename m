@@ -1,92 +1,107 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: mercurial to git
-Date: Tue, 6 Mar 2007 16:54:59 -0500
-Message-ID: <20070306215459.GI18370@thunk.org>
-References: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] bundle: fix wrong check of read_header()'s return value &
+ add tests
+Date: Tue, 6 Mar 2007 22:57:07 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703062256200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 06 22:55:13 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Mar 06 22:57:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOhcn-0005A2-9S
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 22:55:13 +0100
+	id 1HOhek-00069K-LL
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 22:57:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030310AbXCFVzG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 16:55:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030321AbXCFVzG
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 16:55:06 -0500
-Received: from thunk.org ([69.25.196.29]:57903 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030310AbXCFVzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 16:55:04 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HOhiC-0003LF-Jd; Tue, 06 Mar 2007 17:00:48 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HOhcZ-0000AR-Ra; Tue, 06 Mar 2007 16:54:59 -0500
-Content-Disposition: inline
-In-Reply-To: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1030321AbXCFV5K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 16:57:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030327AbXCFV5K
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 16:57:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42565 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030321AbXCFV5J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 16:57:09 -0500
+Received: (qmail invoked by alias); 06 Mar 2007 21:57:07 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp041) with SMTP; 06 Mar 2007 22:57:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/UucoRbpnUedTnHsXWQS5iYDDfzvCnxjHs87LvEu
+	EqUrYp3sx69X7R
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41597>
 
-On Tue, Mar 06, 2007 at 09:06:29PM +0000, Rocco Rutte wrote:
-> 
-> attached are two files of take #1 of writing a hg2git converter/tracker 
-> using git-fast-import. It basically works so use at your own risk and 
-> send patches... :)
 
-I was actually thinking about doing this too, but apparently you beat
-me too it.  :-)
+If read_header() fails, it returns <0, not 0. Further, an open(/dev/null)
+was not checked for errors.
 
-> The performance bottleneck is hg exporting data, as discovered by people 
-> on #mercurial, the problem is not really fixable and is due to hg's 
-> revlog handling. As a result, I needed to let the script feed the full 
-> contents of the repository at each revision we walk (i.e. all for the 
-> initial import) into git-fast-import. This is horribly slow. For mutt 
-> which contains several tags, a handfull of branches and only 5k commits 
-> this takes roughly two hours at 1 commit/sec. My earlier version not 
-> using 'deleteall' and feeding only files that changed took 15 minutes 
-> alltogether, git-fast-import from a textfile 1 min 30 sec.
+Also, this adds two tests to make sure that the bundle file looks
+correct, by checking if it has the header has the expected form, and that
+the pack contains the right amount of objects.
 
-Hmm.... the way I was planning on handling the performance bottleneck
-was to use "hg manifest --debug <rev>" and diffing the hashes against
-its parents.  Using "hg manifest" only hits .hg/00manifest.[di] and
-.hg/00changelog.[di] files, so it's highly efficient.  With the
---debug option to hg manifest (not needed on some earlier versions of
-hg, but it seems to be needed on the latest development version of
-hg), it outputs the mode and SHA1 hash of the files, so it becomes
-easy to see which files were changed relative to the revision's
-parent(s).
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+ builtin-bundle.c |    4 +++-
+ t/t5510-fetch.sh |   14 ++++++++++++++
+ 2 files changed, 17 insertions(+), 1 deletions(-)
 
-Once we know which files we need to feed to git-fast-import, it's just
-a matter of using "hg cat -r <rev> <pathname>" to feed the individual
-changed file to git-fast-import.  For each file, you only have to
-touch .hg/data/pathane.[di] files.  So this should allow us to feed
-input into git-fast-important without needing to feed the full
-contents of the repository for each revision.
-
-The other thing that I've been working in my design is how to make the
-converter to be bidrectional.  That is, if a changelog is made on the
-hg repository, it should be possible to push it over to the git
-repository, and vice versa, if there are changes made in the git
-repository, it should be possible to push it back to git.  
-
-In order to do this it becomes necessary to special case the .hgrc
-file, and in fact we need to make sure that the .hgrc file does *not*
-show up in the git repository, but the contents of the .hgrc file
-needs to be stored in the state file that lives alongside the git and
-hg repositories.
-
-Regards,
-						- Ted
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index d0c3617..3b3bc25 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -404,6 +404,8 @@ static int unbundle(struct bundle_header *header, int bundle_fd,
+ 	if (verify_bundle(header, 0))
+ 		return -1;
+ 	dev_null = open("/dev/null", O_WRONLY);
++	if (dev_null < 0)
++		return error("Could not open /dev/null");
+ 	pid = fork_with_pipe(argv_index_pack, &bundle_fd, &dev_null);
+ 	if (pid < 0)
+ 		return error("Could not spawn index-pack");
+@@ -440,7 +442,7 @@ int cmd_bundle(int argc, const char **argv, const char *prefix)
+ 
+ 	memset(&header, 0, sizeof(header));
+ 	if (strcmp(cmd, "create") &&
+-			!(bundle_fd = read_header(bundle_file, &header)))
++			(bundle_fd = read_header(bundle_file, &header)) < 0)
+ 		return 1;
+ 
+ 	if (!strcmp(cmd, "verify")) {
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index fa76662..ce96b4b 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -90,6 +90,13 @@ test_expect_success 'create bundle 1' '
+ 	git bundle create bundle1 master^..master
+ '
+ 
++test_expect_success 'header of bundle looks right' '
++	head -n 1 "$D"/bundle1 | grep "^#" &&
++	head -n 2 "$D"/bundle1 | grep "^-[0-9a-f]\{40\} " &&
++	head -n 3 "$D"/bundle1 | grep "^[0-9a-f]\{40\} " &&
++	head -n 4 "$D"/bundle1 | grep "^$"
++'
++
+ test_expect_success 'create bundle 2' '
+ 	cd "$D" &&
+ 	git bundle create bundle2 master~2..master
+@@ -101,6 +108,13 @@ test_expect_failure 'unbundle 1' '
+ 	git fetch "$D/bundle1" master:master
+ '
+ 
++test_expect_success 'bundle 1 has only 3 files ' '
++	cd "$D" &&
++	sed "1,4d" < bundle1 > bundle.pack &&
++	git index-pack bundle.pack &&
++	test 4 = $(git verify-pack -v bundle.pack | wc -l)
++'
++
+ test_expect_success 'unbundle 2' '
+ 	cd "$D/bundle" &&
+ 	git fetch ../bundle2 master:master &&
+-- 
+1.5.0.3.2559.g30d3b
