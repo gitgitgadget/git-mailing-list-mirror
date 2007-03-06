@@ -1,98 +1,68 @@
-From: Theodore Tso <tytso@mit.edu>
+From: Bill Lear <rael@zopyra.com>
 Subject: Re: Git checkout preserve timestamp?
-Date: Mon, 5 Mar 2007 19:21:25 -0500
-Message-ID: <20070306002125.GB19634@thunk.org>
-References: <Pine.LNX.4.63.0703052014020.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17900.30394.172067.743310@lisa.zopyra.com> <Pine.LNX.4.63.0703052143120.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17900.36569.805689.922989@lisa.zopyra.com> <Pine.LNX.4.64.0703051347490.3998@woody.linux-foundation.org> <17900.39124.763603.695942@lisa.zopyra.com> <Pine.LNX.4.64.0703051431130.3998@woody.linux-foundation.org> <17900.42415.750335.329874@lisa.zopyra.com> <Pine.LNX.4.63.0703060026340.13683@wbgn013.biozentrum.uni-wuerzburg.de> <17900.43487.947400.649777@lisa.zopyra.com>
+Date: Mon, 5 Mar 2007 18:24:17 -0600
+Message-ID: <17900.46257.982036.751903@lisa.zopyra.com>
+References: <17895.18265.710811.536526@lisa.zopyra.com>
+	<Pine.LNX.4.63.0703021618000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20070302162136.GA9593@diana.vm.bytemark.co.uk>
+	<Pine.LNX.4.63.0703022018190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20070305072323.GA31169@diana.vm.bytemark.co.uk>
+	<Pine.LNX.4.63.0703051230390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17900.27067.247950.419438@lisa.zopyra.com>
+	<Pine.LNX.4.63.0703052014020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17900.30394.172067.743310@lisa.zopyra.com>
+	<Pine.LNX.4.63.0703052143120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17900.36569.805689.922989@lisa.zopyra.com>
+	<Pine.LNX.4.64.0703051347490.3998@woody.linux-foundation.org>
+	<17900.39124.763603.695942@lisa.zopyra.com>
+	<Pine.LNX.4.64.0703051431130.3998@woody.linux-foundation.org>
+	<17900.42415.750335.329874@lisa.zopyra.com>
+	<Pine.LNX.4.63.0703060026340.13683@wbgn013.biozentrum.uni-wuerzburg.de>
+	<17900.43487.947400.649777@lisa.zopyra.com>
+	<Pine.LNX.4.63.0703060042040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 01:21:50 2007
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 06 01:24:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HONR4-00048I-4K
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 01:21:46 +0100
+	id 1HONTc-0005Ih-3O
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 01:24:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752542AbXCFAVm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 19:21:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752638AbXCFAVm
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 19:21:42 -0500
-Received: from THUNK.ORG ([69.25.196.29]:40836 "EHLO thunker.thunk.org"
+	id S932529AbXCFAYV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 19:24:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932601AbXCFAYV
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 19:24:21 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60429 "EHLO zopyra.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752542AbXCFAVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 19:21:41 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HONWK-00076W-Ls; Mon, 05 Mar 2007 19:27:13 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HONQj-0008Lp-2E; Mon, 05 Mar 2007 19:21:25 -0500
-Content-Disposition: inline
-In-Reply-To: <17900.43487.947400.649777@lisa.zopyra.com>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S932529AbXCFAYU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 19:24:20 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l260OIJ18709;
+	Mon, 5 Mar 2007 18:24:18 -0600
+In-Reply-To: <Pine.LNX.4.63.0703060042040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41512>
 
-On Mon, Mar 05, 2007 at 05:38:07PM -0600, Bill Lear wrote:
-> 
-> No, I think you missed my point.  There are two xyz.o's:
-> 
-> One in .master/xyz.o, and one in .branchX/xyz.o.  So, you're example
-> becomes:
+On Tuesday, March 6, 2007 at 00:50:16 (+0100) Johannes Schindelin writes:
+>On Mon, 5 Mar 2007, Bill Lear wrote:
+>> No, I think you missed my point.  There are two xyz.o's:
+>> 
+>> One in .master/xyz.o, and one in .branchX/xyz.o.
+>
+>Why not put the two xyz.c's into .master/ and .branchX/ as well (surely, 
+>the source files are small compared to the object files)? And just to make 
+>sure ...
 
-Are you assuming that the makefile will automatically figure out which
-branch you are on, and then redirect the .o to the right
-<.branch-name> directory?  That's the only thing that makes sense,
-since if you are using VPATH and depending on the developer being
-cd'ed into .master when the current branch is master, and cd'ed into
-.branchX when the current branch is branchX, and the developer types
-make at when they are in the .master directory but the current branch
-is branchX, the result will be a huge, confusing mess.
-
-But of course, the Makefile is under source control itself, and if at
-a previous point in time the Makefile didn't have the magic .git
-directives, then you could do the build and have the the wrong thing
-happen.
-
-So it seems to be a very fragile solution compared to using multiple
-working directories, or using ccache.  It could be a tad bit more
-efficient than using ccache or multiple directories, but the real
-question is whether it really is worth the effort, and potential
-support difficulties if some confused user turns on this feature with
-the proper git magic in their makefiles, and then the git mailing list
-gets the support burden.
+So, be resorting to snide sarcasm, I can see you concede my point,
+finally.  Thank you.
 
 
-That being said, I have often wished that there was some way I could
-use all of those autogenerated html and man pages to spead up the
-"make doc" process in git.  Ccache doesn't work because it doesn't
-understand asciidoc or xmlto, and there are all of these conveniently
-generated output files in the origin/man and origin/html, but unless
-we are building exactly the same git release as described in the log
-message in the origin/man or origin/html branch.  
-
-What would be really cool would be some way of generating some kind of
-database that mapped the SHA1 hash of the SHA1 hash of the
-dependencies of a particular output file to the SHA1 hash of the glob
-of the generated output file as found in origin/man and origin/html.
-This would basically be a way of integrating ccache functionality into
-git, but for the HTML and man page outputs, which delta compress
-nicely and therefore makes a lot of sense to include in a git
-repository like Junio is doing already.  I'm not sure how much sense
-this would make for storing the .o globs in the git repository
-(although there are some SCM's, like Clearcase who do this), but in
-theory it could be used for that as well.  The case is much more
-compelling with the generated documentation files, though.
-
-					- Ted
+Bill
