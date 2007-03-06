@@ -1,79 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] shortlog: prompt when reading from terminal by mistake
-Date: Thu, 08 Mar 2007 02:12:06 -0800
-Message-ID: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH] cvsserver: Use Merged response instead of Update-existing for merged files
+Date: Tue,  6 Mar 2007 10:42:24 +0100
+Message-ID: <11731741443228-git-send-email-frank@lichtenheld.de>
+Cc: Frank Lichtenheld <frank@lichtenheld.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 08 11:12:18 2007
+X-From: git-owner@vger.kernel.org Thu Mar 08 11:15:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPFbb-00031M-73
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 11:12:15 +0100
+	id 1HPFep-0004VD-Ug
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 11:15:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932945AbXCHKMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 05:12:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932969AbXCHKMJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 05:12:09 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:54844 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932945AbXCHKMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 05:12:08 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070308101208.ZRKJ2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 8 Mar 2007 05:12:08 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id YAC61W00G1kojtg0000000; Thu, 08 Mar 2007 05:12:07 -0500
+	id S932985AbXCHKP3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 05:15:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933012AbXCHKP3
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 05:15:29 -0500
+Received: from planck.djpig.de ([85.10.192.180]:55121 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932985AbXCHKP2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 05:15:28 -0500
+X-Greylist: delayed 1737 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Mar 2007 05:15:28 EST
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 034E188133
+	for <git@vger.kernel.org>; Thu,  8 Mar 2007 10:46:30 +0100 (CET)
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 23257-03 for <git@vger.kernel.org>;
+	Thu, 8 Mar 2007 10:46:29 +0100 (CET)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 1D5CD88134; Thu,  8 Mar 2007 10:46:29 +0100 (CET)
+X-Original-To: djpig@localhost
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id B9FDD27C1BC
+	for <djpig@localhost>; Tue,  6 Mar 2007 10:46:43 +0100 (CET)
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 21078-10 for <djpig@localhost>;
+	Tue, 6 Mar 2007 10:46:39 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id DA5F927C0E3
+	for <djpig@localhost>; Tue,  6 Mar 2007 10:46:39 +0100 (CET)
+Received: from pop3.lenk.info [213.239.194.154]
+	by localhost with POP3 (fetchmail-6.2.5)
+	for djpig@localhost (single-drop); Tue, 06 Mar 2007 10:46:39 +0100 (CET)
+Received: from mail.lenk.info ([217.160.134.107])
+	by smtp.lenk.info with esmtps 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HOWC5-0004b3-9y
+	for <frank@lichtenheld.de>; Tue, 06 Mar 2007 10:42:55 +0100
+Received: from host-82-135-33-74.customer.m-online.net ([82.135.33.74] helo=goedel.djpig.de)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HOWG6-0004L8-KP; Tue, 06 Mar 2007 10:47:02 +0100
+Received: from djpig by goedel.djpig.de with local (Exim 4.63)
+	(envelope-from <djpig@goedel.djpig.de>)
+	id 1HOWBc-00033n-7P; Tue, 06 Mar 2007 10:42:24 +0100
+X-Mailer: git-send-email 1.5.0.2
+X-Lenk-Relay-ID: 2fcfeb08dec7427ae77acced7b7409b3
+X-Resent-For: frank@lichtenheld.de
+X-Resent-For: djpig.frank@courier.sorgfalt.info
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
+X-CRM114-Version: 20050415.BlameTheIRS ( TRE 0.7.2 (GPL) ) MF-DAE15AAC [pR: 22.8865]
+X-CRM114-Status: Good  ( pR: 22.8865 )
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41734>
 
-I was trying to see who have been active recently to find GSoC
-mentor candidates by running:
+Using Update-existing leads to the client forgetting about the "locally
+modified" status of the file which can lead to loss of local changes on
+later updates.
 
-	$ git shortlog -s -n --since=4.months | head -n 20
-
-After waiting for about 20 seconds, I started getting worried,
-thinking that the recent revision traversal updates might have
-had an unintended side effect.
-
-Not so.  "git shortlog" acts as a filter when no revs are given,
-unlike "git log" which defaults to HEAD.  It was reading from
-its standard input.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
 ---
+ git-cvsserver.perl |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-   Arguably because --since=4.months clearly states I am
-   expecting it to start digging from somewhere, it would be
-   more sensible to default to HEAD in this case.  I suspect it
-   might be as simple as checking argc before we call
-   setup_revisions() and pass "HEAD" as the default parameter to
-   it, but it is getting late here.
-
- builtin-shortlog.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-shortlog.c b/builtin-shortlog.c
-index 2d7726e..29343ae 100644
---- a/builtin-shortlog.c
-+++ b/builtin-shortlog.c
-@@ -304,8 +304,11 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
- 	if (!access(".mailmap", R_OK))
- 		read_mailmap(".mailmap");
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 1bf892e..65fcc84 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -957,12 +957,12 @@ sub req_update
+             {
+                 $log->info("Merged successfully");
+                 print "M M $filename\n";
+-                $log->debug("Update-existing $dirpart");
++                $log->debug("Merged $dirpart");
  
--	if (rev.pending.nr == 0)
-+	if (rev.pending.nr == 0) {
-+		if (isatty(0))
-+			fprintf(stderr, "(reading log to summarize from standard input)\n");
- 		read_from_stdin(&list);
-+	}
- 	else
- 		get_from_rev(&rev, &list);
- 
+                 # Don't want to actually _DO_ the update if -n specified
+                 unless ( $state->{globaloptions}{-n} )
+                 {
+-                    print "Update-existing $dirpart\n";
++                    print "Merged $dirpart\n";
+                     $log->debug($state->{CVSROOT} . "/$state->{module}/$filename");
+                     print $state->{CVSROOT} . "/$state->{module}/$filename\n";
+                     my $kopts = kopts_from_path($filepart);
+@@ -978,7 +978,7 @@ sub req_update
+                 # Don't want to actually _DO_ the update if -n specified
+                 unless ( $state->{globaloptions}{-n} )
+                 {
+-                    print "Update-existing $dirpart\n";
++                    print "Merged $dirpart\n";
+                     print $state->{CVSROOT} . "/$state->{module}/$filename\n";
+                     my $kopts = kopts_from_path($filepart);
+                     print "/$filepart/1.$meta->{revision}/+/$kopts/\n";
+-- 
+1.5.0.2
