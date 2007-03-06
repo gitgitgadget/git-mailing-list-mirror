@@ -1,737 +1,111 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: [PATCH 1/5] builtin-mailinfo.c infrastrcture changes
-Date: Tue,  6 Mar 2007 16:57:39 -0500
-Message-ID: <1173218263315-git-send-email-dzickus@redhat.com>
-Cc: Don Zickus <dzickus@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 06 22:59:56 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 3/5] restrict the patch filtering
+Date: Tue, 6 Mar 2007 14:19:13 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703061406580.5963@woody.linux-foundation.org>
+References: <1173218263315-git-send-email-dzickus@redhat.com>
+ <11732182643385-git-send-email-dzickus@redhat.com>
+ <117321826466-git-send-email-dzickus@redhat.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Don Zickus <dzickus@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 23:19:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOhhK-0007Zu-Dm
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 22:59:55 +0100
+	id 1HOi0V-0008LI-HE
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 23:19:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030360AbXCFV7T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 16:59:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030363AbXCFV7T
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 16:59:19 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:49726 "EHLO mx1.redhat.com"
+	id S1030314AbXCFWTg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 17:19:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030348AbXCFWTg
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 17:19:36 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:33471 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030360AbXCFV7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 16:59:11 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l26Lx96v006985
-	for <git@vger.kernel.org>; Tue, 6 Mar 2007 16:59:09 -0500
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l26Lx8sg013039
-	for <git@vger.kernel.org>; Tue, 6 Mar 2007 16:59:08 -0500
-Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
-	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l26Lx7Wh007405;
-	Tue, 6 Mar 2007 16:59:07 -0500
-Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l26LvhHS007886;
-	Tue, 6 Mar 2007 16:57:43 -0500
-Received: (from dzickus@localhost)
-	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l26Lvhi0007885;
-	Tue, 6 Mar 2007 16:57:43 -0500
-X-Mailer: git-send-email 1.5.0.2.212.gd52f-dirty
+	id S1030314AbXCFWTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 17:19:22 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l26MJEq8023824
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 6 Mar 2007 14:19:14 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l26MJDKn011108;
+	Tue, 6 Mar 2007 14:19:14 -0800
+In-Reply-To: <117321826466-git-send-email-dzickus@redhat.com>
+X-Spam-Status: No, hits=-0.96 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41603>
 
-I am working on a project that required parsing through regular mboxes that
-didn't necessarily have patches embedded in them.  I started by creating my
-own modified copy of git-am and working from there.  Very quickly, I noticed
-git-mailinfo wasn't able to handle a big chunk of my email.
 
-After hacking up numerous solutions and running into more limitations, I
-decided it was just easier to rewrite a big chunk of it.  The following
-patch has a bunch of fixes and features that I needed in order for me do
-what I wanted.
 
-Note: I'm didn't follow any email rfc papers but I don't think any of the
-changes I did required much knowledge (besides the boundary stuff).
+On Tue, 6 Mar 2007, Don Zickus wrote:
+>
+> I have come across many emails that use long strings of '-'s as separators
+> for ideas.  This patch below limits the separator to only 3 '-', with the
+> intent that long string of '-'s will stay in the commit msg and not in the
+> patch file.
 
-Sorry for the large patchset.  It was too hard to break it up without
-creating a bunch of intermediate throwaway changes.  If it is too large, I
-can try to break it down some.
+Ack. I think this is better than what we have now. My only question is 
+whether we should allow arbitrary whitespace after the "---", ie all of 
+space/tab/newline. Your patch just does space/newline (and only _one_ 
+space).
 
-List of major changes/fixes:
-- can't create empty patch files fix
-- empty patch files don't fail, this failure will come inside git-am
-- multipart boundaries are now handled
-- only output inbody headers if a patch exists otherwise assume those
-headers are part of the reply and instead output the original headers
-- decode and filter base64 patches correctly
-- various other accidental fixes
+I think the space-only is probably fine - we don't allow tabs there in 
+diffs, and the only reason I mention whitespace is that in an editor it's 
+actually really hard to see spaces at the ends of lines, so I think it's 
+bad form to behave differently for
 
-I believe I didn't break any existing functionality or compatibility (other
-than what I describe above, which is really only the empty patch file).
+	"---\n"
 
-I tested this through various mailing list archives and everything seemed to
-parse correctly (a couple thousand emails).
+than for
 
-Any comments or feedback would be great.
+	"--- \t \n"
 
-Signed-off-by: Don Zickus <dzickus@redhat.com>
----
- builtin-mailinfo.c |  514 +++++++++++++++++++++++++++-------------------------
- git-am.sh          |    1 +
- 2 files changed, 269 insertions(+), 246 deletions(-)
+when they both *look* the same in an editor.
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 766a37e..7456d8a 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -11,19 +11,19 @@ static FILE *cmitmsg, *patchfile, *fin, *fout;
- static int keep_subject;
- static const char *metainfo_charset;
- static char line[1000];
--static char date[1000];
- static char name[1000];
- static char email[1000];
--static char subject[1000];
- 
- static enum  {
- 	TE_DONTCARE, TE_QP, TE_BASE64,
- } transfer_encoding;
--static char charset[256];
-+static enum  {
-+	TYPE_TEXT, TYPE_OTHER,
-+} message_type;
- 
--static char multipart_boundary[1000];
--static int multipart_boundary_len;
-+static char charset[256];
- static int patch_lines;
-+static char **p_hdr_data, **s_hdr_data;
- 
- static char *sanity_check(char *name, char *email)
- {
-@@ -137,15 +137,13 @@ static int handle_from(char *in_line)
- 	return 1;
- }
- 
--static int handle_date(char *line)
-+static int handle_header(char *line, char *data, int ofs)
- {
--	strcpy(date, line);
--	return 0;
--}
-+	if (!line || !data)
-+		return 1;
-+
-+	strcpy(data, line+ofs);
- 
--static int handle_subject(char *line)
--{
--	strcpy(subject, line);
- 	return 0;
- }
- 
-@@ -177,17 +175,35 @@ static int slurp_attr(const char *line, const char *name, char *attr)
- 	return 1;
- }
- 
--static int handle_subcontent_type(char *line)
-+struct content_type {
-+	char *boundary;
-+	int boundary_len;
-+};
-+
-+static struct content_type content[]={
-+	{ NULL },
-+	{ NULL },
-+	{ NULL },
-+	{ NULL },
-+	{ NULL },
-+};
-+
-+static struct content_type *content_top = content;
-+
-+static int handle_content_type(char *line)
- {
--	/* We do not want to mess with boundary.  Note that we do not
--	 * handle nested multipart.
--	 */
--	if (strcasestr(line, "boundary=")) {
--		fprintf(stderr, "Not handling nested multipart message.\n");
--		exit(1);
-+	char boundary[256];
-+
-+	if (strcasestr(line, "text/") < 0)
-+		 message_type = TYPE_OTHER;
-+	if (slurp_attr(line, "boundary=", boundary + 2)) {
-+		memcpy(boundary, "--", 2);
-+		content_top++;
-+		content_top->boundary_len = strlen(boundary);
-+		content_top->boundary = xmalloc(content_top->boundary_len+1);
-+		strcpy(content_top->boundary, boundary);
- 	}
--	slurp_attr(line, "charset=", charset);
--	if (*charset) {
-+	if (slurp_attr(line, "charset=", charset)) {
- 		int i, c;
- 		for (i = 0; (c = charset[i]) != 0; i++)
- 			charset[i] = tolower(c);
-@@ -195,17 +211,6 @@ static int handle_subcontent_type(char *line)
- 	return 0;
- }
- 
--static int handle_content_type(char *line)
--{
--	*multipart_boundary = 0;
--	if (slurp_attr(line, "boundary=", multipart_boundary + 2)) {
--		memcpy(multipart_boundary, "--", 2);
--		multipart_boundary_len = strlen(multipart_boundary);
--	}
--	slurp_attr(line, "charset=", charset);
--	return 0;
--}
--
- static int handle_content_transfer_encoding(char *line)
- {
- 	if (strcasestr(line, "base64"))
-@@ -219,7 +224,7 @@ static int handle_content_transfer_encoding(char *line)
- 
- static int is_multipart_boundary(const char *line)
- {
--	return (!memcmp(line, multipart_boundary, multipart_boundary_len));
-+	return (!memcmp(line, content_top->boundary, content_top->boundary_len));
- }
- 
- static int eatspace(char *line)
-@@ -230,62 +235,6 @@ static int eatspace(char *line)
- 	return len;
- }
- 
--#define SEEN_FROM 01
--#define SEEN_DATE 02
--#define SEEN_SUBJECT 04
--#define SEEN_BOGUS_UNIX_FROM 010
--#define SEEN_PREFIX  020
--
--/* First lines of body can have From:, Date:, and Subject: or empty */
--static void handle_inbody_header(int *seen, char *line)
--{
--	if (*seen & SEEN_PREFIX)
--		return;
--	if (isspace(*line)) {
--		char *cp;
--		for (cp = line + 1; *cp; cp++) {
--			if (!isspace(*cp))
--				break;
--		}
--		if (!*cp)
--			return;
--	}
--	if (!memcmp(">From", line, 5) && isspace(line[5])) {
--		if (!(*seen & SEEN_BOGUS_UNIX_FROM)) {
--			*seen |= SEEN_BOGUS_UNIX_FROM;
--			return;
--		}
--	}
--	if (!memcmp("From:", line, 5) && isspace(line[5])) {
--		if (!(*seen & SEEN_FROM) && handle_from(line+6)) {
--			*seen |= SEEN_FROM;
--			return;
--		}
--	}
--	if (!memcmp("Date:", line, 5) && isspace(line[5])) {
--		if (!(*seen & SEEN_DATE)) {
--			handle_date(line+6);
--			*seen |= SEEN_DATE;
--			return;
--		}
--	}
--	if (!memcmp("Subject:", line, 8) && isspace(line[8])) {
--		if (!(*seen & SEEN_SUBJECT)) {
--			handle_subject(line+9);
--			*seen |= SEEN_SUBJECT;
--			return;
--		}
--	}
--	if (!memcmp("[PATCH]", line, 7) && isspace(line[7])) {
--		if (!(*seen & SEEN_SUBJECT)) {
--			handle_subject(line);
--			*seen |= SEEN_SUBJECT;
--			return;
--		}
--	}
--	*seen |= SEEN_PREFIX;
--}
--
- static char *cleanup_subject(char *subject)
- {
- 	if (keep_subject)
-@@ -341,57 +290,65 @@ static void cleanup_space(char *buf)
- }
- 
- static void decode_header(char *it);
--typedef int (*header_fn_t)(char *);
--struct header_def {
--	const char *name;
--	header_fn_t func;
--	int namelen;
-+static char *header[10] = {
-+	"From",
-+	"Subject",
-+	"Date",
-+	NULL,
-+	NULL,
-+	NULL,
- };
- 
--static void check_header(char *line, struct header_def *header)
-+static int check_header(char *line, char **hdr_data)
- {
- 	int i;
- 
--	if (header[0].namelen <= 0) {
--		for (i = 0; header[i].name; i++)
--			header[i].namelen = strlen(header[i].name);
--	}
--	for (i = 0; header[i].name; i++) {
--		int len = header[i].namelen;
--		if (!strncasecmp(line, header[i].name, len) &&
-+	/* search for the interesting parts */
-+	for (i = 0; header[i]; i++) {
-+		int len = strlen(header[i]);
-+		if (!hdr_data[i] &&
-+		    !strncasecmp(line, header[i], len) &&
- 		    line[len] == ':' && isspace(line[len + 1])) {
- 			/* Unwrap inline B and Q encoding, and optionally
- 			 * normalize the meta information to utf8.
- 			 */
- 			decode_header(line + len + 2);
--			header[i].func(line + len + 2);
--			break;
-+			hdr_data[i] = xmalloc(1000 * sizeof(char));
-+			if (! handle_header(line, hdr_data[i], len + 2)) {
-+				return 1;
-+			}
- 		}
- 	}
--}
- 
--static void check_subheader_line(char *line)
--{
--	static struct header_def header[] = {
--		{ "Content-Type", handle_subcontent_type },
--		{ "Content-Transfer-Encoding",
--		  handle_content_transfer_encoding },
--		{ NULL },
--	};
--	check_header(line, header);
--}
--static void check_header_line(char *line)
--{
--	static struct header_def header[] = {
--		{ "From", handle_from },
--		{ "Date", handle_date },
--		{ "Subject", handle_subject },
--		{ "Content-Type", handle_content_type },
--		{ "Content-Transfer-Encoding",
--		  handle_content_transfer_encoding },
--		{ NULL },
--	};
--	check_header(line, header);
-+	/* Content stuff */
-+	if (!strncasecmp(line, "Content-Type: ", 14)) {
-+		decode_header(line + 14);
-+		if (! handle_content_type(line)) {
-+			return 1;
-+		}
-+	}
-+	if (!strncasecmp(line, "Content-Transfer-Encoding: ", 27)) {
-+		decode_header(line + 27);
-+		if (! handle_content_transfer_encoding(line)) {
-+			return 1;
-+		}
-+	}
-+
-+	/* for inbody stuff */
-+	if (!memcmp(">From", line, 5) && isspace(line[5]))
-+		return 1;
-+	if (!memcmp("[PATCH]", line, 7) && isspace(line[7])) {
-+		for (i=0; header[i]; i++) {
-+			if (!memcmp("Subject: ", header[i], 9)) {
-+				if (! handle_header(line, hdr_data[i], 0)) {
-+					return 1;
-+				}
-+			}
-+		}
-+	}
-+
-+	/* no match */
-+	return 0;
- }
- 
- static int is_rfc2822_header(char *line)
-@@ -647,147 +604,214 @@ static void decode_transfer_encoding(char *line)
- 	}
- }
- 
--static void handle_info(void)
-+static int handle_filter(char *line);
-+
-+static int find_boundary(void)
- {
--	char *sub;
-+	while(fgets(line, sizeof(line), fin) != NULL) {
-+		if (is_multipart_boundary(line))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
-+static int handle_boundary(void)
-+{
-+again:
-+	if (!memcmp(line+content_top->boundary_len, "--", 2)) {
-+		/* we hit an end boundary */
-+		/* pop the current boundary off the stack */
-+		free(content_top->boundary);
-+		content_top--;
-+		handle_filter("\n");
-+
-+		/* skip to the next boundary */
-+		if (!find_boundary())
-+			return 0;
-+		goto again;
-+	}
-+
-+	/* set some defaults */
-+	transfer_encoding = TE_DONTCARE;
-+	charset[0] = 0;
-+	message_type = TYPE_TEXT;
- 
--	sub = cleanup_subject(subject);
--	cleanup_space(name);
--	cleanup_space(date);
--	cleanup_space(email);
--	cleanup_space(sub);
-+	/* slurp in this section's info */
-+	while (read_one_header_line(line, sizeof(line), fin))
-+		check_header(line, p_hdr_data);
- 
--	fprintf(fout, "Author: %s\nEmail: %s\nSubject: %s\nDate: %s\n\n",
--	       name, email, sub, date);
-+	/* eat the blank line after section info */
-+	return (fgets(line, sizeof(line), fin) != NULL);
- }
- 
--/* We are inside message body and have read line[] already.
-- * Spit out the commit log.
-- */
--static int handle_commit_msg(int *seen)
-+static int handle_commit_msg(char *line)
- {
-+	static int still_looking=1;
-+
- 	if (!cmitmsg)
- 		return 0;
--	do {
--		if (!memcmp("diff -", line, 6) ||
--		    !memcmp("---", line, 3) ||
--		    !memcmp("Index: ", line, 7))
--			break;
--		if ((multipart_boundary[0] && is_multipart_boundary(line))) {
--			/* We come here when the first part had only
--			 * the commit message without any patch.  We
--			 * pretend we have not seen this line yet, and
--			 * go back to the loop.
--			 */
--			return 1;
--		}
- 
--		/* Unwrap transfer encoding and optionally
--		 * normalize the log message to UTF-8.
--		 */
--		decode_transfer_encoding(line);
--		if (metainfo_charset)
--			convert_to_utf8(line, charset);
-+	if (still_looking) {
-+		char *cp=line;
-+		if (isspace(*line)) {
-+			for (cp = line + 1; *cp; cp++) {
-+				if (!isspace(*cp))
-+					break;
-+			}
-+			if (!*cp)
-+				return 0;
-+		}
-+		if ((still_looking = check_header(cp, s_hdr_data)) != 0)
-+			return 0;
-+	}
- 
--		handle_inbody_header(seen, line);
--		if (!(*seen & SEEN_PREFIX))
--			continue;
-+	if (!memcmp("diff -", line, 6) ||
-+	    !memcmp("---", line, 3) ||
-+	    !memcmp("Index: ", line, 7)) {
-+		fclose(cmitmsg);
-+		cmitmsg = NULL;
-+		return 1;
-+	}
- 
--		fputs(line, cmitmsg);
--	} while (fgets(line, sizeof(line), fin) != NULL);
--	fclose(cmitmsg);
--	cmitmsg = NULL;
-+	fputs(line, cmitmsg);
- 	return 0;
- }
- 
--/* We have done the commit message and have the first
-- * line of the patch in line[].
-- */
--static void handle_patch(void)
-+static int handle_patch(char *line)
- {
--	do {
--		if (multipart_boundary[0] && is_multipart_boundary(line))
--			break;
--		/* Only unwrap transfer encoding but otherwise do not
--		 * do anything.  We do *NOT* want UTF-8 conversion
--		 * here; we are dealing with the user payload.
--		 */
--		decode_transfer_encoding(line);
--		fputs(line, patchfile);
--		patch_lines++;
--	} while (fgets(line, sizeof(line), fin) != NULL);
-+	fputs(line, patchfile);
-+	patch_lines++;
-+	return 0;
- }
- 
--/* multipart boundary and transfer encoding are set up for us, and we
-- * are at the end of the sub header.  do equivalent of handle_body up
-- * to the next boundary without closing patchfile --- we will expect
-- * that the first part to contain commit message and a patch, and
-- * handle other parts as pure patches.
-- */
--static int handle_multipart_one_part(int *seen)
-+static int handle_filter(char *line)
- {
--	int n = 0;
-+	static int filter=0;
- 
--	while (fgets(line, sizeof(line), fin) != NULL) {
--	again:
--		n++;
--		if (is_multipart_boundary(line))
-+	/* filter tells us which part we left off on
-+	 * a non-zero return indicates we hit a filter point
-+	 */
-+	switch (filter) {
-+	case 0:
-+		if (!handle_commit_msg(line))
- 			break;
--		if (handle_commit_msg(seen))
--			goto again;
--		handle_patch();
--		break;
-+		filter++;
-+	case 1:
-+		if (!handle_patch(line))
-+			break;
-+		filter++;
-+	default:
-+		return 1;
- 	}
--	if (n == 0)
--		return -1;
-+
- 	return 0;
- }
- 
--static void handle_multipart_body(void)
-+static void handle_body(void)
- {
--	int seen = 0;
--	int part_num = 0;
-+	int rc=0;
-+	static char newline[2000];
-+	static char *np=newline;
- 
- 	/* Skip up to the first boundary */
--	while (fgets(line, sizeof(line), fin) != NULL)
--		if (is_multipart_boundary(line)) {
--			part_num = 1;
-+	if (content_top->boundary) {
-+		if (!find_boundary())
-+			return;
-+	}
-+
-+	do {
-+		/* process any boundary lines */
-+		if (content_top->boundary && is_multipart_boundary(line)) {
-+			/* flush any leftover */
-+			if ((transfer_encoding == TE_BASE64)  &&
-+			    (np != newline)) {
-+				handle_filter(newline);
-+			}
-+			if (!handle_boundary())
-+				return;
-+		}
-+
-+		/* Unwrap transfer encoding and optionally
-+		 * normalize the log message to UTF-8.
-+		 */
-+		decode_transfer_encoding(line);
-+		if (metainfo_charset)
-+			convert_to_utf8(line, charset);
-+
-+		switch (transfer_encoding) {
-+		case TE_BASE64:
-+		{
-+			/* binary data most likely doesn't have newlines */
-+			if (message_type != TYPE_TEXT) {
-+				rc=handle_filter(line);
-+				break;
-+			}
-+
-+			/* this is a decoded line that may contain
-+			 * multiple new lines.  Pass only one chunk
-+			 * at a time to handle_filter()
-+			 */
-+
-+			char *op=line;
-+
-+			do {
-+				while (*op != '\n' && *op != 0)
-+					*np++ = *op++;
-+				*np = *op;
-+				if (*np != 0) {
-+					/* should be sitting on a new line */
-+					*(++np) = 0;
-+					op++;
-+					rc=handle_filter(newline);
-+					np=newline;
-+				}
-+			} while (*op != 0);
-+			/* the partial chunk is saved in newline and
-+			 * will be appended by the next iteration of fgets
-+			 */
- 			break;
- 		}
--	if (!part_num)
--		return;
--	/* We are on boundary line.  Start slurping the subhead. */
--	while (1) {
--		int hdr = read_one_header_line(line, sizeof(line), fin);
--		if (!hdr) {
--			if (handle_multipart_one_part(&seen) < 0)
--				return;
--			/* Reset per part headers */
--			transfer_encoding = TE_DONTCARE;
--			charset[0] = 0;
-+		default:
-+			rc=handle_filter(line);
- 		}
--		else
--			check_subheader_line(line);
--	}
--	fclose(patchfile);
--	if (!patch_lines) {
--		fprintf(stderr, "No patch found\n");
--		exit(1);
--	}
-+		if (rc)
-+			/* nothing left to filter */
-+			break;
-+	} while (fgets(line, sizeof(line), fin));
-+
-+	return;
- }
- 
--/* Non multipart message */
--static void handle_body(void)
-+static void handle_info(void)
- {
--	int seen = 0;
--
--	handle_commit_msg(&seen);
--	handle_patch();
--	fclose(patchfile);
--	if (!patch_lines) {
--		fprintf(stderr, "No patch found\n");
--		exit(1);
-+	char *sub;
-+	char *hdr;
-+	int i;
-+
-+	for (i=0; header[i]; i++) {
-+
-+		/* only print inbody headers if we output a patch file */
-+		if (patch_lines && s_hdr_data[i])
-+			hdr=s_hdr_data[i];
-+		else if (p_hdr_data[i])
-+			hdr=p_hdr_data[i];
-+		else
-+			continue;
-+
-+		if (!memcmp(header[i], "Subject", 7)) {
-+			sub = cleanup_subject(hdr);
-+			cleanup_space(sub);
-+			fprintf(fout, "Subject: %s\n", sub);
-+		} else if (!memcmp(header[i], "From", 4)) {
-+			handle_from(hdr);
-+			fprintf(fout, "Author: %s\n", name);
-+			fprintf(fout, "Email: %s\n", email);
-+		} else {
-+			cleanup_space(hdr);
-+			fprintf(fout, "%s: %s\n", header[i], hdr);
-+		}
- 	}
-+	fprintf(fout, "\n");
- }
- 
- int mailinfo(FILE *in, FILE *out, int ks, const char *encoding,
-@@ -809,18 +833,16 @@ int mailinfo(FILE *in, FILE *out, int ks, const char *encoding,
- 		fclose(cmitmsg);
- 		return -1;
- 	}
--	while (1) {
--		int hdr = read_one_header_line(line, sizeof(line), fin);
--		if (!hdr) {
--			if (multipart_boundary[0])
--				handle_multipart_body();
--			else
--				handle_body();
--			handle_info();
--			break;
--		}
--		check_header_line(line);
--	}
-+
-+	p_hdr_data = xcalloc(10, sizeof(char *));
-+	s_hdr_data = xcalloc(10, sizeof(char *));
-+
-+	/* process the email header */
-+	while (read_one_header_line(line, sizeof(line), fin))
-+		check_header(line, p_hdr_data);
-+
-+	handle_body();
-+	handle_info();
- 
- 	return 0;
- }
-diff --git a/git-am.sh b/git-am.sh
-index 2c73d11..8fa466a 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -290,6 +290,7 @@ do
- 		git-mailinfo $keep $utf8 "$dotest/msg" "$dotest/patch" \
- 			<"$dotest/$msgnum" >"$dotest/info" ||
- 			stop_here $this
-+		test -s $dotest/patch || stop_here $this
- 		git-stripspace < "$dotest/msg" > "$dotest/msg-clean"
- 		;;
- 	esac
--- 
-1.5.0.2.212.gd52f-dirty
+> Signed-off-by: Don Zickus <dzickus@redhat.com>
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+
+Although I'd be even happier with something like
+
+	static inline int patchbreak(const char *line)
+	{
+		/* Beginning of a "diff -" header? */
+		if (!memcmp("diff -", line, 6))
+			return 1;
+
+		/* CVS "Index: " line? */
+		if (!memcmp("Index: ", line, 7))
+			return 1;
+
+		/*
+		 * "--- <filename>" starts patches without headers
+		 * "---<sp>*" is a manual separator
+		 */
+		if (!memcmp("---", line, 3)) {
+			line += 3;
+			/* space followed by a filename? */
+			if (line[0] == ' ' && !isspace(line[1]))
+				return 1;
+			/* Just whitespace? */
+			for (;;) {
+				unsigned char c = *line++;
+				if (c == '\n')
+					return 1;
+				if (!isspace(c))
+					break;
+			}
+			return 0;
+		}
+		return 0;
+	}
+
+which is totally untested, of course.
+
+		Linus
