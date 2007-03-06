@@ -1,87 +1,63 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Git checkout preserve timestamp?
-Date: Tue, 6 Mar 2007 13:06:21 +1300
-Message-ID: <46a038f90703051606m7ce73f88hd0f6356969b73535@mail.gmail.com>
+Date: Tue, 6 Mar 2007 01:20:31 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703060119320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <17895.18265.710811.536526@lisa.zopyra.com>
-	 <17900.30394.172067.743310@lisa.zopyra.com>
-	 <Pine.LNX.4.63.0703052143120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <17900.36569.805689.922989@lisa.zopyra.com>
-	 <Pine.LNX.4.64.0703051347490.3998@woody.linux-foundation.org>
-	 <17900.39124.763603.695942@lisa.zopyra.com>
-	 <Pine.LNX.4.64.0703051431130.3998@woody.linux-foundation.org>
-	 <17900.42415.750335.329874@lisa.zopyra.com>
-	 <Pine.LNX.4.63.0703060026340.13683@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <17900.43487.947400.649777@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703022018190.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070305072323.GA31169@diana.vm.bytemark.co.uk>
+ <Pine.LNX.4.63.0703051230390.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.27067.247950.419438@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703052014020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.30394.172067.743310@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703052143120.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.36569.805689.922989@lisa.zopyra.com>
+ <Pine.LNX.4.64.0703051347490.3998@woody.linux-foundation.org>
+ <17900.39124.763603.695942@lisa.zopyra.com>
+ <Pine.LNX.4.64.0703051431130.3998@woody.linux-foundation.org>
+ <17900.42415.750335.329874@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703060026340.13683@wbgn013.biozentrum.uni-wuerzburg.de>
+ <17900.43487.947400.649777@lisa.zopyra.com>
+ <Pine.LNX.4.63.0703060042040.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <87zm6rqlpn.fsf@graviton.dyn.troilus.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Linus Torvalds" <torvalds@linux-foundation.org>,
-	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
-	git@vger.kernel.org
-To: "Bill Lear" <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue Mar 06 01:07:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Michael Poole <mdpoole@troilus.org>
+X-From: git-owner@vger.kernel.org Tue Mar 06 01:21:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HONCj-0005uA-O5
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 01:06:58 +0100
+	id 1HONQR-0003nM-E0
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 01:21:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933331AbXCFAGY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 5 Mar 2007 19:06:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933372AbXCFAGY
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 19:06:24 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:15517 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933331AbXCFAGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Mar 2007 19:06:23 -0500
-Received: by nf-out-0910.google.com with SMTP id m19so2113720nfc
-        for <git@vger.kernel.org>; Mon, 05 Mar 2007 16:06:21 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sDe6YbCRMIiCHr+F89+vuqkP95ZEA+5TPsyAdncfaYDG1rmM5S0JByWeOlHZN7hDoFUNAHXIDyXPxoBgnmq+KtZE9SMN2hixhtNs62Jk2vyY8X2+HfqHSA1JIF2SHrlrSvDLlMOfPsfIUyRTOqj+nB+quoP1X1a95iMbLaB7ikQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pjfoCfk83ciaq0WsNEkktyyb44916rkSLajdn6qLV8gKs4zopb/C6Ez1i/JRj2trYkferK8cdi/imQDDP5HZFEfCWhMl0hsh+xfDyKnJt3riby83ZfxKi2kD2DwJqL+J7wnSNt+n4yyposL05eg1vITuMqS/BIZ2+iculNSY1FU=
-Received: by 10.82.163.13 with SMTP id l13mr6144751bue.1173139581491;
-        Mon, 05 Mar 2007 16:06:21 -0800 (PST)
-Received: by 10.48.215.2 with HTTP; Mon, 5 Mar 2007 16:06:21 -0800 (PST)
-In-Reply-To: <17900.43487.947400.649777@lisa.zopyra.com>
-Content-Disposition: inline
+	id S1752630AbXCFAUe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 5 Mar 2007 19:20:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752638AbXCFAUe
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Mar 2007 19:20:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40718 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752630AbXCFAUd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Mar 2007 19:20:33 -0500
+Received: (qmail invoked by alias); 06 Mar 2007 00:20:31 -0000
+X-Provags-ID: V01U2FsdGVkX19+a7RaOk1+N/9oC7ApbMkqvGoAJ8uqTiRO8pMMyp
+	MW+7wMxuQw+fgK
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <87zm6rqlpn.fsf@graviton.dyn.troilus.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41510>
 
-On 3/6/07, Bill Lear <rael@zopyra.com> wrote:
-> No, I think you missed my point.  There are two xyz.o's:
->
-> One in .master/xyz.o, and one in .branchX/xyz.o.  So, you're example
-> becomes:
+Hi,
 
-For most users, there are no dedicated branch-specific build
-directories. In any situation where there _are_ such
-branch/arch/config-option specific builddirs, someone has crafted a
-neat multi-<factor> build system.
+On Mon, 5 Mar 2007, Michael Poole wrote:
 
-Now, if you have such a build system, it's trivial to have a separate
-checkout for each branch. Trying to push this bit of complexity into
-git means that git would have an option that lets most users shoot
-themselves in the foot, big time.
+> I have not found a git workflow that makes me entirely happy, but I 
+> suspect I just don't know the magic words.
 
-So - your ideas are OK, but just do all the trickery and magic for the
-super-build-system _in_ the super-build-system. You don't need any GIT
-changes, just take advantage of the really fast and lightweight "local
-clone".
+So, what do you want to do?
 
-I guess that's the definition of "WRONG" above. It's wrong and
-error-prone for most users, and for the handsome few that could take
-advantage of it, there are better ways of doing it.
-
-cheers,
-
-
-martin
+Ciao,
+Dscho
