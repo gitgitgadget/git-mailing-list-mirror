@@ -1,82 +1,94 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] cherry-pick: Bug fix 'cherry picked from' message.
-Date: Tue, 6 Mar 2007 00:46:00 -0500
-Message-ID: <20070306054600.GA24206@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: builtin git-bundle - pack contains many more objects than required
+Date: Mon, 05 Mar 2007 22:18:15 -0800
+Message-ID: <7vmz2quc7s.fsf@assigned-by-dhcp.cox.net>
+References: <45ECEB40.4000907@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 06 06:46:11 2007
+Cc: Johannes.Schindelin@gmx.de, Git Mailing List <git@vger.kernel.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 07:18:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOSV1-0005HO-8f
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 06:46:11 +0100
+	id 1HOT07-0001Tr-EZ
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 07:18:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933959AbXCFFqI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 00:46:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933958AbXCFFqI
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 00:46:08 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:43922 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933959AbXCFFqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 00:46:07 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HOSUs-0002zR-GC; Tue, 06 Mar 2007 00:46:02 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B6FD720FBAE; Tue,  6 Mar 2007 00:46:00 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932657AbXCFGSR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 01:18:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933952AbXCFGSR
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 01:18:17 -0500
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:57013 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932657AbXCFGSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 01:18:16 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070306061817.JWDU748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 6 Mar 2007 01:18:17 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id XJJF1W00S1kojtg0000000; Tue, 06 Mar 2007 01:18:16 -0500
+In-Reply-To: <45ECEB40.4000907@gmail.com> (Mark Levedahl's message of "Mon, 05
+	Mar 2007 23:17:04 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41540>
 
-Somewhere along the line (in abd6970a) git-revert.sh learned to
-omit the private object name from the new commit message *unless*
--x was supplied on the command line by the user.
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-The way this was implemented is really non-obvious in the original
-script.  Setting replay=t (the default) means we don't include the
-the private object name, while setting reply='' (the -x flag) means
-we should include the private object name.  These two settings now
-relate to the replay=1 and replay=0 cases in the C version, so we
-need to negate replay to test it is 0.
+> However, a simple example:
+>
+> git>git-rev-list --objects HEAD~1..HEAD
+> 5ced0572217f82f20c4a3460492768e07c08aeea
+> 1d30eaabe4b6f7218e4e4cfff5670a493aa7358e
+> 2a1d6a2be1511f65b601897f05962e5f673257d8 contrib
+> cbd77b2f57114d4fa2f119f1b1ee17968d6d67d4 contrib/emacs
+> 8554e3967cc692c6916e5aee35952074d07e8bf0 contrib/emacs/Makefile
+>
+> shows that the bundle for this case should have five objects as
+> shown. In this case, 916 objects are actually included in the pack
+> when executing
+>
+> git bundle create test.bdl HEAD~1..HEAD
 
-I also noticed the C version was adding an extra LF in the -x case,
-where the older git-revert.sh was not.
+Indeed.  The internal rev-list reimplemented in builtin-bundle.c
+lacks the code to mark trees and blobs in commits that are on
+the other side of the edge uninteresting.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- builtin-revert.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+This is on top of the patches I send to the list and Dscho
+earlier.
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 382fe0c..2f2dc1b 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -303,8 +303,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 		next = commit;
- 		set_author_ident_env(message);
- 		add_message_to_msg(message);
--		if (replay) {
--			add_to_msg("\n(cherry picked from commit ");
-+		if (!replay) {
-+			add_to_msg("(cherry picked from commit ");
- 			add_to_msg(sha1_to_hex(commit->object.sha1));
- 			add_to_msg(")\n");
- 		}
--- 
-1.5.0.3.863.gf0989
+--
+
+ builtin-bundle.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index 4fe74a7..199a30d 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -278,6 +278,11 @@ static void show_object(struct object_array_entry *p)
+ 	write_or_die(1, "\n", 1);
+ }
+ 
++static void show_edge(struct commit *commit)
++{
++	; /* nothing to do */
++}
++
+ static int create_bundle(struct bundle_header *header, const char *path,
+ 		int argc, const char **argv)
+ {
+@@ -361,6 +366,7 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 	dup2(in, 1);
+ 	close(in);
+ 	prepare_revision_walk(&revs);
++	mark_edges_uninteresting(revs.commits, &revs, show_edge);
+ 	traverse_commit_list(&revs, show_commit, show_object);
+ 	close(1);
+ 	while (waitpid(pid, &status, 0) < 0)
