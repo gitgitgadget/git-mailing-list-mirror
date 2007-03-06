@@ -1,63 +1,61 @@
-From: "Jakub Narebski" <jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] gitweb: Change to use explicitly function call cgi->escapHTML()
-Date: Tue, 6 Mar 2007 10:34:32 +0100
-Message-ID: <8fe92b430703060134l14fffcc4rbece3c2071c56422@mail.gmail.com>
-References: <45ECE700.8090205@freescale.com>
-	 <7v649euai8.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 6 Mar 2007 04:39:17 -0500
+Message-ID: <20070306093917.GA1761@coredump.intra.peff.net>
+References: <45ECE700.8090205@freescale.com> <7v649euai8.fsf@assigned-by-dhcp.cox.net> <8fe92b430703060134l14fffcc4rbece3c2071c56422@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Li Yang" <leoli@freescale.com>, git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 06 10:34:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, Li Yang <leoli@freescale.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 10:39:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOW45-0003Qf-Gu
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 10:34:37 +0100
+	id 1HOW93-0005km-Tp
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 10:39:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030453AbXCFJef (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 04:34:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030456AbXCFJee
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 04:34:34 -0500
-Received: from wr-out-0506.google.com ([64.233.184.236]:43292 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030453AbXCFJee (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 04:34:34 -0500
-Received: by wr-out-0506.google.com with SMTP id 37so1818094wra
-        for <git@vger.kernel.org>; Tue, 06 Mar 2007 01:34:33 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=talKc0Nt/QiZh2Q4Em0/E5UC4XQvETOCKc9VIQO7b+KaPVnCbaewaWufl4OvOLCLbvgt2b6sIkP6d+yg5sUBpB3mNm5VHqv+EXC1CM7K/be39BZ3bNEhAXNquojObQcMLhkCddnC1K9YpOiIIrTnKDkbyr2bLl1+GiK7sueDg4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=REHTWKOfKngYXuKTLWeYyY8acWzYYBkBHyu/VPmjLrusyZUWPtk2t5np1UQ53WNrL8Nlm9Y1oHz0qaFvEYV0yKJpeYSDOQpBh80ql1rLzxb32C2lb0IDzE+L2vzRnXKdrTvzWJYd9liCYkjywkPPRmpPU3uKo+g1J2D26V7qTXM=
-Received: by 10.114.192.1 with SMTP id p1mr1674417waf.1173173672941;
-        Tue, 06 Mar 2007 01:34:32 -0800 (PST)
-Received: by 10.114.201.20 with HTTP; Tue, 6 Mar 2007 01:34:32 -0800 (PST)
-In-Reply-To: <7v649euai8.fsf@assigned-by-dhcp.cox.net>
+	id S1030473AbXCFJjX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 04:39:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030479AbXCFJjW
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 04:39:22 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2127 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030473AbXCFJjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 04:39:22 -0500
+Received: (qmail 8776 invoked from network); 6 Mar 2007 04:39:37 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 6 Mar 2007 04:39:37 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Mar 2007 04:39:17 -0500
 Content-Disposition: inline
+In-Reply-To: <8fe92b430703060134l14fffcc4rbece3c2071c56422@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41565>
 
-On 3/6/07, Junio C Hamano <junkio@cox.net> wrote:
-> Li Yang <leoli@freescale.com> writes:
->
-> > Change to use explicitly function call cgi->escapHTML().
-> > This fix the problem on some systems that escapeHTML() is not
-> > functioning, as default CGI is not setting 'escape' parameter.
-> >
-> > Signed-off-by: Li Yang <leoli@freescale.com>
->
-> Regardless of the recent xhtml+html vs html discussion, I think
-> this is probably a sane change.  Comments?
+On Tue, Mar 06, 2007 at 10:34:32AM +0100, Jakub Narebski wrote:
 
-Good (although a bit magic) solution. Ack, FWIW.
+> >Regardless of the recent xhtml+html vs html discussion, I think
+> >this is probably a sane change.  Comments?
+> Good (although a bit magic) solution. Ack, FWIW.
 
--- 
-Jakub Narebski
+I think this should do the same, and is perhaps less magic (or maybe
+more, depending on your perspective).
+
+-Peff
+
+-- >8 --
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 653ca3c..5d1d8cf 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -17,6 +17,7 @@ use Fcntl ':mode';
+ use File::Find qw();
+ use File::Basename qw(basename);
+ binmode STDOUT, ':utf8';
++CGI::autoEscape(1);
+ 
+ BEGIN {
+        CGI->compile() if $ENV{MOD_PERL};
