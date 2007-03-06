@@ -1,167 +1,70 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] Add git-mergetool to run an appropriate merge conflict resolution program
-Date: Tue, 6 Mar 2007 07:40:02 -0500
-Message-ID: <20070306124002.GA18370@thunk.org>
-References: <E1HORtY-0000zK-8B@candygram.thunk.org> <7vr6s3sz8r.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Change to use explicitly function call cgi->escapHTML()
+Date: Tue, 6 Mar 2007 14:23:17 +0100
+Message-ID: <200703061423.18417.jnareb@gmail.com>
+References: <20070306093917.GA1761@coredump.intra.peff.net> <989B956029373F45A0B8AF02970818902DAA12@zch01exm26.fsl.freescale.net> <7vzm6qps51.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Li Yang-r58472" <LeoLi@freescale.com>,
+	"Jeff King" <peff@peff.net>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 06 13:41:41 2007
+X-From: git-owner@vger.kernel.org Tue Mar 06 14:21:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOYyz-0000Df-Mt
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 13:41:34 +0100
+	id 1HOZbD-00085B-Nh
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 14:21:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932504AbXCFMlJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 07:41:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933254AbXCFMlI
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 07:41:08 -0500
-Received: from thunk.org ([69.25.196.29]:49192 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932504AbXCFMkn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 07:40:43 -0500
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HOZ3j-0001L2-NI; Tue, 06 Mar 2007 07:46:28 -0500
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HOYxW-0000cJ-EM; Tue, 06 Mar 2007 07:40:02 -0500
+	id S1030493AbXCFNVA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 6 Mar 2007 08:21:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964988AbXCFNVA
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 08:21:00 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:61113 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964981AbXCFNU6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 08:20:58 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so2471236nfa
+        for <git@vger.kernel.org>; Tue, 06 Mar 2007 05:20:57 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=AFWnuBpBrW1inikNnTtz3QWWk9gpdhC5Kfr1GAM9N407GPY8UW6bbQfc3bKeHVCz3ta920vkWOKg9aEHEzTOH7Pxq4b6BEcPI4k7uBz9VwH81AlOjqMEMpK5NcCtFSlLAOfWx81k6qN3OQsCICU4cO6r+l7RO6IZK2cMNvkCuVc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=gceFe98DV2nTt2HB5zjO6EldRalLNZgH269AcOlHXQMWTB8XIpDn0SgL368xtptcGdQVyyz2R/jGqxx0bYqmFW5YNbC+X/QxTMFKiC4dSThwZwPGf3I+MBmRRf3W4fiDu7dY6cWC4cgHtyFM5QRPHqHbyCp1wQpJzPF91XDW4PI=
+Received: by 10.82.167.5 with SMTP id p5mr6995317bue.1173187256544;
+        Tue, 06 Mar 2007 05:20:56 -0800 (PST)
+Received: from host-81-190-22-152.torun.mm.pl ( [81.190.22.152])
+        by mx.google.com with ESMTP id w5sm22796169mue.2007.03.06.05.20.52;
+        Tue, 06 Mar 2007 05:20:54 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vzm6qps51.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vr6s3sz8r.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.12-2006-07-14
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41582>
 
-On Mon, Mar 05, 2007 at 09:43:48PM -0800, Junio C Hamano wrote:
-> "Theodore Ts'o" <tytso@mit.edu> writes:
-> 
-> > +git-mergetool(1)
-> > +================
-> > +
-> > +NAME
-> > +----
-> > +git-mergetool - Forward-port local commits to the updated upstream head
-> > +
-> 
-> Hmph.  We already have a tool to achieve such a goal, and that
-> is called git-rebase.  Why would we want your program? ;-)
+Junio C Hamano wrote:
 
-Oops, sorry, I thought I had fixed that.  Guess you figured out which
-program I used as a man page template, huh?  :-)
+> Speaking of -title, I see "sub git_project_list_body" does this:
+>=20
+> =A0 =A0 $cgi->a({ ... -title =3D> $pr->{'descr_long'}}, esc_html($pr-=
+>{'descr'}));
+> =A0=A0=A0=A0=A0=A0=A0=A0
+> which seems inconsistent with the earlier quoted $fullname
+> handling (unless $pr->{'descr_long'} is already quoted and $pr->{'des=
+cr'}
+> is not, which I find highly unlikely).
 
-> > +# This file is licensed under the GPL v2, or a later version
-> > +# at the discretion of Linus Torvalds.
-> 
-> Heh ;-).
+CGI::a() subroutine automatically quotes properly _attribute_ values,
+but it does not (and it should not) quote _contents_ of a tag.
 
-Hey, that's what the COPYING file requested, and it was late when I
-started doing the git package integration, hence the stupid think-o
-with the man page.  :-)
+So the above code is correct.
 
-I assume you would prefer that it read Junio instead?  Should we
-change the COPYING while we're at it, perhaps after consulting with
-Linus since he still owns so a fair amount of the copyright on git?
-It seems that if we're going to pre-collect permissions to move to
-GPLv3, it ought to be either you or him....
-
-> Do we want to do this by hand ourselves, or dot-source sh-setup
-> like others?  You would also get die() for free.
-
-Good point, I'll use git-sh-setup.
-
-> You should be able to set IFS to exclude SP and then you only
-> have to say you do not support LF and HT, both of which are much
-> less likely than SP to be in the pathname.
-
-Do we have any coding guidelines about what characters we have to
-support in filenames?  I had assumed that we should support at least
-SP and HT, but life does get easier if we don't need to worry about HT.
-
-> > +	mv "$path" "$BACKUP"
-> > +	cp "$BACKUP" "$path"
-> 
-> What if $path is a symlink blob?  ;-)
-
-Yeah, I need to add special case code for symlinks.
-
-> > +	case "$merge_tool" in
-> > +	    kdiff3)
-> > ...
-> > +	    tkdiff)
-> > ...
-> > +	    meld)
-> > ...
-> > +	    xxdiff)
-> > ...
-> 
-> It is depressing to see that the differences between the command
-> lines of these have to be much larger than just the command name
-> and order of three (or four if we count the result) paths
-> parameters.  
-
-
-Yep, it is depressing.  There is no standard calling convention, and
-there is no standard exit status convention, either.  Hence the
-requirement for meld and xxdiff to check to see if the file has
-changed.  Grump....
-
-> > +		xxdiff -X --show-merged-pane \
-> > +		    -R 'Accel.SaveAsMerged: "Ctrl-S"' \
-> > +		    -R 'Accel.Search: "Ctrl+F"' \
-> > +		    -R 'Accel.SearchForward: "Ctrl-G"' \
-> 
-> Do these configuration belong to individual scripts like this?
-
-The problem is that if you don't do this, using xxdiff is user-hostile
-in the extreme.  The problem isn't so much that the save command has
-no accelerators, but the Save menu gives you five (5!) save options.
-You can save the merged file as:
-
-	* The right file
-	* The middle file
-	* The left file
-	* The file that was specified as the output on the command-line
-	* Some user-specified file (save-as)
-
-So without those resource changes, the user would have to click on the
-File menu, and drag down to the "correct" save option or the file with
-the resolved merge conflicts would get saved to some random place.
-
-Gaaah.  I thought xxdiff was user hostile in the extreme, but Martin
-Langhoff really wanted it, and he was right that xxdiff will give you
-a built-in character-diff so you can see what changed on the
-individual line.  So the resource changes were in my opinion the
-minimum necessary so that the user would have some chance of seeing
-which one of the five save options would actually do the right thing
-with respect to git-mergetool.
-
-> > +	echo "No available merge tools available."
-> 
-> Curious choice of words...
-> 
-
-Yeah, that should probably read "merge conflict resolution programs",
-even though that's a lot more words.
-
-> > +if test $# -eq 0 ; then
-> > +	files=`git ls-files -u --abbrev=8 | colrm 1 24 | sort -u`
-> 
-> Careful.  I think --abbrev=8 just means use at least 8 but more
-> as needed to make them unique.  sed -e 's/^[^	]*	//'
-> (whitespace are HTs) would be safer and simpler, as you are not
-> dealing with a pathname that has LF in it anyway.
-
-OK, I can do that.  Alternatively I guess I could submit a patch which
-caused git-ls-files to only list the files that still needed merging.
-(i.e., git-ls-files -u --nostage".)  Do you have any preferences?
-
-						- Ted
+--=20
+Jakub Narebski
+Poland
