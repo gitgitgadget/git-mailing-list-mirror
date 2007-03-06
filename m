@@ -1,70 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Change to use explicitly function call cgi->escapHTML()
-Date: Tue, 6 Mar 2007 14:23:17 +0100
-Message-ID: <200703061423.18417.jnareb@gmail.com>
-References: <20070306093917.GA1761@coredump.intra.peff.net> <989B956029373F45A0B8AF02970818902DAA12@zch01exm26.fsl.freescale.net> <7vzm6qps51.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make 'make' quieter while building git
+Date: Tue, 6 Mar 2007 14:24:22 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703061422580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070306063501.GA24355@spearce.org>
+ <81b0412b0703060116m166e2da7saeab82c67536558e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Li Yang-r58472" <LeoLi@freescale.com>,
-	"Jeff King" <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 06 14:21:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 06 14:24:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOZbD-00085B-Nh
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 14:21:04 +0100
+	id 1HOZeV-00012T-9y
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 14:24:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030493AbXCFNVA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 6 Mar 2007 08:21:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964988AbXCFNVA
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 08:21:00 -0500
-Received: from nf-out-0910.google.com ([64.233.182.188]:61113 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964981AbXCFNU6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 08:20:58 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so2471236nfa
-        for <git@vger.kernel.org>; Tue, 06 Mar 2007 05:20:57 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=AFWnuBpBrW1inikNnTtz3QWWk9gpdhC5Kfr1GAM9N407GPY8UW6bbQfc3bKeHVCz3ta920vkWOKg9aEHEzTOH7Pxq4b6BEcPI4k7uBz9VwH81AlOjqMEMpK5NcCtFSlLAOfWx81k6qN3OQsCICU4cO6r+l7RO6IZK2cMNvkCuVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=gceFe98DV2nTt2HB5zjO6EldRalLNZgH269AcOlHXQMWTB8XIpDn0SgL368xtptcGdQVyyz2R/jGqxx0bYqmFW5YNbC+X/QxTMFKiC4dSThwZwPGf3I+MBmRRf3W4fiDu7dY6cWC4cgHtyFM5QRPHqHbyCp1wQpJzPF91XDW4PI=
-Received: by 10.82.167.5 with SMTP id p5mr6995317bue.1173187256544;
-        Tue, 06 Mar 2007 05:20:56 -0800 (PST)
-Received: from host-81-190-22-152.torun.mm.pl ( [81.190.22.152])
-        by mx.google.com with ESMTP id w5sm22796169mue.2007.03.06.05.20.52;
-        Tue, 06 Mar 2007 05:20:54 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vzm6qps51.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1030515AbXCFNY0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 08:24:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030584AbXCFNYZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 08:24:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:39941 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030515AbXCFNYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 08:24:24 -0500
+Received: (qmail invoked by alias); 06 Mar 2007 13:24:23 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp028) with SMTP; 06 Mar 2007 14:24:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Da0lkUlLDc2VlDLCfvt1gLCjgl6oclrQWZwhKhm
+	qpS7xmghFTOvMQ
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <81b0412b0703060116m166e2da7saeab82c67536558e@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41583>
 
-Junio C Hamano wrote:
+Hi,
 
-> Speaking of -title, I see "sub git_project_list_body" does this:
->=20
-> =A0 =A0 $cgi->a({ ... -title =3D> $pr->{'descr_long'}}, esc_html($pr-=
->{'descr'}));
-> =A0=A0=A0=A0=A0=A0=A0=A0
-> which seems inconsistent with the earlier quoted $fullname
-> handling (unless $pr->{'descr_long'} is already quoted and $pr->{'des=
-cr'}
-> is not, which I find highly unlikely).
+On Tue, 6 Mar 2007, Alex Riesen wrote:
 
-CGI::a() subroutine automatically quotes properly _attribute_ values,
-but it does not (and it should not) quote _contents_ of a tag.
+> On 3/6/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > ...
+> >     CC builtin-grep.c
+> > builtin-grep.c:187: warning: 'external_grep' defined but not used
+> 
+> Can I suggest printing the resulting object file instead of source?
+> It is useful if you want rebuild just one file by mouse-copy-paste it
+> into command line (the source file name for editor in case of
+> error is already in error message).
 
-So the above code is correct.
+I don't understand. If you want to fix what was triggering the warning, 
+you have to edit the source, no? Besides, this warning is generated by the 
+compiler, so I doubt we can do anything about it.
 
---=20
-Jakub Narebski
-Poland
+Ciao,
+Dscho
