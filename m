@@ -1,98 +1,87 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/4] revision traversal: retire BOUNDARY_SHOW
-Date: Tue, 6 Mar 2007 16:52:21 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703061643490.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <8aa486160703050202y5ee159d2i42a2859a00b41679@mail.gmail.com>
- <7vlkicynwm.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0703051951340.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0703051130090.3998@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703051145210.3998@woody.linux-foundation.org>
- <Pine.LNX.4.63.0703060016020.13683@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vk5xvw6mg.fsf@assigned-by-dhcp.cox.net> <7vzm6rurst.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0703060253140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4pozuncr.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0703060322270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vd53mppvb.fsf@assigned-by-dhcp.cox.net>
+From: Sergio Callegari <scallegari@arces.unibo.it>
+Subject: git gc and git repack
+Date: Tue, 6 Mar 2007 16:13:03 +0000 (UTC)
+Message-ID: <loom.20070306T165455-693@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Santi =?utf-8?Q?B?= =?utf-8?Q?=C3=A9jar?= <sbejar@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 06 16:52:36 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 06 17:13:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HObxq-0000Th-T7
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 16:52:35 +0100
+	id 1HOcI7-0000BP-VR
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 17:13:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965182AbXCFPwY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 10:52:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965180AbXCFPwY
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 10:52:24 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33568 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965202AbXCFPwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 10:52:23 -0500
-Received: (qmail invoked by alias); 06 Mar 2007 15:52:21 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 06 Mar 2007 16:52:21 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19JhHUXWJ9JfNZg5cmUYFyXAI8Njutsn3efDsmrtE
-	ZXTL+l2mHRLqCW
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vd53mppvb.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S965219AbXCFQNb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 11:13:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965242AbXCFQNb
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 11:13:31 -0500
+Received: from main.gmane.org ([80.91.229.2]:54237 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965219AbXCFQNa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 11:13:30 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HOcHv-0007IN-F2
+	for git@vger.kernel.org; Tue, 06 Mar 2007 17:13:19 +0100
+Received: from st-a-2.ingfo.unibo.it ([137.204.201.23])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Mar 2007 17:13:19 +0100
+Received: from scallegari by st-a-2.ingfo.unibo.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Mar 2007 17:13:19 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.204.201.23 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.2) Gecko/20060601 Firefox/2.0.0.2 (Ubuntu-edgy))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41588>
 
 Hi,
 
-On Tue, 6 Mar 2007, Junio C Hamano wrote:
+I am puzzled by a different behavior when doing housekeeping with git-gc and
+git-repack:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> > This should help performance, as not all reachable commits are 
-> >> > traversed any more.
-> >> 
-> >> You prevented that with "while (i &&" part already, didn't you?
-> >
-> > Well, yes. I also wanted to prevent going down all paths, though.
-> 
-> If we wanted to bundle "-8 A B", I think we would make 'x' and
-> 'y' prereqs, as they are the direct parents commits that are
-> shown, and that themselves are not shown.
-> 
->          .---*---*---*---*---* A
->         /
->     ---x---y---*---*---* B
-> 
-> If we say upon hitting prereq (x and y) we stop traversal by
-> marking the parent UNINTERESTING, I suspected that we may not
-> find out 'x' with get_revision() loop, and that was why I chose
-> not to.  Instead the loop stops by finding y and then x (and by
-> saying "ok I needed to find two and now I have two".
+On a repository I have, git gc gives:
 
-Yes, that is correct. What I wanted to optimize for was this:
+Generating pack...
+Done counting 75 objects.
+Deltifying 75 objects.
+ 100% (75/75) done
+Writing 75 objects.
+ 100% (75/75) done
+Total 75 (delta 26), reused 68 (delta 26)
+Pack pack-a989a4c4c7454874220cf502865ab9a28952499f created.
+Removing unused objects 100%...
+Done.
 
-x--*--*--A
+while git repack -a -d gives
 
-y--*--B
+Generating pack...
+Done counting 143 objects.
+Deltifying 143 objects.
+ 100% (143/143) done
+Writing 143 objects.
+ 100% (143/143) done
+Total 143 (delta 49), reused 120 (delta 31)
+Pack pack-d17fd54437f04fbde34088909e31e95718e7b8c5 created.
+Removing unused objects 100%...
+Done.
 
-There is no need to traverse the parents of y to find x. I wanted for the 
-traversal to just stop on paths where a prereq was found.
+Why is a different number of objects being considered in the two case, with git
+repack considering more objects and producing a different pack? Also, the
+package produced by repack turns out to be much larger than the one by git gc...
+In any case, both packages turn out to be git-fsck clean...
 
-But setting the parents to UNINTERESTING or SHOWN was wrong, because that 
-would not stop the traversal: see get_revision_1(). In case revs->limited 
-is 0, and the cutoff date is not yet reached, the parents are added 
-always. Even if the current commit is UNINTERESTING or SHOWN. (Which is 
-correct, of course.)
+I suspect, this has to to with my repository using alternates... (in fact git-gc
+and git-repack start behaving identically if I pass the -l (local) option to
+repack...  can anyone confirm that this is the only difference?
 
-BTW this behaviour with revs->limited = 1 made me set revs->limited in 
-case of revs->reverse in the first place...
-
-Ciao,
-Dscho
+Also can anybody confirm whether git repack -a -d actually includes in the pack
+also _all_ the "borrowed" objects? I.e. if it is in fact a way to convert a
+repository that borrows objects into one that is self-standing?
