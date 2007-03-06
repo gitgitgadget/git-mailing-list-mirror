@@ -1,59 +1,120 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Add git-mergetool to run an appropriate merge conflict
- resolution program
-Date: Tue, 6 Mar 2007 14:55:58 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0703061454350.5963@woody.linux-foundation.org>
-References: <E1HORtY-0000zK-8B@candygram.thunk.org> <7vr6s3sz8r.fsf@assigned-by-dhcp.cox.net>
- <20070306124002.GA18370@thunk.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 06 23:56:16 2007
+From: Don Zickus <dzickus@redhat.com>
+Subject: [PATCH 3/5] restrict the patch filtering v2
+Date: Tue,  6 Mar 2007 17:59:57 -0500
+Message-ID: <11732219972409-git-send-email-dzickus@redhat.com>
+Cc: Don Zickus <dzickus@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 07 00:01:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOiZq-0008FF-Ni
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 23:56:15 +0100
+	id 1HOies-0002RX-SL
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 00:01:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932627AbXCFW4L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 17:56:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932610AbXCFW4L
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 17:56:11 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:34856 "EHLO smtp.osdl.org"
+	id S1030579AbXCFXBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 18:01:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030608AbXCFXBY
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 18:01:24 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:42737 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030428AbXCFW4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 17:56:09 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l26Mu1q8024917
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 6 Mar 2007 14:56:02 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l26MtwbP011904;
-	Tue, 6 Mar 2007 14:56:00 -0800
-In-Reply-To: <20070306124002.GA18370@thunk.org>
-X-Spam-Status: No, hits=-2.46 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030579AbXCFXBX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 18:01:23 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l26N1MML005836
+	for <git@vger.kernel.org>; Tue, 6 Mar 2007 18:01:22 -0500
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l26N1Mwq004019
+	for <git@vger.kernel.org>; Tue, 6 Mar 2007 18:01:22 -0500
+Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
+	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l26N1LHh016976;
+	Tue, 6 Mar 2007 18:01:21 -0500
+Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
+	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l26MxvwK024158;
+	Tue, 6 Mar 2007 17:59:57 -0500
+Received: (from dzickus@localhost)
+	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l26Mxv1K024157;
+	Tue, 6 Mar 2007 17:59:57 -0500
+X-Mailer: git-send-email 1.5.0.2.213.g23f4-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41607>
 
+I have come across many emails that use long strings of '-'s as separators
+for ideas.  This patch below limits the separator to only 3 '-', with the
+intent that long string of '-'s will stay in the commit msg and not in the
+patch file.
 
+Signed-off-by: Don Zickus <dzickus@redhat.com>
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
 
-On Tue, 6 Mar 2007, Theodore Tso wrote:
-> 
-> I assume you would prefer that it read Junio instead?  Should we
-> change the COPYING while we're at it, perhaps after consulting with
-> Linus since he still owns so a fair amount of the copyright on git?
-> It seems that if we're going to pre-collect permissions to move to
-> GPLv3, it ought to be either you or him....
+---
+I purposedly separated this patch out because I wasn't sure if anyone would
+have objections to it.  I tested it on numerous emails with and with patches
+and didn't see any issues.
 
-I'm ok with Junio controlling it as far as I'm concerned. After all, he's 
-been the maintainer for the last two years, so he gets the blame, and he'd 
-better get the credit too.
+Update: compiled and tested with my test mbox (~1200 emails).  output is
+identical to the previous patch. 
 
-			Linus
+---
+ builtin-mailinfo.c |   37 ++++++++++++++++++++++++++++++++++---
+ 1 files changed, 34 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index 0532003..7b04179 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -644,6 +644,39 @@ again:
+ 	return (fgets(line, sizeof(line), fin) != NULL);
+ }
+ 
++static inline int patchbreak(const char *line)
++{
++	/* Beginning of a "diff -" header? */
++	if (!memcmp("diff -", line, 6))
++		return 1;
++
++	/* CVS "Index: " line? */
++	if (!memcmp("Index: ", line, 7))
++		return 1;
++
++	/*
++	 * "--- <filename>" starts patches without headers
++	 * "---<sp>*" is a manual separator
++	 */
++	if (!memcmp("---", line, 3)) {
++		line += 3;
++		/* space followed by a filename? */
++		if (line[0] == ' ' && !isspace(line[1]))
++			return 1;
++		/* Just whitespace? */
++		for (;;) {
++			unsigned char c = *line++;
++			if (c == '\n')
++				return 1;
++			if (!isspace(c))
++				break;
++		}
++		return 0;
++	}
++	return 0;
++}
++
++
+ static int handle_commit_msg(char *line)
+ {
+ 	static int still_looking=1;
+@@ -665,9 +698,7 @@ static int handle_commit_msg(char *line)
+ 			return 0;
+ 	}
+ 
+-	if (!memcmp("diff -", line, 6) ||
+-	    !memcmp("---", line, 3) ||
+-	    !memcmp("Index: ", line, 7)) {
++	if (patchbreak(line)) {
+ 		fclose(cmitmsg);
+ 		cmitmsg = NULL;
+ 		return 1;
+-- 
+1.5.0.2.213.g23f4-dirty
