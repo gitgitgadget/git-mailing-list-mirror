@@ -1,120 +1,98 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: [PATCH 3/5] restrict the patch filtering v2
-Date: Tue,  6 Mar 2007 17:59:57 -0500
-Message-ID: <11732219972409-git-send-email-dzickus@redhat.com>
-Cc: Don Zickus <dzickus@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 07 00:01:27 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add git-mergetool to run an appropriate merge conflict resolution program
+Date: Tue, 06 Mar 2007 15:02:55 -0800
+Message-ID: <7vk5xunffk.fsf@assigned-by-dhcp.cox.net>
+References: <E1HORtY-0000zK-8B@candygram.thunk.org>
+	<7vr6s3sz8r.fsf@assigned-by-dhcp.cox.net>
+	<20070306124002.GA18370@thunk.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Mar 07 00:04:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOies-0002RX-SL
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 00:01:27 +0100
+	id 1HOihQ-0003hf-3I
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 00:04:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030579AbXCFXBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 18:01:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030608AbXCFXBY
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 18:01:24 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:42737 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030579AbXCFXBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 18:01:23 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l26N1MML005836
-	for <git@vger.kernel.org>; Tue, 6 Mar 2007 18:01:22 -0500
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l26N1Mwq004019
-	for <git@vger.kernel.org>; Tue, 6 Mar 2007 18:01:22 -0500
-Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
-	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l26N1LHh016976;
-	Tue, 6 Mar 2007 18:01:21 -0500
-Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l26MxvwK024158;
-	Tue, 6 Mar 2007 17:59:57 -0500
-Received: (from dzickus@localhost)
-	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l26Mxv1K024157;
-	Tue, 6 Mar 2007 17:59:57 -0500
-X-Mailer: git-send-email 1.5.0.2.213.g23f4-dirty
+	id S1030634AbXCFXDB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 18:03:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030654AbXCFXDB
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 18:03:01 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:56250 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030634AbXCFXC4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 18:02:56 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070306230255.UQQM2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 6 Mar 2007 18:02:55 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Xb2v1W00Y1kojtg0000000; Tue, 06 Mar 2007 18:02:56 -0500
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41608>
 
-I have come across many emails that use long strings of '-'s as separators
-for ideas.  This patch below limits the separator to only 3 '-', with the
-intent that long string of '-'s will stay in the commit msg and not in the
-patch file.
+Theodore Tso <tytso@mit.edu> writes:
 
-Signed-off-by: Don Zickus <dzickus@redhat.com>
-Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+>> > +# This file is licensed under the GPL v2, or a later version
+>> > +# at the discretion of Linus Torvalds.
+>> 
+>> Heh ;-).
+>
+> Hey, that's what the COPYING file requested, and it was late when I
+> started doing the git package integration, hence the stupid think-o
+> with the man page.  :-)
+>
+> I assume you would prefer that it read Junio instead?
 
----
-I purposedly separated this patch out because I wasn't sure if anyone would
-have objections to it.  I tested it on numerous emails with and with patches
-and didn't see any issues.
+Oh, no, sorry.  The text itself is just fine as is, if that is
+the way you want.
 
-Update: compiled and tested with my test mbox (~1200 emails).  output is
-identical to the previous patch. 
+I just laughed out because I remembered the list discussion
+(which might also have cc'ed the kernel list, but I do not
+remember) about possible relicensing schenario, where Linus
+mentioned that exact clause in the COPYING file, saying that his
+discretion would by now be to let me decide ;-).
 
----
- builtin-mailinfo.c |   37 ++++++++++++++++++++++++++++++++++---
- 1 files changed, 34 insertions(+), 3 deletions(-)
+>> You should be able to set IFS to exclude SP and then you only
+>> have to say you do not support LF and HT, both of which are much
+>> less likely than SP to be in the pathname.
+>
+> Do we have any coding guidelines about what characters we have to
+> support in filenames?  I had assumed that we should support at least
+> SP and HT, but life does get easier if we don't need to worry about HT.
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index 0532003..7b04179 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -644,6 +644,39 @@ again:
- 	return (fgets(line, sizeof(line), fin) != NULL);
- }
- 
-+static inline int patchbreak(const char *line)
-+{
-+	/* Beginning of a "diff -" header? */
-+	if (!memcmp("diff -", line, 6))
-+		return 1;
-+
-+	/* CVS "Index: " line? */
-+	if (!memcmp("Index: ", line, 7))
-+		return 1;
-+
-+	/*
-+	 * "--- <filename>" starts patches without headers
-+	 * "---<sp>*" is a manual separator
-+	 */
-+	if (!memcmp("---", line, 3)) {
-+		line += 3;
-+		/* space followed by a filename? */
-+		if (line[0] == ' ' && !isspace(line[1]))
-+			return 1;
-+		/* Just whitespace? */
-+		for (;;) {
-+			unsigned char c = *line++;
-+			if (c == '\n')
-+				return 1;
-+			if (!isspace(c))
-+				break;
-+		}
-+		return 0;
-+	}
-+	return 0;
-+}
-+
-+
- static int handle_commit_msg(char *line)
- {
- 	static int still_looking=1;
-@@ -665,9 +698,7 @@ static int handle_commit_msg(char *line)
- 			return 0;
- 	}
- 
--	if (!memcmp("diff -", line, 6) ||
--	    !memcmp("---", line, 3) ||
--	    !memcmp("Index: ", line, 7)) {
-+	if (patchbreak(line)) {
- 		fclose(cmitmsg);
- 		cmitmsg = NULL;
- 		return 1;
--- 
-1.5.0.2.213.g23f4-dirty
+The core scripts, at least the ones I personally use, are meant
+to handle all characters, including SP, HT and LF, so if there
+were any guidelines that would be it.  However, your particular
+case to interface with external editor needs `eval` with sq
+magic if it needs to be coded in portable bourne, which can be
+done, but I suspect it is not worth doing, as we would not see
+HT in pathnames in the practice.  UNIXy folks tend to avoid any
+whitespaces in the filenames, and Windows folks cannot use HT in
+pathnames as far as I understand.
+
+> Yeah, that should probably read "merge conflict resolution programs",
+> even though that's a lot more words.
+>
+>> > +if test $# -eq 0 ; then
+>> > +	files=`git ls-files -u --abbrev=8 | colrm 1 24 | sort -u`
+>> 
+>> Careful.  I think --abbrev=8 just means use at least 8 but more
+>> as needed to make them unique.  sed -e 's/^[^	]*	//'
+>> (whitespace are HTs) would be safer and simpler, as you are not
+>> dealing with a pathname that has LF in it anyway.
+>
+> OK, I can do that.  Alternatively I guess I could submit a patch which
+> caused git-ls-files to only list the files that still needed merging.
+> (i.e., git-ls-files -u --nostage".)  Do you have any preferences?
+
+The latter would be more useful in general, and something I
+should have done long time ago to help scripts.  Thanks.
