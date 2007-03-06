@@ -1,68 +1,47 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Make 'make' quieter while building git
-Date: Tue, 6 Mar 2007 02:16:30 -0500
-Message-ID: <20070306071630.GB24004@spearce.org>
-References: <20070306063501.GA24355@spearce.org> <7v1wk2ua55.fsf@assigned-by-dhcp.cox.net>
+From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
+Subject: Re: [PATCH 1/3] git-branch: add --track and --no-track options
+Date: Tue, 06 Mar 2007 08:23:26 +0100
+Message-ID: <45ED16EE.8020303@lu.unisi.ch>
+References: <esgm1m$33f$1@sea.gmane.org>	<Pine.LNX.4.63.0703051520340.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45EC3905.7070406@lu.unisi.ch>	<Pine.LNX.4.63.0703051648330.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45EC4B55.3090505@lu.unisi.ch>	<Pine.LNX.4.63.0703051812030.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45EC51C6.5080505@lu.unisi.ch>	<Pine.LNX.4.63.0703051930560.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45EC8959.1090303@lu.unisi.ch> <7v3b4jxtx8.fsf@assigned-by-dhcp.cox.net>
+Reply-To: bonzini@gnu.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: bonzini@gnu.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 06 08:16:39 2007
+X-From: git-owner@vger.kernel.org Tue Mar 06 08:23:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOTuY-00014U-2P
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 08:16:38 +0100
+	id 1HOU1C-0003xp-G6
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 08:23:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932715AbXCFHQg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 02:16:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932719AbXCFHQg
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 02:16:36 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:45484 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932715AbXCFHQf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 02:16:35 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HOTuS-00077S-3s; Tue, 06 Mar 2007 02:16:32 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 222DD20FBAE; Tue,  6 Mar 2007 02:16:31 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v1wk2ua55.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932725AbXCFHX2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 02:23:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932739AbXCFHX2
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 02:23:28 -0500
+Received: from server.usilu.net ([195.176.178.200]:23154 "EHLO mail.usilu.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932725AbXCFHX2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 02:23:28 -0500
+Received: from [192.168.68.211] ([192.168.68.211] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 6 Mar 2007 08:23:25 +0100
+User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
+In-Reply-To: <7v3b4jxtx8.fsf@assigned-by-dhcp.cox.net>
+X-OriginalArrivalTime: 06 Mar 2007 07:23:25.0290 (UTC) FILETIME=[541D14A0:01C75FC0]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41550>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > I find it difficult to see compiler warnings amongst the massive
-> > spewing produced by GNU make as it works through our productions.
-> 
-> I agree, and suspect it might even be a better idea to make this
-> the default, with "make V=1" to make chattier.
 
-See my other patch.  ;-)
- 
-> Now we should do the same to git-gui, shouldn't we?  Time for me
-> to subtree-merge git-gui to my master?
+> Yes, that is correct.  Some C lib implementations seem to count
+> %n and others don't so it is not reliable.  That is one of the
+> reasons I personally have stayed away from fancier sscanf()
+> constructs, both inside and outside git project.
 
-Done.  gitgui-0.6.3 is tagged and ready to be pulled into maint.
-There's a few small fixes in there that have been accumlating too.
-Be nice to get them into your next release, whatever that winds
-up being.  ;-)
+So, should I remove it?  As I said, the code using sscanf is already the second try, and the first was utterly illegible, so I'd rather stay with it.
 
--- 
-Shawn.
+Paolo
