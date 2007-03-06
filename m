@@ -1,155 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-mergetool to run an appropriate merge conflict resolution program
-Date: Mon, 05 Mar 2007 21:43:48 -0800
-Message-ID: <7vr6s3sz8r.fsf@assigned-by-dhcp.cox.net>
-References: <E1HORtY-0000zK-8B@candygram.thunk.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] cherry-pick: Bug fix 'cherry picked from' message.
+Date: Tue, 6 Mar 2007 00:46:00 -0500
+Message-ID: <20070306054600.GA24206@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Theodore Ts'o" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 06 06:44:11 2007
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 06 06:46:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOST0-0004RV-Ok
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 06:44:07 +0100
+	id 1HOSV1-0005HO-8f
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 06:46:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965786AbXCFFnv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 00:43:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965784AbXCFFnv
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 00:43:51 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:43871 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965786AbXCFFnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 00:43:50 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070306054350.FXIP2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 6 Mar 2007 00:43:50 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id XHjo1W00H1kojtg0000000; Tue, 06 Mar 2007 00:43:49 -0500
-In-Reply-To: <E1HORtY-0000zK-8B@candygram.thunk.org> (Theodore Ts'o's message
-	of "Tue, 06 Mar 2007 00:07:28 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933959AbXCFFqI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 00:46:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933958AbXCFFqI
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 00:46:08 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:43922 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933959AbXCFFqH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 00:46:07 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HOSUs-0002zR-GC; Tue, 06 Mar 2007 00:46:02 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B6FD720FBAE; Tue,  6 Mar 2007 00:46:00 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41539>
 
-"Theodore Ts'o" <tytso@mit.edu> writes:
+Somewhere along the line (in abd6970a) git-revert.sh learned to
+omit the private object name from the new commit message *unless*
+-x was supplied on the command line by the user.
 
-> +git-mergetool(1)
-> +================
-> +
-> +NAME
-> +----
-> +git-mergetool - Forward-port local commits to the updated upstream head
-> +
+The way this was implemented is really non-obvious in the original
+script.  Setting replay=t (the default) means we don't include the
+the private object name, while setting reply='' (the -x flag) means
+we should include the private object name.  These two settings now
+relate to the replay=1 and replay=0 cases in the C version, so we
+need to negate replay to test it is 0.
 
-Hmph.  We already have a tool to achieve such a goal, and that
-is called git-rebase.  Why would we want your program? ;-)
+I also noticed the C version was adding an extra LF in the -x case,
+where the older git-revert.sh was not.
 
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> new file mode 100755
-> index 0000000..b961719
-> --- /dev/null
-> +++ b/git-mergetool.sh
-> @@ -0,0 +1,208 @@
-> +#!/bin/sh
-> +#
-> +# This program resolves merge conflicts in git
-> +#
-> +# Copyright (c) 2006 Theodore Y. Ts'o
-> +#
-> +# This file is licensed under the GPL v2, or a later version
-> +# at the discretion of Linus Torvalds.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ builtin-revert.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Heh ;-).
-
-> +#
-> +
-> +usage () {
-> +    echo "Usage: git mergetool [--tool=tool] [file to merge] ..."
-> +    exit 1
-> +}
-
-Do we want to do this by hand ourselves, or dot-source sh-setup
-like others?  You would also get die() for free.
-
-> +merge_file () {
-> ...
-> +
-> +	if test ! -f "$path" ; then
-> +		echo "$path: file not found"
-> +		exit 1
-> +	fi
-> +
-> +	f=`git-ls-files -u "$path"`
-> +	if test -z "$f" ; then
-> +		echo "$path: file does not need merging"
-> +		exit 1
-> +	fi
-
-You should be able to set IFS to exclude SP and then you only
-have to say you do not support LF and HT, both of which are much
-less likely than SP to be in the pathname.
-
-> +	mv "$path" "$BACKUP"
-> +	cp "$BACKUP" "$path"
-
-What if $path is a symlink blob?  ;-)
-
-> +	git cat-file blob ":1:$path" > "$BASE"
-> +	git cat-file blob ":2:$path" > "$LOCAL"
-> +	git cat-file blob ":3:$path" > "$REMOTE"
-
-> +	case "$merge_tool" in
-> +	    kdiff3)
-> ...
-> +	    tkdiff)
-> ...
-> +	    meld)
-> ...
-> +	    xxdiff)
-> ...
-
-It is depressing to see that the differences between the command
-lines of these have to be much larger than just the command name
-and order of three (or four if we count the result) paths
-parameters.  I was hoping that we could do something like:
-
-	mergetool -t='newmerge $BASE $LOCAL $REMOTE'
-
-> +		xxdiff -X --show-merged-pane \
-> +		    -R 'Accel.SaveAsMerged: "Ctrl-S"' \
-> +		    -R 'Accel.Search: "Ctrl+F"' \
-> +		    -R 'Accel.SearchForward: "Ctrl-G"' \
-
-Do these configuration belong to individual scripts like this?
-
-> +if test -z "$merge_tool" ; then
-> +    if type kdiff3 >/dev/null 2>&1 && test -n "$DISPLAY"; then
-> +	merge_tool="kdiff3";
-> +    elif type tkdiff >/dev/null 2>&1 && test -n "$DISPLAY"; then
-> +    	merge_tool=tkdiff
-> +    elif type xxdiff >/dev/null 2>&1 && test -n "$DISPLAY"; then
-> +    	merge_tool=xxdiff
-> +    elif type meld >/dev/null 2>&1 && test -n "$DISPLAY"; then
-> +        merge_tool=meld
-> +    elif type emacs >/dev/null 2>&1; then
-> +        merge_tool=emerge
-> +    else
-> +	echo "No available merge tools available."
-
-Curious choice of words...
-
-> +if test $# -eq 0 ; then
-> +	files=`git ls-files -u --abbrev=8 | colrm 1 24 | sort -u`
-
-Careful.  I think --abbrev=8 just means use at least 8 but more
-as needed to make them unique.  sed -e 's/^[^	]*	//'
-(whitespace are HTs) would be safer and simpler, as you are not
-dealing with a pathname that has LF in it anyway.
+diff --git a/builtin-revert.c b/builtin-revert.c
+index 382fe0c..2f2dc1b 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -303,8 +303,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		next = commit;
+ 		set_author_ident_env(message);
+ 		add_message_to_msg(message);
+-		if (replay) {
+-			add_to_msg("\n(cherry picked from commit ");
++		if (!replay) {
++			add_to_msg("(cherry picked from commit ");
+ 			add_to_msg(sha1_to_hex(commit->object.sha1));
+ 			add_to_msg(")\n");
+ 		}
+-- 
+1.5.0.3.863.gf0989
