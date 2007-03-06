@@ -1,55 +1,63 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Make 'make' quieter while building git
-Date: Tue, 6 Mar 2007 10:16:12 +0100
-Message-ID: <81b0412b0703060116m166e2da7saeab82c67536558e@mail.gmail.com>
-References: <20070306063501.GA24355@spearce.org>
+From: "Jakub Narebski" <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Change to use explicitly function call cgi->escapHTML()
+Date: Tue, 6 Mar 2007 10:34:32 +0100
+Message-ID: <8fe92b430703060134l14fffcc4rbece3c2071c56422@mail.gmail.com>
+References: <45ECE700.8090205@freescale.com>
+	 <7v649euai8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Mar 06 10:17:07 2007
+Cc: "Li Yang" <leoli@freescale.com>, git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 06 10:34:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOVn9-00040k-Fp
-	for gcvg-git@gmane.org; Tue, 06 Mar 2007 10:17:07 +0100
+	id 1HOW45-0003Qf-Gu
+	for gcvg-git@gmane.org; Tue, 06 Mar 2007 10:34:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933173AbXCFJQS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 04:16:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933174AbXCFJQS
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 04:16:18 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:41151 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933173AbXCFJQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 04:16:15 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so2403336nfa
-        for <git@vger.kernel.org>; Tue, 06 Mar 2007 01:16:14 -0800 (PST)
+	id S1030453AbXCFJef (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 04:34:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030456AbXCFJee
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 04:34:34 -0500
+Received: from wr-out-0506.google.com ([64.233.184.236]:43292 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030453AbXCFJee (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 04:34:34 -0500
+Received: by wr-out-0506.google.com with SMTP id 37so1818094wra
+        for <git@vger.kernel.org>; Tue, 06 Mar 2007 01:34:33 -0800 (PST)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YDnmjMObqy4wOY/xpnDZPZ1urdworw1Q8xv84O7jYyXORSWT/hO1lefLT52GE6Qd15RwsWdtQ+hmGH0Ox40ziRq83Dobo1OhdCT5ht/lVT+hoY3jtNOe1VWJR41lQfdDtguUZIWHOmPTcJfCKIh71Ju2gmgLggQA4+DzrhT3N/g=
+        b=talKc0Nt/QiZh2Q4Em0/E5UC4XQvETOCKc9VIQO7b+KaPVnCbaewaWufl4OvOLCLbvgt2b6sIkP6d+yg5sUBpB3mNm5VHqv+EXC1CM7K/be39BZ3bNEhAXNquojObQcMLhkCddnC1K9YpOiIIrTnKDkbyr2bLl1+GiK7sueDg4w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fr1KmeytOLN6CkCsi/y3VzVSjvl1eT6A6SjsoZ9CDDOJyjxQ9wxUMC8RkawE18njf7uPEfIw9IufKRenjYgoBAnlnMLizkEURWeenTwbrJQo70cPB4K1kSb4IdDIb9NexiHVazbrVB4WXQPhP0KnWnDNqPhU+Z9g+A4vcofHbNs=
-Received: by 10.78.149.15 with SMTP id w15mr756166hud.1173172572153;
-        Tue, 06 Mar 2007 01:16:12 -0800 (PST)
-Received: by 10.78.138.5 with HTTP; Tue, 6 Mar 2007 01:16:12 -0800 (PST)
-In-Reply-To: <20070306063501.GA24355@spearce.org>
+        b=REHTWKOfKngYXuKTLWeYyY8acWzYYBkBHyu/VPmjLrusyZUWPtk2t5np1UQ53WNrL8Nlm9Y1oHz0qaFvEYV0yKJpeYSDOQpBh80ql1rLzxb32C2lb0IDzE+L2vzRnXKdrTvzWJYd9liCYkjywkPPRmpPU3uKo+g1J2D26V7qTXM=
+Received: by 10.114.192.1 with SMTP id p1mr1674417waf.1173173672941;
+        Tue, 06 Mar 2007 01:34:32 -0800 (PST)
+Received: by 10.114.201.20 with HTTP; Tue, 6 Mar 2007 01:34:32 -0800 (PST)
+In-Reply-To: <7v649euai8.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41564>
 
-On 3/6/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> ...
->     CC builtin-grep.c
-> builtin-grep.c:187: warning: 'external_grep' defined but not used
+On 3/6/07, Junio C Hamano <junkio@cox.net> wrote:
+> Li Yang <leoli@freescale.com> writes:
+>
+> > Change to use explicitly function call cgi->escapHTML().
+> > This fix the problem on some systems that escapeHTML() is not
+> > functioning, as default CGI is not setting 'escape' parameter.
+> >
+> > Signed-off-by: Li Yang <leoli@freescale.com>
+>
+> Regardless of the recent xhtml+html vs html discussion, I think
+> this is probably a sane change.  Comments?
 
-Can I suggest printing the resulting object file instead of source?
-It is useful if you want rebuild just one file by mouse-copy-paste it
-into command line (the source file name for editor in case of
-error is already in error message).
+Good (although a bit magic) solution. Ack, FWIW.
+
+-- 
+Jakub Narebski
