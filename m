@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 7/9] Use off_t when we really mean a file offset.
-Date: Tue, 6 Mar 2007 20:44:30 -0500
-Message-ID: <20070307014430.GH26482@spearce.org>
+Subject: [PATCH 6/9] Use uint32_t for pack-objects counters.
+Date: Tue, 6 Mar 2007 20:44:24 -0500
+Message-ID: <20070307014424.GG26482@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 07 02:46:11 2007
+X-From: git-owner@vger.kernel.org Wed Mar 07 02:46:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOlEF-00070d-L5
+	id 1HOlEF-00070d-44
 	for gcvg-git@gmane.org; Wed, 07 Mar 2007 02:46:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161194AbXCGBol (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 20:44:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161187AbXCGBoj
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 20:44:39 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:49222 "EHLO
+	id S1161192AbXCGBoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 20:44:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161187AbXCGBoe
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 20:44:34 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49218 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161184AbXCGBoe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 20:44:34 -0500
+	with ESMTP id S1161176AbXCGBo2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 20:44:28 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HOlCX-0003qq-DQ; Tue, 06 Mar 2007 20:44:21 -0500
+	id 1HOlCQ-0003qH-V5; Tue, 06 Mar 2007 20:44:15 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id ABFFC20FBAE; Tue,  6 Mar 2007 20:44:30 -0500 (EST)
+	id 20D2220FBAE; Tue,  6 Mar 2007 20:44:24 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -41,376 +41,243 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41641>
 
-Not all platforms have declared 'unsigned long' to be a 64 bit value,
-but we want to support a 64 bit packfile (or close enough anyway)
-in the near future as some projects are getting large enough that
-their packed size exceeds 4 GiB.
+As we technically try to support up to a maximum of 2**32-1 objects
+in a single packfile we should act like it and use unsigned 32 bit
+integers for all of our object counts and progress output.
 
-By using off_t, the POSIX type that is declared to mean an offset
-within a file, we support whatever maximum file size the underlying
-operating system will handle.  For most modern systems this is up
-around 2^60 or higher.
+This change does not modify everything in pack-objects that probably
+needs to change to fully support the maximum of 2**32-1 objects.
+I'm intentionally breaking the improvements into slightly smaller
+commits to make them easier to follow.
+
+No logic change should be occuring here, with the exception that
+some comparsions will now work properly when the number of objects
+exceeds 2**31-1.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- cache.h           |   10 ++++----
- fast-import.c     |    4 ---
- git-compat-util.h |    4 +++
- pack-check.c      |   21 +++++++++++--------
- pack-redundant.c  |    8 +++---
- sha1_file.c       |   54 ++++++++++++++++++++++++++++------------------------
- 6 files changed, 54 insertions(+), 47 deletions(-)
+ builtin-pack-objects.c |   63 ++++++++++++++++++++++-------------------------
+ 1 files changed, 30 insertions(+), 33 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 63a093b..ae25759 100644
---- a/cache.h
-+++ b/cache.h
-@@ -383,7 +383,7 @@ extern struct packed_git {
- } *packed_git;
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 8cf24f4..8d5c3f1 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -68,7 +68,7 @@ static int allow_ofs_delta;
  
- struct pack_entry {
--	unsigned int offset;
-+	off_t offset;
- 	unsigned char sha1[20];
+ static struct object_entry **sorted_by_sha, **sorted_by_type;
+ static struct object_entry *objects;
+-static int nr_objects, nr_alloc, nr_result;
++static uint32_t nr_objects, nr_alloc, nr_result;
+ static const char *base_name;
+ static unsigned char pack_file_sha1[20];
+ static int progress = 1;
+@@ -114,10 +114,8 @@ static int pack_revindex_hashsz;
+ /*
+  * stats
+  */
+-static int written;
+-static int written_delta;
+-static int reused;
+-static int reused_delta;
++static uint32_t written, written_delta;
++static uint32_t reused, reused_delta;
+ 
+ static int pack_revindex_ix(struct packed_git *p)
+ {
+@@ -518,7 +516,7 @@ static unsigned long write_one(struct sha1file *f,
+ 
+ static void write_pack_file(void)
+ {
+-	int i;
++	uint32_t i;
+ 	struct sha1file *f;
+ 	unsigned long offset;
+ 	struct pack_header hdr;
+@@ -533,7 +531,7 @@ static void write_pack_file(void)
+ 		f = sha1create("%s-%s.%s", base_name,
+ 			       sha1_to_hex(object_list_sha1), "pack");
+ 	if (do_progress)
+-		fprintf(stderr, "Writing %d objects.\n", nr_result);
++		fprintf(stderr, "Writing %u objects.\n", nr_result);
+ 
+ 	hdr.hdr_signature = htonl(PACK_SIGNATURE);
+ 	hdr.hdr_version = htonl(PACK_VERSION);
+@@ -558,13 +556,13 @@ static void write_pack_file(void)
+ 		fputc('\n', stderr);
+  done:
+ 	if (written != nr_result)
+-		die("wrote %d objects while expecting %d", written, nr_result);
++		die("wrote %u objects while expecting %u", written, nr_result);
+ 	sha1close(f, pack_file_sha1, 1);
+ }
+ 
+ static void write_index_file(void)
+ {
+-	int i;
++	uint32_t i;
+ 	struct sha1file *f = sha1create("%s-%s.%s", base_name,
+ 					sha1_to_hex(object_list_sha1), "idx");
+ 	struct object_entry **list = sorted_by_sha;
+@@ -633,7 +631,7 @@ static struct object_entry *locate_object_entry(const unsigned char *sha1)
+ 
+ static void rehash_objects(void)
+ {
+-	int i;
++	uint32_t i;
+ 	struct object_entry *oe;
+ 
+ 	object_ix_hashsz = nr_objects * 3;
+@@ -670,7 +668,7 @@ static unsigned name_hash(const char *name)
+ 
+ static int add_object_entry(const unsigned char *sha1, unsigned hash, int exclude)
+ {
+-	unsigned int idx = nr_objects;
++	uint32_t idx = nr_objects;
+ 	struct object_entry *entry;
  	struct packed_git *p;
- };
-@@ -422,15 +422,15 @@ extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
- 					 struct packed_git *packs);
+ 	unsigned int found_offset = 0;
+@@ -696,9 +694,8 @@ static int add_object_entry(const unsigned char *sha1, unsigned hash, int exclud
+ 		goto already_added;
  
- extern void pack_report(void);
--extern unsigned char* use_pack(struct packed_git *, struct pack_window **, unsigned long, unsigned int *);
-+extern unsigned char* use_pack(struct packed_git *, struct pack_window **, off_t, unsigned int *);
- extern void unuse_pack(struct pack_window **);
- extern struct packed_git *add_packed_git(char *, int, int);
- extern uint32_t num_packed_objects(const struct packed_git *p);
- extern int nth_packed_object_sha1(const struct packed_git *, uint32_t, unsigned char*);
--extern unsigned long find_pack_entry_one(const unsigned char *, struct packed_git *);
--extern void *unpack_entry(struct packed_git *, unsigned long, enum object_type *, unsigned long *);
-+extern off_t find_pack_entry_one(const unsigned char *, struct packed_git *);
-+extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
- extern unsigned long unpack_object_header_gently(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
--extern const char *packed_object_info_detail(struct packed_git *, unsigned long, unsigned long *, unsigned long *, unsigned int *, unsigned char *);
-+extern const char *packed_object_info_detail(struct packed_git *, off_t, unsigned long *, unsigned long *, unsigned int *, unsigned char *);
- 
- /* Dumb servers support */
- extern int update_server_info(int);
-diff --git a/fast-import.c b/fast-import.c
-index 132dd9c..a418a17 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -133,10 +133,6 @@ Format of STDIN stream:
- #define PACK_ID_BITS 16
- #define MAX_PACK_ID ((1<<PACK_ID_BITS)-1)
- 
--#ifndef PRIuMAX
--#define PRIuMAX "llu"
--#endif
--
- struct object_entry
- {
- 	struct object_entry *next;
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 56212b2..33b68e4 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -70,6 +70,10 @@
- #define PATH_MAX 4096
- #endif
- 
-+#ifndef PRIuMAX
-+#define PRIuMAX "llu"
-+#endif
-+
- #ifdef __GNUC__
- #define NORETURN __attribute__((__noreturn__))
- #else
-diff --git a/pack-check.c b/pack-check.c
-index 7c82f67..299c514 100644
---- a/pack-check.c
-+++ b/pack-check.c
-@@ -4,11 +4,11 @@
- static int verify_packfile(struct packed_git *p,
- 		struct pack_window **w_curs)
- {
--	unsigned long index_size = p->index_size;
-+	off_t index_size = p->index_size;
- 	void *index_base = p->index_base;
- 	SHA_CTX ctx;
- 	unsigned char sha1[20];
--	unsigned long offset = 0, pack_sig = p->pack_size - 20;
-+	off_t offset = 0, pack_sig = p->pack_size - 20;
- 	uint32_t nr_objects, i;
- 	int err;
- 
-@@ -24,7 +24,7 @@ static int verify_packfile(struct packed_git *p,
- 		unsigned char *in = use_pack(p, w_curs, offset, &remaining);
- 		offset += remaining;
- 		if (offset > pack_sig)
--			remaining -= offset - pack_sig;
-+			remaining -= (unsigned int)(offset - pack_sig);
- 		SHA1_Update(&ctx, in, remaining);
+ 	if (idx >= nr_alloc) {
+-		unsigned int needed = (idx + 1024) * 3 / 2;
+-		objects = xrealloc(objects, needed * sizeof(*entry));
+-		nr_alloc = needed;
++		nr_alloc = (idx + 1024) * 3 / 2;
++		objects = xrealloc(objects, nr_alloc * sizeof(*entry));
  	}
- 	SHA1_Final(sha1, &ctx);
-@@ -45,7 +45,8 @@ static int verify_packfile(struct packed_git *p,
- 		unsigned char sha1[20];
- 		void *data;
- 		enum object_type type;
--		unsigned long size, offset;
-+		unsigned long size;
-+		off_t offset;
+ 	entry = objects + idx;
+ 	nr_objects = idx + 1;
+@@ -718,7 +715,7 @@ static int add_object_entry(const unsigned char *sha1, unsigned hash, int exclud
  
- 		if (nth_packed_object_sha1(p, i, sha1))
- 			die("internal error pack-check nth-packed-object");
-@@ -85,7 +86,7 @@ static void show_pack_info(struct packed_git *p)
- 		const char *type;
- 		unsigned long size;
- 		unsigned long store_size;
--		unsigned long offset;
-+		off_t offset;
- 		unsigned int delta_chain_length;
+  already_added:
+ 	if (progress_update) {
+-		fprintf(stderr, "Counting objects...%d\r", nr_objects);
++		fprintf(stderr, "Counting objects...%u\r", nr_objects);
+ 		progress_update = 0;
+ 	}
+ 	if (exclude)
+@@ -1081,7 +1078,7 @@ static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
  
- 		if (nth_packed_object_sha1(p, i, sha1))
-@@ -99,9 +100,11 @@ static void show_pack_info(struct packed_git *p)
- 						 base_sha1);
- 		printf("%s ", sha1_to_hex(sha1));
- 		if (!delta_chain_length)
--			printf("%-6s %lu %lu\n", type, size, offset);
-+			printf("%-6s %lu %"PRIuMAX"\n",
-+			       type, size, (uintmax_t)offset);
- 		else {
--			printf("%-6s %lu %lu %u %s\n", type, size, offset,
-+			printf("%-6s %lu %"PRIuMAX" %u %s\n",
-+			       type, size, (uintmax_t)offset,
- 			       delta_chain_length, sha1_to_hex(base_sha1));
- 			if (delta_chain_length < MAX_CHAIN)
- 				chain_histogram[delta_chain_length]++;
-@@ -123,7 +126,7 @@ static void show_pack_info(struct packed_git *p)
- 
- int verify_pack(struct packed_git *p, int verbose)
+ static void get_object_details(void)
  {
--	unsigned long index_size = p->index_size;
-+	off_t index_size = p->index_size;
- 	void *index_base = p->index_base;
- 	SHA_CTX ctx;
- 	unsigned char sha1[20];
-@@ -132,7 +135,7 @@ int verify_pack(struct packed_git *p, int verbose)
- 	ret = 0;
- 	/* Verify SHA1 sum of the index file */
- 	SHA1_Init(&ctx);
--	SHA1_Update(&ctx, index_base, index_size - 20);
-+	SHA1_Update(&ctx, index_base, (unsigned int)(index_size - 20));
- 	SHA1_Final(sha1, &ctx);
- 	if (hashcmp(sha1, (unsigned char *)index_base + index_size - 20))
- 		ret = error("Packfile index for %s SHA1 mismatch",
-diff --git a/pack-redundant.c b/pack-redundant.c
-index edb5524..c8f7d9a 100644
---- a/pack-redundant.c
-+++ b/pack-redundant.c
-@@ -396,9 +396,9 @@ static size_t get_pack_redundancy(struct pack_list *pl)
- 	return ret;
- }
+-	int i;
++	uint32_t i;
+ 	struct object_entry *entry;
  
--static inline size_t pack_set_bytecount(struct pack_list *pl)
-+static inline off_t pack_set_bytecount(struct pack_list *pl)
+ 	prepare_pack_ix();
+@@ -1120,7 +1117,7 @@ static int sort_comparator(const void *_a, const void *_b)
+ static struct object_entry **create_sorted_list(entry_sort_t sort)
  {
--	size_t ret = 0;
-+	off_t ret = 0;
- 	while (pl) {
- 		ret += pl->pack->pack_size;
- 		ret += pl->pack->index_size;
-@@ -413,7 +413,7 @@ static void minimize(struct pack_list **min)
- 		*non_unique = NULL, *min_perm = NULL;
- 	struct pll *perm, *perm_all, *perm_ok = NULL, *new_perm;
- 	struct llist *missing;
--	size_t min_perm_size = (size_t)-1, perm_size;
-+	off_t min_perm_size = 0, perm_size;
- 	int n;
+ 	struct object_entry **list = xmalloc(nr_objects * sizeof(struct object_entry *));
+-	int i;
++	uint32_t i;
  
- 	pl = local_packs;
-@@ -461,7 +461,7 @@ static void minimize(struct pack_list **min)
- 	perm = perm_ok;
- 	while (perm) {
- 		perm_size = pack_set_bytecount(perm->pl);
--		if (min_perm_size > perm_size) {
-+		if (!min_perm_size || min_perm_size > perm_size) {
- 			min_perm_size = perm_size;
- 			min_perm = perm->pl;
+ 	for (i = 0; i < nr_objects; i++)
+ 		list[i] = objects + i;
+@@ -1137,7 +1134,7 @@ static int sha1_sort(const struct object_entry *a, const struct object_entry *b)
+ static struct object_entry **create_final_object_list(void)
+ {
+ 	struct object_entry **list;
+-	int i, j;
++	uint32_t i, j;
+ 
+ 	for (i = nr_result = 0; i < nr_objects; i++)
+ 		if (!objects[i].preferred_base)
+@@ -1279,20 +1276,20 @@ static void progress_interval(int signum)
+ 
+ static void find_deltas(struct object_entry **list, int window, int depth)
+ {
+-	int i, idx;
++	uint32_t i = nr_objects, idx = 0, processed = 0;
+ 	unsigned int array_size = window * sizeof(struct unpacked);
+-	struct unpacked *array = xmalloc(array_size);
+-	unsigned processed = 0;
++	struct unpacked *array;
+ 	unsigned last_percent = 999;
+ 
++	if (!nr_objects)
++		return;
++	array = xmalloc(array_size);
+ 	memset(array, 0, array_size);
+-	i = nr_objects;
+-	idx = 0;
+ 	if (progress)
+-		fprintf(stderr, "Deltifying %d objects.\n", nr_result);
++		fprintf(stderr, "Deltifying %u objects.\n", nr_result);
+ 
+-	while (--i >= 0) {
+-		struct object_entry *entry = list[i];
++	do {
++		struct object_entry *entry = list[--i];
+ 		struct unpacked *n = array + idx;
+ 		int j;
+ 
+@@ -1325,7 +1322,7 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 
+ 		j = window;
+ 		while (--j > 0) {
+-			unsigned int other_idx = idx + j;
++			uint32_t other_idx = idx + j;
+ 			struct unpacked *m;
+ 			if (other_idx >= window)
+ 				other_idx -= window;
+@@ -1345,7 +1342,7 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 		idx++;
+ 		if (idx >= window)
+ 			idx = 0;
+-	}
++	} while (i > 0);
+ 
+ 	if (progress)
+ 		fputc('\n', stderr);
+@@ -1386,7 +1383,7 @@ static int reuse_cached_pack(unsigned char *sha1)
+ 	}
+ 
+ 	if (progress)
+-		fprintf(stderr, "Reusing %d objects pack %s\n", nr_objects,
++		fprintf(stderr, "Reusing %u objects pack %s\n", nr_objects,
+ 			sha1_to_hex(sha1));
+ 
+ 	if (pack_to_stdout) {
+@@ -1537,7 +1534,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	struct object_entry **list;
+ 	int use_internal_rev_list = 0;
+ 	int thin = 0;
+-	int i;
++	uint32_t i;
+ 	const char **rp_av;
+ 	int rp_ac_alloc = 64;
+ 	int rp_ac;
+@@ -1670,7 +1667,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (progress)
+-		fprintf(stderr, "Done counting %d objects.\n", nr_objects);
++		fprintf(stderr, "Done counting %u objects.\n", nr_objects);
+ 	sorted_by_sha = create_final_object_list();
+ 	if (non_empty && !nr_result)
+ 		return 0;
+@@ -1683,7 +1680,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	}
+ 	SHA1_Final(object_list_sha1, &ctx);
+ 	if (progress && (nr_objects != nr_result))
+-		fprintf(stderr, "Result has %d objects.\n", nr_result);
++		fprintf(stderr, "Result has %u objects.\n", nr_result);
+ 
+ 	if (reuse_cached_pack(object_list_sha1))
+ 		;
+@@ -1704,7 +1701,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
  		}
-diff --git a/sha1_file.c b/sha1_file.c
-index 54ffa7c..50d800e 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -629,7 +629,7 @@ static int open_packed_git(struct packed_git *p)
- 	return -1;
- }
- 
--static int in_window(struct pack_window *win, unsigned long offset)
-+static int in_window(struct pack_window *win, off_t offset)
- {
- 	/* We must promise at least 20 bytes (one hash) after the
- 	 * offset is available from this window, otherwise the offset
-@@ -644,7 +644,7 @@ static int in_window(struct pack_window *win, unsigned long offset)
- 
- unsigned char* use_pack(struct packed_git *p,
- 		struct pack_window **w_cursor,
--		unsigned long offset,
-+		off_t offset,
- 		unsigned int *left)
- {
- 	struct pack_window *win = *w_cursor;
-@@ -1049,14 +1049,14 @@ void * unpack_sha1_file(void *map, unsigned long mapsize, enum object_type *type
- 	return unpack_sha1_rest(&stream, hdr, *size);
- }
- 
--static unsigned long get_delta_base(struct packed_git *p,
-+static off_t get_delta_base(struct packed_git *p,
- 				    struct pack_window **w_curs,
--				    unsigned long *curpos,
-+				    off_t *curpos,
- 				    enum object_type type,
--				    unsigned long delta_obj_offset)
-+				    off_t delta_obj_offset)
- {
- 	unsigned char *base_info = use_pack(p, w_curs, *curpos, NULL);
--	unsigned long base_offset;
-+	off_t base_offset;
- 
- 	/* use_pack() assured us we have [base_info, base_info + 20)
- 	 * as a range that we can look at without walking off the
-@@ -1092,17 +1092,17 @@ static unsigned long get_delta_base(struct packed_git *p,
- }
- 
- /* forward declaration for a mutually recursive function */
--static int packed_object_info(struct packed_git *p, unsigned long offset,
-+static int packed_object_info(struct packed_git *p, off_t offset,
- 			      unsigned long *sizep);
- 
- static int packed_delta_info(struct packed_git *p,
- 			     struct pack_window **w_curs,
--			     unsigned long curpos,
-+			     off_t curpos,
- 			     enum object_type type,
--			     unsigned long obj_offset,
-+			     off_t obj_offset,
- 			     unsigned long *sizep)
- {
--	unsigned long base_offset;
-+	off_t base_offset;
- 
- 	base_offset = get_delta_base(p, w_curs, &curpos, type, obj_offset);
- 	type = packed_object_info(p, base_offset, NULL);
-@@ -1152,7 +1152,7 @@ static int packed_delta_info(struct packed_git *p,
- 
- static int unpack_object_header(struct packed_git *p,
- 				struct pack_window **w_curs,
--				unsigned long *curpos,
-+				off_t *curpos,
- 				unsigned long *sizep)
- {
- 	unsigned char *base;
-@@ -1176,14 +1176,15 @@ static int unpack_object_header(struct packed_git *p,
- }
- 
- const char *packed_object_info_detail(struct packed_git *p,
--				      unsigned long obj_offset,
-+				      off_t obj_offset,
- 				      unsigned long *size,
- 				      unsigned long *store_size,
- 				      unsigned int *delta_chain_length,
- 				      unsigned char *base_sha1)
- {
- 	struct pack_window *w_curs = NULL;
--	unsigned long curpos, dummy;
-+	off_t curpos;
-+	unsigned long dummy;
- 	unsigned char *next_sha1;
- 	enum object_type type;
- 
-@@ -1223,11 +1224,12 @@ const char *packed_object_info_detail(struct packed_git *p,
  	}
- }
- 
--static int packed_object_info(struct packed_git *p, unsigned long obj_offset,
-+static int packed_object_info(struct packed_git *p, off_t obj_offset,
- 			      unsigned long *sizep)
- {
- 	struct pack_window *w_curs = NULL;
--	unsigned long size, curpos = obj_offset;
-+	unsigned long size;
-+	off_t curpos = obj_offset;
- 	enum object_type type;
- 
- 	type = unpack_object_header(p, &w_curs, &curpos, &size);
-@@ -1255,7 +1257,7 @@ static int packed_object_info(struct packed_git *p, unsigned long obj_offset,
- 
- static void *unpack_compressed_entry(struct packed_git *p,
- 				    struct pack_window **w_curs,
--				    unsigned long curpos,
-+				    off_t curpos,
- 				    unsigned long size)
- {
- 	int st;
-@@ -1286,20 +1288,22 @@ static void *unpack_compressed_entry(struct packed_git *p,
- 
- static void *unpack_delta_entry(struct packed_git *p,
- 				struct pack_window **w_curs,
--				unsigned long curpos,
-+				off_t curpos,
- 				unsigned long delta_size,
--				unsigned long obj_offset,
-+				off_t obj_offset,
- 				enum object_type *type,
- 				unsigned long *sizep)
- {
- 	void *delta_data, *result, *base;
--	unsigned long base_size, base_offset;
-+	unsigned long base_size;
-+	off_t base_offset;
- 
- 	base_offset = get_delta_base(p, w_curs, &curpos, *type, obj_offset);
- 	base = unpack_entry(p, base_offset, type, &base_size);
- 	if (!base)
--		die("failed to read delta base object at %lu from %s",
--		    base_offset, p->pack_name);
-+		die("failed to read delta base object"
-+		    " at %"PRIuMAX" from %s",
-+		    (uintmax_t)base_offset, p->pack_name);
- 
- 	delta_data = unpack_compressed_entry(p, w_curs, curpos, delta_size);
- 	result = patch_delta(base, base_size,
-@@ -1312,11 +1316,11 @@ static void *unpack_delta_entry(struct packed_git *p,
- 	return result;
- }
- 
--void *unpack_entry(struct packed_git *p, unsigned long obj_offset,
-+void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 		   enum object_type *type, unsigned long *sizep)
- {
- 	struct pack_window *w_curs = NULL;
--	unsigned long curpos = obj_offset;
-+	off_t curpos = obj_offset;
- 	void *data;
- 
- 	*type = unpack_object_header(p, &w_curs, &curpos, sizep);
-@@ -1355,7 +1359,7 @@ int nth_packed_object_sha1(const struct packed_git *p, uint32_t n,
+ 	if (progress)
+-		fprintf(stderr, "Total %d (delta %d), reused %d (delta %d)\n",
++		fprintf(stderr, "Total %u (delta %u), reused %u (delta %u)\n",
+ 			written, written_delta, reused, reused_delta);
  	return 0;
  }
- 
--unsigned long find_pack_entry_one(const unsigned char *sha1,
-+off_t find_pack_entry_one(const unsigned char *sha1,
- 				  struct packed_git *p)
- {
- 	uint32_t *level1_ofs = p->index_base;
-@@ -1397,7 +1401,7 @@ static int matches_pack_name(struct packed_git *p, const char *ig)
- static int find_pack_entry(const unsigned char *sha1, struct pack_entry *e, const char **ignore_packed)
- {
- 	struct packed_git *p;
--	unsigned long offset;
-+	off_t offset;
- 
- 	prepare_packed_git();
- 
 -- 
 1.5.0.3.863.gf0989
