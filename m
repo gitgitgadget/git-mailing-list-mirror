@@ -1,91 +1,78 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: git's is_inside_git_dir too strict?
-Date: Wed, 7 Mar 2007 19:17:42 +0700
-Message-ID: <fcaeb9bf0703070417n5d3fb168jc7efd4642ad38c92@mail.gmail.com>
-References: <fcaeb9bf0703060741l7cbfd0f3ue443730176606db6@mail.gmail.com>
-	 <Pine.LNX.4.63.0703062232570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: [PATCH] t/t5515-fetch-merge-logic.sh: Add two more tests
+Date: Wed, 07 Mar 2007 13:18:59 +0100
+Message-ID: <87k5xt5jrg.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 07 13:17:48 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 07 13:18:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOv5Y-0001bA-8H
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 13:17:48 +0100
+	id 1HOv6c-00024x-Gl
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 13:18:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751224AbXCGMRo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Mar 2007 07:17:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751244AbXCGMRo
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 07:17:44 -0500
-Received: from wr-out-0506.google.com ([64.233.184.230]:44846 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751224AbXCGMRn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2007 07:17:43 -0500
-Received: by wr-out-0506.google.com with SMTP id 58so220461wri
-        for <git@vger.kernel.org>; Wed, 07 Mar 2007 04:17:42 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WZ2/2yJC1sW2ecDojjWo1a4rtc8f8Y20w9yFRGxJBBqeddhIu5oWZEsww4ZvBJScZUraMcKrAM4txPJg7VHS3Tv2vY3R3kQhobBtjF3NV+fMh+XTnPaIcEogY3vZ/Pneqy+tNUrSdLcVhDQvXhDAEBGa43okk/sbiux5hXI1SLs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JC8xqcY7GzSy1aZ9YOsC1SaJa7wyZ6KFNN7mdC/wBDRrvTGLQlLTqhTjbmEZLS+TeKDDP1n+fdkFKeKVvfEs8M8tybH2YFgDZpZkyYCssv6VQ9tj7e4GMsOMBjO80gmMBvoXQ0lMhDrtRFX+Grf62bedEbmKZrkbi6hCowgjIxU=
-Received: by 10.114.126.1 with SMTP id y1mr2132518wac.1173269862101;
-        Wed, 07 Mar 2007 04:17:42 -0800 (PST)
-Received: by 10.115.19.15 with HTTP; Wed, 7 Mar 2007 04:17:42 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.63.0703062232570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Content-Disposition: inline
+	id S1751216AbXCGMSv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Mar 2007 07:18:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbXCGMSv
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 07:18:51 -0500
+Received: from ifae-s0.ifae.es ([192.101.162.68]:40169 "EHLO ifae-s0.ifae.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751216AbXCGMSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2007 07:18:50 -0500
+Received: from bela (caronte.ifae.es [192.101.162.199])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l27CIlw29871
+	for <git@vger.kernel.org>; Wed, 7 Mar 2007 13:18:48 +0100
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.95 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41664>
-
-On 3/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Complaints include "cannot be used without a working tree" and "This
-> > operation must be run in a work tree". Can I have the former behaviour
-> > back in some ways?
->
-> Well, there is a real problem with "This operation must be run in a work
-> tree". What operation is that? We tried to make it hard to overwrite
-> things in $GIT_DIR by running Git operations meant for the working tree,
-> and it seems like you are running one of them.
-
->From this command:
-
-git --git-dir=/home/pclouds/blog/data.git ls-files --others --modified
-2007-03-07T18_52_41.txt
-
-It was run in /home/pclouds/blog/data, which is the working directory
-of data.git.
-
-By the way, is it plausible to add --git-workdir option to specify
-working directory? With that option, I won't need to chdir to the
-working directory, run git commands and chdir back.
-
->
-> However, I think that is_bare_repository() really should check if
-> $GIT_DIR is a prefix of $(pwd). Because if it is not, we are likely to run
-> in a detached work tree.
->
-> If you agree, then is_inside_git_dir() might actually be a better way to
-> ask if the repo is bare than is_bare_repository().
->
-> Comments?
-
-I didn't follow git development lately so I'm afraid I'm incapable to
-comment on this :-)
-
->
-> Ciao,
-> Dscho
->
->
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41665>
 
 
--- 
-Duy
+They test the behaviour with just a URL in the command line.
+
+Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
+---
+ t/t5515-fetch-merge-logic.sh      |    1 +
+ t/t5515/fetch.br-unconfig_.._.git |    2 ++
+ t/t5515/fetch.master_.._.git      |    2 ++
+ 3 files changed, 5 insertions(+), 0 deletions(-)
+ create mode 100644 t/t5515/fetch.br-unconfig_.._.git
+ create mode 100644 t/t5515/fetch.master_.._.git
+
+diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.s=
+h
+index 765c83f..0b600bb 100755
+--- a/t/t5515-fetch-merge-logic.sh
++++ b/t/t5515-fetch-merge-logic.sh
+@@ -114,6 +114,7 @@ done >> tests
+ # neither in the Pull: or .fetch config
+ for branch in master br-unconfig ; do
+     cat <<EOF
++$branch ../.git
+ $branch ../.git one
+ $branch ../.git one two
+ $branch --tags ../.git
+diff --git a/t/t5515/fetch.br-unconfig_.._.git b/t/t5515/fetch.br-uncon=
+fig_.._.git
+new file mode 100644
+index 0000000..284bb1f
+--- /dev/null
++++ b/t/t5515/fetch.br-unconfig_.._.git
+@@ -0,0 +1,2 @@
++# br-unconfig ../.git
++0567da4d5edd2ff4bb292a465ba9e64dcad9536b		../
+diff --git a/t/t5515/fetch.master_.._.git b/t/t5515/fetch.master_.._.gi=
+t
+new file mode 100644
+index 0000000..66d1aad
+--- /dev/null
++++ b/t/t5515/fetch.master_.._.git
+@@ -0,0 +1,2 @@
++# master ../.git
++0567da4d5edd2ff4bb292a465ba9e64dcad9536b		../
+--=20
+1.5.0.3.897.g91a70-dirty
