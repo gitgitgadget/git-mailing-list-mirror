@@ -1,61 +1,61 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: Re: [PATCH] Makefile: do not optimize when DEBUG=1
-Date: Wed, 07 Mar 2007 10:26:38 +0100
-Organization: eudaptics software gmbh
-Message-ID: <45EE854E.210EDAFF@eudaptics.com>
-References: <Pine.LNX.4.63.0703062249540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH, 2nd version] git-archimport: allow remapping branch names
+Date: Wed, 07 Mar 2007 01:33:35 -0800
+Message-ID: <7vwt1tfle8.fsf@assigned-by-dhcp.cox.net>
+References: <eslrcr$9rc$1@sea.gmane.org>
+	<7vodn5iiew.fsf@assigned-by-dhcp.cox.net>
+	<45EE7442.6030308@lu.unisi.ch>
+	<7vlki9h1mg.fsf@assigned-by-dhcp.cox.net>
+	<45EE80B0.8010403@lu.unisi.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 07 10:24:30 2007
+Cc: git@vger.kernel.org
+To: bonzini@gnu.org
+X-From: git-owner@vger.kernel.org Wed Mar 07 10:34:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOsNp-0002wE-Bv
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 10:24:29 +0100
+	id 1HOsX2-000759-St
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 10:34:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422645AbXCGJYZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Mar 2007 04:24:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422652AbXCGJYZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 04:24:25 -0500
-Received: from main.gmane.org ([80.91.229.2]:41972 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422645AbXCGJYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2007 04:24:24 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HOsNb-0002VM-8M
-	for git@vger.kernel.org; Wed, 07 Mar 2007 10:24:15 +0100
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 Mar 2007 10:24:15 +0100
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 07 Mar 2007 10:24:15 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1422664AbXCGJdh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Mar 2007 04:33:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422663AbXCGJdh
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 04:33:37 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:51139 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422664AbXCGJdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2007 04:33:36 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070307093335.GNOU3546.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 7 Mar 2007 04:33:35 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id XlZb1W0091kojtg0000000; Wed, 07 Mar 2007 04:33:35 -0500
+In-Reply-To: <45EE80B0.8010403@lu.unisi.ch> (Paolo Bonzini's message of "Wed,
+	07 Mar 2007 10:06:56 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41661>
 
-Johannes Schindelin wrote:
-> You can do that now by removing just the object files containing the
-> code you want to debug, and saying "make DEBUG=1".
-> [...]
-> -CFLAGS = -g -O2 -Wall
-> +CFLAGS = -g -Wall
-> +ifndef DEBUG
-> +       CFLAGS += -O2
-> +endif
+Paolo Bonzini <paolo.bonzini@lu.unisi.ch> writes:
 
-I think the shortcut to remove just the interesting object file does not
-work because Makefile notices (the GIT-CFLAGS rule) that there are "new
-flags or prefix", and so recompiles everything.
+>> Just to make sure.  Was it tested with AND WITHOUT the new colon
+>> feature?  I am asking how likely is there a regression.
+>
+> Yes.  But my Arch repositories do not have colons in the name (I mean I tested on real-world repositories and not weird ones created exactly to make the patch fail).
 
--- Hannes
+That's fine.
+
+> In this case, this input will always be of the form t--a/g--REVISION.
+>
+> So the old one would change to t--a,g--REVISION; the new one would
+> strip to t--a/g and convert it to t--a,g (using git_default_branchname)
+> and file tack --REVISION at the end again.
+
+Ah, thanks.
