@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git push failure with update hook success
-Date: Wed, 7 Mar 2007 18:09:48 -0500
-Message-ID: <20070307230948.GE27922@spearce.org>
-References: <17902.59497.831409.218529@lisa.zopyra.com> <17902.60536.5890.608883@lisa.zopyra.com> <20070307170904.GB27922@spearce.org> <17902.62836.920473.810183@lisa.zopyra.com>
+Subject: Re: mercurial to git
+Date: Wed, 7 Mar 2007 18:14:21 -0500
+Message-ID: <20070307231421.GF27922@spearce.org>
+References: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 00:10:02 2007
+To: Rocco Rutte <pdmef@gmx.net>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 00:14:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HP5Gj-0000Tc-NE
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 00:10:02 +0100
+	id 1HP5LH-0002ck-V1
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 00:14:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965505AbXCGXJz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Mar 2007 18:09:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965731AbXCGXJz
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 18:09:55 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:56497 "EHLO
+	id S2992718AbXCGXO3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Mar 2007 18:14:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992722AbXCGXO3
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 18:14:29 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56655 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965714AbXCGXJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2007 18:09:52 -0500
+	with ESMTP id S2992719AbXCGXO1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2007 18:14:27 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HP5GP-0006N0-7y; Wed, 07 Mar 2007 18:09:41 -0500
+	id 1HP5Kn-0006o3-WC; Wed, 07 Mar 2007 18:14:14 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id EE50120FBAE; Wed,  7 Mar 2007 18:09:48 -0500 (EST)
+	id E7B2E20FBAE; Wed,  7 Mar 2007 18:14:21 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <17902.62836.920473.810183@lisa.zopyra.com>
+In-Reply-To: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -43,19 +43,36 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41700>
 
-Bill Lear <rael@zopyra.com> wrote:
-> Since it just gets the ref name, would one (of sufficient skill) be
-> able to reconstruct the same sort of report that the "pre" update hook
-> does?  That is, from the ref name can I get the old SHA-1?  If I try
-> to write this, what I think I would like to do is just call the
-> existing update hook from the post-update hook, with the post update
-> hook figuring out the proper arguments to pass along.
+Rocco Rutte <pdmef@gmx.net> wrote:
+> Somewhat related: It would be really nice to teach git-fast-import to 
+> init from a previously saved mark file. Right now I use hg revision 
+> numbers as marks, let git-fast-import save them, and read them back next 
+> time. These are needed to map hg revisions to git SHA1s in case I need 
+> to reference something in an incremental import from an earlier run. It 
+> would be nice if git-fast-import could do this on its own so that all 
+> consumers can benefit and can have persistent marks accross sessions.
 
-For what its worth, the receive-pack patch series that I posted a
-few hours ago creates a new post-receive hook that would be suitable
-for generating the report you are looking for.
+Done.  See the new --import-marks option.
+
+The following changes since commit c390ae97beb9e8cdab159b593ea9659e8096c4db:
+  Li Yang (1):
+        gitweb: Change to use explicitly function call cgi->escapHTML()
+
+are found in the git repository at:
+
+  git://repo.or.cz:/git/fastimport.git
+
+Shawn O. Pearce (3):
+      Preallocate memory earlier in fast-import
+      Use atomic updates to the fast-import mark file
+      Allow fast-import frontends to reload the marks table
+
+ Documentation/git-fast-import.txt |   13 +++++-
+ fast-import.c                     |   85 +++++++++++++++++++++++++++++-------
+ t/t9300-fast-import.sh            |    8 ++++
+ 3 files changed, 88 insertions(+), 18 deletions(-)
 
 -- 
 Shawn.
