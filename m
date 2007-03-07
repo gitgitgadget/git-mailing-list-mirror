@@ -1,85 +1,93 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Makefile: do not optimize when DEBUG=1
-Date: Wed, 7 Mar 2007 13:37:15 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703071319520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: [PATCH] Avoid rebuilding everything if user changes CFLAGS on the make 
+ command line
+Date: Wed, 07 Mar 2007 14:41:54 +0100
+Organization: eudaptics software gmbh
+Message-ID: <45EEC122.EA43CB72@eudaptics.com>
 References: <Pine.LNX.4.63.0703062249540.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45EE854E.210EDAFF@eudaptics.com>
+	 <45EE854E.210EDAFF@eudaptics.com> <Pine.LNX.4.63.0703071319520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Sixt <J.Sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 13:37:41 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 07 14:39:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOvOl-00029U-AK
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 13:37:39 +0100
+	id 1HOwMc-00046Q-Ir
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 14:39:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751299AbXCGMhV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Mar 2007 07:37:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965143AbXCGMhU
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 07:37:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41854 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965133AbXCGMhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2007 07:37:17 -0500
-Received: (qmail invoked by alias); 07 Mar 2007 12:37:16 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 07 Mar 2007 13:37:16 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+JM01cCw+JS7i+C3Gp4W3HGGVWrx1wfP9V+JCnt1
-	NzSLeaWLu1duxt
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45EE854E.210EDAFF@eudaptics.com>
-X-Y-GMX-Trusted: 0
+	id S965454AbXCGNjY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Mar 2007 08:39:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965468AbXCGNjY
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 08:39:24 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160]:21304 "EHLO
+	linz.eudaptics.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965454AbXCGNjY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2007 08:39:24 -0500
+Received: from eudaptics.com (tethys.linz.eudaptics [192.168.1.88])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 18E5054D; Wed,  7 Mar 2007 14:39:21 +0100 (CET)
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41668>
 
-Hi,
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-On Wed, 7 Mar 2007, Johannes Sixt wrote:
+The following sequence of commands is commonly used to recompile
+selected files with different flags, for example, to change the debug
+information:
 
-> Johannes Schindelin wrote:
-> > You can do that now by removing just the object files containing the
-> > code you want to debug, and saying "make DEBUG=1".
-> > [...]
-> > -CFLAGS = -g -O2 -Wall
-> > +CFLAGS = -g -Wall
-> > +ifndef DEBUG
-> > +       CFLAGS += -O2
-> > +endif
-> 
-> I think the shortcut to remove just the interesting object file does not 
-> work because Makefile notices (the GIT-CFLAGS rule) that there are "new 
-> flags or prefix", and so recompiles everything.
+   make
+   rm builtin-diff.o
+   make CFLAGS="-g -O0"
 
-That is unfortunatley true, and was hidden in my test by something 
-completely unrelated.
+However, the Makefile is clever enough to notice that the second 'make'
+invocation changes the build flags and rebuilds everything.
 
-I do something completely different now:
+This change exempts the value of CFLAGS (which is explicitly declared
+as reserved for the user to change from the command line) from this
+auto-detection.
 
-@@ -846,7 +841,8 @@ TRACK_CFLAGS = $(subst ','\'',$(ALL_CFLAGS)):\
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+Johannes Schindelin wrote:
+>  GIT-CFLAGS: .FORCE-GIT-CFLAGS
+>         @FLAGS='$(TRACK_CFLAGS)'; \
+> -           if test x"$$FLAGS" != x"`cat GIT-CFLAGS 2>/dev/null`" ; then \
+> +           if test x"$$FLAGS" != x"`cat GIT-CFLAGS 2>/dev/null`" -a \
+> +                   -z "$(IGNORE_GIT_CFLAGS)"; then \
+>                 echo 1>&2 "    * new build flags or prefix"; \
+>                 echo "$$FLAGS" >GIT-CFLAGS; \
+>              fi
+
+IMHO, the value of $(CFLAGS) (which the Makefile declares as "for the
+users to override from the command line") should never take part in this
+build-flags-change-autodetection.
+
+-- Hannes
+
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 9a37b15..8410530 100644
+--- a/Makefile
++++ b/Makefile
+@@ -812,7 +812,7 @@ tags:
+ 	find . -name '*.[hcS]' -print | xargs ctags -a
+ 
+ ### Detect prefix changes
+-TRACK_CFLAGS = $(subst ','\'',$(ALL_CFLAGS)):\
++TRACK_CFLAGS = $(subst ','\'',$(BASIC_CFLAGS)):\
+             
+$(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ)
  
  GIT-CFLAGS: .FORCE-GIT-CFLAGS
- 	@FLAGS='$(TRACK_CFLAGS)'; \
--	    if test x"$$FLAGS" != x"`cat GIT-CFLAGS 2>/dev/null`" ; then \
-+	    if test x"$$FLAGS" != x"`cat GIT-CFLAGS 2>/dev/null`" -a \
-+		    -z "$(IGNORE_GIT_CFLAGS)"; then \
- 		echo 1>&2 "    * new build flags or prefix"; \
- 		echo "$$FLAGS" >GIT-CFLAGS; \
-             fi
-
-... and in my config.mak, there is
-
-ifdef DEBUG
-	ALL_CFLAGS := $(filter-out -O2,$(ALL_CFLAGS))
-	IGNORE_GIT_CFLAGS = YesPlease
-endif
-
-I'm happy now.
-
-Ciao,
-Dscho
+-- 
+1.5.0.2.279.g4808
