@@ -1,65 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] make t8001 work on Mac OS X again
-Date: Tue, 06 Mar 2007 17:00:54 -0800
-Message-ID: <7vr6s1n9yx.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0703061557j1cade6f6k4577da5e447a4e2a@mail.gmail.com>
-	<20070307001410.GA26050@spearce.org>
-	<20070307004859.GA26262@spearce.org>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] git-bundle: fix pack generation.
+Date: Tue, 06 Mar 2007 20:15:46 -0500
+Message-ID: <45EE1242.8080405@gmail.com>
+References: <45ECEB40.4000907@gmail.com> <7vejo2stlw.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 07 02:00:59 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes.Schindelin@gmx.de, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Mar 07 02:15:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOkWZ-0004h8-5t
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 02:00:59 +0100
+	id 1HOkkx-0002hX-6m
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 02:15:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751320AbXCGBA4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 20:00:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751386AbXCGBA4
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 20:00:56 -0500
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:33868 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320AbXCGBAz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 20:00:55 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070307010055.YIAM26279.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 6 Mar 2007 20:00:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Xd0u1W00T1kojtg0000000; Tue, 06 Mar 2007 20:00:55 -0500
-In-Reply-To: <20070307004859.GA26262@spearce.org> (Shawn O. Pearce's message
-	of "Tue, 6 Mar 2007 19:48:59 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161089AbXCGBPq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 20:15:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161091AbXCGBPp
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 20:15:45 -0500
+Received: from wx-out-0506.google.com ([66.249.82.239]:19049 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161089AbXCGBPo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 20:15:44 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so77wxd
+        for <git@vger.kernel.org>; Tue, 06 Mar 2007 17:15:44 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=QptlYLlI/qJMAP7SZ2fLPu57dckYaJgiBIR1NMzc8Fhs/HmI7sTC/HGa1hmoLL/KWqFBuDV+NRr4fV/ETqOqyh3xF3TDsQxK2H1/8SEKAGSiSCl1hejE0zRMiy0UhTnI/RddOk/QhZ4hOt7OyQh2sLdM2ZZNxeljGs/gLxaEsCo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=kVLlN57ZhnRyhq03df0uhC19GAmzD2pl9iFFuN/WN5mggr4gUN59dif/6zL3PL9zU2WyswGfDGy6rkYwj0d4+obTfKLfUZ9r5J+3UBR6QPi7tM0vvCcptpO+z0axVgrrSKXVISwbslFIzbIuQYWA4Iq/ss87rj6Xl+hd9o1aYY8=
+Received: by 10.90.56.14 with SMTP id e14mr6603687aga.1173230144210;
+        Tue, 06 Mar 2007 17:15:44 -0800 (PST)
+Received: from ?192.168.100.117? ( [71.246.235.75])
+        by mx.google.com with ESMTP id g3sm12234428wra.2007.03.06.17.15.43;
+        Tue, 06 Mar 2007 17:15:43 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <7vejo2stlw.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41631>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano wrote:
+> The handcrafted built-in rev-list lookalike forgot to mark the trees
+> and blobs contained in the boundary commits uninteresting, resulting
+> in unnecessary objects in the pack.
+>
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+>   
+This works for things like  master~1..master, but fails on git bundle 
+create t.bdl  master --since=1.day.ago.
+Apparently the boundary commits marked with a date are not being honored 
+in creating a pack.
 
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->
-> It has a broken sed which adds a newline to the last line, if it does
-> not end with one.
->
-> Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Acked-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
->
-> 	From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> 	> Does this work for you?
->
-> 	Yes.  ;-)
-
-Thanks. Strictly speaking, sed is *supposed* to end its output
-of pattern space with newline, so the test is at fault, not
-Macintosh sed.
-
-Will apply.
+Mark
