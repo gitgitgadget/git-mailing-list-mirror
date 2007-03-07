@@ -1,57 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Mark Levedahl <mlevedahl@gmail.com>
 Subject: Re: [PATCH] git-bundle: fix pack generation.
-Date: Tue, 06 Mar 2007 19:01:44 -0800
-Message-ID: <7vhcsxkb8n.fsf@assigned-by-dhcp.cox.net>
-References: <45ECEB40.4000907@gmail.com>
-	<7vejo2stlw.fsf@assigned-by-dhcp.cox.net> <45EE1242.8080405@gmail.com>
+Date: Tue, 06 Mar 2007 22:17:30 -0500
+Message-ID: <45EE2ECA.60403@gmail.com>
+References: <45ECEB40.4000907@gmail.com>	<7vejo2stlw.fsf@assigned-by-dhcp.cox.net> <45EE1242.8080405@gmail.com> <7vhcsxkb8n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Johannes.Schindelin@gmx.de, Git Mailing List <git@vger.kernel.org>
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 07 04:01:53 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Mar 07 04:17:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOmPZ-0004V5-4r
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 04:01:53 +0100
+	id 1HOmek-00020D-8b
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 04:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161331AbXCGDBq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 22:01:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161355AbXCGDBq
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 22:01:46 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52249 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161331AbXCGDBp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 22:01:45 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070307030146.NRGB1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 6 Mar 2007 22:01:46 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Xf1k1W00w1kojtg0000000; Tue, 06 Mar 2007 22:01:45 -0500
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030782AbXCGDRb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 22:17:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030783AbXCGDRb
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 22:17:31 -0500
+Received: from wx-out-0506.google.com ([66.249.82.232]:9661 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030782AbXCGDRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 22:17:30 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so24745wxd
+        for <git@vger.kernel.org>; Tue, 06 Mar 2007 19:17:29 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=OpGtAiJSPL8VKS3lpKFITjsGYflbB8qjKJe3XobRjXBzYTpBBNEPdpZqDI5hnbdmdcJd9szT12qX3KuoZ8h1EPPQ8CHfJf7oFDNx39qCw3oHAM0icXvESFk1D264+bRMj/jsR3+Ezm6vvQwMASILRTaSwlPtSxx6vetRhim1+E4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=laL+Hok/2aa43BXucTrwmJwYdPk7oX0m5lM3fJHvV6kIpVOkcXZz/8PzMTVp/3bAf1qvWdJWhLUkky1/T8300f1QFN3U0SmRQtDMd3xRH4/S7t361wJqGpawdeuSe3UR5dbN9T29njoGDfEbp4p50E4TKtLZQA9FLJ5cEUcSXfY=
+Received: by 10.70.67.10 with SMTP id p10mr9171535wxa.1173237449703;
+        Tue, 06 Mar 2007 19:17:29 -0800 (PST)
+Received: from ?192.168.100.117? ( [71.246.235.75])
+        by mx.google.com with ESMTP id i33sm168145wxd.2007.03.06.19.17.28;
+        Tue, 06 Mar 2007 19:17:29 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <7vhcsxkb8n.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41646>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+Junio C Hamano wrote:
+> That one is caused by the broken revision traversal in 'master'
+> and being worked on in 'next'.  Care to try the one from 'next'
+> instead?
+using next as just pulled from kernel.org 
+(09890a9bce0bc27182bc1f74a34b53) ...
 
-> Junio C Hamano wrote:
->> The handcrafted built-in rev-list lookalike forgot to mark the trees
->> and blobs contained in the boundary commits uninteresting, resulting
->> in unnecessary objects in the pack.
->>
->> Signed-off-by: Junio C Hamano <junkio@cox.net>
->>
-> This works for things like  master~1..master, but fails on git bundle
-> create t.bdl  master --since=1.day.ago.
-> Apparently the boundary commits marked with a date are not being
-> honored in creating a pack.
+git>git bundle create test.bdl HEAD~1..HEAD
+error: rev-list died 255
 
-That one is caused by the broken revision traversal in 'master'
-and being worked on in 'next'.  Care to try the one from 'next'
-instead?
+I have not found any  rev-args set that avoids that error.
+
+Mark
