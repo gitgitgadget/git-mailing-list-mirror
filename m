@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 1/9] Display the null SHA-1 as the base for an OBJ_OFS_DELTA.
-Date: Tue, 6 Mar 2007 20:44:08 -0500
-Message-ID: <20070307014408.GB26482@spearce.org>
+Subject: [PATCH 0/9] misc. cleanups
+Date: Tue, 6 Mar 2007 20:44:04 -0500
+Message-ID: <20070307014403.GA26482@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 07 02:46:06 2007
+X-From: git-owner@vger.kernel.org Wed Mar 07 02:46:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOlED-00070d-IN
+	id 1HOlED-00070d-0L
 	for gcvg-git@gmane.org; Wed, 07 Mar 2007 02:46:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161182AbXCGBoX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 6 Mar 2007 20:44:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161179AbXCGBoW
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 20:44:22 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:49194 "EHLO
+	id S1161158AbXCGBoW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 6 Mar 2007 20:44:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161184AbXCGBoT
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Mar 2007 20:44:19 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49190 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161158AbXCGBoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Mar 2007 20:44:12 -0500
+	with ESMTP id S1161175AbXCGBoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Mar 2007 20:44:09 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HOlCB-0003oZ-1m; Tue, 06 Mar 2007 20:43:59 -0500
+	id 1HOlC8-0003oR-1p; Tue, 06 Mar 2007 20:43:56 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 56C4E20FBAE; Tue,  6 Mar 2007 20:44:08 -0500 (EST)
+	id C3EE220FBAE; Tue,  6 Mar 2007 20:44:04 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -41,30 +41,39 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41636>
 
-Because we are currently cheating and never supplying the delta base
-for an OBJ_OFS_DELTA we get a random SHA-1 in the delta base field.
-Instead lets clear the hash out so its at least all 0's.  This is
-somewhat more obvious that something fishy is going on, like we
-don't actually have the SHA-1 of the base handy.  :)
+This is a series of various cleanups that I have pending at the
+front of my pack v4 topic.  The earlier ones are annoying nits,
+the later ones fix compiler errors caused by compiling with:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- sha1_file.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+--snip--
+  CFLAGS += -Wall -ansi -pedantic -std=c99
+  
+  ifdef strict
+          CFLAGS += -Werror
+          CFLAGS += -Wfour-char-constants
+          CFLAGS += -fnon-lvalue-assign
+          CFLAGS += -Wdeclaration-after-statement
+          CFLAGS += -Wpointer-arith
+          CFLAGS += -Wbad-function-cast
+          CFLAGS += -Wcast-align
+          CFLAGS += -Wwrite-strings
+          CFLAGS += -Wshorten-64-to-32
+  
+          # No, currently a huge set.
+          #CFLAGS += -Wsign-compare
+  
+          # No, only in diffcore-rename and that's ok.
+          #CFLAGS += -Wfloat-equal
+  
+          # No, unused parameters, -Wsign-compare, missing initializers.
+          # CFLAGS += -Wextra
+  
+          # No, memcmp trips on signed/unsigned conversion.
+          # CFLAGS += -Wconversion
+  endif
+--snap--
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 6d0a72e..c13ef66 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1200,6 +1200,7 @@ const char *packed_object_info_detail(struct packed_git *p,
- 			obj_offset = get_delta_base(p, &w_curs, &curpos, type, obj_offset);
- 			if (*delta_chain_length == 0) {
- 				/* TODO: find base_sha1 as pointed by curpos */
-+				hashclr(base_sha1);
- 			}
- 			break;
- 		case OBJ_REF_DELTA:
 -- 
-1.5.0.3.863.gf0989
+Shawn.
