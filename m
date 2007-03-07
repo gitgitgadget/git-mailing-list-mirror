@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 3/5] Refactor run_update_hook to be more useful
-Date: Wed, 7 Mar 2007 16:51:09 -0500
-Message-ID: <20070307215109.GC28649@spearce.org>
+Subject: [PATCH 4/5] Refactor handling of error_string in receive-pack
+Date: Wed, 7 Mar 2007 16:51:59 -0500
+Message-ID: <20070307215159.GD28649@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 07 22:51:49 2007
+X-From: git-owner@vger.kernel.org Wed Mar 07 22:52:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HP432-0004gg-7Z
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 22:51:48 +0100
+	id 1HP43O-0004qe-4S
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 22:52:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965684AbXCGVvP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Mar 2007 16:51:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992640AbXCGVvP
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 16:51:15 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53863 "EHLO
+	id S965686AbXCGVwG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Mar 2007 16:52:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965688AbXCGVwF
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 16:52:05 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:53898 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992634AbXCGVvN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2007 16:51:13 -0500
+	with ESMTP id S965686AbXCGVwE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2007 16:52:04 -0500
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HP42I-0003WZ-E1; Wed, 07 Mar 2007 16:51:02 -0500
+	id 1HP436-0003cB-9E; Wed, 07 Mar 2007 16:51:52 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A423920FBAE; Wed,  7 Mar 2007 16:51:09 -0500 (EST)
+	id 8AB3020FBAE; Wed,  7 Mar 2007 16:51:59 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -41,147 +41,180 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41694>
 
-This is a simple refactoring of run_update_hook to allow the function
-to be passed the name of the hook it runs and also to build the
-argument list from a list of struct commands, rather than just one
-struct command.
+I discovered we did not send an ng line in the report-status feedback
+if the ref was not updated because the repository has the config
+option receive.denyNonFastForwards enabled.  I think the reason this
+happened is that it is simply too easy to forget to set error_string
+when returning back a failure from update()
 
-The refactoring is to support new pre-receive and post-receive
-hooks that will be given the entire list of struct commands,
-rather than just one struct command.  These new hooks will follow
-in another patch.
+We now return an ng line for a non-fastforward update, which in
+turn will cause send-pack to exit with a non-zero exit status.
+Hence the modified test.
+
+This refactoring changes update to return a const char* describing
+the error, which execute_commands always loads into error_string.
+The result is what I think is cleaner code, and allows us to
+initialize the error_string member to NULL when we read_head_info.
+
+I want error_string to be NULL in all commands before we call
+execute_commands, so that we can reuse the run_hook function to
+execute a new pre-receive hook.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- receive-pack.c |   63 +++++++++++++++++++++++++++++++++++++++----------------
- 1 files changed, 44 insertions(+), 19 deletions(-)
+ receive-pack.c       |   62 ++++++++++++++++++++++++++-----------------------
+ t/t5400-send-pack.sh |    4 +-
+ 2 files changed, 35 insertions(+), 31 deletions(-)
 
 diff --git a/receive-pack.c b/receive-pack.c
-index e32e301..c55d905 100644
+index c55d905..ff746e7 100644
 --- a/receive-pack.c
 +++ b/receive-pack.c
-@@ -67,18 +67,45 @@ struct command {
- 
- static struct command *commands;
- 
--static char update_hook[] = "hooks/update";
-+static const char update_hook[] = "hooks/update";
- 
--static int run_update_hook(const char *refname,
--			   char *old_hex, char *new_hex)
-+static int run_hook(const char *hook_name,
-+	struct command *first_cmd,
-+	int single)
- {
--	int code;
-+	struct command *cmd;
-+	int argc, code;
-+	const char **argv;
-+
-+	for (argc = 0, cmd = first_cmd; cmd; cmd = cmd->next) {
-+		if (!cmd->error_string)
-+			argc += 3;
-+		if (single)
-+			break;
-+	}
- 
--	if (access(update_hook, X_OK) < 0)
-+	if (!argc || access(hook_name, X_OK) < 0)
- 		return 0;
--	code = run_command_opt(RUN_COMMAND_NO_STDIN
--		| RUN_COMMAND_STDOUT_TO_STDERR,
--		update_hook, refname, old_hex, new_hex, NULL);
-+
-+	argv = xmalloc(sizeof(*argv) * (2 + argc));
-+	argv[0] = hook_name;
-+	for (argc = 1, cmd = first_cmd; cmd; cmd = cmd->next) {
-+		if (!cmd->error_string) {
-+			argv[argc++] = xstrdup(cmd->ref_name);
-+			argv[argc++] = xstrdup(sha1_to_hex(cmd->old_sha1));
-+			argv[argc++] = xstrdup(sha1_to_hex(cmd->new_sha1));
-+		}
-+		if (single)
-+			break;
-+	}
-+	argv[argc] = NULL;
-+
-+	code = run_command_v_opt(argv,
-+		RUN_COMMAND_NO_STDIN | RUN_COMMAND_STDOUT_TO_STDERR);
-+	while (--argc > 0)
-+		free((char*)argv[argc]);
-+	free(argv);
-+
- 	switch (code) {
- 	case 0:
- 		return 0;
-@@ -91,11 +118,11 @@ static int run_update_hook(const char *refname,
- 	case -ERR_RUN_COMMAND_WAITPID_WRONG_PID:
- 		return error("waitpid is confused");
- 	case -ERR_RUN_COMMAND_WAITPID_SIGNAL:
--		return error("%s died of signal", update_hook);
-+		return error("%s died of signal", hook_name);
- 	case -ERR_RUN_COMMAND_WAITPID_NOEXIT:
--		return error("%s died strangely", update_hook);
-+		return error("%s died strangely", hook_name);
- 	default:
--		error("%s exited with error code %d", update_hook, -code);
-+		error("%s exited with error code %d", hook_name, -code);
- 		return -code;
+@@ -127,24 +127,22 @@ static int run_hook(const char *hook_name,
  	}
  }
-@@ -105,7 +132,6 @@ static int update(struct command *cmd)
+ 
+-static int update(struct command *cmd)
++static const char *update(struct command *cmd)
+ {
  	const char *name = cmd->ref_name;
  	unsigned char *old_sha1 = cmd->old_sha1;
  	unsigned char *new_sha1 = cmd->new_sha1;
--	char new_hex[41], old_hex[41];
  	struct ref_lock *lock;
  
- 	cmd->error_string = NULL;
-@@ -115,13 +141,10 @@ static int update(struct command *cmd)
- 			     name);
+-	cmd->error_string = NULL;
+ 	if (!prefixcmp(name, "refs/") && check_ref_format(name + 5)) {
+-		cmd->error_string = "funny refname";
+-		return error("refusing to create funny ref '%s' locally",
+-			     name);
++		error("refusing to create funny ref '%s' locally", name);
++		return "funny refname";
  	}
  
--	strcpy(new_hex, sha1_to_hex(new_sha1));
--	strcpy(old_hex, sha1_to_hex(old_sha1));
--
  	if (!is_null_sha1(new_sha1) && !has_sha1_file(new_sha1)) {
- 		cmd->error_string = "bad pack";
- 		return error("unpack should have generated %s, "
--			     "but I can't find it!", new_hex);
-+			     "but I can't find it!", sha1_to_hex(new_sha1));
+-		cmd->error_string = "bad pack";
+-		return error("unpack should have generated %s, "
+-			     "but I can't find it!", sha1_to_hex(new_sha1));
++		error("unpack should have generated %s, "
++		      "but I can't find it!", sha1_to_hex(new_sha1));
++		return "bad pack";
  	}
  	if (deny_non_fast_forwards && !is_null_sha1(new_sha1) &&
  	    !is_null_sha1(old_sha1) &&
-@@ -140,7 +163,7 @@ static int update(struct command *cmd)
- 			return error("denying non-fast forward;"
- 				     " you should pull first");
+@@ -159,37 +157,39 @@ static int update(struct command *cmd)
+ 			if (!hashcmp(old_sha1, ent->item->object.sha1))
+ 				break;
+ 		free_commit_list(bases);
+-		if (!ent)
+-			return error("denying non-fast forward;"
+-				     " you should pull first");
++		if (!ent) {
++			error("denying non-fast forward %s"
++			      " (you should pull first)", name);
++			return "non-fast forward";
++		}
  	}
--	if (run_update_hook(name, old_hex, new_hex)) {
-+	if (run_hook(update_hook, cmd, 1)) {
- 		cmd->error_string = "hook declined";
- 		return error("hook declined to update %s", name);
+ 	if (run_hook(update_hook, cmd, 1)) {
+-		cmd->error_string = "hook declined";
+-		return error("hook declined to update %s", name);
++		error("hook declined to update %s", name);
++		return "hook declined";
  	}
-@@ -150,7 +173,8 @@ static int update(struct command *cmd)
- 			cmd->error_string = "failed to delete";
- 			return error("failed to delete %s", name);
+ 
+ 	if (is_null_sha1(new_sha1)) {
+ 		if (delete_ref(name, old_sha1)) {
+-			cmd->error_string = "failed to delete";
+-			return error("failed to delete %s", name);
++			error("failed to delete %s", name);
++			return "failed to delete";
  		}
--		fprintf(stderr, "%s: %s -> deleted\n", name, old_hex);
-+		fprintf(stderr, "%s: %s -> deleted\n", name,
-+			sha1_to_hex(old_sha1));
+ 		fprintf(stderr, "%s: %s -> deleted\n", name,
+ 			sha1_to_hex(old_sha1));
++		return NULL; /* good */
  	}
  	else {
  		lock = lock_any_ref_for_update(name, old_sha1);
-@@ -162,7 +186,8 @@ static int update(struct command *cmd)
- 			cmd->error_string = "failed to write";
- 			return -1; /* error() already called */
+ 		if (!lock) {
+-			cmd->error_string = "failed to lock";
+-			return error("failed to lock %s", name);
++			error("failed to lock %s", name);
++			return "failed to lock";
  		}
--		fprintf(stderr, "%s: %s -> %s\n", name, old_hex, new_hex);
-+		fprintf(stderr, "%s: %s -> %s\n", name,
-+			sha1_to_hex(old_sha1), sha1_to_hex(new_sha1));
+ 		if (write_ref_sha1(lock, new_sha1, "push")) {
+-			cmd->error_string = "failed to write";
+-			return -1; /* error() already called */
++			return "failed to write"; /* error() already called */
+ 		}
+ 		fprintf(stderr, "%s: %s -> %s\n", name,
+ 			sha1_to_hex(old_sha1), sha1_to_hex(new_sha1));
++		return NULL; /* good */
  	}
- 	return 0;
+-	return 0;
  }
+ 
+ static char update_post_hook[] = "hooks/post-update";
+@@ -224,15 +224,20 @@ static void run_update_post_hook(struct command *cmd)
+ 		| RUN_COMMAND_STDOUT_TO_STDERR);
+ }
+ 
+-/*
+- * This gets called after(if) we've successfully
+- * unpacked the data payload.
+- */
+-static void execute_commands(void)
++static void execute_commands(const char *unpacker_error)
+ {
+ 	struct command *cmd = commands;
++
++	if (unpacker_error) {
++		while (cmd) {
++			cmd->error_string = "n/a (unpacker error)";
++			cmd = cmd->next;
++		}
++		return;
++	}
++
+ 	while (cmd) {
+-		update(cmd);
++		cmd->error_string = update(cmd);
+ 		cmd = cmd->next;
+ 	}
+ }
+@@ -270,7 +275,7 @@ static void read_head_info(void)
+ 		hashcpy(cmd->old_sha1, old_sha1);
+ 		hashcpy(cmd->new_sha1, new_sha1);
+ 		memcpy(cmd->ref_name, line + 82, len - 81);
+-		cmd->error_string = "n/a (unpacker error)";
++		cmd->error_string = NULL;
+ 		cmd->next = NULL;
+ 		*p = cmd;
+ 		p = &cmd->next;
+@@ -473,8 +478,7 @@ int main(int argc, char **argv)
+ 
+ 		if (!delete_only(commands))
+ 			unpack_status = unpack();
+-		if (!unpack_status)
+-			execute_commands();
++		execute_commands(unpack_status);
+ 		if (pack_lockfile)
+ 			unlink(pack_lockfile);
+ 		if (report_status)
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index fc4a126..477b267 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -108,8 +108,8 @@ test_expect_success \
+ 	cd victim &&
+ 	git-config receive.denyNonFastforwards true &&
+ 	cd .. &&
+-	git-update-ref refs/heads/master master^ &&
+-	git-send-pack --force ./victim/.git/ master &&
++	git-update-ref refs/heads/master master^ || return 1
++	git-send-pack --force ./victim/.git/ master && return 1
+ 	! git diff .git/refs/heads/master victim/.git/refs/heads/master
+ '
+ 
 -- 
 1.5.0.3.895.g09890
