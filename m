@@ -1,56 +1,67 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Git push failure with update hook success
-Date: Wed, 7 Mar 2007 10:29:29 -0600
-Message-ID: <17902.59497.831409.218529@lisa.zopyra.com>
+From: "Mark Levedahl" <mlevedahl@gmail.com>
+Subject: Re: [PATCH] git-bundle: fix pack generation.
+Date: Wed, 7 Mar 2007 11:34:15 -0500
+Message-ID: <30e4a070703070834s3dd5bdd7x2e1639aa2979d1cf@mail.gmail.com>
+References: <45ECEB40.4000907@gmail.com>
+	 <7vejo2stlw.fsf@assigned-by-dhcp.cox.net> <45EE1242.8080405@gmail.com>
+	 <7vhcsxkb8n.fsf@assigned-by-dhcp.cox.net> <45EE2ECA.60403@gmail.com>
+	 <Pine.LNX.4.63.0703070419410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <45EE36A1.30001@gmail.com>
+	 <Pine.LNX.4.63.0703070504140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 07 17:29:50 2007
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 07 17:34:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HOz1H-0005q8-RG
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 17:29:40 +0100
+	id 1HOz5x-0007mJ-PF
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 17:34:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751078AbXCGQ3g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Mar 2007 11:29:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751081AbXCGQ3g
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 11:29:36 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60754 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751078AbXCGQ3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2007 11:29:35 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l27GTXO13831;
-	Wed, 7 Mar 2007 10:29:33 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S965153AbXCGQeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Mar 2007 11:34:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965180AbXCGQeX
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 11:34:23 -0500
+Received: from mu-out-0910.google.com ([209.85.134.191]:38663 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965153AbXCGQeW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2007 11:34:22 -0500
+Received: by mu-out-0910.google.com with SMTP id g7so236279muf
+        for <git@vger.kernel.org>; Wed, 07 Mar 2007 08:34:20 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HM2vPWmL2iHBvw00iS5yyh1QH0VkpKFB1WsGNLWGRJoqWPVLSIZJExW+FkFr9UO4wKjCdmNjBs0dUDoHOzizRiLdv9I5vn+yKaGvUG9zGyG1BmkPseiDQFHq/xLC8o4l8xqXEQ/bYavH0AjdXg1eumeArVxmbZgiHyDjLDFaiK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OWM0nhsUC+arWzNYbEJllsowjFPW/xppU3HkdvzPiBdbpDI3R4FkhTut6v3cKFfr6ZFA+nXHHCwRJPMJiWsfjElvd6CrG8yUD6pBb4V+goSBnxa/KCqKCAObtJ93preOMD4Yn27iviaeBQZJSgxo5sYCE729501L3pVHbcgj/wY=
+Received: by 10.82.177.3 with SMTP id z3mr9506436bue.1173285260570;
+        Wed, 07 Mar 2007 08:34:20 -0800 (PST)
+Received: by 10.82.186.1 with HTTP; Wed, 7 Mar 2007 08:34:15 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.63.0703070504140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41674>
 
-We seem to have a few permission problems using git through ssh that
-we hopefully will resolve.  However, in the course of this, we have
-noticed that our update hook runs with no errors, sends out a
-confirmation email, but the push to our repo fails (we found that the
-log file had improper permissions due to umask botchitude).
+On 3/6/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> >
+> > git-bundle create test.bdl HEAD --since=1.day.ago  ==>> pack with 1531
+> > objects
+>
+> Did you test with "--since=1.day.ago HEAD", i.e. with the correct order? I
+> know you'd like the options to be interminglable, but "HEAD" really is not
+> an option, but an argument.
+>
 
-So, I surmised that the rough order of things is on our git company
-repo is:
+Changing the order of arguments makes no difference, same result either way.
 
-o receive the git "package" from the person who is pushing it
-o call the update hook, telling it the package that is coming in
-o the update hook examines things, forms an email, and sends it out
-o the rest of the git machinery then actually applies the changes,
-  logs them, etc., but fails (after the email is long gone), and
-  on the remote (client) side, the push fails.
-o the user gets a confirmation email that the push went ok
-
-So, I was wondering if this is correct (more or less) and if so
-whether it might be better to call the update hook after everything
-had actually been written, including the log file.
-
-
-Bill
+Mark
