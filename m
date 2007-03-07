@@ -1,67 +1,59 @@
-From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
-Subject: Re: pcre performance, was Re: git log filtering
-Date: Wed, 07 Mar 2007 19:03:32 +0100
-Message-ID: <45EEFE74.1090309@lu.unisi.ch>
-References: <68948ca0702070841m76817d9el7ce2ec69835c50e@mail.gmail.com> <Pine.LNX.4.64.0702070856190.8424@woody.linux-foundation.org> <Pine.LNX.4.63.0702071822430.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v64ad7l12.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071257490.8424@woody.linux-foundation.org> <7vps8l65fh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0702071334060.8424@woody.linux-foundation.org> <20070208061654.GA8813@coredump.intra.peff.net> <Pine.LNX.4.63.0703071807250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Reply-To: bonzini@gnu.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Support of "make -s" in git-gui: do not output anything of the build itself
+Date: Wed, 07 Mar 2007 10:07:46 -0800
+Message-ID: <7v8xe9exl9.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0703061557j1cade6f6k4577da5e447a4e2a@mail.gmail.com>
+	<20070307001410.GA26050@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Mar 07 19:06:25 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 07 19:08:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HP0Wc-0004Ts-S1
-	for gcvg-git@gmane.org; Wed, 07 Mar 2007 19:06:07 +0100
+	id 1HP0Yu-0005ed-M5
+	for gcvg-git@gmane.org; Wed, 07 Mar 2007 19:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422973AbXCGSDy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 7 Mar 2007 13:03:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422972AbXCGSDx
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 13:03:53 -0500
-Received: from server.usilu.net ([195.176.178.200]:54557 "EHLO mail.usilu.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1422982AbXCGSDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2007 13:03:42 -0500
-Received: from [1.240.182.245] ([213.140.22.65] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 7 Mar 2007 19:03:38 +0100
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
-In-Reply-To: <Pine.LNX.4.63.0703071807250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-OriginalArrivalTime: 07 Mar 2007 18:03:38.0309 (UTC) FILETIME=[EE785F50:01C760E2]
+	id S1422976AbXCGSHu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Mar 2007 13:07:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422975AbXCGSHu
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 13:07:50 -0500
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:56097 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422976AbXCGSHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2007 13:07:48 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070307180748.SFUO2394.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 7 Mar 2007 13:07:48 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id Xu7m1W00Z1kojtg0000000; Wed, 07 Mar 2007 13:07:47 -0500
+In-Reply-To: <20070307001410.GA26050@spearce.org> (Shawn O. Pearce's message
+	of "Tue, 6 Mar 2007 19:14:10 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41686>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> Result: external grep wins hands-down. GNU regex loses hands-down. pc=
-re=20
-> seems to be better than glibc's regex engine, and gains ever so sligh=
-tly=20
-> when using NO_MMAP.
+> If it is alright with Alex, I'd like to hold off on merging git-gui
+> into git.git right now.  We just got gitgui-0.6.3 merged, and I'd
+> like to see at least one version of git ship with a stable tag from
+> git-gui, rather than an arbitrary commit.  ;-)
 
-Indeed GNU regex 0.12 loses, and that's why it was rewritten for (IIRC)
-glibc 2.3.  Older glibc's use code derived from GNU regex 0.12; but the
-old GNU regex code is dead in general (maybe it survives in Emacs -- bu=
-t
-I don't remember), and the glibc regex code can be used by external
-programs via gnulib.
+Well, I do not think these Makefile clean-ups deserve to be
+applied to 'maint'.  They are by definition not to have any
+effect on the build products (otherwise that is called a bug),
+so will not either fix nor improve the end user experience.
 
-glibc is slower than PCRE mostly because it is internationalized.  So
-for example it supports things like stra[.ss.]e matching both strasse
-and stra=DFe in a German locale, or [[=3Da=3D]] matching a=E0=E1=E4=E2 =
-and possibly
-more variations.  In theory.  In practice I couldn't make it work
-while writing this message...
-
-External grep wins hands-down because it's a DFA engine.  If the regex
-uses backreferences (or the above esoteric constructs), however, extern=
-al
-grep will not be able to give a definite answer using the fast engine,
-and will fall back to glibc regex.
-
-Paolo
+In 'maint', I try to have changes that fixes problems in the end
+user experience that exist in the corresponding feature release,
+and nothing else.  That is what 'maintenance' means.
