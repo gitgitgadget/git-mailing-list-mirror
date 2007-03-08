@@ -1,83 +1,70 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Diff output from a rewrite of a function
-Date: Thu, 8 Mar 2007 23:01:35 +0100
-Organization: Dewire
-Message-ID: <200703082301.35774.robin.rosenberg.lists@dewire.com>
-References: <Pine.LNX.4.64.0703082049060.19974@kivilampi-30.cs.helsinki.fi>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] git-branch: rename nor delete should not work when HEAD is detached.
+Date: Thu, 08 Mar 2007 14:10:51 -0800
+Message-ID: <7virdb8jys.fsf_-_@assigned-by-dhcp.cox.net>
+References: <45EFB205.4000604@lu.unisi.ch>
+	<7vzm6o9ie1.fsf@assigned-by-dhcp.cox.net>
+	<45EFDE4B.3010408@lu.unisi.ch>
+	<7vabyo9gr6.fsf@assigned-by-dhcp.cox.net>
+	<7vr6rz8khv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Ilpo =?iso-8859-1?q?J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
-X-From: git-owner@vger.kernel.org Thu Mar 08 22:59:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Lars Hjemli <hjemli@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	bonzini@gnu.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 23:10:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPQeO-0000xW-2Z
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 22:59:52 +0100
+	id 1HPQp8-00068L-7w
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 23:10:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030724AbXCHV7r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Mar 2007 16:59:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030726AbXCHV7r
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 16:59:47 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:10880 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1030724AbXCHV7q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2007 16:59:46 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 54A4D802842;
-	Thu,  8 Mar 2007 22:54:33 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 24846-10; Thu,  8 Mar 2007 22:54:33 +0100 (CET)
-Received: from [10.9.0.4] (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id F1DE78027F8;
-	Thu,  8 Mar 2007 22:54:30 +0100 (CET)
-User-Agent: KMail/1.9.4
-In-Reply-To: <Pine.LNX.4.64.0703082049060.19974@kivilampi-30.cs.helsinki.fi>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1030761AbXCHWKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 17:10:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030762AbXCHWKx
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 17:10:53 -0500
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:35333 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030761AbXCHWKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 17:10:52 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070308221052.LEHD26279.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 8 Mar 2007 17:10:52 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id YNAr1W00Q1kojtg0000000; Thu, 08 Mar 2007 17:10:52 -0500
+In-Reply-To: <7vr6rz8khv.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Thu, 08 Mar 2007 13:59:24 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41775>
 
-torsdag 08 mars 2007 20:04 skrev Ilpo J=E4rvinen:
-> Hi,
->=20
-> I have a C source file in which couple of functions are fully rewritt=
-en=20
-> (only a part of the file), almost no real similarities (block closing=
-=20
-> parents will obviously match still and couple of other keyword lines =
-here=20
-> and there). I wonder if there is way to produce diff that does not ge=
-t=20
-> confused by the empty lines / identical lines that are present in bot=
-h=20
-> original and the modified version. Default diff output is very bad lo=
-oking=20
-> (IMHO) because these identical lines cause a "synchronization point" =
-to=20
-> occur, that is, each identical line of the original is not considered=
- as=20
-> +/- but left as is. Thus I have something like 3-6 add+del blocks per=
-=20
-> function with a part of the change rather than e.g., one block per=20
-> function or so... I found -B from man git-diff-files, but I guess=20
-> "complete rewrite changes" means whole files as it did do anything.
->=20
-> Any ideas?
-Increase the context size from the default three lines.  Something like
-diff -U 7 old new will require larger chunks of unchanged code for diff
-break up a hunk. With git you can do=20
+While reviewing the latest round of 'branch --track' changes, I
+noticed that we do not do anything special when renaming or
+deleting a detached HEAD.  We do not have anything to rename nor
+delete in this case, so instead of attempting to rename/delete
+refs/heads/HEAD, we should error out.
 
-GIT_DIFF_OPTS=3D-u7 git-diff-....
+---
+ * CC'ed are not guilty parties, but people who might know the
+   code better than others.
 
->=20
-> I'm currently using 1.4.2, if that's significant.
->=20
-That was 1.5, but I think that part didn't change.
-
--- robin
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 06d8a8c..28d4b71 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -483,6 +483,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		die("Failed to resolve HEAD as a valid ref.");
+ 	if (!strcmp(head, "HEAD")) {
+ 		detached = 1;
++		if (rename || delete)
++			die("Cannot rename nor delete a detached HEAD");
+ 	}
+ 	else {
+ 		if (prefixcmp(head, "refs/heads/"))
