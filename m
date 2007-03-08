@@ -1,88 +1,58 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] shortlog: prompt when reading from terminal by mistake
-Date: Thu, 8 Mar 2007 08:37:44 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0703080827170.10832@woody.linux-foundation.org>
-References: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net>
+From: "Andrew Kilroy" <lemonkandy@gmail.com>
+Subject: attempting to clone the git repo
+Date: Thu, 8 Mar 2007 16:49:27 +0000
+Message-ID: <2fb03ecb0703080849m41ac8158y4895f2bc811934f5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 08 17:37:56 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 17:49:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPLcn-0004Wf-Bq
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 17:37:53 +0100
+	id 1HPLoP-0001IZ-7O
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 17:49:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752503AbXCHQht (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 11:37:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752512AbXCHQht
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 11:37:49 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:51666 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752503AbXCHQhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 11:37:48 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l28Gbjq8005231
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 8 Mar 2007 08:37:46 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l28GbiGq031920;
-	Thu, 8 Mar 2007 08:37:45 -0800
-In-Reply-To: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-2.488 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752547AbXCHQta (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 11:49:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbXCHQta
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 11:49:30 -0500
+Received: from ug-out-1314.google.com ([66.249.92.169]:18973 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752547AbXCHQt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 11:49:29 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1005842uga
+        for <git@vger.kernel.org>; Thu, 08 Mar 2007 08:49:28 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=C5tEY2yTTDJ/Afq93YtuWsVFAk/sNnDO7lfnCpJxsRehoNvosnu7C0Wml3Oz+h97zJZ1mEbkRPE85TRlUrf4rQLqEHFB/YCxBKtsBFr8GPGm327DQSmygGCjEHKjsXSfjUse20fIGWq6ue+OdPJHT4V7QuViSKoCvhfQQWz5gNQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=HKUA0eaLTgoEq/cC/hnabCBj6Sq/Tx9x71/PUUL4Q/RFzMY8EliDjMuOwFqfkbbk2TNundyx8KPXPlWXgUpjgVuJLHbonVtRbCA7yq+GvASzWwv8LrrCrAKOk5pD8iD2pcm/j8T+z8y82Hi8oTZF00favQ2fcTo8vGY1F3flp6g=
+Received: by 10.114.133.1 with SMTP id g1mr210481wad.1173372567081;
+        Thu, 08 Mar 2007 08:49:27 -0800 (PST)
+Received: by 10.114.166.4 with HTTP; Thu, 8 Mar 2007 08:49:27 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41756>
 
+Hi,
 
+I'm attempting to clone the git repository using git-1.5.0.3 in my workplace.
+Port 9418's blocked by the firewall, so I'm trying via http:
 
-On Thu, 8 Mar 2007, Junio C Hamano wrote:
-> 
-> Not so.  "git shortlog" acts as a filter when no revs are given,
-> unlike "git log" which defaults to HEAD.  It was reading from
-> its standard input.
+    $ git clone http://git.kernel.org/pub/scm/git/git.git
+    Initialized empty Git repository in /home/akilroy/workspace/git/.git/
+    Cannot get remote repository information.
+    Perhaps git-update-server-info needs to be run there?
 
-Could we just change that?
+Is there a problem at the server?  I've tried this before using an old version
+of git, and that worked (1.4.4.4 I think).
 
-There aren't *that* many users of "git shortlog", I bet, and I'm not sure 
-the "filter mode" is really worth it, especially since it ends up being 
-confusing once you get used to using it as just another "git log" variant.
-
-It was a filter not really because people wanted a filter, but for 
-historical reasons, and because it wasn't really able to do things on its 
-own, and it was just an external script...
-
-Yeah, as a filter it *can* stil lbe useful, of course, but I suspect the 
-usefullness is limited.
-
-> +	if (rev.pending.nr == 0) {
-> +		if (isatty(0))
-> +			fprintf(stderr, "(reading log to summarize from standard input)\n");
-
-Sure, this probably gets some cases (and the one you tried in particular), 
-but if you pipe the output to a pager, I doubt it's actually all that 
-useful.
-
-To simulate a "wait a long time without output" case, try this:
-
-	( echo "Important warning" >&2 ; sleep 10) | less -S
-
-and at least for me, I don't see squat _in_case_I'm_at_the_top_ of the 
-window, simply because "less" will clear the screen for me.
-
-In other words, putting warnings on stderr usually isn't all that useful 
-when you have something like a pager that will do tty stuff - it will 
-easily overwrite the warning so quickly that you'll never see it at all.
-
-So I think your patch is an improvement, but I suspect it would be a 
-bigger improvement to just make "git shortlog" work as "git log". If we 
-want to support the filtering mode, we could just make it be a separate 
-command ("git shortlog-filter") instead?
-
-			Linus
+Thanks,
+Andy
