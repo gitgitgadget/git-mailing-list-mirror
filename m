@@ -1,50 +1,42 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
 Subject: Re: Advice on strategy for "temporary" commits
-Date: Thu, 8 Mar 2007 17:11:58 +0100
-Message-ID: <81b0412b0703080811m27ff892eg5bf1cdf93f89051a@mail.gmail.com>
+Date: Thu, 8 Mar 2007 11:32:39 -0500
+Message-ID: <20070308163239.GH22713@fieldses.org>
 References: <e1dab3980703080639i4c553e89nb931c2aea45b023b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "David Tweed" <david.tweed@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 17:12:10 2007
+To: David Tweed <david.tweed@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 17:32:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPLDs-0001nF-31
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 17:12:08 +0100
+	id 1HPLXE-0001yR-0U
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 17:32:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752434AbXCHQMD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 11:12:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752445AbXCHQMC
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 11:12:02 -0500
-Received: from ug-out-1314.google.com ([66.249.92.171]:15127 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752434AbXCHQMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 11:12:01 -0500
-Received: by ug-out-1314.google.com with SMTP id 44so993096uga
-        for <git@vger.kernel.org>; Thu, 08 Mar 2007 08:11:59 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SXx3VGSUNjzqho8MOrPjXb8TOcEJO2ULHc4zbnM4dihaTqponh1RxmF6/g3/BvamfFrH07kMQXEdCcvoxq3X6TVhz8/lVxbo74fKNLFMwkqJd/NI7OV5TYpLyQXGHYzyQmrQJVAlBGIhovdBu5msgSgsmknVHaLiXT5PLjP/bv4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Nkn3YOHIxDEO/Vki/AKV0KdDRBkdmet83c9GXNz5F8IfetKKpaeKEcSxVKqaJYq102JwviStrK/cWOhIN5ejg8SeDQfqB0jaBYcOp2O6gdnSJLDqhjtmghV9YRGoT3bW4IHAocYvk9KaT8dc1d6s4OzQR8o+0B7ymaPwdTnZ070=
-Received: by 10.78.178.5 with SMTP id a5mr72011huf.1173370319131;
-        Thu, 08 Mar 2007 08:11:59 -0800 (PST)
-Received: by 10.78.138.5 with HTTP; Thu, 8 Mar 2007 08:11:58 -0800 (PST)
-In-Reply-To: <e1dab3980703080639i4c553e89nb931c2aea45b023b@mail.gmail.com>
+	id S1752490AbXCHQcE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 11:32:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752489AbXCHQcE
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 11:32:04 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:45543 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752490AbXCHQcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 11:32:03 -0500
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HPLXj-0001Od-Ee; Thu, 08 Mar 2007 11:32:39 -0500
 Content-Disposition: inline
+In-Reply-To: <e1dab3980703080639i4c553e89nb931c2aea45b023b@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41754>
 
-On 3/8/07, David Tweed <david.tweed@gmail.com> wrote:
+On Thu, Mar 08, 2007 at 02:39:46PM +0000, David Tweed wrote:
+> Hi,
+> 
 > I've been working with my system taking automatic
 > hourly git snapshots of (filtered portions of) my home
 > directory for a couple of months. Being able to look
@@ -60,12 +52,22 @@ On 3/8/07, David Tweed <david.tweed@gmail.com> wrote:
 > being primarily taken on a timed basis I'll have more
 > non-compiling changes than is usual in a repository, so
 > that this may not turn out to be useful in practice.)
+> 
+> Looking through the git docs, it looks like the most
+> natural way of doing this is to make the 10-min commits
+> (via cron & tagging them under a special tag "temporary
+> commits only" directory) and then use
+> 
+> git-rebase --onto start-tag end-tag branch
+> 
+> every so often (via cron again) to chop the older
+> temporary commits between start-tag and end-tag
+> out of the database.
 
-Try using temporary and primary branch. Commit
-10-minutes to the temporary branch, reset it to the
-head of primary branch after you did a commit to
-it and repack. Commits from temporary branch will
-be removed.
-You even can setup/modify your editor, to do a
-temporary commit every time you save a file, for
-extra ganularity.
+You don't want to run git-rebase out of a cron job, because it may
+require human interaction.
+
+The simplest thing might be to make the temporary commits onto a
+separate branch, and throw that branch away periodically.
+
+--b.
