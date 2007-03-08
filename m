@@ -1,146 +1,83 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH, nitpickingly final version] git-branch, git-checkout: autosetup for remote branch tracking
-Date: Thu, 08 Mar 2007 13:59:24 -0800
-Message-ID: <7vr6rz8khv.fsf@assigned-by-dhcp.cox.net>
-References: <45EFB205.4000604@lu.unisi.ch>
-	<7vzm6o9ie1.fsf@assigned-by-dhcp.cox.net>
-	<45EFDE4B.3010408@lu.unisi.ch>
-	<7vabyo9gr6.fsf@assigned-by-dhcp.cox.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: Diff output from a rewrite of a function
+Date: Thu, 8 Mar 2007 23:01:35 +0100
+Organization: Dewire
+Message-ID: <200703082301.35774.robin.rosenberg.lists@dewire.com>
+References: <Pine.LNX.4.64.0703082049060.19974@kivilampi-30.cs.helsinki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: bonzini@gnu.org
-X-From: git-owner@vger.kernel.org Thu Mar 08 22:59:36 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Ilpo =?iso-8859-1?q?J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
+X-From: git-owner@vger.kernel.org Thu Mar 08 22:59:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPQe7-0000pC-UO
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 22:59:36 +0100
+	id 1HPQeO-0000xW-2Z
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 22:59:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030714AbXCHV71 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 16:59:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030719AbXCHV71
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 16:59:27 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:51316 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030714AbXCHV70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 16:59:26 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070308215925.XYUT1226.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 8 Mar 2007 16:59:25 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id YMzQ1W00W1kojtg0000000; Thu, 08 Mar 2007 16:59:25 -0500
-In-Reply-To: <7vabyo9gr6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Thu, 08 Mar 2007 02:22:37 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030724AbXCHV7r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 8 Mar 2007 16:59:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030726AbXCHV7r
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 16:59:47 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:10880 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1030724AbXCHV7q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Mar 2007 16:59:46 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 54A4D802842;
+	Thu,  8 Mar 2007 22:54:33 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 24846-10; Thu,  8 Mar 2007 22:54:33 +0100 (CET)
+Received: from [10.9.0.4] (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id F1DE78027F8;
+	Thu,  8 Mar 2007 22:54:30 +0100 (CET)
+User-Agent: KMail/1.9.4
+In-Reply-To: <Pine.LNX.4.64.0703082049060.19974@kivilampi-30.cs.helsinki.fi>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41774>
 
-Junio C Hamano <junkio@cox.net> writes:
+torsdag 08 mars 2007 20:04 skrev Ilpo J=E4rvinen:
+> Hi,
+>=20
+> I have a C source file in which couple of functions are fully rewritt=
+en=20
+> (only a part of the file), almost no real similarities (block closing=
+=20
+> parents will obviously match still and couple of other keyword lines =
+here=20
+> and there). I wonder if there is way to produce diff that does not ge=
+t=20
+> confused by the empty lines / identical lines that are present in bot=
+h=20
+> original and the modified version. Default diff output is very bad lo=
+oking=20
+> (IMHO) because these identical lines cause a "synchronization point" =
+to=20
+> occur, that is, each identical line of the original is not considered=
+ as=20
+> +/- but left as is. Thus I have something like 3-6 add+del blocks per=
+=20
+> function with a part of the change rather than e.g., one block per=20
+> function or so... I found -B from man git-diff-files, but I guess=20
+> "complete rewrite changes" means whole files as it did do anything.
+>=20
+> Any ideas?
+Increase the context size from the default three lines.  Something like
+diff -U 7 old new will require larger chunks of unchanged code for diff
+break up a hunk. With git you can do=20
 
-> Paolo Bonzini <paolo.bonzini@lu.unisi.ch> writes:
->
->> 	This fixes all the nits you pointed out. :-D
->> 	Now, this was an experience to make...
->
-> Thanks.
->
-> Will apply after reviewing once more tomorrow, with fix-ups
-> locally if needed.  No need to resend.
+GIT_DIFF_OPTS=3D-u7 git-diff-....
 
-Gaah.
+>=20
+> I'm currently using 1.4.2, if that's significant.
+>=20
+That was 1.5, but I think that part didn't change.
 
-The new create_branch() is totally borked, and I did not notice
-it while exchanging review e-mails.
-
-The problem is that we have:
-
-	if (real_ref == NULL)
-        	die();
-
-which is completely bogus.  We do "checkout -b temp v2.6.20~15"
-all the time, and in that case dwim_ref(v2.6.20~15) rightfully
-would say "nope, that's not a branch tip".  We have no right to
-die there.
-
-I think your new tests should have caught this kind of breakage,
-but now I notice that there is no such test that makes sure that
-no auto set-up is made when the original branch is not a remote
-tracking branch (your new tests are only interested in testing
-to see if the new feature works, and it does not test that there
-is no regression to old usage).  The breakage was caught by an
-unrelated test, t3900.
-
-The appended is on top of your "final".  This is what I am
-considering to apply currently.
-
-
-Grumble....
-
----
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 011a2fc..1d6f0cb 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -409,7 +409,6 @@ static void set_branch_defaults(const char *name, const char *real_ref)
- }
- 
- static void create_branch(const char *name, const char *start_name,
--			  unsigned char *start_sha1,
- 			  int force, int reflog, int track)
- {
- 	struct ref_lock *lock;
-@@ -430,15 +429,22 @@ static void create_branch(const char *name, const char *start_name,
- 		forcing = 1;
- 	}
- 
--	if (start_sha1) {
--		/* detached HEAD */
--		hashcpy(sha1, start_sha1);
-+	real_ref = NULL;
-+	if (get_sha1(start_name, sha1))
-+		die("Not a valid object name: '%s'.", start_name);
-+
-+	switch (dwim_ref(start_name, strlen(start_name), sha1, &real_ref)) {
-+	case 0:
-+		/* Not branching from any existing branch */
- 		real_ref = NULL;
--	}
--	else if (dwim_ref(start_name, strlen(start_name), sha1, &real_ref) > 1)
-+		break;
-+	case 1:
-+		/* Unique completion -- good */
-+		break;
-+	default:
- 		die("Ambiguous object name: '%s'.", start_name);
--	else if (real_ref == NULL)
--		die("Not a valid object name: '%s'.", start_name);
-+		break;
-+	}
- 
- 	if ((commit = lookup_commit_reference(sha1)) == NULL)
- 		die("Not a valid branch point: '%s'.", start_name);
-@@ -619,12 +625,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		rename_branch(head, argv[i], force_rename);
- 	else if (rename && (i == argc - 2))
- 		rename_branch(argv[i], argv[i + 1], force_rename);
--	else if (i == argc - 1)
--		create_branch(argv[i], head, head_sha1, force_create, reflog,
--			      track);
--	else if (i == argc - 2)
--		create_branch(argv[i], argv[i+1], NULL, force_create, reflog,
--			      track);
-+	else if (i == argc - 1 || i == argc - 2)
-+		create_branch(argv[i], (i == argc - 2) ? argv[i+1] : head,
-+			      force_create, reflog, track);
- 	else
- 		usage(builtin_branch_usage);
- 
+-- robin
