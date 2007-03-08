@@ -1,77 +1,80 @@
-From: Junio C Hamano <junkio@cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: [PATCH] Split sample update hook into post-receive hook
-Date: Thu, 08 Mar 2007 01:06:54 -0800
-Message-ID: <7vy7m8aytt.fsf@assigned-by-dhcp.cox.net>
-References: <20070308041618.GA29744@spearce.org>
-	<81b0412b0703080026v6f3990c3x2cefca661b64e00d@mail.gmail.com>
-	<20070308083317.GB30289@spearce.org>
+Date: Thu, 8 Mar 2007 04:13:13 -0500
+Message-ID: <20070308091313.GC30289@spearce.org>
+References: <20070308041618.GA29744@spearce.org> <81b0412b0703080026v6f3990c3x2cefca661b64e00d@mail.gmail.com> <20070308083317.GB30289@spearce.org> <7vy7m8aytt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Alex Riesen <raa.lkml@gmail.com>,
 	Andy Parkins <andyparkins@gmail.com>,
 	Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 08 10:07:06 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 10:13:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPEaU-0006uT-Jx
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 10:07:04 +0100
+	id 1HPEgm-0001Ru-OB
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 10:13:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030363AbXCHJG6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 04:06:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030370AbXCHJG6
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 04:06:58 -0500
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:35646 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030363AbXCHJG4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 04:06:56 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070308090655.NHC26279.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 8 Mar 2007 04:06:55 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Y96u1W00L1kojtg0000000; Thu, 08 Mar 2007 04:06:55 -0500
-In-Reply-To: <20070308083317.GB30289@spearce.org> (Shawn O. Pearce's message
-	of "Thu, 8 Mar 2007 03:33:17 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030370AbXCHJN1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 04:13:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030380AbXCHJN0
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 04:13:26 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:41182 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030370AbXCHJNZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 04:13:25 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HPEgW-0005JU-TG; Thu, 08 Mar 2007 04:13:17 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1DD5020FBAE; Thu,  8 Mar 2007 04:13:13 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vy7m8aytt.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41722>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano <junkio@cox.net> wrote:
+> I suspect that it is deeper than that.  Think about why having
+> "everything at once" is better than "one at a time".
+> 
+> Potentially you could have a rule that says "these should be
+> updated together" (or the other way around).  If you split the
+> set of refs at arbitrary limit, like xargs does, you would lose
+> that advantage.
 
-> Alex Riesen <raa.lkml@gmail.com> wrote:
->> On 3/8/07, Shawn O. Pearce <spearce@spearce.org> wrote:
->> >+# Called by git-receive-pack with arguments:
->> >+#    (refname sha1-old sha1-new)+
->> > #
->> 
->> What do you do if this breaks because of too many refs passed?
->
-> Die a horrible horrible death?
->
-> That's certainly a problem in receive-pack.  It should (somehow)
-> break long invocations up, much like what xargs winds up doing.
-> Problem is that limit is OS dependent... so uh, yea...
+Yes, I think the documentation says something about that... ;-)
 
-I suspect that it is deeper than that.  Think about why having
-"everything at once" is better than "one at a time".
+> We could take stdin to solve that and shell
+> scripts should be able to handle that as refnames do not contain
+> shell metacharacters.
 
-Potentially you could have a rule that says "these should be
-updated together" (or the other way around).  If you split the
-set of refs at arbitrary limit, like xargs does, you would lose
-that advantage.  We could take stdin to solve that and shell
-scripts should be able to handle that as refnames do not contain
-shell metacharacters.
+Never even occurred to me, because I was trying to keep the hook
+interface "simple".
 
-But this is only true if you want to make it really nice.  I
-personally feel that nobody would scream if pushing 1300 refs at
-once (4K pages and MAX_ARG_PAGES at 32 would give 128K for
-**argv and its strings, and one ref's worth of data is two
-40-digit hex plus refname, roughly 100-byte per ref) is not
-supported and always failed.
+> But this is only true if you want to make it really nice.  I
+> personally feel that nobody would scream if pushing 1300 refs at
+> once (4K pages and MAX_ARG_PAGES at 32 would give 128K for
+> **argv and its strings, and one ref's worth of data is two
+> 40-digit hex plus refname, roughly 100-byte per ref) is not
+> supported and always failed.
+
+Agree completely.  I'm not too worried about it.  1300 ref push is
+just not going to really occur in practice; that is just insane.
+30 refs, maybe.
+
+-- 
+Shawn.
