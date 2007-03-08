@@ -1,75 +1,55 @@
-From: sf <sf@b-i-t.de>
-Subject: Re: (Re: gitweb not friendly to firefox?) and unusable in the lynx
-Date: Thu, 08 Mar 2007 16:31:50 +0100
-Message-ID: <45F02C66.9010909@b-i-t.de>
-References: <989B956029373F45A0B8AF02970818902DA81B@zch01exm26.fsl.freescale.net> <7vabyweypw.fsf@assigned-by-dhcp.cox.net> <E1HNATn-0005Y6-HW@flower> <200703030357.18822.jnareb@gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: GSoC project mentors
+Date: Thu, 8 Mar 2007 17:04:26 +0100
+Message-ID: <81b0412b0703080804r5e2d933fqabab7306a5f0d6db@mail.gmail.com>
+References: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net>
+	 <20070308150756.GB30674@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Oleg Verych <olecom@flower.upol.cz>,
-	Junio C Hamano <junkio@cox.net>,
-	Li Yang-r58472 <LeoLi@freescale.com>, rea-git@codelabs.ru,
-	Raimund Bauer <ray@softwarelandschaft.com>,
-	git@vger.kernel.org, Alp Toker <alp@atoker.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 16:39:47 2007
+Cc: git@vger.kernel.org, "Junio C Hamano" <junkio@cox.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 08 17:05:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPKiY-0003y8-Nh
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 16:39:47 +0100
+	id 1HPL6w-000744-9p
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 17:04:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752158AbXCHPjn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 10:39:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbXCHPjn
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 10:39:43 -0500
-Received: from mail.medianet-world.de ([213.157.0.167]:46705 "HELO
-	mail.medianet-world.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1752158AbXCHPjn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 10:39:43 -0500
-X-Greylist: delayed 424 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Mar 2007 10:39:42 EST
-Received: (qmail 25199 invoked by uid 54139); 8 Mar 2007 15:31:23 -0000
-Received: from sf@b-i-t.de by pop1 by uid 89 with qmail-scanner-1.22 
- (ExcuBAtor: 1.0.2.  Clear:RC:1(213.157.15.184):. 
- Processed in 0.042073 secs); 08 Mar 2007 15:31:23 -0000
-Received: from ip-213157015184.dialin.heagmedianet.de (HELO IP-213157000067.dialin.heagmedianet.de) (213.157.15.184)
-  by mail.medianet-world.de with SMTP; 8 Mar 2007 15:31:23 -0000
-Received: from [192.168.168.40] (groa.b-i-t.de [192.168.168.40])
-	by mail.b-i-t.de (Postfix) with ESMTP id CA17B41A9;
-	Thu,  8 Mar 2007 16:31:51 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070305)
-In-Reply-To: <200703030357.18822.jnareb@gmail.com>
+	id S1752427AbXCHQE3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 11:04:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752437AbXCHQE3
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 11:04:29 -0500
+Received: from nf-out-0910.google.com ([64.233.182.186]:34080 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752427AbXCHQE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 11:04:28 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so689729nfa
+        for <git@vger.kernel.org>; Thu, 08 Mar 2007 08:04:26 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dje4rYSTrRSB7xsdnt9+2RHh0NeVZFPYoBOENP4n9g0FfX+4NK/vd0VUo5KevkYEzXlEybSyyafBO+Rt015+BOX9Dwbcl0GvW7iretttPxkc9v/aq73Bv83J1YuSQWZks4dKhtN+QFoYS80K7vCB+BFuEvWxGAmKt94YCAwXtlw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hpAMJUuG+fPlVrSVQ1ZwQs0FKggfOFvJRIwPstV4dxmorpweXIaXSlrRtb8tioB3XEtaFcmjBrWy2lj7OQCGmre3HctB5NdSCKD4r1VMpGKIV1oS4Nu1gWHVqRUTR7JkJAB/mvBeqzjh/p+13SJbfe7Gg/6AgJ//mMecEWRNjv0=
+Received: by 10.78.157.8 with SMTP id f8mr72991hue.1173369866606;
+        Thu, 08 Mar 2007 08:04:26 -0800 (PST)
+Received: by 10.78.138.5 with HTTP; Thu, 8 Mar 2007 08:04:26 -0800 (PST)
+In-Reply-To: <20070308150756.GB30674@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41752>
 
-Jakub Narebski wrote:
-...
-> By "conservatively" it means that it uses 'application/xhtml+xml' only when
-> client explicitly claims that it accepts its, and it is not due to for
-> example */* accept globbing.
+On 3/8/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+>
+> Being a GSoC mentor does have a time commitment.  You will need to
 
-You may need something like the (not tested and line wrapped) patch 
-below as well.
-
-Regards
-
-Stephan
-
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 27b5970..6cc5c20 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1714,7 +1714,8 @@ sub git_header_html {
-                 $content_type = 'text/html';
-         }
-         print $cgi->header(-type=>$content_type, -charset => 'utf-8',
--                          -status=> $status, -expires => $expires);
-+                          -status=> $status, -expires => $expires,
-+                          -Vary=> 'Accept');
-         my $mod_perl_version = $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : '';
-         print <<EOF;
-  <?xml version="1.0" encoding="utf-8"?>
+This is a problem. How about IRC schedules? Say, if some idea
+has not enough mentorship, it may have at least supporters on
+IRC who _commit_ themselves to that schedule. In this case
+the students can at least know when they are likely to get help.
