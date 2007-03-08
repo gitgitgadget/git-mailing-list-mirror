@@ -1,80 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-bundle: Make thin packs
-Date: Thu, 8 Mar 2007 14:07:14 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703081406570.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45ECEB40.4000907@gmail.com> <7vejo2stlw.fsf@assigned-by-dhcp.cox.net>
- <45EE1242.8080405@gmail.com> <7vhcsxkb8n.fsf@assigned-by-dhcp.cox.net>
- <45EE2ECA.60403@gmail.com> <Pine.LNX.4.63.0703070419410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <45EE36A1.30001@gmail.com> <Pine.LNX.4.63.0703070504140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <30e4a070703070834s3dd5bdd7x2e1639aa2979d1cf@mail.gmail.com>
- <Pine.LNX.4.63.0703072330200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0703071516330.5963@woody.linux-foundation.org>
- <Pine.LNX.4.63.0703080121210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v4powebmr.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] bundle: fix wrong check of read_header()'s return value & add tests
+Date: Thu, 8 Mar 2007 14:58:01 +0100
+Message-ID: <81b0412b0703080558ye4cff44l88eb88d4911222a0@mail.gmail.com>
+References: <Pine.LNX.4.63.0703062256200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.63.0703070613530.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <7vslchio4f.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0703081405310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 08 14:07:27 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 08 14:58:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPIL5-0004Mw-DU
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 14:07:24 +0100
+	id 1HPJ8P-0001VQ-Ip
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 14:58:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbXCHNHS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 08:07:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751786AbXCHNHS
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 08:07:18 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41327 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751784AbXCHNHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 08:07:16 -0500
-Received: (qmail invoked by alias); 08 Mar 2007 13:07:15 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 08 Mar 2007 14:07:15 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19qJ6prfspqA3CRFveOr/+DkTI9JavM4LIijrfunq
-	cx0yGl1/CwdYgB
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7v4powebmr.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1751857AbXCHN6F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 08:58:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXCHN6E
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 08:58:04 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:54289 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751857AbXCHN6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 08:58:03 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so642833nfa
+        for <git@vger.kernel.org>; Thu, 08 Mar 2007 05:58:02 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=A4nBNHPSNiIIGMnno4xhfHsT/Nm43kVZou2/5a216kz0ZaYsaBKgY2dHNR1gePOVzqQ38KUaThst3m0/14QslFpU834ZQaFfQR3GFm3iNnjbqqQEJ4Jlxj7AXgUoSr8mBOvRxPdDrg+1AMaj9dEqc2el6498l2ID3OG6/IZ/nUw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GkJ8ZIN60OteNngHL+X7KzNMFrDSUCTT/4c2Vb2brAfc0/ZNs4wjN3xb3snOZFB5WaM/wcNUD92L55Eeeo32J3jspPOnA74eXUvwkGVyYHzV7fspzAqVNBLuO1BE5TRJ2KmzmgnpIalO0GCwaa11iGckhpyXFJ/I05iQf5qQ12c=
+Received: by 10.78.201.15 with SMTP id y15mr52381huf.1173362281499;
+        Thu, 08 Mar 2007 05:58:01 -0800 (PST)
+Received: by 10.78.138.5 with HTTP; Thu, 8 Mar 2007 05:58:01 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.63.0703081405310.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41743>
 
-Hi,
+On 3/8/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Tue, 6 Mar 2007, Junio C Hamano wrote:
+> > +     (
+> > +             while read x && test -n "$x"
+> > +             do
+> > +                     :;
+> > +             done
+> > +             cat
+> > +     ) <bundle1 >bundle.pack &&
+>
+> I tried to avoid that, because it was mentioned that this does not work on
+> Cygwin for some reason I forgot.
+>
 
-On Wed, 7 Mar 2007, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > This commit also changes behaviour slightly: since we now know early 
-> > enough if a specified ref is _not_ contained in the pack, we can avoid 
-> > putting that ref into the pack. So, we don't die() here, but warn() 
-> > instead, and skip that ref.
-> 
-> I am a bit worried about that part.  
-> 
-> If somebody says "bundle create foo.bdl --since=1.day maint" and
-> maint's tip hasn't changed for a month, we would end up having
-> no refs and no pack in the bundle with just a warning.
-> 
-> "bundle create foo.bdl -20 master next" does _not_ mean "20 revs
-> but at least have master and next tip", but it may surprise an
-> uninitiated to find out that running "bundle list foo.bdl" on
-> the resulting bundle did not talk about master at all.
-> 
-> I have a feeling that it would avoid confusion if we did not
-> even start the pack generation and die early when we find the
-> counting caused us not to include all the positive refs
-> specified on the command line.
-
-Fair enough.
-
-Ciao,
-Dscho
+Can't think of a reason why it would not. Just tried: works.
+It works even with \r\n line endings (which I don't understand).
