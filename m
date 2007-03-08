@@ -1,7 +1,7 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] git-bundle: Make thin packs
-Date: Wed, 7 Mar 2007 16:34:16 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0703071632140.5963@woody.linux-foundation.org>
+Date: Thu, 8 Mar 2007 01:56:29 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703080149320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <45ECEB40.4000907@gmail.com>  <7vejo2stlw.fsf@assigned-by-dhcp.cox.net>
  <45EE1242.8080405@gmail.com>  <7vhcsxkb8n.fsf@assigned-by-dhcp.cox.net>
  <45EE2ECA.60403@gmail.com>  <Pine.LNX.4.63.0703070419410.22628@wbgn013.biozentrum.uni-wuerzburg.de>
@@ -10,66 +10,74 @@ References: <45ECEB40.4000907@gmail.com>  <7vejo2stlw.fsf@assigned-by-dhcp.cox.n
  <Pine.LNX.4.63.0703072330200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
  <Pine.LNX.4.64.0703071516330.5963@woody.linux-foundation.org>
  <Pine.LNX.4.63.0703080121210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0703071632140.5963@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Mark Levedahl <mlevedahl@gmail.com>,
 	Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 08 01:34:29 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Mar 08 01:57:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HP6aS-0005lI-IR
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 01:34:29 +0100
+	id 1HP6wX-0006tU-0C
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 01:57:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbXCHAeY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 7 Mar 2007 19:34:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750916AbXCHAeY
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 19:34:24 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:41623 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750799AbXCHAeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Mar 2007 19:34:23 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l280YHq8008081
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 7 Mar 2007 16:34:17 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l280YGJp014410;
-	Wed, 7 Mar 2007 16:34:16 -0800
-In-Reply-To: <Pine.LNX.4.63.0703080121210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-2.483 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932166AbXCHA4c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 7 Mar 2007 19:56:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932348AbXCHA4c
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Mar 2007 19:56:32 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44300 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932166AbXCHA4a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Mar 2007 19:56:30 -0500
+Received: (qmail invoked by alias); 08 Mar 2007 00:56:29 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp017) with SMTP; 08 Mar 2007 01:56:29 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/8u+NBAEr842Zpvehwh/YfQesQgHp+4fR6KKrRuJ
+	H2SLS9SfnmqzVd
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0703071632140.5963@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41709>
 
+Hi,
 
+On Wed, 7 Mar 2007, Linus Torvalds wrote:
 
-On Thu, 8 Mar 2007, Johannes Schindelin wrote:
->
-> 	> Since a bundle doesn't make any sense *anyway* unless you have 
-> 	> the prerequisites at the other end, I think you might as well do 
-> 	> thin packs. That will cut down on the bundle size a *lot* for 
-> 	> the common cases.
+> Does anybody actually use shallow clones in real life?
+
+I don't. That's why I work on push/fetch from/via/into shallow repos.
+
+> When I did the numbers a long time ago, the shallow clone didn't 
+> actually help much, because it meant that there were no deltas. Which 
+> meant that you got 1% of the history for 60% of the price of all 
+> history, and the shallow thing didn't really seem to make much sense.
 > 
-> 	Well, I disagree on the blanket "*anyway*". Shallow fetches are no 
-> 	longer possible from these bundles (at least after this commit 
-> 	_and_ ":/git-bundle: avoid packing" which I just sent out).
+> I guess that for something with a really long history, you'd get 0.001% 
+> of the history for 10% of the price, and maybe it makes sense then.
 
-Does anybody actually use shallow clones in real life?
+You -- being blessed by not having to work with anything closed -- miss an 
+important fact of commercial software development. Most, if not all, 
+projects in a commercial setting contain binary blobs. For example, a DLL, 
+or a PNG, or a Firmware blob. These are updated regularly. And they delta 
+really awfully bad.
 
-When I did the numbers a long time ago, the shallow clone didn't actually 
-help much, because it meant that there were no deltas. Which meant that 
-you got 1% of the history for 60% of the price of all history, and the 
-shallow thing didn't really seem to make much sense.
+Also, for something as OpenOffice or Mozilla, I guess that if you really 
+only want to work on the newest revision, the _initial_ fetch will be way 
+cheaper than a full clone. Of course I have no numbers here, but that is 
+what my gut feeling says.
 
-I guess that for something with a really long history, you'd get 0.001% of 
-the history for 10% of the price, and maybe it makes sense then.
+Naturally, over time, the shallow clone will fetch in more and more 
+objects from the upstream, eventually being almost as large as if having 
+the complete history, but the user's experience is different: the amount 
+of time needed to get that amount of data is much more widely spread.
 
-		Linus
+Ciao,
+Dscho
