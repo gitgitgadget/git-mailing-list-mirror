@@ -1,62 +1,57 @@
-From: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
-Subject: Diff output from a rewrite of a function
-Date: Thu, 8 Mar 2007 21:04:46 +0200 (EET)
-Message-ID: <Pine.LNX.4.64.0703082049060.19974@kivilampi-30.cs.helsinki.fi>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: StGIT 0.12.1: pulling up to specific commit (tag)
+Date: Thu, 8 Mar 2007 21:17:07 +0100
+Message-ID: <20070308201707.GA4250@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 08 20:05:56 2007
+Cc: GIT list <git@vger.kernel.org>
+To: Andrey Borzenkov <arvidjaar@mail.ru>
+X-From: git-owner@vger.kernel.org Thu Mar 08 21:17:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPNvh-0007WJ-5S
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 20:05:35 +0100
+	id 1HPP3T-0005Vr-Su
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 21:17:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933063AbXCHTEz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 14:04:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933065AbXCHTEz
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 14:04:55 -0500
-Received: from courier.cs.helsinki.fi ([128.214.9.1]:53905 "EHLO
-	mail.cs.helsinki.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933063AbXCHTEy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 14:04:54 -0500
-Received: from kivilampi-30.cs.helsinki.fi (kivilampi-30.cs.helsinki.fi [128.214.9.42])
-  (AUTH: PLAIN cs-relay, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
-  by mail.cs.helsinki.fi with esmtp; Thu, 08 Mar 2007 21:04:47 +0200
-  id 0005FEF2.45F05E4F.00006650
-Received: by kivilampi-30.cs.helsinki.fi (Postfix, from userid 50795)
-	id E80F8EB365; Thu,  8 Mar 2007 21:04:46 +0200 (EET)
-Received: from localhost (localhost [127.0.0.1])
-	by kivilampi-30.cs.helsinki.fi (Postfix) with ESMTP id E45D7EB364
-	for <git@vger.kernel.org>; Thu,  8 Mar 2007 21:04:46 +0200 (EET)
-X-X-Sender: ijjarvin@kivilampi-30.cs.helsinki.fi
+	id S1752634AbXCHUR3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 15:17:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbXCHUR3
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 15:17:29 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:41688 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752643AbXCHUR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 15:17:27 -0500
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id B832B49EB6;
+	Thu,  8 Mar 2007 21:17:25 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 9FAC81F096; Thu,  8 Mar 2007 21:17:07 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41770>
 
-Hi,
+Hi Andrey,
 
-I have a C source file in which couple of functions are fully rewritten 
-(only a part of the file), almost no real similarities (block closing 
-parents will obviously match still and couple of other keyword lines here 
-and there). I wonder if there is way to produce diff that does not get 
-confused by the empty lines / identical lines that are present in both 
-original and the modified version. Default diff output is very bad looking 
-(IMHO) because these identical lines cause a "synchronization point" to 
-occur, that is, each identical line of the original is not considered as 
-+/- but left as is. Thus I have something like 3-6 add+del blocks per 
-function with a part of the change rather than e.g., one block per 
-function or so... I found -B from man git-diff-files, but I guess 
-"complete rewrite changes" means whole files as it did do anything.
+>Now "stg pull" no more accepts branch name; but I cannot figure how to to the 
+>same using git config.
 
-Any ideas?
+(I must say I am not sure to understand the workflow you're using, I
+suspect there were some missing steps in your mail).
 
-I'm currently using 1.4.2, if that's significant.
+You probably want "stg rebase <parent branch>", unless you have
+commits below your stack base, and that you get a merge commit when
+running "git pull".
 
+In the latter case, there is possibly a missing feature: you can get a
+merge through git-pull, but you cannot pass the refspec any more.  If
+there is a use for this (other than the one already handled by
+"rebase"), I'd like to understand the need, so we can add the feature
+back in a better way.
+
+Best regards,
 -- 
- i.
-
-ps. Please cc me when replying.
+Yann.
