@@ -1,59 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Git push failure with update hook success
-Date: Thu, 08 Mar 2007 01:54:34 -0800
-Message-ID: <7vvehc9i1x.fsf@assigned-by-dhcp.cox.net>
-References: <17902.59497.831409.218529@lisa.zopyra.com>
-	<20070307170904.GB27922@spearce.org>
-	<17902.62836.920473.810183@lisa.zopyra.com>
-	<200703080922.54978.andyparkins@gmail.com>
-	<20070308092809.GE30289@spearce.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Split sample update hook into post-receive hook
+Date: Thu, 8 Mar 2007 10:57:01 +0100
+Message-ID: <81b0412b0703080157n413de6f6q35ae24e2620df91d@mail.gmail.com>
+References: <20070308041618.GA29744@spearce.org>
+	 <81b0412b0703080026v6f3990c3x2cefca661b64e00d@mail.gmail.com>
+	 <20070308083317.GB30289@spearce.org>
+	 <7vy7m8aytt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Bill Lear <rael@zopyra.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 08 10:54:52 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Andy Parkins" <andyparkins@gmail.com>,
+	"Bill Lear" <rael@zopyra.com>, git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 10:57:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPFKk-0003bu-Cy
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 10:54:52 +0100
+	id 1HPFN2-0004l6-OU
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 10:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030455AbXCHJyh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 04:54:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030524AbXCHJyg
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 04:54:36 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:53358 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030455AbXCHJyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 04:54:36 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070308095436.ZPWM2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 8 Mar 2007 04:54:36 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Y9ub1W0021kojtg0000000; Thu, 08 Mar 2007 04:54:35 -0500
-In-Reply-To: <20070308092809.GE30289@spearce.org> (Shawn O. Pearce's message
-	of "Thu, 8 Mar 2007 04:28:09 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030525AbXCHJ5F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 04:57:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030545AbXCHJ5E
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 04:57:04 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:35539 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030525AbXCHJ5D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 04:57:03 -0500
+Received: by nf-out-0910.google.com with SMTP id o25so573157nfa
+        for <git@vger.kernel.org>; Thu, 08 Mar 2007 01:57:01 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=R/ZiyguMQPU/g0Mi53H3d6RuANyN7/KUHfyPJUNa1WU1bn783vO4ecEGCTwVu4Z8cDFsBA+yDmtwZQVau5Yq+ih/P40xxpDkonTRfQX8A0b20Ku0I34dB4LT6p9twSX6fncgl5/l5K7JMFXBvINeM6A+tGplStiRAVmqWU+tPDc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ins99SwWwzJyDsoLw4z5I9M20Lu7Vkkw7qAkanvpTSJ1sV/ljj67HjRC54NilRPJBPKzlwgzdsDpZHHucVri7Ox51HWi1HtNSlY0SHP/5TFYk6eI9cnwa5g31DVKIem4axAQy13yuYGcTxLFbM50haN12PRzCtW1uU/g8la2sAE=
+Received: by 10.78.195.9 with SMTP id s9mr20610huf.1173347821434;
+        Thu, 08 Mar 2007 01:57:01 -0800 (PST)
+Received: by 10.78.138.5 with HTTP; Thu, 8 Mar 2007 01:57:01 -0800 (PST)
+In-Reply-To: <7vy7m8aytt.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41728>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+On 3/8/07, Junio C Hamano <junkio@cox.net> wrote:
+> But this is only true if you want to make it really nice.  I
+> personally feel that nobody would scream if pushing 1300 refs at
+> once (4K pages and MAX_ARG_PAGES at 32 would give 128K for
+> **argv and its strings, and one ref's worth of data is two
+> 40-digit hex plus refname, roughly 100-byte per ref) is not
+> supported and always failed.
 
-> Andy Parkins <andyparkins@gmail.com> wrote:
->> Without adding some nasty switches to git-rev-list 
->> (like --all-except-this-branch), I can't see how the post-update hook could 
->> ever send emails with the necessary amount of detail.
->
-> Which is why `master` now has support for a post-receive hook,
-> that has the magic three parameters.  ;-)
+I'm not too worried about linux. It wont have any problems
+even if you supply megabytes of arguments (if someone will
+really need such lists, he can increase MAX_ARG_PAGES
+and be done with it).
 
-... but do not use that yet, as its public interface will change
-to take the refs parameters in different ways (and the final
-interface still under discussion).
+The proprietary OS' will have the problem, though. And far sooner
+than 1300 refs (w2k has only 32767 bytes for command line).
+Besides, don't overestimate peoples readiness to be careful
+about reference names. I would expect reference names over
+100 bytes in length to happen regularly (generated from file names
+appended with a timestamp, for example).
+
+Maybe provide this hooks with simply formatted list on stdin? I.e.
+
+<old-ref> <new-ref> <ref-name> LF
