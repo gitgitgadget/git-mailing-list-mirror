@@ -1,84 +1,83 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Advice on strategy for "temporary" commits
-Date: Thu, 8 Mar 2007 14:39:46 +0000
-Message-ID: <e1dab3980703080639i4c553e89nb931c2aea45b023b@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Git building is borked
+Date: Thu, 8 Mar 2007 09:55:32 -0500
+Message-ID: <20070308145532.GA30674@spearce.org>
+References: <4BBB354C-B000-4EF7-B3FF-7B2A4D6DE538@cam.ac.uk> <F0177878-0A2B-43B0-9838-E032FB3A0A58@cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 08 15:40:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Anton Altaparmakov <aia21@cam.ac.uk>
+X-From: git-owner@vger.kernel.org Thu Mar 08 15:55:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPJmp-0002xW-BO
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 15:40:07 +0100
+	id 1HPK1v-0001Ux-0l
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 15:55:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981AbXCHOjs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 09:39:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751982AbXCHOjs
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 09:39:48 -0500
-Received: from nz-out-0506.google.com ([64.233.162.226]:5516 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751981AbXCHOjr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 09:39:47 -0500
-Received: by nz-out-0506.google.com with SMTP id s1so431506nze
-        for <git@vger.kernel.org>; Thu, 08 Mar 2007 06:39:47 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=WFCAsgojNvoK4SmDzCfqboi+JmrAopkkNstgWXo4Sp9dCi6I5zXry6Nd50vReb0SR4En51Pt8acURxK0RcAu1fzJNYmtOOgoIEefVE3byB6ppNbT3Qm8jshLMqzpyL3CNxODuRnzd7ONSZP4MHZZW5olnHs1Zz3JljukmEZ7Cmc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=GGBzogvRxL55PdMbpUXjSDKPwBYYJokXI7t8EIrBAG/4dE276dHfbAJxzJTlSkHoAXPxlfAblvwzjzVn4pKxXyyh9BAEwsh5Kfz510vLNFAUXpWpR7j5WmcJBWSoQ1Uei4cudEGRKEQGaxqPPCODw9QAWehf9vrEbVQxAL/LlD4=
-Received: by 10.65.248.19 with SMTP id a19mr936392qbs.1173364786961;
-        Thu, 08 Mar 2007 06:39:46 -0800 (PST)
-Received: by 10.65.160.2 with HTTP; Thu, 8 Mar 2007 06:39:46 -0800 (PST)
+	id S1752041AbXCHOzi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 09:55:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752029AbXCHOzi
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 09:55:38 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:49450 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752041AbXCHOzh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 09:55:37 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HPK1h-0000EZ-GI; Thu, 08 Mar 2007 09:55:29 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id F1E6620FBAE; Thu,  8 Mar 2007 09:55:32 -0500 (EST)
 Content-Disposition: inline
+In-Reply-To: <F0177878-0A2B-43B0-9838-E032FB3A0A58@cam.ac.uk>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41745>
 
-Hi,
+Anton Altaparmakov <aia21@cam.ac.uk> wrote:
+> But now I put the git-gui mentions back into the Makefile and tried  
+> again it still fails.  Looking at it closer it actually requires me  
+> to compile within a checked out git tree, i.e. including the .git  
+> directory and all its contents!  That seems even weirder than  
+> requiring git to be installed in the first place...
 
-I've been working with my system taking automatic
-hourly git snapshots of (filtered portions of) my home
-directory for a couple of months. Being able to look
-back to what files looked like mid-afternoon yesterday,
-or on 18 Nov, is proving modestly useful. However,
-I'm thinking about adding "temporary" commits every
-ten minutes which then get discarded after 5 hours-ish
-(in addition to the long-term archival hourly commits).
-This is motivated by the desire to have finer granularity
-for testing/bisecting short-term regressions but not having
-ridiculously fine-grained changes clogging up the
-archive long-term. (I'm aware that with the commits
-being primarily taken on a timed basis I'll have more
-non-compiling changes than is usual in a repository, so
-that this may not turn out to be useful in practice.)
+What version of Git specifically are you building with?  How did
+you obtain these source files?
 
-Looking through the git docs, it looks like the most
-natural way of doing this is to make the 10-min commits
-(via cron & tagging them under a special tag "temporary
-commits only" directory) and then use
+Release tarballs of Git contain a git-gui/credits file that makes
+CREDITS-GEN avoid invoking the not-yet-existing Git.  Building
+git-gui without this file does require not only a working Git
+installation, but also the git-gui object database.  Both of these
+are readily available on a Git hacker's system, and on any system
+that is attempting to create a release tarball.
 
-git-rebase --onto start-tag end-tag branch
+There are other files included in the release tarballs (version,
+git-gui/version) that are also required to get a correct build when
+you don't have Git installed, or are missing its object database.
+Having these missing does not stop the build process, but it does
+make the output of `git version` and `git gui version` relatively
+useless.
 
-every so often (via cron again) to chop the older
-temporary commits between start-tag and end-tag
-out of the database.
 
-However, I'm not remotely expert on all the other
-things you can do with git, so I'm just checking
-there's not a way considered better/safer (eg, a separate
-branch or repository).
+So you need to be bootstrapping from a released *.tar.{gz,bz2},
+which can be found here:
 
-Many thanks for any insight,
+  http://www.kernel.org/pub/software/scm/git/
+
+
+Sadly, simply downloading the source files from a random gitweb
+doesn't work anymore.  Yes, I know, my fault.  ;-)
+
 -- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-Details are all that matters; God dwells there, and you never get to
-see Him if you don't struggle to get them right. -- Stephen Jay Gould
+Shawn.
