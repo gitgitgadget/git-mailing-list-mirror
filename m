@@ -1,67 +1,61 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] shortlog: prompt when reading from terminal by mistake
-Date: Thu, 8 Mar 2007 09:31:55 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0703080928580.10832@woody.linux-foundation.org>
-References: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0703080827170.10832@woody.linux-foundation.org>
- <Pine.LNX.4.63.0703081755500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: attempting to clone the git repo
+Date: Thu, 8 Mar 2007 18:33:48 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703081833020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <2fb03ecb0703080849m41ac8158y4895f2bc811934f5@mail.gmail.com>
+ <Pine.LNX.4.63.0703081828500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 08 18:32:38 2007
+Cc: git@vger.kernel.org
+To: Andrew Kilroy <lemonkandy@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 08 18:33:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPMTm-0002Hn-90
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 18:32:38 +0100
+	id 1HPMUz-0002mw-HW
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 18:33:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932156AbXCHRcG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 12:32:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbXCHRcG
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 12:32:06 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:53701 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752590AbXCHRcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 12:32:04 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l28HVuq8006934
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 8 Mar 2007 09:31:56 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l28HVtXu000692;
-	Thu, 8 Mar 2007 09:31:55 -0800
-In-Reply-To: <Pine.LNX.4.63.0703081755500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Spam-Status: No, hits=-2.489 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932189AbXCHRdu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 12:33:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752591AbXCHRdu
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 12:33:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50224 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752590AbXCHRdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 12:33:49 -0500
+Received: (qmail invoked by alias); 08 Mar 2007 17:33:48 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 08 Mar 2007 18:33:48 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+MJktHC9KMMlUON+FAgMhiuRq7swkyzx8c9S3J8h
+	3TgRsvgxC2/ozY
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.63.0703081828500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41765>
 
-
+Hi,
 
 On Thu, 8 Mar 2007, Johannes Schindelin wrote:
+
+> On Thu, 8 Mar 2007, Andrew Kilroy wrote:
 > 
-> How about something totally different: "git log --shortlog". I.e.
+> > I'm attempting to clone the git repository using git-1.5.0.3 in my workplace.
+> > Port 9418's blocked by the firewall, so I'm trying via http:
+> > 
+> >    $ git clone http://git.kernel.org/pub/scm/git/git.git
+> 
+> Add a "/" to the end:
+> 
+> $ git clone http://git.kernel.org/pub/scm/git/git.git/
 
-Sure, but this is even worse, because the way you wrote the patch, now
+Sorry. After trying: this does no longer work. Evidently, something 
+changed (gitweb says http://git.kernel.org//git/git.git (sic!) is correct 
+now, but it is not).
 
-	git log --shortlog
-
-will act as a filter too, which is even *more* confusing.
-
-You also broke something even more fundamental. Try this:
-
-	git log -- --shortlog
-
-with your patch ;)
-
-But yeah, if "cmd_shortlog()" worked like "git log" (at least if it sees 
-the "--shortlog" flag) and with that obvious filename parsing thing fixed, 
-that thing would be fine.
-
-			Linus
+Sorry again,
+Dscho
