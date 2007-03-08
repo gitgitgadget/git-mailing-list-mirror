@@ -1,57 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git push failure with update hook success
-Date: Thu, 8 Mar 2007 04:28:09 -0500
-Message-ID: <20070308092809.GE30289@spearce.org>
-References: <17902.59497.831409.218529@lisa.zopyra.com> <20070307170904.GB27922@spearce.org> <17902.62836.920473.810183@lisa.zopyra.com> <200703080922.54978.andyparkins@gmail.com>
+From: Sergey Vlasov <vsu@altlinux.ru>
+Subject: Re: [PATCH] Split sample update hook into post-receive hook
+Date: Thu, 8 Mar 2007 12:40:24 +0300
+Message-ID: <20070308124024.d20e29c9.vsu@altlinux.ru>
+References: <20070308041618.GA29744@spearce.org>
+	<81b0412b0703080026v6f3990c3x2cefca661b64e00d@mail.gmail.com>
+	<20070308083317.GB30289@spearce.org>
+	<7vy7m8aytt.fsf@assigned-by-dhcp.cox.net>
+	<20070308091313.GC30289@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Bill Lear <rael@zopyra.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 10:28:26 2007
+Content-Type: multipart/signed; protocol="application/pgp-signature";
+ micalg="PGP-SHA1";
+ boundary="Signature=_Thu__8_Mar_2007_12_40_24_+0300_klXvXWLTBVJSE4M0"
+Cc: Junio C Hamano <junkio@cox.net>, Alex Riesen <raa.lkml@gmail.com>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 08 10:41:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPEv7-0008S9-7d
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 10:28:21 +0100
+	id 1HPF7x-0006B6-QQ
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 10:41:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030407AbXCHJ2R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 04:28:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030347AbXCHJ2R
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 04:28:17 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:41388 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030407AbXCHJ2P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 04:28:15 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HPEuw-0005r3-2t; Thu, 08 Mar 2007 04:28:10 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2585D20FBAE; Thu,  8 Mar 2007 04:28:09 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <200703080922.54978.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030476AbXCHJlb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 04:41:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030461AbXCHJlb
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 04:41:31 -0500
+Received: from master.altlinux.org ([62.118.250.235]:4264 "EHLO
+	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030449AbXCHJla (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 04:41:30 -0500
+Received: by master.altlinux.org (Postfix, from userid 584)
+	id EBB64E34CC; Thu,  8 Mar 2007 12:41:28 +0300 (MSK)
+In-Reply-To: <20070308091313.GC30289@spearce.org>
+X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.6; x86_64-alt-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41725>
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> Without adding some nasty switches to git-rev-list 
-> (like --all-except-this-branch), I can't see how the post-update hook could 
-> ever send emails with the necessary amount of detail.
+--Signature=_Thu__8_Mar_2007_12_40_24_+0300_klXvXWLTBVJSE4M0
+Content-Type: text/plain; charset=US-ASCII
+Content-Disposition: inline
+Content-Transfer-Encoding: 7bit
 
-Which is why `master` now has support for a post-receive hook,
-that has the magic three parameters.  ;-)
+On Thu, 8 Mar 2007 04:13:13 -0500 Shawn O. Pearce wrote:
 
--- 
-Shawn.
+> Junio C Hamano <junkio@cox.net> wrote:
+[...]
+> > But this is only true if you want to make it really nice.  I
+> > personally feel that nobody would scream if pushing 1300 refs at
+> > once (4K pages and MAX_ARG_PAGES at 32 would give 128K for
+> > **argv and its strings, and one ref's worth of data is two
+> > 40-digit hex plus refname, roughly 100-byte per ref) is not
+> > supported and always failed.
+>
+> Agree completely.  I'm not too worried about it.  1300 ref push is
+> just not going to really occur in practice; that is just insane.
+> 30 refs, maybe.
+
+It is not completely insane - e.g., the current klibc repository
+already contains 338 tags.  Being unable to use "git push --tags" to
+an initially empty repository does not look good.
+
+So could you please switch to passing refs through stdin while we
+still can do it without breaking public interfaces?
+
+--Signature=_Thu__8_Mar_2007_12_40_24_+0300_klXvXWLTBVJSE4M0
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.1 (GNU/Linux)
+
+iD8DBQFF79oLW82GfkQfsqIRAkPoAJsG84rOUndtUyjXBSd9dq6rOhMuHgCePfLI
+Bj032jrYII737dH2XAyffSU=
+=wli1
+-----END PGP SIGNATURE-----
+
+--Signature=_Thu__8_Mar_2007_12_40_24_+0300_klXvXWLTBVJSE4M0--
