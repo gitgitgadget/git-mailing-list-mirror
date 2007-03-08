@@ -1,57 +1,92 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: StGIT 0.12.1: pulling up to specific commit (tag)
-Date: Thu, 8 Mar 2007 21:17:07 +0100
-Message-ID: <20070308201707.GA4250@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH] git-bundle: avoid packing objects which are in the prerequisites
+Date: Thu, 08 Mar 2007 15:36:41 -0500
+Message-ID: <45F073D9.7060209@gmail.com>
+References: <45ECEB40.4000907@gmail.com> <7vejo2stlw.fsf@assigned-by-dhcp.cox.net> <45EE1242.8080405@gmail.com> <7vhcsxkb8n.fsf@assigned-by-dhcp.cox.net> <45EE2ECA.60403@gmail.com> <Pine.LNX.4.63.0703070419410.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45EE36A1.30001@gmail.com> <Pine.LNX.4.63.0703070504140.22628@wbgn013.biozentrum.uni-wuerzburg.de> <30e4a070703070834s3dd5bdd7x2e1639aa2979d1cf@mail.gmail.com> <Pine.LNX.4.63.0703072330200.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vfy8geikk.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703080039420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT list <git@vger.kernel.org>
-To: Andrey Borzenkov <arvidjaar@mail.ru>
-X-From: git-owner@vger.kernel.org Thu Mar 08 21:17:41 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 08 21:36:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPP3T-0005Vr-Su
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 21:17:40 +0100
+	id 1HPPLx-0005H4-3d
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 21:36:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752634AbXCHUR3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 15:17:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbXCHUR3
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 15:17:29 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:41688 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752643AbXCHUR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 15:17:27 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id B832B49EB6;
-	Thu,  8 Mar 2007 21:17:25 +0100 (CET)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 9FAC81F096; Thu,  8 Mar 2007 21:17:07 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932244AbXCHUgl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 15:36:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933045AbXCHUgk
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 15:36:40 -0500
+Received: from an-out-0708.google.com ([209.85.132.243]:55349 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932244AbXCHUgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 15:36:39 -0500
+Received: by an-out-0708.google.com with SMTP id b33so584875ana
+        for <git@vger.kernel.org>; Thu, 08 Mar 2007 12:36:39 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=RUgqfu0+l7avoZB4aWicRN6F+lWtvAt3BO0RK1VGzPagSzgNxv2ZxcgtpY7rIAY3/figvapa+Zz+qojDSYGFwJMLFAP6xpto8p3OmFbUTWPfWKGTI6ipZ/IWwEaDlz53IAE50ypj3V8eOSm20vwz4r1g4xjFT50OSFmYSDAWCF4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=KFFubW6BXCTp/k7k7MOiunJOkcyg9YmsUq4WuYco5cmeeGzSy6nYs5L5yReBRO89Fq7aZh9yTPqkmH/G8PgpTltCOcQCV/ljPmhVY/BONJ5hLf0g5PAYGl1APraHIn9/6fJ87usJduzAMX3DSdlXoqemUKZ0gv482B4A3OcQrPc=
+Received: by 10.100.197.15 with SMTP id u15mr653870anf.1173386199010;
+        Thu, 08 Mar 2007 12:36:39 -0800 (PST)
+Received: from ?192.168.1.8? ( [209.168.216.145])
+        by mx.google.com with ESMTP id c39sm3607921anc.2007.03.08.12.36.37;
+        Thu, 08 Mar 2007 12:36:38 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <Pine.LNX.4.63.0703080039420.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41771>
 
-Hi Andrey,
+Johannes Schindelin wrote:
 
->Now "stg pull" no more accepts branch name; but I cannot figure how to to the 
->same using git config.
+Using next (2432cbc253e8ef5cf09062abb8f7325813476d1d) that has your 
+patches for creating a thin-pack and limiting objects, I generally find 
+the bundle file created cannot be used.
 
-(I must say I am not sure to understand the workflow you're using, I
-suspect there were some missing steps in your mail).
+Specific example you can repeat in a current git repo:
 
-You probably want "stg rebase <parent branch>", unless you have
-commits below your stack base, and that you get a merge commit when
-running "git pull".
+git>git branch foo 2432cbc253e8ef5c
+git>git bundle create t.bdl foo~1..foo
+Generating pack...
+Done counting 20 objects.
+Result has 14 objects.
+Deltifying 14 objects.
+ 100% (14/14) done
+Writing 14 objects.
+ 100% (14/14) done
+Total 14 (delta 10), reused 10 (delta 6)
+git>git fetch t.bdl
+fatal: pack has junk at the end
+error: index-pack exited with status 128
+fatal: Fetch failure: t.bdl
+git>
 
-In the latter case, there is possibly a missing feature: you can get a
-merge through git-pull, but you cannot pass the refspec any more.  If
-there is a use for this (other than the one already handled by
-"rebase"), I'd like to understand the need, so we can add the feature
-back in a better way.
 
-Best regards,
--- 
-Yann.
+Also, we get an interesting failure if the references are not touched in 
+a given date range:
+git>git bundle create t.bdl --since=5.minutes.ago foo
+warning: ref 'foo' is excluded by the rev-list options
+Generating pack...
+Done counting 38321 objects.
+Deltifying 38321 objects.
+ 100% (38321/38321) done
+Writing 38321 objects.
+ 100% (38321/38321) done
+Total 38321 (delta 26678), reused 38180 (delta 26551)
+git>
+
+No references requies 38000+ objects?? In this case, the bundle includes 
+every object in the repository, the exact opposite of what should happen 
+(zero objects).
+
+Mark
