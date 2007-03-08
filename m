@@ -1,72 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git push failure with update hook success
-Date: Thu, 8 Mar 2007 05:06:55 -0500
-Message-ID: <20070308100655.GG30289@spearce.org>
-References: <17902.59497.831409.218529@lisa.zopyra.com> <200703080922.54978.andyparkins@gmail.com> <20070308092809.GE30289@spearce.org> <200703081004.32666.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] shortlog: prompt when reading from terminal by mistake
+Date: Thu, 08 Mar 2007 02:12:06 -0800
+Message-ID: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Bill Lear <rael@zopyra.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 08 11:07:11 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 08 11:12:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPFWg-0000jg-BE
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 11:07:10 +0100
+	id 1HPFbb-00031M-73
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 11:12:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932470AbXCHKHA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 05:07:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932945AbXCHKHA
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 05:07:00 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42010 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932470AbXCHKG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 05:06:58 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HPFWQ-00070F-Jq; Thu, 08 Mar 2007 05:06:54 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9463620FBAE; Thu,  8 Mar 2007 05:06:55 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <200703081004.32666.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S932945AbXCHKMJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 05:12:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932969AbXCHKMJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 05:12:09 -0500
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:54844 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932945AbXCHKMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 05:12:08 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070308101208.ZRKJ2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 8 Mar 2007 05:12:08 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id YAC61W00G1kojtg0000000; Thu, 08 Mar 2007 05:12:07 -0500
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41733>
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> On Thursday 2007 March 08 09:28, Shawn O. Pearce wrote:
-> > Andy Parkins <andyparkins@gmail.com> wrote:
-> > > Without adding some nasty switches to git-rev-list
-> > > (like --all-except-this-branch), I can't see how the post-update hook
-> > > could ever send emails with the necessary amount of detail.
-> >
-> > Which is why `master` now has support for a post-receive hook,
-> > that has the magic three parameters.  ;-)
-> 
-> It still won't work - what about the 
-> 
->  git-rev-list --not --all
-> 
-> Problem?
-> 
-> By the time that hook runs the master ref (for example) has changed, 
-> so "--not --all" includes the new revisions, and you get no output.
+I was trying to see who have been active recently to find GSoC
+mentor candidates by running:
 
-Dammit.  That's so obvious.  And I missed it.
+	$ git shortlog -s -n --since=4.months | head -n 20
 
-I got nothing at this hour of the morning.
+After waiting for about 20 seconds, I started getting worried,
+thinking that the recent revision traversal updates might have
+had an unintended side effect.
 
--- 
-Shawn.
+Not so.  "git shortlog" acts as a filter when no revs are given,
+unlike "git log" which defaults to HEAD.  It was reading from
+its standard input.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+
+   Arguably because --since=4.months clearly states I am
+   expecting it to start digging from somewhere, it would be
+   more sensible to default to HEAD in this case.  I suspect it
+   might be as simple as checking argc before we call
+   setup_revisions() and pass "HEAD" as the default parameter to
+   it, but it is getting late here.
+
+ builtin-shortlog.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-shortlog.c b/builtin-shortlog.c
+index 2d7726e..29343ae 100644
+--- a/builtin-shortlog.c
++++ b/builtin-shortlog.c
+@@ -304,8 +304,11 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ 	if (!access(".mailmap", R_OK))
+ 		read_mailmap(".mailmap");
+ 
+-	if (rev.pending.nr == 0)
++	if (rev.pending.nr == 0) {
++		if (isatty(0))
++			fprintf(stderr, "(reading log to summarize from standard input)\n");
+ 		read_from_stdin(&list);
++	}
+ 	else
+ 		get_from_rev(&rev, &list);
+ 
