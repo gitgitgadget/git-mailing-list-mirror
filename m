@@ -1,67 +1,72 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Split sample update hook into post-receive hook
-Date: Thu, 8 Mar 2007 13:09:07 +0100
-Message-ID: <81b0412b0703080409u5ae64698tfa70a8ba2de65df@mail.gmail.com>
-References: <20070308041618.GA29744@spearce.org>
-	 <81b0412b0703080026v6f3990c3x2cefca661b64e00d@mail.gmail.com>
-	 <20070308083317.GB30289@spearce.org>
-	 <7vy7m8aytt.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0703080157n413de6f6q35ae24e2620df91d@mail.gmail.com>
-	 <20070308100237.GF30289@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] shortlog: prompt when reading from terminal by mistake
+Date: Thu, 8 Mar 2007 14:04:04 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703081344140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Andy Parkins" <andyparkins@gmail.com>,
-	"Bill Lear" <rael@zopyra.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 08 13:09:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 08 14:04:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPHQo-0003ue-6V
-	for gcvg-git@gmane.org; Thu, 08 Mar 2007 13:09:14 +0100
+	id 1HPII0-0002zk-Nc
+	for gcvg-git@gmane.org; Thu, 08 Mar 2007 14:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751536AbXCHMJK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 07:09:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751537AbXCHMJK
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 07:09:10 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:50616 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751533AbXCHMJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 07:09:09 -0500
-Received: by nf-out-0910.google.com with SMTP id o25so609164nfa
-        for <git@vger.kernel.org>; Thu, 08 Mar 2007 04:09:07 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FFhIXL0YEJDirwKNUviUwmoS+6hyZ/87S0ie/yDQQOR8IYIEplkQ3UtPF9mEDxpbEUacqtEej8p4l+GtRWzcRHD29tiJWWESSCECM+aUSjKUUfY1wavbMgfJiS7dvwd8AuFJp8OBssd75d8tL2fLFRQpdIOXoadeLOuT40bbh6M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QvkzMWZ/xoo/3pdUZ6U+CFZBSCqccjvbJjZ9o4oiVYnNadzUt3i53c60cw+ycyBLV4CeUhCp+auhoqkezihTO2FCMM1awbX8M/vctRdby4MutkJbCcnxkMo8Q8P4LtfWfGbBxiAZlDahNM8gpbKTQbF/lOKsJYSyzP2uEfOfn1w=
-Received: by 10.78.160.2 with SMTP id i2mr34366hue.1173355747706;
-        Thu, 08 Mar 2007 04:09:07 -0800 (PST)
-Received: by 10.78.138.5 with HTTP; Thu, 8 Mar 2007 04:09:07 -0800 (PST)
-In-Reply-To: <20070308100237.GF30289@spearce.org>
-Content-Disposition: inline
+	id S1751726AbXCHNEI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 08:04:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751752AbXCHNEI
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 08:04:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44077 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751726AbXCHNEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 08:04:07 -0500
+Received: (qmail invoked by alias); 08 Mar 2007 13:04:04 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp052) with SMTP; 08 Mar 2007 14:04:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+a3Ww8c/+aJRbVan4R2zxkJ1ecn3dzaRico1I8pl
+	N+Aui9KWBrYwGv
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41740>
 
-On 3/8/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> > The proprietary OS' will have the problem, though. And far sooner
-> > than 1300 refs (w2k has only 32767 bytes for command line).
-> > Besides, don't overestimate peoples readiness to be careful
-> > about reference names. I would expect reference names over
-> > 100 bytes in length to happen regularly (generated from file names
-> > appended with a timestamp, for example).
->
-> Cygwin's lifted that argument handling to be unlimited.
+Hi,
 
-Actually, it didn't at all. Cygwin conveniently forgets that not all
-programs use cygwin1.dll. Cygwin is just the wrong place
-were the problems of windows stupidity have to be fixed,
-and so it does not fix them.
+On Thu, 8 Mar 2007, Junio C Hamano wrote:
+
+> I was trying to see who have been active recently to find GSoC
+> mentor candidates by running:
+> 
+> 	$ git shortlog -s -n --since=4.months | head -n 20
+> 
+> After waiting for about 20 seconds, I started getting worried,
+> thinking that the recent revision traversal updates might have
+> had an unintended side effect.
+> 
+> Not so.  "git shortlog" acts as a filter when no revs are given,
+> unlike "git log" which defaults to HEAD.  It was reading from
+> its standard input.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+>    Arguably because --since=4.months clearly states I am
+>    expecting it to start digging from somewhere, it would be
+>    more sensible to default to HEAD in this case.  I suspect it
+>    might be as simple as checking argc before we call
+>    setup_revisions() and pass "HEAD" as the default parameter to
+>    it, but it is getting late here.
+
+Hm. Better check argc _afterwards_, and if it changed, but no pending 
+object was there, add "HEAD".
+
+Ciao,
+Dscho
