@@ -1,71 +1,87 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in
- bundle
-Date: Thu, 08 Mar 2007 22:17:07 -0500
-Message-ID: <45F0D1B3.9020204@gmail.com>
+From: Mark Levedahl <mdl123@verizon.net>
+Subject: [PATCH] git-bundle: die if the bundle is empty.
+Date: Thu, 08 Mar 2007 22:51:56 -0500
+Message-ID: <11734123161927-git-send-email-mdl123@verizon.net>
 References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, junkio@cox.net
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 09 04:17:15 2007
+Cc: junkio@cox.net, git@vger.kernel.org,
+	Mark Levedahl <mdl123@verizon.net>
+To: Johannes.Schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Fri Mar 09 04:52:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPVbT-0005Ew-EO
-	for gcvg-git@gmane.org; Fri, 09 Mar 2007 04:17:11 +0100
+	id 1HPW9f-0001iz-BA
+	for gcvg-git@gmane.org; Fri, 09 Mar 2007 04:52:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992914AbXCIDRH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 22:17:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992917AbXCIDRH
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 22:17:07 -0500
-Received: from an-out-0708.google.com ([209.85.132.250]:23041 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992914AbXCIDRE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 22:17:04 -0500
-Received: by an-out-0708.google.com with SMTP id b33so667347ana
-        for <git@vger.kernel.org>; Thu, 08 Mar 2007 19:17:03 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=SBbyC9fH+XEQKCIIr9U8WuIhImmkJUnse2vbqw/f6x2SIfLL7H6/gjEIN8CBVrKqi+j11B1QyhVKAZVlMmx16IQTr/+L+bYzK9BMWDaS43cjqaiwttVQ7pD7JB3bgNga/DiJAtPHIf0Asr30G2ECnMJTJigNTL61Mr+kB4rZWOI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=AV3kwArGdoI7GPB0BnoAv3/2jM5q/pysUrtDW7Q9l+uFeDT1Qy36xI5Cm6N6+gWFRC7xnDRr5NdHYETE/iPfwuKJ4qeMOBX7k9peiLR23u+ms4wYFXXSbd9NrCkg2PJJwkdWqYGGzQd3D4OSiYWAx7WrmGqfVuvXmncrAS3QPas=
-Received: by 10.100.10.20 with SMTP id 20mr908376anj.1173410223847;
-        Thu, 08 Mar 2007 19:17:03 -0800 (PST)
-Received: from ?10.1.5.213? ( [206.166.206.34])
-        by mx.google.com with ESMTP id c13sm4317238anc.2007.03.08.19.17.02;
-        Thu, 08 Mar 2007 19:17:03 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1751774AbXCIDwT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 22:52:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751881AbXCIDwS
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 22:52:18 -0500
+Received: from vms046pub.verizon.net ([206.46.252.46]:35532 "EHLO
+	vms046pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751774AbXCIDwS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 22:52:18 -0500
+Received: from fal-l07294-lp.us.ray.com ([206.166.206.34])
+ by vms046.mailsrvcs.net
+ (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
+ with ESMTPA id <0JEM00HQDAQFJ7N2@vms046.mailsrvcs.net> for
+ git@vger.kernel.org; Thu, 08 Mar 2007 21:51:54 -0600 (CST)
+In-reply-to: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: git-send-email 1.5.0.3.927.g2432c-dirty
+X-Peer: 127.0.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41786>
 
-Johannes Schindelin wrote:
-> The earlier patch tried to be nice by just warning, but it seems
-> more likely that the user wants to adjust the parameters.
->
-> Also, it prevents a bundle containing _all_ revisions in the case
-> when the user only gave one ref, but also rev-list options which
-> excluded the ref.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->
->   
-This patch makes git-bundle greatly complicates one of my primary uses: 
-a nightly update generated and emailed to other users. With this, I need 
-to write code to separately explore each branch in the repository to 
-find what changed, then include only those. Without, I can just do git 
-bundle ... <list of refs> and those which have been updated get included.
+A common use of bundle is to schedule nightly emailed updates to a remote
+system containing all updates made over a given period. We want bundle
+to complain only if the resulting bundle would be empty, but not if at
+least one of the given refs has an update resulting in a non-empty bundle.
 
-So, I would really like an option to error out only if the bundle would 
-be empty.
+Signed-off-by: Mark Levedahl <mdl123@verizon.net>
+---
+ builtin-bundle.c |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
 
-Mark
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index c85f996..b888a9f 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -261,6 +261,7 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		int argc, const char **argv)
+ {
+ 	int bundle_fd = -1;
++	int isempty = 1;
+ 	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
+ 	const char **argv_pack = xmalloc(5 * sizeof(const char *));
+ 	int pid, in, out, i, status;
+@@ -328,17 +329,17 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		 * other limiting options could have prevented all the tips
+ 		 * from getting output.
+ 		 */
+-		if (!(e->item->flags & SHOWN)) {
+-			warn("ref '%s' is excluded by the rev-list options",
+-				e->name);
+-			continue;
++		if ((e->item->flags & SHOWN)) {
++			isempty = 0;
++			write_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40);
++			write_or_die(bundle_fd, " ", 1);
++			write_or_die(bundle_fd, ref, strlen(ref));
++			write_or_die(bundle_fd, "\n", 1);
+ 		}
+-		write_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40);
+-		write_or_die(bundle_fd, " ", 1);
+-		write_or_die(bundle_fd, ref, strlen(ref));
+-		write_or_die(bundle_fd, "\n", 1);
+ 		free(ref);
+ 	}
++	if (isempty)
++		die("Bundle is empty");
+ 
+ 	/* end header */
+ 	write_or_die(bundle_fd, "\n", 1);
+-- 
+1.5.0.3.927.g2432c-dirty
