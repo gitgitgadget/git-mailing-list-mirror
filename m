@@ -1,105 +1,72 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in
- bundle
-Date: Fri, 09 Mar 2007 08:40:04 -0500
-Message-ID: <45F163B4.2000905@gmail.com>
-References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] shortlog: prompt when reading from terminal by mistake
+Date: Fri, 09 Mar 2007 15:41:02 +0100
+Organization: At home
+Message-ID: <esrrh3$rmb$1@sea.gmane.org>
+References: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703080827170.10832@woody.linux-foundation.org> <Pine.LNX.4.63.0703081755500.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 09 14:40:14 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 09 16:03:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPfKO-0007qK-Mm
-	for gcvg-git@gmane.org; Fri, 09 Mar 2007 14:40:13 +0100
+	id 1HPgdL-00015p-Ii
+	for gcvg-git@gmane.org; Fri, 09 Mar 2007 16:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767285AbXCINkF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 08:40:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767287AbXCINkF
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 08:40:05 -0500
-Received: from an-out-0708.google.com ([209.85.132.242]:29620 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767285AbXCINkB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 08:40:01 -0500
-Received: by an-out-0708.google.com with SMTP id b33so767225ana
-        for <git@vger.kernel.org>; Fri, 09 Mar 2007 05:40:01 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=eN4xYbKhbQm037as3g4s6dgbZNGIEE+gO+Uh0E2wk2T/ObE+LhXY/s7Lpm4t6xidK9jkxhTsBBW4k057f9oZkNDCTl3lLkZX43P6VQNG33nqd6DLPAtBG/6Ou1jEHZ3ib6g0o/XIgalJ6WJeY+miCI6jiPp2FgHMq6K6pOvJ84Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=sbKUqHzP36EIPVOB1zER1u1bdUPmUSrsUTNxpc8xhHsA2EJ2ZJZtBrJFhv1PaIYCFQxpWsR2CHuvoo2GlrlP3JRP6ryVrfw9cDHvekVV1ainm54rdhDlgrulaFyj4K4Mpktj+9geiRyuu4Lj4FXwhPqebitjdsg1b28Nm+hb+fg=
-Received: by 10.100.190.8 with SMTP id n8mr1215128anf.1173447600692;
-        Fri, 09 Mar 2007 05:40:00 -0800 (PST)
-Received: from ?10.1.5.213? ( [206.166.206.34])
-        by mx.google.com with ESMTP id c27sm4850155ana.2007.03.09.05.39.59;
-        Fri, 09 Mar 2007 05:39:59 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
+	id S932529AbXCIPDr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 10:03:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932715AbXCIPDr
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 10:03:47 -0500
+Received: from main.gmane.org ([80.91.229.2]:59539 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932529AbXCIPDq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 10:03:46 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HPgTq-0001Za-5I
+	for git@vger.kernel.org; Fri, 09 Mar 2007 15:54:03 +0100
+Received: from host-81-190-29-212.torun.mm.pl ([81.190.29.212])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Mar 2007 15:54:02 +0100
+Received: from jnareb by host-81-190-29-212.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Mar 2007 15:54:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-212.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41796>
 
-Junio C Hamano wrote:
-> Mark Levedahl <mlevedahl@gmail.com> writes:
-> I am not sure if the above is true.  How are you preventing the
-> command from bundling everything?  You must have some limiter at
-> the bottom, something like --since=25.hours (to account for cron
-> schedule skew), not just <list of refs>.
->   
-Sorry, I trimmed too much. My typical command usage is something like
-    git bundle create foo --since=10.days.ago --all
+Johannes Schindelin wrote:
 
-I include a very generous date range so that folks don't have to update 
-daily, can cover a vacation with a single bundle, etc. I think this 
-usage renders moot all practical issues with clock skew. I am being 
-loose, if the bundle won't apply then get one from the previous week, 
-apply, and go forward.
+> On Thu, 8 Mar 2007, Linus Torvalds wrote:
+> 
+>> On Thu, 8 Mar 2007, Junio C Hamano wrote:
+>>> 
+>>> Not so.  "git shortlog" acts as a filter when no revs are given, 
+>>> unlike "git log" which defaults to HEAD.  It was reading from its 
+>>> standard input.
+>> 
+>> Could we just change that?
+>>
+>> [...]
+>> 
+>> Yeah, as a filter it *can* stil lbe useful, of course, but I suspect the 
+>> usefullness is limited.
+> 
+> How about something totally different: "git log --shortlog". I.e.
 
-BTW, shouldn't git check for clock skew when creating a commit to assure 
-the parents predate the child? Clock skew could allow this circumstance 
-which would look suspicious when exploring a history.
-> In any case, the semantics of --since=25.hours limiter is not
-> "show everything newer than 25.hours that are reachable from any
-> of these refs"; it is "start digging from these tips, and stop
-> exploring the path as soon as you hit something that is newer
-> than 25.hours".
->   
-I presume you mean "older than 2.5" hours in the above.
+Or have old filter behavior only with "git shortlog --stdin" option?
+Perhaps in git 1.5.1...
 
-> If I were doing a nightly script, I would probably be doing
-> something like this:
->
-> 	#!/bin/sh
-> 	yesterday=$(git bundle list-heads yesterday.bdl | sed -e 's/ .*//')
-> 	git bundle create today.bdl --all --not $yesterday
-> 	# mail it out
->
-> After sending today's bundle out, you will rotate it out to
-> yesterday.bdl in order to prepare for the next round.  It is
-> likely that you would want to keep a few day's worth of bundles
-> for other reasons _anyway_ (say, some project members might be
-> out of office, or mail gets dropped, or whatever), I think the
-> above is a reasonably clean and easy thing to arrange.
->
->   
-This is certainly a reliable method, but has the difficulty of how to 
-get started and of course requires that history be kept for the entire 
-range covered by each bundle. The first bundle is either a) the entire 
-repository, or b) crafted by trying each and every ref to find which are 
-legal to define. While all of this can be done, I think this cure is 
-worse than the disease (seconds to minutes of clock skew).
-
-I would prefer to just add a warning to the manual that when limiting by 
-date, be generous to allow for all possible clock skew across the 
-distributed set of computers.
-
-Mark
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
