@@ -1,67 +1,97 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/3] Do not link to docs that will never be written.
-Date: Sat, 10 Mar 2007 00:18:43 +0100
-Message-ID: <20070309231843.30705.24604.stgit@gandelf.nowhere.earth>
-References: <20070309231444.30705.72292.stgit@gandelf.nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in bundle
+Date: Fri, 09 Mar 2007 15:37:12 -0800
+Message-ID: <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
+	<45F17EF0.5060008@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 10 00:19:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 10 00:37:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPoMr-0008M9-5M
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 00:19:21 +0100
+	id 1HPoeL-0008Cj-L9
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 00:37:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767639AbXCIXTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 18:19:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767638AbXCIXTM
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 18:19:12 -0500
-Received: from smtp3-g19.free.fr ([212.27.42.29]:44246 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767639AbXCIXTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 18:19:09 -0500
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id DFDD738B1;
-	Sat, 10 Mar 2007 00:19:07 +0100 (CET)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 55A4A1F095;
-	Sat, 10 Mar 2007 00:18:43 +0100 (CET)
-In-Reply-To: <20070309231444.30705.72292.stgit@gandelf.nowhere.earth>
-User-Agent: StGIT/0.12
+	id S1767658AbXCIXhQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 18:37:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767654AbXCIXhP
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 18:37:15 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:50893 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767658AbXCIXhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 18:37:14 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070309233713.GMSK3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 9 Mar 2007 18:37:13 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id YndC1W00U1kojtg0000000; Fri, 09 Mar 2007 18:37:13 -0500
+In-Reply-To: <45F17EF0.5060008@gmail.com> (Mark Levedahl's message of "Fri, 09
+	Mar 2007 10:36:16 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41822>
 
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
+> git>git bundle create t.bdl master --not master
+> Generating pack...
+> Done counting 0 objects.
+> Writing 0 objects.
+> Total 0 (delta 0), reused 0 (delta 0)
+> git>git ls-remote t.bdl
+> git>
+>
+> e.g, an empty bundle is created without any error or warning. This is
+> the one case I believe an error should result: there is no use to
+> sending (or even creating) an empty bundle.
 
+I agree that erroring on an empty output is a sensible _option_
+just like pack-objects has --no-empty option.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
+The above is actually an interesting example in a different
+sense.  When somebody did the following, what should be output?
 
- Documentation/stg.txt |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+	$ edit; git commit -a ;# on master
+        $ git checkout -b side
+        $ edit; git commit -a ;# on side
+        $ git bundle create foo.bdl master side ^master
+	$ git bundle verify foo.bdl
 
-diff --git a/Documentation/stg.txt b/Documentation/stg.txt
-index 002606f..60a6f9c 100644
---- a/Documentation/stg.txt
-+++ b/Documentation/stg.txt
-@@ -65,11 +65,11 @@ Generic commands
- 
- User-support commands not touching the repository.
- 
--stglink:help[]::
-+stg help::
- 	stgdesc:help[]
--stglink:version[]::
-+stg version::
- 	stgdesc:version[]
--stglink:copyright[]::
-+stg copyright::
- 	stgdesc:copyright[]
- 
- Repository commands
+My answer is that it should list master and side as the
+available heads and master itself as also a prerequisite (which
+is not what the current code does).  
+
+I think unbundling foo.bdl should be the moral equivalent of
+fetching from the originating repository by somebody who has its
+prerequisites as tips of some branches.  So I think foo.bdl
+should list refs/heads/master as one of the available heads to
+fetch/pull from, while requiring the same commit as prerequisite
+of the bundle.  It is as if you tried "git fetch" and found out
+that you are up to date.  Listing where the 'master' tip is,
+even though you did not have to include any commits from that
+branch, gives you a useful bit of information ("I am up to date
+with respect to that branch").
+
+So I think if you did this instead in the above sequence: 
+
+	$ git bundle create foo.bdl master ^master
+
+it would be sensible to have an option to error out because of
+empty pack, but at the same time it would equally be sensible to
+have an option to still create a bundle with an empty pack
+contents.  In either case, the head and prerequisite section
+should include the tip of the master.  Earlier, I said we should
+error out if we do not find 'master' in the list of shown
+objects, but I think it is more sensible to add it to both the
+list of head _and_ prerequisites.
