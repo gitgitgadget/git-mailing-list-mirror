@@ -1,61 +1,84 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: attempting to clone the git repo
-Date: Fri, 9 Mar 2007 11:08:23 +0100
-Message-ID: <20070309100823.GB28406@xp.machine.xx>
-References: <2fb03ecb0703080849m41ac8158y4895f2bc811934f5@mail.gmail.com> <Pine.LNX.4.63.0703081828500.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v649ba89l.fsf@assigned-by-dhcp.cox.net> <2fb03ecb0703090151j10842263off743be1f86bf9c3@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Advice on strategy for "temporary" commits
+Date: Fri, 09 Mar 2007 11:15:01 +0100
+Organization: At home
+Message-ID: <esrbub$bg$1@sea.gmane.org>
+References: <e1dab3980703080639i4c553e89nb931c2aea45b023b@mail.gmail.com> <20070308163239.GH22713@fieldses.org> <e1dab3980703080907v58739287p18bc2797db7d209e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andrew Kilroy <lemonkandy@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 11:04:26 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 09 11:12:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPbxZ-0004d4-Mz
-	for gcvg-git@gmane.org; Fri, 09 Mar 2007 11:04:26 +0100
+	id 1HPc5b-00084a-Pt
+	for gcvg-git@gmane.org; Fri, 09 Mar 2007 11:12:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993095AbXCIKEV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 05:04:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767142AbXCIKEV
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 05:04:21 -0500
-Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34]:51302 "HELO
-	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S2993095AbXCIKEU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2007 05:04:20 -0500
-Received: (qmail 4686 invoked by uid 0); 9 Mar 2007 10:04:17 -0000
-Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 9 Mar 2007 10:04:17 -0000
-Mail-Followup-To: Andrew Kilroy <lemonkandy@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <2fb03ecb0703090151j10842263off743be1f86bf9c3@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S2993099AbXCIKMk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 9 Mar 2007 05:12:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993101AbXCIKMj
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 05:12:39 -0500
+Received: from main.gmane.org ([80.91.229.2]:48908 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2993099AbXCIKMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 05:12:38 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HPc5U-0000yc-V7
+	for git@vger.kernel.org; Fri, 09 Mar 2007 11:12:36 +0100
+Received: from host-81-190-29-212.torun.mm.pl ([81.190.29.212])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Mar 2007 11:12:36 +0100
+Received: from jnareb by host-81-190-29-212.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Mar 2007 11:12:36 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-81-190-29-212.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41793>
 
-On Fri, Mar 09, 2007 at 09:51:14AM +0000, Andrew Kilroy wrote:
-> On 08/03/07, Junio C Hamano <junkio@cox.net> wrote:
-> >I've always thought that for http transfer the hostname was not
-> >git.kernel.org but www.kernel.org, as in:
-> >
-> >        git clone http://www.kernel.org/pub/scm/git/git.git/
-> >
-> 
-> That worked, thanks.
-> 
-> I thought there were more branches though (pu, todo...).  I can only
-> see master via 'git branch'.  I'm not that familiar with git yet, so I
-> might be missing something obvious here.
-> 
-> Andy
+[Cc: git@vger.kernel.org]
 
-Use
-	git branch -r   # shows the remote branches
-or
-	gitk --all 	# --all = show every branch
+David Tweed wrote:
 
-to see all the branches.
+> So, at this point I need to ask an embarassingly basic
+> question: how do I "change branches" from T (say), in order to commit
+> to a different branch A, without changing the contents of
+> the working directory back to match what it was at the
+> time of the last commit to A?
+[...]]
+> So I'm on the temporary branch and have been doing
+> temporary commits to it and we hit an hour mark.
+> Cron wants to commit what's _currently_ in my working
+> directory as a new head to the "archival branch" A
+> and then swap back the temporary branch to
+> commit it on that branch and carry on, ie, make
+> the diagram look like:
+>=20
+> a-----------a-----------a-----------a
+> =A0\ =A0 =A0 =A0 =A0 =A0$ =A0 =A0 =A0 =A0 =A0 $ =A0 =A0 =A0 =A0 =A0 $
+> =A0 \-t---t---t---t---t---t---t---t---t
+>=20
+> AIUI neither git-branch nor git-checkout provide
+> a way to do this. (Clearly the git datastructures
+> can represent this situation, I'm just not sure how
+> to ask the tools to do it.)
 
--Peter
+Try if "git checkout -m" does what you wanted. Or simply
+do a merge of "more often" branch into "less often" branch,
+perhaps simply not recording it as a merge with=20
+"git merge --squash" followed by "git commit".
+
+By the way, you know that you can --amend a commit?
+
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
