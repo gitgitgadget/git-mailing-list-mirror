@@ -1,63 +1,69 @@
-From: Anton Tropashko <atropashko@yahoo.com>
-Subject: Errors cloning large repo
-Date: Fri, 9 Mar 2007 11:20:35 -0800 (PST)
-Message-ID: <284107.69764.qm@web52601.mail.yahoo.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] Documentation: s/seperator/separator/
+Date: Fri, 9 Mar 2007 15:21:41 -0500
+Message-ID: <20070309202141.GA4074@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 09 20:28:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 09 21:22:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPkl8-0000Vg-N5
-	for gcvg-git@gmane.org; Fri, 09 Mar 2007 20:28:11 +0100
+	id 1HPlbI-0000NI-Tn
+	for gcvg-git@gmane.org; Fri, 09 Mar 2007 21:22:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933151AbXCIT1R (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 14:27:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933382AbXCIT1R
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 14:27:17 -0500
-Received: from web52601.mail.yahoo.com ([206.190.48.204]:33595 "HELO
-	web52601.mail.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S933151AbXCIT1Q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2007 14:27:16 -0500
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Mar 2007 14:27:15 EST
-Received: (qmail 72183 invoked by uid 60001); 9 Mar 2007 19:20:35 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=aFOdxbsak0i7JcY90r5YC3B8hhBLZ34A4hvGO45jvgfFC+eLljOfyqxEfSyXdNLDEC0XGtUnFouUQOhq3MRafrdFpOujAxYISRpGBn1Jv/DWNXOxQ/7c3pXI1tWPIbWB6hUXpXV2q6aPluun3FVltEp42iaVjo7dLsLa3+Cu8ls=;
-Received: from [129.188.69.169] by web52601.mail.yahoo.com via HTTP; Fri, 09 Mar 2007 11:20:35 PST
-X-Mailer: YahooMailRC/471 YahooMailWebService/0.6.132.8
+	id S933043AbXCIUVp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 15:21:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933173AbXCIUVp
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 15:21:45 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2304 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933043AbXCIUVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 15:21:44 -0500
+Received: (qmail 25282 invoked from network); 9 Mar 2007 15:22:03 -0500
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 9 Mar 2007 15:22:03 -0500
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Mar 2007 15:21:41 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41807>
-
-I managed to stuff 8.5 GB worth of files into a git repo (two two git commits since
-it was running out of memory when I gave it -a option)
-
-but when I'm cloning to another linux box I get:
-
-Generating pack...
-Done counting 152200 objects.
-Deltifying 152200 objects.
-0* 80% (122137/152200) donee
- 100% (152200/152200) done
-/usr/bin/git-clone: line 321:  2072 File size limit exceededgit-fetch-pack --all -k $quiet "$repo"
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41808>
 
 
-Would be nice to be able to work around this somehow if the bug can not be fixed.
-1.5.0 on the server
-1.4.1 on the client
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is obviously a ridiculously minor patch; is there some place other
+than Junio for collecting little typo patches?
 
+ Documentation/git-fast-import.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-
-
-
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 77a14bb..a7d255d 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -451,7 +451,7 @@ in octal.  Git only supports the following modes:
+ In both formats `<path>` is the complete path of the file to be added
+ (if not already existing) or modified (if already existing).
  
-____________________________________________________________________________________
-Food fight? Enjoy some healthy debate 
-in the Yahoo! Answers Food & Drink Q&A.
-http://answers.yahoo.com/dir/?link=list&sid=396545367
+-A `<path>` string must use UNIX-style directory seperators (forward
++A `<path>` string must use UNIX-style directory separators (forward
+ slash `/`), may contain any byte other than `LF`, and must not
+ start with double quote (`"`).
+ 
+@@ -461,8 +461,8 @@ quoting should be used, e.g. `"path/with\n and \" in it"`.
+ The value of `<path>` must be in canoncial form. That is it must not:
+ 
+ * contain an empty directory component (e.g. `foo//bar` is invalid),
+-* end with a directory seperator (e.g. `foo/` is invalid),
+-* start with a directory seperator (e.g. `/foo` is invalid),
++* end with a directory separator (e.g. `foo/` is invalid),
++* start with a directory separator (e.g. `/foo` is invalid),
+ * contain the special component `.` or `..` (e.g. `foo/./bar` and
+   `foo/../bar` are invalid).
+ 
+-- 
+1.5.0.3.927.g2432c
