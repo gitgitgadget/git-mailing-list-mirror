@@ -1,97 +1,133 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in bundle
-Date: Fri, 09 Mar 2007 15:37:12 -0800
-Message-ID: <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
-	<45F17EF0.5060008@gmail.com>
+From: Anton Tropashko <atropashko@yahoo.com>
+Subject: Re: Errors cloning large repo
+Date: Fri, 9 Mar 2007 15:48:46 -0800 (PST)
+Message-ID: <20070309234846.7641.qmail@web52613.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 10 00:37:26 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Mar 10 00:48:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPoeL-0008Cj-L9
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 00:37:26 +0100
+	id 1HPopR-0005Au-Uy
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 00:48:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767658AbXCIXhQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 18:37:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767654AbXCIXhP
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 18:37:15 -0500
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:50893 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767658AbXCIXhO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 18:37:14 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070309233713.GMSK3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 9 Mar 2007 18:37:13 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id YndC1W00U1kojtg0000000; Fri, 09 Mar 2007 18:37:13 -0500
-In-Reply-To: <45F17EF0.5060008@gmail.com> (Mark Levedahl's message of "Fri, 09
-	Mar 2007 10:36:16 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767669AbXCIXss (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 18:48:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767670AbXCIXss
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 18:48:48 -0500
+Received: from web52613.mail.yahoo.com ([206.190.48.216]:45112 "HELO
+	web52613.mail.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1767669AbXCIXsr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2007 18:48:47 -0500
+Received: (qmail 7643 invoked by uid 60001); 9 Mar 2007 23:48:46 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
+  b=K8RMJc7LXoyWCOMr+C8ueWyjr5w1kbFzOJKqfjk7f6qoCh44WyzjNJwW1VWmXdc9e5Vr8Ha7gYHrsDRsMBq6ptAsbK8WB2drOloWuXsU2OXrWCKB0WsYooHcF5z6xl/mznqdWqpLLx0x7xKkfl46rC8Kc6sscG3UD3qMJFw70/Y=  ;
+X-YMail-OSG: QDvdh0UVM1mbs33lCm7vlDBN9QNSI.g57wqIqZXcjvw6uhMzYYLKsR7CyAk7TQRRziXEnfgy2SxNgD81_fu80_Bo0rCWwm0.Vu7u8f_R5aaoT3X848rMugXh4A5xTdQOI8bjHzMGQuIRKd54bafayMW5Zg--
+Received: from [136.182.158.129] by web52613.mail.yahoo.com via HTTP; Fri, 09 Mar 2007 15:48:46 PST
+X-Mailer: YahooMailRC/471 YahooMailWebService/0.6.132.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41823>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+answers inline prefixed with >>>> while I'm trying to figure out how to deal
+with new "improvement" to yahoo mail beta.
 
-> git>git bundle create t.bdl master --not master
-> Generating pack...
-> Done counting 0 objects.
-> Writing 0 objects.
-> Total 0 (delta 0), reused 0 (delta 0)
-> git>git ls-remote t.bdl
-> git>
+On Fri, 9 Mar 2007, Anton Tropashko wrote:
 >
-> e.g, an empty bundle is created without any error or warning. This is
-> the one case I believe an error should result: there is no use to
-> sending (or even creating) an empty bundle.
+> I managed to stuff 8.5 GB worth of files into a git repo (two two git commits since
+> it was running out of memory when I gave it -a option)
 
-I agree that erroring on an empty output is a sensible _option_
-just like pack-objects has --no-empty option.
+So you might be able to do just do
 
-The above is actually an interesting example in a different
-sense.  When somebody did the following, what should be output?
+    git add dir1
+    git add dir2
+    git add dir3
+    ..
+    git commit
 
-	$ edit; git commit -a ;# on master
-        $ git checkout -b side
-        $ edit; git commit -a ;# on side
-        $ git bundle create foo.bdl master side ^master
-	$ git bundle verify foo.bdl
+or something.
 
-My answer is that it should list master and side as the
-available heads and master itself as also a prerequisite (which
-is not what the current code does).  
+>>>>>>>>>>>>  For some reason git add . swallowed the whole thing
+>>>>>>>>>>>>  but git commit did not and I had to split it up. I trimmed the tree a bit
+>>>>>>>>>>>>  since then by removing c & c++ files ;-)
 
-I think unbundling foo.bdl should be the moral equivalent of
-fetching from the originating repository by somebody who has its
-prerequisites as tips of some branches.  So I think foo.bdl
-should list refs/heads/master as one of the available heads to
-fetch/pull from, while requiring the same commit as prerequisite
-of the bundle.  It is as if you tried "git fetch" and found out
-that you are up to date.  Listing where the 'master' tip is,
-even though you did not have to include any commits from that
-branch, gives you a useful bit of information ("I am up to date
-with respect to that branch").
+But one caveat: git may not be the right tool for the job. May I inquire 
+what the heck you're doing? We may be able to fix git even for your kinds 
 
-So I think if you did this instead in the above sequence: 
+>>>>>>>>>>>>  I dumped a rather large SDK into it. Headers, libraries
+>>>>>>>>>>>> event crs.o from the toolchains that are part of SDK. The idea is to keep
+>>>>>>>>>>>>  SDK versioned and being able to pull an arbitrary version once tagged.
 
-	$ git bundle create foo.bdl master ^master
+So I'm not saying that git won't work for you, I'm just warning that the 
+whole model of operation may or may not actually match what you want to 
+do. Do you really want to track that 8.5GB as *one* entity?
 
-it would be sensible to have an option to error out because of
-empty pack, but at the same time it would equally be sensible to
-have an option to still create a bundle with an empty pack
-contents.  In either case, the head and prerequisite section
-should include the tip of the master.  Earlier, I said we should
-error out if we do not find 'master' in the list of shown
-objects, but I think it is more sensible to add it to both the
-list of head _and_ prerequisites.
+>>>>>>>>>>>> Yes. It would be nice if I won't have to prune pdfs, txts, and who
+>>>>>>>>>>>> knows what else people put in there just to reduce the size.
+
+> but when I'm cloning to another linux box I get:
+> 
+> Generating pack...
+> Done counting 152200 objects.
+> Deltifying 152200 objects.
+
+.. this is the part makes me think git *should* be able to work for you. 
+Having lots of smallish files is much better for git than a few DVD 
+images, for example. And if those 152200 objects are just from two 
+commits, you obviously have lots of files ;)
+
+However, if it packs really badly (and without any history, that's quite 
+likely), maybe the resulting pack-file is bigger than 4GB, and then you'd 
+have trouble (in fact, I think you'd hit trouble at the 2GB pack-file 
+mark).
+
+Does "git repack -a -d" work for you?
+
+>>>>>>>>>>>> I'll tell you as soon as I get another failure. As you
+>>>>>>>>>>>> might guess it takes a while :-]
+
+> /usr/bin/git-clone: line 321:  2072 File size limit exceededgit-fetch-pack --all -k $quiet "$repo"
+
+"File size limit exceeded" sounds like SIGXFSZ, which is either:
+
+ - you have file limits enabled, and the resulting pack-file was just too 
+   big for the limits.
+
+ - the file size is bigger than MAX_NON_LFS (2GB-1), and we don't use 
+   O_LARGEFILE.
+
+I suspect the second case. Shawn and Nico have worked on 64-bit packfile 
+indexing, so they may have a patch / git tree for you to try out.
+
+>>>>>>>>>>>> Ok. I think you're correct:
+from ulimit -a:
+...
+file size             (blocks, -f) unlimited
+...
+
+Good to know developers are ahead of the users.
+
+Is there way to get rid of pending (uncommitted) changes?
+git revert does not work the same way as svn revert as I just discovered
+and git status still reports a ton of pending deletions
+(I changed my mind and need my object files back). I suppose I can move .git out
+of the way blow all the files move it back and git pull or whatever
+does a local checkout, but there must be a better way.
+ 
+
+
+
+
+
+ 
+____________________________________________________________________________________
+No need to miss a message. Get email on-the-go 
+with Yahoo! Mail for Mobile. Get started.
+http://mobile.yahoo.com/mail 
