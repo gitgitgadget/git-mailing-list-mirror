@@ -1,138 +1,166 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Google Summer of Code '07 application
-Date: Fri, 9 Mar 2007 10:39:34 -0500
-Message-ID: <20070309153934.GA1131@spearce.org>
-References: <20070308050746.GA29778@spearce.org> <20070309022118.GC32211@spearce.org> <20070309060128.GC5026@fieldses.org>
+From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
+Subject: [PATCH] git-parse-remote: Support dummy remote `.' in branch.<name>.remote
+Date: Fri, 09 Mar 2007 16:53:00 +0100
+Message-ID: <45F182DC.9090507@lu.unisi.ch>
+Reply-To: bonzini@gnu.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri Mar 09 16:39:48 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 09 16:53:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPhC4-000838-Iy
-	for gcvg-git@gmane.org; Fri, 09 Mar 2007 16:39:44 +0100
+	id 1HPhPB-0005hR-FV
+	for gcvg-git@gmane.org; Fri, 09 Mar 2007 16:53:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030453AbXCIPjk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 10:39:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030493AbXCIPjj
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 10:39:39 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:60447 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030453AbXCIPji (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 10:39:38 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HPhBr-0005uF-Fj; Fri, 09 Mar 2007 10:39:31 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id EE40920FBAE; Fri,  9 Mar 2007 10:39:34 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20070309060128.GC5026@fieldses.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S2993132AbXCIPxG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 10:53:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993133AbXCIPxG
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 10:53:06 -0500
+Received: from server.usilu.net ([195.176.178.200]:49548 "EHLO mail.usilu.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S2993134AbXCIPxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 10:53:04 -0500
+Received: from [192.168.76.141] ([192.168.76.141] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Fri, 9 Mar 2007 16:53:00 +0100
+User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
+X-OriginalArrivalTime: 09 Mar 2007 15:53:00.0081 (UTC) FILETIME=[03593210:01C76263]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41800>
 
-"J. Bruce Fields" <bfields@fieldses.org> wrote:
-> On Thu, Mar 08, 2007 at 09:21:18PM -0500, Shawn O. Pearce wrote:
-> > I have updated the wiki with the final draft, and taken into account
-> > the copy editing that people were trying to do last night in parallel
-> > with me overwriting their changes all of the time.  ;-)
-> 
-> I see a few more minor language fixes--do you want them by wiki or
-> email?
+This patch adds support for a dummy remote `.' to avoid having to declare
+a fake remote like
 
-Wiki would probably just be quicker.  Feel free to edit away.
+	[remote "local"]
+		url = .
+		fetch = refs/heads/*:refs/heads/*
+
+A configuration variable is provided, "branch.forcelocalupdates", which
+fakes the fetch line to read "+refs/heads/*:refs/heads/*".
+
+A subsequent patch, which will be submitted after this and the
+--track/--no-track patch goes in, will add support for the `.'
+remote in `git-branch --track'.
+
+It is important to notice that the `.' remote only works in
+branch.<name>.remote by design.
+
+Signed-off-by: Paolo Bonzini  <bonzini@gnu.org>
+---
+ Documentation/config.txt |   10 ++++++++++
+ git-parse-remote.sh      |   15 ++++++++++++++-
+ t/t5520-pull.sh          |   13 +++++++++++++
+ 3 files changed, 37 insertions(+), 1 deletion(-)
+
+	Andy Parkins wrote:
+
+	> I think what you want is something that I would like too.  If you specify "." 
+	> to a git-pull it means to use the local repository not a remote.  It would be 
+	> great if one could have:
+	> 
+	> [remote "origin"]
+        > url = git://git.kernel.org/pub/scm/git/git.git
+        > fetch = refs/heads/master:refs/remotes/origin/master
+	> [branch "master"]
+        > remote = .
+        > merge = refs/remotes/origin/master
+	>
+	> That way a "git pull" on master wouldn't need to make a remote connection in 
+	> order to do a merge (which is the way I like it).  However, I remember there 
+	> was a reason this wouldn't work, but I don't remember what it was  :-) 
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5408dd6..0e72c3e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -272,6 +272,16 @@ branch.<name>.merge::
+ 	`git fetch`) to lookup the default branch for merging. Without
+ 	this option, `git pull` defaults to merge the first refspec fetched.
+ 	Specify multiple values to get an octopus merge.
++	If you wish to setup `git pull` so that it merges into <name> from
++	another branch in the local repository, you can point
++	branch.<name>.merge to the desired branch, and use the special setting
++	`.` (a period) for branch.<name>.remote.
++
++branch.forcelocalupdates::
++	If set to true, merges from the local repository (i.e. when
++	branch.<name>.remote is the special setting `.`) are performed
++	even if they do not result in a fast forward update.  The default
++	is true.
  
-> > ''' Describe your organization. '''
-> 
-> The first paragraph (in particular, first sentence) is a little
-> generic--couldn't it mostly apply to all of the GSoC projects?  You
-> might turn it around and start with the second paragraph, which is stuff
-> only git can boast of:
-> 
-> 	As Git approaches its second anniversary, it is now the revision
-> 	control system of choice for many of the largest and most
-> 	succesful open source projects, including the Linux kernel and
-> 	at least 5 Google Summer of Code 2006 projects: One Laptop Per
-> 	Child, Tangram, The Wine Project, XMMS2, and X.org.  Many more
-> 	are considering Git adoption.
-> 
-> 	This achievement is the product of the Git development
-> 	community, a loose-knit team of developers, technical writers,
-> 	and end users with a passion for high quality open-source
-> 	development.
-
-Yes.  Last night when I went to bed I realized I should try to
-improve this answer.  I think its one of the more important ones
-in the application; we need to show we are looking at GSoC as a
-way to attract new talent to the community, not as a way to get
-free paid coders for a few months.  GSoC is more about getting
-students involved in open source, and keeping them involved.
-We all obviously want to attract new talent, and keep them here
-once we've got 'em.  ;-)
+ color.branch::
+ 	A boolean to enable/disable color in the output of
+diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+index 99e7184..60c4b08 100755
+--- a/git-parse-remote.sh
++++ b/git-parse-remote.sh
+@@ -9,6 +9,9 @@ get_data_source () {
+ 	*/*)
+ 		echo ''
+ 		;;
++	.)
++		echo builtin
++		;;
+ 	*)
+ 		if test "$(git-config --get "remote.$1.url")"
+ 		then
+@@ -31,6 +34,9 @@ get_remote_url () {
+ 	'')
+ 		echo "$1"
+ 		;;
++	builtin)
++		echo "$1"
++		;;
+ 	config)
+ 		git-config --get "remote.$1.url"
+ 		;;
+@@ -57,7 +63,7 @@ get_default_remote () {
+ get_remote_default_refs_for_push () {
+ 	data_source=$(get_data_source "$1")
+ 	case "$data_source" in
+-	'' | branches)
++	'' | branches | builtin)
+ 		;; # no default push mapping, just send matching refs.
+ 	config)
+ 		git-config --get-all "remote.$1.push" ;;
+@@ -128,6 +134,13 @@ get_remote_default_refs_for_fetch () {
+ 	case "$data_source" in
+ 	'')
+ 		set explicit "HEAD:" ;;
++	builtin)
++		if test $(git-config --bool "branch.forcelocalupdates" || echo true) = true
++		then
++			set $(expand_refs_wildcard . +refs/heads/*:refs/heads/*)
++		else
++			set $(expand_refs_wildcard . refs/heads/*:refs/heads/*)
++		fi ;;
+ 	config)
+ 		set $(expand_refs_wildcard "$1" \
+ 			$(git-config --get-all "remote.$1.fetch")) ;;
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 7eb3783..c424e5b 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -29,5 +29,18 @@ test_expect_success 'checking the results' '
+ 	diff file cloned/file
+ '
  
-> > ''' Why is your organization applying to participate in GSoC 2007? What
-> > do you hope to gain by participating? '''
-> 
-> Here also maybe leading with the specifics would make it stronger?:
-> 
-> 	Prior Google Summer of Code projects have asked for new features
-> 	in Git, including submodule support (needed by Gentoo) native
-> 	Windows port (needed by KDE and The Mozilla Foundation).....
-
-Yes, good...
++test_expect_success 'test . as a remote' '
++
++	git branch copy master &&
++	git config branch.copy.remote . &&
++	git config branch.copy.merge refs/heads/master &&
++	echo updated >file &&
++	git commit -a -m updated &&
++	git checkout copy &&
++	test `cat file` = file &&
++	git pull &&
++	test `cat file` = updated
++'
++
+ test_done
  
-> (Would it be worth listing more examples here, or does the application
-> already include a comprehensive list?)
-
-The application has a link to our SoC2007Ideas page, so I don't
-think it is worth including all of them here.  Anyone at Google who
-is sifting through the applications can easily follow the link to
-the ideas page if they want to see what else we are looking to do.
-What I was trying to do here was to highlight the fact that last
-year Google supported some of these projects, and we are also trying
-to support them too, so maybe Google can help us help them.  ;-)
- 
-> It seems to me that the Git community has been pretty good at attracting
-> and mentoring new contributors.  The maintainers have been really
-> conscientious about explaining the project architecture and giving
-> feedback on contributions.
-
-Also good... I've tried to include this in the answer.
-
-> I'm not sure how to make that really clear, or where to fit it in.
-> Maybe in the answer to one of these two?:
-> 
-> > ''' What steps will you take to encourage students to interact with
-> > your project's community before, during and after the program? '''
-> 
-> > ''' What will you do to ensure that your accepted students stick with
-> > the project after GSoC concludes? '''
-
-> I wonder if it'd be easy to come up with some more specifics to support
-> these kinds of statements.  Could even point to particular exchanges in
-> the mail archives if there's anything short that obviously demonstrates
-> the point.  Also I think it's not so much "friendliness" as willingness
-> (and ability) to communicate what's important very clearly.
-
-Locating specifics might be good.  I can't think of any off the
-top of my head.  Maybe if I went waaaaay back and found some of
-my initial emails (Feb 17th timeframe), I could use myself as
-an example.  I know I got beat up a bit by Junio about how I did
-a bug fix in git-reset.  ;-)
-
--- 
-Shawn.
