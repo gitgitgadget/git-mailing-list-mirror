@@ -1,56 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GSoC project mentors
-Date: Thu, 8 Mar 2007 21:26:16 -0500
-Message-ID: <20070309022616.GD32211@spearce.org>
-References: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net> <20070308150756.GB30674@spearce.org> <Pine.LNX.4.63.0703081826000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 1/3] git-bundle: handle thin packs in subcommand "unbundle"
+Date: Fri, 9 Mar 2007 03:48:27 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703090347430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 09 03:26:27 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: junkio@cox.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 09 03:48:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPUoL-0002ht-BH
-	for gcvg-git@gmane.org; Fri, 09 Mar 2007 03:26:25 +0100
+	id 1HPV9p-00034O-IQ
+	for gcvg-git@gmane.org; Fri, 09 Mar 2007 03:48:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965257AbXCIC0W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 8 Mar 2007 21:26:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992892AbXCIC0W
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 21:26:22 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:42369 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965257AbXCIC0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Mar 2007 21:26:21 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HPUo2-0001sn-SY; Thu, 08 Mar 2007 21:26:06 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B809020FBAE; Thu,  8 Mar 2007 21:26:16 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0703081826000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S2992900AbXCICsa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 8 Mar 2007 21:48:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992903AbXCICsa
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Mar 2007 21:48:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44070 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S2992900AbXCICs3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Mar 2007 21:48:29 -0500
+Received: (qmail invoked by alias); 09 Mar 2007 02:48:27 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp040) with SMTP; 09 Mar 2007 03:48:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/iQxpoVv/ii+4dKvX5kY9GI6HSCauRT99IlM6jO1
+	kkj8J1khxdXTrn
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41780>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Speaking of whom: Junio, if you don't do the backup administrator, I would 
-> be willing to.
 
-Martin Langhoff agreed first, so that is who I listed.  I think he
-is also listed as mentor for fewer projects than you are.  ;-)
+The patch to make the packs in a bundle thin forgot the receiving side.
+D'oh.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+
+	This starts a series of three brown paper bag patches.
+
+ builtin-bundle.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index 6163358..33b533f 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -374,7 +374,8 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ static int unbundle(struct bundle_header *header, int bundle_fd,
+ 		int argc, const char **argv)
+ {
+-	const char *argv_index_pack[] = {"index-pack", "--stdin", NULL};
++	const char *argv_index_pack[] = {"index-pack",
++		"--fix-thin", "--stdin", NULL};
+ 	int pid, status, dev_null;
+ 
+ 	if (verify_bundle(header, 0))
 -- 
-Shawn.
+1.5.0.3.2601.gc1e5-dirty
