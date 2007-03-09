@@ -1,90 +1,172 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in bundle
-Date: Thu, 08 Mar 2007 23:17:58 -0800
-Message-ID: <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F0D1B3.9020204@gmail.com>
+From: "=?ISO-8859-1?Q?Ilpo_J=E4rvinen?=" <ilpo.jarvinen@helsinki.fi>
+Subject: Re: Diff output from a rewrite of a function
+Date: Fri, 9 Mar 2007 10:39:41 +0200 (EET)
+Message-ID: <Pine.LNX.4.64.0703090927310.22648@kivilampi-30.cs.helsinki.fi>
+References: <Pine.LNX.4.64.0703082049060.19974@kivilampi-30.cs.helsinki.fi>
+ <200703082301.35774.robin.rosenberg.lists@dewire.com>
+ <7vbqj38gkp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Transfer-Encoding: 7bit
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
 	git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 08:18:41 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 09 09:39:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPZN7-0000uI-Pl
-	for gcvg-git@gmane.org; Fri, 09 Mar 2007 08:18:38 +0100
+	id 1HPadm-0000c0-HR
+	for gcvg-git@gmane.org; Fri, 09 Mar 2007 09:39:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993043AbXCIHSE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 02:18:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993041AbXCIHSE
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 02:18:04 -0500
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:59264 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993026AbXCIHSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 02:18:00 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070309071759.TDAO2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 9 Mar 2007 02:17:59 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id YXHy1W00m1kojtg0000000; Fri, 09 Mar 2007 02:17:59 -0500
-In-Reply-To: <45F0D1B3.9020204@gmail.com> (Mark Levedahl's message of "Thu, 08
-	Mar 2007 22:17:07 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S2993087AbXCIIjr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 03:39:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993085AbXCIIjr
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 03:39:47 -0500
+Received: from courier.cs.helsinki.fi ([128.214.9.1]:41352 "EHLO
+	mail.cs.helsinki.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993087AbXCIIjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 03:39:43 -0500
+Received: from kivilampi-30.cs.helsinki.fi (kivilampi-30.cs.helsinki.fi [128.214.9.42])
+  (AUTH: PLAIN cs-relay, TLS: TLSv1/SSLv3,256bits,AES256-SHA)
+  by mail.cs.helsinki.fi with esmtp; Fri, 09 Mar 2007 10:39:41 +0200
+  id 000601DA.45F11D4D.00002804
+Received: by kivilampi-30.cs.helsinki.fi (Postfix, from userid 50795)
+	id C2261EB365; Fri,  9 Mar 2007 10:39:41 +0200 (EET)
+Received: from localhost (localhost [127.0.0.1])
+	by kivilampi-30.cs.helsinki.fi (Postfix) with ESMTP id BED38EB364;
+	Fri,  9 Mar 2007 10:39:41 +0200 (EET)
+X-X-Sender: ijjarvin@kivilampi-30.cs.helsinki.fi
+In-Reply-To: <7vbqj38gkp.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41789>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+On Thu, 8 Mar 2007, Junio C Hamano wrote:
 
-> ... Without, I
-> can just do git bundle ... <list of refs> and those which have been
-> updated get included.
+> Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+> 
+> > Increase the context size from the default three lines.  Something like
+> > diff -U 7 old new will require larger chunks of unchanged code for diff
+> > break up a hunk. With git you can do 
+> >
+> > GIT_DIFF_OPTS=-u7 git-diff-....
+> 
+> I think you can say "git diff -U7" to do what you are
+> describing, but I do not think that does what you want. 
 
-I am not sure if the above is true.  How are you preventing the
-command from bundling everything?  You must have some limiter at
-the bottom, something like --since=25.hours (to account for cron
-schedule skew), not just <list of refs>.
+Tested both and as you predicted. It didn't do the trick... Tested even 
+with 70... :-)
 
-I do not think the max-age limiter works as you are expecting,
-especially when merges and clock skew among committing machines
-are involved (just as you are distributing from central repo, I
-am assuming you are getting work back from worker-bee machines
-to the central repo at some point, and doing sneakernet implies
-to me that they are disconnected machines, not running ntp, but
-this is just me guessing).
+> I think what you want is a "negative context", which says "do not
+> consider group of lines less than N lines as matching between
+> preimage and postimage".  What Ilpo wants is to see something
+> like this:
+> 
+> -	Deleted 1
+> -	Deleted 2
+> -	Deleted 3
+> ...
+> -	Deleted 400
+> +	Added 1
+> +	Added 2
+> +	Added 3
+> ...
+> +	Added 500
+> 	/* happens to match because this was left intact,too */
+> -	Deleted 401
+> -	Deleted 402
+> -	Deleted 403
+> +	Added 501
+> 
+> as if the small context lines that happen to match are also part
+> of the change, like this:
+> 
+> -	Deleted 1
+> -	Deleted 2
+> -	Deleted 3
+> ...
+> -	Deleted 400
+> -	/* happens to match because this was left intact,too */
+> -	Deleted 401
+> -	Deleted 402
+> -	Deleted 403
+> +	Added 1
+> +	Added 2
+> +	Added 3
+> ...
+> +	Added 500
+> +	/* happens to match because this was left intact,too */
+> +	Added 501
 
-In any case, the semantics of --since=25.hours limiter is not
-"show everything newer than 25.hours that are reachable from any
-of these refs"; it is "start digging from these tips, and stop
-exploring the path as soon as you hit something that is newer
-than 25.hours".
+Yes, you are showing here exactly what I meant. IMHO the latter would be 
+easier for everyone, especially for the review in mailinglists. It's very 
+hard to find the correct part to comment from the messed up output, and in 
+the worst case that could be split to two blocks anyway and then there 
+will be deleted lines between the addition of the lines. Besides, the 
+latter would describe the nature of the change much better rather than 
+trying to be "too intelligent"... :-)
 
-It appears that for the past few days we have been spending
-significant effort to make --max-count and --max-age work with
-bundles, but my honest impression is they do not play well in
-the real world, especially when clock skew is involved.  On the
-other hand, revision ranges ("include these, exclude those") are
-always precise, and that is what you would want to be using,
-especially from an automated script.
+Though I guess that when the change is included to any repository (don't 
+know enough about git internals to know for sure though), it will again 
+perplex everyone looking it from the history because the diff tries again 
+to be that intelligent :-)? So in the simplest format this is kind of 
+helper for review only but that's the most important thing as commit 
+message could then include a note or so that anyone who really wants, can 
+create a better diff manually with correct options or whatever is 
+required for that.
 
-If I were doing a nightly script, I would probably be doing
-something like this:
+Main problem seems to be empty lines which you basically have in almost 
+any code (or at least ought to have some of them in any non-trivial code) 
+and they're always identical unless bad spacing exists. As I noted earlier 
+also block closing lines and keywords seem the create identical lines 
+easily even when you don't have any relation between the code in the 
+different versions. It is quite common to say in any code:
+		}
+	}
+or:
+		break;
+or:
+		} else {
+etc.
 
-	#!/bin/sh
-	yesterday=$(git bundle list-heads yesterday.bdl | sed -e 's/ .*//')
-	git bundle create today.bdl --all --not $yesterday
-	# mail it out
+Four lines seem to be the largest I have but that's in the end of a 
+function so it wouldn't be a big deal (as there are no deleted lines after 
+that point). Here is a distribution of the synchronization (match) point 
+sizes for a real change (the previous but quite similar version of the 
+diff is available on netdev of linux kernel if somebody is that interested 
+about it):
+ijjarvin@glomgold-39:~$ sort tmp/syncpoints | uniq -c
+     11 1
+      5 2
+      1 3
+      1 4
+ijjarvin@glomgold-39:~$ git-diff --stat HEAD^^ HEAD^ net/ipv4/tcp_input.c
+ net/ipv4/tcp_input.c |  218 +++++++++++++++++++++++++++++++++++---------------
+ 1 files changed, 153 insertions(+), 65 deletions(-)
+ijjarvin@kivilampi-30:~/work/src/submit$
 
-After sending today's bundle out, you will rotate it out to
-yesterday.bdl in order to prepare for the next round.  It is
-likely that you would want to keep a few day's worth of bundles
-for other reasons _anyway_ (say, some project members might be
-out of office, or mail gets dropped, or whatever), I think the
-above is a reasonably clean and easy thing to arrange.
+Two of the syncpoints with length of two (and the four lines closing 
+thingie) might be considered as ok. The intention of the new and old code 
+is to do the same thing but using a totally different algorithm, and those 
+two twoline blocks actually do logically the same thing, others do not, 
+but due to language keywords and structure, they match. Though, I would 
+not mind if a better diff output couldn't then keep those two lines as 
+from original.
+
+I could have tried to move the relevant functions to another place in the 
+file but that's sort of hackish approach to a problem I hope my tools 
+would be able to do if I ask it to (not sure if moving them would have 
+worked anyway)...
+
+Or alternatively doing a script that creates garbage after each line in 
+the modified functions and then removes the garbage from the diff output 
+or so... ;-)
+
+
+I assume it is not possible currently since you didn't suggest anything?
+
+
+-- 
+ i.
