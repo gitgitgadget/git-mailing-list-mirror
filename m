@@ -1,90 +1,120 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GSoC project mentors
-Date: Fri, 9 Mar 2007 10:58:22 -0500
-Message-ID: <20070309155822.GB1131@spearce.org>
-References: <7vhcsw9h8p.fsf@assigned-by-dhcp.cox.net> <20070308150756.GB30674@spearce.org> <81b0412b0703080804r5e2d933fqabab7306a5f0d6db@mail.gmail.com> <20070309005940.GA32211@spearce.org> <81b0412b0703090150r674e754bn921d86eb40563e2a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-bundle: only die if pack would be empty, warn if ref is
+ skipped
+Date: Fri, 9 Mar 2007 17:30:15 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703091726530.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
+ <45F17EF0.5060008@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 09 16:58:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 09 17:30:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPhUF-00085I-79
-	for gcvg-git@gmane.org; Fri, 09 Mar 2007 16:58:31 +0100
+	id 1HPhz7-0004rV-5N
+	for gcvg-git@gmane.org; Fri, 09 Mar 2007 17:30:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767331AbXCIP60 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 10:58:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767332AbXCIP60
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 10:58:26 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33118 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767331AbXCIP6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 10:58:25 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HPhU2-0007fl-Th; Fri, 09 Mar 2007 10:58:19 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CB2A420FBAE; Fri,  9 Mar 2007 10:58:22 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <81b0412b0703090150r674e754bn921d86eb40563e2a@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1767363AbXCIQaU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 11:30:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767367AbXCIQaT
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 11:30:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48281 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1767363AbXCIQaR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 11:30:17 -0500
+Received: (qmail invoked by alias); 09 Mar 2007 16:30:15 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp046) with SMTP; 09 Mar 2007 17:30:15 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18J1qVior0JJojd/Ss4l5cDtyGGIdQXKgHdFQzvlr
+	pWZTfMZJ6yocxP
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45F17EF0.5060008@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41802>
 
-Alex Riesen <raa.lkml@gmail.com> wrote:
-> On 3/9/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> >Committing oneself to being on IRC is a time commitment, isn't it?
-> >:-)
-> 
-> yes, but it is a smaller one. And the suggestion was to commit to specific
-> date and time.
-> 
-> >IRC time is difficult for me; I do hang out there more often than
-> >I used to now that the community is doing the same, but I spend
-> >a good part of my week working from a network where IRC access
-> >isn't allowed.
-> 
-> Me too. But I would gladly spent some time on IRC when I'm home,
-> which usually is after 20:00 CET. Especially if I promised to.
 
-Looking at the way other successful projects have worked with GSoC,
-it seems to really pay to have a couple of mentors per student.
-The students don't always reach out to the mailing list right away
-when they don't understand something or are seeking feedback on
-an approach, as they might be shy or might be afraid of getting
-flamed by one of the "old hands".  This is where having accessible
-mentors comes in nicely, as the mentor can help the student frame
-their message and get it into the public forum.  Likewise having
-more than one mentor gives the student somewhere to turn when one
-of the mentors takes a week of vacation.
+A use case for git-bundle expected to be quite common is this:
 
-Most of our projects do have more than one mentor listed now (thanks
-guys!).  As our group's coordinator I intend on trying to make sure
-every project has at least two mentors assigned to it and actively
-participating with the student.  But given the way our community
-works, I fully expect the whole community to be involved as patches
-are posted and discussed on the mailing list.  Students need to be
-interacting with all of us on git@vger, not just their mentors.
+	$ git bundle create daily.bundle --since=10.days.ago --all
 
-Having a fairly consistent presence on IRC would also be good.
-I'm not quite sure yet how I'm personally going to do that this
-summer scheduling wise, but I think it would be good if we can
-have a few individuals on #git on a regularly scheduled basis.
-I'd love to see you there, along with some of our other regulars.
+The expected outcome is _not_ to error out if only a couple of the
+refs were not changed during the last 10 days.
 
+This patch complains loudly about refs which are skipped due to the
+pack not containing the corresponding objects, but dies only if
+no objects would be in the pack _at all_.
+
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+
+	On Fri, 9 Mar 2007, Mark Levedahl wrote:
+
+	> Junio C Hamano wrote:
+	> > If I were doing a nightly script, I would probably be doing
+	> > something like this:
+	> > 
+	> > 	#!/bin/sh
+	> > 	yesterday=$(git bundle list-heads yesterday.bdl | sed -e 's/ .*//')
+	> > 	git bundle create today.bdl --all --not $yesterday
+	> > 	# mail it out
+	>
+	> Thinking about this further, the above has a problem (or should, 
+	> but see below). [...]
+
+	I see another problem, too: if at least one ref was not updated 
+	since yesterday, "create" would fail with the latest patches.
+
+	This fixes it.
+
+	BTW I had a little laugh when seeing what git-describe made of my 
+	current version :-)
+
+ builtin-bundle.c |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-bundle.c b/builtin-bundle.c
+index 55f6d0a..7868080 100644
+--- a/builtin-bundle.c
++++ b/builtin-bundle.c
+@@ -263,7 +263,7 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 	int bundle_fd = -1;
+ 	const char **argv_boundary = xmalloc((argc + 4) * sizeof(const char *));
+ 	const char **argv_pack = xmalloc(5 * sizeof(const char *));
+-	int pid, in, out, i, status;
++	int pid, in, out, i, status, ref_count = 0;
+ 	char buffer[1024];
+ 	struct rev_info revs;
+ 
+@@ -328,15 +328,20 @@ static int create_bundle(struct bundle_header *header, const char *path,
+ 		 * other limiting options could have prevented all the tips
+ 		 * from getting output.
+ 		 */
+-		if (!(e->item->flags & SHOWN))
+-			die("ref '%s' is excluded by the rev-list options",
++		if (!(e->item->flags & SHOWN)) {
++			warn("ref '%s' is excluded by the rev-list options",
+ 				e->name);
++			continue;
++		}
++		ref_count++;
+ 		write_or_die(bundle_fd, sha1_to_hex(e->item->sha1), 40);
+ 		write_or_die(bundle_fd, " ", 1);
+ 		write_or_die(bundle_fd, ref, strlen(ref));
+ 		write_or_die(bundle_fd, "\n", 1);
+ 		free(ref);
+ 	}
++	if (!ref_count)
++		die ("Refusing to create empty bundle.");
+ 
+ 	/* end header */
+ 	write_or_die(bundle_fd, "\n", 1);
 -- 
-Shawn.
+1.5.0.3.2621.gaaaa-dirty
