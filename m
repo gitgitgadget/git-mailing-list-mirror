@@ -1,76 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Errors cloning large repo
-Date: Sat, 10 Mar 2007 01:01:44 -0500
-Message-ID: <20070310060144.GA3223@spearce.org>
-References: <645002.46177.qm@web52608.mail.yahoo.com> <20070310030718.GA2927@spearce.org> <Pine.LNX.4.64.0703092145550.10832@woody.linux-foundation.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: git-log --full-history renamed-file
+Date: Sat, 10 Mar 2007 06:14:02 +0000
+Message-ID: <200703100614.04526.andyparkins@gmail.com>
+References: <87lki6umts.fsf@rho.meyering.net> <7v8xe53ok5.fsf@assigned-by-dhcp.cox.net> <est24q$p4n$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Anton Tropashko <atropashko@yahoo.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Mar 10 07:02:04 2007
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 10 07:17:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPuea-0005aI-64
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 07:02:04 +0100
+	id 1HPutE-0003jd-L1
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 07:17:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767843AbXCJGBy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 01:01:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767845AbXCJGBy
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 01:01:54 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:57857 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767843AbXCJGBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 01:01:53 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HPueM-0007l8-Nq; Sat, 10 Mar 2007 01:01:50 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B85D120FBAE; Sat, 10 Mar 2007 01:01:44 -0500 (EST)
+	id S1767828AbXCJGQx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 01:16:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993183AbXCJGQx
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 01:16:53 -0500
+Received: from ug-out-1314.google.com ([66.249.92.171]:60907 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2993179AbXCJGQw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 01:16:52 -0500
+Received: by ug-out-1314.google.com with SMTP id 44so1586750uga
+        for <git@vger.kernel.org>; Fri, 09 Mar 2007 22:16:51 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=lMMV9HmfH7+93hvreLA86pZQCzlRemlnqzCAQqxZRS43AL2Bi9eHiM2/i8uEA6Zn05pj3ckyG0vx/WIsoqSPc0HeBssMtazwg8jfZf3NmJNJxN45Tg5XmWuICHf6to5PI7T97GGiGz5u6Ivwy3amFZ/gKlMe2Z5ldjvJOR3xLmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Wcbp4RX7TWHhCnQz01Jvs4NQPy+6TyTB+APQVRrWRbvVuzxlNiv/YGii+rLT/4wrNm5+9htw9JAju5rsi2VScA3SjhFofD++W4rco2DH6ADrICYsVGWS7KLaPgdajGNVZzxnBE661thokfM3/G4jnJG1q7wLHUVGuKmFkQkHbVE=
+Received: by 10.67.101.10 with SMTP id d10mr11390215ugm.1173507411556;
+        Fri, 09 Mar 2007 22:16:51 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id 24sm5358515ugf.2007.03.09.22.16.50;
+        Fri, 09 Mar 2007 22:16:51 -0800 (PST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <est24q$p4n$1@sea.gmane.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0703092145550.10832@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41852>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Fri, 9 Mar 2007, Shawn O. Pearce wrote:
-> > 
-> > I'm shocked you were able to repack an 8.5 GiB repository.
-> 
-> Side note - it would be nice to hear just how big the repository *really* 
-> is.
-> 
-> For example, if "du -sh" says 8.5GB, it doesn't necessarily mean that 
-> there really is 8.5GB of data there.
+On Saturday 2007, March 10, Jakub Narebski wrote:
 
-Oh, good point.  Thanks for reminding me of reality.
+> By the way, while it is fairly easy to follow one file, it is hard
+> to follow directory or glob... and there is a trouble that one file
+> might come from two files (as concatenation for example; but I don't
+> think git can detect it with default values of rename detection
+> heuristics).
 
-I'm just so used to not looking at repository size unless the
-repository has been fully repacked first.  So I somehow just read
-this thread has Anton having 8.5 GiB worth of *packed* data (where
-filesystem wastage in the tail block is minimal) and not 8.5 GiB
-of loose objects.
+That's not rename detection then though.
 
-Its very likely this did fit in just under 4 GiB of packed data,
-but as you said, without O_LARGEFILE we can't work with it.
- 
-> So this really could be a situation where just small tweaks makes it work 
-> out for now. We'll need the full 64-bit index eventually for sure, but..
+I know git is clever and has potential to be able to do rename detection 
+even when it was rename-and-modify.  For me though, I always like to 
+make the job of the VCS easier by doing the rename in a separate commit 
+from the modify.
 
-Yes.  ;-)
+I'd really like it if git would deal with the easy, 100% rename case, 
+even if it didn't deal with the 
+rename-two-files-to-be-one-file-and-modify-the-result case. 
 
+
+
+Andy
 -- 
-Shawn.
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
