@@ -1,133 +1,119 @@
-From: Anton Tropashko <atropashko@yahoo.com>
-Subject: Re: Errors cloning large repo
-Date: Fri, 9 Mar 2007 15:48:46 -0800 (PST)
-Message-ID: <20070309234846.7641.qmail@web52613.mail.yahoo.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-parse-remote: Support dummy remote `.' in branch.<name>.remote
+Date: Fri, 09 Mar 2007 16:17:31 -0800
+Message-ID: <7v1wjy3qas.fsf@assigned-by-dhcp.cox.net>
+References: <45F182DC.9090507@lu.unisi.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Mar 10 00:48:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>
+To: bonzini@gnu.org
+X-From: git-owner@vger.kernel.org Sat Mar 10 01:17:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPopR-0005Au-Uy
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 00:48:54 +0100
+	id 1HPpHV-0001I6-HY
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 01:17:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767669AbXCIXss (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 18:48:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767670AbXCIXss
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 18:48:48 -0500
-Received: from web52613.mail.yahoo.com ([206.190.48.216]:45112 "HELO
-	web52613.mail.yahoo.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1767669AbXCIXsr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Mar 2007 18:48:47 -0500
-Received: (qmail 7643 invoked by uid 60001); 9 Mar 2007 23:48:46 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=K8RMJc7LXoyWCOMr+C8ueWyjr5w1kbFzOJKqfjk7f6qoCh44WyzjNJwW1VWmXdc9e5Vr8Ha7gYHrsDRsMBq6ptAsbK8WB2drOloWuXsU2OXrWCKB0WsYooHcF5z6xl/mznqdWqpLLx0x7xKkfl46rC8Kc6sscG3UD3qMJFw70/Y=  ;
-X-YMail-OSG: QDvdh0UVM1mbs33lCm7vlDBN9QNSI.g57wqIqZXcjvw6uhMzYYLKsR7CyAk7TQRRziXEnfgy2SxNgD81_fu80_Bo0rCWwm0.Vu7u8f_R5aaoT3X848rMugXh4A5xTdQOI8bjHzMGQuIRKd54bafayMW5Zg--
-Received: from [136.182.158.129] by web52613.mail.yahoo.com via HTTP; Fri, 09 Mar 2007 15:48:46 PST
-X-Mailer: YahooMailRC/471 YahooMailWebService/0.6.132.8
+	id S1767676AbXCJARf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 19:17:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767680AbXCJARe
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 19:17:34 -0500
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:34952 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767676AbXCJARd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 19:17:33 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070310001734.HELS3546.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 9 Mar 2007 19:17:34 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id YoHY1W0091kojtg0000000; Fri, 09 Mar 2007 19:17:32 -0500
+In-Reply-To: <45F182DC.9090507@lu.unisi.ch> (Paolo Bonzini's message of "Fri,
+	09 Mar 2007 16:53:00 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41824>
 
-answers inline prefixed with >>>> while I'm trying to figure out how to deal
-with new "improvement" to yahoo mail beta.
+Paolo Bonzini <paolo.bonzini@lu.unisi.ch> writes:
 
-On Fri, 9 Mar 2007, Anton Tropashko wrote:
+> This patch adds support for a dummy remote `.' to avoid having to declare
+> a fake remote like
 >
-> I managed to stuff 8.5 GB worth of files into a git repo (two two git commits since
-> it was running out of memory when I gave it -a option)
+> 	[remote "local"]
+> 		url = .
+> 		fetch = refs/heads/*:refs/heads/*
 
-So you might be able to do just do
+For one thing, I do not think it would help Andy's original
+example of reusing what we already have in refs/remotes
+hierarchy if you faked it with refs/heads/*:refs/heads/*
+wildcard like the above.
 
-    git add dir1
-    git add dir2
-    git add dir3
-    ..
-    git commit
+Why not
 
-or something.
+	[remote "local"]
+        	url = .
+                fetch = refs/heads/*
 
->>>>>>>>>>>>  For some reason git add . swallowed the whole thing
->>>>>>>>>>>>  but git commit did not and I had to split it up. I trimmed the tree a bit
->>>>>>>>>>>>  since then by removing c & c++ files ;-)
+or even
 
-But one caveat: git may not be the right tool for the job. May I inquire 
-what the heck you're doing? We may be able to fix git even for your kinds 
+	[remote "local"]
+        	url = .
+                fetch = refs/*
 
->>>>>>>>>>>>  I dumped a rather large SDK into it. Headers, libraries
->>>>>>>>>>>> event crs.o from the toolchains that are part of SDK. The idea is to keep
->>>>>>>>>>>>  SDK versioned and being able to pull an arbitrary version once tagged.
+except that we currently do not have non-storing globbing
+pattern defined?
 
-So I'm not saying that git won't work for you, I'm just warning that the 
-whole model of operation may or may not actually match what you want to 
-do. Do you really want to track that 8.5GB as *one* entity?
+I am actually Ok with the idea of built-in ".", but I really do
+not like it to even pretend storing the fetched results in local
+branches.  If you stop thinking in terms of "tracking fetch"
+that stores the result in some local branch, you do not have to
+have branch.forcelocalupdates.
 
->>>>>>>>>>>> Yes. It would be nice if I won't have to prune pdfs, txts, and who
->>>>>>>>>>>> knows what else people put in there just to reduce the size.
+By the way, I do not understand the semantics of that
+configuration variable at all.
 
-> but when I'm cloning to another linux box I get:
-> 
-> Generating pack...
-> Done counting 152200 objects.
-> Deltifying 152200 objects.
+> +branch.forcelocalupdates::
+> +	If set to true, merges from the local repository (i.e. when
+> +	branch.<name>.remote is the special setting `.`) are performed
+> +	even if they do not result in a fast forward update.  The default
+> +	is true.
 
-.. this is the part makes me think git *should* be able to work for you. 
-Having lots of smallish files is much better for git than a few DVD 
-images, for example. And if those 152200 objects are just from two 
-commits, you obviously have lots of files ;)
+Really, when does fetching from refs/heads/<blah> into refs/heads/<blah>
+result in anything but "already up-to-date"?
 
-However, if it packs really badly (and without any history, that's quite 
-likely), maybe the resulting pack-file is bigger than 4GB, and then you'd 
-have trouble (in fact, I think you'd hit trouble at the 2GB pack-file 
-mark).
+I think you can get rid of this ridiculous "we obtain
+refs/heads/master from ourselves and store it in the same branch
+of ours".  The only thing you want here is to leave FETCH_HEAD
+in a state that is usable by git-pull.  Wouldn't that be much
+cleaner?
 
-Does "git repack -a -d" work for you?
+> @@ -128,6 +134,13 @@ get_remote_default_refs_for_fetch () {
+>  	case "$data_source" in
+>  	'')
+>  		set explicit "HEAD:" ;;
+> +	builtin)
+> +		if test $(git-config --bool "branch.forcelocalupdates" || echo true) = true
+> +		then
+> +			set $(expand_refs_wildcard . +refs/heads/*:refs/heads/*)
+> +		else
+> +			set $(expand_refs_wildcard . refs/heads/*:refs/heads/*)
+> +		fi ;;
+>  	config)
+>  		set $(expand_refs_wildcard "$1" \
+>  			$(git-config --get-all "remote.$1.fetch")) ;;
 
->>>>>>>>>>>> I'll tell you as soon as I get another failure. As you
->>>>>>>>>>>> might guess it takes a while :-]
+Especially this above hunk is not something I'd like to see so
+the patch won't be applied as-is in this round, but just for
+future reference...
 
-> /usr/bin/git-clone: line 321:  2072 File size limit exceededgit-fetch-pack --all -k $quiet "$repo"
-
-"File size limit exceeded" sounds like SIGXFSZ, which is either:
-
- - you have file limits enabled, and the resulting pack-file was just too 
-   big for the limits.
-
- - the file size is bigger than MAX_NON_LFS (2GB-1), and we don't use 
-   O_LARGEFILE.
-
-I suspect the second case. Shawn and Nico have worked on 64-bit packfile 
-indexing, so they may have a patch / git tree for you to try out.
-
->>>>>>>>>>>> Ok. I think you're correct:
-from ulimit -a:
-...
-file size             (blocks, -f) unlimited
-...
-
-Good to know developers are ahead of the users.
-
-Is there way to get rid of pending (uncommitted) changes?
-git revert does not work the same way as svn revert as I just discovered
-and git status still reports a ton of pending deletions
-(I changed my mind and need my object files back). I suppose I can move .git out
-of the way blow all the files move it back and git pull or whatever
-does a local checkout, but there must be a better way.
- 
-
-
-
-
-
- 
-____________________________________________________________________________________
-No need to miss a message. Get email on-the-go 
-with Yahoo! Mail for Mobile. Get started.
-http://mobile.yahoo.com/mail 
+The --bool option makes sure the git-config command either says
+"true", "false" or silently exit with non-zero, in which case
+you would let echo say "true".  In that sense, it is not a
+problem in this particular patch, but in general it makes me
+worried when I see somebody feeds $() without quoting to test as
+its argument.
