@@ -1,63 +1,67 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in
- bundle
-Date: Sat, 10 Mar 2007 00:48:20 -0500
-Message-ID: <45F246A4.2040304@gmail.com>
-References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>	<45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>	<45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Errors cloning large repo
+Date: Fri, 9 Mar 2007 21:54:17 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703092145550.10832@woody.linux-foundation.org>
+References: <645002.46177.qm@web52608.mail.yahoo.com> <20070310030718.GA2927@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Mar 10 06:48:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Anton Tropashko <atropashko@yahoo.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Mar 10 06:54:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPuRN-0008LY-TK
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 06:48:26 +0100
+	id 1HPuXM-0002Ls-8b
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 06:54:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993176AbXCJFsS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 00:48:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993177AbXCJFsS
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 00:48:18 -0500
-Received: from wx-out-0506.google.com ([66.249.82.232]:35662 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993176AbXCJFsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 00:48:17 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so1095500wxd
-        for <git@vger.kernel.org>; Fri, 09 Mar 2007 21:48:16 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=isyx8FMKlSTq1gixN2rxoYIjK2bXoO7Z2YULfvqNMjP0j3sPgRTETTLQXSVGgkA7BNjZUueHcjAUtjjFOW3940q3SSf+OKq9lkcaquWD9DBMwHvTr6u2hwd5mu75i9nk5GOg2MRd8iIyW7mFwBB/0NqDScGioIglB98OgvTZNeQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=toMz5xSAa55CANbKjbbM26gGaM0hCTesx0SkAwTluBseRae+ozF0EdavrgJWraiiOew4s6WJathfchoGN+vvn0Md/4dGjaHjugxTBmPJLmRSNLqJvoL1rH4VghlVRSeqLnRy9/6iQkPPN0VESOnlK9wdYIaxttwrCgEt1I0mr24=
-Received: by 10.70.100.14 with SMTP id x14mr4623115wxb.1173505696743;
-        Fri, 09 Mar 2007 21:48:16 -0800 (PST)
-Received: from ?192.168.100.117? ( [71.246.235.75])
-        by mx.google.com with ESMTP id i40sm5775489wxd.2007.03.09.21.48.15;
-        Fri, 09 Mar 2007 21:48:16 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
+	id S2993177AbXCJFyV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 00:54:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993179AbXCJFyV
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 00:54:21 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:33495 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2993177AbXCJFyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 00:54:21 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2A5sIo4030833
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 9 Mar 2007 21:54:18 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2A5sH6I012868;
+	Fri, 9 Mar 2007 21:54:17 -0800
+In-Reply-To: <20070310030718.GA2927@spearce.org>
+X-Spam-Status: No, hits=-0.49 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41850>
 
-Junio C Hamano wrote:
-> My answer is that it should list master and side as the
-> available heads and master itself as also a prerequisite (which
-> is not what the current code does).
->   
-So, practically speaking the proposal is that for each ref where 
-git-bundle currently issues a warning, instead the ref should be added 
-to the prerequisites list, and that all refs given on the command line 
-are in the bundle's defined refs.
 
-Sounds reasonable to me.
 
-Mark
+On Fri, 9 Mar 2007, Shawn O. Pearce wrote:
+> 
+> I'm shocked you were able to repack an 8.5 GiB repository.
+
+Side note - it would be nice to hear just how big the repository *really* 
+is.
+
+For example, if "du -sh" says 8.5GB, it doesn't necessarily mean that 
+there really is 8.5GB of data there.
+
+With a normal 4kB blocksize filesystem, and ~150.000 filesystem objects, 
+you'd have an average of 300MB of just padding (roughly 2kB per file). 
+Depending on the file statistics, it could be even more.
+
+And if it's compressible, it's entirely possible that even without 
+much delta compression, it could fit in a pack-file smaller than 4GB. At 
+which point a 32-bit index file should work fine, just not with a 32-bit 
+off_t.
+
+So this really could be a situation where just small tweaks makes it work 
+out for now. We'll need the full 64-bit index eventually for sure, but..
+
+		Linus
