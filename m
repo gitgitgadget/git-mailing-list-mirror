@@ -1,84 +1,75 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in
  bundle
-Date: Sat, 10 Mar 2007 11:14:13 -0500
-Message-ID: <45F2D955.8050800@gmail.com>
-References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net> <45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Sat, 10 Mar 2007 17:53:30 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703101749270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
+ <45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45F2D955.8050800@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 10 17:14:21 2007
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 10 17:53:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQ4D3-0007W0-Gv
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 17:14:17 +0100
+	id 1HQ4pA-0000J0-37
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 17:53:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767860AbXCJQOL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 11:14:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767859AbXCJQOL
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 11:14:11 -0500
-Received: from wx-out-0506.google.com ([66.249.82.236]:29440 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767858AbXCJQOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 11:14:09 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so1197424wxd
-        for <git@vger.kernel.org>; Sat, 10 Mar 2007 08:14:09 -0800 (PST)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=txcx6YHDF03q3L3lGgVj8Va+ygS1D4pPKTvJqq6HcT8dIOGK8jWLtzlx47HJlLQE17Ely0DWlIu1bhQ7eEMDmTKqV97FA5vEG17EXtBXlT7w8DUljUgTbG7+KYDXCIL8vZpN2D17Lb2TBljS7tsUsJu+ZmA4v+ril9BscTrZFPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=uDqYpD5IzmAUXetVPBdAInpUGTytNyxLn/j1sZWELuK0ebK6SGzf912wBIkvRk9AuqwzhNJCI6oqVVcZ303GeiSO/dFrzYZOUMvtY1RBJ+KXtgDbozQwwnxOrISiCcH967H0taxQWmzqsefT14/uHLMb0FCpausHSc8s1bAT28g=
-Received: by 10.90.96.20 with SMTP id t20mr1042957agb.1173543249211;
-        Sat, 10 Mar 2007 08:14:09 -0800 (PST)
-Received: from ?192.168.100.117? ( [71.246.235.75])
-        by mx.google.com with ESMTP id 20sm4347092agd.2007.03.10.08.14.08;
-        Sat, 10 Mar 2007 08:14:08 -0800 (PST)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1767882AbXCJQxd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 11:53:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933498AbXCJQxd
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 11:53:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54574 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933490AbXCJQxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 11:53:32 -0500
+Received: (qmail invoked by alias); 10 Mar 2007 16:53:31 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp024) with SMTP; 10 Mar 2007 17:53:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/74yo/Jmj7lxDKbpPdJM9r2vZ7u94dIYPNx61P0Q
+	7p8McN/N9aP7J3
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <45F2D955.8050800@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41868>
 
-Johannes Schindelin wrote:
-> Hi,
->   
-> IMHO saying "master ^master" should blow into the user's face. If she says 
-> "I want it" _and_ "I don't want it", she should sorta expect it not to 
-> work.
+Hi,
+
+On Sat, 10 Mar 2007, Mark Levedahl wrote:
+
+> Johannes Schindelin wrote:
 >
-> Ciao,
-> Dscho
+> > IMHO saying "master ^master" should blow into the user's face. If she 
+> > says "I want it" _and_ "I don't want it", she should sorta expect it 
+> > not to work.
 >
->   
-The command
-    git-bundle create foo next ^master
+> [...]
+>
+> As long as the lists are syntactically acceptable (all exist), we should 
+> just create the bundle with the given refs and prerequisites.
 
-is legitimate, even if next points to the same commit as master. The 
-current logic would reject this, and should not as we might want to push 
-out the base of a new development branch in this manner. Consider that 
-git-fetch <url> would happily update next in this case, git bundle / 
-git-fetch should as well.
+So, what do you do if some of your users do, and some others do not, have 
+the "blue-sky" branch? If you say "git bundle create new.bundle --all 
+-10", your bundle will list "blue-sky" as a prerequisite.
 
-I think we should think of the git-bundle command as accepting two lists 
-of rev-args
-1 - the list of heads to define in the bundle (possibly --all, should 
-also accept refs/heads/*)
-2 - the list of commits to require as prerequisites for applying the 
-bundle (possibly defined as --since=, possibly defined as a list of 
-commits, etc).
+Boom.
 
-As long as the lists are syntactically acceptable (all exist), we should 
-just create the bundle with the given refs and prerequisites. The 
-resulting bundle will apply cleanly and conforms to general git 
-semantics. So, I think git-bundle should error out only if a ref does 
-not exist or if no refs are defined. An empty pack file is legitimate.
+Some of your users -- those without "blue-sky" -- will _not_ be able 
+to fetch _anything_ from the bundle. They are lacking the prerequisites.
 
-Mark
+The semantics of git-bundle used to be so clear and sensible, since they 
+exactly reflected what git-pack-objects would do.
+
+Now they are no longer?
+
+Ciao,
+Dscho
