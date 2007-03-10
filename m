@@ -1,69 +1,72 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Martin Waitz <tali@admingilde.org>
 Subject: Re: Errors cloning large repo
-Date: Sat, 10 Mar 2007 14:21:27 -0800 (PST)
-Message-ID: <Pine.LNX.4.64.0703101414380.10330@woody.linux-foundation.org>
-References: <645002.46177.qm@web52608.mail.yahoo.com> <20070310030718.GA2927@spearce.org>
- <82B0999F-73E8-494E-8D66-FEEEDA25FB91@adacore.com>
+Date: Sat, 10 Mar 2007 23:32:51 +0100
+Message-ID: <20070310223251.GA20726@admingilde.org>
+References: <645002.46177.qm@web52608.mail.yahoo.com> <20070310030718.GA2927@spearce.org> <Pine.LNX.4.64.0703092145550.10832@woody.linux-foundation.org> <20070310060144.GA3223@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="4Ckj6UjgE2iN1+kY"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Anton Tropashko <atropashko@yahoo.com>, git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Sat Mar 10 23:21:52 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Mar 10 23:33:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQ9wm-0001uE-AW
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 23:21:52 +0100
+	id 1HQA7a-0006mF-6F
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 23:33:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932166AbXCJWVg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 17:21:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932176AbXCJWVg
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 17:21:36 -0500
-Received: from smtp.osdl.org ([65.172.181.24]:57658 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932166AbXCJWVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 17:21:35 -0500
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2AMLSo4027227
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 10 Mar 2007 14:21:28 -0800
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2AMLR6m031683;
-	Sat, 10 Mar 2007 14:21:28 -0800
-In-Reply-To: <82B0999F-73E8-494E-8D66-FEEEDA25FB91@adacore.com>
-X-Spam-Status: No, hits=-0.489 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932112AbXCJWcy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 17:32:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751314AbXCJWcy
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 17:32:54 -0500
+Received: from mail.admingilde.org ([213.95.32.147]:57918 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751306AbXCJWcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 17:32:53 -0500
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HQA7P-0000JK-76; Sat, 10 Mar 2007 23:32:51 +0100
+Content-Disposition: inline
+In-Reply-To: <20070310060144.GA3223@spearce.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41886>
 
 
+--4Ckj6UjgE2iN1+kY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, 10 Mar 2007, Geert Bosch wrote:
-> 
-> Larger packs might still be sent over the network, but they
-> wouldn't have an index and could be constructed on the fly,
-> without ever writing any multi-gigabyte files to disk.
+hoi :)
 
-I have to say, I think that's a good idea. Rather than supporting a 64-bit 
-index, not generating big pack-files in general is probably a great idea.
+On Sat, Mar 10, 2007 at 01:01:44AM -0500, Shawn O. Pearce wrote:
+> Its very likely this did fit in just under 4 GiB of packed data,
+> but as you said, without O_LARGEFILE we can't work with it.
 
-For the streaming formats, we'd obviously generate arbitrarily large 
-pack-files, but as you say, they never have an index at all, and the 
-receiver always re-writes them *anyway* (ie we now always run 
-"git-index-pack --fix-thin" on them), so we could just modify that 
-"--fix-thin" logic to also split the pack when it reaches some arbitrary 
-limit).
+but newer git version can cope with it:
 
-Some similar logic in git-pack-objects would mean that we'd never generate 
-bigger packs in the first place..
+-r--r--r-- 1 martin martin 3847536413 18. Feb 10:36 pack-ffe867679d673ea5fb=
+fa598b28aca1e58528b8cd.pack
 
-It's not that 64-bit index file support is "wrong", but it does seem like 
-it's not really necessary.
+--=20
+Martin Waitz
 
-		Linus
+--4Ckj6UjgE2iN1+kY
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFF8zITj/Eaxd/oD7IRAv02AJoDppZwC9Amc27BSowU6eERDUMPGwCeJcp5
+TvN8TiLTh3+SdF7iM10fWts=
+=V4S1
+-----END PGP SIGNATURE-----
+
+--4Ckj6UjgE2iN1+kY--
