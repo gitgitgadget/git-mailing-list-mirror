@@ -1,113 +1,98 @@
-From: "Josef 'Jeff' Sipek" <jsipek@cs.sunysb.edu>
-Subject: [PATCH 1/2] Automatically create unannotated tags for top, bottom, and base of the stack
-Date: Fri,  9 Mar 2007 23:46:22 -0500
-Message-ID: <11735019831879-git-send-email-jsipek@cs.sunysb.edu>
-References: <11735019831915-git-send-email-jsipek@cs.sunysb.edu>
-Cc: "Josef 'Jeff' Sipek" <jsipek@cs.sunysb.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 10 05:46:43 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Errors cloning large repo
+Date: Fri, 9 Mar 2007 21:10:16 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703092057570.10832@woody.linux-foundation.org>
+References: <645002.46177.qm@web52608.mail.yahoo.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Anton Tropashko <atropashko@yahoo.com>
+X-From: git-owner@vger.kernel.org Sat Mar 10 06:10:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPtTe-0000DQ-Gz
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 05:46:42 +0100
+	id 1HPtqh-0001QQ-Db
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 06:10:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767816AbXCJEqb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 23:46:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767821AbXCJEqb
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 23:46:31 -0500
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:54230 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767816AbXCJEq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 23:46:29 -0500
-Received: from thor.fsl.cs.sunysb.edu (thor.fsl.cs.sunysb.edu [130.245.126.40])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l2A4kL4c028990;
-	Fri, 9 Mar 2007 23:46:21 -0500
-Received: from jsipek by thor.fsl.cs.sunysb.edu with local (Exim 4.63)
-	(envelope-from <jsipek@dhcp42.fsl.cs.sunysb.edu>)
-	id 1HPtTL-0007Vz-8m; Fri, 09 Mar 2007 23:46:23 -0500
-X-Mailer: git-send-email 1.5.0.3.268.g3dda
-In-Reply-To: <11735019831915-git-send-email-jsipek@cs.sunysb.edu>
+	id S1767818AbXCJFKU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 00:10:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767827AbXCJFKU
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 00:10:20 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:60984 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1767818AbXCJFKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 00:10:18 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2A5AHo4029702
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 9 Mar 2007 21:10:17 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2A5AGRo012162;
+	Fri, 9 Mar 2007 21:10:16 -0800
+In-Reply-To: <645002.46177.qm@web52608.mail.yahoo.com>
+X-Spam-Status: No, hits=-0.491 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41847>
 
-On every push or pop operation (refresh is a pop followed by a push), update
-the stack top (${branch}_top), stack bottom (${branch}_bottom), and stack
-base (${branch}_base) tags.
 
-Top:	Topmost applied patch/commit
-Bottom:	Bottommost applied patch/commit
-Base:	Commit on top of which the bottom most patch is applied
 
-Having these three tags, one can easily get the log/diff/other information
-only for commits that are (or are not!) part of the patch stack.
+On Fri, 9 Mar 2007, Anton Tropashko wrote:
+> 
+> My problem is git-clone though since for commit it's no big deal
+> to git commit [a-c]* , or use xargs as a workaround
 
-Signed-off-by: Josef 'Jeff' Sipek <jsipek@cs.sunysb.edu>
----
- guilt |   34 ++++++++++++++++++++++++++++++++--
- 1 files changed, 32 insertions(+), 2 deletions(-)
+Sure, but there were two problems.
 
-diff --git a/guilt b/guilt
-index 43e7842..3dbe4b6 100755
---- a/guilt
-+++ b/guilt
-@@ -277,6 +277,33 @@ function pop_many_patches
- 	mv "$applied.tmp" "$applied"
- 
- 	cd - 2>&1 >/dev/null
-+
-+	# update references to top, bottom, and base
-+	update_stack_tags
-+}
-+
-+# usage: update_stack_tags
-+function update_stack_tags
-+{
-+	if [ `wc -l < $applied` -gt 0 ]; then
-+		# there are patches applied, therefore we must get the top,
-+		# bottom and base hashes, and update the tags
-+
-+		local top_hash=`git-rev-parse HEAD`
-+		local bottom_hash=`head -1 < $applied | cut -d: -f1`
-+		local base_hash=`git-rev-parse $bottom_hash^`
-+
-+		echo $top_hash > "$GIT_DIR/refs/tags/${branch}_top"
-+		echo $bottom_hash > "$GIT_DIR/refs/tags/${branch}_bottom"
-+		echo $base_hash > "$GIT_DIR/refs/tags/${branch}_base"
-+	else
-+		# there are no patches applied, therefore we must remove the
-+		# tags to old top, bottom, and base
-+
-+		rm -f "$GIT_DIR/refs/tags/${branch}_top"
-+		rm -f "$GIT_DIR/refs/tags/${branch}_bottom"
-+		rm -f "$GIT_DIR/refs/tags/${branch}_base"
-+	fi
- }
- 
- # usage: push_patch patchname [bail_action]
-@@ -349,6 +376,11 @@ function push_patch
- 	# mark patch as applied
- 	echo "$commitish:$pname" >> $applied
- 
-+	cd - 2>&1 >/dev/null
-+
-+	# update references to top, bottom, and base of the stack
-+	update_stack_tags
-+
- 	# restore original GIT_AUTHOR_{NAME,EMAIL}
- 	if [ ! -z "$author_str" ]; then
- 		if [ ! -z "$backup_author_name" ]; then
-@@ -376,8 +408,6 @@ function push_patch
- 
- 	rm -f /tmp/guilt.msg.$$ /tmp/guilt.log.$$
- 
--	cd - 2>&1 >/dev/null
--
- 	return $bail
- }
- 
--- 
-1.5.0.3.268.g3dda
+The "git commit" problem is trivial, and in no way fundamental. The thing 
+that uses tons of memory is literally just eyecandy, to show you *what* 
+you're committing.
+
+In fact, by the time it starts using tons of memory, the commit has 
+literally already happened. It's just doing statistics afterwards that 
+bloats it up.
+
+> For git clone I got this
+
+The "git clone" problem is different, in that it's due to the 2GB 
+pack-file limit. It's not "fundmentally hard" either, but it's at least 
+not just a small tiny silly detail.
+
+In fact, you can just do
+
+	git add .
+	git commit -q
+
+and the "-q" flag (or "--quiet") will mean that the diffstat is never 
+done, and the commit should be almost instantaneous (all the real work is 
+done by the "git add .")
+
+So "git commit" issue really is just a small beauty wart.
+
+> Deltifying 144511 objects.
+>  100% (144511/144511) done
+> 1625.375MB  (1713 kB/s)       
+> 1729.057MB  (499 kB/s)       
+> /usr/bin/git-clone: line 321: 24360 File size limit exceededgit-fetch-pack --all -k $quiet "$repo"
+> 
+> again after git repack and don't see how to work around that aside from artifically
+> splitting the tree at the top or resorting to a tarball on an ftp site.
+
+So the "git repack" actually worked for you? It really shouldn't have 
+worked.
+
+Is the server side perhaps 64-bit? If so, the limit ends up being 4GB 
+instead of 2GB, and your 8.5GB project may actually fit.
+
+If so, we can trivially fix it with the current index file even for a 
+32-bit machine. The reason we limit pack-files to 2GB on 32-bit machines 
+is purely that we don't use O_LARGEFILE. If we enable O_LARGEFILE, that 
+moves the limit up from 31 bits to 32 bits, and it might be enough for 
+you. No new data structures for the index necessary at all.
+
+		Linus
