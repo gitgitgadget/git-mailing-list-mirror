@@ -1,83 +1,77 @@
-From: Raimund Bauer <ray007@gmx.net>
-Subject: Re: Problems with autoCRLF?
-Date: Sat, 10 Mar 2007 13:23:21 +0100
-Message-ID: <1173529401.5975.10.camel@localhost>
-References: <1173464102.6102.18.camel@localhost>
-	 <7v8xe528mk.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in
+ bundle
+Date: Sat, 10 Mar 2007 16:39:16 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
+ <45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Mar 10 13:23:32 2007
+X-From: git-owner@vger.kernel.org Sat Mar 10 16:39:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQ0bj-0008Hr-N2
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 13:23:32 +0100
+	id 1HQ3fJ-0000Yw-HE
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 16:39:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932943AbXCJMXZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 07:23:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933048AbXCJMXZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 07:23:25 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58814 "HELO mail.gmx.net"
+	id S1767844AbXCJPjT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 10:39:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767847AbXCJPjT
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 10:39:19 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40345 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932943AbXCJMXY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 07:23:24 -0500
-Received: (qmail invoked by alias); 10 Mar 2007 12:23:23 -0000
-Received: from p54988720.dip0.t-ipconnect.de (EHLO [192.168.178.22]) [84.152.135.32]
-  by mail.gmx.net (mp001) with SMTP; 10 Mar 2007 13:23:23 +0100
-X-Authenticated: #20693823
-X-Provags-ID: V01U2FsdGVkX18/o98KluQ/f/yF4czSUkXHi0n853Y4Ml92pQBJyG
-	+xEg75YqJkrSE3
-In-Reply-To: <7v8xe528mk.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.8.1 
+	id S1767844AbXCJPjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 10:39:18 -0500
+Received: (qmail invoked by alias); 10 Mar 2007 15:39:16 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp001) with SMTP; 10 Mar 2007 16:39:16 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/cL0wfU3bci9aM3EjIaEkWnksNupjqLHieTaDDXy
+	X5dwfpzWqZWU9w
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41866>
 
-On Fri, 2007-03-09 at 17:24 -0800, Junio C Hamano wrote:
+Hi,
 
-> So on sane platforms, you do not want to set that variable,
-> unless you are helping to test and improve that feature.
+On Fri, 9 Mar 2007, Junio C Hamano wrote:
 
-In that case we should document it as well. Having the information in
-the Releasenotes is nice, but having it in the git-config manpage too
-may be better, text taken straight from the Releasenotes for git 1.5.1.
+> Mark Levedahl <mlevedahl@gmail.com> writes:
+> 
+> > git>git bundle create t.bdl master --not master
+> > Generating pack...
+> > Done counting 0 objects.
+> > Writing 0 objects.
+> > Total 0 (delta 0), reused 0 (delta 0)
+> > git>git ls-remote t.bdl
+> > git>
+> >
+> > e.g, an empty bundle is created without any error or warning. This is
+> > the one case I believe an error should result: there is no use to
+> > sending (or even creating) an empty bundle.
+> 
+> I agree that erroring on an empty output is a sensible _option_
+> just like pack-objects has --no-empty option.
+> 
+> The above is actually an interesting example in a different
+> sense.  When somebody did the following, what should be output?
+> 
+> 	$ edit; git commit -a ;# on master
+>         $ git checkout -b side
+>         $ edit; git commit -a ;# on side
+>         $ git bundle create foo.bdl master side ^master
 
----
- Documentation/config.txt |   11 +++++++++++
- 1 files changed, 11 insertions(+), 0 deletions(-)
+IMHO saying "master ^master" should blow into the user's face. If she says 
+"I want it" _and_ "I don't want it", she should sorta expect it not to 
+work.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5408dd6..7864ea3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -137,6 +137,17 @@ Can be overridden by the 'GIT_PROXY_COMMAND' environment variable
- (which always applies universally, without the special "for"
- handling).
- 
-+core.autocrlf::
-+    When set to 'true', makes git to convert CRLF at the end of lines
-+    in text files to LF when reading from the filesystem, and convert
-+    in reverse when writing to the filesystem.  The variable can be
-+    set to 'input', in which case the conversion happens only while
-+    reading from the filesystem but files are written out with LF at
-+    the end of lines.  Currently, which paths to consider 'text'
-+    (i.e. be subjected to the autocrlf mechanism) is decided purely
-+    based on the contents, but the plan is to allow users to
-+    explicitly override this heuristic based on paths.
-+
- core.ignoreStat::
- 	The working copy files are assumed to stay unchanged until you
- 	mark them otherwise manually - Git will not detect the file changes
--- 
-1.5.0.3.942.g299f
-
--- 
-best regards
-
-  Ray
+Ciao,
+Dscho
