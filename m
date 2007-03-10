@@ -1,71 +1,130 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Adjust reflog filemode in shared repository
-Date: Fri, 09 Mar 2007 16:53:50 -0800
-Message-ID: <7vd53h3om9.fsf@assigned-by-dhcp.cox.net>
-References: <11734799371637-git-send-email-matthias@spinlock.ch>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Errors cloning large repo
+Date: Fri, 9 Mar 2007 16:54:44 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703091641460.10832@woody.linux-foundation.org>
+References: <20070309234846.7641.qmail@web52613.mail.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Matthias Kestenholz <matthias@spinlock.ch>
-X-From: git-owner@vger.kernel.org Sat Mar 10 01:54:14 2007
+To: Anton Tropashko <atropashko@yahoo.com>
+X-From: git-owner@vger.kernel.org Sat Mar 10 01:55:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPpqf-00081s-61
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 01:54:13 +0100
+	id 1HPprU-0008RB-5A
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 01:55:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767687AbXCJAxy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 19:53:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767688AbXCJAxy
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 19:53:54 -0500
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:49682 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767687AbXCJAxx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 19:53:53 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070310005352.DMLB24587.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 9 Mar 2007 19:53:52 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Yotq1W00n1kojtg0000000; Fri, 09 Mar 2007 19:53:51 -0500
-In-Reply-To: <11734799371637-git-send-email-matthias@spinlock.ch> (Matthias
-	Kestenholz's message of "Fri, 9 Mar 2007 23:38:57 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767688AbXCJAy5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 19:54:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767691AbXCJAy5
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 19:54:57 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:55387 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1767688AbXCJAyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 19:54:47 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2A0sjo4022511
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 9 Mar 2007 16:54:45 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2A0sijQ007477;
+	Fri, 9 Mar 2007 16:54:45 -0800
+In-Reply-To: <20070309234846.7641.qmail@web52613.mail.yahoo.com>
+X-Spam-Status: No, hits=-0.493 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41827>
 
-Thanks, will apply to 'maint' to be included in v1.5.0.4 (and
-also in 'master' to be in v1.5.1).
 
-We should add tests whenever we found this kind of breakage.
-For core.sharedrepository, we would want to have something like
-this:
+On Fri, 9 Mar 2007, Anton Tropashko wrote:
+>
+> > So you might be able to do just do
+> > 
+> >     git add dir1
+> >     git add dir2
+> >     git add dir3
+> >     ..
+> >     git commit
+> > 
+> > or something.
+>
+> For some reason git add . swallowed the whole thing
+> but git commit did not and I had to split it up. I trimmed the tree a bit
+> since then by removing c & c++ files ;-)
 
- (1) Initialize a repository
- (2) set core.sharedrepository
- (3) set umask to 077
- (4) perform various git operations in the repository
- (5) "find .git" to see if there is anything unreadable by group
-     members; if you find any, you found a bug.
+Ok, that's a bit surprising, since "git commit" actually should do less 
+than "git add .", but it's entirely possible that just the status message 
+generation ends up doing strange things for a repository with that many 
+files in it.
 
-That is the "feature" test -- check if a feature works as
-intended.
+I should try it out with some made-up auto-generated directory setup, but 
+I'm not sure I have the energy to do it ;)
 
-At the same time, we need to have a corresponding "regression"
-test to make sure that a feature does not overstep its boundary
-and affect cases where it is not enabled:
+> > But one caveat: git may not be the right tool for the job. May I inquire 
+> > what the heck you're doing? We may be able to fix git even for your kinds 
+>
+> I dumped a rather large SDK into it. Headers, libraries
+> event crs.o from the toolchains that are part of SDK. The idea is to keep
+> SDK versioned and being able to pull an arbitrary version once tagged.
 
- (1) Initialize a repository
- (2) unset core.sharedrepository
- (3) set umask to 077
- (4) perform various git operations in the repository
- (5) "find .git" to see if there is anything readable by group
-     members; if you find any, you found a bug.
+Ok. Assuming most of this doesn't change very often (ie the crs.o files 
+aren't actually *generated*, but come from some external thing), git 
+should do well enough once it's past the original hump.
 
-We would need such "regression" tests for existing tests too,
-but that is a separate issue.
+So your usage scheanrio doesn't sound insane, and it's something we should 
+be able to support well enough. 
+
+> > So I'm not saying that git won't work for you, I'm just warning that the 
+> > whole model of operation may or may not actually match what you want to 
+> > do. Do you really want to track that 8.5GB as *one* entity?
+>
+> Yes. It would be nice if I won't have to prune pdfs, txts, and who
+> knows what else people put in there just to reduce the size.
+
+Sure. 8.5GB is absolutely huge, and clearly you're hitting some problems 
+here, but if we're talking things like having a whole development 
+environment with big manuals etc, it might be a perfectly valid usage 
+schenario.
+
+That said, it might also be a good idea (regardless of anything else) to 
+split things up, if only because it's quite possible that not everybody is 
+interested in having *everything*. Forcing people to work with a 8.5GB 
+repository when they might not care about it all could be a bad idea.
+
+> >  - the file size is bigger than MAX_NON_LFS (2GB-1), and we don't use 
+> >    O_LARGEFILE.
+>
+> Ok. I think you're correct:
+> from ulimit -a:
+> ...
+> file size             (blocks, -f) unlimited
+
+Ok, then it's the 2GB limit that the OS puts on you unless you tell it to 
+use O_LARGEFILE.
+
+Which is just as well, since the normal git pack-files won't index past 
+that size *anyway* (ok, so it should index all the way up to 4GB, but it's 
+close enough..)
+
+> Good to know developers are ahead of the users.
+
+Well, not "ahead enough" apparently ;)
+
+I was seriously hoping that we could keep off the 64-bit issues for a bit 
+longer, since the biggest real archive (firefox) we've seen so far was 
+barely over half a gigabyte.
+
+> Is there way to get rid of pending (uncommitted) changes?
+
+"git reset --hard" will do it for you. As will "git checkout -f", for that 
+matter.
+
+"git revert" will just undo an old commit (as you apparently already found 
+out)
+
+		Linus
