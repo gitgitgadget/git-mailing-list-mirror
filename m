@@ -1,79 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git-log --full-history renamed-file
-Date: Sat, 10 Mar 2007 02:40:07 +0100
-Organization: At home
-Message-ID: <est24q$p4n$1@sea.gmane.org>
-References: <87lki6umts.fsf@rho.meyering.net> <Pine.LNX.4.64.0703091339190.10832@woody.linux-foundation.org> <7v8xe53ok5.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Errors cloning large repo
+Date: Fri, 09 Mar 2007 18:12:46 -0800
+Message-ID: <7vabylzw0x.fsf@assigned-by-dhcp.cox.net>
+References: <20070309234846.7641.qmail@web52613.mail.yahoo.com>
+	<Pine.LNX.4.64.0703091641460.10832@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703091800110.10832@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 10 03:07:19 2007
+Cc: Anton Tropashko <atropashko@yahoo.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Mar 10 03:12:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPqzL-0004UX-Qc
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 03:07:16 +0100
+	id 1HPr4n-0006hS-HT
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 03:12:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767724AbXCJCHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 21:07:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767722AbXCJCHJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 21:07:09 -0500
-Received: from main.gmane.org ([80.91.229.2]:57419 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767724AbXCJCHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 21:07:06 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HPqlV-0000O9-G8
-	for git@vger.kernel.org; Sat, 10 Mar 2007 02:52:57 +0100
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Mar 2007 02:52:57 +0100
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Mar 2007 02:52:57 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
-X-UiO-SPF-Received: Received-SPF: pass (mail-mx3.uio.no: domain of sea.gmane.org designates 80.91.229.5 as permitted sender) client-ip=80.91.229.5; envelope-from=news@sea.gmane.org; helo=sea.gmane.org;
-X-UiO-Spam-info: not spam, SpamAssassin (score=0.0, required=12.0, autolearn=disabled, none)
-X-UiO-Scanned: 660EE0A957FAD864D1A3D0A83D0E2D0447274983
-X-UiO-SPAM-Test: remote_host: 80.91.229.5 spam_score: 0 maxlevel 200 minaction 2 bait 0 mail/h: 3 total 30 max/h 8 blacklist 0 greylist 1 ratelimit 0
+	id S1767730AbXCJCMs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 21:12:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767725AbXCJCMs
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 21:12:48 -0500
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:44477 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767730AbXCJCMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 21:12:47 -0500
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070310021247.EPTX24587.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 9 Mar 2007 21:12:47 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id YqCm1W0021kojtg0000000; Fri, 09 Mar 2007 21:12:46 -0500
+In-Reply-To: <Pine.LNX.4.64.0703091800110.10832@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Fri, 9 Mar 2007 18:03:39 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41839>
 
-Junio C Hamano wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
->> There were patches floating around for an option called "--follow" to "git 
->> log", that would actually follow the renames. 
->>
->> I don't remember what happened to them - I suspect the implementation 
->> wasn't up to snuff. But the *concept* is definitely right.
-> 
-> Yes, the concept is good.  It was from Fredrik of
-> merge-recursive fame.
-> 
-> The patch was not _bad_, but it looked a bit too intrusive back
-> then and scared me away.
+> It's indeed "git commit" that takes tons of memory, but for all the wrong 
+> reasons. It does a "git diff-tree" to generate the diffstat, and *that* is 
+> extremely expensive:
+>
+> 	git-diff-tree --shortstat --summary --root --no-commit-id HEAD --
+>
+> I suspect we shouldn't bother with the diffstat for the initial commit. 
+> Just removing "--root" migth be sufficient.
 
-If I remember correctly it had somewhat unfortunate timing, as it
-was around changes in the same area.
+Yes and no.  It was added as a response to sugestions from
+people in "baby step tutorial" camp.
 
-By the way, while it is fairly easy to follow one file, it is hard
-to follow directory or glob... and there is a trouble that one file
-might come from two files (as concatenation for example; but I don't
-think git can detect it with default values of rename detection
-heuristics). 
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+An option to disable the last diff-tree step, just like git-pull
+has --no-summary option, would be perfectly fine, though.
