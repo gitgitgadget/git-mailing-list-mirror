@@ -1,145 +1,67 @@
-From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 2/2] git.el: Retrieve commit log information from .dotest directory.
-Date: Sat, 10 Mar 2007 19:22:26 +0100
-Message-ID: <87lki5557h.fsf@wine.dyndns.org>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in
+ bundle
+Date: Sat, 10 Mar 2007 13:30:12 -0500
+Message-ID: <45F2F934.8060407@gmail.com>
+References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net> <45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F2D955.8050800@gmail.com> <Pine.LNX.4.63.0703101749270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 10 19:22:44 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Mar 10 19:30:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQ6DK-0005rI-0L
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 19:22:42 +0100
+	id 1HQ6Ku-0000oZ-II
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 19:30:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061AbXCJSWb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 13:22:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751068AbXCJSWb
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 13:22:31 -0500
-Received: from mail.codeweavers.com ([216.251.189.131]:39301 "EHLO
-	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751061AbXCJSWa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 13:22:30 -0500
-Received: from adsl-84-227-136-250.adslplus.ch ([84.227.136.250] helo=wine.dyndns.org)
-	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HQ6D6-0003K6-Jj
-	for git@vger.kernel.org; Sat, 10 Mar 2007 12:22:29 -0600
-Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 7AB26109F1C; Sat, 10 Mar 2007 19:22:26 +0100 (CET)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.93 (gnu/linux)
+	id S1751153AbXCJSaL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 13:30:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751220AbXCJSaL
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 13:30:11 -0500
+Received: from an-out-0708.google.com ([209.85.132.244]:16591 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751153AbXCJSaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 13:30:10 -0500
+Received: by an-out-0708.google.com with SMTP id b33so1071512ana
+        for <git@vger.kernel.org>; Sat, 10 Mar 2007 10:30:09 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=HXZmqa7mNUY/+oXYr1uG+zrBL+C2TkSWmKrqLaADRMKamCA/Ym+Od4dhTL164F9f99Fm4EeL0ykXC8uthgvTckZjuMVWMTAW/OCHZfA0frAA0R/NiqiFS36xoIp1qJWgCB/Fe3od3Ab222NVTLIx3lbQc6/ZE3JkcPb8F4/YSdo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=JAAC2QZz7BL7UN82CYPhdVbq5ePzxbLtKIROhtmcV4+/9n9iOrE+v+TwqXBUhKvI8NUzxRlaMjICg2x4q9eDViwWPHv5cM3oy6IwsTxPe3f9DUOhptXuJkWbChvtBJxy7ma4xH0aULYz010+CCbJOXe9nvHjUDV6HCJnIMxcISM=
+Received: by 10.114.173.15 with SMTP id v15mr539961wae.1173551409095;
+        Sat, 10 Mar 2007 10:30:09 -0800 (PST)
+Received: from ?192.168.100.117? ( [71.246.235.75])
+        by mx.google.com with ESMTP id 45sm5930093wri.2007.03.10.10.30.08;
+        Sat, 10 Mar 2007 10:30:08 -0800 (PST)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <Pine.LNX.4.63.0703101749270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41875>
 
-If a git-am or git-rebase is in progress, fill the commit log buffer
-from the commit information found in the various files in the .dotest
-directory.
+Johannes Schindelin wrote:
+> Hi,
+>   
+> So, what do you do if some of your users do, and some others do not, have 
+> the "blue-sky" branch? If you say "git bundle create new.bundle --all 
+> -10", your bundle will list "blue-sky" as a prerequisite.
+>
+> Boom.
+>
+> Some of your users -- those without "blue-sky" -- will _not_ be able 
+> to fetch _anything_ from the bundle. They are lacking the prerequisites.
+>   
+Those who have the prerequisites can apply the bundle. Those who do not, 
+cannot. This is unchanged, and completely unrelated to whether the 
+bundle defines 0 objects or 10,000. If you do not have the 
+prerequisites, you need a different bundle.
 
-Signed-off-by: Alexandre Julliard <julliard@winehq.org>
----
- contrib/emacs/git.el |   77 ++++++++++++++++++++++++++++++++++---------------
- 1 files changed, 53 insertions(+), 24 deletions(-)
-
-diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index 427f89b..db87a37 100644
---- a/contrib/emacs/git.el
-+++ b/contrib/emacs/git.el
-@@ -903,36 +903,65 @@ and returns the process output as a string."
-       (goto-char (point-max))
-       (insert sign-off "\n"))))
- 
--(defun git-commit-file ()
--  "Commit the marked file(s), asking for a commit message."
--  (interactive)
-+(defun git-setup-log-buffer (buffer &optional author-name author-email subject date msg)
-+  "Setup the log buffer for a commit."
-   (unless git-status (error "Not in git-status buffer."))
--  (let ((buffer (get-buffer-create "*git-commit*"))
--        (merge-heads (git-get-merge-heads))
-+  (let ((merge-heads (git-get-merge-heads))
-         (dir default-directory)
--        (coding-system (git-get-commits-coding-system))
-         (committer-name (git-get-committer-name))
-         (committer-email (git-get-committer-email))
-         (sign-off git-append-signed-off-by))
-     (with-current-buffer buffer
--      (when (eq 0 (buffer-size))
--        (cd dir)
--        (erase-buffer)
--        (insert
--         (propertize
--          (format "Author: %s <%s>\n%s"
--                  committer-name committer-email
--                  (if merge-heads
--                      (format "Parent: %s\n%s\n"
--                              (git-rev-parse "HEAD")
--                              (mapconcat (lambda (str) (concat "Parent: " str)) merge-heads "\n"))
--                    ""))
--          'face 'git-header-face)
--         (propertize git-log-msg-separator 'face 'git-separator-face)
--         "\n")
--        (when (file-readable-p ".git/MERGE_MSG")
--          (insert-file-contents ".git/MERGE_MSG"))
--        (when sign-off (git-append-sign-off committer-name committer-email))))
-+      (cd dir)
-+      (erase-buffer)
-+      (insert
-+       (propertize
-+        (format "Author: %s <%s>\n%s%s"
-+                (or author-name committer-name)
-+                (or author-email committer-email)
-+                (if date (format "Date: %s\n" date) "")
-+                (if merge-heads
-+                    (format "Parent: %s\n%s\n"
-+                            (git-rev-parse "HEAD")
-+                            (mapconcat (lambda (str) (concat "Parent: " str)) merge-heads "\n"))
-+                  ""))
-+        'face 'git-header-face)
-+       (propertize git-log-msg-separator 'face 'git-separator-face)
-+       "\n")
-+      (when subject (insert subject "\n\n"))
-+      (cond (msg (insert msg "\n"))
-+            ((file-readable-p ".dotest/msg")
-+             (insert-file-contents ".dotest/msg"))
-+            ((file-readable-p ".git/MERGE_MSG")
-+             (insert-file-contents ".git/MERGE_MSG")))
-+      ; delete empty lines at end
-+      (goto-char (point-min))
-+      (when (re-search-forward "\n+\\'" nil t)
-+        (replace-match "\n" t t))
-+      (when sign-off (git-append-sign-off committer-name committer-email)))))
-+
-+(defun git-commit-file ()
-+  "Commit the marked file(s), asking for a commit message."
-+  (interactive)
-+  (unless git-status (error "Not in git-status buffer."))
-+  (let ((buffer (get-buffer-create "*git-commit*"))
-+        (coding-system (git-get-commits-coding-system))
-+        author-name author-email subject date)
-+    (when (eq 0 (buffer-size buffer))
-+      (when (file-readable-p ".dotest/info")
-+        (with-temp-buffer
-+          (insert-file-contents ".dotest/info")
-+          (goto-char (point-min))
-+          (when (re-search-forward "^Author: \\(.*\\)\nEmail: \\(.*\\)$" nil t)
-+            (setq author-name (match-string 1))
-+            (setq author-email (match-string 2)))
-+          (goto-char (point-min))
-+          (when (re-search-forward "^Subject: \\(.*\\)$" nil t)
-+            (setq subject (match-string 1)))
-+          (goto-char (point-min))
-+          (when (re-search-forward "^Date: \\(.*\\)$" nil t)
-+            (setq date (match-string 1)))))
-+      (git-setup-log-buffer buffer author-name author-email subject date))
-     (log-edit #'git-do-commit nil #'git-log-edit-files buffer)
-     (setq font-lock-keywords (font-lock-compile-keywords git-log-edit-font-lock-keywords))
-     (setq buffer-file-coding-system coding-system)
--- 
-1.5.0.3.321.g4253
-
--- 
-Alexandre Julliard
-julliard@winehq.org
+Mark
