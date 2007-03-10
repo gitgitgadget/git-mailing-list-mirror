@@ -1,94 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-log --full-history renamed-file
-Date: Fri, 09 Mar 2007 17:59:42 -0800
-Message-ID: <7vejnxzwmp.fsf@assigned-by-dhcp.cox.net>
-References: <87lki6umts.fsf@rho.meyering.net>
-	<Pine.LNX.4.64.0703091339190.10832@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Errors cloning large repo
+Date: Fri, 9 Mar 2007 18:03:39 -0800 (PST)
+Message-ID: <Pine.LNX.4.64.0703091800110.10832@woody.linux-foundation.org>
+References: <20070309234846.7641.qmail@web52613.mail.yahoo.com>
+ <Pine.LNX.4.64.0703091641460.10832@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jim Meyering <jim@meyering.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Mar 10 02:59:53 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Anton Tropashko <atropashko@yahoo.com>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Mar 10 03:03:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HPqsB-0001Y2-2E
-	for gcvg-git@gmane.org; Sat, 10 Mar 2007 02:59:51 +0100
+	id 1HPqw2-00036s-1n
+	for gcvg-git@gmane.org; Sat, 10 Mar 2007 03:03:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767713AbXCJB7o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 9 Mar 2007 20:59:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767721AbXCJB7o
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 20:59:44 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:64853 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767713AbXCJB7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Mar 2007 20:59:43 -0500
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070310015943.JPSA748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 9 Mar 2007 20:59:43 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id Ypzi1W0011kojtg0000000; Fri, 09 Mar 2007 20:59:42 -0500
-In-Reply-To: <Pine.LNX.4.64.0703091339190.10832@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 9 Mar 2007 14:20:55 -0800 (PST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767719AbXCJCDp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 9 Mar 2007 21:03:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767721AbXCJCDp
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Mar 2007 21:03:45 -0500
+Received: from smtp.osdl.org ([65.172.181.24]:57004 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1767719AbXCJCDo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Mar 2007 21:03:44 -0500
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2A23fo4024648
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 9 Mar 2007 18:03:41 -0800
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2A23eDi008854;
+	Fri, 9 Mar 2007 18:03:40 -0800
+In-Reply-To: <Pine.LNX.4.64.0703091641460.10832@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-0.492 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41837>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
->  - it's almost silly, but "git blame" internally really already has all 
->    the logic for this, it's just not exposed any sane way to a user.
->
-> I'm appending a REALLY UGLY patch that makes
->
-> 	git blame --log filename.c
->
-> work kind of like you'd want. IT IS NOT MEANT TO BE REALLY USED, because 
-> in particular, it doesn't take the nice log options (so you cannot make it 
-> show diffs etc, even though we have all the machinery in place for that). 
-> But it's an example of the fact that yes, git can do this, but we're so 
-> stupid that we don't really accept it.
->
-> (NOTE! It's also almost totally untested. It might not work. I'm sending 
-> it out as a very rough example, not as a serious contender)
->
-> 		Linus
 
-At this point that you call log_tree_commit(), 
+On Fri, 9 Mar 2007, Linus Torvalds wrote:
+> >
+> > For some reason git add . swallowed the whole thing
+> > but git commit did not and I had to split it up. I trimmed the tree a bit
+> > since then by removing c & c++ files ;-)
+> 
+> Ok, that's a bit surprising, since "git commit" actually should do less 
+> than "git add .", but it's entirely possible that just the status message 
+> generation ends up doing strange things for a repository with that many 
+> files in it.
 
-> @@ -1376,6 +1379,16 @@ static void found_guilty_entry(struct blame_entry *ent)
->  	if (ent->guilty)
->  		return;
->  	ent->guilty = 1;
-> +	if (log) {
-> +		struct origin *suspect = ent->suspect;
-> +		struct commit *commit = suspect->commit;
-> +
-> +		if (commit->object.flags & SHOWN)
-> +			return;
-> +		commit->object.flags |= SHOWN;
-> +		log_tree_commit(&log_rev, commit);
-> +		return;
-> +	}
+Ahhh. Found it.
 
-you have not just the path information _but_ also the line range
-in the postimage, so we could use an enhanced version of
-log_tree_commit() that also lets us limit its output only to
-hunks that touch the affected range.
+It's indeed "git commit" that takes tons of memory, but for all the wrong 
+reasons. It does a "git diff-tree" to generate the diffstat, and *that* is 
+extremely expensive:
 
-Also, found_guilty_entry() is called number of times for the
-same suspect <commit, path> pair for discontiguous line ranges.
-I think a saner thing to do is to collect and coalesce the blame
-entry for the same <commit, path> in the above part of the code,
-and then do a single log_tree_commit() for the <commit, path>,
-perhaps limiting to the hunks that touch the line ranges the
-commit is assigned blame for, before continuing to a different
-commit (i.e. after the for() loop, which is the only caller of
-this found_guilty_entry() function, exits).
+	git-diff-tree --shortstat --summary --root --no-commit-id HEAD --
+
+I suspect we shouldn't bother with the diffstat for the initial commit. 
+Just removing "--root" migth be sufficient.
+
+		Linus
