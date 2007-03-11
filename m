@@ -1,99 +1,74 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH 2/2] Re-add qualfiier for development version
-Date: Sun, 11 Mar 2007 21:11:50 +0100
-Message-ID: <20070311201150.23073.38604.stgit@lathund.dewire.com>
-References: <20070311180608.18012.13767.stgit@lathund.dewire.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [RFC] introduce GIT_WORK_DIR environment variable
+Date: Sun, 11 Mar 2007 13:10:24 -0700
+Message-ID: <7vlki3wngv.fsf@assigned-by-dhcp.cox.net>
+References: <20070311043250.GA21331@moooo.ath.cx>
+	<7vabykxs15.fsf@assigned-by-dhcp.cox.net>
+	<20070311162201.GA26983@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: spearce@spearce.org, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 11 21:10:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Sun Mar 11 21:10:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQUMs-0006ro-0h
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:10:10 +0100
+	id 1HQUNE-00072V-Nf
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:10:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932456AbXCKUKD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 16:10:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932487AbXCKUKD
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:10:03 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:2384 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S932456AbXCKUKB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 16:10:01 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 86583802843;
-	Sun, 11 Mar 2007 21:04:45 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 26979-07; Sun, 11 Mar 2007 21:04:45 +0100 (CET)
-Received: from lathund.dewire.com (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id 377CE802841;
-	Sun, 11 Mar 2007 21:04:45 +0100 (CET)
-Received: from localhost (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 771F6297C8;
-	Sun, 11 Mar 2007 21:11:59 +0100 (CET)
-X-Virus-Scanned: amavisd-new at localhost.localdomain
-Received: from lathund.dewire.com ([127.0.0.1])
-	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id W82RXD5LAci2; Sun, 11 Mar 2007 21:11:50 +0100 (CET)
-Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id 2CC77297C6;
-	Sun, 11 Mar 2007 21:11:50 +0100 (CET)
-In-Reply-To: <20070311180608.18012.13767.stgit@lathund.dewire.com>
-User-Agent: StGIT/0.12
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S932487AbXCKUK0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 16:10:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932511AbXCKUK0
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:10:26 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:61209 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932487AbXCKUKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 16:10:25 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070311201024.XYQE24587.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 11 Mar 2007 16:10:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZYAQ1W00V1kojtg0000000; Sun, 11 Mar 2007 16:10:25 -0400
+In-Reply-To: <20070311162201.GA26983@moooo.ath.cx> (Matthias Lederhofer's
+	message of "Sun, 11 Mar 2007 17:22:01 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41969>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
----
+Matthias Lederhofer <matled@gmx.net> writes:
 
- org.spearce.egit.core/META-INF/MANIFEST.MF |    2 +-
- org.spearce.egit.ui/META-INF/MANIFEST.MF   |    2 +-
- org.spearce.jgit/META-INF/MANIFEST.MF      |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+> For example have the checkout of a git repository publicly available
+> (e.g. on a webserver).  The .git directory containing all the history
+> should probably not go there (especially if it tracks scripts).  Sure,
+> setting strict permissions solves this too in most cases but anyway
+> it's nice to have the option to move the repository away.
 
-diff --git a/org.spearce.egit.core/META-INF/MANIFEST.MF b/org.spearce.egit.core/META-INF/MANIFEST.MF
-index fd90a0c..f4c96cc 100644
---- a/org.spearce.egit.core/META-INF/MANIFEST.MF
-+++ b/org.spearce.egit.core/META-INF/MANIFEST.MF
-@@ -2,7 +2,7 @@ Manifest-Version: 1.0
- Bundle-ManifestVersion: 2
- Bundle-Name: %plugin_name
- Bundle-SymbolicName: org.spearce.egit.core; singleton:=true
--Bundle-Version: 0.2.1
-+Bundle-Version: 0.2.1.qualifier
- Bundle-Activator: org.spearce.egit.core.Activator
- Bundle-Vendor: %provider_name
- Bundle-Localization: plugin
-diff --git a/org.spearce.egit.ui/META-INF/MANIFEST.MF b/org.spearce.egit.ui/META-INF/MANIFEST.MF
-index 8075883..18b7e87 100644
---- a/org.spearce.egit.ui/META-INF/MANIFEST.MF
-+++ b/org.spearce.egit.ui/META-INF/MANIFEST.MF
-@@ -2,7 +2,7 @@ Manifest-Version: 1.0
- Bundle-ManifestVersion: 2
- Bundle-Name: %plugin_name
- Bundle-SymbolicName: org.spearce.egit.ui; singleton:=true
--Bundle-Version: 0.2.1
-+Bundle-Version: 0.2.1.qualifier
- Bundle-Activator: org.spearce.egit.ui.Activator
- Bundle-Vendor: %plugin_provider
- Bundle-Localization: plugin
-diff --git a/org.spearce.jgit/META-INF/MANIFEST.MF b/org.spearce.jgit/META-INF/MANIFEST.MF
-index 9bbddb3..f671eb9 100644
---- a/org.spearce.jgit/META-INF/MANIFEST.MF
-+++ b/org.spearce.jgit/META-INF/MANIFEST.MF
-@@ -2,7 +2,7 @@ Manifest-Version: 1.0
- Bundle-ManifestVersion: 2
- Bundle-Name: %plugin_name
- Bundle-SymbolicName: org.spearce.jgit
--Bundle-Version: 0.2.1
-+Bundle-Version: 0.2.1.qualifier
- Bundle-Localization: plugin
- Bundle-Vendor: %provider_name
- Export-Package: org.spearce.jgit.errors,
+That's fine.  Will you constantly work inside that webserver exposed
+working tree, though?  I suspect the operation you would do
+there would only be "GIT_DIR=/some/where/else git checkout -f"
+to refresh the published copy, so I do not think even GIT_WORK_DIR
+is needed for that use case (just to make sure, I am not opposed
+to having GIT_WORK_DIR -- my "why bother" is about having the
+equivalent in .git/work_dir or .git/config).
+
+> Additionally when reading the man page about GIT_DIR it says 'the
+> default value is .git', which sounds a bit like "hey, if you don't
+> like the name you're free to change it", but as soon as you change it
+> you run into problems because git behaves strange in subdirectories :)
+
+That is really a historical mention.  The current Porcelain-ish
+depend on that "default" layout (I know you know that after
+seeing what setup_git_directory does), and I think GIT_DIR
+should not be taught to new people as such.
+
+> The tools to inspect (git diff, ..) and track (git add, ..) work fine.
+> So one could easily (without copying stuff around) track changes of a
+> read-only directory.
+
+Why does read-only directory have changes to begin with???
