@@ -1,98 +1,66 @@
-From: Sergey Vlasov <vsu@altlinux.ru>
-Subject: Re: [PATCH] More build output cleaning up
-Date: Sun, 11 Mar 2007 18:48:27 +0300
-Message-ID: <20070311184827.a98691c3.vsu@altlinux.ru>
-References: <81b0412b0703061513g7aafc9daq46feea69d969089a@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/3] fast-import: tree allocation cleanups
+Date: Sun, 11 Mar 2007 11:51:38 -0400
+Message-ID: <20070311155138.GA7110@coredump.intra.peff.net>
+References: <<20070310191515.GA3416@coredump.intra.peff.net>> <20070310192114.GA3875@coredump.intra.peff.net> <20070311032147.GA10781@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Sun__11_Mar_2007_18_48_27_+0300_xWJ./ZAmYA3wTTaZ"
-Cc: "Junio C Hamano" <junkio@cox.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 16:49:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Mar 11 16:51:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQQIq-0002Vu-OU
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 16:49:45 +0100
+	id 1HQQKn-0003Il-NB
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 16:51:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933784AbXCKPtk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 11:49:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933785AbXCKPtk
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 11:49:40 -0400
-Received: from master.altlinux.org ([62.118.250.235]:1449 "EHLO
-	master.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933784AbXCKPtj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 11:49:39 -0400
-Received: by master.altlinux.org (Postfix, from userid 584)
-	id 55C00E3EC6; Sun, 11 Mar 2007 18:49:38 +0300 (MSK)
-In-Reply-To: <81b0412b0703061513g7aafc9daq46feea69d969089a@mail.gmail.com>
-X-Mailer: Sylpheed version 2.2.9 (GTK+ 2.10.6; x86_64-alt-linux-gnu)
+	id S933787AbXCKPvm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 11:51:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933788AbXCKPvm
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 11:51:42 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4277 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933787AbXCKPvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 11:51:41 -0400
+Received: (qmail 4046 invoked from network); 11 Mar 2007 11:52:01 -0400
+Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
+  by 66-23-211-5.clients.speedfactory.net with SMTP; 11 Mar 2007 11:52:01 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Mar 2007 11:51:38 -0400
+Content-Disposition: inline
+In-Reply-To: <20070311032147.GA10781@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41933>
 
---Signature=_Sun__11_Mar_2007_18_48_27_+0300_xWJ./ZAmYA3wTTaZ
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: 7bit
+On Sat, Mar 10, 2007 at 10:21:47PM -0500, Shawn O. Pearce wrote:
 
-On Wed, 7 Mar 2007 00:13:08 +0100 Alex Riesen wrote:
+> > +
+> > +		t->entries[t->entry_count++] = e;
+> This I wouldn't have bothered to do in this patch.  It is just
+> unecessary code churning, as you turn around and change this again
+> in the next patch.  I actually dropped these two hunks from this
+> patch (but left the dang commit message comment in, whoops) and
+> moved the first hunk to the next patch.
 
-> - print output file name for .c files
-> - suppress output of the names of subdirectories when make changes into them
-> - use GEN prefix for makefile generation in perl/
->
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->  Makefile      |    8 +++++---
->  perl/Makefile |    2 +-
->  2 files changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 72d4291..eb6c421 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -605,14 +605,16 @@ ifdef NO_PERL_MAKEMAKER
->  	export NO_PERL_MAKEMAKER
->  endif
->  ifndef V
-> -	QUIET_CC       = @echo '   ' CC $<;
-> +	QUIET_CC       = @echo '   ' CC $@;
->  	QUIET_AR       = @echo '   ' AR $@;
->  	QUIET_LINK     = @echo '   ' LINK $@;
->  	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
->  	QUIET_GEN      = @echo '   ' GEN $@;
->  	QUIET_SUBDIR0  = @subdir=
-> -	QUIET_SUBDIR1  = ;echo '   ' SUBDIR $$subdir; $(MAKE) -C$$subdir
-> +	QUIET_SUBDIR1  = ;echo '   ' SUBDIR $$subdir; \
-> +			 $(MAKE) --no-print-directory -C $$subdir
+OK. There are actually two changes: moving the insertion until after
+e->name is set up (which has no functionality impact) and changing the
+manner of insertion. I split them up to try to make them more readable,
+but clearly you figured out what I was going for.
 
-Using --no-print-directory will break movement to the location of an
-error/warning message at least in vim (emacs will probably have
-problems too), if the error is in some file in a subdirectory.  The
-problem is that the nested make will output paths relative to the
-subdirectory, but without "Entering directory..." messages the editor
-will not know that filenames should be interpreted relative to that
-subdirectory.
+> > +	name = to_atom(p, n);
+> [...]
+> > -	e->name = to_atom(p, (unsigned short)n);
+> 
+> You missed an unsigned short cast here.
 
-Currently this problem is not visible, because subdirectories with
-their own Makefiles (perl/ and git-gui/) do not contain C code - but
-the problem will appear, e.g., if Git.xs will be added again.
+Actually, I removed it intentionally (though clearly I should have
+documented it). It's casting from an unsigned int to an unsigned short.
+Such a cast is at best pointless (since the compiler performs the exact
+same cast implicitly -- see C99 6.5.2.2, paragraph 7), and at worst
+masks an error (e.g., if the type of n is changed).
 
---Signature=_Sun__11_Mar_2007_18_48_27_+0300_xWJ./ZAmYA3wTTaZ
-Content-Type: application/pgp-signature
+Is there some subtle issue I'm missing here?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.1 (GNU/Linux)
-
-iD8DBQFF9CTPW82GfkQfsqIRAiRwAJ9/Bp8YwFQmTGeH9IcGC1ikXA6OqwCeNkGf
-p2Osy0u0Xs6bAIkwupU0L18=
-=TqBt
------END PGP SIGNATURE-----
-
---Signature=_Sun__11_Mar_2007_18_48_27_+0300_xWJ./ZAmYA3wTTaZ--
+-Peff
