@@ -1,58 +1,56 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in bundle
-Date: Sun, 11 Mar 2007 12:58:46 -0700
-Message-ID: <7vps7fwo09.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
-	<45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F2D955.8050800@gmail.com>
-	<Pine.LNX.4.63.0703101749270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F2F934.8060407@gmail.com>
-	<Pine.LNX.4.63.0703110201450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7vy7m4y3cn.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0703110244130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F41787.4080506@gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH 0/2] Series short description
+Date: Sun, 11 Mar 2007 21:11:33 +0100
+Message-ID: <20070311201130.23044.34651.stgit@lathund.dewire.com>
+References: <20070311180608.18012.13767.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Mark Levedahl <mlevedahl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 20:58:52 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: spearce@spearce.org, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 11 21:09:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQUBv-0001lY-9U
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 20:58:51 +0100
+	id 1HQUMb-0006kG-RF
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:09:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751548AbXCKT6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 15:58:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbXCKT6s
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 15:58:48 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:43564 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751547AbXCKT6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 15:58:47 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070311195846.OHEX1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 11 Mar 2007 15:58:46 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ZXym1W00B1kojtg0000000; Sun, 11 Mar 2007 15:58:46 -0400
-In-Reply-To: <45F41787.4080506@gmail.com> (Mark Levedahl's message of "Sun, 11
-	Mar 2007 10:51:51 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932267AbXCKUJu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 16:09:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932469AbXCKUJu
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:09:50 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:2372 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S932267AbXCKUJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 16:09:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id D699B802843;
+	Sun, 11 Mar 2007 21:04:33 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 26979-06; Sun, 11 Mar 2007 21:04:33 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id 9DD01802841;
+	Sun, 11 Mar 2007 21:04:31 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id D6477297C9;
+	Sun, 11 Mar 2007 21:11:45 +0100 (CET)
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+Received: from lathund.dewire.com ([127.0.0.1])
+	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id RluA4+mptxyL; Sun, 11 Mar 2007 21:11:34 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id E9B72297C6;
+	Sun, 11 Mar 2007 21:11:33 +0100 (CET)
+In-Reply-To: <20070311180608.18012.13767.stgit@lathund.dewire.com>
+User-Agent: StGIT/0.12
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41966>
 
-Mark Levedahl <mlevedahl@gmail.com> writes:
+The following series implements...
 
-> Bottom line, I strongly advocate Dscho's last patch + what is on next
-> be promoted to master.
-
-I agree that is a very sensible thing to do.  Let's do that.
+-- 
+Signature
