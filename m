@@ -1,123 +1,63 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] rev-parse: --is-bare-repository option
-Date: Sun, 11 Mar 2007 16:05:27 +0100
-Message-ID: <20070311150527.GA23224@moooo.ath.cx>
-References: <20070311043250.GA21331@moooo.ath.cx> <fcaeb9bf0703110627r6500d621rf6710c58e9e8d65b@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 16:05:36 2007
+From: Xavier Maillard <zedek@gnu.org>
+Subject: git merge and merge message
+Date: Sun, 11 Mar 2007 16:05:04 +0100
+Organization: GNU's Not UNIX!
+Message-ID: <200703111505.l2BF54Kq006625@localhost.localdomain>
+Reply-To: Xavier Maillard <zedek@gnu.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 11 16:07:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQPc6-0001Jz-BD
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 16:05:34 +0100
+	id 1HQPeM-0002IN-VL
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 16:07:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933721AbXCKPFb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 11:05:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933730AbXCKPFb
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 11:05:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40136 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933721AbXCKPFa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 11:05:30 -0400
-Received: (qmail invoked by alias); 11 Mar 2007 15:05:28 -0000
-Received: from pD9EB9C1C.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.156.28]
-  by mail.gmx.net (mp017) with SMTP; 11 Mar 2007 16:05:28 +0100
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX18S9DU29ysSbKUCvHc/u1PXTIGai5eiFjJcmwRgyt
-	mXZDqOU3zyRM1y
-Mail-Followup-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0703110627r6500d621rf6710c58e9e8d65b@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S933736AbXCKPHw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 11:07:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933738AbXCKPHw
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 11:07:52 -0400
+Received: from smtp2-g19.free.fr ([212.27.42.28]:42602 "EHLO smtp2-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933736AbXCKPHv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 11:07:51 -0400
+Received: from zogzog.home (cha51-2-82-244-211-40.fbx.proxad.net [82.244.211.40])
+	by smtp2-g19.free.fr (Postfix) with ESMTP id 415E47D11
+	for <git@vger.kernel.org>; Sun, 11 Mar 2007 16:07:50 +0100 (CET)
+Received: from localhost.localdomain (IDENT:1001@localhost [127.0.0.1])
+	by zogzog.home (8.13.8/8.13.8) with ESMTP id l2BF55kc006628
+	for <git@vger.kernel.org>; Sun, 11 Mar 2007 16:05:05 +0100
+Received: (from zedek@localhost)
+	by localhost.localdomain (8.13.8/8.13.8/Submit) id l2BF54Kq006625;
+	Sun, 11 Mar 2007 16:05:04 +0100
+X-Authentication-Warning: localhost.localdomain: zedek set sender to zedek@gnu.org using -f
+Jabber-ID: zedek@im.lolica.org
+User-Agent: Rmail in GNU Emacs 23.0.51.1 on GNU/Linux
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41931>
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> Um.. git-sh-setup.sh may need special treatment because its
-> is_bare_directory doesn't call this function.
-Here is rev-parse --is-bare-repository to fix this.
+Hi,
 
-I'm not sure if git-sh-setup.sh:is_bare_repository should do other
-checks if git-rev-parse --is-bare-repository fails.
----
- Documentation/git-rev-parse.txt |    7 +++++++
- builtin-rev-parse.c             |    5 +++++
- git-sh-setup.sh                 |    6 +-----
- git-svn.perl                    |    2 +-
- 4 files changed, 14 insertions(+), 6 deletions(-)
+I have setup several 'topic branches' for a project I am
+maintaining.
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index ccc66aa..d024d93 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -89,6 +89,13 @@ OPTIONS
- --git-dir::
- 	Show `$GIT_DIR` if defined else show the path to the .git directory.
- 
-+--is-inside-git-dir::
-+	When the current working directory is below the repository
-+	directory print "true", otherwise "false".
-+
-+--is-bare-repository::
-+	When the repository is bare print "true", otherwise "false".
-+
- --short, --short=number::
- 	Instead of outputting the full SHA1 values of object names try to
- 	abbreviate them to a shorter unique name. When no length is specified
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index 37addb2..71d5162 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -352,6 +352,11 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 						: "false");
- 				continue;
- 			}
-+			if (!strcmp(arg, "--is-bare-repository")) {
-+				printf("%s\n", is_bare_repository() ? "true"
-+						: "false");
-+				continue;
-+			}
- 			if (!prefixcmp(arg, "--since=")) {
- 				show_datestring("--max-age=", arg+8);
- 				continue;
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index f24c7f2..9ac657a 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -29,11 +29,7 @@ set_reflog_action() {
- }
- 
- is_bare_repository () {
--	git-config --bool --get core.bare ||
--	case "$GIT_DIR" in
--	.git | */.git) echo false ;;
--	*) echo true ;;
--	esac
-+	git-rev-parse --is-bare-repository
- }
- 
- cd_to_toplevel () {
-diff --git a/git-svn.perl b/git-svn.perl
-index 326e89f..ea5da95 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -559,7 +559,7 @@ sub post_fetch_checkout {
- 	my $index = $ENV{GIT_INDEX_FILE} || "$ENV{GIT_DIR}/index";
- 	return if -f $index;
- 
--	chomp(my $bare = `git config --bool --get core.bare`);
-+	chomp(my $bare = `git rev-parse --is-bare-repository`);
- 	return if $bare eq 'true';
- 	return if command_oneline(qw/rev-parse --is-inside-git-dir/) eq 'true';
- 	command_noisy(qw/read-tree -m -u -v HEAD HEAD/);
+For several ones, I want to merge them into master.
+
+Here is what I am trying to use:
+
+git checkout master
+git merge -m "Message" topic-branch
+
+The merge is correct but there is not merge message when I do a
+git log.
+
+I have tried either with and without -m, I even tried with git
+merge "merge message" topic-branch but then it failed.
+
+What is the correct way to have merge message ?
+
+Thank you
 -- 
-1.5.0.3.355.g8488f-dirty
+Xavier
