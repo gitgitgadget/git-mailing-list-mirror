@@ -1,70 +1,59 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] setup_git_directory_gently: fix off-by-one error
-Date: Sun, 11 Mar 2007 02:35:00 +0100
-Message-ID: <20070311013459.GA30057@moooo.ath.cx>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: git-upload-pack: the timeout gets corrupted?!
+Date: Sat, 10 Mar 2007 17:45:28 -0800
+Message-ID: <45F35F38.1080206@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 11 02:35:11 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 11 02:45:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQCxq-0006T9-Sh
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 02:35:11 +0100
+	id 1HQD7z-0002Mn-MR
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 02:45:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932281AbXCKBfF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 20:35:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbXCKBfF
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 20:35:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:56093 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932281AbXCKBfC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 20:35:02 -0500
-Received: (qmail invoked by alias); 11 Mar 2007 01:35:01 -0000
-Received: from pD9EBB157.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.177.87]
-  by mail.gmx.net (mp044) with SMTP; 11 Mar 2007 02:35:01 +0100
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX19mlAREKGtmoMh7JZTzzJpphVsnJjS8JQp/y5TDxI
-	sj6c6t33DwkS9G
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-X-Y-GMX-Trusted: 0
+	id S932325AbXCKBpg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 20:45:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932419AbXCKBpg
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 20:45:36 -0500
+Received: from terminus.zytor.com ([192.83.249.54]:44237 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932325AbXCKBpf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 20:45:35 -0500
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l2B1jTEk010803
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 10 Mar 2007 17:45:29 -0800
+User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
+X-Virus-Scanned: ClamAV 0.88.7/2801/Sat Mar 10 11:14:47 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=2.3 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX,PLING_QUERY,RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL
+	autolearn=no version=3.1.8
+X-Spam-Level: **
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41891>
 
-don't tell getcwd that the buffer has one spare byte for an extra /
+git-1.5.0.3-1.i386 rpm from Junio's repository on kernel.org:
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
-gdb session with PATH_MAX set to 2048:
-Breakpoint 5, setup_git_directory_gently (nongit_ok=0x0) at
-setup.c:253
-253             cwd[len] = 0;
-$ print sizeof(cwd)
-$14 = 2049
-$ print len
-$15 = 2049
-$ print PATH_MAX
-$16 = 2048
----
- setup.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Since we got the new git server on kernel.org, we are having a problem 
+with git-upload-pack processes getting reparented to init, and then 
+sitting there forever.  Going in with gdb, it appears the "timeout" 
+variable gets overwritten:
 
-diff --git a/setup.c b/setup.c
-index dda67d2..a45ea83 100644
---- a/setup.c
-+++ b/setup.c
-@@ -216,7 +216,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		die("Not a git repository: '%s'", gitdirenv);
- 	}
- 
--	if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
-+	if (!getcwd(cwd, sizeof(cwd)-1) || cwd[0] != '/')
- 		die("Unable to read current working directory");
- 
- 	offset = len = strlen(cwd);
--- 
-1.5.0.3
+(gdb) p timeout
+$1 = 608471321
+
+... which should have been 600.
+
+The process spends effectively forever waiting in on the fflush() in 
+show_commit() (in upload-pack.c); /proc/*/fd shows it is trying to write 
+to a pipe, but I'm not sure what is at the other end of that same pipe.
+
+	-hpa
