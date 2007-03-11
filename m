@@ -1,59 +1,76 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: git-upload-pack: the timeout gets corrupted?!
-Date: Sat, 10 Mar 2007 17:45:28 -0800
-Message-ID: <45F35F38.1080206@zytor.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 5/8] Teach run_command how to setup a stdin pipe
+Date: Sat, 10 Mar 2007 20:45:33 -0500
+Message-ID: <20070311014533.GA10343@spearce.org>
+References: <20070310082808.GE4133@spearce.org> <Pine.LNX.4.63.0703101753440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Mar 11 02:45:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Mar 11 02:45:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQD7z-0002Mn-MR
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 02:45:40 +0100
+	id 1HQD89-0002R9-Lc
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 02:45:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932325AbXCKBpg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 20:45:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932419AbXCKBpg
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 20:45:36 -0500
-Received: from terminus.zytor.com ([192.83.249.54]:44237 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932325AbXCKBpf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 20:45:35 -0500
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l2B1jTEk010803
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 10 Mar 2007 17:45:29 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
-X-Virus-Scanned: ClamAV 0.88.7/2801/Sat Mar 10 11:14:47 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=2.3 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_96_XX,PLING_QUERY,RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL
-	autolearn=no version=3.1.8
-X-Spam-Level: **
-X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
+	id S932419AbXCKBpk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 20:45:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932425AbXCKBpk
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 20:45:40 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:56808 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932419AbXCKBpj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 20:45:39 -0500
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HQD7k-0005yc-Vg; Sat, 10 Mar 2007 20:45:25 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id B8FFB20FBAE; Sat, 10 Mar 2007 20:45:33 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0703101753440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41892>
 
-git-1.5.0.3-1.i386 rpm from Junio's repository on kernel.org:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Sat, 10 Mar 2007, Shawn O. Pearce wrote:
+> 
+> > Sometimes callers trying to use run_command to execute a child process 
+> > will want to setup a pipe or file descriptor to redirect into the 
+> > child's stdin.
+> > 
+> > This idea is completely stolen from builtin-bundle's fork_with_pipe, 
+> > written by Johannes Schindelin.  All credit (and blame) should lie with 
+> > Dscho.  ;-)
+> 
+> ;-)
+> 
+> Thank you for starting this thread. I think it makes a lot of sense in the 
+> face of the MinGW port. (I am not interested in the hook stuff personally, 
+> so I'll not comment on that.)
 
-Since we got the new git server on kernel.org, we are having a problem 
-with git-upload-pack processes getting reparented to init, and then 
-sitting there forever.  Going in with gdb, it appears the "timeout" 
-variable gets overwritten:
+I'd like to see run_command learn how to also redirect stdout,
+then replace fork_with_pipe in builtin-bundle with run_command.
+We should be able to also improve some of our other more direct
+uses of fork to use run_command at that point too.
 
-(gdb) p timeout
-$1 = 608471321
+I don't know squat about MinGW, so I don't know if having the
+run_command abstraction really helps there or not, but I know we
+tried to make it with the good intentions of being able to use it
+to wrap that asinine CreateProcess() thing that Win32 has...
 
-... which should have been 600.
-
-The process spends effectively forever waiting in on the fflush() in 
-show_commit() (in upload-pack.c); /proc/*/fd shows it is trying to write 
-to a pipe, but I'm not sure what is at the other end of that same pipe.
-
-	-hpa
+-- 
+Shawn.
