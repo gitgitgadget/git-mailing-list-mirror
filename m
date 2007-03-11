@@ -1,68 +1,65 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Make gc a builtin.
-Date: Sun, 11 Mar 2007 23:48:45 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703112332550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11736508181273-git-send-email-jbowes@dangerouslyinc.com>
- <1173650820969-git-send-email-jbowes@dangerouslyinc.com>
+Subject: Re: A tracking tree for the active work space
+Date: Mon, 12 Mar 2007 00:18:27 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703120017450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <9e4733910703110706m14abae25r2a965b644d8c3bbb@mail.gmail.com> 
+ <7vhcsrwn8d.fsf@assigned-by-dhcp.cox.net> <9e4733910703111335j20c0acf4wa12c2d410580898b@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: James Bowes <jbowes@dangerouslyinc.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 23:52:49 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 00:18:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQWuG-0002Te-I3
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 23:52:48 +0100
+	id 1HQXJC-0004oH-Ps
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 00:18:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933604AbXCKWwp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 18:52:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933610AbXCKWwp
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 18:52:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57950 "HELO mail.gmx.net"
+	id S933619AbXCKXSc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 19:18:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933620AbXCKXSc
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 19:18:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45148 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933604AbXCKWwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 18:52:44 -0400
-Received: (qmail invoked by alias); 11 Mar 2007 22:48:47 -0000
+	id S933619AbXCKXSb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 19:18:31 -0400
+Received: (qmail invoked by alias); 11 Mar 2007 23:18:29 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp041) with SMTP; 11 Mar 2007 23:48:47 +0100
+  by mail.gmx.net (mp031) with SMTP; 12 Mar 2007 00:18:29 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/YLRIHutbYQd3d+2QShHT4Gm99VbVC4VsopUmAWb
-	B/g4l0kuF6Ihvb
+X-Provags-ID: V01U2FsdGVkX18YpXEtqGoYrb06DLebPz48zSOqMjsm6I8ftq8/lG
+	Snk2UhED+SdwPI
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <1173650820969-git-send-email-jbowes@dangerouslyinc.com>
+In-Reply-To: <9e4733910703111335j20c0acf4wa12c2d410580898b@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42001>
 
 Hi,
 
-On Sun, 11 Mar 2007, James Bowes wrote:
+On Sun, 11 Mar 2007, Jon Smirl wrote:
 
-> +	if (pack_refs)
-> +		run_command_or_die("git-pack-refs", "--prune", NULL);
-> +	run_command_or_die("git-reflog", "expire", "--all", NULL);
-> +	run_command_or_die("git-repack", "-a", "-d", "-l", NULL);
-> +	if (prune)
-> +		run_command_or_die("git-prune", NULL);
-> +	run_command_or_die("git-rerere", "gc", NULL);
+> On 3/11/07, Junio C Hamano <junkio@cox.net> wrote:
+> > "Jon Smirl" <jonsmirl@gmail.com> writes:
+> > 
+> > > Reading the other thread on tracking temporary changes made me think
+> > > of using inotify with git. The basic idea would be to a daemon running
+> > > that uses inotify to listen for changes in the working tree. As these
+> > > changes happen they get committed to a tracking tree.
+> > 
+> > I think it is an interesting idea, but can be used with any SCM
+> > not just git ;-).
 
-Shawn recently sent a series which discourages the va_list versions of 
-run_command. I think that makes sense. So, using 
-run_command_v_opt(argv_pack_refs, RUN_GIT_CMD) would be better IMHO.
+I just stumbled over this:
 
-And instead of die()ing, I'd rather do something like
+	http://arcs.unixtreaty.com/
 
-	return (pack_refs || run_command_v_opt(argv_pack_refs, RUN_GIT_CMD) &&
-		run_command_v_opt(argv_reflog_expire, RUN_GIT_CMD) &&
-		run_command_v_opt(argv_repack, RUN_GIT_CMD) &&
-		(prune || run_command_v_opt(argv_prune, RUN_GIT_CMD) &&
-		run_command_v_opt(argv_rerere, RUN_GIT_CMD);
-
-Hmm?
+which might or might not do what you want, judging by the description.
 
 Ciao,
 Dscho
