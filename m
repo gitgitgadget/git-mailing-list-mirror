@@ -1,73 +1,63 @@
-From: Georg Lohrer <pacco@tropezien.de>
-Subject: Re: How to use git-svnimport without trunk, tags and branches?
-Date: Sun, 11 Mar 2007 17:57:13 +0100
-Message-ID: <45F434E9.7040003@tropezien.de>
-References: <45F3EA37.2080502@tropezien.de> <20070311143638.GA7822@diana.vm.bytemark.co.uk>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: git-upload-pack: the timeout gets corrupted?!
+Date: Sun, 11 Mar 2007 10:18:33 -0700
+Message-ID: <45F439E9.1080204@zytor.com>
+References: <45F35F38.1080206@zytor.com> <7vy7m4wcfb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 17:57:28 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Mar 11 18:19:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQRML-00072W-Pn
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 17:57:26 +0100
+	id 1HQRhF-00080x-3i
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 18:19:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933839AbXCKQ5W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 11 Mar 2007 12:57:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933844AbXCKQ5W
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 12:57:22 -0400
-Received: from www18.your-server.de ([213.133.104.18]:4397 "EHLO
-	www18.your-server.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933839AbXCKQ5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 12:57:21 -0400
-Received: from [91.23.156.88] (helo=[192.168.100.70])
-	by www18.your-server.de with esmtpsa (TLSv1:RC4-MD5:128)
-	(Exim 4.50)
-	id 1HQRMG-0002zU-47; Sun, 11 Mar 2007 17:57:20 +0100
-User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
-In-Reply-To: <20070311143638.GA7822@diana.vm.bytemark.co.uk>
-X-Authenticated-Sender: pacco@tropezien.de
-X-Virus-Scanned: Clear (ClamAV 0.88.4/2690/Thu Mar  1 12:11:27 2007)
+	id S933854AbXCKRSp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 13:18:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933856AbXCKRSp
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 13:18:45 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:57030 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933854AbXCKRSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 13:18:44 -0400
+Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l2BHIX1l026168
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 11 Mar 2007 10:18:35 -0700
+User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
+In-Reply-To: <7vy7m4wcfb.fsf@assigned-by-dhcp.cox.net>
+X-Virus-Scanned: ClamAV 0.88.7/2807/Sun Mar 11 01:57:00 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=2.3 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX,PLING_QUERY,RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL
+	autolearn=no version=3.1.8
+X-Spam-Level: **
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41944>
 
-Hi Karl,
+Junio C Hamano wrote:
+> "H. Peter Anvin" <hpa@zytor.com> writes:
+> 
+>> ...  Going in with gdb, it appears the "timeout"
+>> variable gets overwritten:
+>>
+>> (gdb) p timeout
+>> $1 = 608471321
+>>
+>> ... which should have been 600.
+> 
+> I do not see offhand what can cause this.  The only new code
+> since 1.4.4 series is "shallow clone" stuff,...
 
-Karl Hasselstr=F6m schrieb:
-  > You could try something like this:
->=20
->   trunk: svnrepos/projectA
->   tags: svnrepos/dummytags
->   branches: svnrepos/dummybranches
->=20
-> I haven't tested, but I think that kind of maneouver should work.
+Well, we changed servers from an x86-64 box to an i386 box, so we're 
+definitely running different binaries.
 
-yes, that does the trick. I use:
-
-$ cd ~/tmp/git-test
-$ tar xvfj fooRepos.tar.bz2
-$ mv fooRepos foorRepos.svnrepos
-$ svn mkdir file:///home/georg/tmp/git-test/fooRepos.svnrepos/dummytags
-$ svn mkdir file:///home/georg/tmp/git-test/foorRepos.svnrepos/dummybra=
-nches
-$ mkdir fooRepos.git; cd fooRepos.git
-$ git-svnimport -b dummybranches -t dummytags -T projectA=20
-file:///home/georg/tmp/git-test/fooRepos.svnrepos
-
-Unfortunately there was a bunch of directories  instead of a single=20
-projectA-directory. Do I have to repeat the above mentioned sequence fo=
-r=20
-every directory (projectA, projectB, ...) or is there a simple way of=20
-git-svnimport'ing into an existing git-repository?
-
-Nevertheless, if that is not possible, I could extract with your way=20
-the desired directories separately and keep the histories intact.
-
-Regards, Georg
+	-hpa
