@@ -1,120 +1,58 @@
-From: Josef Sipek <jsipek@cs.sunysb.edu>
-Subject: [ANNOUNCE] Guilt v0.22
-Date: Sun, 11 Mar 2007 15:30:54 -0400
-Message-ID: <20070311193054.GA26766@filer.fsl.cs.sunysb.edu>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in bundle
+Date: Sun, 11 Mar 2007 12:58:46 -0700
+Message-ID: <7vps7fwo09.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
+	<45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<45F2D955.8050800@gmail.com>
+	<Pine.LNX.4.63.0703101749270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<45F2F934.8060407@gmail.com>
+	<Pine.LNX.4.63.0703110201450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7vy7m4y3cn.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0703110244130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<45F41787.4080506@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 11 20:31:17 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 11 20:58:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQTlD-0006Xn-0F
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 20:31:15 +0100
+	id 1HQUBv-0001lY-9U
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 20:58:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965082AbXCKTa6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 15:30:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965069AbXCKTa6
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 15:30:58 -0400
-Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:46357 "EHLO
-	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964802AbXCKTa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 15:30:56 -0400
-Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l2BJUsZV028951;
-	Sun, 11 Mar 2007 15:30:54 -0400
-Received: (from jsipek@localhost)
-	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l2BJUssn028948;
-	Sun, 11 Mar 2007 15:30:54 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
+	id S1751548AbXCKT6s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 15:58:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751546AbXCKT6s
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 15:58:48 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:43564 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751547AbXCKT6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 15:58:47 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070311195846.OHEX1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 11 Mar 2007 15:58:46 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZXym1W00B1kojtg0000000; Sun, 11 Mar 2007 15:58:46 -0400
+In-Reply-To: <45F41787.4080506@gmail.com> (Mark Levedahl's message of "Sun, 11
+	Mar 2007 10:51:51 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41965>
 
-Guilt v0.22 is available for download (once it mirrors out on kernel.org).
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-Guilt (Git Quilt) is a series of bash scripts which add a Mercurial
-queues-like functionality and interface to git.
+> Bottom line, I strongly advocate Dscho's last patch + what is on next
+> be promoted to master.
 
-Tarballs:
-http://www.kernel.org/pub/linux/kernel/people/jsipek/guilt/
-
-Git repo:
-git://git.kernel.org/pub/scm/linux/kernel/git/jsipek/guilt.git
-
-
-The changes to Guilt could be divided into three categories:
-
-1) Documentation: Quite a bit of documentation was added.
-
-2) Bugfixes:
-    - guilt-patchbomb did not actually do the right action based on user's
-      answer to the question about removal of the temporary patch directory.
-
-    - Many places in the code used variables in an unsafe way - a whitespace
-      in a path could have caused very bad things to happen.
-
-    - Guilt 0.21 did not allow the user to be in a subdirectory and run
-      guilt commands.
-
-    - guilt-files did not recurse into subdirectories.
-
-3) Features: Autotagging:
-
-    Automatically creates unannotated tags for top, bottom, and base of the
-    stack
-
-    On every push or pop operation (refresh is a pop followed by a push),
-    update the stack top (${branch}_top), stack bottom (${branch}_bottom),
-    and stack base (${branch}_base) tags.
-
-    Top:	Topmost applied patch/commit
-    Bottom:	Bottommost applied patch/commit
-    Base:	Commit on top of which the bottom most patch is applied
-
-    Having these three tags, one can easily get the log/diff/other information
-    only for commits that are (or are not!) part of the patch stack.
-
-    Autotagging can be disabled by setting guilt.autotag=0 in your git
-    config file.
-
-    Additionally, guilt-init now accepts a new parameter '-n' to
-    automatically set guilt.autotag=0 in the current repository.
-
-
-As always, patches, and other feedback is welcome.
-
-Josef "Jeff" Sipek.
-
-------------
-Changes since v0.21:
-
-Josef 'Jeff' Sipek (19):
-      Inform git-sh-setup that we can work from within a subdirectory
-      Docs: guilt-new manpage
-      files: Recurse into subdirectories when using git-diff-tree
-      Docs: guilt-files manpage
-      Docs: Formatting fixes
-      Docs: prev, refresh, top, and unapplied manpages
-      new: Make sure the requested patchname would not create unnecessary problems
-      Quote variables as frequently as possible to prevent whitespace problems
-      Remove find_git_dir as git-sh-setup already provides such functionality
-      Makefile's clean target should be .PHONY as well
-      Docs: Fix links/references between pages
-      Docs: Mention the fact that guilt can be used to develop guilt
-      Docs: Fix command examples in new & next manpage
-      Docs: Remove stray reference
-      Automatically create unannotated tags for top, bottom, and base of the stack
-      Autotag: Read guilt.autotag config var and tag commits only if this feature is enabled
-      Docs: Added install-html makefile rule to Documentation/Makefile
-      Makefile: Replace hard-coded script list with a wildcard
-      Guilt v0.22
-
-Nur Hussein (3):
-      Guilt: Fixed guilt-patchbomb temporary mbox deletion bug
-      Guilt: Added an uninstall target
-      Guilt: Makefile tab fix
+I agree that is a very sensible thing to do.  Let's do that.
