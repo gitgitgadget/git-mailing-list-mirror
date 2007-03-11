@@ -1,98 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git merge and merge message
-Date: Sun, 11 Mar 2007 13:19:00 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703111309410.9690@woody.linux-foundation.org>
-References: <200703111505.l2BF54Kq006625@localhost.localdomain>
- <20070311160424.GA629@fieldses.org> <200703111815.l2BIFHbq010315@localhost.localdomain>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] fast-import: use binary search in tree_content_remove
+Date: Sun, 11 Mar 2007 16:19:12 -0400
+Message-ID: <20070311201912.GA12457@spearce.org>
+References: <<20070310191515.GA3416@coredump.intra.peff.net>> <20070310192131.GB3875@coredump.intra.peff.net> <20070310192304.GB3416@coredump.intra.peff.net> <20070310194012.GA5126@coredump.intra.peff.net> <20070311033833.GB10781@spearce.org> <20070311163412.GB7110@coredump.intra.peff.net> <20070311165432.GA13555@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: Xavier Maillard <zedek@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Mar 11 21:19:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Mar 11 21:19:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQUVf-0002Ow-5X
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:19:15 +0100
+	id 1HQUVo-0002TY-Kk
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:19:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750712AbXCKUTM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 16:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbXCKUTM
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:19:12 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:57374 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750712AbXCKUTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 16:19:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2BKJ1o4010648
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 11 Mar 2007 13:19:01 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2BKJ0FJ018830;
-	Sun, 11 Mar 2007 12:19:00 -0800
-In-Reply-To: <200703111815.l2BIFHbq010315@localhost.localdomain>
-X-Spam-Status: No, hits=-0.488 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750917AbXCKUTU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 16:19:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751143AbXCKUTU
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:19:20 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:49007 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750917AbXCKUTT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 16:19:19 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HQUVF-0002QT-Cz; Sun, 11 Mar 2007 16:18:49 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 5162420FBAE; Sun, 11 Mar 2007 16:19:13 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070311165432.GA13555@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41972>
 
-
-
-On Sun, 11 Mar 2007, Xavier Maillard wrote:
->    On Sun, Mar 11, 2007 at 04:05:04PM +0100, Xavier Maillard wrote:
->    > The merge is correct but there is not merge message when I do a
->    > git log.
+Jeff King <peff@peff.net> wrote:
+> On Sun, Mar 11, 2007 at 12:34:13PM -0400, Jeff King wrote:
 > 
->    Have you done any work on the master branch since you branched the topic
->    branch off from it?  If not, the merge is just a "fast forward"--no
->    merge commit is created, and instead the head of the master branch is
->    just updated to point at the same commit as the head of the topic
->    branch.
+> > > I'm plastering over the problem by resorting a tree strictly by
+> > > name after it has been written out and the deleted entries have
+> > > been filtered out.
+> > I wonder if we could make this a bit cleaner by actually using the git
+> > sort in the first place. I will take a look...
 > 
-> No I did not touch master before. It could explain that behaviour
-> then :)
+> Hrm, it's not that hard to pass the mode around and use
+> base_name_compare, but I don't think that's enough. Any time we turn an
+> entry into a tree, we'll have to resort. I think your patch is simpler
+> and less error prone.
 
-Indeed.
+Yes, but it gets worse.  We delete an entry by setting the mode to
+0 in version 1, but leaving the entry in the tree so that the entry
+will show up in version 0 during delta generation.
 
-The "don't merge, just fast-forward" is the right thing to do for working 
-together. However, I can well imagine that if you actually work with 
-branches not as "distributed development", but *just* as "topic branches", 
-then having the "useless" merge (with the parents actually being parents 
-of each other) migth actually be nice from a documentation standpoint.
+So what happens if we delete the tree entry, then modify it in
+the same commit?  We can't find it if we are searching with mode
+included.
 
-I'm torn on this. I really dislike anything but fast-forward, because I 
-have a strong suspicion that it will cause "alpha male" behaviour (where 
-maintainers use the "useless merge" as a way to mark their territory), 
-which I think is actually really bad form.
+Sidenote: I have the same sorting problems in jgit.  It all comes
+down to how annoying the tree format is, in that entries are sorted
+by both name and mode, but only name makes the entry be unique.
 
-At the same time, I think that the kind of behaviour that Xavier is 
-talking about, where you actually end up having feature branches for your 
-own project, and then using
+Right now I'm not sure how to resolve this, short of the bandaid
+patch I put onto the end of your series.   :-(
 
-	git merge -m "Merge feature Xyz" xyz-branch
-
-is potentially a really good way of making it clear that the code along 
-the branch you merged did Xyz.
-
-My other rule in life is that a tool should not *force* a certain policy 
-(although encouraging good behaviour by making that the *easy* thing to do 
-is a good idea), so I think that it would probably be ok to add a flag to 
-"git merge" to say "force a merge commit", which would disable the 
-fast-forward behaviour.
-
-(And if you don't support it for "git pull", maybe that's enough of a 
-disincentive that you won't see the "maintainer marking his territory by 
-peeing in the snow" behaviour).
-
-Comments? Do people think it would be a good idea to do
-
-	git merge --no-fast-forward -m "Merge feature Xyz" xyz-branch
-
-as an option?
-
-			Linus
+-- 
+Shawn.
