@@ -1,82 +1,157 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 5/8] Teach run_command how to setup a stdin pipe
-Date: Sun, 11 Mar 2007 03:07:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703110305000.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070310082808.GE4133@spearce.org>
- <Pine.LNX.4.63.0703101753440.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070311014533.GA10343@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] prepare_packed_git(): sort packs by age and localness.
+Date: Sat, 10 Mar 2007 18:29:20 -0800
+Message-ID: <7vtzwsy0lb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Mar 11 03:07:33 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 11 03:29:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQDTB-000300-4q
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 03:07:33 +0100
+	id 1HQDoP-00032v-5p
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 03:29:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932465AbXCKCHP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 21:07:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932468AbXCKCHO
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 21:07:14 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58235 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932465AbXCKCHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 21:07:13 -0500
-Received: (qmail invoked by alias); 11 Mar 2007 02:07:11 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp054) with SMTP; 11 Mar 2007 03:07:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19XFLxUuhdXVOUGYIC2viHagyJ0ycyVt62LzB0KvN
-	ox9zUvChpZbKcX
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070311014533.GA10343@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S932635AbXCKC3X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 21:29:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932688AbXCKC3W
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 21:29:22 -0500
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:54223 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932635AbXCKC3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 21:29:21 -0500
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070311022921.HKMA1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sat, 10 Mar 2007 21:29:21 -0500
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZEVL1W00P1kojtg0000000; Sat, 10 Mar 2007 21:29:20 -0500
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41897>
 
-Hi,
+When accessing objects, we first look for them in packs that
+are linked together in the reverse order of discovery.
 
-On Sat, 10 Mar 2007, Shawn O. Pearce wrote:
+Since younger packs tend to contain more recent objects, which
+are more likely to be accessed often, and local packs tend to
+contain objects more relevant to our specific projects, sort the
+list of packs before starting to access them.  In addition,
+favoring local packs over the ones borrowed from alternates can
+be a win when alternates are mounted on network file systems.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Sat, 10 Mar 2007, Shawn O. Pearce wrote:
-> > 
-> > > Sometimes callers trying to use run_command to execute a child 
-> > > process will want to setup a pipe or file descriptor to redirect 
-> > > into the child's stdin.
-> > > 
-> > > This idea is completely stolen from builtin-bundle's fork_with_pipe, 
-> > > written by Johannes Schindelin.  All credit (and blame) should lie 
-> > > with Dscho.  ;-)
-> > 
-> > ;-)
-> > 
-> > Thank you for starting this thread. I think it makes a lot of sense in 
-> > the face of the MinGW port. (I am not interested in the hook stuff 
-> > personally, so I'll not comment on that.)
-> 
-> I'd like to see run_command learn how to also redirect stdout, then 
-> replace fork_with_pipe in builtin-bundle with run_command. We should be 
-> able to also improve some of our other more direct uses of fork to use 
-> run_command at that point too.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ cache.h     |    2 ++
+ sha1_file.c |   58 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+), 0 deletions(-)
 
-I concur.
-
-> I don't know squat about MinGW, so I don't know if having the 
-> run_command abstraction really helps there or not, but I know we tried 
-> to make it with the good intentions of being able to use it to wrap that 
-> asinine CreateProcess() thing that Win32 has...
-
-There is only one place that I am aware of, where this is not enough: For 
-the shallow thing, upload-pack fork()s but does not execute another 
-program, but lists all the objects to be uploaded. (For shallow, this 
-_cannot_ be an external process, since it mucks with the commits which are 
-to be treated as shallow).
-
-Ciao,
-Dscho
+diff --git a/cache.h b/cache.h
+index ae25759..db3a000 100644
+--- a/cache.h
++++ b/cache.h
+@@ -373,6 +373,7 @@ extern struct packed_git {
+ 	struct packed_git *next;
+ 	struct pack_window *windows;
+ 	uint32_t *index_base;
++	time_t mtime;
+ 	off_t index_size;
+ 	off_t pack_size;
+ 	int pack_fd;
+@@ -431,6 +432,7 @@ extern off_t find_pack_entry_one(const unsigned char *, struct packed_git *);
+ extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
+ extern unsigned long unpack_object_header_gently(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
+ extern const char *packed_object_info_detail(struct packed_git *, off_t, unsigned long *, unsigned long *, unsigned int *, unsigned char *);
++void rearrange_packed_git(void);
+ 
+ /* Dumb servers support */
+ extern int update_server_info(int);
+diff --git a/sha1_file.c b/sha1_file.c
+index 219a10f..3036817 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -739,6 +739,7 @@ struct packed_git *add_packed_git(char *path, int path_len, int local)
+ 	p->windows = NULL;
+ 	p->pack_fd = -1;
+ 	p->pack_local = local;
++	p->mtime = st.st_mtime;
+ 	if ((path_len > 44) && !get_sha1_hex(path + path_len - 44, sha1))
+ 		hashcpy(p->sha1, sha1);
+ 	return p;
+@@ -823,6 +824,62 @@ static void prepare_packed_git_one(char *objdir, int local)
+ 	closedir(dir);
+ }
+ 
++static int sort_pack(const void *a_, const void *b_)
++{
++	struct packed_git *a = *((struct packed_git **)a_);
++	struct packed_git *b = *((struct packed_git **)b_);
++	int st;
++
++	/*
++	 * Local packs tend to contain objects specific to our
++	 * variant of the project than remote ones.  In addition,
++	 * remote ones could be on a network mounted filesystem.
++	 * Favor local ones for these reasons.
++	 */
++	st = a->pack_local - b->pack_local;
++	if (st)
++		return -st;
++
++	/*
++	 * Younger packs tend to contain more recent objects,
++	 * and more recent objects tend to get accessed more
++	 * often.
++	 */
++	if (a->mtime < b->mtime)
++		return 1;
++	else if (a->mtime == b->mtime)
++		return 0;
++	return -1;
++}
++
++void rearrange_packed_git(void)
++{
++	struct packed_git **ary, *p;
++	int i, n;
++	int (*sort_fn)(const void *, const void *);
++
++	for (n = 0, p = packed_git; p; p = p->next)
++		n++;
++	if (n < 2)
++		return;
++
++	/* prepare an array of packed_git for easier sorting */
++	ary = xcalloc(n, sizeof(struct packed_git *));
++	for (n = 0, p = packed_git; p; p = p->next)
++		ary[n++] = p;
++
++	sort_fn = sort_pack;
++	qsort(ary, n, sizeof(struct packed_git *), sort_fn);
++
++	/* link them back again */
++	for (i = 0; i < n - 1; i++)
++		ary[i]->next = ary[i + 1];
++	ary[n - 1]->next = NULL;
++	packed_git = ary[0];
++
++	free(ary);
++}
++
+ static int prepare_packed_git_run_once = 0;
+ void prepare_packed_git(void)
+ {
+@@ -837,6 +894,7 @@ void prepare_packed_git(void)
+ 		prepare_packed_git_one(alt->base, 0);
+ 		alt->name[-1] = '/';
+ 	}
++	rearrange_packed_git();
+ 	prepare_packed_git_run_once = 1;
+ }
+ 
+-- 
+1.5.0.3.942.g299fc
