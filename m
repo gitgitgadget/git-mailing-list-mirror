@@ -1,62 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-upload-pack: the timeout gets corrupted?!
-Date: Sat, 10 Mar 2007 21:56:40 -0800
-Message-ID: <7vy7m4wcfb.fsf@assigned-by-dhcp.cox.net>
-References: <45F35F38.1080206@zytor.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [RFC] introduce GIT_WORK_DIR environment variable
+Date: Sun, 11 Mar 2007 08:26:30 +0000
+Message-ID: <200703110826.39283.andyparkins@gmail.com>
+References: <20070311043250.GA21331@moooo.ath.cx> <7vabykxs15.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 06:57:00 2007
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	Matthias Lederhofer <matled@gmx.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 11 09:29:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQH3B-0006HU-TR
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 06:56:58 +0100
+	id 1HQJQy-0005dR-Bg
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 09:29:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933203AbXCKF4m (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 00:56:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933204AbXCKF4m
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 00:56:42 -0500
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:36132 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933203AbXCKF4l (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 00:56:41 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070311055642.JGQC1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 11 Mar 2007 00:56:42 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ZHwh1W0031kojtg0000000; Sun, 11 Mar 2007 00:56:41 -0500
-In-Reply-To: <45F35F38.1080206@zytor.com> (H. Peter Anvin's message of "Sat,
-	10 Mar 2007 17:45:28 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751782AbXCKI3b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 04:29:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbXCKI3a
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 04:29:30 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:44353 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751782AbXCKI33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 04:29:29 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1848421uga
+        for <git@vger.kernel.org>; Sun, 11 Mar 2007 00:29:28 -0800 (PST)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=mQtcSaJ1uo24tIPkJuDNATI6Mn5Hh83/Yg98fS8v3SWwXelwXFuX/nGLoDXG4oEB9X4N5DA28+r4+AUw5whUsBzQBfOoW1bx6xP6XPk2v8JWrcDFQU1ZCTSBfiQJ4z1748p+//ez+ceW/jEagXJtIdvSACX2h6VCNoXLY9MqsmE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=q6O6yqCVG7GoD7n3/AxEujM1Ja4Tk98pBUdDBoPXtWjHchgCjCN02fRpylTUqR7yfJxHYcVHB0EJges7Y60pxJf4pVkwotsCiXmKU2I0Tofh2WiCdezSM5Y1T2vK1qNcnhUi94rUCYkspNaHS48naPUa5sNif7yUnMJ5GV4sEz4=
+Received: by 10.67.119.13 with SMTP id w13mr14331778ugm.1173601767987;
+        Sun, 11 Mar 2007 00:29:27 -0800 (PST)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id o24sm6639706ugd.2007.03.11.00.29.26;
+        Sun, 11 Mar 2007 00:29:27 -0800 (PST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vabykxs15.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41915>
 
-"H. Peter Anvin" <hpa@zytor.com> writes:
+On Sunday 2007, March 11, Junio C Hamano wrote:
 
-> ...  Going in with gdb, it appears the "timeout"
-> variable gets overwritten:
->
-> (gdb) p timeout
-> $1 = 608471321
->
-> ... which should have been 600.
+> What's the real motivation behind all this?
 
-I do not see offhand what can cause this.  The only new code
-since 1.4.4 series is "shallow clone" stuff,...
+Coincidentally, I found I was needing this feature just yesterday.
 
-> The process spends effectively forever waiting in on the fflush() in
-> show_commit() (in upload-pack.c); /proc/*/fd shows it is trying to
-> write to a pipe, but I'm not sure what is at the other end of that
-> same pipe.
+I wanted to keep random configuration files in a repository.  I didn't 
+want the directory structure though.  The config files are, of course, 
+in my home directory, however I didn't want the danger of putting 
+a .git that low in my hierarchy.  Having a .git that is findable from 
+any location in my tree seems a bad idea.
 
-The process forks and the one that runs show_commit() is running
-rev-list internally while the other end is a pack-objects that
-reads from it and sends its output back to the client.
+So; I put the repository somewhere else and set GIT_DIR.  However that 
+scuppered my plans.  Trying to add a config file results in "not in a 
+working directory" (of course), because even though git can find the 
+repository, it has no way of knowing which directory to consider as the 
+root of the working tree.
+
+Let me put this in command form for you:
+
+ $ cd $HOME
+ $ export GIT_DIR=$HOME/gitrepos
+ $ git init
+ $ git add .bashrc
+ fatal: add must be run in a work tree
+
+Being able to set GIT_WORKING_DIR would have let me do this.
+
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
