@@ -1,94 +1,103 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-upload-pack: the timeout gets corrupted?!
-Date: Sun, 11 Mar 2007 13:14:53 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703111314150.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <45F35F38.1080206@zytor.com> <7vy7m4wcfb.fsf@assigned-by-dhcp.cox.net>
- <45F3CAAF.7030909@zytor.com>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [RFC] introduce GIT_WORK_DIR environment variable
+Date: Sun, 11 Mar 2007 19:42:02 +0700
+Message-ID: <fcaeb9bf0703110542t49bb3e77kb164ba7bfee1a6ed@mail.gmail.com>
+References: <20070311043250.GA21331@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 13:15:02 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, "Matthias Lederhofer" <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Sun Mar 11 13:42:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQMx3-0004tJ-U6
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 13:15:02 +0100
+	id 1HQNNN-0007OX-90
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 13:42:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933276AbXCKMO6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 08:14:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933278AbXCKMO6
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 08:14:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56875 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933276AbXCKMO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 08:14:57 -0400
-Received: (qmail invoked by alias); 11 Mar 2007 12:14:56 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp053) with SMTP; 11 Mar 2007 13:14:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+DyllVn8mDyk9rY6onY65RHV0YNTOdkfczGWlFkn
-	J4sGFuTaLciuez
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <45F3CAAF.7030909@zytor.com>
-X-Y-GMX-Trusted: 0
+	id S933348AbXCKMmG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 08:42:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933457AbXCKMmG
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 08:42:06 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:59688 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933348AbXCKMmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 08:42:04 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1890343uga
+        for <git@vger.kernel.org>; Sun, 11 Mar 2007 05:42:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sWMxN9qVICAnHQO3HPJN/TTurquJhDSDKlGacG05a0me7d+Ufsatu8m5cNVjegNs3de7HTc00kow022V7R5yovB8fx69C7+QVHCtSc8Qjp7X1APWlqHclmdDrlUIsPGojmWWiI2+NV3Y/WWhxLZDONB9DeEPbxJz+N1ZuxatY9Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Uji3krzKpYWf4S4+kdxQwpQHGVlG0CUdftcIHLjQpJH4Vl7oeXpaK3oJv2RgdNNXOu2noSX24qplhrXQtcRqdipkdS7I4OQkS/Cs7nslou0aIZYSUV1y9F23VI42nKqW9o4UpLTXIcD0tZxoB3wslC50NIdlTy7U7ITFbAxCjww=
+Received: by 10.115.54.1 with SMTP id g1mr787707wak.1173616922280;
+        Sun, 11 Mar 2007 05:42:02 -0700 (PDT)
+Received: by 10.115.19.15 with HTTP; Sun, 11 Mar 2007 05:42:02 -0700 (PDT)
+In-Reply-To: <20070311043250.GA21331@moooo.ath.cx>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41920>
 
-Hi,
+On 3/11/07, Matthias Lederhofer <matled@gmx.net> wrote:
+> +               gitwd = getenv(GIT_WORKING_DIR_ENVIRONMENT);
+> +               if (!gitwd || stat(gitwd, &st_work))
+>                         return NULL;
 
-On Sun, 11 Mar 2007, H. Peter Anvin wrote:
+I propose the following instead of the last two lines:
 
-> Junio C Hamano wrote:
-> > 
-> > > The process spends effectively forever waiting in on the fflush() in
-> > > show_commit() (in upload-pack.c); /proc/*/fd shows it is trying to
-> > > write to a pipe, but I'm not sure what is at the other end of that
-> > > same pipe.
-> > 
-> > The process forks and the one that runs show_commit() is running
-> > rev-list internally while the other end is a pack-objects that
-> > reads from it and sends its output back to the client.
-> > 
-> 
-> Now, given that the fact that the git-pack-object process has already died,
-> normally one would expect the write() to get SIGPIPE which would kill the
-> process.  Does git-upload-pack not close the read end of the pipe in the
-> writer?  From the looks of the fd directory, I would say it does not.
+                if (!gitwd)
+                        return NULL;
+                if (stat(gitwd, &st_work))
+                        die("Unable to stat git working directory %s",gitwd);
 
-Something like this (totally untested):
+> +               if (inside_git_dir == -1 && stat(gitdirenv, &st_git))
+> +                       die("Unable to stat git directory");
+> +               if (!getcwd(cwd, sizeof(cwd)-1) || cwd[0] != '/')
+> +                       die("Unable to read current working directory");
+> +               len = strlen(cwd);
+> +
+> +               prefix = cwd+len;
+> +               for (;;) {
+> +                       c = *prefix;
+> +                       *prefix = '\0';
+> +                       if (stat(cwd, &st))
+> +                               die("Unable to stat '%s'", cwd);
+> +                       if (st_work.st_dev == st.st_dev &&
+> +                           st_work.st_ino == st.st_ino)
+> +                               break;
+> +                       if (inside_git_dir == -1 &&
+> +                           st_git.st_dev == st.st_dev &&
+> +                           st_git.st_ino == st.st_ino)
+> +                               inside_git_dir = 1;
+> +                       *prefix = c;
+> +
+> +                       if (prefix == cwd+1) {
+> +                               has_working_directory = 0;
+> +                               return NULL;
 
- upload-pack.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+My case seems a bit complicated than usual. The working directory
+(/home/pclouds/blog/data) was not a prefix of cwd (/home/pclouds/blog)
+so the code failed silently at this line. If I replace
+"has_working_directory = 0; return NULL;" with "strcpy(cwd,gitwd);c =
+0;break;", it may work but see below
 
-diff --git a/upload-pack.c b/upload-pack.c
-index 498bf50..bafd90f 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -119,6 +119,8 @@ static void create_pack_file(void)
- 		int i;
- 		struct rev_info revs;
- 
-+		close(0);
-+
- 		pack_pipe = fdopen(lp_pipe[1], "w");
- 
- 		if (create_full_pack)
-@@ -167,6 +169,10 @@ static void create_pack_file(void)
- 		const char *argv[10];
- 		int i = 0;
- 
-+		close(0);
-+		close(1);
-+		close(2);
-+
- 		dup2(lp_pipe[0], 0);
- 		dup2(pu_pipe[1], 1);
- 		dup2(pe_pipe[1], 2);
+> +                       }
+> +                       while (*(--prefix) != '/')
+> +                               ; /* do nothing */
+> +                       if (prefix == cwd)
+> +                               prefix++;
+> +               }
+> +
+> +               if (chdir(cwd))
+> +                       die("Cannot change directory to '%s'", cwd);
+> +
 
-Ciao,
-Dscho
+If cwd changed and GIT_DIR is a relative path, git can no longer
+access GIT_DIR properly.
+-- 
+Duy
