@@ -1,83 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: A tracking tree for the active work space
-Date: Sun, 11 Mar 2007 22:31:58 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703112209160.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <9e4733910703110706m14abae25r2a965b644d8c3bbb@mail.gmail.com> 
- <7vhcsrwn8d.fsf@assigned-by-dhcp.cox.net> <9e4733910703111335j20c0acf4wa12c2d410580898b@mail.gmail.com>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Errors cloning large repo
+Date: Sun, 11 Mar 2007 22:35:24 +0100
+Message-ID: <20070311213523.GB20726@admingilde.org>
+References: <645002.46177.qm@web52608.mail.yahoo.com> <20070310030718.GA2927@spearce.org> <Pine.LNX.4.64.0703092145550.10832@woody.linux-foundation.org> <20070310060144.GA3223@spearce.org> <20070310223251.GA20726@admingilde.org> <Pine.LNX.4.64.0703101443411.10330@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 22:32:06 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="NDin8bjvE/0mNLFQ"
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Anton Tropashko <atropashko@yahoo.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Mar 11 22:35:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQVe9-0000bR-F4
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 22:32:05 +0100
+	id 1HQVhS-0001zj-4R
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 22:35:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932645AbXCKVcB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 17:32:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932687AbXCKVcB
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 17:32:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56006 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932645AbXCKVcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 17:32:00 -0400
-Received: (qmail invoked by alias); 11 Mar 2007 21:31:58 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp046) with SMTP; 11 Mar 2007 22:31:58 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18WNnxSBWAW6peGp+Fd4CxDVOrB6TFcxj6JplPQo4
-	Zt2aaTjTGUNOLt
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <9e4733910703111335j20c0acf4wa12c2d410580898b@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S932687AbXCKVf1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 17:35:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932696AbXCKVf1
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 17:35:27 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:56851 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932687AbXCKVf0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 17:35:26 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HQVhM-00036T-2A; Sun, 11 Mar 2007 22:35:24 +0100
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0703101443411.10330@woody.linux-foundation.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41987>
 
-Hi,
 
-On Sun, 11 Mar 2007, Jon Smirl wrote:
+--NDin8bjvE/0mNLFQ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> As for the part about 'git grep' Shawn and I have been talking off and 
-> on about experimenting with an inverted index for a packfile format. The 
-> basic idea is that you tokenize the input and turn a source file into a 
-> list of tokens. You diff with the list of tokens like you would normally 
-> do with text. There is a universal dictionary for tokens, a token's id 
-> is it's position in the dictionary.
+hoi :)
 
-All in all, this is an interesting idea.
+On Sat, Mar 10, 2007 at 02:46:35PM -0800, Linus Torvalds wrote:
+> Are you sure you're not just running a 64-bit process?
 
-However, I see some problems I'd like to know solutions for:
+pretty sure, yes :-)
 
-- how to determine the optimal length of the tokens? (It is easy if you 
-  tokenize on the word level, but you suggested that it is more efficient 
-  to have longer phrases.)
+> 64-bit processes don't need O_LARGEFILE to process files larger than 2GB,=
+=20
+> since for them, off_t is already 64-bit.
 
-- the search terms can be _part of_ the tokens. In fact, a search term can 
-  be the postfix of one token, then a list of other tokens, and then a 
-  prefix of yet another token. It might not be really cheap to construct 
-  _all_ possible combinations of tokens which make up the search term...
+but O_LARGEFILE is a Linux-only thing, right?
 
-- how do you want to cope with regular expressions? (The previous problem 
-  only addresses simple, constant search terms, i.e. no true regular 
-  expressions.)
+> Oh, except we have that=20
+>=20
+> 	#define _FILE_OFFSET_BITS 64
+>=20
+> which is just a horrible hack. That's nasty. We should just use=20
+> O_LARGEFILE rather than depend on some internal glibc thing that works=20
+> nowhere else.
 
-- at the moment, most objects which are contained by a pack are relatively 
-  cheaply transported via the pack protocol. IIUC your new pack format 
-  would need _exactly_ the same dictionary to be transmitted as-is. IOW
-  how do you want to make on-the-fly pack generation cheap again?
+Well, if I remember correctly the *BSD systems always use 64bit now,
+its sad that glibc does not do the same out of the box for Linux.
+_FILE_OFFSET_BITS is the documented way to get 64bit file sizes on
+glibc, so I think it is the right thing for us (even when that define
+is really ugly).
 
-Don't get me wrong: I don't want to discourage you, but it is too easy to 
-optimize for the wrong use cases (I expact a repack, or a fetch, to happen 
-much more often than a grep). If you can address above-mentioned issues, 
-I see no reason why the new pack format should not be used instead of the 
-current one.
+--=20
+Martin Waitz
 
-Ciao,
-Dscho
+--NDin8bjvE/0mNLFQ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFF9HYbj/Eaxd/oD7IRApC8AJ4y40rnRf+6RvPF6lQeBYVVlDT4qgCfZnNZ
+xu/ovgbtlqmcS22xscSRL8A=
+=JADW
+-----END PGP SIGNATURE-----
+
+--NDin8bjvE/0mNLFQ--
