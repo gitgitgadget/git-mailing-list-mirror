@@ -1,125 +1,232 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] fast-import: use binary search in tree_content_remove
-Date: Sat, 10 Mar 2007 22:38:33 -0500
-Message-ID: <20070311033833.GB10781@spearce.org>
-References: <<20070310191515.GA3416@coredump.intra.peff.net>> <20070310192131.GB3875@coredump.intra.peff.net> <20070310192304.GB3416@coredump.intra.peff.net> <20070310194012.GA5126@coredump.intra.peff.net>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [RFC] introduce GIT_WORK_DIR environment variable
+Date: Sun, 11 Mar 2007 05:32:50 +0100
+Message-ID: <20070311043250.GA21331@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Mar 11 04:38:57 2007
+To: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 11 05:34:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQEtb-00047X-13
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 04:38:55 +0100
+	id 1HQFl9-00009r-6r
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 05:34:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932805AbXCKDij (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 22:38:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932809AbXCKDij
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 22:38:39 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:58752 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932805AbXCKDii (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 22:38:38 -0500
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HQEt6-000484-BB; Sat, 10 Mar 2007 22:38:24 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id EE68D20FBAE; Sat, 10 Mar 2007 22:38:33 -0500 (EST)
+	id S933101AbXCKEc4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 23:32:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933100AbXCKEc4
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 23:32:56 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46040 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933101AbXCKEcy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 23:32:54 -0500
+Received: (qmail invoked by alias); 11 Mar 2007 04:32:52 -0000
+Received: from pD9EB9C1C.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.156.28]
+  by mail.gmx.net (mp009) with SMTP; 11 Mar 2007 05:32:52 +0100
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1+TIfRV42eTmf2ztOky79CmDEt2w3aw8v1OSF01po
+	bnZb6BRQAh2Gzv
+Mail-Followup-To: git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070310194012.GA5126@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41902>
 
-Jeff King <peff@peff.net> wrote:
-> And here it is. However, I should note that this patch is _not_
-> necessary.
-
-Well, its not necessary for you, as you aren't trying to remove
-something from your huge tree.  ;-)
-
-> I had originally thought that removal might destroy the
-> sorting that I added in the last patch, but it looks like the entry
-> isn't actually removed. Shawn, can you sanity check this?
-
-Your patch is fine.  fast-import takes an "optimization" here and
-does not bother to actually delete entries from a tree until *after*
-we have written the tree data out to the packfile.  The reason
-is we need to retain the version 0 tree entry objects to recreate
-the delta base.  Since these are combined with the version 1 data
-(the "new" data) we have to delay the actual deletes until after
-we store the tree and have its SHA-1.
-
-It turns out however that your entire series was broken. I had to
-commit the following on top of it to fix it:
-
--->8--
-From 0af148553a94f7e856089fa68395524932240145 Mon Sep 17 00:00:00 2001
-From: Shawn O. Pearce <spearce@spearce.org>
-Date: Sat, 10 Mar 2007 22:34:12 -0500
-Subject: [PATCH] fast-import: Brown paper bag fix tree sorting
-
-Jeff King's recent changes to sort trees by strictly name (and binary
-search to locate an entry) works OK up until we have to write a
-tree out that uses the funny name/mode sorting that native Git uses:
-
-  b.
-  b/
-  ba
-
-Here the subtree "b" must sort between files "b." and "ba", but
-Jeff's changes have it sorting before "b.".  This means we would fail
-to find entries during future modifications to that tree as Jeff's
-binary search algorithm won't find subtree "b" between b.  and ba.
-
-I'm plastering over the problem by resorting a tree strictly by
-name after it has been written out and the deleted entries have
-been filtered out.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+This environment variable can be used with GIT_DIR to
+specify the toplevel working directory.  When GIT_DIR is not
+set this variable is ignored.  As for GIT_DIR there is also
+the option git --work-dir which overrides the environment
+variable.
 ---
- fast-import.c |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+Missing:
+Documentation update but if this feature should not get accepted..
+therefore I'll wait for feedback first.
 
-diff --git a/fast-import.c b/fast-import.c
-index 716819f..fa3b766 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1136,6 +1136,13 @@ static int tecmp1 (const void *_a, const void *_b)
- 		b->name->str_dat, b->name->str_len, b->versions[1].mode);
+Idea:
+Add some way to configure tho working directory for one repository
+and set GIT_WORK_DIR automatically when GIT_DIR is used.  I think of:
+ * a subdirectory in the repository directory
+   e.g. .git/work_dir which is supposed to be a symlink (or a textfile
+   containing the path for windows compatibility?)
+or
+ * a configuration variable
+
+Considerations:
+Without running setup_git_directory_gently is_bare_repository and
+is_inside_git_dir may return wrong values.  Except for cmd_init_db I
+found no place calling on of the functions without calling
+setup_git_directory_gently before.
+
+To do:
+git init should probably set bare = false when GIT_WORK_DIR is
+exported.  And if the idea about configurable working directories gets
+implemented it could also set this option accordingly.
+
+---
+ cache.h       |    2 +
+ environment.c |    2 +
+ git.c         |   12 +++++++++-
+ setup.c       |   70 ++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ 4 files changed, 80 insertions(+), 6 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index ae25759..042734c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -144,6 +144,7 @@ enum object_type {
+ };
+ 
+ #define GIT_DIR_ENVIRONMENT "GIT_DIR"
++#define GIT_WORKING_DIR_ENVIRONMENT "GIT_WORK_DIR"
+ #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
+ #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
+ #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
+@@ -164,6 +165,7 @@ extern char *get_graft_file(void);
+ 
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ 
++extern int has_working_directory;
+ extern const char **get_pathspec(const char *prefix, const char **pathspec);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+diff --git a/environment.c b/environment.c
+index 0151ad0..5c30c9b 100644
+--- a/environment.c
++++ b/environment.c
+@@ -61,6 +61,8 @@ int is_bare_repository(void)
+ 	const char *dir, *s;
+ 	if (0 <= is_bare_repository_cfg)
+ 		return is_bare_repository_cfg;
++	if (0 <= has_working_directory)
++		return !has_working_directory;
+ 
+ 	dir = get_git_dir();
+ 	if (!strcmp(dir, DEFAULT_GIT_DIR_ENVIRONMENT))
+diff --git a/git.c b/git.c
+index 04fc99a..3cf7ce2 100644
+--- a/git.c
++++ b/git.c
+@@ -4,7 +4,7 @@
+ #include "quote.h"
+ 
+ const char git_usage_string[] =
+-	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate] [--bare] [--git-dir=GIT_DIR] [--help] COMMAND [ARGS]";
++	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate] [--bare] [--git-dir=GIT_DIR] [--work-dir=GIT_WORK_DIR] [--help] COMMAND [ARGS]";
+ 
+ static void prepend_to_path(const char *dir, int len)
+ {
+@@ -68,6 +68,16 @@ static int handle_options(const char*** argv, int* argc)
+ 			(*argc)--;
+ 		} else if (!prefixcmp(cmd, "--git-dir=")) {
+ 			setenv(GIT_DIR_ENVIRONMENT, cmd + 10, 1);
++		} else if (!strcmp(cmd, "--work-dir")) {
++			if (*argc < 2) {
++				fprintf(stderr, "No directory given for --work-dir.\n" );
++				usage(git_usage_string);
++			}
++			setenv(GIT_WORKING_DIR_ENVIRONMENT, (*argv)[1], 1);
++			(*argv)++;
++			(*argc)--;
++		} else if (!prefixcmp(cmd, "--work-dir=")) {
++			setenv(GIT_WORKING_DIR_ENVIRONMENT, cmd + 11, 1);
+ 		} else if (!strcmp(cmd, "--bare")) {
+ 			static char git_dir[PATH_MAX+1];
+ 			setenv(GIT_DIR_ENVIRONMENT, getcwd(git_dir, sizeof(git_dir)), 1);
+diff --git a/setup.c b/setup.c
+index dda67d2..7f5d73b 100644
+--- a/setup.c
++++ b/setup.c
+@@ -192,6 +192,8 @@ int is_inside_git_dir(void)
+ 	return inside_git_dir;
  }
  
-+static int nmcmp (const void *_a, const void *_b)
-+{
-+	struct tree_entry *a = *((struct tree_entry**)_a);
-+	struct tree_entry *b = *((struct tree_entry**)_b);
-+	return strcmp(a->name->str_dat, b->name->str_dat);
-+}
++int has_working_directory = -1;
 +
- static void mktree(struct tree_content *t,
- 	int v,
- 	unsigned long *szp,
-@@ -1218,6 +1225,7 @@ static void store_tree(struct tree_entry *root)
+ const char *setup_git_directory_gently(int *nongit_ok)
+ {
+ 	static char cwd[PATH_MAX+1];
+@@ -205,15 +207,73 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 	 */
+ 	gitdirenv = getenv(GIT_DIR_ENVIRONMENT);
+ 	if (gitdirenv) {
++		struct stat st, st_work, st_git;
++		const char *gitwd;
++		char *prefix;
++		char c;
++		int len;
++
+ 		if (PATH_MAX - 40 < strlen(gitdirenv))
+ 			die("'$%s' too big", GIT_DIR_ENVIRONMENT);
+-		if (is_git_directory(gitdirenv))
+-			return NULL;
+-		if (nongit_ok) {
+-			*nongit_ok = 1;
++		if (!is_git_directory(gitdirenv)) {
++			if (nongit_ok) {
++				*nongit_ok = 1;
++				return NULL;
++			}
++			die("Not a git repository: '%s'", gitdirenv);
++		}
++
++		gitwd = getenv(GIT_WORKING_DIR_ENVIRONMENT);
++		if (!gitwd || stat(gitwd, &st_work))
+ 			return NULL;
++		if (inside_git_dir == -1 && stat(gitdirenv, &st_git))
++			die("Unable to stat git directory");
++		if (!getcwd(cwd, sizeof(cwd)-1) || cwd[0] != '/')
++			die("Unable to read current working directory");
++		len = strlen(cwd);
++
++		prefix = cwd+len;
++		for (;;) {
++			c = *prefix;
++			*prefix = '\0';
++			if (stat(cwd, &st))
++				die("Unable to stat '%s'", cwd);
++			if (st_work.st_dev == st.st_dev &&
++			    st_work.st_ino == st.st_ino)
++				break;
++			if (inside_git_dir == -1 &&
++			    st_git.st_dev == st.st_dev &&
++			    st_git.st_ino == st.st_ino)
++				inside_git_dir = 1;
++			*prefix = c;
++
++			if (prefix == cwd+1) {
++				has_working_directory = 0;
++				return NULL;
++			}
++			while (*(--prefix) != '/')
++				; /* do nothing */
++			if (prefix == cwd)
++				prefix++;
++		}
++
++		if (chdir(cwd))
++			die("Cannot change directory to '%s'", cwd);
++
++		if (c) {
++			*prefix = c;
++			prefix++;
++			cwd[len] = '/';
++			cwd[len+1] = '\0';
++		} else {
++			prefix = NULL;
  		}
+-		die("Not a git repository: '%s'", gitdirenv);
++
++		has_working_directory = 1;
++		if (inside_git_dir == -1)
++			inside_git_dir = 0;
++
++		return prefix;
  	}
- 	t->entry_count -= del;
-+	qsort(t->entries, t->entry_count, sizeof(t->entries[0]), nmcmp);
- }
  
- static int tree_content_set(
+ 	if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
 -- 
-1.5.0.3.942.g299f
+1.5.0.3
