@@ -1,64 +1,69 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: git-upload-pack: the timeout gets corrupted?!
-Date: Sun, 11 Mar 2007 01:23:59 -0800
-Message-ID: <45F3CAAF.7030909@zytor.com>
-References: <45F35F38.1080206@zytor.com> <7vy7m4wcfb.fsf@assigned-by-dhcp.cox.net>
+From: Georg Lohrer <pacco@tropezien.de>
+Subject: How to use git-svnimport without trunk, tags and branches?
+Date: Sun, 11 Mar 2007 12:38:31 +0100
+Message-ID: <45F3EA37.2080502@tropezien.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Mar 11 10:24:17 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 11 13:08:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQKHm-0001Sq-80
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 10:24:14 +0100
+	id 1HQMqb-0002Ai-Bv
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 13:08:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915AbXCKJYL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 05:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751919AbXCKJYL
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 05:24:11 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:35391 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751915AbXCKJYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 05:24:10 -0400
-Received: from [172.27.0.16] (c-67-180-238-27.hsd1.ca.comcast.net [67.180.238.27])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l2B9O0CY023061
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 11 Mar 2007 01:24:00 -0800
-User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
-In-Reply-To: <7vy7m4wcfb.fsf@assigned-by-dhcp.cox.net>
-X-Virus-Scanned: ClamAV 0.88.7/2806/Sun Mar 11 00:36:34 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=2.3 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_96_XX,PLING_QUERY,RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL
-	autolearn=no version=3.1.8
-X-Spam-Level: **
-X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
+	id S933267AbXCKMIQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 08:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933271AbXCKMIQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 08:08:16 -0400
+Received: from www18.your-server.de ([213.133.104.18]:3527 "EHLO
+	www18.your-server.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933267AbXCKMIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 08:08:15 -0400
+X-Greylist: delayed 1775 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Mar 2007 08:08:15 EDT
+Received: from [91.23.156.88] (helo=[192.168.100.70])
+	by www18.your-server.de with esmtpsa (TLSv1:RC4-MD5:128)
+	(Exim 4.50)
+	id 1HQMNq-000577-UB
+	for git@vger.kernel.org; Sun, 11 Mar 2007 12:38:39 +0100
+User-Agent: Thunderbird 1.5.0.7 (X11/20060918)
+X-Authenticated-Sender: pacco@tropezien.de
+X-Virus-Scanned: Clear (ClamAV 0.88.4/2690/Thu Mar  1 12:11:27 2007)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41918>
 
-Junio C Hamano wrote:
-> 
->> The process spends effectively forever waiting in on the fflush() in
->> show_commit() (in upload-pack.c); /proc/*/fd shows it is trying to
->> write to a pipe, but I'm not sure what is at the other end of that
->> same pipe.
-> 
-> The process forks and the one that runs show_commit() is running
-> rev-list internally while the other end is a pack-objects that
-> reads from it and sends its output back to the client.
-> 
+Hi,
 
-Now, given that the fact that the git-pack-object process has already 
-died, normally one would expect the write() to get SIGPIPE which would 
-kill the process.  Does git-upload-pack not close the read end of the 
-pipe in the writer?  From the looks of the fd directory, I would say it 
-does not.
+I have searched the archive but did not found any hint for my problem.
+Perhaps I did not have the right search pattern, but see yourself:
 
-	-hpa
+The most important thing prior of using git was to import my subversion
+repositories. It seems to be quite easy if the SVN-repositories are of
+common structure using the trunk, tags and branches structure.
+
+But times ago I have had the idea of not using the traditional structure
+of subversion for some of my repositories but using the repository
+directly as single directory - no trunk, no tags, no branches. That was
+because I thought only a geek would have the "complicated" way for only
+a few files without any need for tags and branches.
+And now the git-svnimport does not seem to be able to handle a SVN-repos
+structure like mine:
+
+~/svnrepos/
+      |------- projectA
+                  |---- foo.cpp
+                  |---- foo.h
+
+I want to import projectA into git _with_ the commit-history (there are
+of course no tags and no branches).
+Is there a way to do that with git-svnimport? Or do I have to throw away
+all the details, checkout projectA and reimport it as initial version
+with git?
+
+Any hints are warmly appreciated.
+
+Ciao, Georg
