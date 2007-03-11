@@ -1,95 +1,82 @@
-From: Avi Kivity <avi@qumranet.com>
-Subject: [PATCH 2/2] git-send-email: configurable bcc and chain-reply-to
-Date: Sun, 11 Mar 2007 19:19:44 +0200
-Message-ID: <11736335842187-git-send-email-avi@qumranet.com>
-References: <11736335842565-git-send-email-avi@qumranet.com>
-Cc: Avi Kivity <avi@qumranet.com>
-To: git@vger.kernel.org, Ryan Anderson <ryan@michonline.com>
-X-From: git-owner@vger.kernel.org Sun Mar 11 18:41:21 2007
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [EGIT PATCH 01/10] Git history refresh problem
+Date: Sun, 11 Mar 2007 19:15:21 +0100
+Message-ID: <20070311181521.18012.76975.stgit@lathund.dewire.com>
+References: <20070311180608.18012.13767.stgit@lathund.dewire.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Sun Mar 11 19:13:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQS2p-0000wJ-QQ
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 18:41:20 +0100
+	id 1HQSYC-00066B-I9
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 19:13:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933877AbXCKRlP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 13:41:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933885AbXCKRlP
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 13:41:15 -0400
-Received: from il.qumranet.com ([82.166.9.18]:41887 "EHLO il.qumranet.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933880AbXCKRlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 13:41:12 -0400
-Received: by il.qumranet.com (Postfix, from userid 500)
-	id B9182A00B9; Sun, 11 Mar 2007 19:19:44 +0200 (IST)
-X-Mailer: git-send-email 1.5.0.2
-In-Reply-To: <11736335842565-git-send-email-avi@qumranet.com>
+	id S933937AbXCKSNk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 14:13:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933941AbXCKSNk
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 14:13:40 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:1589 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S933937AbXCKSNj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 14:13:39 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 59B13802E25;
+	Sun, 11 Mar 2007 19:08:24 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 26000-09; Sun, 11 Mar 2007 19:08:23 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.4])
+	by dewire.com (Postfix) with ESMTP id E0D9D802841;
+	Sun, 11 Mar 2007 19:08:22 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id CDF7C28D45;
+	Sun, 11 Mar 2007 19:15:36 +0100 (CET)
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+Received: from lathund.dewire.com ([127.0.0.1])
+	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id 0QN-L5R375UX; Sun, 11 Mar 2007 19:15:21 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id 84AA428D5B;
+	Sun, 11 Mar 2007 19:15:21 +0100 (CET)
+In-Reply-To: <20070311180608.18012.13767.stgit@lathund.dewire.com>
+User-Agent: StGIT/0.12
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41950>
 
-Chain-reply-to is a personal perference, and is unlikely to change from
-patchset to patchset.  Similarly, bcc is likely to have the same values
-every invocation is one likes to bcc oneself.
+It seems the history window often lags one event behind.
 
-So, allow both to be set via configuration variables.
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-Signed-off-by: Avi Kivity <avi@qumranet.com>
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 ---
- Documentation/git-send-email.txt |   10 +++++++++-
- git-send-email.perl              |   10 ++++++++++
- 2 files changed, 19 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 367646e..9b3aabb 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -40,7 +40,8 @@ The --cc option must be repeated for each user you want on the cc list.
- 	the first will be sent as replies to the first email sent.  When using
- 	this, it is recommended that the first file given be an overview of the
- 	entire patch series.
--	Default is --chain-reply-to
-+	Default is the value of the 'sendemail.chainreplyto' configuration
-+	value; if that is unspecified, default to --chain-reply-to.
+ .../src/org/spearce/egit/ui/GitHistoryPage.java    |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
+index 2a5fa98..d1591f0 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/GitHistoryPage.java
+@@ -242,9 +242,13 @@ public class GitHistoryPage extends HistoryPage implements IAdaptable,
+ 					.getFileHistoryFor((IResource) getInput(),
+ 							IFileHistoryProvider.SINGLE_LINE_OF_DESCENT, null/* monitor */);
+ 			fileRevisions = fileHistoryFor.getFileRevisions();
+-			tree.setData(fileRevisions);
++			tree.clearAll(true);
+ 			tree.setItemCount(fileRevisions.length);
++			tree.setData(fileRevisions);
++			System.out.println("inputchanged, invoking refresh");
+ 			viewer.refresh();
++			tree.getParent().layout();
++			tree.getParent().getParent().layout();
+ 		}
  
- --compose::
- 	Use $EDITOR to edit an introductory message for the
-@@ -101,6 +102,13 @@ sendemail.aliasfiletype::
- 	Format of the file(s) specified in sendemail.aliasesfile. Must be
- 	one of 'mutt', 'mailrc', 'pine', or 'gnus'.
- 
-+sendemail.bcc::
-+	Email address (or alias) to always bcc.
-+
-+sendemail.chainreplyto::
-+	Boolean value specifying the default to the '--chain_reply_to'
-+	parameter.
-+
- sendemail.smtpserver::
- 	Default smtp server to use.
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index a71a192..6989c02 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -149,6 +149,16 @@ if ($@) {
- 	$term = new FakeTerm "$@: going non-interactive";
- }
- 
-+my $def_chain = $repo->config_boolean('sendemail.chainreplyto');
-+if ($def_chain and $def_chain eq 'false') {
-+    $chain_reply_to = 0;
-+}
-+
-+@bcclist = $repo->config('sendemail.bcc');
-+if (!@bcclist or !$bcclist[0]) {
-+    @bcclist = ();
-+}
-+
- # Begin by accumulating all the variables (defined above), that we will end up
- # needing, first, from the command line:
- 
--- 
-1.5.0.2
+ 		public void dispose() {
