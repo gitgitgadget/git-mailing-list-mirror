@@ -1,63 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Do not output "GEN " when generating perl.mak
-Date: Sun, 11 Mar 2007 14:19:07 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703111418280.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [RFC] introduce GIT_WORK_DIR environment variable
+Date: Sun, 11 Mar 2007 20:27:02 +0700
+Message-ID: <fcaeb9bf0703110627r6500d621rf6710c58e9e8d65b@mail.gmail.com>
+References: <20070311043250.GA21331@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Mar 11 14:19:28 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, "Matthias Lederhofer" <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Sun Mar 11 14:27:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQNxO-0006Ur-EC
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 14:19:26 +0100
+	id 1HQO56-0001Xx-0l
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 14:27:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197AbXCKNTK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 09:19:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbXCKNTK
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 09:19:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54452 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752197AbXCKNTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 09:19:09 -0400
-Received: (qmail invoked by alias); 11 Mar 2007 13:19:07 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp050) with SMTP; 11 Mar 2007 14:19:07 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/56Sl3ZoD5rdJq99ZAKH/kEz0iQq9obf98wY8wSr
-	RwlEmCmeBLshMH
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+	id S1752178AbXCKN1H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 09:27:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbXCKN1H
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 09:27:07 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:48763 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752178AbXCKN1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 09:27:05 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1898563uga
+        for <git@vger.kernel.org>; Sun, 11 Mar 2007 06:27:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lLMXW2MR8nVF/3elfRoocaie0JsyLyP+Qg3v6ENcG1X25SVzBcMOEIRhemFvXWch/lXUhJBDmO+TjHQxjHDrUah2Y2on31WQnWDU/j7Mxgbco9RZ1D0K42wAD0nd0pz6IymiFJIjn+RUIGocKmwa2Q54ALy1SZ3cg/98nLcvhrk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rUFmbTXoq5VVFjRDT6YzcjlC5NQ5YawJ4qRDDm5/0XXttOm6ibD77qNxsuvBvANLyW+EYeD0km0hOdIGTm5Kp20l9gn3e2hqiq9Cazze99NVpC0PeUH2gMZlOTiuKYcagq2aW8O7+KFl8pfSRtHbWPVoqhCJQVh1e3YZI3IoDeY=
+Received: by 10.114.12.9 with SMTP id 9mr813805wal.1173619622691;
+        Sun, 11 Mar 2007 06:27:02 -0700 (PDT)
+Received: by 10.115.19.15 with HTTP; Sun, 11 Mar 2007 06:27:02 -0700 (PDT)
+In-Reply-To: <20070311043250.GA21331@moooo.ath.cx>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41922>
 
+On 3/11/07, Matthias Lederhofer <matled@gmx.net> wrote:
+> diff --git a/environment.c b/environment.c
+> index 0151ad0..5c30c9b 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -61,6 +61,8 @@ int is_bare_repository(void)
+>         const char *dir, *s;
+>         if (0 <= is_bare_repository_cfg)
+>                 return is_bare_repository_cfg;
+> +       if (0 <= has_working_directory)
+> +               return !has_working_directory;
+>
+>         dir = get_git_dir();
+>         if (!strcmp(dir, DEFAULT_GIT_DIR_ENVIRONMENT))
 
-This fixes the same issue as 8bef6204, which became an issue again
-after 31d0399c.
-
-Besides, it is not really helpful to print just "GEN " (_without_
-"perl.mak").
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- perl/Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/perl/Makefile b/perl/Makefile
-index 5ec0389..17d004e 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -33,7 +33,7 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	echo '	echo $(instdir_SQ)' >> $@
- else
- $(makfile): Makefile.PL ../GIT-CFLAGS
--	$(QUIET_GEN)'$(PERL_PATH_SQ)' $< PREFIX='$(prefix_SQ)'
-+	'$(PERL_PATH_SQ)' $< PREFIX='$(prefix_SQ)'
- endif
- 
- # this is just added comfort for calling make directly in perl dir
+Um.. git-sh-setup.sh may need special treatment because its
+is_bare_directory doesn't call this function.
 -- 
-1.5.0.3.2649.g9f8ff
+Duy
