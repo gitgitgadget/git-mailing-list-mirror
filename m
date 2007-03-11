@@ -1,66 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in bundle
-Date: Sat, 10 Mar 2007 17:29:44 -0800
-Message-ID: <7vy7m4y3cn.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net>
-	<45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F2D955.8050800@gmail.com>
-	<Pine.LNX.4.63.0703101749270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<45F2F934.8060407@gmail.com>
-	<Pine.LNX.4.63.0703110201450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] setup_git_directory_gently: fix off-by-one error
+Date: Sun, 11 Mar 2007 02:35:00 +0100
+Message-ID: <20070311013459.GA30057@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 11 02:30:06 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 11 02:35:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQCsu-0004PC-FW
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 02:30:04 +0100
+	id 1HQCxq-0006T9-Sh
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 02:35:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932134AbXCKB34 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 10 Mar 2007 20:29:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932222AbXCKB3y
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 20:29:54 -0500
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:45099 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932134AbXCKB3p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Mar 2007 20:29:45 -0500
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070311012944.VPWA748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 10 Mar 2007 20:29:44 -0500
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ZDVk1W00C1kojtg0000000; Sat, 10 Mar 2007 20:29:44 -0500
-In-Reply-To: <Pine.LNX.4.63.0703110201450.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Sun, 11 Mar 2007 02:08:04 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932281AbXCKBfF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 10 Mar 2007 20:35:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932325AbXCKBfF
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Mar 2007 20:35:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56093 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932281AbXCKBfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Mar 2007 20:35:02 -0500
+Received: (qmail invoked by alias); 11 Mar 2007 01:35:01 -0000
+Received: from pD9EBB157.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.177.87]
+  by mail.gmx.net (mp044) with SMTP; 11 Mar 2007 02:35:01 +0100
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX19mlAREKGtmoMh7JZTzzJpphVsnJjS8JQp/y5TDxI
+	sj6c6t33DwkS9G
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41890>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+don't tell getcwd that the buffer has one spare byte for an extra /
 
-> Basically, I am saying that this whole bundle concept is not thought 
-> through, that it is too loosely defined, and that it will result in unmet 
-> expectations sooner or later. (Which usually means sooner.)
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+gdb session with PATH_MAX set to 2048:
+Breakpoint 5, setup_git_directory_gently (nongit_ok=0x0) at
+setup.c:253
+253             cwd[len] = 0;
+$ print sizeof(cwd)
+$14 = 2049
+$ print len
+$15 = 2049
+$ print PATH_MAX
+$16 = 2048
+---
+ setup.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Earlier I thought you said that bundle had a clearly defined
-semantics, which I did not quite understand, but now you are
-agreeing with me...
-
-> So, either we have to rethink how to handle prerequisites (so that only 
-> those are checked which are strictly necessary for _the one_ ref you are 
-> updating), or we have to make it _very_ obvious to (human) users of 
-> git-bundle that you should _not_ bundle two unrelated -- or only remotely 
-> related -- refs into one bundle.
-
-I've been wondering if we can define prereqs per listed head.
+diff --git a/setup.c b/setup.c
+index dda67d2..a45ea83 100644
+--- a/setup.c
++++ b/setup.c
+@@ -216,7 +216,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		die("Not a git repository: '%s'", gitdirenv);
+ 	}
+ 
+-	if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
++	if (!getcwd(cwd, sizeof(cwd)-1) || cwd[0] != '/')
+ 		die("Unable to read current working directory");
+ 
+ 	offset = len = strlen(cwd);
+-- 
+1.5.0.3
