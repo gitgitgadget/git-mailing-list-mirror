@@ -1,80 +1,66 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: How to use git-svnimport without trunk, tags and branches?
-Date: Sun, 11 Mar 2007 21:26:20 +0100
-Message-ID: <20070311202620.GB15336@diana.vm.bytemark.co.uk>
-References: <45F3EA37.2080502@tropezien.de> <20070311143638.GA7822@diana.vm.bytemark.co.uk> <45F434E9.7040003@tropezien.de>
+From: Avi Kivity <avi@qumranet.com>
+Subject: Re: git merge and merge message
+Date: Sun, 11 Mar 2007 22:31:15 +0200
+Message-ID: <45F46713.6030702@qumranet.com>
+References: <200703111505.l2BF54Kq006625@localhost.localdomain>
+ <20070311160424.GA629@fieldses.org>
+ <200703111815.l2BIFHbq010315@localhost.localdomain>
+ <Pine.LNX.4.64.0703111309410.9690@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Georg Lohrer <pacco@tropezien.de>
-X-From: git-owner@vger.kernel.org Sun Mar 11 21:26:41 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: Xavier Maillard <zedek@gnu.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Mar 11 21:31:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQUcq-0005eF-B6
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:26:40 +0100
+	id 1HQUhP-0007av-A0
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751477AbXCKU0h convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 11 Mar 2007 16:26:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751690AbXCKU0h
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:26:37 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3426 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751477AbXCKU0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 16:26:36 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HQUcW-00046c-00; Sun, 11 Mar 2007 20:26:20 +0000
-Content-Disposition: inline
-In-Reply-To: <45F434E9.7040003@tropezien.de>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751724AbXCKUbS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 16:31:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751749AbXCKUbS
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:31:18 -0400
+Received: from mtaout4.012.net.il ([84.95.2.10]:11025 "EHLO mtaout4.012.net.il"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751048AbXCKUbR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 16:31:17 -0400
+Received: from firebolt.argo.co.il ([80.178.147.45])
+ by i_mtaout4.012.net.il (HyperSendmail v2004.12)
+ with ESMTP id <0JER001EEAPJBM31@i_mtaout4.012.net.il> for git@vger.kernel.org;
+ Sun, 11 Mar 2007 22:39:20 +0200 (IST)
+Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
+	by firebolt.argo.co.il (Postfix) with ESMTP id 4136DC0329; Sun,
+ 11 Mar 2007 22:31:15 +0200 (IST)
+In-reply-to: <Pine.LNX.4.64.0703111309410.9690@woody.linux-foundation.org>
+X-Greylist: Sender IP whitelisted,
+ not delayed by milter-greylist-2.1.12 (firebolt.argo.co.il [0.0.0.0]); Sun,
+ 11 Mar 2007 22:31:15 +0200 (IST)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41976>
 
-On 2007-03-11 17:57:13 +0100, Georg Lohrer wrote:
-
-> Karl Hasselstr=F6m schrieb:
+Linus Torvalds wrote:
+> Comments? Do people think it would be a good idea to do
 >
-> > You could try something like this:
-> >
-> >  trunk: svnrepos/projectA
-> >  tags: svnrepos/dummytags
-> >  branches: svnrepos/dummybranches
+> 	git merge --no-fast-forward -m "Merge feature Xyz" xyz-branch
 >
-> yes, that does the trick. I use:
+> as an option?
 >
-> $ cd ~/tmp/git-test
-> $ tar xvfj fooRepos.tar.bz2
-> $ mv fooRepos foorRepos.svnrepos
-> $ svn mkdir file:///home/georg/tmp/git-test/fooRepos.svnrepos/dummyta=
-gs
-> $ svn mkdir file:///home/georg/tmp/git-test/foorRepos.svnrepos/dummyb=
-ranches
-> $ mkdir fooRepos.git; cd fooRepos.git
-> $ git-svnimport -b dummybranches -t dummytags -T projectA file:///hom=
-e/georg/tmp/git-test/fooRepos.svnrepos
+>   
 
-Did you try importing without creating the dummy* directories? I think
-it may work even if they don't exist.
+Actually there's at least one tree where this should be activated -- 
+yours.  If you perform a fast-forward merge, there's no record of the 
+merge, no record of which tree was pulled, and no sign-off from you.  
+The commits just appear there.  It partially defeats the sign-off system.
 
-> Unfortunately there was a bunch of directories instead of a single
-> projectA-directory. Do I have to repeat the above mentioned sequence
-> for every directory (projectA, projectB, ...) or is there a simple
-> way of git-svnimport'ing into an existing git-repository?
+This feature would be good for top-level trees and for major subsystem 
+trees IMO.
 
-You could try this:
-
-  trunk: dummy
-  tags: dummy
-  branches: svnrepos
-
-That should turn svnrepos/projectA into the branch projectA,
-svnrepos/projectB into the branch projectB, and so on.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Do not meddle in the internals of kernels, for they are subtle and quick to panic.
