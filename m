@@ -1,77 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git-diff -p :/anything" always segfaults
-Date: Sun, 11 Mar 2007 13:25:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703111322180.9690@woody.linux-foundation.org>
-References: <87d53fsjiz.fsf@rho.meyering.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: How to use git-svnimport without trunk, tags and branches?
+Date: Sun, 11 Mar 2007 21:26:20 +0100
+Message-ID: <20070311202620.GB15336@diana.vm.bytemark.co.uk>
+References: <45F3EA37.2080502@tropezien.de> <20070311143638.GA7822@diana.vm.bytemark.co.uk> <45F434E9.7040003@tropezien.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Sun Mar 11 21:25:44 2007
+To: Georg Lohrer <pacco@tropezien.de>
+X-From: git-owner@vger.kernel.org Sun Mar 11 21:26:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQUbv-0005Gn-2l
-	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:25:43 +0100
+	id 1HQUcq-0005eF-B6
+	for gcvg-git@gmane.org; Sun, 11 Mar 2007 21:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443AbXCKUZk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 16:25:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbXCKUZk
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:25:40 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:57452 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751443AbXCKUZj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 16:25:39 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2BKPYo4010776
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 11 Mar 2007 13:25:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2BKPXZ7018956;
-	Sun, 11 Mar 2007 12:25:33 -0800
-In-Reply-To: <87d53fsjiz.fsf@rho.meyering.net>
-X-Spam-Status: No, hits=-0.487 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1751477AbXCKU0h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 11 Mar 2007 16:26:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751690AbXCKU0h
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 16:26:37 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3426 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477AbXCKU0g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 16:26:36 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HQUcW-00046c-00; Sun, 11 Mar 2007 20:26:20 +0000
+Content-Disposition: inline
+In-Reply-To: <45F434E9.7040003@tropezien.de>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/41975>
 
+On 2007-03-11 17:57:13 +0100, Georg Lohrer wrote:
 
-
-On Sun, 11 Mar 2007, Jim Meyering wrote:
+> Karl Hasselstr=F6m schrieb:
 >
-> I like the idea of the new ':/<oneline prefix>' notation, and gave it
-> a try, but all I could get was a segfault.  It was dereferencing a NULL
-> commit list.  Fix below.  With it, this example now works:
+> > You could try something like this:
+> >
+> >  trunk: svnrepos/projectA
+> >  tags: svnrepos/dummytags
+> >  branches: svnrepos/dummybranches
+>
+> yes, that does the trick. I use:
+>
+> $ cd ~/tmp/git-test
+> $ tar xvfj fooRepos.tar.bz2
+> $ mv fooRepos foorRepos.svnrepos
+> $ svn mkdir file:///home/georg/tmp/git-test/fooRepos.svnrepos/dummyta=
+gs
+> $ svn mkdir file:///home/georg/tmp/git-test/foorRepos.svnrepos/dummyb=
+ranches
+> $ mkdir fooRepos.git; cd fooRepos.git
+> $ git-svnimport -b dummybranches -t dummytags -T projectA file:///hom=
+e/georg/tmp/git-test/fooRepos.svnrepos
 
-The fix is correct, but not complete.
+Did you try importing without creating the dummy* directories? I think
+it may work even if they don't exist.
 
-> -	while ((commit = pop_most_recent_commit(&list, ONELINE_SEEN))) {
-> +	while (list && (commit = pop_most_recent_commit(&list, ONELINE_SEEN))) {
+> Unfortunately there was a bunch of directories instead of a single
+> projectA-directory. Do I have to repeat the above mentioned sequence
+> for every directory (projectA, projectB, ...) or is there a simple
+> way of git-svnimport'ing into an existing git-repository?
 
-The old code was broken, but the new one isn't much better.
+You could try this:
 
-"pop_most_recent_commit()" simply doesn't work that way. It *never* 
-returns NULL. So having it as part of a while-loop was buggy to begin 
-with, and you fixed the test, but the thing is, it should just look like
+  trunk: dummy
+  tags: dummy
+  branches: svnrepos
 
-	while (list) {
-		struct commit *commit;
+That should turn svnrepos/projectA into the branch projectA,
+svnrepos/projectB into the branch projectB, and so on.
 
-		commit = pop_most_recent_commit(&list, ONELINE_SEEN);
-		..
-
-and the "pop_most_recent_commit()" simply shouldn't be part of the 
-conditional at all.
-
-Alternatively, we could just change the semantics, and have it return NULL 
-when the list is empty. That would probably be fine too, but then the old 
-code was correct.
-
-Hmm?
-
-		Linus
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
