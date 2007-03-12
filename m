@@ -1,75 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: bisection oddity.
-Date: Mon, 12 Mar 2007 20:50:56 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703122047480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070312192821.GA24992@redhat.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Dave Jones <davej@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:51:16 2007
+From: Don Zickus <dzickus@redhat.com>
+Subject: [PATCH 0/5] git-mailinfo fixes/features
+Date: Mon, 12 Mar 2007 15:52:03 -0400
+Message-ID: <11737291282223-git-send-email-dzickus@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:53:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQqY7-00011o-Hc
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:51:15 +0100
+	id 1HQqaQ-0002GW-Sh
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835AbXCLTu6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:50:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752836AbXCLTu6
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:50:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47696 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752835AbXCLTu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:50:57 -0400
-Received: (qmail invoked by alias); 12 Mar 2007 19:50:56 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp047) with SMTP; 12 Mar 2007 20:50:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/06Hx7f3n0DFp7nY9FTZc/YQPjgGzGRv/yLP+6NO
-	dffmdz8jW08bEe
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070312192821.GA24992@redhat.com>
-X-Y-GMX-Trusted: 0
+	id S1752830AbXCLTxf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:53:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbXCLTxf
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:53:35 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:55918 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752830AbXCLTxf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:53:35 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2CJrYHv022108
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:53:34 -0400
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2CJrX2O020366
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:53:33 -0400
+Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
+	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2CJrXxX029968
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:53:33 -0400
+Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
+	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2CJq8af019759
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:52:08 -0400
+Received: (from dzickus@localhost)
+	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2CJq8uf019758
+	for git@vger.kernel.org; Mon, 12 Mar 2007 15:52:08 -0400
+X-Mailer: git-send-email 1.5.0.2.211.g2ca9-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42071>
 
-Hi,
 
-On Mon, 12 Mar 2007, Dave Jones wrote:
+I am trying to get my own custom git-am to parse non-patches from my Inbox
+better.  Using git-mailinfo had a lot of limitations.  I rewrote and
+restructured builtin-mailinfo.c to handle what I want to do better.  
 
-> I'm chasing a kernel bug that was introduced somewhere between
-> v2.6.20 and 2.6.21rc1, and bisect has done this so far..
-> 
-> git-bisect start
-> # bad: [c8f71b01a50597e298dc3214a2f2be7b8d31170c] Linux 2.6.21-rc1
-> git-bisect bad c8f71b01a50597e298dc3214a2f2be7b8d31170c
-> # good: [fa285a3d7924a0e3782926e51f16865c5129a2f7] Linux 2.6.20
-> git-bisect good fa285a3d7924a0e3782926e51f16865c5129a2f7
-> # bad: [574009c1a895aeeb85eaab29c235d75852b09eb8] Merge branch 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus
-> git-bisect bad 574009c1a895aeeb85eaab29c235d75852b09eb8
-> # bad: [43187902cbfafe73ede0144166b741fb0f7d04e1] Merge master.kernel.org:/pub/scm/linux/kernel/git/gregkh/driver-2.6
-> git-bisect bad 43187902cbfafe73ede0144166b741fb0f7d04e1
-> # good: [1545085a28f226b59c243f88b82ea25393b0d63f] drm: Allow for 44 bit user-tokens (or drm_file offsets)
-> git-bisect good 1545085a28f226b59c243f88b82ea25393b0d63f
-> # good: [c96e2c92072d3e78954c961f53d8c7352f7abbd7] Merge master.kernel.org:/pub/scm/linux/kernel/git/gregkh/usb-2.6
-> git-bisect good c96e2c92072d3e78954c961f53d8c7352f7abbd7
-> 
-> What I'm puzzled at is that this lands me at 2.6.20-rc5, which is *before*
-> the range I'm interested in.  What happened here?
+In addition to a lot of fixes, I am looking to add a few small backwards
+compatible features.  The following patches accomplish that.
 
-This lands me at
+This is an update to my previous set of patches.  These new fixes deal with
+some of the issues Junio and Linus brought up.
 
-v2.6.20-rc5-301-g31c56d8
+Any feedback would be great.
 
-which is _not_ an ancestor of v2.6.20 (your first good commit), oddly 
-enough. Start "gitk v2.6.20-rc5-301-g31c56d8...v2.6.20" to see how the 
-commits are related.
-
-So, it is intended behaviour.
-
-Hth,
-Dscho
+Cheers,
+Don
