@@ -1,76 +1,100 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: [PATCH] git-init: set up GIT_DIR/workdir if GIT_WORK_DIR is set
-Date: Mon, 12 Mar 2007 20:36:42 +0700
-Message-ID: <fcaeb9bf0703120636r7038a7fat24e571e7c087d13d@mail.gmail.com>
-References: <20070311043250.GA21331@moooo.ath.cx>
-	 <20070312115350.GA15179@moooo.ath.cx>
-	 <20070312121226.GB2268@always.joy.eth.net>
-	 <20070312131253.GA16452@moooo.ath.cx>
+From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+Subject: Re: [PATCH 1/6] Fix some "printf format" warnings.
+Date: Mon, 12 Mar 2007 15:03:49 +0100
+Message-ID: <45F55DC5.8060702@fs.ei.tum.de>
+References: <45E9BE46.1020801@ramsay1.demon.co.uk> <7v4pp29eok.fsf@assigned-by-dhcp.cox.net> <45EAFD21.6010002@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, "Matthias Lederhofer" <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 14:36:50 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig3B8F2E7624F9459F5371552E"
+Cc: Junio C Hamano <junkio@cox.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 12 15:04:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQkhm-0002Aa-45
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 14:36:50 +0100
+	id 1HQl8H-0005E3-Q4
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 15:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965574AbXCLNgr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 09:36:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965582AbXCLNgr
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 09:36:47 -0400
-Received: from wr-out-0506.google.com ([64.233.184.236]:49319 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965574AbXCLNgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 09:36:46 -0400
-Received: by wr-out-0506.google.com with SMTP id i28so975377wra
-        for <git@vger.kernel.org>; Mon, 12 Mar 2007 06:36:46 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GSmtEGOoUtkqmUi1sCOJbf6hiTJUCORp5dAlKLgbb0HB/YpZzSy+g8jEcl7UZNGTXExA4VFBvo+BBd3LDA6veCQCBQDqfDCFz+h/XwT/Qtnm19jGrubB1+KGf7CxnIzpo5M38lNltP1VKBmSj2ttYOtzVzC18dlny2dn30w0Boo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qpKnDr4NbF8p+OF0w9J+izBOjm0AlurRPcSxdGp9M4BG82cfeKbAmsKyuHYQ55bQY3XN5+1VtukIl/PzBkLHtR1OJ4uH9BKVnhk1rOlvn73fDXmkNU+4Dvs8uRMU7hjzH97Q93h3BD8nRTvgPBzqlitRB7XUzHtXruJYniZ8QKE=
-Received: by 10.115.76.1 with SMTP id d1mr1496215wal.1173706602735;
-        Mon, 12 Mar 2007 06:36:42 -0700 (PDT)
-Received: by 10.115.19.15 with HTTP; Mon, 12 Mar 2007 06:36:42 -0700 (PDT)
-In-Reply-To: <20070312131253.GA16452@moooo.ath.cx>
-Content-Disposition: inline
+	id S965854AbXCLOD7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 10:03:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965857AbXCLOD7
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 10:03:59 -0400
+Received: from stella.fs.ei.tum.de ([129.187.54.7]:40412 "EHLO
+	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965854AbXCLOD6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 10:03:58 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 3AA7028652;
+	Mon, 12 Mar 2007 15:03:56 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
+Received: from stella.fs.ei.tum.de ([127.0.0.1])
+	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id qQpKpsm36pHp; Mon, 12 Mar 2007 15:03:55 +0100 (CET)
+Received: from [62.216.212.224] (ppp-62-216-212-224.dynamic.mnet-online.de [62.216.212.224])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by stella.fs.ei.tum.de (Postfix) with ESMTP id 82DA92864D;
+	Mon, 12 Mar 2007 15:03:54 +0100 (CET)
+User-Agent: Mail/News 1.5.0.4 (X11/20060619)
+In-Reply-To: <45EAFD21.6010002@ramsay1.demon.co.uk>
+X-Enigmail-Version: 0.94.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42029>
 
-On 3/12/07, Matthias Lederhofer <matled@gmx.net> wrote:
-> Putting $GIT_WORK_DIR as is into $GIT_DIR/workdir is probably not what
-> the user expects because the content of $GIT_DIR/workdir is
-> interpreted relative to $GIT_DIR, not the current working directory.
-> Example:
->
->     /tmp$ mkdir repository working_directory
->     /tmp$ git --git-dir=repository --work-dir=working_directory init
->
-> If git init puts 'working_directory' into $GIT_DIR/workdir it would
-> make the associated working directory $GIT_DIR/working_directory =
-> /tmp/repository/working_directory and not /tmp/working_directory.
->
-> The alternative to use
->
->     /tmp$ git --git-dir=repository --work-dir=../working_directory init
->
-> seems quite confusing to me.
->
-> If you've any other idea to solve this please tell me.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig3B8F2E7624F9459F5371552E
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Let users create $GIT_DIR/workdir themselves. Your way may be less
-confusing to you but might be more confusing to me because I _might_
-expect a relative workdir setting (for example I move the repository
-and the working directory together to another place).
+Ramsay Jones wrote:
+>>> -        printf("%s%06o %s %d\t",
+>>> +        printf("%s%06lo %s %d\t",
+>>>                 tag,
+>>>                 ntohl(ce->ce_mode),=20
+>> I think we should do this instead:
+>>
+>>     printf("%s%06o %s %d\t", tag, (unsigned) ntohl(ce->ce_mode), ...
+> Oops, yes you are right.
+> (cygwin typedef's uint32_t as unsigned long.)
+>=20
+> However, I would hate to add all those casts! Casts are not always
+> evil, but should be avoided if possible. Having said that, I don't
+> see another solution ...
 
--- 
-Duy
+shouldn't it be something like this?
+
+printf("%s%06"PRIo32" %s %d\t", tag, ntohl(ce->ce_mode), ...)
+
+that's the correct and allegedly portable way I guess.
+
+cheers
+  simon
+
+--=20
+Serve - BSD     +++  RENT this banner advert  +++    ASCII Ribbon   /"\
+Work - Mac      +++  space for low =E2=82=AC=E2=82=AC=E2=82=AC NOW!1  +++=
+      Campaign     \ /
+Party Enjoy Relax   |   http://dragonflybsd.org      Against  HTML   \
+Dude 2c 2 the max   !   http://golden-apple.biz       Mail + News   / \
+
+
+--------------enig3B8F2E7624F9459F5371552E
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.3 (DragonFly)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFF9V3Ir5S+dk6z85oRAqxsAJ0cHiMxBP68QTG3PI5DRZlSx+9fHACff+zi
+SkAvImTXrDSXBO+9Lz9Ey3Q=
+=93Tj
+-----END PGP SIGNATURE-----
+
+--------------enig3B8F2E7624F9459F5371552E--
