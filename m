@@ -1,65 +1,76 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH 0/2] Make gc a builtin.
-Date: Mon, 12 Mar 2007 09:36:12 -0400
-Message-ID: <20070312133612.GD4372@thunk.org>
-References: <11736508181273-git-send-email-jbowes@dangerouslyinc.com> <20070312025736.GA28505@thunk.org> <Pine.LNX.4.63.0703121222350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH] git-init: set up GIT_DIR/workdir if GIT_WORK_DIR is set
+Date: Mon, 12 Mar 2007 20:36:42 +0700
+Message-ID: <fcaeb9bf0703120636r7038a7fat24e571e7c087d13d@mail.gmail.com>
+References: <20070311043250.GA21331@moooo.ath.cx>
+	 <20070312115350.GA15179@moooo.ath.cx>
+	 <20070312121226.GB2268@always.joy.eth.net>
+	 <20070312131253.GA16452@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: James Bowes <jbowes@dangerouslyinc.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 12 14:36:26 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, "Matthias Lederhofer" <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Mon Mar 12 14:36:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQkhN-00020C-VW
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 14:36:26 +0100
+	id 1HQkhm-0002Aa-45
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 14:36:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965544AbXCLNgX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 09:36:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965574AbXCLNgX
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 09:36:23 -0400
-Received: from thunk.org ([69.25.196.29]:47339 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965544AbXCLNgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 09:36:22 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HQkmx-0006tw-27; Mon, 12 Mar 2007 09:42:11 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HQkhA-0006Sk-3k; Mon, 12 Mar 2007 09:36:12 -0400
+	id S965574AbXCLNgr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 09:36:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965582AbXCLNgr
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 09:36:47 -0400
+Received: from wr-out-0506.google.com ([64.233.184.236]:49319 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965574AbXCLNgq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 09:36:46 -0400
+Received: by wr-out-0506.google.com with SMTP id i28so975377wra
+        for <git@vger.kernel.org>; Mon, 12 Mar 2007 06:36:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GSmtEGOoUtkqmUi1sCOJbf6hiTJUCORp5dAlKLgbb0HB/YpZzSy+g8jEcl7UZNGTXExA4VFBvo+BBd3LDA6veCQCBQDqfDCFz+h/XwT/Qtnm19jGrubB1+KGf7CxnIzpo5M38lNltP1VKBmSj2ttYOtzVzC18dlny2dn30w0Boo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qpKnDr4NbF8p+OF0w9J+izBOjm0AlurRPcSxdGp9M4BG82cfeKbAmsKyuHYQ55bQY3XN5+1VtukIl/PzBkLHtR1OJ4uH9BKVnhk1rOlvn73fDXmkNU+4Dvs8uRMU7hjzH97Q93h3BD8nRTvgPBzqlitRB7XUzHtXruJYniZ8QKE=
+Received: by 10.115.76.1 with SMTP id d1mr1496215wal.1173706602735;
+        Mon, 12 Mar 2007 06:36:42 -0700 (PDT)
+Received: by 10.115.19.15 with HTTP; Mon, 12 Mar 2007 06:36:42 -0700 (PDT)
+In-Reply-To: <20070312131253.GA16452@moooo.ath.cx>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0703121222350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42028>
 
-On Mon, Mar 12, 2007 at 12:23:41PM +0100, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Sun, 11 Mar 2007, Theodore Tso wrote:
-> 
-> > On Sun, Mar 11, 2007 at 06:06:56PM -0400, James Bowes wrote:
-> > > The following two patches make git-gc a builtin command.
-> > 
-> > What's the advantage in making git-gc a builtin command?
-> 
-> Portability. Plus, James wanted to get involved in Git development, and 
-> building in gc really was the shortest path into that.
-> 
+On 3/12/07, Matthias Lederhofer <matled@gmx.net> wrote:
+> Putting $GIT_WORK_DIR as is into $GIT_DIR/workdir is probably not what
+> the user expects because the content of $GIT_DIR/workdir is
+> interpreted relative to $GIT_DIR, not the current working directory.
+> Example:
+>
+>     /tmp$ mkdir repository working_directory
+>     /tmp$ git --git-dir=repository --work-dir=working_directory init
+>
+> If git init puts 'working_directory' into $GIT_DIR/workdir it would
+> make the associated working directory $GIT_DIR/working_directory =
+> /tmp/repository/working_directory and not /tmp/working_directory.
+>
+> The alternative to use
+>
+>     /tmp$ git --git-dir=repository --work-dir=../working_directory init
+>
+> seems quite confusing to me.
+>
+> If you've any other idea to solve this please tell me.
 
-I'm not sure I understand the portability argument?  All of the
-platforms that git currently supports will handle shell scripts,
-right?  
+Let users create $GIT_DIR/workdir themselves. Your way may be less
+confusing to you but might be more confusing to me because I _might_
+expect a relative workdir setting (for example I move the repository
+and the working directory together to another place).
 
-Heck, git-commit is still a shell script, and that's a rather, ah,
-fundamental command, isn't it? 
-
-						- Ted
+-- 
+Duy
