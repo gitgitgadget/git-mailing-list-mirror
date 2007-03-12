@@ -1,68 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/3] fast-import: tree allocation cleanups
-Date: Mon, 12 Mar 2007 15:16:39 -0400
-Message-ID: <20070312191639.GD15887@spearce.org>
-References: <<20070310191515.GA3416@coredump.intra.peff.net>> <20070310192114.GA3875@coredump.intra.peff.net> <20070311032147.GA10781@spearce.org> <20070311155138.GA7110@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: What's the best method between merging and rebasing ?
+Date: Mon, 12 Mar 2007 20:14:52 +0100
+Organization: GNU's Not UNIX!
+Message-ID: <200703121914.l2CJEqW0031669@localhost.localdomain>
+References: <200703121139.l2CBdcUL022906@localhost.localdomain> <20070312120820.GE18952@mad.intersec.eu> <200703121634.l2CGYtGx027263@localhost.localdomain> <20070312173727.GC30489@mad.intersec.eu>
+Reply-To: Xavier Maillard <zedek@gnu.org>
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:16:47 2007
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:17:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQq0k-0000sD-6V
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:16:46 +0100
+	id 1HQq1f-0001Hm-Ah
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:17:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752266AbXCLTQn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:16:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752344AbXCLTQn
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:16:43 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:51689 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752266AbXCLTQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:16:42 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HQq0W-0008P8-C5; Mon, 12 Mar 2007 15:16:32 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1B9F620FBAE; Mon, 12 Mar 2007 15:16:39 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070311155138.GA7110@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752340AbXCLTRk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbXCLTRk
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:17:40 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:36124 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752340AbXCLTRj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:17:39 -0400
+Received: from zogzog.home (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id E4FAD7D8F;
+	Mon, 12 Mar 2007 20:17:37 +0100 (CET)
+Received: from localhost.localdomain (IDENT:1001@localhost [127.0.0.1])
+	by zogzog.home (8.13.8/8.13.8) with ESMTP id l2CJErBR031672;
+	Mon, 12 Mar 2007 20:14:53 +0100
+Received: (from zedek@localhost)
+	by localhost.localdomain (8.13.8/8.13.8/Submit) id l2CJEqW0031669;
+	Mon, 12 Mar 2007 20:14:52 +0100
+X-Authentication-Warning: localhost.localdomain: zedek set sender to zedek@gnu.org using -f
+In-reply-to: <20070312173727.GC30489@mad.intersec.eu> (madcoder@debian.org)
+Jabber-ID: zedek@im.lolica.org
+User-Agent: Rmail in GNU Emacs 23.0.51.1 on GNU/Linux
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42062>
 
-Jeff King <peff@peff.net> wrote:
-> On Sat, Mar 10, 2007 at 10:21:47PM -0500, Shawn O. Pearce wrote:
-> > > +	name = to_atom(p, n);
-> > [...]
-> > > -	e->name = to_atom(p, (unsigned short)n);
-> > 
-> > You missed an unsigned short cast here.
-> 
-> Actually, I removed it intentionally (though clearly I should have
-> documented it). It's casting from an unsigned int to an unsigned short.
-> Such a cast is at best pointless (since the compiler performs the exact
-> same cast implicitly -- see C99 6.5.2.2, paragraph 7), and at worst
-> masks an error (e.g., if the type of n is changed).
+Hi,
 
-Hmm.  You are probably right.  I had put that cast into place before
-because (if I recall correctly) I was getting compiler errors.
-But today looking at it I'm not, even if I remove the casts.  So uh,
-yea... they should probably come out.
+   From: Pierre Habouzit <madcoder@debian.org>
 
+   On Mon, Mar 12, 2007 at 05:34:55PM +0100, Xavier Maillard wrote:
+
+   > So it seems to be cherry-picks + rebase master on new HEAD but I
+   > am not sure at how things are doing :)
+
+     okay then I got this right, you don't want to rebase master on new
+   HEAD because you would keep the commits you don't want (I guess). What
+
+     you start from:
+
+   orig master -> A -> B -> C (master)
+	       \
+		-> D -> E -> F topic
+
+     let's say you want to keep A and C from master. here is what I'd do:
+
+     $ git checkout topic     # topic will be the new master
+     $ git cherry-pick A C    # we want to keep A and C
+
+Got it for this one :)
+
+     we now have:
+
+   orig master -> A -> B -> C  (master)
+	       \
+		-> D -> E -> F -> A' -> C' (topic)
+
+     $ git branch -D master
+
+For historical reasons, I have to keep my master around so I
+won't delete it completely. Maybe there is a way to tell that a
+branch is considered "dead" thus indicating there won't be any
+new developement onto it. I will check this.
+
+As I have been told privately, what I want in reality is a reset
+of master onto my new HEAD.
+
+I think I have misunderstood reset behaviour.
+
+So this is how I end up now (from my new master branch):
+
+$ git cherry-pick <commits>
+$ git rebase master~NUM
+$ git reset master HEAD
+
+There I would need something to tell old master is dead but it is
+optionnal (a single tag will do that).
+
+Does that make sense for you ?
+
+Regards,
+
+P.S: I have problems reading your posts, my mail buffer is full
+of =20 here and there
 -- 
-Shawn.
+Xavier
