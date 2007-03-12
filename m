@@ -1,85 +1,79 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git merge and merge message
-Date: Mon, 12 Mar 2007 16:07:02 +1300
-Message-ID: <46a038f90703112007y2baf7205v56a1ad4b784e93f0@mail.gmail.com>
-References: <200703111505.l2BF54Kq006625@localhost.localdomain>
-	 <20070311160424.GA629@fieldses.org>
-	 <200703111815.l2BIFHbq010315@localhost.localdomain>
-	 <Pine.LNX.4.64.0703111309410.9690@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Make gc a builtin.
+Date: Mon, 12 Mar 2007 04:07:43 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703120403360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11736508181273-git-send-email-jbowes@dangerouslyinc.com>
+ <1173650820969-git-send-email-jbowes@dangerouslyinc.com>
+ <Pine.LNX.4.63.0703112332550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vtzwrtdmx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Xavier Maillard" <zedek@gnu.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Mar 12 04:07:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: James Bowes <jbowes@dangerouslyinc.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Mar 12 04:07:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQasO-0004u7-6o
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 04:07:08 +0100
+	id 1HQat7-0005Ar-E0
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 04:07:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964934AbXCLDHF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 23:07:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964868AbXCLDHF
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 23:07:05 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:18861 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964934AbXCLDHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 23:07:03 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so1845634nfa
-        for <git@vger.kernel.org>; Sun, 11 Mar 2007 20:07:02 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=C0Iofq91wvynUVM2xsq70e6ljYqlOFoB8NoJ3tD9G/EcAZ8FcQhpr1Lj6fuBeROYcv0wc6NN5adIYqmsfS+kfqwpXPXihR0+EyMUgiDyv/hXuyFaXS9f3BzWBKZOVlgrI+usAXU1KEvy82lDuq/gmCUl0LA5jkuvk1WWzBAL2uY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AcqbrZXDT5JeRunfsuaCiCgX/QZW5vVMJb+zaWStkCaopEyOLVgxMCajc5VbI1BcRWOoICXr1tZnWFczM3RpYucZ3U51oscwNqKR+/dzmJRW82d2OIhYfiz70V5PB6GyjtRizcShGRYXWL5RTWbZJaFejMh8Piq9lDZQw7i08bw=
-Received: by 10.82.188.15 with SMTP id l15mr7449629buf.1173668822089;
-        Sun, 11 Mar 2007 20:07:02 -0700 (PDT)
-Received: by 10.82.183.14 with HTTP; Sun, 11 Mar 2007 20:07:02 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0703111309410.9690@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S964868AbXCLDHr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 11 Mar 2007 23:07:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964875AbXCLDHr
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 23:07:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48660 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964868AbXCLDHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Mar 2007 23:07:46 -0400
+Received: (qmail invoked by alias); 12 Mar 2007 03:07:45 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp030) with SMTP; 12 Mar 2007 04:07:45 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+ALVdrlHiAESopiKBDNIyYPbHp7c9Sv0wKtApBEB
+	hDAw2n9DnRfsBx
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vtzwrtdmx.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42007>
 
-On 3/12/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> The "don't merge, just fast-forward" is the right thing to do for working
-> together. However, I can well imagine that if you actually work with
-> branches not as "distributed development", but *just* as "topic branches",
-> then having the "useless" merge (with the parents actually being parents
-> of each other) migth actually be nice from a documentation standpoint.
+Hi,
 
-Well, actually I do quite a bit of work in private repos, and it is
-more useful to know *trivially* that the branches are in the same
-place, and get me and my team into the "it's about the content,
-stupid" mindset.
+On Sun, 11 Mar 2007, Junio C Hamano wrote:
 
-So after all the flamefesting, I drank the content-is-king koolaid and
-if a pull leads to a fast-forward, I'm happy. If it's a pointless
-merge I often rebase to linearise.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > And instead of die()ing, I'd rather do something like
+> >
+> > 	return (pack_refs || run_command_v_opt(argv_pack_refs, RUN_GIT_CMD) &&
+> > 		run_command_v_opt(argv_reflog_expire, RUN_GIT_CMD) &&
+> > 		run_command_v_opt(argv_repack, RUN_GIT_CMD) &&
+> > 		(prune || run_command_v_opt(argv_prune, RUN_GIT_CMD) &&
+> > 		run_command_v_opt(argv_rerere, RUN_GIT_CMD);
+> 
+> Gaaaaaaaah.
+> 
+> That may be valid C,
 
-> I'm torn on this.
+Actually, it is not. As usual, I fscked up: run_command_v_opt() is 
+supposed to return 0 on _success_, so all the "&&" should be "||", and all 
+the "||" should be "&&".
 
-Man, you're getting soft in the middle ;-) First, git gets a newline
-conversion option to please windows users that don't use the many GOOD
-programming editors that know a unix newline from a UFO (and those are
-the majority these days, or so I hear). And now _this_! Tsk, tsk!
+> 	if (we are told to pack-refs)
+>         	if (try to pack refs and find error)
+> 			goto failure;
 
-> I really dislike anything but fast-forward, because I
-> have a strong suspicion that it will cause "alpha male" behaviour (where
-> maintainers use the "useless merge" as a way to mark their territory),
-> which I think is actually really bad form.
+I find this not very elegant. Instead, I'd do
 
-I share your concern. And for Xavier's case ref logs should do the
-trick anyway.
+	if (do_pack_refs && run_comand_v_opt(argv_pack_refs, RUN_GIT_CMD))
+		return error("Could not run pack-refs.");
 
-cheers,
+It does not only avoid the evil goto, but uses the screen estate for some 
+nice error messages so that the user is not left out in the cold when 
+something is wrong.
 
-
-m
+Ciao,
+Dscho
