@@ -1,103 +1,84 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: svnimport problems (abysmal performance and crash) on Cygwin
-Date: Mon, 12 Mar 2007 08:24:19 +0100
-Message-ID: <45F50023.9030403@dawes.za.net>
-References: <45F4F58D.2010701@dawes.za.net>
+From: "A.J. Rossini" <blindglobe@gmail.com>
+Subject: Re: [RFC] introduce GIT_WORK_DIR environment variable
+Date: Mon, 12 Mar 2007 09:08:46 +0100
+Message-ID: <1abe3fa90703120108x3fbc5b49k17ee6d00ff5fb79@mail.gmail.com>
+References: <20070311043250.GA21331@moooo.ath.cx>
+	 <7vabykxs15.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0703111326170.9690@woody.linux-foundation.org>
+	 <7vodmzv6dq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, normalperson@yhbt.net
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Mar 12 08:24:28 2007
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Mar 12 09:08:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQetO-00081n-I8
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 08:24:26 +0100
+	id 1HQfaO-0001UP-DW
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 09:08:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965275AbXCLHYX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 03:24:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965263AbXCLHYX
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 03:24:23 -0400
-Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:60604 "EHLO
-	spunkymail-a15.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S965238AbXCLHYW (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2007 03:24:22 -0400
-Received: from [0.0.0.0] (lucas.dreamhost.com [64.111.99.14])
-	by spunkymail-a15.dreamhost.com (Postfix) with ESMTP id B54C87F024;
-	Mon, 12 Mar 2007 00:24:21 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
-In-Reply-To: <45F4F58D.2010701@dawes.za.net>
+	id S965263AbXCLIIt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 04:08:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965316AbXCLIIt
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 04:08:49 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:26684 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965263AbXCLIIr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 04:08:47 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1346588ana
+        for <git@vger.kernel.org>; Mon, 12 Mar 2007 01:08:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Zcqdf9qRrR/FQIQhEs6FoQMcnMwmh9aI8nGKHvpFC42LTdCBv7L5RycsDmsogN/r3aVuSiCKH+F2nXRZ822Fjzz61ymh/ZnPPP05Gi1lt8pPk32YNCdX+UU+zhKOW5Z5P3YNmCFQEIPLPB0mH8ZZkyzCePNQwKmzuWZ7iQ3GCrw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TG0M7y+Ko503jyqsPlhnLFtFYwZFa1bDmvIwvUp3rWqC0D9wusDPKPSqJX8nvhBYRWSA1gRSg9uyOX/+6Mxnu36TS6K/rjxyOSA+tQ+UoOjAac5N6dKUWDV03cmgYqbqfo46NVQDO9ZRfzs84pyi4MjXu2hYLeg+6J/GwVFrJf8=
+Received: by 10.114.75.1 with SMTP id x1mr1139235waa.1173686926882;
+        Mon, 12 Mar 2007 01:08:46 -0700 (PDT)
+Received: by 10.115.47.9 with HTTP; Mon, 12 Mar 2007 01:08:46 -0700 (PDT)
+In-Reply-To: <7vodmzv6dq.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42013>
 
-Rogan Dawes wrote:
-> Hi folks,
-> 
-> I am trying to use git to track the Spring Rich Client project's SVN 
-> repository, along with some local changes. I am using git 1.5.0.3 as 
-> packaged by Cygwin, on Windows XP SP2.
-> 
-> The repo's URL is:
-> 
-> <http://spring-rich-c.svn.sourceforge.net/svnroot/spring-rich-c/trunk/spring-richclient> 
-> 
-> 
-> I start the import using:
-> 
-> git svnimport -v $url
-> 
-> and then wait (and wait and wait). For some reason, revision 5 takes 
-> over an hour to complete, from version 4. The repo is not substantial 
-> (when it eventually fails on rev 102, the unpacked repo is only 148kB).
-> 
-> In addition, it does not complete the import successfully.
-> 
-> Eventually (I left it running while I slept), it crashes on rev 102 with 
-> the following message:
-> 
-> Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-> Committed change 102:/ 2004-08-03 04:53:31)
-> Merge parent branch: ab10f9f06566e0fbdb3ee57d7489b53567f313d3
-> Commit ID 722f84d2578f84a1b64904b0b425e02c0397c40e
-> Writing to refs/heads/origin
-> DONE: 102 origin 722f84d2578f84a1b64904b0b425e02c0397c40e
-> RA layer request failed: REPORT request failed on 
-> '/svnroot/spring-rich-c/!svn/bc/1001/trunk/spring-richclient': REPORT of 
-> '/svnroot/spring-rich-c/!svn/bc/1001/trunk/spring-richclient': 200 OK 
-> (http://spring-rich-c.svn.sourceforge.net) at /usr/bin/git-svnimport 
-> line 955
-> 
-> Any ideas what might be going on? Or suggestions for debugging this 
-> further?
-> 
-> Many thanks
-> 
-> Rogan
-> 
-> P.S. It also looks like Rev 4-5 takes quite a long time under Linux as 
-> well, from initial analysis.
+On 3/11/07, Junio C Hamano <junkio@cox.net> wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
+>
+> > So let's say that you have a git repository for tracking all that. The
+> > "working tree" for that git repository would be your home directory.
+> >
+> > Now, imagine that you *also* want to track something else in git, that you
+> > *also* have in your home directory. Say your ".bashrc" files etc. They
+> > have nothing to do with your music tracking setup, so you don't want to
+> > track it in the same git repository, and you want to have a totally
+> > different .git/index file for those. But again, the *working*tree* is
+> > actually your home directory.
+>
+> That is a good example usage schenario; we would need to think
+> about what to do with .gitignore (and .gitattributes if we will
+> have that in-tree), though.
 
-Another data point:
+Modulo problems like above, isn't this just a solid solution to the
+modules problem?   (not only directory-level modules, but intertwined
+(in the sense of repositories) files within a directory).
 
-I ran it on a Linux server I have access to, and it got further (rev 
-147), but still failed. The error message was different, though:
+And wouldn't the cheap hack just to be to have a pecking order for
+determining attributes?  (i.e. a master file with metadata which is
+owned by the working directory, not the repository, to decide which
+repository to look at for which files).
 
-Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-Committed change 147:/ 2004-08-12 18:23:53)
-Merge parent branch: 1f053b959bdee167f328cf98116179358d80fef9
-Commit ID ef57373cfd1ef6ddf797a4b5ea66de6465391789
-Writing to refs/heads/origin
-DONE: 147 origin ef57373cfd1ef6ddf797a4b5ea66de6465391789 at Mon Mar 12 
-06:40:47 2007
-RA layer request failed: REPORT request failed on 
-'/svnroot/spring-rich-c/!svn/bc/1001/trunk/spring-richclient': REPORT of 
-'/svnroot/spring-rich-c/!svn/bc/1001/trunk/spring-richclient': Could not 
-read response body: connection was closed by server. 
-(http://spring-rich-c.svn.sourceforge.net) at 
-/home/rdawes/bin/git-svnimport line 955
+Ouch, but Junio's right, it's still painful, ugly and problematic.
 
-Rogan
+best,
+-tony
+
+blindglobe@gmail.com
+Muttenz, Switzerland.
+"Commit early,commit often, and commit in a repository from which we
+can easily roll-back your mistakes" (AJR, 4Jan05).
