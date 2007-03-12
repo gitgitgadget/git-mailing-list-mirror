@@ -1,87 +1,118 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] GIT_WORK_DIR: documentation for relative path
-Date: Mon, 12 Mar 2007 20:53:48 +0100
-Message-ID: <20070312195348.GA30520@moooo.ath.cx>
-References: <20070311043250.GA21331@moooo.ath.cx> <20070312115350.GA15179@moooo.ath.cx> <20070312121226.GB2268@always.joy.eth.net> <20070312131253.GA16452@moooo.ath.cx> <fcaeb9bf0703120636r7038a7fat24e571e7c087d13d@mail.gmail.com> <20070312140808.GA17450@moooo.ath.cx> <7vabyitlld.fsf@assigned-by-dhcp.cox.net> <20070312180837.GA22701@moooo.ath.cx> <20070312191812.GA29327@moooo.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:54:12 2007
+From: Don Zickus <dzickus@redhat.com>
+Subject: [PATCH 3/5] restrict the patch filtering
+Date: Mon, 12 Mar 2007 15:52:06 -0400
+Message-ID: <1173729128920-git-send-email-dzickus@redhat.com>
+References: <11737291282223-git-send-email-dzickus@redhat.com>
+Cc: Don Zickus <dzickus@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:54:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQqax-0002Ui-NB
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:54:12 +0100
+	id 1HQqaw-0002Ui-EC
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752838AbXCLTxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752847AbXCLTxv
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:53:51 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50385 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752838AbXCLTxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:53:50 -0400
-Received: (qmail invoked by alias); 12 Mar 2007 19:53:49 -0000
-Received: from pD9EBB74D.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.183.77]
-  by mail.gmx.net (mp034) with SMTP; 12 Mar 2007 20:53:49 +0100
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX1/scawr0P/s4VmY+xf6RmWTqXiMhQlNzW9o1PzO0t
-	I7+TRZQ6S7OKsI
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070312191812.GA29327@moooo.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1752831AbXCLTxm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:53:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752838AbXCLTxl
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:53:41 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:55955 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752831AbXCLTxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:53:40 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2CJreLG022119
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:53:40 -0400
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2CJrY9a020370
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:53:34 -0400
+Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
+	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2CJrXKY029975;
+	Mon, 12 Mar 2007 15:53:33 -0400
+Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
+	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2CJq89k019771;
+	Mon, 12 Mar 2007 15:52:08 -0400
+Received: (from dzickus@localhost)
+	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2CJq87S019770;
+	Mon, 12 Mar 2007 15:52:08 -0400
+X-Mailer: git-send-email 1.5.0.2.211.g2ca9-dirty
+In-Reply-To: <11737291282223-git-send-email-dzickus@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42077>
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+I have come across many emails that use long strings of '-'s as separators
+for ideas.  This patch below limits the separator to only 3 '-', with the
+intent that long string of '-'s will stay in the commit msg and not in the
+patch file.
+
+Signed-off-by: Don Zickus <dzickus@redhat.com>
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+
 ---
- Documentation/git.txt |   22 +++++++++++++---------
- 1 files changed, 13 insertions(+), 9 deletions(-)
+I purposedly separated this patch out because I wasn't sure if anyone would
+have objections to it.  I tested it on numerous emails with and with patches
+and didn't see any issues.
+---
+ builtin-mailinfo.c |   37 ++++++++++++++++++++++++++++++++++---
+ 1 files changed, 34 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index d2f5d27..177adf5 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -83,11 +83,13 @@ OPTIONS
- 	setting the GIT_DIR environment variable.
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index dd0f563..a8d5b60 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -652,6 +652,39 @@ again:
+ 	return (fgets(line, sizeof(line), fin) != NULL);
+ }
  
- --work-dir=<path>::
--	Set the path to the toplevel working directory.  The value will
--	be used only in combination with $GIT_DIR or '--git-dir'.
--	Without this option git will assume that the current directory
--	is also the toplevel directory.  This can also be controlled by
--	setting the GIT_WORK_DIR environment variable.
-+	Set the path to the toplevel working directory.  If the path is
-+	relative it is interpreted from $GIT_DIR, not the current
-+	working directory.  The value will be used only in combination
-+	with $GIT_DIR or '--git-dir'.  Without this option git will
-+	assume that the current working directory is also the toplevel
-+	directory.  This can also be controlled by setting the
-+	GIT_WORK_DIR environment variable.
++static inline int patchbreak(const char *line)
++{
++	/* Beginning of a "diff -" header? */
++	if (!memcmp("diff -", line, 6))
++		return 1;
++
++	/* CVS "Index: " line? */
++	if (!memcmp("Index: ", line, 7))
++		return 1;
++
++	/*
++	 * "--- <filename>" starts patches without headers
++	 * "---<sp>*" is a manual separator
++	 */
++	if (!memcmp("---", line, 3)) {
++		line += 3;
++		/* space followed by a filename? */
++		if (line[0] == ' ' && !isspace(line[1]))
++			return 1;
++		/* Just whitespace? */
++		for (;;) {
++			unsigned char c = *line++;
++			if (c == '\n')
++				return 1;
++			if (!isspace(c))
++				break;
++		}
++		return 0;
++	}
++	return 0;
++}
++
++
+ static int handle_commit_msg(char *line)
+ {
+ 	static int still_looking=1;
+@@ -673,9 +706,7 @@ static int handle_commit_msg(char *line)
+ 			return 0;
+ 	}
  
- --bare::
- 	Same as --git-dir=`pwd`.
-@@ -334,10 +336,12 @@ git so take care if using Cogito etc.
- 	for the base of the repository.
- 
- 'GIT_WORK_DIR'::
--	Set the path to the toplevel working directory.  The value will
--	be used only in combination with $GIT_DIR or '--git-dir'.
--	Without this environment variable git will assume that the
--	current directory is also the toplevel directory.
-+	Set the path to the toplevel working directory.  If the path is
-+	relative it is interpreted from $GIT_DIR, not the current
-+	working directory.  The value will be used only in combination
-+	with $GIT_DIR or '--git-dir'.  Without this environment variable
-+	git will assume that the current working directory is also the
-+	toplevel directory.
- 
- git Commits
- ~~~~~~~~~~~
+-	if (!memcmp("diff -", line, 6) ||
+-	    !memcmp("---", line, 3) ||
+-	    !memcmp("Index: ", line, 7)) {
++	if (patchbreak(line)) {
+ 		fclose(cmitmsg);
+ 		cmitmsg = NULL;
+ 		return 1;
 -- 
-1.5.0.3.1007.g7ff7
+1.5.0.2.211.g2ca9-dirty
