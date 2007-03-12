@@ -1,110 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-init: set up GIT_DIR/workdir if GIT_WORK_DIR is set
-Date: Mon, 12 Mar 2007 13:05:32 -0700
-Message-ID: <7vird6qlbn.fsf@assigned-by-dhcp.cox.net>
-References: <20070311043250.GA21331@moooo.ath.cx>
-	<20070312115350.GA15179@moooo.ath.cx>
-	<20070312121226.GB2268@always.joy.eth.net>
-	<20070312131253.GA16452@moooo.ath.cx>
-	<fcaeb9bf0703120636r7038a7fat24e571e7c087d13d@mail.gmail.com>
-	<20070312140808.GA17450@moooo.ath.cx>
-	<7vabyitlld.fsf@assigned-by-dhcp.cox.net>
-	<20070312180837.GA22701@moooo.ath.cx>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: using the same repo with different OS
+Date: Mon, 12 Mar 2007 21:05:11 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703122100550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <906f26060702250913g41658be6mffea613f25f9a847@mail.gmail.com> 
+ <Pine.LNX.4.63.0702251829530.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7v3b4ut7yq.fsf@assigned-by-dhcp.cox.net> 
+ <Pine.LNX.4.63.0702251929170.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <7vy7mmrspw.fsf@assigned-by-dhcp.cox.net>  <906f26060702281006l794173e8uea0f7174dd712e32@mail.gmail.com>
+  <20070228181251.GG5924@spearce.org> <906f26060703121133o6de42d66y9f3ada50149a852c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 21:05:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Stefano Spinucci <virgo977virgo@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 21:05:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQqm0-0007Y5-7u
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 21:05:36 +0100
+	id 1HQqll-0007Y5-Do
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 21:05:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752850AbXCLUFe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 16:05:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752851AbXCLUFe
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 16:05:34 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:43673 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752850AbXCLUFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 16:05:33 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070312200533.RFBS2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 12 Mar 2007 16:05:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id Zw5Y1W00x1kojtg0000000; Mon, 12 Mar 2007 16:05:33 -0400
-In-Reply-To: <20070312180837.GA22701@moooo.ath.cx> (Matthias Lederhofer's
-	message of "Mon, 12 Mar 2007 19:08:37 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752848AbXCLUFQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 16:05:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752851AbXCLUFQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 16:05:16 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35778 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752848AbXCLUFN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 16:05:13 -0400
+Received: (qmail invoked by alias); 12 Mar 2007 20:05:11 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp010) with SMTP; 12 Mar 2007 21:05:11 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/lLHFQArrlMA9JFmhVi+frsOwTGVeJ31x9mzSFsm
+	sNkp8Y+9W/Vssq
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <906f26060703121133o6de42d66y9f3ada50149a852c@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42079>
 
-Matthias Lederhofer <matled@gmx.net> writes:
+Hi,
 
-> I just thought that GIT_WORK_DIR should be relative to the current
-> working directory because it's more intuitive, e.g.
->
->     $ git --git-dir=/path/to/repo.git --work-dir=../.. add a
->
-> where ../.. matches the path to the toplevel working directory from
-> cwd.  But this definitely is annoying when changing directories.
+On Mon, 12 Mar 2007, Stefano Spinucci wrote:
 
-Not so fast.  That was a trick suggestion, only meant to see if
-you have thought through the issues, and you did not have to
-agree with me so quickly ;-).  What I was pointing out was
-merely that specifying the top as a path relative to the cwd in
-permanent basis was not useful if you are going to cd around,
-which is a tautology.
+> On 2/28/07, Shawn O. Pearce <spearce@spearce.org> wrote:
+> > 
+> > Stefano Spinucci <virgo977virgo@gmail.com> wrote:
+> > > Than I'm asking how you'd setup repos to work on some linux/windows
+> > > machines, transferring data only with an USB disk.
+> > 
+> > Just create a bare repository on the USB stick and push/fetch to it.
+> > It won't have a checkout directory or an index, the two sticking
+> > points with mmap() on Windows and with a FAT32 filesystem being
+> > accessed through Git by both Linux and Windows.
+> 
+> Needing to have my repos backupped and only on fat32 usb keys, I was
+> thinking to have the following layout:
+> on usb key one --> repo.linux
+> on usb key two --> repo.win
+> 
+> Then, on repo.win, I'll do:
+> # before daily work on windows
+> fetch from repo.linux
+> # after daily work on windows
+> push to repo.linux
+> 
+> Otherwise, on repo.linux:
+> # before nightly work on linux
+> fetch from repo.windows
+> # after nightly work on linux
+> push to repo.windows
+> 
+> It's possible, or I need a third bare repository between windows and 
+> linux ???
 
-For a one-shot thing, I would agree that being able to say "I am
-in Documentation/howto directory of the whole thing, so I can
-name the top of my working tree as ../.." is far more useful and
-natural than having to say "ehhhh, what is the top of the
-working tree relative to my repository???".  If it is not a
-one-shot thing and the user expects to cd around, then:
+No need for a third one. You can even use alternates to save space:
 
-	$ GIT_WORK_DIR=$(pwd)/../..; export GIT_WORK_DIR
-	$ git foo ...; git bar ...;
+$ git clone -l -s repo.linux repo.windows
 
-would be more natural, so I do not expect the semantics of
-relative path would be a big issue in reality, as long as we
-make it clear that it is relative to cwd.
+When git-gc'ing, the objects will be packed, but if they are present in 
+both repo.linux and repo.windows, the objects from repo.linux will be 
+reused in repo.windows.
 
-By the way, I do not find your command line example intuitive at
-all, whether the --work-dir= parameter is relative or absolute.
-Do you honestry expect that loooong command line is something
-people would use in real life?
+Note: USB sticks are almost as fragile as disks used to be... So, try 
+avoiding writes if you can...
 
-With $GIT_DIR/workdir support, I would expect that people would
-do (if what is done is only to add one file and nothing else):
-
-	$ GIT_DIR=/path/to/repo.git git add a
-
-And without $GIT_DIR/workdir support:
-
-	$ GIT_DIR=/path/to/repo.git GIT_WORK_DIR=../.. git add a
-
-If the user is going to work in the working tree for extended
-period of time, cd'ing around and running multiple git commands:
-
-	$ GIT_DIR=/path/to/repo.git; export GIT_DIR
-        $ git foo ; git bar ; cd subdir ; git baz ; ...
-
-And without $GIT_DIR/workdir support, perhaps the user would do:
-
-	$ GIT_DIR=/path/to/repo.git; export GIT_DIR
-	$ GIT_WORK_DIR=$(pwd)/../..; export GIT_WORK_DIR
-        $ git foo ; git bar ; cd subdir ; git baz ; ...
-
-What I am getting at is that I personally feel that --git-dir=
-option is already an unnecessary redundancy that is there only
-to confuse new people by having more than one way to do the same
-thing, and --work-dir= option seems to be only adding to the
-same confusion.  Do we really want that as an option?
+Ciao,
+Dscho
