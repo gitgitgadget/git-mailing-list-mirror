@@ -1,86 +1,103 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH,RFC] Add git-mergetool to run an appropriate merge conflict resolution program
-Date: Sun, 11 Mar 2007 23:47:22 -0700
-Message-ID: <7vodmzt0ud.fsf@assigned-by-dhcp.cox.net>
-References: <E1HQdaX-00025N-3s@candygram.thunk.org>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: svnimport problems (abysmal performance and crash) on Cygwin
+Date: Mon, 12 Mar 2007 08:24:19 +0100
+Message-ID: <45F50023.9030403@dawes.za.net>
+References: <45F4F58D.2010701@dawes.za.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Theodore Ts'o" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 12 07:47:40 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, normalperson@yhbt.net
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Mon Mar 12 08:24:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQeJl-0001BJ-KZ
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 07:47:37 +0100
+	id 1HQetO-00081n-I8
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 08:24:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965176AbXCLGrY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 02:47:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965197AbXCLGrY
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 02:47:24 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:50565 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965187AbXCLGrX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 02:47:23 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070312064723.TTCQ28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 12 Mar 2007 02:47:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ZinN1W00M1kojtg0000000; Mon, 12 Mar 2007 02:47:22 -0400
-In-Reply-To: <E1HQdaX-00025N-3s@candygram.thunk.org> (Theodore Ts'o's message
-	of "Mon, 12 Mar 2007 02:00:53 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965275AbXCLHYX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 03:24:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965263AbXCLHYX
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 03:24:23 -0400
+Received: from sd-green-bigip-177.dreamhost.com ([208.97.132.177]:60604 "EHLO
+	spunkymail-a15.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S965238AbXCLHYW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2007 03:24:22 -0400
+Received: from [0.0.0.0] (lucas.dreamhost.com [64.111.99.14])
+	by spunkymail-a15.dreamhost.com (Postfix) with ESMTP id B54C87F024;
+	Mon, 12 Mar 2007 00:24:21 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
+In-Reply-To: <45F4F58D.2010701@dawes.za.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42012>
 
-"Theodore Ts'o" <tytso@mit.edu> writes:
+Rogan Dawes wrote:
+> Hi folks,
+> 
+> I am trying to use git to track the Spring Rich Client project's SVN 
+> repository, along with some local changes. I am using git 1.5.0.3 as 
+> packaged by Cygwin, on Windows XP SP2.
+> 
+> The repo's URL is:
+> 
+> <http://spring-rich-c.svn.sourceforge.net/svnroot/spring-rich-c/trunk/spring-richclient> 
+> 
+> 
+> I start the import using:
+> 
+> git svnimport -v $url
+> 
+> and then wait (and wait and wait). For some reason, revision 5 takes 
+> over an hour to complete, from version 4. The repo is not substantial 
+> (when it eventually fails on rev 102, the unpacked repo is only 148kB).
+> 
+> In addition, it does not complete the import successfully.
+> 
+> Eventually (I left it running while I slept), it crashes on rev 102 with 
+> the following message:
+> 
+> Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+> Committed change 102:/ 2004-08-03 04:53:31)
+> Merge parent branch: ab10f9f06566e0fbdb3ee57d7489b53567f313d3
+> Commit ID 722f84d2578f84a1b64904b0b425e02c0397c40e
+> Writing to refs/heads/origin
+> DONE: 102 origin 722f84d2578f84a1b64904b0b425e02c0397c40e
+> RA layer request failed: REPORT request failed on 
+> '/svnroot/spring-rich-c/!svn/bc/1001/trunk/spring-richclient': REPORT of 
+> '/svnroot/spring-rich-c/!svn/bc/1001/trunk/spring-richclient': 200 OK 
+> (http://spring-rich-c.svn.sourceforge.net) at /usr/bin/git-svnimport 
+> line 955
+> 
+> Any ideas what might be going on? Or suggestions for debugging this 
+> further?
+> 
+> Many thanks
+> 
+> Rogan
+> 
+> P.S. It also looks like Rev 4-5 takes quite a long time under Linux as 
+> well, from initial analysis.
 
-> OK, here's my second attempt at a git-mergetool subcommand.
->
-> Major differences from last time, besides addressing the comments made
-> by Junio, is that the git-mergetool now handles various scnearios where
-> the conflicts are caused by files changing to/from symlinks, and where
-> the symlink was changed to two different destinations in the local and
-> remote branches.
+Another data point:
 
-Thanks.  By the way, is it fashionable to misspell "scenario" in
-the kernel circles? ;-)
+I ran it on a Linux server I have access to, and it got further (rev 
+147), but still failed. The error message was different, though:
 
-> +    git cat-file blob ":1:$path" > "$BASE" 2>/dev/null
-> +    git cat-file blob ":2:$path" > "$LOCAL" 2>/dev/null
-> +    git cat-file blob ":3:$path" > "$REMOTE" 2>/dev/null
-> +
-> +    if test -z "$local_mode" -o -z "$remote_mode"; then
-> +	echo "Deleted merge conflict for $path:"
-> +	describe_file "$local_mode" "local" "$LOCAL"
-> +	describe_file "$remote_mode" "remote" "$REMOTE"
-> +	resolve_deleted_merge
-> +	return
-> +    fi
+Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+Committed change 147:/ 2004-08-12 18:23:53)
+Merge parent branch: 1f053b959bdee167f328cf98116179358d80fef9
+Commit ID ef57373cfd1ef6ddf797a4b5ea66de6465391789
+Writing to refs/heads/origin
+DONE: 147 origin ef57373cfd1ef6ddf797a4b5ea66de6465391789 at Mon Mar 12 
+06:40:47 2007
+RA layer request failed: REPORT request failed on 
+'/svnroot/spring-rich-c/!svn/bc/1001/trunk/spring-richclient': REPORT of 
+'/svnroot/spring-rich-c/!svn/bc/1001/trunk/spring-richclient': Could not 
+read response body: connection was closed by server. 
+(http://spring-rich-c.svn.sourceforge.net) at 
+/home/rdawes/bin/git-svnimport line 955
 
-Running cat-file even when you know it does not exist at that
-stage does not feel right here, although you are not checking
-the exit status and discarding 2>/dev/null...
-
-One situation that happens in the real life to cause "we deleted
-while they modified" is when in reality we moved then modified
-so much that the difference between our version and the common
-ancestor version is too large to be considered a rename anymore.
-
-Such a misidentified rename would appear as one path that is "we
-deleted while they modified" (original path) and the other path
-that is "we created while they didn't do anything to the path".
-The latter does not conflict and is already resolved in the
-index when you would run git-mergetool.
-
-So if you have "we deleted while they modified" conflict, it may
-make sense to give the paths the index adds (relative to HEAD),
-let the user pick one of them and allow 3-way merge to update
-the path we renamed to.  The original path which had conflicted
-would be removed as the result.
+Rogan
