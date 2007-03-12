@@ -1,82 +1,75 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: What's the best method between merging and rebasing ?
-Date: Mon, 12 Mar 2007 20:43:09 +0100
-Message-ID: <20070312194309.GI30489@mad.intersec.eu>
-References: <200703121139.l2CBdcUL022906@localhost.localdomain> <20070312120820.GE18952@mad.intersec.eu> <200703121634.l2CGYtGx027263@localhost.localdomain> <45F589BF.28E3A5AD@eudaptics.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: bisection oddity.
+Date: Mon, 12 Mar 2007 20:50:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703122047480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070312192821.GA24992@redhat.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="NzX0AQGjRQPusK/O";
-	protocol="application/pgp-signature"; micalg=pgp-sha1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:43:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Dave Jones <davej@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:51:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQqQP-0005Nr-Tg
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:43:18 +0100
+	id 1HQqY7-00011o-Hc
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829AbXCLTnP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:43:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752810AbXCLTnO
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:43:14 -0400
-Received: from rudy.intersec.eu ([88.191.20.202]:53586 "EHLO mx2.intersec.fr"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752829AbXCLTnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:43:14 -0400
-Received: from localhost.localdomain (beacon-free1.intersec.eu [81.57.219.236])
-	by mx1.intersec.eu (Postfix) with ESMTP id 713DAD8855
-	for <git@vger.kernel.org>; Mon, 12 Mar 2007 20:43:09 +0100 (CET)
-Received: by localhost.localdomain (Postfix, from userid 1003)
-	id 51096ABD6A4; Mon, 12 Mar 2007 20:43:09 +0100 (CET)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <45F589BF.28E3A5AD@eudaptics.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752835AbXCLTu6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:50:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752836AbXCLTu6
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:50:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47696 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752835AbXCLTu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:50:57 -0400
+Received: (qmail invoked by alias); 12 Mar 2007 19:50:56 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp047) with SMTP; 12 Mar 2007 20:50:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/06Hx7f3n0DFp7nY9FTZc/YQPjgGzGRv/yLP+6NO
+	dffmdz8jW08bEe
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070312192821.GA24992@redhat.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42070>
 
+Hi,
 
---NzX0AQGjRQPusK/O
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 12 Mar 2007, Dave Jones wrote:
 
-On Mon, Mar 12, 2007 at 06:11:27PM +0100, Johannes Sixt wrote:
-> Xavier Maillard wrote:
-> > -> D -> E -> F -> several commits from old master -> HEAD (of new maste=
-r)
-> >=20
-> > So it seems to be cherry-picks + rebase master on new HEAD but I
-> > am not sure at how things are doing :)
->=20
-> Just to get the wording straight: You mean "reset master to new HEAD",
-> not "rebase". "reset" means to point the branch identifier ("master") to
-> some commit - with or without modifying the working directory
-> accordingly. OTOH, "rebase" means to re-apply a string of commits on top
-> of some other commit.
- =20
-  err that was indeed a lapsus from me. Sorry for the mistake, that was
-indeed what I intended to say.
+> I'm chasing a kernel bug that was introduced somewhere between
+> v2.6.20 and 2.6.21rc1, and bisect has done this so far..
+> 
+> git-bisect start
+> # bad: [c8f71b01a50597e298dc3214a2f2be7b8d31170c] Linux 2.6.21-rc1
+> git-bisect bad c8f71b01a50597e298dc3214a2f2be7b8d31170c
+> # good: [fa285a3d7924a0e3782926e51f16865c5129a2f7] Linux 2.6.20
+> git-bisect good fa285a3d7924a0e3782926e51f16865c5129a2f7
+> # bad: [574009c1a895aeeb85eaab29c235d75852b09eb8] Merge branch 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus
+> git-bisect bad 574009c1a895aeeb85eaab29c235d75852b09eb8
+> # bad: [43187902cbfafe73ede0144166b741fb0f7d04e1] Merge master.kernel.org:/pub/scm/linux/kernel/git/gregkh/driver-2.6
+> git-bisect bad 43187902cbfafe73ede0144166b741fb0f7d04e1
+> # good: [1545085a28f226b59c243f88b82ea25393b0d63f] drm: Allow for 44 bit user-tokens (or drm_file offsets)
+> git-bisect good 1545085a28f226b59c243f88b82ea25393b0d63f
+> # good: [c96e2c92072d3e78954c961f53d8c7352f7abbd7] Merge master.kernel.org:/pub/scm/linux/kernel/git/gregkh/usb-2.6
+> git-bisect good c96e2c92072d3e78954c961f53d8c7352f7abbd7
+> 
+> What I'm puzzled at is that this lands me at 2.6.20-rc5, which is *before*
+> the range I'm interested in.  What happened here?
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+This lands me at
 
---NzX0AQGjRQPusK/O
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+v2.6.20-rc5-301-g31c56d8
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+which is _not_ an ancestor of v2.6.20 (your first good commit), oddly 
+enough. Start "gitk v2.6.20-rc5-301-g31c56d8...v2.6.20" to see how the 
+commits are related.
 
-iD8DBQFF9a1NvGr7W6HudhwRAuCoAJ41S827ptLKp53eL5FWHpKohupR+wCggdIr
-2jxg16Aj0q6ZdhZ0OFFdppM=
-=TGBi
------END PGP SIGNATURE-----
+So, it is intended behaviour.
 
---NzX0AQGjRQPusK/O--
+Hth,
+Dscho
