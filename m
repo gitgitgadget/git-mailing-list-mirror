@@ -1,60 +1,57 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git-diff -p :/anything" always segfaults
-Date: Mon, 12 Mar 2007 09:22:09 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703120921080.9690@woody.linux-foundation.org>
-References: <87d53fsjiz.fsf@rho.meyering.net>
- <Pine.LNX.4.64.0703111322180.9690@woody.linux-foundation.org>
- <7vslcbv6ol.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703120900300.9690@woody.linux-foundation.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH] Add an empty line before signed-off-by
+Date: Mon, 12 Mar 2007 16:25:45 +0000
+Message-ID: <b0943d9e0703120925k17fb9cabt6b43e371433dfc9b@mail.gmail.com>
+References: <20070309225959.20959.32505.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 17:23:11 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Robin Rosenberg" <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 17:25:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQnIh-0005vf-77
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 17:23:07 +0100
+	id 1HQnLN-0007A0-IC
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 17:25:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030580AbXCLQWT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 12:22:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030586AbXCLQWT
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 12:22:19 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:59707 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030580AbXCLQWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 12:22:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2CGMAo4014017
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Mar 2007 09:22:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2CGM9Sq007550;
-	Mon, 12 Mar 2007 08:22:09 -0800
-In-Reply-To: <Pine.LNX.4.64.0703120900300.9690@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.487 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030502AbXCLQZu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 12:25:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030525AbXCLQZu
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 12:25:50 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:25596 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030502AbXCLQZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 12:25:49 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so2298073uga
+        for <git@vger.kernel.org>; Mon, 12 Mar 2007 09:25:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fyZmACgsQc64NvZSa5qBPc7i1UNz4JZWjNQkIa9QgLLd8NeJVBru+u7Gxt65/dblizPtRarIQUU6+Uff83DLVDK3Z1aGg0LUX6G4LVBzyz9M51MyP3YJS45JYzCvrXcU/kvMyP963ZKNA5pAlc+b2HAGq69utglj3wlrg/5cJbY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jEUs3EXq7OS8Pn+mvlxz6olcrUN7dT2+4tT/YbAjDCg458Nu0i+Tzgl3++3RwvgvPP8Hvq8VTJ/9b4MW6oUFtoYz0wVdVAD8Eo+Zm4LUPm5W59OOh/gC5yd9my78JE6a3A1FDHSV9JApo6qia9fTJMGHQ+4/eF0g3GcBLNk6qaM=
+Received: by 10.114.110.1 with SMTP id i1mr1793754wac.1173716745396;
+        Mon, 12 Mar 2007 09:25:45 -0700 (PDT)
+Received: by 10.65.96.9 with HTTP; Mon, 12 Mar 2007 09:25:45 -0700 (PDT)
+In-Reply-To: <20070309225959.20959.32505.stgit@lathund.dewire.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42038>
 
+On 09/03/07, Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> Default to the standard convention of having an empty line
+> before the Signed-off line when addign a signature using the
+> --sign option.
 
+I mainly use this option to counter-sign an existing patch, in which
+case there is no need for a new line. Maybe we need StGIT to be
+smarter and check whether the patch was already signed.
 
-On Mon, 12 Mar 2007, Linus Torvalds wrote:
-> 
-> Otherwise, please apply something like this, which also fixes the return 
-> value. We should return -1 on error!
-
-Btw, I didn't remove the 
-
-	if (!commit)
-		break;
-
-but I should have. It doesn't actually matter (since it will never 
-trigger), but it adds to the confusion around pop_most_recent_commit.
-
-		Linus
+-- 
+Catalin
