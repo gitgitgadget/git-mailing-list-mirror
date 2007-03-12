@@ -1,100 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Correct new compiler warnings in builtin-revert
-Date: Mon, 12 Mar 2007 15:33:18 -0400
-Message-ID: <20070312193318.GA16234@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/6] Fix some "printf format" warnings.
+Date: Mon, 12 Mar 2007 12:40:14 -0700
+Message-ID: <7vfy8as129.fsf@assigned-by-dhcp.cox.net>
+References: <45E9BE46.1020801@ramsay1.demon.co.uk>
+	<7v4pp29eok.fsf@assigned-by-dhcp.cox.net>
+	<45EAFD21.6010002@ramsay1.demon.co.uk> <45F55DC5.8060702@fs.ei.tum.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:33:32 2007
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:40:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQqGs-0000Np-AP
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:33:26 +0100
+	id 1HQqNi-000408-Ew
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:40:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568AbXCLTdX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:33:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752607AbXCLTdX
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:33:23 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:52137 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752568AbXCLTdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:33:22 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HQqGe-0001GR-6I; Mon, 12 Mar 2007 15:33:12 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 08E5020FBAE; Mon, 12 Mar 2007 15:33:19 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752826AbXCLTk0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:40:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752607AbXCLTk0
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:40:26 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:48593 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752826AbXCLTkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:40:25 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070312194024.TCHJ748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 12 Mar 2007 15:40:24 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ZvgN1W00D1kojtg0000000; Mon, 12 Mar 2007 15:40:24 -0400
+In-Reply-To: <45F55DC5.8060702@fs.ei.tum.de> (Simon Schubert's message of
+	"Mon, 12 Mar 2007 15:03:49 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42067>
 
-The new builtin-revert code introduces a few new compiler errors
-when I'm building with my stricter set of checks enabled in CFLAGS.
-These all just stem from trying to store a constant string into
-a non-const char*.  Simple fix, make the variables const char*.
+Simon 'corecode' Schubert <corecode@fs.ei.tum.de> writes:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- builtin-revert.c |    4 ++--
- cache.h          |    2 +-
- environment.c    |    2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+> Ramsay Jones wrote:
+>>>> -        printf("%s%06o %s %d\t",
+>>>> +        printf("%s%06lo %s %d\t",
+>>>>                 tag,
+>>>>                 ntohl(ce->ce_mode),
+>>> I think we should do this instead:
+>>>
+>>>     printf("%s%06o %s %d\t", tag, (unsigned) ntohl(ce->ce_mode), ...
+>>
+>> Oops, yes you are right.
+>> (cygwin typedef's uint32_t as unsigned long.)
+>>
+>> However, I would hate to add all those casts! Casts are not always
+>> evil, but should be avoided if possible. Having said that, I don't
+>> see another solution ...
+>
+> shouldn't it be something like this?
+>
+> printf("%s%06"PRIo32" %s %d\t", tag, ntohl(ce->ce_mode), ...)
+>
+> that's the correct and allegedly portable way I guess.
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index 652eece..f3f3f5c 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -235,8 +235,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	unsigned char head[20];
- 	struct commit *base, *next;
- 	int i;
--	char *oneline, *encoding, *reencoded_message = NULL;
--	const char *message;
-+	char *oneline, *reencoded_message = NULL;
-+	const char *message, *encoding;
- 
- 	git_config(git_default_config);
- 	me = action == REVERT ? "revert" : "cherry-pick";
-diff --git a/cache.h b/cache.h
-index f172d02..4f10667 100644
---- a/cache.h
-+++ b/cache.h
-@@ -449,7 +449,7 @@ extern int check_repository_format_version(const char *var, const char *value);
- extern char git_default_email[MAX_GITNAME];
- extern char git_default_name[MAX_GITNAME];
- 
--extern char *git_commit_encoding;
-+extern const char *git_commit_encoding;
- extern const char *git_log_output_encoding;
- 
- extern int copy_fd(int ifd, int ofd);
-diff --git a/environment.c b/environment.c
-index 0151ad0..fff4a4d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -20,7 +20,7 @@ int is_bare_repository_cfg = -1; /* unspecified */
- int log_all_ref_updates = -1; /* unspecified */
- int warn_ambiguous_refs = 1;
- int repository_format_version;
--char *git_commit_encoding;
-+const char *git_commit_encoding;
- const char *git_log_output_encoding;
- int shared_repository = PERM_UMASK;
- const char *apply_default_whitespace;
--- 
-1.5.0.3.985.gcf0b4
+Yes, except that that is only portable across platforms with
+inttypes.h, and we would need a compatibility definition in
+git-compat-util.h next to PRIuMAX definition we already have.
+
+But I wonder if this is really worth it.  The thing is,
+
+    printf("%s%06o %s %d\t", tag, (unsigned) ntohl(ce->ce_mode), ...
+
+is perfectly readable for even old timers about git, as long as
+they know traditional C and what ntohl() is.  And ce->ce_mode
+even fits in 16-bit, so while we are _not_ supporting platforms
+whose unsigned int is 16-bit, the above cast is not losing any
+useful precision either.
