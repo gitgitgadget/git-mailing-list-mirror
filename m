@@ -1,83 +1,87 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: [PATCH 5/5] fix a utf8 issue in t5100/patch005
-Date: Mon, 12 Mar 2007 15:52:08 -0400
-Message-ID: <11737291281424-git-send-email-dzickus@redhat.com>
-References: <11737291282223-git-send-email-dzickus@redhat.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] GIT_WORK_DIR: documentation for relative path
+Date: Mon, 12 Mar 2007 20:53:48 +0100
+Message-ID: <20070312195348.GA30520@moooo.ath.cx>
+References: <20070311043250.GA21331@moooo.ath.cx> <20070312115350.GA15179@moooo.ath.cx> <20070312121226.GB2268@always.joy.eth.net> <20070312131253.GA16452@moooo.ath.cx> <fcaeb9bf0703120636r7038a7fat24e571e7c087d13d@mail.gmail.com> <20070312140808.GA17450@moooo.ath.cx> <7vabyitlld.fsf@assigned-by-dhcp.cox.net> <20070312180837.GA22701@moooo.ath.cx> <20070312191812.GA29327@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Don Zickus <dzickus@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:54:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:54:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQqax-0002Ui-2V
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:54:11 +0100
+	id 1HQqax-0002Ui-NB
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:54:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752840AbXCLTxo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:53:44 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752838AbXCLTxn
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:53:43 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:55957 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752840AbXCLTxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:53:40 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2CJrecj022122
-	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:53:40 -0400
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2CJrYuc020373
-	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:53:34 -0400
-Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
-	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2CJrXX4029982;
-	Mon, 12 Mar 2007 15:53:33 -0400
-Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2CJq8jF019779;
-	Mon, 12 Mar 2007 15:52:08 -0400
-Received: (from dzickus@localhost)
-	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2CJq8ho019778;
-	Mon, 12 Mar 2007 15:52:08 -0400
-X-Mailer: git-send-email 1.5.0.2.211.g2ca9-dirty
-In-Reply-To: <11737291282223-git-send-email-dzickus@redhat.com>
+	id S1752838AbXCLTxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:53:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752847AbXCLTxv
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:53:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50385 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752838AbXCLTxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:53:50 -0400
+Received: (qmail invoked by alias); 12 Mar 2007 19:53:49 -0000
+Received: from pD9EBB74D.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.183.77]
+  by mail.gmx.net (mp034) with SMTP; 12 Mar 2007 20:53:49 +0100
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1/scawr0P/s4VmY+xf6RmWTqXiMhQlNzW9o1PzO0t
+	I7+TRZQ6S7OKsI
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070312191812.GA29327@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42076>
 
-This issue popped up when testing my changes.  I believe the patch is t=
-he
-intended output that git-mailinfo should provide.
-
-Signed-off-by: Don Zickus <dzickus@redhat.com>
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
 ---
- t/t5100/patch0005 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ Documentation/git.txt |   22 +++++++++++++---------
+ 1 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/t/t5100/patch0005 b/t/t5100/patch0005
-index 7d24b24..e7d6f66 100644
---- a/t/t5100/patch0005
-+++ b/t/t5100/patch0005
-@@ -61,7 +61,7 @@ diff --git a/git-cvsimport-script b/git-cvsimport-scr=
-ipt
-  		push(@old,$fn);
-=20
- --=20
--David K=E5gedal
-+David K=C3=A5gedal
- -
- To unsubscribe from this list: send the line "unsubscribe git" in
- the body of a message to majordomo@vger.kernel.org
---=20
-1.5.0.2.211.g2ca9-dirty
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index d2f5d27..177adf5 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -83,11 +83,13 @@ OPTIONS
+ 	setting the GIT_DIR environment variable.
+ 
+ --work-dir=<path>::
+-	Set the path to the toplevel working directory.  The value will
+-	be used only in combination with $GIT_DIR or '--git-dir'.
+-	Without this option git will assume that the current directory
+-	is also the toplevel directory.  This can also be controlled by
+-	setting the GIT_WORK_DIR environment variable.
++	Set the path to the toplevel working directory.  If the path is
++	relative it is interpreted from $GIT_DIR, not the current
++	working directory.  The value will be used only in combination
++	with $GIT_DIR or '--git-dir'.  Without this option git will
++	assume that the current working directory is also the toplevel
++	directory.  This can also be controlled by setting the
++	GIT_WORK_DIR environment variable.
+ 
+ --bare::
+ 	Same as --git-dir=`pwd`.
+@@ -334,10 +336,12 @@ git so take care if using Cogito etc.
+ 	for the base of the repository.
+ 
+ 'GIT_WORK_DIR'::
+-	Set the path to the toplevel working directory.  The value will
+-	be used only in combination with $GIT_DIR or '--git-dir'.
+-	Without this environment variable git will assume that the
+-	current directory is also the toplevel directory.
++	Set the path to the toplevel working directory.  If the path is
++	relative it is interpreted from $GIT_DIR, not the current
++	working directory.  The value will be used only in combination
++	with $GIT_DIR or '--git-dir'.  Without this environment variable
++	git will assume that the current working directory is also the
++	toplevel directory.
+ 
+ git Commits
+ ~~~~~~~~~~~
+-- 
+1.5.0.3.1007.g7ff7
