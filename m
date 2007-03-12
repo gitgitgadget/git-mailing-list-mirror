@@ -1,103 +1,113 @@
-From: Xavier Maillard <zedek@gnu.org>
-Subject: Re: What's the best method between merging and rebasing ?
-Date: Mon, 12 Mar 2007 20:14:52 +0100
-Organization: GNU's Not UNIX!
-Message-ID: <200703121914.l2CJEqW0031669@localhost.localdomain>
-References: <200703121139.l2CBdcUL022906@localhost.localdomain> <20070312120820.GE18952@mad.intersec.eu> <200703121634.l2CGYtGx027263@localhost.localdomain> <20070312173727.GC30489@mad.intersec.eu>
-Reply-To: Xavier Maillard <zedek@gnu.org>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] always interpret GIT_WORK_DIR relative to $GIT_DIR
+Date: Mon, 12 Mar 2007 20:18:12 +0100
+Message-ID: <20070312191812.GA29327@moooo.ath.cx>
+References: <20070311043250.GA21331@moooo.ath.cx> <20070312115350.GA15179@moooo.ath.cx> <20070312121226.GB2268@always.joy.eth.net> <20070312131253.GA16452@moooo.ath.cx> <fcaeb9bf0703120636r7038a7fat24e571e7c087d13d@mail.gmail.com> <20070312140808.GA17450@moooo.ath.cx> <7vabyitlld.fsf@assigned-by-dhcp.cox.net> <20070312180837.GA22701@moooo.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:17:47 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:18:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQq1f-0001Hm-Ah
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:17:43 +0100
+	id 1HQq2G-0001Xd-87
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:18:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340AbXCLTRk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752366AbXCLTRk
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:17:40 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:36124 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752340AbXCLTRj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:17:39 -0400
-Received: from zogzog.home (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id E4FAD7D8F;
-	Mon, 12 Mar 2007 20:17:37 +0100 (CET)
-Received: from localhost.localdomain (IDENT:1001@localhost [127.0.0.1])
-	by zogzog.home (8.13.8/8.13.8) with ESMTP id l2CJErBR031672;
-	Mon, 12 Mar 2007 20:14:53 +0100
-Received: (from zedek@localhost)
-	by localhost.localdomain (8.13.8/8.13.8/Submit) id l2CJEqW0031669;
-	Mon, 12 Mar 2007 20:14:52 +0100
-X-Authentication-Warning: localhost.localdomain: zedek set sender to zedek@gnu.org using -f
-In-reply-to: <20070312173727.GC30489@mad.intersec.eu> (madcoder@debian.org)
-Jabber-ID: zedek@im.lolica.org
-User-Agent: Rmail in GNU Emacs 23.0.51.1 on GNU/Linux
+	id S1752395AbXCLTSR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:18:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752398AbXCLTSR
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:18:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56267 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752366AbXCLTSQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:18:16 -0400
+Received: (qmail invoked by alias); 12 Mar 2007 19:18:14 -0000
+Received: from pD9EBB74D.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.183.77]
+  by mail.gmx.net (mp053) with SMTP; 12 Mar 2007 20:18:14 +0100
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX19MGSReTTZMSY6LO2Z0relmE0omc3CVkCV/AnZJcm
+	9DVEoVoMn9FlPC
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070312180837.GA22701@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42063>
 
-Hi,
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+ setup.c |   39 +++++++++++++++++++++++----------------
+ 1 files changed, 23 insertions(+), 16 deletions(-)
 
-   From: Pierre Habouzit <madcoder@debian.org>
-
-   On Mon, Mar 12, 2007 at 05:34:55PM +0100, Xavier Maillard wrote:
-
-   > So it seems to be cherry-picks + rebase master on new HEAD but I
-   > am not sure at how things are doing :)
-
-     okay then I got this right, you don't want to rebase master on new
-   HEAD because you would keep the commits you don't want (I guess). What
-
-     you start from:
-
-   orig master -> A -> B -> C (master)
-	       \
-		-> D -> E -> F topic
-
-     let's say you want to keep A and C from master. here is what I'd do:
-
-     $ git checkout topic     # topic will be the new master
-     $ git cherry-pick A C    # we want to keep A and C
-
-Got it for this one :)
-
-     we now have:
-
-   orig master -> A -> B -> C  (master)
-	       \
-		-> D -> E -> F -> A' -> C' (topic)
-
-     $ git branch -D master
-
-For historical reasons, I have to keep my master around so I
-won't delete it completely. Maybe there is a way to tell that a
-branch is considered "dead" thus indicating there won't be any
-new developement onto it. I will check this.
-
-As I have been told privately, what I want in reality is a reset
-of master onto my new HEAD.
-
-I think I have misunderstood reset behaviour.
-
-So this is how I end up now (from my new master branch):
-
-$ git cherry-pick <commits>
-$ git rebase master~NUM
-$ git reset master HEAD
-
-There I would need something to tell old master is dead but it is
-optionnal (a single tag will do that).
-
-Does that make sense for you ?
-
-Regards,
-
-P.S: I have problems reading your posts, my mail buffer is full
-of =20 here and there
+diff --git a/setup.c b/setup.c
+index a8b9fae..f8c020e 100644
+--- a/setup.c
++++ b/setup.c
+@@ -192,16 +192,36 @@ int is_inside_git_dir(void)
+ 	return inside_git_dir;
+ }
+ 
++static int stat_relative(const char *base, const char *path, struct stat *st)
++{
++	char cwd[PATH_MAX];
++	int ret;
++
++	if (path[0] != '/') {
++		if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
++			die("Unable to read current working directory");
++		if (chdir(base))
++			die("Cannot change directory to '%s'", base);
++	}
++
++	ret = stat(path, st);
++
++	if (path[0] != '/' && chdir(cwd))
++		die("Cannot come back to cwd");
++
++	return ret;
++}
++
+ static int stat_git_work_dir(struct stat *st)
+ {
+-	char workdir[PATH_MAX], cwd[PATH_MAX];
++	char workdir[PATH_MAX];
+ 	const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
+ 	const char *gitwd = getenv(GIT_WORKING_DIR_ENVIRONMENT);
+ 	int offset;
+ 	FILE *fp;
+ 
+ 	if (gitwd) {
+-		if (!stat(gitwd, st))
++		if (!stat_relative(gitdir, gitwd, st))
+ 			return 1;
+ 		die("Unable to stat git working directory '%s'", gitwd);
+ 	}
+@@ -231,21 +251,8 @@ static int stat_git_work_dir(struct stat *st)
+ 		--offset;
+ 	workdir[offset+1] = '\0';
+ 
+-	/* relative path: change to gitdir for stat */
+-	if (workdir[0] != '/') {
+-		if (!getcwd(cwd, sizeof(cwd)) || cwd[0] != '/')
+-			die("Unable to read current working directory");
+-		if (chdir(gitdir))
+-			die("Cannot change directory to '%s'", gitdir);
+-	}
+-
+-	if (stat(workdir, st))
++	if (stat_relative(gitdir, workdir, st))
+ 		die("Unable to stat directory from GIT_DIR/workdir");
+-	if (!(st->st_mode & S_IFDIR))
+-		die("GIT_DIR/workdir does not point to a directory");
+-
+-	if (workdir[0] != '/' && chdir(cwd))
+-		die("Cannot come back to cwd");
+ 
+ 	return 1;
+ }
 -- 
-Xavier
+1.5.0.3.1007.g7ff7
