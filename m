@@ -1,57 +1,85 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Distignuish between commit id and key in commit cache
-Date: Mon, 12 Mar 2007 17:05:40 -0400
-Message-ID: <20070312210540.GA16513@spearce.org>
-References: <20070312175115.10884.87646.stgit@lathund.dewire.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [StGit PATCH] Add an empty line before signed-off-by
+Date: Mon, 12 Mar 2007 22:13:20 +0100
+Message-ID: <200703122213.21298.robin.rosenberg@dewire.com>
+References: <20070309225959.20959.32505.stgit@lathund.dewire.com> <b0943d9e0703120925k17fb9cabt6b43e371433dfc9b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Mar 12 22:06:29 2007
+To: "Catalin Marinas" <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 22:11:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQril-00029z-VC
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 22:06:20 +0100
+	id 1HQrnk-0004S2-19
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 22:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752949AbXCLVFq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 17:05:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752952AbXCLVFq
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 17:05:46 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:54763 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752949AbXCLVFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 17:05:45 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HQri1-0007Ab-KF; Mon, 12 Mar 2007 17:05:33 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0CA0120FBAE; Mon, 12 Mar 2007 17:05:40 -0400 (EDT)
+	id S1752393AbXCLVLZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 12 Mar 2007 17:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbXCLVLZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 17:11:25 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:11082 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752389AbXCLVLY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Mar 2007 17:11:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 92915802841;
+	Mon, 12 Mar 2007 22:06:07 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 08852-03; Mon, 12 Mar 2007 22:06:07 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 3CE6B802808;
+	Mon, 12 Mar 2007 22:06:05 +0100 (CET)
+User-Agent: KMail/1.9.4
+In-Reply-To: <b0943d9e0703120925k17fb9cabt6b43e371433dfc9b@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20070312175115.10884.87646.stgit@lathund.dewire.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42082>
 
-Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
-> See WeakHashMap documentation. If the key is the same object
-> as the objectid the keys can never be collected.
 
-Thanks.  I have applied this in the middle of your other recent
-series, tagged 0.2.1 and pushed it out to the usual locations.
-The history view looks pretty nice...  and is reasonably quick too!
+    Default to the standard convention of having an empty line
+    before the Signed-off line when addign a signature using the
+    --sign option.=20
 
--- 
-Shawn.
+    Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+--
+
+m=E5ndag 12 mars 2007 17:25 skrev Catalin Marinas:
+> On 09/03/07, Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> > Default to the standard convention of having an empty line
+> > before the Signed-off line when addign a signature using the
+> > --sign option.
+>=20
+> I mainly use this option to counter-sign an existing patch, in which
+> case there is no need for a new line. Maybe we need StGIT to be
+> smarter and check whether the patch was already signed.
+
+Ok, here's a smarter version
+
+-- robin
+
+diff --git a/stgit/stack.py b/stgit/stack.py
+index feb77e3..681da5e 100644
+--- a/stgit/stack.py
++++ b/stgit/stack.py
+@@ -734,7 +734,12 @@ class Series(StgitObject):
+             committer_email =3D patch.get_commemail()
+
+         if sign_str:
+-            descr =3D '%s\n%s: %s <%s>\n' % (descr.rstrip(), sign_str,
++            descr =3D descr.rstrip()
++            if descr.find("\nSigned-off-by") < 0:
++                if descr.find("\nAcked-by") < 0:
++                    descr =3D descr + "\n"
++
++            descr =3D '%s\n%s: %s <%s>\n' % (descr, sign_str,
+                                            committer_name, committer_e=
+mail)
+
+         bottom =3D patch.get_bottom()
