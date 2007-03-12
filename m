@@ -1,173 +1,61 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: "git-diff -p :/anything" always segfaults
-Date: Mon, 12 Mar 2007 09:14:03 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703120900300.9690@woody.linux-foundation.org>
-References: <87d53fsjiz.fsf@rho.meyering.net>
- <Pine.LNX.4.64.0703111322180.9690@woody.linux-foundation.org>
- <7vslcbv6ol.fsf@assigned-by-dhcp.cox.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 0/3] "stg cp", and StGIT doc updates
+Date: Mon, 12 Mar 2007 16:20:37 +0000
+Message-ID: <b0943d9e0703120920v28b76773h9e78b15f9d5f5f92@mail.gmail.com>
+References: <20070309231444.30705.72292.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 17:14:48 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Mon Mar 12 17:20:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQnAV-0002BO-Sv
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 17:14:40 +0100
+	id 1HQnGP-0004tv-1A
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 17:20:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030510AbXCLQOQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 12:14:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030572AbXCLQOP
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 12:14:15 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:59301 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030510AbXCLQOL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 12:14:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2CGE4o4013488
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Mar 2007 09:14:04 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2CGE34g007273;
-	Mon, 12 Mar 2007 08:14:03 -0800
-In-Reply-To: <7vslcbv6ol.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.488 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030576AbXCLQUj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 12:20:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030580AbXCLQUj
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 12:20:39 -0400
+Received: from an-out-0708.google.com ([209.85.132.248]:11518 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030576AbXCLQUi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 12:20:38 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1498479ana
+        for <git@vger.kernel.org>; Mon, 12 Mar 2007 09:20:38 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cHoQUjnyLw7NlaYLUcoXrZYAd+JKUHTd+OZr/K+79SsLQnLyCKj6q3dQUAEy1B3jMbQ1k4YDRzecgXVPN2TE/4ycy8uNrcyL0cf6ohv5ifbbOqIzajbTfkWeuU40C0cfagX+CcTSTAnlKzWa2mrGmp0H2ZrmW0Y0fJMS6s6dENQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kUwNN1eXXNhD7DVxhp9B+83yZuarHqfWCYkbzAVjUxZRcmDj+QWZypSRxMu/b1sDgB75l6GopWKXxHw0Wqx+okHSMTej0aUrBeHuun+uDB6wLoh4GHvdlIpJOjxaQmVgb0uyt3FSL3tC8PipnW/KmESa7FqoMUrRf00+p3kms4Y=
+Received: by 10.114.170.1 with SMTP id s1mr1787685wae.1173716437403;
+        Mon, 12 Mar 2007 09:20:37 -0700 (PDT)
+Received: by 10.65.96.9 with HTTP; Mon, 12 Mar 2007 09:20:37 -0700 (PDT)
+In-Reply-To: <20070309231444.30705.72292.stgit@gandelf.nowhere.earth>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42036>
 
+On 09/03/07, Yann Dirson <ydirson@altern.org> wrote:
+> "stg cp" comes to complement "add" and "rm".  I originally thought to
+> complement the whole with "stg mv", but I wonder whether the all 4 of
+> them eally have a place in StGIT.  Shouldn't we just use git/cogito
+> for such operations ?  In this case, this patch should indeed be
+> retargetted to be a git-cp command (it has anyway no real dependency
+> on StGIT, and the feature would be more generally useful).
 
+I think we should have these commands in StGIT, even if they would
+just call the corresponding git commands. The reason is that we may
+later decide to implement some other behaviour (i.e. use a separate
+index when working on a patch).
 
-On Sun, 11 Mar 2007, Junio C Hamano wrote:
-> >
-> > "pop_most_recent_commit()" simply doesn't work that way. It *never* 
-> > returns NULL. So having it as part of a while-loop was buggy to begin 
-> > with, and you fixed the test, but the thing is, it should just look like
-> >
-> > 	while (list) {
-> > 		struct commit *commit;
-> >
-> > 		commit = pop_most_recent_commit(&list, ONELINE_SEEN);
-> > 		..
-> >
-> > and the "pop_most_recent_commit()" simply shouldn't be part of the 
-> > conditional at all.
-> 
-> That's what I did in my tentative commit based on Jim's patch
-> (except "commit" is also used to determine the return value from
-> the function).
-
-Your version is *also* buggy.
-
-And the bug is exactly that return value.
-
-You simply cannot do it that way. You do
-
-	...
-	commit = pop_most_recent_commit(&list, ONELINE_SEEN);
-	if (!commit)
-		break;
-	...
-
-which is totally broken and pointless, and more importantly, *exactly* 
-because you use "commit" outside the loop, it's broken.
-
-It will now return the last commit it ever saw, whether that commit 
-matches the buffer or not. Because "commit" will *never* be set to NULL 
-ever again after the initial assignment!
-
-The fact is, if you don't do it the way I described:
-
-	while (list) {
-		struct commit *commit;
-
-		commit = pop_most_recent_commit(&list, ONELINE_SEEN);
-		...
-
-you will almost certainly have a bug. Why? Because the return value of 
-"pop_most_recent_commit()" simply *makes*no*sense* outside the loop. It's 
-that simple. 
-
-Outside the loop, you have to have a *different* return value, namely the 
-one that matches. Which may be NULL. Something that 
-pop_most_recent_commit() simply never returns!
-
-So I repeat my suggestion:
-
- - either use the sequence above
- - or change the semantics of "pop_most_recent_commit()" to return NULL if 
-   the list is empty.
-
-Considering that there's now been two totally broken versions of this 
-loop, with the exact same bug, I'm inclined to say that you should just 
-change "pop_most_recent_commit()" instead, and then change the loop back 
-to its original form of "while ((commit = pop_..) != NULL) {"
-
-Otherwise, please apply something like this, which also fixes the return 
-value. We should return -1 on error!
-
-We should add a test with
-
-	git log :/hjashjs
-
-or similar. It's supposed to return an error ("fatal: ambiguous argument 
-':/hjashjs': unknown revision or path not in the working tree.")
-
-		Linus
-
- [ Same return value rules as for the kernel and for system calls, either:
-
-    - 0/1 for "false/true", where _1_ is success, and 0 is "false".
-
-    - negative/0 for "error/no-error", where _0_ is success, and negative 
-      is a failure.
-
-   but not some mixture with 1 being failure! ]
----
-diff --git a/sha1_name.c b/sha1_name.c
-index 6b8b67b..40dd2d1 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -602,10 +602,10 @@ static int handle_one_ref(const char *path,
-  */
- 
- #define ONELINE_SEEN (1u<<20)
--int get_sha1_oneline(const char *prefix, unsigned char *sha1)
-+static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
- {
- 	struct commit_list *list = NULL, *backup = NULL, *l;
--	struct commit *commit = NULL;
-+	int retval = -1;
- 
- 	if (prefix[0] == '!') {
- 		if (prefix[1] != '!')
-@@ -619,6 +619,7 @@ int get_sha1_oneline(const char *prefix, unsigned char *sha1)
- 		commit_list_insert(l->item, &backup);
- 	while (list) {
- 		char *p;
-+		struct commit *commit;
- 
- 		commit = pop_most_recent_commit(&list, ONELINE_SEEN);
- 		if (!commit)
-@@ -628,13 +629,14 @@ int get_sha1_oneline(const char *prefix, unsigned char *sha1)
- 			continue;
- 		if (!prefixcmp(p + 2, prefix)) {
- 			hashcpy(sha1, commit->object.sha1);
-+			retval = 0;
- 			break;
- 		}
- 	}
- 	free_commit_list(list);
- 	for (l = backup; l; l = l->next)
- 		clear_commit_marks(l->item, ONELINE_SEEN);
--	return commit == NULL;
-+	return retval;
- }
- 
- /*
+-- 
+Catalin
