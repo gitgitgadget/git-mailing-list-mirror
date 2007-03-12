@@ -1,79 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Make gc a builtin.
-Date: Mon, 12 Mar 2007 04:07:43 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703120403360.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH 0/2] Make gc a builtin.
+Date: Sun, 11 Mar 2007 22:57:36 -0400
+Message-ID: <20070312025736.GA28505@thunk.org>
 References: <11736508181273-git-send-email-jbowes@dangerouslyinc.com>
- <1173650820969-git-send-email-jbowes@dangerouslyinc.com>
- <Pine.LNX.4.63.0703112332550.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vtzwrtdmx.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: James Bowes <jbowes@dangerouslyinc.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 12 04:07:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: James Bowes <jbowes@dangerouslyinc.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 05:53:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQat7-0005Ar-E0
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 04:07:53 +0100
+	id 1HQcWt-0005Ct-1m
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 05:53:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964868AbXCLDHr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 11 Mar 2007 23:07:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964875AbXCLDHr
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Mar 2007 23:07:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48660 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S964868AbXCLDHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Mar 2007 23:07:46 -0400
-Received: (qmail invoked by alias); 12 Mar 2007 03:07:45 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp030) with SMTP; 12 Mar 2007 04:07:45 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ALVdrlHiAESopiKBDNIyYPbHp7c9Sv0wKtApBEB
-	hDAw2n9DnRfsBx
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vtzwrtdmx.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S965060AbXCLEw4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 00:52:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964978AbXCLEw4
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 00:52:56 -0400
+Received: from THUNK.ORG ([69.25.196.29]:59979 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965060AbXCLEw4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 00:52:56 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HQccP-000352-31; Mon, 12 Mar 2007 00:58:45 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HQajA-0007ul-SW; Sun, 11 Mar 2007 22:57:36 -0400
+Content-Disposition: inline
+In-Reply-To: <11736508181273-git-send-email-jbowes@dangerouslyinc.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42008>
 
-Hi,
+On Sun, Mar 11, 2007 at 06:06:56PM -0400, James Bowes wrote:
+> The following two patches make git-gc a builtin command.
 
-On Sun, 11 Mar 2007, Junio C Hamano wrote:
+What's the advantage in making git-gc a builtin command?  It's not
+like it's going to help performance a whole lot (especially since
+you're just forking separate processes to run git-prune,
+git-pack-refs, et.al.), and as a shell script it's a lot easier to
+explain to people what git-gc is actually doing, so there is
+pedagogical value to keeping it as a shell script.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > And instead of die()ing, I'd rather do something like
-> >
-> > 	return (pack_refs || run_command_v_opt(argv_pack_refs, RUN_GIT_CMD) &&
-> > 		run_command_v_opt(argv_reflog_expire, RUN_GIT_CMD) &&
-> > 		run_command_v_opt(argv_repack, RUN_GIT_CMD) &&
-> > 		(prune || run_command_v_opt(argv_prune, RUN_GIT_CMD) &&
-> > 		run_command_v_opt(argv_rerere, RUN_GIT_CMD);
-> 
-> Gaaaaaaaah.
-> 
-> That may be valid C,
+Regards,
 
-Actually, it is not. As usual, I fscked up: run_command_v_opt() is 
-supposed to return 0 on _success_, so all the "&&" should be "||", and all 
-the "||" should be "&&".
-
-> 	if (we are told to pack-refs)
->         	if (try to pack refs and find error)
-> 			goto failure;
-
-I find this not very elegant. Instead, I'd do
-
-	if (do_pack_refs && run_comand_v_opt(argv_pack_refs, RUN_GIT_CMD))
-		return error("Could not run pack-refs.");
-
-It does not only avoid the evil goto, but uses the screen estate for some 
-nice error messages so that the user is not left out in the cold when 
-something is wrong.
-
-Ciao,
-Dscho
+						- Ted
