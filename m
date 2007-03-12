@@ -1,84 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: .git inside a .git: is it safe?
-Date: Mon, 12 Mar 2007 23:56:59 +0100
-Organization: At home
-Message-ID: <et4lmo$nnj$1@sea.gmane.org>
-References: <8b65902a0703121456s56008088ra14452ef7f325cf3@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/7] Fix t5510-fetch's use of sed
+Date: Mon, 12 Mar 2007 18:59:16 -0400
+Message-ID: <20070312225916.GA16840@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 12 23:54:47 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Mar 12 23:59:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQtPg-0002vE-CH
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 23:54:44 +0100
+	id 1HQtUC-0005cA-EL
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 23:59:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751710AbXCLWyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 18:54:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbXCLWyl
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 18:54:41 -0400
-Received: from main.gmane.org ([80.91.229.2]:48709 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751710AbXCLWyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 18:54:41 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HQtPR-0002Ng-Np
-	for git@vger.kernel.org; Mon, 12 Mar 2007 23:54:29 +0100
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Mar 2007 23:54:29 +0100
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Mar 2007 23:54:29 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751884AbXCLW7V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 18:59:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751975AbXCLW7V
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 18:59:21 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:58200 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751884AbXCLW7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 18:59:20 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HQtTw-0004N9-MJ; Mon, 12 Mar 2007 18:59:08 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2C30A20FBAE; Mon, 12 Mar 2007 18:59:17 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42086>
 
-Guilhem Bonnefille wrote:
+POSIX says sed may add a trailing LF if there isn't already
+one there.  We shouldn't rely on it not adding that LF, as
+some systems (Mac OS X for example) will add it.
 
-> Hi,
-> 
-> I'm actually working on the packaging of a project. To do so, I use
-> two Git repositories:
-> - one to follow the main project
-> - one to manage my updates on this project.
-> 
-> But, the matter is I cannot merge the both root. I need to have the
-> main project sources in a subdirectory of my own project. My workspace
-> is as follow: myproject/sub/tree/mainproject
-> 
-> With SVN, I think such things are handled with svn:external.
-> 
-> Actually, with Git, I frequently copy the mainproject inside its
-> subtree in my workspace.
-> 
-> 
-> But, I recently discover that everything seems fine if I include the
-> Git repo of mainproject inside the Git repo of my project. The layout
-> lloks like this:
-> myproject
-> |- .git
-> |- sub
->   |- tree
->     |- mainproject
->       |- .git
-> 
-> 
-> It seems to work. But do you think such layout is "safe" ?
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ t/t5510-fetch.sh |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-IIRC Junio uses similar layout managing todo branch in git.git
-(which comes from separate repository).
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index ee3f397..426017e 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -134,7 +134,13 @@ test_expect_success 'bundle does not prerequisite objects' '
+ 	git add file2 &&
+ 	git commit -m add.file2 file2 &&
+ 	git bundle create bundle3 -1 HEAD &&
+-	sed "1,4d" < bundle3 > bundle.pack &&
++	(
++		while read x && test -n "$x"
++		do
++			:;
++		done
++		cat
++	) <bundle3 >bundle.pack &&
+ 	git index-pack bundle.pack &&
+ 	test 4 = $(git verify-pack -v bundle.pack | wc -l)
+ '
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.5.0.3.985.gcf0b4
