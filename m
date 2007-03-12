@@ -1,83 +1,68 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/2] Make gc a builtin.
-Date: Mon, 12 Mar 2007 12:14:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703121202560.9690@woody.linux-foundation.org>
-References: <11736508181273-git-send-email-jbowes@dangerouslyinc.com>
- <20070312025736.GA28505@thunk.org> <Pine.LNX.4.63.0703121222350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070312133612.GD4372@thunk.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/3] fast-import: tree allocation cleanups
+Date: Mon, 12 Mar 2007 15:16:39 -0400
+Message-ID: <20070312191639.GD15887@spearce.org>
+References: <<20070310191515.GA3416@coredump.intra.peff.net>> <20070310192114.GA3875@coredump.intra.peff.net> <20070311032147.GA10781@spearce.org> <20070311155138.GA7110@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	James Bowes <jbowes@dangerouslyinc.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:14:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:16:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQpyR-0008E5-PL
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:14:24 +0100
+	id 1HQq0k-0000sD-6V
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:16:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbXCLTOV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:14:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbXCLTOU
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:14:20 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:37776 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752254AbXCLTOU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:14:20 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2CJE7o4020432
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 12 Mar 2007 12:14:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2CJE4xF011661;
-	Mon, 12 Mar 2007 11:14:05 -0800
-In-Reply-To: <20070312133612.GD4372@thunk.org>
-X-Spam-Status: No, hits=-0.936 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,OSDL_NIGERIAN_GOLD
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752266AbXCLTQn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:16:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752344AbXCLTQn
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:16:43 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:51689 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752266AbXCLTQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:16:42 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HQq0W-0008P8-C5; Mon, 12 Mar 2007 15:16:32 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1B9F620FBAE; Mon, 12 Mar 2007 15:16:39 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070311155138.GA7110@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42061>
 
-
-
-On Mon, 12 Mar 2007, Theodore Tso wrote:
+Jeff King <peff@peff.net> wrote:
+> On Sat, Mar 10, 2007 at 10:21:47PM -0500, Shawn O. Pearce wrote:
+> > > +	name = to_atom(p, n);
+> > [...]
+> > > -	e->name = to_atom(p, (unsigned short)n);
+> > 
+> > You missed an unsigned short cast here.
 > 
-> I'm not sure I understand the portability argument?  All of the
-> platforms that git currently supports will handle shell scripts,
-> right?  
+> Actually, I removed it intentionally (though clearly I should have
+> documented it). It's casting from an unsigned int to an unsigned short.
+> Such a cast is at best pointless (since the compiler performs the exact
+> same cast implicitly -- see C99 6.5.2.2, paragraph 7), and at worst
+> masks an error (e.g., if the type of n is changed).
 
-Git "supports" MinGW, or at least wants to. And yes, you can put bash in 
-there, but we'd be *so* much better off if we had no shell scripting at 
-all.
+Hmm.  You are probably right.  I had put that cast into place before
+because (if I recall correctly) I was getting compiler errors.
+But today looking at it I'm not, even if I remove the casts.  So uh,
+yea... they should probably come out.
 
-Another thing I find annoying (even as a UNIX user) is that whenever I do 
-any tracing for performance data, shell is absolutely horrid. It's *so* 
-much nicer to do 'strace' on built-in programs that it's not even funny.
-
-It's also sad how many performance issues we've had with shell, just 
-because even something really simple (like a few hundred refs) is just too 
-slow for shell scripting.
-
-> Heck, git-commit is still a shell script, and that's a rather, ah,
-> fundamental command, isn't it? 
-
-Yeah, and that's probably my pet peeve. I'd love to see a built-in "git 
-commit" and "git fetch". The "fetch--tool" thing in next gets rid of some 
-of the latter (and apparently the worst performance problems), but it's 
-sad how we have a really nice builtin "push", but our "fetch" is still 
-mostly really hairy shell-code (not just "git-fetch.sh" itself, but 
-"git-parse-remote.sh".
-
-A gold star for whoever gets rid of any of of commit/clone/fetch or 
-ls-remote
-
-(ls-remote isn't that big or hairy, but I mention it because it's a user 
-of "parse-remote", so making even just ls-remote built-in is probably 
-going to help with fetch/clone eventually).
-
-		Linus
+-- 
+Shawn.
