@@ -1,100 +1,99 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] git-init: set up GIT_DIR/workdir if GIT_WORK_DIR is set
-Date: Mon, 12 Mar 2007 15:08:08 +0100
-Message-ID: <20070312140808.GA17450@moooo.ath.cx>
-References: <20070311043250.GA21331@moooo.ath.cx> <20070312115350.GA15179@moooo.ath.cx> <20070312121226.GB2268@always.joy.eth.net> <20070312131253.GA16452@moooo.ath.cx> <fcaeb9bf0703120636r7038a7fat24e571e7c087d13d@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Errors cloning large repo
+Date: Mon, 12 Mar 2007 10:24:51 -0400
+Message-ID: <20070312142451.GC15150@spearce.org>
+References: <645002.46177.qm@web52608.mail.yahoo.com> <esu11i$m54$1@sea.gmane.org> <20070311020013.GD10343@spearce.org> <200703121209.35052.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 12 15:08:49 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 12 15:25:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQlCZ-00079p-CV
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 15:08:39 +0100
+	id 1HQlSN-0005mZ-Gr
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 15:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965882AbXCLOIO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 10:08:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965881AbXCLOIO
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 10:08:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39597 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965883AbXCLOIL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 10:08:11 -0400
-Received: (qmail invoked by alias); 12 Mar 2007 14:08:09 -0000
-Received: from pD9EBB74D.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.183.77]
-  by mail.gmx.net (mp044) with SMTP; 12 Mar 2007 15:08:09 +0100
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX19A2wZN/MdAF6WXHjqewG+er/OGP2z0732JbvBIvI
-	Qtd7qca2FLSzuU
-Mail-Followup-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
+	id S965887AbXCLOY4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 10:24:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965890AbXCLOY4
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 10:24:56 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:43313 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965887AbXCLOYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 10:24:55 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HQlSB-0006Jg-PI; Mon, 12 Mar 2007 10:24:47 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DAAB220FBAE; Mon, 12 Mar 2007 10:24:51 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <fcaeb9bf0703120636r7038a7fat24e571e7c087d13d@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+In-Reply-To: <200703121209.35052.jnareb@gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42031>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> Let users create $GIT_DIR/workdir themselves. Your way may be less
-> confusing to you but might be more confusing to me because I _might_
-> expect a relative workdir setting (for example I move the repository
-> and the working directory together to another place).
+Jakub Narebski <jnareb@gmail.com> wrote:
+> But what would happen if server supporting concatenated packfiles
+> sends such stream to the old client? So I think some kind of protocol
+> extension, or at least new request / new feature is needed for that.
 
-Well, without this patch you havo to do one of these:
+No, a protocol extension is not required.  The packfile format
+is: 12 byte header, objects, 20 byte SHA-1 footer.  When sending
+concatenated packfiles to a client the server just needs to:
 
-    /tmp$ mkdir repository working_directory
-    /tmp$ git --git-dir=repository init
-    /tmp$ git --git-dir=repository config core.bare false
-    /tmp$ echo ../working_directory > repository/workdir
+  - figure out how many objects total will be sent;
+  - send its own (new) header with that count;
+  - initialize a SHA-1 context and update it with the header;
+  - for each packfile to be sent:
+    - strip the first 12 bytes of the packfile;
+    - send the remaining bytes, except the last 20;
+    - update the SHA-1 context with the packfile data;
+  - send its own footer with the SHA-1 context.
 
-or
+Very simple.  Even the oldest Git clients (pre multi-ack extension)
+would understand that.  That's what's great about the way the
+packfile protocol and disk format is organized.  ;-)
+ 
+> Wouldn't it be better to pack loose objects into separate pack
+> (and perhaps save it, if some threshold is crossed, and we have
+> writing rights to repo), by the way?
 
-    /tmp$ mkdir repository working_directory
-    /tmp/repository$ cd repository
-    /tmp$ git init
-    /tmp/repository$ mv .git/* .
-    /tmp/repository$ rmdir .git
-    /tmp$ echo ../working_directory > repository/workdir
+Perhaps.  Interesting food for thought, something nobody has tried
+to experiment with.  Currently servers pack to update the fetching
+client.  That means they may be sending a mixture of already-packed
+(older) objects and loose (newer) objects.  But with the new kept
+pack thing in receive-pack its more likely that things are already
+packed on the server, and not loose.  (I suspect most public open
+source users are pushing >100 objects when they do push to their
+server.)
+ 
+> > The client could easily segment that into multiple packfiles
+> > locally using two rules:
+> > 
+> >   - if the last object was not a OBJ_COMMIT and this object is
+> >   an OBJ_COMMIT, start a new packfile with this object.
+...
+> 
+> Without first rule, wouldn't client end with strange packfile?
+> Or would it have to rewrite a pack?
 
-Where the second example is probably better because git init creates a
-bare repository in the first case which might have more settings
-different from a 'normal' repository (it actually sets also
-core.logallrefupdates = true which probably should be added to the
-first example).
+Nope.  We don't care about the order of the objects in a packfile.
+Never have.  Never will.  Even in pack v4 where we have special
+object types that should only appear once in a packfile, they can
+appear at any position within the packfile.  MUCH simpler code.
 
-With this patch you'd have to do
-
-    /tmp$ mkdir repository working_directory
-    /tmp$ git --git-dir=repository --work-dir=working_directory init
-    /tmp$ echo ../working_directory > repository/workdir
-
-in case you really want a relative path.
-
-Because the first two ways are so long I think git init should have
-some way to handle this case.
-
-I don't want to put $GIT_WORK_DIR 'as is' to $GIT_DIR/workdir because
-$GIT_WORK_DIR is normally interpreted as relative path to the current
-working directory and not relative to $GIT_DIR.
-
-Perhaps we could add another flag to git init which will be used 'as is'
-for $GIT_DIR/workdir:
-    git --git-dir=repository init --work-dir=../working_directory
-
-Other things I can think of:
-
-    Add a --not-bare flag to git init:
-    $ git --git-dir=repository init --not-bare
-    $ echo ../working_directory > repository/workdir
-
-    Tell the user what to do in case the path should be relative:
-    $ git --git-dir=repository --work-dir=working_directory init
-    You specified a relative working directory and git has
-    automatically expanded this to /tmp/working_directory.  If you
-    prefer a relative path you can do:
-        echo relative_path > repository/workdir
+-- 
+Shawn.
