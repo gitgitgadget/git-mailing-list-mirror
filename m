@@ -1,84 +1,67 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH(amend)] git-init: set up GIT_DIR/workdir if GIT_WORK_DIR is set
-Date: Mon, 12 Mar 2007 20:23:01 +0100
-Message-ID: <20070312192301.GB29327@moooo.ath.cx>
-References: <20070311043250.GA21331@moooo.ath.cx> <20070312115350.GA15179@moooo.ath.cx>
+From: Dave Jones <davej@redhat.com>
+Subject: bisection oddity.
+Date: Mon, 12 Mar 2007 15:28:21 -0400
+Message-ID: <20070312192821.GA24992@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 12 20:24:39 2007
+X-From: git-owner@vger.kernel.org Mon Mar 12 20:28:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQq8M-0004R5-1W
-	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:24:38 +0100
+	id 1HQqC8-0006Kr-Sn
+	for gcvg-git@gmane.org; Mon, 12 Mar 2007 20:28:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752470AbXCLTXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 15:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752568AbXCLTXF
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:23:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33202 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752470AbXCLTXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 15:23:03 -0400
-Received: (qmail invoked by alias); 12 Mar 2007 19:23:02 -0000
-Received: from pD9EBB74D.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.183.77]
-  by mail.gmx.net (mp036) with SMTP; 12 Mar 2007 20:23:02 +0100
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX1/A0q9P7YHA1ihWPWVMH/dlOLlJxQSuZcfMcTkkd2
-	Y0umE3NprhyR9e
-Mail-Followup-To: git@vger.kernel.org
+	id S1752404AbXCLT23 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 15:28:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbXCLT23
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 15:28:29 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:48433 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752398AbXCLT22 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 15:28:28 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2CJSRVi008805
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:28:27 -0400
+Received: from gelk.kernelslacker.org (vpn-248-5.boston.redhat.com [10.13.248.5])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2CJSLEf011477
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:28:21 -0400
+Received: from gelk.kernelslacker.org (localhost.localdomain [127.0.0.1])
+	by gelk.kernelslacker.org (8.13.8/8.13.8) with ESMTP id l2CJSL7g025175
+	for <git@vger.kernel.org>; Mon, 12 Mar 2007 15:28:21 -0400
+Received: (from davej@localhost)
+	by gelk.kernelslacker.org (8.13.8/8.13.8/Submit) id l2CJSLai025174
+	for git@vger.kernel.org; Mon, 12 Mar 2007 15:28:21 -0400
+X-Authentication-Warning: gelk.kernelslacker.org: davej set sender to davej@redhat.com using -f
 Content-Disposition: inline
-In-Reply-To: <20070312115350.GA15179@moooo.ath.cx>
-X-Y-GMX-Trusted: 0
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42065>
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
-It's much easier when $GIT_WORK_DIR is always interpreted relative to
-$GIT_DIR.
----
- builtin-init-db.c |   14 +++++++++++++-
- 1 files changed, 13 insertions(+), 1 deletions(-)
+I'm chasing a kernel bug that was introduced somewhere between
+v2.6.20 and 2.6.21rc1, and bisect has done this so far..
 
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 4df9fd0..8d0065c 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -182,6 +182,7 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 	char repo_version_string[10];
- 	int reinit;
- 	int filemode;
-+	const char *gitwd = getenv(GIT_WORKING_DIR_ENVIRONMENT);
- 
- 	if (len > sizeof(path)-50)
- 		die("insane git directory %s", git_dir);
-@@ -252,10 +253,21 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 	}
- 	git_config_set("core.filemode", filemode ? "true" : "false");
- 
--	if (is_bare_repository()) {
-+	if (is_bare_repository() && !gitwd) {
- 		git_config_set("core.bare", "true");
- 	}
- 	else {
-+		if (gitwd) {
-+			FILE *fp = NULL;
-+
-+			path[len] = 0;
-+			strcpy(path + len, "workdir");
-+			if (!(fp = fopen(path, "w")))
-+				die("Cannot open GIT_DIR/workdir");
-+			fprintf(fp, "%s\n", gitwd);
-+			fclose(fp);
-+		}
-+
- 		git_config_set("core.bare", "false");
- 		/* allow template config file to override the default */
- 		if (log_all_ref_updates == -1)
+git-bisect start
+# bad: [c8f71b01a50597e298dc3214a2f2be7b8d31170c] Linux 2.6.21-rc1
+git-bisect bad c8f71b01a50597e298dc3214a2f2be7b8d31170c
+# good: [fa285a3d7924a0e3782926e51f16865c5129a2f7] Linux 2.6.20
+git-bisect good fa285a3d7924a0e3782926e51f16865c5129a2f7
+# bad: [574009c1a895aeeb85eaab29c235d75852b09eb8] Merge branch 'upstream' of git://ftp.linux-mips.org/pub/scm/upstream-linus
+git-bisect bad 574009c1a895aeeb85eaab29c235d75852b09eb8
+# bad: [43187902cbfafe73ede0144166b741fb0f7d04e1] Merge master.kernel.org:/pub/scm/linux/kernel/git/gregkh/driver-2.6
+git-bisect bad 43187902cbfafe73ede0144166b741fb0f7d04e1
+# good: [1545085a28f226b59c243f88b82ea25393b0d63f] drm: Allow for 44 bit user-tokens (or drm_file offsets)
+git-bisect good 1545085a28f226b59c243f88b82ea25393b0d63f
+# good: [c96e2c92072d3e78954c961f53d8c7352f7abbd7] Merge master.kernel.org:/pub/scm/linux/kernel/git/gregkh/usb-2.6
+git-bisect good c96e2c92072d3e78954c961f53d8c7352f7abbd7
+
+What I'm puzzled at is that this lands me at 2.6.20-rc5, which is *before*
+the range I'm interested in.  What happened here?
+
+	Dave
+
 -- 
-1.5.0.3.1007.g7ff7
+http://www.codemonkey.org.uk
