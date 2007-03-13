@@ -1,68 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/5] add the ability to select more email header fields to output
-Date: Mon, 12 Mar 2007 19:34:16 -0700
-Message-ID: <7vodmxoorb.fsf@assigned-by-dhcp.cox.net>
-References: <11737291282223-git-send-email-dzickus@redhat.com>
-	<11737291281648-git-send-email-dzickus@redhat.com>
-	<7vveh6nes9.fsf@assigned-by-dhcp.cox.net>
-	<68948ca0703121821h72f6c08ak9f38cae40240ac59@mail.gmail.com>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in
+ bundle
+Date: Mon, 12 Mar 2007 23:16:16 -0400
+Message-ID: <45F61780.2090001@gmail.com>
+References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net> <45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F2D955.8050800@gmail.com> <Pine.LNX.4.63.0703101749270.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F2F934.8060407@gmail.com> <Pine.LNX.4.63.0703110201450.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vy7m4y3cn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703110244130.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F41787.4080506@gmail.com> <Pine.LNX.4.63.0703112302140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Don Zickus" <dzickus@redhat.com>, git@vger.kernel.org
-To: "Don Zickus" <dzickus@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 03:34:22 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 13 04:16:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQwqD-0005rk-Dh
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 03:34:21 +0100
+	id 1HQxV6-0008BA-DS
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 04:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043AbXCMCeS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 22:34:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753052AbXCMCeS
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 22:34:18 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:49963 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753043AbXCMCeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 22:34:17 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070313023417.JTXX28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 12 Mar 2007 22:34:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id a2aG1W00M1kojtg0000000; Mon, 12 Mar 2007 22:34:17 -0400
-In-Reply-To: <68948ca0703121821h72f6c08ak9f38cae40240ac59@mail.gmail.com> (Don
-	Zickus's message of "Mon, 12 Mar 2007 21:21:25 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753082AbXCMDQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 23:16:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753083AbXCMDQW
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 23:16:22 -0400
+Received: from ik-out-1112.google.com ([66.249.90.183]:15527 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753077AbXCMDQV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 23:16:21 -0400
+Received: by ik-out-1112.google.com with SMTP id c21so1876032ika
+        for <git@vger.kernel.org>; Mon, 12 Mar 2007 20:16:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=rpSIDGJTGUlhHmcwKlvZb6p0SbGsPUd5C9mW1Wk4vk/nFbPna7EibH4dGRX+8O62jETQRPgS73y4+SSTU9IB6igj8PirlU+kG0OaKw6GWJrrhdsXcFiLqgnPLymfUGcnz8xA2rhE6hLRzvBEv1CVoTwpjTAwxbgQpCxEaUamTWw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=ri2M20kI0K+kI6ihKMWLUy0/ZWcgt2zhCpJ+0aMlMJ+jmZBxN/gL+y1vbL8RtQJVggTK4DJ3wCOzLMtX3rDypd2KYyfL+qVJA8n2rDd9iEHg4yC/R2ZwvPIUDkjBuaQQ6gEIPMjfWGx8IVEp1i7RWefTzcZMkxK1gUGOC9UigjA=
+Received: by 10.70.132.2 with SMTP id f2mr614535wxd.1173755779604;
+        Mon, 12 Mar 2007 20:16:19 -0700 (PDT)
+Received: from ?192.168.100.117? ( [71.246.235.75])
+        by mx.google.com with ESMTP id h13sm6483180wxd.2007.03.12.20.16.17;
+        Mon, 12 Mar 2007 20:16:18 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <Pine.LNX.4.63.0703112302140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42106>
 
-"Don Zickus" <dzickus@gmail.com> writes:
-
-> On 3/12/07, Junio C Hamano <junkio@cox.net> wrote:
->> Don Zickus <dzickus@redhat.com> writes:
->>
->> > This is useful when scripts need more than just the basic email headers to
->> > parse.  By specifying the "-x=" option, one can search and output any header
->> > field they want.
->>
->> It probably is useful, but that is rather difficult to judge,
->> unless you have a specific use in the scripts (am/applymox).
+Johannes Schindelin wrote:
+> FWIW my plans are to make the pack thin _only_ when there is only one 
+> prereq and/or ref in the bundle (this prevents a _wanted_ object being 
+> deltified against a not-wanted object).
 >
-> I have my own custom clone of git-am I am using to extract the
-> Message-id, In-Reply-To, and References fields.  For awhile I had the
-> fields hardcoded in my version of git-mailinfo.  But instead of
-> maintaining it, I was hoping I could push it upstream.  One less thing
-> to maintain on my own.  :-)
+>   
+I am not sure that this is really necessary or accomplishes additional 
+safety. The prerequisites must exist and be well connected in the target 
+repo before the pack file is indexed: presumably, the reference objects 
+all exist if the checks hold, or there is a logic flaw in the thin-pack 
+generation.
 
-Fair enough.
+If the prereq test is removed, then avoiding a thin pack might allow the 
+pack file to be applied to a repo that held only the prereqs for a 
+single head out of many in the bundle, but there is no info for the user 
+to understand how or when to do this and I don't really think that is a 
+good practice to encourage. I suggest waiting for a well defined 
+use-case that really demands being able to apply only part of a pack 
+file before implementing.
 
-> oops.  left over comment from old code.  I'll clean that up.
-
-I've applied 1, 3, 4 and 5 for now, but have't pushed the
-results out (I have other patches to tend first).
+> Also, as mentioned above, I think that we have to check that "git rev-list 
+> --objects <new-refs> --not --all" does not result in missing objects.
+>   
+This is certainly a good safety check: even though the prereqs are 
+satisfied and all *should* be ok, some error might still exist and it is 
+better to be safe.
+> Ciao,
+> Dscho
+>   
