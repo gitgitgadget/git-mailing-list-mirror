@@ -1,78 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 4/4] Replace fork_with_pipe in bundle with run_command
-Date: Mon, 12 Mar 2007 20:56:21 -0400
-Message-ID: <20070313005621.GA17243@spearce.org>
-References: <20070312183815.GD15996@spearce.org> <7vslcaow13.fsf@assigned-by-dhcp.cox.net> <20070313003646.GA17169@spearce.org> <7v3b4aotd9.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 0/2] Make gc a builtin.
+Date: Mon, 12 Mar 2007 18:20:15 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703121815411.9690@woody.linux-foundation.org>
+References: <11736508181273-git-send-email-jbowes@dangerouslyinc.com>
+ <20070312025736.GA28505@thunk.org> <Pine.LNX.4.63.0703121222350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070312133612.GD4372@thunk.org> <Pine.LNX.4.64.0703121202560.9690@woody.linux-foundation.org>
+ <et4s76$9u3$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 13 01:56:30 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 02:20:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQvJV-00027Y-O0
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 01:56:30 +0100
+	id 1HQvgf-0004mI-W3
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 02:20:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752596AbXCMA41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 20:56:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752594AbXCMA41
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 20:56:27 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33392 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752596AbXCMA40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 20:56:26 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HQvJE-00039Z-IM; Mon, 12 Mar 2007 20:56:12 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 464C020FBAE; Mon, 12 Mar 2007 20:56:22 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7v3b4aotd9.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752974AbXCMBUV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 12 Mar 2007 21:20:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752989AbXCMBUU
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 21:20:20 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:54872 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752974AbXCMBUS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Mar 2007 21:20:18 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2D1KGo4032640
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 12 Mar 2007 18:20:16 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2D1KFZq019523;
+	Mon, 12 Mar 2007 17:20:15 -0800
+In-Reply-To: <et4s76$9u3$1@sea.gmane.org>
+X-Spam-Status: No, hits=-0.985 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42103>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
+
+
+On Tue, 13 Mar 2007, Jakub Narebski wrote:
+
+> Linus Torvalds wrote:
 > 
-> > Junio C Hamano <junkio@cox.net> wrote:
-> >> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> >> >  	return status;
-> >> 
-> >> As the variable 'status' is not used anymore, I think this should return 0.
-> >
-> > Indeed.  I replaced that patch with another (same subject) in my
-> > latest series.  Because leaving that 'status' variable in caused
-> > a failure in the test suite when trying to create a bundle.
-> >
-> >   fixed:  http://article.gmane.org/gmane.comp.version-control.git/42087
-> >   borked: http://article.gmane.org/gmane.comp.version-control.git/42056
-> >
-> > You quoted the borked one.  Please drop it and apply the fixed one.
+> > Another thing I find annoying (even as a UNIX user) is that whenever I do 
+> > any tracing for performance data, shell is absolutely horrid. It's *so* 
+> > much nicer to do 'strace' on built-in programs that it's not even funny.
 > 
-> Ok, diffing these two the only differences I see are identical
-> to what I locally hand-fixed, so we are Ok it seems.
+> Isn't that what GIT_TRACE was made for?
 
-Yes, the only difference between the two patches was the unused
-'status' variable, and returning 0 when we did actually make
-the bundle successfully.  ;-)
+That just shows the high-level git commands.
 
-Sorry for the pain today.  I usually try harder to avoid problems
-like this...
+If you look for performance issues or correctness issues (like when I 
+tried to figure out if O_LARGEFILE was set for "git clone"), GIT_TRACE 
+does nothing. You want to do "strace -f -o trace-file".
 
--- 
-Shawn.
+And shell scripts look horrible there, and make it much harder to follow 
+things. In fact, it doesn't even need to be shell per se, but fork/exec 
+already makes things harder to see, shell just tends to (a) make it even 
+more so (try stracing though a shell startup, ugh) and (b) cause tons of 
+fork/exec cases.
+
+For example, when we made patch generation a built-in, it suddenly became 
+*hugely* easier to follow what was going on in the traces, because it got 
+much more streamlined. In general I find that "high performance" == "easy 
+to trace".
+
+		Linus
