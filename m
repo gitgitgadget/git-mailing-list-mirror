@@ -1,67 +1,66 @@
-From: Florian La Roche <laroche@redhat.com>
-Subject: git-1.5 and bare repos
-Date: Tue, 13 Mar 2007 17:09:50 +0100
-Message-ID: <20070313160950.GA14163@dudweiler.stuttgart.redhat.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Remove tab character from conflicted files list part of the merge message
+Date: Tue, 13 Mar 2007 16:22:51 +0000
+Message-ID: <200703131622.53559.andyparkins@gmail.com>
+References: <200703131309.43767.andyparkins@gmail.com> <200703131518.54076.andyparkins@gmail.com> <Pine.LNX.4.63.0703131643590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 13 17:10:19 2007
+X-From: git-owner@vger.kernel.org Tue Mar 13 17:23:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HR9Zp-0000Ro-KW
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 17:10:19 +0100
+	id 1HR9mG-0006aa-4N
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 17:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbXCMQKA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Mar 2007 12:10:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753306AbXCMQKA
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 12:10:00 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:47962 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753295AbXCMQJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2007 12:09:59 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2DG9rde015834
-	for <git@vger.kernel.org>; Tue, 13 Mar 2007 12:09:53 -0400
-Received: from pobox.stuttgart.redhat.com (pobox.stuttgart.redhat.com [172.16.2.10])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2DG9rO1012519
-	for <git@vger.kernel.org>; Tue, 13 Mar 2007 12:09:53 -0400
-Received: from dudweiler.stuttgart.redhat.com (dudweiler.stuttgart.redhat.com [10.32.5.60])
-	by pobox.stuttgart.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2DG9qFG015591
-	for <git@vger.kernel.org>; Tue, 13 Mar 2007 17:09:52 +0100
-Received: from dudweiler.stuttgart.redhat.com (localhost [127.0.0.1])
-	by dudweiler.stuttgart.redhat.com (8.13.8/8.13.8) with ESMTP id l2DG9pO5014175
-	for <git@vger.kernel.org>; Tue, 13 Mar 2007 17:09:51 +0100
-Received: (from laroche@localhost)
-	by dudweiler.stuttgart.redhat.com (8.13.8/8.13.8/Submit) id l2DG9oDY014171
-	for git@vger.kernel.org; Tue, 13 Mar 2007 17:09:50 +0100
+	id S1030747AbXCMQXE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Mar 2007 12:23:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030763AbXCMQXE
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 12:23:04 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:58225 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030747AbXCMQXB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2007 12:23:01 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so2574174nfa
+        for <git@vger.kernel.org>; Tue, 13 Mar 2007 09:23:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=jyxuf2IeRIC0kC2bbnPGx5qLTiXCIlTUOfnB91XnoiTYFfDc4Jw0ed4uG7+ORysxRw5086OWqOn3dGMsNyoyRF0cQaCOIexkI+XGkUhLQJVoUMn4skFv9LnyPmkyZkdj8md8Qk5gIC+Mm6rJKbUSyybLdiRGs22cGkcaT2jJ1QU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=sXVWhxl6iIBeaaXV8VOQT0Jff/z8v31m1wIhyjSX2JyXdhtFhdRV2+5zV88bo+yJCskYLveq150Fd4IcZiPqj9DEcotsxMkiVr4OoklJCJm3V4g/hdedrSBFRVws0ZP8sfL7KAFiPHmnOFsMx54wxahyA+rg0CR0hcPOCl2S72o=
+Received: by 10.82.138.6 with SMTP id l6mr2016864bud.1173802979449;
+        Tue, 13 Mar 2007 09:22:59 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id x24sm21826467nfb.2007.03.13.09.22.58;
+        Tue, 13 Mar 2007 09:22:58 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.63.0703131643590.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Content-Disposition: inline
-User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42128>
 
-Here a patch to correctly allow also bare
-repositories.
+On Tuesday 2007 March 13 15:44, Johannes Schindelin wrote:
 
-regards,
+> Huh? s/isn't/is/, right?
 
-Florian La Roche
+<sheepish grin>
+
+Yes, it's impressive how I can render a point meaningless by not rereading 
+before I send.
 
 
 
---- git-sh-setup.sh	2007-03-05 03:15:33.000000000 +0100
-+++ git-sh-setup	2007-03-13 17:08:22.000000000 +0100
-@@ -49,8 +49,8 @@
- 
- require_work_tree () {
- 	test $(is_bare_repository) = false &&
--	test $(git-rev-parse --is-inside-git-dir) = false ||
--	die "fatal: $0 cannot be used without a working tree."
-+	{ test $(git-rev-parse --is-inside-git-dir) = false ||
-+	  die "fatal: $0 cannot be used without a working tree."; }
- }
- 
- if [ -z "$LONG_USAGE" ]
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
