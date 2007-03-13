@@ -1,141 +1,157 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: svnimport problems (abysmal performance and crash) on Cygwin
-Date: Tue, 13 Mar 2007 20:10:28 +0100
-Message-ID: <45F6F724.4080704@dawes.za.net>
-References: <45F4F58D.2010701@dawes.za.net> <45F50023.9030403@dawes.za.net> <46a038f90703120339j674e15cqe0e0fa587736f9bc@mail.gmail.com> <45F59193.1070608@dawes.za.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 13 Mar 2007 12:43:51 -0700
+Message-ID: <7vhcsphqtk.fsf@assigned-by-dhcp.cox.net>
+References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
+	<7v8xep8dfk.fsf@assigned-by-dhcp.cox.net>
+	<7v7itx5mep.fsf@assigned-by-dhcp.cox.net>
+	<7vps7dle8j.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, normalperson@yhbt.net
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 13 20:10:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>,
+	Santi =?utf-8?B?Qu+/ve+/vWphcg==?= <sbejar@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 13 20:44:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRCOS-0000R1-5S
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 20:10:44 +0100
+	id 1HRCud-0000QM-SS
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 20:44:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933059AbXCMTKf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Mar 2007 15:10:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933044AbXCMTKf
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 15:10:35 -0400
-Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:55444 "EHLO
-	spunkymail-a1.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S933054AbXCMTKe (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2007 15:10:34 -0400
-Received: from [0.0.0.0] (lucas.dreamhost.com [64.111.99.14])
-	by spunkymail-a1.g.dreamhost.com (Postfix) with ESMTP id 66439FFA6B;
-	Tue, 13 Mar 2007 12:10:32 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
-In-Reply-To: <45F59193.1070608@dawes.za.net>
+	id S1752365AbXCMTn4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Mar 2007 15:43:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752521AbXCMTn4
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 15:43:56 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:60324 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752365AbXCMTnz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2007 15:43:55 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070313194352.RIOC748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 13 Mar 2007 15:43:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id aKjs1W00R1kojtg0000000; Tue, 13 Mar 2007 15:43:52 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42145>
 
-Rogan Dawes wrote:
-> Martin Langhoff wrote:
->> Rogan,
->>
->> it looks like your connection to the server is dodgy, or maybe the
->> server is being restarted, or has a throttle for "intense" clients.
->>
->> After it failes, you should be able to do
->>
->>   git-checkout -b master
->>
->> and then rerun git-svnimport $params as many times as needed until it
->> completes.
->>
->> cheers,
->>
->>
->> maritn
-> 
-> Excellent! Thanks, that did it. Although I did need to checkout "origin" 
-> first:
-> 
-> 0 $ git checkout origin
-> warning: You appear to be on a branch yet to be born.
-> warning: Forcing checkout of origin.
-> Switched to branch "origin"
-> 0 $ git checkout -b master
-> Switched to a new branch "master"
-> 0 $ git svnimport -v 
-> http://spring-rich-c.svn.sourceforge.net/svnroot/spring-rich-c/trunk/spring-richclient 
-> 
-> Processing from 106 to 1734 ...
-> Fetching from 106 to 1106 ...
-> Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-> Merge parent branch: 4a31e85eda538f8d6ca069ddee11327c25542403
-> Committed change 106:/ 2004-08-03 05:49:22)
-> Commit ID 449db651234665f17590288370e84b249cad13f4
-> Writing to refs/heads/origin
-> DONE: 106 origin 449db651234665f17590288370e84b249cad13f4 at Mon Mar 12 
-> 17:42:44 2007
-> 
-> Thanks for the help.
-> 
-> Rogan
+Junio C Hamano <junkio@cox.net> writes:
 
-Hmm. Looks like I spoke too soon. In fact, I do not seem to have any 
-files, but only have the commits, with no actual files.
+> Here are the topics that have been cooking.
+
+> * sb/fetch (Mon Mar 12 19:01:11 2007 -0700) 19 commits
+>  + git-fetch.sh:append_fetch_head() no longer has a remote_nick
+>    argument
+>  + git-fetch: Split fetch and merge logic
+>
+> I have a soft spot to anything that claims to be a clean-up, but
+> I suspect that the shell loop this series introduces may defeat
+> the git-fetch--tool optimization.  Also I think having to base
+> the patch on this made Paolo's "dot is special token to mean
+> 'git pull' merges from a local branch" needlessly complex (but I
+> haven't tried rewriting it myself without these two).  Although
+> I merged these to 'next', I am considering to revert them.
+
+I tried the "NULL fetch between 1000-refs repositories" test,
+which prompted the git-fetch--tool work that was done on
+jc/fetch topic in 'next', with the following versions:
+
+ (1) 1.5.0 (without any git-fetch--tool optimization)
+ (2) master (ditto)
+ (3) master with jc/fetch (but not sb/fetch topic)
+ (4) next ((3) plus sb/fetch and others)
+
+The test scripts are at the end of this message.  Both (1) and
+(2) take 3 minutes 7 seconds wallclock time.  (3) improves it
+down to 15 seconds.  (4) makes the operation spend 24 seconds
+(the times are all on my primary machine x86-64 with 1GB, hot
+cache and average of three runs each).
+
+So the "Split fetch and merge" series hurts the performance
+quite a bit.  If it had enough "code clean-up" merit to warrant
+this, I would say it probably is a cost we should bear, but I
+personally do not see it.
+
+Paolo recently worked on top of next to base the fake '.' remote
+patch.  This wants to allow:
+
+	[branch "foo"]
+        	remote = .
+                merge = refs/heads/master
+
+with an implicit (meaning, you do not have to have this in your
+configuration):
+
+	[remote "."]
+        	url = .
+                fetch = refs/*
+
+so that you can say:
+
+	$ git checkout foo
+        $ git pull
+
+to merge from the local 'master' branch.
+
+I haven't reimplemented Paolo's patch on top of (3) above for
+comparison, but I have a feeling that it would not have been
+helped by the alleged clean-up value of "Split fetch and merge"
+patch (iow, I do not think it would be the case that the code
+got clearer to understand thanks to the clean-up).
+
+What Paolo's patch needs to do is to bypass the actual fetch and
+generate the following line in .git/FETCH_HEAD:
+
+	sha1-of-our-master <TAB> <TAB> branch 'master' of .
+
+I even suspect that "Split fetch and merge", by introducing
+FETCH_FETCHED and making FETCH_HEAD generated from it, made
+Paolo's patch more difficult to do and the end result less
+efficient.
+
+So unless there is a convincing counterexample otherwise, I'd
+like to revert the "Split fetch and merge" series.
 
 
-0 $ git log | tail
+-- >8 -- setting up test repositories -- >8 --
+#!/bin/sh
 
-commit f7f6143408ae1db4fa8bf707c49ca1c2156f4461
-Author: root <root>
-Date:   Tue Jul 6 17:11:30 2004 +0000
+rm -fr origin clone
 
-     initial checkin
+mkdir origin
+cd origin
+git init
+: >hello
+git add hello
+git commit -a -m 'initial'
+i=0
+while test $i -lt 500
+do
+	git tag t$i
+	git branch b$i
+	i=$(($i+1))
+done
 
-commit 53b1bd87b5b0d4078946446d2cf13b4aaed4e662
-Author: unknown <unknown>
-Date:   Tue Jul 6 17:11:30 2004 +0000
+: >bye
+git add bye
+git commit -a -m 'second'
+while test $i -lt 1000
+do
+	git tag t$i
+	git branch b$i
+	i=$(($i+1))
+done
 
-     New repository initialized by cvs2svn.
-0 $ git show --raw f7f6143408ae1db4fa8bf707c49ca1c2156f4461
-commit f7f6143408ae1db4fa8bf707c49ca1c2156f4461
-Author: root <root>
-Date:   Tue Jul 6 17:11:30 2004 +0000
+cd ..
+-- >8 -- NULL fetch test -- >8 --
+#!/bin/sh
 
-     initial checkin
-
-0 $
-
-I ran it again, and found it quite interesting that the Tree ID was the 
-same for all commits:
-
-Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-Committed change 1197:/ 2006-06-11 18:59:45)
-Merge parent branch: 727e7dde19256b711329499e78ae4228c84c012b
-Commit ID 255074be6c74c9d256efb180d08a79377827618c
-Writing to refs/heads/origin
-DONE: 1197 origin 255074be6c74c9d256efb180d08a79377827618c at Tue Mar 13 
-19:08:45 2007
-Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-Committed change 1198:/ 2006-06-11 19:32:10)
-Merge parent branch: 255074be6c74c9d256efb180d08a79377827618c
-Commit ID 7668d58cfc0f0309d2102880d4b480805afaa7fc
-Writing to refs/heads/origin
-DONE: 1198 origin 7668d58cfc0f0309d2102880d4b480805afaa7fc at Tue Mar 13 
-19:08:46 2007
-Tree ID 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-Committed change 1199:/ 2006-06-14 07:15:59)
-Merge parent branch: 7668d58cfc0f0309d2102880d4b480805afaa7fc
-Commit ID 4c7db3d8fdd4b33c69008750e0c38d386ad0f9ab
-Writing to refs/heads/origin
-DONE: 1199 origin 4c7db3d8fdd4b33c69008750e0c38d386ad0f9ab at Tue Mar 13 
-19:08:46 2007
-
-I guess what is happening is that the server is not telling svnimport 
-about the files, and so the assumption is that there are none, and so we 
-commit an empty tree - repeatedly :-(
-
-Any suggestions?
-
-Thanks
-
-Rogan
+cd clone
+echo '* fetching'
+time git fetch origin
