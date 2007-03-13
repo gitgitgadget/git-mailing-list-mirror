@@ -1,303 +1,203 @@
 From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
-Subject: [PATCH 2/3] git-fetch: Support the local remote "."
-Date: Tue, 13 Mar 2007 17:28:24 +0100
-Message-ID: <87bqixf6qf.fsf@gmail.com>
+Subject: [PATCH 3/3] git-branch: Support local --track via a special remote `.'
+Date: Tue, 13 Mar 2007 17:30:55 +0100
+Message-ID: <877itlf6m8.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "Junio C. Hamano" <junkio@cox.net>
 To: Git Mailing List <git@vger.kernel.org>,
 	Paolo Bonzini <bonzini@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Mar 13 17:28:18 2007
+X-From: git-owner@vger.kernel.org Tue Mar 13 17:30:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HR9rE-0000gd-6X
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 17:28:16 +0100
+	id 1HR9tq-0001vC-9c
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 17:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030775AbXCMQ2N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Mar 2007 12:28:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030754AbXCMQ2N
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 12:28:13 -0400
-Received: from ifae-s0.ifae.es ([192.101.162.68]:38062 "EHLO ifae-s0.ifae.es"
+	id S1030780AbXCMQam convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Mar 2007 12:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030773AbXCMQam
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 12:30:42 -0400
+Received: from ifae-s0.ifae.es ([192.101.162.68]:38138 "EHLO ifae-s0.ifae.es"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030778AbXCMQ2M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2007 12:28:12 -0400
+	id S1030780AbXCMQal (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2007 12:30:41 -0400
 Received: from bela (caronte.ifae.es [192.101.162.199])
-	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l2DGS4q15269;
-	Tue, 13 Mar 2007 17:28:04 +0100
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l2DGUZq15549;
+	Tue, 13 Mar 2007 17:30:35 +0100
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.95 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42132>
 
 
-To this end, git-parse-remote is grown with a new kind of remote,
-`builtin'. This returns all the local branches in
-get_remote_default_refs_for_fetch. This is equivalent to having a
-fake remote as:
+=46rom: Paolo Bonzini  <bonzini@gnu.org>
 
-[remote "local"]
-url =3D .
-fetch =3D refs/*
-
-Based on a patch from Paolo Bonzini.
+The patch adds --track/--no-track support, extending
+it so that branch.<name>.remote items referring `.' can be created.
+=46inally, it fixes a typo in git-checkout.sh.
 
 Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
 ---
- Documentation/config.txt     |    4 ++++
- git-parse-remote.sh          |   12 +++++++++++-
- t/t5515-fetch-merge-logic.sh |    2 ++
- t/t5515/fetch.br-.           |    6 ++++++
- t/t5515/fetch.br-.-merge     |    6 ++++++
- t/t5515/fetch.br-.-merge_.   |    6 ++++++
- t/t5515/fetch.br-.-octopus   |    6 ++++++
- t/t5515/fetch.br-.-octopus_. |    6 ++++++
- t/t5515/fetch.br-._.         |    6 ++++++
- t/t5515/fetch.br-unconfig_.  |    5 +++++
- t/t5515/fetch.master_.       |    5 +++++
- t/t5520-pull.sh              |   13 +++++++++++++
- 12 files changed, 76 insertions(+), 1 deletions(-)
- create mode 100644 t/t5515/fetch.br-.
- create mode 100644 t/t5515/fetch.br-.-merge
- create mode 100644 t/t5515/fetch.br-.-merge_.
- create mode 100644 t/t5515/fetch.br-.-octopus
- create mode 100644 t/t5515/fetch.br-.-octopus_.
- create mode 100644 t/t5515/fetch.br-._.
+ This is an updated patch of:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5408dd6..28899d9 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -272,6 +272,10 @@ branch.<name>.merge::
- 	`git fetch`) to lookup the default branch for merging. Without
- 	this option, `git pull` defaults to merge the first refspec fetched.
- 	Specify multiple values to get an octopus merge.
-+	If you wish to setup `git pull` so that it merges into <name> from
-+	another branch in the local repository, you can point
-+	branch.<name>.merge to the desired branch, and use the special settin=
-g
-+	`.` (a period) for branch.<name>.remote.
+ [PATCH, fixed version] git-fetch, git-branch: Support local --track vi=
+a
+ a special
+
+ builtin-branch.c        |   39 +++++++++++++++++++++++++--------------
+ git-checkout.sh         |    2 +-
+ t/t3200-branch.sh       |    6 ++++++
+ t/t9109-git-svn-pull.sh |   31 +++++++++++++++++++++++++++++++
+ 4 files changed, 63 insertions(+), 15 deletions(-)
+ create mode 100755 t/t9109-git-svn-pull.sh
+
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 42b1ff1..14c4219 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -372,9 +372,26 @@ static int get_remote_config(const char *key, cons=
+t char *value)
+ 	return 0;
+ }
 =20
- color.branch::
- 	A boolean to enable/disable color in the output of
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 99e7184..84c2c89 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -9,6 +9,9 @@ get_data_source () {
- 	*/*)
- 		echo ''
- 		;;
-+	.)
-+		echo builtin
-+		;;
- 	*)
- 		if test "$(git-config --get "remote.$1.url")"
- 		then
-@@ -31,6 +34,9 @@ get_remote_url () {
- 	'')
- 		echo "$1"
- 		;;
-+	builtin)
-+		echo "$1"
-+		;;
- 	config)
- 		git-config --get "remote.$1.url"
- 		;;
-@@ -57,7 +63,7 @@ get_default_remote () {
- get_remote_default_refs_for_push () {
- 	data_source=3D$(get_data_source "$1")
- 	case "$data_source" in
--	'' | branches)
-+	'' | branches | builtin)
- 		;; # no default push mapping, just send matching refs.
- 	config)
- 		git-config --get-all "remote.$1.push" ;;
-@@ -128,6 +134,10 @@ get_remote_default_refs_for_fetch () {
- 	case "$data_source" in
- 	'')
- 		set explicit "HEAD:" ;;
-+	builtin)
-+		set glob $(for name in $(git-show-ref |
-+			sed -n 's,.*[      ]refs/,refs/,p')
-+		    do echo "$name:" ; done);;
- 	config)
- 		set $(expand_refs_wildcard "$1" \
- 			$(git-config --get-all "remote.$1.fetch")) ;;
-diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.s=
-h
-index 9759959..e840fe0 100755
---- a/t/t5515-fetch-merge-logic.sh
-+++ b/t/t5515-fetch-merge-logic.sh
-@@ -78,6 +78,8 @@ test_expect_success setup '
- 	echo "../.git#one" > .git/branches/branches-one &&
- 	remotes=3D"$remotes branches-one" &&
-=20
-+	remotes=3D"$remotes ." &&
+-static void set_branch_defaults(const char *name, const char *real_ref=
+)
++static void set_branch_merge (const char *name, const char *config_rem=
+ote,
++			      const char *config_repo)
+ {
+ 	char key[1024];
++	if (sizeof(key) <=3D
++	    snprintf(key, sizeof(key), "branch.%s.remote", name))
++		die("what a long branch name you have!");
++	git_config_set(key, config_remote);
 +
- 	for remote in $remotes ; do
- 		git config branch.br-$remote.remote $remote &&
- 		git config branch.br-$remote-merge.remote $remote &&
-diff --git a/t/t5515/fetch.br-. b/t/t5515/fetch.br-.
-new file mode 100644
-index 0000000..8878a73
---- /dev/null
-+++ b/t/t5515/fetch.br-.
-@@ -0,0 +1,6 @@
-+# br-.
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/HEAD' of .
-+754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	remote branch '=
-origin/master' of .
-+8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	remote branch '=
-origin/one' of .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/three' of .
-+6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	remote branch '=
-origin/two' of .
-diff --git a/t/t5515/fetch.br-.-merge b/t/t5515/fetch.br-.-merge
-new file mode 100644
-index 0000000..b851578
---- /dev/null
-+++ b/t/t5515/fetch.br-.-merge
-@@ -0,0 +1,6 @@
-+# br-.-merge
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/HEAD' of .
-+754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	remote branch '=
-origin/master' of .
-+8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	remote branch '=
-origin/one' of .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/three' of .
-+6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	remote branch '=
-origin/two' of .
-diff --git a/t/t5515/fetch.br-.-merge_. b/t/t5515/fetch.br-.-merge_.
-new file mode 100644
-index 0000000..2484570
---- /dev/null
-+++ b/t/t5515/fetch.br-.-merge_.
-@@ -0,0 +1,6 @@
-+# br-.-merge .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/HEAD' of .
-+754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	remote branch '=
-origin/master' of .
-+8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	remote branch '=
-origin/one' of .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/three' of .
-+6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	remote branch '=
-origin/two' of .
-diff --git a/t/t5515/fetch.br-.-octopus b/t/t5515/fetch.br-.-octopus
-new file mode 100644
-index 0000000..3f440b1
---- /dev/null
-+++ b/t/t5515/fetch.br-.-octopus
-@@ -0,0 +1,6 @@
-+# br-.-octopus
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/HEAD' of .
-+754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	remote branch '=
-origin/master' of .
-+8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	remote branch '=
-origin/one' of .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/three' of .
-+6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	remote branch '=
-origin/two' of .
-diff --git a/t/t5515/fetch.br-.-octopus_. b/t/t5515/fetch.br-.-octopus_=
-=2E
-new file mode 100644
-index 0000000..938e9ed
---- /dev/null
-+++ b/t/t5515/fetch.br-.-octopus_.
-@@ -0,0 +1,6 @@
-+# br-.-octopus .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/HEAD' of .
-+754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	remote branch '=
-origin/master' of .
-+8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	remote branch '=
-origin/one' of .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/three' of .
-+6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	remote branch '=
-origin/two' of .
-diff --git a/t/t5515/fetch.br-._. b/t/t5515/fetch.br-._.
-new file mode 100644
-index 0000000..9d43858
---- /dev/null
-+++ b/t/t5515/fetch.br-._.
-@@ -0,0 +1,6 @@
-+# br-. .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/HEAD' of .
-+754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	remote branch '=
-origin/master' of .
-+8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	remote branch '=
-origin/one' of .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/three' of .
-+6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	remote branch '=
-origin/two' of .
-diff --git a/t/t5515/fetch.br-unconfig_. b/t/t5515/fetch.br-unconfig_.
-index 73c937d..455a0ce 100644
---- a/t/t5515/fetch.br-unconfig_.
-+++ b/t/t5515/fetch.br-unconfig_.
-@@ -1 +1,6 @@
- # br-unconfig .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/HEAD' of .
-+754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	remote branch '=
-origin/master' of .
-+8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	remote branch '=
-origin/one' of .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/three' of .
-+6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	remote branch '=
-origin/two' of .
-diff --git a/t/t5515/fetch.master_. b/t/t5515/fetch.master_.
-index ad16cdc..967d057 100644
---- a/t/t5515/fetch.master_.
-+++ b/t/t5515/fetch.master_.
-@@ -1 +1,6 @@
- # master .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/HEAD' of .
-+754b754407bf032e9a2f9d5a9ad05ca79a6b228f	not-for-merge	remote branch '=
-origin/master' of .
-+8e32a6d901327a23ef831511badce7bf3bf46689	not-for-merge	remote branch '=
-origin/one' of .
-+0567da4d5edd2ff4bb292a465ba9e64dcad9536b	not-for-merge	remote branch '=
-origin/three' of .
-+6134ee8f857693b96ff1cc98d3e2fd62b199e5a8	not-for-merge	remote branch '=
-origin/two' of .
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 7eb3783..c424e5b 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -29,5 +29,18 @@ test_expect_success 'checking the results' '
- 	diff file cloned/file
- '
-=20
-+test_expect_success 'test . as a remote' '
++	/*
++	 * We do not have to check if we have enough space for
++	 * the 'merge' key, since it's shorter than the
++	 * previous 'remote' key, which we already checked.
++	 */
++	snprintf(key, sizeof(key), "branch.%s.merge", name);
++	git_config_set(key, config_repo);
++}
 +
-+	git branch copy master &&
-+	git config branch.copy.remote . &&
-+	git config branch.copy.merge refs/heads/master &&
-+	echo updated >file &&
-+	git commit -a -m updated &&
-+	git checkout copy &&
-+	test `cat file` =3D file &&
-+	git pull &&
-+	test `cat file` =3D updated
-+'
-+
- test_done
++static void set_branch_defaults(const char *name, const char *real_ref=
+)
++{
+ 	const char *slash =3D strrchr(real_ref, '/');
 =20
+ 	if (!slash)
+@@ -384,21 +401,15 @@ static void set_branch_defaults(const char *name,=
+ const char *real_ref)
+ 	start_len =3D strlen(real_ref);
+ 	base_len =3D slash - real_ref;
+ 	git_config(get_remote_config);
++	if (!config_repo && !config_remote &&
++	    !prefixcmp (real_ref, "refs/heads/")) {
++		set_branch_merge (name, ".", real_ref);
++		printf("Branch %s set up to track local branch %s.\n",
++		       name, real_ref);
++	}
+=20
+ 	if (config_repo && config_remote) {
+-		if (sizeof(key) <=3D
+-		    snprintf(key, sizeof(key), "branch.%s.remote", name))
+-			die("what a long branch name you have!");
+-		git_config_set(key, config_remote);
+-
+-		/*
+-		 * We do not have to check if we have enough space for
+-		 * the 'merge' key, since it's shorter than the
+-		 * previous 'remote' key, which we already checked.
+-		 */
+-		snprintf(key, sizeof(key), "branch.%s.merge", name);
+-		git_config_set(key, config_repo);
+-
++		set_branch_merge (name, config_remote, config_repo);
+ 		printf("Branch %s set up to track remote branch %s.\n",
+ 		       name, real_ref);
+ 	}
+diff --git a/git-checkout.sh b/git-checkout.sh
+index 6caa9fd..b292ff0 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -89,7 +89,7 @@ while [ "$#" !=3D "0" ]; do
+     esac
+ done
+=20
+-case "$new_branch,$track" in
++case "$newbranch,$track" in
+ ,--*)
+ 	die "git checkout: --track and --no-track require -b"
+ esac
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 75c000a..9558bdb 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -145,9 +145,15 @@ test_expect_success 'test overriding tracking setu=
+p via --no-track' \
+      git-config remote.local.fetch refs/heads/*:refs/remotes/local/* &=
+&
+      (git-show-ref -q refs/remotes/local/master || git-fetch local) &&
+      git-branch --no-track my2 local/master &&
++     git-config branch.autosetupmerge false &&
+      ! test $(git-config branch.my2.remote) =3D local &&
+      ! test $(git-config branch.my2.merge) =3D refs/heads/master'
+=20
++test_expect_success 'test local tracking setup' \
++    'git branch --track my6 s &&
++     test $(git-config branch.my6.remote) =3D . &&
++     test $(git-config branch.my6.merge) =3D refs/heads/s'
++
+ # Keep this test last, as it changes the current branch
+ cat >expect <<EOF
+ 0000000000000000000000000000000000000000 $HEAD $GIT_COMMITTER_NAME <$G=
+IT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
+diff --git a/t/t9109-git-svn-pull.sh b/t/t9109-git-svn-pull.sh
+new file mode 100755
+index 0000000..58fa7df
+--- /dev/null
++++ b/t/t9109-git-svn-pull.sh
+@@ -0,0 +1,31 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Paolo Bonzini
++#
++
++test_description=3D'git-svn pull test'
++. ./lib-git-svn.sh
++
++mkdir import
++
++cd import
++	echo Hello World > motd
++	svn import -m 'import for git-svn' . "$svnrepo" >/dev/null
++cd ..
++
++test_expect_success 'initialize git-svn and fetch' "
++	git-svn init $svnrepo
++	git-svn fetch"
++
++svn co $svnrepo test_wc > /dev/null
++cd test_wc
++	echo Goodbye World > motd
++	svn commit -m "another svn commit" > /dev/null
++cd ..
++
++test_expect_success 'fetch and pull latest from svn' \
++	'git-svn fetch &&
++	 git pull . remotes/git-svn &&
++	 grep Goodbye motd'
++
++test_done
 --=20
 1.5.0.3.1021.g5897
+
+
+--=20
+Buscant signatura...
+Buscant signatura...fet
