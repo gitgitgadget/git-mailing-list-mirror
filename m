@@ -1,240 +1,175 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Tue, 13 Mar 2007 01:49:43 -0700
-Message-ID: <7vr6rtle8o.fsf@assigned-by-dhcp.cox.net>
-References: <7vbqjp1dyx.fsf@assigned-by-dhcp.cox.net>
-	<7v3b4x9sst.fsf@assigned-by-dhcp.cox.net>
-	<7v8xed5mex.fsf@assigned-by-dhcp.cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Tue, 13 Mar 2007 01:49:48 -0700
+Message-ID: <7vps7dle8j.fsf@assigned-by-dhcp.cox.net>
+References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
+	<7v8xep8dfk.fsf@assigned-by-dhcp.cox.net>
+	<7v7itx5mep.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 13 09:49:51 2007
+X-From: git-owner@vger.kernel.org Tue Mar 13 09:50:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HR2hZ-0001nL-1U
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 09:49:49 +0100
+	id 1HR2hl-0001tf-8a
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 09:50:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753193AbXCMItq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Mar 2007 04:49:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbXCMItq
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 04:49:46 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:64411 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753193AbXCMIto convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2007 04:49:44 -0400
+	id S1753194AbXCMItu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Mar 2007 04:49:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753196AbXCMItu
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 04:49:50 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:57385 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753194AbXCMItt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2007 04:49:49 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070313084944.DVEB24587.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 13 Mar 2007 04:49:44 -0400
+          id <20070313084949.ISUT748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 13 Mar 2007 04:49:49 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id a8pj1W00E1kojtg0000000; Tue, 13 Mar 2007 04:49:44 -0400
-X-maint-at: 65d61e5f512f15b8384a2b6bfe818713fe5bebcb
+	id a8po1W00E1kojtg0000000; Tue, 13 Mar 2007 04:49:48 -0400
 X-master-at: 27ebd6e0443bdd795869f598ecebc9eadd64a26c
-In-Reply-To: <7v8xed5mex.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 04 Mar 2007 02:32:38 -0800")
+X-next-at: bf75cf511bfc53ad0b60efb9b984f0b2b83d4580
+In-Reply-To: <7v7itx5mep.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 04 Mar 2007 02:32:46 -0800")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42108>
 
-Perhaps it is time for 1.5.0.4 this Wednesday (my time) from
-'maint'.
-
-On the 'master' front, Johannes and Matthias cleaned up the
-git-bundle and made it (hopefully) usable shape.  Also git-diff
-got even nicer when used outside the context of git, again
-thanks to Johannes.  I think we are nearing 1.5.1-rc1, which
-I'll talk about in "What's cooking".
-
-----------------------------------------------------------------
-
-* The 'maint' branch has these fixes since the last announcement.
-
- Alexandre Julliard (2):
-  git.el: Avoid appending a signoff line that is already present.
-  git.el: Retrieve commit log information from .dotest directory.
-
- Avi Kivity (1):
-  git-send-email: Document configuration options
-
- Brian Gernhardt (1):
-  Fix diff-options references in git-diff and git-format-patch
-
- J. Bruce Fields (13):
-  Documentation: mention module option to git-cvsimport
-  user-manual: reset to ORIG_HEAD not HEAD to undo merge
-  user-manual: ensure generated manual references stylesheet
-  user-manual: insert earlier of mention content-addressable architectu=
-re
-  user-manual: how to replace commits older than most recent
-  user-manual: more detailed merge discussion
-  glossary: fix overoptimistic automatic linking of defined terms
-  user-manual: fix inconsistent example
-  user-manual: fix inconsistent use of pull and merge
-  user-manual: fix missing colon in git-show example
-  user-manual: fix rendering of history diagrams
-  user-manual: install user manual stylesheet with other web documents
-  git-merge: warn when -m provided on a fast forward
-
- Jeff King (2):
-  Documentation: s/seperator/separator/
-  fast-import: grow tree storage more aggressively
-
- Johannes Schindelin (2):
-  Begin SubmittingPatches with a check list
-  make t8001 work on Mac OS X again
-
- Junio C Hamano (2):
-  GIT 1.5.0.3
-  git-commit: cd to top before showing the final stat
-
- Matthias Kestenholz (1):
-  Adjust reflog filemode in shared repository
-
- Matthias Lederhofer (1):
-  setup_git_directory_gently: fix off-by-one error
-
- Shawn O. Pearce (13):
-  git-gui: Relocate the menu/transport menu code.
-  git-gui: Add Reset to the Branch menu.
-  git-gui: Don't create empty (same tree as parent) commits.
-  git-gui: Remove unnecessary /dev/null redirection.
-  fast-import: Avoid infinite loop after reset
-  fast-import: Fail if a non-existant commit is used for merge
-  git-gui: Make 'make' quieter by default
-  Catch write_ref_sha1 failure in receive-pack
-  git-gui: Allow committing empty merges
-  git-gui: Revert "Don't modify CREDITS-FILE if it hasn't changed."
-  git-gui: Revert "git-gui: Display all authors of git-gui."
-  git-gui: Allow 'git gui version' outside of a repository
-  Don't package the git-gui credits file anymore
-
- Theodore Ts'o (1):
-  Add definition of <commit-ish> to the main git man page.
-
- Yasushi SHOJI (1):
-  glossary: Add definitions for dangling and unreachable objects
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
 
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+* sp/run-command (Mon Mar 12 19:00:29 2007 -0400) 9 commits
+ + Use run_command within send-pack
+ + Use run_command within receive-pack to invoke index-pack
+ + Use run_command within merge-index
+ + Use run_command for proxy connections
+ + Use RUN_GIT_CMD to run push backends
+ + Correct new compiler warnings in builtin-revert
+ + Replace fork_with_pipe in bundle with run_command
+ + Teach run-command to redirect stdout to /dev/null
+ + Teach run-command about stdout redirection
 
- Alex Riesen (4):
-  git-gui: Support of "make -s" in: do not output anything of the build=
- itself
-  More build output cleaning up
-  Support of "make -s": do not output anything of the build itself
-  Allow "make -w" generate its usual output
+This is really internal clean-up without behaviour change (but I
+suspect the error messages from failure cases might be
+different).  Good to flush these to 'master' before 1.5.1-rc1.
 
- Avi Kivity (1):
-  git-send-email: configurable bcc and chain-reply-to
+* dz/mailinfo (Mon Mar 12 15:52:07 2007 -0400) 3 commits
+ + Add a couple more test cases to the suite.
+ + restrict the patch filtering
+ + builtin-mailinfo.c infrastrcture changes
 
- Frank Lichtenheld (1):
-  cvsserver: Use Merged response instead of Update-existing for merged =
-files
+The mailinfo implementation in 'master' I punted to do
+complicated multi-part and Don Zickus rewrote much of the hacky
+parts.  The less hacky code of mine remains in the tree, the
+happier I am.  Should be in 'master' before 1.5.1-rc1.
 
- Jakub Narebski (1):
-  gitweb: Don't escape attributes in CGI.pm HTML methods
+* jc/repack (Fri Mar 9 03:52:12 2007 -0800) 1 commit
+ + prepare_packed_git(): sort packs by age and localness.
 
- Jeff King (1):
-  New fast-import test case for valid tree sorting
+This is to improve the access pattern when repository has many
+small packfiles, as recent push/fetch tend to keep packs
+unexploded.  The idea is to check younger packs and local packs
+before others when we iterate over .idx files to look for packed
+objects from find_pack_entry().  I've repacked linux-2.6 kernel
+repository so that it has one pack per one public tag (which is
+a bit excessive -- it results in 70 or so small packs), and saw
+"git log -r --raw v2.6.20.." got some speed-up in hot cache case
+(4.4 seconds vs 5.3 seconds on average).
 
- Jim Meyering (1):
-  I like the idea of the new ':/<oneline prefix>' notation, and gave it
+* jc/fetch (Sun Mar 4 15:36:08 2007 -0800) 15 commits
+ + .gitignore: add git-fetch--tool
+ + builtin-fetch--tool: fix reflog notes.
+ + git-fetch: retire update-local-ref which is not used anymore.
+ + builtin-fetch--tool: make sure not to overstep ls-remote-result
+   buffer.
+ + fetch--tool: fix uninitialized buffer when reading from stdin
+ + builtin-fetch--tool: adjust to updated sha1_object_info().
+ + git-fetch--tool takes flags before the subcommand.
+ + Use stdin reflist passing in git-fetch.sh
+ + Use stdin reflist passing in parse-remote
+ + Allow fetch--tool to read from stdin
+ + git-fetch: rewrite expand_ref_wildcard in C
+ + git-fetch: rewrite another shell loop in C
+ + git-fetch: move more code into C.
+ + git-fetch--tool: start rewriting parts of git-fetch in C.
+ + git-fetch: split fetch_main into fetch_dumb and fetch_native
 
- Johannes Schindelin (15):
-  fetch & clone: do not output progress when not on a tty
-  Fixup no-progress for fetch & clone
-  Make git-revert & git-cherry-pick a builtin
-  diff: support reading a file from stdin via "-"
-  diff --no-index: support /dev/null as filename
-  Get rid of the dependency to GNU diff in the tests
-  cherry-pick: Suggest a better method to retain authorship
-  format-patch: add --inline option and make --attach a true attachment
-  bundle: fix wrong check of read_header()'s return value & add tests
-  git-bundle: avoid packing objects which are in the prerequisites
-  git-bundle: Make thin packs
-  git-bundle: handle thin packs in subcommand "unbundle"
-  git-bundle: die if a given ref is not included in bundle
-  git-bundle: prevent overwriting existing bundles
-  git-bundle: only die if pack would be empty, warn if ref is skipped
+This is a partial C rewrite of heaviest part of git-fetch to
+help fetching between repositories with hundreds of refs.  I do
+not like the way it is split, but it may be a good idea to throw
+it in 'master' as it does not seem to regress anything and see
+if there are other interested people who want to finish the
+rewriting.
 
- Johannes Sixt (3):
-  Add core.symlinks to mark filesystems that do not support symbolic li=
-nks.
-  Handle core.symlinks=3Dfalse case in merge-recursive.
-  Tell multi-parent diff about core.symlinks.
+* pb/branch-track (Thu Mar 8 13:59:54 2007 -0800) 2 commits
+ + Fix broken create_branch() in builtin-branch.
+ + git-branch, git-checkout: autosetup for remote branch tracking
 
- Junio C Hamano (14):
-  diff-ni: fix the diff with standard input
-  format-patch --attach: not folding some long headers.
-  Post 1.5.0.3 cleanup
-  fsck: fix broken loose object check.
-  unpack_sha1_file(): detect corrupt loose object files.
-  fsck: exit with non-zero status upon errors
-  git-bundle: fix pack generation.
-  revision walker: Fix --boundary when limited
-  revision traversal: retire BOUNDARY_SHOW
-  git-bundle: various fixups
-  revision traversal: SHOWN means shown
-  git-bundle: make verify a bit more chatty.
-  revision --boundary: fix stupid typo
-  revision --boundary: fix uncounted case.
+As I personally do not use "git branch --track", all I can say
+is that this, with the fix-up patch already in, does not seem to
+regress anything.  Positive feedbacks requested before advancing
+to 'master'.
 
- Li Yang (1):
-  gitweb: Change to use explicitly function call cgi->escapHTML()
+* jb/per-user-exclude (Tue Feb 27 22:31:10 2007 -0500) 1 commit
+ + add: Support specifying an excludes file with a configuration
+   variable
 
- Linus Torvalds (1):
-  Re-fix get_sha1_oneline()
+Same as above.
 
- Paolo Bonzini (3):
-  git-config: document --rename-section, provide --remove-section
-  git-archimport: allow remapping branch names
-  git-commit: add a --interactive option
+* ml/workdir (Sun Mar 11 22:29:06 2007 +0100) 3 commits
+ - use $GIT_DIR/workdir as working directory with $GIT_DIR
+ - introduce GIT_WORK_DIR environment variable
+ - rev-parse: --is-bare-repository option
 
- Santi B=C3=A9jar (2):
-  t/t5515-fetch-merge-logic.sh: Added tests for the merge login in git-=
-fetch
-  t/t5515-fetch-merge-logic.sh: Add two more tests
+Not in 'next' yet, but I think this one is ready to be tested.
+We need testsuite for it before that happens, though.
 
- Shawn O. Pearce (31):
-  cherry-pick: Bug fix 'cherry picked from' message.
-  Make 'make' quieter while building git
-  Make 'make' quiet by default
-  Display the null SHA-1 as the base for an OBJ_OFS_DELTA.
-  Fix mmap leak caused by reading bad indexes.
-  Don't build external_grep if its not used
-  General const correctness fixes
-  Use uint32_t for all packed object counts.
-  Use uint32_t for pack-objects counters.
-  Use off_t when we really mean a file offset.
-  Use off_t in pack-objects/fast-import when we mean an offset
-  Cast 64 bit off_t to 32 bit size_t
-  Preallocate memory earlier in fast-import
-  Move post-update hook to after all other activity
-  Don't run post-update hook unless a ref changed
-  Refactor run_update_hook to be more useful
-  Refactor handling of error_string in receive-pack
-  Teach receive-pack to run pre-receive/post-receive hooks
-  Use atomic updates to the fast-import mark file
-  Allow fast-import frontends to reload the marks table
-  Switch to run_command_v_opt in revert
-  Remove unused run_command variants
-  Start defining a more sophisticated run_command
-  Split run_command into two halves (start/finish)
-  Teach run_command how to setup a stdin pipe
-  Refactor run_command error handling in receive-pack
-  Split back out update_hook handling in receive-pack
-  Change {pre,post}-receive hooks to use stdin
-  Remove unnecessary casts from fast-import
-  Simplify closing two fds at once in run-command.c
-  Fix t5510-fetch's use of sed
+* js/fetch-progress (Sun Feb 25 13:13:17 2007 -0800) 1 commit
+ + git-fetch: add --quiet
 
- Xavier Maillard (1):
-  contrib/emacs: Use non-interactive function to byte-compile files
+This does not break anything, but I am not sure how useful it
+would be.
+
+* sb/fetch (Mon Mar 12 19:01:11 2007 -0700) 19 commits
+ + git-fetch.sh:append_fetch_head() no longer has a remote_nick
+   argument
+ + git-fetch: Split fetch and merge logic
+
+I have a soft spot to anything that claims to be a clean-up, but
+I suspect that the shell loop this series introduces may defeat
+the git-fetch--tool optimization.  Also I think having to base
+the patch on this made Paolo's "dot is special token to mean
+'git pull' merges from a local branch" needlessly complex (but I
+haven't tried rewriting it myself without these two).  Although
+I merged these to 'next', I am considering to revert them.
+
+* jc/pathattr (Thu Mar 1 01:20:21 2007 -0800) 5 commits
+ - pathattr: allow piping to external program.
+ - pathattr: read from git_config().
+ - git-show: use pathattr to run "display"
+ - pathattr: path based configuration of various attributes.
+ + convert: add scaffolding for path based selection of conversion
+   routines.
+
+Stalled.
+
+* jc/merge-subtree (Thu Feb 15 16:32:45 2007 -0800) 1 commit
+ - A new merge stragety 'subtree'.
+
+Stalled.
+
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
+
+Just a reference code.
