@@ -1,48 +1,67 @@
-From: Luke.Powell@bjservices.com
-Subject: git support for subprojects?
-Date: Tue, 13 Mar 2007 09:32:18 -0500
-Message-ID: <OFD596829F.8C32CA61-ON8625729D.004F66DC-8625729D.00501D41@BJSERVICES.COM>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Remove tab character from conflicted files list part of
+ the merge message
+Date: Tue, 13 Mar 2007 15:42:03 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703131539430.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <200703131309.43767.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 13 15:42:09 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 15:42:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HR8CV-0003yc-Nn
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 15:42:08 +0100
+	id 1HR8Cf-000431-5z
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 15:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030461AbXCMOlw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Mar 2007 10:41:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030494AbXCMOlv
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 10:41:51 -0400
-Received: from lngw1.bjservices.com ([207.193.159.253]:40601 "EHLO
-	lngw02.BJSERVICES.COM" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030461AbXCMOlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2007 10:41:51 -0400
-X-Greylist: delayed 403 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Mar 2007 10:41:51 EDT
-X-Mailer: Lotus Notes Release 6.5.1 January 21, 2004
-X-MIMETrack: Serialize by Router on LnGW02/BJSUSA/BJSERVICES(Release 6.5.5FP1|April 11, 2006) at
- 03/13/2007 09:39:05,
-	Serialize complete at 03/13/2007 09:39:05
+	id S1030490AbXCMOmH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Mar 2007 10:42:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030449AbXCMOmH
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 10:42:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42840 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1030494AbXCMOmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2007 10:42:05 -0400
+Received: (qmail invoked by alias); 13 Mar 2007 14:42:03 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp049) with SMTP; 13 Mar 2007 15:42:03 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+O3gBtlr2Owo0TtmUhcZziRBuHjq8XGVlHB54JQq
+	uDWYiQRutuqxN3
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <200703131309.43767.andyparkins@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42119>
 
-Say that I have projects A and B which both depend on another project Z. 
-Whenever I update one of those projects, I'd like to also update to the 
-latest version of Z in a subdirectory. Is there that kind of support for 
-these subprojects? If I'm not being clear, I'm talking about the kind of 
-support that is available in Subversion through svn:externals or something 
-analogous.
+Hi,
 
-Also, please cc me in any answers since I'm not sure my subscription to 
-the list went through.
+On Tue, 13 Mar 2007, Andy Parkins wrote:
 
-Thanks,
+> So what I thought I was formatting as (for example)
+> 
+> Conflicts:
+>     file.c
+>      * Chose upstream version over mine, but integrated my small typo fix.
+> 
+> Was appearing in the log display as
+> 
+> Conflicts:
+>         file.c
+>      * Chose upstream version over mine, but integrated my small typo fix.
+> 
+> Which isn't how I'd intended at all.
+> 
+> The fix is of course - no tabs.  Tabs for formatting is always going to 
+> cause trouble, so this patch swaps the tab for spaces.
 
-Luke Powell
-Project Engineer
-BJ Services
+And of course the next guy will have the reverse problem, because he typed 
+<TAB><SPACE> instead of <SPACE>*5. What do you tell _him_ after "fixing" 
+this issue? "Do as _I_ do"?
+
+Ciao,
+Dscho
