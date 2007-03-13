@@ -1,46 +1,48 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] git log --first-parent
-Date: Tue, 13 Mar 2007 10:17:51 -0400
-Message-ID: <20070313141750.GA26738@coredump.intra.peff.net>
-References: <200703111505.l2BF54Kq006625@localhost.localdomain> <20070311160424.GA629@fieldses.org> <200703111815.l2BIFHbq010315@localhost.localdomain> <Pine.LNX.4.64.0703111309410.9690@woody.linux-foundation.org> <7vwt1nv6r5.fsf@assigned-by-dhcp.cox.net> <7vfy89ldyv.fsf_-_@assigned-by-dhcp.cox.net>
+From: Luke.Powell@bjservices.com
+Subject: git support for subprojects?
+Date: Tue, 13 Mar 2007 09:32:18 -0500
+Message-ID: <OFD596829F.8C32CA61-ON8625729D.004F66DC-8625729D.00501D41@BJSERVICES.COM>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 13 15:18:12 2007
+Content-Type: text/plain; charset="US-ASCII"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 13 15:42:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HR7pA-000216-Jc
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 15:18:01 +0100
+	id 1HR8CV-0003yc-Nn
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 15:42:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030354AbXCMORy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Mar 2007 10:17:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030376AbXCMORy
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 10:17:54 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3507 "HELO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030354AbXCMORx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2007 10:17:53 -0400
-Received: (qmail 24665 invoked from network); 13 Mar 2007 10:18:15 -0400
-Received: from unknown (HELO coredump.intra.peff.net) (10.0.0.2)
-  by 66-23-211-5.clients.speedfactory.net with SMTP; 13 Mar 2007 10:18:15 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Mar 2007 10:17:51 -0400
-Content-Disposition: inline
-In-Reply-To: <7vfy89ldyv.fsf_-_@assigned-by-dhcp.cox.net>
+	id S1030461AbXCMOlw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Mar 2007 10:41:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030494AbXCMOlv
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 10:41:51 -0400
+Received: from lngw1.bjservices.com ([207.193.159.253]:40601 "EHLO
+	lngw02.BJSERVICES.COM" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030461AbXCMOlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2007 10:41:51 -0400
+X-Greylist: delayed 403 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Mar 2007 10:41:51 EDT
+X-Mailer: Lotus Notes Release 6.5.1 January 21, 2004
+X-MIMETrack: Serialize by Router on LnGW02/BJSUSA/BJSERVICES(Release 6.5.5FP1|April 11, 2006) at
+ 03/13/2007 09:39:05,
+	Serialize complete at 03/13/2007 09:39:05
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42118>
 
-On Tue, Mar 13, 2007 at 01:55:36AM -0700, Junio C Hamano wrote:
+Say that I have projects A and B which both depend on another project Z. 
+Whenever I update one of those projects, I'd like to also update to the 
+latest version of Z in a subdirectory. Is there that kind of support for 
+these subprojects? If I'm not being clear, I'm talking about the kind of 
+support that is available in Subversion through svn:externals or something 
+analogous.
 
-> 	$ git log --first-parent master..jc/fetch
+Also, please cc me in any answers since I'm not sure my subscription to 
+the list went through.
 
-You might recall the 25-way hydra merge I was discussing a few weeks
-ago. I ended up simply making a series of pair-wise merges; this
-"--first-parent" option is the perfect tool for visualizing it,
-especially "gitk --first-parent". Please consider merging it.
+Thanks,
 
--Peff
+Luke Powell
+Project Engineer
+BJ Services
