@@ -1,78 +1,240 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 2/3] git-bundle: die if a given ref is not included in
- bundle
-Date: Mon, 12 Mar 2007 23:16:16 -0400
-Message-ID: <45F61780.2090001@gmail.com>
-References: <Pine.LNX.4.63.0703090348300.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F0D1B3.9020204@gmail.com> <7vejny7umx.fsf@assigned-by-dhcp.cox.net> <45F17EF0.5060008@gmail.com> <7v1wjy56qf.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703101637300.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F2D955.8050800@gmail.com> <Pine.LNX.4.63.0703101749270.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F2F934.8060407@gmail.com> <Pine.LNX.4.63.0703110201450.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7vy7m4y3cn.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703110244130.22628@wbgn013.biozentrum.uni-wuerzburg.de> <45F41787.4080506@gmail.com> <Pine.LNX.4.63.0703112302140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git (stable)
+Date: Tue, 13 Mar 2007 01:49:43 -0700
+Message-ID: <7vr6rtle8o.fsf@assigned-by-dhcp.cox.net>
+References: <7vbqjp1dyx.fsf@assigned-by-dhcp.cox.net>
+	<7v3b4x9sst.fsf@assigned-by-dhcp.cox.net>
+	<7v8xed5mex.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 13 04:16:37 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 13 09:49:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HQxV6-0008BA-DS
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 04:16:36 +0100
+	id 1HR2hZ-0001nL-1U
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 09:49:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082AbXCMDQW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 12 Mar 2007 23:16:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753083AbXCMDQW
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Mar 2007 23:16:22 -0400
-Received: from ik-out-1112.google.com ([66.249.90.183]:15527 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753077AbXCMDQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Mar 2007 23:16:21 -0400
-Received: by ik-out-1112.google.com with SMTP id c21so1876032ika
-        for <git@vger.kernel.org>; Mon, 12 Mar 2007 20:16:20 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=rpSIDGJTGUlhHmcwKlvZb6p0SbGsPUd5C9mW1Wk4vk/nFbPna7EibH4dGRX+8O62jETQRPgS73y4+SSTU9IB6igj8PirlU+kG0OaKw6GWJrrhdsXcFiLqgnPLymfUGcnz8xA2rhE6hLRzvBEv1CVoTwpjTAwxbgQpCxEaUamTWw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=ri2M20kI0K+kI6ihKMWLUy0/ZWcgt2zhCpJ+0aMlMJ+jmZBxN/gL+y1vbL8RtQJVggTK4DJ3wCOzLMtX3rDypd2KYyfL+qVJA8n2rDd9iEHg4yC/R2ZwvPIUDkjBuaQQ6gEIPMjfWGx8IVEp1i7RWefTzcZMkxK1gUGOC9UigjA=
-Received: by 10.70.132.2 with SMTP id f2mr614535wxd.1173755779604;
-        Mon, 12 Mar 2007 20:16:19 -0700 (PDT)
-Received: from ?192.168.100.117? ( [71.246.235.75])
-        by mx.google.com with ESMTP id h13sm6483180wxd.2007.03.12.20.16.17;
-        Mon, 12 Mar 2007 20:16:18 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <Pine.LNX.4.63.0703112302140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S1753193AbXCMItq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Mar 2007 04:49:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbXCMItq
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 04:49:46 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:64411 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753193AbXCMIto convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2007 04:49:44 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070313084944.DVEB24587.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 13 Mar 2007 04:49:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id a8pj1W00E1kojtg0000000; Tue, 13 Mar 2007 04:49:44 -0400
+X-maint-at: 65d61e5f512f15b8384a2b6bfe818713fe5bebcb
+X-master-at: 27ebd6e0443bdd795869f598ecebc9eadd64a26c
+In-Reply-To: <7v8xed5mex.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 04 Mar 2007 02:32:38 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42107>
 
-Johannes Schindelin wrote:
-> FWIW my plans are to make the pack thin _only_ when there is only one 
-> prereq and/or ref in the bundle (this prevents a _wanted_ object being 
-> deltified against a not-wanted object).
->
->   
-I am not sure that this is really necessary or accomplishes additional 
-safety. The prerequisites must exist and be well connected in the target 
-repo before the pack file is indexed: presumably, the reference objects 
-all exist if the checks hold, or there is a logic flaw in the thin-pack 
-generation.
+Perhaps it is time for 1.5.0.4 this Wednesday (my time) from
+'maint'.
 
-If the prereq test is removed, then avoiding a thin pack might allow the 
-pack file to be applied to a repo that held only the prereqs for a 
-single head out of many in the bundle, but there is no info for the user 
-to understand how or when to do this and I don't really think that is a 
-good practice to encourage. I suggest waiting for a well defined 
-use-case that really demands being able to apply only part of a pack 
-file before implementing.
+On the 'master' front, Johannes and Matthias cleaned up the
+git-bundle and made it (hopefully) usable shape.  Also git-diff
+got even nicer when used outside the context of git, again
+thanks to Johannes.  I think we are nearing 1.5.1-rc1, which
+I'll talk about in "What's cooking".
 
-> Also, as mentioned above, I think that we have to check that "git rev-list 
-> --objects <new-refs> --not --all" does not result in missing objects.
->   
-This is certainly a good safety check: even though the prereqs are 
-satisfied and all *should* be ok, some error might still exist and it is 
-better to be safe.
-> Ciao,
-> Dscho
->   
+----------------------------------------------------------------
+
+* The 'maint' branch has these fixes since the last announcement.
+
+ Alexandre Julliard (2):
+  git.el: Avoid appending a signoff line that is already present.
+  git.el: Retrieve commit log information from .dotest directory.
+
+ Avi Kivity (1):
+  git-send-email: Document configuration options
+
+ Brian Gernhardt (1):
+  Fix diff-options references in git-diff and git-format-patch
+
+ J. Bruce Fields (13):
+  Documentation: mention module option to git-cvsimport
+  user-manual: reset to ORIG_HEAD not HEAD to undo merge
+  user-manual: ensure generated manual references stylesheet
+  user-manual: insert earlier of mention content-addressable architectu=
+re
+  user-manual: how to replace commits older than most recent
+  user-manual: more detailed merge discussion
+  glossary: fix overoptimistic automatic linking of defined terms
+  user-manual: fix inconsistent example
+  user-manual: fix inconsistent use of pull and merge
+  user-manual: fix missing colon in git-show example
+  user-manual: fix rendering of history diagrams
+  user-manual: install user manual stylesheet with other web documents
+  git-merge: warn when -m provided on a fast forward
+
+ Jeff King (2):
+  Documentation: s/seperator/separator/
+  fast-import: grow tree storage more aggressively
+
+ Johannes Schindelin (2):
+  Begin SubmittingPatches with a check list
+  make t8001 work on Mac OS X again
+
+ Junio C Hamano (2):
+  GIT 1.5.0.3
+  git-commit: cd to top before showing the final stat
+
+ Matthias Kestenholz (1):
+  Adjust reflog filemode in shared repository
+
+ Matthias Lederhofer (1):
+  setup_git_directory_gently: fix off-by-one error
+
+ Shawn O. Pearce (13):
+  git-gui: Relocate the menu/transport menu code.
+  git-gui: Add Reset to the Branch menu.
+  git-gui: Don't create empty (same tree as parent) commits.
+  git-gui: Remove unnecessary /dev/null redirection.
+  fast-import: Avoid infinite loop after reset
+  fast-import: Fail if a non-existant commit is used for merge
+  git-gui: Make 'make' quieter by default
+  Catch write_ref_sha1 failure in receive-pack
+  git-gui: Allow committing empty merges
+  git-gui: Revert "Don't modify CREDITS-FILE if it hasn't changed."
+  git-gui: Revert "git-gui: Display all authors of git-gui."
+  git-gui: Allow 'git gui version' outside of a repository
+  Don't package the git-gui credits file anymore
+
+ Theodore Ts'o (1):
+  Add definition of <commit-ish> to the main git man page.
+
+ Yasushi SHOJI (1):
+  glossary: Add definitions for dangling and unreachable objects
+
+
+* The 'master' branch has these since the last announcement
+  in addition to the above.
+
+ Alex Riesen (4):
+  git-gui: Support of "make -s" in: do not output anything of the build=
+ itself
+  More build output cleaning up
+  Support of "make -s": do not output anything of the build itself
+  Allow "make -w" generate its usual output
+
+ Avi Kivity (1):
+  git-send-email: configurable bcc and chain-reply-to
+
+ Frank Lichtenheld (1):
+  cvsserver: Use Merged response instead of Update-existing for merged =
+files
+
+ Jakub Narebski (1):
+  gitweb: Don't escape attributes in CGI.pm HTML methods
+
+ Jeff King (1):
+  New fast-import test case for valid tree sorting
+
+ Jim Meyering (1):
+  I like the idea of the new ':/<oneline prefix>' notation, and gave it
+
+ Johannes Schindelin (15):
+  fetch & clone: do not output progress when not on a tty
+  Fixup no-progress for fetch & clone
+  Make git-revert & git-cherry-pick a builtin
+  diff: support reading a file from stdin via "-"
+  diff --no-index: support /dev/null as filename
+  Get rid of the dependency to GNU diff in the tests
+  cherry-pick: Suggest a better method to retain authorship
+  format-patch: add --inline option and make --attach a true attachment
+  bundle: fix wrong check of read_header()'s return value & add tests
+  git-bundle: avoid packing objects which are in the prerequisites
+  git-bundle: Make thin packs
+  git-bundle: handle thin packs in subcommand "unbundle"
+  git-bundle: die if a given ref is not included in bundle
+  git-bundle: prevent overwriting existing bundles
+  git-bundle: only die if pack would be empty, warn if ref is skipped
+
+ Johannes Sixt (3):
+  Add core.symlinks to mark filesystems that do not support symbolic li=
+nks.
+  Handle core.symlinks=3Dfalse case in merge-recursive.
+  Tell multi-parent diff about core.symlinks.
+
+ Junio C Hamano (14):
+  diff-ni: fix the diff with standard input
+  format-patch --attach: not folding some long headers.
+  Post 1.5.0.3 cleanup
+  fsck: fix broken loose object check.
+  unpack_sha1_file(): detect corrupt loose object files.
+  fsck: exit with non-zero status upon errors
+  git-bundle: fix pack generation.
+  revision walker: Fix --boundary when limited
+  revision traversal: retire BOUNDARY_SHOW
+  git-bundle: various fixups
+  revision traversal: SHOWN means shown
+  git-bundle: make verify a bit more chatty.
+  revision --boundary: fix stupid typo
+  revision --boundary: fix uncounted case.
+
+ Li Yang (1):
+  gitweb: Change to use explicitly function call cgi->escapHTML()
+
+ Linus Torvalds (1):
+  Re-fix get_sha1_oneline()
+
+ Paolo Bonzini (3):
+  git-config: document --rename-section, provide --remove-section
+  git-archimport: allow remapping branch names
+  git-commit: add a --interactive option
+
+ Santi B=C3=A9jar (2):
+  t/t5515-fetch-merge-logic.sh: Added tests for the merge login in git-=
+fetch
+  t/t5515-fetch-merge-logic.sh: Add two more tests
+
+ Shawn O. Pearce (31):
+  cherry-pick: Bug fix 'cherry picked from' message.
+  Make 'make' quieter while building git
+  Make 'make' quiet by default
+  Display the null SHA-1 as the base for an OBJ_OFS_DELTA.
+  Fix mmap leak caused by reading bad indexes.
+  Don't build external_grep if its not used
+  General const correctness fixes
+  Use uint32_t for all packed object counts.
+  Use uint32_t for pack-objects counters.
+  Use off_t when we really mean a file offset.
+  Use off_t in pack-objects/fast-import when we mean an offset
+  Cast 64 bit off_t to 32 bit size_t
+  Preallocate memory earlier in fast-import
+  Move post-update hook to after all other activity
+  Don't run post-update hook unless a ref changed
+  Refactor run_update_hook to be more useful
+  Refactor handling of error_string in receive-pack
+  Teach receive-pack to run pre-receive/post-receive hooks
+  Use atomic updates to the fast-import mark file
+  Allow fast-import frontends to reload the marks table
+  Switch to run_command_v_opt in revert
+  Remove unused run_command variants
+  Start defining a more sophisticated run_command
+  Split run_command into two halves (start/finish)
+  Teach run_command how to setup a stdin pipe
+  Refactor run_command error handling in receive-pack
+  Split back out update_hook handling in receive-pack
+  Change {pre,post}-receive hooks to use stdin
+  Remove unnecessary casts from fast-import
+  Simplify closing two fds at once in run-command.c
+  Fix t5510-fetch's use of sed
+
+ Xavier Maillard (1):
+  contrib/emacs: Use non-interactive function to byte-compile files
