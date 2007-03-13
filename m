@@ -1,67 +1,57 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Support for config wildcards
-Date: Tue, 13 Mar 2007 10:47:23 -0600
-Message-ID: <17910.54683.651029.884390@lisa.zopyra.com>
+From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
+Subject: Re: [PATCH 2/3] git-fetch: Support the local remote "."
+Date: Tue, 13 Mar 2007 17:53:44 +0100
+Message-ID: <45F6D718.5080601@lu.unisi.ch>
+References: <87bqixf6qf.fsf@gmail.com>
+Reply-To: bonzini@gnu.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 13 17:47:53 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Paolo Bonzini <bonzini@gnu.org>,
+	"Junio C. Hamano" <junkio@cox.net>
+To: =?UTF-8?B?U2FudGkgQsOpamFy?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 13 17:53:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRAAC-00018p-F4
-	for gcvg-git@gmane.org; Tue, 13 Mar 2007 17:47:52 +0100
+	id 1HRAFy-0003tj-5d
+	for gcvg-git@gmane.org; Tue, 13 Mar 2007 17:53:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030792AbXCMQrk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Mar 2007 12:47:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030791AbXCMQrk
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 12:47:40 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:61842 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030792AbXCMQrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2007 12:47:39 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l2DGlaS26353;
-	Tue, 13 Mar 2007 10:47:36 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1030800AbXCMQxs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 13 Mar 2007 12:53:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030797AbXCMQxs
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 12:53:48 -0400
+Received: from server.usilu.net ([195.176.178.200]:57147 "EHLO mail.usilu.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1030800AbXCMQxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2007 12:53:47 -0400
+Received: from [192.168.68.211] ([192.168.68.211] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 13 Mar 2007 17:53:42 +0100
+User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
+In-Reply-To: <87bqixf6qf.fsf@gmail.com>
+X-OriginalArrivalTime: 13 Mar 2007 16:53:42.0262 (UTC) FILETIME=[27E8E960:01C76590]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42134>
 
-I would like to use our update hook to send email to recipients based
-on a branch name pattern.  For example, the "abc" team would get email
-for all updates to branches that start with the word "abc".
+Santi B=C3=A9jar wrote:
+> To this end, git-parse-remote is grown with a new kind of remote,
+> `builtin'. This returns all the local branches in
+> get_remote_default_refs_for_fetch. This is equivalent to having a
+> fake remote as:
+>=20
+> [remote "local"]
+> url =3D .
+> fetch =3D refs/*
+>=20
+> Based on a patch from Paolo Bonzini.
 
-I would like to write something like this in the config file:
+Can you please compare the times to do "git fetch ."?  The reason
+to touch git-fetch.sh was an optimization that Junio requested.
 
-[hooks.mail.recipients]
-        xyz.pickle = me, you, betty-sue
-        xyz* = joe, jaya, julie
-        abc* = mark, nancy, svetlana
-        taug* = sridhar, pete, joe
-        * = me, you, big-boss
+I found my 2nd submission to be 20% faster than the first.
 
-Then, in the update hook, do something like this (very
-pseudo-code-ish):
-
-    for key, value in $(git config --get-regexp hooks.mail.recipients*); do
-        key=${key#hooks.mail.recipients}
-        if $(matches $key $branch); then
-            recipients=$value
-            break
-        fi
-    done
-
-Which would allow me to change the mailing list recipients based
-on the branch without having to update the update hook each time.
-
-But, apparently at least the '*' and '.' characters are not allowed as
-keys, and I can't seem to escape them.
-
-Is there a way to do this sort of thing that I am missing?
-
-
-Bill
+Paolo
