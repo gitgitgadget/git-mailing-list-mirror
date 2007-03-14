@@ -1,96 +1,90 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Allow git-diff exit with codes similar to diff(1)
-Date: Wed, 14 Mar 2007 13:05:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703141301210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <81b0412b0703131717k7106ee1cg964628f0bda2c83e@mail.gmail.com> 
- <Pine.LNX.4.64.0703131757080.9690@woody.linux-foundation.org> 
- <Pine.LNX.4.63.0703140216480.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
- <Pine.LNX.4.64.0703131831390.9690@woody.linux-foundation.org> 
- <Pine.LNX.4.63.0703140237270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <81b0412b0703140137i6d0df44aua9205e81249570ea@mail.gmail.com>
+Subject: Re: [PATCH] Make gc a builtin.
+Date: Wed, 14 Mar 2007 13:19:21 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703141314140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11738375021267-git-send-email-jbowes@dangerouslyinc.com>
+ <7vodmwfg2c.fsf@assigned-by-dhcp.cox.net> <20070314074440.GC12710@thunk.org>
+ <200703141045.58739.andyparkins@gmail.com> <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 13:05:44 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Theodore Tso <tytso@mit.edu>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	James Bowes <jbowes@dangerouslyinc.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Mar 14 13:19:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRSEf-0000Cm-8m
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 13:05:41 +0100
+	id 1HRSS0-0007bw-B1
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 13:19:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161177AbXCNMF1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 08:05:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161178AbXCNMF1
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 08:05:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41535 "HELO mail.gmx.net"
+	id S1161198AbXCNMTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 08:19:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161201AbXCNMTZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 08:19:25 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52295 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161177AbXCNMF0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 08:05:26 -0400
-Received: (qmail invoked by alias); 14 Mar 2007 12:05:24 -0000
+	id S1161198AbXCNMTY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 08:19:24 -0400
+Received: (qmail invoked by alias); 14 Mar 2007 12:19:22 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp035) with SMTP; 14 Mar 2007 13:05:24 +0100
+  by mail.gmx.net (mp022) with SMTP; 14 Mar 2007 13:19:23 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19sVrt2swNs/rn1FZjkzBmy79x6AWK1V+xybL82DE
-	LtKvGfB8YWmLTP
+X-Provags-ID: V01U2FsdGVkX1+B9mYF5niBGu55+F1JqOGTbv6rDkR2Kk8D6rqP7r
+	mdVf6N1dq4IbmJ
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <81b0412b0703140137i6d0df44aua9205e81249570ea@mail.gmail.com>
+In-Reply-To: <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42203>
 
 Hi,
 
-On Wed, 14 Mar 2007, Alex Riesen wrote:
+On Wed, 14 Mar 2007, Junio C Hamano wrote:
 
-> On 3/14/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > > So, big master to hom everybody bows, how to return the correct value
-> > > > when executing a pager? Because this _has_ to be done if we go that
-> > > > way.
-> > >
-> > > Why? If you execute the pager, nobody cares about the error value
-> > > anyway.
-> > >
-> > > I don't see why you would mix in a pager here. If you do
-> > >
-> > >       diff -u file1 file2 | less -S
-> > >
-> > > the return value of the pipe will not only generally be totally
-> > > uninteresting and never used, but it will be the return value of "less"
-> > > anyway. Which is what we'd get quite naturally.
-> > 
-> > The thing is, most people do not realize that
-> > 
-> >         git diff file1 file2
-> > 
-> > _will_ execute a pager. As foreground process. And the return value is
-> > that of the pager.
+> Andy Parkins <andyparkins@gmail.com> writes:
 > 
-> In this example this is obviously (sometimes it is obscurely) interactive.
-> The return code is seldom expected.
+> > On Wednesday 2007 March 14 07:44, Theodore Tso wrote:
+> >
+> >> I agree with Junio; I think the scripts are much more readable and
+> >> easier to understand; In fact, it would be nice if the script were
+> >> preserved somewhere, perhaps as comments in the .c file.
+> >
+> > If only there were some tool that would keep collections of files as a 
+> > snapshotted whole and allow us to browse the history of those snapshots in 
+> > some sort of connected graph, with each snapshot being given some sort of 
+> > unique ID.  Then we could simply refer to that unique ID when we wanted to 
+> > tell someone about a particular historical instance.
+> >
+> > :-)
 > 
-> More sneaky case could be this:
+> There is a difference between having a readily greppable and
+> lessable copy handy to study at your own initiative, and being
+> able to retrieve to review only after being told.
 > 
->  git diff file1 file2 > tmp && do_something
->  rm -f tmp
-> 
-> But we have isatty in setup_pager, so this works properly.
+> You could argue that we can all do that with git-grep and
+> git-less ;-).
 
-The problem is test cases. I think that we pipe the output of the test 
-case _anyway_, so the isatty() call is helping us there.
+Not to forget git-checkout.
 
-If we did not (this applies to test cases _outside_ of Git, too), then a 
-simple
+But I like the idea of contrib/examples/. Why not put more stuff there, 
+instead of clinging onto scripts for core-git? The purpose of 
+contrib/examples/ is to provide easy samples, and the purpose of core-git 
+is _not_ to provide easy examples, but a consistent and portable set of 
+programs.
 
-	git diff bla || exit
+Als, when reading Git's scripts, I often think
 
-would not work as expected. Even worse, as long as it is piped somewhere, 
-even cat, it works. But once you no longer pipe it (to get the nice pager, 
-for example), it stops working.
+- wow, what a different style from my one, and
+- would locking not be a nice thing?
+
+But I guess that now that the King Penguin spoke, I no longer have to 
+argue for more builtins, even if they are trivial. (Who knows, maybe we 
+can ship _one_ program, which is then hard linked to git-*, soon?)
 
 Ciao,
 Dscho
