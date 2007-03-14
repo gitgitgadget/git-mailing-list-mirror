@@ -1,69 +1,60 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Make gc a builtin.
-Date: Wed, 14 Mar 2007 04:12:56 -0700
-Message-ID: <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
-References: <11738375021267-git-send-email-jbowes@dangerouslyinc.com>
-	<7vodmwfg2c.fsf@assigned-by-dhcp.cox.net>
-	<20070314074440.GC12710@thunk.org>
-	<200703141045.58739.andyparkins@gmail.com>
+Subject: Re: [PATCH, fixed version] git-fetch, git-branch: Support local --track via a special remote `.'
+Date: Wed, 14 Mar 2007 04:20:49 -0700
+Message-ID: <7vird4ax66.fsf@assigned-by-dhcp.cox.net>
+References: <45F58A84.2000503@lu.unisi.ch>
+	<7v4poplceh.fsf@assigned-by-dhcp.cox.net>
+	<45F69939.6070909@lu.unisi.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Theodore Tso <tytso@mit.edu>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	James Bowes <jbowes@dangerouslyinc.com>,
-	Johannes.Schindelin@gmx.de
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 12:13:10 2007
+Cc: git@vger.kernel.org
+To: bonzini@gnu.org
+X-From: git-owner@vger.kernel.org Wed Mar 14 12:20:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRRPp-0005Ov-Dh
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 12:13:09 +0100
+	id 1HRRXK-0000zU-QR
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 12:20:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161130AbXCNLM7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 07:12:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161132AbXCNLM7
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 07:12:59 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:64238 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161130AbXCNLM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 07:12:58 -0400
+	id S1161133AbXCNLUv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 07:20:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161140AbXCNLUv
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 07:20:51 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:49894 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161133AbXCNLUv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 07:20:51 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao104.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070314111256.DMNK748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 14 Mar 2007 07:12:56 -0400
+          id <20070314112049.ORYR1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Mar 2007 07:20:49 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id abCx1W0021kojtg0000000; Wed, 14 Mar 2007 07:12:57 -0400
-In-Reply-To: <200703141045.58739.andyparkins@gmail.com> (Andy Parkins's
-	message of "Wed, 14 Mar 2007 10:45:55 +0000")
+	id abLq1W0081kojtg0000000; Wed, 14 Mar 2007 07:20:50 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42198>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Paolo Bonzini <paolo.bonzini@lu.unisi.ch> writes:
 
-> On Wednesday 2007 March 14 07:44, Theodore Tso wrote:
+>  t/t9109-git-svn-pull.sh  |   31 +++++++++++++++++++++++++++++++
+>  8 files changed, 120 insertions(+), 27 deletions(-)
 >
->> I agree with Junio; I think the scripts are much more readable and
->> easier to understand; In fact, it would be nice if the script were
->> preserved somewhere, perhaps as comments in the .c file.
+> 	The failure, which I didn't see because I didn't have svn-perl
+> 	bindings installed, was caused by my usage of "git-show-ref --heads"
+> 	where I should have used plain "git-show-ref".
 >
-> If only there were some tool that would keep collections of files as a 
-> snapshotted whole and allow us to browse the history of those snapshots in 
-> some sort of connected graph, with each snapshot being given some sort of 
-> unique ID.  Then we could simply refer to that unique ID when we wanted to 
-> tell someone about a particular historical instance.
->
-> :-)
+> 	I include a smaller testcase for the same problem, t9109.
 
-There is a difference between having a readily greppable and
-lessable copy handy to study at your own initiative, and being
-able to retrieve to review only after being told.
+I'd prefer dropping the t9109 test, as it seems to be redundant.
+Existing t9101 seems to cover pulling from remote tracking
+branch maintained by git-svn already.
 
-You could argue that we can all do that with git-grep and
-git-less ;-).
+Also I'll be reverting a couple of patches from 'next', so this
+no longer applies.  Would appreciate a re-spin.
+
+Sorry about that.
