@@ -1,90 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make gc a builtin.
-Date: Wed, 14 Mar 2007 13:19:21 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703141314140.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11738375021267-git-send-email-jbowes@dangerouslyinc.com>
- <7vodmwfg2c.fsf@assigned-by-dhcp.cox.net> <20070314074440.GC12710@thunk.org>
- <200703141045.58739.andyparkins@gmail.com> <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Allow git-diff exit with codes similar to diff(1)
+Date: Wed, 14 Mar 2007 13:26:33 +0100
+Message-ID: <81b0412b0703140526p454ee85fk74dcd76fb684217c@mail.gmail.com>
+References: <81b0412b0703131717k7106ee1cg964628f0bda2c83e@mail.gmail.com>
+	 <Pine.LNX.4.64.0703131757080.9690@woody.linux-foundation.org>
+	 <Pine.LNX.4.63.0703140216480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.64.0703131831390.9690@woody.linux-foundation.org>
+	 <Pine.LNX.4.63.0703140237270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <81b0412b0703140137i6d0df44aua9205e81249570ea@mail.gmail.com>
+	 <Pine.LNX.4.63.0703141301210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Theodore Tso <tytso@mit.edu>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	James Bowes <jbowes@dangerouslyinc.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 13:19:32 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 14 13:26:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRSS0-0007bw-B1
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 13:19:28 +0100
+	id 1HRSZ5-0002w1-81
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 13:26:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161198AbXCNMTZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 08:19:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161201AbXCNMTZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 08:19:25 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52295 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1161198AbXCNMTY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 08:19:24 -0400
-Received: (qmail invoked by alias); 14 Mar 2007 12:19:22 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp022) with SMTP; 14 Mar 2007 13:19:23 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+B9mYF5niBGu55+F1JqOGTbv6rDkR2Kk8D6rqP7r
-	mdVf6N1dq4IbmJ
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1161213AbXCNM0g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 08:26:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161212AbXCNM0g
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 08:26:36 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:60022 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161222AbXCNM0f (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 08:26:35 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so190564nfa
+        for <git@vger.kernel.org>; Wed, 14 Mar 2007 05:26:33 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=awLH0/7inFYfTT9DsShhCEEXWmVFk8hTDxcUVqpleIDug5nANZdlmO2LfGE46obdBhbbLPb17IHMw0bmmJf1eycohHEGFITsolOzkkcxxnTW2+PbW6Xyi3zCCy4hAbA6j4bTdior2cl0DE0/n3O00r3sepZKTTuT+1w5mI6v/aA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S8BQJORmiQGh9iWjQFQzsiM0mlXi0UlmewMRc4hF68xKNZ0fmsK+4xo6yO9Mh6gXhrZBJYzhz+MOFGkT/jLIGgGZ24peW1UEPxi5Xn6dhnE5RT+OOH943X4RILWbFoWd+fKYfWMjW3kVFvRccuAiM+lBfvx1eNffVm3AfyjrHVk=
+Received: by 10.78.200.3 with SMTP id x3mr1141588huf.1173875193352;
+        Wed, 14 Mar 2007 05:26:33 -0700 (PDT)
+Received: by 10.78.138.5 with HTTP; Wed, 14 Mar 2007 05:26:33 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.63.0703141301210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42204>
 
-Hi,
+On 3/14/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > But we have isatty in setup_pager, so this works properly.
+>
+> The problem is test cases. I think that we pipe the output of the test
+> case _anyway_, so the isatty() call is helping us there.
+>
+> If we did not (this applies to test cases _outside_ of Git, too), then a
+> simple
+>
+>         git diff bla || exit
+>
+> would not work as expected. Even worse, as long as it is piped somewhere,
+> even cat, it works. But once you no longer pipe it (to get the nice pager,
+> for example), it stops working.
 
-On Wed, 14 Mar 2007, Junio C Hamano wrote:
-
-> Andy Parkins <andyparkins@gmail.com> writes:
-> 
-> > On Wednesday 2007 March 14 07:44, Theodore Tso wrote:
-> >
-> >> I agree with Junio; I think the scripts are much more readable and
-> >> easier to understand; In fact, it would be nice if the script were
-> >> preserved somewhere, perhaps as comments in the .c file.
-> >
-> > If only there were some tool that would keep collections of files as a 
-> > snapshotted whole and allow us to browse the history of those snapshots in 
-> > some sort of connected graph, with each snapshot being given some sort of 
-> > unique ID.  Then we could simply refer to that unique ID when we wanted to 
-> > tell someone about a particular historical instance.
-> >
-> > :-)
-> 
-> There is a difference between having a readily greppable and
-> lessable copy handy to study at your own initiative, and being
-> able to retrieve to review only after being told.
-> 
-> You could argue that we can all do that with git-grep and
-> git-less ;-).
-
-Not to forget git-checkout.
-
-But I like the idea of contrib/examples/. Why not put more stuff there, 
-instead of clinging onto scripts for core-git? The purpose of 
-contrib/examples/ is to provide easy samples, and the purpose of core-git 
-is _not_ to provide easy examples, but a consistent and portable set of 
-programs.
-
-Als, when reading Git's scripts, I often think
-
-- wow, what a different style from my one, and
-- would locking not be a nice thing?
-
-But I guess that now that the King Penguin spoke, I no longer have to 
-argue for more builtins, even if they are trivial. (Who knows, maybe we 
-can ship _one_ program, which is then hard linked to git-*, soon?)
-
-Ciao,
-Dscho
+We have "PAGER=cat" in test-lib.sh which just disables pager,
+so gits tests do not have the problem (maybe it was disabled just
+because of this?). And if someone has own tests _with_ pager active
+the one better be aware of what the one doing.
