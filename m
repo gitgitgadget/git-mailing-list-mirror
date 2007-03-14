@@ -1,231 +1,132 @@
-From: James Bowes <jbowes@dangerouslyinc.com>
-Subject: [PATCH] Make gc a builtin.
-Date: Tue, 13 Mar 2007 21:58:22 -0400
-Message-ID: <11738375021267-git-send-email-jbowes@dangerouslyinc.com>
-Cc: spearce@spearce.org, junkio@cox.net, Johannes.Schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 14 02:59:09 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Allow git-diff exit with codes similar to diff(1)
+Date: Tue, 13 Mar 2007 21:56:01 -0700
+Message-ID: <7v8xe0h19a.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0703131717k7106ee1cg964628f0bda2c83e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 14 05:56:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRIlh-00032v-2z
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 02:59:09 +0100
+	id 1HRLXD-0000tS-0M
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 05:56:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933791AbXCNB6x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Mar 2007 21:58:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933796AbXCNB6w
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 21:58:52 -0400
-Received: from ms-smtp-01.southeast.rr.com ([24.25.9.100]:62530 "EHLO
-	ms-smtp-01.southeast.rr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933791AbXCNB6w (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Mar 2007 21:58:52 -0400
-Received: from localhost (cpe-066-057-086-146.nc.res.rr.com [66.57.86.146])
-	by ms-smtp-01.southeast.rr.com (8.13.6/8.13.6) with ESMTP id l2E1wlmj008436;
-	Tue, 13 Mar 2007 21:58:48 -0400 (EDT)
-X-Mailer: git-send-email 1.5.0.2
-In-Reply-To: Pine.LNX.4.63.0703140203250.22628@wbgn013.biozentrum.uni-wuerzburg.de
-References: Pine.LNX.4.63.0703140203250.22628@wbgn013.biozentrum.uni-wuerzburg.de
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
+	id S933826AbXCNE4F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 00:56:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933827AbXCNE4F
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 00:56:05 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:53271 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933826AbXCNE4E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 00:56:04 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070314045603.ZCLJ2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Mar 2007 00:56:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id aUw11W00p1kojtg0000000; Wed, 14 Mar 2007 00:56:02 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42172>
 
-Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
----
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-On 3/13/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> If you say "return error(...);", there is _no_ way that multiple error
-> messages are printed out.
+> diff --git a/builtin-diff.c b/builtin-diff.c
+> index 4efbb82..5e6265f 100644
+> --- a/builtin-diff.c
+> +++ b/builtin-diff.c
+> @@ -130,6 +130,7 @@ static int builtin_diff_tree(struct rev_info *revs,
+>  {
+>  	const unsigned char *(sha1[2]);
+>  	int swap = 0;
+> +	int result = 0;
+>  
+>  	if (argc > 1)
+>  		usage(builtin_diff_usage);
+> @@ -141,9 +142,9 @@ static int builtin_diff_tree(struct rev_info *revs,
+>  		swap = 1;
+>  	sha1[swap] = ent[0].item->sha1;
+>  	sha1[1-swap] = ent[1].item->sha1;
+> -	diff_tree_sha1(sha1[0], sha1[1], "", &revs->diffopt);
+> +	result = diff_tree_sha1(sha1[0], sha1[1], "", &revs->diffopt);
+>  	log_tree_diff_flush(revs);
+> -	return 0;
+> +	return result;
+>  }
+>  
+>  static int builtin_diff_combined(struct rev_info *revs,
 
-Yeah, I wasn't testing well enough. If you pass the name of a non-existant
-command to run_command, then it will print out a message about not being able
-to exec. That's not going to help when the command runs but does something bad.
-So here's the patch with error().
+The change to diff-tree side is completely borked.  (1) You did
+not notice compare_tree_entry() in tree-diff.c returns 0 only to
+signal that it has dealt with an entry from both sides (so the
+caller can do update_tree_entry() on both), and the return value
+does not mean they are the same.  (2) You are checking if there
+are differences at wrong level, before letting diffcore_std() to
+process the queue.  Because of the bug (1) I cannot test that
+but after you fix (1) you would notice that it would not work if
+you say "-Spickaxe"; your changes to diff-files and diff-index
+are correct on this regard.
 
--James
+A slight tangent, but what Linus recalled he thought he did but
+he didn't is related to the parts you touched in diff-tree
+above.  Because of the interaction with diffcore, these changes
+should not be used for the purpose of -exit-code, but catching
+the tree level change in the above places and leaving early
+would be the right thing to do for comparing the whole tree for
+the purpose of simplifying the parents.  Tomorrow will be my git
+day so I might whip up a patch to speed that up.
 
- Makefile     |    3 +-
- builtin-gc.c |   78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- builtin.h    |    1 +
- git-gc.sh    |   37 ---------------------------
- git.c        |    1 +
- 5 files changed, 82 insertions(+), 38 deletions(-)
- create mode 100644 builtin-gc.c
- delete mode 100755 git-gc.sh
+> diff --git a/diff-lib.c b/diff-lib.c
+> index 6abb981..f943b6f 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -433,8 +437,9 @@ int run_diff_files(struct rev_info *revs, int silent_on_removed)
+>  
+>  	}
+>  	diffcore_std(&revs->diffopt);
+> +	result = revs->diffopt.diff_exit_code && diff_queued_diff.nr ? 1: 0;
+>  	diff_flush(&revs->diffopt);
+> -	return 0;
+> +	return result;
+>  }
+>  
+>  /*
+> @@ -664,9 +669,10 @@ int run_diff_index(struct rev_info *revs, int cached)
+>  		return error("bad tree object %s", tree_name);
+>  	if (read_tree(tree, 1, revs->prune_data))
+>  		return error("unable to read tree object %s", tree_name);
+> -	ret = diff_cache(revs, active_cache, active_nr, revs->prune_data,
+> +	diff_cache(revs, active_cache, active_nr, revs->prune_data,
+>  			 cached, match_missing);
+>  	diffcore_std(&revs->diffopt);
+> +	ret = revs->diffopt.diff_exit_code && diff_queued_diff.nr ? 1: 0;
+>  	diff_flush(&revs->diffopt);
+>  	return ret;
+>  }
 
-diff --git a/Makefile b/Makefile
-index 9b31565..1ccd52f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -177,7 +177,7 @@ BASIC_LDFLAGS =
- SCRIPT_SH = \
- 	git-bisect.sh git-checkout.sh \
- 	git-clean.sh git-clone.sh git-commit.sh \
--	git-fetch.sh git-gc.sh \
-+	git-fetch.sh \
- 	git-ls-remote.sh \
- 	git-merge-one-file.sh git-parse-remote.sh \
- 	git-pull.sh git-rebase.sh \
-@@ -297,6 +297,7 @@ BUILTIN_OBJS = \
- 	builtin-fmt-merge-msg.o \
- 	builtin-for-each-ref.o \
- 	builtin-fsck.o \
-+	builtin-gc.o \
- 	builtin-grep.o \
- 	builtin-init-db.o \
- 	builtin-log.o \
-diff --git a/builtin-gc.c b/builtin-gc.c
-new file mode 100644
-index 0000000..3b1f8c2
---- /dev/null
-+++ b/builtin-gc.c
-@@ -0,0 +1,78 @@
-+/*
-+ * git gc builtin command
-+ *
-+ * Cleanup unreachable files and optimize the repository.
-+ *
-+ * Copyright (c) 2007 James Bowes
-+ *
-+ * Based on git-gc.sh, which is
-+ *
-+ * Copyright (c) 2006 Shawn O. Pearce
-+ */
-+
-+#include "cache.h"
-+#include "run-command.h"
-+
-+#define FAILED_RUN "failed to run %s"
-+
-+static const char builtin_gc_usage[] = "git-gc [--prune]";
-+
-+static int pack_refs = -1;
-+
-+static const char *argv_pack_refs[] = {"pack-refs", "--prune", NULL};
-+static const char *argv_reflog[] = {"reflog", "expire", "--all", NULL};
-+static const char *argv_repack[] = {"repack", "-a", "-d", "-l", NULL};
-+static const char *argv_prune[] = {"prune", NULL};
-+static const char *argv_rerere[] = {"rerere", "gc", NULL};
-+
-+static int gc_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "gc.packrefs")) {
-+		if (!strcmp(value, "notbare"))
-+			pack_refs = -1;
-+		else
-+			pack_refs = git_config_bool(var, value);
-+		return 0;
-+	}
-+	return git_default_config(var, value);
-+}
-+
-+int cmd_gc(int argc, const char **argv, const char *prefix)
-+{
-+	int i;
-+	int prune = 0;
-+
-+	git_config(gc_config);
-+
-+	if (pack_refs < 0)
-+		pack_refs = !is_bare_repository();
-+
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		if (!strcmp(arg, "--prune")) {
-+			prune = 1;
-+			continue;
-+		}
-+		/* perhaps other parameters later... */
-+		break;
-+	}
-+	if (i != argc)
-+		usage(builtin_gc_usage);
-+
-+	if (pack_refs && run_command_v_opt(argv_pack_refs, RUN_GIT_CMD))
-+		return error(FAILED_RUN, argv_pack_refs[0]);
-+
-+	if (run_command_v_opt(argv_reflog, RUN_GIT_CMD))
-+		return error(FAILED_RUN, argv_reflog[0]);
-+
-+	if (run_command_v_opt(argv_repack, RUN_GIT_CMD))
-+		return error(FAILED_RUN, argv_repack[0]);
-+
-+	if (prune && run_command_v_opt(argv_prune, RUN_GIT_CMD))
-+		return error(FAILED_RUN, argv_prune[0]);
-+
-+	if (run_command_v_opt(argv_rerere, RUN_GIT_CMD))
-+		return error(FAILED_RUN, argv_rerere[0]);
-+
-+	return 0;
-+}
-diff --git a/builtin.h b/builtin.h
-index 1cb64b7..af203e9 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -37,6 +37,7 @@ extern int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix);
- extern int cmd_for_each_ref(int argc, const char **argv, const char *prefix);
- extern int cmd_format_patch(int argc, const char **argv, const char *prefix);
- extern int cmd_fsck(int argc, const char **argv, const char *prefix);
-+extern int cmd_gc(int argc, const char **argv, const char *prefix);
- extern int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix);
- extern int cmd_grep(int argc, const char **argv, const char *prefix);
- extern int cmd_help(int argc, const char **argv, const char *prefix);
-diff --git a/git-gc.sh b/git-gc.sh
-deleted file mode 100755
-index 436d7ca..0000000
---- a/git-gc.sh
-+++ /dev/null
-@@ -1,37 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) 2006, Shawn O. Pearce
--#
--# Cleanup unreachable files and optimize the repository.
--
--USAGE='[--prune]'
--SUBDIRECTORY_OK=Yes
--. git-sh-setup
--
--no_prune=:
--while case $# in 0) break ;; esac
--do
--	case "$1" in
--	--prune)
--		no_prune=
--		;;
--	--)
--		usage
--		;;
--	esac
--	shift
--done
--
--case "$(git config --get gc.packrefs)" in
--notbare|"")
--	test $(is_bare_repository) = true || pack_refs=true;;
--*)
--	pack_refs=$(git config --bool --get gc.packrefs)
--esac
--
--test "true" != "$pack_refs" ||
--git-pack-refs --prune &&
--git-reflog expire --all &&
--git-repack -a -d -l &&
--$no_prune git-prune &&
--git-rerere gc || exit
-diff --git a/git.c b/git.c
-index dde4d07..ed1c65e 100644
---- a/git.c
-+++ b/git.c
-@@ -249,6 +249,7 @@ static void handle_internal_command(int argc, const char **argv, char **envp)
- 		{ "format-patch", cmd_format_patch, RUN_SETUP },
- 		{ "fsck", cmd_fsck, RUN_SETUP },
- 		{ "fsck-objects", cmd_fsck, RUN_SETUP },
-+		{ "gc", cmd_gc, RUN_SETUP },
- 		{ "get-tar-commit-id", cmd_get_tar_commit_id },
- 		{ "grep", cmd_grep, RUN_SETUP | USE_PAGER },
- 		{ "help", cmd_help },
--- 
-1.5.0.2
+This side looks correct, as you are counting queued_diff.nr after
+letting diffcore_std() to filter the results.
+
+> +test_expect_failure 'git diff-tree HEAD^ HEAD' '
+> +	git diff-tree --exit-code HEAD^ HEAD
+> +'
+> ...
+> +test_expect_failure 'git diff-index --cached HEAD' '
+> +	git update-index c &&
+> +	git diff-index --exit-code --cached HEAD
+> +'
+
+In general, expect_failure should not be used for complex cases
+like this.  The first one I quoted is fine, but the latter one
+is not.  update-index may fail (perhaps somebody screwed up
+while updating read-cache.c or sha1_file.c) and the whole test
+would say "happy that the command chain as a whole failed".
