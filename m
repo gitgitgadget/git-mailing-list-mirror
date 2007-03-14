@@ -1,93 +1,96 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Make gc a builtin.
-Date: Wed, 14 Mar 2007 11:48:06 +0000
-Message-ID: <200703141148.12364.andyparkins@gmail.com>
-References: <11738375021267-git-send-email-jbowes@dangerouslyinc.com> <200703141045.58739.andyparkins@gmail.com> <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Allow git-diff exit with codes similar to diff(1)
+Date: Wed, 14 Mar 2007 13:05:24 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703141301210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <81b0412b0703131717k7106ee1cg964628f0bda2c83e@mail.gmail.com> 
+ <Pine.LNX.4.64.0703131757080.9690@woody.linux-foundation.org> 
+ <Pine.LNX.4.63.0703140216480.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <Pine.LNX.4.64.0703131831390.9690@woody.linux-foundation.org> 
+ <Pine.LNX.4.63.0703140237270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <81b0412b0703140137i6d0df44aua9205e81249570ea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, Theodore Tso <tytso@mit.edu>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	James Bowes <jbowes@dangerouslyinc.com>,
-	Johannes.Schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 14 12:48:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 14 13:05:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRRxt-0007sJ-0q
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 12:48:22 +0100
+	id 1HRSEf-0000Cm-8m
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 13:05:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161159AbXCNLsS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 07:48:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161162AbXCNLsS
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 07:48:18 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:48408 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161159AbXCNLsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 07:48:17 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so141114wxd
-        for <git@vger.kernel.org>; Wed, 14 Mar 2007 04:48:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Y8Z4QDy5DOfDvQIA6wnEda2GMCg8ws/46APL/x1Q1AZKmx+KIndU9VUxi3d+P3Euq5b8WMV9W4K2+jQq5smYEccbkY5GIVPmK4pJAIzveIciehkTC9yQ1yZWsCN/zql+muX5dtg8BDmd99bEnKh/3ViSFpnV+1hzo3H8YIXIjTY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=hP+W1OVnL5uVhsUmzmMCGD4eIM8L0Yrr6j5PgJgXQ3oL/esJUTXfpTJ20DlsLxDTSbnQUNldmZ0ChR8ENAT7i5z3ib+ld2zJNxL2jey5M393+igrE/FhqmO1cPXYmkGCRTfOYXCNwTO6HIe/ngzhUZaJ31ena7V8coNt4uoQVw8=
-Received: by 10.90.88.13 with SMTP id l13mr6975975agb.1173872897111;
-        Wed, 14 Mar 2007 04:48:17 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id g1sm24546190nfe.2007.03.14.04.48.16;
-        Wed, 14 Mar 2007 04:48:16 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1161177AbXCNMF1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 08:05:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161178AbXCNMF1
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 08:05:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41535 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1161177AbXCNMF0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 08:05:26 -0400
+Received: (qmail invoked by alias); 14 Mar 2007 12:05:24 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 14 Mar 2007 13:05:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19sVrt2swNs/rn1FZjkzBmy79x6AWK1V+xybL82DE
+	LtKvGfB8YWmLTP
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <81b0412b0703140137i6d0df44aua9205e81249570ea@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42202>
 
-On Wednesday 2007 March 14 11:12, Junio C Hamano wrote:
+Hi,
 
-> There is a difference between having a readily greppable and
-> lessable copy handy to study at your own initiative, and being
-> able to retrieve to review only after being told.
+On Wed, 14 Mar 2007, Alex Riesen wrote:
 
-Well I was only joking really.
+> On 3/14/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > > > So, big master to hom everybody bows, how to return the correct value
+> > > > when executing a pager? Because this _has_ to be done if we go that
+> > > > way.
+> > >
+> > > Why? If you execute the pager, nobody cares about the error value
+> > > anyway.
+> > >
+> > > I don't see why you would mix in a pager here. If you do
+> > >
+> > >       diff -u file1 file2 | less -S
+> > >
+> > > the return value of the pipe will not only generally be totally
+> > > uninteresting and never used, but it will be the return value of "less"
+> > > anyway. Which is what we'd get quite naturally.
+> > 
+> > The thing is, most people do not realize that
+> > 
+> >         git diff file1 file2
+> > 
+> > _will_ execute a pager. As foreground process. And the return value is
+> > that of the pager.
+> 
+> In this example this is obviously (sometimes it is obscurely) interactive.
+> The return code is seldom expected.
+> 
+> More sneaky case could be this:
+> 
+>  git diff file1 file2 > tmp && do_something
+>  rm -f tmp
+> 
+> But we have isatty in setup_pager, so this works properly.
 
-> You could argue that we can all do that with git-grep and
-> git-less ;-).
+The problem is test cases. I think that we pipe the output of the test 
+case _anyway_, so the isatty() call is helping us there.
 
-Definitely.  git is so good at this sort of stuff that encouraging the 
-retention of commented out code is just filling up source files with junk.
+If we did not (this applies to test cases _outside_ of Git, too), then a 
+simple
 
-In the old days, before version control, I would often have files with
+	git diff bla || exit
 
-#if 0
-// This is how I used to do it
-// ...
-#endif
+would not work as expected. Even worse, as long as it is piped somewhere, 
+even cat, it works. But once you no longer pipe it (to get the nice pager, 
+for example), it stops working.
 
-These days I comment it out, then after a few successful commits it gets 
-removed from the source file.  Git makes my code cleaner and clearer as it's 
-not filled with obsolete junk.  I am always secure in the knowledge that I 
-can go back and look if I want.  The same is true, I think, for shell script 
-replaced with C code.
-
-What will you do if in the future the C gets a feature that wasn't in the 
-shell code - should the shell code be updated?  If you don't then the comment 
-is a lie, if you do then it's a maintenance nightmare.
-
-Chuck it and be happy it's chucked.  A rule for life.  I should write fortune 
-cookies.
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Ciao,
+Dscho
