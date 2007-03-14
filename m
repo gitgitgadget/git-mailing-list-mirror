@@ -1,56 +1,73 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [GIT PULL] Please pull mergetool.git
-Date: Wed, 14 Mar 2007 10:55:37 +0100
-Message-ID: <81b0412b0703140255j1d49cf0cpea69d381ec8a0a4c@mail.gmail.com>
-References: <E1HRI5K-0008T9-9e@candygram.thunk.org>
-	 <7vtzwob1lo.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Make gc a builtin.
+Date: Wed, 14 Mar 2007 10:45:55 +0000
+Message-ID: <200703141045.58739.andyparkins@gmail.com>
+References: <11738375021267-git-send-email-jbowes@dangerouslyinc.com> <7vodmwfg2c.fsf@assigned-by-dhcp.cox.net> <20070314074440.GC12710@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Theodore Ts'o" <tytso@mit.edu>, git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 10:56:17 2007
+Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	James Bowes <jbowes@dangerouslyinc.com>,
+	Johannes.Schindelin@gmx.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 14 11:46:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRQDQ-0005hj-Ii
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 10:56:16 +0100
+	id 1HRQzj-0007yE-4v
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 11:46:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030835AbXCNJ4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 05:56:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030836AbXCNJ4N
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 05:56:13 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:52166 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030835AbXCNJ4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 05:56:13 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so145955nfa
-        for <git@vger.kernel.org>; Wed, 14 Mar 2007 02:56:12 -0700 (PDT)
+	id S1161110AbXCNKqH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 06:46:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161103AbXCNKqH
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 06:46:07 -0400
+Received: from wr-out-0506.google.com ([64.233.184.224]:12366 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161110AbXCNKqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 06:46:06 -0400
+Received: by wr-out-0506.google.com with SMTP id i28so118483wra
+        for <git@vger.kernel.org>; Wed, 14 Mar 2007 03:46:04 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=QfLueZzSPHMRRZRng4VVWb4++iARd8fnxr/e7oaLfAoEV5h0x0wuZNrCfUqeF0AIRr7ve8batABfWHFwzMlpyUUPp+24SE6ORbHzizHzHvJ1dh/H6HOEdWnEFRU4Qz68os1dEvHfufbqWbRxng04WXQAMlABwUtjb7tT9KXNM7E=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=gs9HMqGTai11pbu8iRVJWmpVgwgZMIL2fGPqeH72Cp0UYq84IEVxcGYEY/9PtYRGvzAmbhY5orslHmMLZxLoV6HOqBKXcyE11RQNN705LMTaJGaYi6vr84IXnUgNjdroRiGePkQoF4sxiC12b/6vA3rrKB3o7lNMvHjqK1xVj9o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=HSIcLJIMn5pfRJ5Tew4IvU+rYD/8VvZelEjIWipr4MO20Qn3HmiabqA4I40EOiob2yYlZICYOaiuUW8hMfjp7LH650Dd78cqB5tkfXoHjaXALdfOZTdX3jggA0Pxl8s3qitazeOgx2k+9hZktKPj2LPZ4Q6QHqUmd4QjAS1Dnk4=
-Received: by 10.78.172.20 with SMTP id u20mr1047482hue.1173866137961;
-        Wed, 14 Mar 2007 02:55:37 -0700 (PDT)
-Received: by 10.78.138.5 with HTTP; Wed, 14 Mar 2007 02:55:37 -0700 (PDT)
-In-Reply-To: <7vtzwob1lo.fsf@assigned-by-dhcp.cox.net>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=bdDt/XeqyqNK9uGx8QDQqG5+/MfPYluicVvTy9X9ugb3ROUG50oQTU3+McBb92ZZ7lTiq3ZdUWlB1oKtzdFxxb3zI2CkwG51zOeL8EwkI7kr1j3pexicGG2q+5dxUBLr2tHnbCeFYVir0phVMywWiSf/l3m6PzxM4FURyyjOmxc=
+Received: by 10.65.248.19 with SMTP id a19mr4073620qbs.1173869163710;
+        Wed, 14 Mar 2007 03:46:03 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id x1sm6537574nfb.2007.03.14.03.46.02;
+        Wed, 14 Mar 2007 03:46:02 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <20070314074440.GC12710@thunk.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42196>
 
-On 3/14/07, Junio C Hamano <junkio@cox.net> wrote:
-> So here it is.
->
->  - An .gitignore entry to ignore the build product.
->
->  - An Makefile entry to build and clean.
->
+On Wednesday 2007 March 14 07:44, Theodore Tso wrote:
 
-- If the "product" has own Makefile: QUIET support (aka "V=x")
+> I agree with Junio; I think the scripts are much more readable and
+> easier to understand; In fact, it would be nice if the script were
+> preserved somewhere, perhaps as comments in the .c file.
+
+If only there were some tool that would keep collections of files as a 
+snapshotted whole and allow us to browse the history of those snapshots in 
+some sort of connected graph, with each snapshot being given some sort of 
+unique ID.  Then we could simply refer to that unique ID when we wanted to 
+tell someone about a particular historical instance.
+
+:-)
+
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
