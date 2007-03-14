@@ -1,319 +1,296 @@
-From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
-Subject: [PATCH, respin] git-fetch, git-branch: Support local --track via
- a special remote `.'
-Date: Wed, 14 Mar 2007 13:52:33 +0100
-Message-ID: <45F7F011.5080308@lu.unisi.ch>
-References: <45F58A84.2000503@lu.unisi.ch>	<7v4poplceh.fsf@assigned-by-dhcp.cox.net>	<45F69939.6070909@lu.unisi.ch> <7vird4ax66.fsf@assigned-by-dhcp.cox.net>
-Reply-To: bonzini@gnu.org
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [PATCH] Allow git-diff exit with codes similar to diff(1)
+Date: Wed, 14 Mar 2007 15:01:18 +0100
+Message-ID: <81b0412b0703140701h60982fddw3ed8fa71288cb220@mail.gmail.com>
+References: <81b0412b0703131717k7106ee1cg964628f0bda2c83e@mail.gmail.com>
+	 <7v8xe0h19a.fsf@assigned-by-dhcp.cox.net>
+	 <81b0412b0703140128y46ff6bb6m503eeae00c043ddf@mail.gmail.com>
+	 <7v6494dwms.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 13:53:16 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_16208_23919513.1173880878838"
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Mar 14 15:01:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRSyg-0007en-Be
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 13:53:14 +0100
+	id 1HRU31-00063i-DK
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 15:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161227AbXCNMxK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 08:53:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161252AbXCNMxK
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 08:53:10 -0400
-Received: from server.usilu.net ([195.176.178.200]:47205 "EHLO mail.usilu.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1161227AbXCNMxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 08:53:08 -0400
-Received: from [192.168.76.141] ([192.168.76.141] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 14 Mar 2007 13:52:29 +0100
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
-In-Reply-To: <7vird4ax66.fsf@assigned-by-dhcp.cox.net>
-X-OriginalArrivalTime: 14 Mar 2007 12:52:29.0733 (UTC) FILETIME=[A005FD50:01C76637]
+	id S1030859AbXCNOBW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 10:01:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030864AbXCNOBW
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 10:01:22 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:11263 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030859AbXCNOBU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 10:01:20 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so228746nfa
+        for <git@vger.kernel.org>; Wed, 14 Mar 2007 07:01:19 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=KV7JdnRey39483MyzasWn4wddp141ZzADhkx7cWkmG1piNZDgZUxuMf2mm05rB9CgOEoGCQqYIYWubWsvTXejTQjZD6WP3/iXYSeCFXj92jMgLrdLQxEfQdpHwWmLP+R3lfaayzJXwbGhyWbvbIuLjYThtLaYlgzcVwKkHbtKwo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
+        b=s6Dyui+bIfl+UxLHd3LiPzboyjxQSGwzrfN/ly+NgZI9Vm0CqdOnyCR8sjVKBZtKjUqW1wVKXCrrl2zsfK9v+soHJSEojQ2H0v9XVjdpPrDZyhRRq2HkvTSk8khq/etefiSlD5giByh6NqoezP5kxppmr6rwoTYcDZRu0HCDhLo=
+Received: by 10.78.97.7 with SMTP id u7mr1202215hub.1173880879041;
+        Wed, 14 Mar 2007 07:01:19 -0700 (PDT)
+Received: by 10.78.138.5 with HTTP; Wed, 14 Mar 2007 07:01:18 -0700 (PDT)
+In-Reply-To: <7v6494dwms.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42207>
 
-This patch adds support for a dummy remote `.' to avoid having to declare
-a fake remote like
+------=_Part_16208_23919513.1173880878838
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-        [remote "local"]
-                url = .
-                fetch = refs/heads/*:refs/heads/*
+This introduces a new command-line option: --exit-code. The diff
+programs will return 1 for differences, return 0 for equality, and
+something else for errors.
 
-Such a builtin remote simplifies the operation of "git-fetch", which
-will populate FETCH_HEAD but will not pretend that two repositories are
-in use, will not create a thin pack, and will not perform any useless
-remapping of names.  The speed improvement is around 20%, and it should
-improve more if "git-fetch" is converted to a builtin.
-
-To this end, git-parse-remote is grown with a new kind of remote, `builtin'.
-In git-fetch.sh, we treat the builtin remote specially in that it needs no
-pack/store operations.  In fact, doing git-fetch on a builtin remote will
-simply populate FETCH_HEAD appropriately.
-
-The patch also improves of the --track/--no-track support, extending
-it so that branch.<name>.remote items referring `.' can be created.
-Finally, it fixes a typo in git-checkout.sh.
-
-Signed-off-by: Paolo Bonzini  <bonzini@gnu.org>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- Documentation/config.txt |    4 ++++
- builtin-branch.c         |   39 +++++++++++++++++++++++++--------------
- git-checkout.sh          |    2 +-
- git-fetch.sh             |   28 ++++++++++++++++++++--------
- git-parse-remote.sh      |   12 ++++++++++--
- t/t3200-branch.sh        |    6 ++++++
- t/t5520-pull.sh          |   13 +++++++++++++
- 7 files changed, 79 insertions(+), 25 deletions(-)
+Updated the patch:
 
-	> I'd prefer dropping the t9109 test, as it seems to be redundant.
+- added more tests: path limiter and -S
+- moved exit code into diff_options and used diffcore_std* for its evaluation
 
-	As you wish.
+On 3/14/07, Junio C Hamano <junkio@cox.net> wrote:
+> > Challenging... Now, if someone just told me where to look for
+> > differences in diff-tree case...
+>
+> As the resident git-diff expert I might hack on this myself as
+> the --quiet options are useful, and --exit-code comes almost
+> free when you properly do --quiet that implies --quick.
 
-	> Also I'll be reverting a couple of patches from 'next', so this
-	> no longer applies.  Would appreciate a re-spin.
-	> 
-	> Sorry about that.
+Thanks! That would _most_ welcome :)
 
-	No problem.
+> > Can it eventually be wired to "-s" (DIFF_FORMAT_NO_OUTPUT)?
+>
+> I do not think so.  When we run diff internally to pick the set
+> of paths (i.e. run diffcore and check contents of diff_queue,
+> just like you did for diff-index/diff-files), we internally use
+> NO_OUTPUT.  See merge-recursive.c for an example.
 
-	I must say that from a clarity point of view I preferred the
-	older code.  It did encapsulate fetching in a pretty easy to
-	understand way.  OTOH, my patch is smaller now.
+Right, is not that simple as it looks...
 
-	Just my 0.02 cents, or something to remember once the
-	git-fetch--tool conversion proceeds and possibly the merge logic
-	is written in C.
+> >> >       diffcore_std(&revs->diffopt);
+> >> > +     ret = revs->diffopt.diff_exit_code && diff_queued_diff.nr ? 1: 0;
+> >> >       diff_flush(&revs->diffopt);
+> >> >       return ret;
+> >> >  }
+> >>
+> >> This side looks correct, as you are counting queued_diff.nr after
+> >> letting diffcore_std() to filter the results.
+> >
+> > And it will continue to work if the diffing is left early because of
+> > no output needed. Err, will it?
+>
+> To implement --quick correctly, you need to know when it is safe
+> to leave early.  Presence of -S (pickaxe) would most likely mean
+> you shouldn't leave early.
 
+Thanks, that got me thinking. Moved all exit code evaluation
+into diffcore_std, added a field for the code to diff_options,
+and use it if called with --exit-code.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index aaae9ac..953acae 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -272,6 +272,10 @@ branch.<name>.merge::
- 	`git fetch`) to lookup the default branch for merging. Without
- 	this option, `git pull` defaults to merge the first refspec fetched.
- 	Specify multiple values to get an octopus merge.
-+	If you wish to setup `git pull` so that it merges into <name> from
-+	another branch in the local repository, you can point
-+	branch.<name>.merge to the desired branch, and use the special setting
-+	`.` (a period) for branch.<name>.remote.
- 
- color.branch::
- 	A boolean to enable/disable color in the output of
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 42b1ff1..14c4219 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -372,9 +372,26 @@ static int get_remote_config(const char *key, const char *value)
- 	return 0;
- }
- 
--static void set_branch_defaults(const char *name, const char *real_ref)
-+static void set_branch_merge(const char *name, const char *config_remote,
-+			     const char *config_repo)
- {
- 	char key[1024];
-+	if (sizeof(key) <=
-+	    snprintf(key, sizeof(key), "branch.%s.remote", name))
-+		die("what a long branch name you have!");
-+	git_config_set(key, config_remote);
-+
-+	/*
-+	 * We do not have to check if we have enough space for
-+	 * the 'merge' key, since it's shorter than the
-+	 * previous 'remote' key, which we already checked.
-+	 */
-+	snprintf(key, sizeof(key), "branch.%s.merge", name);
-+	git_config_set(key, config_repo);
-+}
-+
-+static void set_branch_defaults(const char *name, const char *real_ref)
-+{
- 	const char *slash = strrchr(real_ref, '/');
- 
- 	if (!slash)
-@@ -384,21 +401,15 @@ static void set_branch_defaults(const char *name, const char *real_ref)
- 	start_len = strlen(real_ref);
- 	base_len = slash - real_ref;
- 	git_config(get_remote_config);
-+	if (!config_repo && !config_remote &&
-+	    !prefixcmp(real_ref, "refs/heads/")) {
-+		set_branch_merge(name, ".", real_ref);
-+		printf("Branch %s set up to track local branch %s.\n",
-+		       name, real_ref);
-+	}
- 
- 	if (config_repo && config_remote) {
--		if (sizeof(key) <=
--		    snprintf(key, sizeof(key), "branch.%s.remote", name))
--			die("what a long branch name you have!");
--		git_config_set(key, config_remote);
--
--		/*
--		 * We do not have to check if we have enough space for
--		 * the 'merge' key, since it's shorter than the
--		 * previous 'remote' key, which we already checked.
--		 */
--		snprintf(key, sizeof(key), "branch.%s.merge", name);
--		git_config_set(key, config_repo);
--
-+		set_branch_merge(name, config_remote, config_repo);
- 		printf("Branch %s set up to track remote branch %s.\n",
- 		       name, real_ref);
- 	}
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 6caa9fd..b292ff0 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -89,7 +89,7 @@ while [ "$#" != "0" ]; do
-     esac
- done
- 
--case "$new_branch,$track" in
-+case "$newbranch,$track" in
- ,--*)
- 	die "git checkout: --track and --no-track require -b"
- esac
-diff --git a/git-fetch.sh b/git-fetch.sh
-index ebe6c33..88bf64d 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -161,6 +161,14 @@ then
- 	fi
- fi
- 
-+fetch_builtin () {
-+    for ref in $(get_remote_default_refs_for_fetch "$remote_nick"); do
-+      name=$(expr "z$ref" : 'z\([^:]*\):')
-+      append_fetch_head $(git-rev-parse "$name") "$remote" \
-+	  "$name" "$remote_nick" "$name" "" || exit
-+    done
-+}
-+
- fetch_native () {
-   eval=$(echo "$1" | git-fetch--tool parse-reflist "-")
-   eval "$eval"
-@@ -296,14 +303,18 @@ fetch_dumb () {
- }
- 
- fetch_main () {
--	case "$remote" in
--	http://* | https://* | ftp://* | rsync://* )
--		fetch_dumb "$@"
--		;;
--	*)
--		fetch_native "$@"
--		;;
--	esac
-+	if test "$(get_data_source $remote_nick)" = builtin; then
-+		fetch_builtin
-+	else
-+		case "$remote" in
-+		http://* | https://* | ftp://* | rsync://* )
-+			fetch_dumb "$@"
-+			;;
-+		*)
-+			fetch_native "$@"
-+			;;
-+		esac
-+	fi
- }
- 
- fetch_main "$reflist" || exit
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index c46131f..1b96ec6 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -9,6 +9,9 @@ get_data_source () {
- 	*/*)
- 		echo ''
- 		;;
-+	.)
-+		echo builtin
-+		;;
- 	*)
- 		if test "$(git-config --get "remote.$1.url")"
- 		then
-@@ -31,6 +34,9 @@ get_remote_url () {
- 	'')
- 		echo "$1"
- 		;;
-+	builtin)
-+		echo "$1"
-+		;;
- 	config)
- 		git-config --get "remote.$1.url"
- 		;;
-@@ -57,7 +63,7 @@ get_default_remote () {
- get_remote_default_refs_for_push () {
- 	data_source=$(get_data_source "$1")
- 	case "$data_source" in
--	'' | branches)
-+	'' | branches | builtin)
- 		;; # no default push mapping, just send matching refs.
- 	config)
- 		git-config --get-all "remote.$1.push" ;;
-@@ -163,6 +169,8 @@ get_remote_default_refs_for_fetch () {
- 	case "$data_source" in
- 	'')
- 		echo "HEAD:" ;;
-+	builtin)
-+	        git-show-ref | sed -n 's,.*[      ]\(refs/.*\),\1:,p' ;;
- 	config)
- 		canon_refs_list_for_fetch -d "$1" \
- 			$(git-config --get-all "remote.$1.fetch") ;;
-@@ -177,7 +185,7 @@ get_remote_default_refs_for_fetch () {
- 					}' "$GIT_DIR/remotes/$1")
- 		;;
- 	*)
--		die "internal error: get-remote-default-ref-for-push $1" ;;
-+		die "internal error: get-remote-default-ref-for-fetch $1" ;;
- 	esac
- }
- 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 75c000a..9558bdb 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -145,9 +145,15 @@ test_expect_success 'test overriding tracking setup via --no-track' \
-      git-config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-      (git-show-ref -q refs/remotes/local/master || git-fetch local) &&
-      git-branch --no-track my2 local/master &&
-+     git-config branch.autosetupmerge false &&
-      ! test $(git-config branch.my2.remote) = local &&
-      ! test $(git-config branch.my2.merge) = refs/heads/master'
- 
-+test_expect_success 'test local tracking setup' \
-+    'git branch --track my6 s &&
-+     test $(git-config branch.my6.remote) = . &&
-+     test $(git-config branch.my6.merge) = refs/heads/s'
-+
- # Keep this test last, as it changes the current branch
- cat >expect <<EOF
- 0000000000000000000000000000000000000000 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 7eb3783..c424e5b 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -29,5 +29,17 @@ test_expect_success 'checking the results' '
- 	diff file cloned/file
- '
- 
-+test_expect_success 'test . as a remote' '
-+	git branch copy master &&
-+	git config branch.copy.remote . &&
-+	git config branch.copy.merge refs/heads/master &&
-+	echo updated >file &&
-+	git commit -a -m updated &&
-+	git checkout copy &&
-+	test `cat file` = file &&
-+	git pull &&
-+	test `cat file` = updated
-+'
-+
- test_done
- 
+ Documentation/diff-options.txt |    5 +++
+ builtin-diff-files.c           |    4 ++-
+ builtin-diff-index.c           |    4 ++-
+ builtin-diff-tree.c            |    4 +-
+ builtin-diff.c                 |   19 +++++++-----
+ diff-lib.c                     |    5 ++-
+ diff.c                         |    6 ++++
+ diff.h                         |    5 ++-
+ t/t4017-diff-retval.sh         |   64 ++++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 102 insertions(+), 14 deletions(-)
+ create mode 100755 t/t4017-diff-retval.sh
+
+------=_Part_16208_23919513.1173880878838
+Content-Type: application/xxxxx; 
+	name=0001-Allow-git-diff-exit-with-codes-similar-to-diff-1.patch
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ez9u6vkp
+Content-Disposition: attachment; filename="0001-Allow-git-diff-exit-with-codes-similar-to-diff-1.patch"
+
+RnJvbSBkMzdiMzRlMWFlYWEwMjk5YWVmZDViODQ2MjdkYTJlMTg1MDBjNjc5IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBXZWQsIDE0IE1hciAyMDA3IDAxOjE3OjA0ICswMTAwClN1YmplY3Q6IFtQQVRDSF0gQWxsb3cg
+Z2l0LWRpZmYgZXhpdCB3aXRoIGNvZGVzIHNpbWlsYXIgdG8gZGlmZigxKQoKVGhpcyBpbnRyb2R1
+Y2VzIGEgbmV3IGNvbW1hbmQtbGluZSBvcHRpb246IC0tZXhpdC1jb2RlLiBUaGUgZGlmZgpwcm9n
+cmFtcyB3aWxsIHJldHVybiAxIGZvciBkaWZmZXJlbmNlcywgcmV0dXJuIDAgZm9yIGVxdWFsaXR5
+LCBhbmQKc29tZXRoaW5nIGVsc2UgZm9yIGVycm9ycy4KClNpZ25lZC1vZmYtYnk6IEFsZXggUmll
+c2VuIDxyYWEubGttbEBnbWFpbC5jb20+Ci0tLQogRG9jdW1lbnRhdGlvbi9kaWZmLW9wdGlvbnMu
+dHh0IHwgICAgNSArKysKIGJ1aWx0aW4tZGlmZi1maWxlcy5jICAgICAgICAgICB8ICAgIDQgKyst
+CiBidWlsdGluLWRpZmYtaW5kZXguYyAgICAgICAgICAgfCAgICA0ICsrLQogYnVpbHRpbi1kaWZm
+LXRyZWUuYyAgICAgICAgICAgIHwgICAgNCArLQogYnVpbHRpbi1kaWZmLmMgICAgICAgICAgICAg
+ICAgIHwgICAxOSArKysrKysrLS0tLS0KIGRpZmYtbGliLmMgICAgICAgICAgICAgICAgICAgICB8
+ICAgIDUgKystCiBkaWZmLmMgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICA2ICsrKysKIGRp
+ZmYuaCAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgIDUgKystCiB0L3Q0MDE3LWRpZmYtcmV0
+dmFsLnNoICAgICAgICAgfCAgIDY0ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysKIDkgZmlsZXMgY2hhbmdlZCwgMTAyIGluc2VydGlvbnMoKyksIDE0IGRlbGV0aW9ucygt
+KQogY3JlYXRlIG1vZGUgMTAwNzU1IHQvdDQwMTctZGlmZi1yZXR2YWwuc2gKCmRpZmYgLS1naXQg
+YS9Eb2N1bWVudGF0aW9uL2RpZmYtb3B0aW9ucy50eHQgYi9Eb2N1bWVudGF0aW9uL2RpZmYtb3B0
+aW9ucy50eHQKaW5kZXggZDg2OTZiNy4uNzdhM2Y3OCAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlv
+bi9kaWZmLW9wdGlvbnMudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZGlmZi1vcHRpb25zLnR4dApA
+QCAtMTU5LDUgKzE1OSwxMCBAQAogLXc6OgogCVNob3J0aGFuZCBmb3IgIi0taWdub3JlLWFsbC1z
+cGFjZSIuCiAKKy0tZXhpdC1jb2RlOjoKKwlNYWtlIHRoZSBwcm9ncmFtIGV4aXQgd2l0aCBjb2Rl
+cyBzaW1pbGFyIHRvIGRpZmYoMSkuCisJVGhhdCBpcywgaXQgZXhpdHMgd2l0aCAxIGlmIHRoZXJl
+IHdlcmUgZGlmZmVyZW5jZXMgYW5kCisJMCBtZWFucyBubyBkaWZmZXJlbmNlcy4KKwogRm9yIG1v
+cmUgZGV0YWlsZWQgZXhwbGFuYXRpb24gb24gdGhlc2UgY29tbW9uIG9wdGlvbnMsIHNlZSBhbHNv
+CiBsaW5rOmRpZmZjb3JlLmh0bWxbZGlmZmNvcmUgZG9jdW1lbnRhdGlvbl0uCmRpZmYgLS1naXQg
+YS9idWlsdGluLWRpZmYtZmlsZXMuYyBiL2J1aWx0aW4tZGlmZi1maWxlcy5jCmluZGV4IGFlYzgz
+MzguLjI1MjVhZTYgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tZGlmZi1maWxlcy5jCisrKyBiL2J1aWx0
+aW4tZGlmZi1maWxlcy5jCkBAIC0xNyw2ICsxNyw3IEBAIGludCBjbWRfZGlmZl9maWxlcyhpbnQg
+YXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKIHsKIAlzdHJ1Y3Qg
+cmV2X2luZm8gcmV2OwogCWludCBub25naXQgPSAwOworCWludCByZXN1bHQ7CiAKIAlwcmVmaXgg
+PSBzZXR1cF9naXRfZGlyZWN0b3J5X2dlbnRseSgmbm9uZ2l0KTsKIAlpbml0X3JldmlzaW9ucygm
+cmV2LCBwcmVmaXgpOwpAQCAtMjksNSArMzAsNiBAQCBpbnQgY21kX2RpZmZfZmlsZXMoaW50IGFy
+Z2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJCWFyZ2MgPSBzZXR1
+cF9yZXZpc2lvbnMoYXJnYywgYXJndiwgJnJldiwgTlVMTCk7CiAJaWYgKCFyZXYuZGlmZm9wdC5v
+dXRwdXRfZm9ybWF0KQogCQlyZXYuZGlmZm9wdC5vdXRwdXRfZm9ybWF0ID0gRElGRl9GT1JNQVRf
+UkFXOwotCXJldHVybiBydW5fZGlmZl9maWxlc19jbWQoJnJldiwgYXJnYywgYXJndik7CisJcmVz
+dWx0ID0gcnVuX2RpZmZfZmlsZXNfY21kKCZyZXYsIGFyZ2MsIGFyZ3YpOworCXJldHVybiByZXYu
+ZGlmZm9wdC5kaWZmX2V4aXRfY29kZSA/IHJldi5kaWZmb3B0LmV4aXRfY29kZTogcmVzdWx0Owog
+fQpkaWZmIC0tZ2l0IGEvYnVpbHRpbi1kaWZmLWluZGV4LmMgYi9idWlsdGluLWRpZmYtaW5kZXgu
+YwppbmRleCAwODM1OTlkLi42NzlhNmYxIDEwMDY0NAotLS0gYS9idWlsdGluLWRpZmYtaW5kZXgu
+YworKysgYi9idWlsdGluLWRpZmYtaW5kZXguYwpAQCAtMTQsNiArMTQsNyBAQCBpbnQgY21kX2Rp
+ZmZfaW5kZXgoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgp
+CiAJc3RydWN0IHJldl9pbmZvIHJldjsKIAlpbnQgY2FjaGVkID0gMDsKIAlpbnQgaTsKKwlpbnQg
+cmVzdWx0OwogCiAJaW5pdF9yZXZpc2lvbnMoJnJldiwgcHJlZml4KTsKIAlnaXRfY29uZmlnKGdp
+dF9kZWZhdWx0X2NvbmZpZyk7IC8qIG5vICJkaWZmIiBVSSBvcHRpb25zICovCkBAIC00Miw1ICs0
+Myw2IEBAIGludCBjbWRfZGlmZl9pbmRleChpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNv
+bnN0IGNoYXIgKnByZWZpeCkKIAkJcGVycm9yKCJyZWFkX2NhY2hlIik7CiAJCXJldHVybiAtMTsK
+IAl9Ci0JcmV0dXJuIHJ1bl9kaWZmX2luZGV4KCZyZXYsIGNhY2hlZCk7CisJcmVzdWx0ID0gcnVu
+X2RpZmZfaW5kZXgoJnJldiwgY2FjaGVkKTsKKwlyZXR1cm4gcmV2LmRpZmZvcHQuZGlmZl9leGl0
+X2NvZGUgPyByZXYuZGlmZm9wdC5leGl0X2NvZGU6IHJlc3VsdDsKIH0KZGlmZiAtLWdpdCBhL2J1
+aWx0aW4tZGlmZi10cmVlLmMgYi9idWlsdGluLWRpZmYtdHJlZS5jCmluZGV4IDI0Y2IyZDcuLjIx
+ZDQ3NDMgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tZGlmZi10cmVlLmMKKysrIGIvYnVpbHRpbi1kaWZm
+LXRyZWUuYwpAQCAtMTE4LDcgKzExOCw3IEBAIGludCBjbWRfZGlmZl90cmVlKGludCBhcmdjLCBj
+b25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQogCX0KIAogCWlmICghcmVhZF9z
+dGRpbikKLQkJcmV0dXJuIDA7CisJCXJldHVybiBvcHQtPmRpZmZvcHQuZGlmZl9leGl0X2NvZGUg
+PyBvcHQtPmRpZmZvcHQuZXhpdF9jb2RlOiAwOwogCiAJaWYgKG9wdC0+ZGlmZm9wdC5kZXRlY3Rf
+cmVuYW1lKQogCQlvcHQtPmRpZmZvcHQuc2V0dXAgfD0gKERJRkZfU0VUVVBfVVNFX1NJWkVfQ0FD
+SEUgfApAQCAtMTMzLDUgKzEzMyw1IEBAIGludCBjbWRfZGlmZl90cmVlKGludCBhcmdjLCBjb25z
+dCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4KQogCQllbHNlCiAJCQlkaWZmX3RyZWVf
+c3RkaW4obGluZSk7CiAJfQotCXJldHVybiAwOworCXJldHVybiBvcHQtPmRpZmZvcHQuZGlmZl9l
+eGl0X2NvZGUgPyBvcHQtPmRpZmZvcHQuZXhpdF9jb2RlOiAwOwogfQpkaWZmIC0tZ2l0IGEvYnVp
+bHRpbi1kaWZmLmMgYi9idWlsdGluLWRpZmYuYwppbmRleCA0ZWZiYjgyLi45MjMyYTcyIDEwMDY0
+NAotLS0gYS9idWlsdGluLWRpZmYuYworKysgYi9idWlsdGluLWRpZmYuYwpAQCAtMTkwLDYgKzE5
+MCw3IEBAIGludCBjbWRfZGlmZihpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNo
+YXIgKnByZWZpeCkKIAljb25zdCBjaGFyICpwYXRoID0gTlVMTDsKIAlzdHJ1Y3QgYmxvYmluZm8g
+YmxvYlsyXTsKIAlpbnQgbm9uZ2l0ID0gMDsKKwlpbnQgcmVzdWx0ID0gMDsKIAogCS8qCiAJICog
+V2UgY291bGQgZ2V0IE4gdHJlZS1pc2ggaW4gdGhlIHJldi5wZW5kaW5nX29iamVjdHMgbGlzdC4K
+QEAgLTI5MiwxNyArMjkzLDE3IEBAIGludCBjbWRfZGlmZihpbnQgYXJnYywgY29uc3QgY2hhciAq
+KmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKIAlpZiAoIWVudHMpIHsKIAkJc3dpdGNoIChibG9i
+cykgewogCQljYXNlIDA6Ci0JCQlyZXR1cm4gcnVuX2RpZmZfZmlsZXNfY21kKCZyZXYsIGFyZ2Ms
+IGFyZ3YpOworCQkJcmVzdWx0ID0gcnVuX2RpZmZfZmlsZXNfY21kKCZyZXYsIGFyZ2MsIGFyZ3Yp
+OwogCQkJYnJlYWs7CiAJCWNhc2UgMToKIAkJCWlmIChwYXRocyAhPSAxKQogCQkJCXVzYWdlKGJ1
+aWx0aW5fZGlmZl91c2FnZSk7Ci0JCQlyZXR1cm4gYnVpbHRpbl9kaWZmX2JfZigmcmV2LCBhcmdj
+LCBhcmd2LCBibG9iLCBwYXRoKTsKKwkJCXJlc3VsdCA9IGJ1aWx0aW5fZGlmZl9iX2YoJnJldiwg
+YXJnYywgYXJndiwgYmxvYiwgcGF0aCk7CiAJCQlicmVhazsKIAkJY2FzZSAyOgogCQkJaWYgKHBh
+dGhzKQogCQkJCXVzYWdlKGJ1aWx0aW5fZGlmZl91c2FnZSk7Ci0JCQlyZXR1cm4gYnVpbHRpbl9k
+aWZmX2Jsb2JzKCZyZXYsIGFyZ2MsIGFyZ3YsIGJsb2IpOworCQkJcmVzdWx0ID0gYnVpbHRpbl9k
+aWZmX2Jsb2JzKCZyZXYsIGFyZ2MsIGFyZ3YsIGJsb2IpOwogCQkJYnJlYWs7CiAJCWRlZmF1bHQ6
+CiAJCQl1c2FnZShidWlsdGluX2RpZmZfdXNhZ2UpOwpAQCAtMzExLDE5ICszMTIsMjEgQEAgaW50
+IGNtZF9kaWZmKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwgY29uc3QgY2hhciAqcHJlZml4
+KQogCWVsc2UgaWYgKGJsb2JzKQogCQl1c2FnZShidWlsdGluX2RpZmZfdXNhZ2UpOwogCWVsc2Ug
+aWYgKGVudHMgPT0gMSkKLQkJcmV0dXJuIGJ1aWx0aW5fZGlmZl9pbmRleCgmcmV2LCBhcmdjLCBh
+cmd2KTsKKwkJcmVzdWx0ID0gYnVpbHRpbl9kaWZmX2luZGV4KCZyZXYsIGFyZ2MsIGFyZ3YpOwog
+CWVsc2UgaWYgKGVudHMgPT0gMikKLQkJcmV0dXJuIGJ1aWx0aW5fZGlmZl90cmVlKCZyZXYsIGFy
+Z2MsIGFyZ3YsIGVudCk7CisJCXJlc3VsdCA9IGJ1aWx0aW5fZGlmZl90cmVlKCZyZXYsIGFyZ2Ms
+IGFyZ3YsIGVudCk7CiAJZWxzZSBpZiAoKGVudHMgPT0gMykgJiYgKGVudFswXS5pdGVtLT5mbGFn
+cyAmIFVOSU5URVJFU1RJTkcpKSB7CiAJCS8qIGRpZmYgQS4uLkIgd2hlcmUgdGhlcmUgaXMgb25l
+IHNhbmUgbWVyZ2UgYmFzZSBiZXR3ZWVuCiAJCSAqIEEgYW5kIEIuICBXZSBoYXZlIGVudFswXSA9
+PSBtZXJnZS1iYXNlLCBlbnRbMV0gPT0gQSwKIAkJICogYW5kIGVudFsyXSA9PSBCLiAgU2hvdyBk
+aWZmIGJldHdlZW4gdGhlIGJhc2UgYW5kIEIuCiAJCSAqLwogCQllbnRbMV0gPSBlbnRbMl07Ci0J
+CXJldHVybiBidWlsdGluX2RpZmZfdHJlZSgmcmV2LCBhcmdjLCBhcmd2LCBlbnQpOworCQlyZXN1
+bHQgPSBidWlsdGluX2RpZmZfdHJlZSgmcmV2LCBhcmdjLCBhcmd2LCBlbnQpOwogCX0KIAllbHNl
+Ci0JCXJldHVybiBidWlsdGluX2RpZmZfY29tYmluZWQoJnJldiwgYXJnYywgYXJndiwKKwkJcmVz
+dWx0ID0gYnVpbHRpbl9kaWZmX2NvbWJpbmVkKCZyZXYsIGFyZ2MsIGFyZ3YsCiAJCQkJCSAgICAg
+ZW50LCBlbnRzKTsKLQl1c2FnZShidWlsdGluX2RpZmZfdXNhZ2UpOworCWlmIChyZXYuZGlmZm9w
+dC5kaWZmX2V4aXRfY29kZSkKKwkJcmVzdWx0ID0gcmV2LmRpZmZvcHQuZXhpdF9jb2RlOworCXJl
+dHVybiByZXN1bHQ7CiB9CmRpZmYgLS1naXQgYS9kaWZmLWxpYi5jIGIvZGlmZi1saWIuYwppbmRl
+eCA2YWJiOTgxLi43ZWY1MGYyIDEwMDY0NAotLS0gYS9kaWZmLWxpYi5jCisrKyBiL2RpZmYtbGli
+LmMKQEAgLTE3MCw4ICsxNzAsMTAgQEAgc3RhdGljIGludCBoYW5kbGVfZGlmZl9maWxlc19hcmdz
+KHN0cnVjdCByZXZfaW5mbyAqcmV2cywKIAkJZWxzZSBpZiAoIXN0cmNtcChhcmd2WzFdLCAiLS10
+aGVpcnMiKSkKIAkJCXJldnMtPm1heF9jb3VudCA9IDM7CiAJCWVsc2UgaWYgKCFzdHJjbXAoYXJn
+dlsxXSwgIi1uIikgfHwKLQkJCQkhc3RyY21wKGFyZ3ZbMV0sICItLW5vLWluZGV4IikpCisJCQkJ
+IXN0cmNtcChhcmd2WzFdLCAiLS1uby1pbmRleCIpKSB7CiAJCQlyZXZzLT5tYXhfY291bnQgPSAt
+MjsKKwkJCXJldnMtPmRpZmZvcHQuZGlmZl9leGl0X2NvZGUgPSAxOworCQl9CiAJCWVsc2UgaWYg
+KCFzdHJjbXAoYXJndlsxXSwgIi1xIikpCiAJCQkqc2lsZW50ID0gMTsKIAkJZWxzZQpAQCAtMjM3
+LDYgKzIzOSw3IEBAIGludCBzZXR1cF9kaWZmX25vX2luZGV4KHN0cnVjdCByZXZfaW5mbyAqcmV2
+cywKIAkJCWJyZWFrOwogCQl9IGVsc2UgaWYgKGkgPCBhcmdjIC0gMyAmJiAhc3RyY21wKGFyZ3Zb
+aV0sICItLW5vLWluZGV4IikpIHsKIAkJCWkgPSBhcmdjIC0gMzsKKwkJCXJldnMtPmRpZmZvcHQu
+ZGlmZl9leGl0X2NvZGUgPSAxOwogCQkJYnJlYWs7CiAJCX0KIAlpZiAoYXJnYyAhPSBpICsgMiB8
+fCAoIWlzX291dHNpZGVfcmVwbyhhcmd2W2kgKyAxXSwgbm9uZ2l0LCBwcmVmaXgpICYmCmRpZmYg
+LS1naXQgYS9kaWZmLmMgYi9kaWZmLmMKaW5kZXggOTU0Y2E4My4uMTJiMDhlZCAxMDA2NDQKLS0t
+IGEvZGlmZi5jCisrKyBiL2RpZmYuYwpAQCAtMjEzNCw2ICsyMTM0LDggQEAgaW50IGRpZmZfb3B0
+X3BhcnNlKHN0cnVjdCBkaWZmX29wdGlvbnMgKm9wdGlvbnMsIGNvbnN0IGNoYXIgKiphdiwgaW50
+IGFjKQogCQlvcHRpb25zLT5jb2xvcl9kaWZmID0gb3B0aW9ucy0+Y29sb3JfZGlmZl93b3JkcyA9
+IDE7CiAJZWxzZSBpZiAoIXN0cmNtcChhcmcsICItLW5vLXJlbmFtZXMiKSkKIAkJb3B0aW9ucy0+
+ZGV0ZWN0X3JlbmFtZSA9IDA7CisJZWxzZSBpZiAoIXN0cmNtcChhcmcsICItLWV4aXQtY29kZSIp
+KQorCQlvcHRpb25zLT5kaWZmX2V4aXRfY29kZSA9IDE7CiAJZWxzZQogCQlyZXR1cm4gMDsKIAly
+ZXR1cm4gMTsKQEAgLTI5MTAsNiArMjkxMiw4IEBAIHZvaWQgZGlmZmNvcmVfc3RkKHN0cnVjdCBk
+aWZmX29wdGlvbnMgKm9wdGlvbnMpCiAJCWRpZmZjb3JlX29yZGVyKG9wdGlvbnMtPm9yZGVyZmls
+ZSk7CiAJZGlmZl9yZXNvbHZlX3JlbmFtZV9jb3B5KCk7CiAJZGlmZmNvcmVfYXBwbHlfZmlsdGVy
+KG9wdGlvbnMtPmZpbHRlcik7CisJaWYgKG9wdGlvbnMtPmRpZmZfZXhpdF9jb2RlKQorCQlvcHRp
+b25zLT5leGl0X2NvZGUgPSAhIWRpZmZfcXVldWVkX2RpZmYubnI7CiB9CiAKIApAQCAtMjkyMCw2
+ICsyOTI0LDggQEAgdm9pZCBkaWZmY29yZV9zdGRfbm9fcmVzb2x2ZShzdHJ1Y3QgZGlmZl9vcHRp
+b25zICpvcHRpb25zKQogCWlmIChvcHRpb25zLT5vcmRlcmZpbGUpCiAJCWRpZmZjb3JlX29yZGVy
+KG9wdGlvbnMtPm9yZGVyZmlsZSk7CiAJZGlmZmNvcmVfYXBwbHlfZmlsdGVyKG9wdGlvbnMtPmZp
+bHRlcik7CisJaWYgKG9wdGlvbnMtPmRpZmZfZXhpdF9jb2RlKQorCQlvcHRpb25zLT5leGl0X2Nv
+ZGUgPSAhIWRpZmZfcXVldWVkX2RpZmYubnI7CiB9CiAKIHZvaWQgZGlmZl9hZGRyZW1vdmUoc3Ry
+dWN0IGRpZmZfb3B0aW9ucyAqb3B0aW9ucywKZGlmZiAtLWdpdCBhL2RpZmYuaCBiL2RpZmYuaApp
+bmRleCA0YjQzNWU4Li4yZmEyMTkyIDEwMDY0NAotLS0gYS9kaWZmLmgKKysrIGIvZGlmZi5oCkBA
+IC01Niw3ICs1Niw4IEBAIHN0cnVjdCBkaWZmX29wdGlvbnMgewogCQkgc2lsZW50X29uX3JlbW92
+ZToxLAogCQkgZmluZF9jb3BpZXNfaGFyZGVyOjEsCiAJCSBjb2xvcl9kaWZmOjEsCi0JCSBjb2xv
+cl9kaWZmX3dvcmRzOjE7CisJCSBjb2xvcl9kaWZmX3dvcmRzOjEsCisJCSBkaWZmX2V4aXRfY29k
+ZToxOwogCWludCBjb250ZXh0OwogCWludCBicmVha19vcHQ7CiAJaW50IGRldGVjdF9yZW5hbWU7
+CkBAIC03MSw2ICs3Miw4IEBAIHN0cnVjdCBkaWZmX29wdGlvbnMgewogCWNvbnN0IGNoYXIgKm1z
+Z19zZXA7CiAJY29uc3QgY2hhciAqc3RhdF9zZXA7CiAJbG9uZyB4ZGxfb3B0czsKKwkvKiAwIC0g
+bm8gZGlmZmVyZW5jZXM7IG9ubHkgbWVhbmluZ2Z1bCBpZiBkaWZmX2V4aXRfY29kZSBzZXQgKi8K
+KwlpbnQgZXhpdF9jb2RlOwogCiAJaW50IHN0YXRfd2lkdGg7CiAJaW50IHN0YXRfbmFtZV93aWR0
+aDsKZGlmZiAtLWdpdCBhL3QvdDQwMTctZGlmZi1yZXR2YWwuc2ggYi90L3Q0MDE3LWRpZmYtcmV0
+dmFsLnNoCm5ldyBmaWxlIG1vZGUgMTAwNzU1CmluZGV4IDAwMDAwMDAuLjkxNTk2MTgKLS0tIC9k
+ZXYvbnVsbAorKysgYi90L3Q0MDE3LWRpZmYtcmV0dmFsLnNoCkBAIC0wLDAgKzEsNjQgQEAKKyMh
+L2Jpbi9zaAorCit0ZXN0X2Rlc2NyaXB0aW9uPSdSZXR1cm4gdmFsdWUgb2YgZGlmZnMnCisKKy4g
+Li90ZXN0LWxpYi5zaAorCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdzZXR1cCcgJworCWVjaG8gMSA+
+YSAmJgorCWdpdCBhZGQgLiAmJgorCWdpdCBjb21taXQgLW0gZmlyc3QgJiYKKwllY2hvIDIgPmIg
+JiYKKwlnaXQgYWRkIC4gJiYKKwlnaXQgY29tbWl0IC1hIC1tIHNlY29uZAorJworCit0ZXN0X2V4
+cGVjdF9mYWlsdXJlICdnaXQgZGlmZi10cmVlIEhFQUReIEhFQUQnICcKKwlnaXQgZGlmZi10cmVl
+IC0tZXhpdC1jb2RlIEhFQUReIEhFQUQKKycKK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2dpdCBkaWZm
+LXRyZWUgSEVBRF4gSEVBRCAtLSBhJyAnCisJZ2l0IGRpZmYtdHJlZSAtLWV4aXQtY29kZSBIRUFE
+XiBIRUFEIC0tIGEKKycKK3Rlc3RfZXhwZWN0X2ZhaWx1cmUgJ2dpdCBkaWZmLXRyZWUgSEVBRF4g
+SEVBRCAtLSBiJyAnCisJZ2l0IGRpZmYtdHJlZSAtLWV4aXQtY29kZSBIRUFEXiBIRUFEIC0tIGIK
+KycKK3Rlc3RfZXhwZWN0X2ZhaWx1cmUgJ2VjaG8gSEVBRCB8IGdpdCBkaWZmLXRyZWUgLS1zdGRp
+bicgJworCWVjaG8gJChnaXQgcmV2LXBhcnNlIEhFQUQpIHwgZ2l0IGRpZmYtdHJlZSAtLWV4aXQt
+Y29kZSAtLXN0ZGluCisnCit0ZXN0X2V4cGVjdF9zdWNjZXNzICdnaXQgZGlmZi10cmVlIEhFQUQg
+SEVBRCcgJworCWdpdCBkaWZmLXRyZWUgLS1leGl0LWNvZGUgSEVBRCBIRUFECisnCisKK3Rlc3Rf
+ZXhwZWN0X3N1Y2Nlc3MgJ2dpdCBkaWZmLWZpbGVzJyAnCisJZ2l0IGRpZmYtZmlsZXMgLS1leGl0
+LWNvZGUKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnZ2l0IGRpZmYtaW5kZXggLS1jYWNoZWQg
+SEVBRCcgJworCWdpdCBkaWZmLWluZGV4IC0tZXhpdC1jb2RlIC0tY2FjaGVkIEhFQUQKKycKK3Rl
+c3RfZXhwZWN0X2ZhaWx1cmUgJ2dpdCBkaWZmLWluZGV4IC0tY2FjaGVkIEhFQUReJyAnCisJZ2l0
+IGRpZmYtaW5kZXggLS1leGl0LWNvZGUgLS1jYWNoZWQgSEVBRF4KKycKK3Rlc3RfZXhwZWN0X2Zh
+aWx1cmUgJ2dpdCBkaWZmLWluZGV4IC0tY2FjaGVkIEhFQUReJyAnCisJZWNobyB0ZXh0ID4+YiAm
+JgorCWVjaG8gMyA+YyAmJgorCWdpdCBhZGQgLiAmJgorCWdpdCBkaWZmLWluZGV4IC0tZXhpdC1j
+b2RlIC0tY2FjaGVkIEhFQUReCisnCitnaXQgY29tbWl0IC1tICd0aGlyZCcgPi9kZXYvbnVsbCB8
+fCBlcnJvciAidGhpcmQgY29tbWl0IGZhaWxlZCIKK3Rlc3RfZXhwZWN0X2ZhaWx1cmUgJ2dpdCBk
+aWZmLXRyZWUgLVN0ZXh0IEhFQUReIEhFQUQgLS0gYicgJworCWdpdCBkaWZmLXRyZWUgLXAgLS1l
+eGl0LWNvZGUgLVN0ZXh0IEhFQUReIEhFQUQgLS0gYgorJwordGVzdF9leHBlY3Rfc3VjY2VzcyAn
+Z2l0IGRpZmYtdHJlZSAtU25vdC1mb3VuZCBIRUFEXiBIRUFEIC0tIGInICcKKwlnaXQgZGlmZi10
+cmVlIC1wIC0tZXhpdC1jb2RlIC1Tbm90LWZvdW5kIEhFQUReIEhFQUQgLS0gYgorJwordGVzdF9l
+eHBlY3RfZmFpbHVyZSAnZ2l0IGRpZmYtZmlsZXMnICcKKwllY2hvIDMgPj5jICYmCisJZ2l0IGRp
+ZmYtZmlsZXMgLS1leGl0LWNvZGUKKycKK2dpdCB1cGRhdGUtaW5kZXggYyB8fCBlcnJvciAidXBk
+YXRlLWluZGV4IGZhaWxlZCIKK3Rlc3RfZXhwZWN0X2ZhaWx1cmUgJ2dpdCBkaWZmLWluZGV4IC0t
+Y2FjaGVkIEhFQUQnICcKKwlnaXQgZGlmZi1pbmRleCAtLWV4aXQtY29kZSAtLWNhY2hlZCBIRUFE
+CisnCisKK3Rlc3RfZG9uZQotLSAKMS41LjAuMy40NzEuZzRjYzI1Cgo=
+------=_Part_16208_23919513.1173880878838--
