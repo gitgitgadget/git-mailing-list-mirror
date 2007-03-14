@@ -1,65 +1,120 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-Subject: Re: .git inside a .git: is it safe?
-Date: Wed, 14 Mar 2007 16:02:26 +0100
-Message-ID: <8b65902a0703140802t4d98bbfdj84e8c4523e852e8a@mail.gmail.com>
-References: <8b65902a0703121456s56008088ra14452ef7f325cf3@mail.gmail.com>
-	 <20070312221540.GA16545@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Allow git-diff exit with codes similar to diff(1)
+Date: Wed, 14 Mar 2007 09:14:39 -0700
+Message-ID: <7v1wjrby4w.fsf@assigned-by-dhcp.cox.net>
+References: <81b0412b0703131717k7106ee1cg964628f0bda2c83e@mail.gmail.com>
+	<7v8xe0h19a.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0703140128y46ff6bb6m503eeae00c043ddf@mail.gmail.com>
+	<7v6494dwms.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0703140701h60982fddw3ed8fa71288cb220@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Mar 14 16:02:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 14 17:14:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRV00-0001Dv-AF
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 16:02:44 +0100
+	id 1HRW7j-0001Um-K7
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 17:14:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161306AbXCNPC2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 11:02:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161313AbXCNPC2
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 11:02:28 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:34001 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161306AbXCNPC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 11:02:27 -0400
-Received: by an-out-0708.google.com with SMTP id b33so209462ana
-        for <git@vger.kernel.org>; Wed, 14 Mar 2007 08:02:26 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Lv+VCS4XWQli/bTbskgX17yDmAK5MuUfcoJ0SRU/Kc7BEV4GP5BqJfwASUrU8+01eJjX/dFbbAJg7vKskXgGxl1zkWNV7YACFDekDrFKhIWMLlfS4QkhEIwDkXHACJICM8E+qsj6mKevA1VrjZkMZwEuV+nvbR/VC2mRnc4HBQA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VBb5UW5EBtYmE8KZm6Yx12gl9zsiqR+m6a9mTHR4aXW4TPT4Btgm1CkvT+Tyb25V7B9MK19XrON5zIM+pkLfMjXdgRV61ROQ85xHDoAtCubCf9MwkBCFjw6PMybrSOvNenBWaAn+6W2XRJdP0bGgwrN5S8oP+kFVbexJgDXOnAI=
-Received: by 10.100.141.13 with SMTP id o13mr1985187and.1173884546660;
-        Wed, 14 Mar 2007 08:02:26 -0700 (PDT)
-Received: by 10.100.135.16 with HTTP; Wed, 14 Mar 2007 08:02:26 -0700 (PDT)
-In-Reply-To: <20070312221540.GA16545@spearce.org>
-Content-Disposition: inline
+	id S932230AbXCNQOn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 12:14:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932286AbXCNQOn
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 12:14:43 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:35428 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932230AbXCNQOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 12:14:42 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070314161441.RWWP1226.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Mar 2007 12:14:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id agEf1W00X1kojtg0000000; Wed, 14 Mar 2007 12:14:40 -0400
+In-Reply-To: <81b0412b0703140701h60982fddw3ed8fa71288cb220@mail.gmail.com>
+	(Alex Riesen's message of "Wed, 14 Mar 2007 15:01:18 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42211>
 
-Thanks for your answers. It's really a cool feature for my needs.
+"Alex Riesen" <raa.lkml@gmail.com> writes:
 
-On 3/12/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Yes, that's fine.  You just probably want an entry in the top level
-> project (myproject) that says ignore the stuff under mainproject.
-> That way "git add ." in myproject doesn't include files in
-> mainproject by accident.
+>> To implement --quick correctly, you need to know when it is safe
+>> to leave early.  Presence of -S (pickaxe) would most likely mean
+>> you shouldn't leave early.
+>
+> Thanks, that got me thinking. Moved all exit code evaluation
+> into diffcore_std, added a field for the code to diff_options,
+> and use it if called with --exit-code.
 
-In fact, in my case, I think I will prefer to store the mainproject's
-sources in both Git repo. By this way, I will be able to easily found
-the version of mainproject's sources that are compatible with the rest
-of myproject.
+Certainly --quick would be "interesting" and useful to add on
+top of your patch.
 
--- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+> diff --git a/builtin-diff-files.c b/builtin-diff-files.c
+> index aec8338..2525ae6 100644
+> --- a/builtin-diff-files.c
+> +++ b/builtin-diff-files.c
+> @@ -17,6 +17,7 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct rev_info rev;
+>  	int nongit = 0;
+> +	int result;
+>  
+>  	prefix = setup_git_directory_gently(&nongit);
+>  	init_revisions(&rev, prefix);
+> @@ -29,5 +30,6 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+>  		argc = setup_revisions(argc, argv, &rev, NULL);
+>  	if (!rev.diffopt.output_format)
+>  		rev.diffopt.output_format = DIFF_FORMAT_RAW;
+> -	return run_diff_files_cmd(&rev, argc, argv);
+> +	result = run_diff_files_cmd(&rev, argc, argv);
+> +	return rev.diffopt.diff_exit_code ? rev.diffopt.exit_code: result;
+>  }
+
+Yuck.  Let's call the former "exit_with_status" (meaning, the
+caller instructed us to do that) and the latter "has_changes".
+
+> +test_expect_failure 'git diff-index --cached HEAD^' '
+> +	echo text >>b &&
+> +	echo 3 >c &&
+> +	git add . &&
+> +	git diff-index --exit-code --cached HEAD^
+> +'
+
+Please:
+
+        test_expect_success '...
+                echo ... &&
+                git add . &&
+                ! git diff-index ...
+        '
+
+I recall somebody on the list had a buggy shell that cannot
+handle "a && ! b" and tweaked a few tests to work around it.
+In that case...
+
+	echo ... &&
+        git add . &&
+	{
+        	git diff-index ...; test $? != 0
+	}
+
+> +test_expect_failure 'git diff-files' '
+> +	echo 3 >>c &&
+> +	git diff-files --exit-code
+> +'
+
+Likewise
+
+> +git update-index c || error "update-index failed"
+
+Please do not have command outside test_expect without good
+reason.
