@@ -1,61 +1,60 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] Make gc a builtin.
-Date: Wed, 14 Mar 2007 03:44:40 -0400
-Message-ID: <20070314074440.GC12710@thunk.org>
-References: <11738375021267-git-send-email-jbowes@dangerouslyinc.com> <20070314060727.GC20978@spearce.org> <7vodmwfg2c.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH(amend)] core.workdir config variable
+Date: Wed, 14 Mar 2007 00:48:18 -0700
+Message-ID: <7vfy88fepp.fsf@assigned-by-dhcp.cox.net>
+References: <20070311043250.GA21331@moooo.ath.cx>
+	<fcaeb9bf0703110542t49bb3e77kb164ba7bfee1a6ed@mail.gmail.com>
+	<20070311155649.GA29663@moooo.ath.cx>
+	<20070311212906.GA18208@moooo.ath.cx>
+	<20070313231004.GA15058@moooo.ath.cx>
+	<20070313235755.GA25013@moooo.ath.cx>
+	<20070314060145.GB20978@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	James Bowes <jbowes@dangerouslyinc.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 08:45:39 2007
+Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 14 08:48:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HROAu-0002Zi-Kw
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 08:45:32 +0100
+	id 1HRODe-00048q-9F
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 08:48:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933294AbXCNHpJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 03:45:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933873AbXCNHpI
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 03:45:08 -0400
-Received: from thunk.org ([69.25.196.29]:47370 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933294AbXCNHpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 03:45:07 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HROG5-0003mY-Sv; Wed, 14 Mar 2007 03:50:54 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HROA4-0000t1-H1; Wed, 14 Mar 2007 03:44:40 -0400
-Content-Disposition: inline
-In-Reply-To: <7vodmwfg2c.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S933855AbXCNHsU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 03:48:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933873AbXCNHsU
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 03:48:20 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:50815 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933855AbXCNHsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 03:48:19 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070314074818.LTPG28911.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 14 Mar 2007 03:48:18 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id aXoJ1W00B1kojtg0000000; Wed, 14 Mar 2007 03:48:19 -0400
+In-Reply-To: <20070314060145.GB20978@spearce.org> (Shawn O. Pearce's message
+	of "Wed, 14 Mar 2007 02:01:45 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42181>
 
-On Wed, Mar 14, 2007 at 12:19:07AM -0700, Junio C Hamano wrote:
-> >> -test "true" != "$pack_refs" ||
-> >> -git-pack-refs --prune &&
-> >> -git-reflog expire --all &&
-> >> -git-repack -a -d -l &&
-> >> ...
-> 
-> I do not necessarily think so.  This is not even a performance
-> critical part of the system, so if there _were_ no other
-> constraints, I would rather keep scripts like this as scripts.
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-I agree with Junio; I think the scripts are much more readable and
-easier to understand; In fact, it would be nice if the script were
-preserved somewhere, perhaps as comments in the .c file.
+> Matthias Lederhofer <matled@gmx.net> wrote:
+>> core.workdir is used as default value for $GIT_WORK_DIR
+> ...
+>> -- 
+>> gitgui.0.6.3.g4bccd
+>
+> Really?  gitgui generates emails now?  ;-)
 
-						- Ted
+It might not be a bad idea actually.  You let people make
+commits.  Why not let them pick commits, run format-patch and
+drive send-email for them from the UI?
