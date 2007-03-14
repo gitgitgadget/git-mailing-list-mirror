@@ -1,57 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make gc a builtin.
-Date: Wed, 14 Mar 2007 02:05:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703140203250.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: 20070312144312.GE15150@spearce.org
- <11738270273757-git-send-email-jbowes@dangerouslyinc.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git support for subprojects?
+Date: Wed, 14 Mar 2007 02:11:51 +0100
+Organization: At home
+Message-ID: <et7hvh$phh$1@sea.gmane.org>
+References: <OFD596829F.8C32CA61-ON8625729D.004F66DC-8625729D.00501D41@BJSERVICES.COM>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, spearce@spearce.org, junkio@cox.net
-To: James Bowes <jbowes@dangerouslyinc.com>
-X-From: git-owner@vger.kernel.org Wed Mar 14 02:05:39 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 14 02:09:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRHvc-0002V3-NR
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 02:05:35 +0100
+	id 1HRHzX-0004Qw-Fv
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 02:09:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752678AbXCNBFR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 13 Mar 2007 21:05:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752679AbXCNBFQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 21:05:16 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53844 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752678AbXCNBFO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Mar 2007 21:05:14 -0400
-Received: (qmail invoked by alias); 14 Mar 2007 01:05:12 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp023) with SMTP; 14 Mar 2007 02:05:12 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+QIsppx4yQ/o5dj68IrEtUuZ6CfDLtZCU2YaMFuS
-	7YYQqDHBwj6W2V
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <11738270273757-git-send-email-jbowes@dangerouslyinc.com>
-X-Y-GMX-Trusted: 0
+	id S1752685AbXCNBJU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 13 Mar 2007 21:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752688AbXCNBJU
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Mar 2007 21:09:20 -0400
+Received: from main.gmane.org ([80.91.229.2]:39418 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752685AbXCNBJT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Mar 2007 21:09:19 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HRHzR-00072I-5t
+	for git@vger.kernel.org; Wed, 14 Mar 2007 02:09:17 +0100
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Mar 2007 02:09:17 +0100
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Mar 2007 02:09:17 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42161>
 
-Hi,
+[Cc: git@vger.kernel.org]
 
-On Tue, 13 Mar 2007, James Bowes wrote:
+Luke.Powell@bjservices.com wrote:
 
-> Take 3. The changes are pretty much all of Shawn's suggestions. If a 
-> command fails this code just returns -1, rather than calling error(), so 
-> that two duplicate error messages aren't printed out.
+> Say that I have projects A and B which both depend on another project Z. 
+> Whenever I update one of those projects, I'd like to also update to the 
+> latest version of Z in a subdirectory. Is there that kind of support for 
+> these subprojects? If I'm not being clear, I'm talking about the kind of 
+> support that is available in Subversion through svn:externals or something 
+> analogous.
 
-If you say "return error(...);", there is _no_ way that multiple error 
-messages are printed out.
+Git currently doesn't have submodule (subproject) support, although this
+topic appears from time to time on git mailing list. There are even two
+prototypes of proper submodule support; link to one of those (heavyweight
+one by Martin Waitz) can be found at
+  http://git.or.cz/gitwiki/SubprojectSupport
+There is also lightweight submodule support proposal, but as author did
+not put info in above page, and I don't have I think an URL saved...
+It is I think what you might want.
 
-If you say "return -1;", however, the user is likely to _never_ know that 
-git-gc failed. (I, for one, do not check $? after running a program which 
-does not say _anything_.)
+But it should be fairly easy to cobble together something analogous
+to broken[*1*] svn:externals with update hook...
+ 
+> Also, please cc me in any answers since I'm not sure my subscription to 
+> the list went through.
 
-Ciao,
-Dscho
+http://git.or.cz/gitwiki/GitCommunity  
+
+
+[*1*] In short: you really, really want to bind/connect submodule commit
+(submodule version) to supermodule (main module) commit. E.g. you want to
+know for sure that v2.1.3 of your project pass all the tests and works
+with v0.2.1 of a submodule.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
