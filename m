@@ -1,7 +1,7 @@
 From: Don Zickus <dzickus@redhat.com>
-Subject: [PATCH 4/5] Add a couple more test cases to the suite.
-Date: Wed, 14 Mar 2007 16:12:25 -0400
-Message-ID: <11739031473249-git-send-email-dzickus@redhat.com>
+Subject: [PATCH 3/5] restrict the patch filtering
+Date: Wed, 14 Mar 2007 16:12:24 -0400
+Message-ID: <1173903147792-git-send-email-dzickus@redhat.com>
 References: <11739031463211-git-send-email-dzickus@redhat.com>
 Cc: Don Zickus <dzickus@redhat.com>
 To: git@vger.kernel.org
@@ -10,141 +10,109 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRZrD-0003IB-Jn
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 21:13:59 +0100
+	id 1HRZrE-0003IB-3n
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 21:14:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933100AbXCNUNz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 16:13:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933120AbXCNUNz
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 16:13:55 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:38211 "EHLO mx1.redhat.com"
+	id S933131AbXCNUN4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 16:13:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933120AbXCNUN4
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 16:13:56 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:38210 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933100AbXCNUNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 16:13:53 -0400
+	id S933113AbXCNUNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 16:13:54 -0400
 Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2EKDrjv014190
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2EKDrAc014187
 	for <git@vger.kernel.org>; Wed, 14 Mar 2007 16:13:53 -0400
 Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2EKDqDR025158
-	for <git@vger.kernel.org>; Wed, 14 Mar 2007 16:13:53 -0400
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2EKDq3T025155
+	for <git@vger.kernel.org>; Wed, 14 Mar 2007 16:13:52 -0400
 Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
-	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2EKDqMl007063;
+	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2EKDqa6007060;
 	Wed, 14 Mar 2007 16:13:52 -0400
 Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2EKCRgo009155;
+	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2EKCRt1009151;
 	Wed, 14 Mar 2007 16:12:27 -0400
 Received: (from dzickus@localhost)
-	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2EKCRjK009154;
+	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2EKCRQI009150;
 	Wed, 14 Mar 2007 16:12:27 -0400
 X-Mailer: git-send-email 1.5.0.2.213.g18c8-dirty
 In-Reply-To: <11739031463211-git-send-email-dzickus@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42223>
 
-They handle cases where there is no attached patch.
+I have come across many emails that use long strings of '-'s as separators
+for ideas.  This patch below limits the separator to only 3 '-', with the
+intent that long string of '-'s will stay in the commit msg and not in the
+patch file.
 
 Signed-off-by: Don Zickus <dzickus@redhat.com>
----
- t/t5100-mailinfo.sh |    2 +-
- t/t5100/info0007    |    5 +++++
- t/t5100/info0008    |    5 +++++
- t/t5100/msg0007     |    2 ++
- t/t5100/msg0008     |    4 ++++
- t/t5100/sample.mbox |   18 ++++++++++++++++++
- 6 files changed, 35 insertions(+), 1 deletions(-)
- create mode 100644 t/t5100/info0007
- create mode 100644 t/t5100/info0008
- create mode 100644 t/t5100/msg0007
- create mode 100644 t/t5100/msg0008
- create mode 100644 t/t5100/patch0007
- create mode 100644 t/t5100/patch0008
+Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
 
-diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
-index 4d2b781..ca96918 100755
---- a/t/t5100-mailinfo.sh
-+++ b/t/t5100-mailinfo.sh
-@@ -11,7 +11,7 @@ test_expect_success 'split sample box' \
- 	'git-mailsplit -o. ../t5100/sample.mbox >last &&
- 	last=`cat last` &&
- 	echo total is $last &&
--	test `cat last` = 6'
-+	test `cat last` = 8'
+---
+I purposedly separated this patch out because I wasn't sure if anyone would
+have objections to it.  I tested it on numerous emails with and with patches
+and didn't see any issues.
+---
+ builtin-mailinfo.c |   37 ++++++++++++++++++++++++++++++++++---
+ 1 files changed, 34 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index dd0f563..a8d5b60 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -652,6 +652,39 @@ again:
+ 	return (fgets(line, sizeof(line), fin) != NULL);
+ }
  
- for mail in `echo 00*`
- do
-diff --git a/t/t5100/info0007 b/t/t5100/info0007
-new file mode 100644
-index 0000000..49bb0fe
---- /dev/null
-+++ b/t/t5100/info0007
-@@ -0,0 +1,5 @@
-+Author: A U Thor
-+Email: a.u.thor@example.com
-+Subject: another patch
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
++static inline int patchbreak(const char *line)
++{
++	/* Beginning of a "diff -" header? */
++	if (!memcmp("diff -", line, 6))
++		return 1;
 +
-diff --git a/t/t5100/info0008 b/t/t5100/info0008
-new file mode 100644
-index 0000000..e8a2951
---- /dev/null
-+++ b/t/t5100/info0008
-@@ -0,0 +1,5 @@
-+Author: Junio C Hamano
-+Email: junio@kernel.org
-+Subject: another patch
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
++	/* CVS "Index: " line? */
++	if (!memcmp("Index: ", line, 7))
++		return 1;
 +
-diff --git a/t/t5100/msg0007 b/t/t5100/msg0007
-new file mode 100644
-index 0000000..71b23c0
---- /dev/null
-+++ b/t/t5100/msg0007
-@@ -0,0 +1,2 @@
-+Here is an empty patch from A U Thor.
++	/*
++	 * "--- <filename>" starts patches without headers
++	 * "---<sp>*" is a manual separator
++	 */
++	if (!memcmp("---", line, 3)) {
++		line += 3;
++		/* space followed by a filename? */
++		if (line[0] == ' ' && !isspace(line[1]))
++			return 1;
++		/* Just whitespace? */
++		for (;;) {
++			unsigned char c = *line++;
++			if (c == '\n')
++				return 1;
++			if (!isspace(c))
++				break;
++		}
++		return 0;
++	}
++	return 0;
++}
 +
-diff --git a/t/t5100/msg0008 b/t/t5100/msg0008
-new file mode 100644
-index 0000000..a80ecb9
---- /dev/null
-+++ b/t/t5100/msg0008
-@@ -0,0 +1,4 @@
-+>Here is an empty patch from A U Thor.
 +
-+Hey you forgot the patch!
-+
-diff --git a/t/t5100/patch0007 b/t/t5100/patch0007
-new file mode 100644
-index 0000000..e69de29
-diff --git a/t/t5100/patch0008 b/t/t5100/patch0008
-new file mode 100644
-index 0000000..e69de29
-diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
-index 86bfc27..b80c981 100644
---- a/t/t5100/sample.mbox
-+++ b/t/t5100/sample.mbox
-@@ -386,3 +386,21 @@ index 9123cdc..918dcf8 100644
- -- 
- 1.4.0.g6f2b
+ static int handle_commit_msg(char *line)
+ {
+ 	static int still_looking=1;
+@@ -673,9 +706,7 @@ static int handle_commit_msg(char *line)
+ 			return 0;
+ 	}
  
-+From nobody Mon Sep 17 00:00:00 2001
-+From: A U Thor <a.u.thor@example.com>
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+Subject: [PATCH] another patch
-+
-+Here is an empty patch from A U Thor.
-+
-+From nobody Mon Sep 17 00:00:00 2001
-+From: Junio C Hamano <junio@kernel.org>
-+Date: Fri, 9 Jun 2006 00:44:16 -0700
-+Subject: re: [PATCH] another patch
-+
-+From: A U Thor <a.u.thor@example.com>
-+Subject: [PATCH] another patch
-+>Here is an empty patch from A U Thor.
-+
-+Hey you forgot the patch!
-+
+-	if (!memcmp("diff -", line, 6) ||
+-	    !memcmp("---", line, 3) ||
+-	    !memcmp("Index: ", line, 7)) {
++	if (patchbreak(line)) {
+ 		fclose(cmitmsg);
+ 		cmitmsg = NULL;
+ 		return 1;
 -- 
 1.5.0.2.211.g2ca9-dirty
