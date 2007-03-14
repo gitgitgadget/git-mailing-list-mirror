@@ -1,83 +1,99 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: [PATCH 5/5] fix a utf8 issue in t5100/patch005
-Date: Wed, 14 Mar 2007 16:12:26 -0400
-Message-ID: <11739031471626-git-send-email-dzickus@redhat.com>
-References: <11739031463211-git-send-email-dzickus@redhat.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] Teach git-remote to list pushed branches.
+Date: Wed, 14 Mar 2007 21:56:00 +0100
+Message-ID: <200703142156.00678.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Don Zickus <dzickus@redhat.com>
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 14 21:14:28 2007
+X-From: git-owner@vger.kernel.org Wed Mar 14 21:56:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRZrf-0003ZQ-4u
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 21:14:27 +0100
+	id 1HRaWM-0001we-7Y
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 21:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933143AbXCNUOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 16:14:05 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933147AbXCNUOD
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 16:14:03 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:38256 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933143AbXCNUN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 16:13:59 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2EKDwrp014192
-	for <git@vger.kernel.org>; Wed, 14 Mar 2007 16:13:58 -0400
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2EKDrdZ025159
-	for <git@vger.kernel.org>; Wed, 14 Mar 2007 16:13:53 -0400
-Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
-	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2EKDqdL007066;
-	Wed, 14 Mar 2007 16:13:52 -0400
-Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2EKCRRm009159;
-	Wed, 14 Mar 2007 16:12:27 -0400
-Received: (from dzickus@localhost)
-	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2EKCRkj009158;
-	Wed, 14 Mar 2007 16:12:27 -0400
-X-Mailer: git-send-email 1.5.0.2.213.g18c8-dirty
-In-Reply-To: <11739031463211-git-send-email-dzickus@redhat.com>
+	id S1422652AbXCNU4N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 16:56:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422654AbXCNU4M
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 16:56:12 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:41159 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422652AbXCNU4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 16:56:06 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 308DA13A2CD
+	for <git@vger.kernel.org>; Wed, 14 Mar 2007 21:56:03 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 811323AD24
+	for <git@vger.kernel.org>; Wed, 14 Mar 2007 21:56:01 +0100 (CET)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42227>
 
-This issue popped up when testing my changes.  I believe the patch is t=
-he
-intended output that git-mailinfo should provide.
+The configured refspecs are printed almost verbatim, i.e. both the local
+and the remote branch name separated by a colon are printed; only the
+prefix 'refs/heads/' is removed, like this:
 
-Signed-off-by: Don Zickus <dzickus@redhat.com>
+  Local branch(es) pushed with 'git push'
+    master refs/tags/*:refs/tags/* next:next
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- t/t5100/patch0005 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/t/t5100/patch0005 b/t/t5100/patch0005
-index 7d24b24..e7d6f66 100644
---- a/t/t5100/patch0005
-+++ b/t/t5100/patch0005
-@@ -61,7 +61,7 @@ diff --git a/git-cvsimport-script b/git-cvsimport-scr=
-ipt
-  		push(@old,$fn);
-=20
- --=20
--David K=E5gedal
-+David K=C3=A5gedal
- -
- To unsubscribe from this list: send the line "unsubscribe git" in
- the body of a message to majordomo@vger.kernel.org
---=20
-1.5.0.2.211.g2ca9-dirty
+The hunk that reads the 'Push'es from the .git/remotes file is taken
+almost verbatim from the corresponding 'Pull' clause and is untested.
+
+-- Hannes
+
+ git-remote.perl |   16 +++++++++++++++-
+ 1 files changed, 15 insertions(+), 1 deletions(-)
+
+diff --git a/git-remote.perl b/git-remote.perl
+index bd70bf1..52013fe 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -15,6 +15,10 @@ sub add_remote_config {
+ 		$hash->{$name}{'FETCH'} ||= [];
+ 		push @{$hash->{$name}{'FETCH'}}, $value;
+ 	}
++	elsif ($what eq 'push') {
++		$hash->{$name}{'PUSH'} ||= [];
++		push @{$hash->{$name}{'PUSH'}}, $value;
++	}
+ 	if (!exists $hash->{$name}{'SOURCE'}) {
+ 		$hash->{$name}{'SOURCE'} = 'config';
+ 	}
+@@ -44,7 +48,8 @@ sub add_remote_remotes {
+ 			}
+ 		}
+ 		elsif (/^Push:\s*(.*)$/) {
+-			; # later
++			$it->{'PUSH'} ||= [];
++			push @{$it->{'PUSH'}}, $1;
+ 		}
+ 		elsif (/^Pull:\s*(.*)$/) {
+ 			$it->{'FETCH'} ||= [];
+@@ -250,6 +255,15 @@ sub show_remote {
+ 	if ($info->{'LS_REMOTE'}) {
+ 		show_mapping($name, $info);
+ 	}
++	if ($info->{'PUSH'}) {
++		my @pushed = map {
++			s|^refs/heads/||;
++			s|:refs/heads/|:|;
++			$_;
++		} @{$info->{'PUSH'}};
++		print "  Local branch(es) pushed with 'git push'\n";
++		print "    @pushed\n";
++	}
+ }
+ 
+ sub add_remote {
+-- 
+1.5.0.3.438.gc49b2
