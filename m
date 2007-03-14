@@ -1,97 +1,82 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Upgrade to 1.5.0 utility
-Date: Wed, 14 Mar 2007 02:16:12 -0400
-Message-ID: <20070314061611.GD20978@spearce.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [GIT PULL] Please pull mergetool.git
+Date: Wed, 14 Mar 2007 02:17:44 -0400
+Message-ID: <20070314061744.GA12710@thunk.org>
+References: <E1HRI5K-0008T9-9e@candygram.thunk.org> <20070314055923.GA20978@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 14 07:16:30 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Mar 14 07:18:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRMmh-0007WV-6F
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 07:16:27 +0100
+	id 1HRMoS-0008T7-QW
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 07:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030473AbXCNGQQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 02:16:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030493AbXCNGQQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 02:16:16 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:49324 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030473AbXCNGQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 02:16:15 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HRMmT-0003Kj-16
-	for git@vger.kernel.org; Wed, 14 Mar 2007 02:16:13 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6049E20FBAE; Wed, 14 Mar 2007 02:16:12 -0400 (EDT)
+	id S1030480AbXCNGSN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 02:18:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030667AbXCNGSN
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 02:18:13 -0400
+Received: from thunk.org ([69.25.196.29]:42093 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030480AbXCNGSN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 02:18:13 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HRMu5-0003Q5-HV; Wed, 14 Mar 2007 02:24:05 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HRMnx-00043b-1e; Wed, 14 Mar 2007 02:17:45 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+In-Reply-To: <20070314055923.GA20978@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42177>
 
-Yesterday on #git DrNick wanted a script to update a pre-1.5.0
-Git repository to be like a 1.5.0 (and later) style repository.
+On Wed, Mar 14, 2007 at 01:59:23AM -0400, Shawn O. Pearce wrote:
+> Theodore Ts'o <tytso@mit.edu> wrote:
+> > +    base_mode=`git ls-files -u -- "$path" | awk '{if ($3==1) print $1;}'`
+> > +    local_mode=`git ls-files -u -- "$path" | awk '{if ($3==2) print $1;}'`
+> > +    remote_mode=`git ls-files -u -- "$path" | awk '{if ($3==3) print $1;}'`
+> > +
+> > +    base_present   && git cat-file blob ":1:$path" > "$BASE" 2>/dev/null
+> > +    local_present  && git cat-file blob ":2:$path" > "$LOCAL" 2>/dev/null
+> > +    remote_present && git cat-file blob ":3:$path" > "$REMOTE" 2>/dev/null
+> 
+> Why not use `git checkout-index --stage=all "$path"` ?
+> E.g.:
+> 
+> 	git checkout-index --stage=all "$path" |
+> 	read base_temp local_temp remote_temp path
+> 
+> I'm not trying to nitpick, I'm just curious about why this particular
+> feature of checkout-index was not useful here.
 
-This basically means rewriting the remotes into .git/config, setting
-up wildcard tracking branches under refs/remotes and deleting the
-old tracking branches from the refs/heads namespace.
+1)  I didn't know about it.
 
-Much earlier I had cobbled together a short shell script that does
-this for a *working directory repository*.  Please don't use it on
-a bare repository, at least not without editing, as it is hardcoding
-the config options.  ;-)
+2) If I used it would I have to have renamed the files to
+<path>.LOCAL, <path>.BASE, et.al, because with most of the graphical
+merge tools, the filename is the only thing which gets displayed to
+tell the user which file came from the local branch or the remote
+branch or the base revision --- since file names such as
+.merge_file_QBaxrn and .merge_file_prSEqs don't have a lot of human
+meaning.....
 
-Here it is:
+So I don't know that it would havce saved much in the script.  You
+replace three invocations to git-cat-file with one invocation to
+git-checkout-index plus three invocations to mv.
 
-cat <<END_OF_SCRIPT >upgrade.sh
-#!/bin/sh
+Regards,
 
-##
-## Upgrades a pre-1.5.0 repository to a 1.5.0-style layout.
-## Use at your own risk.  I've used it to upgrade many of
-## my own repositories, but I also know what I'm doing.  ;-)
-##
+						- Ted
 
-sh remotes2config.sh; # from git.git/contrib
 
-git config core.bare false
-git config core.logallrefupdates true
-
-for r in $(git remote)
-do
-  old="`git config --get-all remote.$r.fetch | sed s,^.*:refs/heads/,,`"
-  if [ -z "$old" ]
-  then
-    echo "No fetch lines for $r."
-    continue
-  fi
-
-  echo "Converting $r..."
-  git config --replace-all remote.$r.fetch +refs/heads/*:refs/remotes/$r/*
-  git fetch $r
-  for r in $old
-  do
-    case "$r" in
-    *:*) echo "Not deleting $r" ;;
-    *) git branch -D $r ;;
-    esac
-  done
-done
-END_OF_SCRIPT
-
--- 
-Shawn.
+			
