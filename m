@@ -1,85 +1,93 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 14 Mar 2007 12:47:03 +0100
-Message-ID: <8aa486160703140447g560e3b42j7a14f6c3032bb77a@mail.gmail.com>
-References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
-	 <7v8xep8dfk.fsf@assigned-by-dhcp.cox.net>
-	 <7v7itx5mep.fsf@assigned-by-dhcp.cox.net>
-	 <7vps7dle8j.fsf@assigned-by-dhcp.cox.net>
-	 <7vhcsphqtk.fsf@assigned-by-dhcp.cox.net>
-	 <8aa486160703131614i1b67e6c3vf7ccf395d63573b4@mail.gmail.com>
-	 <7vbqiwawva.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Make gc a builtin.
+Date: Wed, 14 Mar 2007 11:48:06 +0000
+Message-ID: <200703141148.12364.andyparkins@gmail.com>
+References: <11738375021267-git-send-email-jbowes@dangerouslyinc.com> <200703141045.58739.andyparkins@gmail.com> <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Paolo Bonzini" <paolo.bonzini@lu.unisi.ch>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 14 12:47:15 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, Theodore Tso <tytso@mit.edu>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	James Bowes <jbowes@dangerouslyinc.com>,
+	Johannes.Schindelin@gmx.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 14 12:48:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRRwm-0007Ff-GZ
-	for gcvg-git@gmane.org; Wed, 14 Mar 2007 12:47:12 +0100
+	id 1HRRxt-0007sJ-0q
+	for gcvg-git@gmane.org; Wed, 14 Mar 2007 12:48:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161152AbXCNLrI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 14 Mar 2007 07:47:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161159AbXCNLrI
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 07:47:08 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:4820 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161152AbXCNLrF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Mar 2007 07:47:05 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so178543nfa
-        for <git@vger.kernel.org>; Wed, 14 Mar 2007 04:47:04 -0700 (PDT)
+	id S1161159AbXCNLsS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 07:48:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161162AbXCNLsS
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 07:48:18 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:48408 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161159AbXCNLsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 07:48:17 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so141114wxd
+        for <git@vger.kernel.org>; Wed, 14 Mar 2007 04:48:17 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=dFB2bmHSnESUWnT2TVaUkkolhhSsD+btq3rv9Xojd9e4t5VLiE72beN6lesemUXbShHmYbYNlPR/U7wJ65+oMBgqFD7/sYEjV8mngcBnwDZ+d+JzPXm5IAG0hwEuqbywoexDoLo9ySlPcodkmCY3u5Dp/DSfqR4CQkbs71CFemc=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Y8Z4QDy5DOfDvQIA6wnEda2GMCg8ws/46APL/x1Q1AZKmx+KIndU9VUxi3d+P3Euq5b8WMV9W4K2+jQq5smYEccbkY5GIVPmK4pJAIzveIciehkTC9yQ1yZWsCN/zql+muX5dtg8BDmd99bEnKh/3ViSFpnV+1hzo3H8YIXIjTY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YXAWQCfxozClrT0O8pP7cUQH/o7BC+VwLPTIY++PQyLjSyU8j7bPzHuebCodn6iLrlxC6LYkFSiNQTrc6gE4c3Mn81wWlA2jIT+v8LNWEcQy9Xy1+JutYyhsC0NUO2pHfg9N2uqZfHekM8GyRJ6T9cfxkzkR36n5hLQ+tGmaQWY=
-Received: by 10.78.136.7 with SMTP id j7mr1119707hud.1173872823871;
-        Wed, 14 Mar 2007 04:47:03 -0700 (PDT)
-Received: by 10.78.69.4 with HTTP; Wed, 14 Mar 2007 04:47:03 -0700 (PDT)
-In-Reply-To: <7vbqiwawva.fsf@assigned-by-dhcp.cox.net>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=hP+W1OVnL5uVhsUmzmMCGD4eIM8L0Yrr6j5PgJgXQ3oL/esJUTXfpTJ20DlsLxDTSbnQUNldmZ0ChR8ENAT7i5z3ib+ld2zJNxL2jey5M393+igrE/FhqmO1cPXYmkGCRTfOYXCNwTO6HIe/ngzhUZaJ31ena7V8coNt4uoQVw8=
+Received: by 10.90.88.13 with SMTP id l13mr6975975agb.1173872897111;
+        Wed, 14 Mar 2007 04:48:17 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id g1sm24546190nfe.2007.03.14.04.48.16;
+        Wed, 14 Mar 2007 04:48:16 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vps7caxjb.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42201>
 
-On 3/14/07, Junio C Hamano <junkio@cox.net> wrote:
-> "Santi B=E9jar" <sbejar@gmail.com> writes:
->
-> >> I tried the "NULL fetch between 1000-refs repositories" test,
-> >> which prompted the git-fetch--tool work that was done on
-> >> jc/fetch topic in 'next', with the following versions:
-> >>
-> >>  (1) 1.5.0 (without any git-fetch--tool optimization)
-> >>  (2) master (ditto)
-> >>  (3) master with jc/fetch (but not sb/fetch topic)
-> >>  (4) next ((3) plus sb/fetch and others)
-> >>
-> >> The test scripts are at the end of this message.  Both (1) and
-> >> (2) take 3 minutes 7 seconds wallclock time.  (3) improves it
-> >> down to 15 seconds.  (4) makes the operation spend 24 seconds
-> >> (the times are all on my primary machine x86-64 with 1GB, hot
-> >> cache and average of three runs each).
-> >
-> > I think it is not fair,...
+On Wednesday 2007 March 14 11:12, Junio C Hamano wrote:
 
-[...]
+> There is a difference between having a readily greppable and
+> lessable copy handy to study at your own initiative, and being
+> able to retrieve to review only after being told.
 
->, and you may not like the
-> numbers, but if you call that is "not fair", I do not know what
-> could be considered fair.
+Well I was only joking really.
 
-I would consider fair the comparison you did not quote, a comparison
-with the merge logic written in C. I know that (4) is a step backwards
-in performance as it is now, and I understand that with those numbers
-the "Split" patch must be reverted.
+> You could argue that we can all do that with git-grep and
+> git-less ;-).
 
-Santi
+Definitely.  git is so good at this sort of stuff that encouraging the 
+retention of commented out code is just filling up source files with junk.
+
+In the old days, before version control, I would often have files with
+
+#if 0
+// This is how I used to do it
+// ...
+#endif
+
+These days I comment it out, then after a few successful commits it gets 
+removed from the source file.  Git makes my code cleaner and clearer as it's 
+not filled with obsolete junk.  I am always secure in the knowledge that I 
+can go back and look if I want.  The same is true, I think, for shell script 
+replaced with C code.
+
+What will you do if in the future the C gets a feature that wasn't in the 
+shell code - should the shell code be updated?  If you don't then the comment 
+is a lie, if you do then it's a maintenance nightmare.
+
+Chuck it and be happy it's chucked.  A rule for life.  I should write fortune 
+cookies.
+
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
