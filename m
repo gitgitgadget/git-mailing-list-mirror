@@ -1,135 +1,80 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: Re: [PATCH 2/5] add the ability to select more email header fields to output
-Date: Thu, 15 Mar 2007 10:36:39 -0400
-Message-ID: <20070315143639.GC11029@redhat.com>
-References: <11739031463211-git-send-email-dzickus@redhat.com> <11739031471426-git-send-email-dzickus@redhat.com>
+From: Rocco Rutte <pdmef@gmx.net>
+Subject: Re: mercurial to git
+Date: Thu, 15 Mar 2007 15:19:37 +0000
+Organization: Berlin University of Technology
+Message-ID: <20070315151936.GA31087@peter.daprodeges.fqdn.th-h.de>
+References: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de> <20070306215459.GI18370@thunk.org> <20070306230802.GA17226@filer.fsl.cs.sunysb.edu> <20070307001105.GJ18370@thunk.org> <20070314111257.GA4526@peter.daprodeges.fqdn.th-h.de> <20070315002505.GA31770@thunk.org> <20070315101913.GA9831@peter.daprodeges.fqdn.th-h.de> <20070315141227.GA18416@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 15 15:38:18 2007
+X-From: git-owner@vger.kernel.org Thu Mar 15 16:19:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRr5o-0005O5-6V
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 15:38:12 +0100
+	id 1HRrkE-00005V-IR
+	for gcvg-git@gmane.org; Thu, 15 Mar 2007 16:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422740AbXCOOiJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 10:38:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422741AbXCOOiJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 10:38:09 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:38890 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422740AbXCOOiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 10:38:07 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2FEc5aK013430
-	for <git@vger.kernel.org>; Thu, 15 Mar 2007 10:38:05 -0400
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2FEc5a6030582
-	for <git@vger.kernel.org>; Thu, 15 Mar 2007 10:38:05 -0400
-Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
-	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2FEc55L017010
-	for <git@vger.kernel.org>; Thu, 15 Mar 2007 10:38:05 -0400
-Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2FEadlV031579
-	for <git@vger.kernel.org>; Thu, 15 Mar 2007 10:36:39 -0400
-Received: (from dzickus@localhost)
-	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2FEadLo031578
-	for git@vger.kernel.org; Thu, 15 Mar 2007 10:36:39 -0400
-X-Authentication-Warning: drseuss.boston.redhat.com: dzickus set sender to dzickus@redhat.com using -f
+	id S1422891AbXCOPTm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 11:19:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422892AbXCOPTm
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 11:19:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39773 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422891AbXCOPTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 11:19:41 -0400
+Received: (qmail invoked by alias); 15 Mar 2007 15:19:39 -0000
+X-Provags-ID: V01U2FsdGVkX18uK9kypvcun6KwhINcjgppTd+eTddcKHWUEcZx7w
+	LYUeNJNS4uKKrg
+Received: from peter.daprodeges.fqdn.th-h.de (peter [192.168.0.5])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by peter.daprodeges.fqdn.th-h.de (Postfix) with ESMTP id AE93320F0D
+	for <git@vger.kernel.org>; Thu, 15 Mar 2007 15:19:38 +0000 (UTC)
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <11739031471426-git-send-email-dzickus@redhat.com>
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <20070315141227.GA18416@thunk.org>
+X-GnuPG-Key: http://user.cs.tu-berlin.de/~pdmef/rrutte.gpg
+X-Blog: http://user.cs.tu-berlin.de/~pdmef/horst.cgi?o
+X-System: peter.daprodeges.fqdn.th-h.de (FreeBSD 6.2-STABLE i386)
+User-Agent: Mutt/1.5.14 (2007-03-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42286>
 
-This is useful when scripts need more than just the basic email headers to
-parse.  By specifying the "-x=" option, one can search and output any header
-field they want.
+Hi,
 
-Signed-off-by: Don Zickus <dzickus@redhat.com>
----
+* Theodore Tso [07-03-15 10:12:27 -0400] wrote:
+>On Thu, Mar 15, 2007 at 10:19:13AM +0000, Rocco Rutte wrote:
+>> I failed to send a response to the list and it went Theodore privately 
+>> only, sorry. I merged hg2git into fast-export.git at repo.or.cz and 
+>> named it 'hg-fast-export' to match with the other importers there. It 
+>> now can parse Signed-off-by lines and supports author maps (as 
+>> git-cvsimport and git-svnimport do, same syntax).
 
- Accidentally sent out the wrong patch yesterday.
+>BTW, there are a number of places where the old name (hg2git) is still
+>being used for filenames, et.al, because $PFX is still being set to
+>hg2git.
 
----
- builtin-mailinfo.c |   22 ++++++++++++++++------
- 1 files changed, 16 insertions(+), 6 deletions(-)
+I know and intend to leave it that way as the filenames are shorter.
 
-diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-index a5eea82..8ac6ef4 100644
---- a/builtin-mailinfo.c
-+++ b/builtin-mailinfo.c
-@@ -302,7 +302,7 @@ static int check_header(char *line, char **hdr_data)
- 	int i;
- 
- 	/* search for the interesting parts */
--	for (i = 0; header[i]; i++) {
-+	for (i = 0; header[i] && i < MAX_HDR_PARSED; i++) {
- 		int len = strlen(header[i]);
- 		if (!hdr_data[i] &&
- 		    !strncasecmp(line, header[i], len) &&
-@@ -338,8 +338,8 @@ static int check_header(char *line, char **hdr_data)
- 	if (!memcmp(">From", line, 5) && isspace(line[5]))
- 		return 1;
- 	if (!memcmp("[PATCH]", line, 7) && isspace(line[7])) {
--		for (i = 0; header[i]; i++) {
--			if (!memcmp("Subject: ", header[i], 9)) {
-+		for (i = 0; header[i] && i < MAX_HDR_PARSED; i++) {
-+			if (!memcmp("Subject", header[i], 7)) {
- 				if (! handle_header(line, hdr_data[i], 0)) {
- 					return 1;
- 				}
-@@ -796,7 +796,7 @@ static void handle_info(void)
- 	char *hdr;
- 	int i;
- 
--	for (i = 0; header[i]; i++) {
-+	for (i = 0; header[i] && i < MAX_HDR_PARSED; i++) {
- 
- 		/* only print inbody headers if we output a patch file */
- 		if (patch_lines && s_hdr_data[i])
-@@ -856,11 +856,12 @@ int mailinfo(FILE *in, FILE *out, int ks, const char *encoding,
- }
- 
- static const char mailinfo_usage[] =
--	"git-mailinfo [-k] [-u | --encoding=<encoding>] msg patch <mail >info";
-+	"git-mailinfo [-k] [-u | --encoding=<encoding>] [-x=<field>] msg patch <mail >info";
- 
- int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- {
- 	const char *def_charset;
-+	int top;
- 
- 	/* NEEDSWORK: might want to do the optional .git/ directory
- 	 * discovery
-@@ -870,6 +871,8 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- 	def_charset = (git_commit_encoding ? git_commit_encoding : "utf-8");
- 	metainfo_charset = def_charset;
- 
-+	for (top = 0; header[top] && top < MAX_HDR_PARSED; top++){ ; }
-+
- 	while (1 < argc && argv[1][0] == '-') {
- 		if (!strcmp(argv[1], "-k"))
- 			keep_subject = 1;
-@@ -879,7 +882,14 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- 			metainfo_charset = NULL;
- 		else if (!prefixcmp(argv[1], "--encoding="))
- 			metainfo_charset = argv[1] + 11;
--		else
-+		else if (!prefixcmp(argv[1], "-x=")) {
-+			if (top >= MAX_HDR_PARSED) {
-+				fprintf(stderr, "too many headers to parse\n");
-+				exit(1);
-+			}
-+			header[top] = xmalloc(256*sizeof(char));
-+			strncpy(header[top++], argv[1]+3, 256);
-+		} else
- 			usage(mailinfo_usage);
- 		argc--; argv++;
- 	}
+>The date seems to be correctly generated using
+
+>	hg-fast-export.sh -s -A ../e2fsprogs.authors -r ../e2fsprogs
+>	hg-fast-export.sh -s -r ../e2fsprogs
+>	hg-fast-export.sh -r ../e2fsprogs
+
+>It seems to be this combination of options:
+
+>	hg-fast-export.sh -A ../e2fsprogs.authors -r ../e2fsprogs
+
+>Where all of the dates end up being Jan 1, 1970.
+
+Hmm. Strange, I cannot reproduce this. Can you mail me your authors file 
+along with version information privately please?
+
+   bye, Rocco
 -- 
-1.5.0.2.213.g18c8-dirty
+:wq!
