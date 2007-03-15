@@ -1,346 +1,113 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [PATCH, fixed] git-fetch, git-branch: Support local --track via a
- special remote `.'
-Date: Thu, 15 Mar 2007 09:23:20 +0100
-Message-ID: <etavpn$ma0$1@sea.gmane.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: [RFC] Add --index to git-commit: just commit current index
+Date: Thu, 15 Mar 2007 10:43:37 +0100
+Message-ID: <81b0412b0703150243h6a5f036aye8f115d82e11e883@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 15 09:23:50 2007
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_23072_23847454.1173951817947"
+Cc: "Junio C Hamano" <junkio@cox.net>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Mar 15 10:43:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRlFU-0006Tl-7Y
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 09:23:48 +0100
+	id 1HRmUp-0005U1-E4
+	for gcvg-git@gmane.org; Thu, 15 Mar 2007 10:43:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933450AbXCOIXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 04:23:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933386AbXCOIXp
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 04:23:45 -0400
-Received: from main.gmane.org ([80.91.229.2]:44118 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933450AbXCOIXn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 04:23:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HRlFB-000651-KV
-	for git@vger.kernel.org; Thu, 15 Mar 2007 09:23:29 +0100
-Received: from usilu-ge.ti-edu.ch ([195.176.176.226])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Mar 2007 09:23:29 +0100
-Received: from bonzini by usilu-ge.ti-edu.ch with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Mar 2007 09:23:29 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: usilu-ge.ti-edu.ch
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
+	id S1752781AbXCOJnk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 05:43:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752784AbXCOJnk
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 05:43:40 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:15143 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752781AbXCOJnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 05:43:39 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so252631uga
+        for <git@vger.kernel.org>; Thu, 15 Mar 2007 02:43:38 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=cgqC5MK20eE5Rk/m0JdA881FfT+xfunCb17bt9M3XoITNUGX0qfg2/CI9ct1PZufW5dTBxvPiotm4eYfSIRiDvfa771QvhI0umn3aiwX9p4iGWFz7VYSm0rG4VXnzAV1XW0smkwX2RT+eTu0NKBp+2Lu5CWvN5BHYgl3J2BaSnk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
+        b=uY2fRO1jbvZKaDpInE+wHxLV6Bt7BY59V7LQQYmtMnkSsN5eBbTok4v4V26YISfQDUFa9wquQwPWUk0HZGeC9z+kCzwZpF+vyaaq+Va5Zw51mLAOV8kKDf27oa2kuHLLZ6P7IJU4EueEZouFzuDCbOKsKnl6zIRRsv0CgsdTfJM=
+Received: by 10.78.204.20 with SMTP id b20mr229193hug.1173951817981;
+        Thu, 15 Mar 2007 02:43:37 -0700 (PDT)
+Received: by 10.78.138.5 with HTTP; Thu, 15 Mar 2007 02:43:37 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42275>
 
-This patch adds support for a dummy remote `.' to avoid having to declare
-a fake remote like
+------=_Part_23072_23847454.1173951817947
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-        [remote "local"]
-                url = .
-                fetch = refs/heads/*:refs/heads/*
-
-Such a builtin remote simplifies the operation of "git-fetch", which
-will populate FETCH_HEAD but will not pretend that two repositories are
-in use, will not create a thin pack, and will not perform any useless
-remapping of names.  The speed improvement is around 20%, and it should
-improve more if "git-fetch" is converted to a builtin.
-
-To this end, git-parse-remote is grown with a new kind of remote, `builtin'.
-In git-fetch.sh, we treat the builtin remote specially in that it needs no
-pack/store operations.  In fact, doing git-fetch on a builtin remote will
-simply populate FETCH_HEAD appropriately.
-
-The patch also improves of the --track/--no-track support, extending
-it so that branch.<name>.remote items referring `.' can be created.
-Finally, it fixes a typo in git-checkout.sh.
-
-Signed-off-by: Paolo Bonzini  <bonzini@gnu.org>
+Refreshing index takes a long time on big repositories with many files,
+especially if the developer was unlucky enough to stick to a slow filesystem
+or a broken OS. In this situation explicit git-update-index with
+git-commit --index will speedup the workflow.
+Giving either --all, -o, or -i silently turns --index off (these have to
+refresh index).
+In case of unmodified index no status message is shown, for all
+the same reasons: it takes too long.
 ---
- Documentation/config.txt |    4 ++++
- builtin-branch.c         |   39 +++++++++++++++++++++++++--------------
- git-checkout.sh          |    2 +-
- git-fetch.sh             |   29 +++++++++++++++++++----------
- git-parse-remote.sh      |   13 +++++++++++--
- t/t3200-branch.sh        |    6 ++++++
- t/t5520-pull.sh          |   24 ++++++++++++++++++++++++
- 7 files changed, 90 insertions(+), 27 deletions(-)
 
-	This patch includes the testcase from Junio -- which now
-	passes.  Fixing it is easy but required a curious implementation:
-	since all we have to do is append fetched heads to FETCH_HEADS,
-	it is simpler to put the handling of builtin `.' into fetch_dumb.
+First use of new --quiet :)
 
-	To make the name of fetch_dumb more consistent with the
-	functionality, I renamed it to fetch_heads, as well as
-	renaming fetch_native to fetch_packs.
+ git-commit.sh |   21 +++++++++++++++++----
+ 1 files changed, 17 insertions(+), 4 deletions(-)
 
-	The patch was regression tested and shows no regression.  I added
-	to t5520-pull.sh the testcase that was failing in the first respin.
+------=_Part_23072_23847454.1173951817947
+Content-Type: text/plain; 
+	name=0001-Add-index-to-git-commit-just-commit-current-index.txt; 
+	charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ezb0n9x2
+Content-Disposition: attachment; filename="0001-Add-index-to-git-commit-just-commit-current-index.txt"
 
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index aaae9ac..953acae 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -272,6 +272,10 @@ branch.<name>.merge::
- 	`git fetch`) to lookup the default branch for merging. Without
- 	this option, `git pull` defaults to merge the first refspec fetched.
- 	Specify multiple values to get an octopus merge.
-+	If you wish to setup `git pull` so that it merges into <name> from
-+	another branch in the local repository, you can point
-+	branch.<name>.merge to the desired branch, and use the special setting
-+	`.` (a period) for branch.<name>.remote.
- 
- color.branch::
- 	A boolean to enable/disable color in the output of
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 42b1ff1..a4494ee 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -372,9 +372,26 @@ static int get_remote_config(const char *key, const char *value)
- 	return 0;
- }
- 
--static void set_branch_defaults(const char *name, const char *real_ref)
-+static void set_branch_merge(const char *name, const char *config_remote,
-+			     const char *config_repo)
- {
- 	char key[1024];
-+	if (sizeof(key) <=
-+	    snprintf(key, sizeof(key), "branch.%s.remote", name))
-+		die("what a long branch name you have!");
-+	git_config_set(key, config_remote);
-+
-+	/*
-+	 * We do not have to check if we have enough space for
-+	 * the 'merge' key, since it's shorter than the
-+	 * previous 'remote' key, which we already checked.
-+	 */
-+	snprintf(key, sizeof(key), "branch.%s.merge", name);
-+	git_config_set(key, config_repo);
-+}
-+
-+static void set_branch_defaults(const char *name, const char *real_ref)
-+{
- 	const char *slash = strrchr(real_ref, '/');
- 
- 	if (!slash)
-@@ -384,21 +401,15 @@ static void set_branch_defaults(const char *name, const char *real_ref)
- 	start_len = strlen(real_ref);
- 	base_len = slash - real_ref;
- 	git_config(get_remote_config);
-+	if (!config_repo && !config_remote &&
-+	    !prefixcmp(real_ref, "refs/heads/")) {
-+		set_branch_merge(name, ".", real_ref);
-+		printf("Branch %s set up to track local branch %s.\n",
-+		       name, real_ref);
-+	}
- 
- 	if (config_repo && config_remote) {
--		if (sizeof(key) <=
--		    snprintf(key, sizeof(key), "branch.%s.remote", name))
--			die("what a long branch name you have!");
--		git_config_set(key, config_remote);
--
--		/*
--		 * We do not have to check if we have enough space for
--		 * the 'merge' key, since it's shorter than the
--		 * previous 'remote' key, which we already checked.
--		 */
--		snprintf(key, sizeof(key), "branch.%s.merge", name);
--		git_config_set(key, config_repo);
--
-+		set_branch_merge(name, config_remote, config_repo);
- 		printf("Branch %s set up to track remote branch %s.\n",
- 		       name, real_ref);
- 	}
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 6caa9fd..b292ff0 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -89,7 +89,7 @@ while [ "$#" != "0" ]; do
-     esac
- done
- 
--case "$new_branch,$track" in
-+case "$newbranch,$track" in
- ,--*)
- 	die "git checkout: --track and --no-track require -b"
- esac
-diff --git a/git-fetch.sh b/git-fetch.sh
-index ebe6c33..3b01f06 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -161,7 +161,7 @@ then
- 	fi
- fi
- 
--fetch_native () {
-+fetch_packs () {
- 
-   eval=$(echo "$1" | git-fetch--tool parse-reflist "-")
-   eval "$eval"
-@@ -192,7 +192,7 @@ fetch_native () {
- 
- }
- 
--fetch_dumb () {
-+fetch_heads () {
-   reflist="$1"
-   refs=
-   rref=
-@@ -286,6 +286,10 @@ fetch_dumb () {
- 	      rsync_slurped_objects=t
- 	  }
- 	  ;;
-+      .)
-+	  local_name=$remote_name
-+	  head=$(git-rev-parse --verify "$local_name")
-+	  ;;
-       esac
- 
-       append_fetch_head "$head" "$remote" \
-@@ -296,14 +300,19 @@ fetch_dumb () {
- }
- 
- fetch_main () {
--	case "$remote" in
--	http://* | https://* | ftp://* | rsync://* )
--		fetch_dumb "$@"
--		;;
--	*)
--		fetch_native "$@"
--		;;
--	esac
-+	data_source=$(get_data_source "$remote_nick")
-+	if test "$data_source" = builtin; then
-+		fetch_heads "$@"
-+	else
-+		case "$remote" in
-+		http://* | https://* | ftp://* | rsync://* )
-+			fetch_heads "$@"
-+			;;
-+		*)
-+			fetch_packs "$@"
-+			;;
-+		esac
-+	fi
- }
- 
- fetch_main "$reflist" || exit
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index c46131f..a94215d 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -9,6 +9,9 @@ get_data_source () {
- 	*/*)
- 		echo ''
- 		;;
-+	.)
-+		echo builtin
-+		;;
- 	*)
- 		if test "$(git-config --get "remote.$1.url")"
- 		then
-@@ -31,6 +34,9 @@ get_remote_url () {
- 	'')
- 		echo "$1"
- 		;;
-+	builtin)
-+		echo "$1"
-+		;;
- 	config)
- 		git-config --get "remote.$1.url"
- 		;;
-@@ -57,7 +63,7 @@ get_default_remote () {
- get_remote_default_refs_for_push () {
- 	data_source=$(get_data_source "$1")
- 	case "$data_source" in
--	'' | branches)
-+	'' | branches | builtin)
- 		;; # no default push mapping, just send matching refs.
- 	config)
- 		git-config --get-all "remote.$1.push" ;;
-@@ -163,6 +169,9 @@ get_remote_default_refs_for_fetch () {
- 	case "$data_source" in
- 	'')
- 		echo "HEAD:" ;;
-+	builtin)
-+	        canon_refs_list_for_fetch -d "$1" \
-+			$(git-show-ref | sed -n 's,.*[      ]\(refs/.*\),\1:,p') ;;
- 	config)
- 		canon_refs_list_for_fetch -d "$1" \
- 			$(git-config --get-all "remote.$1.fetch") ;;
-@@ -177,7 +186,7 @@ get_remote_default_refs_for_fetch () {
- 					}' "$GIT_DIR/remotes/$1")
- 		;;
- 	*)
--		die "internal error: get-remote-default-ref-for-push $1" ;;
-+		die "internal error: get-remote-default-ref-for-fetch $1" ;;
- 	esac
- }
- 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 75c000a..9558bdb 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -145,9 +145,15 @@ test_expect_success 'test overriding tracking setup via --no-track' \
-      git-config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
-      (git-show-ref -q refs/remotes/local/master || git-fetch local) &&
-      git-branch --no-track my2 local/master &&
-+     git-config branch.autosetupmerge false &&
-      ! test $(git-config branch.my2.remote) = local &&
-      ! test $(git-config branch.my2.merge) = refs/heads/master'
- 
-+test_expect_success 'test local tracking setup' \
-+    'git branch --track my6 s &&
-+     test $(git-config branch.my6.remote) = . &&
-+     test $(git-config branch.my6.merge) = refs/heads/s'
-+
- # Keep this test last, as it changes the current branch
- cat >expect <<EOF
- 0000000000000000000000000000000000000000 $HEAD $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	branch: Created from master
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 7eb3783..243212d 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -29,5 +29,29 @@ test_expect_success 'checking the results' '
- 	diff file cloned/file
- '
- 
-+test_expect_success 'test . as a remote' '
-+
-+	git branch copy master &&
-+	git config branch.copy.remote . &&
-+	git config branch.copy.merge refs/heads/master &&
-+	echo updated >file &&
-+	git commit -a -m updated &&
-+	git checkout copy &&
-+	test `cat file` = file &&
-+	git pull &&
-+	test `cat file` = updated
-+'
-+
-+test_expect_success 'the default remote . should not break explicit pull' '
-+	git checkout -b second master^ &&
-+	echo modified >file &&
-+	git commit -a -m modified &&
-+	git checkout copy &&
-+	git reset --hard HEAD^ &&
-+	test `cat file` = file &&
-+	git pull . second &&
-+	test `cat file` = modified
-+'
-+
- test_done
- 
+RnJvbSA0OWI4NDZhNjU0ZDJmMWVmNTQwZDY0MzgzNTZiZmZlYWZhOTdiYTYyIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
+OiBUaHUsIDE1IE1hciAyMDA3IDEwOjM5OjM2ICswMTAwClN1YmplY3Q6IFtQQVRDSF0gQWRkIC0t
+aW5kZXggdG8gZ2l0LWNvbW1pdDoganVzdCBjb21taXQgY3VycmVudCBpbmRleAoKUmVmcmVzaGlu
+ZyBpbmRleCB0YWtlcyBhIGxvbmcgdGltZSBvbiBiaWcgcmVwb3NpdG9yaWVzIHdpdGggbWFueSBm
+aWxlcywKZXNwZWNpYWxseSBpZiB0aGUgZGV2ZWxvcGVyIGlzIHVubHVja3kgZW5vdWdoIHRvIHN0
+aWNrIHRvIGEgc2xvdyBmaWxlc3lzdGVtCm9yIGEgYnJva2VuIE9TLiBJbiB0aGlzIHNpdHVhdGlv
+biBleHBsaWNpdCBnaXQtdXBkYXRlLWluZGV4IHdpdGgKZ2l0LWNvbW1pdCAtLWluZGV4IHdpbGwg
+c3BlZWR1cCB0aGUgd29ya2Zsb3cuCkdpdmluZyBlaXRoZXIgLS1hbGwsIC0tb25seSwgb3IgLS1p
+bmNsdWRlIHNpbGVudGx5IHR1cm5zIC0taW5kZXggb2ZmLgotLS0KIGdpdC1jb21taXQuc2ggfCAg
+IDIxICsrKysrKysrKysrKysrKysrLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCAxNyBpbnNlcnRpb25z
+KCspLCA0IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dpdC1jb21taXQuc2ggYi9naXQtY29t
+bWl0LnNoCmluZGV4IDM2NTZkNjAuLjU2NTQzYzkgMTAwNzU1Ci0tLSBhL2dpdC1jb21taXQuc2gK
+KysrIGIvZ2l0LWNvbW1pdC5zaApAQCAtMyw3ICszLDcgQEAKICMgQ29weXJpZ2h0IChjKSAyMDA1
+IExpbnVzIFRvcnZhbGRzCiAjIENvcHlyaWdodCAoYykgMjAwNiBKdW5pbyBDIEhhbWFubwogCi1V
+U0FHRT0nWy1hIHwgLS1pbnRlcmFjdGl2ZV0gWy1zXSBbLXZdIFstLW5vLXZlcmlmeV0gWy1tIDxt
+ZXNzYWdlPiB8IC1GIDxsb2dmaWxlPiB8ICgtQ3wtYykgPGNvbW1pdD4gfCAtLWFtZW5kXSBbLXVd
+IFstZV0gWy0tYXV0aG9yIDxhdXRob3I+XSBbWy1pIHwgLW9dIDxwYXRoPi4uLl0nCitVU0FHRT0n
+Wy1hIHwgLS1pbnRlcmFjdGl2ZV0gWy1zXSBbLXZdIFstLW5vLXZlcmlmeV0gWy1tIDxtZXNzYWdl
+PiB8IC1GIDxsb2dmaWxlPiB8ICgtQ3wtYykgPGNvbW1pdD4gfCAtLWFtZW5kXSBbLXVdIFstZV0g
+Wy0tYXV0aG9yIDxhdXRob3I+XSBbLS1pbmRleF0gW1staSB8IC1vXSA8cGF0aD4uLi5dJwogU1VC
+RElSRUNUT1JZX09LPVllcwogLiBnaXQtc2gtc2V0dXAKIHJlcXVpcmVfd29ya190cmVlCkBAIC04
+Nyw2ICs4Nyw3IEBAIHNpZ25vZmY9CiBmb3JjZV9hdXRob3I9CiBvbmx5X2luY2x1ZGVfYXNzdW1l
+ZD0KIHVudHJhY2tlZF9maWxlcz0KK2luZGV4X29ubHk9CiB3aGlsZSBjYXNlICIkIyIgaW4gMCkg
+YnJlYWs7OyBlc2FjCiBkbwogCWNhc2UgIiQxIiBpbgpAQCAtMjYyLDYgKzI2MywxMCBAQCAkMSIK
+IAkJdW50cmFja2VkX2ZpbGVzPXQKIAkJc2hpZnQKIAkJOzsKKwktLWluZGV4KQorCQlpbmRleF9v
+bmx5PXQKKwkJc2hpZnQKKwkJOzsKIAktLSkKIAkJc2hpZnQKIAkJYnJlYWsKQEAgLTI3NSw2ICsy
+ODAsNyBAQCAkMSIKIAllc2FjCiBkb25lCiBjYXNlICIkZWRpdF9mbGFnIiBpbiB0KSBub19lZGl0
+PSA7OyBlc2FjCitjYXNlICIkYWxsJGFsc28kb25seSIgaW4gdCopIGluZGV4X29ubHk9IDs7IGVz
+YWMKIAogIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMj
+IyMjIyMjIyMjIyMjIwogIyBTYW5pdHkgY2hlY2sgb3B0aW9ucwpAQCAtNDA0LDE1ICs0MTAsMjIg
+QEAgZWxzZQogCVVTRV9JTkRFWD0iJFRISVNfSU5ERVgiCiBmaQogCi1jYXNlICIkc3RhdHVzX29u
+bHkiIGluCi10KQorY2FzZSAiJHN0YXR1c19vbmx5LCRpbmRleF9vbmx5IiBpbgordCwqKQogCSMg
+VGhpcyB3aWxsIHNpbGVudGx5IGZhaWwgaW4gYSByZWFkLW9ubHkgcmVwb3NpdG9yeSwgd2hpY2gg
+aXMKIAkjIHdoYXQgd2Ugd2FudC4KIAlHSVRfSU5ERVhfRklMRT0iJFVTRV9JTkRFWCIgZ2l0LXVw
+ZGF0ZS1pbmRleCAtcSAtLXVubWVyZ2VkIC0tcmVmcmVzaAogCXJ1bl9zdGF0dXMKIAlleGl0ICQ/
+CiAJOzsKLScnKQorLHQpCisJR0lUX0lOREVYX0ZJTEU9IiRVU0VfSU5ERVgiIFwKKwlnaXQtZGlm
+Zi1pbmRleCAtLWNhY2hlZCAtLXF1aWV0IC0tZXhpdC1jb2RlIEhFQUQgJiYgeworCQllY2hvID4m
+MiAiTm8gY2hhbmdlcyBpbiB0aGUgaW5kZXgiCisJCWV4aXQgMQorCX0KKwk7OworLCkKIAlHSVRf
+SU5ERVhfRklMRT0iJFVTRV9JTkRFWCIgZ2l0LXVwZGF0ZS1pbmRleCAtcSAtLXJlZnJlc2ggfHwg
+ZXhpdAogCTs7CiBlc2FjCi0tIAoxLjUuMC40LjQzOS5nY2U1ZgoK
+------=_Part_23072_23847454.1173951817947--
