@@ -1,90 +1,156 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: mercurial to git
-Date: Thu, 15 Mar 2007 10:12:27 -0400
-Message-ID: <20070315141227.GA18416@thunk.org>
-References: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de> <20070306215459.GI18370@thunk.org> <20070306230802.GA17226@filer.fsl.cs.sunysb.edu> <20070307001105.GJ18370@thunk.org> <20070314111257.GA4526@peter.daprodeges.fqdn.th-h.de> <20070315002505.GA31770@thunk.org> <20070315101913.GA9831@peter.daprodeges.fqdn.th-h.de>
+From: =?iso-8859-1?q?G=E1bor_Melis?= <mega@retes.hu>
+Subject: git emacs mode patch
+Date: Thu, 15 Mar 2007 14:03:56 +0100
+Message-ID: <200703151403.56552.mega@retes.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Multipart/Mixed;
+  boundary="Boundary-00=_8QU+FRPNAjXrUfz"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 15 15:13:13 2007
+X-From: git-owner@vger.kernel.org Thu Mar 15 15:24:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRqha-0001Xe-91
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 15:13:10 +0100
+	id 1HRqse-0007DQ-O1
+	for gcvg-git@gmane.org; Thu, 15 Mar 2007 15:24:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422713AbXCOOMt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 10:12:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422714AbXCOOMt
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 10:12:49 -0400
-Received: from THUNK.ORG ([69.25.196.29]:55225 "EHLO thunker.thunk.org"
+	id S1422714AbXCOOYe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 10:24:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422718AbXCOOYe
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 10:24:34 -0400
+Received: from crow2.exxs.net ([213.202.244.8]:33671 "EHLO crow2.exxs.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422713AbXCOOMs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 10:12:48 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HRqmv-0006f3-9p; Thu, 15 Mar 2007 10:18:41 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HRqgt-0005WH-Ec; Thu, 15 Mar 2007 10:12:27 -0400
-Content-Disposition: inline
-In-Reply-To: <20070315101913.GA9831@peter.daprodeges.fqdn.th-h.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1422714AbXCOOYd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 10:24:33 -0400
+X-Greylist: delayed 4828 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Mar 2007 10:24:32 EDT
+Received: from dev277.development.ravenpack.com (62.37.239.2.static.abi.uni2.es [62.37.239.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by crow2.exxs.net (Postfix) with ESMTP id 3E9FFBE05B
+	for <git@vger.kernel.org>; Thu, 15 Mar 2007 14:03:51 +0100 (CET)
+User-Agent: KMail/1.9.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42283>
 
-On Thu, Mar 15, 2007 at 10:19:13AM +0000, Rocco Rutte wrote:
-> I failed to send a response to the list and it went Theodore privately 
-> only, sorry. I merged hg2git into fast-export.git at repo.or.cz and 
-> named it 'hg-fast-export' to match with the other importers there. It 
-> now can parse Signed-off-by lines and supports author maps (as 
-> git-cvsimport and git-svnimport do, same syntax).
+--Boundary-00=_8QU+FRPNAjXrUfz
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-BTW, there are a number of places where the old name (hg2git) is still
-being used for filenames, et.al, because $PFX is still being set to
-hg2git.  
+The attached patch makes it possible to toggle show/hide of files with=20
+up-to-date and unknown statuses with M-d and M-u.
 
-> For which changesets exactly? The script only attempts to write out the 
-> 'author' command if -s (for parsing signed-off-by) is given. But for 
-> both commands the time information written out are identical and are 
-> exactly what hg gives us. So the bug must be elsewhere.
+Cheers,
+G=E1bor Melis
 
-All of them.  :-)
+Please CC me, I'm not on the list.
 
-Upon doing more investigation, the failure case seems to be if -A is
-specified but NOT -s.  Comare:
+--Boundary-00=_8QU+FRPNAjXrUfz
+Content-Type: text/x-diff;
+  charset="us-ascii";
+  name="git-el.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="git-el.patch"
 
-(Generated using: hg-fast-export.sh -A ../e2fsprogs.authors -r ../e2fsprogs)
-commit b584b9c57ecbbeef91970ca2924d66662029ab29
-Author: Theodore Ts'o <tytso@mit.edu>
-Date:   Thu Jan 1 00:00:00 1970 +0000  <=============
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index db87a37..2f993de 100644
+=2D-- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -97,6 +97,16 @@ if there is already one that displays the same directory=
+=2E"
+   :group 'git
+   :type 'string)
+=20
++(defcustom git-hide-up-to-date t
++  "Hide files with up-to-date status by default."
++  :group 'git
++  :type 'boolean)
++
++(defcustom git-hide-unknown t
++  "Hide files with unknown status by default."
++  :group 'git
++  :type 'boolean)
++
+=20
+ (defface git-status-face
+   '((((class color) (background light)) (:foreground "purple")))
+@@ -428,6 +438,7 @@ and returns the process output as a string."
+     (?A 'added)
+     (?D 'deleted)
+     (?U 'unmerged)
++    (?H 'uptodate)
+     (t nil)))
+=20
+ (defun git-status-code-as-string (code)
+@@ -1017,15 +1028,18 @@ and returns the process output as a string."
+       (with-temp-buffer
+         (git-run-command t nil "diff-index" "-z" "-M" "HEAD")
+         (git-parse-status status)))
++    (unless (member 'up-to-date hidden-statuses)
+       (with-temp-buffer
+=2D        (git-run-command t nil "ls-files" "-z" "-u")
+=2D        (git-parse-ls-unmerged status))
++        (git-run-command t nil "ls-files" "-z" "-t")
++        (git-parse-ls-files status 'unknown)))
++    (unless (member 'unknown hidden-statuses)
+       (when (file-readable-p ".git/info/exclude")
+         (with-temp-buffer
+           (git-run-command t nil "ls-files" "-z" "-t" "-o"
+                            "--exclude-from=3D.git/info/exclude"
+=2D                           (concat "--exclude-per-directory=3D" git-per-=
+dir-ignore-file))
+=2D          (git-parse-ls-files status 'unknown)))
++                           (concat "--exclude-per-directory=3D"
++                                   git-per-dir-ignore-file))
++          (git-parse-ls-files status 'unknown))))
+     (git-refresh-files)
+     (git-refresh-ewoc-hf status)
+     ; move point to the current file name if any
+@@ -1080,6 +1094,8 @@ and returns the process output as a string."
+     (define-key map "U"   'git-revert-file)
+     (define-key map "v"   'git-view-file)
+     (define-key map "x"   'git-remove-handled)
++    (define-key map "\M-d" 'git-toggle-up-to-date)
++    (define-key map "\M-u" 'git-toggle-unknown)
+     (define-key map "\C-?" 'git-unmark-file-up)
+     (define-key map "\M-\C-?" 'git-unmark-all)
+     ; the diff submap
+@@ -1093,6 +1109,20 @@ and returns the process output as a string."
+     (define-key diff-map "o" 'git-diff-file-other)
+     (setq git-status-mode-map map)))
+=20
++(defun git-toggle-up-to-date ()
++  (interactive)
++  (if (member 'up-to-date hidden-statuses)
++      (setq hidden-statuses (remove 'up-to-date hidden-statuses))
++    (push 'up-to-date hidden-statuses))
++  (git-refresh-status))
++
++(defun git-toggle-unknown ()
++  (interactive)
++  (if (member 'unknown hidden-statuses)
++      (setq hidden-statuses (remove 'unknown hidden-statuses))
++    (push 'unknown hidden-statuses))
++  (git-refresh-status))
++
+ ;; git mode should only run in the *git status* buffer
+ (put 'git-status-mode 'mode-class 'special)
+=20
+@@ -1112,6 +1142,11 @@ Commands:
+   (let ((status (ewoc-create 'git-fileinfo-prettyprint "" "")))
+     (set (make-local-variable 'git-status) status))
+   (set (make-local-variable 'list-buffers-directory) default-directory)
++  (set (make-local-variable 'hidden-statuses) ())
++  (when git-hide-up-to-date
++    (push 'up-to-date hidden-statuses))
++  (when git-hide-unknown
++    (push 'unknown hidden-statuses))
+   (run-hooks 'git-status-mode-hook)))
+=20
+ (defun git-find-status-buffer (dir)
 
-with
-
-(Generated using: hg-fast-export.sh -s -A ../e2fsprogs.authors -r ../e2fsprogs)
-commit 9e9a5867e4d4985bde6d6be072efb96e901e08cc
-Author: Theodore Ts'o <tytso@mit.edu>
-Date:   Wed Mar 7 08:09:10 2007 -0500  <=============
-
-The date seems to be correctly generated using
-
-	hg-fast-export.sh -s -A ../e2fsprogs.authors -r ../e2fsprogs
-	hg-fast-export.sh -s -r ../e2fsprogs
-	hg-fast-export.sh -r ../e2fsprogs
-
-It seems to be this combination of options:
-
-	hg-fast-export.sh -A ../e2fsprogs.authors -r ../e2fsprogs
-
-Where all of the dates end up being Jan 1, 1970.
-
-Regards,
-
-						- Ted
+--Boundary-00=_8QU+FRPNAjXrUfz--
