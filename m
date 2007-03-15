@@ -1,66 +1,71 @@
 From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH 2/5] diff --quiet
-Date: Thu, 15 Mar 2007 14:55:01 +0100
-Message-ID: <81b0412b0703150655y3d2a71d3t8db6e334ecf23ca1@mail.gmail.com>
-References: <7vwt1j8z0e.fsf@assigned-by-dhcp.cox.net>
-	 <7vodmv7bza.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0703141614m70f4a565qc001e06e60b0ffd5@mail.gmail.com>
-	 <7v8xdz5qn0.fsf@assigned-by-dhcp.cox.net>
-	 <81b0412b0703150119l705eefb6h6af44b9452db83e2@mail.gmail.com>
-	 <Pine.LNX.4.63.0703151136470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: [PATCH] Allow git-diff exit with codes similar to diff(1)
+Date: Thu, 15 Mar 2007 14:56:16 +0100
+Message-ID: <81b0412b0703150656v6fb91c9bge73f64d4dc05a115@mail.gmail.com>
+References: <81b0412b0703131717k7106ee1cg964628f0bda2c83e@mail.gmail.com>
+	 <Pine.LNX.4.64.0703131757080.9690@woody.linux-foundation.org>
+	 <Pine.LNX.4.63.0703140216480.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <Pine.LNX.4.64.0703131831390.9690@woody.linux-foundation.org>
+	 <Pine.LNX.4.63.0703140237270.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <81b0412b0703140137i6d0df44aua9205e81249570ea@mail.gmail.com>
+	 <Pine.LNX.4.63.0703141301210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <81b0412b0703140526p454ee85fk74dcd76fb684217c@mail.gmail.com>
+	 <45F940E0.60302@fs.ei.tum.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 15 14:55:13 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>
+X-From: git-owner@vger.kernel.org Thu Mar 15 14:56:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRqQ9-0001IN-F5
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 14:55:09 +0100
+	id 1HRqRM-0001vb-Nq
+	for gcvg-git@gmane.org; Thu, 15 Mar 2007 14:56:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161347AbXCONzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 09:55:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161351AbXCONzF
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 09:55:05 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:62462 "EHLO
+	id S1161342AbXCON4W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 09:56:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161351AbXCON4W
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 09:56:22 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:64816 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161347AbXCONzC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 09:55:02 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so332604uga
-        for <git@vger.kernel.org>; Thu, 15 Mar 2007 06:55:01 -0700 (PDT)
+	with ESMTP id S1161342AbXCON4V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 09:56:21 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so333022uga
+        for <git@vger.kernel.org>; Thu, 15 Mar 2007 06:56:16 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LgCpWQz388yKZfHNDFaFXeev0yp3a0Zy8WadEOdIAtBP3THsczOytMsaZm2cd+EZahn6D/Zx9bVcA4haZgWivtjnzivfS5GstNSVi2QAEndk3a/KSlr7JDPFJwQmP8hkzKjhbauJ5CTwrjIx5kAAcaFfyElRq4r0NGnHBCg54To=
+        b=jQuuqpDd/hH7WoH50v2NoSAZ+305ulbJK67o+Fo/jWkPykYtjXdcXVaequdYVAOMIwT42//YqMpBj/DQIZcUlpa7HQGu/K8cSyTsFsIJj+QP1eDYtPAmksihHcQsRQmWlhG8zZiXmNzrLcVRhM/Qr+M0nqzZ1DYv+PQ/64i22d0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MneMalAMNzYYpTOue5lps1vc8pDeKRDZxE2FgoqEPcExOGPl5JuU2jQHX24H80DYBeXa+Jp1Ne+clu0fo2nG/4/d/UlM8BV93ICvbIvlQXR8upmosSWjsIvxq/kIV3M3LzEKPuKu/w4GoNQD9emIrtFpEtvg7+yVuNJHWxjiYEM=
-Received: by 10.78.124.13 with SMTP id w13mr355223huc.1173966901046;
-        Thu, 15 Mar 2007 06:55:01 -0700 (PDT)
-Received: by 10.78.138.5 with HTTP; Thu, 15 Mar 2007 06:55:01 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.63.0703151136470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+        b=S+Y5LMILVJUiTuWrkHmayN43kJ0QsEAuMtXz40JfbxExIGNRHPr3jGv3qhP3lamo3IXnW98CGZiffOKhC4nYQYwwhvpiMrvQWqXT5cRurDhwbp4MsaDJpFporAJzoesDNat6KsxQooUToZpYdguMPnrR6BTLKi7VRkgRuFzvZds=
+Received: by 10.78.106.3 with SMTP id e3mr364430huc.1173966976701;
+        Thu, 15 Mar 2007 06:56:16 -0700 (PDT)
+Received: by 10.78.138.5 with HTTP; Thu, 15 Mar 2007 06:56:16 -0700 (PDT)
+In-Reply-To: <45F940E0.60302@fs.ei.tum.de>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42280>
 
-On 3/15/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > >         $ git-rev-parse v2.6.16^{tree} v2.6.20^{tree}
-> > >
-> >
-> > Why would I want to benchmark --quiet with rev-parse?
+On 3/15/07, Simon 'corecode' Schubert <corecode@fs.ei.tum.de> wrote:
+> Alex Riesen wrote:
+> > We have "PAGER=cat" in test-lib.sh which just disables pager,
+> > so gits tests do not have the problem (maybe it was disabled just
+> > because of this?). And if someone has own tests _with_ pager active
+> > the one better be aware of what the one doing.
 >
-> It is not benchmarking, but it is a faster solution: you can see if two
-> trees are different by comparing their SHA-1s.
+> Does PAGER=cat really disable the pager?  seems to me that it simply
+> passes the data through cat.
 
-Can the same be done for index? (index-tree comparison)
+Yes:
+pager.c:
 
-> (That, however, works only if you do not want something like "git diff
-> -w"...)
-
-Why? Can't "git diff -w" quit early?
+	else if (!*pager || !strcmp(pager, "cat"))
+		return;
