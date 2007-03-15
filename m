@@ -1,71 +1,72 @@
-From: Rocco Rutte <pdmef@gmx.net>
-Subject: Re: mercurial to git
-Date: Thu, 15 Mar 2007 10:19:13 +0000
-Organization: Berlin University of Technology
-Message-ID: <20070315101913.GA9831@peter.daprodeges.fqdn.th-h.de>
-References: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de> <20070306215459.GI18370@thunk.org> <20070306230802.GA17226@filer.fsl.cs.sunysb.edu> <20070307001105.GJ18370@thunk.org> <20070314111257.GA4526@peter.daprodeges.fqdn.th-h.de> <20070315002505.GA31770@thunk.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/5] diff --quiet
+Date: Thu, 15 Mar 2007 11:37:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703151136470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vwt1j8z0e.fsf@assigned-by-dhcp.cox.net> 
+ <7vodmv7bza.fsf@assigned-by-dhcp.cox.net>  <81b0412b0703141614m70f4a565qc001e06e60b0ffd5@mail.gmail.com>
+  <7v8xdz5qn0.fsf@assigned-by-dhcp.cox.net> <81b0412b0703150119l705eefb6h6af44b9452db83e2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 15 11:19:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 15 11:38:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRn3J-0006xC-UI
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 11:19:22 +0100
+	id 1HRnLX-0008Ic-Mg
+	for gcvg-git@gmane.org; Thu, 15 Mar 2007 11:38:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbXCOKTS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 06:19:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751552AbXCOKTS
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 06:19:18 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49630 "HELO mail.gmx.net"
+	id S932073AbXCOKhz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 06:37:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932102AbXCOKhz
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 06:37:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53088 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751785AbXCOKTR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 06:19:17 -0400
-Received: (qmail invoked by alias); 15 Mar 2007 10:19:16 -0000
-X-Provags-ID: V01U2FsdGVkX1/+lhIv04z+ipRS0UJoqNs8xgCnuclX7ugR20HsBp
-	GK7qf16ONRkQ1N
-Received: from peter.daprodeges.fqdn.th-h.de (peter [192.168.0.5])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by peter.daprodeges.fqdn.th-h.de (Postfix) with ESMTP id 19EE120F0D
-	for <git@vger.kernel.org>; Thu, 15 Mar 2007 10:19:15 +0000 (UTC)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070315002505.GA31770@thunk.org>
-X-GnuPG-Key: http://user.cs.tu-berlin.de/~pdmef/rrutte.gpg
-X-Blog: http://user.cs.tu-berlin.de/~pdmef/horst.cgi?o
-X-System: peter.daprodeges.fqdn.th-h.de (FreeBSD 6.2-STABLE i386)
-User-Agent: Mutt/1.5.14 (2007-03-07)
+	id S932073AbXCOKhy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 06:37:54 -0400
+Received: (qmail invoked by alias); 15 Mar 2007 10:37:53 -0000
+X-Provags-ID: V01U2FsdGVkX1+eh1ATlO6eL7S2pbSxp+RRR94TyCgW+r03rmmi88
+	qSOPouZZtsIgYz
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <81b0412b0703150119l705eefb6h6af44b9452db83e2@mail.gmail.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42277>
 
 Hi,
 
-* Theodore Tso [07-03-14 20:25:07 -0400] wrote:
->On Wed, Mar 14, 2007 at 11:12:57AM +0000, Rocco Rutte wrote:
+On Thu, 15 Mar 2007, Alex Riesen wrote:
 
-I failed to send a response to the list and it went Theodore privately 
-only, sorry. I merged hg2git into fast-export.git at repo.or.cz and 
-named it 'hg-fast-export' to match with the other importers there. It 
-now can parse Signed-off-by lines and supports author maps (as 
-git-cvsimport and git-svnimport do, same syntax).
+> On 3/15/07, Junio C Hamano <junkio@cox.net> wrote:
+> > > Now I'm happy :)
+> > >
+> > > ~/linux$ time git diff-tree -r -s v2.6.16 v2.6.20
+> > >
+> > > real    0m0.137s
+> > > user    0m0.117s
+> > > sys     0m0.020s
+> > > ~/linux$ time ~/projects/git-diff/git-diff-tree -r --quiet v2.6.16
+> > v2.6.20
+> > >
+> > > real    0m0.006s
+> > > user    0m0.000s
+> > > sys     0m0.007s
+> > 
+> > You do not need diff-tree --quiet to do that!
+> > 
+> >         $ git-rev-parse v2.6.16^{tree} v2.6.20^{tree}
+> > 
+> 
+> Why would I want to benchmark --quiet with rev-parse?
 
->> I tried the import on the e2fsprogs repo and the files come out 
->> identical, authors/comitters look okay to me, too.
+It is not benchmarking, but it is a faster solution: you can see if two 
+trees are different by comparing their SHA-1s.
 
->Very cool!  It looks like some of the git author dates are only
->getting set if the -s flag is set.  Was that intentional?
+(That, however, works only if you do not want something like "git diff 
+-w"...)
 
-For which changesets exactly? The script only attempts to write out the 
-'author' command if -s (for parsing signed-off-by) is given. But for 
-both commands the time information written out are identical and are 
-exactly what hg gives us. So the bug must be elsewhere.
-
-   bye, Rocco
--- 
-:wq!
+Ciao,
+Dscho
