@@ -1,67 +1,72 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: GSoC '07 - Accepted!
-Date: Thu, 15 Mar 2007 12:22:51 -0400
-Message-ID: <20070315162251.GB29547@spearce.org>
+Date: Thu, 15 Mar 2007 09:43:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703150931050.3816@woody.linux-foundation.org>
 References: <20070315161143.GA29547@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 15 17:23:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 15 17:44:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRsjO-0004H6-9B
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 17:23:10 +0100
+	id 1HRt3o-0007ax-Hm
+	for gcvg-git@gmane.org; Thu, 15 Mar 2007 17:44:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422942AbXCOQWz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 12:22:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422943AbXCOQWz
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 12:22:55 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41543 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422942AbXCOQWy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 12:22:54 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HRsj0-0004FI-II
-	for git@vger.kernel.org; Thu, 15 Mar 2007 12:22:46 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id A55E320FBAE; Thu, 15 Mar 2007 12:22:51 -0400 (EDT)
-Content-Disposition: inline
+	id S1030510AbXCOQoK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 12:44:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030603AbXCOQoJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 12:44:09 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:59176 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030510AbXCOQoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 12:44:08 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2FGhsOb015654
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 15 Mar 2007 09:43:54 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2FGhlnx020772;
+	Thu, 15 Mar 2007 08:43:51 -0800
 In-Reply-To: <20070315161143.GA29547@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+X-Spam-Status: No, hits=-0.488 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42293>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Google accepted our application to GSoC '07.  Thanks to everyone
-> who helped with reviewing the application, and most of of all thanks
-> to our volunteer mentors!
 
-Also, the organization setup page is asking us "desired number of
-projects".
 
-Hmm.  Gee.  We have an entire ideas page full of projects that we'd
-desire to have done.  More than we can realistically mentor students
-working through (depending on the skill level of the individual
-of course).
+On Thu, 15 Mar 2007, Shawn O. Pearce wrote:
+> 
+> Small catch though: I didn't find this clause earlier when I setup
+> the application, but reading through the Terms of Service for the
+> program I found this:
+> 
+>   10. All necessary tax forms or other tax related documentation
+>   required to provide payment to the organization
+> 
+> Yea... we as an organization get $500.00 USD for each student
+> that particpiates:
 
-I'm thinking we ask for 2 or 3 slots, given that we have 6 mentors
-lined up right now.
+I _think_ you can either:
 
-Thoughts?
+ - decide to pay the mentor (and have the mentor just pay the tax on it 
+   as extra income). Mentors can then sort it out amongst themselves.
 
--- 
-Shawn.
+ - If nobody really wants to go through the hassle (not so much in 
+   receiving the money, as trying to sort it out ;), decide to just 
+   directly transfer it to some charitable organization that is already 
+   set up (eg the EFF).
+
+as it would probably be more pain than it's worth to actually try to set 
+up some "git foundation".
+
+Regardless, congrats on the GSoC entry!
+
+		Linus
