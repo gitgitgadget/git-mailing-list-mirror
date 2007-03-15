@@ -1,87 +1,87 @@
-From: Rocco Rutte <pdmef@gmx.net>
-Subject: Re: mercurial to git
-Date: Thu, 15 Mar 2007 22:07:05 +0000
-Organization: Berlin University of Technology
-Message-ID: <20070315220705.GD31087@peter.daprodeges.fqdn.th-h.de>
-References: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de> <20070306215459.GI18370@thunk.org> <20070306230802.GA17226@filer.fsl.cs.sunysb.edu> <20070307001105.GJ18370@thunk.org> <20070314111257.GA4526@peter.daprodeges.fqdn.th-h.de> <20070314132951.GE12710@thunk.org> <20070315094434.GA4425@peter.daprodeges.fqdn.th-h.de> <20070315210406.GA8568@thunk.org>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: error with symlinks on OSX
+Date: Thu, 15 Mar 2007 15:19:43 -0700
+Message-ID: <m2wt1i6tfk.fsf@ziti.local>
+References: <m2r6rqbfcy.fsf@ziti.local> <20070315194410.GC29547@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 15 23:07:21 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Mar 15 23:24:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRy6T-0007Br-D2
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 23:07:21 +0100
+	id 1HRyMg-0007TD-BR
+	for gcvg-git@gmane.org; Thu, 15 Mar 2007 23:24:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795AbXCOWHL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 18:07:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753393AbXCOWHL
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 18:07:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47887 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751795AbXCOWHK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 18:07:10 -0400
-Received: (qmail invoked by alias); 15 Mar 2007 22:07:08 -0000
-X-Provags-ID: V01U2FsdGVkX1+SH1Zz2zmSB65+SSg14beIwb0EnLyUm4Q0h3AGLk
-	PNuGWHO2y067XG
-Received: from peter.daprodeges.fqdn.th-h.de (peter [192.168.0.5])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by peter.daprodeges.fqdn.th-h.de (Postfix) with ESMTP id 617A320F0D
-	for <git@vger.kernel.org>; Thu, 15 Mar 2007 22:07:07 +0000 (UTC)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070315210406.GA8568@thunk.org>
-X-GnuPG-Key: http://user.cs.tu-berlin.de/~pdmef/rrutte.gpg
-X-Blog: http://user.cs.tu-berlin.de/~pdmef/horst.cgi?o
-X-System: peter.daprodeges.fqdn.th-h.de (FreeBSD 6.2-STABLE i386)
-User-Agent: Mutt/1.5.14 (2007-03-14)
-X-Y-GMX-Trusted: 0
+	id S933887AbXCOWU4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 18:20:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422832AbXCOWUM
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 18:20:12 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:37147 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933846AbXCOWTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 18:19:42 -0400
+Received: by wr-out-0506.google.com with SMTP id 41so337458wry
+        for <git@vger.kernel.org>; Thu, 15 Mar 2007 15:19:42 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=BeFvsXtKBHbFbbqEtvKnblwI6lRIQOcoB8mfPNfmF2BkwILoSQrb/7RltDB9eK/ywuV0R9x4QU/KsYse6jO9Xrd297mddIqM21gLEeiyJJUbT2BXF52a7tJy7P4d0VwiF6TQG93yJUQqg5oRyF0eRNwLWcKVznVzYbXdwZDHVys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=CImfxsTkbEIHtb95yOBSH95o5yxMLciNOeXmXmXn2iUW1uPEsIScT9Nkvtd51U3eFt6ztSi19FmsOKAjtLuw9ndhCMB1qMTqRFflbxZtChqG4C+dZBowb26vIf3ep7kO+vcMo7ZMlC+KHlYL63dgcsDQHtAYSkPbrFVWth4QS5o=
+Received: by 10.114.197.1 with SMTP id u1mr459511waf.1173997181710;
+        Thu, 15 Mar 2007 15:19:41 -0700 (PDT)
+Received: from ziti.local ( [140.107.156.111])
+        by mx.google.com with ESMTP id y11sm3089582pod.2007.03.15.15.19.40;
+        Thu, 15 Mar 2007 15:19:40 -0700 (PDT)
+In-Reply-To: <20070315194410.GC29547@spearce.org> (Shawn O. Pearce's message of "Thu, 15 Mar 2007 15:44:10 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42302>
 
-Hi,
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-* Theodore Tso [07-03-15 17:04:07 -0400] wrote:
->Hopefully you won't mind that I'm adding the git list back to the cc
->line, since it would be useful for others to provide some feedback.
+> Seth Falcon <sethfalcon@gmail.com> wrote:
+>> error: git-checkout-index: unable to create symlink Category/Makefile (Invalid argument)
+>> 
+>> Now while my file system isn't smart enough to tell the difference
+>> between t and T, it does support symlinks AFAIK.
+>
+> Yes, it does support symlinks.  Is it possible that the name Category
+> already existed, but as a file?  Hmm.
 
-Not at all. Just wondering when others would get too bored... :)
+I think in the revision before the update, there was a file
+Category/Makefile and that it was replaced by a symlink.
 
->Actually, there *is* an hg-fast-import.  It exists in the hg sources
->in contrib/convert-repo, and it is being used in production to do
->incremental conversion from the Linux kernel git tree to an hg tree.
->So it does handle octopus merges already (it has to, the ACPI folks
->are very ocotpus merge happy :-).
+So Category is/was a dir.  Category/Makefile was a file and became a
+symlink.  Note that I am using git-svn to track an svn repository and
+so the problem could be there.
 
-I know convert-repo and like it as a starting point. But it has some 
-problems like not properly creating hg branches, can import only one 
-branch at a time which must also be checkout out on the git side, etc.
+However, I'm not sure where to look or what experiment to try next.
 
-With 'hg-fast-import' I meant something like git-fast-import where 
-clients can feed in more raw data instead of preparing each commit on 
-its own and comitting it.
+If I checkout an old revision prior to the file becoming a symlink and
+then checkout master, I get:
 
-[...]
+git checkout -b foobar 74227bbd35a77b8
+Switched to a new branch "foobar"
+git checkout master
+D       Category/Makefile
+[...snip...]
+D       vsn/Makefile
+Switched to branch "master"
 
->So more practially, here are some of the things that we would need to
->do, looking at hg-fast-export:
+git reset --hard HEAD
+error: git-checkout-index: unable to create symlink Category/Makefile (Invalid argument)
+[...snip...]
+error: git-checkout-index: unable to create symlink vsn/Makefile (Invalid argument)
+HEAD is now at 30bd65d... the commit msg here
 
->*) Change the index/marks file to map between hg SHA hash ID's instead
->of the small integer ordinals.  This is useful for enabling multisite
->conversion, but it is also useful for tracking tag changes in .hgtags.
 
-The small numbers are the hg revision numbers which we'll need for 
-git-fast-import. Ideally git-fast-import would allow us to use anything 
-for a mark we want as long as it's unique. But I'm sure there's a cheap 
-way of mapping revision to SHA1 in the hg API.
-
-So, if anybody wants to join in writing up such a hybrid system, I'm for 
-it. :)
-
-   bye, Rocco
 -- 
+Seth
