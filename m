@@ -1,80 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/5] diff --quiet
-Date: Wed, 14 Mar 2007 18:23:40 -0700
-Message-ID: <7v4pon5mg3.fsf@assigned-by-dhcp.cox.net>
-References: <7vwt1j8z0e.fsf@assigned-by-dhcp.cox.net>
-	<7vodmv7bza.fsf@assigned-by-dhcp.cox.net>
-	<81b0412b0703141614m70f4a565qc001e06e60b0ffd5@mail.gmail.com>
-	<7v8xdz5qn0.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0703141728350.9690@woody.linux-foundation.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: git protocol over port-forwarding
+Date: Wed, 14 Mar 2007 19:32:52 -0600
+Message-ID: <17912.41540.361226.683146@lisa.zopyra.com>
+References: <17912.16608.852664.321837@lisa.zopyra.com>
+	<Pine.LNX.4.64.0703142057300.25422@beast.quantumfyre.co.uk>
+	<17912.29057.435478.123662@lisa.zopyra.com>
+	<46a038f90703141514q5273e493r87f0ac7f52c1c216@mail.gmail.com>
+	<et9vkm$2j4$1@sea.gmane.org>
+	<17912.38000.404237.850492@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Mar 15 02:23:45 2007
+Content-Transfer-Encoding: 7bit
+To: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 15 02:32:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRegz-0006Ay-02
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 02:23:45 +0100
+	id 1HRepr-0002I8-Mt
+	for gcvg-git@gmane.org; Thu, 15 Mar 2007 02:32:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752769AbXCOBXm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 14 Mar 2007 21:23:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752307AbXCOBXm
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 21:23:42 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:38462 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751964AbXCOBXl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Mar 2007 21:23:41 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070315012342.MEHF24587.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 14 Mar 2007 21:23:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id apPg1W00r1kojtg0000000; Wed, 14 Mar 2007 21:23:41 -0400
-In-Reply-To: <Pine.LNX.4.64.0703141728350.9690@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 14 Mar 2007 17:33:25 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751964AbXCOBcx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 14 Mar 2007 21:32:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbXCOBcx
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Mar 2007 21:32:53 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:61979 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751964AbXCOBcw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Mar 2007 21:32:52 -0400
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l2F1WqT06636;
+	Wed, 14 Mar 2007 19:32:52 -0600
+In-Reply-To: <17912.38000.404237.850492@lisa.zopyra.com>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42269>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Wednesday, March 14, 2007 at 18:33:52 (-0600) Bill Lear writes:
+>On Thursday, March 15, 2007 at 00:14:32 (+0100) Jakub Narebski writes:
+>>...
+>>I think it could be done but with _two_ port forwarding, one from git
+>>port to ssh port or 5700 port, on your computer (probably reverse tunnel),
+>>second from 5700 port to git port... unless you configure git server
+>>to use different port...
+>
+>Ok thanks to all, Jakub, Martin, Julian, for the comments.  I'll
+>go give our ssh "expert" hell.
 
-> On Wed, 14 Mar 2007, Junio C Hamano wrote:
->
->> "Alex Riesen" <raa.lkml@gmail.com> writes:
->> 
->> > Now I'm happy :)
->> >
->> > ~/linux$ time git diff-tree -r -s v2.6.16 v2.6.20
->> >
->> > real    0m0.137s
->> > user    0m0.117s
->> > sys     0m0.020s
->> > ~/linux$ time ~/projects/git-diff/git-diff-tree -r --quiet v2.6.16 v2.6.20
->> >
->> > real    0m0.006s
->> > user    0m0.000s
->> > sys     0m0.007s
->> 
->> You do not need diff-tree --quiet to do that!
->> 
->> 	$ git-rev-parse v2.6.16^{tree} v2.6.20^{tree}
->
-> Well, if you have a path-spec, it can certainly matter.
->
-> Personally, I think it's more interesting if this can make a difference 
-> for something like
->
-> 	git log v2.6.12.. -- drivers/ > /dev/null
->
-> but that would require that we actually understand that we can stop early 
-> if we ever get to REV_TREE_DIFFERENT. I didn't check if you actually did 
-> that optimization.
+Just wanted to confirm to all that our expert confessed that he had
+fat-fingered something (I promise, it wasn't me), and now it works
+perfectly.
 
-The code is supposed to be there, but I haven't benched.
+Thanks again.
+
+
+Bill
