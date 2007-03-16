@@ -1,66 +1,57 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Question about bare repositories
-Date: Fri, 16 Mar 2007 09:47:02 +0000
-Message-ID: <200703160947.03833.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-fetch, git-parse-remote: Cleanup implementation of '.'
+Date: Fri, 16 Mar 2007 03:00:55 -0700
+Message-ID: <7vlkhxv76w.fsf@assigned-by-dhcp.cox.net>
+References: <etavpn$ma0$1@sea.gmane.org>
+	<7vr6rqyr60.fsf@assigned-by-dhcp.cox.net>
+	<45FA5771.1040200@lu.unisi.ch>
+	<7vps79v8ik.fsf@assigned-by-dhcp.cox.net>
+	<45FA657B.1010709@lu.unisi.ch>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 16 10:47:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: bonzini@gnu.org
+X-From: git-owner@vger.kernel.org Fri Mar 16 11:01:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS91t-000238-Vv
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 10:47:22 +0100
+	id 1HS9F9-0000qO-2e
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 11:01:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933278AbXCPJrK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 05:47:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933284AbXCPJrK
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 05:47:10 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:49152 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933278AbXCPJrI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 05:47:08 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so181803nfa
-        for <git@vger.kernel.org>; Fri, 16 Mar 2007 02:47:07 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qXXXyLizcYSlYg0VZzYd7Yswh9hozFcBVkkLUcqS+mQKPFnqSeN/dbERbVNTFjMXKNwKuKzMUbzN68rDi2NEZIKWqKty9raABVFh+0dqM0iHZzfzTNfmNyGpI0Z2AUUlORoSXEJAgG+ict7cyarkL859GI+Kp/eiZeAZugdaJ68=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Q1xaRgyPuT32KxTvUMxXgg2jN2aIj9zMDiSAR4ddnhMprCxze9R4+Mf8uX0ghX0QJ/XRt2ViOEw1EIpWmWMCpHAh/eBgwJ9iCSvLvIXu5RoL8M87O3XoReYP3m+vYdrh5DwkXcqd+LHXJUx///1qg0mavE0bTUT82XZHdqjIlKs=
-Received: by 10.78.203.13 with SMTP id a13mr850761hug.1174038426938;
-        Fri, 16 Mar 2007 02:47:06 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id l21sm3717075nfc.2007.03.16.02.47.06;
-        Fri, 16 Mar 2007 02:47:06 -0700 (PDT)
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
+	id S933286AbXCPKA5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 06:00:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933320AbXCPKA5
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 06:00:57 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:34600 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933286AbXCPKA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 06:00:57 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070316100055.GMCN321.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 16 Mar 2007 06:00:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id bN0w1W00E1kojtg0000000; Fri, 16 Mar 2007 06:00:56 -0400
+In-Reply-To: <45FA657B.1010709@lu.unisi.ch> (Paolo Bonzini's message of "Fri,
+	16 Mar 2007 10:38:03 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42343>
 
-Hello,
+Paolo Bonzini <paolo.bonzini@lu.unisi.ch> writes:
 
-I'm having an understanding problem, rather than a git problem.  It came about 
-because I was looking at a repository using gitweb.  The repository was bare, 
-and happened to have HEAD pointing at an old branch that hadn't been updated 
-for a long time.  I was confused because I wasn't seeing new commits.  Once I 
-set HEAD to master in the bare repository, gitweb showed the new commits.
+>> I may not be really thinking straight tonight (no I am not
+>> drunk, but just a tad sick), but I wonder if this is sufficient?
+>> 
+>> 	$(git-for-each-ref --format='%(refname):')
+>> 
+>> Shorter and one less process and pipe.
+>
+> It is.  Would you take care of that?
 
-All that led me to this question, which isn't a criticism, but has exposed a 
-hole in my understanding of git.
-
-Why does a bare repository have/need a HEAD?
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Surely, and thanks for sanity checking.
