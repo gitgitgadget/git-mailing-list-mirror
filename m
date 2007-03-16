@@ -1,170 +1,115 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] add test for OFS_DELTA objects
-Date: Fri, 16 Mar 2007 13:50:18 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703161346560.18328@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: cleaner/better zlib sources?
+Date: Fri, 16 Mar 2007 10:51:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703161026220.3816@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
+ <45F9EED5.3070706@garzik.org> <Pine.LNX.4.64.0703151822490.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703161236180.5518@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 16 18:50:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Davide Libenzi <davidel@xmailserver.org>,
+	Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>, mpm@selenic.com,
+	bcrl@kvack.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Mar 16 18:52:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSGZM-0001Rf-7G
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 18:50:24 +0100
+	id 1HSGb7-0002Kn-Ly
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 18:52:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965792AbXCPRuV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 13:50:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965795AbXCPRuV
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 13:50:21 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:25322 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965792AbXCPRuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 13:50:20 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF00062PC7UP6I0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 16 Mar 2007 13:50:19 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S965783AbXCPRwK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 13:52:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965795AbXCPRwK
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 13:52:10 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:56712 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965783AbXCPRwJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 13:52:09 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2GHpQcD031557
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 16 Mar 2007 10:51:26 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2GHpOFE018077;
+	Fri, 16 Mar 2007 09:51:24 -0800
+In-Reply-To: <alpine.LFD.0.83.0703161236180.5518@xanadu.home>
+X-Spam-Status: No, hits=-0.481 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42387>
 
-Make sure pack-objects with --delta-base-offset works fine, and that
-it actually produces smaller packs as expected.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 17befde..eacb1e9 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -64,7 +64,7 @@ test_expect_success \
- cd "$TRASH"
- 
- test_expect_success \
--    'pack with delta' \
-+    'pack with REF_DELTA' \
-     'pwd &&
-      packname_2=$(git-pack-objects test-2 <obj-list)'
- 
-@@ -72,7 +72,7 @@ rm -fr .git2
- mkdir .git2
- 
- test_expect_success \
--    'unpack with delta' \
-+    'unpack with REF_DELTA' \
-     'GIT_OBJECT_DIRECTORY=.git2/objects &&
-      export GIT_OBJECT_DIRECTORY &&
-      git-init &&
-@@ -82,7 +82,7 @@ test_expect_success \
- unset GIT_OBJECT_DIRECTORY
- cd "$TRASH/.git2"
- test_expect_success \
--    'check unpack with delta' \
-+    'check unpack with REF_DELTA' \
-     '(cd ../.git && find objects -type f -print) |
-      while read path
-      do
-@@ -93,6 +93,42 @@ test_expect_success \
-      done'
- cd "$TRASH"
- 
-+test_expect_success \
-+    'pack with OFS_DELTA' \
-+    'pwd &&
-+     packname_3=$(git-pack-objects --delta-base-offset test-3 <obj-list)'
-+
-+rm -fr .git2
-+mkdir .git2
-+
-+test_expect_success \
-+    'unpack with OFS_DELTA' \
-+    'GIT_OBJECT_DIRECTORY=.git2/objects &&
-+     export GIT_OBJECT_DIRECTORY &&
-+     git-init &&
-+     git-unpack-objects -n <test-3-${packname_3}.pack &&
-+     git-unpack-objects <test-3-${packname_3}.pack'
-+
-+unset GIT_OBJECT_DIRECTORY
-+cd "$TRASH/.git2"
-+test_expect_success \
-+    'check unpack with OFS_DELTA' \
-+    '(cd ../.git && find objects -type f -print) |
-+     while read path
-+     do
-+         cmp $path ../.git/$path || {
-+	     echo $path differs.
-+	     return 1
-+	 }
-+     done'
-+cd "$TRASH"
-+
-+test_expect_success \
-+    'compare delta flavors' \
-+    'size_2=`stat -c "%s" test-2-${packname_2}.pack` &&
-+     size_3=`stat -c "%s" test-3-${packname_3}.pack` &&
-+     test $size_2 -gt $size_3'
-+
- rm -fr .git2
- mkdir .git2
- 
-@@ -111,9 +147,8 @@ test_expect_success \
-     } >current &&
-     diff expect current'
- 
--
- test_expect_success \
--    'use packed deltified objects' \
-+    'use packed deltified (REF_DELTA) objects' \
-     'GIT_OBJECT_DIRECTORY=.git2/objects &&
-      export GIT_OBJECT_DIRECTORY &&
-      rm .git2/objects/pack/test-* &&
-@@ -127,11 +162,28 @@ test_expect_success \
-     } >current &&
-     diff expect current'
- 
-+test_expect_success \
-+    'use packed deltified (OFS_DELTA) objects' \
-+    'GIT_OBJECT_DIRECTORY=.git2/objects &&
-+     export GIT_OBJECT_DIRECTORY &&
-+     rm .git2/objects/pack/test-* &&
-+     cp test-3-${packname_3}.pack test-3-${packname_3}.idx .git2/objects/pack && {
-+	 git-diff-tree --root -p $commit &&
-+	 while read object
-+	 do
-+	    t=`git-cat-file -t $object` &&
-+	    git-cat-file $t $object || return 1
-+	 done <obj-list
-+    } >current &&
-+    diff expect current'
-+
- unset GIT_OBJECT_DIRECTORY
- 
- test_expect_success \
-     'verify pack' \
--    'git-verify-pack test-1-${packname_1}.idx test-2-${packname_2}.idx'
-+    'git-verify-pack	test-1-${packname_1}.idx \
-+			test-2-${packname_2}.idx \
-+			test-3-${packname_3}.idx'
- 
- test_expect_success \
-     'corrupt a pack and see if verify catches' \
-@@ -194,6 +246,13 @@ test_expect_success \
-      git-index-pack test-3.pack &&
-      cmp test-3.idx test-2-${packname_2}.idx &&
- 
-+     cp test-3-${packname_3}.pack test-3.pack &&
-+     git-index-pack -o tmp.idx test-3-${packname_3}.pack &&
-+     cmp tmp.idx test-3-${packname_3}.idx &&
-+
-+     git-index-pack test-3.pack &&
-+     cmp test-3.idx test-3-${packname_3}.idx &&
-+
-      :'
- 
- test_done
+On Fri, 16 Mar 2007, Nicolas Pitre wrote:
+
+> On Fri, 16 Mar 2007, Linus Torvalds wrote:
+> 
+> > The most performance-critical objects for uncompression are commits and 
+> > trees. At least for the kernel, the average size of a tree object is 678
+> > bytes. And that's ignoring the fact that most of them are then deltified, 
+> > so about 80% of them are likely just a ~60-byte delta.
+> 
+> This is why in pack v4 there will be an alternate tree object 
+> representation which is not deflated at all.
+
+Well, the thing is, for things that really don't compress, zlib shouldn't 
+add much of an overhead on uncompression. It *should* just end up being a 
+single "memcpy()" after you've done:
+ - check the header for size and mode ("plain data")
+ - check the adler checksum (which is *really* nice - we've found real 
+   corruption this way!).
+
+The adler32 checksumming may sound unnecessary when you already have the 
+SHA1 checksum, but the thing is, we normally don't actually *check* the 
+SHA1 except when doing a full fsck. So I actually like the fact that 
+object unpacking always checks at least the adler32 checksum at each 
+stage, which you get "for free" when you use zlib.
+
+So not using compression at all actually not only gets rid of the 
+compression, it gets rid of a good safety valve - something that may not 
+be immediately obvious when you don't think about what all zlib entails. 
+
+People think of zlib as just compressing, but I think the checksumming is 
+almost as important, which is why it isn't an obviously good thing to not 
+compress small objects just because you don't win on size!
+
+Remember: stability and safety of the data is *the* #1 objective here. The 
+git SHA1 checksums guarantees that we can find any corruption, but in 
+every-day git usage, the adler32 checksum is the one that generally would 
+*notice* the corruption and cause us to say "uhhuh, need to fsck".
+
+Everything else is totally secondary to the goal of "your data is secure". 
+Yes, performance is a primary goal too, but it's always "performance with 
+correctness guarantees"!
+
+But I just traced through a simple 60-byte incompressible zlib thing. It's 
+painful. This should be *the* simplest case, and it should really just be 
+the memcpy and the adler32 check. But:
+
+	[torvalds@woody ~]$ grep '<inflate' trace | wc -l
+	460
+	[torvalds@woody ~]$ grep '<adler32' trace | wc -l
+	403
+	[torvalds@woody ~]$ grep '<memcpy' trace | wc -l
+	59
+
+ie we spend *more* instructions on just the stupid setup in "inflate()" 
+than we spend on the adler32 (or, obviously, on the actual 60-byte memcpy 
+of the actual incompressible data)
+
+I dunno. I don't mind the adler32 that much. The rest seems to be 
+pretty annoying, though.
+
+		Linus
