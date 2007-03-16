@@ -1,87 +1,109 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: error with symlinks on OSX
-Date: Thu, 15 Mar 2007 15:19:43 -0700
-Message-ID: <m2wt1i6tfk.fsf@ziti.local>
-References: <m2r6rqbfcy.fsf@ziti.local> <20070315194410.GC29547@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 2/5] diff --quiet
+Date: Thu, 15 Mar 2007 17:16:15 -0700
+Message-ID: <7v3b4611rk.fsf@assigned-by-dhcp.cox.net>
+References: <7vwt1j8z0e.fsf@assigned-by-dhcp.cox.net>
+	<7vodmv7bza.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0703141614m70f4a565qc001e06e60b0ffd5@mail.gmail.com>
+	<7v8xdz5qn0.fsf@assigned-by-dhcp.cox.net>
+	<81b0412b0703150119l705eefb6h6af44b9452db83e2@mail.gmail.com>
+	<Pine.LNX.4.63.0703151136470.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0703150655y3d2a71d3t8db6e334ecf23ca1@mail.gmail.com>
+	<Pine.LNX.4.63.0703151841180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<81b0412b0703151408v5e6245f4l95fb7cc801e1b568@mail.gmail.com>
+	<Pine.LNX.4.63.0703152211050.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Mar 15 23:24:07 2007
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 16 01:16:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HRyMg-0007TD-BR
-	for gcvg-git@gmane.org; Thu, 15 Mar 2007 23:24:06 +0100
+	id 1HS07T-0008Di-SU
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 01:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933887AbXCOWU4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 18:20:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422832AbXCOWUM
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 18:20:12 -0400
-Received: from wr-out-0506.google.com ([64.233.184.232]:37147 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933846AbXCOWTm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 18:19:42 -0400
-Received: by wr-out-0506.google.com with SMTP id 41so337458wry
-        for <git@vger.kernel.org>; Thu, 15 Mar 2007 15:19:42 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=BeFvsXtKBHbFbbqEtvKnblwI6lRIQOcoB8mfPNfmF2BkwILoSQrb/7RltDB9eK/ywuV0R9x4QU/KsYse6jO9Xrd297mddIqM21gLEeiyJJUbT2BXF52a7tJy7P4d0VwiF6TQG93yJUQqg5oRyF0eRNwLWcKVznVzYbXdwZDHVys=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=CImfxsTkbEIHtb95yOBSH95o5yxMLciNOeXmXmXn2iUW1uPEsIScT9Nkvtd51U3eFt6ztSi19FmsOKAjtLuw9ndhCMB1qMTqRFflbxZtChqG4C+dZBowb26vIf3ep7kO+vcMo7ZMlC+KHlYL63dgcsDQHtAYSkPbrFVWth4QS5o=
-Received: by 10.114.197.1 with SMTP id u1mr459511waf.1173997181710;
-        Thu, 15 Mar 2007 15:19:41 -0700 (PDT)
-Received: from ziti.local ( [140.107.156.111])
-        by mx.google.com with ESMTP id y11sm3089582pod.2007.03.15.15.19.40;
-        Thu, 15 Mar 2007 15:19:40 -0700 (PDT)
-In-Reply-To: <20070315194410.GC29547@spearce.org> (Shawn O. Pearce's message of "Thu, 15 Mar 2007 15:44:10 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+	id S1753421AbXCPAQR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 20:16:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbXCPAQR
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 20:16:17 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:46084 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753421AbXCPAQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 20:16:16 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070316001616.PKME748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 15 Mar 2007 20:16:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id bCGG1W0071kojtg0000000; Thu, 15 Mar 2007 20:16:16 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42303>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Seth Falcon <sethfalcon@gmail.com> wrote:
->> error: git-checkout-index: unable to create symlink Category/Makefile (Invalid argument)
->> 
->> Now while my file system isn't smart enough to tell the difference
->> between t and T, it does support symlinks AFAIK.
->
-> Yes, it does support symlinks.  Is it possible that the name Category
-> already existed, but as a file?  Hmm.
+> The point I tried to make: without "-w" or "-b", you can compare at the 
+> tree level. No need for a --quiet option.
 
-I think in the revision before the update, there was a file
-Category/Makefile and that it was replaced by a symlink.
+That's not true.  The --quiet option is not about comparing at
+the tree level vs looking inside the blobs.  It helps to
+optimize the tree level comparison as well.  The difference
+Linus was happy about comes from exactly the early exit from
+tree comparison.
 
-So Category is/was a dir.  Category/Makefile was a file and became a
-symlink.  Note that I am using git-svn to track an svn repository and
-so the problem could be there.
+The current --quiet will report if they are different at the
+tree level and does not take filtering done at the later phases
+into account at all, and that is a conscious design decision so
+that we can use it for optimizing try_to_simplify_commit().  So
+for example, if you have any change that a plain "git diff-*"
+says there are differences, the option reports there indeed are
+differences, like this:
 
-However, I'm not sure where to look or what experiment to try next.
+	$ git reset --hard ;# start from the clean state
+        $ touch Makefile
+        $ git diff-files -p
+        diff --git a/Makefile b/Makefile
+        $ git diff-files --quiet; echo $?
+	1
 
-If I checkout an old revision prior to the file becoming a symlink and
-then checkout master, I get:
+I didn't consider -w nor -b when I made the design decision that
+leads to the above behaviour, but I think the filtering done at
+the textual patch generation phase falls into the same category.
+If you do the following, the answer would be "they are
+different":
 
-git checkout -b foobar 74227bbd35a77b8
-Switched to a new branch "foobar"
-git checkout master
-D       Category/Makefile
-[...snip...]
-D       vsn/Makefile
-Switched to branch "master"
+	$ sed -e 's/$/ /' <Makefile >Makefile+
+        $ cat Makefile+ >Makefile
+        $ rm Makefile+
+        $ git update-index --refresh
+        $ git diff-files -b -p
+        diff --git a/Makefile b/Makefile
+        index dc024d4..1c328be 100644
+        $ git diff-files -b -p --quiet; echo $?
+        1
 
-git reset --hard HEAD
-error: git-checkout-index: unable to create symlink Category/Makefile (Invalid argument)
-[...snip...]
-error: git-checkout-index: unable to create symlink vsn/Makefile (Invalid argument)
-HEAD is now at 30bd65d... the commit msg here
+Options like -w and -b are only about not showing the lines; you
+still get the diff header that reports they are different.  So
+in that sense the output from the last command above is correct.
 
+I am however wondering if we want to have (and if it would be
+worth the trouble to add) an option to have the command say if
+there will be textual difference output without producing it.  I
+do not see much value in it right now, but it might turn out to
+be handy.  I do suspect that would be a rather intrusive and
+error prone change, though.
 
--- 
-Seth
+A good news is that such an option needs to work at a different
+level than the existing --quiet, which works in diffcore_std().
+The new option would probably need to work inside diff_flush()
+which is a later phase.  So no matter how you screw up, it would
+hopefully not break revision traversal too much.
+
+We might want to rename the existing one --quick and name that
+new option --quiet, though, if we go that route.
