@@ -1,61 +1,98 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-fetch, git-parse-remote: Cleanup implementation of '.'
-Date: Fri, 16 Mar 2007 02:32:19 -0700
-Message-ID: <7vps79v8ik.fsf@assigned-by-dhcp.cox.net>
-References: <etavpn$ma0$1@sea.gmane.org>
-	<7vr6rqyr60.fsf@assigned-by-dhcp.cox.net>
-	<45FA5771.1040200@lu.unisi.ch>
+From: Matthias Kestenholz <matthias@spinlock.ch>
+Subject: Re: [PATCH/RFC] Documentation: git-daemon inetd configuration fix
+Date: Fri, 16 Mar 2007 10:02:09 +0100
+Message-ID: <1174035730.4067.54.camel@localhost.localdomain>
+References: <11740316693552-git-send-email-matthias@spinlock.ch>
+	 <7vabydwpd5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: bonzini@gnu.org
-X-From: git-owner@vger.kernel.org Fri Mar 16 10:32:56 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 16 10:36:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS8nw-0002yW-37
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 10:32:56 +0100
+	id 1HS8rh-00050t-DA
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 10:36:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932932AbXCPJcd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 05:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933142AbXCPJcd
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 05:32:33 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:46134 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932932AbXCPJcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 05:32:21 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070316093221.HFTY18070.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 16 Mar 2007 05:32:21 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id bMYK1W00h1kojtg0000000; Fri, 16 Mar 2007 05:32:20 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933238AbXCPJg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 05:36:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932991AbXCPJg1
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 05:36:27 -0400
+Received: from elephant.oekohosting.ch ([80.74.144.79]:33809 "EHLO
+	elephant.oekohosting.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933238AbXCPJg0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 05:36:26 -0400
+X-Greylist: delayed 2036 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Mar 2007 05:36:25 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by elephant.oekohosting.ch (Postfix) with ESMTP id 5543D62C0BC;
+	Fri, 16 Mar 2007 10:00:11 +0100 (CET)
+Received: from elephant.oekohosting.ch ([127.0.0.1])
+	by localhost (elephant.oekohosting.ch [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 14119-03; Fri, 16 Mar 2007 10:00:08 +0100 (CET)
+Received: from [192.168.1.7] (176-197.0-85.cust.bluewin.ch [85.0.197.176])
+	by elephant.oekohosting.ch (Postfix) with ESMTP id 56E8062C09A;
+	Fri, 16 Mar 2007 10:00:08 +0100 (CET)
+In-Reply-To: <7vabydwpd5.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.8.2.1 
+X-Virus-Scanned: ClamAV using ClamSMTP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42339>
 
-Paolo Bonzini <paolo.bonzini@lu.unisi.ch> writes:
+On Fri, 2007-03-16 at 01:43 -0700, Junio C Hamano wrote:
+> Matthias Kestenholz <matthias@spinlock.ch> writes:
+> 
+> >  On my debian server, this change was needed to get git-daemon running.
+> >  I am no inetd expert, so I don't know where the error was.
+> >
+> >  Perhaps this patch might help someone else.
+> >
+> >
+> > diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+> > index 9ddab71..499c1f3 100644
+> > --- a/Documentation/git-daemon.txt
+> > +++ b/Documentation/git-daemon.txt
+> > @@ -177,7 +177,7 @@ git-daemon as inetd server::
+> >  +
+> >  ------------------------------------------------
+> >  	git stream tcp nowait nobody  /usr/bin/git-daemon
+> > -		git-daemon --inetd --verbose --export-all
+> > +		/usr/bin/git-daemon --inetd --verbose --export-all
+> >  		/pub/foo /pub/bar
+> >  ------------------------------------------------
+> 
+> That sounds _very_ wrong.  What you changed is argv[0] (i.e. the
+> beginning of "service program arguments" field) and it should
+> not matter what you have there for inetd to launch git-daemon.
+> Presumably your inetd runs with /usr/bin in your path so even
+> the "service program" field (the one after 'nobody') should not
+> need the full path (but it is a good idea to be explicit in that
+> field as a principle), but needing the full path in argv[0]?
+> 
+> On _my_ debian box, I do not need a full path there, so it is
+> not even Debian in general but problem is on your particular
+> box.  Can you dig a bit more to see what you are doing any
+> differently?
+> 
+> For example, do you really mean the "service program arguments"
+> field that matters?
+> 
 
-> 	The patch is a cleanup of the one you posted, and it was
-> 	appropriately tested with no regression.
->
-> 	I can see now what you meant by the split between fetch and
-> 	merge logic making my patch more complicated than necessary.
 
-Thanks.  I'll squash the two and apply.
+Uhm... I don't get it. I changed the second /usr/bin/git-daemon back to
+git-dameon (and even to "foo") and it continues working after restarting
+inetd.
 
-> +	builtin)
-> +	        canon_refs_list_for_fetch -d "$1" \
-> +			$(git-show-ref | sed -n 's,.*[      ]\(refs/.*\),\1:,p') ;;
+I cannot reproduce the problem I had earlier, but everything works fine
+with the line from the docs now.
 
-I may not be really thinking straight tonight (no I am not
-drunk, but just a tad sick), but I wonder if this is sufficient?
+Btw, git is installed in /usr/bin , so that cannot be the reason for the
+failure I saw.
 
-	$(git-for-each-ref --format='%(refname):')
 
-Shorter and one less process and pipe.
+Oh well, sorry for the noise and thanks for the fast response.
+	Matthias
