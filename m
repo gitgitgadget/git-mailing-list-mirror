@@ -1,63 +1,74 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: Libification project (SoC)
-Date: Fri, 16 Mar 2007 14:59:49 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703161454280.18328@xanadu.home>
-References: <20070316042406.7e750ed0@home.brethil>
- <20070316045928.GB31606@spearce.org> <7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
- <20070316060033.GD31606@spearce.org> <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
- <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <e5bfff550703161120o4571769eq18c13ae29ac79957@mail.gmail.com>
- <e5bfff550703161138x5ab1fe3anf7b2aaab81bb77e4@mail.gmail.com>
+Date: Fri, 16 Mar 2007 19:09:36 +0000
+Message-ID: <200703161909.38662.andyparkins@gmail.com>
+References: <20070316042406.7e750ed0@home.brethil> <e5bfff550703161120o4571769eq18c13ae29ac79957@mail.gmail.com> <e5bfff550703161138x5ab1fe3anf7b2aaab81bb77e4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Rocco Rutte <pdmef@gmx.net>, git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 16 19:59:58 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Marco Costalba" <mcostalba@gmail.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Rocco Rutte" <pdmef@gmx.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 16 20:12:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSHeb-00028q-Tj
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 19:59:54 +0100
+	id 1HSHqr-0000L1-Hr
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 20:12:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965871AbXCPS7v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 14:59:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965880AbXCPS7v
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 14:59:51 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:32424 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965871AbXCPS7u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 14:59:50 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF000DPVFFPEAC0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 16 Mar 2007 14:59:49 -0400 (EDT)
-In-reply-to: <e5bfff550703161138x5ab1fe3anf7b2aaab81bb77e4@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S965874AbXCPTMa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 15:12:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965887AbXCPTMa
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 15:12:30 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:36428 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965874AbXCPTM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 15:12:29 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so778972uga
+        for <git@vger.kernel.org>; Fri, 16 Mar 2007 12:12:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NUByecpuChRk58U+JrAaQWjrnbuhhQ91XY+hofWE6QPU9fJbDj7x/KfXvvegnptYGNzdyzyw9lYm9oQoUYpljiJ3siSxSzYTomXPyNbNiKaY1j6Pmsr78jpfUS+zQcevhGDdxTGqT/WUPSRFmZfcB7/XsyMzSQ3LcRPwKYK/SWs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=KL8dUEbjSzQSugndI7YWyGj+vjLGeEW/Ff76j6el8T4S3DljfSw5LhXRrRatQYRa93uU8JmD/go+L37pbWdWgNqM6h6+dFxya7Djy096HWcBCInRQjNBuPOrS2FgBI4Renot7xUZi6brLOZnQq9SwO9UFdoOAnxGG599Po4t0jk=
+Received: by 10.67.22.2 with SMTP id z2mr4989720ugi.1174072347605;
+        Fri, 16 Mar 2007 12:12:27 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id 55sm4206590ugq.2007.03.16.12.12.26;
+        Fri, 16 Mar 2007 12:12:27 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <e5bfff550703161138x5ab1fe3anf7b2aaab81bb77e4@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42395>
 
-On Fri, 16 Mar 2007, Marco Costalba wrote:
+On Friday 2007, March 16, Marco Costalba wrote:
 
-> On 3/16/07, Marco Costalba <mcostalba@gmail.com> wrote:
-> > 
-> > *The most important thing for a libgit to be used by qgit is reentrancy*
-> > 
-> 
-> Another crtitical feature is that this call to git-rev-list-like
-> function MUST be non-blocking.
+> There is no way that a GUI tool is allowed to *freeze* for that
+> amount of time. Currently, because an external process is forked when
+> running 'git rev-list' all the problem is happly handled by the
+> kernel scheduler and the QProcess callback mechanism (based on
+> select()). In case of a libified git-rev-list this could be an issue.
 
-I'm not sure I agree.
+I don't think that is ever going to be an issue.  At the worst you could 
+just fork() and run the libgit command in that.  Threads are fairly 
+easy in Qt as well.
 
-The non-blockingness can be (and probably should be) handled at a higher 
-level with your own threading facility of choice.  Making GIT 
-restartable has the potential for making the core code much too complex.
+In short, I wouldn't worry about libgit blocking - in fact it's almost a 
+guarantee that libgit /will/ block; it would be a nightmare to write an 
+asynchronous libgit.
 
 
-Nicolas
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
