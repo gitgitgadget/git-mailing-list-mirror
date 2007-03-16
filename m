@@ -1,52 +1,105 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] user-manual: ensure generated manual references stylesheet
-Date: Fri, 16 Mar 2007 13:02:30 -0400
-Message-ID: <20070316170230.GB4538@fieldses.org>
-References: <1173045556191-git-send-email-bfields@citi.umich.edu> <11730455574115-git-send-email-bfields@citi.umich.edu> <1173045558959-git-send-email-bfields@citi.umich.edu> <11730455591178-git-send-email-bfields@citi.umich.edu> <loom.20070316T134149-54@post.gmane.org> <20070316142431.GE31722@fieldses.org> <7C0AC446-57CA-480B-A14E-1E861E2FCBA7@silverinsanity.com> <20070316153639.GH31722@fieldses.org> <7DA766E4-D88F-4248-BD29-1E0B403BF0BE@silverinsanity.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: cleaner/better zlib sources?
+Date: Fri, 16 Mar 2007 13:06:44 -0400 (EDT)
+Message-ID: <alpine.LFD.0.83.0703161236180.5518@xanadu.home>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
+ <45F9EED5.3070706@garzik.org>
+ <Pine.LNX.4.64.0703151822490.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robert Pluim <rpluim+git@gmail.com>, git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Fri Mar 16 18:02:55 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Davide Libenzi <davidel@xmailserver.org>,
+	Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>, mpm@selenic.com,
+	bcrl@kvack.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Mar 16 18:07:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSFpE-0003IP-CN
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 18:02:44 +0100
+	id 1HSFtM-0005DY-Sx
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 18:07:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965661AbXCPRCe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 13:02:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965680AbXCPRCe
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 13:02:34 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:38777 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965661AbXCPRCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 13:02:33 -0400
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HSFp0-0002pc-K8; Fri, 16 Mar 2007 13:02:30 -0400
-Content-Disposition: inline
-In-Reply-To: <7DA766E4-D88F-4248-BD29-1E0B403BF0BE@silverinsanity.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S965655AbXCPRGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 13:06:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965712AbXCPRGr
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 13:06:47 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:33070 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965655AbXCPRGq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 13:06:46 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JF0006MRA78Q690@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 16 Mar 2007 13:06:44 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42381>
 
-On Fri, Mar 16, 2007 at 12:29:42PM -0400, Brian Gernhardt wrote:
-> I've honestly never used it too much.  I got a distinct dislike for  
-> docbook and xsltproc after trying to get it to work for a couple  
-> days.
+On Fri, 16 Mar 2007, Linus Torvalds wrote:
 
-I understand.  The position of Chief Git Docbook Hacker is very much
-open--I'm still pretty ignorant of that whole toolchain.
+> The most performance-critical objects for uncompression are commits and 
+> trees. At least for the kernel, the average size of a tree object is 678
+> bytes. And that's ignoring the fact that most of them are then deltified, 
+> so about 80% of them are likely just a ~60-byte delta.
 
-> As I recall there were some options for alternate/additional  
-> catalogs and the like.  However, I mostly suggested it as a way to  
-> let you (and others who want it) to use --nonet.
+This is why in pack v4 there will be an alternate tree object 
+representation which is not deflated at all.
 
-Nah, I probably just copied that --nonet from someplace else without
-understanding it properly.
+In short we intend to have 3 tables where common things are factored 
+out:
 
---b.
+ 1) the path component string table (deflated)
+
+ 2) author/committer string table (deflated)
+
+ 3) sorted SHA1 table (obviously not deflated)
+
+The sorted SHA1 table will be part of the pack instead of being in the 
+pack index.  The idea is that most SHA1's are already duplicated in the 
+pack already anyway within commit and tree objects.  With a single table 
+then commit and tree objects can index into that SHA1 table rather than 
+providing the SHA1 value inline for the objects they refer to.
+
+This means that a tree object record would be only 6 bytes according to 
+the current design: 2 bytes to index into the path component string 
+table (which also include the mode information), and 4 bytes to index 
+into the sorted SHA1 table.  And similarly for commit objects.
+
+This means that the pack index will only have a table of offsets 
+corresponding to the table of sorted SHA1's.
+
+So... walking revisions will become only a matter of picking the first 
+commit object, using the tree index value (which is not deflated), but 
+instead of using it in the SHA1 table it could be used in the offset 
+table to find the location of the corresponding tree object directly.  
+Same goes for tree entries, or for locating the parent's commit object.
+
+No deflating, no binary searching, no SHA1 comparisons.  Plain straight 
+pointer dereference.
+
+Then, if you want to filter tree walking on path spec, you only need to 
+locate the path component in the path table once and use the 
+corresponding index to filter tree entries instead of repeated strcmp().  
+Same thing if you want to filter commits based on author/committer.  
+One side effect of this is that you can tell straight away that a path 
+doesn't exist in the whole pack if one of its components cannot be found 
+in the table (that works only if no legacy tree representations are 
+present of course).  That should make history walking blazingly fast.
+
+The only thing that gets deflated is the commit message which needs to 
+be inflated only when displaying it.
+
+And so far that makes for quite smaller packs too!
+
+
+Nicolas
