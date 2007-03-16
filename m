@@ -1,76 +1,153 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Question about bare repositories
-Date: Fri, 16 Mar 2007 11:52:35 +0000
-Message-ID: <200703161152.37485.andyparkins@gmail.com>
-References: <200703160947.03833.andyparkins@gmail.com> <7vhcslv701.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Libification project (SoC)
+Date: Fri, 16 Mar 2007 12:54:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070316042406.7e750ed0@home.brethil> <20070316045928.GB31606@spearce.org>
+ <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316060033.GD31606@spearce.org>
+ <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 16 12:53:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 16 12:55:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSAzd-0008M5-BD
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 12:53:09 +0100
+	id 1HSB1O-0000xF-GX
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 12:54:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965116AbXCPLwn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 07:52:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965330AbXCPLwn
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 07:52:43 -0400
-Received: from wx-out-0506.google.com ([66.249.82.224]:23352 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965095AbXCPLwm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 07:52:42 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so518326wxd
-        for <git@vger.kernel.org>; Fri, 16 Mar 2007 04:52:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=qCE7e6wGSVjvVfEYh1O0N3gLeb7w3aLkJ9fz+t3mGISUphO55Ty72gw1OsoUn4W4Lj//f9zKqa313AxNRFgX4ehgjvTX29mUIz2Bh9ZKB70T5rOX9gceG19NMYNl9RKq3bpi/O+AqxJNBexgIeEdkZceg9RtElrDWhEMVsNi2vQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=aIu97SdrT3pcjjA0UuC+m/9lQlrxehWYgJZ5t4PKs9Nhbxe24nATBCZnz7rVV/n6qFSsDXJ+i7/moP571F5pdxgtelMxOAkf4+H7oRkGXgOpiMOt5b4WnpeKoB1mQ7IzGJgeKql0wX10Mv3Do9YkN6kUMIeEk6yb3OxbFZoi9s4=
-Received: by 10.70.44.4 with SMTP id r4mr2186213wxr.1174045961778;
-        Fri, 16 Mar 2007 04:52:41 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id q28sm4087905nfc.2007.03.16.04.52.40;
-        Fri, 16 Mar 2007 04:52:40 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vhcslv701.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S964848AbXCPLyz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 07:54:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965095AbXCPLyz
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 07:54:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48276 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964848AbXCPLyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 07:54:54 -0400
+Received: (qmail invoked by alias); 16 Mar 2007 11:54:53 -0000
+X-Provags-ID: V01U2FsdGVkX18RtaQGkCAR0Sc94h48lERaKVXt49PdSB8MhwhvRR
+	9zEshj+Jstoz6v
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42353>
 
-On Friday 2007 March 16 10:05, Junio C Hamano wrote:
-> Andy Parkins <andyparkins@gmail.com> writes:
-> > Why does a bare repository have/need a HEAD?
->
-> To mark which branch the repository owner considers the primary
-> branch of the repository.  I think "git pull $URL" (i.e. without
+Hi,
 
-Interesting.   So it's got a much reduced importance and sounds like it is 
-mainly as guidance for cloners, etc.
+On Thu, 15 Mar 2007, Junio C Hamano wrote:
 
-> using shorthand arranged in the config nor $GIT_DIR/remotes/)
-> defaults to fetching and merging HEAD from there, for example (I
-> say "I think" because it's been a while I did so myself, and we
-> might have broken it during the 1.5.0 process, which had a lot
-> of work in that area).
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> 
+> > Junio C Hamano <junkio@cox.net> wrote:
+> >> "Shawn O. Pearce" <spearce@spearce.org> writes:
+> >> > On the other hand, many of the variables declared in environment.c
+> >> > are repository specific configuration variables.  These probably
+> >> > should be abstracted into some sort of wrapper, so that multiple
+> >> > repositories can be accessed from within the same process.  Why?
+> >> > a future mod_perl running gitweb.cgi accessing repositories through
+> >> > libgit.a and Perl bindings of course!
+> >> 
+> >> I think if you are abstracting them out, into "struct repo_state",
+> >> the index and object store related variables such as packed_git
+> >> should go there as well, so your recommendation feels very
+> >> inconsistent to me.
+> >
+> > I missed packed_git, but you are right, that should definately go
+> > with a struct repo_state.  And maybe you are right that the index
+> > should go with it... but I'm not sure the index should be tied to the
+> > repository at all.  Its strictly convention that the index goes with
+> > the repository; GIT_INDEX_FILE lets you say otherwise at the command
+> > line level, why can't we do otherwise from a library level too?
+> 
+> Even within a plumbing, being able to shuffle multiple indices
+> at once would be very useful.  For example, if I were to rewrite
+> unpack-trees, I would most likely read from the current index
+> and trees and populate a new index from emptiness by appending
+> to it, thereby avoiding the binary-search and insert costs.
+> 
+> I've thought about the layering when Smurf first brought up the
+> libification (which was a loooong time ago), and concluded three
+> layered approach would be most useful.
+> 
+> The bottom layer is object store across repositories.  If we
+> ignore SHA-1 collisions as an issue (and we _will_ ignore it for
+> forseeable future), unless you are doing "read from one
+> repository and write that to another repository", it is more
+> handy to be able to name an object and get its data without
+> knowing which repository's object store it comes from, and it
+> would make "git log master~A..master~B" across repositories
+> (i.e. 'master' of repository A and 'master' of repository B)
+> possible.  An example interface would be like:
+> 
+> (current)
+> void *read_sha1_file(const unsigned char *sha1,
+> 		     enum object_type *type,
+> 		     unsigned long *size);
+> 
+> (libified)
+> void *git_read_sha1_file(struct gitlib *,
+> 			 const unsigned char *sha1,
+> 			 enum object_type *type,
+> 			 unsigned long *size);
+> 
+> where "struct gitlib" has a list of "struct object_store", and
+> we will have:
+> 
+> int git_add_object_store(struct gitlib *, const char *path);
+> 
+> to add one directory as object store the toplevel gitlib structure
+> knows about.  In a sense, "struct gitlib" and object store is so
+> global that we might not even need to have it as a parameter
+> (iow, it and "struct object **obj_hash" from object.c can stay
+> global).
+> 
+> The middle layer is repositories, primarily their refs and
+> reflogs.  An example interface would be like:
+> 
+> (current)
+> int get_sha1(const char *name, unsigned char *sha1);
+> 
+> (libified)
+> int git_get_sha1(struct git_repo *, const char *name, unsigned char *sha1);
+> 
+> where "struct git_repo" is one repository (and it would have a
+> pointer to "struct gitlib *" so that we can follow objects to
+> follow parents and stuff).
+> 
+> And the top layer would have indices, and working trees as
+> per-invocation parameter.
+> 
+> (current)
+> int cache_name_pos(const char *name, int namelen);
+> int unpack_trees(struct object_list *trees, struct unpack_trees_options *o);
+> 
+> (libified)
+> int git_cache_name_pos(struct git_cache *, const char *name, int namelen);
+> int git_unpack_trees(struct object_list *trees, struct git_unpack_trees_options *o);
+> 
+> where "struct git_cache" has "index" thingies, such as
+> active_cache, active_nr, active_alloc, and active_cache_tree.
+> And we would have pointer to "struct git_cache *" in unpack_trees_options
+> structure.
 
-Me too; I don't think I've ever used it, which is where my confusion came 
-from.
+Isn't this an awfully long shot?
 
-Thanks for the help.
+I'd be happy if the libification project resulted
 
+- in a (static!) libgit.a which can be linked to qgit or similar (being 
+  reentrant, or at least optionally so, and not die()ing all the time), 
+  and
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+- which does not fix the API yet (at least for the most parts).
+
+We _can_ -- once we agree on a stable API -- expose _some_ functions in a 
+libgit.so, but that does not have to be the goal for the first step!
+
+Ciao,
+Dscho
