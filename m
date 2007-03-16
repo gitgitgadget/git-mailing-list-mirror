@@ -1,71 +1,83 @@
-From: Matt Mackall <mpm@selenic.com>
+From: Davide Libenzi <davidel@xmailserver.org>
 Subject: Re: cleaner/better zlib sources?
-Date: Thu, 15 Mar 2007 20:14:57 -0500
-Message-ID: <20070316011457.GA4892@waste.org>
-References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org> <45F9EED5.3070706@garzik.org>
+Date: Thu, 15 Mar 2007 18:33:44 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703151807010.4998@alien.or.mcafeemobile.com>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>, bcrl@kvack.org
-To: Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Fri Mar 16 02:27:42 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Mar 16 02:46:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS1EL-0003qB-1i
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 02:27:41 +0100
+	id 1HS1WG-0005Nr-Af
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 02:46:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933999AbXCPB1i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 21:27:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934000AbXCPB1i
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 21:27:38 -0400
-Received: from waste.org ([66.93.16.53]:50981 "EHLO waste.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933999AbXCPB1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 21:27:37 -0400
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l2G1Ew8W013720
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 15 Mar 2007 20:14:58 -0500
-Received: (from oxymoron@localhost)
-	by waste.org (8.13.4/8.13.4/Submit) id l2G1EvS6013719;
-	Thu, 15 Mar 2007 20:14:57 -0500
-Content-Disposition: inline
-In-Reply-To: <45F9EED5.3070706@garzik.org>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by amavisd-new
+	id S1752190AbXCPBqJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 21:46:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbXCPBqJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 21:46:09 -0400
+Received: from x35.xmailserver.org ([64.71.152.41]:48014 "EHLO
+	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752190AbXCPBqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 21:46:08 -0400
+X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Mar 2007 21:46:08 EDT
+X-AuthUser: davidel@xmailserver.org
+Received: from alien.or.mcafeemobile.com
+	by x35.xmailserver.org with [XMail 1.25 ESMTP Server]
+	id <S21C61C> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Thu, 15 Mar 2007 21:37:52 -0400
+X-X-Sender: davide@alien.or.mcafeemobile.com
+In-Reply-To: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
+X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
+X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42312>
 
-On Thu, Mar 15, 2007 at 09:11:49PM -0400, Jeff Garzik wrote:
-> Linus Torvalds wrote:
-> >Now, it's possible that I'm just wrong, but the instruction-level profile 
-> >really did pinpoint the "look up state branch pointer and jump to it" as 
-> >some of the hottest part of that function. Which is just *evil*. You can 
+On Thu, 15 Mar 2007, Linus Torvalds wrote:
+
 > 
-> ISTR there are a bunch of state transitions per byte, which would make 
-> sense that it shows up on profiles.
-
-Yep, not surprising.
-
-> >Now, I'm just wondering if anybody knows if there are better zlib 
-> >implementations out there? This really looks like it could be a noticeable 
-> >performance issue, but I'm lazy and would be much happier to hear that 
-> >somebody has already played with optimizing zlib. Especially since I'm not 
-> >100% sure it's really going to be noticeable..
+> I looked at git profiles yesterday, and some of them are pretty scary. We 
+> spend about 50% of the time under some loads in just zlib uncompression, 
+> and when I actually looked closer at the zlib sources I can kind of 
+> understand why. That thing is horrid.
 > 
-> I could have sworn that either Matt Mackall or Ben LaHaise had cleaned 
-> up the existing zlib so much that it was practically a new 
-> implementation.  I'm not aware of any open source implementations 
-> independent of zlib (except maybe that C++ behemoth, 7zip).
+> The sad part is that it looks like it should be quite possible to make 
+> zlib simply just perform better. The profiles seem to say that a lot of 
+> the cost is literally in the "inflate()" state machine code (and by that I 
+> mean *not* the code itself, but literally in the indirect jump generated 
+> by the case-statement).
+> 
+> Now, on any high-performance CPU, doing state-machines by having
+> 
+> 	for (;;)
+> 		switch (data->state) {
+> 			...
+> 			data->state = NEW_STATE;
+> 			continue;
+> 		}
+> 
+> (which is what zlib seems to be doing) is just about the worst possible 
+> way to code things.
 
-I cleaned up the version in lib/ that's used for boot on most systems.
-It's quite a bit simpler and cleaner than the code lib/zlib (and
-elsewhere!). But making it faster is another matter entirely - I don't
-know off-hand how the two compare.
+A quick hack would be to just define:
 
--- 
-Mathematics is the supreme nostalgia of our time.
+#define SWITCH_LBL(n) \
+	case n: \
+	lbl_##n:
+
+#define STATE_CHANGE(s) \
+	state->mode = s; \
+	goto lbl_##s;
+
+Then replace all the "state->mode = STATE; break;" into STATE_CHANGE(STATE);
+I'm giving it a try as we speak ...
+
+
+
+
+- Davide
