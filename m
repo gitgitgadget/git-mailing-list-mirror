@@ -1,110 +1,52 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH] test git-rev-parse
-Date: Fri, 16 Mar 2007 23:33:57 +0100
-Message-ID: <20070316223357.GA16255@moooo.ath.cx>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: cleaner/better zlib sources?
+Date: Fri, 16 Mar 2007 23:45:42 +0100
+Message-ID: <200703162345.42784.Josef.Weidendorfer@gmx.de>
+References: <20070316060841.19946.qmail@science.horizon.com> <Pine.LNX.4.64.0703160841360.3816@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 16 23:34:08 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: linux@horizon.com, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Mar 16 23:45:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSKzw-0005os-5E
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 23:34:08 +0100
+	id 1HSLBJ-0003tG-Is
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 23:45:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965994AbXCPWeF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 18:34:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965995AbXCPWeE
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 18:34:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47513 "HELO mail.gmx.net"
+	id S2992442AbXCPWpq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 18:45:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992448AbXCPWpq
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 18:45:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44726 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965994AbXCPWeC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 18:34:02 -0400
-Received: (qmail invoked by alias); 16 Mar 2007 22:34:00 -0000
-X-Provags-ID: V01U2FsdGVkX1+b9/9EFx2b40H/Jvt+MXqGY7RtChPRBlPXc/Nv0t
-	FQMd84b/GqE2sw
-Mail-Followup-To: git@vger.kernel.org
+	id S2992442AbXCPWpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 18:45:45 -0400
+Received: (qmail invoked by alias); 16 Mar 2007 22:45:43 -0000
+X-Provags-ID: V01U2FsdGVkX1/kDBI+IlLkvI4TxWpr4yWDa82RoXox4E6lnUMSRe
+	ee+I71RHkXSLsa
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0703160841360.3816@woody.linux-foundation.org>
 Content-Disposition: inline
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42402>
 
-this tests --is-bare-repository, --is-inside-git-dir, --show-cdup and
---show-prefix
+On Friday 16 March 2007, Linus Torvalds wrote:
+> (Btw, to get this level of detail, you need to link statically, at least 
+> if you are using Fedora Core. If you do the normal dynamic linking, 
+> oprofile will not be able to show you which function, and will just say 
+> that 50% of all time was spent in libz.so.1.2.3).
 
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
----
-The number of the test has to be changed.
----
- t/t9999-rev-parse.sh |   57 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 57 insertions(+), 0 deletions(-)
- create mode 100755 t/t9999-rev-parse.sh
+I see the same here on OpenSuse 10.2.
+This is because opreport currently does not take symbols from the dynamic
+symbol table into account. Patching the symbol loader (I just send a
+patch to the oprofile mailing list), I get the same detail with dynamic
+linking.
 
-diff --git a/t/t9999-rev-parse.sh b/t/t9999-rev-parse.sh
-new file mode 100755
-index 0000000..c385660
---- /dev/null
-+++ b/t/t9999-rev-parse.sh
-@@ -0,0 +1,57 @@
-+#!/bin/sh
-+
-+test_description='test git rev-parse'
-+. ./test-lib.sh
-+
-+test_expect_success 'toplevel: is-bare-repository' \
-+	'test "false" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'toplevel: is-inside-git-dir' \
-+	'test "false" = "$(git rev-parse --is-inside-git-dir)"'
-+test_expect_success 'toplevel: show-cdup' \
-+	'test "" = "$(git rev-parse --show-cdup)"'
-+test_expect_success 'toplevel: show-prefix' \
-+	'test "" = "$(git rev-parse --show-prefix)"'
-+
-+cd .git/objects || exit 1
-+test_expect_success 'in-git-dir: is-bare-repository' \
-+	'test "false" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'in-git-dir: is-inside-git-dir' \
-+	'test "true" = "$(git rev-parse --is-inside-git-dir)"'
-+test_expect_success 'in-git-dir: show-cdup' \
-+	'test "../../" = "$(git rev-parse --show-cdup)"'
-+test_expect_success 'in-git-dir: show-prefix' \
-+	'test ".git/objects/" = "$(git rev-parse --show-prefix)"'
-+cd ../.. || exit 1
-+
-+mkdir sub || exit 1
-+cd sub || exit 1
-+test_expect_success 'subdirectory: is-bare-repository' \
-+	'test "false" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'subdirectory: is-inside-git-dir' \
-+	'test "false" = "$(git rev-parse --is-inside-git-dir)"'
-+test_expect_success 'subdirectory: show-cdup' \
-+	'test "../" = "$(git rev-parse --show-cdup)"'
-+test_expect_success 'subdirectory: show-prefix' \
-+	'test "sub/" = "$(git rev-parse --show-prefix)"'
-+cd .. || exit 1
-+
-+test_expect_success 'core.bare = true: is-bare-repository' \
-+	'git config core.bare true &&
-+	test "true" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'unset core.bare: is-bare-repository' \
-+	'git config --unset core.bare &&
-+	test "false" = "$(git rev-parse --is-bare-repository)"'
-+
-+mv .git foo.git || exit 1
-+export GIT_DIR=foo.git
-+export GIT_CONFIG=foo.git/config
-+test_expect_success 'GIT_DIR=foo.git: is-bare-repository' \
-+	'test "true" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'GIT_DIR=foo.git, core.bare = true: is-bare-repository' \
-+	'git --git-dir foo.git config core.bare true &&
-+	test "true" = "$(git --git-dir foo.git rev-parse --is-bare-repository)"'
-+test_expect_success 'GIT_DIR=foo.git, core.bare = false: is-bare-repository' \
-+	'git config core.bare false &&
-+	test "false" = "$(git rev-parse --is-bare-repository)"'
-+
-+test_done
--- 
-1.5.0.3.972.g70823
+Josef
