@@ -1,81 +1,88 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: cleaner/better zlib sources?
-Date: Fri, 16 Mar 2007 14:09:13 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703161358010.18328@xanadu.home>
-References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
- <45F9EED5.3070706@garzik.org>
- <Pine.LNX.4.64.0703151822490.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703161236180.5518@xanadu.home>
- <Pine.LNX.4.64.0703161026220.3816@woody.linux-foundation.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Libification project (SoC)
+Date: Fri, 16 Mar 2007 19:20:26 +0100
+Message-ID: <e5bfff550703161120o4571769eq18c13ae29ac79957@mail.gmail.com>
+References: <20070316042406.7e750ed0@home.brethil>
+	 <20070316045928.GB31606@spearce.org>
+	 <7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
+	 <20070316060033.GD31606@spearce.org>
+	 <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
+	 <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Davide Libenzi <davidel@xmailserver.org>,
-	Jeff Garzik <jeff@garzik.org>,
-	Git Mailing List <git@vger.kernel.org>, mpm@selenic.com,
-	bcrl@kvack.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 16 19:09:30 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Rocco Rutte" <pdmef@gmx.net>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 16 19:20:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSGrp-00022Y-VZ
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 19:09:30 +0100
+	id 1HSH2X-0007kI-BF
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 19:20:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965808AbXCPSJP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 14:09:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965814AbXCPSJP
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 14:09:15 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:15242 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965808AbXCPSJO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 14:09:14 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF000A8MD3DEWI0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 16 Mar 2007 14:09:13 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0703161026220.3816@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S965816AbXCPSUa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 14:20:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965821AbXCPSUa
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 14:20:30 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:61193 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965816AbXCPSU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 14:20:29 -0400
+Received: by wr-out-0506.google.com with SMTP id 41so631599wry
+        for <git@vger.kernel.org>; Fri, 16 Mar 2007 11:20:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Hlioqf+pKL52u+U2UW2kEo8KwF5C9GM2APYBMLPDKr8xXRri83Qr9Npd9XXrEey6Ss2NvhFz2mr30jjwqXe1zrDz9OLMhM8hpBXfBjqdT79IkZc9HkejVB+s6nRQdRxHJXRAwadROd8AZ8fpzKMZb4NhZynQBJpFU2NBwyaFc0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kVpiK1ISFySJ0eNtnejLXIPcrEpV+KMzEFi08L7YKpzE+TUhhVoVJrK1MCK1gTGEdqdFZZph5rwOD6d+znmkNlLraoFrZoHzTj03hz8KO7uqUqzL6gEO2vJ8Rsd816JAFt8epyq6RMTNLkPYI7+h6EWiH0i/haOGmKoScUr+LvM=
+Received: by 10.114.122.2 with SMTP id u2mr830330wac.1174069226305;
+        Fri, 16 Mar 2007 11:20:26 -0700 (PDT)
+Received: by 10.114.60.16 with HTTP; Fri, 16 Mar 2007 11:20:26 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42389>
 
-On Fri, 16 Mar 2007, Linus Torvalds wrote:
+On 3/16/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > Porting things like qgit to it or writting proper perl/python bindings
+> > is wasted time since you'd have to rewrite all of it once you decided
+> > which functions to expose and which structures to use (calling the
+> > main() routines of builtin's doesn't count as real libifaction, it would
+> > rather be a performance improvement only).
+>
+> Nope. It is _not_ a complete rewrite. More likely, it is minimal
+> adjustments. It's not like we will replace apples with cars...
+>
 
-> On Fri, 16 Mar 2007, Nicolas Pitre wrote:
-> 
-> > This is why in pack v4 there will be an alternate tree object 
-> > representation which is not deflated at all.
-> 
-> Well, the thing is, for things that really don't compress, zlib shouldn't 
-> add much of an overhead on uncompression. It *should* just end up being a 
-> single "memcpy()" after you've done:
->  - check the header for size and mode ("plain data")
->  - check the adler checksum (which is *really* nice - we've found real 
->    corruption this way!).
+IMHO probably the truth is in the middle. I wouldn't call it a trivial
+porting, at least for me, but anyway it would be interesting to have
+fun with linking libgit.
 
-But the thing is that with tree objects which records are 6 fairly 
-random bytes we already know that compression will never be worth it 
-size wise, so it is not worth it even if the header overhead was zero.  
-In that case it is preferable to do without compression entirely.
+*The most important thing for a libgit to be used by qgit is reentrancy*
 
-> The adler32 checksumming may sound unnecessary when you already have the 
-> SHA1 checksum, but the thing is, we normally don't actually *check* the 
-> SHA1 except when doing a full fsck. So I actually like the fact that 
-> object unpacking always checks at least the adler32 checksum at each 
-> stage, which you get "for free" when you use zlib.
+Currently an unlimited number of tabs could be open in qgit, I'm not
+talking about tabs open on different repos, but different views on the
+same repo: main view, file history of file A, file history of file B,
+tree view, i.e. select some files/directory from directory tree and
+view the revisions that modified that repo subset, and so on. Other
+different views could be added in the future. Because each view has a
+dedicated tab and each tab calls _his_ 'git rev-list' instance (could
+be called also at the same time) this libgit thing should be able to
+support many instance of the libified git-rev-list function running at
+the same time.
 
-We still can perform adler32 on undeflated objects directly though.  But 
-they need no be stored in the pack.  I'd store the adler32 checksum for 
-each object in the pack index as it can be recomputed by index-pack 
-(which will do the full SHA1 validation anyway).
+Perhaps currently this need is only for qgit among the GUI browsers,
+but it would be not too difficult to foreseen a multi view GUI
+interface as a relative common feature in the future also for the
+remaining crop of git tools.
 
-
-Nicolas
+    Marco
