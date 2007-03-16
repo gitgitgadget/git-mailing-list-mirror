@@ -1,70 +1,106 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Libification project (SoC)
-Date: Fri, 16 Mar 2007 17:13:04 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703161710400.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070316042406.7e750ed0@home.brethil> <20070316045928.GB31606@spearce.org>
- <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316060033.GD31606@spearce.org>
- <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
- <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <alpine.LFD.0.83.0703161145520.5518@xanadu.home>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [BUG] bisecting miscounts revisions left to test
+Date: Fri, 16 Mar 2007 17:14:21 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070316161421.GA24584@lala>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Rocco Rutte <pdmef@gmx.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Mar 16 17:13:18 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Mar 16 17:14:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSF3J-0004W0-1Y
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 17:13:13 +0100
+	id 1HSF4Y-00054s-KP
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 17:14:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965407AbXCPQNJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 12:13:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965415AbXCPQNJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 12:13:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43962 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965407AbXCPQNI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 12:13:08 -0400
-Received: (qmail invoked by alias); 16 Mar 2007 16:13:05 -0000
-X-Provags-ID: V01U2FsdGVkX18g1rRQ5NkgioXbv1wYCaz/m4blQJxUVsjHIjXwCD
-	kEsjAMQ7LhdBp3
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <alpine.LFD.0.83.0703161145520.5518@xanadu.home>
-X-Y-GMX-Trusted: 0
+	id S965427AbXCPQO0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 16 Mar 2007 12:14:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965440AbXCPQO0
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 12:14:26 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:44910 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965427AbXCPQOZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Mar 2007 12:14:25 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HSF4R-0001as-TX
+	for git@vger.kernel.org; Fri, 16 Mar 2007 17:14:24 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2GGELCK019255
+	for <git@vger.kernel.org>; Fri, 16 Mar 2007 17:14:21 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2GGELDq019254
+	for git@vger.kernel.org; Fri, 16 Mar 2007 17:14:21 +0100 (MET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42370>
 
-Hi,
+Hello,
 
-On Fri, 16 Mar 2007, Nicolas Pitre wrote:
+I'm just bisecting in the kernel, the last commands + output are:
 
-> On Fri, 16 Mar 2007, Johannes Schindelin wrote:
-> 
-> > We already _have_ the data structures!
-> 
-> Well... Shawn and I are contemplating alternate data structures to 
-> improve things dramatically.
+zeisberg@cassiopeia:~/gsrc/linux-2.6$ git bisect good
+Bisecting: 2 revisions left to test after this
+[e7b0d26a86943370c04d6833c6edba2a72a6e240] sysfs: reinstate exclusion b=
+etween method calls and attribute unregistration
 
-I was alluding to rev_info, not pack_window and friends.
+zeisberg@cassiopeia:~/gsrc/linux-2.6$ git bisect good
+Bisecting: 2 revisions left to test after this
+[b810cdfcf91d76f603fd48023aede48ced8e6bed] Merge branch 'upstream-linus=
+' of master.kernel.org:/pub/scm/linux/kernel/git/jgarzik/netdev-2.6
 
-> With a fixed public API I doubt such improvements could be as effective.
+So after having 2 revisions left to test and an addional test I still
+have to test 2 revisions.
 
-Just think of the "API" we have for porcelains. It is literally unchanged 
-since the beginning. You can even use the original script git-log.sh 
-today! _That_ is what I mean by fixed public API: give certain guarantees 
-about what will not go away.
+=46or reproducibility:
 
-> One thing that was really done right in the Linux kernel is to _not_ 
-> have any sort of fixed API at all for drivers.  This is a big upside for 
-> progress.  Yet the Linux kernel is regarded as highly useful.
+zeisberg@cassiopeia:~/gsrc/linux-2.6$ git bisect log
+git-bisect start
+# good: [08e15e81a40e3241ce93b4a43886f3abda184aa6] Linux 2.6.21-rc3
+git-bisect good 08e15e81a40e3241ce93b4a43886f3abda184aa6
+# bad: [bac6eefe96204d0ad67d144f2511a6fc487aa594] Linux 2.6.21-rc4
+git-bisect bad bac6eefe96204d0ad67d144f2511a6fc487aa594
+# good: [bdf3aaf9519ddd8a026b5e04e713d2fa673532e5] Pull bugzilla-8066 i=
+nto release branch
+git-bisect good bdf3aaf9519ddd8a026b5e04e713d2fa673532e5
+# good: [2cb8a57b9851805883dfe92cf5d88a726134a384] Fix vmi time header =
+bug
+git-bisect good 2cb8a57b9851805883dfe92cf5d88a726134a384
+# good: [a7c999114ecd0c69bd3970272b64d8842b765b21] BLK_DEV_IDE_CELLEB d=
+ependency fix
+git-bisect good a7c999114ecd0c69bd3970272b64d8842b765b21
+# good: [0bdd0f385a44344f83409b9e00797bfe2596faf8] Merge master.kernel.=
+org:/pub/scm/linux/kernel/git/wim/linux-2.6-watchdog
+git-bisect good 0bdd0f385a44344f83409b9e00797bfe2596faf8
+# good: [6ab27c6bf38d5ff71dafeca77b79e7c284804b75] Merge branch 'for-li=
+nus' of master.kernel.org:/pub/scm/linux/kernel/git/jikos/hid
+git-bisect good 6ab27c6bf38d5ff71dafeca77b79e7c284804b75
+# good: [069f8256362b7a17da532f0631cee73b4cfee65b] natsemi: Fix NAPI fo=
+r interrupt sharing
+git-bisect good 069f8256362b7a17da532f0631cee73b4cfee65b
+# good: [e7b0d26a86943370c04d6833c6edba2a72a6e240] sysfs: reinstate exc=
+lusion between method calls and attribute unregistration
+git-bisect good e7b0d26a86943370c04d6833c6edba2a72a6e240
 
-Yes. I am a Linux user myself.
+zeisberg@cassiopeia:~/gsrc/linux-2.6$ git version
+git version 1.5.0.3
 
-Ciao,
-Dscho
+This is git from the Debian package.
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+cal 9 1752 | grep 10
