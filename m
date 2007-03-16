@@ -1,75 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Libification project (SoC)
-Date: Fri, 16 Mar 2007 09:58:04 +0100
-Message-ID: <vpqveh15zvn.fsf@olympe.imag.fr>
-References: <20070316042406.7e750ed0@home.brethil>
-	<20070316045928.GB31606@spearce.org> <45FA501B.FA5B9F30@eudaptics.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] update-hook: fix incorrect use of git-describe and sed
+ for finding previous tag
+Date: Fri, 16 Mar 2007 10:06:40 +0100
+Message-ID: <45FA5E20.2050905@op5.se>
+References: <200703141425.53192.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 16 09:59:15 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 16 10:07:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS8HL-0002Aw-66
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 09:59:15 +0100
+	id 1HS8On-00060Z-FA
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 10:06:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932370AbXCPI6X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 04:58:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753433AbXCPI6X
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 04:58:23 -0400
-Received: from imag.imag.fr ([129.88.30.1]:44001 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753136AbXCPI6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 04:58:21 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l2G8w4dj023412
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 16 Mar 2007 09:58:05 +0100 (CET)
-Received: from olympe.imag.fr ([129.88.43.60])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HS8GC-0000Ou-KT
-	for git@vger.kernel.org; Fri, 16 Mar 2007 09:58:04 +0100
-Received: from moy by olympe.imag.fr with local (Exim 4.50)
-	id 1HS8GC-0002C9-FR
-	for git@vger.kernel.org; Fri, 16 Mar 2007 09:58:04 +0100
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <45FA501B.FA5B9F30@eudaptics.com> (Johannes Sixt's message of "Fri\, 16 Mar 2007 09\:06\:51 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 16 Mar 2007 09:58:05 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S932436AbXCPJGp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 05:06:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753136AbXCPJGp
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 05:06:45 -0400
+Received: from linux-server1.op5.se ([193.201.96.2]:52606 "EHLO
+	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753128AbXCPJGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 05:06:44 -0400
+Received: by smtp-gw1.op5.se (Postfix, from userid 588)
+	id 6FF4E6BCCB; Fri, 16 Mar 2007 10:06:42 +0100 (CET)
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	linux-server1.op5.se
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
+	autolearn=ham version=3.1.4
+Received: from [192.168.1.179] (unknown [192.168.1.179])
+	by smtp-gw1.op5.se (Postfix) with ESMTP
+	id DC31E6BCBF; Fri, 16 Mar 2007 10:06:40 +0100 (CET)
+User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
+In-Reply-To: <200703141425.53192.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42337>
 
-Johannes Sixt <J.Sixt@eudaptics.com> writes:
+Andy Parkins wrote:
+> Previously git-describe would output lines of the form
+>  v1.1.1-gf509d56
+> The update hook found the dash and stripped it off using
+>  sed 's/-g.*//'
+> The remainder was then used as the previous tag name.
+> 
+> However, git-describe has changed format.  The output is now of the form
+>  v1.1.1-23-gf509d56
+> The above sed fragment doesn't strip the middle "-23", and so the
+> previous tag name used would be "v1.1.1-23".  This is incorrect.
+> 
+> Since the hook script was written, git-describe now gained support for
+> "--abbrev=0", which it uses as a special flag to tell it not to output
+> anything other than the nearest tag name.  This patch fixes the problem,
+> and prevents any future recurrence by using this new flag rather than
+> sed to find the previous tag.
+> 
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 
-> You could think about longjmp(3)ing out into main(), which would have to
-> setjmp(3). But in order to clean up intermediate frames, you would have
-> to have a stack of setjmp/longjmp buffers.
->
-> Oh, well, how do I *love* them C++ exceptions!
+Acked-by: Andreas Ericsson <ae@op5.se>
 
-You can have exceptions in C too.
 
-I've used it a bit while contributing to Baz 1.x (the fork of tla).
-The library used was cexcept ( http://cexcept.sourceforge.net/ ).
+> ---
+>  templates/hooks--update |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/templates/hooks--update b/templates/hooks--update
+> index 5b82b68..8f6c4fe 100644
+> --- a/templates/hooks--update
+> +++ b/templates/hooks--update
+> @@ -210,7 +210,7 @@ case "$refname_type" in
+>  		fi
+>  
+>  		# If this tag succeeds another, then show which tag it replaces
+> -		prevtag=$(git describe $newrev^ 2>/dev/null | sed 's/-g.*//')
+> +		prevtag=$(git describe --abbrev=0 $newrev^ 2>/dev/null)
+>  		if [ -n "$prevtag" ]; then
+>  			echo "  replaces  $prevtag"
+>  		fi
 
-As you mention, jumping is the easy part, and cleaning up is the hard
-one. Baz was using talloc, hacked to somehow work with cexcept. The
-mini-library doesn't seem to be available as a tarball anymore, so I
-did the checkout+targz in case someone's curious to have a look, and
-lazy enough not to install baz to get it:
-
-http://www-verimag.imag.fr/~moy/tmp/talloc-except--2.0.1--patch-2.tar.gz
-
-This stuff is not supported anymore, but very small anyway.
+I just updated git on our repo server and did this exact change to our update
+tag 15 minutes ago.
 
 -- 
-Matthieu
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
