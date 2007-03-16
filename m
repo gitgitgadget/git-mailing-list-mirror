@@ -1,73 +1,110 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Directory in one branch, file in another = can't switch branches
-Date: Fri, 16 Mar 2007 15:17:06 -0700
-Message-ID: <45FB1762.7040505@midwinter.com>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH] test git-rev-parse
+Date: Fri, 16 Mar 2007 23:33:57 +0100
+Message-ID: <20070316223357.GA16255@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 16 23:23:55 2007
+X-From: git-owner@vger.kernel.org Fri Mar 16 23:34:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSKq2-0000Tg-Od
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 23:23:55 +0100
+	id 1HSKzw-0005os-5E
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 23:34:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965993AbXCPWXu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 18:23:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965994AbXCPWXt
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 18:23:49 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:54446 "HELO midwinter.com"
+	id S965994AbXCPWeF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 18:34:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965995AbXCPWeE
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 18:34:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47513 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S965993AbXCPWXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 18:23:49 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Mar 2007 18:23:48 EDT
-Received: (qmail 11386 invoked from network); 16 Mar 2007 22:17:07 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=IIL0nBuzjqtfKXgRuorx25X2C4cc/4MebjUOiXePZB+i/kOJjxfrVMvNOXS9IIfq  ;
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
-  by localhost with SMTP; 16 Mar 2007 22:17:07 -0000
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+	id S965994AbXCPWeC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 18:34:02 -0400
+Received: (qmail invoked by alias); 16 Mar 2007 22:34:00 -0000
+X-Provags-ID: V01U2FsdGVkX1+b9/9EFx2b40H/Jvt+MXqGY7RtChPRBlPXc/Nv0t
+	FQMd84b/GqE2sw
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42401>
 
-We've hit this problem with a git-svn-based repository where some stuff 
-got reorganized, but it happens in plain git too; if you have a branch 
-with a file called, say, "foo" and another branch with a file called 
-"foo/bar", you can't switch between branches even if there are no 
-uncommitted edits in either branch.
+this tests --is-bare-repository, --is-inside-git-dir, --show-cdup and
+--show-prefix
 
-To reproduce (I'm using version 1.5.0.1.74.g2470):
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+The number of the test has to be changed.
+---
+ t/t9999-rev-parse.sh |   57 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 57 insertions(+), 0 deletions(-)
+ create mode 100755 t/t9999-rev-parse.sh
 
-% git init-db
-Initialized empty Git repository in .git/
-% echo "this is a test file" > testing
-% git add testing
-% git commit -a -m "initial commit on master"
-Created initial commit 1a9cb1bf3a5475f0bb05d1e7c59839ba0a388be7
- 1 files changed, 1 insertions(+), 0 deletions(-)
- create mode 100644 testing
-% git checkout -b with-dir
-Switched to a new branch "with-dir"
-% mv testing testing-
-% mkdir testing
-% mv testing- testing/datafile
-% git add testing/datafile
-% git commit -a -m "commit with subdir"      
-Created commit cdcb2af2a8dae8a2c5c3c143cb00b4863291cc17
- 2 files changed, 1 insertions(+), 1 deletions(-)
- delete mode 100644 testing
- create mode 100644 testing/datafile
-% git checkout master
-fatal: Untracked working tree file 'testing' would be overwritten by merge.
-
-You can work around it by renaming the directory, but git should really 
-blow away the directory if it doesn't contain any untracked / modified 
-files.
-
--Steve
+diff --git a/t/t9999-rev-parse.sh b/t/t9999-rev-parse.sh
+new file mode 100755
+index 0000000..c385660
+--- /dev/null
++++ b/t/t9999-rev-parse.sh
+@@ -0,0 +1,57 @@
++#!/bin/sh
++
++test_description='test git rev-parse'
++. ./test-lib.sh
++
++test_expect_success 'toplevel: is-bare-repository' \
++	'test "false" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'toplevel: is-inside-git-dir' \
++	'test "false" = "$(git rev-parse --is-inside-git-dir)"'
++test_expect_success 'toplevel: show-cdup' \
++	'test "" = "$(git rev-parse --show-cdup)"'
++test_expect_success 'toplevel: show-prefix' \
++	'test "" = "$(git rev-parse --show-prefix)"'
++
++cd .git/objects || exit 1
++test_expect_success 'in-git-dir: is-bare-repository' \
++	'test "false" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'in-git-dir: is-inside-git-dir' \
++	'test "true" = "$(git rev-parse --is-inside-git-dir)"'
++test_expect_success 'in-git-dir: show-cdup' \
++	'test "../../" = "$(git rev-parse --show-cdup)"'
++test_expect_success 'in-git-dir: show-prefix' \
++	'test ".git/objects/" = "$(git rev-parse --show-prefix)"'
++cd ../.. || exit 1
++
++mkdir sub || exit 1
++cd sub || exit 1
++test_expect_success 'subdirectory: is-bare-repository' \
++	'test "false" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'subdirectory: is-inside-git-dir' \
++	'test "false" = "$(git rev-parse --is-inside-git-dir)"'
++test_expect_success 'subdirectory: show-cdup' \
++	'test "../" = "$(git rev-parse --show-cdup)"'
++test_expect_success 'subdirectory: show-prefix' \
++	'test "sub/" = "$(git rev-parse --show-prefix)"'
++cd .. || exit 1
++
++test_expect_success 'core.bare = true: is-bare-repository' \
++	'git config core.bare true &&
++	test "true" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'unset core.bare: is-bare-repository' \
++	'git config --unset core.bare &&
++	test "false" = "$(git rev-parse --is-bare-repository)"'
++
++mv .git foo.git || exit 1
++export GIT_DIR=foo.git
++export GIT_CONFIG=foo.git/config
++test_expect_success 'GIT_DIR=foo.git: is-bare-repository' \
++	'test "true" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'GIT_DIR=foo.git, core.bare = true: is-bare-repository' \
++	'git --git-dir foo.git config core.bare true &&
++	test "true" = "$(git --git-dir foo.git rev-parse --is-bare-repository)"'
++test_expect_success 'GIT_DIR=foo.git, core.bare = false: is-bare-repository' \
++	'git config core.bare false &&
++	test "false" = "$(git rev-parse --is-bare-repository)"'
++
++test_done
+-- 
+1.5.0.3.972.g70823
