@@ -1,98 +1,108 @@
-From: Matthias Kestenholz <matthias@spinlock.ch>
-Subject: Re: [PATCH/RFC] Documentation: git-daemon inetd configuration fix
-Date: Fri, 16 Mar 2007 10:02:09 +0100
-Message-ID: <1174035730.4067.54.camel@localhost.localdomain>
-References: <11740316693552-git-send-email-matthias@spinlock.ch>
-	 <7vabydwpd5.fsf@assigned-by-dhcp.cox.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [RFC] Add --index to git-commit: just commit current index
+Date: Fri, 16 Mar 2007 10:37:49 +0100
+Message-ID: <81b0412b0703160237l90dd158x87646be6c2731886@mail.gmail.com>
+References: <81b0412b0703150243h6a5f036aye8f115d82e11e883@mail.gmail.com>
+	 <7vird2yr1w.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 16 10:36:50 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 16 10:37:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS8rh-00050t-DA
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 10:36:49 +0100
+	id 1HS8sk-0005dO-TE
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 10:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933238AbXCPJg1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 05:36:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932991AbXCPJg1
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 05:36:27 -0400
-Received: from elephant.oekohosting.ch ([80.74.144.79]:33809 "EHLO
-	elephant.oekohosting.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933238AbXCPJg0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 05:36:26 -0400
-X-Greylist: delayed 2036 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Mar 2007 05:36:25 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by elephant.oekohosting.ch (Postfix) with ESMTP id 5543D62C0BC;
-	Fri, 16 Mar 2007 10:00:11 +0100 (CET)
-Received: from elephant.oekohosting.ch ([127.0.0.1])
-	by localhost (elephant.oekohosting.ch [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 14119-03; Fri, 16 Mar 2007 10:00:08 +0100 (CET)
-Received: from [192.168.1.7] (176-197.0-85.cust.bluewin.ch [85.0.197.176])
-	by elephant.oekohosting.ch (Postfix) with ESMTP id 56E8062C09A;
-	Fri, 16 Mar 2007 10:00:08 +0100 (CET)
-In-Reply-To: <7vabydwpd5.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Evolution 2.8.2.1 
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S933271AbXCPJhw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 05:37:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933265AbXCPJhv
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 05:37:51 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:37157 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933262AbXCPJhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 05:37:50 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so178742nfa
+        for <git@vger.kernel.org>; Fri, 16 Mar 2007 02:37:49 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jX7VoLITdCn6LoMZL+n49Nt9yUj6dML+bru/svfH/RaXbaQV54TnGOMEK3shz8RklqrsNWu86xFj//vZsaLIKuf9yd9ug7jBkT/EECamQCXuYmo/gohiIfoh8P+3u144WYsq2raQnfqdM95UZldWxRRhuh3TRSTwQi3S1BWZ7qI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=dWOdB2USPg/ta5dmobY7aUa6VWsUOevuCF1i/ztssIkBUsFdpgnh2LfQdbq0Pxh0+2w1QBZtH5iaYexEN4U/1w+vF3gtedQyj5OObbZWn8yiQkef+yblw39undD0Yie/Me0BM/GJnxEywlGUIfmDZ5UMDdvYgS1rW75dbkDVx08=
+Received: by 10.78.180.18 with SMTP id c18mr849366huf.1174037869343;
+        Fri, 16 Mar 2007 02:37:49 -0700 (PDT)
+Received: by 10.78.138.5 with HTTP; Fri, 16 Mar 2007 02:37:49 -0700 (PDT)
+In-Reply-To: <7vird2yr1w.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42340>
 
-On Fri, 2007-03-16 at 01:43 -0700, Junio C Hamano wrote:
-> Matthias Kestenholz <matthias@spinlock.ch> writes:
-> 
-> >  On my debian server, this change was needed to get git-daemon running.
-> >  I am no inetd expert, so I don't know where the error was.
-> >
-> >  Perhaps this patch might help someone else.
-> >
-> >
-> > diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-> > index 9ddab71..499c1f3 100644
-> > --- a/Documentation/git-daemon.txt
-> > +++ b/Documentation/git-daemon.txt
-> > @@ -177,7 +177,7 @@ git-daemon as inetd server::
-> >  +
-> >  ------------------------------------------------
-> >  	git stream tcp nowait nobody  /usr/bin/git-daemon
-> > -		git-daemon --inetd --verbose --export-all
-> > +		/usr/bin/git-daemon --inetd --verbose --export-all
-> >  		/pub/foo /pub/bar
-> >  ------------------------------------------------
-> 
-> That sounds _very_ wrong.  What you changed is argv[0] (i.e. the
-> beginning of "service program arguments" field) and it should
-> not matter what you have there for inetd to launch git-daemon.
-> Presumably your inetd runs with /usr/bin in your path so even
-> the "service program" field (the one after 'nobody') should not
-> need the full path (but it is a good idea to be explicit in that
-> field as a principle), but needing the full path in argv[0]?
-> 
-> On _my_ debian box, I do not need a full path there, so it is
-> not even Debian in general but problem is on your particular
-> box.  Can you dig a bit more to see what you are doing any
-> differently?
-> 
-> For example, do you really mean the "service program arguments"
-> field that matters?
-> 
+On 3/16/07, Junio C Hamano <junkio@cox.net> wrote:
+>
+> > First use of new --quiet :)
+>
+> You do not need to say --exit-code if you use --quiet.
 
+Just forgot it in
 
-Uhm... I don't get it. I changed the second /usr/bin/git-daemon back to
-git-dameon (and even to "foo") and it continues working after restarting
-inetd.
+> > Refreshing index takes a long time on big repositories with
+> > many files, especially if the developer was unlucky enough to
+> > stick to a slow filesystem or a broken OS. In this situation
+> > explicit git-update-index with git-commit --index will speedup
+> > the workflow.
+>
+> Does it?
 
-I cannot reproduce the problem I had earlier, but everything works fine
-with the line from the docs now.
+IFF you use git-update-index, yes
 
-Btw, git is installed in /usr/bin , so that cannot be the reason for the
-failure I saw.
+> A typical workflow would go something like this:
+>
+>         - repeat from here
+>         - "edit foo"
+>         - "edit bar"
+>         - "git diff" to help me see what I changed
+>         - "git add foo" as the change is sane
+>         - test and see breakage
+>         - "git diff HEAD" to help me see what I broke
+>         - go back to 'here' to fix it up
+>         - "git diff HEAD" to help me see what I changed
+>         - "git add foo bar" to include what I changed
+>         - "git commit"
 
+- edit
+- test
+- edit
+- test
+- update-index (or add) file(s)
+- git commit --index <--- this is faster than before
+- repeat
 
-Oh well, sorry for the noise and thanks for the fast response.
-	Matthias
+> If I have a large project on a filesystem with slow lstat(2), I
+> would imagine your development is slowed anyway because you
+> would use diff far more often than commit.  I wonder if it may
+
+I avoid using diff-files for the whole project. diff-index --cached is
+fast always. It is ok even on windows
+
+> be a better idea to use (and extend if needed) existing 'assume
+> unchanged' on such a system, exactly because "diff" side would
+> take more time than final "commit", and if you do use 'assume
+> unchanged', then it also makes --refresh a no-op.
+
+Forgot about it too. It didn't seem to work properly, the last time
+I tried (for a long time, I admit). Besides, sometimes I want to do a
+refresh, and having to switch the option on and off is annoying.
+
+> In any case, I think your --index is a misnomer, as we do commit
+> the current index.  If the sole purpose of your patch is to omit
+> refreshing it, then it should be named as such.
+
+--no-refresh?
