@@ -1,78 +1,87 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] Add --index to git-commit: just commit current index
-Date: Thu, 15 Mar 2007 17:23:39 -0700
-Message-ID: <7vird2yr1w.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0703150243h6a5f036aye8f115d82e11e883@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: GSoC '07 - Accepted!
+Date: Thu, 15 Mar 2007 20:50:26 -0400
+Message-ID: <20070316005026.GF29547@spearce.org>
+References: <20070315161143.GA29547@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 16 01:23:45 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 16 01:50:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS0ER-0003gG-Ri
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 01:23:44 +0100
+	id 1HS0eQ-00012A-GN
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 01:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753466AbXCPAXl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 20:23:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753467AbXCPAXl
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 20:23:41 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:62859 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753466AbXCPAXk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 20:23:40 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070316002340.OXML2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 15 Mar 2007 20:23:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id bCPg1W00F1kojtg0000000; Thu, 15 Mar 2007 20:23:40 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933978AbXCPAub (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 20:50:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933980AbXCPAub
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 20:50:31 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:58340 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933978AbXCPAua (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 20:50:30 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HS0e9-0004QD-MI
+	for git@vger.kernel.org; Thu, 15 Mar 2007 20:50:17 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 028C020FBAE; Thu, 15 Mar 2007 20:50:26 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070315161143.GA29547@spearce.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42306>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> Google accepted our application to GSoC '07.  Thanks to everyone
+> who helped with reviewing the application, and most of of all thanks
+> to our volunteer mentors!
 
-> First use of new --quiet :)
+So I've been doing some more research on the GSoC process, based on
+what other organizations have written about their own experiences
+last year.  One thing that came up frequently was many organizations
+found having a student application template useful, as it helped
+the student and the mentors to better focus their proposal and
+their review.
 
-You do not need to say --exit-code if you use --quiet.
+This may be important to us, as there were 6,338 applications
+last year:
 
-> Refreshing index takes a long time on big repositories with
-> many files, especially if the developer was unlucky enough to
-> stick to a slow filesystem or a broken OS. In this situation
-> explicit git-update-index with git-commit --index will speedup
-> the workflow.
+  http://code.google.com/soc/GSoC2006Statistics.pdf
 
-Does it?
+Boost for example received some 160 or so applications (see page 3).
+We aren't as big or as popular as Boost is, so I don't expect to
+receive that many, but I would also like to hope that we will get
+more than 10 applications.  ;-)
 
-A typical workflow would go something like this:
+One of the better (in my opinion anyway) templates appears to
+be the NetBSD one:
 
-	- repeat from here
-	- "edit foo"
-        - "edit bar"
-        - "git diff" to help me see what I changed
-        - "git add foo" as the change is sane
-        - test and see breakage
-        - "git diff HEAD" to help me see what I broke
-        - go back to 'here' to fix it up
-        - "git diff HEAD" to help me see what I changed
-        - "git add foo bar" to include what I changed
-        - "git commit"
+  http://www.netbsd.org/contrib/soc-application.xml
 
-If I have a large project on a filesystem with slow lstat(2), I
-would imagine your development is slowed anyway because you
-would use diff far more often than commit.  I wonder if it may
-be a better idea to use (and extend if needed) existing 'assume
-unchanged' on such a system, exactly because "diff" side would
-take more time than final "commit", and if you do use 'assume
-unchanged', then it also makes --refresh a no-op.
+We have not yet defined a template for student applications, but
+I'm thinking we may want to at least draft one up and offer it as
+an option for students to follow.
 
-In any case, I think your --index is a misnomer, as we do commit
-the current index.  If the sole purpose of your patch is to omit
-refreshing it, then it should be named as such.
+
+Interesting side note: The largest compliant from the '06 Apache
+Software Foundation mentors was that the students were not given
+committer access to Subversion.  They felt this made it difficult
+for the students to contribute.  Now if only there was a really
+cool distributed version control system...  ;-)
+
+-- 
+Shawn.
