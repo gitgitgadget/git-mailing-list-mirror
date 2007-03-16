@@ -1,72 +1,95 @@
-From: "Pelle Svensson" <pelle2004@gmail.com>
-Subject: git-pull can't be used without URL - Has worked before
-Date: Fri, 16 Mar 2007 11:24:58 +0100
-Message-ID: <6bb9c1030703160324u17d49b85s754ac8358f633bde@mail.gmail.com>
+From: =?utf-8?Q?Santi_B=C3=A9jar?= <sbejar@gmail.com>
+Subject: Re: Merging on a dirty tree???
+Date: Fri, 16 Mar 2007 11:46:09 +0100
+Message-ID: <87slc54gb2.fsf@gmail.com>
+References: <200703152359.53543.dtor@insightbb.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Mar 16 11:25:08 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Dmitry Torokhov <dtor@insightbb.com>
+X-From: git-owner@vger.kernel.org Fri Mar 16 11:46:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS9cR-0005Cx-Lr
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 11:25:08 +0100
+	id 1HS9wr-00081i-38
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 11:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753449AbXCPKZD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 06:25:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753452AbXCPKZD
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 06:25:03 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:63128 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753449AbXCPKZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 06:25:01 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so644197uga
-        for <git@vger.kernel.org>; Fri, 16 Mar 2007 03:24:59 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=TBn7oKlHgD1UvvpzvAX4iVwIHvfXrP8ep+3i7wMShkV+9wDP8P0/FKBFcH7tIf2ticNZwCdcYOfPfIqhHwe4JzKjFzGNe8bLnM+4kPnqFNaK1qc++5mxf5JVKXoqzGHzZEKak83jsN2mUkdxo7UytxyKytCktfxy8U/sc+I/X5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=Zzb8/YQNA39UVkUe8EKfoKo6vDbMgLE1Eici2RM66vTLwlviB74LZ6eiVl4igQwfJ3Z6at8NZbwo3v/XJk6u2MPjiRnQiyglnFqpHaoEVv1tSebSx+gdvCcN9zCzk4jT9nkQHOJ3S7AQ8Bveeew5rmSugdzzS8GKcr+wtdZCSkI=
-Received: by 10.114.124.1 with SMTP id w1mr658510wac.1174040698846;
-        Fri, 16 Mar 2007 03:24:58 -0700 (PDT)
-Received: by 10.114.37.15 with HTTP; Fri, 16 Mar 2007 03:24:58 -0700 (PDT)
-Content-Disposition: inline
+	id S1753470AbXCPKp4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 16 Mar 2007 06:45:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753471AbXCPKp4
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 06:45:56 -0400
+Received: from ifae-s0.ifae.es ([192.101.162.68]:56281 "EHLO ifae-s0.ifae.es"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753470AbXCPKpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 06:45:55 -0400
+Received: from bela (caronte.ifae.es [192.101.162.199])
+	by ifae-s0.ifae.es (8.11.6/8.11.6) with ESMTP id l2GAjmq00442;
+	Fri, 16 Mar 2007 11:45:49 +0100
+In-Reply-To: <200703152359.53543.dtor@insightbb.com> (Dmitry Torokhov's
+	message of "Thu, 15 Mar 2007 23:59:53 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.95 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42346>
 
-Hi,
+Dmitry Torokhov <dtor@insightbb.com> writes:
 
-Did a setup of a new git-kernel, but this time git-pull can't be used without
-full URL. What should I do.
+> Hi,
+>
+> I just tried to pull from Linus' tree into my local tree and it seems
+> that fast forward was committed even though the tree was dirty:
 
-Setup done this time
-=================
-[]$ git-clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-[]$ git-checkout -b my-brach v2.6.21-rc3;
-...
-[]$ git-pull
-Warning: No merge candidate found because value of config option
-              "branch.my-project.merge" dose not match any remote
-branch fetched.
+[...]
 
-Tried with success
-==============
-[]$ git-pull git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>  19 files changed, 211 insertions(+), 80 deletions(-)
+> [dtor@anvil work]$ git --version
+> git version 1.5.0.3.438.gc49b2
+>
+> It used to refuse merge if there were conflicts...
 
-Then again
-=========
-[]$ git-pull
-Warning: No merge candidate found because value of config option
-              "branch.my-project.merge" dose not match any remote
-branch fetched.
+Try with this patch.
 
-I don't have .../.git/remotes directory in this setup??
+Santi
 
-/Pelle
+-- >8 --
+=46rom: "Santi B=C3=A9jar" <sbejar@gmail.com>
+Subject: [PATCH] git-merge: finish when git-read-tree fails
+
+The message formating (commit v1.5.0.3-28-gbe242d5) broke the && chain.
+
+Noticed by Dmitry Torokhov.
+
+Signed-off-by: Santi B=C3=A9jar <sbejar@gmail.com>
+---
+ git-merge.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-merge.sh b/git-merge.sh
+index 6ce62c8..8759c5a 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -292,13 +292,13 @@ f,*)
+ 	# Again the most common case of merging one remote.
+ 	echo "Updating $(git-rev-parse --short $head)..$(git-rev-parse --shor=
+t $1)"
+ 	git-update-index --refresh 2>/dev/null
+-	new_head=3D$(git-rev-parse --verify "$1^0") &&
+-	git-read-tree -v -m -u --exclude-per-directory=3D.gitignore $head "$n=
+ew_head" &&
+ 	msg=3D"Fast forward"
+ 	if test -n "$have_message"
+ 	then
+ 		msg=3D"$msg (no commit created; -m option ignored)"
+ 	fi
++	new_head=3D$(git-rev-parse --verify "$1^0") &&
++	git-read-tree -v -m -u --exclude-per-directory=3D.gitignore $head "$n=
+ew_head" &&
+ 	finish "$new_head" "$msg" || exit
+ 	dropsave
+ 	exit 0
+--=20
+1.5.0.4.1010.g688e
