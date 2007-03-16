@@ -1,58 +1,72 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: Libification project (SoC)
-Date: Fri, 16 Mar 2007 15:08:55 +0100
-Message-ID: <20070316140855.GE4489@pasky.or.cz>
-References: <20070316042406.7e750ed0@home.brethil> <20070316045928.GB31606@spearce.org> <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316104715.483df0d5@localhost>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] user-manual: ensure generated manual references stylesheet
+Date: Fri, 16 Mar 2007 10:24:31 -0400
+Message-ID: <20070316142431.GE31722@fieldses.org>
+References: <1173045556191-git-send-email-bfields@citi.umich.edu> <11730455574115-git-send-email-bfields@citi.umich.edu> <1173045558959-git-send-email-bfields@citi.umich.edu> <11730455591178-git-send-email-bfields@citi.umich.edu> <loom.20070316T134149-54@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-X-From: git-owner@vger.kernel.org Fri Mar 16 15:09:02 2007
+Cc: git@vger.kernel.org
+To: Robert Pluim <rpluim+git@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 16 15:24:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSD77-0005UL-8P
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 15:09:01 +0100
+	id 1HSDME-0004Tl-ID
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 15:24:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932495AbXCPOI6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 10:08:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933257AbXCPOI6
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 10:08:58 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:60903 "EHLO machine.or.cz"
+	id S965055AbXCPOYe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 10:24:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965114AbXCPOYe
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 10:24:34 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:43361 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932495AbXCPOI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 10:08:57 -0400
-Received: (qmail 29611 invoked by uid 2001); 16 Mar 2007 15:08:55 +0100
+	id S965055AbXCPOYd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 10:24:33 -0400
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HSDM7-0003a3-Gp; Fri, 16 Mar 2007 10:24:31 -0400
 Content-Disposition: inline
-In-Reply-To: <20070316104715.483df0d5@localhost>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+In-Reply-To: <loom.20070316T134149-54@post.gmane.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42363>
 
-On Fri, Mar 16, 2007 at 02:47:15PM CET, Luiz Fernando N. Capitulino wrote:
->  We could start by fixing the got-an-error-die behaivor and
-> define a _experimental_ API (just a few functions) just to get
-> data out of git.
+On Fri, Mar 16, 2007 at 12:44:19PM +0000, Robert Pluim wrote:
+> J. Bruce Fields <bfields <at> citi.umich.edu> writes:
 > 
->  This would be enough to write the Perl binding I think?
+> 
+> > +XSLT = http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
+> > +XSLTOPTS = --nonet --xinclude --stringparam html.stylesheet docbook-xsl.css
+> > +
+> >  user-manual.html: user-manual.xml
+> > -	xmlto html-nochunks $<
+> > +	xsltproc $(XSLTOPTS) -o $ <at>  $(XSLT) $<
+> 
+> Does this actually work for you?  I get:
+> 
+>   xsltproc --nonet --xinclude --stringparam html.stylesheet docbook-xsl.css -o
+> user-manual.html
+> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl user-manual.xml
+>   I/O error : Attempt to load network entity
+> http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
+>   warning: failed to load external entity
+> "http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl"
+>   cannot parse http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl
+>   make[1]: *** [user-manual.html] Error 4
+> 
+> 
+> If I remove the --nonet it works fine.
 
-Actually, well, I've already done this. :-)
+Yes, it works for me.  From a quick strace, it appears to find the file
+by opening /etc/xml/catalog, aplying some URL-rewriting rules found
+there, then finding a file on my local filesystem under
+/usr/share/sgml/docbook/.  Those files appear to be provided by a
+package named docbook-style-xsl on my fedora box, and something called
+docbook-xsl on my debian box.
 
-The trouble begins when you want to access multiple repositories from
-the same process, etc. Without that, writing the Perl binding is
-trivial; there's already a hook the binding can use to catch dies, I've
-added it.
+I'd prefer the build not require network access, if possible.
 
-So, the main point of the work is to define a _good_ API and get rid of
-the static state, I guess.
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+--b.
