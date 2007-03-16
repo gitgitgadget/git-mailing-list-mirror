@@ -1,79 +1,112 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: cleaner/better zlib sources?
-Date: Fri, 16 Mar 2007 19:22:44 -0400
-Message-ID: <20070316232244.GC4508@spearce.org>
-References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org> <45F9EED5.3070706@garzik.org> <Pine.LNX.4.64.0703151822490.3816@woody.linux-foundation.org> <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org> <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com> <Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org> <Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com> <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org> <45FAC75B.3030902@garzik.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Libification project (SoC)
+Date: Sat, 17 Mar 2007 00:24:44 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703170014130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070316042406.7e750ed0@home.brethil>  <7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
+  <20070316060033.GD31606@spearce.org>  <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
+  <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de> 
+ <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <e5bfff550703161120o4571769eq18c13ae29ac79957@mail.gmail.com> 
+ <e5bfff550703161138x5ab1fe3anf7b2aaab81bb77e4@mail.gmail.com> 
+ <alpine.LFD.0.83.0703161454280.18328@xanadu.home>
+ <e5bfff550703161407u6afefae9u4a23cf1cb49125ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Davide Libenzi <davidel@xmailserver.org>,
-	Git Mailing List <git@vger.kernel.org>, mpm@selenic.com,
-	bcrl@kvack.org
-To: Jeff Garzik <jeff@garzik.org>
-X-From: git-owner@vger.kernel.org Sat Mar 17 00:23:08 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Rocco Rutte <pdmef@gmx.net>,
+	git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 17 00:24:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSLlJ-000770-3N
-	for gcvg-git@gmane.org; Sat, 17 Mar 2007 00:23:05 +0100
+	id 1HSLn1-00081E-UR
+	for gcvg-git@gmane.org; Sat, 17 Mar 2007 00:24:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752562AbXCPXXB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 19:23:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752569AbXCPXXA
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 19:23:00 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41871 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752562AbXCPXW7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 19:22:59 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HSLkq-0002Aw-U5; Fri, 16 Mar 2007 19:22:37 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3F21020FBAE; Fri, 16 Mar 2007 19:22:45 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <45FAC75B.3030902@garzik.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752579AbXCPXYt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 19:24:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753665AbXCPXYr
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 19:24:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59198 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752580AbXCPXYq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 19:24:46 -0400
+Received: (qmail invoked by alias); 16 Mar 2007 23:24:44 -0000
+X-Provags-ID: V01U2FsdGVkX1+yxsVkS/WyurKrOaOWPHxbaSNaEtXdYdaAy2KdsF
+	Q0iG8WPtcVbouw
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <e5bfff550703161407u6afefae9u4a23cf1cb49125ce@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42408>
 
-Jeff Garzik <jeff@garzik.org> wrote:
-> Although it sounds like zlib could indeed be optimized to reduce its 
-> startup and shutdown overhead, I wonder if switching compression 
-> algorithms to a pure Huffman or even RLE compression (with associated 
-> lower startup/shutdown costs) would perform better in the face of all 
-> those small objects.
+Hi,
 
-As Nico already stated, for pack v4 we are probably heading in a
-direction where these really small (except for blobs anyway) objects
-aren't compressed at all by zlib.  They are smaller in disk space,
-and are faster to reconstruct to their raw format.
- 
-> And another random thought, though it may be useless in this thread:  I 
-> bet using a pre-built (compiled into git) static zlib dictionary for git 
-> commit and tree objects might improve things a bit.
+On Fri, 16 Mar 2007, Marco Costalba wrote:
 
-I've actually tried this with the Mozilla project.  The improvement
-was under 2% on disk space usage and no runtime performance gains.
-Not worth the pain involved.  We are seeing much higher disk
-space improvements and much better performance gains in the pack
-v4 prototype.
+> On 3/16/07, Nicolas Pitre <nico@cam.org> wrote:
+> > On Fri, 16 Mar 2007, Marco Costalba wrote:
+> > 
+> > > On 3/16/07, Marco Costalba <mcostalba@gmail.com> wrote:
+> > > >
+> > > > *The most important thing for a libgit to be used by qgit is 
+> > > > reentrancy*
+> > > >
+> > >
+> > > Another crtitical feature is that this call to git-rev-list-like
+> > > function MUST be non-blocking.
+> > 
+> > I'm not sure I agree.
 
-Oh, and that was *with* a dictionary that was customized to Mozilla.
-Not a static one.  A lot of keywords in the dictionary were Mozilla
-project specific, and would actually *hurt* compression for the
-Linux kernel, Git, X.org, etc...
+I am sure I don't agree.
 
--- 
-Shawn.
+> > The non-blockingness can be (and probably should be) handled at a 
+> > higher level with your own threading facility of choice.  Making GIT 
+> > restartable has the potential for making the core code much too 
+> > complex.
+> 
+> The fact is that the solution is complex anyway, moving the complex code 
+> at higher level doesn't simplify the whole issue, it just *moves* the 
+> issue somewhere else.
+
+It not only *moves* the issue somewhere else, but it also cleanly 
+separates the issues.
+
+> BTW now qgit is single-threaded (as gitk), you suggest that linking with 
+> libgit it will involve to go on the multi threading side and I think you 
+> are right. But it will be not that easy.
+
+Why?
+
+First, it _is_ multi-threaded, since it calls external programs. That is 
+even more than a thread. It is a process.
+
+Second, it _would_ be easy to just use the threads provided by Qt.
+
+> Because we are just speaking (well, writing ;-) ) about a possible 
+> library I think we could take in account what would involve to foreseen 
+> a callback mechanism in the API, at least for the slowest ones.
+
+We are talking about libgit. Which should make access to certain common 
+functions on Git repositories easy. Nothing more than that.
+
+If you need to do that asynchronously, do _not_ fiddle with libgit. Just 
+imagine what this would involve: you'd have to have timeouts (since there 
+is _NO_ other way to find out when to return with empty hands, instead of 
+blocking), which is _not_ portable. You'd soon be in the same _mess_ we 
+are talking about with respect to exceptions.
+
+Also, you would make _all_ operations expensive, since they _would_ have 
+to store state to be restartable.
+
+The common solution for your problem _is_ to use threads.
+
+And you have to admit that _only_ viewers would need asynchronous access 
+anyway. I doubt that other tools -- which could take their advantage of a 
+libgit -- would need such an access.
+
+Ciao,
+Dscho
