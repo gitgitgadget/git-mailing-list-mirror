@@ -1,747 +1,502 @@
-From: Davide Libenzi <davidel@xmailserver.org>
-Subject: Re: cleaner/better zlib sources?
-Date: Fri, 16 Mar 2007 12:21:36 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703161216510.13732@alien.or.mcafeemobile.com>
-References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
- <45F9EED5.3070706@garzik.org> <Pine.LNX.4.64.0703151822490.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703160920030.13402@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] clean up pack index handling a bit
+Date: Fri, 16 Mar 2007 16:42:50 -0400 (EDT)
+Message-ID: <alpine.LFD.0.83.0703161639270.18328@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff Garzik <jeff@garzik.org>,
-	Git Mailing List <git@vger.kernel.org>, mpm@selenic.com,
-	bcrl@kvack.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 16 20:25:26 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 16 21:42:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSI3I-00076X-V4
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 20:25:25 +0100
+	id 1HSJGM-0006UJ-MS
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 21:42:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753594AbXCPTZV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 15:25:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753592AbXCPTZV
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 15:25:21 -0400
-Received: from x35.xmailserver.org ([64.71.152.41]:49220 "EHLO
-	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753249AbXCPTZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 15:25:19 -0400
-X-AuthUser: davidel@xmailserver.org
-Received: from alien.or.mcafeemobile.com
-	by x35.xmailserver.org with [XMail 1.25 ESMTP Server]
-	id <S21C90A> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Fri, 16 Mar 2007 15:25:16 -0400
-X-X-Sender: davide@alien.or.mcafeemobile.com
-In-Reply-To: <Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org>
-X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
-X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
+	id S1753641AbXCPUmz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 16:42:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753654AbXCPUmz
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 16:42:55 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:49701 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753653AbXCPUmx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 16:42:53 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JF000HE2K7EUFD0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 16 Mar 2007 16:42:52 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42396>
-
-On Fri, 16 Mar 2007, Linus Torvalds wrote:
-
-> 
-> 
-> On Fri, 16 Mar 2007, Davide Libenzi wrote:
-> >
-> > > This one seems to do benchmarking with 8MB buffers if I read it right 
-> > > (didn't try).
-> > 
-> > Yes, I just wanted to have the biggest time spent in inflate(). That why I 
-> > use a big buffer.
-> 
-> Right. But if the biggest time is spent in setup, the big-buffer thing 
-> ends up being exactly the wrong thing to test ;)
-
-I modified ztest.c to be able to bench on various data files (you list 
-them on the command line), but result are pretty much same.
-I cannot measure any sensible difference between the two.
-Attached there's ztest.c and the diff, in case you want to try on your 
-own.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42397>
 
 
+Especially with the new index format to come, it is more appropriate
+to encapsulate more into check_packed_git_idx() and assume less of the
+index format in struct packed_git.
 
-> > Definitely. The nature of the data matters.
-> > Did you try to make a zlib with my patch and oprofile git on real data 
-> > with that?
-> 
-> I haven't actually set it up so that I can build against my own zlib yet. 
-> Exactly because I was hoping that somebody would already have a solution 
-> ;)
+To that effect, the index_base is renamed to index_data with void * type
+so it is not used directly but other pointers initialized with it. This
+allows for a couple pointer cast removal, as well as providing a better
+generic name to grep for when adding support for new index versions or
+formats.
 
-An LD_PRELOAD pointing to your own build should do it.
+And index_data is declared const too while at it.
 
-
-
-
-- Davide
-
-
-
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/mman.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <time.h>
-#include "zlib.h"
-
-
-#define MIN_TESTIME (2 * 1000000)
-#define INNER_CYCLES 32
-
-
-
-#define CHECK_ERR(err, msg) do { \
-	if (err != Z_OK) { \
-		fprintf(stderr, "%s error: %d\n", msg, err); \
-		exit(1); \
-	} \
-} while (0)
-
-
-
-static unsigned long long mintt = MIN_TESTIME;
-static uLong incycles = INNER_CYCLES;
-
-
-
-static unsigned long long getustime(void) {
-	struct timeval tm;
-
-	gettimeofday(&tm, NULL);
-	return tm.tv_sec * 1000000ULL + tm.tv_usec;
-}
-
-static void do_defl(Byte *cdata, uLong *clen,
-		    Byte *udata, uLong uclen) {
-	z_stream c_stream; /* compression stream */
-	int err;
-
-	c_stream.zalloc = (alloc_func) NULL;
-	c_stream.zfree = (free_func) NULL;
-	c_stream.opaque = (voidpf) NULL;
-
-	err = deflateInit(&c_stream, Z_BEST_SPEED);
-	CHECK_ERR(err, "deflateInit");
-
-	c_stream.next_out = cdata;
-	c_stream.avail_out = (uInt) *clen;
-
-	/* At this point, udata is still mostly zeroes, so it should compress
-	 * very well:
-	 */
-	c_stream.next_in = udata;
-	c_stream.avail_in = (uInt) uclen;
-	err = deflate(&c_stream, Z_FINISH);
-	if (err != Z_STREAM_END) {
-		fprintf(stderr, "whoops, got %d instead of Z_STREAM_END\n", err);
-		exit(1);
-	}
-
-	err = deflateEnd(&c_stream);
-	CHECK_ERR(err, "deflateEnd");
-
-	*clen = c_stream.next_out - cdata;
-}
-
-static void do_infl(Byte *cdata, uLong clen,
-		    Byte *udata, uLong *uclen) {
-	int err;
-	z_stream d_stream; /* decompression stream */
-
-	d_stream.zalloc = (alloc_func) NULL;
-	d_stream.zfree = (free_func) NULL;
-	d_stream.opaque = (voidpf) NULL;
-
-	d_stream.next_in  = cdata;
-	d_stream.avail_in = (uInt) clen;
-
-	err = inflateInit(&d_stream);
-	CHECK_ERR(err, "inflateInit");
-
-	d_stream.next_out = udata;            /* discard the output */
-	d_stream.avail_out = (uInt) *uclen;
-	err = inflate(&d_stream, Z_FULL_FLUSH);
-	if (err != Z_STREAM_END) {
-		fprintf(stderr, "deflate should report Z_STREAM_END\n");
-		exit(1);
-	}
-
-	err = inflateEnd(&d_stream);
-	CHECK_ERR(err, "inflateEnd");
-
-	*uclen = d_stream.next_out - udata;
-}
-
-static int do_filebench(char const *fpath) {
-	int fd, err = -1;
-	uLong i, n, clen, ulen, size;
-	Byte *ubuf, *cbuf, *tbuf;
-	unsigned long long ts, te;
-	void *addr;
-	struct stat stb;
-
-	if ((fd = open(fpath, O_RDONLY)) == -1 ||
-	    fstat(fd, &stb)) {
-		perror(fpath);
-		close(fd);
-		return -1;
-	}
-	size = stb.st_size;
-	addr = mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-	close(fd);
-	if (addr == (void *) -1L) {
-		perror("mmap");
-		return -1;
-	}
-	ulen = size;
-	clen = size + 4096;
-	ubuf = addr;
-	if ((tbuf = malloc(ulen + clen)) == NULL) {
-		perror("malloc");
-		goto err_exit;
-	}
-	cbuf = tbuf + ulen;
-
-	/* Warming up ... */
-	do_defl(cbuf, &clen, ubuf, ulen);
-	do_infl(cbuf, clen, tbuf, &ulen);
-	if (ulen != size) {
-		fprintf(stderr, "size mismatch %lu instead of %lu\n",
-			(unsigned long) ulen, (unsigned long) size);
-		goto err_exit;
-	}
-	if (memcmp(tbuf, ubuf, size)) {
-		fprintf(stderr, "whoops! we did not get back the same data\n");
-		goto err_exit;
-	}
-
-	/* Test ... */
-	fprintf(stdout, "testing: %s\n", fpath);
-	ts = getustime();
-	n = 0;
-	do {
-		for (i = 0; i < incycles; i++) {
-			ulen = size;
-			do_infl(cbuf, clen, tbuf, &ulen);
-		}
-		n += i;
-		te = getustime();
-	} while (te - ts < mintt);
-
-	fprintf(stdout, "\tus time / cycle = %llu\n", (te - ts) / n);
-	err = 0;
-
-err_exit:
-	free(tbuf);
-	munmap(addr, size);
-
-	return err;
-}
-
-int main(int ac, char **av) {
-	int i;
-
-	for (i = 1; i < ac; i++)
-		do_filebench(av[i]);
-
-	return 0;
-}
-
-
-
-Index: zlib-1.2.3.quilt/inflate.c
-===================================================================
---- zlib-1.2.3.quilt.orig/inflate.c	2007-03-15 18:17:19.000000000 -0700
-+++ zlib-1.2.3.quilt/inflate.c	2007-03-15 18:31:14.000000000 -0700
-@@ -551,6 +551,15 @@
-    will return Z_BUF_ERROR if it has not reached the end of the stream.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index f8ebad0..73d448b 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -166,11 +166,12 @@ static void prepare_pack_revindex(struct pack_revindex *rix)
+ 	struct packed_git *p = rix->p;
+ 	int num_ent = num_packed_objects(p);
+ 	int i;
+-	void *index = p->index_base + 256;
++	const char *index = p->index_data;
+ 
++	index += 4 * 256;
+ 	rix->revindex = xmalloc(sizeof(*rix->revindex) * (num_ent + 1));
+ 	for (i = 0; i < num_ent; i++) {
+-		unsigned int hl = *((unsigned int *)((char *) index + 24*i));
++		uint32_t hl = *((uint32_t *)(index + 24 * i));
+ 		rix->revindex[i].offset = ntohl(hl);
+ 		rix->revindex[i].nr = i;
+ 	}
+@@ -217,11 +218,11 @@ static off_t find_packed_object_size(struct packed_git *p, off_t ofs)
+ 	return entry[1].offset - ofs;
+ }
+ 
+-static unsigned char *find_packed_object_name(struct packed_git *p,
+-					      off_t ofs)
++static const unsigned char *find_packed_object_name(struct packed_git *p,
++						    off_t ofs)
+ {
+ 	struct revindex_entry *entry = find_packed_object(p, ofs);
+-	return (unsigned char *)(p->index_base + 256) + 24 * entry->nr + 4;
++	return ((unsigned char *)p->index_data) + 4 * 256 + 24 * entry->nr + 4;
+ }
+ 
+ static void *delta_against(void *buf, unsigned long size, struct object_entry *entry)
+@@ -996,7 +997,8 @@ static void check_object(struct object_entry *entry)
+ 		 * delta.
+ 		 */
+ 		if (!no_reuse_delta) {
+-			unsigned char c, *base_name;
++			unsigned char c;
++			const unsigned char *base_name;
+ 			off_t ofs;
+ 			unsigned long used_0;
+ 			/* there is at least 20 bytes left in the pack */
+diff --git a/cache.h b/cache.h
+index 9f8e655..5396d33 100644
+--- a/cache.h
++++ b/cache.h
+@@ -371,10 +371,11 @@ struct pack_window {
+ extern struct packed_git {
+ 	struct packed_git *next;
+ 	struct pack_window *windows;
+-	uint32_t *index_base;
+-	time_t mtime;
++	const void *index_data;
+ 	off_t index_size;
+ 	off_t pack_size;
++	time_t mtime;
++	int index_version;
+ 	int pack_fd;
+ 	int pack_local;
+ 	unsigned char sha1[20];
+@@ -412,7 +413,7 @@ extern int server_supports(const char *feature);
+ 
+ extern struct packed_git *parse_pack_index(unsigned char *sha1);
+ extern struct packed_git *parse_pack_index_file(const unsigned char *sha1,
+-						char *idx_path);
++						const char *idx_path);
+ 
+ extern void prepare_packed_git(void);
+ extern void reprepare_packed_git(void);
+@@ -424,7 +425,7 @@ extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ extern void pack_report(void);
+ extern unsigned char* use_pack(struct packed_git *, struct pack_window **, off_t, unsigned int *);
+ extern void unuse_pack(struct pack_window **);
+-extern struct packed_git *add_packed_git(char *, int, int);
++extern struct packed_git *add_packed_git(const char *, int, int);
+ extern uint32_t num_packed_objects(const struct packed_git *p);
+ extern int nth_packed_object_sha1(const struct packed_git *, uint32_t, unsigned char*);
+ extern off_t find_pack_entry_one(const unsigned char *, struct packed_git *);
+diff --git a/pack-check.c b/pack-check.c
+index 299c514..d988322 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -5,7 +5,7 @@ static int verify_packfile(struct packed_git *p,
+ 		struct pack_window **w_curs)
+ {
+ 	off_t index_size = p->index_size;
+-	void *index_base = p->index_base;
++	const unsigned char *index_base = p->index_data;
+ 	SHA_CTX ctx;
+ 	unsigned char sha1[20];
+ 	off_t offset = 0, pack_sig = p->pack_size - 20;
+@@ -31,7 +31,7 @@ static int verify_packfile(struct packed_git *p,
+ 	if (hashcmp(sha1, use_pack(p, w_curs, pack_sig, NULL)))
+ 		return error("Packfile %s SHA1 mismatch with itself",
+ 			     p->pack_name);
+-	if (hashcmp(sha1, (unsigned char *)index_base + index_size - 40))
++	if (hashcmp(sha1, index_base + index_size - 40))
+ 		return error("Packfile %s SHA1 mismatch with idx",
+ 			     p->pack_name);
+ 	unuse_pack(w_curs);
+@@ -127,7 +127,7 @@ static void show_pack_info(struct packed_git *p)
+ int verify_pack(struct packed_git *p, int verbose)
+ {
+ 	off_t index_size = p->index_size;
+-	void *index_base = p->index_base;
++	const unsigned char *index_base = p->index_data;
+ 	SHA_CTX ctx;
+ 	unsigned char sha1[20];
+ 	int ret;
+@@ -137,7 +137,7 @@ int verify_pack(struct packed_git *p, int verbose)
+ 	SHA1_Init(&ctx);
+ 	SHA1_Update(&ctx, index_base, (unsigned int)(index_size - 20));
+ 	SHA1_Final(sha1, &ctx);
+-	if (hashcmp(sha1, (unsigned char *)index_base + index_size - 20))
++	if (hashcmp(sha1, index_base + index_size - 20))
+ 		ret = error("Packfile index for %s SHA1 mismatch",
+ 			    p->pack_name);
+ 
+diff --git a/pack-redundant.c b/pack-redundant.c
+index c8f7d9a..40e579b 100644
+--- a/pack-redundant.c
++++ b/pack-redundant.c
+@@ -17,7 +17,7 @@ static int load_all_packs, verbose, alt_odb;
+ 
+ struct llist_item {
+ 	struct llist_item *next;
+-	unsigned char *sha1;
++	const unsigned char *sha1;
+ };
+ static struct llist {
+ 	struct llist_item *front;
+@@ -104,9 +104,9 @@ static struct llist * llist_copy(struct llist *list)
+ 	return ret;
+ }
+ 
+-static inline struct llist_item * llist_insert(struct llist *list,
+-					       struct llist_item *after,
+-					       unsigned char *sha1)
++static inline struct llist_item *llist_insert(struct llist *list,
++					      struct llist_item *after,
++					       const unsigned char *sha1)
+ {
+ 	struct llist_item *new = llist_item_get();
+ 	new->sha1 = sha1;
+@@ -128,12 +128,14 @@ static inline struct llist_item * llist_insert(struct llist *list,
+ 	return new;
+ }
+ 
+-static inline struct llist_item *llist_insert_back(struct llist *list, unsigned char *sha1)
++static inline struct llist_item *llist_insert_back(struct llist *list,
++						   const unsigned char *sha1)
+ {
+ 	return llist_insert(list, list->back, sha1);
+ }
+ 
+-static inline struct llist_item *llist_insert_sorted_unique(struct llist *list, unsigned char *sha1, struct llist_item *hint)
++static inline struct llist_item *llist_insert_sorted_unique(struct llist *list,
++			const unsigned char *sha1, struct llist_item *hint)
+ {
+ 	struct llist_item *prev = NULL, *l;
+ 
+@@ -246,12 +248,12 @@ static struct pack_list * pack_list_difference(const struct pack_list *A,
+ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
+ {
+ 	int p1_off, p2_off;
+-	unsigned char *p1_base, *p2_base;
++	const unsigned char *p1_base, *p2_base;
+ 	struct llist_item *p1_hint = NULL, *p2_hint = NULL;
+ 
+ 	p1_off = p2_off = 256 * 4 + 4;
+-	p1_base = (unsigned char *) p1->pack->index_base;
+-	p2_base = (unsigned char *) p2->pack->index_base;
++	p1_base = p1->pack->index_data;
++	p2_base = p2->pack->index_data;
+ 
+ 	while (p1_off <= p1->pack->index_size - 3 * 20 &&
+ 	       p2_off <= p2->pack->index_size - 3 * 20)
+@@ -351,11 +353,11 @@ static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
+ {
+ 	size_t ret = 0;
+ 	int p1_off, p2_off;
+-	unsigned char *p1_base, *p2_base;
++	const unsigned char *p1_base, *p2_base;
+ 
+ 	p1_off = p2_off = 256 * 4 + 4;
+-	p1_base = (unsigned char *)p1->index_base;
+-	p2_base = (unsigned char *)p2->index_base;
++	p1_base = p1->index_data;
++	p2_base = p2->index_data;
+ 
+ 	while (p1_off <= p1->index_size - 3 * 20 &&
+ 	       p2_off <= p2->index_size - 3 * 20)
+@@ -534,7 +536,7 @@ static struct pack_list * add_pack(struct packed_git *p)
+ {
+ 	struct pack_list l;
+ 	size_t off;
+-	unsigned char *base;
++	const unsigned char *base;
+ 
+ 	if (!p->pack_local && !(alt_odb || verbose))
+ 		return NULL;
+@@ -543,7 +545,7 @@ static struct pack_list * add_pack(struct packed_git *p)
+ 	llist_init(&l.all_objects);
+ 
+ 	off = 256 * 4 + 4;
+-	base = (unsigned char *)p->index_base;
++	base = p->index_data;
+ 	while (off <= p->index_size - 3 * 20) {
+ 		llist_insert_back(l.all_objects, base + off);
+ 		off += 24;
+diff --git a/pack.h b/pack.h
+index deb427e..d4d412c 100644
+--- a/pack.h
++++ b/pack.h
+@@ -16,24 +16,15 @@ struct pack_header {
+ };
+ 
+ /*
+- * Packed object index header
+- *
+- * struct pack_idx_header {
+- * 	uint32_t idx_signature;
+- *	uint32_t idx_version;
+- * };
+- *
+- * Note: this header isn't active yet.  In future versions of git
+- * we may change the index file format.  At that time we would start
+- * the first four bytes of the new index format with this signature,
+- * as all older git binaries would find this value illegal and abort
+- * reading the file.
++ * The first four bytes of index formats later than version 1 should
++ * start with this signature, as all older git binaries would find this
++ * value illegal and abort reading the file.
+  *
+  * This is the case because the number of objects in a packfile
+  * cannot exceed 1,431,660,000 as every object would need at least
+- * 3 bytes of data and the overall packfile cannot exceed 4 GiB due
+- * to the 32 bit offsets used by the index.  Clearly the signature
+- * exceeds this maximum.
++ * 3 bytes of data and the overall packfile cannot exceed 4 GiB with
++ * version 1 of the index file due to the offsets limited to 32 bits.
++ * Clearly the signature exceeds this maximum.
+  *
+  * Very old git binaries will also compare the first 4 bytes to the
+  * next 4 bytes in the index and abort with a "non-monotonic index"
+@@ -43,6 +34,15 @@ struct pack_header {
   */
+ #define PACK_IDX_SIGNATURE 0xff744f63	/* "\377tOc" */
  
-+#define CASE_DECL(n) \
-+	case n: \
-+	lbl_##n:
++/*
++ * Packed object index header
++ */
++struct pack_idx_header {
++	uint32_t idx_signature;
++	uint32_t idx_version;
++};
 +
-+#define STATE_CHANGE(s) do { \
-+	state->mode = s; \
-+	goto lbl_##s; \
-+} while (0)
 +
- int ZEXPORT inflate(strm, flush)
- z_streamp strm;
- int flush;
-@@ -586,10 +595,9 @@
-     ret = Z_OK;
-     for (;;)
-         switch (state->mode) {
--        case HEAD:
-+        CASE_DECL(HEAD)
-             if (state->wrap == 0) {
--                state->mode = TYPEDO;
--                break;
-+		STATE_CHANGE(TYPEDO);
-             }
-             NEEDBITS(16);
- #ifdef GUNZIP
-@@ -597,8 +605,7 @@
-                 state->check = crc32(0L, Z_NULL, 0);
-                 CRC2(state->check, hold);
-                 INITBITS();
--                state->mode = FLAGS;
--                break;
-+		STATE_CHANGE(FLAGS);
-             }
-             state->flags = 0;           /* expect zlib header */
-             if (state->head != Z_NULL)
-@@ -609,20 +616,17 @@
- #endif
-                 ((BITS(8) << 8) + (hold >> 8)) % 31) {
-                 strm->msg = (char *)"incorrect header check";
--                state->mode = BAD;
--                break;
-+	        STATE_CHANGE(BAD);
-             }
-             if (BITS(4) != Z_DEFLATED) {
-                 strm->msg = (char *)"unknown compression method";
--                state->mode = BAD;
--                break;
-+	        STATE_CHANGE(BAD);
-             }
-             DROPBITS(4);
-             len = BITS(4) + 8;
-             if (len > state->wbits) {
-                 strm->msg = (char *)"invalid window size";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             state->dmax = 1U << len;
-             Tracev((stderr, "inflate:   zlib header ok\n"));
-@@ -631,32 +635,30 @@
-             INITBITS();
-             break;
- #ifdef GUNZIP
--        case FLAGS:
-+        CASE_DECL(FLAGS)
-             NEEDBITS(16);
-             state->flags = (int)(hold);
-             if ((state->flags & 0xff) != Z_DEFLATED) {
-                 strm->msg = (char *)"unknown compression method";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             if (state->flags & 0xe000) {
-                 strm->msg = (char *)"unknown header flags set";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             if (state->head != Z_NULL)
-                 state->head->text = (int)((hold >> 8) & 1);
-             if (state->flags & 0x0200) CRC2(state->check, hold);
-             INITBITS();
-             state->mode = TIME;
--        case TIME:
-+        CASE_DECL(TIME)
-             NEEDBITS(32);
-             if (state->head != Z_NULL)
-                 state->head->time = hold;
-             if (state->flags & 0x0200) CRC4(state->check, hold);
-             INITBITS();
-             state->mode = OS;
--        case OS:
-+        CASE_DECL(OS)
-             NEEDBITS(16);
-             if (state->head != Z_NULL) {
-                 state->head->xflags = (int)(hold & 0xff);
-@@ -665,7 +667,7 @@
-             if (state->flags & 0x0200) CRC2(state->check, hold);
-             INITBITS();
-             state->mode = EXLEN;
--        case EXLEN:
-+        CASE_DECL(EXLEN)
-             if (state->flags & 0x0400) {
-                 NEEDBITS(16);
-                 state->length = (unsigned)(hold);
-@@ -677,7 +679,7 @@
-             else if (state->head != Z_NULL)
-                 state->head->extra = Z_NULL;
-             state->mode = EXTRA;
--        case EXTRA:
-+        CASE_DECL(EXTRA)
-             if (state->flags & 0x0400) {
-                 copy = state->length;
-                 if (copy > have) copy = have;
-@@ -699,7 +701,7 @@
-             }
-             state->length = 0;
-             state->mode = NAME;
--        case NAME:
-+        CASE_DECL(NAME)
-             if (state->flags & 0x0800) {
-                 if (have == 0) goto inf_leave;
-                 copy = 0;
-@@ -720,7 +722,7 @@
-                 state->head->name = Z_NULL;
-             state->length = 0;
-             state->mode = COMMENT;
--        case COMMENT:
-+        CASE_DECL(COMMENT)
-             if (state->flags & 0x1000) {
-                 if (have == 0) goto inf_leave;
-                 copy = 0;
-@@ -740,13 +742,12 @@
-             else if (state->head != Z_NULL)
-                 state->head->comment = Z_NULL;
-             state->mode = HCRC;
--        case HCRC:
-+        CASE_DECL(HCRC)
-             if (state->flags & 0x0200) {
-                 NEEDBITS(16);
-                 if (hold != (state->check & 0xffff)) {
-                     strm->msg = (char *)"header crc mismatch";
--                    state->mode = BAD;
--                    break;
-+		    STATE_CHANGE(BAD);
-                 }
-                 INITBITS();
-             }
-@@ -755,28 +756,26 @@
-                 state->head->done = 1;
-             }
-             strm->adler = state->check = crc32(0L, Z_NULL, 0);
--            state->mode = TYPE;
--            break;
-+	    STATE_CHANGE(TYPE);
- #endif
--        case DICTID:
-+        CASE_DECL(DICTID)
-             NEEDBITS(32);
-             strm->adler = state->check = REVERSE(hold);
-             INITBITS();
-             state->mode = DICT;
--        case DICT:
-+        CASE_DECL(DICT)
-             if (state->havedict == 0) {
-                 RESTORE();
-                 return Z_NEED_DICT;
-             }
-             strm->adler = state->check = adler32(0L, Z_NULL, 0);
-             state->mode = TYPE;
--        case TYPE:
-+        CASE_DECL(TYPE)
-             if (flush == Z_BLOCK) goto inf_leave;
--        case TYPEDO:
-+        CASE_DECL(TYPEDO)
-             if (state->last) {
-                 BYTEBITS();
--                state->mode = CHECK;
--                break;
-+		STATE_CHANGE(CHECK);
-             }
-             NEEDBITS(3);
-             state->last = BITS(1);
-@@ -785,39 +784,38 @@
-             case 0:                             /* stored block */
-                 Tracev((stderr, "inflate:     stored block%s\n",
-                         state->last ? " (last)" : ""));
--                state->mode = STORED;
--                break;
-+		DROPBITS(2);
-+		STATE_CHANGE(STORED);
-             case 1:                             /* fixed block */
-                 fixedtables(state);
-                 Tracev((stderr, "inflate:     fixed codes block%s\n",
-                         state->last ? " (last)" : ""));
--                state->mode = LEN;              /* decode codes */
--                break;
-+		DROPBITS(2);
-+		STATE_CHANGE(LEN);
-             case 2:                             /* dynamic block */
-                 Tracev((stderr, "inflate:     dynamic codes block%s\n",
-                         state->last ? " (last)" : ""));
--                state->mode = TABLE;
--                break;
-+		DROPBITS(2);
-+		STATE_CHANGE(TABLE);
-             case 3:
-+		DROPBITS(2);
-                 strm->msg = (char *)"invalid block type";
--                state->mode = BAD;
-+		STATE_CHANGE(BAD);
-             }
--            DROPBITS(2);
-             break;
--        case STORED:
-+        CASE_DECL(STORED)
-             BYTEBITS();                         /* go to byte boundary */
-             NEEDBITS(32);
-             if ((hold & 0xffff) != ((hold >> 16) ^ 0xffff)) {
-                 strm->msg = (char *)"invalid stored block lengths";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             state->length = (unsigned)hold & 0xffff;
-             Tracev((stderr, "inflate:       stored length %u\n",
-                     state->length));
-             INITBITS();
-             state->mode = COPY;
--        case COPY:
-+        CASE_DECL(COPY)
-             copy = state->length;
-             if (copy) {
-                 if (copy > have) copy = have;
-@@ -832,9 +830,8 @@
-                 break;
-             }
-             Tracev((stderr, "inflate:       stored end\n"));
--            state->mode = TYPE;
--            break;
--        case TABLE:
-+	    STATE_CHANGE(TYPE);
-+        CASE_DECL(TABLE)
-             NEEDBITS(14);
-             state->nlen = BITS(5) + 257;
-             DROPBITS(5);
-@@ -845,14 +842,13 @@
- #ifndef PKZIP_BUG_WORKAROUND
-             if (state->nlen > 286 || state->ndist > 30) {
-                 strm->msg = (char *)"too many length or distance symbols";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
- #endif
-             Tracev((stderr, "inflate:       table sizes ok\n"));
-             state->have = 0;
-             state->mode = LENLENS;
--        case LENLENS:
-+        CASE_DECL(LENLENS)
-             while (state->have < state->ncode) {
-                 NEEDBITS(3);
-                 state->lens[order[state->have++]] = (unsigned short)BITS(3);
-@@ -867,13 +863,12 @@
-                                 &(state->lenbits), state->work);
-             if (ret) {
-                 strm->msg = (char *)"invalid code lengths set";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             Tracev((stderr, "inflate:       code lengths ok\n"));
-             state->have = 0;
-             state->mode = CODELENS;
--        case CODELENS:
-+        CASE_DECL(CODELENS)
-             while (state->have < state->nlen + state->ndist) {
-                 for (;;) {
-                     this = state->lencode[BITS(state->lenbits)];
-@@ -891,8 +886,7 @@
-                         DROPBITS(this.bits);
-                         if (state->have == 0) {
-                             strm->msg = (char *)"invalid bit length repeat";
--                            state->mode = BAD;
--                            break;
-+			    STATE_CHANGE(BAD);
-                         }
-                         len = state->lens[state->have - 1];
-                         copy = 3 + BITS(2);
-@@ -914,17 +908,13 @@
-                     }
-                     if (state->have + copy > state->nlen + state->ndist) {
-                         strm->msg = (char *)"invalid bit length repeat";
--                        state->mode = BAD;
--                        break;
-+			STATE_CHANGE(BAD);
-                     }
-                     while (copy--)
-                         state->lens[state->have++] = (unsigned short)len;
-                 }
-             }
+ extern int verify_pack(struct packed_git *, int);
  
--            /* handle error breaks in while */
--            if (state->mode == BAD) break;
+ #define PH_ERROR_EOF		(-1)
+diff --git a/sha1_file.c b/sha1_file.c
+index 5691448..110d696 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -432,16 +432,15 @@ void pack_report()
+ 		pack_mapped, peak_pack_mapped);
+ }
+ 
+-static int check_packed_git_idx(const char *path,
+-	unsigned long *idx_size_,
+-	void **idx_map_)
++static int check_packed_git_idx(const char *path,  struct packed_git *p)
+ {
+ 	void *idx_map;
+-	uint32_t *index;
++	struct pack_idx_header *hdr;
+ 	size_t idx_size;
+-	uint32_t nr, i;
++	uint32_t nr, i, *index;
+ 	int fd = open(path, O_RDONLY);
+ 	struct stat st;
++
+ 	if (fd < 0)
+ 		return -1;
+ 	if (fstat(fd, &st)) {
+@@ -456,15 +455,12 @@ static int check_packed_git_idx(const char *path,
+ 	idx_map = xmmap(NULL, idx_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
+ 
+-	index = idx_map;
+-	*idx_map_ = idx_map;
+-	*idx_size_ = idx_size;
 -
-             /* build code tables */
-             state->next = state->codes;
-             state->lencode = (code const FAR *)(state->next);
-@@ -933,8 +923,7 @@
-                                 &(state->lenbits), state->work);
-             if (ret) {
-                 strm->msg = (char *)"invalid literal/lengths set";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             state->distcode = (code const FAR *)(state->next);
-             state->distbits = 6;
-@@ -942,12 +931,11 @@
-                             &(state->next), &(state->distbits), state->work);
-             if (ret) {
-                 strm->msg = (char *)"invalid distances set";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             Tracev((stderr, "inflate:       codes ok\n"));
-             state->mode = LEN;
--        case LEN:
-+        CASE_DECL(LEN)
-             if (have >= 6 && left >= 258) {
-                 RESTORE();
-                 inflate_fast(strm, out);
-@@ -975,22 +963,19 @@
-                 Tracevv((stderr, this.val >= 0x20 && this.val < 0x7f ?
-                         "inflate:         literal '%c'\n" :
-                         "inflate:         literal 0x%02x\n", this.val));
--                state->mode = LIT;
--                break;
-+		STATE_CHANGE(LIT);
-             }
-             if (this.op & 32) {
-                 Tracevv((stderr, "inflate:         end of block\n"));
--                state->mode = TYPE;
--                break;
-+		STATE_CHANGE(TYPE);
-             }
-             if (this.op & 64) {
-                 strm->msg = (char *)"invalid literal/length code";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             state->extra = (unsigned)(this.op) & 15;
-             state->mode = LENEXT;
--        case LENEXT:
-+        CASE_DECL(LENEXT)
-             if (state->extra) {
-                 NEEDBITS(state->extra);
-                 state->length += BITS(state->extra);
-@@ -998,7 +983,7 @@
-             }
-             Tracevv((stderr, "inflate:         length %u\n", state->length));
-             state->mode = DIST;
--        case DIST:
-+        CASE_DECL(DIST)
-             for (;;) {
-                 this = state->distcode[BITS(state->distbits)];
-                 if ((unsigned)(this.bits) <= bits) break;
-@@ -1017,13 +1002,12 @@
-             DROPBITS(this.bits);
-             if (this.op & 64) {
-                 strm->msg = (char *)"invalid distance code";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             state->offset = (unsigned)this.val;
-             state->extra = (unsigned)(this.op) & 15;
-             state->mode = DISTEXT;
--        case DISTEXT:
-+        CASE_DECL(DISTEXT)
-             if (state->extra) {
-                 NEEDBITS(state->extra);
-                 state->offset += BITS(state->extra);
-@@ -1032,18 +1016,16 @@
- #ifdef INFLATE_STRICT
-             if (state->offset > state->dmax) {
-                 strm->msg = (char *)"invalid distance too far back";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
- #endif
-             if (state->offset > state->whave + out - left) {
-                 strm->msg = (char *)"invalid distance too far back";
--                state->mode = BAD;
--                break;
-+		STATE_CHANGE(BAD);
-             }
-             Tracevv((stderr, "inflate:         distance %u\n", state->offset));
-             state->mode = MATCH;
--        case MATCH:
-+        CASE_DECL(MATCH)
-             if (left == 0) goto inf_leave;
-             copy = out - left;
-             if (state->offset > copy) {         /* copy from window */
-@@ -1066,15 +1048,15 @@
-             do {
-                 *put++ = *from++;
-             } while (--copy);
--            if (state->length == 0) state->mode = LEN;
-+            if (state->length == 0)
-+		STATE_CHANGE(LEN);
-             break;
--        case LIT:
-+        CASE_DECL(LIT)
-             if (left == 0) goto inf_leave;
-             *put++ = (unsigned char)(state->length);
-             left--;
--            state->mode = LEN;
--            break;
--        case CHECK:
-+	    STATE_CHANGE(LEN);
-+        CASE_DECL(CHECK)
-             if (state->wrap) {
-                 NEEDBITS(32);
-                 out -= left;
-@@ -1090,36 +1072,34 @@
- #endif
-                      REVERSE(hold)) != state->check) {
-                     strm->msg = (char *)"incorrect data check";
--                    state->mode = BAD;
--                    break;
-+		    STATE_CHANGE(BAD);
-                 }
-                 INITBITS();
-                 Tracev((stderr, "inflate:   check matches trailer\n"));
-             }
- #ifdef GUNZIP
-             state->mode = LENGTH;
--        case LENGTH:
-+        CASE_DECL(LENGTH)
-             if (state->wrap && state->flags) {
-                 NEEDBITS(32);
-                 if (hold != (state->total & 0xffffffffUL)) {
-                     strm->msg = (char *)"incorrect length check";
--                    state->mode = BAD;
--                    break;
-+		    STATE_CHANGE(BAD);
-                 }
-                 INITBITS();
-                 Tracev((stderr, "inflate:   length matches trailer\n"));
-             }
- #endif
-             state->mode = DONE;
--        case DONE:
-+        CASE_DECL(DONE)
-             ret = Z_STREAM_END;
-             goto inf_leave;
--        case BAD:
-+        CASE_DECL(BAD)
-             ret = Z_DATA_ERROR;
-             goto inf_leave;
--        case MEM:
-+        CASE_DECL(MEM)
-             return Z_MEM_ERROR;
--        case SYNC:
-+        CASE_DECL(SYNC)
-         default:
-             return Z_STREAM_ERROR;
-         }
+ 	/* a future index format would start with this, as older git
+ 	 * binaries would fail the non-monotonic index check below.
+ 	 * give a nicer warning to the user if we can.
+ 	 */
+-	if (index[0] == htonl(PACK_IDX_SIGNATURE)) {
++	hdr = idx_map;
++	if (hdr->idx_signature == htonl(PACK_IDX_SIGNATURE)) {
+ 		munmap(idx_map, idx_size);
+ 		return error("index file %s is a newer version"
+ 			" and is not supported by this binary"
+@@ -473,6 +469,7 @@ static int check_packed_git_idx(const char *path,
+ 	}
+ 
+ 	nr = 0;
++	index = idx_map;
+ 	for (i = 0; i < 256; i++) {
+ 		uint32_t n = ntohl(index[i]);
+ 		if (n < nr) {
+@@ -494,6 +491,9 @@ static int check_packed_git_idx(const char *path,
+ 		return error("wrong index file size in %s", path);
+ 	}
+ 
++	p->index_version = 1;
++	p->index_data = idx_map;
++	p->index_size = idx_size;
+ 	return 0;
+ }
+ 
+@@ -614,7 +614,7 @@ static int open_packed_git_1(struct packed_git *p)
+ 		return error("end of packfile %s is unavailable", p->pack_name);
+ 	if (read_in_full(p->pack_fd, sha1, sizeof(sha1)) != sizeof(sha1))
+ 		return error("packfile %s signature is unavailable", p->pack_name);
+-	idx_sha1 = ((unsigned char *)p->index_base) + p->index_size - 40;
++	idx_sha1 = ((unsigned char *)p->index_data) + p->index_size - 40;
+ 	if (hashcmp(sha1, idx_sha1))
+ 		return error("packfile %s does not match index", p->pack_name);
+ 	return 0;
+@@ -710,38 +710,37 @@ unsigned char* use_pack(struct packed_git *p,
+ 	return win->base + offset;
+ }
+ 
+-struct packed_git *add_packed_git(char *path, int path_len, int local)
++struct packed_git *add_packed_git(const char *path, int path_len, int local)
+ {
+ 	struct stat st;
+-	struct packed_git *p;
+-	unsigned long idx_size;
+-	void *idx_map;
+-	unsigned char sha1[20];
++	struct packed_git *p = xmalloc(sizeof(*p) + path_len + 2);
+ 
+-	if (check_packed_git_idx(path, &idx_size, &idx_map))
++	/*
++	 * Make sure a corresponding .pack file exists and that
++	 * the index looks sane.
++	 */
++	path_len -= strlen(".idx");
++	if (path_len < 1)
+ 		return NULL;
+-
+-	/* do we have a corresponding .pack file? */
+-	strcpy(path + path_len - 4, ".pack");
+-	if (stat(path, &st) || !S_ISREG(st.st_mode)) {
+-		munmap(idx_map, idx_size);
++	memcpy(p->pack_name, path, path_len);
++	strcpy(p->pack_name + path_len, ".pack");
++	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode) ||
++	    check_packed_git_idx(path, p)) {
++		free(p);
+ 		return NULL;
+ 	}
++
+ 	/* ok, it looks sane as far as we can check without
+ 	 * actually mapping the pack file.
+ 	 */
+-	p = xmalloc(sizeof(*p) + path_len + 2);
+-	strcpy(p->pack_name, path);
+-	p->index_size = idx_size;
+ 	p->pack_size = st.st_size;
+-	p->index_base = idx_map;
+ 	p->next = NULL;
+ 	p->windows = NULL;
+ 	p->pack_fd = -1;
+ 	p->pack_local = local;
+ 	p->mtime = st.st_mtime;
+-	if ((path_len > 44) && !get_sha1_hex(path + path_len - 44, sha1))
+-		hashcpy(p->sha1, sha1);
++	if (path_len < 40 || get_sha1_hex(path + path_len - 40, p->sha1))
++		hashclr(p->sha1);
+ 	return p;
+ }
+ 
+@@ -751,23 +750,19 @@ struct packed_git *parse_pack_index(unsigned char *sha1)
+ 	return parse_pack_index_file(sha1, path);
+ }
+ 
+-struct packed_git *parse_pack_index_file(const unsigned char *sha1, char *idx_path)
++struct packed_git *parse_pack_index_file(const unsigned char *sha1,
++					 const char *idx_path)
+ {
+-	struct packed_git *p;
+-	unsigned long idx_size;
+-	void *idx_map;
+-	char *path;
++	const char *path = sha1_pack_name(sha1);
++	struct packed_git *p = xmalloc(sizeof(*p) + strlen(path) + 2);
+ 
+-	if (check_packed_git_idx(idx_path, &idx_size, &idx_map))
++	if (check_packed_git_idx(idx_path, p)) {
++		free(p);
+ 		return NULL;
++	}
+ 
+-	path = sha1_pack_name(sha1);
+-
+-	p = xmalloc(sizeof(*p) + strlen(path) + 2);
+ 	strcpy(p->pack_name, path);
+-	p->index_size = idx_size;
+ 	p->pack_size = 0;
+-	p->index_base = idx_map;
+ 	p->next = NULL;
+ 	p->windows = NULL;
+ 	p->pack_fd = -1;
+@@ -1423,24 +1418,27 @@ uint32_t num_packed_objects(const struct packed_git *p)
+ int nth_packed_object_sha1(const struct packed_git *p, uint32_t n,
+ 			   unsigned char* sha1)
+ {
+-	void *index = p->index_base + 256;
++	const unsigned char *index = p->index_data;
++	index += 4 * 256;
+ 	if (num_packed_objects(p) <= n)
+ 		return -1;
+-	hashcpy(sha1, (unsigned char *) index + (24 * n) + 4);
++	hashcpy(sha1, index + 24 * n + 4);
+ 	return 0;
+ }
+ 
+ off_t find_pack_entry_one(const unsigned char *sha1,
+ 				  struct packed_git *p)
+ {
+-	uint32_t *level1_ofs = p->index_base;
++	const uint32_t *level1_ofs = p->index_data;
+ 	int hi = ntohl(level1_ofs[*sha1]);
+ 	int lo = ((*sha1 == 0x0) ? 0 : ntohl(level1_ofs[*sha1 - 1]));
+-	void *index = p->index_base + 256;
++	const unsigned char *index = p->index_data;
++
++	index += 4 * 256;
+ 
+ 	do {
+ 		int mi = (lo + hi) / 2;
+-		int cmp = hashcmp((unsigned char *)index + (24 * mi) + 4, sha1);
++		int cmp = hashcmp(index + 24 * mi + 4, sha1);
+ 		if (!cmp)
+ 			return ntohl(*((uint32_t *)((char *)index + (24 * mi))));
+ 		if (cmp > 0)
