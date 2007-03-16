@@ -1,86 +1,554 @@
 From: Davide Libenzi <davidel@xmailserver.org>
 Subject: Re: cleaner/better zlib sources?
-Date: Thu, 15 Mar 2007 19:06:53 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703151906050.4998@alien.or.mcafeemobile.com>
+Date: Thu, 15 Mar 2007 19:43:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
 References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151807010.4998@alien.or.mcafeemobile.com>
+ <45F9EED5.3070706@garzik.org> <Pine.LNX.4.64.0703151822490.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: Jeff Garzik <jeff@garzik.org>,
+	Git Mailing List <git@vger.kernel.org>, mpm@selenic.com,
+	bcrl@kvack.org
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 16 03:11:36 2007
+X-From: git-owner@vger.kernel.org Fri Mar 16 03:47:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS1uo-0002J9-48
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 03:11:34 +0100
+	id 1HS2Ta-0003Wf-4B
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 03:47:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751197AbXCPCLF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 15 Mar 2007 22:11:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751234AbXCPCLF
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 22:11:05 -0400
-Received: from x35.xmailserver.org ([64.71.152.41]:48023 "EHLO
+	id S1752310AbXCPCr0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 15 Mar 2007 22:47:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752367AbXCPCr0
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Mar 2007 22:47:26 -0400
+Received: from x35.xmailserver.org ([64.71.152.41]:48036 "EHLO
 	x35.xmailserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751197AbXCPCLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Mar 2007 22:11:03 -0400
+	with ESMTP id S1752310AbXCPCrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Mar 2007 22:47:25 -0400
 X-AuthUser: davidel@xmailserver.org
 Received: from alien.or.mcafeemobile.com
 	by x35.xmailserver.org with [XMail 1.25 ESMTP Server]
-	id <S21C648> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
-	Thu, 15 Mar 2007 22:11:00 -0400
+	id <S21C658> for <git@vger.kernel.org> from <davidel@xmailserver.org>;
+	Thu, 15 Mar 2007 22:47:23 -0400
 X-X-Sender: davide@alien.or.mcafeemobile.com
-In-Reply-To: <Pine.LNX.4.64.0703151807010.4998@alien.or.mcafeemobile.com>
+In-Reply-To: <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
 X-GPG-FINGRPRINT: CFAE 5BEE FD36 F65E E640  56FE 0974 BF23 270F 474E
 X-GPG-PUBLIC_KEY: http://www.xmailserver.org/davidel.asc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42316>
 
-On Thu, 15 Mar 2007, Davide Libenzi wrote:
+On Thu, 15 Mar 2007, Linus Torvalds wrote:
 
+> 
+> 
 > On Thu, 15 Mar 2007, Linus Torvalds wrote:
-> 
 > > 
-> > I looked at git profiles yesterday, and some of them are pretty scary. We 
-> > spend about 50% of the time under some loads in just zlib uncompression, 
-> > and when I actually looked closer at the zlib sources I can kind of 
-> > understand why. That thing is horrid.
-> > 
-> > The sad part is that it looks like it should be quite possible to make 
-> > zlib simply just perform better. The profiles seem to say that a lot of 
-> > the cost is literally in the "inflate()" state machine code (and by that I 
-> > mean *not* the code itself, but literally in the indirect jump generated 
-> > by the case-statement).
-> > 
-> > Now, on any high-performance CPU, doing state-machines by having
-> > 
-> > 	for (;;)
-> > 		switch (data->state) {
-> > 			...
-> > 			data->state = NEW_STATE;
-> > 			continue;
-> > 		}
-> > 
-> > (which is what zlib seems to be doing) is just about the worst possible 
-> > way to code things.
+> > Same obvious performance problems go for
+> >
+> >         case COPY:
 > 
-> A quick hack would be to just define:
+> As an example, I *think* this patch to zlib-1.2.3 not only generates 
+> better code, but is (a) shorter and (b) more logical anyway.
 > 
-> #define SWITCH_LBL(n) \
-> 	case n: \
-> 	lbl_##n:
-> 
-> #define STATE_CHANGE(s) \
-> 	state->mode = s; \
-> 	goto lbl_##s;
-> 
-> Then replace all the "state->mode = STATE; break;" into STATE_CHANGE(STATE);
-> I'm giving it a try as we speak ...
+> Together with Davide's suggestion on using C macro expansion to make most 
+> of the mode switches simple branches, it might get rid of most of the 
+> indirect branches (to get rid of them all, you'd have to also find the 
+> places where we *don't* set a new state, because it stays the same like 
+> this one, and the ones where we have conditionals on what the mode is 
+> going to be..
 
-I get about 5-6% boost with it AFAICS ...
+That's the diff against 1.2.3, but it does not seem to make an substantial 
+difference in my Opteron ...
+
 
 
 
 - Davide
+
+
+
+Index: zlib-1.2.3.quilt/inflate.c
+===================================================================
+--- zlib-1.2.3.quilt.orig/inflate.c	2007-03-15 18:17:19.000000000 -0700
++++ zlib-1.2.3.quilt/inflate.c	2007-03-15 18:31:14.000000000 -0700
+@@ -551,6 +551,15 @@
+    will return Z_BUF_ERROR if it has not reached the end of the stream.
+  */
+ 
++#define CASE_DECL(n) \
++	case n: \
++	lbl_##n:
++
++#define STATE_CHANGE(s) do { \
++	state->mode = s; \
++	goto lbl_##s; \
++} while (0)
++
+ int ZEXPORT inflate(strm, flush)
+ z_streamp strm;
+ int flush;
+@@ -586,10 +595,9 @@
+     ret = Z_OK;
+     for (;;)
+         switch (state->mode) {
+-        case HEAD:
++        CASE_DECL(HEAD)
+             if (state->wrap == 0) {
+-                state->mode = TYPEDO;
+-                break;
++		STATE_CHANGE(TYPEDO);
+             }
+             NEEDBITS(16);
+ #ifdef GUNZIP
+@@ -597,8 +605,7 @@
+                 state->check = crc32(0L, Z_NULL, 0);
+                 CRC2(state->check, hold);
+                 INITBITS();
+-                state->mode = FLAGS;
+-                break;
++		STATE_CHANGE(FLAGS);
+             }
+             state->flags = 0;           /* expect zlib header */
+             if (state->head != Z_NULL)
+@@ -609,20 +616,17 @@
+ #endif
+                 ((BITS(8) << 8) + (hold >> 8)) % 31) {
+                 strm->msg = (char *)"incorrect header check";
+-                state->mode = BAD;
+-                break;
++	        STATE_CHANGE(BAD);
+             }
+             if (BITS(4) != Z_DEFLATED) {
+                 strm->msg = (char *)"unknown compression method";
+-                state->mode = BAD;
+-                break;
++	        STATE_CHANGE(BAD);
+             }
+             DROPBITS(4);
+             len = BITS(4) + 8;
+             if (len > state->wbits) {
+                 strm->msg = (char *)"invalid window size";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             state->dmax = 1U << len;
+             Tracev((stderr, "inflate:   zlib header ok\n"));
+@@ -631,32 +635,30 @@
+             INITBITS();
+             break;
+ #ifdef GUNZIP
+-        case FLAGS:
++        CASE_DECL(FLAGS)
+             NEEDBITS(16);
+             state->flags = (int)(hold);
+             if ((state->flags & 0xff) != Z_DEFLATED) {
+                 strm->msg = (char *)"unknown compression method";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             if (state->flags & 0xe000) {
+                 strm->msg = (char *)"unknown header flags set";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             if (state->head != Z_NULL)
+                 state->head->text = (int)((hold >> 8) & 1);
+             if (state->flags & 0x0200) CRC2(state->check, hold);
+             INITBITS();
+             state->mode = TIME;
+-        case TIME:
++        CASE_DECL(TIME)
+             NEEDBITS(32);
+             if (state->head != Z_NULL)
+                 state->head->time = hold;
+             if (state->flags & 0x0200) CRC4(state->check, hold);
+             INITBITS();
+             state->mode = OS;
+-        case OS:
++        CASE_DECL(OS)
+             NEEDBITS(16);
+             if (state->head != Z_NULL) {
+                 state->head->xflags = (int)(hold & 0xff);
+@@ -665,7 +667,7 @@
+             if (state->flags & 0x0200) CRC2(state->check, hold);
+             INITBITS();
+             state->mode = EXLEN;
+-        case EXLEN:
++        CASE_DECL(EXLEN)
+             if (state->flags & 0x0400) {
+                 NEEDBITS(16);
+                 state->length = (unsigned)(hold);
+@@ -677,7 +679,7 @@
+             else if (state->head != Z_NULL)
+                 state->head->extra = Z_NULL;
+             state->mode = EXTRA;
+-        case EXTRA:
++        CASE_DECL(EXTRA)
+             if (state->flags & 0x0400) {
+                 copy = state->length;
+                 if (copy > have) copy = have;
+@@ -699,7 +701,7 @@
+             }
+             state->length = 0;
+             state->mode = NAME;
+-        case NAME:
++        CASE_DECL(NAME)
+             if (state->flags & 0x0800) {
+                 if (have == 0) goto inf_leave;
+                 copy = 0;
+@@ -720,7 +722,7 @@
+                 state->head->name = Z_NULL;
+             state->length = 0;
+             state->mode = COMMENT;
+-        case COMMENT:
++        CASE_DECL(COMMENT)
+             if (state->flags & 0x1000) {
+                 if (have == 0) goto inf_leave;
+                 copy = 0;
+@@ -740,13 +742,12 @@
+             else if (state->head != Z_NULL)
+                 state->head->comment = Z_NULL;
+             state->mode = HCRC;
+-        case HCRC:
++        CASE_DECL(HCRC)
+             if (state->flags & 0x0200) {
+                 NEEDBITS(16);
+                 if (hold != (state->check & 0xffff)) {
+                     strm->msg = (char *)"header crc mismatch";
+-                    state->mode = BAD;
+-                    break;
++		    STATE_CHANGE(BAD);
+                 }
+                 INITBITS();
+             }
+@@ -755,28 +756,26 @@
+                 state->head->done = 1;
+             }
+             strm->adler = state->check = crc32(0L, Z_NULL, 0);
+-            state->mode = TYPE;
+-            break;
++	    STATE_CHANGE(TYPE);
+ #endif
+-        case DICTID:
++        CASE_DECL(DICTID)
+             NEEDBITS(32);
+             strm->adler = state->check = REVERSE(hold);
+             INITBITS();
+             state->mode = DICT;
+-        case DICT:
++        CASE_DECL(DICT)
+             if (state->havedict == 0) {
+                 RESTORE();
+                 return Z_NEED_DICT;
+             }
+             strm->adler = state->check = adler32(0L, Z_NULL, 0);
+             state->mode = TYPE;
+-        case TYPE:
++        CASE_DECL(TYPE)
+             if (flush == Z_BLOCK) goto inf_leave;
+-        case TYPEDO:
++        CASE_DECL(TYPEDO)
+             if (state->last) {
+                 BYTEBITS();
+-                state->mode = CHECK;
+-                break;
++		STATE_CHANGE(CHECK);
+             }
+             NEEDBITS(3);
+             state->last = BITS(1);
+@@ -785,39 +784,38 @@
+             case 0:                             /* stored block */
+                 Tracev((stderr, "inflate:     stored block%s\n",
+                         state->last ? " (last)" : ""));
+-                state->mode = STORED;
+-                break;
++		DROPBITS(2);
++		STATE_CHANGE(STORED);
+             case 1:                             /* fixed block */
+                 fixedtables(state);
+                 Tracev((stderr, "inflate:     fixed codes block%s\n",
+                         state->last ? " (last)" : ""));
+-                state->mode = LEN;              /* decode codes */
+-                break;
++		DROPBITS(2);
++		STATE_CHANGE(LEN);
+             case 2:                             /* dynamic block */
+                 Tracev((stderr, "inflate:     dynamic codes block%s\n",
+                         state->last ? " (last)" : ""));
+-                state->mode = TABLE;
+-                break;
++		DROPBITS(2);
++		STATE_CHANGE(TABLE);
+             case 3:
++		DROPBITS(2);
+                 strm->msg = (char *)"invalid block type";
+-                state->mode = BAD;
++		STATE_CHANGE(BAD);
+             }
+-            DROPBITS(2);
+             break;
+-        case STORED:
++        CASE_DECL(STORED)
+             BYTEBITS();                         /* go to byte boundary */
+             NEEDBITS(32);
+             if ((hold & 0xffff) != ((hold >> 16) ^ 0xffff)) {
+                 strm->msg = (char *)"invalid stored block lengths";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             state->length = (unsigned)hold & 0xffff;
+             Tracev((stderr, "inflate:       stored length %u\n",
+                     state->length));
+             INITBITS();
+             state->mode = COPY;
+-        case COPY:
++        CASE_DECL(COPY)
+             copy = state->length;
+             if (copy) {
+                 if (copy > have) copy = have;
+@@ -832,9 +830,8 @@
+                 break;
+             }
+             Tracev((stderr, "inflate:       stored end\n"));
+-            state->mode = TYPE;
+-            break;
+-        case TABLE:
++	    STATE_CHANGE(TYPE);
++        CASE_DECL(TABLE)
+             NEEDBITS(14);
+             state->nlen = BITS(5) + 257;
+             DROPBITS(5);
+@@ -845,14 +842,13 @@
+ #ifndef PKZIP_BUG_WORKAROUND
+             if (state->nlen > 286 || state->ndist > 30) {
+                 strm->msg = (char *)"too many length or distance symbols";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+ #endif
+             Tracev((stderr, "inflate:       table sizes ok\n"));
+             state->have = 0;
+             state->mode = LENLENS;
+-        case LENLENS:
++        CASE_DECL(LENLENS)
+             while (state->have < state->ncode) {
+                 NEEDBITS(3);
+                 state->lens[order[state->have++]] = (unsigned short)BITS(3);
+@@ -867,13 +863,12 @@
+                                 &(state->lenbits), state->work);
+             if (ret) {
+                 strm->msg = (char *)"invalid code lengths set";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             Tracev((stderr, "inflate:       code lengths ok\n"));
+             state->have = 0;
+             state->mode = CODELENS;
+-        case CODELENS:
++        CASE_DECL(CODELENS)
+             while (state->have < state->nlen + state->ndist) {
+                 for (;;) {
+                     this = state->lencode[BITS(state->lenbits)];
+@@ -891,8 +886,7 @@
+                         DROPBITS(this.bits);
+                         if (state->have == 0) {
+                             strm->msg = (char *)"invalid bit length repeat";
+-                            state->mode = BAD;
+-                            break;
++			    STATE_CHANGE(BAD);
+                         }
+                         len = state->lens[state->have - 1];
+                         copy = 3 + BITS(2);
+@@ -914,17 +908,13 @@
+                     }
+                     if (state->have + copy > state->nlen + state->ndist) {
+                         strm->msg = (char *)"invalid bit length repeat";
+-                        state->mode = BAD;
+-                        break;
++			STATE_CHANGE(BAD);
+                     }
+                     while (copy--)
+                         state->lens[state->have++] = (unsigned short)len;
+                 }
+             }
+ 
+-            /* handle error breaks in while */
+-            if (state->mode == BAD) break;
+-
+             /* build code tables */
+             state->next = state->codes;
+             state->lencode = (code const FAR *)(state->next);
+@@ -933,8 +923,7 @@
+                                 &(state->lenbits), state->work);
+             if (ret) {
+                 strm->msg = (char *)"invalid literal/lengths set";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             state->distcode = (code const FAR *)(state->next);
+             state->distbits = 6;
+@@ -942,12 +931,11 @@
+                             &(state->next), &(state->distbits), state->work);
+             if (ret) {
+                 strm->msg = (char *)"invalid distances set";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             Tracev((stderr, "inflate:       codes ok\n"));
+             state->mode = LEN;
+-        case LEN:
++        CASE_DECL(LEN)
+             if (have >= 6 && left >= 258) {
+                 RESTORE();
+                 inflate_fast(strm, out);
+@@ -975,22 +963,19 @@
+                 Tracevv((stderr, this.val >= 0x20 && this.val < 0x7f ?
+                         "inflate:         literal '%c'\n" :
+                         "inflate:         literal 0x%02x\n", this.val));
+-                state->mode = LIT;
+-                break;
++		STATE_CHANGE(LIT);
+             }
+             if (this.op & 32) {
+                 Tracevv((stderr, "inflate:         end of block\n"));
+-                state->mode = TYPE;
+-                break;
++		STATE_CHANGE(TYPE);
+             }
+             if (this.op & 64) {
+                 strm->msg = (char *)"invalid literal/length code";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             state->extra = (unsigned)(this.op) & 15;
+             state->mode = LENEXT;
+-        case LENEXT:
++        CASE_DECL(LENEXT)
+             if (state->extra) {
+                 NEEDBITS(state->extra);
+                 state->length += BITS(state->extra);
+@@ -998,7 +983,7 @@
+             }
+             Tracevv((stderr, "inflate:         length %u\n", state->length));
+             state->mode = DIST;
+-        case DIST:
++        CASE_DECL(DIST)
+             for (;;) {
+                 this = state->distcode[BITS(state->distbits)];
+                 if ((unsigned)(this.bits) <= bits) break;
+@@ -1017,13 +1002,12 @@
+             DROPBITS(this.bits);
+             if (this.op & 64) {
+                 strm->msg = (char *)"invalid distance code";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             state->offset = (unsigned)this.val;
+             state->extra = (unsigned)(this.op) & 15;
+             state->mode = DISTEXT;
+-        case DISTEXT:
++        CASE_DECL(DISTEXT)
+             if (state->extra) {
+                 NEEDBITS(state->extra);
+                 state->offset += BITS(state->extra);
+@@ -1032,18 +1016,16 @@
+ #ifdef INFLATE_STRICT
+             if (state->offset > state->dmax) {
+                 strm->msg = (char *)"invalid distance too far back";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+ #endif
+             if (state->offset > state->whave + out - left) {
+                 strm->msg = (char *)"invalid distance too far back";
+-                state->mode = BAD;
+-                break;
++		STATE_CHANGE(BAD);
+             }
+             Tracevv((stderr, "inflate:         distance %u\n", state->offset));
+             state->mode = MATCH;
+-        case MATCH:
++        CASE_DECL(MATCH)
+             if (left == 0) goto inf_leave;
+             copy = out - left;
+             if (state->offset > copy) {         /* copy from window */
+@@ -1066,15 +1048,15 @@
+             do {
+                 *put++ = *from++;
+             } while (--copy);
+-            if (state->length == 0) state->mode = LEN;
++            if (state->length == 0)
++		STATE_CHANGE(LEN);
+             break;
+-        case LIT:
++        CASE_DECL(LIT)
+             if (left == 0) goto inf_leave;
+             *put++ = (unsigned char)(state->length);
+             left--;
+-            state->mode = LEN;
+-            break;
+-        case CHECK:
++	    STATE_CHANGE(LEN);
++        CASE_DECL(CHECK)
+             if (state->wrap) {
+                 NEEDBITS(32);
+                 out -= left;
+@@ -1090,36 +1072,34 @@
+ #endif
+                      REVERSE(hold)) != state->check) {
+                     strm->msg = (char *)"incorrect data check";
+-                    state->mode = BAD;
+-                    break;
++		    STATE_CHANGE(BAD);
+                 }
+                 INITBITS();
+                 Tracev((stderr, "inflate:   check matches trailer\n"));
+             }
+ #ifdef GUNZIP
+             state->mode = LENGTH;
+-        case LENGTH:
++        CASE_DECL(LENGTH)
+             if (state->wrap && state->flags) {
+                 NEEDBITS(32);
+                 if (hold != (state->total & 0xffffffffUL)) {
+                     strm->msg = (char *)"incorrect length check";
+-                    state->mode = BAD;
+-                    break;
++		    STATE_CHANGE(BAD);
+                 }
+                 INITBITS();
+                 Tracev((stderr, "inflate:   length matches trailer\n"));
+             }
+ #endif
+             state->mode = DONE;
+-        case DONE:
++        CASE_DECL(DONE)
+             ret = Z_STREAM_END;
+             goto inf_leave;
+-        case BAD:
++        CASE_DECL(BAD)
+             ret = Z_DATA_ERROR;
+             goto inf_leave;
+-        case MEM:
++        CASE_DECL(MEM)
+             return Z_MEM_ERROR;
+-        case SYNC:
++        CASE_DECL(SYNC)
+         default:
+             return Z_STREAM_ERROR;
+         }
