@@ -1,82 +1,52 @@
-From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-Subject: Re: Libification project (SoC)
-Date: Fri, 16 Mar 2007 10:47:15 -0300
-Organization: Mandriva
-Message-ID: <20070316104715.483df0d5@localhost>
-References: <20070316042406.7e750ed0@home.brethil>
-	<20070316045928.GB31606@spearce.org>
-	<7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: GSoC '07 - Accepted!
+Date: Fri, 16 Mar 2007 10:06:27 -0400
+Message-ID: <1A02E75C-3BCE-487C-8D58-6B454EBF0BDC@silverinsanity.com>
+References: <20070315161143.GA29547@spearce.org> <20070316005026.GF29547@spearce.org> <20070316065222.GF31606@spearce.org> <Pine.LNX.4.63.0703161318180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 16 14:47:34 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 16 15:06:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSCmL-00041Y-Rx
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 14:47:34 +0100
+	id 1HSD4m-0004HK-R4
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 15:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933636AbXCPNrb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 09:47:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933643AbXCPNrb
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 09:47:31 -0400
-Received: from perninha.conectiva.com.br ([200.140.247.100]:56044 "EHLO
-	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933636AbXCPNra (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 09:47:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 4CFAE2AE81;
-	Fri, 16 Mar 2007 10:47:28 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at conectiva.com.br
-Received: from perninha.conectiva.com.br ([127.0.0.1])
-	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id mCnjlcNCxw4h; Fri, 16 Mar 2007 10:47:18 -0300 (BRT)
-Received: from localhost (doriath.conectiva [10.0.2.48])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 54BF32AE78;
-	Fri, 16 Mar 2007 10:47:18 -0300 (BRT)
-In-Reply-To: <7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
-X-Mailer: Sylpheed-Claws 2.5.0-rc3 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
+	id S964789AbXCPOGe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 10:06:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964810AbXCPOGe
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 10:06:34 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:59446 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964789AbXCPOGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 10:06:33 -0400
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id A261F1FFC02B;
+	Fri, 16 Mar 2007 14:06:31 +0000 (UTC)
+In-Reply-To: <Pine.LNX.4.63.0703161318180.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42361>
 
-Em Thu, 15 Mar 2007 22:30:46 -0700
-Junio C Hamano <junkio@cox.net> escreveu:
 
-| "Shawn O. Pearce" <spearce@spearce.org> writes:
-| 
-| >>     o Documentation (eg, doxygen)
-| >>     o Unit-tests
-| >>     o Add prefix (eg, git_*) to public API functions
-| >
-| > Yes.  But which functions shall we expose?  ;-)
-| 
-| Before going into that topic, a bigger question is if we are
-| happy with the current internal API and what the goal of
-| libification is.  If the libification is going to say that "this
-| is a published API so we are not going to change it", I would
-| imagine that it would be very hard to accept in the mainline.
+On Mar 16, 2007, at 8:18 AM, Johannes Schindelin wrote:
 
- I think you can put this way: do you want/whish to make
-git more useful than it's today?
+> On Fri, 16 Mar 2007, Shawn O. Pearce wrote:
+>> Besides giving the lesson that I cannot spell (or type), I've put
+>> together a possible set of points that I think would help students to
+>> write better proposals, and will help us as mentors to review them:
+>>
+>>   http://git.or.cz/gitwiki/SoC2007Template
+>
+> Looks good to me!
 
- If so, such a library is important because it will allow
-users to write application that use git in a reasonable
-way.
-
- It doesn't need to be the next five-zilion-function-library
-that will provide the wonders of git in several different
-ways.
-
- We could start by fixing the got-an-error-die behaivor and
-define a _experimental_ API (just a few functions) just to get
-data out of git.
-
- This would be enough to write the Perl binding I think?
-
--- 
-Luiz Fernando N. Capitulino
+Ditto.
+~~ Brian
