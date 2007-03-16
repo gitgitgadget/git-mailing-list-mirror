@@ -1,58 +1,59 @@
-From: Len Brown <lenb@kernel.org>
-Subject: Re: mercurial to git
-Date: Fri, 16 Mar 2007 00:53:54 -0400
-Organization: Intel Open Source Technology Center
-Message-ID: <200703160053.54699.lenb@kernel.org>
-References: <20070306210629.GA42331@peter.daprodeges.fqdn.th-h.de> <20070315094434.GA4425@peter.daprodeges.fqdn.th-h.de> <20070315210406.GA8568@thunk.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Rocco Rutte <pdmef@gmx.net>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Fri Mar 16 05:55:36 2007
+From: Ed Swarthout <Ed.Swarthout@freescale.com>
+Subject: [PATCH] gitweb: Fix uninitialized value when commit message is missing.
+Date: Thu, 15 Mar 2007 23:55:09 -0500
+Message-ID: <11740209091385-git-send-email-Ed.Swarthout@freescale.com>
+Cc: Ed Swarthout <Ed.Swarthout@freescale.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 16 05:56:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS4TX-0006WN-LS
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 05:55:36 +0100
+	id 1HS4U7-0006p3-M7
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 05:56:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751710AbXCPEzT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 00:55:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751850AbXCPEzT
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 00:55:19 -0400
-Received: from hera.kernel.org ([140.211.167.34]:42614 "EHLO hera.kernel.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751710AbXCPEzS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 00:55:18 -0400
-Received: from d975xbx2.site (c-65-96-213-102.hsd1.ma.comcast.net [65.96.213.102])
-	(authenticated bits=0)
-	by hera.kernel.org (8.13.8/8.13.7) with ESMTP id l2G4s0lk004749
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 16 Mar 2007 04:55:10 GMT
-User-Agent: KMail/1.9.5
-In-Reply-To: <20070315210406.GA8568@thunk.org>
-Content-Disposition: inline
-X-Virus-Scanned: ClamAV 0.88.7/2842/Thu Mar 15 22:21:31 2007 on hera.kernel.org
-X-Virus-Status: Clean
-X-Spam-Status: No, score=0.5 required=5.0 tests=AWL,BAYES_50,RCVD_IN_SORBS_DUL
-	autolearn=no version=3.1.8
-X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on hera.kernel.org
+	id S1751861AbXCPE4I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 00:56:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751850AbXCPE4I
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 00:56:08 -0400
+Received: from de01egw01.freescale.net ([192.88.165.102]:38956 "EHLO
+	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751861AbXCPE4H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 00:56:07 -0400
+Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
+	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id l2G4u4XF011300
+	for <git@vger.kernel.org>; Thu, 15 Mar 2007 21:56:04 -0700 (MST)
+Received: from petra11.am.freescale.net (petra11.am.freescale.net [10.82.2.111])
+	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id l2G4u2TZ020460;
+	Thu, 15 Mar 2007 23:56:02 -0500 (CDT)
+Received: from swarthou by petra11.am.freescale.net with local (Exim 4.50)
+	id 1HS4T7-0006JA-WC; Thu, 15 Mar 2007 23:55:10 -0500
+X-Mailer: git-send-email 1.5.0.4.403.g4ee1
+X-Brightmail-Tracker: AAAAAQAAAAQ=
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42323>
 
-On Thursday 15 March 2007 17:04, Theodore Tso wrote:
-> So it does handle octopus merges already (it has to, the ACPI folks
-> are very ocotpus merge happy :-).
 
-Well, just to set the record straight...
+Signed-off-by: Ed Swarthout <Ed.Swarthout@freescale.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-So yes, I did a 12-way merge in the kernel a long while back on a lark.
-I don't generally do them any more in the official kernel tree
-because I think they make bisect more complicated than it needs to be.
-
-cheers,
--Len
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 27b5970..4771689 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1346,7 +1346,7 @@ sub parse_commit_text {
+ 			last;
+ 		}
+ 	}
+-	if ($co{'title'} eq "") {
++	if (!defined($co{'title'}) || $co{'title'} eq "") {
+ 		$co{'title'} = $co{'title_short'} = '(no commit message)';
+ 	}
+ 	# remove added spaces
+-- 
+1.5.0.4.403.g4ee1
