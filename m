@@ -1,110 +1,73 @@
-From: "Chris Riddoch" <riddochc@gmail.com>
-Subject: Initializing svn repo from git
-Date: Fri, 16 Mar 2007 15:40:46 -0600
-Message-ID: <6efbd9b70703161440h762bd340x787f3258bc8dfcdc@mail.gmail.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Directory in one branch, file in another = can't switch branches
+Date: Fri, 16 Mar 2007 15:17:06 -0700
+Message-ID: <45FB1762.7040505@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 16 22:40:54 2007
+X-From: git-owner@vger.kernel.org Fri Mar 16 23:23:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSKAO-0003Ub-Bd
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 22:40:52 +0100
+	id 1HSKq2-0000Tg-Od
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 23:23:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753298AbXCPVks (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 17:40:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbXCPVks
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 17:40:48 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:16670 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753298AbXCPVkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 17:40:47 -0400
-Received: by wr-out-0506.google.com with SMTP id 41so687444wry
-        for <git@vger.kernel.org>; Fri, 16 Mar 2007 14:40:46 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=NaqwuuEKYtecOry06xVXuvFkTMrfq3TZxWA4WaJXEwgzdCXBLXfRJ9JZhjWOndeq7KWZE4ox5ukLOtLZGKMi0aLNpYYl5aD7yhVA2tHpjahbYRfTQxuyvMlBIqrUBGx2dRFg/Pt6WHrdDjBtemLLFoThWd2BPfeKAms13vSuCsc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=FLBCIv0DQ28CMedyXyk2UdBbgMuZvFaWEn3QARDDeUO2QrzmzlOB7690CIaMgEGTUjFXIip/ws2EUdzWNNEviwz0JzoSv/zjKSMrZiu8OSoW7iK1lJNBZfpwP4pKZkP8KUmv0WQB/g3H37hLTFJpkJA0evUMRpuGiA64U/+ivDo=
-Received: by 10.114.202.15 with SMTP id z15mr911869waf.1174081246501;
-        Fri, 16 Mar 2007 14:40:46 -0700 (PDT)
-Received: by 10.114.254.4 with HTTP; Fri, 16 Mar 2007 14:40:46 -0700 (PDT)
-Content-Disposition: inline
+	id S965993AbXCPWXu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 18:23:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965994AbXCPWXt
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 18:23:49 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:54446 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965993AbXCPWXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 18:23:49 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Mar 2007 18:23:48 EDT
+Received: (qmail 11386 invoked from network); 16 Mar 2007 22:17:07 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=IIL0nBuzjqtfKXgRuorx25X2C4cc/4MebjUOiXePZB+i/kOJjxfrVMvNOXS9IIfq  ;
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
+  by localhost with SMTP; 16 Mar 2007 22:17:07 -0000
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42400>
 
-Hi, folks.  This is probably targeted at Eric Wong, but any assistance
-is welcome.  I asked on #git, and decideded that a larger audience
-might be interested in this question, and whatever its answer turns
-out to be.
+We've hit this problem with a git-svn-based repository where some stuff 
+got reorganized, but it happens in plain git too; if you have a branch 
+with a file called, say, "foo" and another branch with a file called 
+"foo/bar", you can't switch between branches even if there are no 
+uncommitted edits in either branch.
 
-I've been working on a project, and tracking its history in git.  Due
-to lack of windows support, and windows-only developers joining my
-project, my higher-ups decided that we needed to use SVN.  I expect
-I'll probably use git-svn, myself, but I'm faced with a task:
+To reproduce (I'm using version 1.5.0.1.74.g2470):
 
-I need to use the contents of my git repository, which is *very*
-linear with only one branch, to fill in some history for a new, empty
-svn repository.
+% git init-db
+Initialized empty Git repository in .git/
+% echo "this is a test file" > testing
+% git add testing
+% git commit -a -m "initial commit on master"
+Created initial commit 1a9cb1bf3a5475f0bb05d1e7c59839ba0a388be7
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 testing
+% git checkout -b with-dir
+Switched to a new branch "with-dir"
+% mv testing testing-
+% mkdir testing
+% mv testing- testing/datafile
+% git add testing/datafile
+% git commit -a -m "commit with subdir"      
+Created commit cdcb2af2a8dae8a2c5c3c143cb00b4863291cc17
+ 2 files changed, 1 insertions(+), 1 deletions(-)
+ delete mode 100644 testing
+ create mode 100644 testing/datafile
+% git checkout master
+fatal: Untracked working tree file 'testing' would be overwritten by merge.
 
-My current steps, which isn't complete (identifiers cleaned out to
-protect... well, me.)
+You can work around it by renaming the directory, but git should really 
+blow away the directory if it doesn't contain any untracked / modified 
+files.
 
-$ git svn init  svn://server/project project
-$ cd project
-project$ git svn fetch
-Fetching git-svn
-r0 = df2d1a798e85c75b9abbfd22fe06ff651a8fa9dd
-project$ git pull /git/project
-warning: no common commits
-remote: Generating pack...
-remote: Done counting 850 objects.
-remote: Deltifying 850 objects.
-...
-
-project$ git log
-commit <sha>
-Merge: <sha>... <sha>...
-Author: Chris Riddoch
-Date: Fri Mar 16 15:13:58 2007 -0600
-
-    Merge /git/project/
-
-commit <sha>
-Author: (no author) <(no author)@641bd306-a92b-0410-b27c-7dcbb122c54d>
-Date:   Wed Mar 14 20:41:10 2007 +0000
-
-    git-svn-id: svn://server/project@0 641bd306-a92b-0410-b27c-7dcbb122c54d
-
-commit <sha>
-Author: Chris Riddoch
-Date:   Tue Mar 13 13:54:21 2007 -0600
-
-    Most recent commit
-
-<skipping a bunch>
-
-commit <sha>
-Author: Chris Riddoch
-Date:   Thu Feb 1 10:55:42 2007 -0700
-
-    Initial commit of project
-
-
-
-Um... now what?  Can someone walk me through this?
-
-Oh, how I wish for a native Windows version of git.  That's the
-*right* solution, I know.
-
--- 
-epistemological humility
-  Chris Riddoch
+-Steve
