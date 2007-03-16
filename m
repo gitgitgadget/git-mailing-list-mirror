@@ -1,88 +1,63 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Libification project (SoC)
-Date: Fri, 16 Mar 2007 16:12:17 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Fri, 16 Mar 2007 16:16:25 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703161612380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 References: <20070316042406.7e750ed0@home.brethil> <20070316045928.GB31606@spearce.org>
- <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316060033.GD31606@spearce.org>
- <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
+ <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316104715.483df0d5@localhost>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Rocco Rutte <pdmef@gmx.net>
-X-From: git-owner@vger.kernel.org Fri Mar 16 16:12:25 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+X-From: git-owner@vger.kernel.org Fri Mar 16 16:16:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSE6Q-0000mq-IH
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 16:12:22 +0100
+	id 1HSEAV-0002ml-RI
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 16:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219AbXCPPMT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 11:12:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965356AbXCPPMT
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 11:12:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42832 "HELO mail.gmx.net"
+	id S1752240AbXCPPQ3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 11:16:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399AbXCPPQ3
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 11:16:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54329 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753219AbXCPPMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 11:12:18 -0400
-Received: (qmail invoked by alias); 16 Mar 2007 15:12:17 -0000
-X-Provags-ID: V01U2FsdGVkX19fduAypMZfiqcnwRLWZNJawS3bAAjNfRd6NNtVUY
-	uozs685t6mMnbV
+	id S1752279AbXCPPQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 11:16:28 -0400
+Received: (qmail invoked by alias); 16 Mar 2007 15:16:27 -0000
+X-Provags-ID: V01U2FsdGVkX18qoXttZg8qBch6ERbCR08B3cOltV/P0uK+zsGWWC
+	FqPEqUvryjmYxw
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
+In-Reply-To: <20070316104715.483df0d5@localhost>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42365>
 
 Hi,
 
-[please do not cull the Cc: list]
+On Fri, 16 Mar 2007, Luiz Fernando N. Capitulino wrote:
 
-On Fri, 16 Mar 2007, Rocco Rutte wrote:
+>  It doesn't need to be the next five-zilion-function-library that will 
+> provide the wonders of git in several different ways.
 
-> First, I think that would be some cleanup "only" since that basically would
-> mean to
-> 
->   1) make all functions die()ing return some value and handle it and
->   2) wrap all static vars into structures and pass them around
-> 
-> If you don't choose a design before wrapping things up in structures, you'll
-> probably end up having one structure per source file (at least too many
-> structures).
+Yes. Just like we have a really small really stable part of core-git, 
+which can be used by porcelains, and is expected to work the same in 
+future versions, we could have eventually with libgit.
 
-Why? For some tasks, it should be 1) easier, 2) more elegant, and 3) 
-faster to write a function which re-initialises the static variables.
+That would mean, for example, that rev_info should always be initialised 
+with malloc() so that future versions can make it bigger, and that new 
+members be added always at the end.
 
-Of course, if you want to work with multiple repos _at the same time_, 
-this does not help you. But frankly, we don't support that with core-git, 
-so why should we in libgit?
+>  We could start by fixing the got-an-error-die behaivor and define a 
+> _experimental_ API (just a few functions) just to get data out of git.
 
-> Porting things like qgit to it or writting proper perl/python bindings 
-> is wasted time since you'd have to rewrite all of it once you decided 
-> which functions to expose and which structures to use (calling the 
-> main() routines of builtin's doesn't count as real libifaction, it would 
-> rather be a performance improvement only).
+That sounds very reasonable.
 
-Nope. It is _not_ a complete rewrite. More likely, it is minimal 
-adjustments. It's not like we will replace apples with cars...
-
-> I'd simply try to find a rough consensus on the data structures and the 
-> layer model before starting the project, solve 1), afterwards implement 
-> 2) according to it.
-
-We already _have_ the data structures!
-
-Also, in my experience, defining a complete API, and only after that, 
-implement it, never works. Rather, start with a _small_ part you want to 
-do. Define a clean API _just for that part_. Implement it. Verify that it 
-indeed does what it should do (and that means not just _you_ should verify 
-it, but it should be stress tested on the list).
-
-We don't have to create the whole world in one day, you know?
+And if it does not work out as expected, we don't have to make it part of 
+"official" Git. It can live on as a fork.
 
 Ciao,
 Dscho
