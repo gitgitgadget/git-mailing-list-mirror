@@ -1,170 +1,103 @@
-From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
-Subject: [PATCH] git-fetch, git-parse-remote: Cleanup implementation of '.'
-Date: Fri, 16 Mar 2007 09:38:09 +0100
-Message-ID: <45FA5771.1040200@lu.unisi.ch>
-References: <etavpn$ma0$1@sea.gmane.org> <7vr6rqyr60.fsf@assigned-by-dhcp.cox.net>
-Reply-To: bonzini@gnu.org
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH/RFC] Documentation: git-daemon inetd configuration fix
+Date: Fri, 16 Mar 2007 01:43:02 -0700
+Message-ID: <7vabydwpd5.fsf@assigned-by-dhcp.cox.net>
+References: <11740316693552-git-send-email-matthias@spinlock.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 16 09:38:20 2007
+To: Matthias Kestenholz <matthias@spinlock.ch>
+X-From: git-owner@vger.kernel.org Fri Mar 16 09:43:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HS7x5-000874-Bq
-	for gcvg-git@gmane.org; Fri, 16 Mar 2007 09:38:19 +0100
+	id 1HS81l-0002CM-Vn
+	for gcvg-git@gmane.org; Fri, 16 Mar 2007 09:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752080AbXCPIiQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 04:38:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbXCPIiQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 04:38:16 -0400
-Received: from server.usilu.net ([195.176.178.200]:22539 "EHLO mail.usilu.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752080AbXCPIiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 04:38:15 -0400
-Received: from [1.240.182.245] ([213.140.22.65] RDNS failed) by mail.usilu.net over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 16 Mar 2007 09:40:59 +0100
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
-In-Reply-To: <7vr6rqyr60.fsf@assigned-by-dhcp.cox.net>
-X-OriginalArrivalTime: 16 Mar 2007 08:40:59.0937 (UTC) FILETIME=[D2A15910:01C767A6]
+	id S1752100AbXCPInG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 04:43:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbXCPInG
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 04:43:06 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:47434 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100AbXCPInE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 04:43:04 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070316084302.WBCQ748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 16 Mar 2007 04:43:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id bLj21W00J1kojtg0000000; Fri, 16 Mar 2007 04:43:02 -0400
+In-Reply-To: <11740316693552-git-send-email-matthias@spinlock.ch> (Matthias
+	Kestenholz's message of "Fri, 16 Mar 2007 08:54:29 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42335>
 
-As per the mailing list exchanges, this applies the following changes:
+Matthias Kestenholz <matthias@spinlock.ch> writes:
 
-- renames the data source from 'builtin' to 'self'.
+>  On my debian server, this change was needed to get git-daemon running.
+>  I am no inetd expert, so I don't know where the error was.
+>
+>  Perhaps this patch might help someone else.
+>
+>
+> diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+> index 9ddab71..499c1f3 100644
+> --- a/Documentation/git-daemon.txt
+> +++ b/Documentation/git-daemon.txt
+> @@ -177,7 +177,7 @@ git-daemon as inetd server::
+>  +
+>  ------------------------------------------------
+>  	git stream tcp nowait nobody  /usr/bin/git-daemon
+> -		git-daemon --inetd --verbose --export-all
+> +		/usr/bin/git-daemon --inetd --verbose --export-all
+>  		/pub/foo /pub/bar
+>  ------------------------------------------------
 
-- renames fetch_packs/fetch_heads to fetch_per_ref and fetch_all_at_once
+That sounds _very_ wrong.  What you changed is argv[0] (i.e. the
+beginning of "service program arguments" field) and it should
+not matter what you have there for inetd to launch git-daemon.
+Presumably your inetd runs with /usr/bin in your path so even
+the "service program" field (the one after 'nobody') should not
+need the full path (but it is a good idea to be explicit in that
+field as a principle), but needing the full path in argv[0]?
 
-- processes any remote whose URL is '.' (not only the builtin one) using
-native-store (this is tested by t3200-branch.sh).
+On _my_ debian box, I do not need a full path there, so it is
+not even Debian in general but problem is on your particular
+box.  Can you dig a bit more to see what you are doing any
+differently?
 
-Signed-Off-By: Paolo Bonzini  <bonzini@gnu.org>
----
- git-fetch.sh        |   33 +++++++++++++--------------------
- git-parse-remote.sh |    8 ++++----
- 2 files changed, 17 insertions(+), 24 deletions(-)
+For example, do you really mean the "service program arguments"
+field that matters?
 
-	The patch is a cleanup of the one you posted, and it was
-	appropriately tested with no regression.
+One plausible mistake scenario you _could_ have made is
+something like this.  You compile git yourself and install it in
+/home/matt/bin/git-daemon, and you needed to spell that path out
+in "service program" field, but you found it out by trial and
+error, and during that experiment you did not change "service
+program" field (which actually matters) but "service program
+arguments" field first.  And the working configuration you
+happened to end up with was like this:
 
-	I can see now what you meant by the split between fetch and
-	merge logic making my patch more complicated than necessary.
+	git stream tcp nowait nobody /home/matt/bin/git-daemon \
+        	/home/matt/bin/git-daemon --inetd ...
 
-diff --git a/git-fetch.sh b/git-fetch.sh
-index 3b01f06..a650116 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -161,7 +161,7 @@ then
- 	fi
- fi
- 
--fetch_packs () {
-+fetch_all_at_once () {
- 
-   eval=$(echo "$1" | git-fetch--tool parse-reflist "-")
-   eval "$eval"
-@@ -169,7 +169,9 @@ fetch_packs () {
-     ( : subshell because we muck with IFS
-       IFS=" 	$LF"
-       (
--	if test -f "$remote" ; then
-+	if test "$remote" = . ; then
-+	    git-show-ref $rref || echo failed "$remote"
-+	elif test -f "$remote" ; then
- 	    test -n "$shallow_depth" &&
- 		die "shallow clone with bundle is not supported"
- 	    git-bundle unbundle "$remote" $rref ||
-@@ -192,7 +194,7 @@ fetch_packs () {
- 
- }
- 
--fetch_heads () {
-+fetch_per_ref () {
-   reflist="$1"
-   refs=
-   rref=
-@@ -286,10 +288,6 @@ fetch_heads () {
- 	      rsync_slurped_objects=t
- 	  }
- 	  ;;
--      .)
--	  local_name=$remote_name
--	  head=$(git-rev-parse --verify "$local_name")
--	  ;;
-       esac
- 
-       append_fetch_head "$head" "$remote" \
-@@ -300,19 +298,14 @@ fetch_heads () {
- }
- 
- fetch_main () {
--	data_source=$(get_data_source "$remote_nick")
--	if test "$data_source" = builtin; then
--		fetch_heads "$@"
--	else
--		case "$remote" in
--		http://* | https://* | ftp://* | rsync://* )
--			fetch_heads "$@"
--			;;
--		*)
--			fetch_packs "$@"
--			;;
--		esac
--	fi
-+	case "$remote" in
-+	http://* | https://* | ftp://* | rsync://* )
-+		fetch_per_ref "$@"
-+		;;
-+	*)
-+		fetch_all_at_once "$@"
-+		;;
-+	esac
- }
- 
- fetch_main "$reflist" || exit
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index a94215d..f25f9c1 100755
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -10,7 +10,7 @@ get_data_source () {
- 		echo ''
- 		;;
- 	.)
--		echo builtin
-+		echo self
- 		;;
- 	*)
- 		if test "$(git-config --get "remote.$1.url")"
-@@ -34,7 +34,7 @@ get_remote_url () {
- 	'')
- 		echo "$1"
- 		;;
--	builtin)
-+	self)
- 		echo "$1"
- 		;;
- 	config)
-@@ -63,7 +63,7 @@ get_default_remote () {
- get_remote_default_refs_for_push () {
- 	data_source=$(get_data_source "$1")
- 	case "$data_source" in
--	'' | branches | builtin)
-+	'' | branches | self)
- 		;; # no default push mapping, just send matching refs.
- 	config)
- 		git-config --get-all "remote.$1.push" ;;
-@@ -169,7 +169,7 @@ get_remote_default_refs_for_fetch () {
- 	case "$data_source" in
- 	'')
- 		echo "HEAD:" ;;
--	builtin)
-+	self)
- 	        canon_refs_list_for_fetch -d "$1" \
- 			$(git-show-ref | sed -n 's,.*[      ]\(refs/.*\),\1:,p') ;;
- 	config)
+and then you tried to generalize it like this:
+
+	git stream tcp nowait nobody /usr/bin/git-daemon \
+        	/usr/bin/git-daemon --inetd ...
+
+For one thing, I just tried to make sure argv[0] does not matter
+at all by having this entry in my inetd.conf:
+
+	git stream tcp nowait nobody /git/bin/git-daemon \
+        	foobla --inetd ...
+
+/git/bin is where I installed my git.  If I replace foobla with
+anything else, it responds just fine.
