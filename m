@@ -1,100 +1,104 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: [PATCH] calculate the maximal number of revisions to test
-Date: Sat, 17 Mar 2007 20:58:40 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070317195840.GA20735@informatik.uni-freiburg.de>
-References: <20070317141209.GA7838@cepheus> <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: Re: Libification project (SoC)
+Date: Sat, 17 Mar 2007 19:58:32 +0000
+Organization: Mandriva
+Message-ID: <20070317195832.2af87c06@home.brethil>
+References: <20070316042406.7e750ed0@home.brethil>
+	<20070316045928.GB31606@spearce.org>
+	<7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
+	<20070316104715.483df0d5@localhost>
+	<20070316140855.GE4489@pasky.or.cz>
+	<20070316153822.5c842e69@localhost>
+	<20070316231646.GB4508@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Mar 17 20:58:48 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Mar 17 21:13:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSf39-0001L3-Q1
-	for gcvg-git@gmane.org; Sat, 17 Mar 2007 20:58:48 +0100
+	id 1HSfHM-0000hq-Ko
+	for gcvg-git@gmane.org; Sat, 17 Mar 2007 21:13:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753841AbXCQT6q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 17 Mar 2007 15:58:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753848AbXCQT6p
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 15:58:45 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:50115 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753841AbXCQT6p (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2007 15:58:45 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HSf35-0005t4-P4; Sat, 17 Mar 2007 20:58:43 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2HJwflf020926;
-	Sat, 17 Mar 2007 20:58:41 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2HJweTj020925;
-	Sat, 17 Mar 2007 20:58:40 +0100 (MET)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753879AbXCQUN1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Mar 2007 16:13:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753874AbXCQUN1
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 16:13:27 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:56372 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753879AbXCQUN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2007 16:13:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 43F682AEDE;
+	Sat, 17 Mar 2007 17:13:24 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at conectiva.com.br
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id Rbmq0KWWhCDb; Sat, 17 Mar 2007 17:10:48 -0300 (BRT)
+Received: from home.brethil (unknown [189.4.51.23])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 9CC842AFBF;
+	Sat, 17 Mar 2007 16:55:45 -0300 (BRT)
+In-Reply-To: <20070316231646.GB4508@spearce.org>
+X-Mailer: Sylpheed-Claws 1.0.4 (GTK+ 1.2.10; x86_64-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42452>
 
-Hi gene099,
+On Fri, 16 Mar 2007 19:16:46 -0400
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
 
-> the subject really could use a "bisect:" prefix, and maybe be a littl=
-e=20
-> clearer to begin with? Imagine how much sense it makes to read the co=
-mmit=20
-> messages, and see that some maximal number of revisions is calculated=
-=2E
-OK, you're right.  I think the patch is not as complete as it could be.
-I will fix that and resend with a better log.
-=20
-> > diff --git a/git-bisect.sh b/git-bisect.sh
-> > index b1c3a6b..a5b4fdd 100755
-> > --- a/git-bisect.sh
-> > +++ b/git-bisect.sh
-> > @@ -150,8 +150,14 @@ bisect_next() {
-> >  	    git-diff-tree --pretty $rev
-> >  	    exit 0
-> >  	fi
-> > -	nr=3D$(eval "git-rev-list $rev $good -- $(cat $GIT_DIR/BISECT_NAM=
-ES)" | wc -l) || exit
-> > -	echo "Bisecting: $nr revisions left to test after this"
-> > +	nr_bad=3D$(eval "git-rev-list $rev^ $good -- $(cat $GIT_DIR/BISEC=
-T_NAMES)" | wc -l) || exit
-> > +	nr_good=3D$(eval "git-rev-list $bad^ ^$rev $good -- $(cat $GIT_DI=
-R/BISECT_NAMES)" | wc -l) || exit
-> > +	if test "$nr_bad" -ge "$nr_good"; then
-> > +		nr=3D"$nr_bad";
-> > +	else
-> > +		nr=3D"$nr_good";
-> > +	fi;
-> > +	echo "Bisecting: maximal $nr revisions left to test after this"
->=20
-> How about this instead:
->=20
-> -	echo "Bisecting: $nr revisions left to test after this"
-> +	echo "Bisecting: approx. $nr revisions left to test after this"
->=20
-> since your version is an approximation (although a conservative one)=20
-> anyway. Hmm?
-I prefer a wording that points out a maximum.  Earlier today I thougt
-about this, too, but currently I don't remember my alternative.
+| "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br> wrote:
+| >  I think the right solution is to get rid of die() from functions that
+| > are supposed to be an interface, set errno if needed and return -1
+| > or NULL.
+| 
+| And then make their callers (if they are above the public API layer)
+| die instead.  In some cases this might imply an undesirable change
+| in the error message produced, as necessary details that are included
+| today would be unavailable in the caller.
 
-Best regards
-Uwe
+ Exactly!
 
---=20
-Uwe Kleine-K=F6nig
+ One simple example of an important error message that would be
+lost can be found in read-cache.c:read_cache_from():
 
-http://www.google.com/search?q=3D12+divided+by+3
+ o index file smaller than expected
+
+ I've found a possible solution, though.
+
+ Take a look at Rusty's solution for the same problem in
+module-init-tools:
+
+"""
+/* We use error numbers in a loose translation... */
+static const char *insert_moderror(int err)
+{
+	switch (err) {
+	case ENOEXEC:
+		return "Invalid module format";
+	case ENOENT:
+		return "Unknown symbol in module, or unknown parameter (see dmesg)";
+	case ENOSYS:
+		return "Kernel does not have module support";
+	default:
+		return strerror(err);
+	}
+}
+"""
+
+ Instead of calling strerror() directly for error generated
+when inserting a module, the insmod() function calls insert_moderror()
+which provides the desirable mapping.
+
+ I think we could have something like that for each git's
+module, eg, git_cache_strerror(), git_commit_strerror() and so on.
+
+ Does this look reasonable?
+
+-- 
+Luiz Fernando N. Capitulino
