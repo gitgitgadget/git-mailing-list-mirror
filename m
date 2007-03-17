@@ -1,90 +1,107 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Errors cloning large repo
-Date: Sat, 17 Mar 2007 14:23:28 +0100
-Message-ID: <200703171423.29265.jnareb@gmail.com>
-References: <645002.46177.qm@web52608.mail.yahoo.com> <200703121209.35052.jnareb@gmail.com> <20070312142451.GC15150@spearce.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [BUG] bisecting miscounts revisions left to test
+Date: Sat, 17 Mar 2007 14:46:39 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070317134639.GA10968@informatik.uni-freiburg.de>
+References: <20070316161421.GA24584@lala> <Pine.LNX.4.63.0703170139110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 17 14:20:51 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Mar 17 14:46:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSYq3-0005Dk-DX
-	for gcvg-git@gmane.org; Sat, 17 Mar 2007 14:20:51 +0100
+	id 1HSZF8-0001aY-Rn
+	for gcvg-git@gmane.org; Sat, 17 Mar 2007 14:46:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965525AbXCQNUt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Mar 2007 09:20:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933874AbXCQNUt
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 09:20:49 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:48381 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933826AbXCQNUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2007 09:20:48 -0400
-Received: by nf-out-0910.google.com with SMTP id b2so587361nfe
-        for <git@vger.kernel.org>; Sat, 17 Mar 2007 06:20:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=s28X+CRam5WBmg8orpPr5wcVuHkvth5LYM/estAX8jibKzbjRii1P2wQkuf8xxTWPatlneOpK45NXktRKC19KQjc7mGWJvw7Z9kL9O56KxtILmIMENwZdpa3ce/rBRQvF+u96Fk+c3n7GJ7d4AJkGHPDCm+Z1V8uy197DcVtgYY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=sUMbdz52wTs5ui7YsMuJoYMkE2j7DfeAovGr4qws4h/XiuotOxKzAbe3PYO2pmtz5zW2Zlc+oCgtCU9UnRokeECDJhJtVifjt7rE23KgMjnAJbtht0qBGEI661nGw8MjFa0/xfX8t7BbTOj8DCJcTrQJ1bohW22cpPzOVelRA2g=
-Received: by 10.78.185.7 with SMTP id i7mr290949huf.1174137646634;
-        Sat, 17 Mar 2007 06:20:46 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id y6sm10976569mug.2007.03.17.06.20.44;
-        Sat, 17 Mar 2007 06:20:45 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20070312142451.GC15150@spearce.org>
+	id S965527AbXCQNqo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 17 Mar 2007 09:46:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965548AbXCQNqo
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 09:46:44 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:48864 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965527AbXCQNqn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2007 09:46:43 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HSZF4-0003Ag-K2; Sat, 17 Mar 2007 14:46:42 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2HDke30012360;
+	Sat, 17 Mar 2007 14:46:40 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2HDkdCE012359;
+	Sat, 17 Mar 2007 14:46:39 +0100 (MET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0703170139110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42433>
 
-On Mon, 12 March 2007, Shawn O. Pearce wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
+Hello,
 
->> But what would happen if server supporting concatenated packfiles
->> sends such stream to the old client? So I think some kind of protocol
->> extension, or at least new request / new feature is needed for that.
-> 
-> No, a protocol extension is not required.  The packfile format
-> is: 12 byte header, objects, 20 byte SHA-1 footer.  When sending
-> concatenated packfiles to a client the server just needs to:
-> 
->   - figure out how many objects total will be sent;
->   - send its own (new) header with that count;
->   - initialize a SHA-1 context and update it with the header;
->   - for each packfile to be sent:
->     - strip the first 12 bytes of the packfile;
->     - send the remaining bytes, except the last 20;
->     - update the SHA-1 context with the packfile data;
->   - send its own footer with the SHA-1 context.
-> 
-> Very simple.  Even the oldest Git clients (pre multi-ack extension)
-> would understand that.  That's what's great about the way the
-> packfile protocol and disk format is organized.  ;-)
+Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Fri, 16 Mar 2007, Uwe Kleine-K=F6nig wrote:
+>=20
+> > zeisberg@cassiopeia:~/gsrc/linux-2.6$ git bisect good
+> > Bisecting: 2 revisions left to test after this
+> > [e7b0d26a86943370c04d6833c6edba2a72a6e240] sysfs: reinstate exclusi=
+on between method calls and attribute unregistration
+> >=20
+> > zeisberg@cassiopeia:~/gsrc/linux-2.6$ git bisect good
+> > Bisecting: 2 revisions left to test after this
+> > [b810cdfcf91d76f603fd48023aede48ced8e6bed] Merge branch 'upstream-l=
+inus' of master.kernel.org:/pub/scm/linux/kernel/git/jgarzik/netdev-2.6
+>=20
+> The problem is that after the first git-bisect good, it looks like th=
+is:
+>=20
+> g1 - b2 - b1 - M - B
+>              /
+>      g2 - b3
+I wonder if bisect really knows that B is bad.  git bisect visualize
+doesn't mark B (i.e. bac6eefe96204d0ad67d144f2511a6fc487aa594) bad.
+Maybe the problem is, that this is a tag and not a commit?
 
-It would be a very nice thing to have, if it is backwards compatibile.
-It would ease load to server on clone, even if packs are divided into
-large tight archive pack and perhaps a few more current packs to make
-dumb transport do not neeed to download everything on [incremental]
-fetch.
+After 2 more "bisect good"s I once more get B to test.  If I mark that
+as good, I get "... was both good and bad"?
 
-On fetch... perhaps there should be some configuration variable which
-would change balance between load and bandwidth used...
+The commandline is:
 
-And automatic splitting large pack on client side would help if for
-example we have huge repository (non-compressable binaries) and client
-has smaller filesystem limit on maximum file size than server.
+	git-rev-list --bisect '^069f8256362b7a17da532f0631cee73b4cfee65b' '^08=
+e15e81a40e3241ce93b4a43886f3abda184aa6' '^0bdd0f385a44344f83409b9e00797=
+bfe2596faf8' '^2cb8a57b9851805883dfe92cf5d88a726134a384' '^6ab27c6bf38d=
+5ff71dafeca77b79e7c284804b75' '^a7c999114ecd0c69bd3970272b64d8842b765b2=
+1' '^b810cdfcf91d76f603fd48023aede48ced8e6bed' '^bdf3aaf9519ddd8a026b5e=
+04e713d2fa673532e5' '^e7b0d26a86943370c04d6833c6edba2a72a6e240' bac6eef=
+e96204d0ad67d144f2511a6fc487aa594 --
 
--- 
-Jakub Narebski
-Poland
+Maybe better "git-rev-list --bisect $good $bad^ --" should be used to
+find the bisection point?
+
+> P.S.: if Momo's turtle thinks that your name contains no non-ASCIIs, =
+why=20
+> should I?
+You should differentiate between my user name and my real name.
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+$ dc << EOF
+[d1-d1<a]sa99d1<a1[rdn555760928P*pz1<a]salax
+EOF
