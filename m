@@ -1,104 +1,153 @@
-From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-Subject: Re: Libification project (SoC)
-Date: Sat, 17 Mar 2007 19:58:32 +0000
-Organization: Mandriva
-Message-ID: <20070317195832.2af87c06@home.brethil>
-References: <20070316042406.7e750ed0@home.brethil>
-	<20070316045928.GB31606@spearce.org>
-	<7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
-	<20070316104715.483df0d5@localhost>
-	<20070316140855.GE4489@pasky.or.cz>
-	<20070316153822.5c842e69@localhost>
-	<20070316231646.GB4508@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] Implement a simple delta_base cache
+Date: Sat, 17 Mar 2007 14:45:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703160920030.13402@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703161216510.13732@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703161636520.3910@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703162257560.18328@xanadu.home>
+ <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Petr Baudis <pasky@suse.cz>, Junio C Hamano <junkio@cox.net>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 17 21:13:31 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Mar 17 22:46:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSfHM-0000hq-Ko
-	for gcvg-git@gmane.org; Sat, 17 Mar 2007 21:13:28 +0100
+	id 1HSgj7-0007fn-5Y
+	for gcvg-git@gmane.org; Sat, 17 Mar 2007 22:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753879AbXCQUN1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Mar 2007 16:13:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753874AbXCQUN1
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 16:13:27 -0400
-Received: from perninha.conectiva.com.br ([200.140.247.100]:56372 "EHLO
-	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753879AbXCQUN0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2007 16:13:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 43F682AEDE;
-	Sat, 17 Mar 2007 17:13:24 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at conectiva.com.br
-Received: from perninha.conectiva.com.br ([127.0.0.1])
-	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id Rbmq0KWWhCDb; Sat, 17 Mar 2007 17:10:48 -0300 (BRT)
-Received: from home.brethil (unknown [189.4.51.23])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 9CC842AFBF;
-	Sat, 17 Mar 2007 16:55:45 -0300 (BRT)
-In-Reply-To: <20070316231646.GB4508@spearce.org>
-X-Mailer: Sylpheed-Claws 1.0.4 (GTK+ 1.2.10; x86_64-mandriva-linux-gnu)
+	id S1751626AbXCQVqK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Mar 2007 17:46:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbXCQVqK
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 17:46:10 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:46681 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751626AbXCQVqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2007 17:46:08 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2HLjocD012044
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 17 Mar 2007 14:45:50 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2HLjnSD010452;
+	Sat, 17 Mar 2007 13:45:49 -0800
+In-Reply-To: <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-0.978 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42453>
 
-On Fri, 16 Mar 2007 19:16:46 -0400
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
 
-| "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br> wrote:
-| >  I think the right solution is to get rid of die() from functions that
-| > are supposed to be an interface, set errno if needed and return -1
-| > or NULL.
-| 
-| And then make their callers (if they are above the public API layer)
-| die instead.  In some cases this might imply an undesirable change
-| in the error message produced, as necessary details that are included
-| today would be unavailable in the caller.
 
- Exactly!
+On Sat, 17 Mar 2007, Linus Torvalds wrote:
+> 
+> Instead of always re-generating the delta bases (possibly over and over 
+> and over again), just cache the last few ones. They often can get re-used.
 
- One simple example of an important error message that would be
-lost can be found in read-cache.c:read_cache_from():
+Not just to compare actual timings, this shows the difference in the 
+traces I did. Remember, before we had:
 
- o index file smaller than expected
+	[torvalds@woody linux]$ grep Needs delta-base-trace | wc -l
+	469334
+	[torvalds@woody linux]$ grep Needs delta-base-trace |sort -u | wc -l
+	21933
 
- I've found a possible solution, though.
+and now with the simple cache, I get:
 
- Take a look at Rusty's solution for the same problem in
-module-init-tools:
+	[torvalds@woody linux]$ grep Needs delta-base-trace-new | wc -l
+	28688
+	[torvalds@woody linux]$ grep Needs delta-base-trace-new | sort -u | wc -l
+	21933
 
-"""
-/* We use error numbers in a loose translation... */
-static const char *insert_moderror(int err)
-{
-	switch (err) {
-	case ENOEXEC:
-		return "Invalid module format";
-	case ENOENT:
-		return "Unknown symbol in module, or unknown parameter (see dmesg)";
-	case ENOSYS:
-		return "Kernel does not have module support";
-	default:
-		return strerror(err);
-	}
-}
-"""
+ie, we still re-generate some of the objects multiple times, but now, 
+rather than generating them (on average) 20+ times each, we now generate 
+them an average of just 1.3 times each. Which explains why the wall-time 
+goes down by over a factor of two.
 
- Instead of calling strerror() directly for error generated
-when inserting a module, the insmod() function calls insert_moderror()
-which provides the desirable mapping.
+Changing the (statically sized) cache from 256 entries to 1024 (and 
+updating the hash function appropriately of course) gets the number down 
+to 23953 delta-base lookups (the number of unique ones obviously stays the 
+same), for an average of just 1.1 object generates per unique object, and 
+also means that you occasionally get sub-second times for my test-case of 
+logging drivers/usb/.
 
- I think we could have something like that for each git's
-module, eg, git_cache_strerror(), git_commit_strerror() and so on.
+It all also means that libz isn't really even the top entry in the 
+profiles any more, although it's still pretty high. But the profile now 
+says:
 
- Does this look reasonable?
+	samples  %        app name                 symbol name
+	41527    15.6550  git                      strlen
+	30215    11.3905  git                      inflate
+	27504    10.3685  git                      inflate_table
+	20321     7.6607  git                      find_pack_entry_one
+	16892     6.3680  git                      interesting
+	16259     6.1294  vmlinux                  __copy_user_nocache
+	16010     6.0355  git                      inflate_fast
+	9240      3.4833  git                      get_mode
+	8863      3.3412  git                      tree_entry_extract
+	7145      2.6935  git                      strncmp
+	7131      2.6883  git                      memcpy
+	6863      2.5872  git                      diff_tree
+	6113      2.3045  git                      adler32
+	4515      1.7021  git                      _int_malloc
+	3022      1.1392  git                      update_tree_entry
+	...
 
--- 
-Luiz Fernando N. Capitulino
+(Adding up all of libz is still ~31%, but it's lower as a percentage *and* 
+it's obviously a smaller percentage of a much lower absolute time, so the 
+zlib overhead went down much more than any other git overheads did)
+
+In general, this all seems very cool. The patches are simple enough that I 
+think this is very safe to merge indeed: the only question I have is that 
+somebody should verify that the "struct packed_git *p" is stable over the 
+whole lifetime of a process - so that we can use it as a hash key without 
+having to invalidate hashes if we unmap a pack (I *think* we just unmap 
+the virtual mapping, and "struct packed_git *" stays valid, but Junio 
+should ack that for me).
+
+Here's the trivial patch to extend the caching to 1k entries if somebody 
+cares. I don't know if the small added performance is worth it.
+
+		Linus
+---
+diff --git a/sha1_file.c b/sha1_file.c
+index a7e3a2a..372af60 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1352,7 +1352,7 @@ static void *unpack_compressed_entry(struct packed_git *p,
+ 	return buffer;
+ }
+ 
+-#define MAX_DELTA_CACHE (256)
++#define MAX_DELTA_CACHE (1024)
+ 
+ static struct delta_base_cache_entry {
+ 	struct packed_git *p;
+@@ -1367,8 +1367,8 @@ static unsigned long pack_entry_hash(struct packed_git *p, off_t base_offset)
+ 	unsigned long hash;
+ 
+ 	hash = (unsigned long)p + (unsigned long)base_offset;
+-	hash += (hash >> 8) + (hash >> 16);
+-	return hash & 0xff;
++	hash += (hash >> 10) + (hash >> 20);
++	return hash & (MAX_DELTA_CACHE-1);
+ }
+ 
+ static void *cache_or_unpack_entry(struct packed_git *p, off_t base_offset,
