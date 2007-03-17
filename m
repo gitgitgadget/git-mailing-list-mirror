@@ -1,132 +1,100 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 2/2] Implement a simple delta_base cache
-Date: Sat, 17 Mar 2007 12:44:06 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
- <45F9EED5.3070706@garzik.org> <Pine.LNX.4.64.0703151822490.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703160920030.13402@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703161216510.13732@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703161636520.3910@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703162257560.18328@xanadu.home>
- <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [PATCH] calculate the maximal number of revisions to test
+Date: Sat, 17 Mar 2007 20:58:40 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070317195840.GA20735@informatik.uni-freiburg.de>
+References: <20070317141209.GA7838@cepheus> <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Mar 17 20:44:25 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Mar 17 20:58:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSepF-0002G3-F9
-	for gcvg-git@gmane.org; Sat, 17 Mar 2007 20:44:25 +0100
+	id 1HSf39-0001L3-Q1
+	for gcvg-git@gmane.org; Sat, 17 Mar 2007 20:58:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753830AbXCQToX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Mar 2007 15:44:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753831AbXCQToX
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 15:44:23 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:42827 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753830AbXCQToW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2007 15:44:22 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2HJi7cD008860
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 17 Mar 2007 12:44:07 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2HJi6cG008807;
-	Sat, 17 Mar 2007 11:44:06 -0800
-In-Reply-To: <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.978 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753841AbXCQT6q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 17 Mar 2007 15:58:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753848AbXCQT6p
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 15:58:45 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:50115 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753841AbXCQT6p (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Mar 2007 15:58:45 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HSf35-0005t4-P4; Sat, 17 Mar 2007 20:58:43 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2HJwflf020926;
+	Sat, 17 Mar 2007 20:58:41 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2HJweTj020925;
+	Sat, 17 Mar 2007 20:58:40 +0100 (MET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42451>
 
+Hi gene099,
 
-This trivial 256-entry delta_base cache improves performance for some 
-loads by a factor of 2.5 or so.
+> the subject really could use a "bisect:" prefix, and maybe be a littl=
+e=20
+> clearer to begin with? Imagine how much sense it makes to read the co=
+mmit=20
+> messages, and see that some maximal number of revisions is calculated=
+=2E
+OK, you're right.  I think the patch is not as complete as it could be.
+I will fix that and resend with a better log.
+=20
+> > diff --git a/git-bisect.sh b/git-bisect.sh
+> > index b1c3a6b..a5b4fdd 100755
+> > --- a/git-bisect.sh
+> > +++ b/git-bisect.sh
+> > @@ -150,8 +150,14 @@ bisect_next() {
+> >  	    git-diff-tree --pretty $rev
+> >  	    exit 0
+> >  	fi
+> > -	nr=3D$(eval "git-rev-list $rev $good -- $(cat $GIT_DIR/BISECT_NAM=
+ES)" | wc -l) || exit
+> > -	echo "Bisecting: $nr revisions left to test after this"
+> > +	nr_bad=3D$(eval "git-rev-list $rev^ $good -- $(cat $GIT_DIR/BISEC=
+T_NAMES)" | wc -l) || exit
+> > +	nr_good=3D$(eval "git-rev-list $bad^ ^$rev $good -- $(cat $GIT_DI=
+R/BISECT_NAMES)" | wc -l) || exit
+> > +	if test "$nr_bad" -ge "$nr_good"; then
+> > +		nr=3D"$nr_bad";
+> > +	else
+> > +		nr=3D"$nr_good";
+> > +	fi;
+> > +	echo "Bisecting: maximal $nr revisions left to test after this"
+>=20
+> How about this instead:
+>=20
+> -	echo "Bisecting: $nr revisions left to test after this"
+> +	echo "Bisecting: approx. $nr revisions left to test after this"
+>=20
+> since your version is an approximation (although a conservative one)=20
+> anyway. Hmm?
+I prefer a wording that points out a maximum.  Earlier today I thougt
+about this, too, but currently I don't remember my alternative.
 
-Instead of always re-generating the delta bases (possibly over and over 
-and over again), just cache the last few ones. They often can get re-used.
+Best regards
+Uwe
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
+--=20
+Uwe Kleine-K=F6nig
 
-This should have some other people doing performance testing too, since 
-it's fairly core. But *dang*, it's really simple.
-
-diff --git a/sha1_file.c b/sha1_file.c
-index f11ca3f..a7e3a2a 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1352,16 +1352,57 @@ static void *unpack_compressed_entry(struct packed_git *p,
- 	return buffer;
- }
- 
-+#define MAX_DELTA_CACHE (256)
-+
-+static struct delta_base_cache_entry {
-+	struct packed_git *p;
-+	off_t base_offset;
-+	unsigned long size;
-+	void *data;
-+	enum object_type type;
-+} delta_base_cache[MAX_DELTA_CACHE];
-+
-+static unsigned long pack_entry_hash(struct packed_git *p, off_t base_offset)
-+{
-+	unsigned long hash;
-+
-+	hash = (unsigned long)p + (unsigned long)base_offset;
-+	hash += (hash >> 8) + (hash >> 16);
-+	return hash & 0xff;
-+}
-+
- static void *cache_or_unpack_entry(struct packed_git *p, off_t base_offset,
- 	unsigned long *base_size, enum object_type *type)
- {
-+	void *ret;
-+	unsigned long hash = pack_entry_hash(p, base_offset);
-+	struct delta_base_cache_entry *ent = delta_base_cache + hash;
-+
-+	ret = ent->data;
-+	if (ret && ent->p == p && ent->base_offset == base_offset)
-+		goto found_cache_entry;
- 	return unpack_entry(p, base_offset, type, base_size);
-+
-+found_cache_entry:
-+	ent->data = NULL;
-+	*type = ent->type;
-+	*base_size = ent->size;
-+	return ret;
- }
- 
- static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
- 	void *base, unsigned long base_size, enum object_type type)
- {
--	free(base);
-+	unsigned long hash = pack_entry_hash(p, base_offset);
-+	struct delta_base_cache_entry *ent = delta_base_cache + hash;
-+
-+	if (ent->data)
-+		free(ent->data);
-+	ent->p = p;
-+	ent->base_offset = base_offset;
-+	ent->type = type;
-+	ent->data = base;
-+	ent->size = base_size;
- }
- 
- static void *unpack_delta_entry(struct packed_git *p,
+http://www.google.com/search?q=3D12+divided+by+3
