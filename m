@@ -1,113 +1,109 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 2/2] Implement a simple delta_base cache
-Date: Sat, 17 Mar 2007 15:37:30 -0700
-Message-ID: <7vfy83qyxh.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 17 Mar 2007 15:44:54 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703171521180.4964@woody.linux-foundation.org>
 References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
-	<Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com>
-	<Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703160920030.13402@alien.or.mcafeemobile.com>
-	<Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703161216510.13732@alien.or.mcafeemobile.com>
-	<Pine.LNX.4.64.0703161636520.3910@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org>
-	<alpine.LFD.0.83.0703162257560.18328@xanadu.home>
-	<Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151848090.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151941090.4998@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703151955440.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703151955150.4998@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703160913361.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703160920030.13402@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703161216510.13732@alien.or.mcafeemobile.com>
+ <Pine.LNX.4.64.0703161636520.3910@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703162257560.18328@xanadu.home>
+ <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Mar 17 23:37:48 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Mar 17 23:45:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HShX1-0007TU-N1
-	for gcvg-git@gmane.org; Sat, 17 Mar 2007 23:37:48 +0100
+	id 1HSheX-0002vd-30
+	for gcvg-git@gmane.org; Sat, 17 Mar 2007 23:45:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072AbXCQWhd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Mar 2007 18:37:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752076AbXCQWhd
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 18:37:33 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:33365 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752072AbXCQWhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2007 18:37:32 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070317223731.DHSN321.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 17 Mar 2007 18:37:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id bydW1W00N1kojtg0000000; Sat, 17 Mar 2007 18:37:31 -0400
-In-Reply-To: <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sat, 17 Mar 2007 14:45:49 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752076AbXCQWpO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Mar 2007 18:45:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752095AbXCQWpO
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 18:45:14 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:48360 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752076AbXCQWpM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2007 18:45:12 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2HMitcD013502
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 17 Mar 2007 15:44:55 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2HMisu2011192;
+	Sat, 17 Mar 2007 14:44:54 -0800
+In-Reply-To: <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-0.978 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42456>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> ie, we still re-generate some of the objects multiple times, but now, 
-> rather than generating them (on average) 20+ times each, we now generate 
-> them an average of just 1.3 times each. Which explains why the wall-time 
-> goes down by over a factor of two.
 
-This is beautiful.  You only cache what we were about to discard
-anyway, and when giving a cached one out, you invalidate the
-cached entry, so there is no way the patch can introduce leaks
-nor double-frees and it is absolutely safe (as long as we can
-pin the packed_git structure, which I think is the case --- even
-when we re-read the packs, I do not think we discard old ones).
+On Sat, 17 Mar 2007, Linus Torvalds wrote:
+> 
+> This trivial 256-entry delta_base cache improves performance for some 
+> loads by a factor of 2.5 or so.
 
-I've thought about possible ways to improve on it, but came up
-almost empty.
+Btw, final comment on this issue:
 
-When unpacking a depth-3 deltified object A, the code finds the
-target object A (which is a delta), ask for its base B and put B
-in the cache after using it to reconstitute A.  While doing so,
-the first-generation base B is also a delta so its base C (which
-is a non-delta) is found and placed in the cache.  When A is
-returned, the cache has B and C.  If you ask for B at this
-point, we read the delta, pick up its base C from the cache,
-apply, and return while putting C back in the cache.  If you ask
-for A after that, we do not read from the cache, although it is
-available.
+I was initially a bit worried about optimizing for just the "git log" with 
+pathspec or "git blame" kind of behaviour, and possibly pessimizing some 
+other load.
 
-Which feels a bit wasteful at first sight, and we *could* make
-read_packed_sha1() also steal from the cache, but after thinking
-about it a bit, I am not sure if it is worth it.  The contract
-between read_packed_sha1() and read_sha1_file() and its callers
-is that the returned data belongs to the caller and it is a
-responsibility for the caller to free the buffer, and also the
-caller is free to modify it, so stealing from the cache from
-that codepath means an extra allocation and memcpy.  If the
-object stolen from the cache is of sufficient depth, it might be
-worth it, but to decide it we somehow need to compute and store
-which delta depth the cached one is at.
+But the way the caching works, this is likely to be faster (or at least 
+not slower) even for something that doesn't ever need the cache (which in 
+turn is likely to be because it's a smaller footprint query and only works 
+on one version).
 
-In any way, your code makes a deeply delitified packfiles a lot
-more practical.  As long as the working set of delta chains fits
-in the cache, after unpacking the longuest delta, the objects on
-the chain can be had by one lookup and one delta application.
+Because the way the cache works, it doesn't really do any extra work: it 
+basically just delays the "free()" on the buffer we allocated. So for 
+really small footprints it just avoids the overhead of free() (let the OS 
+reap the pages for it at exit), and for bigger footprints (that end up 
+replacing the cache entries) it will just do the same work a bit later.
 
-Very good job.
+Because it's a simple direct-mapped cache, the only cost is the (trivial) 
+hash of a few instructions, and possibly the slightly bigger D$ footprint. 
+I would strongly suspect that even on loads where it doesn't help by 
+reusing the cached objects, the delayed free'ing on its own is as likely 
+to help as it is to hurt.
 
-> In general, this all seems very cool. The patches are simple enough that I 
-> think this is very safe to merge indeed: the only question I have is that 
-> somebody should verify that the "struct packed_git *p" is stable over the 
-> whole lifetime of a process - so that we can use it as a hash key without 
-> having to invalidate hashes if we unmap a pack (I *think* we just unmap 
-> the virtual mapping, and "struct packed_git *" stays valid, but Junio 
-> should ack that for me).
+So there really shouldn't be any downsides.
 
-Ack ;-)
+Testing on some other loads (for example, drivers/scsi/ has more activity 
+than drivers/usb/), the 2x performance win seems to happen for other 
+things too. For drivers/scsi, the log generating went down from 3.582s 
+(best) to 1.448s.
+
+"git blame Makefile" went from 1.802s to 1.243s (both best-case numbers 
+again: a smaller win, but still a win), but there the issue seems to be 
+that with a file like that, we actually spend most of our time comparing 
+different versions.
+
+For the "git blame Makefile" case *all* of zlib combined is just 18%, 
+while the ostensibly trivial "cmp_suspect()" is 23% and another 11% is 
+from "assign_blame()" - so for top-level entries the costs would seem to 
+tend to be in the blame algorithm itself, rather than in the actual object 
+handling.
+
+(I'm sure that could be improved too, but the take-home message from this 
+is that zlib wasn't really the problem, and our stupid re-generation of 
+the same delta base was.
+
+			Linus
