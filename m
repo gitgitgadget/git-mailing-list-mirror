@@ -1,76 +1,125 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: tree sorting..
-Date: Fri, 16 Mar 2007 16:35:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703161632270.3910@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0703160941290.3816@woody.linux-foundation.org>
- <20070316231329.GA4508@spearce.org>
+From: koreth@midwinter.com
+Subject: [PATCH] Add test cases for handling of name conflicts between files and directories.
+Date: Fri, 16 Mar 2007 17:00:04 -0700
+Message-ID: <20070317000004.GA14919@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Mar 17 00:35:58 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 17 01:00:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSLxk-0005g3-Rx
-	for gcvg-git@gmane.org; Sat, 17 Mar 2007 00:35:57 +0100
+	id 1HSMLF-0001QQ-A7
+	for gcvg-git@gmane.org; Sat, 17 Mar 2007 01:00:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030202AbXCPXfy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 16 Mar 2007 19:35:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030278AbXCPXfy
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 19:35:54 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:42428 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030202AbXCPXfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Mar 2007 19:35:53 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2GNZocD010780
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 16 Mar 2007 16:35:50 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2GNZniM024479;
-	Fri, 16 Mar 2007 15:35:50 -0800
-In-Reply-To: <20070316231329.GA4508@spearce.org>
-X-Spam-Status: No, hits=-0.48 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S2992458AbXCQAAJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 16 Mar 2007 20:00:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992469AbXCQAAJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Mar 2007 20:00:09 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:55233 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S2992464AbXCQAAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Mar 2007 20:00:07 -0400
+Received: (qmail 14998 invoked by uid 1001); 17 Mar 2007 00:00:04 -0000
+Content-Disposition: inline
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42411>
 
+Here are a few test cases for the file/directory name conflict patch.
 
+---
+ t/t7201-co.sh |   70 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 70 insertions(+), 0 deletions(-)
 
-On Fri, 16 Mar 2007, Shawn O. Pearce wrote:
-> 
-> The entire reason this happened is hysterical raisins.  Your first
-> draft of Git had trees as one flat structure, sorting complete
-> paths by their memcmp result.  Which is dead simple and worked.
-
-No. 
-
-It's *not* historical reasons. That's what I tried to explain.
-
-It's absolutely *required*. Not because of the old flat layout, but 
-because we want read-tree to translate 1:1 into the index.
-
-And the index is a flat file. And it *needs* to be a flat file, because we 
-need to open it and read it efficiently. If it wasn't a flat file, we'd 
-have all the index operations taking as long as the tree operations take.
-
-> Now we are stuck with it.
-
-No. How you need to accept it. It's that easy. It's not "stuck". It's 
-"correct".
-
-That's why I reacted to your irc thing. You seemed to think (and still 
-apparently do) that the sorting is some messy mistake. It's anything but.
-
-So yes, "foo" is *different* from "foo/". You just need to realize that 
-they are two totally different entries. They have absolutely no 
-relationship what-so-ever with each other, except that you obviously must 
-not add one when the other exists.
-
-		Linus
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 867bbd2..6692f25 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -36,6 +36,9 @@ test_expect_success setup '
+ 	git update-index --add --remove one two three &&
+ 	git commit -m "Side M one, D two, A three" &&
+ 
++	git branch with-file master &&
++	git branch with-dir master &&
++
+ 	git checkout master
+ '
+ 
+@@ -129,4 +132,71 @@ test_expect_success 'checkout -m with merge conflict' '
+ 	! test -s current
+ '
+ 
++test_expect_success 'checkout with file/directory conflict' '
++
++	git checkout -f with-dir && git clean &&
++
++	mv one one- &&
++	mkdir one &&
++	mv one- one/file &&
++	git add one/file &&
++	git commit -m "with-dir D one A one/file" &&
++	
++	git checkout with-file &&
++	git checkout with-dir
++'
++
++test_expect_success 'checkout with file/directory conflict and modified file in dir' '
++
++	git checkout -f with-dir && git-clean &&
++
++	fill 1 2 3 4 5 6 7 > one/file &&
++	if git checkout with-file
++	then
++		echo Should have detected modified file in subdirectory
++		false
++	else
++		echo "happy - failed correctly"
++	fi
++'
++
++test_expect_success 'checkout with file/directory conflict and untracked file in dir' '
++
++	git checkout -f with-dir && git-clean &&
++
++	fill 1 2 3 > one/file2 &&
++	if git checkout with-file
++	then
++		echo Should have detected untracked file in subdirectory
++		false
++	else
++		echo "happy - failed correctly"
++	fi &&
++	rm one/file2
++'
++
++test_expect_success 'checkout with file/directory conflict and deleted file in dir' '
++
++	git checkout -f with-dir && git-clean &&
++
++	rm one/file &&
++	git checkout with-file
++'
++
++test_expect_success 'checkout with file/directory conflict and modified file' '
++
++	git checkout -f with-file && git-clean &&
++
++	fill 1 2 3 > one &&
++	if git checkout with-dir
++	then
++		echo Should have detected modified file
++		false
++	else
++		echo "happy - failed correctly"
++	fi &&
++
++	git reset --hard
++'
++
+ test_done
+-- 
+1.5.0.4.404.gdbb2-dirty
