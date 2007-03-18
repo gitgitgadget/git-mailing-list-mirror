@@ -1,72 +1,198 @@
-From: Avi Kivity <avi@qumranet.com>
-Subject: Re: [PATCH 2/2] Implement a simple delta_base cache
-Date: Sun, 18 Mar 2007 08:28:27 +0200
-Message-ID: <45FCDC0B.1090506@qumranet.com>
-References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703161216510.13732@alien.or.mcafeemobile.com>
- <Pine.LNX.4.64.0703161636520.3910@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703162257560.18328@xanadu.home>
- <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
- <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [RFH] straightening out "read-tree -m"
+Date: Sun, 18 Mar 2007 00:25:40 -0700
+Message-ID: <7vtzwjnhcb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Morten Welinder <mwelinder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 18 07:36:58 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 18 08:25:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSp0k-0001wN-2n
-	for gcvg-git@gmane.org; Sun, 18 Mar 2007 07:36:58 +0100
+	id 1HSplw-00087q-AF
+	for gcvg-git@gmane.org; Sun, 18 Mar 2007 08:25:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753086AbXCRGg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 02:36:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753087AbXCRGg4
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 02:36:56 -0400
-Received: from mtaout1.012.net.il ([84.95.2.1]:19200 "EHLO mtaout1.012.net.il"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753084AbXCRGgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 02:36:55 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sun, 18 Mar 2007 02:36:55 EDT
-Received: from firebolt.argo.co.il ([80.178.182.138])
- by i_mtaout1.012.net.il (HyperSendmail v2004.12)
- with ESMTP id <0JF30063G6D1ANK0@i_mtaout1.012.net.il> for git@vger.kernel.org;
- Sun, 18 Mar 2007 08:36:38 +0200 (IST)
-Received: from [127.0.0.1] (localhost.localdomain [127.0.0.1])
-	by firebolt.argo.co.il (Postfix) with ESMTP id 086F6C02A6; Sun,
- 18 Mar 2007 08:28:28 +0200 (IST)
-In-reply-to: <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
-X-Greylist: Sender IP whitelisted,
- not delayed by milter-greylist-2.1.12 (firebolt.argo.co.il [0.0.0.0]); Sun,
- 18 Mar 2007 08:28:28 +0200 (IST)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070212)
+	id S1753112AbXCRHZn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 03:25:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbXCRHZm
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 03:25:42 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:40162 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753112AbXCRHZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 03:25:41 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070318072542.YUHE2807.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 18 Mar 2007 03:25:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id c7Rg1W0091kojtg0000000; Sun, 18 Mar 2007 03:25:41 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42478>
 
-Morten Welinder wrote:
->>         samples  %        app name                 symbol name
->>         41527    15.6550  git                      strlen
->
-> Almost 16% in strlen?  Ugh!
->
-> That's a lot of strings, or perhaps very long strings.  Or a profiling 
-> bug.
->
+While everybody else was having fun with low-hanging fruit
+performance tweaking ;-), I was looking at rather depressing
+picture.
 
-Or maybe strlen() is the first function to touch the page/cacheline.
+I do not have much energy left to look into this further
+tonight, but I noticed this while drawing a case table to deal
+with the recent "why can't I switch between these two branches"
+problem.
+
+First part is sort of "accomplishment" for tonight.  Two case
+tables that describe desired semantics (meaning, the current
+"read-tree -m -u" does not do this, and neither does
+merge-recursive because it shares the same unpack-trees
+backend).
+
+* 2-way "read-tree -m -u A B".
+
+While switching from branch A to branch B, if a path "foo" is
+directory/file in A while the path is directory/file in B, then
+these things should happen...
+
+A	B	Outcome
+----------------------------------------------------------------
+D	D	No problem.
+
+D	F	This should result in refusal when there are
+                local modification to paths in "foo" directory,
+		or there are untracked (but unignored) paths in
+                "foo/".
+
+F	D	This should result in refusal if "foo" has local
+                modification.
+
+F	F	This should result in refusal if "foo" has local
+		modification.
 
 
--- 
-Do not meddle in the internals of kernels, for they are subtle and quick to panic.
+The patch to "verify_absent()" I sent out earlier tries to deal
+with the second case above, although it still has issues
+(namely, the *indpos needs to be recomputed after replacing
+potentially multiple entries under "foo/" with "foo" from B,
+which the patch does not do).
+
+Then I started to wonder if we have similar problem on the 3-way
+side.
+
+* 3-way "read-tree -m -u O A B"
+
+While on branch A, if you try to merge branch B using O as the
+merge base, if a path "foo" is D/F in A/B/C (there are 8
+combinations), these things should happen...
+
+O	A	B	Outcome
+----------------------------------------------------------------
+D	D	D	No problem.  Paths in the "foo/" directory 
+			are merged subject to the usual rule.
+
+D	D	F	File "foo", which did not exist in ancestor
+			and we did not touch, is created.  Which means
+			that contents of "foo/" is about to be
+			lost.  We need to refuse this unless
+			everything in "foo/" matches between O
+			and A, there is no local modifications
+			in "foo/", and there is no untracked but
+			unignored paths in "foo/".
+
+D	F	D	File "foo", which did not exist in
+			ancestor and they did not touch, is
+			created, so we would want to keep it.
+			Which means that their changes to paths
+			in "foo/" will be lost.  We should leave
+			conflict for paths in "foo/" that are
+			different between O and B.
+
+D	F	F	No problem.  This is usual "added on
+			both branches" conflict.
+
+F	D	D	No problem.  Paths in the "foo/"
+        		directory have usual "added on both
+        		branches" conflict.
+
+F	D	F	No problem.  If file "foo" was modified
+			by them (i.e. O!=B) then usual "remove-modify"
+			conflict arises.
+
+F	F	D	No problem.  If file "foo" was modified
+			by us (i.e. O!=A) then usual "remove-modify"
+			conflict arises.  Also "foo" must not
+			have local modifications.
+
+F	F	F	No problem, usual 3-way rule applies.
+			Also "foo" must not have local modifications.
+
+
+The sad story is how confused the current unpack-trees is, given
+the test case for the above 3-way.
+
+The attached script demonstrates one aspect of the sorry state
+of three-way merge done with unpack-trees.  You would notice
+that there are multiple paths that have both stage '0' entry and
+higher stage entries at the same time --- I do not think this
+should not happen.
+
+Git v1.0.0 to v1.2.0 refuse to merge but leaves two stage '0'
+entries for path '4' and '8' (which is already incorrect but in
+a different way).  v1.3.0 and later leaves stage 0/1/2/3 entry
+for path '8'.
+
+Depressing...
+
+
+#!/bin/sh
+
+# If your 'test' is precious, do not run this script!
+/bin/rm -fr test
+
+create () {
+	rm -f .git/index
+	mark="$1"
+	shift
+	num=0
+	for t
+	do
+		num=$(($num+1))
+		rm -fr "$num"
+		case "$t" in
+		D)
+			mkdir "$num"; t="$num/$num" ;;
+		F)
+			t="$num" ;;
+		esac
+		echo "$mark" >"$t"
+		git add "$t"
+	done
+	git commit -m "$mark: $*"
+}
+
+mkdir test || exit
+cd test
+git init-db
+
+create O D D D D F F F F
+git tag O
+git branch a
+git branch b
+
+rm -rf ?
+git checkout a
+create A D D F F D D F F
+git tag A
+
+rm -rf ?
+git checkout b
+create B D F D F D F D F
+git tag B
+
+rm -rf ?
+git checkout a
+git read-tree -m O A B
+
+git ls-files -s
