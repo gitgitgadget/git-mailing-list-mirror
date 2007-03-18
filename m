@@ -1,126 +1,97 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [wishlist] git branch -d -r remotename
-Date: Mon, 19 Mar 2007 09:46:10 +1200
-Message-ID: <45FDB322.10904@vilain.net>
-References: <45FD0804.6010401@vilain.net>	<20070318110507.5701413A382@magnus.utsl.gen.nz>	<20070318113210.5843E13A382@magnus.utsl.gen.nz> <7vvegyl4nt.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 3/2] Avoid unnecessary strlen() calls
+Date: Sun, 18 Mar 2007 14:48:17 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703181440140.6730@woody.linux-foundation.org>
+References: <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
+ <Pine.LNX.4.64.0703171822280.4964@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703172136440.18328@xanadu.home>
+ <Pine.LNX.4.64.0703171854270.6730@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703172200060.18328@xanadu.home>
+ <Pine.LNX.4.64.0703171911120.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171949190.6730@woody.linux-foundation.org>
+ <7v8xdunavr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703180848580.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703180854470.6730@woody.linux-foundation.org>
+ <20070318213807.GB20658@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Mar 18 22:46:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Mar 18 22:48:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HT3Cm-0002kV-1E
-	for gcvg-git@gmane.org; Sun, 18 Mar 2007 22:46:20 +0100
+	id 1HT3F8-00042F-Go
+	for gcvg-git@gmane.org; Sun, 18 Mar 2007 22:48:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932835AbXCRVqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 17:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932853AbXCRVqT
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 17:46:19 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:55411 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932835AbXCRVqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 17:46:17 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 24EA31570E2; Mon, 19 Mar 2007 09:46:16 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id BA1C813A302;
-	Mon, 19 Mar 2007 09:46:12 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.2 (X11/20060521)
-In-Reply-To: <7vvegyl4nt.fsf@assigned-by-dhcp.cox.net>
-X-Enigmail-Version: 0.94.0.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=failed 
-	version=3.0.2
+	id S932853AbXCRVsp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 17:48:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933256AbXCRVsp
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 17:48:45 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:55764 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932853AbXCRVso (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 17:48:44 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2ILmIcD030289
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 18 Mar 2007 14:48:18 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2ILmHOO031293;
+	Sun, 18 Mar 2007 13:48:17 -0800
+In-Reply-To: <20070318213807.GB20658@spearce.org>
+X-Spam-Status: No, hits=-0.979 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42527>
 
-Junio C Hamano wrote:
->> Subject: [PATCH] git-remote: implement prune -c
->>
->> It would be nice to prune local refs which are irrelevant; add an
->> option to git-remote prune, with documentation.
->>     
->
-> I do not understand what workflow you are assuming, so your use
-> of the word "irrelevant" does not mean much to me.  I suspect
-> other readers of the patch and documentation wouldn't find it
-> clear in what situation this option is useful.
->   
 
-Bad choice of words. What I mean is to delete all local refs which are
-already reachable by a remote ref on the given remote.
 
-> Perhaps you are thinking about this scenario?  I am only
-> guessing because you are not clear enough:
->
-> 	$ git clone
->         ... time passes ...
->         $ git checkout -b next origin/next
->         ... build, install, have fun ...
-> 	$ git checkout master
->         ... time passes ...
->         $ git branch
->         ... notice that you do not hack on your copy of 'next'
->         ... and want to remove it
-> 	$ git remote prune -c
->   
+On Sun, 18 Mar 2007, Shawn O. Pearce wrote:
+> Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> > 
+> > Of course, the git gui blame colorization is clearly done by somebody who 
+> > is still actively popping LSD with both fists and didn't realize that the 
+> > 60's are long done, but that's another issue.
+> 
+> :-)
+> 
+> git-gui is open source.  I'd be happy to take a patch.  Or,
+> since that is horribly messy Tcl/Tk code, just a better color
+> suggestion. :-)
 
-Yes, that's it. Or clean up the references you already pushed because
-they are no longer of interest.
+Yeah, the Tcl/Tk part means that I take one look and decide that I have 
+absolutely zero clue..
 
-> In any case, are you checking irrelevancy?  What if your foo branch has
-> more changes to be sent upstream?  Even when the remote has a
-> bit older version doesn't your code remove yours?  For example,
-> if you did this, instead of the above, what happens?
->
-> 	$ git clone
->         ... time passes ...
->         $ git checkout -b next origin/next
->         ... build, install, have fun ...
-> 	... find an opportunity to improve ...
->         $ edit
->         $ git commit ;# on your 'next'.
->         ... build, install, test ...
-> 	$ git checkout master
->         ... time passes ...
->         $ git branch
->         ... notice that you do not hack on your copy of 'next' anymore,
->         ... and want to remove it
-> 	$ git remote prune -c
->   
+Also, I'm not entirely sure what the "right" color is, but the changing 
+colors do confuse me. Also, maybe I'm some kind of white suburban 
+house-wife or something, but I prefer calmer pastel colors over the bright 
+ones you've selected.
 
-It doesn't do that because the head doesn't match any revision that was
-given to us by `rev-list refs/remotes/foo/*`
+I would suggest:
 
-> If the above is the usage scenario you are trying to help, then
-> wouldn't it be helpful if you could also help removing 'my-next'
-> in this slightly altered example?
->
-> 	$ git clone
->         ... time passes ...
->         $ git checkout -b my-next origin/next
->         ... build, install, have fun ...
-> 	$ git checkout master
->         ... time passes ...
->         $ git branch
->         ... notice that you do not hack on your copy of 'next'
->         ... which is 'my-next', and want to remove it
-> 	$ git remote prune -c
+ - some special color for "currently selected" (which defaults to being 
+   the first one coming out of the blame thing, of course). 
 
-Yes, the idea was to "sweep" all branches that were just local branches
-of a remote and never worked on. This is most useful right now for
-people switching from Cogito or old-style remotes, who have a lot of
-branches that are remote tracking branches. Using this, they can just
-set up a new remote, fetch and prune -c and be left in a tidy state.
+   I'd suggest "black text on pale green background", but that may be just 
+   me. Patricia calls the current color "hot pink", and maybe that's 
+   appropriate for a certain segment of the population, but I'm not sure I 
+   want to even *meet* that segment ;)
 
-Sam.
+ - some *stable* graduated color for the rest. I don't think it 
+   necessarily needs to be "older" vs "newer", and in fact I'd suggest 
+   just two slightly different shades of gray for the background - just 
+   pick alternating shades for each blame entry that comes in (and leave 
+   un-blamed lines white).
+
+The flickering just makes me go "ooh, I'm really happy I don't have 
+epilepsy, because otherwise I'd be writhing on the floor every time I 
+tried to use this tool".
+
+			Linus
