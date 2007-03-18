@@ -1,81 +1,65 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git push to a non-bare repository
-Date: Sun, 18 Mar 2007 23:01:28 +0100
-Organization: At home
-Message-ID: <etkcrn$e9a$1@sea.gmane.org>
-References: <vpq648ye9w6.fsf@olympe.imag.fr> <7vr6rml4fb.fsf@assigned-by-dhcp.cox.net> <45FDB447.5070507@vilain.net>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH 0/4] Eclipse (EGIT) Structured compare
+Date: Sun, 18 Mar 2007 23:15:50 +0100
+Message-ID: <20070318220711.24742.90943.stgit@lathund.dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: spearce@spearce.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 18 23:02:09 2007
+X-From: git-owner@vger.kernel.org Sun Mar 18 23:14:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HT3S4-0002ms-Vn
-	for gcvg-git@gmane.org; Sun, 18 Mar 2007 23:02:09 +0100
+	id 1HT3dc-0000PT-Tu
+	for gcvg-git@gmane.org; Sun, 18 Mar 2007 23:14:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933333AbXCRWCA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 18:02:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933331AbXCRWB7
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 18:01:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:49343 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933333AbXCRWB6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 18:01:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HT3Rh-0003ZP-Pp
-	for git@vger.kernel.org; Sun, 18 Mar 2007 23:01:45 +0100
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Mar 2007 23:01:45 +0100
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 Mar 2007 23:01:45 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S933307AbXCRWN6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 18:13:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933338AbXCRWN5
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 18:13:57 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:7588 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S933307AbXCRWN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 18:13:56 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id AE45A802857;
+	Sun, 18 Mar 2007 23:08:34 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 18488-05; Sun, 18 Mar 2007 23:08:34 +0100 (CET)
+Received: from lathund.dewire.com (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 5BF45802664;
+	Sun, 18 Mar 2007 23:08:33 +0100 (CET)
+Received: from localhost (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id 612F828D38;
+	Sun, 18 Mar 2007 23:16:07 +0100 (CET)
+X-Virus-Scanned: amavisd-new at localhost.localdomain
+Received: from lathund.dewire.com ([127.0.0.1])
+	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id zykRwTk4btqH; Sun, 18 Mar 2007 23:15:52 +0100 (CET)
+Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
+	by lathund.dewire.com (Postfix) with ESMTP id C218228CA9;
+	Sun, 18 Mar 2007 23:15:50 +0100 (CET)
+User-Agent: StGIT/0.12
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42531>
 
-Sam Vilain wrote:
+Now Eclipse can compare two git version at the project level. Thanks
+to the SHA-1's the compare is very quick. There is some extra cost
+for version managed archives (zip/jars) as Eclipse insists on comparing
+the contents of those at the file level too. Not that I mind that. It
+is useful and cool. (No, it doesn't compare open office documents in
+any useful manner, unless you happen to have a plugin for it, in
+which case it might actually work.)
 
-> Junio C Hamano wrote:
+Along with this some experiments with caching and a minor bug fix in
+the commit reader.
 
->>> I don't understand the design choice here: git had two options to
->>> avoid this scenario:
->>
->> Actually, there are no such "design choices".  That's entirely
->> up to the repository owners to arrange post-update hook, to
->> allow you to do anything you want.  
->>
->> The default is not to encourage people (who do not know what
->> they are doing anyway) to push into non-bare repository.
->>   
-> 
-> Maybe it's worth making it an error (that can be forced) if you're
-> pushing to the head that's checked out in a non-bare repository ?
-> 
-> It's pretty nasty behaviour for people used to darcs / bzr et al.
+If anyone besides me actually uses this, please send a comment.
 
-Perhaps it would be for the best.
-
-BUT unless you arrange some fancy post-update hook you have two
-sane choices:
- * push to bare repository, with 1:1 refs mapping
- * push to non-bare repository, but with mapping pushed refs on
-   pushee to remotes refs (remote / tracking branches) on remote
-   side.
-
-In all other choices there madness lies... ;-)
-
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-- robin
