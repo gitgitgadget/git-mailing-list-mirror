@@ -1,64 +1,78 @@
-From: "Morten Welinder" <mwelinder@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 2/2] Implement a simple delta_base cache
-Date: Sat, 17 Mar 2007 21:14:16 -0400
-Message-ID: <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
-References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0703161216510.13732@alien.or.mcafeemobile.com>
-	 <Pine.LNX.4.64.0703161636520.3910@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org>
-	 <alpine.LFD.0.83.0703162257560.18328@xanadu.home>
-	 <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
+Date: Sat, 17 Mar 2007 18:29:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703171822280.4964@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org> 
+ <Pine.LNX.4.64.0703160934070.3816@woody.linux-foundation.org> 
+ <Pine.LNX.4.64.0703161216510.13732@alien.or.mcafeemobile.com> 
+ <Pine.LNX.4.64.0703161636520.3910@woody.linux-foundation.org> 
+ <Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org> 
+ <alpine.LFD.0.83.0703162257560.18328@xanadu.home> 
+ <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org> 
+ <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org> 
+ <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org> 
+ <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
+ <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, "Nicolas Pitre" <nico@cam.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Mar 18 02:14:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Morten Welinder <mwelinder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 18 02:31:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSjyW-0002VP-Vr
-	for gcvg-git@gmane.org; Sun, 18 Mar 2007 02:14:21 +0100
+	id 1HSkF5-00028b-Kx
+	for gcvg-git@gmane.org; Sun, 18 Mar 2007 02:31:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752957AbXCRBOT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 17 Mar 2007 21:14:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752961AbXCRBOT
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 21:14:19 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:30489 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752945AbXCRBOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Mar 2007 21:14:18 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1011483uga
-        for <git@vger.kernel.org>; Sat, 17 Mar 2007 18:14:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ies6dYUazQOI0f7FxKF9ZcFaM1iBwCx+WGgv6PBzhdAcoIQa2UsfhduAj1AzZwG0g2VWKAIEmj8/4ATj65K6MSZ6IS3+UK+hKk46jmUgoS7JtRRXDVMyl5CdFh1O1ExTC02WBCsYsnhBxdK8J+H91ZMLpVzccZ/+9ubJ99m2ajg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pRXH/cfTI3Z3+oG0Lj1InA9TRXZZa0YkHkXsxx2bgzmVOaBCFAmQgm4Xj0aq7axPRRIt3HJzKJqaXtbZDyshSy8tjAhXw6XWAegHaFTGq/YZxpsls1fl4zy6KWz4dsMr56CcgvNslzhJHmM1DBGH7PqG9zDL1Ui4CXGJg6Ee8eU=
-Received: by 10.64.210.3 with SMTP id i3mr5972853qbg.1174180456656;
-        Sat, 17 Mar 2007 18:14:16 -0700 (PDT)
-Received: by 10.115.109.10 with HTTP; Sat, 17 Mar 2007 18:14:16 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1752976AbXCRBaI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 17 Mar 2007 21:30:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753020AbXCRBaI
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Mar 2007 21:30:08 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:51887 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752976AbXCRBaA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Mar 2007 21:30:00 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2I1TdcD017552
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 17 Mar 2007 18:29:40 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2I1TcO7013435;
+	Sat, 17 Mar 2007 17:29:39 -0800
+In-Reply-To: <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
+X-Spam-Status: No, hits=-0.978 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42464>
 
->         samples  %        app name                 symbol name
->         41527    15.6550  git                      strlen
 
-Almost 16% in strlen?  Ugh!
 
-That's a lot of strings, or perhaps very long strings.  Or a profiling bug.
+On Sat, 17 Mar 2007, Morten Welinder wrote:
+>
+> >         samples  %        app name                 symbol name
+> >         41527    15.6550  git                      strlen
+> 
+> Almost 16% in strlen?  Ugh!
+> 
+> That's a lot of strings, or perhaps very long strings.  Or a profiling bug.
 
-M.
+It's likely real, and the problem is likely lots of small strings.
+
+Each git tree entry is:
+
+	"<octal mode> name\0" <20-byte sha1>
+
+so you do have a *lot* of strlen() calls when doing any tree parsing. And 
+for some inexplicable reason, glibc thinks strings are long on average, so 
+it has a fancy algorithm to do 8 bytes at a time and tries to do things 
+aligned etc.
+
+The size of strlen() on x86-64 with glibc is 232 bytes. I'm not kidding.
+
+			Linus
