@@ -1,82 +1,84 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-remote: allow 'git-remote fetch' as a synonym for 'git fetch'
-Date: Sun, 18 Mar 2007 22:03:45 +1200
-Message-ID: <20070318101311.E296213A382@magnus.utsl.gen.nz>
-References: <20070318094910.7985613A382@magnus.utsl.gen.nz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 18 11:13:16 2007
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH 2/2] Implement a simple delta_base cache
+Date: Sun, 18 Mar 2007 11:53:58 +0100
+Organization: Dewire
+Message-ID: <200703181153.59768.robin.rosenberg.lists@dewire.com>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org> <alpine.LFD.0.83.0703172228220.18328@xanadu.home> <Pine.LNX.4.64.0703172013340.6730@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@cam.org>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Mar 18 11:51:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HSsO4-0001ju-EI
-	for gcvg-git@gmane.org; Sun, 18 Mar 2007 11:13:16 +0100
+	id 1HSszQ-0003hN-Fz
+	for gcvg-git@gmane.org; Sun, 18 Mar 2007 11:51:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753756AbXCRKNO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 06:13:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753758AbXCRKNO
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 06:13:14 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:53837 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753751AbXCRKNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 06:13:14 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 1003)
-	id E296213A382; Sun, 18 Mar 2007 22:13:11 +1200 (NZST)
-In-Reply-To: <20070318094910.7985613A382@magnus.utsl.gen.nz>
+	id S932309AbXCRKvu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 18 Mar 2007 06:51:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932331AbXCRKvu
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 06:51:50 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:4515 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S932309AbXCRKvt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Mar 2007 06:51:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9E6AA802855;
+	Sun, 18 Mar 2007 11:46:28 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 12771-03; Sun, 18 Mar 2007 11:46:28 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 411DB802664;
+	Sun, 18 Mar 2007 11:46:26 +0100 (CET)
+User-Agent: KMail/1.9.4
+In-Reply-To: <Pine.LNX.4.64.0703172013340.6730@woody.linux-foundation.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42488>
 
-And here it is again, this time with documentation and based against
-maint.
+s=F6ndag 18 mars 2007 04:31 skrev Linus Torvalds:
+> I'd still like to see the KDE repo, that thing went quiet after it wa=
+s=20
+> supposed to hit sneaker-net..
+>=20
+> If it was 30 seconds before to do a "git log" for some individual fil=
+e,=20
+> after the recent optimizations it should hopefully be down to 10. And=
+ I=20
+> agree that I might be more motivated to try to get it down further if=
+ I=20
+> could just find a repository where it's that much.=20
 
-From: Sam Vilain <sam@vilain.net>
-Subject: git-remote: allow 'git-remote fetch' as a synonym for 'git fetch'
+I don't have the KDE repo, but I do have an Eclipse import. Without you=
+r
+patches I get (hot cache)
 
-I found myself typing this when doing remote-like things.  Perhaps
-other people will find this useful
+# time git log -- org.eclipse.core.resources/src/org/eclipse/core/resou=
+rces/ >/dev/null
+65.10user 0.50system 1:12.44elapsed 90%CPU (0avgtext+0avgdata 0maxresid=
+ent)k
+0inputs+0outputs (0major+80242minor)pagefaults 0swaps
 
-Signed-off-by: Sam Vilain <sam@vilain.net>
----
- Documentation/git-remote.txt |    4 ++++
- git-remote.perl              |    4 ++++
- 2 files changed, 8 insertions(+), 0 deletions(-)
+With patch 1&2 (hot cache)
 
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index de2658c..ab04b86 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -64,6 +64,10 @@ With `-n` option, the remote heads are not confirmed first with `git
- ls-remote <name>`; cached information is used instead.  Use with
- caution.
- 
-+'fetch'::
-+
-+Synonym for `git fetch <name>`, and accepts all the same options.
-+
- 'update'::
- 
- Fetch updates for a named set of remotes in the repository as defined by
-diff --git a/git-remote.perl b/git-remote.perl
-index bd70bf1..20f9f54 100755
---- a/git-remote.perl
-+++ b/git-remote.perl
-@@ -389,11 +389,15 @@ elsif ($ARGV[0] eq 'add') {
- 	}
- 	add_remote($ARGV[1], $ARGV[2], \%opts);
- }
-+elsif ($ARGV[0] eq 'fetch') {
-+	exec("git-fetch", @ARGV[1..$#ARGV]);
-+}
- else {
- 	print STDERR "Usage: git remote\n";
- 	print STDERR "       git remote add <name> <url>\n";
- 	print STDERR "       git remote show <name>\n";
- 	print STDERR "       git remote prune <name>\n";
- 	print STDERR "       git remote update [group]\n";
-+	print STDERR "       git remote fetch <fetch-options> <repository> <refspec>...\n";
- 	exit(1);
- }
--- 
-1.5.0.2.gdcde2
+# time ~/SW/GIT/git-log -- org.eclipse.core.resources/src/org/eclipse/c=
+ore/resources/ >/dev/null
+27.51user 0.21system 0:28.23elapsed 98%CPU (0avgtext+0avgdata 0maxresid=
+ent)k
+0inputs+0outputs (0major+80266minor)pagefaults 0swaps
+
+That's quite an improvement The eclipse repo is about 140k commits in t=
+he master branch and=20
+has a 3GB pack file (fromcvs import).=20
+
+-- robin
