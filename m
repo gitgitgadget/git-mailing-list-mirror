@@ -1,64 +1,75 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Libification project (SoC)
-Date: Sun, 18 Mar 2007 17:15:30 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703181709280.18328@xanadu.home>
-References: <20070316042406.7e750ed0@home.brethil>
- <20070316045928.GB31606@spearce.org> <7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
- <20070316104715.483df0d5@localhost> <20070316140855.GE4489@pasky.or.cz>
- <20070316153822.5c842e69@localhost> <20070316231646.GB4508@spearce.org>
- <20070317195832.2af87c06@home.brethil> <20070318052332.GC15885@spearce.org>
- <7vzm6bp07f.fsf@assigned-by-dhcp.cox.net>
- <20070318161854.5a6a34e0@home.brethil>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH] git-init: set core.workdir when GIT_WORK_DIR is specified
+Date: Sun, 18 Mar 2007 22:18:36 +0100
+Message-ID: <20070318211836.GA12456@moooo.ath.cx>
+References: <20070317015855.GB19305@moooo.ath.cx> <7vbqiss4yw.fsf@assigned-by-dhcp.cox.net> <20070317143452.GA21140@moooo.ath.cx> <7vr6rnlyzt.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-X-From: git-owner@vger.kernel.org Sun Mar 18 22:15:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Mar 18 22:18:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HT2j2-000349-Ho
-	for gcvg-git@gmane.org; Sun, 18 Mar 2007 22:15:36 +0100
+	id 1HT2m4-0004iv-82
+	for gcvg-git@gmane.org; Sun, 18 Mar 2007 22:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbXCRVPf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 17:15:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751894AbXCRVPf
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 17:15:35 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:60528 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751289AbXCRVPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 17:15:34 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF400CCKB1XA1B0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 18 Mar 2007 17:15:33 -0400 (EDT)
-In-reply-to: <20070318161854.5a6a34e0@home.brethil>
-X-X-Sender: nico@xanadu.home
+	id S933140AbXCRVSn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 17:18:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753274AbXCRVSm
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 17:18:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43875 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752819AbXCRVSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 17:18:42 -0400
+Received: (qmail invoked by alias); 18 Mar 2007 21:18:40 -0000
+X-Provags-ID: V01U2FsdGVkX18gpAh8T4AgwGVLyQqw8KxFKV66kGclEWTTV1J64i
+	MsMCjDWl7TcdRr
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vr6rnlyzt.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42522>
 
-On Sun, 18 Mar 2007, Luiz Fernando N. Capitulino wrote:
-
->  Other possibility is to let the caller do the job.
+Junio C Hamano <junkio@cox.net> wrote:
+> Matthias Lederhofer <matled@gmx.net> writes:
+> >  * is_bare_repository() in general
 > 
->  I mean, if the information needed to print the error message (packfile
-> name and version in this example) is available to the caller, or the
-> caller can get it someway, then the caller could check which error
-> he got and build the message himself.
+> There is a bit of chicken and egg involved in is_bare, because
+> we need to find out where GIT_DIR is in order to find where to
+> read GIT_DIR/config from, and only after reading the file we
+> would know if the user explicitly told us the repository is
+> bare, and setup_gently does not want to cd-up if the repository
+> is bare (i.e. there is no "top" to move to).
 
-Nah...  The error details should be handled at the failure location.  
-Any error code based mechanism is bound to get out of synch at some 
-point, or people simply won't bother adding new codes for new error 
-conditions but simply reuse an existing generic enough code instead.
+How about changing setup_git_directory_gently to do the following:
 
-We already have this nice error() function.  Right now it simply dumps 
-the message to stderr but it could be made more sophisticated if needed.
+Find the git directory ($GIT_DIR, .git in parent directories and "."
+at last).
 
+Read configuration for core.bare and core.worktree.  If core.bare is
+not specified do the old guessing.
 
-Nicolas
+if core.bare = true:
+    Set GIT_DIR if it isn't set yet and stop (don't change the
+    directory).
+
+if core.bare = false:
+    GIT_DIR specified:
+        use GIT_WORK_TREE, core.worktree or "." as working tree
+    found repository as .git directory:
+        use the parent directory of the .git directory as working tree
+    found repository in ".":
+        use "." as working tree
+
+    if cwd is below the working tree:
+        change to working tree
+        inside_work_tree = 1
+        return prefix
+    if cwd is outside of the working tree:
+        inside_work_tree = 0
+        return NULL
