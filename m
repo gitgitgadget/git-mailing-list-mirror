@@ -1,59 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Teach git-remote to list pushed branches.
-Date: Sun, 18 Mar 2007 13:37:54 -0700
-Message-ID: <7vzm6ajnj1.fsf@assigned-by-dhcp.cox.net>
-References: <200703182134.46450.johannes.sixt@telecom.at>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Trivial cleanup of track_tree_refs()
+Date: Sun, 18 Mar 2007 13:38:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703181333190.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun Mar 18 21:38:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Mar 18 21:38:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HT28s-0000WX-Sp
-	for gcvg-git@gmane.org; Sun, 18 Mar 2007 21:38:15 +0100
+	id 1HT294-0000cq-TF
+	for gcvg-git@gmane.org; Sun, 18 Mar 2007 21:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933226AbXCRUiN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 16:38:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933231AbXCRUiN
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 16:38:13 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:43502 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933226AbXCRUiM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 16:38:12 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070318203811.ZKEP24587.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 18 Mar 2007 16:38:11 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id cLeB1W00i1kojtg0000000; Sun, 18 Mar 2007 16:38:12 -0400
-In-Reply-To: <200703182134.46450.johannes.sixt@telecom.at> (Johannes Sixt's
-	message of "Sun, 18 Mar 2007 21:34:46 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933231AbXCRUiY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 16:38:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933232AbXCRUiY
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 16:38:24 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:53330 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933231AbXCRUiX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 16:38:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2IKcKcD028342
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 18 Mar 2007 13:38:20 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2IKcJrP030207;
+	Sun, 18 Mar 2007 12:38:19 -0800
+X-Spam-Status: No, hits=-0.48 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42520>
 
-Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-> The configured refspecs are printed almost verbatim, i.e. both the local
-> and the remote branch name separated by a colon are printed; only the
-> prefix 'refs/heads/' is removed, like this:
->
->   Local branch(es) pushed with 'git push'
->     master refs/tags/*:refs/tags/* next:next
->
-> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
-> ---
->  [Resent; I don't see the patch applied nor were there any comments.]
->
->  The hunk that reads the 'Push'es from the .git/remotes file is taken
->  almost verbatim from the corresponding 'Pull' clause and is untested.
+This makes "track_tree_refs()" use the same "tree_entry()" function for 
+counting the entries as it does for actually traversing them a few lines 
+later. 
 
-Maybe while waiting for application nor comments you could have
-tested and removed that comment?
+Not a biggie, but the reason I care was that this was the only user of 
+"update_tree_entry()" that didn't actually *extract* the tree entry first. 
+It doesn't matter as things stand now, but it meant that a separate 
+test-patch I had that avoided a few more "strlen()" calls by just saving 
+the entry length in the entry descriptor and using it directly when 
+updating wouldn't work without this patch.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+ tree.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+diff --git a/tree.c b/tree.c
+index 46923ee..24f8fb6 100644
+--- a/tree.c
++++ b/tree.c
+@@ -153,10 +153,8 @@ static void track_tree_refs(struct tree *item)
+ 	/* Count how many entries there are.. */
+ 	desc.buf = item->buffer;
+ 	desc.size = item->size;
+-	while (desc.size) {
++	while (tree_entry(&desc, &entry))
+ 		n_refs++;
+-		update_tree_entry(&desc);
+-	}
+ 
+ 	/* Allocate object refs and walk it again.. */
+ 	i = 0;
