@@ -1,73 +1,108 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Libification project (SoC)
-Date: Sun, 18 Mar 2007 12:31:13 -0700
-Message-ID: <7v4poimjr2.fsf@assigned-by-dhcp.cox.net>
-References: <20070316042406.7e750ed0@home.brethil>
-	<20070316045928.GB31606@spearce.org>
-	<7vejnpycu1.fsf@assigned-by-dhcp.cox.net>
-	<20070316104715.483df0d5@localhost>
-	<20070316140855.GE4489@pasky.or.cz>
-	<20070316153822.5c842e69@localhost>
-	<20070316231646.GB4508@spearce.org>
-	<20070317195832.2af87c06@home.brethil>
-	<20070318052332.GC15885@spearce.org>
-	<7vzm6bp07f.fsf@assigned-by-dhcp.cox.net>
-	<20070318161854.5a6a34e0@home.brethil>
+Subject: Re: [wishlist] git branch -d -r remotename
+Date: Sun, 18 Mar 2007 12:42:30 -0700
+Message-ID: <7vvegyl4nt.fsf@assigned-by-dhcp.cox.net>
+References: <45FD0804.6010401@vilain.net>
+	<20070318110507.5701413A382@magnus.utsl.gen.nz>
+	<20070318113210.5843E13A382@magnus.utsl.gen.nz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
-To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-X-From: git-owner@vger.kernel.org Sun Mar 18 20:31:52 2007
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sun Mar 18 20:42:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HT16d-0007vc-00
-	for gcvg-git@gmane.org; Sun, 18 Mar 2007 20:31:51 +0100
+	id 1HT1Gz-000528-Vu
+	for gcvg-git@gmane.org; Sun, 18 Mar 2007 20:42:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932969AbXCRTbR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 15:31:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933020AbXCRTbQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 15:31:16 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:56696 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932997AbXCRTbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 15:31:15 -0400
+	id S933020AbXCRTmc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 15:42:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933026AbXCRTmc
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 15:42:32 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:40046 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933020AbXCRTmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 15:42:31 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070318193115.NGQY18070.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 18 Mar 2007 15:31:15 -0400
+          id <20070318194232.ECHA2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 18 Mar 2007 15:42:32 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id cKXD1W00j1kojtg0000000; Sun, 18 Mar 2007 15:31:14 -0400
-In-Reply-To: <20070318161854.5a6a34e0@home.brethil> (Luiz Fernando
-	N. Capitulino's message of "Sun, 18 Mar 2007 16:18:54 +0000")
+	id cKiW1W00e1kojtg0000000; Sun, 18 Mar 2007 15:42:31 -0400
+In-Reply-To: <20070318113210.5843E13A382@magnus.utsl.gen.nz> (Sam Vilain's
+	message of "Sun, 18 Mar 2007 23:01:33 +1200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42511>
 
-"Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-writes:
+Sam Vilain <sam@vilain.net> writes:
 
->  I mean, if the information needed to print the error message (packfile
-> name and version in this example) is available to the caller, or the
-> caller can get it someway, then the caller could check which error
-> he got and build the message himself.
+> One time again, this time with the call to porcelain command
+> `git-branch` replaced with the plumbing command `symbolic-ref HEAD`
 >
->  That seems simpler to me, considering the caller has the needed
-> info, of course...
+> I also changed the output to be a little less "Got here\n" style.
+>
+> Subject: [PATCH] git-remote: implement prune -c
+>
+> It would be nice to prune local refs which are irrelevant; add an
+> option to git-remote prune, with documentation.
 
-It's a possibility, but that would make it much less nice to
-diagnose and debug problems, as the caller does not usually have
-necessary information.
+I do not understand what workflow you are assuming, so your use
+of the word "irrelevant" does not mean much to me.  I suspect
+other readers of the patch and documentation wouldn't find it
+clear in what situation this option is useful.
 
-The caller may ask for object A, and the error is triggered
-because a different object C is missing, which is the delta base
-of object B which in turn is the delta base of object A.  The
-best your "caller" can say is "cannot read object A for some
-reason", and it cannot say "cannot read object A because object
-C is missing".
+Perhaps you are thinking about this scenario?  I am only
+guessing because you are not clear enough:
+
+	$ git clone
+        ... time passes ...
+        $ git checkout -b next origin/next
+        ... build, install, have fun ...
+	$ git checkout master
+        ... time passes ...
+        $ git branch
+        ... notice that you do not hack on your copy of 'next'
+        ... and want to remove it
+	$ git remote prune -c
+
+In any case, are you checking irrelevancy?  What if your foo branch has
+more changes to be sent upstream?  Even when the remote has a
+bit older version doesn't your code remove yours?  For example,
+if you did this, instead of the above, what happens?
+
+	$ git clone
+        ... time passes ...
+        $ git checkout -b next origin/next
+        ... build, install, have fun ...
+	... find an opportunity to improve ...
+        $ edit
+        $ git commit ;# on your 'next'.
+        ... build, install, test ...
+	$ git checkout master
+        ... time passes ...
+        $ git branch
+        ... notice that you do not hack on your copy of 'next' anymore,
+        ... and want to remove it
+	$ git remote prune -c
+
+If the above is the usage scenario you are trying to help, then
+wouldn't it be helpful if you could also help removing 'my-next'
+in this slightly altered example?
+
+	$ git clone
+        ... time passes ...
+        $ git checkout -b my-next origin/next
+        ... build, install, have fun ...
+	$ git checkout master
+        ... time passes ...
+        $ git branch
+        ... notice that you do not hack on your copy of 'next'
+        ... which is 'my-next', and want to remove it
+	$ git remote prune -c
