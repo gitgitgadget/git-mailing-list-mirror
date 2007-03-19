@@ -1,66 +1,65 @@
-From: "Raimund Bauer" <ray@softwarelandschaft.com>
-Subject: RE: [wishlist] graphical diff
-Date: Mon, 19 Mar 2007 09:14:58 +0100
-Organization: Softwarelandschaft
-Message-ID: <001001c769fe$af8f4400$0b0aa8c0@abf.local>
-References: <Pine.LNX.4.63.0703182342110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-symbolic-ref: fix error message when ref doesn't exist
+Date: Mon, 19 Mar 2007 01:47:08 -0700
+Message-ID: <7vslc1iprn.fsf@assigned-by-dhcp.cox.net>
+References: <20070318020645.2444.75365.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "'git'" <git@vger.kernel.org>
-To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-	"'Robin Rosenberg'" <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 09:15:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 19 09:47:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTD1Q-0003cu-Tg
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 09:15:17 +0100
+	id 1HTDWL-0003s7-Jg
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 09:47:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904AbXCSIPF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 19 Mar 2007 04:15:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbXCSIPF
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 04:15:05 -0400
-Received: from s15211414.onlinehome-server.info ([87.106.16.196]:53735 "EHLO
-	s15211414.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751904AbXCSIPC convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 04:15:02 -0400
-Received: (qmail 25165 invoked from network); 19 Mar 2007 09:20:21 +0100
-Received: from host-62-245-155-90.customer.m-online.net (HELO swl011) (62.245.155.90)
-  by s15211414.onlinehome-server.info with SMTP; 19 Mar 2007 09:20:21 +0100
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.6626
-In-Reply-To: <Pine.LNX.4.63.0703182342110.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
-Importance: Normal
+	id S965827AbXCSIrL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 04:47:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965839AbXCSIrL
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 04:47:11 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:46490 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965827AbXCSIrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 04:47:10 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070319084709.HRYV24587.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 19 Mar 2007 04:47:09 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id cYn81W00Y1kojtg0000000; Mon, 19 Mar 2007 04:47:09 -0400
+In-Reply-To: <20070318020645.2444.75365.julian@quantumfyre.co.uk> (Julian
+	Phillips's message of "Sun, 18 Mar 2007 01:53:02 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42599>
 
-On Monday, March 19, Johannes Schindelin wrote:
-> > s=F6ndag 18 mars 2007 14:16 skrev Raimund Bauer:
-> > > I think it would be really helpful (especially for=20
-> newbies like me)=20
-> > > to have an option like
-> > >=20
-> > > git diff --gui [revisions] <singe path spec>
->=20
-> And how do you set _what_ gui you want? Everybody has her pet=20
-> diff-viewer=20
-> (mine is less, BTW).
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
-Maybe with a git.gui config option (like merge.tool)?
-Or by specifying on the commandline:
+> When calling resolve_ref from check_symref set reading to 1, since we
+> do want to know if the given ref doesn't exist.  This means that
+> "git symbolic-ref foo" will now print "fatal: No such ref: foo" as
+> expected.
 
-git diff --gui=3D<my-gui-differ> ...
+Hmmmm.  That would break:
 
-And <my-gui-differ> =3D xxdiff | kompare | tkdiff | ...
+	$ rm -fr a; mkdir a; cd a
+	$ git init-db
+        $ git symbolic-ref HEAD
+        refs/heads/master
 
---=20
-best regards
+wouldn't it?  We do want it not to fail and tell us that the
+commit we are going to create will be on refs/heads/master
+(i.e. "the master branch").
 
-  Ray
+And  the command errors out as expected when given a
+non-existent symbolic ref:
+
+	$ git symbolic-ref no-such; echo $?
+	fatal: ref no-such is not a symbolic ref
+	128
