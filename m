@@ -1,97 +1,96 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-init: set core.workdir when GIT_WORK_DIR is specified
-Date: Mon, 19 Mar 2007 15:24:53 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703191523520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070317015855.GB19305@moooo.ath.cx> <7vbqiss4yw.fsf@assigned-by-dhcp.cox.net>
- <20070317143452.GA21140@moooo.ath.cx> <7vr6rnlyzt.fsf@assigned-by-dhcp.cox.net>
- <20070318211836.GA12456@moooo.ath.cx> <7vk5xensjn.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: Libification project (SoC)
+Date: Mon, 19 Mar 2007 15:57:51 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703191556210.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316060033.GD31606@spearce.org>
+ <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
+ <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070318140816.GG4489@pasky.or.cz> <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070319012111.GS18276@pasky.or.cz> <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070319025636.GE11371@thunk.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 19 15:25:01 2007
+Cc: Petr Baudis <pasky@suse.cz>, Rocco Rutte <pdmef@gmx.net>,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Mar 19 15:58:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTInB-0008Pr-5B
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 15:24:57 +0100
+	id 1HTJJ4-0007Qy-Pr
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 15:57:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750897AbXCSOYz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 10:24:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750880AbXCSOYz
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 10:24:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55850 "HELO mail.gmx.net"
+	id S932279AbXCSO5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 10:57:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932280AbXCSO5x
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 10:57:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49235 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750821AbXCSOYy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 10:24:54 -0400
-Received: (qmail invoked by alias); 19 Mar 2007 14:24:53 -0000
+	id S932279AbXCSO5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 10:57:52 -0400
+Received: (qmail invoked by alias); 19 Mar 2007 14:57:51 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp044) with SMTP; 19 Mar 2007 15:24:53 +0100
+  by mail.gmx.net (mp054) with SMTP; 19 Mar 2007 15:57:51 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19dmtVUWDpdYuqE+tpCAgtgzS1a1+6rhWNZZSy2K9
-	sSkYBMN05RdlY3
+X-Provags-ID: V01U2FsdGVkX1/hDXc42kjhLWTI9wLrALHkz1wMm2vbrinixqhk2S
+	RlgyUMmJFMnKWU
 X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vk5xensjn.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20070319025636.GE11371@thunk.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42624>
 
 Hi,
 
-On Sun, 18 Mar 2007, Junio C Hamano wrote:
+On Sun, 18 Mar 2007, Theodore Tso wrote:
 
-> Matthias Lederhofer <matled@gmx.net> writes:
+> On Mon, Mar 19, 2007 at 02:43:54AM +0100, Johannes Schindelin wrote:
+> > >   I was talking about the API. The API has to be designed to be 
+> > > reentrant. And you get pretty much stuck with the API. And requiring 
+> > > reentrance isn't that far off once libgit is there, as I tried to point 
+> > > out; it's not really any obscure requirement.
+> > 
+> > - it is easy enough to extend the API later, _retaining_ the small and 
+> >   beautiful functions.
 > 
-> > Junio C Hamano <junkio@cox.net> wrote:
-> >> Matthias Lederhofer <matled@gmx.net> writes:
-> >> >  * is_bare_repository() in general
-> >> 
-> >> There is a bit of chicken and egg involved in is_bare, because
-> >> we need to find out where GIT_DIR is in order to find where to
-> >> read GIT_DIR/config from, and only after reading the file we
-> >> would know if the user explicitly told us the repository is
-> >> bare, and setup_gently does not want to cd-up if the repository
-> >> is bare (i.e. there is no "top" to move to).
-> >
-> > How about changing setup_git_directory_gently to do the following:
-> >
-> > Find the git directory ($GIT_DIR, .git in parent directories and "."
-> > at last).
-> >
-> > Read configuration for core.bare and core.worktree.  If core.bare is
-> > not specified do the old guessing.
-> >
-> > if core.bare = true:
-> >     Set GIT_DIR if it isn't set yet and stop (don't change the
-> >     directory).
-> >
-> > if core.bare = false:
-> >     GIT_DIR specified:
-> >         use GIT_WORK_TREE, core.worktree or "." as working tree
-> >     found repository as .git directory:
-> >         use the parent directory of the .git directory as working tree
-> >     found repository in ".":
-> >         use "." as working tree
-> >
-> >     if cwd is below the working tree:
-> >         change to working tree
-> >         inside_work_tree = 1
-> >         return prefix
-> >     if cwd is outside of the working tree:
-> >         inside_work_tree = 0
-> >         return NULL
+> Um, look at what we had to do with gethostbyname() and 
+> gethostbyname_r().  It wasn't possible to sweep through and fix all of 
+> the programs that used gethostbyname(), despite the fact that if a 
+> program called gethostbyname(), then called library function which 
+> unknowingly to application, could possibly do a DNS or YP lookup (and 
+> whose behavior could change depending on some config file like 
+> /etc/nsswitch.conf), which would blow away the static information.  So 
+> if the application tryied to use the information returned by _its_ call 
+> to gethostbyname after calling some other library function, it could get 
+> some completely random hostname that wasn't what it expected.
 > 
-> Luckily, this is an area that two of the most active git
-> regulars have touched, and I can rely on their judgement to help
-> me ;-)
+> Yelch!  And so we have two API's that libc has to support, 
+> gethostbyname(), and gethostbyname_r(), with the ugly _r() suffix, and 
+> which in a sane world most programs should use since otherwise they can 
+> be incredibly fragile unless the _first_ thing they do after calling 
+> gethostbyname is to copy the information to someplace stable, instead of 
+> relying on the static buffer to remain sane.  (And yet they don't, which 
+> means bugs that only show up if optional YP or Hesiod lookups are 
+> enabled, etc.)
 > 
-> What you describe sounds like a sane outline to me.
+> Berkely got it horribly wrong when it tried to start with the "small and 
+> beautiful" functions that were non-reentrant, and we've been paying the 
+> price ever since.  Do we really want to support two versions of the API 
+> forever?  Is it really that hard to support a reentrant API from the 
+> beginning?  I'd submit the answer to these two questions are no, and no, 
+> respectively.
 
-Yes, I like it, too (that is, I did not find an obvious flaw in it).
+You make a good case why gethostbyname() was wrong, and should have been 
+defined as gethostbyname_r() to begin with.
+
+However, as I wrote in another reply in this thread, I am not prepared to 
+sink more time in this discussion, _unless_ somebody who cares about it 
+enough shows me some code and/or numbers.
 
 Ciao,
 Dscho
