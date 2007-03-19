@@ -1,54 +1,72 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: GIT v1.5.1-rc1
-Date: Mon, 19 Mar 2007 07:21:35 -0600
-Message-ID: <17918.36447.419632.224014@lisa.zopyra.com>
-References: <20070306063501.GA24355@spearce.org>
-	<7v1wk2ua55.fsf@assigned-by-dhcp.cox.net>
-	<20070306071630.GB24004@spearce.org>
-	<7vtzwyprr7.fsf_-_@assigned-by-dhcp.cox.net>
-	<7v8xdth5c4.fsf_-_@assigned-by-dhcp.cox.net>
+From: Alexander Litvinov <litvinov2004@gmail.com>
+Subject: Re: My git repo is broken, how to fix it ?
+Date: Mon, 19 Mar 2007 19:32:26 +0600
+Message-ID: <200703191932.26856.litvinov2004@gmail.com>
+References: <200702281036.30539.litvinov2004@gmail.com> <200702281754.42383.litvinov2004@gmail.com> <Pine.LNX.4.64.0702280802150.12485@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 19 14:21:49 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Mar 19 14:32:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTHo0-0004GJ-EW
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 14:21:44 +0100
+	id 1HTHym-0001Ex-0D
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 14:32:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933286AbXCSNVj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 09:21:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933565AbXCSNVj
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 09:21:39 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60156 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933286AbXCSNVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 09:21:38 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l2JDLa102857;
-	Mon, 19 Mar 2007 07:21:36 -0600
-In-Reply-To: <7v8xdth5c4.fsf_-_@assigned-by-dhcp.cox.net>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S933907AbXCSNci convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 19 Mar 2007 09:32:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933900AbXCSNci
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 09:32:38 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:64690 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933889AbXCSNch convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2007 09:32:37 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1314132uga
+        for <git@vger.kernel.org>; Mon, 19 Mar 2007 06:32:36 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Ct09NtyPreMLzK5ddOALxGkcQ6FB8WILzsusbiUIgnZxXGY4gPwVmMBDjpsnTJTvaT7/Hk3MYCsJX0NMDMc6JUQJdeqhyl2ZTekWifPc3B3Qx7YBpL+Bxy9u42fx1rMT/UJojaPzPCcWnvLOihJD/MmTG1F/AdMpvgMBrHIavAw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=AZXj9ShxZo3vfgCD6VGedzGSbHvQstf7Mju9S08rxmUWfoUxrWYxc+rvWNN2qhGEPmGfsv1PM1ZaEIn9jpae5liauAXQTkl/b0ZZUgWyXjNa4lrEXgt3rKcXrmRfq4pDYW/Igqq+vIcXotKgtOu/ZaBQ8ppJ+wYw2McEhr1BVjU=
+Received: by 10.66.244.10 with SMTP id r10mr9844378ugh.1174311155981;
+        Mon, 19 Mar 2007 06:32:35 -0700 (PDT)
+Received: from lan.ac-sw.lcl ( [81.1.223.2])
+        by mx.google.com with ESMTP id c1sm4930020ugf.2007.03.19.06.32.33;
+        Mon, 19 Mar 2007 06:32:34 -0700 (PDT)
+User-Agent: KMail/1.8
+In-Reply-To: <Pine.LNX.4.64.0702280802150.12485@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42617>
 
-On Monday, March 19, 2007 at 03:53:47 (-0700) Junio C Hamano writes:
->...
->* Hooks
+=D0=92 =D1=81=D0=BE=D0=BE=D0=B1=D1=89=D0=B5=D0=BD=D0=B8=D0=B8 =D0=BE=D1=
+=82 Wednesday 28 February 2007 22:19 Linus Torvalds =D0=BD=D0=B0=D0=BF=D0=
+=B8=D1=81=D0=B0=D0=BB(a):
+> On Wed, 28 Feb 2007, Alexander Litvinov wrote:
+> > Thanks for answer. I have found this blob in cloned repo. I just co=
+py it
+> > into objects subdir and repack repo again. fsck works without any e=
+rrors.
 >
->  - The sample update hook to show how to send out notification
->    e-mail was updated to show only new commits that appeared in
->    the repository.  Earlier, it showed new commits that appeared
->    on the branch.
+> Good to hear.
 
-I did not see Shawn's changes to the update hooks in here, and can't
-recall where these stand at the moment --- will these be forthcoming?
+Hello, its me again.
 
+It is pity but my repo was corrupted again. I have WinXP + cygwin +=20
+git-1.5.0-572-ge86d552. I was doing=20
+git-apply/git-am/git-reset/git-cvsexportcommit and broke repo somehow. =
+I have=20
+two broken blobs that should be done by my recent patches.
 
-Bill
+Will try to recover them and report the result.
+
+Is there any way to catch and solve the problem ?
+Thanks for help.
