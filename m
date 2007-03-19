@@ -1,75 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 1/2] clean up the delta base cache size a bit
-Date: Mon, 19 Mar 2007 16:28:51 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703191625090.18328@xanadu.home>
+From: Raimund Bauer <ray007@gmx.net>
+Subject: RE: [wishlist] graphical diff
+Date: Mon, 19 Mar 2007 21:29:06 +0100
+Message-ID: <1174336146.5639.26.camel@localhost>
+References: <001001c769fe$af8f4400$0b0aa8c0@abf.local>
+	 <Pine.LNX.4.63.0703191359380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <1174322644.5639.17.camel@localhost>
+	 <Pine.LNX.4.63.0703191748580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 19 21:28:58 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: 'Robin Rosenberg' <robin.rosenberg.lists@dewire.com>,
+	'git' <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 19 21:29:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTOTQ-0006ky-FG
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 21:28:56 +0100
+	id 1HTOTj-0006to-7t
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 21:29:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753188AbXCSU2x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 16:28:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbXCSU2x
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 16:28:53 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:39546 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753188AbXCSU2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 16:28:52 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF6002SL3K3G6M0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 19 Mar 2007 16:28:52 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S1753189AbXCSU3M (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 16:29:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753191AbXCSU3M
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 16:29:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40872 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753189AbXCSU3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 16:29:10 -0400
+Received: (qmail invoked by alias); 19 Mar 2007 20:29:08 -0000
+Received: from p5498AE42.dip0.t-ipconnect.de (EHLO [192.168.178.22]) [84.152.174.66]
+  by mail.gmx.net (mp010) with SMTP; 19 Mar 2007 21:29:08 +0100
+X-Authenticated: #20693823
+X-Provags-ID: V01U2FsdGVkX1+uCOReg1qu0HGYspdL4bQ4vJVdjoreUyuCkDXoCf
+	ZQLkMKLhmyAxy2
+In-Reply-To: <Pine.LNX.4.63.0703191748580.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Evolution 2.8.1 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42668>
 
-Currently there are 3 different ways to deal with the cache size.
-Let's stick to only one.  The compiler is smart enough to produce the exact
-same code in those cases anyway.
+On Mon, 2007-03-19 at 17:49 +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 19 Mar 2007, Raimund Bauer wrote:
+> 
+> > $ git show v1.4.0:git.c > git.c.v1.4.0
+> > $ git show v1.4.4:git.c > git.c.v1.4.4
+> > $ tkdiff git.c.v1.4.0 git.c.v1.4.4
+> > $ rm git.c.v1.4.0 git.c.v1.4.4
+> 
+> This almost looks like a script! Why don't you make it one?
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
- sha1_file.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+Because I had hoped that someone more familiar with git and scripting
+than me can come up with something, that
+1.) also works in the multi-file case
+2.) can take all the usual object and revision specifiers that git diff
+takes.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index b0b2177..8a19d7e 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1369,7 +1369,7 @@ static unsigned long pack_entry_hash(struct packed_git *p, off_t base_offset)
- 
- 	hash = (unsigned long)p + (unsigned long)base_offset;
- 	hash += (hash >> 8) + (hash >> 16);
--	return hash & 0xff;
-+	return hash % MAX_DELTA_CACHE;
- }
- 
- static void *cache_or_unpack_entry(struct packed_git *p, off_t base_offset,
-@@ -1417,13 +1417,13 @@ static void add_delta_base_cache(struct packed_git *p, off_t base_offset,
- 	release_delta_base_cache(ent);
- 	delta_base_cached += base_size;
- 	for (i = 0; delta_base_cached > delta_base_cache_limit
--		&& i < ARRAY_SIZE(delta_base_cache); i++) {
-+		    && i < MAX_DELTA_CACHE ; i++) {
- 		struct delta_base_cache_entry *f = delta_base_cache + i;
- 		if (f->type == OBJ_BLOB)
- 			release_delta_base_cache(f);
- 	}
- 	for (i = 0; delta_base_cached > delta_base_cache_limit
--		&& i < ARRAY_SIZE(delta_base_cache); i++)
-+		    && i < MAX_DELTA_CACHE ; i++)
- 		release_delta_base_cache(delta_base_cache + i);
- 
- 	ent->p = p;
+And then there's gitk integration ...
+
+But I'll take a look at it ;-)
+
+> Ciao,
+> Dscho
+
 -- 
-1.5.1.rc1.596.ge11e-dirty
+best regards
+
+  Ray
