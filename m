@@ -1,82 +1,60 @@
-From: "James Bowes" <jbowes@dangerouslyinc.com>
-Subject: Re: [PATCH] mergetool: Use merge.tool config option.
-Date: Sun, 18 Mar 2007 21:11:07 -0400
-Message-ID: <3f80363f0703181811x54acb3f4n689f4fd68f5a5dbe@mail.gmail.com>
-References: <11742343911678-git-send-email-jbowes@dangerouslyinc.com>
-	 <7vwt1em6gf.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Libification project (SoC)
+Date: Mon, 19 Mar 2007 02:21:11 +0100
+Message-ID: <20070319012111.GS18276@pasky.or.cz>
+References: <20070316042406.7e750ed0@home.brethil> <20070316045928.GB31606@spearce.org> <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316060033.GD31606@spearce.org> <7vps79wueu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de> <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070318140816.GG4489@pasky.or.cz> <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, tytso@mit.edu
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 19 02:11:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Rocco Rutte <pdmef@gmx.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 19 02:21:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HT6P1-0006w1-C9
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 02:11:11 +0100
+	id 1HT6Yy-0003b4-Rh
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 02:21:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964930AbXCSBLJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 21:11:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965029AbXCSBLJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 21:11:09 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:5349 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964930AbXCSBLI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 21:11:08 -0400
-Received: by wr-out-0506.google.com with SMTP id 41so1232927wry
-        for <git@vger.kernel.org>; Sun, 18 Mar 2007 18:11:07 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=hWxM/furLCrM3z1LHzBglYUzetM1eWYcOwuPJHFxv7zkeFjj5hT1mRfb793JeCB6aJ2OOFYfzf8D+YgtXCr28q6gTkMfZnkCVRMQxUca/B6TtoChDuiWNqPLp85q8Qz/r/OqfjmsEna8ouk7bnvzmOTspgZYIkdBwI9O1CLW3Wk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=TX7Nov07UDR8V2VZ74UJC4yoh2Fnz6CvgDagTTMjwn3oCZBVwzvhvAq4nwcJB9R331ClU8JdoYBi4mm9VAcbWQ+VWXYrWF8QoQvI+4wD5R51XCaskQD6Fnw/sT9HItlsk20uq8FJDmqsTcaVc0htHEMfleeMMAbQmNxJ+ef18Wk=
-Received: by 10.64.91.15 with SMTP id o15mr6596867qbb.1174266667499;
-        Sun, 18 Mar 2007 18:11:07 -0700 (PDT)
-Received: by 10.114.194.4 with HTTP; Sun, 18 Mar 2007 18:11:07 -0700 (PDT)
-In-Reply-To: <7vwt1em6gf.fsf@assigned-by-dhcp.cox.net>
+	id S1751671AbXCSBVO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 21:21:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbXCSBVO
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 21:21:14 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:50623 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751366AbXCSBVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 21:21:14 -0400
+Received: (qmail 10769 invoked by uid 2001); 19 Mar 2007 02:21:11 +0100
 Content-Disposition: inline
-X-Google-Sender-Auth: 31a44d73503fd399
+In-Reply-To: <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42554>
 
-On 3/18/07, Junio C Hamano <junkio@cox.net> wrote:
-> The problem description looks correct, but I think the original
-> meant to reject configuration value for merge_tool that is not
-> supported with the version of the script (and screwed up).
+  Hi,
 
-There's a bit later on in mergetool that errors out if you have
-provided an unknown merge program (either via the command line or
-through your config). The command line and the config ways should
-probably behave the same, eh? If so, the case block should be brought
-up one level like so:
+On Mon, Mar 19, 2007 at 12:48:27AM CET, Johannes Schindelin wrote:
+> On Sun, 18 Mar 2007, Petr Baudis wrote:
+> 
+> > [...] if you look at the UNIX history, you'll notice that first people 
+> > started with non-reentrant stuff because it was "good enough" and then 
+> > came back later and added reentrant versions anyway. Let's learn from 
+> > history. It's question of probability but it's very likely this will 
+> > happen to us as well.
+> 
+> Yes, let's learn from history. Start with a libgit that is good enough. 
+> And when somebody actually needs it to behave a little differently, or 
+> more sophisticated, then let that somebody work on it!
 
-> IOW, wouldn't this be a better way?
->
->         if test -z "$merge_tool"
->         then
->                 merge_tool=`git-config merge.tool`
-           fi
-          case "$merge_tool" in
-          kdiff3 | tkdiff | xxdiff | meld | emerge)
-                     ;; # happy
-          *)
-                     echo >&2 "We do not know how to drive $merge_tool"
-                     echo >&2 "Resetting to default..."
-                     unset merge_tool
-                     ;;
-          esac
+  I was talking about the API. The API has to be designed to be
+reentrant. And you get pretty much stuck with the API. And requiring
+reentrance isn't that far off once libgit is there, as I tried to point
+out; it's not really any obscure requirement.
 
-And then remove the 'Unknown mergetool' bit.
-
-I think either way is fine since they both let you know that you've
-entered gobbledeegook or forgot to install something, so I'll defer to
-you all for the choice on which way to go.
-
--James
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
