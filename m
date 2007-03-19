@@ -1,112 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: My git repo is broken, how to fix it ?
-Date: Mon, 19 Mar 2007 08:20:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703190804350.6730@woody.linux-foundation.org>
-References: <200702281036.30539.litvinov2004@gmail.com>
- <200702281754.42383.litvinov2004@gmail.com>
- <Pine.LNX.4.64.0702280802150.12485@woody.linux-foundation.org>
- <200703191932.26856.litvinov2004@gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Alexander Litvinov <litvinov2004@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 16:20:56 2007
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH 1/5] cvsserver: Introduce new state variable 'method'
+Date: Mon, 19 Mar 2007 16:55:57 +0100
+Message-ID: <11743197614055-git-send-email-frank@lichtenheld.de>
+References: <11743197614111-git-send-email-frank@lichtenheld.de>
+Cc: Frank Lichtenheld <frank@lichtenheld.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 19 16:56:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTJfC-0001U9-82
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 16:20:46 +0100
+	id 1HTKE9-0001kD-KW
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 16:56:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965881AbXCSPU2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 11:20:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965885AbXCSPU2
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 11:20:28 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:37636 "EHLO smtp.osdl.org"
+	id S1030266AbXCSP4w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 11:56:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030259AbXCSP4w
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 11:56:52 -0400
+Received: from mail.lenk.info ([217.160.134.107]:62753 "EHLO mail.lenk.info"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965881AbXCSPU0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 11:20:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2JFKOcD027772
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 19 Mar 2007 08:20:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2JFKNCH009499;
-	Mon, 19 Mar 2007 07:20:23 -0800
-In-Reply-To: <200703191932.26856.litvinov2004@gmail.com>
-X-Spam-Status: No, hits=-0.478 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030230AbXCSP4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 11:56:51 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HTKEP-00047D-Gg; Mon, 19 Mar 2007 16:57:09 +0100
+Received: from p54b0eb28.dip.t-dialin.net ([84.176.235.40] helo=goedel.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HTKE5-0005ut-MS; Mon, 19 Mar 2007 16:56:49 +0100
+Received: from djpig by goedel.djpig.de with local (Exim 4.63)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1HTKDJ-0005vj-86; Mon, 19 Mar 2007 16:56:01 +0100
+X-Mailer: git-send-email 1.5.0.3
+In-Reply-To: <11743197614111-git-send-email-frank@lichtenheld.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42628>
 
+$state->{method} contains the CVS access method used,
+either 'ext' or 'pserver'
 
-
-On Mon, 19 Mar 2007, Alexander Litvinov wrote:
-> 
-> It is pity but my repo was corrupted again. I have WinXP + cygwin + 
-> git-1.5.0-572-ge86d552. I was doing 
-> git-apply/git-am/git-reset/git-cvsexportcommit and broke repo somehow. I have 
-> two broken blobs that should be done by my recent patches.
-
-Ok, can you send me just the two broken blobs? I assume that they are 
-loose objects, so when fsck complaines about a corrupt object xyzzy..., 
-just take those objects from
-
-	.git/objects/xy/zzy..
-
-and tar the two broken ones up, and send it to me by email. I'll keep it 
-private if need be, but if you don't care about that, it would be even 
-better if you can send them to the list publicly so that others can see 
-what the corruption looks like.
-
-> Is there any way to catch and solve the problem ?
-
-I'd like to see the objects to look at what the corruption looks like, but 
-I suspect that it's cygwin and/or WinXP. I'm not at all convinced that 
-Windows is all that safe in general when it comes to data consistency, and 
-I suspect cygwin makes it much worse by making operations that *should* be 
-atomic be non-atomic.
-
-Here's a patch that is probably a good idea to try. It disables the 
-hardlinking code for CYGWIN, and it also checks for errors from "close()". 
-Those are the two most obvious issues that I could imagine causing 
-problems..
-
-		Linus
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
 ---
- sha1_file.c |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
+ git-cvsserver.perl |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 372af60..d829dc7 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1760,6 +1760,14 @@ static void write_sha1_file_prepare(void *buf, unsigned long len,
- 	SHA1_Final(sha1, &c);
- }
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 68aa752..e9d489b 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -91,7 +91,9 @@ $log->debug("Temporary directory is '$TEMP_DIR'");
+ # if we are called with a pserver argument,
+ # deal with the authentication cat before entering the
+ # main loop
++$state->{method} = 'ext';
+ if (@ARGV && $ARGV[0] eq 'pserver') {
++    $state->{method} = 'pserver';
+     my $line = <STDIN>; chomp $line;
+     unless( $line eq 'BEGIN AUTH REQUEST') {
+        die "E Do not understand $line - expecting BEGIN AUTH REQUEST\n";
+@@ -1026,7 +1028,7 @@ sub req_ci
  
-+#ifdef __CYGWIN__
-+static int link(const char *old, const char *new)
-+{
-+	errno = ENOSYS;
-+	return -1;
-+}
-+#endif
-+
- /*
-  * Link the tempfile to the final place, possibly creating the
-  * last directory level as you do so.
-@@ -1951,7 +1959,8 @@ int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned cha
- 	if (write_buffer(fd, compressed, size) < 0)
- 		die("unable to write sha1 file");
- 	fchmod(fd, 0444);
--	close(fd);
-+	if (close(fd))
-+		die("error closing sha1 file (%s)", strerror(errno));
- 	free(compressed);
+     $log->info("req_ci : " . ( defined($data) ? $data : "[NULL]" ));
  
- 	return move_temp_to_file(tmpfile, filename);
+-    if ( @ARGV && $ARGV[0] eq 'pserver')
++    if ( $state->{method} eq 'pserver')
+     {
+         print "error 1 pserver access cannot commit\n";
+         exit;
+-- 
+1.5.0.3
