@@ -1,65 +1,84 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Rename handling
-Date: Mon, 19 Mar 2007 16:44:57 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0703191628100.6485@iabervon.org>
-References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org>
- <45FED31B.8070307@midwinter.com> <alpine.LFD.0.83.0703191427140.18328@xanadu.home>
- <45FEE629.8030606@midwinter.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, John Goerzen <jgoerzen@complete.org>,
-	git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 21:45:10 2007
+From: James Bowes <jbowes@dangerouslyinc.com>
+Subject: [PATCH] Replace remaining instances of strdup with xstrdup.
+Date: Mon, 19 Mar 2007 17:42:40 -0400
+Message-ID: <1174340560341-git-send-email-jbowes@dangerouslyinc.com>
+Cc: junkio@cox.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 19 22:45:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTOj5-0006lm-Bh
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 21:45:07 +0100
+	id 1HTPfv-0003t2-HX
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 22:45:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228AbXCSUpB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 16:45:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750978AbXCSUpB
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 16:45:01 -0400
-Received: from iabervon.org ([66.92.72.58]:1194 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750948AbXCSUo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 16:44:59 -0400
-Received: (qmail 8806 invoked by uid 1000); 19 Mar 2007 16:44:57 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 19 Mar 2007 16:44:57 -0400
-In-Reply-To: <45FEE629.8030606@midwinter.com>
+	id S1030636AbXCSVoa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 17:44:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030657AbXCSVnv
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 17:43:51 -0400
+Received: from ms-smtp-01.southeast.rr.com ([24.25.9.100]:38460 "EHLO
+	ms-smtp-01.southeast.rr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1030654AbXCSVnc (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2007 17:43:32 -0400
+Received: from localhost (cpe-066-057-086-146.nc.res.rr.com [66.57.86.146])
+	by ms-smtp-01.southeast.rr.com (8.13.6/8.13.6) with ESMTP id l2JLhTuW004286;
+	Mon, 19 Mar 2007 17:43:29 -0400 (EDT)
+X-Mailer: git-send-email 1.5.0.3
+X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42672>
 
-On Mon, 19 Mar 2007, Steven Grimm wrote:
+Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
+---
 
-> Nicolas Pitre wrote:
-> > So maybe, just maybe, at the end of the day getting renames right 100% of
-> > the time instead of 99% is not such a big thing after all.
-> 
-> For me personally, that is true -- but I'd still prefer that extra 1%.
+This is a blatant copy of Shawn's patch. I don't know if there's a reason these
+are still strdup. If there is, please ignore this patch :)
 
-I think the discussion of 99% is misleading here. The heuristics aren't 
-random; it's not like if you do 2000 renames, you can expect 20 of them to 
-be mishandled. What's actually going on is that git will get 100% on 
-unambiguous cases; it'll get 100% on slight ambiguities; it'll get 100% on 
-mostly clear cases. On the ~2% of cases where the correct result is 
-arguable, git will choose differently from you half of the time. If you do 
-a rename and have to change most of the lines of the file, git might 
-decide that you rewrote it from scratch. On the other hand, you might have 
-had an easier time rewriting it from scratch. Even more extreme, if you 
-use git-mv to rename a file, and then you totally replace the file with 
-some other content, git will treat it as a remove and an add, rather than 
-a rename and a total rewrite. But making it a remove and an add is the 
-sensible interpretation of the change, anyway.
+ builtin-log.c |    2 +-
+ commit.c      |    2 +-
+ revision.c    |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-I'd actually guess that git's analysis is at least as likely to be useful 
-as the reference human analysis that the 1% error rate is measured 
-against.
-
-	-Daniel
-*This .sig left intentionally blank*
+diff --git a/builtin-log.c b/builtin-log.c
+index 865832c..71df957 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -35,7 +35,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 		if (!prefixcmp(arg, "--encoding=")) {
+ 			arg += 11;
+ 			if (strcmp(arg, "none"))
+-				git_log_output_encoding = strdup(arg);
++				git_log_output_encoding = xstrdup(arg);
+ 			else
+ 				git_log_output_encoding = "";
+ 		}
+diff --git a/commit.c b/commit.c
+index 5b9234e..718e568 100644
+--- a/commit.c
++++ b/commit.c
+@@ -706,7 +706,7 @@ static char *logmsg_reencode(const struct commit *commit,
+ 	encoding = get_header(commit, "encoding");
+ 	use_encoding = encoding ? encoding : utf8;
+ 	if (!strcmp(use_encoding, output_encoding))
+-		out = strdup(commit->buffer);
++		out = xstrdup(commit->buffer);
+ 	else
+ 		out = reencode_string(commit->buffer,
+ 				      output_encoding, use_encoding);
+diff --git a/revision.c b/revision.c
+index bcdb6a1..c680dcb 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1038,7 +1038,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 			if (!prefixcmp(arg, "--encoding=")) {
+ 				arg += 11;
+ 				if (strcmp(arg, "none"))
+-					git_log_output_encoding = strdup(arg);
++					git_log_output_encoding = xstrdup(arg);
+ 				else
+ 					git_log_output_encoding = "";
+ 				continue;
+-- 
+1.5.1.rc1.1.g504b
