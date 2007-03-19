@@ -1,85 +1,77 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git push to a non-bare repository
-Date: Mon, 19 Mar 2007 10:19:47 +0100
-Message-ID: <vpq8xdtpp3g.fsf@olympe.imag.fr>
-References: <vpq648ye9w6.fsf@olympe.imag.fr>
-	<20070319020053.GA11371@thunk.org>
+From: Steve =?ISO-8859-1?Q?Fr=E9cinaux?= <nudrema@gmail.com>
+Subject: Re: Libification project (SoC)
+Date: Mon, 19 Mar 2007 10:46:56 +0100
+Message-ID: <1174297616.5884.42.camel@mejai>
+References: <20070316042406.7e750ed0@home.brethil>
+	 <20070316060033.GD31606@spearce.org>
+	 <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
+	 <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070318140816.GG4489@pasky.or.cz>
+	 <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070319012111.GS18276@pasky.or.cz>
+	 <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <e5bfff550703190001k761541c7v2c259ef3f7695b10@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 19 10:20:19 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 10:47:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTE2M-0005Rl-Cb
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 10:20:18 +0100
+	id 1HTESE-0003OZ-I1
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 10:47:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752391AbXCSJT7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 05:19:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752607AbXCSJT6
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 05:19:58 -0400
-Received: from imag.imag.fr ([129.88.30.1]:33642 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752391AbXCSJT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 05:19:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l2J9JlhT018633
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 19 Mar 2007 10:19:47 +0100 (CET)
-Received: from olympe.imag.fr ([129.88.43.60])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HTE1r-0002ZL-Fb
-	for git@vger.kernel.org; Mon, 19 Mar 2007 10:19:47 +0100
-Received: from moy by olympe.imag.fr with local (Exim 4.50)
-	id 1HTE1r-0007o7-D4
-	for git@vger.kernel.org; Mon, 19 Mar 2007 10:19:47 +0100
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <20070319020053.GA11371@thunk.org> (Theodore Tso's message of "Sun\, 18 Mar 2007 22\:00\:54 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Mar 2007 10:19:47 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753765AbXCSJrA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 05:47:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753764AbXCSJq7
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 05:46:59 -0400
+Received: from serv108.segi.ulg.ac.be ([139.165.32.111]:59197 "EHLO
+	serv108.segi.ulg.ac.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752607AbXCSJq7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 05:46:59 -0400
+Received: (qmail 23457 invoked by uid 510); 19 Mar 2007 10:46:56 +0100
+Received: from 83.182.28.64 by serv108.segi.ulg.ac.be (envelope-from <nudrema@gmail.com>, uid 501) with qmail-scanner-1.25 
+ (clamdscan: 0.90/2867.  
+ Clear:RC:1(83.182.28.64):. 
+ Processed in 0.015643 secs); 19 Mar 2007 09:46:56 -0000
+Received: from unknown (HELO [10.0.0.14]) (s020908@[83.182.28.64])
+          (envelope-sender <nudrema@gmail.com>)
+          by serv108.segi.ulg.ac.be (qmail-ldap-1.03) with SMTP
+          for <mcostalba@gmail.com>; 19 Mar 2007 10:46:56 +0100
+In-Reply-To: <e5bfff550703190001k761541c7v2c259ef3f7695b10@mail.gmail.com>
+X-Mailer: Evolution 2.10.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42602>
 
-Theodore Tso <tytso@mit.edu> writes:
+On Mon, 2007-03-19 at 08:01 +0100, Marco Costalba wrote:
 
-> On Sun, Mar 18, 2007 at 06:31:21PM +0100, Matthieu Moy wrote:
->> I have a repository with a working tree on a machine A, did a clone to
->> another machine B and commited there locally.
->> 
->> I want my changes to get back into the first repository, so I did a
->> "push". The new commit is in the history, I can see it with "git log",
->> but the modifications are not in the working tree.
->
-> The general answer (which you've already received) is to tell folks is
-> to simply don't use "git push" to remote trees; basically, if you ever
-> have a non-bare repository, it doesn't do what you expect, and it will
-> leave the novice user horribly confused.  A much better answer is to
-> simply go back to machine A, and pull from machine B.
+> I' have tried to do the list myself, but I found only viewers ;-)
+> among _currently_ tools I know of, and all the viewers allow loading
+> in background _now_ so will not be portable to libgit without main
+> surgery, read multi-thread (BTW none is currently multi-thread).
 
-It's not really an option in my case. A is a fixe-IP/fixe-DNS machine,
-while B is my home machine, behind a NAT modem-router. So, I'd have to
-figure out my home IP, port-forward the ssh port from the modem to my
-machine, ...
+I thought about configuration tools (gconf, kconfig, etc), that could
+then implement something similar to what the recovery system of WinXP
+does: they could store an history of the configuration state, and then
+recover a previous state if things go wrong. This would be incredibly
+useful for system administrators.
 
-If I understand correctly the other answers, I have two options:
+Also, more generally, git can be used as a versioned storage system
+without direct link to source control. I'm thinking about ikiwiki for
+instance.
 
-* Git doesn't manage this case, and doesn't care about me loosing data
-  if they're not commited, I'll have to do it myself with hooks.
+More SCM-oriented, a cron script that manages a website by checkouting
+several repositories (one for the wiki module, another for the blog
+module, another for the forum, etc) using, say, the python bindi
 
-* Create a bare repository on machine A, and clone it to a non-bare
-  repo on which I'll work. But that means duplicating the repository
-  on the same filesystem of the same machine. Not really satisfactory
-  either. The "light checkout" feature would make it better, but I'm
-  still worried about what will happen to my light checkout when
-  someone pushes to the repository.
-
--- 
-Matthieu
+There are probably a zillion other possible uses. The common thing when
+exposing an API is that it ends up being used in a way nobody had
+thought of. So it's dangerous to say "it's useless" or "nobody will do
+it". You can be sure someone will, it's just a matter of time.
