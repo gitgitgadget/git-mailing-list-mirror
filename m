@@ -1,85 +1,91 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Rename handling
-Date: Mon, 19 Mar 2007 21:02:19 +0100
-Organization: Dewire
-Message-ID: <200703192102.20258.robin.rosenberg.lists@dewire.com>
-References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org> <alpine.LFD.0.83.0703191427140.18328@xanadu.home> <Pine.LNX.4.64.0703191145530.6730@woody.linux-foundation.org>
+Date: Mon, 19 Mar 2007 13:07:45 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703191259420.6730@woody.linux-foundation.org>
+References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org>
+ <45FED31B.8070307@midwinter.com> <alpine.LFD.0.83.0703191427140.18328@xanadu.home>
+ <45FEE629.8030606@midwinter.com> <45FEE869.3040308@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@cam.org>, Steven Grimm <koreth@midwinter.com>,
-	John Goerzen <jgoerzen@complete.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Mar 19 21:00:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, John Goerzen <jgoerzen@complete.org>,
+	git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 21:10:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTO1j-0001hE-GV
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 21:00:20 +0100
+	id 1HTOBo-0006cV-Cy
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 21:10:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751044AbXCSUAN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 19 Mar 2007 16:00:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751610AbXCSUAN
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 16:00:13 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:14738 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751044AbXCSUAL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Mar 2007 16:00:11 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id B576B8027F8;
-	Mon, 19 Mar 2007 20:54:48 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 30251-07; Mon, 19 Mar 2007 20:54:48 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id EAB37802651;
-	Mon, 19 Mar 2007 20:54:45 +0100 (CET)
-User-Agent: KMail/1.9.4
-In-Reply-To: <Pine.LNX.4.64.0703191145530.6730@woody.linux-foundation.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S932124AbXCSUIu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 16:08:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbXCSUIt
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 16:08:49 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:53246 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753150AbXCSUIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 16:08:22 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2JK7pcD005799
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 19 Mar 2007 13:07:52 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2JK7kpm015915;
+	Mon, 19 Mar 2007 12:07:48 -0800
+In-Reply-To: <45FEE869.3040308@midwinter.com>
+X-Spam-Status: No, hits=-0.482 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42662>
 
-m=E5ndag 19 mars 2007 19:48 skrev Linus Torvalds:
->=20
-> On Mon, 19 Mar 2007, Nicolas Pitre wrote:
-> >=20
-> > And some will argue that explicit renames are susceptible to user e=
-rror=20
-> > misidentifying the rename too, certainly in the 1% figure of all re=
-names=20
-> > if not more.
->=20
-> It's much worse than that. I will *guarantee* that renames are missed=
- when=20
-> they come in as traditional patches, for example. That's a 100% error=
- rate=20
-> right there, not some "1%" one.
->=20
-> And even if people never make mistakes, and people *only* use the nat=
-ive=20
-> SCM "rename" functions, I guarantee that the downsides of thinking th=
-at=20
-> files have identities is still much much bigger than the upsides. We'=
-ve=20
-> already shown that the git "blame" functionality is strictly more pow=
-erful=20
-> than anything based on renames.
->=20
-> So learn to love the bomb. Rename tracking is *wrong*.=20
->=20
-> 		Linus
 
-How about this simple receipe for defeating rename tracking (real world=
-):
 
-User needs to modify A. User renames A to OLD_A within his/her IDE. SCM
-records the rename. User now uses SaveAs to restore A, and SCM detects =
-the=20
-*NEW* file A.
+On Mon, 19 Mar 2007, Steven Grimm wrote:
+> 
+> Err, then I am *going* to consider it a failure of the tool.
 
--- robin
+Sure.
+
+And then realize that nothing is perfect.
+
+Git is just *closer* to perfect than any other SCM out there. That doesn't 
+mean that you can never find cases where you consider it failed. It just 
+means that it fails less than the alternatives.
+
+To be perfect, an SCM would have to be able to infer a higher meaning. Who 
+knows - maybe that will happen in a few centuries (or decades, but AI has 
+not had a good track-record so far). 
+
+Git tracks exactly the stuff that does *not* require it to infer higher 
+meanings - purely data. I personally consider it one of gits greatest 
+strengths: it never matters *how* you get to some state, or what tools you 
+used (patches, imports from other SCM's, "git mv" with intelligent 
+developers, "git mv" with total clutzes, "plain mv", random monkeys 
+typing, whatever). Git tracks not "intent", but "hard data".
+
+The fact that git then can use that unambiguous hard data to show you 
+interesting patterns is a big deal. But you need to realize that it's an 
+even *bigger* deal that git only traffics in hard data that leaves 
+absolutely no room for mistakes.
+
+Git simply doesn't *care* whether you applied a patch to create the 
+rename, or whether you imported the series from a system that doesn't 
+track renames, or whether you just forgot to do "git mv". You should be 
+really really happy about that. 
+
+Btw, the reason -M isn't on by default is not that it's more expensive in 
+CPU-time (it is, but quite frankly, you will never really see that effect 
+in practice). No, the real reason is that if you use "-M" and actually see 
+renames, traditional tools no longer understand the patches. And sadly, 
+there are still too many unwashed and ignorant people out there to make 
+the default patch format be git-specific.
+
+When the revolution comes, and we can shoot everybody who uses anything 
+else, we'll turn -M on by default.  Don't despair, comrade!
+
+		Linus
