@@ -1,95 +1,82 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Limit the size of the new delta_base_cache
-Date: Mon, 19 Mar 2007 12:41:10 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703191218190.18328@xanadu.home>
-References: <20070319051437.GA22494@spearce.org>
- <Pine.LNX.4.64.0703190906320.6730@woody.linux-foundation.org>
+From: Raimund Bauer <ray007@gmx.net>
+Subject: RE: [wishlist] graphical diff
+Date: Mon, 19 Mar 2007 17:44:04 +0100
+Message-ID: <1174322644.5639.17.camel@localhost>
+References: <001001c769fe$af8f4400$0b0aa8c0@abf.local>
+	 <Pine.LNX.4.63.0703191359380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Mar 19 17:41:40 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: 'Robin Rosenberg' <robin.rosenberg.lists@dewire.com>,
+	'git' <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 19 17:44:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTKvR-0006qt-K1
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 17:41:37 +0100
+	id 1HTKy2-0008CO-Ip
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 17:44:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030368AbXCSQlN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 12:41:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030384AbXCSQlN
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 12:41:13 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:51904 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030368AbXCSQlM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 12:41:12 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF500KFHT0M5UA0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 19 Mar 2007 12:41:10 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0703190906320.6730@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S1751558AbXCSQoJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 12:44:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030299AbXCSQoJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 12:44:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33368 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751596AbXCSQoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 12:44:07 -0400
+Received: (qmail invoked by alias); 19 Mar 2007 16:44:06 -0000
+Received: from p5498AE42.dip0.t-ipconnect.de (EHLO [192.168.178.22]) [84.152.174.66]
+  by mail.gmx.net (mp045) with SMTP; 19 Mar 2007 17:44:06 +0100
+X-Authenticated: #20693823
+X-Provags-ID: V01U2FsdGVkX18H2SNNLYgH6f+yuR7kbfFbfOiQc6/OeNGt0Ebavl
+	qIeeFHkyV4ondU
+In-Reply-To: <Pine.LNX.4.63.0703191359380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Evolution 2.8.1 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42641>
 
-On Mon, 19 Mar 2007, Linus Torvalds wrote:
+Hi,
 
+On Mon, 2007-03-19 at 14:00 +0100, Johannes Schindelin wrote:
+> > Maybe with a git.gui config option (like merge.tool)?
+> > Or by specifying on the commandline:
+> > 
+> > git diff --gui=<my-gui-differ> ...
+> > 
+> > And <my-gui-differ> = xxdiff | kompare | tkdiff | ...
 > 
-> 
-> On Mon, 19 Mar 2007, Shawn O. Pearce wrote:
-> >
-> > Round two, based on comments on IRC from Junio:
-> 
-> One more change: please don't even *add* objects to the cache that are 
-> bigger than 10-20% of the cache limit!
-> 
-> If you start adding big objects, and you have some cache limit, that will 
-> make the cache seriously less useful by causing eviction of potentially 
-> much more interesting objects, and also obviously causing the cache code 
-> itself to spend much more time picking objects (since it's enough to have 
-> just a few big objects to make the cache eviction decide it needs to 
-> evict).
-> 
-> Limiting by size is also effective since anything that is more than a 
-> megabyte is likely to be a blob anyway, and thus much less useful for 
-> caching in the first place. So there are just tons of reasons to say 
-> "don't even add it in the first place" if you decide to go with any limit 
-> at all.
+> Have you actually looked at the patch I sent? It is more logical to say 
+> "git -p=<bla> diff ..." when the option "-p" (without "=") already exists.
 
-On the other hand......
+I have, and I can't see your patch doing what I want.
+Sorry if I haven't made myself clear what I want, but I was thinking
+about a shortcut for something like the following example sequence:
 
-Either you parse blobs or you don't.  If you only do logs with path 
-limiting then you won't add blobs to the cache anyway.
+$ git show v1.4.0:git.c > git.c.v1.4.0
+$ git show v1.4.4:git.c > git.c.v1.4.4
+$ tkdiff git.c.v1.4.0 git.c.v1.4.4
+$ rm git.c.v1.4.0 git.c.v1.4.4
 
-If you do end up adding blobs to the cache that means you have blob 
-deltas to resolve, and even that operation should benefit from the cache 
-regardless of the object size.
+Replace tkdiff with the differ of your choice.
 
-In fact, the bigger is the object, the more effective will be the cache.  
-Because you certainly don't want to have a complete breakdown in 
-performance just because a blob just crossed the 20% treshold.
+At least for comparing 2 single blobs that behavior should be well
+defined. For comparing multiple blobs, checking them out in 2 separate
+directories and starting the differ with the directories could work, but
+I'm more after the single-file case for now ... and that's also the one
+that should be easy to start from gitk.
 
-And because we usually walk objects from newest to oldest, and because 
-deltas are usually oriented in the same direction, we only need to tweak 
-the current eviction loop a bit so on average the oldest objects are 
-evicted first so next time around the current base will still be there 
-for the next delta depth.  Given the nature of the hash containing the 
-object's offset that means starting the loop at the next entry index 
-instead of zero which should do the trick pretty well.
+If there's a way to do that by setting the pager I'll be happy to do
+so ;-)
 
-Of course if you end up in a condition where you have to prune the cache 
-continuously, you'll spend more cycles picking up the object to evict, 
-but it is likely to be so much less work than reintering that O(n!) 
-behavior with deflate we had without the cache, and even worse since we 
-mean big objects in this case.
+> Ciao,
+> Dscho
 
-So I wouldn't add any rule of that sort unless it is actually proven to 
-be bad.
+-- 
+best regards
 
-
-Nicolas
+  Ray
