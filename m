@@ -1,122 +1,97 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Rename handling
-Date: Mon, 19 Mar 2007 15:27:03 -0700
-Message-ID: <7vmz28g98o.fsf@assigned-by-dhcp.cox.net>
-References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org>
-	<45FED31B.8070307@midwinter.com>
-	<slrnevtqaq.1df.jgoerzen@katherina.lan.complete.org>
+Subject: Re: [PATCH] Teach git-remote to list pushed branches.
+Date: Mon, 19 Mar 2007 15:36:29 -0700
+Message-ID: <7v648wg8sy.fsf@assigned-by-dhcp.cox.net>
+References: <200703182134.46450.johannes.sixt@telecom.at>
+	<7vzm6ajnj1.fsf@assigned-by-dhcp.cox.net>
+	<200703192016.46894.johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: John Goerzen <jgoerzen@complete.org>
-X-From: git-owner@vger.kernel.org Mon Mar 19 23:27:13 2007
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Mon Mar 19 23:36:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTQJs-0008TD-5d
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 23:27:12 +0100
+	id 1HTQSw-00057Z-VK
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 23:36:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964917AbXCSW1I (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 18:27:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964944AbXCSW1H
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 18:27:07 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52484 "EHLO
+	id S965045AbXCSWgb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 18:36:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965138AbXCSWgb
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 18:36:31 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:56914 "EHLO
 	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964917AbXCSW1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 18:27:06 -0400
+	with ESMTP id S965045AbXCSWga (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 18:36:30 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
           by fed1rmmtao104.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070319222704.LDDH1606.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 19 Mar 2007 18:27:04 -0400
+          id <20070319223631.LIIE1606.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 19 Mar 2007 18:36:31 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id cmT31W00n1kojtg0000000; Mon, 19 Mar 2007 18:27:04 -0400
-In-Reply-To: <slrnevtqaq.1df.jgoerzen@katherina.lan.complete.org> (John
-	Goerzen's message of "Mon, 19 Mar 2007 14:49:46 -0500")
+	id cmcW1W00H1kojtg0000000; Mon, 19 Mar 2007 18:36:30 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42676>
 
-John Goerzen <jgoerzen@complete.org> writes:
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-> But if most of my work is hacking directly on the code, I am going to
-> know better than the VCS what is being renamed, and would like to record
-> that.  Sometimes the filenames are part of the code.
+> On Sunday 18 March 2007 21:37, Junio C Hamano wrote:
+>> Johannes Sixt <johannes.sixt@telecom.at> writes:
+>> >  The hunk that reads the 'Push'es from the .git/remotes file is taken
+>> >  almost verbatim from the corresponding 'Pull' clause and is untested.
+>>
+>> Maybe while waiting for application nor comments you could have
+>> tested and removed that comment?
 >
-> I want the option.
+> Fair enough ;)
+>
+> While waiting for application or comments again, I did test
+> now, and the patch does what I expect even for .git/remotes
+> files, that is, it prints the refs to be pushed just like it
+> does for remotes noted in the config file.
 
-This depends on what you want to do with that recorded rename.
+Thanks, and sorry for that comment as I was in a grumpy mood.
 
-Let's say you renamed foo.py to bar.py, but the content changed
-so much while you renamed the file that it is no longer similar
-enough for the default similarity threshold to consider them a
-renamed pair.
+Let's queue it in 'next', as I do not see anything obviously
+wrong with it [*1*].
 
-Then you run:
+Now let's find other people who find this new feature
+desirable.  I am personally neutral right now.
 
-	$ git log bar.py
 
-and against your expectation, it says "the history of that name
-ends here --- you created this file at this point from zero".
+[Footnote]
 
-Now, what would you do at this point, of course after an
-obligatory "f*ck, stupid tool" cussing?
+*1* Actually I think the refspec list on "Push: " lines should
+be split out into separate array elements, because
 
-You would do "$ git show -M" and you would not see the rename,
-because we are assuming that the similarity is smaller than the
-default threashold.
+	Push: A B C
 
-But it's your project and you know better than the tool.  You
-know that bar.py used to be called foo.py.  So you can do:
+is equivalent to
 
-	$ git diff $commit^:foo.py $commit:bar.py
+	Push: A
+        Push: B
+        Push: C
 
-if you cared what huge change you did while renaming, and then
-continue digging from that point, perhaps with:
+This does not apply to "Pull: " lines, as
 
-	$ git log $commit^ -- foo.py
+	Pull: A B C
 
-Earlier, I said "you know better than the tool", but that is a
-slight lie.  You probably knew better than the tool back when
-you made that commit, but you cannot be better than any tool to
-remember that 10 years (or 6 months) after making that commit.
+and
 
-That's why you need to record somewhere you renamed foo.py to
-bar.py in this commit.
+	Pull: A
+	Pull: B
+	Pull: C
 
-We happen to have a perfect place to record such a rename and it
-is called the commit log message.  If a rename matters *so* much
-to your project, you not only would want to record the fact that
-you renamed it, but you would want to record *WHY*, and the
-commit log message is the perfect place to do both.
+mean quite different things.
 
-A single path being renamed is a special case of content
-movement across file boundaries.  Pairwise diff that "git log
--p" gives cannot express one file being split into two or two
-file merged into one, and that is independent of explicitly
-recorded rename or inferred one.  We already have a better
-solution for that general problem and it is called git-blame.
-
-By the way, blame is not perfect.  One thing I sometimes find
-lacking from it is that it only shows the final assignment of
-the blame.  Often, a development goes like (1) code evolves in
-two or more different files, (2) at one point somebody goes in
-and cleans things up to move the duplicated code from these
-files and consolidate into one file, (3) and the refactored
-results gets polished further, drastically changing.  Many
-times, step (2), especially when done by a competent person, is
-done carefully not to change the logic of the code to avoid
-regression, and lines from that revision does not appear in the
-end result of the blame.
-
-This is good when the reason why you are reading the blame
-output is to figure out *why* a block of lines in the current
-code is written that way (you do not care about the
-restructuring history, but care more about the origin of the
-code and the reasoning behind why it is that way), but when
-doing archaeology sometimes I wish what happened in step (2) can
-also be shown a bit more prominently in the final output.
+This distinction does not matter to the current callers, but I
+was hoping that somebody would build "interactive" mode to edit
+Push and Pull list, and when that happens, having A B C as
+separate entries in @{$hash->{$name}{'PUSH'}} would be handier
+to code.
