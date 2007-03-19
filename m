@@ -1,71 +1,82 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH] cvsserver: Don't lie about binary mode in asciidoc documentation
-Date: Mon, 19 Mar 2007 13:31:52 +0100
-Message-ID: <11743075123989-git-send-email-frank@lichtenheld.de>
-Cc: Frank Lichtenheld <frank@lichtenheld.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 19 13:32:19 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Libification project (SoC)
+Date: Mon, 19 Mar 2007 13:37:18 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703191329220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070316042406.7e750ed0@home.brethil>  <20070316060033.GD31606@spearce.org>
+  <7vps79wueu.fsf@assigned-by-dhcp.cox.net> 
+ <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de> 
+ <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de> 
+ <20070318140816.GG4489@pasky.or.cz>  <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+  <20070319012111.GS18276@pasky.or.cz> 
+ <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <e5bfff550703190001k761541c7v2c259ef3f7695b10@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, Rocco Rutte <pdmef@gmx.net>,
+	git@vger.kernel.org, tytso@mit.edu, spearce@spearce.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 13:37:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTH29-0004fh-U0
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 13:32:18 +0100
+	id 1HTH7W-0007dD-NP
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 13:37:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933149AbXCSMcG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 08:32:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933238AbXCSMcG
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 08:32:06 -0400
-Received: from mail.lenk.info ([217.160.134.107]:54237 "EHLO mail.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933149AbXCSMcE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 08:32:04 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HTH2B-0004Kw-5k; Mon, 19 Mar 2007 13:32:20 +0100
-Received: from p54b0e006.dip.t-dialin.net ([84.176.224.6] helo=goedel.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HTH1r-0006h9-VM; Mon, 19 Mar 2007 13:32:00 +0100
-Received: from djpig by goedel.djpig.de with local (Exim 4.63)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HTH1k-0002gH-Jl; Mon, 19 Mar 2007 13:31:52 +0100
-X-Mailer: git-send-email 1.5.0.3
+	id S933849AbXCSMhX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 08:37:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933845AbXCSMhW
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 08:37:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47295 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933849AbXCSMhV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 08:37:21 -0400
+Received: (qmail invoked by alias); 19 Mar 2007 12:37:19 -0000
+X-Provags-ID: V01U2FsdGVkX19pFAh9Kr9pALuFaBT3nVq/erskJjXgl2x9I5JJXx
+	Bj1ksvOMaoLUXI
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <e5bfff550703190001k761541c7v2c259ef3f7695b10@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42610>
 
-The git-cvsserver documentation claims that the server will set
--k modes if appropriate which is not really the case. On the other
-hand the available gitcvs.allbinary variable is not documented at
-all. Fix both these issues by rewording the related paragraph.
+Hi,
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- Documentation/git-cvsserver.txt |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+On Mon, 19 Mar 2007, Marco Costalba wrote:
 
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 1c6f6a7..85d0950 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -134,9 +134,11 @@ checkout, diff, status, update, log, add, remove, commit.
- Legacy monitoring operations are not supported (edit, watch and related).
- Exports and tagging (tags and branches) are not supported at this stage.
- 
--The server will set the -k mode to binary when relevant. In proper GIT
--tradition, the contents of the files are always respected.
--No keyword expansion or newline munging is supported.
-+The server should set the -k mode to binary when relevant, however,
-+this is not really implemented yet. For now, you can force the server
-+to set `-kb` for all files by setting the `gitcvs.allbinary` config
-+variable. In proper GIT tradition, the contents of the files are
-+always respected. No keyword expansion or newline munging is supported.
- 
- Dependencies
- ------------
--- 
-1.5.0.3
+> On 3/19/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > I don't see _any_ problem in making an API which works with _one_ repo
+> > first. This has several advantages:
+> > 
+> > - most users (if any!) will work that way,
+> > 
+> 
+> Sometime could be useful to write a list of possible users before
+> starting to code.
+
+Fair enough.
+
+I expect the most visible users of libgit to be: the core Git programs! 
+Because if we don't eat our own dog food, why should anybody else?
+
+And I am absolutely utterly opposed to make them slower just to support a 
+program which wants to cache meta data from multiple repositories.
+
+Yes, you could write a program which can compare objects from several 
+repos, but that is easy in fact: just set GIT_ALTERNATE_OBJECT_DIRECTORIES 
+and you're done. Without changing the core of Git at all!
+
+Having said that, I never liked the idea of having static variables to 
+talk with config handlers, and would have preferred cb_data like 
+for_each_ref() does. That is a low hanging fruit, which does not affect 
+performance, and is _definitely_ a clean up.
+
+I am not so sure about the impact of changing the index to a non-static 
+structure.
+
+Ciao,
+Dscho
