@@ -1,77 +1,117 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: RE: [wishlist] graphical diff
-Date: Mon, 19 Mar 2007 14:00:32 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703191359380.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <001001c769fe$af8f4400$0b0aa8c0@abf.local>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Libification project (SoC)
+Date: Mon, 19 Mar 2007 14:04:47 +0100
+Message-ID: <e5bfff550703190604n6360659cl3880ec5b3a9b5042@mail.gmail.com>
+References: <20070316042406.7e750ed0@home.brethil>
+	 <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
+	 <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070318140816.GG4489@pasky.or.cz>
+	 <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070319012111.GS18276@pasky.or.cz>
+	 <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <e5bfff550703190001k761541c7v2c259ef3f7695b10@mail.gmail.com>
+	 <Pine.LNX.4.63.0703191329220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-610279858-1174309232=:22628"
-Cc: 'Robin Rosenberg' <robin.rosenberg.lists@dewire.com>,
-	'git' <git@vger.kernel.org>
-To: Raimund Bauer <ray@softwarelandschaft.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 14:00:40 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>, "Rocco Rutte" <pdmef@gmx.net>,
+	git@vger.kernel.org, tytso@mit.edu, spearce@spearce.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 19 14:05:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTHTb-0002kq-Lm
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 14:00:40 +0100
+	id 1HTHXq-0004jU-Hk
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 14:05:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933856AbXCSNAf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 09:00:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933853AbXCSNAf
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 09:00:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47676 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933856AbXCSNAe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 09:00:34 -0400
-Received: (qmail invoked by alias); 19 Mar 2007 13:00:33 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp045) with SMTP; 19 Mar 2007 14:00:33 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18XyX0axFAXrUXIgXGw9QLwNsRU7RyWdHYxXR+9VS
-	ATjbS5s7kuGYVl
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <001001c769fe$af8f4400$0b0aa8c0@abf.local>
-X-Y-GMX-Trusted: 0
+	id S933876AbXCSNEu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 09:04:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933861AbXCSNEu
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 09:04:50 -0400
+Received: from wr-out-0506.google.com ([64.233.184.228]:27584 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933876AbXCSNEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 09:04:49 -0400
+Received: by wr-out-0506.google.com with SMTP id 41so1416025wry
+        for <git@vger.kernel.org>; Mon, 19 Mar 2007 06:04:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=audGi2y99oPMwgGN6F+rGG6huealn9fbLDbcURwgNnqCNT1oh61o111wgSPobNC6XhOlTWqIGYH0sn27ZDYJUdykrsDIprqN2maIsCamSe2Bic92aMDqw71ewTnCkICNh4wWsbjitGvmN6NkwdzGYSuBs98LB1f3s/z0Ja7qziQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kCE8WI7HITPhxqN0i4TOJUSsZJJH2jBGSqSjeSrv6er+uB7OleagqFxDAWC7ZlN1V0UktXv8miaqhUOYRfWsFhfFXvXOUidgO7eft+pRiV4FkM1b+NfGWbbBqmTyaVzUZZi3OpFfRUdnIfsa0dJ3uv7Sa00siurwYzEDwMC+ch4=
+Received: by 10.90.51.17 with SMTP id y17mr3840360agy.1174309487254;
+        Mon, 19 Mar 2007 06:04:47 -0700 (PDT)
+Received: by 10.114.60.16 with HTTP; Mon, 19 Mar 2007 06:04:47 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.63.0703191329220.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42614>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 3/19/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Mon, 19 Mar 2007, Marco Costalba wrote:
+>
+> > On 3/19/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > I don't see _any_ problem in making an API which works with _one_ repo
+> > > first. This has several advantages:
+> > >
+> > > - most users (if any!) will work that way,
+> > >
+> >
+> > Sometime could be useful to write a list of possible users before
+> > starting to code.
+>
+> Fair enough.
+>
+> I expect the most visible users of libgit to be: the core Git programs!
+> Because if we don't eat our own dog food, why should anybody else?
+>
 
----1148973799-610279858-1174309232=:22628
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+But in case you eat your own food, why others should to the same?
 
-Hi,
 
-On Mon, 19 Mar 2007, Raimund Bauer wrote:
+> And I am absolutely utterly opposed to make them slower just to support a
+> program which wants to cache meta data from multiple repositories.
+>
 
-> On Monday, March 19, Johannes Schindelin wrote:
-> > > söndag 18 mars 2007 14:16 skrev Raimund Bauer:
-> > > > I think it would be really helpful (especially for 
-> > newbies like me) 
-> > > > to have an option like
-> > > > 
-> > > > git diff --gui [revisions] <singe path spec>
-> > 
-> > And how do you set _what_ gui you want? Everybody has her pet 
-> > diff-viewer 
-> > (mine is less, BTW).
-> 
-> Maybe with a git.gui config option (like merge.tool)?
-> Or by specifying on the commandline:
-> 
-> git diff --gui=<my-gui-differ> ...
-> 
-> And <my-gui-differ> = xxdiff | kompare | tkdiff | ...
+The problem, at least with viewers I know, it's not with multiple
+repositories but with multiple  views of the same repo.
 
-Have you actually looked at the patch I sent? It is more logical to say 
-"git -p=<bla> diff ..." when the option "-p" (without "=") already exists.
 
-Ciao,
-Dscho
+Anyway. Just to give my two cent:
 
----1148973799-610279858-1174309232=:22628--
+The two possible features we are talking about are:
+
+  - reentrancy (many views open on the same repo)
+
+  - non-blocking behaviour (loading repo in background)
+
+These two features are _very_ different. I agree an async library it's
+not a small thing, and probably it involves using an external thread
+library in libgit itself, like pthread, just to not reinventing the
+(difficult) wheel.
+
+Regarding reentrancy I don't know what is involved in avoiding globals
+and the like, but I would think it's really an absolute minimum to get
+people eating your food ;-)
+
+I completely agree that it's impossible to know how a library will be
+used when you write it, but giving a good look around before to start
+allows you to get a minimum subset of needed features and if you add a
+little bit of generalization and you are lucky enough perhaps you will
+avoid to rewrite the library in the future.
+
+>From the viewers survey and also from the interesting examples of
+Steve I would say that do not planning for reentarncy would be a big
+no-no
+
+  Marco
