@@ -1,59 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Limit the size of the new delta_base_cache
-Date: Mon, 19 Mar 2007 12:54:12 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703191248360.18328@xanadu.home>
-References: <20070319051437.GA22494@spearce.org>
- <Pine.LNX.4.64.0703190906320.6730@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703191218190.18328@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Why are ref_lists sorted?
+Date: Mon, 19 Mar 2007 10:03:10 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703190935360.6730@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0703190321370.28570@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Mar 19 17:54:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Mar 19 18:03:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTL7k-0004k6-3w
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 17:54:20 +0100
+	id 1HTLGQ-0000ib-Tz
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 18:03:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030401AbXCSQyO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 12:54:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030400AbXCSQyO
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 12:54:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:23533 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030401AbXCSQyN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 12:54:13 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF500EOZTMCSHH0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 19 Mar 2007 12:54:12 -0400 (EDT)
-In-reply-to: <alpine.LFD.0.83.0703191218190.18328@xanadu.home>
-X-X-Sender: nico@xanadu.home
+	id S966022AbXCSRDR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 13:03:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966023AbXCSRDR
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 13:03:17 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:41755 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966022AbXCSRDQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 13:03:16 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2JH3BcD031271
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 19 Mar 2007 10:03:11 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2JH3AoB011771;
+	Mon, 19 Mar 2007 09:03:10 -0800
+In-Reply-To: <Pine.LNX.4.64.0703190321370.28570@beast.quantumfyre.co.uk>
+X-Spam-Status: No, hits=-0.478 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42643>
-
-On Mon, 19 Mar 2007, Nicolas Pitre wrote:
-
-> And because we usually walk objects from newest to oldest, and because 
-> deltas are usually oriented in the same direction, we only need to tweak 
-> the current eviction loop a bit so on average the oldest objects are 
-> evicted first so next time around the current base will still be there 
-> for the next delta depth.  Given the nature of the hash containing the 
-> object's offset that means starting the loop at the next entry index 
-> instead of zero which should do the trick pretty well.
-
-OK. Two flaws above: to be clear it is the newest objects in terms of 
-absolute age should be evicted first, which means the oldest to have 
-been cached.  Then the hash cannot be representative of the object 
-ordering because it is reduced to 8 bits and objects are often enough 
-more than 256 bytes apart to make this hash based ordering completely 
-random.  A simple LRU might be quite effective instead.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42644>
 
 
-Nicolas
+
+On Mon, 19 Mar 2007, Julian Phillips wrote:
+> 
+> So my questions are:
+> 
+> 1) what have I broken by removing the sort?
+
+The big thing is probably consistency.
+
+I *really* think we need to sort these things. Otherwise you'll see two 
+totally identical repositories giving different results to something as 
+fundamental as "git ls-remote" just because they didn't get sorted.
+
+So I think sorting is absolutely required, perhaps not so much because it 
+is necessarily "incorrect" without the sorting, but because I think 
+consistency in this area is too important *not* to sort it.
+
+And sorting it really is simple. The fact that we use a O(n**2) list 
+insertion thing that is also probably pessimal for the case of "already 
+sorted" input is just a "hey, it was easy, we never actually hit it in 
+practice" issue. 
+
+> 2) is it worth trying to optimise the sort?
+
+Absolutely. It might involve changing the "ref_list *" thing into an array 
+of ref_entries, and that will cause a lot of (fairly trivial) changes, but 
+it should all be entirely internal to refs.c, so it's hopefully not 
+painful, just some boring grunt-work.
+
+		Linus
