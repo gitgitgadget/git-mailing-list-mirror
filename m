@@ -1,87 +1,97 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: [PATCH] Make git-send-email aware of Cc: lines.
-Date: Sun, 18 Mar 2007 21:37:53 -0400
-Message-ID: <20070319013753.GA23545@fieldses.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Libification project (SoC)
+Date: Mon, 19 Mar 2007 02:43:54 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070316042406.7e750ed0@home.brethil> <20070316045928.GB31606@spearce.org>
+ <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316060033.GD31606@spearce.org>
+ <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
+ <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070318140816.GG4489@pasky.or.cz> <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070319012111.GS18276@pasky.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 19 02:38:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Rocco Rutte <pdmef@gmx.net>, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Mar 19 02:44:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HT6p9-0003YR-Ez
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 02:38:11 +0100
+	id 1HT6v0-0006U2-Sp
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 02:44:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932887AbXCSBh4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 21:37:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933572AbXCSBh4
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 21:37:56 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:56352 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932887AbXCSBhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 21:37:55 -0400
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HT6os-0007rx-1G; Sun, 18 Mar 2007 21:37:54 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S933611AbXCSBn5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 21:43:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933614AbXCSBn5
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 21:43:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42161 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933611AbXCSBn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 21:43:56 -0400
+Received: (qmail invoked by alias); 19 Mar 2007 01:43:55 -0000
+X-Provags-ID: V01U2FsdGVkX1/zfNMwtgjzyGCw2a/JXflWr98AMS0oPK8PXzAkI4
+	8DI7IzpEjxDrt0
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070319012111.GS18276@pasky.or.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42558>
 
-In the Linux kernel, for example, it's common to include Cc: lines
-for cases when you want to remember to cc someone on a patch without
-necessarily claiming they signed off on it.  Make git-send-email
-aware of these.
+Hi,
 
-Signed-off-by: "J. Bruce Fields" <bfields@citi.umich.edu>
----
- Documentation/git-send-email.txt |    3 ++-
- git-send-email.perl              |    8 ++++----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+On Mon, 19 Mar 2007, Petr Baudis wrote:
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 35b0104..ba5f3ef 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -59,7 +59,8 @@ The --cc option must be repeated for each user you want on the cc list.
- 	is not set, this will be prompted for.
- 
- --no-signed-off-by-cc::
--	Do not add emails found in Signed-off-by: lines to the cc list.
-+	Do not add emails found in Signed-off-by: or Cc: lines to the
-+	cc list.
- 
- --quiet::
- 	Make git-send-email less verbose.  One line per email should be
-diff --git a/git-send-email.perl b/git-send-email.perl
-index a71a192..e6d81f9 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -65,8 +65,8 @@ Options:
-                   Defaults to on.
- 
-    --no-signed-off-cc Suppress the automatic addition of email addresses
--                 that appear in a Signed-off-by: line, to the cc: list.
--		 Note: Using this option is not recommended.
-+                 that appear in Signed-off-by: or Cc: lines to the cc:
-+                 list.  Note: Using this option is not recommended.
- 
-    --smtp-server  If set, specifies the outgoing SMTP server to use.
-                   Defaults to localhost.
-@@ -562,8 +562,8 @@ foreach my $t (@files) {
- 			}
- 		} else {
- 			$message .=  $_;
--			if (/^Signed-off-by: (.*)$/i && !$no_signed_off_cc) {
--				my $c = $1;
-+			if (/^(Signed-off-by|Cc): (.*)$/i && !$no_signed_off_cc) {
-+				my $c = $2;
- 				chomp $c;
- 				push @cc, $c;
- 				printf("(sob) Adding cc: %s from line '%s'\n",
--- 
-1.5.0.3.31.ge47c
+> On Mon, Mar 19, 2007 at 12:48:27AM CET, Johannes Schindelin wrote:
+> > On Sun, 18 Mar 2007, Petr Baudis wrote:
+> > 
+> > > [...] if you look at the UNIX history, you'll notice that first 
+> > > people started with non-reentrant stuff because it was "good enough" 
+> > > and then came back later and added reentrant versions anyway. Let's 
+> > > learn from history. It's question of probability but it's very 
+> > > likely this will happen to us as well.
+> > 
+> > Yes, let's learn from history. Start with a libgit that is good 
+> > enough. And when somebody actually needs it to behave a little 
+> > differently, or more sophisticated, then let that somebody work on it!
+> 
+>   I was talking about the API. The API has to be designed to be 
+> reentrant. And you get pretty much stuck with the API. And requiring 
+> reentrance isn't that far off once libgit is there, as I tried to point 
+> out; it's not really any obscure requirement.
+
+I don't see _any_ problem in making an API which works with _one_ repo 
+first. This has several advantages:
+
+- most users (if any!) will work that way,
+
+- it is easier to implement,
+
+- you are more likely to get that right than the more complex thing you 
+  seem to want already in the first version, and
+
+- it is easy enough to extend the API later, _retaining_ the small and 
+  beautiful functions.
+
+As for the memory problems I was pointing out to you on IRC: if you do 
+some operation on one repo, and run out of memory, okay, there is not much 
+you can do about it. Tough luck.
+
+If you cache different repos in the _same_ process, and run out of memory, 
+you should free the caches of the _other_ repos first, instead of just 
+erroring out. This is not entirely trivial, likely to make libgit fragile, 
+and quite possibly a performance hit (making libgit unattractive for 
+plumbing, which would take away the best test case for libgit).
+
+Also, when you cache different repos, you want to avoid duplicating 
+identical objects in different caches, which makes the cache handling no 
+easier.
+
+But even if these issues would not exist, isn't it obvious that you should 
+start with something _simple_?
+
+Ciao,
+Dscho
