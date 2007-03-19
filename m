@@ -1,72 +1,78 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git push to a non-bare repository
-Date: Sun, 18 Mar 2007 23:44:51 -0700
-Message-ID: <7vzm69ivfg.fsf@assigned-by-dhcp.cox.net>
-References: <vpq648ye9w6.fsf@olympe.imag.fr>
-	<20070319020053.GA11371@thunk.org>
-	<7vr6rmm1y9.fsf@assigned-by-dhcp.cox.net>
-	<20070319022143.GF20658@spearce.org>
-	<20070319024744.GD11371@thunk.org>
-	<20070319025603.GG20658@spearce.org>
-	<20070319032130.GF11371@thunk.org>
-	<20070319035351.GI20658@spearce.org>
-	<alpine.LFD.0.83.0703182355570.18328@xanadu.home>
-	<20070319062525.GH11371@thunk.org>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: Libification project (SoC)
+Date: Mon, 19 Mar 2007 08:01:35 +0100
+Message-ID: <e5bfff550703190001k761541c7v2c259ef3f7695b10@mail.gmail.com>
+References: <20070316042406.7e750ed0@home.brethil>
+	 <20070316060033.GD31606@spearce.org>
+	 <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
+	 <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070318140816.GG4489@pasky.or.cz>
+	 <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	 <20070319012111.GS18276@pasky.or.cz>
+	 <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Mar 19 07:44:56 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Petr Baudis" <pasky@suse.cz>, "Rocco Rutte" <pdmef@gmx.net>,
+	git@vger.kernel.org, tytso@mit.edu, spearce@spearce.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Mar 19 08:01:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTBby-0000m9-T7
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 07:44:55 +0100
+	id 1HTBsC-0000Rn-4y
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 08:01:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965724AbXCSGoy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 02:44:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965726AbXCSGox
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 02:44:53 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:34193 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965724AbXCSGow (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 02:44:52 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070319064452.VQOY18070.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 19 Mar 2007 02:44:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id cWkr1W0081kojtg0000000; Mon, 19 Mar 2007 02:44:52 -0400
-In-Reply-To: <20070319062525.GH11371@thunk.org> (Theodore Tso's message of
-	"Mon, 19 Mar 2007 02:25:25 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965744AbXCSHBj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 03:01:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965750AbXCSHBj
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 03:01:39 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:8447 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965744AbXCSHBi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 03:01:38 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1235382uga
+        for <git@vger.kernel.org>; Mon, 19 Mar 2007 00:01:36 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=nm4AiS7dRysNA8TpRDy10d44H8uwbXYakVyMru7wkUPQq/JjZvarqM/UqNRdN0hz5HzTqYqRtIn7FAcjNqe2UfkpXDp+/YXpriaQ9Fz8rvr3Freqvg+ScaYKNZWfKMJK4Qf/eB0sXKnT5LnbvH44xV8maK7WuBdPOc6IAhT9c7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=A0xQoaYOUqRyaNWLZ84ALm5wb/GBYdaLLbGB5UFHQXYeNlEZlFqEhVZiXw+W2qY67QCRH0wt2BAEM82YHapAox8glNFn7vyipiSZgDwFsyoFU4qlnA3cAMrI1tUAM9Cy5TiH6tGM/8ssu1EeweDFhns5LTlsDM02VOZFMK6ri2w=
+Received: by 10.65.126.16 with SMTP id d16mr8266615qbn.1174287695475;
+        Mon, 19 Mar 2007 00:01:35 -0700 (PDT)
+Received: by 10.114.60.16 with HTTP; Mon, 19 Mar 2007 00:01:35 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42597>
 
-Theodore Tso <tytso@mit.edu> writes:
-
-> Right, but if the branch being pointed to is pointed to by HEAD I
-> would argue that the reflog for HEAD should be updated, since
-> operations that reference HEAD will see a new commit, and and it will
-> be confusing when "git reflog" shows no hint of the change.
+On 3/19/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 >
-> Of couse, if the branch being pushed to isn't one which is pointed by
-> HEAD, of course HEAD's reflog shouldn't be updated.
+> I don't see _any_ problem in making an API which works with _one_ repo
+> first. This has several advantages:
+>
+> - most users (if any!) will work that way,
+>
 
-If we were to do this properly, we probably would need to
-restructure the reflog update code for the HEAD in a major way.
-"git-update-ref refs/heads/foo $newvalue" when HEAD points at
-branch 'foo' currently does not update HEAD reflog because the
-current definition of HEAD reflog is (as Nico mentioned) log of
-changes made through HEAD symref.  Instead, we would need a
-reverse lookup every time any ref is updated to see if that ref
-is pointed by any symbolics ref and update the reflogs of those
-symbolic refs.  This is expensive to do in general, though,
-because there is no backpointer to list of symbolic refs that
-point at a non-symbolic ref.
+Sometime could be useful to write a list of possible users before
+starting to code.
+
+Please which are, in your opinion, the possible tools that could use a
+non-reentrant, blocking libgit? In case tool is already exsistant
+please write the name, in case it's a 'would be' one give a brief
+description.
+
+I' have tried to do the list myself, but I found only viewers ;-)
+among _currently_ tools I know of, and all the viewers allow loading
+in background _now_ so will not be portable to libgit without main
+surgery, read multi-thread (BTW none is currently multi-thread).
+
+   Marco
