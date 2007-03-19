@@ -1,56 +1,72 @@
-From: "Christian MICHON" <christian.michon@gmail.com>
-Subject: Re: how to do these 2 one-liners ?
-Date: Mon, 19 Mar 2007 23:59:52 +0100
-Message-ID: <46d6db660703191559s56f13734w45c6ce65fe604f4a@mail.gmail.com>
-References: <46d6db660703191525w613b02e1nae0f30efaca3b269@mail.gmail.com>
-	 <7vwt1cetuc.fsf@assigned-by-dhcp.cox.net>
+From: Chris Wright <chrisw@sous-sol.org>
+Subject: Re: [PATCH]: remove extra-verbosity from git-clone (http)
+Date: Mon, 19 Mar 2007 16:04:36 -0700
+Message-ID: <20070319230436.GB12555@sequoia.sous-sol.org>
+References: <58d389c20702150910x24ec218bjdb9cb49ee03fd1df@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 00:00:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Fernando Herrera <fherrera@onirica.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 20 00:08:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTQpq-0001PE-H5
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 00:00:14 +0100
+	id 1HTQy7-00063h-Oj
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 00:08:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965352AbXCSW74 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 18:59:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965330AbXCSW74
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 18:59:56 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:57262 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965352AbXCSW7z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 18:59:55 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1423846uga
-        for <git@vger.kernel.org>; Mon, 19 Mar 2007 15:59:54 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ib1debP0Se/VzXi6L8PHFvWdBS6JXVsHoRZnDp1xu/+dOeBholcnx8WNeE741hmirw7nO0YuyJl3bjPfQJIkbghKtvuySbzDQRWiXSPtfINcj+0YjEKIVejbTUGpi/zCySTm43YUsxqKxrEsOrUazwxe5Hr1mjIUaL2zexTXNm0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=B7XMKI7MA1Txhie1/pIc/G0r8HR8y6v3//M2q9I7Kp6eHiT3wZicixLsbuwJf5Bl0GkqnI01YxUJ6ea+LC0qL0uRrtA/edQ61rl2UzRbTflew3ujzBZd25C6GRS/TWREdo5kX/uJSZWdrkgFIzbZ+cRXxiAlQ/WbUAoEC5s8nlQ=
-Received: by 10.64.143.12 with SMTP id q12mr8580028qbd.1174345192773;
-        Mon, 19 Mar 2007 15:59:52 -0700 (PDT)
-Received: by 10.115.16.8 with HTTP; Mon, 19 Mar 2007 15:59:52 -0700 (PDT)
-In-Reply-To: <7vwt1cetuc.fsf@assigned-by-dhcp.cox.net>
+	id S965405AbXCSXIp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 19:08:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965407AbXCSXIo
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 19:08:44 -0400
+Received: from 216-99-217-87.dsl.aracnet.com ([216.99.217.87]:33546 "EHLO
+	sous-sol.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965405AbXCSXIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 19:08:44 -0400
+Received: from sous-sol.org (localhost.localdomain [127.0.0.1])
+	by sous-sol.org (8.13.8/8.13.7) with ESMTP id l2JN4a57016786;
+	Mon, 19 Mar 2007 16:04:36 -0700
+Received: (from chrisw@localhost)
+	by sous-sol.org (8.13.8/8.13.7/Submit) id l2JN4a6U016785;
+	Mon, 19 Mar 2007 16:04:36 -0700
 Content-Disposition: inline
+In-Reply-To: <58d389c20702150910x24ec218bjdb9cb49ee03fd1df@mail.gmail.com>
+User-Agent: Mutt/1.4.2.2i
+X-Spam-Status: No, score=-2.3 required=5.0 tests=AWL,BAYES_00,HOT_NASTY,
+	UNPARSEABLE_RELAY autolearn=ham version=3.1.4
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	sequoia.sous-sol.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42679>
 
-On 3/19/07, Junio C Hamano <junkio@cox.net> send 2 nice
-one-liners...
+* Fernando Herrera (fherrera@onirica.com) wrote:
+> the attached patch removes the extra verbosity when cloning a http
+> repository. I noticed this after some git upgrade in fedora. Please,
+> consider applying it, getting tons of "got XXX", "walk XXX" lines by
+> default is a little bit annoying.
+> 
+> Salu2
+> 
+> PS: Thanks for this so great piece os software!
+> 
+> --- git-clone.sh.orig	2007-02-15 19:03:51.000000000 +0200
+> +++ git-clone.sh	2007-02-15 19:04:06.000000000 +0200
+> @@ -59,7 +59,7 @@
+>  		else
+>  			tname=$name
+>  		fi
+> -		git-http-fetch -v -a -w "$tname" "$name" "$1/" || exit 1
+> +		git-http-fetch -a -w "$tname" "$name" "$1/" || exit 1
+>  	done <"$clone_tmp/refs"
+>  	rm -fr "$clone_tmp"
+>  	http_fetch "$1/HEAD" "$GIT_DIR/REMOTE_HEAD" ||
 
-Thanks Junio :)
+Was there any problem with this patch from Fernando?  I don't care much
+either way (I simply never use http fetch myself ;-).  Just doing some
+old bugzilla cleanup and noticed this still was neither picked up nor
+replied to.  So, in case it just fell through the cracks...
 
-I'll use these 2 tomorrow. I wasn't that far in my last experiments
-for the 2nd one...
-
--- 
-Christian
+thanks,
+-chris
