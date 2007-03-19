@@ -1,125 +1,147 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] mergetool: Add support for vimdiff.
-Date: Sun, 18 Mar 2007 22:18:27 -0400
-Message-ID: <20070319021827.GB11371@thunk.org>
-References: <11742569263141-git-send-email-jbowes@dangerouslyinc.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 0/4] Eclipse (EGIT) Structured compare
+Date: Sun, 18 Mar 2007 22:21:02 -0400
+Message-ID: <20070319022102.GE20658@spearce.org>
+References: <20070318220711.24742.90943.stgit@lathund.dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, junkio@cox.net
-To: James Bowes <jbowes@dangerouslyinc.com>
-X-From: git-owner@vger.kernel.org Mon Mar 19 03:18:35 2007
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Mar 19 03:21:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HT7SE-0006Ca-2Y
-	for gcvg-git@gmane.org; Mon, 19 Mar 2007 03:18:34 +0100
+	id 1HT7Uk-0007Sl-7z
+	for gcvg-git@gmane.org; Mon, 19 Mar 2007 03:21:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933652AbXCSCSd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 18 Mar 2007 22:18:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933660AbXCSCSd
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 22:18:33 -0400
-Received: from THUNK.ORG ([69.25.196.29]:49497 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933652AbXCSCSc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Mar 2007 22:18:32 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HT7Xy-0001L5-65; Sun, 18 Mar 2007 22:24:30 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HT7S7-00046o-JF; Sun, 18 Mar 2007 22:18:27 -0400
+	id S933632AbXCSCVJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 18 Mar 2007 22:21:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933660AbXCSCVJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Mar 2007 22:21:09 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48059 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933632AbXCSCVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Mar 2007 22:21:07 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HT7UT-0004qL-GO; Sun, 18 Mar 2007 22:20:53 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1683D20FBAE; Sun, 18 Mar 2007 22:21:03 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <11742569263141-git-send-email-jbowes@dangerouslyinc.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <20070318220711.24742.90943.stgit@lathund.dewire.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42562>
 
-Hi James,
+Robin Rosenberg <robin.rosenberg@dewire.com> wrote:
+> Now Eclipse can compare two git version at the project level. Thanks
+> to the SHA-1's the compare is very quick. There is some extra cost
+> for version managed archives (zip/jars) as Eclipse insists on comparing
+> the contents of those at the file level too. Not that I mind that. It
+> is useful and cool. (No, it doesn't compare open office documents in
+> any useful manner, unless you happen to have a plugin for it, in
+> which case it might actually work.)
+> 
+> Along with this some experiments with caching and a minor bug fix in
+> the commit reader.
 
-	Thanks for adding vimdiff support!  One minor nit, which I
-fixed before applying to my tree:  You didn't update git-mergetool.txt
-and config.txt in the Documentation directory to add "vimdiff" to the
-list of possible merge resolution tools.
+Thanks for this series.  I have applied it and pushed it out, along
+with a small fix on top.
 
-Junio, please pull from:
+It works nicely, at least the "NG" variant when comparing trees.
+;-)
 
-	git://repo.or.cz/git/mergetool.git
+The non-NG variant shows the raw tree diff, which is uh, a little
+uninteresting, unless you are a true core Git hacker...
 
-						- Ted
+I tested it on a small-ish repository. The history browser works
+quite nicely once the cache starts to get filled.  I don't know
+how well it works on bigger repositories.  ;-)
 
-commit 9cec65399d3575774910b21c1cfd762a5e88a245
-Author: James Bowes <jbowes@dangerouslyinc.com>
-Date:   Sun Mar 18 22:11:54 2007 -0400
+--'da small fix--
+From 6c402714c5a1850b871877cefe465a6a40ccdd0f Mon Sep 17 00:00:00 2001
+From: Shawn O. Pearce <spearce@spearce.org>
+Date: Sun, 18 Mar 2007 22:15:14 -0400
+Subject: [PATCH] Move GitResourceNode to ui plugin
 
-    mergetool: Add support for vimdiff.
-    
-    Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
-    Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
+Because I am trying to keep the core plugin UI free, allowing it
+to be used in headless workbenches, such as from an Eclipse based
+build system, we don't want to depend on the org.eclipse.swt plugin.
+Relocating GitResourceNode to the UI plugin lets us continue to avoid
+that dependency.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 953acae..6688642 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -460,7 +460,7 @@ merge.summary::
- merge.tool::
- 	Controls which merge resolution program is used by
- 	gitlink:git-mergetool[l].  Valid values are: "kdiff3", "tkdiff",
--	"meld", "xxdiff", "emerge"
-+	"meld", "xxdiff", "emerge", "vimdiff"
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ org.spearce.egit.core/META-INF/MANIFEST.MF         |    4 +---
+ .../spearce/egit/ui/internal}/GitResourceNode.java |    3 ++-
+ .../internal/actions/GitCompareRevisionAction.java |    2 +-
+ 3 files changed, 4 insertions(+), 5 deletions(-)
+ rename {org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping => org.spearce.egit.ui/src/org/spearce/egit/ui/internal}/GitResourceNode.java (96%)
+
+diff --git a/org.spearce.egit.core/META-INF/MANIFEST.MF b/org.spearce.egit.core/META-INF/MANIFEST.MF
+index 8dc62d6..fd39ec6 100644
+--- a/org.spearce.egit.core/META-INF/MANIFEST.MF
++++ b/org.spearce.egit.core/META-INF/MANIFEST.MF
+@@ -10,9 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
+  org.eclipse.team.core,
+  org.eclipse.core.resources,
+  org.spearce.jgit,
+- org.eclipse.core.filesystem,
+- org.eclipse.compare,
+- org.eclipse.swt
++ org.eclipse.core.filesystem
+ Export-Package: org.spearce.egit.core.internal.mapping;x-friends:="org.spearce.egit.ui",
+  org.spearce.egit.core,
+  org.spearce.egit.core.internal.mapping,
+diff --git a/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitResourceNode.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitResourceNode.java
+similarity index 96%
+rename from org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitResourceNode.java
+rename to org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitResourceNode.java
+index 0bba684..bdf8902 100644
+--- a/org.spearce.egit.core/src/org/spearce/egit/core/internal/mapping/GitResourceNode.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/GitResourceNode.java
+@@ -1,4 +1,4 @@
+-package org.spearce.egit.core.internal.mapping;
++package org.spearce.egit.ui.internal;
  
- merge.verbosity::
- 	Controls the amount of output shown by the recursive merge
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index ae69a0e..5baaaca 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -25,7 +25,7 @@ OPTIONS
- -t or --tool=<tool>::
- 	Use the merge resolution program specified by <tool>.
- 	Valid merge tools are:
--	kdiff3, tkdiff, meld, xxdiff, and emerge.
-+	kdiff3, tkdiff, meld, xxdiff, emerge, and vimdiff.
+ import java.io.ByteArrayInputStream;
+ import java.io.IOException;
+@@ -11,6 +11,7 @@ import org.eclipse.compare.structuremergeviewer.IStructureComparator;
+ import org.eclipse.core.runtime.CoreException;
+ import org.eclipse.swt.graphics.Image;
+ import org.eclipse.team.core.history.IFileRevision;
++import org.spearce.egit.core.internal.mapping.GitFileRevision;
+ import org.spearce.jgit.lib.FileTreeEntry;
+ import org.spearce.jgit.lib.ObjectId;
+ import org.spearce.jgit.lib.ObjectLoader;
+diff --git a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/GitCompareRevisionAction.java b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/GitCompareRevisionAction.java
+index 84eb506..9a0b378 100644
+--- a/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/GitCompareRevisionAction.java
++++ b/org.spearce.egit.ui/src/org/spearce/egit/ui/internal/actions/GitCompareRevisionAction.java
+@@ -32,8 +32,8 @@ import org.eclipse.ui.IReusableEditor;
+ import org.eclipse.ui.IWorkbenchPage;
+ import org.eclipse.ui.actions.BaseSelectionListenerAction;
+ import org.spearce.egit.core.GitWorkspaceFileRevision;
+-import org.spearce.egit.core.internal.mapping.GitResourceNode;
+ import org.spearce.egit.ui.internal.GitCompareFileRevisionEditorInput;
++import org.spearce.egit.ui.internal.GitResourceNode;
  
- 	If a merge resolution program is not specified, 'git mergetool'
- 	will use the configuration variable merge.tool.  If the
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 52386a5..563c5c0 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -185,9 +185,9 @@ merge_file () {
- 		mv -- "$BACKUP" "$path.orig"
- 	    fi
- 	    ;;
--	meld)
-+	meld|vimdiff)
- 	    touch "$BACKUP"
--	    meld -- "$LOCAL" "$path" "$REMOTE"
-+	    $merge_tool -- "$LOCAL" "$path" "$REMOTE"
- 	    if test "$path" -nt "$BACKUP" ; then
- 		status=0;
- 	    else
-@@ -305,6 +305,8 @@ if test -z "$merge_tool" ; then
- 	merge_tool=meld
-     elif type emacs >/dev/null 2>&1; then
- 	merge_tool=emerge
-+    elif type vimdiff >/dev/null 2>&1; then
-+	merge_tool=vimdiff
-     else
- 	echo "No available merge resolution programs available."
- 	exit 1
-@@ -312,7 +314,7 @@ if test -z "$merge_tool" ; then
- fi
- 
- case "$merge_tool" in
--    kdiff3|tkdiff|meld|xxdiff)
-+    kdiff3|tkdiff|meld|xxdiff|vimdiff)
- 	if ! type "$merge_tool" > /dev/null 2>&1; then
- 	    echo "The merge tool $merge_tool is not available"
- 	    exit 1
+ /**
+  * Action to invoke a Git based compare on selected revivsions in the history window.
+-- 
+1.5.0.4.1023.gb3ae
+
+-- 
+Shawn.
