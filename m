@@ -1,76 +1,79 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: GIT v1.5.1-rc1
-Date: Tue, 20 Mar 2007 09:37:38 +0000
-Message-ID: <200703200937.39440.andyparkins@gmail.com>
-References: <20070306063501.GA24355@spearce.org> <7v7itcd8mk.fsf@assigned-by-dhcp.cox.net> <20070320025539.GA28922@spearce.org>
+Subject: [PATCH 1/4] update-hook: abort early if the project description is unset
+Date: Tue, 20 Mar 2007 10:58:32 +0000
+Message-ID: <200703201058.33046.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, Bill Lear <rael@zopyra.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 20 10:37:55 2007
+X-From: git-owner@vger.kernel.org Tue Mar 20 11:58:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTamv-0002st-AZ
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 10:37:53 +0100
+	id 1HTc3A-0002Nc-F1
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 11:58:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933454AbXCTJhp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 05:37:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933416AbXCTJhp
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 05:37:45 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:21288 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933454AbXCTJho (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 05:37:44 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so272999nfa
-        for <git@vger.kernel.org>; Tue, 20 Mar 2007 02:37:43 -0700 (PDT)
+	id S1753648AbXCTK6k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 06:58:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753653AbXCTK6j
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 06:58:39 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:59638 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753648AbXCTK6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 06:58:38 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1597056uga
+        for <git@vger.kernel.org>; Tue, 20 Mar 2007 03:58:37 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GZuvKzPaxQwHkZOHtMeFSOQWVdcQC1qUtL4A66NvD0/8w6ahbjmUfRwdrI5amgC3LeAZ/Nst7dHCKKL2cQO7M0RyVhTghGyqrLld9V2iuN58FSv1dHrcyGmBQBlN10eChBFGt8eox9m3BgdKGgzIavvU8soL/1mbKDjfezg40Eo=
+        h=domainkey-signature:received:received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=Hck74UTpNBJ6xD0YYnkSVAGnY/Xabk/oSlyBb0nsluztDNBHMLTaw6DrIICNCH4tS5gxs77/vIU+8E5Gy6LJZmkDSMRiy4p6X8hNQwjHYOAXcQBCilPtQZDI1z3RsHaaL3RG9YmtwPKMwA6dxOz2InlaZstQTq6zHitDJEdfZms=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tHgU/aosq2VdC36wsCPAitW8sc7foTY08Ofm4hyInu9k0ujXgbN9Kw6/4SrHTiGB1HYp9a9GiNbLntJGyEw6ZbhZp6No4eMXsmTpPWA9M+whgYr7bvjhBWQZM+1Mi4oG0TRimutsGnObzk467JrXPvFkHefTI+IV30ZkUkeRk28=
-Received: by 10.78.106.3 with SMTP id e3mr2925336huc.1174383462912;
-        Tue, 20 Mar 2007 02:37:42 -0700 (PDT)
+        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=SQPDQ3rwgZmRokyh8eaBG8m27B48nUpCSEsW4mHDnbwidgLl35/e6DszXio7/qeUMwovGeaoRbIYUpdk/mnVh4CAq6VXs0I0EOLKF9Krp5ybthwlEn/YMhzyIE+Dwts+l6k3RJAKv3i7ZWszikFq9Mu7TvyEe1SGDYTemE37CD8=
+Received: by 10.64.114.10 with SMTP id m10mr7561147qbc.1174388316857;
+        Tue, 20 Mar 2007 03:58:36 -0700 (PDT)
 Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id d2sm1307977nfe.2007.03.20.02.37.41;
-        Tue, 20 Mar 2007 02:37:41 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <20070320025539.GA28922@spearce.org>
+        by mx.google.com with ESMTP id p20sm1550828nfc.2007.03.20.03.58.35;
+        Tue, 20 Mar 2007 03:58:36 -0700 (PDT)
+X-TUID: 2f8600270cded8d8
+X-UID: 292
+X-Length: 1421
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42734>
 
-On Tuesday 2007 March 20 02:55, Shawn O. Pearce wrote:
+It was annoying to always have the first email from a project be from
+the "Unnamed repository; edit this file to name it for gitweb project";
+just because it's so easy to forget to set it.
 
-> I was hoping Andy or one of the other folks who have worked on
-> that hook would pick up the ball and update the hook, but I
+This patch checks to see if the description file is still default (or
+empty) and aborts if so - allowing you to fix the problem before sending
+out silly looking emails to every developer.
 
-I'll be delighted to port the hook script - I've got some fixes that haven't 
-been nicely stacked yet.  The problem I have for porting the hook is as you 
-point out:
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ templates/hooks--update |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-> think they are stuck on the fact that you cannot use:
->
-> 	git log $new --not --all
-
-> That almost needs a --all-except="refs/heads/a refs/heads/b" option
-> to rev-list.  Grrrr.
-
-I'm afraid so.  Would a --ignore list be more appropriate?  That way you could 
-list any refs you wanted (i.e. not just --all) and then have that list 
-finally filtered by --ignore.
-
-
-Andy
+diff --git a/templates/hooks--update b/templates/hooks--update
+index 8f6c4fe..1a60773 100644
+--- a/templates/hooks--update
++++ b/templates/hooks--update
+@@ -56,6 +56,12 @@ recipients=$(git-repo-config hooks.mailinglist)
+ announcerecipients=$(git-repo-config hooks.announcelist)
+ allowunannotated=$(git-repo-config --bool hooks.allowunannotated)
+ 
++# check for no description
++if [ -z "$projectdesc" -o "$projectdesc" = "Unnamed repository; edit this file to name it for gitweb" ]; then
++	echo "*** Project description file hasn't been set" >&2
++	exit 1
++fi
++
+ # --- Check types
+ newrev_type=$(git-cat-file -t $newrev)
+ 
 -- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+1.5.0.3.402.g0c48
