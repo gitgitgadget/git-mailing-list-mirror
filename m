@@ -1,86 +1,174 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH 2/4] update-hook: show the contents of the tag message for annotated tags
-Date: Tue, 20 Mar 2007 10:58:38 +0000
-Message-ID: <200703201058.38519.andyparkins@gmail.com>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: [PATCH] Added make options NO_GUI and WITH_P4IMPORT.
+Date: Tue, 20 Mar 2007 14:45:25 +0300
+Message-ID: <20070320114525.GP96806@codelabs.ru>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=koi8-r
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 20 11:59:17 2007
+X-From: git-owner@vger.kernel.org Tue Mar 20 12:45:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTc3b-0002Za-I2
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 11:59:11 +0100
+	id 1HTcmV-0000tB-Ou
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 12:45:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753670AbXCTK6o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 06:58:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753677AbXCTK6o
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 06:58:44 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:10871 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753670AbXCTK6m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 06:58:42 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so299723nfa
-        for <git@vger.kernel.org>; Tue, 20 Mar 2007 03:58:41 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=Q3kGZA3y028+zJ3htGxrSe+33K6MEeHkyDE/Hs1NF9M6LtZhj8hQlG1U61AZFI6gMM0WJJb8mhQ27Dwd/v0rW1YQkHJINzpr7nd55Ga+V+NZbyRde+r5YA6cSxvl1zh00va4oesqIhSS1JnCuwb2u1D+jIWNAnJmks2IHRbxQIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=Wl5WN/1EQfcvylt94mhSz+ZC9oj3PwZPyhoyOeO8KPOPx1l0bGG/zTPsxC/gElq8h/9nk6mvezodmKXvxTxvYdzX5na/67a5B9u3fgQAGgpJJS6LZ+ne91QWRyrBcg6T0rWAXMs/oE6wJRn8v618498cYDSQU3d+51dtSFPFFh4=
-Received: by 10.78.193.19 with SMTP id q19mr1811175huf.1174388320989;
-        Tue, 20 Mar 2007 03:58:40 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id o45sm1541495nfa.2007.03.20.03.58.39;
-        Tue, 20 Mar 2007 03:58:40 -0700 (PDT)
-X-TUID: aaae46035a53852a
-X-UID: 293
-X-Length: 1624
+	id S1753593AbXCTLpd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 07:45:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753690AbXCTLpd
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 07:45:33 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:53787 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753593AbXCTLpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 07:45:32 -0400
+Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HTcmQ-0001lL-6I for git@vger.kernel.org; Tue, 20 Mar 2007 14:45:30 +0300
 Content-Disposition: inline
+X-Spam-Status: No, score=-1.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42738>
 
-The annotated tag points at a commit, for which we show the short log.
-However, the tag itself contains a message, possibly release notes or
-hand-written change log - whatever it contains is worth showing.  The
-tag message is extracted with
+NO_GUI disables the building and installation of the git GUI part.
+WITH_P4IMPORT enables the installation of the Perforce import script.
 
-  git cat-file tag $newrev | tail -q -n +5
+This patch was originally developed for the FreeBSD port of git,
+but I think that it will not harm to integrate this patch into the
+development tree.
 
-Which is dangerously reliant on the format of the tag object being four
-header lines then the message.  I don't like it, but I don't know of any
-other way of extracting the message.  It's also missing any kind of
-support for the GPG signature.
-
-Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
 ---
- templates/hooks--update |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+ Makefile |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 44 insertions(+), 0 deletions(-)
 
-diff --git a/templates/hooks--update b/templates/hooks--update
-index 1a60773..31e72ca 100644
---- a/templates/hooks--update
-+++ b/templates/hooks--update
-@@ -231,8 +231,14 @@ case "$refname_type" in
+diff --git a/Makefile b/Makefile
+index 51c1fed..8b142f0 100644
+--- a/Makefile
++++ b/Makefile
+@@ -110,6 +110,10 @@ all::
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+ # MakeMaker (e.g. using ActiveState under Cygwin).
+ #
++# Define NO_GUI if you do not want Tcl/Tk GUI.
++#
++# Define WITH_P4IMPORT to build and install Python git-p4import script.
++#
  
- 		echo ""
- 		echo $LOGBEGIN
--		echo ""
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -196,9 +200,20 @@ SCRIPT_PERL = \
+ 	git-svnimport.perl git-cvsexportcommit.perl \
+ 	git-send-email.perl git-svn.perl
  
-+		# Show the content of the tag message; this might contain a change log
-+		# or release notes so is worth displaying.  "tail -n +5" is there to
-+		# remove the first 4 lines of the tag object, those details have
-+		# already been summarised above
-+		git cat-file tag $newrev | tail -q -n +5
++SCRIPT_PYTHON = \
++	git-p4import.py
 +
-+		echo ""
- 		if [ -n "$prevtag" ]; then
- 			git rev-list --pretty=short "$prevtag..$newrev" | git shortlog
- 		else
++ifdef WITH_P4IMPORT
++SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
++	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
++	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
++	  git-status git-instaweb
++else
+ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+ 	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
+ 	  git-status git-instaweb
++endif
++
+ 
+ # ... and all the rest that could be moved out of bindir to gitexecdir
+ PROGRAMS = \
+@@ -241,6 +256,9 @@ endif
+ ifndef PERL_PATH
+ 	PERL_PATH = /usr/bin/perl
+ endif
++ifndef PYTHON_PATH
++	PYTHON_PATH = /usr/local/bin/python
++endif
+ 
+ export PERL_PATH
+ 
+@@ -646,6 +664,7 @@ prefix_SQ = $(subst ','\'',$(prefix))
+ 
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+ PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
++PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
+ 
+ LIBS = $(GITLIBS) $(EXTLIBS)
+ 
+@@ -667,7 +686,9 @@ ifneq (,$X)
+ endif
+ 
+ all::
++ifndef NO_GUI
+ 	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) all
++endif
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' all
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1)
+ 
+@@ -699,6 +720,15 @@ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
+ 
++$(patsubst %.py,%,$(SCRIPT_PYTHON)) : % : %.py
++	rm -f $@ $@+
++	sed -e '1s|#!.*/python|#!$(PYTHON_PATH_SQ)|' \
++	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
++	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
++	    $@.py >$@+
++	chmod +x $@+
++	mv $@+ $@
++
+ perl/perl.mak: GIT-CFLAGS
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' $(@F)
+ 
+@@ -892,10 +922,16 @@ install: all
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
++ifndef NO_GUI
+ 	$(INSTALL) git$X gitk '$(DESTDIR_SQ)$(bindir_SQ)'
++else
++	$(INSTALL) git$X '$(DESTDIR_SQ)$(bindir_SQ)'
++endif
+ 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
+ 	$(MAKE) -C perl prefix='$(prefix_SQ)' install
++ifndef NO_GUI
+ 	$(MAKE) -C git-gui install
++endif
+ 	if test 'z$(bindir_SQ)' != 'z$(gitexecdir_SQ)'; \
+ 	then \
+ 		ln -f '$(DESTDIR_SQ)$(bindir_SQ)/git$X' \
+@@ -929,11 +965,17 @@ dist: git.spec git-archive
+ 	@mkdir -p $(GIT_TARNAME)
+ 	@cp git.spec $(GIT_TARNAME)
+ 	@echo $(GIT_VERSION) > $(GIT_TARNAME)/version
++ifndef NO_GUI
+ 	@$(MAKE) -C git-gui TARDIR=../$(GIT_TARNAME)/git-gui dist-version
+ 	$(TAR) rf $(GIT_TARNAME).tar \
+ 		$(GIT_TARNAME)/git.spec \
+ 		$(GIT_TARNAME)/version \
+ 		$(GIT_TARNAME)/git-gui/version
++else
++	$(TAR) rf $(GIT_TARNAME).tar \
++		$(GIT_TARNAME)/git.spec \
++		$(GIT_TARNAME)/version
++endif
+ 	@rm -rf $(GIT_TARNAME)
+ 	gzip -f -9 $(GIT_TARNAME).tar
+ 
+@@ -974,7 +1016,9 @@ clean:
+ 	rm -f gitweb/gitweb.cgi
+ 	$(MAKE) -C Documentation/ clean
+ 	$(MAKE) -C perl clean
++ifndef NO_GUI
+ 	$(MAKE) -C git-gui clean
++endif
+ 	$(MAKE) -C templates/ clean
+ 	$(MAKE) -C t/ clean
+ 	rm -f GIT-VERSION-FILE GIT-CFLAGS
 -- 
-1.5.0.3.402.g0c48
+1.5.0.3-dirty
+-- 
+Eygene
