@@ -1,74 +1,60 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git 1.5.1-rc1 doesn't like empty files
-Date: Mon, 19 Mar 2007 23:05:56 -0700
-Message-ID: <7v1wjkbgaj.fsf@assigned-by-dhcp.cox.net>
-References: <1174361424.3143.42.camel@dv>
-	<7vslc0bhz7.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0703192245490.6730@woody.linux-foundation.org>
-	<7v648wbgiy.fsf@assigned-by-dhcp.cox.net>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH 2/2] Implement a simple delta_base cache
+Date: Tue, 20 Mar 2007 07:35:40 +0100
+Organization: Dewire
+Message-ID: <200703200735.41234.robin.rosenberg.lists@dewire.com>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org> <200703181929.58278.robin.rosenberg.lists@dewire.com> <45FE8D1E.6040408@sinister.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 07:06:09 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Brodsky <trekie@sinister.cz>
+X-From: git-owner@vger.kernel.org Tue Mar 20 07:33:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTXU1-0008Tj-2y
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 07:06:09 +0100
+	id 1HTXug-0005fN-TB
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 07:33:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752223AbXCTGF6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 02:05:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752778AbXCTGF6
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 02:05:58 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:50280 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752223AbXCTGF5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 02:05:57 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070320060557.IRGY2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 20 Mar 2007 02:05:57 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id cu5w1W00n1kojtg0000000; Tue, 20 Mar 2007 02:05:57 -0400
-In-Reply-To: <7v648wbgiy.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 19 Mar 2007 23:00:53 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752792AbXCTGd3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 02:33:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753117AbXCTGd3
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 02:33:29 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:17656 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752792AbXCTGd2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 02:33:28 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 94FF480281D;
+	Tue, 20 Mar 2007 07:28:05 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 03679-03; Tue, 20 Mar 2007 07:28:05 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 44A2780264C;
+	Tue, 20 Mar 2007 07:28:03 +0100 (CET)
+User-Agent: KMail/1.9.4
+In-Reply-To: <45FE8D1E.6040408@sinister.cz>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42721>
 
-Junio C Hamano <junkio@cox.net> writes:
+Uploaded now.
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> We've had this bug before - thinking that we don't need to inflate() 
->> anything because we already had it all..
->>
->> 		Linus
->
-> Thanks.  I think we _do_ need a big fat warning near the code to
-> avoid the same mistake in the future...
+David Brodsky provides the final location.
 
-By the way, I think the test that comes after the part you fixed
-is wrong (I know it is my bad without running git-blame).  Since
-we are making sure that we eat everything, we should expect
-Z_STREAM_END and no avail_in.
+Linus: I noted a large extra file that I don't know where it is from. Seems to
+be form the first convetsion. Perhaps you wont' need to download it: 
 
-diff --git a/sha1_file.c b/sha1_file.c
-index d7dc80d..7dc16ea 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1037,7 +1037,7 @@ static void *unpack_sha1_rest(z_stream *stream, void *buffer, unsigned long size
- 			status = inflate(stream, Z_FINISH);
- 	}
- 	buf[size] = 0;
--	if ((status == Z_OK || status == Z_STREAM_END) && !stream->avail_in) {
-+	if (status == Z_STREAM_END && !stream->avail_in) {
- 		inflateEnd(stream);
- 		return buf;
- 	}
+ECLIPSE.git/.git/objects/pack_sETUPg
+
+-- robin
