@@ -1,61 +1,113 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Suspicious of v1.5.0 tag object
-Date: Tue, 20 Mar 2007 13:43:00 -0700
-Message-ID: <7v7itb7ijv.fsf@assigned-by-dhcp.cox.net>
-References: <200703201323.15497.andyparkins@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] index-pack: more validation checks and cleanups
+Date: Tue, 20 Mar 2007 17:07:48 -0400 (EDT)
+Message-ID: <alpine.LFD.0.83.0703201659530.18328@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 21:43:30 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 20 22:08:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTlAw-0003tS-LZ
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 21:43:23 +0100
+	id 1HTlYl-0008AE-84
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 22:07:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752869AbXCTUnH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 16:43:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753879AbXCTUnG
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 16:43:06 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:59801 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752869AbXCTUnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 16:43:05 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070320204304.GDO1312.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 20 Mar 2007 16:43:04 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id d8j01W00V1kojtg0000000; Tue, 20 Mar 2007 16:43:01 -0400
-In-Reply-To: <200703201323.15497.andyparkins@gmail.com> (Andy Parkins's
-	message of "Tue, 20 Mar 2007 13:23:12 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753898AbXCTVHv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 17:07:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753901AbXCTVHv
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 17:07:51 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:56108 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753898AbXCTVHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 17:07:49 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JF8009EC010PK60@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 20 Mar 2007 17:07:48 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42761>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+When appending objects to a pack, make sure the appended data is really 
+what we expect instead of simply loading potentially corrupted objects 
+and legitimating them by computing a SHA1 of that corrupt data.
 
-> I was just poking around and noticed this:
->
->   $ git cat-file -p v1.5.0
->   object 437b1b20df4b356c9342dac8d38849f24ef44f27
->   type commit
->   tag v1.5.0
->   tagger Junio C Hamano <junkio@cox.net> Wed Feb 14 00:00:00 2007 +0000
->
-> Is it really the case that you tagged v1.5.0 at midnight UTC
-> exactly; and that you travelled from your normal -0800
-> timezone to +0000?  None of the other tags show this strange
-> output.
+With this the sha1_object() can lose its test_for_collision parameter 
+which is now redundent.
 
-Who are you referring to as "you" when your "To:" header reads
-Git Mailing List ;-)?
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
-That one and its commit object has that timestamp because the
-release was supposed to be named "Rose scented bamboo".
+Again on top of my latest patch.
+
+diff --git a/index-pack.c b/index-pack.c
+index f314937..61eb20e 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -345,12 +345,10 @@ static int find_delta_children(const union delta_base *base,
+ }
+ 
+ static void sha1_object(const void *data, unsigned long size,
+-			enum object_type type, unsigned char *sha1,
+-			int test_for_collision)
++			enum object_type type, unsigned char *sha1)
+ {
+ 	hash_sha1_file(data, size, typename(type), sha1);
+-
+-	if (test_for_collision && has_sha1_file(sha1)) {
++	if (has_sha1_file(sha1)) {
+ 		void *has_data;
+ 		enum object_type has_type;
+ 		unsigned long has_size;
+@@ -381,7 +379,7 @@ static void resolve_delta(struct object_entry *delta_obj, void *base_data,
+ 	free(delta_data);
+ 	if (!result)
+ 		bad_object(delta_obj->offset, "failed to apply delta");
+-	sha1_object(result, result_size, type, delta_obj->sha1, 1);
++	sha1_object(result, result_size, type, delta_obj->sha1);
+ 	nr_resolved_deltas++;
+ 
+ 	hashcpy(delta_base.sha1, delta_obj->sha1);
+@@ -438,7 +436,7 @@ static void parse_pack_objects(unsigned char *sha1)
+ 			delta->obj_no = i;
+ 			delta++;
+ 		} else
+-			sha1_object(data, obj->size, obj->type, obj->sha1, 1);
++			sha1_object(data, obj->size, obj->type, obj->sha1);
+ 		free(data);
+ 		if (verbose)
+ 			percent = display_progress(i+1, nr_objects, percent);
+@@ -541,7 +539,7 @@ static int write_compressed(int fd, void *in, unsigned int size)
+ 	return size;
+ }
+ 
+-static void append_obj_to_pack(void *buf,
++static void append_obj_to_pack(const unsigned char *sha1, void *buf,
+ 			       unsigned long size, enum object_type type)
+ {
+ 	struct object_entry *obj = &objects[nr_objects++];
+@@ -559,7 +557,7 @@ static void append_obj_to_pack(void *buf,
+ 	write_or_die(output_fd, header, n);
+ 	obj[1].offset = obj[0].offset + n;
+ 	obj[1].offset += write_compressed(output_fd, buf, size);
+-	sha1_object(buf, size, type, obj->sha1, 0);
++	hashcpy(obj->sha1, sha1);
+ }
+ 
+ static int delta_pos_compare(const void *_a, const void *_b)
+@@ -612,7 +610,9 @@ static void fix_unresolved_deltas(int nr_unresolved)
+ 				resolve_delta(child, data, size, type);
+ 		}
+ 
+-		append_obj_to_pack(data, size, type);
++		if (check_sha1_signature(d->base.sha1, data, size, typename(type)))
++			die("local object %s is corrupt", sha1_to_hex(d->base.sha1));
++		append_obj_to_pack(d->base.sha1, data, size, type);
+ 		free(data);
+ 		if (verbose)
+ 			percent = display_progress(nr_resolved_deltas,
