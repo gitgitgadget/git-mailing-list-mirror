@@ -1,67 +1,89 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: My git repo is broken, how to fix it ?
-Date: Tue, 20 Mar 2007 11:23:01 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703201113180.18328@xanadu.home>
-References: <200702281036.30539.litvinov2004@gmail.com>
- <200703191932.26856.litvinov2004@gmail.com>
- <Pine.LNX.4.64.0703190804350.6730@woody.linux-foundation.org>
- <200703201013.39169.litvinov2004@gmail.com>
- <Pine.LNX.4.64.0703192212280.6730@woody.linux-foundation.org>
- <7vd5349x97.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 3/4] update-hook: parse the tag header in preparation to use the tag type
+Date: Tue, 20 Mar 2007 15:24:03 +0000
+Message-ID: <200703201524.04282.andyparkins@gmail.com>
+References: <200703201058.42753.andyparkins@gmail.com> <20070320143844.GA1750@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Alexander Litvinov <litvinov2004@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 20 16:23:10 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 20 16:24:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTgB3-0007Qt-11
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 16:23:09 +0100
+	id 1HTgCA-0007vk-AH
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 16:24:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933764AbXCTPXF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 11:23:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933753AbXCTPXE
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 11:23:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:65532 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933779AbXCTPXD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 11:23:03 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF7007ALK2DO570@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 20 Mar 2007 11:23:02 -0400 (EDT)
-In-reply-to: <7vd5349x97.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S933753AbXCTPYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 11:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933779AbXCTPYM
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 11:24:12 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:33555 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933753AbXCTPYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 11:24:10 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1650254uga
+        for <git@vger.kernel.org>; Tue, 20 Mar 2007 08:24:09 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=h1VfWUS70dyfzu80i00ydRfHAwmxjGihewb5pdkEaezfdTx3yblJ00pJrYlTnyguMvFItt/xF8STL0zdJ8K5Tt7u+xy+8cZGlrhPwUDpgJSL1CtBQ4TO1P1uWUfPnJ0bUdWB1yYOM8B82J05ELJI5INDbxw46U0ir6bV0mnLYVM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=sFrVFWHzlK3AmT+TGc/p4c1ZJiWE1a3G3g4rMzagzy3RIDx1jTEkiVuBAatR7sv+sgLF7RFEfjfG2VNgz8w3MjIbQliv7jNycTRqYKpb2q77dTqK+vZYsP7eww0366pY5uVU40EOrtJA9uHzSjRkNm+qTKiEZN7AKSNUdUBt3GM=
+Received: by 10.65.204.7 with SMTP id g7mr1713500qbq.1174404249088;
+        Tue, 20 Mar 2007 08:24:09 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id i1sm2397336nfe.2007.03.20.08.24.08;
+        Tue, 20 Mar 2007 08:24:08 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <20070320143844.GA1750@spearce.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42744>
 
-On Tue, 20 Mar 2007, Junio C Hamano wrote:
+On Tuesday 2007 March 20 14:38, Shawn O. Pearce wrote:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
-> 
-> > But to really look at this we should probably add a "really_careful" flag 
-> > that actually re-verifies the SHA1 on read so that we'd catch these kinds 
-> > of corruptions early. 
-> > ...
-> > I'm hoping somebody has any ideas. We really *could* check the SHA1 on 
-> > each read (and slow down git a lot) and that would catch corruption much 
-> > faster and hopefully pinpoint it more quickly where exactly it happens. 
-> 
-> At least, we could do something like this to catch the breakage
-> when we (re)pack, to prevent damage from propagating.
+> The problem of course is the update hook is running before a ref
+> is created to point at the tag.  If you used post-receive hook
+> on the other hand...  Oh, right, that has its own problems too!
 
-I think it would be better to retest the SHA1 when we're about to 
-_write_ the object out to the pack, replacing check_pack_inflate() and 
-revalidate_loose_object() with the full SHA1 check, and testing objects 
-which data isn't reused from a pack too.  And make it conditional on 
-!pack_to_stdout like we already do of course.
+I've obviously not described the problem very well; as I don't understand how 
+your comment relates to this patch.
+
+All I'm doing is pulling the individual fields out of
+
+ $ git cat-file -p v1.5.0
+ object 437b1b20df4b356c9342dac8d38849f24ef44f27
+ type commit
+ tag v1.5.0
+ tagger Junio C Hamano <junkio@cox.net> Wed Feb 14 00:00:00 2007 +0000
+
+And putting them in their own variables.  I'm not sure how for-each-ref or in 
+fact, any ref-based tool would help me do this.  At this point it's nothing 
+to do with git, it's a standard shell script problem.
+
+ git cat-file -p $newrev | while read field value
+ do
+   variable = "found"
+ done
+ echo $variable
+
+Doesn't work, because the right half of the pipe is run in its own process and 
+so setting "variable" has no effect once the while loop is over.
+
+I found that "<<<" heredoc thing in the bash manual, which is almost like 
+having a reverse pipe and allows the while loop to run in the main process.
 
 
-Nicolas
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
