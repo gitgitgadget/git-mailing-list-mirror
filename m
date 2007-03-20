@@ -1,108 +1,108 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: My git repo is broken, how to fix it ?
-Date: Mon, 19 Mar 2007 22:34:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703192212280.6730@woody.linux-foundation.org>
-References: <200702281036.30539.litvinov2004@gmail.com>
- <200703191932.26856.litvinov2004@gmail.com>
- <Pine.LNX.4.64.0703190804350.6730@woody.linux-foundation.org>
- <200703201013.39169.litvinov2004@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: New index-pack "keep" violates "never overwrite"
+Date: Tue, 20 Mar 2007 01:38:13 -0400
+Message-ID: <20070320053813.GC29288@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Alexander Litvinov <litvinov2004@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 06:34:22 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 20 06:38:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTWzD-0000YL-RQ
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 06:34:20 +0100
+	id 1HTX37-0002ck-BX
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 06:38:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030831AbXCTFeO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 01:34:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030834AbXCTFeO
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 01:34:14 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:47654 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030831AbXCTFeN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 01:34:13 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2K5YBcD024052
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 19 Mar 2007 22:34:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2K5YAgc026768;
-	Mon, 19 Mar 2007 21:34:11 -0800
-In-Reply-To: <200703201013.39169.litvinov2004@gmail.com>
-X-Spam-Status: No, hits=-0.476 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S933594AbXCTFiS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 01:38:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933608AbXCTFiS
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 01:38:18 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38452 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933594AbXCTFiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 01:38:17 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HTX31-0000p1-8C
+	for git@vger.kernel.org; Tue, 20 Mar 2007 01:38:15 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0CB3B20FBAE; Tue, 20 Mar 2007 01:38:14 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42712>
+
+This is something that has been bothering me for several weeks now.
+
+Waaaaaaay back Git was considered to be secure as it never overwrote
+an object it already had.  This was ensured by always unpacking the
+packfile received over the network (both in fetch and receive-pack)
+and our already existing logic to not create a loose object for an
+object we already have.
+
+Lately however we keep "large-ish" packfiles on both fetch and push
+by running them through index-pack instead of unpack-objects.  This
+would let an attacker perform a birthday attack. 
+
+How?  Assume the attacker knows a SHA-1 that has two different
+data streams.  He knows the client is likely to have the "good"
+one.  So he sends the "evil" variant to the other end as part of
+a "large-ish" packfile.  The recipient keeps that packfile, and
+indexes it.  Now since this is a birthday attack there is a SHA-1
+collision; two objects exist in the repository with the same SHA-1.
+They have *very* different data streams.  One of them is "evil".
+
+Currently the poor recipient cannot tell the two objects apart,
+short of by examining the timestamp of the packfiles.  But lets
+say the recipient repacks before he realizes he's been attacked.
+We may wind up packing the "evil" version of the object, and deleting
+the "good" one.  This is made *even more likely* by Junio's recent
+rearrange_packed_git patch (b867092f).
+
+SHA-1 is generally considered to be broken, as there have been some
+attacks implemented where a massive amount of garbage is injected
+into a comment, producing a source file that a compiler/interpreter
+can still process just fine, but that contains "evil bits of code"
+and has the same hash as a "non-evil" version of that same file.
+Yes, of course, if you look at the comment you would immediately
+realize its crap.  You probably would even realize the file is crap
+just by looking at the file size, as typically several megabytes
+of garbage is required.
+
+But how likely are you to look at a file content, or even size,
+during say git-bisect?  Especially on a large project?  Would you
+really notice that "usb.c" took 3 seconds longer than normal to
+compile because the preprecessor had to wade through a gigantic
+garbage comment?
 
 
+We broke a fundemental assumption in the Git security model, and I
+don't think anyone blinked.  Oops.  Either the SHA-1 birthday attack
+I just described is still thought to be a non-issue for at least
+the next few years (due to current computing power limitations),
+or we all missed that one, big time.
 
-On Tue, 20 Mar 2007, Alexander Litvinov wrote:
-> 
-> Actualy, I have packed that objects already, so fsck warn me:
-> $ git fsck --full
-> error: packed 8edc906985f00cf27180b1d9d4c3217ffd1896f8 from .git/objects/pack/pack-abc5cbabfc05c213e50c43ea07f43158bf1de236.pack is corrupt
-> error: packed f6aca57bb30a12e9ac5d71558e0b6052d6fb67a8 from .git/objects/pack/pack-abc5cbabfc05c213e50c43ea07f43158bf1de236.pack is corrupt
-> sha1 mismatch 8edc906985f00cf27180b1d9d4c3217ffd1896f8
-> sha1 mismatch f6aca57bb30a12e9ac5d71558e0b6052d6fb67a8
+The fix does appear to be simple.  Just don't write the existing
+object to the output packfile.  But really that is a lot more like
+what unpack-objects does: buffer deltas we cannot resolve yet, and
+only write out what we cannot find through our ODB.  The logic in
+index-pack ain't built for that...
 
-Ok, this is different from what I expected. 
 
-Since your pack-file seems to pass its own internal SHA1 checks, it means 
-that it was likely corrupt already when it was written out in the pack. 
-What's interesting is that it seems to unpack, but then the SHA1 of the 
-unpacked object doesn't match.
+For those that are really paranoid about this, you can disable the
+pack keeping by setting transfer.unpackLimit to a *huge* value,
+one that is far larger than any packfile you might receive.
 
-The reason I say that's interesting is that it would seem to mean that the 
-zlib CRC/adler check didn't trigger - which probably means that the object 
-was corrupted *before* it was compressed (but after it was originally 
-SHA1-summed), or the compression itself was corrupting (eg a libz 
-problem).
-
-And since the SHA1 of the pack-file matches, the thing was apparently 
-also written out "correctly" after compression (but by that "correctly" I 
-obviously mean that the *corrupted* data was written out). 
-
-Sadly, by the time it's in a pack-file, it is *really* hard to figure out 
-what went wrong: I see your unpacked data, but it's really the packed raw 
-objects that I wanted to look at, in case there would be some pattern in 
-the actual corruption (the corruption will then result in random crud when 
-actually unpacking, which is why the unpacked data isn't that interesting, 
-simple because there's no pattern left to analyze - it got inflated to 
-bogus "data").
-
-> I also use autocrlf feature:
-> $ git config core.autocrlf
-> true
-
-I doubt autocrlf affects anything here, it's only used at checkin and 
-checkout time, and it wouldn't affect the raw internal git objects.
-
-More interesting might be if you might be using any of the other flags 
-that actually affect internal git object packing: "use_legacy_headers" in 
-particular? If we have a bug there, that could be nasty.
-
-But to really look at this we should probably add a "really_careful" flag 
-that actually re-verifies the SHA1 on read so that we'd catch these kinds 
-of corruptions early. 
-
-> This files are cpp code from our project and tham need to be private. Really.
-
-Ok, no problem. I added back the git list (but not your attachments, 
-obviously) but as explained above, there is not a lot I can do with the 
-unpacked data, I'd like to see the actual "raw" stuff.
-
-I'm hoping somebody has any ideas. We really *could* check the SHA1 on 
-each read (and slow down git a lot) and that would catch corruption much 
-faster and hopefully pinpoint it more quickly where exactly it happens. 
-But maybe somebody has some other smart idea?
-
-		Linus
+-- 
+Shawn.
