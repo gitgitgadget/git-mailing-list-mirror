@@ -1,67 +1,89 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git 1.5.1-rc1 doesn't like empty files
-Date: Mon, 19 Mar 2007 22:41:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703192237100.6730@woody.linux-foundation.org>
-References: <1174361424.3143.42.camel@dv>  <Pine.LNX.4.64.0703192148430.6730@woody.linux-foundation.org>
- <1174367312.3143.75.camel@dv>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/2] Avoid unnecessary strlen() calls
+Date: Mon, 19 Mar 2007 22:44:08 -0700
+Message-ID: <7vhcsgbhav.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0703171822280.4964@woody.linux-foundation.org>
+	<alpine.LFD.0.83.0703172136440.18328@xanadu.home>
+	<Pine.LNX.4.64.0703171854270.6730@woody.linux-foundation.org>
+	<alpine.LFD.0.83.0703172200060.18328@xanadu.home>
+	<Pine.LNX.4.64.0703171911120.6730@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703171949190.6730@woody.linux-foundation.org>
+	<7v8xdunavr.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0703180848580.6730@woody.linux-foundation.org>
+	<Pine.LNX.4.63.0703200400230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+	<20070320032947.GA29145@spearce.org>
+	<20070320034020.GB29145@spearce.org>
+	<Pine.LNX.4.64.0703192052380.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Alexander Litvinov <litvinov2004@gmail.com>
-To: Pavel Roskin <proski@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 06:41:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nicolas Pitre <nico@cam.org>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Mar 20 06:44:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTX63-00048u-Fy
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 06:41:23 +0100
+	id 1HTX8n-0005Yp-Oq
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 06:44:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751479AbXCTFlU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 01:41:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751551AbXCTFlU
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 01:41:20 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:47830 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750934AbXCTFlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 01:41:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2K5fBcD024235
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 19 Mar 2007 22:41:11 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2K5fAqR026856;
-	Mon, 19 Mar 2007 21:41:10 -0800
-In-Reply-To: <1174367312.3143.75.camel@dv>
-X-Spam-Status: No, hits=-0.475 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750934AbXCTFoL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 01:44:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751193AbXCTFoK
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 01:44:10 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:39082 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750943AbXCTFoJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 01:44:09 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070320054408.OWNE28911.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 20 Mar 2007 01:44:08 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ctk81W0071kojtg0000000; Tue, 20 Mar 2007 01:44:09 -0400
+In-Reply-To: <Pine.LNX.4.64.0703192052380.6730@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Mon, 19 Mar 2007 21:11:08 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42714>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> Dscho's bigger patch probably helps more on an in-order architecture, and 
+> should be equally good on a P4 (or Opteron). On Core 2, neither of the 
+> patches seem to make a huge difference.
 
-On Tue, 20 Mar 2007, Pavel Roskin wrote:
-> 
-> .git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391 is the same 9
-> bytes:  30 78 9c 03 00 00 00 00 01
+Because hoisting stable test outside loop is always better for
+any architecture, I thought picking between Gitte and Gitney
+patches is a no brainer, and I didn't bother to compare-bench,
+but I got curious.
 
-Ahh.. You have
+(plain)
+7.89user 0.15system 0:08.08elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+41608minor)pagefaults 0swaps
+7.93user 0.18system 0:08.14elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+41608minor)pagefaults 0swaps
 
-	[core]
-		legacyheaders = false
+(gitte -- separate function for slow path)
+6.98user 0.18system 0:07.17elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+41606minor)pagefaults 0swaps
+7.14user 0.12system 0:07.26elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+41607minor)pagefaults 0swaps
 
-don't you? If you didn't, you should see a 15-byte object, not a 9-byte 
-one.
+(gitney -- cheap test first before isspace)
+7.23user 0.18system 0:07.42elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+41608minor)pagefaults 0swaps
+7.32user 0.14system 0:07.48elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+41607minor)pagefaults 0swaps
 
-And yes, I can reproduce this with that "core.legacyheaders=false" 
-setting. It seems that config option is simply broken, and we never 
-noticed, because almost nobody uses it.
+So it does not seem to make much difference on Athlon 64x2 either.
 
-Alexander - do you happen to have that "legacyheaders" setting too? Maybe 
-that explains your pack corruption?
-
-		Linus
+Will apply the "stupid hashcmp() removal" and Dscho's patch and
+call it a day.
