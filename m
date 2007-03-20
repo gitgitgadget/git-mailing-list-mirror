@@ -1,56 +1,61 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git 1.5.1-rc1 doesn't like empty files
-Date: Tue, 20 Mar 2007 08:46:21 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703200846110.6730@woody.linux-foundation.org>
-References: <1174361424.3143.42.camel@dv> <7vslc0bhz7.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0703192245490.6730@woody.linux-foundation.org>
- <7v648wbgiy.fsf@assigned-by-dhcp.cox.net> <7v1wjkbgaj.fsf@assigned-by-dhcp.cox.net>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: qiuestion about Git and Cogito
+Date: Tue, 20 Mar 2007 16:56:23 +0100
+Message-ID: <20070320155623.GH4489@pasky.or.cz>
+References: <45FFFA94.4040105@mail.nih.gov>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pavel Roskin <proski@gnu.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 20 16:46:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Francois Lang <flang@mail.nih.gov>
+X-From: git-owner@vger.kernel.org Tue Mar 20 16:56:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTgXe-0001Ln-Hj
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 16:46:30 +0100
+	id 1HTghQ-0006Bk-40
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 16:56:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364AbXCTPq1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 11:46:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753371AbXCTPq1
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 11:46:27 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:43144 "EHLO smtp.osdl.org"
+	id S1753864AbXCTP41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 11:56:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753861AbXCTP41
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 11:56:27 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:35637 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753364AbXCTPq0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 11:46:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2KFkMcD010586
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 20 Mar 2007 08:46:22 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2KFkL9n003969;
-	Tue, 20 Mar 2007 07:46:22 -0800
-In-Reply-To: <7v1wjkbgaj.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.472 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753864AbXCTP40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 11:56:26 -0400
+Received: (qmail 10840 invoked by uid 2001); 20 Mar 2007 16:56:23 +0100
+Content-Disposition: inline
+In-Reply-To: <45FFFA94.4040105@mail.nih.gov>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42751>
 
-
-
-On Mon, 19 Mar 2007, Junio C Hamano wrote:
+On Tue, Mar 20, 2007 at 04:15:32PM CET, Francois Lang wrote:
+> Hello. We have started using Git and Cogito, and are very happy users so 
+> far. There's one thing that I haven't been able to figure out, however:
 > 
-> By the way, I think the test that comes after the part you fixed
-> is wrong (I know it is my bad without running git-blame).  Since
-> we are making sure that we eat everything, we should expect
-> Z_STREAM_END and no avail_in.
+> Suppose I've done a bunch of commits in my local repository that I have 
+> not yet pushed to the remote repository. How can I determine what has 
+> been cg-commit-ed but not yet cg-pushe-ed WITHOUT actually doing the 
+> cg-push?
+> 
+> Many thanks in advance for your help.
 
-Ack.
+Assuming that you work on master and push to origin,
 
-		Linus
+	cg-log -r master..origin
+
+or
+
+	cg-diff -r master..origin
+
+respectively.
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
