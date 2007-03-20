@@ -1,80 +1,111 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 3/2] Avoid unnecessary strlen() calls
-Date: Tue, 20 Mar 2007 00:18:43 -0400
-Message-ID: <20070320041843.GA29288@spearce.org>
-References: <Pine.LNX.4.64.0703171854270.6730@woody.linux-foundation.org> <alpine.LFD.0.83.0703172200060.18328@xanadu.home> <Pine.LNX.4.64.0703171911120.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0703171949190.6730@woody.linux-foundation.org> <7v8xdunavr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703180848580.6730@woody.linux-foundation.org> <Pine.LNX.4.63.0703200400230.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070320032947.GA29145@spearce.org> <20070320034020.GB29145@spearce.org> <Pine.LNX.4.64.0703192052380.6730@woody.linux-foundation.org>
+Date: Mon, 19 Mar 2007 21:31:57 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703192116020.6730@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703162257560.18328@xanadu.home>
+ <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
+ <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
+ <Pine.LNX.4.64.0703171822280.4964@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703172136440.18328@xanadu.home>
+ <Pine.LNX.4.64.0703171854270.6730@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703172200060.18328@xanadu.home>
+ <Pine.LNX.4.64.0703171911120.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703171949190.6730@woody.linux-foundation.org>
+ <7v8xdunavr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703180848580.6730@woody.linux-foundation.org>
+ <7v3b40d2os.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>,
-	Nicolas Pitre <nico@cam.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>,
 	Morten Welinder <mwelinder@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 05:19:20 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 20 05:32:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTVoc-0006YO-V3
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 05:19:19 +0100
+	id 1HTW1C-0004aj-EA
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 05:32:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933973AbXCTES7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 00:18:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933975AbXCTES7
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 00:18:59 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36293 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933973AbXCTES6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 00:18:58 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HTVo5-0004LI-Ff; Tue, 20 Mar 2007 00:18:45 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 82A9C20FBAE; Tue, 20 Mar 2007 00:18:43 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0703192052380.6730@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S933984AbXCTEcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 00:32:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933985AbXCTEcP
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 00:32:15 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:45633 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933984AbXCTEcO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 00:32:14 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2K4VwcD022216
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 19 Mar 2007 21:31:58 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2K4VvXq025639;
+	Mon, 19 Mar 2007 20:31:57 -0800
+In-Reply-To: <7v3b40d2os.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.977 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42702>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Mon, 19 Mar 2007, Shawn O. Pearce wrote:
-> >
-> > DrNick suggested on #git to try flipping the isspace test around.
-> > This is a smaller change and generated the same ~3.60 seconds run
-> > as Dscho's patch.  I like DrNick's version better.  ;-)
+
+
+On Mon, 19 Mar 2007, Junio C Hamano wrote:
 > 
-> For me, the result seems to be in the noise.
-> 
-> It may be due to running on Core 2. It's not very sensitive to 
-> micro-optimizations like this. It definitely makes sense to test the 
-> *stable* test first, since that will help branch prediction (the 
-> "isspace()" test is *not* very predictable), so I don't disagree with the 
-> patch, but I suspect it depends a lot on the microarchitecture just how 
-> much it matters.
-> 
-> Do you perhaps have a P4? It has a very bad branch mispredict penalty, so 
-> putting the predictable branch first could explain the big difference you 
-> see..
+> With this stupidity-removal patch, it gets down to 7.80user from
+> 8.72user (comparable number of minor faults) for blaming
+> block/ll_rw_blk.c (without tglx grafts)
 
-I tested both patches on a PowerPC G4.  (Apple PowerBook, 1.5 GHz)
-Running on Mac OS X 10.4.8.
+Yeah, this one works for me too. Even more than for you. For me, 
 
-Might be more of a Linux<->Darwin thing; perhaps my isspace is
-significantly slower than yours is...  after all my mmap runs
-like a PC from the 1980s...  ;-)
+	git blame --incremental -C HEAD block/ll_rw_blk.c
 
--- 
-Shawn.
+takes 6.71s (best of ten) normally, and 4.85 (best of ten again) with your 
+patch and Nico's one-liner. In fact, that's a much bigger improvement than 
+I would have expected from the profile, but it may be that you just cut 
+the data cache footprint down a lot, and thus made other things more 
+efficient.
+
+(I just double-checked. Nico's one-liner does help, but not nearly as 
+radically as it did for Nico. The "best of ten" with *just* Nico's 
+one-liner is 6.22 for me - better than before, but the combination of 
+Nico's patch and yours is much more dramatic).
+
+Btw, Dscho's slightly more invasive patch seems to *just* edge out Nico's 
+one-liner for me, with best-of-ten being 6.17s.
+
+The winner is your patch *with* Dscho's slightly more invasive one: 4.69s.
+
+But the difference between the numbers of Dscho's bigger patch and Nico's 
+one-liner really are totally in the noise. Dscho *just* wins the 
+best-of-ten both with and without your patch, but in both cases it's 
+*way* in the noise. For example, while 4.69s was the best for your+Dscho 
+in my testing, the full series was
+
+	0:05.69
+	0:04.69
+	0:04.82
+	0:04.97
+	0:04.85
+	0:05.88
+	0:04.77
+	0:04.69
+	0:05.12
+	0:04.98
+
+so the variability was big enough that I wouldn't say that 0.1s is really 
+all that meaningful even for "best of ten". I didn't try to make the 
+machine totally quiescent, I've got xmms playing in the background etc..
+
+But these kinds of things will definitely vary from machine to machine. 
+It's all good, though.
+
+			Linus
