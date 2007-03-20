@@ -1,110 +1,61 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] index-pack: use hash_sha1_file()
-Date: Tue, 20 Mar 2007 16:02:09 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703201557280.18328@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Suspicious of v1.5.0 tag object
+Date: Tue, 20 Mar 2007 13:43:00 -0700
+Message-ID: <7v7itb7ijv.fsf@assigned-by-dhcp.cox.net>
+References: <200703201323.15497.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 20 21:02:51 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 21:43:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTkXg-00025g-W0
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 21:02:49 +0100
+	id 1HTlAw-0003tS-LZ
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 21:43:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933204AbXCTUCM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 16:02:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932960AbXCTUCM
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 16:02:12 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55482 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753886AbXCTUCK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 16:02:10 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JF700HE0WZLF2Q0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 20 Mar 2007 16:02:09 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S1752869AbXCTUnH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 16:43:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753879AbXCTUnG
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 16:43:06 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:59801 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752869AbXCTUnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 16:43:05 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070320204304.GDO1312.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 20 Mar 2007 16:43:04 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id d8j01W00V1kojtg0000000; Tue, 20 Mar 2007 16:43:01 -0400
+In-Reply-To: <200703201323.15497.andyparkins@gmail.com> (Andy Parkins's
+	message of "Tue, 20 Mar 2007 13:23:12 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42760>
 
-Use hash_sha1_file() instead of duplicating code to compute object SHA1.
-While at it make it accept a const pointer.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
+> I was just poking around and noticed this:
+>
+>   $ git cat-file -p v1.5.0
+>   object 437b1b20df4b356c9342dac8d38849f24ef44f27
+>   type commit
+>   tag v1.5.0
+>   tagger Junio C Hamano <junkio@cox.net> Wed Feb 14 00:00:00 2007 +0000
+>
+> Is it really the case that you tagged v1.5.0 at midnight UTC
+> exactly; and that you travelled from your normal -0800
+> timezone to +0000?  None of the other tags show this strange
+> output.
 
-This applies on top of my previous patch.
+Who are you referring to as "you" when your "To:" header reads
+Git Mailing List ;-)?
 
-diff --git a/cache.h b/cache.h
-index 1b50a74..384b260 100644
---- a/cache.h
-+++ b/cache.h
-@@ -283,7 +283,7 @@ char *enter_repo(char *path, int strict);
- /* Read and unpack a sha1 file into memory, write memory to a sha1 file */
- extern int sha1_object_info(const unsigned char *, unsigned long *);
- extern void * read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size);
--extern int hash_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *sha1);
-+extern int hash_sha1_file(const void *buf, unsigned long len, const char *type, unsigned char *sha1);
- extern int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *return_sha1);
- extern int pretend_sha1_file(void *, unsigned long, enum object_type, unsigned char *);
- 
-diff --git a/index-pack.c b/index-pack.c
-index 4effb2d..f314937 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -348,26 +348,7 @@ static void sha1_object(const void *data, unsigned long size,
- 			enum object_type type, unsigned char *sha1,
- 			int test_for_collision)
- {
--	SHA_CTX ctx;
--	char header[50];
--	int header_size;
--	const char *type_str;
--
--	switch (type) {
--	case OBJ_COMMIT: type_str = commit_type; break;
--	case OBJ_TREE:   type_str = tree_type; break;
--	case OBJ_BLOB:   type_str = blob_type; break;
--	case OBJ_TAG:    type_str = tag_type; break;
--	default:
--		die("bad type %d", type);
--	}
--
--	header_size = sprintf(header, "%s %lu", type_str, size) + 1;
--
--	SHA1_Init(&ctx);
--	SHA1_Update(&ctx, header, header_size);
--	SHA1_Update(&ctx, data, size);
--	SHA1_Final(sha1, &ctx);
-+	hash_sha1_file(data, size, typename(type), sha1);
- 
- 	if (test_for_collision && has_sha1_file(sha1)) {
- 		void *has_data;
-diff --git a/sha1_file.c b/sha1_file.c
-index c445a24..64d9813 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1808,7 +1808,7 @@ void *read_object_with_reference(const unsigned char *sha1,
- 	}
- }
- 
--static void write_sha1_file_prepare(void *buf, unsigned long len,
-+static void write_sha1_file_prepare(const void *buf, unsigned long len,
-                                     const char *type, unsigned char *sha1,
-                                     char *hdr, int *hdrlen)
- {
-@@ -1936,7 +1936,7 @@ static void setup_object_header(z_stream *stream, const char *type, unsigned lon
- 	stream->avail_out -= hdrlen;
- }
- 
--int hash_sha1_file(void *buf, unsigned long len, const char *type,
-+int hash_sha1_file(const void *buf, unsigned long len, const char *type,
-                    unsigned char *sha1)
- {
- 	char hdr[32];
+That one and its commit object has that timestamp because the
+release was supposed to be named "Rose scented bamboo".
