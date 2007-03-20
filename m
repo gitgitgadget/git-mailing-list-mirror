@@ -1,111 +1,691 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 3/2] Avoid unnecessary strlen() calls
-Date: Mon, 19 Mar 2007 21:31:57 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703192116020.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703162257560.18328@xanadu.home>
- <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
- <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
- <Pine.LNX.4.64.0703171822280.4964@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703172136440.18328@xanadu.home>
- <Pine.LNX.4.64.0703171854270.6730@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703172200060.18328@xanadu.home>
- <Pine.LNX.4.64.0703171911120.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171949190.6730@woody.linux-foundation.org>
- <7v8xdunavr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703180848580.6730@woody.linux-foundation.org>
- <7v3b40d2os.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] contrib/continuous: a continuous integration build manager
+Date: Tue, 20 Mar 2007 00:33:41 -0400
+Message-ID: <20070320043341.GA29436@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>,
-	Morten Welinder <mwelinder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 20 05:32:21 2007
+X-From: git-owner@vger.kernel.org Tue Mar 20 05:33:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTW1C-0004aj-EA
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 05:32:18 +0100
+	id 1HTW2j-0005MH-HJ
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 05:33:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933984AbXCTEcP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 00:32:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933985AbXCTEcP
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 00:32:15 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:45633 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933984AbXCTEcO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 00:32:14 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2K4VwcD022216
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 19 Mar 2007 21:31:58 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2K4VvXq025639;
-	Mon, 19 Mar 2007 20:31:57 -0800
-In-Reply-To: <7v3b40d2os.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.977 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S933985AbXCTEdu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 00:33:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933981AbXCTEdu
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 00:33:50 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:36669 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933985AbXCTEdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 00:33:49 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HTW2d-0005XI-2o; Tue, 20 Mar 2007 00:33:47 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1E74220FBAE; Tue, 20 Mar 2007 00:33:41 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42703>
 
+This is a simple but powerful continuous integration build system
+for Git.  It works by receiving push events from repositories
+through the post-receive hook, aggregates them on a per-branch
+basis into a first-come-first-serve build queue, and lets a
+background build daemon perform builds one at a time.
 
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-On Mon, 19 Mar 2007, Junio C Hamano wrote:
-> 
-> With this stupidity-removal patch, it gets down to 7.80user from
-> 8.72user (comparable number of minor faults) for blaming
-> block/ll_rw_blk.c (without tglx grafts)
+ I found this useful.  It was a quick hack I did this weekend.
+ I may grow it out further and try to create a simple tinderbox-like
+ webpage to show prior build logs, and hyperlink into gitweb.cgi.
+ Or not.  ;-)
 
-Yeah, this one works for me too. Even more than for you. For me, 
+ I'm using it to drive builds on a Solaris 9 system, and (gah)
+ forward the failures to the gulity parties by way of the local
+ Microsoft Exchange Server.  Hence there are some ugly bits about
+ subclassing Net::SMTP.
 
-	git blame --incremental -C HEAD block/ll_rw_blk.c
+ contrib/continuous/cidaemon              |  503 ++++++++++++++++++++++++++++++
+ contrib/continuous/post-receive-cinotify |  104 ++++++
+ 2 files changed, 607 insertions(+), 0 deletions(-)
+ create mode 100644 contrib/continuous/cidaemon
+ create mode 100644 contrib/continuous/post-receive-cinotify
 
-takes 6.71s (best of ten) normally, and 4.85 (best of ten again) with your 
-patch and Nico's one-liner. In fact, that's a much bigger improvement than 
-I would have expected from the profile, but it may be that you just cut 
-the data cache footprint down a lot, and thus made other things more 
-efficient.
-
-(I just double-checked. Nico's one-liner does help, but not nearly as 
-radically as it did for Nico. The "best of ten" with *just* Nico's 
-one-liner is 6.22 for me - better than before, but the combination of 
-Nico's patch and yours is much more dramatic).
-
-Btw, Dscho's slightly more invasive patch seems to *just* edge out Nico's 
-one-liner for me, with best-of-ten being 6.17s.
-
-The winner is your patch *with* Dscho's slightly more invasive one: 4.69s.
-
-But the difference between the numbers of Dscho's bigger patch and Nico's 
-one-liner really are totally in the noise. Dscho *just* wins the 
-best-of-ten both with and without your patch, but in both cases it's 
-*way* in the noise. For example, while 4.69s was the best for your+Dscho 
-in my testing, the full series was
-
-	0:05.69
-	0:04.69
-	0:04.82
-	0:04.97
-	0:04.85
-	0:05.88
-	0:04.77
-	0:04.69
-	0:05.12
-	0:04.98
-
-so the variability was big enough that I wouldn't say that 0.1s is really 
-all that meaningful even for "best of ten". I didn't try to make the 
-machine totally quiescent, I've got xmms playing in the background etc..
-
-But these kinds of things will definitely vary from machine to machine. 
-It's all good, though.
-
-			Linus
+diff --git a/contrib/continuous/cidaemon b/contrib/continuous/cidaemon
+new file mode 100644
+index 0000000..4009a15
+--- /dev/null
++++ b/contrib/continuous/cidaemon
+@@ -0,0 +1,503 @@
++#!/usr/bin/perl
++#
++# A daemon that waits for update events sent by its companion
++# post-receive-cinotify hook, checks out a new copy of source,
++# compiles it, and emails the guilty parties if the compile
++# (and optionally test suite) fails.
++#
++# To use this daemon, configure it and run it.  It will disconnect
++# from your terminal and fork into the background.  The daemon must
++# have local filesystem access to the source repositories, as it
++# uses objects/info/alternates to avoid copying objects.
++#
++# Add its companion post-receive-cinotify hook as the post-receive
++# hook to each repository that the daemon should monitor.  Yes, a
++# single daemon can monitor more than one repository.
++#
++# To use multiple daemons on the same system, give them each a
++# unique queue file and tmpdir.
++#
++# Global Config
++# -------------
++# Reads from a Git style configuration file.  This will be
++# ~/.gitconfig by default but can be overridden by setting
++# the GIT_CONFIG_FILE environment variable before starting.
++#
++# cidaemon.smtpHost
++#   Hostname of the SMTP server the daemon will send email
++#   through.  Defaults to 'localhost'.
++#
++# cidaemon.smtpUser
++#   Username to authenticate to the SMTP server as.  This
++#   variable is optional; if it is not supplied then no
++#   authentication will be performed.
++#
++# cidaemon.smtpPassword
++#   Password to authenticate to the SMTP server as.  This
++#   variable is optional.  If not supplied but smtpUser was,
++#   the daemon prompts for the password before forking into
++#   the background.
++#
++# cidaemon.smtpAuth
++#   Type of authentication to perform with the SMTP server.
++#   If set to 'login' and smtpUser was defined, this will
++#   use the AUTH LOGIN command, which is suitable for use
++#   with at least one version of Microsoft Exchange Server.
++#   If not set the daemon will use whatever auth methods
++#   are supported by your version of Net::SMTP.
++#
++# cidaemon.email
++#   Email address that daemon generated emails will be sent
++#   from.  This should be a useful email address within your
++#   organization.  Required.
++#
++# cidaemon.name
++#   Human friendly name that the daemon will send emails as.
++#   Defaults to 'cidaemon'.
++#
++# cidaemon.scanDelay
++#   Number of seconds to sleep between polls of the queue file.
++#   Defaults to 60.
++#
++# cidaemon.recentCache
++#   Number of recent commit SHA-1s per repository to cache and
++#   skip building if they appear again.  This is useful to avoid
++#   rebuilding the same commit multiple times just because it was
++#   pushed into more than one branch.  Defaults to 100.
++#
++# cidaemon.tmpdir
++#   Scratch directory to create the builds within.  The daemon
++#   makes a new subdirectory for each build, then deletes it when
++#   the build has finished.  The pid file is also placed here.
++#   Defaults to '/tmp'.
++#
++# cidaemon.queue
++#   Path to the queue file that the post-receive-cinotify hook
++#   appends events to.  This file is polled by the daemon.  It
++#   must not be on an NFS mount (uses flock).  Required.
++#
++# cidaemon.nocc
++#   Perl regex patterns to match against author and committer
++#   lines.  If a pattern matches, that author or committer will
++#   not be notified of a build failure.
++#
++# Per Repository Config
++# ----------------------
++# Read from the source repository's config file.
++#
++# builder.command
++#   Shell command to execute the build.  This command must
++#   return 0 on "success" and non-zero on failure.  If you
++#   also want to run a test suite, make sure your command
++#   does that too.  Required.
++#
++# builder.queue
++#   Queue file to notify the cidaemon through.  Should match
++#   cidaemon.queue.  If not set the hook will not notify the
++#   cidaemon.
++#
++# builder.skip
++#   Perl regex patterns of refs that should not be sent to
++#   cidaemon.  Updates of these refs will be ignored.
++#
++# builder.newBranchBase
++#   Glob patterns of refs that should be used to form the
++#   'old' revions of a newly created ref.  This should set
++#   to be globs that match your 'mainline' branches.  This
++#   way a build failure of a brand new topic branch does not
++#   attempt to email everyone since the beginning of time;
++#   instead it only emails those authors of commits not in
++#   these 'mainline' branches.
++
++local $ENV{PATH} = join ':', qw(
++	/opt/git/bin
++	/usr/bin
++	/bin
++	);
++
++use strict;
++use warnings;
++use FindBin qw($RealBin);
++use File::Spec;
++use lib File::Spec->catfile($RealBin, '..', 'perl5');
++use Storable qw(retrieve nstore);
++use Fcntl ':flock';
++use POSIX qw(strftime);
++use Getopt::Long qw(:config no_auto_abbrev auto_help);
++
++sub git_config ($;$)
++{
++	my $var = shift;
++	my $required = shift || 0;
++	local *GIT;
++	open GIT, '-|','git','config','--get',$var;
++	my $r = <GIT>;
++	chop $r if $r;
++	close GIT;
++	die "error: $var not set.\n" if ($required && !$r);
++	return $r;
++}
++
++package EXCHANGE_NET_SMTP;
++
++# Microsoft Exchange Server requires an 'AUTH LOGIN'
++# style of authentication.  This is different from
++# the default supported by Net::SMTP so we subclass
++# and override the auth method to support that.
++
++use Net::SMTP;
++use Net::Cmd;
++use MIME::Base64 qw(encode_base64);
++our @ISA = qw(Net::SMTP);
++our $auth_type = ::git_config 'cidaemon.smtpAuth';
++
++sub new
++{
++	my $self = shift;
++	my $type = ref($self) || $self;
++	$type->SUPER::new(@_);
++}
++
++sub auth
++{
++	my $self = shift;
++	return $self->SUPER::auth(@_) unless $auth_type eq 'login';
++
++	my $user = encode_base64 shift, '';
++	my $pass = encode_base64 shift, '';
++	return 0 unless CMD_MORE == $self->command("AUTH LOGIN")->response;
++	return 0 unless CMD_MORE == $self->command($user)->response;
++	CMD_OK == $self->command($pass)->response;
++}
++
++package main;
++
++my ($debug_flag, %recent);
++
++my $ex_host = git_config('cidaemon.smtpHost') || 'localhost';
++my $ex_user = git_config('cidaemon.smtpUser');
++my $ex_pass = git_config('cidaemon.smtpPassword');
++
++my $ex_from_addr = git_config('cidaemon.email', 1);
++my $ex_from_name = git_config('cidaemon.name') || 'cidaemon';
++
++my $scan_delay = git_config('cidaemon.scanDelay') || 60;
++my $recent_size = git_config('cidaemon.recentCache') || 100;
++my $tmpdir = git_config('cidaemon.tmpdir') || '/tmp';
++my $queue_name = git_config('cidaemon.queue', 1);
++my $queue_lock = "$queue_name.lock";
++
++my @nocc_list;
++open GIT,'git config --get-all cidaemon.nocc|';
++while (<GIT>) {
++	chop;
++	push @nocc_list, $_;
++}
++close GIT;
++
++sub nocc_author ($)
++{
++	local $_ = shift;
++	foreach my $pat (@nocc_list) {
++		return 1 if /$pat/;
++	}
++	0;
++}
++
++sub input_echo ($)
++{
++	my $prompt = shift;
++
++	local $| = 1;
++	print $prompt;
++	my $input = <STDIN>;
++	chop $input;
++	return $input;
++}
++
++sub input_noecho ($)
++{
++	my $prompt = shift;
++
++	my $end = sub {system('stty','echo');print "\n";exit};
++	local $SIG{TERM} = $end;
++	local $SIG{INT} = $end;
++	system('stty','-echo');
++
++	local $| = 1;
++	print $prompt;
++	my $input = <STDIN>;
++	system('stty','echo');
++	print "\n";
++	chop $input;
++	return $input;
++}
++
++sub rfc2822_date ()
++{
++	 strftime("%a, %d %b %Y %H:%M:%S %Z", localtime);
++}
++
++sub send_email ($$$)
++{
++	my ($subj, $body, $to) = @_;
++	my $now = rfc2822_date;
++	my $to_str = '';
++	my @rcpt_to;
++	foreach (@$to) {
++		my $s = $_;
++		$s =~ s/^/"/;
++		$s =~ s/(\s+<)/"$1/;
++		$to_str .= ', ' if $to_str;
++		$to_str .= $s;
++		push @rcpt_to, $1 if $s =~ /<(.*)>/;
++	}
++	die "Nobody to send to.\n" unless @rcpt_to;
++	my $msg = <<EOF;
++From: "$ex_from_name" <$ex_from_addr>
++To: $to_str
++Date: $now
++Subject: $subj
++
++$body
++EOF
++
++	my $smtp = EXCHANGE_NET_SMTP->new(Host => $ex_host)
++		or die "Cannot connect to $ex_host: $!\n";
++	if ($ex_user && $ex_pass) {
++		$smtp->auth($ex_user,$ex_pass)
++			or die "$ex_host rejected $ex_user\n";
++	}
++	$smtp->mail($ex_from_addr)
++		or die "$ex_host rejected $ex_from_addr\n";
++	scalar($smtp->recipient(@rcpt_to, { SkipBad => 1 }))
++		or die "$ex_host did not accept any addresses.\n";
++	$smtp->data($msg)
++		or die "$ex_host rejected message data\n";
++	$smtp->quit;
++}
++
++sub pop_queue ()
++{
++	open LOCK, ">$queue_lock" or die "Can't open $queue_lock: $!";
++	flock LOCK, LOCK_EX;
++
++	my $queue = -f $queue_name ? retrieve $queue_name : [];
++	my $ent = shift @$queue;
++	nstore $queue, $queue_name;
++
++	flock LOCK, LOCK_UN;
++	close LOCK;
++	$ent;
++}
++
++sub git_exec (@)
++{
++	system('git',@_) == 0 or die "Cannot git " . join(' ', @_) . "\n";
++}
++
++sub git_val (@)
++{
++	open(C, '-|','git',@_);
++	my $r = <C>;
++	chop $r if $r;
++	close C;
++	$r;
++}
++
++sub do_build ($$)
++{
++	my ($git_dir, $new) = @_;
++
++	my $tmp = File::Spec->catfile($tmpdir, "builder$$");
++	system('rm','-rf',$tmp) == 0 or die "Cannot clear $tmp\n";
++	die "Cannot clear $tmp.\n" if -e $tmp;
++
++	my $result = 1;
++	eval {
++		my $command;
++		{
++			local $ENV{GIT_DIR} = $git_dir;
++			$command = git_val 'config','builder.command';
++		}
++		die "No builder.command for $git_dir.\n" unless $command;
++
++		git_exec 'clone','-n','-l','-s',$git_dir,$tmp;
++		chmod 0700, $tmp or die "Cannot lock $tmp\n";
++		chdir $tmp or die "Cannot enter $tmp\n";
++
++		git_exec 'update-ref','HEAD',$new;
++		git_exec 'read-tree','-m','-u','HEAD','HEAD';
++		system $command;
++		if ($? == -1) {
++			print STDERR "failed to execute '$command': $!\n";
++			$result = 1;
++		} elsif ($? & 127) {
++			my $sig = $? & 127;
++			print STDERR "'$command' died from signal $sig\n";
++			$result = 1;
++		} else {
++			my $r = $? >> 8;
++			print STDERR "'$command' exited with $r\n" if $r;
++			$result = $r;
++		}
++	};
++	if ($@) {
++		$result = 2;
++		print STDERR "$@\n";
++	}
++
++	chdir '/';
++	system('rm','-rf',$tmp);
++	rmdir $tmp;
++	$result;
++}
++
++sub build_failed ($$$$$)
++{
++	my ($git_dir, $ref, $old, $new, $msg) = @_;
++
++	$git_dir =~ m,/([^/]+)$,;
++	my $repo_name = $1;
++	$ref =~ s,^refs/(heads|tags)/,,;
++
++	my %authors;
++	my $shortlog;
++	my $revstr;
++	{
++		local $ENV{GIT_DIR} = $git_dir;
++		my @revs = ($new);
++		push @revs, '--not', @$old if @$old;
++		open LOG,'-|','git','rev-list','--pretty=raw',@revs;
++		while (<LOG>) {
++			if (s/^(author|committer) //) {
++				chomp;
++				s/>.*$/>/;
++				$authors{$_} = 1 unless nocc_author $_;
++			}
++		}
++		close LOG;
++		open LOG,'-|','git','shortlog',@revs;
++		$shortlog .= $_ while <LOG>;
++		close LOG;
++		$revstr = join(' ', @revs);
++	}
++
++	my @to = sort keys %authors;
++	unless (@to) {
++		print STDERR "error: No authors in $revstr\n";
++		return;
++	}
++
++	my $subject = "[$repo_name] $ref : Build Failed";
++	my $body = <<EOF;
++Project: $git_dir
++Branch:  $ref
++Commits: $revstr
++
++$shortlog
++Build Output:
++--------------------------------------------------------------
++$msg
++EOF
++	send_email($subject, $body, \@to);
++}
++
++sub run_build ($$$$)
++{
++	my ($git_dir, $ref, $old, $new) = @_;
++
++	if ($debug_flag) {
++		my @revs = ($new);
++		push @revs, '--not', @$old if @$old;
++		print "BUILDING $git_dir\n";
++		print "  BRANCH: $ref\n";
++		print "  COMMITS: ", join(' ', @revs), "\n";
++	}
++
++	local(*R, *W);
++	pipe R, W or die "cannot pipe builder: $!";
++
++	my $builder = fork();
++	if (!defined $builder) {
++		die "cannot fork builder: $!";
++	} elsif (0 == $builder) {
++		close R;
++		close STDIN;open(STDIN, '/dev/null');
++		open(STDOUT, '>&W');
++		open(STDERR, '>&W');
++		exit do_build $git_dir, $new;
++	} else {
++		close W;
++		my $out = '';
++		$out .= $_ while <R>;
++		close R;
++		waitpid $builder, 0;
++		build_failed $git_dir, $ref, $old, $new, $out if $?;
++	}
++
++	print "DONE\n\n" if $debug_flag;
++}
++
++sub daemon_loop ()
++{
++	my $run = 1;
++	my $stop_sub = sub {$run = 0};
++	$SIG{HUP} = $stop_sub;
++	$SIG{INT} = $stop_sub;
++	$SIG{TERM} = $stop_sub;
++
++	mkdir $tmpdir, 0755;
++	my $pidfile = File::Spec->catfile($tmpdir, "cidaemon.pid");
++	open(O, ">$pidfile"); print O "$$\n"; close O;
++
++	while ($run) {
++		my $ent = pop_queue;
++		if ($ent) {
++			my ($git_dir, $ref, $old, $new) = @$ent;
++
++			$ent = $recent{$git_dir};
++			$recent{$git_dir} = $ent = [[], {}] unless $ent;
++			my ($rec_arr, $rec_hash) = @$ent;
++			next if $rec_hash->{$new}++;
++			while (@$rec_arr >= $recent_size) {
++				my $to_kill = shift @$rec_arr;
++				delete $rec_hash->{$to_kill};
++			}
++			push @$rec_arr, $new;
++
++			run_build $git_dir, $ref, $old, $new;
++		} else {
++			sleep $scan_delay;
++		}
++	}
++
++	unlink $pidfile;
++}
++
++$debug_flag = 0;
++GetOptions(
++	'debug|d' => \$debug_flag,
++	'smtp-user=s' => \$ex_user,
++) or die "usage: $0 [--debug] [--smtp-user=user]\n";
++
++$ex_pass = input_noecho("$ex_user SMTP password: ")
++	if ($ex_user && !$ex_pass);
++
++if ($debug_flag) {
++	daemon_loop;
++	exit 0;
++}
++
++my $daemon = fork();
++if (!defined $daemon) {
++	die "cannot fork daemon: $!";
++} elsif (0 == $daemon) {
++	close STDIN;open(STDIN, '/dev/null');
++	close STDOUT;open(STDOUT, '>/dev/null');
++	close STDERR;open(STDERR, '>/dev/null');
++	daemon_loop;
++	exit 0;
++} else {
++	print "Daemon $daemon running in the background.\n";
++}
+diff --git a/contrib/continuous/post-receive-cinotify b/contrib/continuous/post-receive-cinotify
+new file mode 100644
+index 0000000..b8f5a60
+--- /dev/null
++++ b/contrib/continuous/post-receive-cinotify
+@@ -0,0 +1,104 @@
++#!/usr/bin/perl
++#
++# A hook that notifies its companion cidaemon through a simple
++# queue file that a ref has been updated via a push (actually
++# by a receive-pack running on the server).
++#
++# See cidaemon for per-repository configuration details.
++#
++# To use this hook, add it as the post-receive hook, make it
++# executable, and set its configuration options.
++#
++
++local $ENV{PATH} = '/opt/git/bin';
++
++use strict;
++use warnings;
++use File::Spec;
++use Storable qw(retrieve nstore);
++use Fcntl ':flock';
++
++my $git_dir = File::Spec->rel2abs($ENV{GIT_DIR});
++my $queue_name = `git config --get builder.queue`;chop $queue_name;
++$queue_name =~ m,^([^\s]+)$,; $queue_name = $1; # untaint
++unless ($queue_name) {
++	1 while <STDIN>;
++	print STDERR "\nerror: builder.queue not set.  Not enqueing.\n\n";
++	exit;
++}
++my $queue_lock = "$queue_name.lock";
++
++my @skip;
++open S, "git config --get-all builder.skip|";
++while (<S>) {
++	chop;
++	push @skip, $_;
++}
++close S;
++
++my @new_branch_base;
++open S, "git config --get-all builder.newBranchBase|";
++while (<S>) {
++	chop;
++	push @new_branch_base, $_;
++}
++close S;
++
++sub skip ($)
++{
++	local $_ = shift;
++	foreach my $p (@skip) {
++		return 1 if /^$p/;
++	}
++	0;
++}
++
++open LOCK, ">$queue_lock" or die "Can't open $queue_lock: $!";
++flock LOCK, LOCK_EX;
++
++my $queue = -f $queue_name ? retrieve $queue_name : [];
++my %existing;
++foreach my $r (@$queue) {
++	my ($gd, $ref) = @$r;
++	$existing{$gd}{$ref} = $r;
++}
++
++my @new_branch_commits;
++my $loaded_new_branch_commits = 0;
++
++while (<STDIN>) {
++	chop;
++	my ($old, $new, $ref) = split / /, $_, 3;
++
++	next if $old eq $new;
++	next if $new =~ /^0{40}$/;
++	next if skip $ref;
++
++	my $r = $existing{$git_dir}{$ref};
++	if ($r) {
++		$r->[3] = $new;
++	} else {
++		if ($old =~ /^0{40}$/) {
++			if (!$loaded_new_branch_commits && @new_branch_base) {
++				open M,'-|','git','show-ref',@new_branch_base;
++				while (<M>) {
++					($_) = split / /, $_;
++					push @new_branch_commits, $_;
++				}
++				close M;
++				$loaded_new_branch_commits = 1;
++			}
++			$old = [@new_branch_commits];
++		} else {
++			$old = [$old];
++		}
++
++		$r = [$git_dir, $ref, $old, $new];
++		$existing{$git_dir}{$ref} = $r;
++		push @$queue, $r;
++	}
++}
++nstore $queue, $queue_name;
++
++flock LOCK, LOCK_UN;
++close LOCK;
+-- 
+1.5.1.rc1.595.gd1206
