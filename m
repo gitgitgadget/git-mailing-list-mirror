@@ -1,139 +1,112 @@
-From: Christian Wiese <morfoh@opensde.org>
-Subject: git-svnimport
-Date: Tue, 20 Mar 2007 20:00:11 +0200
-Message-ID: <20070320200011.444bd942@athlon>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Be more careful about zlib return values
+Date: Tue, 20 Mar 2007 11:38:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703201124260.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary=Sig_lNzk4UjCLhQ+MZm3IL7Ofy_;
- protocol="application/pgp-signature"; micalg=PGP-SHA1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 20 19:07:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 20 19:41:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTijw-00008u-9Y
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 19:07:20 +0100
+	id 1HTjGe-0007iF-77
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 19:41:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462AbXCTSHP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 14:07:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbXCTSHP
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 14:07:15 -0400
-Received: from foxtrot388.server4you.de ([85.25.140.218]:60315 "EHLO
-	speakerboxxx.ixplanet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752462AbXCTSHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 14:07:14 -0400
-Received: (qmail 14998 invoked from network); 20 Mar 2007 18:00:54 -0000
-X-Mail-Scanner: Scanned by qSheff-II-2.1-r2 (http://www.enderunix.org/qsheff/)
-Received: from unknown (HELO athlon) (morfoh@opensde.net@[80.97.102.202])
-          (envelope-sender <morfoh@opensde.org>)
-          by speakerboxxx.ixplanet.net (qmail-ldap-1.03) with SMTP
-          for <git@vger.kernel.org>; 20 Mar 2007 18:00:54 -0000
-X-Mailer: Claws Mail 2.8.1 (GTK+ 2.10.6; i686-unknown-linux-gnu)
+	id S965730AbXCTSjI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 14:39:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965621AbXCTSjD
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 14:39:03 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:52030 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965730AbXCTSir (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 14:38:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2KIchcD016552
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 20 Mar 2007 11:38:44 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2KIcYof008213;
+	Tue, 20 Mar 2007 10:38:39 -0800
+X-Spam-Status: No, hits=-0.471 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42755>
-
---Sig_lNzk4UjCLhQ+MZm3IL7Ofy_
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-
-Hello folks,
-
-I'd like to use git-svnimport to mirror the subprojects within our svn
-repository, but I encountered some pitfalls while testing.
-
-Our Layout is like this:
-
-<SVN_Repository_Root>/{subproject-a,subproject-b}/{trunk,branches,tags}
-
-=46rom the documentation of git-svnimport I assumed that I can use:
-------------------------------------------------------
-$ git-svnimport -v <SVN_Repository_Root>/subproject-a
-------------------------------------------------------
-to just fetch subproject-a, but the import fails with an error like
-this:
--------snip--------------------------------------------------------------
-40: Unrecognized path: /subproject-b/tags
-40: Unrecognized path: /subproject-b/trunk
-41: Unrecognized path: /subproject-a/trunk/foo/bar.txt
-42: Unrecognized path: /subproject-a/trunk/foo/bar.txt
-43: Unrecognized path: /subproject-a/trunk/foo/bar.txt
-Generating pack...
-Done counting 0 objects.
-Nothing new to pack.
-Removing unused objects 100%...
-Done.
-DONE; creating master branch
-cp: cannot stat `/repos/test/tmp/.git/refs/heads/origin':
-No such file or directory
-fatal: master: not a valid SHA1
--------snip--------------------------------------------------------------
-
-What am I doing wrong ?
-
-When I am using:
---------------------------------------------------------
-$ git-svnimport -v -T subproject-a <SVN_Repository_Root>
---------------------------------------------------------
-it gets happily imported.
-
-So I have the impression that the described <SVN_repository_URL> in
-the documentation of git-svnimport is in fact the Repository Root of the
-svn repo.
-
-For me it looks like git-svnimport makes the assumption that most svn
-repos are organized in the following way:
-
-<SVN_repository_URL>/{trunk,branches,tags}/{subproject-a,subproject-b}
-
-I have never seen svn repos organized that way if there are more than
-one project inside a repo, and it is even not recommended by the svn
-people as we can see here:
-http://svnbook.red-bean.com/nightly/en/svn-book.html#svn.branchmerge.maint.=
-layout
-
-So the assumption of git-svnimport, that trunk, branches and tags are
-always top-level directories is unlikely the case in most svn
-deployments. Most subprojects hosted in a svn repo have their own
-trunk, branches and tags directories.
-
-I think the '-P' option of git-svnimport should rather define the
-relative path of the subproject from the svn repository root than from
-a trunk toplevel directory, which is not existing in most cases.
-
-It might be even useful to rename <SVN_repository_URL> to
-<SVN_Repository_Root>
-
--P <Path_from_SVN_Repository_Root>
-	By default, the whole  repository is imported.
-	-P my/proj will import starting only from my/proj.
-	This option is useful when you want to import one project from
-	a svn repo which hosts multiple projects, that have their own
-	trunk, branches and tags directory structure.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42756>
 
 
-<SVN_Repository_Root>/<Path_from_SVN_Repository_Root>/{trunk,branches,tags}
+When creating a new object, we use "deflate(stream, Z_FINISH)" in a loop 
+until it no longer returns Z_OK, and then we do "deflateEnd()" to finish 
+up business.
 
-As far as I can see now that would ease the use of git-svnimport a lot
-and would help people to migrate from svn to git as well.
+That should all work, but the fact is, it's not how you're _supposed_ to 
+use the zlib return values properly:
 
-Any suggestions are highly welcome!
+ - deflate() should never return Z_OK in the first place, except if we 
+   need to increase the output buffer size (which we're not doing, and 
+   should never need to do, since we pre-allocated a buffer that is 
+   supposed to be able to hold the output in full). So the "while()" loop 
+   was incorrect: Z_OK doesn't actually mean "ok, continue", it means "ok, 
+   allocate more memory for me and continue"!
 
-Thanks in advance.
-Cheers
---Chris
+ - if we got an error return, we would consider it to be end-of-stream, 
+   but it could be some internal zlib error.  In short, we should check 
+   for Z_STREAM_END explicitly, since that's the only valid return value 
+   anyway for the Z_FINISH case.
 
---Sig_lNzk4UjCLhQ+MZm3IL7Ofy_
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
+ - we never checked deflateEnd() return codes at all.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.5 (GNU/Linux)
+Now, admittedly, none of these issues should ever happen, unless there is 
+some internal bug in zlib. So this patch should make zero difference, but 
+it seems to be the right thing to do.
 
-iD8DBQFGACEyFAiA38MZhZ0RAr0KAJ42vxQ+5iC3fSxZg9sqfsi8KXcuNQCfWZ5G
-1sDEeGRgVVckUl+/4XqMb0M=
-=Qhe0
------END PGP SIGNATURE-----
+We should probablybe anal and check the return value of "deflateInit()" 
+too!
 
---Sig_lNzk4UjCLhQ+MZm3IL7Ofy_--
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+Somebody who has worked more with zlib should probably double-check me, 
+but this is what <zlib.h> claims is the right thing to do.
+
+		Linus
+
+---
+ sha1_file.c |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/sha1_file.c b/sha1_file.c
+index c445a24..bfcbbea 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1947,7 +1947,7 @@ int hash_sha1_file(void *buf, unsigned long len, const char *type,
+ 
+ int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
+ {
+-	int size;
++	int size, ret;
+ 	unsigned char *compressed;
+ 	z_stream stream;
+ 	unsigned char sha1[20];
+@@ -2007,9 +2007,14 @@ int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned cha
+ 	/* Then the data itself.. */
+ 	stream.next_in = buf;
+ 	stream.avail_in = len;
+-	while (deflate(&stream, Z_FINISH) == Z_OK)
+-		/* nothing */;
+-	deflateEnd(&stream);
++	ret = deflate(&stream, Z_FINISH);
++	if (ret != Z_STREAM_END)
++		die("unable to deflate new object %s (%d)", sha1_to_hex(sha1), ret);
++
++	ret = deflateEnd(&stream);
++	if (ret != Z_OK)
++		die("deflateEnd on object %s failed (%d)", sha1_to_hex(sha1), ret);
++
+ 	size = stream.total_out;
+ 
+ 	if (write_buffer(fd, compressed, size) < 0)
