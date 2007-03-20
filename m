@@ -1,133 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 3/2] Avoid unnecessary strlen() calls
-Date: Tue, 20 Mar 2007 04:05:10 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703200400230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Mon, 19 Mar 2007 20:16:51 -0700
+Message-ID: <7v3b40d2os.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703162257560.18328@xanadu.home>
- <Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
- <118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
- <Pine.LNX.4.64.0703171822280.4964@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703172136440.18328@xanadu.home>
- <Pine.LNX.4.64.0703171854270.6730@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703172200060.18328@xanadu.home>
- <Pine.LNX.4.64.0703171911120.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703171949190.6730@woody.linux-foundation.org>
- <7v8xdunavr.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703180848580.6730@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703161636520.3910@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703161722360.3910@woody.linux-foundation.org>
+	<alpine.LFD.0.83.0703162257560.18328@xanadu.home>
+	<Pine.LNX.4.64.0703171044550.4964@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703171232180.4964@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703171242180.4964@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703171420420.4964@woody.linux-foundation.org>
+	<118833cc0703171814n4e56ab9fwfaaea81c903ae235@mail.gmail.com>
+	<Pine.LNX.4.64.0703171822280.4964@woody.linux-foundation.org>
+	<alpine.LFD.0.83.0703172136440.18328@xanadu.home>
+	<Pine.LNX.4.64.0703171854270.6730@woody.linux-foundation.org>
+	<alpine.LFD.0.83.0703172200060.18328@xanadu.home>
+	<Pine.LNX.4.64.0703171911120.6730@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0703171949190.6730@woody.linux-foundation.org>
+	<7v8xdunavr.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0703180848580.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
 	Morten Welinder <mwelinder@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 04:05:44 2007
+X-From: git-owner@vger.kernel.org Tue Mar 20 04:17:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTUfG-0002AH-W2
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 04:05:35 +0100
+	id 1HTUqI-0007fw-VN
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 04:16:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932282AbXCTDFO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 23:05:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932705AbXCTDFO
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 23:05:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50951 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932282AbXCTDFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 23:05:12 -0400
-Received: (qmail invoked by alias); 20 Mar 2007 03:05:11 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 20 Mar 2007 04:05:11 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18hFAIJsu8h6FqlnuN/t/lTG6lpeLUqTUuAP7Psk3
-	byKyHdpnkSxbQ5
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+	id S932943AbXCTDQx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 23:16:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932899AbXCTDQx
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 23:16:53 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:40010 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932943AbXCTDQw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 23:16:52 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070320031652.MDMG28911.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 19 Mar 2007 23:16:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id crGr1W00p1kojtg0000000; Mon, 19 Mar 2007 23:16:52 -0400
 In-Reply-To: <Pine.LNX.4.64.0703180848580.6730@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	(Linus Torvalds's message of "Sun, 18 Mar 2007 08:54:03 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42696>
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Sun, 18 Mar 2007, Linus Torvalds wrote:
+> So it looks like it *used* to be somewhat of a problem (the object access 
+> itself must have been about 10 seconds, since that got shaved off the 
+> time), but realistically, if you want to speed up "git blame", we can 
+> totally ignore the git object data structures, an dconcentrate on xdiff 
+> and on blame itself (cmp_suspect and assign_blame probably have some nasty 
+> O(n^2) behaviour or something like that,...
 
-> All the top profiling hits are about generating the patches and 
-> assigning blame:
-> 
-> 	samples  %        image name               app name                 symbol name
-> 	470352   15.5813  git                      git                      xdl_hash_record
+With this stupidity-removal patch, it gets down to 7.80user from
+8.72user (comparable number of minor faults) for blaming
+block/ll_rw_blk.c (without tglx grafts)
 
-I felt a little left out in all that performance slashing, and so I 
-thought maybe, just maybe, a small change in xdl_hash_record() can do 
-wonders (since it _is_ really simple, but still takes almost a 6th of the 
-CPU time). I don't have a proper test case setup, so maybe you want to try 
-this:
-
--- snipsnap --
-[PATCH] xdiff/xutils.c(xdl_hash_record): factor out whitespace handling
-
-Since in at least one use case, xdl_hash_record() takes over 15% of the
-CPU time, it makes sense to even micro-optimize it. For many cases, no
-whitespace special handling is needed, and in these cases we should not
-even bother to check for whitespace in _every_ iteration of the loop.
-
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-
----
-
-	Please do not consider this patch _unless_ it is proven to enhance 
-	the profile statistics substantially.
-
- xdiff/xutils.c |   22 ++++++++++++++++++++--
- 1 files changed, 20 insertions(+), 2 deletions(-)
-
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 3653864..bf91c0f 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -236,12 +236,13 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
- 	return 0;
+diff --git a/builtin-blame.c b/builtin-blame.c
+index b51cdc7..104521e 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -182,9 +182,8 @@ struct scoreboard {
+ 
+ static int cmp_suspect(struct origin *a, struct origin *b)
+ {
+-	int cmp = hashcmp(a->commit->object.sha1, b->commit->object.sha1);
+-	if (cmp)
+-		return cmp;
++	if (a->commit != b->commit)
++		return 1;
+ 	return strcmp(a->path, b->path);
  }
- 
--unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
-+static unsigned long xdl_hash_record_with_whitespace(char const **data,
-+		char const *top, long flags) {
- 	unsigned long ha = 5381;
- 	char const *ptr = *data;
- 
- 	for (; ptr < top && *ptr != '\n'; ptr++) {
--		if (isspace(*ptr) && (flags & XDF_WHITESPACE_FLAGS)) {
-+		if (isspace(*ptr)) {
- 			const char *ptr2 = ptr;
- 			while (ptr + 1 < top && isspace(ptr[1])
- 					&& ptr[1] != '\n')
-@@ -270,6 +271,23 @@ unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
- }
- 
- 
-+unsigned long xdl_hash_record(char const **data, char const *top, long flags) {
-+	unsigned long ha = 5381;
-+	char const *ptr = *data;
-+
-+	if (flags & XDF_WHITESPACE_FLAGS)
-+		return xdl_hash_record_with_whitespace(data, top, flags);
-+
-+	for (; ptr < top && *ptr != '\n'; ptr++) {
-+		ha += (ha << 5);
-+		ha ^= (unsigned long) *ptr;
-+	}
-+	*data = ptr < top ? ptr + 1: ptr;
-+
-+	return ha;
-+}
-+
-+
- unsigned int xdl_hashbits(unsigned int size) {
- 	unsigned int val = 1, bits = 0;
  
