@@ -1,67 +1,60 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git 1.5.1-rc1 doesn't like empty files
-Date: Tue, 20 Mar 2007 08:43:50 +0000
-Message-ID: <200703200843.51473.andyparkins@gmail.com>
-References: <1174361424.3143.42.camel@dv> <1174367312.3143.75.camel@dv> <Pine.LNX.4.64.0703192237100.6730@woody.linux-foundation.org>
+Date: Tue, 20 Mar 2007 01:49:51 -0700
+Message-ID: <7vbqio7100.fsf@assigned-by-dhcp.cox.net>
+References: <1174361424.3143.42.camel@dv> <1174367312.3143.75.camel@dv>
+	<Pine.LNX.4.64.0703192237100.6730@woody.linux-foundation.org>
+	<200703200843.51473.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Pavel Roskin <proski@gnu.org>,
 	Alexander Litvinov <litvinov2004@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 20 09:44:19 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 09:50:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTZx5-0006fQ-Hy
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 09:44:19 +0100
+	id 1HTa2n-0001Xn-6q
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 09:50:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753275AbXCTIoC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 04:44:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752579AbXCTIoC
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 04:44:02 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:9800 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752562AbXCTIoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 04:44:00 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so253995nfa
-        for <git@vger.kernel.org>; Tue, 20 Mar 2007 01:43:58 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=l5YZruwLGQ6z3OnPdztDlq9/xYWI2FNGOaeGmjMiJIaHZSjLL6Lrk/58yJld3FyeF0umjcNzIyyB4Vgsh9hSa5HEzw4gZkwlNm3UN8NINs6ArZ85epqW8J8UrQU6h4Im9v1gn7BHSFgJb2d8WalpdKgRnpc7t/lyLkjBCr3q2R0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=B8N2YXljiICv1CACa73kjnkavZNsRIjtauECr/e0H8m7jcYGQMIDmYPyffLdJ2FKf4tkfn/2QTKEY5NZWbCDnnSWSPtAUcDB/h7BvaEHZGIuJ/ZYivdBCwXs4fxTO3G2Nc8otXWSHD2H0uvDnZ5lN1r1Rif+8u0U4MtMJZmzhek=
-Received: by 10.78.138.14 with SMTP id l14mr2902597hud.1174380238737;
-        Tue, 20 Mar 2007 01:43:58 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id p45sm1168295nfa.2007.03.20.01.43.54;
-        Tue, 20 Mar 2007 01:43:55 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0703192237100.6730@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1753539AbXCTItw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 04:49:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbXCTItw
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 04:49:52 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40880 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752579AbXCTItw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 04:49:52 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070320084951.MPFK748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 20 Mar 2007 04:49:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id cwpr1W0021kojtg0000000; Tue, 20 Mar 2007 04:49:51 -0400
+In-Reply-To: <200703200843.51473.andyparkins@gmail.com> (Andy Parkins's
+	message of "Tue, 20 Mar 2007 08:43:50 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42730>
 
-On Tuesday 2007 March 20 05:41, Linus Torvalds wrote:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> 	[core]
-> 		legacyheaders = false
-> noticed, because almost nobody uses it.
+> On Tuesday 2007 March 20 05:41, Linus Torvalds wrote:
+>
+>> 	[core]
+>> 		legacyheaders = false
+>> noticed, because almost nobody uses it.
+>
+> I'm not sure that's going to be true for long - the 1.5.0 release notes 
+> recommended setting it (assuming you didn't need backward compatibility) - 
+> which is exactly what I (and I'm sure others) did.
 
-I'm not sure that's going to be true for long - the 1.5.0 release notes 
-recommended setting it (assuming you didn't need backward compatibility) - 
-which is exactly what I (and I'm sure others) did.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Well, it is fixed in 'master' to be in -rc2, and that validation
+does not exist in 'maint', so no harm is done.
