@@ -1,78 +1,50 @@
-From: Alexander Litvinov <litvinov2004@gmail.com>
-Subject: Re: git 1.5.1-rc1 doesn't like empty files
-Date: Tue, 20 Mar 2007 13:04:05 +0600
-Message-ID: <200703201304.05902.litvinov2004@gmail.com>
-References: <1174361424.3143.42.camel@dv> <1174367312.3143.75.camel@dv> <Pine.LNX.4.64.0703192237100.6730@woody.linux-foundation.org>
+From: "Yakov Lerner" <iler.ml@gmail.com>
+Subject: relocating the binaries
+Date: Tue, 20 Mar 2007 09:12:36 +0200
+Message-ID: <f36b08ee0703200012o6f479defs6a8edc8fb1179b8c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pavel Roskin <proski@gnu.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 08:04:19 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 20 08:12:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTYOI-0003sT-5t
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 08:04:18 +0100
+	id 1HTYWX-00083Y-IQ
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 08:12:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752822AbXCTHEP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 20 Mar 2007 03:04:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751440AbXCTHEP
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 03:04:15 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:26748 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752822AbXCTHEO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Mar 2007 03:04:14 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1537615uga
-        for <git@vger.kernel.org>; Tue, 20 Mar 2007 00:04:13 -0700 (PDT)
+	id S1750881AbXCTHMj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 03:12:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750850AbXCTHMj
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 03:12:39 -0400
+Received: from nf-out-0910.google.com ([64.233.182.191]:8276 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750810AbXCTHMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 03:12:38 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so225265nfa
+        for <git@vger.kernel.org>; Tue, 20 Mar 2007 00:12:37 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=UXxIKLdRmQB5Rv3W7CrrhJ6gH0shDbKl8N8MAcwN9uqNWjxuzU63jbyrMCk3QG0FTYpLXM0XtYIt6d8boiiLYUJsRwEEvr9mRWjZS4pPXJ9TqtApzEhH+s0nUa8YIIF8UBwW0VNtIjo5oX23wAuhO+skNx39nqm/Rtoo01IHSdA=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=uE6WnEoevjiRF9DUdLeTA2/QoNZ2FgkKP62iDybEAih9R5u0i+5OlqYsaGqxKViXN5JMlVpixiU67TWZQAycsH6y6kdrXYpXDCpzqsNFnxA61Oygh8C3pVj1DfVcMyQDoUOJZ2V2fFH1pXoGFbyziPsNwfIb7yRVVfdMQDmT9FI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=bIuupCxyGOJtmn9sG2PwIUb0JxKj6uQVTynjC2ETn+ktXps7A/c68vNFYXivODOeLtkPqtaNLJAzUhhTrwNGZWGZxITvPCcd5w7uC7UgV5AyGx0WoRQXd+53N44Y0KFzsYyz1zjQJ2AGel7a2kjOW1BCKq7RnYGlJ7GXMkk2IVk=
-Received: by 10.67.26.7 with SMTP id d7mr828300ugj.1174374252995;
-        Tue, 20 Mar 2007 00:04:12 -0700 (PDT)
-Received: from lan.ac-sw.lcl ( [81.1.223.2])
-        by mx.google.com with ESMTP id s1sm169329uge.2007.03.20.00.04.11;
-        Tue, 20 Mar 2007 00:04:12 -0700 (PDT)
-User-Agent: KMail/1.8
-In-Reply-To: <Pine.LNX.4.64.0703192237100.6730@woody.linux-foundation.org>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Y7H33YH4OOYAQRrScexmuf9gtdT+prgP3F+v1T2BF01inAqmDcCC0zLRB2SZCAmdBovokyHrYGtPL0BnxiXouC6xIfKronsU3l0X7mKQILtimYFO9MO+uAnIyfEeNPwPqTFUMzPJc9zXBX/PIE2PQlbZanHKFrcY2yqJhDuG85o=
+Received: by 10.65.251.17 with SMTP id d17mr4830483qbs.1174374756993;
+        Tue, 20 Mar 2007 00:12:36 -0700 (PDT)
+Received: by 10.114.47.14 with HTTP; Tue, 20 Mar 2007 00:12:36 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42725>
 
-=D0=92 =D1=81=D0=BE=D0=BE=D0=B1=D1=89=D0=B5=D0=BD=D0=B8=D0=B8 =D0=BE=D1=
-=82 Tuesday 20 March 2007 11:41 Linus Torvalds =D0=BD=D0=B0=D0=BF=D0=B8=
-=D1=81=D0=B0=D0=BB:
-> Alexander - do you happen to have that "legacyheaders" setting too? M=
-aybe
-> that explains your pack corruption?
+Let's say the git binaries were built with prefix=/usr/local.
+I wanto to copy them (relocate) to other machine under
+$HOME/run. WHich env.var. do I set to tell the git binaries  that
+it's new prefix is $HOME/run ? nb: i'm not talking about rebuild.
 
-It seems no:
-
-$  git config core.legacyheaders
-$  git config -l
-user.name=3DAlexander Litvinov
-user.email=3DXXX
-core.logallrefupdates=3Dtrue
-core.filemode=3Dfalse
-core.autocrlf=3Dtrue
-diff.color=3Dauto
-status.color=3Dauto
-apply.whitespace=3Dstrip
-core.repositoryformatversion=3D0
-core.filemode=3Dfalse
-core.bare=3Dfalse
-remote.origin.url=3D/home/lan/src/XXX
-remote.origin.fetch=3D+refs/heads/*:refs/remotes/origin/*
-branch.master.remote=3Dorigin
-branch.master.merge=3Drefs/heads/master
-branch.XXX.remote=3Dorigin
-branch.XXX.merge=3Drefs/heads/XXX
+Thanks
+Yakov
