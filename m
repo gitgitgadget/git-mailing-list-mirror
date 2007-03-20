@@ -1,60 +1,54 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git 1.5.1-rc1 doesn't like empty files
-Date: Tue, 20 Mar 2007 01:49:51 -0700
-Message-ID: <7vbqio7100.fsf@assigned-by-dhcp.cox.net>
-References: <1174361424.3143.42.camel@dv> <1174367312.3143.75.camel@dv>
-	<Pine.LNX.4.64.0703192237100.6730@woody.linux-foundation.org>
-	<200703200843.51473.andyparkins@gmail.com>
+From: David Brodsky <trekie@sinister.cz>
+Subject: Re: [PATCH 2/2] Implement a simple delta_base cache
+Date: Tue, 20 Mar 2007 10:13:47 +0100
+Message-ID: <45FFA5CB.1060700@sinister.cz>
+References: <Pine.LNX.4.64.0703151747110.3816@woody.linux-foundation.org> <200703181929.58278.robin.rosenberg.lists@dewire.com> <45FE8D1E.6040408@sinister.cz> <200703200735.41234.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Pavel Roskin <proski@gnu.org>,
-	Alexander Litvinov <litvinov2004@gmail.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 09:50:16 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Morten Welinder <mwelinder@gmail.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Tue Mar 20 10:09:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTa2n-0001Xn-6q
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 09:50:13 +0100
+	id 1HTaLI-0003eQ-K7
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 10:09:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753539AbXCTItw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 04:49:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753299AbXCTItw
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 04:49:52 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40880 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752579AbXCTItw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 04:49:52 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070320084951.MPFK748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 20 Mar 2007 04:49:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id cwpr1W0021kojtg0000000; Tue, 20 Mar 2007 04:49:51 -0400
-In-Reply-To: <200703200843.51473.andyparkins@gmail.com> (Andy Parkins's
-	message of "Tue, 20 Mar 2007 08:43:50 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753546AbXCTJJR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 05:09:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753544AbXCTJJR
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 05:09:17 -0400
+Received: from golias.ruk.cuni.cz ([195.113.0.2]:64499 "HELO
+	golias.ruk.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1752562AbXCTJJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 05:09:17 -0400
+Received: (qmail 18115 invoked from network); 20 Mar 2007 09:09:15 -0000
+Received: from agnes.kajka.koleje.cuni.cz (HELO ?195.113.60.127?) (195.113.60.127)
+  by golias.ruk.cuni.cz with SMTP; 20 Mar 2007 09:09:08 -0000
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.9) Gecko/20070122 SeaMonkey/1.0.7
+In-Reply-To: <200703200735.41234.robin.rosenberg.lists@dewire.com>
+X-Enigmail-Version: 0.94.1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42731>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Robin Rosenberg wrote:
+> Uploaded now.
+> 
+> David Brodsky provides the final location.
 
-> On Tuesday 2007 March 20 05:41, Linus Torvalds wrote:
->
->> 	[core]
->> 		legacyheaders = false
->> noticed, because almost nobody uses it.
->
-> I'm not sure that's going to be true for long - the 1.5.0 release notes 
-> recommended setting it (assuming you didn't need backward compatibility) - 
-> which is exactly what I (and I'm sure others) did.
+Anonymous ftp at agnes.kajka.koleje.cuni.cz:10000 - it will stay up for
+a while, but since it my desktop machine, I don't guarantee anything.
 
-Well, it is fixed in 'master' to be in -rc2, and that validation
-does not exist in 'maint', so no harm is done.
+And (hopefully) permanent http://steamer.kajka.koleje.cuni.cz/Eclipse
+
+Enjoy
+
+David
