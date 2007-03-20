@@ -1,88 +1,139 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Don't ever return corrupt objects from "parse_object()"
-Date: Tue, 20 Mar 2007 10:05:20 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703200953250.6730@woody.linux-foundation.org>
+From: Christian Wiese <morfoh@opensde.org>
+Subject: git-svnimport
+Date: Tue, 20 Mar 2007 20:00:11 +0200
+Message-ID: <20070320200011.444bd942@athlon>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Mar 20 18:06:05 2007
+Content-Type: multipart/signed; boundary=Sig_lNzk4UjCLhQ+MZm3IL7Ofy_;
+ protocol="application/pgp-signature"; micalg=PGP-SHA1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 20 19:07:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HThmH-0004r6-Eq
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 18:05:41 +0100
+	id 1HTijw-00008u-9Y
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 19:07:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965489AbXCTRFa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 13:05:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965310AbXCTRFa
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 13:05:30 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:48026 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965489AbXCTRF0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 13:05:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2KH5NcD013652
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 20 Mar 2007 10:05:23 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2KH5Kcv006017;
-	Tue, 20 Mar 2007 09:05:22 -0800
-X-Spam-Status: No, hits=-0.471 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752462AbXCTSHP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 14:07:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751972AbXCTSHP
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 14:07:15 -0400
+Received: from foxtrot388.server4you.de ([85.25.140.218]:60315 "EHLO
+	speakerboxxx.ixplanet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752462AbXCTSHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 14:07:14 -0400
+Received: (qmail 14998 invoked from network); 20 Mar 2007 18:00:54 -0000
+X-Mail-Scanner: Scanned by qSheff-II-2.1-r2 (http://www.enderunix.org/qsheff/)
+Received: from unknown (HELO athlon) (morfoh@opensde.net@[80.97.102.202])
+          (envelope-sender <morfoh@opensde.org>)
+          by speakerboxxx.ixplanet.net (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 20 Mar 2007 18:00:54 -0000
+X-Mailer: Claws Mail 2.8.1 (GTK+ 2.10.6; i686-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42755>
+
+--Sig_lNzk4UjCLhQ+MZm3IL7Ofy_
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+
+Hello folks,
+
+I'd like to use git-svnimport to mirror the subprojects within our svn
+repository, but I encountered some pitfalls while testing.
+
+Our Layout is like this:
+
+<SVN_Repository_Root>/{subproject-a,subproject-b}/{trunk,branches,tags}
+
+=46rom the documentation of git-svnimport I assumed that I can use:
+------------------------------------------------------
+$ git-svnimport -v <SVN_Repository_Root>/subproject-a
+------------------------------------------------------
+to just fetch subproject-a, but the import fails with an error like
+this:
+-------snip--------------------------------------------------------------
+40: Unrecognized path: /subproject-b/tags
+40: Unrecognized path: /subproject-b/trunk
+41: Unrecognized path: /subproject-a/trunk/foo/bar.txt
+42: Unrecognized path: /subproject-a/trunk/foo/bar.txt
+43: Unrecognized path: /subproject-a/trunk/foo/bar.txt
+Generating pack...
+Done counting 0 objects.
+Nothing new to pack.
+Removing unused objects 100%...
+Done.
+DONE; creating master branch
+cp: cannot stat `/repos/test/tmp/.git/refs/heads/origin':
+No such file or directory
+fatal: master: not a valid SHA1
+-------snip--------------------------------------------------------------
+
+What am I doing wrong ?
+
+When I am using:
+--------------------------------------------------------
+$ git-svnimport -v -T subproject-a <SVN_Repository_Root>
+--------------------------------------------------------
+it gets happily imported.
+
+So I have the impression that the described <SVN_repository_URL> in
+the documentation of git-svnimport is in fact the Repository Root of the
+svn repo.
+
+For me it looks like git-svnimport makes the assumption that most svn
+repos are organized in the following way:
+
+<SVN_repository_URL>/{trunk,branches,tags}/{subproject-a,subproject-b}
+
+I have never seen svn repos organized that way if there are more than
+one project inside a repo, and it is even not recommended by the svn
+people as we can see here:
+http://svnbook.red-bean.com/nightly/en/svn-book.html#svn.branchmerge.maint.=
+layout
+
+So the assumption of git-svnimport, that trunk, branches and tags are
+always top-level directories is unlikely the case in most svn
+deployments. Most subprojects hosted in a svn repo have their own
+trunk, branches and tags directories.
+
+I think the '-P' option of git-svnimport should rather define the
+relative path of the subproject from the svn repository root than from
+a trunk toplevel directory, which is not existing in most cases.
+
+It might be even useful to rename <SVN_repository_URL> to
+<SVN_Repository_Root>
+
+-P <Path_from_SVN_Repository_Root>
+	By default, the whole  repository is imported.
+	-P my/proj will import starting only from my/proj.
+	This option is useful when you want to import one project from
+	a svn repo which hosts multiple projects, that have their own
+	trunk, branches and tags directory structure.
 
 
-Looking at the SHA1 validation code due to the corruption that Alexander 
-Litvinov is seeing under Cygwin, I notice that one of the most central 
-places where we read objects, we actually do end up verifying the SHA1 of 
-the result, but then we happily parse it anyway.
+<SVN_Repository_Root>/<Path_from_SVN_Repository_Root>/{trunk,branches,tags}
 
-And using "printf" to write the error message means that it not only can 
-get lost, but will actually mess up stdout, and cause other strange and 
-hard-to-debug failures downstream.
+As far as I can see now that would ease the use of git-svnimport a lot
+and would help people to migrate from svn to git as well.
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
+Any suggestions are highly welcome!
 
-Of course, messing up stdout is actually a good way to make sure that 
-anything that pipes stdout to another process will cause a failure in the 
-reading process, which is likely why we did it that way in the first 
-place. But any pipeline really *should* check the source process exit 
-status anyway, and it looks rather dangerous to return a valid object as 
-if nothing bad had happened!
+Thanks in advance.
+Cheers
+--Chris
 
-NOTE! A lot of things don't do a "parse_object" at all, but use the raw 
-"read_sha1_file()" interface. So this won't catch all corrupted objects 
-when they are used, but since we already did the check there, we should at 
-least do the right thing.
+--Sig_lNzk4UjCLhQ+MZm3IL7Ofy_
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
 
-		Linus
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
 
----
- object.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+iD8DBQFGACEyFAiA38MZhZ0RAr0KAJ42vxQ+5iC3fSxZg9sqfsi8KXcuNQCfWZ5G
+1sDEeGRgVVckUl+/4XqMb0M=
+=Qhe0
+-----END PGP SIGNATURE-----
 
-diff --git a/object.c b/object.c
-index 5b46889..78a44a6 100644
---- a/object.c
-+++ b/object.c
-@@ -184,8 +184,10 @@ struct object *parse_object(const unsigned char *sha1)
- 
- 	if (buffer) {
- 		struct object *obj;
--		if (check_sha1_signature(sha1, buffer, size, typename(type)) < 0)
--			printf("sha1 mismatch %s\n", sha1_to_hex(sha1));
-+		if (check_sha1_signature(sha1, buffer, size, typename(type)) < 0) {
-+			error("sha1 mismatch %s\n", sha1_to_hex(sha1));
-+			return NULL;
-+		}
- 
- 		obj = parse_object_buffer(sha1, type, size, buffer, &eaten);
- 		if (!eaten)
+--Sig_lNzk4UjCLhQ+MZm3IL7Ofy_--
