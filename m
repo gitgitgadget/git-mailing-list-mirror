@@ -1,70 +1,78 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH 2/4] update-hook: show the contents of the tag message for annotated tags
-Date: Tue, 20 Mar 2007 13:41:54 +0100
-Message-ID: <20070320124154.GB22773@admingilde.org>
-References: <200703201058.38519.andyparkins@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Suspicious of v1.5.0 tag object
+Date: Tue, 20 Mar 2007 13:23:12 +0000
+Message-ID: <200703201323.15497.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="DBIVS5p969aUjpLe"
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 20 13:42:02 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 20 14:23:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTdf5-0002qu-Ix
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 13:41:59 +0100
+	id 1HTeJH-0006dd-RB
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 14:23:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933187AbXCTMl4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 20 Mar 2007 08:41:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933312AbXCTMl4
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 08:41:56 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:33091 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933187AbXCTMlz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Mar 2007 08:41:55 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HTdf0-0007SU-RJ; Tue, 20 Mar 2007 13:41:54 +0100
+	id S932796AbXCTNXX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 20 Mar 2007 09:23:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932806AbXCTNXW
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Mar 2007 09:23:22 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:47645 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932796AbXCTNXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Mar 2007 09:23:21 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so353990nfa
+        for <git@vger.kernel.org>; Tue, 20 Mar 2007 06:23:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=c4QTWFTdEuMeXtDD/ocBf441xyy9Cm63XSmmw6cVelfZAMJuiJaihNAyD6D2ifAg5bAGeddAoxgIruAx1XI76PHpPhVPFYqfHZG+xl0nLmpoVAUsWrRhN0uAQdLLS4vs8dCLPTOVVlHmPpien0YspAb04wH0m3EXCbbbkKq5X+I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=YdVwf3B9nPNQCp+huBxUD7B6NVb2Jwm99vv95rHAe1iNeV2+NNiOu9Xi35SMDirdgTwVUHaXvyXNg2qpt1yXtDe5PiRvM2Vv1ANuaL0QNDDI5rcaIEDRg/2smEjPah1EUhqvrA4ecUKMM9nm+sGqj6e2Ew0SPjIdgmz1dqtT0qw=
+Received: by 10.78.123.4 with SMTP id v4mr3086489huc.1174396999446;
+        Tue, 20 Mar 2007 06:23:19 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id v20sm2037205nfc.2007.03.20.06.23.18;
+        Tue, 20 Mar 2007 06:23:19 -0700 (PDT)
+User-Agent: KMail/1.9.5
 Content-Disposition: inline
-In-Reply-To: <200703201058.38519.andyparkins@gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42740>
+
+Hello,
+
+I was just poking around and noticed this:
+
+  $ git cat-file -p v1.5.0
+  object 437b1b20df4b356c9342dac8d38849f24ef44f27
+  type commit
+  tag v1.5.0
+  tagger Junio C Hamano <junkio@cox.net> Wed Feb 14 00:00:00 2007 +0000
+
+Is it really the case that you tagged v1.5.0 at midnight UTC exactly; and that 
+you travelled from your normal -0800 timezone to +0000?  None of the other 
+tags show this strange output.
+
+  $ git cat-file -p v1.5.0.2
+  object 0d9b9ab1284ce125fd49cf7dbf4d28e0540cf035
+  type commit
+  tag v1.5.0.2
+  tagger Junio C Hamano <junkio@cox.net> Mon Feb 26 00:26:21 2007 -0800
+
+This looks much more normal.
+
+Is the v1.5.0 tag object showing a bug? (The other possibility being that you 
+did some clever messing to make it appear at exactly that moment)
 
 
---DBIVS5p969aUjpLe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-hoi :)
-
-On Tue, Mar 20, 2007 at 10:58:38AM +0000, Andy Parkins wrote:
->   git cat-file tag $newrev | tail -q -n +5
->=20
-> Which is dangerously reliant on the format of the tag object being four
-> header lines then the message.
-
-I think you can split at the blank line after the header.
-
---=20
-Martin Waitz
-
---DBIVS5p969aUjpLe
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFF/9aSj/Eaxd/oD7IRAryuAJ9+yZGb7lLt7MF1jBKYJEp4dpr0nwCeJ+wY
-2U9e6FwegiqbMdVioJ8G9Dw=
-=ILvt
------END PGP SIGNATURE-----
-
---DBIVS5p969aUjpLe--
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
