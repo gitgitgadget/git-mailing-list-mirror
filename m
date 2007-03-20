@@ -1,101 +1,106 @@
-From: Chris Wright <chrisw@sous-sol.org>
-Subject: Re: [PATCH]: remove extra-verbosity from git-clone (http)
-Date: Mon, 19 Mar 2007 19:18:18 -0700
-Message-ID: <20070320021818.GG10574@sequoia.sous-sol.org>
-References: <58d389c20702150910x24ec218bjdb9cb49ee03fd1df@mail.gmail.com> <20070319230436.GB12555@sequoia.sous-sol.org> <7vslc0er1e.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] Add a HOWTO for setting up a standalone git daemon
+Date: Tue, 20 Mar 2007 03:29:56 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703200329350.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Wright <chrisw@sous-sol.org>,
-	Fernando Herrera <fherrera@onirica.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 20 03:17:18 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Tue Mar 20 03:30:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTTuX-0002DJ-6i
-	for gcvg-git@gmane.org; Tue, 20 Mar 2007 03:17:17 +0100
+	id 1HTU7F-0001Td-Oc
+	for gcvg-git@gmane.org; Tue, 20 Mar 2007 03:30:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030822AbXCTCRB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 19 Mar 2007 22:17:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965756AbXCTCRA
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 22:17:00 -0400
-Received: from 216-99-217-87.dsl.aracnet.com ([216.99.217.87]:36380 "EHLO
-	sous-sol.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965795AbXCTCQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Mar 2007 22:16:59 -0400
-Received: from sous-sol.org (localhost.localdomain [127.0.0.1])
-	by sous-sol.org (8.13.8/8.13.7) with ESMTP id l2K2IIRr025662;
-	Mon, 19 Mar 2007 19:18:18 -0700
-Received: (from chrisw@localhost)
-	by sous-sol.org (8.13.8/8.13.7/Submit) id l2K2II5r025661;
-	Mon, 19 Mar 2007 19:18:18 -0700
-Content-Disposition: inline
-In-Reply-To: <7vslc0er1e.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.2i
-X-Spam-Status: No, score=-2.4 required=5.0 tests=AWL,BAYES_00,
-	UNPARSEABLE_RELAY autolearn=ham version=3.1.4
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	sequoia.sous-sol.org
+	id S965804AbXCTC36 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 19 Mar 2007 22:29:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965796AbXCTC36
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Mar 2007 22:29:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55272 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965804AbXCTC35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Mar 2007 22:29:57 -0400
+Received: (qmail invoked by alias); 20 Mar 2007 02:29:56 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp054) with SMTP; 20 Mar 2007 03:29:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19TjWxzU+RTWc/0tpecUm4+uy7yaGbAi26K9OiNgJ
+	DXoaje6v11IvV5
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42692>
 
-* Junio C Hamano (junkio@cox.net) wrote:
-> I saw it.  The -v option used not to be there, but we added it
-> with an explicit purpose of not boring people fetching over http
-> connection (which used to be slow especially before packfiles
-> were introduced).  I do not care much either way, but I suspect
-> there actually are people who want to see that "assuring look"
-> of something happening.  I dunno.
 
-Actually, I very much agree now that I've actually tried it
-myself when testing the simple patch below.
+Setting up a git-daemon came up the other day on IRC, and it is slightly
+non trivial for the uninitiated.
 
-> I am certainly *not* opposed to have an explicit option or a
-> per-user configuration to make it not pass -v to http-fetch.  I
-> am just wondering if we want to change the default.  Especially
-> people new to git may wonder what is happening without _any_
-> feedback if we turned it off by default.
-
-Well, there's enough to go on already.  So how about this simple change
-for those few that are bothered by the verbose output?  Works in my
-basic testing.
-
-thanks,
--chris
---
-Subject: [PATCH] make git clone -q suppress the noise with http fetch
-
-We already have -q in git clone.  So for those who care to suppress
-the noise during an http based clone, make -q actually do a quiet
-http fetch.
-
-Signed-off-by: Chris Wright <chrisw@sous-sol.org>
-Cc: Fernando Herrera <fherrera@onirica.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-clone.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+ Documentation/howto/use-git-daemon.txt |   52 ++++++++++++++++++++++++++++++++
+ 1 files changed, 52 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/howto/use-git-daemon.txt
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 1bd54de..ab6c5c0 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -42,6 +42,7 @@ clone_dumb_http () {
- 	http_fetch "$1/info/refs" "$clone_tmp/refs" ||
- 		die "Cannot get remote repository information.
- Perhaps git-update-server-info needs to be run there?"
-+	test "z$quiet" = z && v=-v || v=
- 	while read sha1 refname
- 	do
- 		name=`expr "z$refname" : 'zrefs/\(.*\)'` &&
-@@ -59,7 +60,7 @@ Perhaps git-update-server-info needs to be run there?"
- 		else
- 			tname=$name
- 		fi
--		git-http-fetch -v -a -w "$tname" "$name" "$1/" || exit 1
-+		git-http-fetch $v -a -w "$tname" "$name" "$1/" || exit 1
- 	done <"$clone_tmp/refs"
- 	rm -fr "$clone_tmp"
- 	http_fetch "$1/HEAD" "$GIT_DIR/REMOTE_HEAD" ||
+diff --git a/Documentation/howto/use-git-daemon.txt b/Documentation/howto/use-git-daemon.txt
+new file mode 100644
+index 0000000..1a1eb24
+--- /dev/null
++++ b/Documentation/howto/use-git-daemon.txt
+@@ -0,0 +1,52 @@
++How to use git-daemon
++
++Git can be run in inetd mode and in stand alone mode. But all you want is
++let a coworker pull from you, and therefore need to set up a git server
++real quick, right?
++
++Note that git-daemon is not really chatty at the moment, especially when
++things do not go according to plan (e.g. a socket could not be bound).
++
++Another word of warning: if you run
++
++	$ git ls-remote git://127.0.0.1/rule-the-world.git
++
++and you see a message like
++
++	fatal: The remote end hung up unexpectedly
++
++it only means that _something_ went wrong. To find out _what_ went wrong,
++you have to ask the server. (Git refuses to be more precise for your
++security only. Take off your shoes now. You have any coins in your pockets?
++Sorry, not allowed -- who knows what you planned to do with them?)
++
++With these two caveats, let's see an example:
++
++	$ git daemon --reuseaddr --verbose --base-path=/home/gitte/git \
++	  --export-all -- /home/gitte/git/rule-the-world.git
++
++(Of course, unless your user name is `gitte` _and_ your repository is in
++~/rule-the-world.git, you have to adjust the paths. If your repository is
++not bare, be aware that you have to type the path to the .git directory!)
++
++This invocation tries to reuse the address if it is already taken
++(this can save you some debugging, because otherwise killing and restarting
++git-daemon could just silently fail to bind to a socket).
++
++Also, it is (relatively) verbose when somebody actually connects to it.
++It also sets the base path, which means that all the projects which can be
++accessed using this daemon have to reside in or under that path.
++
++The option `--export-all` just means that you _don't_ have to create a
++file named `git-daemon-export-ok` in each exported repository. (Otherwise,
++git-daemon would complain loudly, and refuse to cooperate.)
++
++Last of all, the repository which should be exported is specified. It is
++a good practice to put the paths after a "--" separator.
++
++Now, test your daemon with
++
++	$ git ls-remote git://127.0.0.1/rule-the-world.git
++
++If this does not work, find out why, and submit a patch to this document.
++
+-- 
+1.5.1.rc1.2288.g29e7
