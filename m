@@ -1,181 +1,102 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Set up for better tree diff optimizations
-Date: Wed, 21 Mar 2007 12:54:56 -0700
-Message-ID: <7vslbyz81b.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0703181506570.6730@woody.linux-foundation.org>
-	<7vircv3wfc.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0703210812590.6730@woody.linux-foundation.org>
-	<7vslby1qvw.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0703211110050.6730@woody.linux-foundation.org>
-	<7vhcse1kpu.fsf@assigned-by-dhcp.cox.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [PATCH] Bisect: fix calculation of the number of suspicious
+	revisions
+Date: Wed, 21 Mar 2007 22:04:54 +0100
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070321210454.GA2844@lala>
+References: <20070317141209.GA7838@cepheus> <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070317195840.GA20735@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 21 20:55:05 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 21 22:05:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU6tk-0001IU-Hg
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 20:55:04 +0100
+	id 1HU7zT-0007hN-4t
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 22:05:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933957AbXCUTy7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 15:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933948AbXCUTy7
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 15:54:59 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:52400 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933957AbXCUTy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 15:54:57 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070321195458.UQWK1312.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 21 Mar 2007 15:54:58 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id dXuw1W00l1kojtg0000000; Wed, 21 Mar 2007 15:54:57 -0400
-In-Reply-To: <7vhcse1kpu.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 21 Mar 2007 12:05:01 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S964932AbXCUVE7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 21 Mar 2007 17:04:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965013AbXCUVE7
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 17:04:59 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:43925 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965026AbXCUVE6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Mar 2007 17:04:58 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HU7zN-00021b-Ap
+	for git@vger.kernel.org; Wed, 21 Mar 2007 22:04:57 +0100
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2LL4s0e017801
+	for <git@vger.kernel.org>; Wed, 21 Mar 2007 22:04:54 +0100 (MET)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2LL4s3c017800
+	for git@vger.kernel.org; Wed, 21 Mar 2007 22:04:54 +0100 (MET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20070317195840.GA20735@informatik.uni-freiburg.de>
+User-Agent: Mutt/1.5.14+cvs20070315 (2007-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42816>
 
-Junio C Hamano <junkio@cox.net> writes:
+Up to now the number printed was calculated assuming that the current r=
+evision
+to test is bad.  Given that it's not possible that this always matches =
+the
+number of suspicious revs if the current one is good, the maximum of bo=
+th is
+taken now.
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> On Wed, 21 Mar 2007, Junio C Hamano wrote:
->> ...
->>> Would something like this suit your taste?
->>
->> This looks fine, although the reason I didn't get it done myself is that I 
->> have this nagging feeling that there must be some clever way to make it 
->> even faster. I hated having to do the "strncmp()" early, when it's not 
->> always needed. 
-> ...
-> We _could_ check never_interesting first and if it is already
-> dropped then defer strncmp() and check the pathlen > matchlen
-> comparison first.
+Moreover I think the number printed was always one to high, this is fix=
+ed, too.
 
-So this is the round #2, as a replacement patch of what I sent
-earlier.  Once we know that there are pathspecs that sort later
-than the current path, we can defer doing strncmp() and skip
-that pathspec early by comparing length.  If the path is longer
-than the spec, we can tell that it would never match without
-comparing.
-
-Best time for "git-rev-list HEAD -- arch/i386/ include/asm-i386/"
-are (ten runs each):
-
-without any patch:	1.17user
-with the previous:	1.13user
-with this patch:	1.11user
-
--- >8 --
-Teach tree_entry_interesting() that the tree entries are sorted.
-
-When we are looking at a tree entry with pathspecs, if all the
-pathspecs sort strictly earlier than the entry we are currently
-looking at, there is no way later entries in the same tree would
-match out pathspecs, because the entries are sorted.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de>
 ---
+In the mail before I wrote that the former version of this patch was no=
+t
+complete.  This turned out to be a thinko.  So now I only used a better
+Subject, a more verbose log and a hopefully more clear output.
 
- tree-diff.c |   55 +++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 files changed, 49 insertions(+), 6 deletions(-)
+ git-bisect.sh |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tree-diff.c b/tree-diff.c
-index 3678805..15fd665 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -81,6 +81,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 	unsigned mode;
- 	int i;
- 	int pathlen;
-+	int never_interesting = -1;
- 
- 	if (!opt->nr_paths)
- 		return 1;
-@@ -89,9 +90,10 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 
- 	pathlen = tree_entry_len(path, sha1);
- 
--	for (i=0; i < opt->nr_paths; i++) {
-+	for (i = 0; i < opt->nr_paths; i++) {
- 		const char *match = opt->paths[i];
- 		int matchlen = opt->pathlens[i];
-+		int m = -1; /* signals that we haven't called strncmp() */
- 
- 		if (baselen >= matchlen) {
- 			/* If it doesn't match, move along... */
-@@ -109,6 +111,37 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 		match += baselen;
- 		matchlen -= baselen;
- 
-+		if (never_interesting) {
-+			/*
-+			 * We have not seen any match that sorts later
-+			 * than the current path.
-+			 */
-+
-+			/*
-+			 * Does match sort strictly earlier than path
-+			 * with their common parts?
-+			 */
-+			m = strncmp(match, path,
-+				    (matchlen < pathlen) ? matchlen : pathlen);
-+			if (m < 0)
-+				continue;
-+
-+			/*
-+			 * If we come here even once, that means there is at
-+			 * least one pathspec that would sort equal to or
-+			 * later than the path we are currently looking at.
-+			 * In other words, if we have never reached this point
-+			 * after iterating all pathspecs, it means all
-+			 * pathspecs are either outside of base, or inside the
-+			 * base but sorts strictly earlier than the current
-+			 * one.  In either case, they will never match the
-+			 * subsequent entries.  In such a case, we initialized
-+			 * the variable to -1 and that is what will be
-+			 * returned, allowing the caller to terminate early.
-+			 */
-+			never_interesting = 0;
-+		}
-+
- 		if (pathlen > matchlen)
- 			continue;
- 
-@@ -119,12 +152,22 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 				continue;
- 		}
- 
--		if (strncmp(path, match, pathlen))
--			continue;
--
--		return 1;
-+		if (m == -1)
-+			/*
-+			 * we cheated and did not do strncmp(), so we do
-+			 * that here.
-+			 */
-+			m = strncmp(match, path, pathlen);
-+
-+		/*
-+		 * If common part matched earlier then it is a hit,
-+		 * because we rejected the case where path is not a
-+		 * leading directory and is shorter than match.
-+		 */
-+		if (!m)
-+			return 1;
- 	}
--	return 0; /* No matches */
-+	return never_interesting; /* No matches */
- }
- 
- /* A whole sub-tree went away or appeared */
+diff --git a/git-bisect.sh b/git-bisect.sh
+index b1c3a6b..aeff732 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -150,8 +150,14 @@ bisect_next() {
+ 	    git-diff-tree --pretty $rev
+ 	    exit 0
+ 	fi
+-	nr=3D$(eval "git-rev-list $rev $good -- $(cat $GIT_DIR/BISECT_NAMES)"=
+ | wc -l) || exit
+-	echo "Bisecting: $nr revisions left to test after this"
++	nr_bad=3D$(eval "git-rev-list $rev^ $good -- $(cat $GIT_DIR/BISECT_NA=
+MES)" | wc -l) || exit
++	nr_good=3D$(eval "git-rev-list $bad^ ^$rev $good -- $(cat $GIT_DIR/BI=
+SECT_NAMES)" | wc -l) || exit
++	if test "$nr_bad" -ge "$nr_good"; then
++		nr=3D"$nr_bad";
++	else
++		nr=3D"$nr_good";
++	fi;
++	echo "Bisecting: up to $nr suspicious revisions left after this test"
+ 	echo "$rev" > "$GIT_DIR/refs/heads/new-bisect"
+ 	git checkout -q new-bisect || exit
+ 	mv "$GIT_DIR/refs/heads/new-bisect" "$GIT_DIR/refs/heads/bisect" &&
+--=20
+1.5.0.3
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3D1+hertz+in+sec**-1
