@@ -1,77 +1,73 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: [PATCH] have merge put FETCH_HEAD data in commit message
-Date: Wed, 21 Mar 2007 14:06:43 +0200
-Message-ID: <20070321120643.GI20583@mellanox.co.il>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Added make options NO_GUI and WITH_P4IMPORT.
+Date: Wed, 21 Mar 2007 15:25:32 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703211522320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070320114525.GP96806@codelabs.ru> <etpuen$2uo$2@sea.gmane.org>
+ <20070321051406.GW96806@codelabs.ru> <Pine.LNX.4.63.0703211213100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <20070321115004.GB14837@codelabs.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Mar 21 13:06:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Wed Mar 21 15:25:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTzZz-0004Ob-TL
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 13:06:12 +0100
+	id 1HU1kw-0002TA-9y
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 15:25:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626AbXCUMGG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 08:06:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752614AbXCUMGF
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 08:06:05 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:9572 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752580AbXCUMGC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 08:06:02 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so280220uga
-        for <git@vger.kernel.org>; Wed, 21 Mar 2007 05:06:01 -0700 (PDT)
-Received: by 10.66.252.4 with SMTP id z4mr2987427ugh.1174478761016;
-        Wed, 21 Mar 2007 05:06:01 -0700 (PDT)
-Received: from ?127.0.0.1? ( [194.90.237.34])
-        by mx.google.com with ESMTP id q40sm1797416ugc.2007.03.21.05.05.59;
-        Wed, 21 Mar 2007 05:06:00 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
+	id S1752902AbXCUOZf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 10:25:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752899AbXCUOZf
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 10:25:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35684 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752850AbXCUOZe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 10:25:34 -0400
+Received: (qmail invoked by alias); 21 Mar 2007 14:25:33 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp049) with SMTP; 21 Mar 2007 15:25:33 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Txi9RoPWT/raLzPXtwFM6Ag16qj1MKPISMiyhu8
+	zbSaXNyXmy17VU
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070321115004.GB14837@codelabs.ru>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42789>
 
-Hi!
-I often like to fetch some code from others, review and
-then merge. So:
+Hi,
 
-git fetch <URL>
-git log -p FETCH_HEAD
-git merge FETCH_HEAD
+On Wed, 21 Mar 2007, Eygene Ryabinkin wrote:
 
-which is all good but gets me this message in commit log:
+> Wed, Mar 21, 2007 at 12:16:40PM +0100, Johannes Schindelin wrote:
+> > > Will try to implement. But still, NO_GUI should ban the GUI tools from 
+> > > being built and installed, because user can have the Tcl/Tk available, 
+> > > but have no intention to use the git GUI. Am I right?
+> > 
+> > I am not quite certain if I agree. With a similar reasoning, you could 
+> > introduce a flag to prevent pull-request from being installed, and 
+> > git-tag, or other rarely used functions. Is it so bad to have gitk and 
+> > git-gui installed?
+> 
+> I am happening to develop on some machines on which I have no
+> X-Windows or any GUI providers at all, so I prefer not to have the
+> Tcl/Tk dependency at all.
 
-    Merge commit 'FETCH_HEAD' into master
+My point (and I think it's the same point as Jakub's) is that NO_GUI is a 
+misnomer. It should be NO_TCL, since the only reason you state to skip 
+installation of these parts is that they depend on X11, which is not 
+installed on the machine.
 
-which is not very informative.
-I can always fix this up with git commit --amend, but
-I'd like to avoid the extra step.
+If you don't do something, it is often interesting to state why: if you 
+don't install something to prevent a dependency you don't want to have, it 
+is different from saying that you do not want to have a GUI, _even if_ the 
+dependency is there already.
 
-Would the following patch be appropriate?
+Conclusion: I am in favour of NO_TCL, but not of NO_GUI.
 
-Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
-
----
-
-diff --git a/git-merge.sh b/git-merge.sh
-index 8759c5a..629611b 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -108,6 +108,10 @@ merge_name () {
- 		git-show-ref -q --verify "refs/heads/$truname" 2>/dev/null
- 	then
- 		echo "$rh		branch '$truname' (early part) of ."
-+	elif test -r "$GIT_DIR/$remote"
-+	then
-+		echo -n "$rh		"
-+		grep -v not-for-merge "$GIT_DIR/$remote"
- 	else
- 		echo "$rh		commit '$remote'"
- 	fi
+Ciao,
+Dscho
