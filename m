@@ -1,65 +1,69 @@
-From: Paolo Bonzini <bonzini@gnu.org>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
 Subject: Re: [PATCH] Added make options NO_GUI and WITH_P4IMPORT.
-Date: Wed, 21 Mar 2007 15:38:53 +0100
-Message-ID: <4601437D.1010700@gnu.org>
+Date: Wed, 21 Mar 2007 17:40:08 +0300
+Message-ID: <20070321144008.GE14837@codelabs.ru>
 References: <20070320114525.GP96806@codelabs.ru> <etpuen$2uo$2@sea.gmane.org> <20070321051406.GW96806@codelabs.ru> <Pine.LNX.4.63.0703211213100.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321115004.GB14837@codelabs.ru> <Pine.LNX.4.63.0703211522320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eygene Ryabinkin <rea-git@codelabs.ru>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 21 15:39:48 2007
+Content-Type: text/plain; charset=koi8-r
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 21 15:40:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU1yH-0008VU-UV
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 15:39:26 +0100
+	id 1HU1zD-0000Vd-9F
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 15:40:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbXCUOjW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 10:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbXCUOjW
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 10:39:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:34400 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752905AbXCUOjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 10:39:21 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HU1y0-0000Lh-4X
-	for git@vger.kernel.org; Wed, 21 Mar 2007 15:39:08 +0100
-Received: from usilu-ge.ti-edu.ch ([195.176.176.226])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Mar 2007 15:39:08 +0100
-Received: from bonzini by usilu-ge.ti-edu.ch with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Mar 2007 15:39:08 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: usilu-ge.ti-edu.ch
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
+	id S1752705AbXCUOkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 10:40:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904AbXCUOkT
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 10:40:19 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:63239 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752705AbXCUOkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 10:40:17 -0400
+Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HU1z3-0004NX-00; Wed, 21 Mar 2007 17:40:13 +0300
+Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.63.0703211522320.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, score=-3.1 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42791>
 
+Johannes,
 
->> I am happening to develop on some machines on which I have no
->> X-Windows or any GUI providers at all, so I prefer not to have the
->> Tcl/Tk dependency at all.
+Wed, Mar 21, 2007 at 03:25:32PM +0100, Johannes Schindelin wrote:
+> > I am happening to develop on some machines on which I have no
+> > X-Windows or any GUI providers at all, so I prefer not to have the
+> > Tcl/Tk dependency at all.
 > 
+> My point (and I think it's the same point as Jakub's) is that NO_GUI is a 
+> misnomer. It should be NO_TCL, since the only reason you state to skip 
+> installation of these parts is that they depend on X11, which is not 
+> installed on the machine.
+
+Can't speak for Jakub, but it seems to me that he just suggested
+that the configure should look if the Tcl/Tk is available and refuse
+to install the GUI tools if there is no Tcl/Tk. Though only Jakub
+can tell for sure.
+
 > If you don't do something, it is often interesting to state why: if you 
 > don't install something to prevent a dependency you don't want to have, it 
 > is different from saying that you do not want to have a GUI, _even if_ the 
 > dependency is there already.
 
-I read his message as "these are useless for me, so why introduce a
-useless dependency?"  The "effect" is to have no Tcl dependence,
-but the original reason is to have no GUI.
+But I am saying that I do not want the GUI tools installed because
+I do not need GUI at all. And if the GUI will be rewritten to the
+Qt (oh, my, don't do that) I will still have no need of it.
 
-So, "If you don't do something, it is often interesting to state why".
-Why no TCL (in git)?  Because no X11 (on the machine).
+> Conclusion: I am in favour of NO_TCL, but not of NO_GUI.
 
-Paolo
+I am not against such renaming as long as the TCL will be used
+for the GUI part of git. Should I file a patch for the NO_GUI ->
+NO_TCL change? What do others think about the knob name?
+-- 
+Eygene
