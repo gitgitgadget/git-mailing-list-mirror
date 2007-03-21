@@ -1,99 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Rename handling
-Date: Thu, 22 Mar 2007 00:01:54 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703212341020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Wed, 21 Mar 2007 16:10:40 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703211607120.6730@woody.linux-foundation.org>
 References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org>
  <45FED31B.8070307@midwinter.com> <200703191903.20005.andyparkins@gmail.com>
  <45FEE2B2.6050904@midwinter.com> <etpson$qih$1@sea.gmane.org>
  <Pine.LNX.4.63.0703210120230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <4601B199.9060300@midwinter.com>
+ <4601B199.9060300@midwinter.com> <Pine.LNX.4.63.0703212341020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 00:02:49 2007
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Mar 22 00:11:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU9pR-0006Yh-CM
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 00:02:49 +0100
+	id 1HU9xN-0002FL-Ic
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 00:11:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753096AbXCUXCF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 19:02:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753089AbXCUXCF
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 19:02:05 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48933 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753072AbXCUXCC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 19:02:02 -0400
-Received: (qmail invoked by alias); 21 Mar 2007 23:02:00 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp042) with SMTP; 22 Mar 2007 00:02:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18spp86Z54s8qqe6y4FsWdCBJ/SRLYWU8iRcBllUY
-	zf6T2xpC6SRq/s
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <4601B199.9060300@midwinter.com>
-X-Y-GMX-Trusted: 0
+	id S1753100AbXCUXK6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 19:10:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753118AbXCUXK4
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 19:10:56 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:58036 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753099AbXCUXKz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 19:10:55 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2LNAfG9009191
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 21 Mar 2007 16:10:43 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2LNAexU006495;
+	Wed, 21 Mar 2007 16:10:41 -0700
+In-Reply-To: <Pine.LNX.4.63.0703212341020.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42825>
 
-Hi,
 
-On Wed, 21 Mar 2007, Steven Grimm wrote:
 
-> Johannes Schindelin wrote:
-> > P.S.: It would be so nice if somebody (preferably someone who 
-> > previously thought manual renames were a pretty clever thing) to write 
-> > up the arguments, and add that to the "why automatic renaming?" 
-> > section of the FAQ...
+On Thu, 22 Mar 2007, Johannes Schindelin wrote:
 > 
-> For some reason whenever I try to argue that we need, IN ADDITION to the 
-> automatic rename detection, a way to provide hints to the merge engine 
-> that a non-auto-detectable rename has occurred, the responses I get back 
-> are mostly of the form, "But the automatic rename detection handles all 
-> these cases that wouldn't be handled with manual rename marking!"
+> That is a particularly bad example: you are not renaming files in that 
+> example!
 
-No. That's not the argument. The argument goes like this:
+Well, yes and no.
 
-	Whatever solutions you choose to handle renames, it _will_ have 
-	problems. We chose a solution which appears to have the least
-	problems.
+I would actually say that it si a particularly *good* example.
 
-> Say you're tracking a directory full of video files. Even a slight tweak 
-> to one of them (to put a logo in the corner, say, while moving it into 
-> an "accessible by the public" directory) will result in a file that has 
-> no content in common at all if you look at it as purely a stream of 
-> bytes. Short of decoding the thing to video frames and looking for 
-> similarities in the images, there's no way any merge tool will ever be 
-> able to tell the two versions are the same file unless the user 
-> indicates it.
+With git, you can actually record renames exactly this way: you just need 
+to make sure that you don't change the content, and you make it two 
+independent commits.
 
-That is a particularly bad example: you are not renaming files in that 
-example!
+That is in fact how some systems that support "explicit renames" actually 
+do it: the rename is literally a separate option, and cannot necessarily 
+go together with other actions (in particular, several file-ID-following 
+systems do not allow "cross-renames" in the same commit, for example, and 
+you actually have to do them as two separate commits).
 
-> Of course, git actually does give you a way to mark renames manually: 
-> commit them by themselves without changing the content. The problem is 
-> that that overloads the "record this snapshot of the tree for posterity" 
-> command purely for the purpose of working around the merge tool's 
-> inability to detect the rename.
+Git *allows* you to do renames with changes. In fact, I'd normally 
+encourage it. But it doesn't force it, and then renames are totally 
+unambiguos except for the case where you simply have the *same*file* in 
+multiple places, and you remove or add multiple copies (again, you can do 
+that unambiguously too, if you limit it to *one* such rename per commit)
 
-Not at all. You are actually recording the rename. So, you proved that you 
-do have a method to record a rename manually.
-
-> It also means that if I want reliable renames, I can no longer impose 
-> the requirement that my project be in a buildable state at each commit. 
-> That doesn't seem like all that unreasonable a thing to want (but maybe 
-> it is?) -- I don't want to be in the situation where I say, e.g. "git 
-> checkout -b testbranch '@{1 day ago}'" and get a broken working copy 
-> because I happened to do it at just the wrong time of day. But with the 
-> "just commit your renames separately" approach, that's exactly what can 
-> happen.
-
-Hey, I might be wrong. Why don't you prove me wrong? Code talks.
-
-Ciao,
-Dscho
+		Linus
