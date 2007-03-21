@@ -1,167 +1,100 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Set up for better tree diff optimizations
-Date: Wed, 21 Mar 2007 09:51:47 -0700
-Message-ID: <7vslby1qvw.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0703181506570.6730@woody.linux-foundation.org>
-	<7vircv3wfc.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0703210812590.6730@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 0/3] Clean up and optimize tree walking some more
+Date: Wed, 21 Mar 2007 10:07:09 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703210955370.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 21 17:51:54 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Mar 21 18:07:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU42U-0002Yi-5T
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 17:51:54 +0100
+	id 1HU4Hj-0001Oi-7S
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 18:07:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933059AbXCUQvt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 12:51:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933094AbXCUQvt
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 12:51:49 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:33491 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933059AbXCUQvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 12:51:48 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070321165148.BZUH1606.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 21 Mar 2007 12:51:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id dUrn1W00e1kojtg0000000; Wed, 21 Mar 2007 12:51:48 -0400
-In-Reply-To: <Pine.LNX.4.64.0703210812590.6730@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 21 Mar 2007 08:20:50 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933094AbXCURHR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 13:07:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933104AbXCURHQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 13:07:16 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:44168 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933094AbXCURHP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 13:07:15 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2LH7AcD029013
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 21 Mar 2007 10:07:11 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2LH79CZ030824;
+	Wed, 21 Mar 2007 09:07:10 -0800
+X-Spam-Status: No, hits=-0.969 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42803>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Wed, 21 Mar 2007, Junio C Hamano wrote:
->> 
->> I've already applied the patch, but I do not know how much this
->> interface would help, as the only easy case the function
->> tree_entry_interesting() can say "no subsequent entries will be
->> either" without looking ahead is where no pathspecs match the
->> base, but that is already prevented by the way you walk the tree
->> (you do not descend into an uninteresting tree).
->
-> No. You miss the important case.
->
->> If you do:
->> 
->> 	$ git log arch/i386/ include/asm-i386/
->
-> Right. Forget about the paths we're *interested* in. 
->
-> Look at the ones we're *not* interested in!
+This series of three patches improves blame performance on the eclipse 
+tree by about 15% in my tests by improving the tree walk a bit.
 
-As always, you are right and enlightened others with your
-superiour intelligence enough to produce code for you so that
-you do not have to write yourself ;-).
+  [ Before-best-of-five: 11.649s
+    After-best-of-five:   9.675s ]
 
-Would something like this suit your taste?
+The first two patches are just boring cleanups: the first removes an 
+unnecessary field from the "name_entry" structure, because I wanted to 
+embed it into the "tree_desc" one and it was just totally redundant and I 
+felt bad about growing tree_desc more than necessary. No real code 
+changes, just replacing the use of "pathlen" with the helper function we 
+introduced ealier ("tree_entry_len()").
 
-The "rev-list org.eclipse.debug.ui/" test that took 16-17
-seconds takes 9 seconds with this patch.  Running with a
-diffrent pathspec "org.apache.ant/" obviously makes it go a lot
-faster (15sec vs 7sec).
+The second one just makes sure that we always initialize the tree_desc 
+structure with a helper function rather than doing it by hand. Again, this 
+doesn't actually change any code, although I changed the name of the "buf" 
+entry to "buffer", and the type of "size", so that we get nice compiler 
+warnings if they are used the old way by mistake.
 
--- >8 --
-[PATCH] Teach tree_entry_interesting() that the tree entries are sorted.
+The second patch is the largest of the lot, but really doesn't do 
+anything interesting, just preparatory cleanup.
 
-When we are looking at a tree entry with pathspecs, if all the
-pathspecs sort strictly earlier than the entry we are currently
-looking at, there is no way later entries in the same tree would
-match out pathspecs, because the entries are sorted.
+The third patch is the one that actually changes any code, and is fairly 
+straightforward: it just switches around where we actually do the tree 
+entry parsing, which is now possible thanks to patch #2. By doing it 
+up-front, we only need to do it once (we used to have to do it both when 
+doing the "extract" *and* when doing the "update" op - now we do it only 
+once per entry, and "extract" is just about looking at the cached 
+contents).
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+The resulting diffstat of the tree patches ends up removing a few more 
+lines than it adds (not by a lot), but perhaps more importantly (even more 
+than the performance advantage) the code looks nicer, I think.
 
----
- tree-diff.c |   43 +++++++++++++++++++++++++++++++++++++------
- 1 files changed, 37 insertions(+), 6 deletions(-)
+ builtin-fsck.c         |    5 +-
+ builtin-grep.c         |   13 +++--
+ builtin-pack-objects.c |    8 +--
+ builtin-read-tree.c    |    3 +-
+ builtin-reflog.c       |   10 ++--
+ fetch.c                |    3 +-
+ http-push.c            |    3 +-
+ list-objects.c         |    3 +-
+ merge-tree.c           |    9 ++--
+ reachable.c            |    3 +-
+ revision.c             |   12 ++---
+ tree-diff.c            |   22 +++++----
+ tree-walk.c            |  123 ++++++++++++++++++++++--------------------------
+ tree-walk.h            |   20 ++++++--
+ tree.c                 |   18 +++----
+ unpack-trees.c         |    3 +-
+ 16 files changed, 125 insertions(+), 133 deletions(-)
 
-diff --git a/tree-diff.c b/tree-diff.c
-index b2f35dc..459a0ff 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -81,6 +81,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 	unsigned mode;
- 	int i;
- 	int pathlen;
-+	int never_interesting = -1;
- 
- 	if (!opt->nr_paths)
- 		return 1;
-@@ -89,9 +90,10 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 
- 	pathlen = tree_entry_len(path, sha1);
- 
--	for (i=0; i < opt->nr_paths; i++) {
-+	for (i = 0; i < opt->nr_paths; i++) {
- 		const char *match = opt->paths[i];
- 		int matchlen = opt->pathlens[i];
-+		int m;
- 
- 		if (baselen >= matchlen) {
- 			/* If it doesn't match, move along... */
-@@ -109,6 +111,32 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 		match += baselen;
- 		matchlen -= baselen;
- 
-+		/*
-+		 * Does match sort strictly earlier than path with their
-+		 * common parts?
-+		 */
-+		m = strncmp(match, path,
-+			    (matchlen < pathlen) ? matchlen : pathlen);
-+		if (m < 0)
-+			continue;
-+
-+		/*
-+		 * If we come here even once, that means there is at
-+		 * least one pathspec that would sort later than the
-+		 * path we are currently looking at (even though this
-+		 * particular one we are currently looking at might
-+		 * not match).  In other words, if we have never
-+		 * reached this point after iterating all pathspecs,
-+		 * it means all pathspecs are either outside of base,
-+		 * or inside the base but sorts earlier than the
-+		 * current one.  In either case, they will never match
-+		 * the subsequent entries.  In such a case, we
-+		 * initialized the variable to -1 and that is what
-+		 * will be returned, allowing the caller to terminate
-+		 * early.
-+		 */
-+		never_interesting = 0;
-+
- 		if (pathlen > matchlen)
- 			continue;
- 
-@@ -119,12 +147,15 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 				continue;
- 		}
- 
--		if (strncmp(path, match, pathlen))
--			continue;
--
--		return 1;
-+		/*
-+		 * If common part matched earlier then it is a hit,
-+		 * because we rejected the case where path is not a
-+		 * leading directory and is shorter than match.
-+		 */
-+		if (!m)
-+			return 1;
- 	}
--	return 0; /* No matches */
-+	return never_interesting; /* No matches */
- }
- 
- /* A whole sub-tree went away or appeared */
+I'm pretty sure this is all good, and it obviously passes all the tests, 
+but more importantly none of the changes were really very complicated, and 
+patch#2 (which is the big one) was set up so that the compiler would not 
+even compile code that wasn't properly converted, so it should all be 
+good.
+
+			Linus
