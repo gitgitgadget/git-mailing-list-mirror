@@ -1,61 +1,57 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Libification project (SoC)
-Date: Wed, 21 Mar 2007 12:17:36 +0100
-Message-ID: <46011450.4000200@op5.se>
-References: <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316060033.GD31606@spearce.org> <7vps79wueu.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de> <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070318140816.GG4489@pasky.or.cz> <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070319012111.GS18276@pasky.or.cz> <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070319025636.GE11371@thunk.org> <Pine.LNX.4.64.0703190912190.6730@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Added make options NO_GUI and WITH_P4IMPORT.
+Date: Wed, 21 Mar 2007 12:16:40 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703211213100.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070320114525.GP96806@codelabs.ru> <etpuen$2uo$2@sea.gmane.org>
+ <20070321051406.GW96806@codelabs.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>, Rocco Rutte <pdmef@gmx.net>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 21 12:17:44 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Wed Mar 21 12:21:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTyp5-0003zD-Fo
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 12:17:43 +0100
+	id 1HTysU-0005tB-TO
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 12:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204AbXCULRk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 07:17:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752234AbXCULRk
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 07:17:40 -0400
-Received: from linux-server1.op5.se ([193.201.96.2]:47381 "EHLO
-	smtp-gw1.op5.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751739AbXCULRk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 07:17:40 -0400
-Received: by smtp-gw1.op5.se (Postfix, from userid 588)
-	id 9EC1B6BCD6; Wed, 21 Mar 2007 12:17:38 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	linux-server1.op5.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00 
-	autolearn=ham version=3.1.4
-Received: from [192.168.1.179] (unknown [192.168.1.179])
-	by smtp-gw1.op5.se (Postfix) with ESMTP
-	id 611A96BCC4; Wed, 21 Mar 2007 12:17:36 +0100 (CET)
-User-Agent: Thunderbird 1.5.0.9 (X11/20070102)
-In-Reply-To: <Pine.LNX.4.64.0703190912190.6730@woody.linux-foundation.org>
+	id S1752241AbXCULVL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 07:21:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752237AbXCULVL
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 07:21:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44315 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751809AbXCULVK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 07:21:10 -0400
+Received: (qmail invoked by alias); 21 Mar 2007 11:16:49 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp045) with SMTP; 21 Mar 2007 12:16:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+sLN1RNJ+sROoikHyYFtK88Ua8EsfgCLNeoRLl1w
+	3o1Lo0eBxFZ6G7
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070321051406.GW96806@codelabs.ru>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42786>
 
-Linus Torvalds wrote:
-> 
-> I'm a *huge* believer in "Worse is Better" (for people who don't know it, 
-> just google for that phrase, with the quotes around it).
-> 
+Hi,
 
-I just did, and having read the first page of the document found at 
-http://www.jwz.org/doc/worse-is-better.html, I must say "worse-is-better"
-sounds an awful lot like evolution; "Start with something that works. When
-something else works better, jump train and embrace The New Thing".
+On Wed, 21 Mar 2007, Eygene Ryabinkin wrote:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> Will try to implement. But still, NO_GUI should ban the GUI tools from 
+> being built and installed, because user can have the Tcl/Tk available, 
+> but have no intention to use the git GUI. Am I right?
+
+I am not quite certain if I agree. With a similar reasoning, you could 
+introduce a flag to prevent pull-request from being installed, and 
+git-tag, or other rarely used functions. Is it so bad to have gitk and 
+git-gui installed? I mean, you are likely to just try them (and possibly 
+like them!) at some stage, because the graphical representation is so much 
+clearer than what _any_ text representation can do.
+
+Ciao,
+Dscho
