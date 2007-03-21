@@ -1,102 +1,78 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: [PATCH] Bisect: fix calculation of the number of suspicious
-	revisions
-Date: Wed, 21 Mar 2007 22:04:54 +0100
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070321210454.GA2844@lala>
-References: <20070317141209.GA7838@cepheus> <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070317195840.GA20735@informatik.uni-freiburg.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] update HEAD reflog when branch pointed to by HEAD is directly
+ modified
+Date: Wed, 21 Mar 2007 17:11:44 -0400 (EDT)
+Message-ID: <alpine.LFD.0.83.0703211650360.18328@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 21 22:05:04 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Mar 21 22:12:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU7zT-0007hN-4t
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 22:05:03 +0100
+	id 1HU86G-0002Te-NQ
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 22:12:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964932AbXCUVE7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 21 Mar 2007 17:04:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965013AbXCUVE7
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 17:04:59 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:43925 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965026AbXCUVE6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Mar 2007 17:04:58 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HU7zN-00021b-Ap
-	for git@vger.kernel.org; Wed, 21 Mar 2007 22:04:57 +0100
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2LL4s0e017801
-	for <git@vger.kernel.org>; Wed, 21 Mar 2007 22:04:54 +0100 (MET)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2LL4s3c017800
-	for git@vger.kernel.org; Wed, 21 Mar 2007 22:04:54 +0100 (MET)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070317195840.GA20735@informatik.uni-freiburg.de>
-User-Agent: Mutt/1.5.14+cvs20070315 (2007-03-14)
+	id S964983AbXCUVLq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 17:11:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965013AbXCUVLq
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 17:11:46 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:12237 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964983AbXCUVLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 17:11:45 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JF9008VGUVKQH70@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 21 Mar 2007 17:11:44 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42817>
 
-Up to now the number printed was calculated assuming that the current r=
-evision
-to test is bad.  Given that it's not possible that this always matches =
-the
-number of suspicious revs if the current one is good, the maximum of bo=
-th is
-taken now.
+The HEAD reflog is updated as well as the reflog for the branch pointed 
+to by HEAD whenever it is referenced with "HEAD".
 
-Moreover I think the number printed was always one to high, this is fix=
-ed, too.
+There are some cases where a specific branch may be modified directly.  
+In those cases, the HEAD reflog should be updated as well if it is a 
+symref to that branch in order to be consistent.
 
-Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de>
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
-In the mail before I wrote that the former version of this patch was no=
-t
-complete.  This turned out to be a thinko.  So now I only used a better
-Subject, a more verbose log and a hopefully more clear output.
 
- git-bisect.sh |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index b1c3a6b..aeff732 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -150,8 +150,14 @@ bisect_next() {
- 	    git-diff-tree --pretty $rev
- 	    exit 0
- 	fi
--	nr=3D$(eval "git-rev-list $rev $good -- $(cat $GIT_DIR/BISECT_NAMES)"=
- | wc -l) || exit
--	echo "Bisecting: $nr revisions left to test after this"
-+	nr_bad=3D$(eval "git-rev-list $rev^ $good -- $(cat $GIT_DIR/BISECT_NA=
-MES)" | wc -l) || exit
-+	nr_good=3D$(eval "git-rev-list $bad^ ^$rev $good -- $(cat $GIT_DIR/BI=
-SECT_NAMES)" | wc -l) || exit
-+	if test "$nr_bad" -ge "$nr_good"; then
-+		nr=3D"$nr_bad";
-+	else
-+		nr=3D"$nr_good";
-+	fi;
-+	echo "Bisecting: up to $nr suspicious revisions left after this test"
- 	echo "$rev" > "$GIT_DIR/refs/heads/new-bisect"
- 	git checkout -q new-bisect || exit
- 	mv "$GIT_DIR/refs/heads/new-bisect" "$GIT_DIR/refs/heads/bisect" &&
---=20
-1.5.0.3
-
---=20
-Uwe Kleine-K=F6nig
-
-http://www.google.com/search?q=3D1+hertz+in+sec**-1
+diff --git a/refs.c b/refs.c
+index 9f1fb68..435eeca 100644
+--- a/refs.c
++++ b/refs.c
+@@ -980,6 +980,27 @@ int write_ref_sha1(struct ref_lock *lock,
+ 		unlock_ref(lock);
+ 		return -1;
+ 	}
++	if (strcmp(lock->orig_ref_name, "HEAD") != 0) {
++		/*
++		 * Special hack: If a branch is updated directly and HEAD
++		 * points to it (may happen on the remote side of a push
++		 * for example) then logically the HEAD reflog should be
++		 * updated too. 
++		 * A generic solution implies reverse symref information, 
++		 * but finding all symrefs pointing to the given branch
++		 * would be rather costly for this rare event (the direct
++		 * update of a branch) to be worth it.  So let's cheat and
++		 * check with HEAD only which should cover 99% of all usage
++		 * scenarios (even 100% of the default ones).
++		 */
++		unsigned char head_sha1[20];
++		int head_flag;
++		const char *head_ref;
++		head_ref = resolve_ref("HEAD", head_sha1, 1, &head_flag);
++		if (head_ref && (head_flag & REF_ISSYMREF) &&
++		    !strcmp(head_ref, lock->ref_name))
++			log_ref_write("HEAD", lock->old_sha1, sha1, logmsg);
++	}
+ 	if (commit_lock_file(lock->lk)) {
+ 		error("Couldn't set %s", lock->ref_name);
+ 		unlock_ref(lock);
