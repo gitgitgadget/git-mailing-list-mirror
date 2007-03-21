@@ -1,52 +1,71 @@
-From: Neil Schemenauer <nas@arctrix.com>
-Subject: Re: git push to a non-bare repository
-Date: Wed, 21 Mar 2007 17:20:38 +0000 (UTC)
-Message-ID: <etrph6$dt3$1@sea.gmane.org>
-References: <vpq648ye9w6.fsf@olympe.imag.fr> <20070319020053.GA11371@thunk.org> <vpq8xdtpp3g.fsf@olympe.imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 21 18:40:15 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCHv2] put FETCH_HEAD data in merge commit message
+Date: Wed, 21 Mar 2007 11:09:00 -0700
+Message-ID: <7vmz261nb7.fsf@assigned-by-dhcp.cox.net>
+References: <20070321120643.GI20583@mellanox.co.il>
+	<20070321172916.GC5233@mellanox.co.il>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+X-From: git-owner@vger.kernel.org Wed Mar 21 19:09:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU4nC-00009c-UG
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 18:40:11 +0100
+	id 1HU5FF-0004o6-4r
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 19:09:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933226AbXCURkG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 13:40:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933224AbXCURkG
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 13:40:06 -0400
-Received: from main.gmane.org ([80.91.229.2]:52005 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933196AbXCURkE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 13:40:04 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HU4n4-0000iS-SM
-	for git@vger.kernel.org; Wed, 21 Mar 2007 18:40:03 +0100
-Received: from s0106000625c557dc.ss.shawcable.net ([70.64.11.234])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Mar 2007 18:40:02 +0100
-Received: from nas by s0106000625c557dc.ss.shawcable.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Mar 2007 18:40:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: s0106000625c557dc.ss.shawcable.net
-User-Agent: slrn/0.9.8.1pl1 (Debian)
+	id S1751710AbXCUSJF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 14:09:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752310AbXCUSJF
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 14:09:05 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:42987 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751710AbXCUSJE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 14:09:04 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070321180903.CTHX18070.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 21 Mar 2007 14:09:03 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id dW931W0061kojtg0000000; Wed, 21 Mar 2007 14:09:03 -0400
+In-Reply-To: <20070321172916.GC5233@mellanox.co.il> (Michael S. Tsirkin's
+	message of "Wed, 21 Mar 2007 19:29:16 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42810>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> It's not really an option in my case. A is a fixe-IP/fixe-DNS machine,
-> while B is my home machine, behind a NAT modem-router. So, I'd have to
-> figure out my home IP, port-forward the ssh port from the modem to my
-> machine, ...
+"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
 
-I think this is a pretty common scenario.  I have a central server
-that I would like to push to and a bunch of other machines behind
-firewalls.  Pulling from the central machine is not practical.
+>> Quoting Michael S. Tsirkin <mst@dev.mellanox.co.il>:
+>> Subject: [PATCH] have merge put FETCH_HEAD data in commit message
+>> 
+>> Hi!
+>> I often like to fetch some code from others, review and
+>> then merge. So:
+>> 
+>> git fetch <URL>
+>> git log -p FETCH_HEAD
+>> git merge FETCH_HEAD
+>> 
+>> which is all good but gets me this message in commit log:
+>> 
+>>     Merge commit 'FETCH_HEAD' into master
+>> 
+>> which is not very informative.
+>> I can always fix this up with git commit --amend, but
+>> I'd like to avoid the extra step.
+>> 
+>> Would the following patch be appropriate?
+>
+> OK, I since discovered git-fmt-merge-msg does all the necessary formatting,
+> so here's a better and smaller patch. Seems to work well for me.
+>
+> Junio, could you apply this?
 
-  Neil
+I am afraid not.  You missed all the points I raised in my reply.
