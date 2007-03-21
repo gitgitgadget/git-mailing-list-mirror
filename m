@@ -1,99 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Be more careful about zlib return values
-Date: Wed, 21 Mar 2007 01:11:57 -0700
-Message-ID: <7vodmn2eya.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0703201124260.6730@woody.linux-foundation.org>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: [PATCH] fix typo in git-am manpage
+Date: Wed, 21 Mar 2007 10:37:36 +0200
+Message-ID: <20070321083736.GF20583@mellanox.co.il>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 21 09:12:06 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Mar 21 09:37:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTvvR-0000Nc-Q9
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 09:12:06 +0100
+	id 1HTwJX-0004mK-Fx
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 09:36:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985AbXCUIL7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 04:11:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751690AbXCUIL7
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 04:11:59 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:34044 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750985AbXCUIL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 04:11:58 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070321081157.LUOY1312.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 21 Mar 2007 04:11:57 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id dLBx1W00E1kojtg0000000; Wed, 21 Mar 2007 04:11:57 -0400
-In-Reply-To: <Pine.LNX.4.64.0703201124260.6730@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 20 Mar 2007 11:38:34 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751988AbXCUIg4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 04:36:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbXCUIg4
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 04:36:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:22730 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751988AbXCUIgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 04:36:55 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so214089uga
+        for <git@vger.kernel.org>; Wed, 21 Mar 2007 01:36:54 -0700 (PDT)
+Received: by 10.66.232.9 with SMTP id e9mr2753970ugh.1174466214490;
+        Wed, 21 Mar 2007 01:36:54 -0700 (PDT)
+Received: from ?127.0.0.1? ( [194.90.237.34])
+        by mx.google.com with ESMTP id o30sm1590086ugd.2007.03.21.01.36.52;
+        Wed, 21 Mar 2007 01:36:53 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42783>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Fix typo in git-am manpage
 
-> When creating a new object, we use "deflate(stream, Z_FINISH)" in a loop 
-> until it no longer returns Z_OK, and then we do "deflateEnd()" to finish 
-> up business.
->
-> That should all work, but the fact is, it's not how you're _supposed_ to 
-> use the zlib return values properly:
-> ...
-> Somebody who has worked more with zlib should probably double-check me, 
-> but this is what <zlib.h> claims is the right thing to do.
->
-> 		Linus
+Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
 
-I am observing a very curious performance regression with this
-patch.  I do not see anything obviously wrong correctness-wise
-nor performance-wise with it.
+---
 
-This is driving me crazy, as the benchmark is in that repository
-with a 1.7GB pack:
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 4fb1d84..13a7389 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -70,7 +70,7 @@ default.   You could use `--no-utf8` to override this.
+ 	the patch.
+ 
+ -C<n>, -p<n>::
+-	These flag are passed to the `git-apply` program that applies
++	These flags are passed to the `git-apply` program that applies
+ 	the patch.
+ 
+ --interactive::
 
-	$ git-rev-list HEAD -- org.eclipse.debug.ui/ >/dev/null
-
-and the patch is ONLY ABOUT write_sha1_file() codepath.  The function
-should not even be called!
-
-Without the patch (3 typical runs):
-
-16.16user 0.16system 0:16.32elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+79008minor)pagefaults 0swaps
-15.84user 0.14system 0:16.02elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+79009minor)pagefaults 0swaps
-16.04user 0.12system 0:16.17elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+79008minor)pagefaults 0swaps
-
-With the patch:
-
-17.62user 0.20system 0:17.94elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+79009minor)pagefaults 0swaps
-17.79user 0.19system 0:18.03elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+79011minor)pagefaults 0swaps
-17.40user 0.14system 0:17.63elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+79009minor)pagefaults 0swaps
-
-Another funny thing is that if I replace the body of
-write_sha1_file() with just:
-
-int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
-{
-	setup_object_header(NULL, NULL, 0);
-	die("foo");
-}
-
-I get somewhat faster number.
-
-I guess I probably should write it off as some curiosity coming
-from insn cacheline bouncing between hot functions, that is
-caused by the size of this unused function changing.
+-- 
+MST
