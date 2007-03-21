@@ -1,86 +1,108 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Bisect: fix calculation of the number of suspicious
- revisions
-Date: Wed, 21 Mar 2007 15:27:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703211521290.6730@woody.linux-foundation.org>
-References: <20070317141209.GA7838@cepheus>
- <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070317195840.GA20735@informatik.uni-freiburg.de> <20070321210454.GA2844@lala>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Rename handling
+Date: Wed, 21 Mar 2007 15:28:41 -0700
+Message-ID: <4601B199.9060300@midwinter.com>
+References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org> <45FED31B.8070307@midwinter.com> <200703191903.20005.andyparkins@gmail.com> <45FEE2B2.6050904@midwinter.com> <etpson$qih$1@sea.gmane.org> <Pine.LNX.4.63.0703210120230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-884347500-1174516049=:6730"
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Wed Mar 21 23:28:11 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Mar 21 23:28:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU9Ht-0006DG-0n
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 23:28:09 +0100
+	id 1HU9IY-0006Vq-26
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 23:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965424AbXCUW2A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 18:28:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965415AbXCUW2A
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 18:28:00 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:56640 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965404AbXCUW17 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 18:27:59 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2LMRUG9007625
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 21 Mar 2007 15:27:30 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2LMRTWN005440;
-	Wed, 21 Mar 2007 15:27:30 -0700
-In-Reply-To: <20070321210454.GA2844@lala>
-X-Spam-Status: No, hits=-2.473 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965404AbXCUW2l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 18:28:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965381AbXCUW2l
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 18:28:41 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:42078 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965404AbXCUW2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 18:28:40 -0400
+Received: (qmail 18834 invoked from network); 21 Mar 2007 22:28:39 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=ZWWgqJLvKT+LB8pY5zhMI/p8c1kT2/Tls3LzZIpDM2AULXcK2XsdkmhAjGPJlCA7  ;
+Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
+  by localhost with SMTP; 21 Mar 2007 22:28:39 -0000
+User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+In-Reply-To: <Pine.LNX.4.63.0703210120230.22628@wbgn013.biozentrum.uni-wuerzburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42823>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin wrote:
+> P.S.: It would be so nice if somebody (preferably someone who previously 
+> thought manual renames were a pretty clever thing) to write up the 
+> arguments, and add that to the "why automatic renaming?" section of the 
+> FAQ...
+>   
 
----1463790079-884347500-1174516049=:6730
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+I completely understand the arguments in favor of automatic renaming. I 
+have never once advocated getting rid of it. It is useful and valuable 
+and works well within its constraints.
 
+For some reason whenever I try to argue that we need, IN ADDITION to the 
+automatic rename detection, a way to provide hints to the merge engine 
+that a non-auto-detectable rename has occurred, the responses I get back 
+are mostly of the form, "But the automatic rename detection handles all 
+these cases that wouldn't be handled with manual rename marking!" It's 
+as if one can either think autodetection is a good idea, or manual 
+flagging is a good idea, but under no circumstances could they both be 
+good ideas at the same time. (As evidenced by the comment above about 
+"someone who previously thought manual renames were a pretty clever 
+thing.") But they are not in fact mutually exclusive.
 
+Say you're tracking a directory full of video files. Even a slight tweak 
+to one of them (to put a logo in the corner, say, while moving it into 
+an "accessible by the public" directory) will result in a file that has 
+no content in common at all if you look at it as purely a stream of 
+bytes. Short of decoding the thing to video frames and looking for 
+similarities in the images, there's no way any merge tool will ever be 
+able to tell the two versions are the same file unless the user 
+indicates it. Any tool that saves its files in compressed form will have 
+a similar problem: unless git knows how to uncompress the tool's files, 
+a content comparison will often be useless to detect similarities.
 
-On Wed, 21 Mar 2007, Uwe Kleine-König wrote:
->
-> Up to now the number printed was calculated assuming that the current revision
-> to test is bad.  Given that it's not possible that this always matches the
-> number of suspicious revs if the current one is good, the maximum of both is
-> taken now.
+Of course, git actually does give you a way to mark renames manually: 
+commit them by themselves without changing the content. The problem is 
+that that overloads the "record this snapshot of the tree for posterity" 
+command purely for the purpose of working around the merge tool's 
+inability to detect the rename. If other people are like me, when they 
+record a rename-only commit immediately followed by a content-change 
+commit on the same files, the intermediate state of the tree (with just 
+the renames) is not actually an interesting point in the history of the 
+project. It's not a revision in anything but an internal git sense. It 
+probably doesn't even compile or work correctly. It exists only because 
+I'm forced to create it if I want to be 100% certain my renames will be 
+tracked accurately. It is, in short, pollution in the history of my project.
 
-How about adding a new flag to "git-rev-list", to make it count both ways? 
-Doing this whole
+It also means that if I want reliable renames, I can no longer impose 
+the requirement that my project be in a buildable state at each commit. 
+That doesn't seem like all that unreasonable a thing to want (but maybe 
+it is?) -- I don't want to be in the situation where I say, e.g. "git 
+checkout -b testbranch '@{1 day ago}'" and get a broken working copy 
+because I happened to do it at just the wrong time of day. But with the 
+"just commit your renames separately" approach, that's exactly what can 
+happen.
 
-	nr = $(eval "git-rev-list ... | wc -l")
+Now, once again, none of the above is an argument against the automatic 
+rename detection. For cases where renames are automatically detectable, 
+it works fine and will continue to do so, and in fact doesn't have the 
+problem of committing broken builds. I am not arguing it should be 
+replaced or that the user should be required to tell git about every 
+rename. But the lack of an additional manual option forces me into a 
+particular workflow that I wouldn't otherwise use and prevents me from 
+imposing the workflow rules I *do* want.
 
-was ugly to begin with, and you just made it doubly ugly.
+Hopefully that shed a little light on why I think manual rename support 
+is not a totally idiotic idea.
 
-And the thing is, "git-rev-list --bisect" will obviously already have 
-calculated these numbers just to _pick_ the revision in the first place, 
-so it's a bit sad then execute it twice more (giving it back the result 
-*it* gave us in the first place!).
-
-So we could perhaps change the original
-
-	rev=$(eval "git-rev-list --bisect $good $bad -- $(cat $GIT_DIR/BISECT_NAMES)")
-
-with something nicer.
-
-(In fact, I would also suggest we drop or try to fix BISECT_NAMES support, 
-while at it - it never really worked, and iirc it was partly exactly 
-*because* of the end-condition not being handled right).
-
-		Linus
----1463790079-884347500-1174516049=:6730--
+-Steve
