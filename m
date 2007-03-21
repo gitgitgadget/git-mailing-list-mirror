@@ -1,185 +1,99 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GSoC & egit
-Date: Wed, 21 Mar 2007 03:25:41 -0400
-Message-ID: <20070321072541.GB4489@spearce.org>
-References: <13d28e30703201606qdc7dd91mece971dab56a669a@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Be more careful about zlib return values
+Date: Wed, 21 Mar 2007 01:11:57 -0700
+Message-ID: <7vodmn2eya.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0703201124260.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Constantin Roxana <constantinrox@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 21 08:25:58 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 21 09:12:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HTvCf-00024Z-Th
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 08:25:50 +0100
+	id 1HTvvR-0000Nc-Q9
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 09:12:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932074AbXCUHZr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 03:25:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932489AbXCUHZq
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 03:25:46 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58105 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932074AbXCUHZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 03:25:45 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HTvCY-0002Ln-OX; Wed, 21 Mar 2007 03:25:42 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 080E220FBAE; Wed, 21 Mar 2007 03:25:41 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <13d28e30703201606qdc7dd91mece971dab56a669a@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1750985AbXCUIL7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 04:11:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751690AbXCUIL7
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 04:11:59 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:34044 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750985AbXCUIL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 04:11:58 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070321081157.LUOY1312.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 21 Mar 2007 04:11:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id dLBx1W00E1kojtg0000000; Wed, 21 Mar 2007 04:11:57 -0400
+In-Reply-To: <Pine.LNX.4.64.0703201124260.6730@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 20 Mar 2007 11:38:34 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42782>
 
-Constantin Roxana <constantinrox@gmail.com> wrote:
-> I am Roxana Constantin, I am a student and I want to participate to
-> GSoC 2007 and work for git with the project of enhancing egit, the
-> plugin for Eclipse.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Hey!  Welcome!  ;-)
- 
-> The users should be able to import with a wizard (clone in git) an
-> outside project,
+> When creating a new object, we use "deflate(stream, Z_FINISH)" in a loop 
+> until it no longer returns Z_OK, and then we do "deflateEnd()" to finish 
+> up business.
+>
+> That should all work, but the fact is, it's not how you're _supposed_ to 
+> use the zlib return values properly:
+> ...
+> Somebody who has worked more with zlib should probably double-check me, 
+> but this is what <zlib.h> claims is the right thing to do.
+>
+> 		Linus
 
-Here you mean a project that is already stored in Git, right?
-Currently there is not enough library support in jgit to make this
-function, even for the (trivial) case of just cloning a repository
-that is already available on the local filesystem.  So jgit support
-will need to be added.  Specifically a full "standard" clone would
-require that we implement the logic of git-index-pack in jgit.
-That program is about 1000 lines of C right now, so it shouldn't
-be *that* difficult to implement.
+I am observing a very curious performance regression with this
+patch.  I do not see anything obviously wrong correctness-wise
+nor performance-wise with it.
 
-> to commit
+This is driving me crazy, as the benchmark is in that repository
+with a 1.7GB pack:
 
-Yes, this is something I'd really like to see get done.  More so
-than cloning, because users need to commit often, but they don't
-clone very often.  Thus its "ok" to make them use the existing
-command line tools to setup their project(s), but its not really
-ok to make them use command line tools for daily tasks.
+	$ git-rev-list HEAD -- org.eclipse.debug.ui/ >/dev/null
 
-> and browse the history of the commits.
+and the patch is ONLY ABOUT write_sha1_file() codepath.  The function
+should not even be called!
 
-Robin Rosenburg has been doing some work in this area already,
-which is quite a good start.  We can at least show a simple table
-of commits that affect the selected file/folder in the Package
-Explorer or Navigator, or in the current editor.  ;-)
+Without the patch (3 typical runs):
 
-Its not as powerful (or as useful) as any of the other Git history
-viewers, but its a start at something!
+16.16user 0.16system 0:16.32elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+79008minor)pagefaults 0swaps
+15.84user 0.14system 0:16.02elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+79009minor)pagefaults 0swaps
+16.04user 0.12system 0:16.17elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+79008minor)pagefaults 0swaps
 
-> Also
-> a perspective for egit (to include egit specifics), and extend the
-> preference page (just a hello message now) with informations like
-> user, email, or other properties.
+With the patch:
 
-Yes, these are good ideas.  Especially if we start to allow users
-to create commits; they will want to configure their user.name and
-user.email configuration options from within Eclipse.
+17.62user 0.20system 0:17.94elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+79009minor)pagefaults 0swaps
+17.79user 0.19system 0:18.03elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+79011minor)pagefaults 0swaps
+17.40user 0.14system 0:17.63elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+0inputs+0outputs (0major+79009minor)pagefaults 0swaps
 
-> I believe that this minimum requirements should be met in order to be
-> usable, so I would measure the success of my project by the amount of
-> these features implemented.
+Another funny thing is that if I replace the body of
+write_sha1_file() with just:
 
-I would remove the "import with a wizard (clone in git)" requirement
-and instead replace it with at least basic merge support, such
-as the two-way merge that gets used to switch between two branches.
-This is an activity that I do at least 10x per day, if not more
-frequently.  But I almost never clone.
+int write_sha1_file(void *buf, unsigned long len, const char *type, unsigned char *returnsha1)
+{
+	setup_object_header(NULL, NULL, 0);
+	die("foo");
+}
 
-In my mind, the goal of an Eclipse plugin for Git is to allow an
-Eclipse user to get their daily tasks accomplished directly from
-within Eclipse, where they are doing everything else too.  I just
-don't think that project creation is not a daily task for most users,
-but I know committing, branch creation and branch switching is.
+I get somewhat faster number.
 
-> Also a documentation inside Eclipse help system would be useful.
-> (through an extension point)
-
-Yes, this would be very nice indeed.
- 
-> Milestones
-> - from now and until May 28: get used with the source code, learn more
-> about git/jgit
-> (May 28 - June 10) - week 1- 2 : work on commit, get used with the jgit API
-> (June 11 - June 24) - week 3 -4: finish any work left with commit,
-> work for history browser
-> (June 25 - July 8) - week 5-6: finish any work left on the history
-> browser, add perspective, preference page
-> (July 9 - July 22)- week 7-8: work on fine tuning the already
-> implemented features, fix bugs, documentation, tests
-> (July 23 - August 5) - week 9-10: analyses supporting branches and
-> start to work towards supporting them: create, switch, delete
-> (August 6- August 20) - finish any work left, write the final
-> documentation, tests
-
-Yes; this schedule mentions the things I was just talking abouve
-above as being the important features.  It also does not mention
-the import wizard.  ;-)
-
-With the exception of branch switching, I think the above items are
-probably quite doable within the timeframes you are talking about.
-You might also be able to get branch switching implemented; but you
-might not.  I actually expect you will need more than 2 weeks to get
-a decent commit UI built up and working, especially since that is so
-early in the project and you will still be getting started on things.
-
-> A few extension points I want to extend are:
-> org.eclipse.ui.preferencePages,  -- preference pages
-> org.eclipse.core.runtime.preferences  -- initial values for preference pages
-> org.eclipse.ui.importWizards,     -- clone a git repository
-> org.eclipse.ui.perspectives,       --   git perspective
-> org.eclipse.help.toc         -- documentation
-> 
-> Interfaces
-> I sow that in org.spearce.egit.core is the plugin core (non UI)
-> in org.spearce.egit.ui is the UI part of the plugin
-> and org.spearce.jgit is the library with the pure Java implementation of 
-> git.
-> I will use jgit in egit-core and egit-ui, probably mostly 
-> org.spearce.jgit.lib.*
-> I do not know yet if I will need to change something in the library.
-
-Yes.  Its likely that jgit will also need to be changed.  ;-)
- 
-> Preparations
-> Because I never worked with git before:
-> I compiled and installed git and read the tutorial, some man pages,
-> and other docs from Git Documentation. I played with git to get
-> accustomed how it works.
-
-Good!
-
-> I looked at egit sources, how the extension points from Eclipse are
-> extended, what functionality is already there, and I tested the
-> plugin.
-> I built a demo plugin in Eclipse SWT to show you that I know how to
-> work in the Eclipse environment.
-> It draws fractals. It adds a new wizard to Eclipse and you can create
-> a fractal in an existing project.
-> You can install it the usual way by copying it to Eclipse/plugins/
-> directory. The source code is in it.
-
-I apologize for not taking a look at this right now.  I've had a
-very long day, and still have about another 8 hours worth of tasks
-to accomplish, but have under 4 hours in which to do them *and*
-to get some sleep before tomorrow.
-
-I will take a look at this in a day or two, when I can make the time.
-
--- 
-Shawn.
+I guess I probably should write it off as some curiosity coming
+from insn cacheline bouncing between hot functions, that is
+caused by the size of this unused function changing.
