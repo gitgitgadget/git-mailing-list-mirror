@@ -1,111 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Resend: [PATCH 0/3] Clean up and optimize tree walking some more
-Date: Wed, 21 Mar 2007 11:32:06 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703211130270.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0703210955370.6730@woody.linux-foundation.org>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: [PATCH] Documentation/pack-format.txt: Clear up description of types.
+Date: Wed, 21 Mar 2007 19:43:37 +0100
+Message-ID: <20070321184337.GA2705@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Mar 21 19:32:19 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 21 19:50:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU5bc-0006Ux-4J
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 19:32:16 +0100
+	id 1HU5tE-0006AG-5E
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 19:50:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933339AbXCUScN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 14:32:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933351AbXCUScN
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 14:32:13 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:48453 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933339AbXCUScL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 14:32:11 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2LIW7cD031834
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 21 Mar 2007 11:32:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2LIW6Kb000385;
-	Wed, 21 Mar 2007 10:32:07 -0800
-In-Reply-To: <Pine.LNX.4.64.0703210955370.6730@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.474 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S933660AbXCUSuW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 14:50:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933635AbXCUSuV
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 14:50:21 -0400
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:41695 "HELO bohr.gbar.dtu.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933648AbXCUSuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 14:50:20 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Mar 2007 14:50:19 EDT
+Received: (qmail 3240 invoked by uid 5842); 21 Mar 2007 19:43:37 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42813>
 
+Signed-off-by: Peter Eriksen <s022018@student.dtu.dk>
+---
+ Documentation/technical/pack-format.txt |   10 ++++++----
+ 1 files changed, 6 insertions(+), 4 deletions(-)
 
-Hmm.. There may be something wrong with my isp and/or email setup, but I 
-never saw this one come back to me, so I'm re-sending just in case it got 
-lost.. 
-
-		Linus
-
-On Wed, 21 Mar 2007, Linus Torvalds wrote:
-> 
-> This series of three patches improves blame performance on the eclipse 
-> tree by about 15% in my tests by improving the tree walk a bit.
-> 
->   [ Before-best-of-five: 11.649s
->     After-best-of-five:   9.675s ]
-> 
-> The first two patches are just boring cleanups: the first removes an 
-> unnecessary field from the "name_entry" structure, because I wanted to 
-> embed it into the "tree_desc" one and it was just totally redundant and I 
-> felt bad about growing tree_desc more than necessary. No real code 
-> changes, just replacing the use of "pathlen" with the helper function we 
-> introduced ealier ("tree_entry_len()").
-> 
-> The second one just makes sure that we always initialize the tree_desc 
-> structure with a helper function rather than doing it by hand. Again, this 
-> doesn't actually change any code, although I changed the name of the "buf" 
-> entry to "buffer", and the type of "size", so that we get nice compiler 
-> warnings if they are used the old way by mistake.
-> 
-> The second patch is the largest of the lot, but really doesn't do 
-> anything interesting, just preparatory cleanup.
-> 
-> The third patch is the one that actually changes any code, and is fairly 
-> straightforward: it just switches around where we actually do the tree 
-> entry parsing, which is now possible thanks to patch #2. By doing it 
-> up-front, we only need to do it once (we used to have to do it both when 
-> doing the "extract" *and* when doing the "update" op - now we do it only 
-> once per entry, and "extract" is just about looking at the cached 
-> contents).
-> 
-> The resulting diffstat of the tree patches ends up removing a few more 
-> lines than it adds (not by a lot), but perhaps more importantly (even more 
-> than the performance advantage) the code looks nicer, I think.
-> 
->  builtin-fsck.c         |    5 +-
->  builtin-grep.c         |   13 +++--
->  builtin-pack-objects.c |    8 +--
->  builtin-read-tree.c    |    3 +-
->  builtin-reflog.c       |   10 ++--
->  fetch.c                |    3 +-
->  http-push.c            |    3 +-
->  list-objects.c         |    3 +-
->  merge-tree.c           |    9 ++--
->  reachable.c            |    3 +-
->  revision.c             |   12 ++---
->  tree-diff.c            |   22 +++++----
->  tree-walk.c            |  123 ++++++++++++++++++++++--------------------------
->  tree-walk.h            |   20 ++++++--
->  tree.c                 |   18 +++----
->  unpack-trees.c         |    3 +-
->  16 files changed, 125 insertions(+), 133 deletions(-)
-> 
-> I'm pretty sure this is all good, and it obviously passes all the tests, 
-> but more importantly none of the changes were really very complicated, and 
-> patch#2 (which is the big one) was set up so that the compiler would not 
-> even compile code that wasn't properly converted, so it should all be 
-> good.
-> 
-> 			Linus
-> 
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index 0e1ffb2..9ce3c47 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -21,11 +21,11 @@ GIT pack format
+      which looks like this:
+ 
+      (undeltified representation)
+-     n-byte type and length (4-bit type, (n-1)*7+4-bit length)
++     n-byte type and length (3-bit type, (n-1)*7+4-bit length)
+      compressed data
+ 
+      (deltified representation)
+-     n-byte type and length (4-bit type, (n-1)*7+4-bit length)
++     n-byte type and length (3-bit type, (n-1)*7+4-bit length)
+      20-byte base object name
+      compressed delta data
+ 
+@@ -102,11 +102,13 @@ trailer	  | | packfile checksum              |
+ Pack file entry: <+
+ 
+      packed object header:
+-	1-byte type (upper 4-bit)
++	1-byte size extension bit (MSB)
++	       type (next 3 bit)
+ 	       size0 (lower 4-bit) 
+         n-byte sizeN (as long as MSB is set, each 7-bit)
+ 		size0..sizeN form 4+7+7+..+7 bit integer, size0
+-		is the most significant part.
++		is the least significant part, and sizeN is the
++		most significant part.
+      packed object data:
+         If it is not DELTA, then deflated bytes (the size above
+ 		is the size before compression).
+-- 
+1.5.0.4.g1589e
