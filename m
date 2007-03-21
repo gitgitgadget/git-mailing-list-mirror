@@ -1,85 +1,93 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Libification project (SoC)
-Date: Wed, 21 Mar 2007 10:24:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703211020070.6730@woody.linux-foundation.org>
-References: <7vejnpycu1.fsf@assigned-by-dhcp.cox.net> <20070316060033.GD31606@spearce.org>
- <7vps79wueu.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0703161251200.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070316130958.GD1783@peter.daprodeges.fqdn.th-h.de>
- <Pine.LNX.4.63.0703161509560.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070318140816.GG4489@pasky.or.cz> <Pine.LNX.4.63.0703190045520.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070319012111.GS18276@pasky.or.cz> <Pine.LNX.4.63.0703190235330.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070319025636.GE11371@thunk.org> <Pine.LNX.4.64.0703190912190.6730@woody.linux-foundation.org>
- <46011450.4000200@op5.se>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: [PATCHv2] put FETCH_HEAD data in merge commit message
+Date: Wed, 21 Mar 2007 19:29:16 +0200
+Message-ID: <20070321172916.GC5233@mellanox.co.il>
+References: <20070321120643.GI20583@mellanox.co.il>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Tso <tytso@mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>, Rocco Rutte <pdmef@gmx.net>,
-	git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Mar 21 18:24:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+X-From: git-owner@vger.kernel.org Wed Mar 21 18:29:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU4Xz-0000t4-Nw
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 18:24:28 +0100
+	id 1HU4c8-00035S-2j
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 18:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933159AbXCURYZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 13:24:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933193AbXCURYZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 13:24:25 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:45087 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933159AbXCURYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 13:24:24 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2LHO8cD029577
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 21 Mar 2007 10:24:09 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2LHO7nu031171;
-	Wed, 21 Mar 2007 09:24:07 -0800
-In-Reply-To: <46011450.4000200@op5.se>
-X-Spam-Status: No, hits=-0.475 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.176 $
-X-Scanned-By: MIMEDefang 2.36
+	id S933200AbXCUR2l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 13:28:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933215AbXCUR2l
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 13:28:41 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:52812 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933200AbXCUR2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 13:28:40 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so403350uga
+        for <git@vger.kernel.org>; Wed, 21 Mar 2007 10:28:34 -0700 (PDT)
+Received: by 10.67.22.7 with SMTP id z7mr3402099ugi.1174498113979;
+        Wed, 21 Mar 2007 10:28:33 -0700 (PDT)
+Received: from ?127.0.0.1? ( [89.138.180.55])
+        by mx.google.com with ESMTP id 59sm2099743ugf.2007.03.21.10.28.32;
+        Wed, 21 Mar 2007 10:28:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20070321120643.GI20583@mellanox.co.il>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42808>
 
-
-
-On Wed, 21 Mar 2007, Andreas Ericsson wrote:
-
-> Linus Torvalds wrote:
-> > 
-> > I'm a *huge* believer in "Worse is Better" (for people who don't know it, 
-> > just google for that phrase, with the quotes around it).
+> Quoting Michael S. Tsirkin <mst@dev.mellanox.co.il>:
+> Subject: [PATCH] have merge put FETCH_HEAD data in commit message
 > 
-> I just did, and having read the first page of the document found at 
-> http://www.jwz.org/doc/worse-is-better.html, I must say "worse-is-better"
-> sounds an awful lot like evolution; "Start with something that works. When
-> something else works better, jump train and embrace The New Thing".
+> Hi!
+> I often like to fetch some code from others, review and
+> then merge. So:
+> 
+> git fetch <URL>
+> git log -p FETCH_HEAD
+> git merge FETCH_HEAD
+> 
+> which is all good but gets me this message in commit log:
+> 
+>     Merge commit 'FETCH_HEAD' into master
+> 
+> which is not very informative.
+> I can always fix this up with git commit --amend, but
+> I'd like to avoid the extra step.
+> 
+> Would the following patch be appropriate?
 
-Yeah. I'm a huge believer in evolution too (and not just the biological 
-kind ;)
+OK, I since discovered git-fmt-merge-msg does all the necessary formatting,
+so here's a better and smaller patch. Seems to work well for me.
 
-The thing is, most "designers" are just totally clueless. Even the 
-smartest people that have done something similar five times before are 
-prone to totally mis-design something if they start from scratch and try 
-to "think it through". You tend to concentrate on the problems of the 
-previous generation, and not even think about everything that worked 
-wonderfully well, because that wasn't something you *needed* to think 
-about.
+Junio, could you apply this?
 
-So "designing" stuff is way overrated. You can spend years designing 
-somethign that is total crap, just because you didn't actually try it out 
-and _realize_ that it wasn't what the user wanted (it may have been what 
-the user _thought_ and _claimed_ that he wanted, but that was before 
-actually tried to use it, and realized that he was wrong).
+-------------------------
 
-			Linus
+Make git-fetch <URL> && git-merge FETCH_HEAD produce same merge message
+as git-pull <URL>
+
+Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
+
+---
+
+diff --git a/git-merge.sh b/git-merge.sh
+index 8759c5a..1e11593 100755
+--- a/git-merge.sh
++++ b/git-merge.sh
+@@ -108,6 +108,9 @@ merge_name () {
+ 		git-show-ref -q --verify "refs/heads/$truname" 2>/dev/null
+ 	then
+ 		echo "$rh		branch '$truname' (early part) of ."
++	elif test -r "$GIT_DIR/$remote"
++	then
++		cat "$GIT_DIR/$remote"
+ 	else
+ 		echo "$rh		commit '$remote'"
+ 	fi
+-- 
+MST
