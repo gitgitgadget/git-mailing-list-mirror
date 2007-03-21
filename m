@@ -1,93 +1,52 @@
-From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Subject: [PATCHv2] put FETCH_HEAD data in merge commit message
-Date: Wed, 21 Mar 2007 19:29:16 +0200
-Message-ID: <20070321172916.GC5233@mellanox.co.il>
-References: <20070321120643.GI20583@mellanox.co.il>
-Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Mar 21 18:29:03 2007
+From: Neil Schemenauer <nas@arctrix.com>
+Subject: Re: git push to a non-bare repository
+Date: Wed, 21 Mar 2007 17:20:38 +0000 (UTC)
+Message-ID: <etrph6$dt3$1@sea.gmane.org>
+References: <vpq648ye9w6.fsf@olympe.imag.fr> <20070319020053.GA11371@thunk.org> <vpq8xdtpp3g.fsf@olympe.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 21 18:40:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HU4c8-00035S-2j
-	for gcvg-git@gmane.org; Wed, 21 Mar 2007 18:28:44 +0100
+	id 1HU4nC-00009c-UG
+	for gcvg-git@gmane.org; Wed, 21 Mar 2007 18:40:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933200AbXCUR2l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 13:28:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933215AbXCUR2l
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 13:28:41 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:52812 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933200AbXCUR2k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 13:28:40 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so403350uga
-        for <git@vger.kernel.org>; Wed, 21 Mar 2007 10:28:34 -0700 (PDT)
-Received: by 10.67.22.7 with SMTP id z7mr3402099ugi.1174498113979;
-        Wed, 21 Mar 2007 10:28:33 -0700 (PDT)
-Received: from ?127.0.0.1? ( [89.138.180.55])
-        by mx.google.com with ESMTP id 59sm2099743ugf.2007.03.21.10.28.32;
-        Wed, 21 Mar 2007 10:28:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20070321120643.GI20583@mellanox.co.il>
-User-Agent: Mutt/1.5.11
+	id S933226AbXCURkG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 13:40:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933224AbXCURkG
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 13:40:06 -0400
+Received: from main.gmane.org ([80.91.229.2]:52005 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933196AbXCURkE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 13:40:04 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1HU4n4-0000iS-SM
+	for git@vger.kernel.org; Wed, 21 Mar 2007 18:40:03 +0100
+Received: from s0106000625c557dc.ss.shawcable.net ([70.64.11.234])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 21 Mar 2007 18:40:02 +0100
+Received: from nas by s0106000625c557dc.ss.shawcable.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 21 Mar 2007 18:40:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: s0106000625c557dc.ss.shawcable.net
+User-Agent: slrn/0.9.8.1pl1 (Debian)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42809>
 
-> Quoting Michael S. Tsirkin <mst@dev.mellanox.co.il>:
-> Subject: [PATCH] have merge put FETCH_HEAD data in commit message
-> 
-> Hi!
-> I often like to fetch some code from others, review and
-> then merge. So:
-> 
-> git fetch <URL>
-> git log -p FETCH_HEAD
-> git merge FETCH_HEAD
-> 
-> which is all good but gets me this message in commit log:
-> 
->     Merge commit 'FETCH_HEAD' into master
-> 
-> which is not very informative.
-> I can always fix this up with git commit --amend, but
-> I'd like to avoid the extra step.
-> 
-> Would the following patch be appropriate?
+Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> It's not really an option in my case. A is a fixe-IP/fixe-DNS machine,
+> while B is my home machine, behind a NAT modem-router. So, I'd have to
+> figure out my home IP, port-forward the ssh port from the modem to my
+> machine, ...
 
-OK, I since discovered git-fmt-merge-msg does all the necessary formatting,
-so here's a better and smaller patch. Seems to work well for me.
+I think this is a pretty common scenario.  I have a central server
+that I would like to push to and a bunch of other machines behind
+firewalls.  Pulling from the central machine is not practical.
 
-Junio, could you apply this?
-
--------------------------
-
-Make git-fetch <URL> && git-merge FETCH_HEAD produce same merge message
-as git-pull <URL>
-
-Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
-
----
-
-diff --git a/git-merge.sh b/git-merge.sh
-index 8759c5a..1e11593 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -108,6 +108,9 @@ merge_name () {
- 		git-show-ref -q --verify "refs/heads/$truname" 2>/dev/null
- 	then
- 		echo "$rh		branch '$truname' (early part) of ."
-+	elif test -r "$GIT_DIR/$remote"
-+	then
-+		cat "$GIT_DIR/$remote"
- 	else
- 		echo "$rh		commit '$remote'"
- 	fi
--- 
-MST
+  Neil
