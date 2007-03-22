@@ -1,282 +1,127 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] git-rev-list --bisect: optimization
-Date: Wed, 21 Mar 2007 23:42:40 -0700
-Message-ID: <7vvegtwzhb.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20070317141209.GA7838@cepheus>
-	<Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de>
-	<20070317195840.GA20735@informatik.uni-freiburg.de>
-	<20070321210454.GA2844@lala>
-	<Pine.LNX.4.64.0703211521290.6730@woody.linux-foundation.org>
-	<Pine.LNX.4.63.0703220240590.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+Subject: Re: [RFC/PATCH] Bisect: implement "git bisect run <cmd>..." to automatically bisect.
+Date: Thu, 22 Mar 2007 00:14:05 -0700
+Message-ID: <7vejnhwy0y.fsf@assigned-by-dhcp.cox.net>
+References: <20070322070859.a86c0cb4.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Uwe =?utf-8?Q?Kleine-?= =?utf-8?Q?K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Mar 22 07:42:46 2007
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Mar 22 08:14:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUH0X-0003Un-Sw
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 07:42:46 +0100
+	id 1HUHVa-0001jh-2a
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 08:14:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245AbXCVGmn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 02:42:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752336AbXCVGmn
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 02:42:43 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:61041 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752217AbXCVGmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 02:42:42 -0400
+	id S965786AbXCVHOI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 03:14:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932124AbXCVHOI
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 03:14:08 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:37504 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933151AbXCVHOG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 03:14:06 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao104.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070322064241.GRCF748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 22 Mar 2007 02:42:41 -0400
+          id <20070322071404.RMLJ1606.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 22 Mar 2007 03:14:04 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id diig1W00z1kojtg0000000; Thu, 22 Mar 2007 02:42:41 -0400
-In-Reply-To: <Pine.LNX.4.63.0703220240590.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 22 Mar 2007 02:43:18 +0100
-	(CET)")
+	id djE51W00T1kojtg0000000; Thu, 22 Mar 2007 03:14:05 -0400
+In-Reply-To: <20070322070859.a86c0cb4.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Thu, 22 Mar 2007 07:08:59 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42843>
 
-This improves the performance of revision bisection.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-The idea is to avoid rather expensive count_distance() function,
-which counts the number of commits that are reachable from any
-given commit (including itself) in the set.  When a commit has
-only one relevant parent commit, the number of commits the
-commit can reach is exactly the number of commits that the
-parent can reach plus one; instead of running count_distance()
-on commits that are on straight single strand of pearls, we can
-just add one to the parents' count.
+> This idea was suggested by Bill Lear
+> (Message-ID: <17920.38942.364466.642979@lisa.zopyra.com>)
+> and I think it is a very good one.
 
-On the other hand, for a merge commit, because the commits
-reachable from one parent can be reachable from another parent,
-you cannot just add the parents' counts up plus one for the
-commit itself; that would overcount ancestors that are reachable
-from more than one parents.
+Nicely done.
 
-The algorithm used in the patch runs count_distance() on merge
-commits, and uses the util field of commit objects to remember
-them.  After that, the number of commits reachable from each of
-the remaining commits is counted by finding a commit whose count
-is not yet known but the count for its (sole) parent is known,
-and adding one to the parent's count, until we assign numbers to
-everybody.
+People often find that during bisect they want to have a
+near-constant tweaks (e.g., s/#define DEBUG 0/#define DEBUG 1/
+in a header file, or "revision that does not have this commit
+needs this patch applied to work around other problem this
+bisection is not interested in") applied to the revision being
+tested.  
 
-Another small optimization is whenever we find a half-way (that
-is, a commit that can reach exactly half of the commits in the
-set), we stop giving counts to remaining commits.
+To cope with such a situation, after the inner git-bisect finds
+the next revision to test, with the "run" script, the user can
+apply that tweak before compiling, run the real test, and after
+the test decides if the revision (possibly with the needed
+tweaks) passed the test, rewind the tree to the pristine state.
+Finally the "run" script can exit with the status of the real
+test to let "git-bisect run" command loop to know the outcome.
 
-The performance to bisect between v1.0.0 and v1.5.0 in git.git
-repository was improved by saying good and bad in turns from
-3.68 seconds down to 1.26 seconds.  Bisecting the kernel between
-v2.6.18 and v2.6.20 was sped up from 21.84 seconds down to 4.22
-seconds.
+When you write a documentation for this patch, the above issue
+should be addressed, as this is often asked on and off the list.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
+> @@ -220,6 +222,50 @@ bisect_replay () {
+>  	bisect_auto_next
+>  }
+>  
+> +bisect_run () {
+> +    while true
+> +    do
+> +      echo "running $@"
+> +      "$@"
+> +      res=$?
+> +
+> +      # Check for really bad run error.
+> +      if [ $res -lt 0 -o $res -ge 128 ]; then
+> +	  echo >&2 "bisect run failed:"
+> +	  echo >&2 "exit code $res from '$@' is < 0 or >= 128"
+> +	  exit $res
+> +      fi
 
- * This is a rebase on top of updated Johannes's patch, which is
-   [1/2] of this series.
+I am not sure if this flexibility/leniency is desirable.  It
+certainly allows a sloppily written shell script that exits with
+any random small-positive values to report a badness, which may
+be handy, but allowing sloppiness might lead to wasted time
+after all.  I dunno.  A more strict convention that says the run
+script should exit 1 to signal "bad, please continue", 0 for
+"good, please continue" and other values for "no good, abort"
+might be less error prone.
 
-   I am not enabling this for path limited case, so it is still
-   in a WIP state.  I am not sure if parent rewriting is doing
-   the right thing (if so, then we should be able to assume that
-   "interesting" commits are already made contiguous and we can
-   keep giving the number one higher than the parent to commits
-   on a single-strand-of-pearls like this patch does).
+In any case, the exit status convention needs documentation.
 
- builtin-rev-list.c |  162 +++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 160 insertions(+), 2 deletions(-)
+A program that does "exit(-1)" leaves $? = 255 (see exit(3)
+manual page, the value is chopped with "& 0377"), so the test
+for -ge 128 is certainly good; I do not know if any system gives
+negative values, but the check shouldn't hurt.  As a style, I
+would have written that as:
 
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 723e4d4..111ba60 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -207,6 +207,160 @@ static struct commit_list *find_bisection(struct commit_list *list,
- 	return best;
- }
- 
-+static inline int commit_interesting(struct commit_list *elem)
-+{
-+	unsigned flags = elem->item->object.flags;
-+	if (flags & UNINTERESTING)
-+		return 0;
-+	return (!revs.prune_fn || (flags & TREECHANGE));
-+}
-+
-+static inline int weight(struct commit_list *elem)
-+{
-+	return *((int*)(elem->item->util));
-+}
-+
-+static inline void weight_set(struct commit_list *elem, int weight)
-+{
-+	*((int*)(elem->item->util)) = weight;
-+}
-+
-+static int count_interesting_parents(struct commit_list *elem)
-+{
-+	int cnt = 0;
-+	if (!elem->item->parents)
-+		return cnt;
-+	for (elem = elem->item->parents; elem; elem = elem->next) {
-+		if (commit_interesting(elem))
-+			cnt++;
-+	}
-+	return cnt;
-+}
-+
-+static struct commit_list *find_bisection_2(struct commit_list *list,
-+					    int *reaches, int *all)
-+{
-+	int n, nr, counted, distance;
-+	struct commit_list *p, *best;
-+	int *weights;
-+
-+	for (nr = 0, p = list; p; p = p->next) {
-+		if (commit_interesting(p))
-+			nr++;
-+	}
-+	*all = nr;
-+	weights = xcalloc(nr, sizeof(int*));
-+	counted = 0;
-+
-+	for (n = 0, p = list; p; p = p->next) {
-+		if (!commit_interesting(p))
-+			continue;
-+		if (commit_interesting(p)) {
-+			/*
-+			 * positive weight is the number of interesting
-+			 * commits it can reach, including itself.
-+			 * weight = 0 means it has one parent and
-+			 * its distance is unknown.
-+			 * weight < 0 means it has more than one
-+			 * parent and its distance is unknown.
-+			 */
-+			p->item->util = &weights[n++];
-+			switch (count_interesting_parents(p)) {
-+			case 0:
-+				weight_set(p, 1);
-+				counted++;
-+				break;
-+			case 1:
-+				weight_set(p, 0);
-+				break;
-+			default:
-+				weight_set(p, -1);
-+				break;
-+			}
-+		}
-+	}
-+
-+	/*
-+	 * If you have only one parent in the resulting set
-+	 * then you can reach one commit more than that parent
-+	 * can reach.  So we do not have to run the expensive
-+	 * count_distance() for single strand of pearls.
-+	 *
-+	 * However, if you have more than one parents, you cannot
-+	 * just add their distance and one for yourself, since
-+	 * they usually reach the same ancestor and you would
-+	 * end up counting them twice that way.
-+	 *
-+	 * So we will first count distance of merges the usual
-+	 * way, and then fill the blanks using cheaper algorithm.
-+	 */
-+	for (p = list; p; p = p->next) {
-+		if (!commit_interesting(p))
-+			continue;
-+		n = weight(p);
-+		if (0 <= n)
-+			continue;
-+		distance = count_distance(p);
-+		clear_distance(p);
-+		weight_set(p, distance);
-+
-+		/* Is it happen to be at exactly half-way? */
-+		distance *= 2;
-+		if (nr == distance || (nr+1) == distance) {
-+			p->next = NULL;
-+			*reaches = weight(p);
-+			free(weights);
-+			return p;
-+		}
-+		counted++;
-+	}
-+
-+	while (counted < nr) {
-+		for (p = list; p; p = p->next) {
-+			struct commit_list *q;
-+
-+			if (!commit_interesting(p) || 0 < weight(p))
-+				continue;
-+			for (q = p->item->parents; q; q = q->next)
-+				if (commit_interesting(q) && 0 < weight(q))
-+					break;
-+			if (!q)
-+				continue;
-+			weight_set(p, weight(q)+1);
-+			counted++;
-+
-+			/* Is it happen to be at exactly half-way? */
-+			distance = weight(p) * 2;
-+			if (nr == distance || (nr+1) == distance) {
-+				p->next = NULL;
-+				*reaches = weight(p);
-+				free(weights);
-+				return p;
-+			}
-+		}
-+	}
-+
-+	/* Then find the best one */
-+	counted = 0;
-+	best = list;
-+	for (p = list; p; p = p->next) {
-+		if (!commit_interesting(p))
-+			continue;
-+		distance = weight(p);
-+		if (nr - distance < distance)
-+			distance = nr - distance;
-+		if (distance > counted) {
-+			best = p;
-+			counted = distance;
-+			*reaches = weight(p);
-+		}
-+	}
-+	if (best)
-+		best->next = NULL;
-+	free(weights);
-+	return best;
-+}
-+
- static void read_revisions_from_stdin(struct rev_info *revs)
- {
- 	char line[1000];
-@@ -298,8 +452,12 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	if (bisect_list) {
- 		int reaches = reaches, all = all;
- 
--		revs.commits = find_bisection(revs.commits,
--					      &reaches, &all);
-+		if (!revs.prune_fn)
-+			revs.commits = find_bisection_2(revs.commits,
-+							&reaches, &all);
-+		else
-+			revs.commits = find_bisection(revs.commits,
-+						      &reaches, &all);
- 		if (bisect_show_vars) {
- 			int cnt;
- 			if (!revs.commits)
--- 
-1.5.1.rc1.610.g3ba7
+	if test $res -lt 0 || test $res -ge 128
+        then
+        	...
+
+but that is probably a bit old-fashioned.  
+
+> +      # Use "git-bisect good" or "git-bisect bad"
+> +      # depending on run success or failure.
+> +      # We cannot use bisect_good or bisect_bad functions
+> +      # because they can exit.
+> +      if [ $res -gt 0 ]; then
+> +	  next_bisect='git-bisect bad'
+> +      else
+> +	  next_bisect='git-bisect good'
+> +      fi
+> +
+> +      $next_bisect > "$GIT_DIR/BISECT_RUN"
+
+
+If their exiting, and possibly variable assignments, are the
+only problem, you can run that in subshell, can't you?  Like:
+
+	( $next_bisect >"$GIT_DIR/BISECT_RUN" )
+
+> +      res=$?
