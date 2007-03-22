@@ -1,75 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-check-ref-format returns 1 for valid branch names
-Date: Thu, 22 Mar 2007 14:03:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703221358420.6730@woody.linux-foundation.org>
-References: <dbfc82860703221324k48690833g6731ef75562839d6@mail.gmail.com>
- <7vejnht3x2.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: What's in git.git (stable)
+Date: Thu, 22 Mar 2007 14:30:50 -0700
+Message-ID: <7vvegtrmnp.fsf@assigned-by-dhcp.cox.net>
+References: <7vbqjp1dyx.fsf@assigned-by-dhcp.cox.net>
+	<7v3b4x9sst.fsf@assigned-by-dhcp.cox.net>
+	<7v8xed5mex.fsf@assigned-by-dhcp.cox.net>
+	<7vr6rtle8o.fsf@assigned-by-dhcp.cox.net>
+	<4602B810.40504@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nikolai Weibull <now@bitwi.se>, git <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 22 22:04:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 22:31:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUUSP-0001mK-Cc
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 22:04:25 +0100
+	id 1HUUs3-0006GM-Vw
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 22:30:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934234AbXCVVEP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 17:04:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934241AbXCVVEP
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 17:04:15 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:51455 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934234AbXCVVEN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 17:04:13 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2ML3gG9020280
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 22 Mar 2007 14:03:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2ML3faB030314;
-	Thu, 22 Mar 2007 14:03:41 -0700
-In-Reply-To: <7vejnht3x2.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.47 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965371AbXCVVaw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 17:30:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965405AbXCVVaw
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 17:30:52 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:57545 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965371AbXCVVav (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 17:30:51 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070322213051.RBPT748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 22 Mar 2007 17:30:51 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id dxWq1W00E1kojtg0000000; Thu, 22 Mar 2007 17:30:50 -0400
+In-Reply-To: <4602B810.40504@midwinter.com> (Steven Grimm's message of "Thu,
+	22 Mar 2007 10:08:32 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42882>
 
+Steven Grimm <koreth@midwinter.com> writes:
 
+> Will you be applying your patch for the "checkout fails if something
+> is a file in one branch and a directory in another" problem? I realize
+> it's not a complete solution, but it's at least a significant
+> improvement over the current behavior, and I don't imagine it breaks
+> anything else.
 
-On Thu, 22 Mar 2007, Junio C Hamano wrote:
+If I understand correctly, the patch is already broken.  Rather,
+the patch itself may be correct but it exposes more breakages
+that currently is hidden only because we do not replace bunch of
+files in a subdirectory with a single file in the index thanks
+to the "too strict" check that is bothering you.  Lifting that
+check with the previous patch would make it either fail to
+notice other local changes (which is worse), or mistakenly say
+there is a local change when there is none (which is not better
+but not worse).  In particular, I think it is highly suspicious
+what the current code with the patch does to paths that
+immediately follow the directory to be removed, although I
+stopped looking into this issue, as we already said this will
+not be dealt with in 1.5.1.
 
-> "Nikolai Weibull" <now@bitwi.se> writes:
-> 
-> > I'm obviously doing something wrong, but in git 1.5.0.4
-> >
-> > % git check-ref-format abc
-> > % echo $?
-> > 1
-> >
-> > What am I missing here?
-> 
-> If you are trying to see if abc is a valid branch name, try refs/heads/abc.
+In short, I do not think the patch is suitable for production,
+as the cure seems worse than the disease.
 
-.. and before anybody wonders why it wants the "fully qualified" name, 
-it's because "abc" on its own is ambiguous. Is it a _tag_ called "abc", or 
-a branch, or what? That explains why - if you really want to verify a 
-ref-name, you need to give the full name..
-
-On the other hand, if you don't care, and you just want "is this a valid 
-commit name", use
-
-	sha1=$(git rev-parse --verify "$name"^0) || exit
-
-or similar. It won't care if "name" is ambiguous or not, it will just try 
-to parse it as a revision expression (with the "^0" there to force a tag 
-to be converted to a commit-name, or force an error if the SHA1 is not a 
-valid commit).
-
-			Linus
+That does not mean anybody is forbidden to look into a fix in
+the meantime.  I am just saying I do not expect it to happen
+before 1.5.1.
