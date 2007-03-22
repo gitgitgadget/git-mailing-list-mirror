@@ -1,65 +1,65 @@
-From: "Nikolai Weibull" <now@bitwi.se>
-Subject: Re: git-check-ref-format returns 1 for valid branch names
-Date: Thu, 22 Mar 2007 21:42:59 +0100
-Message-ID: <dbfc82860703221342h4e1ade1am2961a0a996d7d20c@mail.gmail.com>
-References: <dbfc82860703221324k48690833g6731ef75562839d6@mail.gmail.com>
-	 <7vejnht3x2.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] git-apply: Do not free the wrong buffer when we convert
+ the data for writeout
+Date: Thu, 22 Mar 2007 13:55:29 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703221355110.6730@woody.linux-foundation.org>
+References: <200702281036.30539.litvinov2004@gmail.com>
+ <Pine.LNX.4.64.0703200836490.6730@woody.linux-foundation.org>
+ <200703210956.50018.litvinov2004@gmail.com> <200703211024.04740.litvinov2004@gmail.com>
+ <Pine.LNX.4.64.0703220858400.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703220924590.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703220931120.6730@woody.linux-foundation.org>
+ <7virctt3yi.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 22 21:43:12 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alexander Litvinov <litvinov2004@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 22 21:55:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUU7q-00005x-H0
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 21:43:10 +0100
+	id 1HUUJu-00066l-LN
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 21:55:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934233AbXCVUnE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 16:43:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934235AbXCVUnE
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 16:43:04 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:19084 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934233AbXCVUnB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 16:43:01 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so813011uga
-        for <git@vger.kernel.org>; Thu, 22 Mar 2007 13:43:00 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=fgn9iyRk1ZSIuc+HuwZHtkt9Y8i15G3ngh8Nc9Z4Crhg/N+DgKdxb3MFhllrPKhDhBpotfFyjYPtWl47yHWjkDnFIoeWnyEY5CgkQnL1nQgetJ3TtASibFmp6BR+ILRYxfvcsuXpWIEyHyB5SAOUXl4goyViKa1gJE3PCm0/0Po=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=Dbm2dmaYL/wN20qrqsB0ytQC93/PDZYSX1PyBxH6EajjmXk96ECargjqlBp2MT5H3MCOoETehPXFGDzV+I8AYx0vLAl3dJsEcioLFE2hJa4o0JeaTa3AacA6gxaa0Sqqvw9WMNqzWuTLXhrci0v/8OL1u9QIjXbs/RK79Q02HSk=
-Received: by 10.114.152.17 with SMTP id z17mr770482wad.1174596179276;
-        Thu, 22 Mar 2007 13:42:59 -0700 (PDT)
-Received: by 10.114.193.4 with HTTP; Thu, 22 Mar 2007 13:42:59 -0700 (PDT)
-In-Reply-To: <7vejnht3x2.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
-X-Google-Sender-Auth: c5d64c15e7bb896b
+	id S1751452AbXCVUzf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 16:55:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbXCVUzf
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 16:55:35 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:51263 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751452AbXCVUzf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 16:55:35 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2MKtUG9019984
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 22 Mar 2007 13:55:31 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2MKtTQn030138;
+	Thu, 22 Mar 2007 13:55:30 -0700
+In-Reply-To: <7virctt3yi.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.469 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42880>
 
-On 3/22/07, Junio C Hamano <junkio@cox.net> wrote:
-> "Nikolai Weibull" <now@bitwi.se> writes:
->
-> > I'm obviously doing something wrong, but in git 1.5.0.4
-> >
-> > % git check-ref-format abc
-> > % echo $?
-> > 1
-> >
-> > What am I missing here?
->
-> If you are trying to see if abc is a valid branch name, try refs/heads/abc.
 
-Thanks.  I just saw an example in git-checkout (where it's testing
-"heads/$newbranch").
 
-  nikolai
+On Thu, 22 Mar 2007, Junio C Hamano wrote:
+> 
+> This patch also moves the call to open() up in the function, as
+> the caller expects us to fail cheaply if leading directories
+> need to be created (and then the caller creates them and calls
+> us again).  For that calling pattern, attempting conversion
+> before opening the file adds unnecessary overhead.
+> 
+> Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+Ack, looks good.
+
+		Linus
