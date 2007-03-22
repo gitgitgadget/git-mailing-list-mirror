@@ -1,55 +1,68 @@
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Installation instructions for gitweb?
-Date: Thu, 22 Mar 2007 14:52:53 -0300
-Message-ID: <etufpl$7en$1@sea.gmane.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: qiuestion about Git and Cogito
+Date: Thu, 22 Mar 2007 18:57:22 +0100
+Message-ID: <20070322175722.GP18276@pasky.or.cz>
+References: <45FFFA94.4040105@mail.nih.gov> <20070320155623.GH4489@pasky.or.cz> <46002BEE.5020300@mail.nih.gov> <46028B45.2010802@mail.nih.gov>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 22 18:54:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Francois Lang <flang@mail.nih.gov>
+X-From: git-owner@vger.kernel.org Thu Mar 22 18:57:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HURUr-0003SB-LU
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 18:54:46 +0100
+	id 1HURXc-0004pP-Ek
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 18:57:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934157AbXCVRyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 13:54:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934163AbXCVRyl
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 13:54:41 -0400
-Received: from main.gmane.org ([80.91.229.2]:49187 "EHLO ciao.gmane.org"
+	id S934163AbXCVR5d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 13:57:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934158AbXCVR5d
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 13:57:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:51653 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934157AbXCVRyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 13:54:40 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HURU0-0005Oc-1a
-	for git@vger.kernel.org; Thu, 22 Mar 2007 18:53:52 +0100
-Received: from 200.99.68.2 ([200.99.68.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Mar 2007 18:53:52 +0100
-Received: from hanwen by 200.99.68.2 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 22 Mar 2007 18:53:52 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 200.99.68.2
-User-Agent: Thunderbird 1.5.0.10 (X11/20070306)
+	id S934163AbXCVR5d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 13:57:33 -0400
+Received: (qmail 19897 invoked by uid 2001); 22 Mar 2007 18:57:22 +0100
+Content-Disposition: inline
+In-Reply-To: <46028B45.2010802@mail.nih.gov>
+X-message-flag: Outlook : A program to spread viri, but it can do mail too.
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42874>
 
+On Thu, Mar 22, 2007 at 02:57:25PM CET, Francois Lang wrote:
+> Interesting...for me, when I do what you suggested, i.e.,
+> 
+> cg-log -r master..origin
+> 
+> it does not tell me what has been locally committed but not yet pushed.
+> 
+> To get that behavior, I need to do
+> 
+> cg-log -r origin..master.
+> 
+> Does that make sense to you, or am I confused? I do work on master and 
+> push to origin.
 
-Hello,
+Oh, of course - I got it swapped in my head. :-)
 
-I'm trying to get gitweb to serve my local repositories on the intranet
-here, but I am not successful in getting it to run.  I got as far as
-getting gitweb page, containing no projects but only "403 forbidden - No
-projects found." I tried setting the projects_list to a directory, a
-subdirectory, a file with the projects to be published, etc.
+It isn't the most intuitive syntax, admittedly, but I couldn't think of
+anything better. The way to think about it is "show me the commits
+that appeared between origin and master", where
 
-Is there a guide on setting up gitweb for hare-brained people like me
-that don't know apache and don't know perl? In particular, the format of
-gitweb_conf.perl is not documented at all.
+	a - b - c - d - e
+	 origin ^
+	         master ^
+
+thus it will show the locally committed but not yet pushed d and e. This
+maps nicely to the range syntax if you think about it, but it isn't
+terribly intuitive. :-(
+
+-- 
+				Petr "Pasky" Baudis
+Stuff: http://pasky.or.cz/
+Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
+		-- Samuel Beckett
