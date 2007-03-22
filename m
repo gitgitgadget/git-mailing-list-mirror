@@ -1,89 +1,103 @@
-From: "Nikolai Weibull" <now@bitwi.se>
-Subject: Re: git-check-ref-format returns 1 for valid branch names
-Date: Thu, 22 Mar 2007 22:58:07 +0100
-Message-ID: <dbfc82860703221458j690d1cafve01174eda8f149ee@mail.gmail.com>
-References: <dbfc82860703221324k48690833g6731ef75562839d6@mail.gmail.com>
-	 <7vejnht3x2.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0703221358420.6730@woody.linux-foundation.org>
+From: arjen@yaph.org (Arjen Laarhoven)
+Subject: [PATCH] Teach git-mergetool about Apple's opendiff/FileMerge
+Date: Thu, 22 Mar 2007 22:37:28 +0100
+Message-ID: <20070322213728.GD3854@regex.yaph.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Mar 22 22:58:15 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 22 23:09:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUVIT-00030W-9W
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 22:58:13 +0100
+	id 1HUVT4-0008LU-M0
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 23:09:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161123AbXCVV6K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 17:58:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161126AbXCVV6J
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 17:58:09 -0400
-Received: from an-out-0708.google.com ([209.85.132.251]:22478 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161123AbXCVV6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 17:58:08 -0400
-Received: by an-out-0708.google.com with SMTP id b33so1062758ana
-        for <git@vger.kernel.org>; Thu, 22 Mar 2007 14:58:07 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=LpXMMOfN7beIhzfxWy1CSVhRssswobVgdU/kMycWyuv+IVRin//jrxRcknlXdGdb6HLz2UAtjikV5XeOcrCkXrsDYmT7qZ3dJEWQAbs4yOWO7JRhKaGgJmukDZXcQibZ+1/IeNsGgOYO39r5LU0hSv+Nnyint7gD+MLbzLnM/kA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=BiMacg+jofTK9X7DtiHB5A916FTGMHUx39+1qjiwDukAHhRqI6DbSvjygA1AQzXfSeLnZjkHDFIPOq6Bu+PcTjh4IedpDirB3Rxc+tme6O1xckbCnZcRgIZTcQlAUdXwpu+swPuB4itmzI9Z5xrEs3sgLInv7hC2UKl2Ymel9q0=
-Received: by 10.114.130.1 with SMTP id c1mr793348wad.1174600687072;
-        Thu, 22 Mar 2007 14:58:07 -0700 (PDT)
-Received: by 10.114.193.4 with HTTP; Thu, 22 Mar 2007 14:58:07 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0703221358420.6730@woody.linux-foundation.org>
+	id S1161139AbXCVWJH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 18:09:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161130AbXCVWJH
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 18:09:07 -0400
+Received: from regex.yaph.org ([193.202.115.201]:38810 "EHLO regex.yaph.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161139AbXCVWJG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 18:09:06 -0400
+X-Greylist: delayed 1896 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Mar 2007 18:09:06 EDT
+Received: by regex.yaph.org (Postfix, from userid 1000)
+	id 43CAA5B7C8; Thu, 22 Mar 2007 22:37:28 +0100 (CET)
 Content-Disposition: inline
-X-Google-Sender-Auth: 4b994b2acce3ce8e
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42885>
 
-On 3/22/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Thu, 22 Mar 2007, Junio C Hamano wrote:
->
-> > "Nikolai Weibull" <now@bitwi.se> writes:
-> >
-> > > I'm obviously doing something wrong, but in git 1.5.0.4
-> > >
-> > > % git check-ref-format abc
-> > > % echo $?
-> > > 1
-> > >
-> > > What am I missing here?
-> >
-> > If you are trying to see if abc is a valid branch name, try refs/heads/abc.
->
-> .. and before anybody wonders why it wants the "fully qualified" name,
-> it's because "abc" on its own is ambiguous. Is it a _tag_ called "abc", or
-> a branch, or what? That explains why - if you really want to verify a
-> ref-name, you need to give the full name..
->
-> On the other hand, if you don't care, and you just want "is this a valid
-> commit name", use
->
->         sha1=$(git rev-parse --verify "$name"^0) || exit
 
-Thanks for the clarification.
+Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
+---
+ git-mergetool.sh |   30 ++++++++++++++++++++++++++++--
+ 1 files changed, 28 insertions(+), 2 deletions(-)
 
-What I was after was a way to verify that a name is a valid new name
-of a branch, for the Zsh completion definition in the context of
-git-checkout -b <new_branch>. [1]  After posting I realized that
-perhaps checking out the sources for git-checkout would enlighten me,
-which it did, as it uses git-check-ref-format "heads/$newbranch" to
-verify that the new branch's name  is valid.
-
-[1] It's not really going to try to complete anything here, but verify
-that the new branch's name is valid while the user types it in. [2]
-[2]  Hm, perhaps completing existing branch-names makes more sense,
-allowing the user to create a new branch-name based on an old one.
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 7942fd0..58ae201 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -248,6 +248,30 @@ merge_file () {
+ 		mv -- "$BACKUP" "$path.orig"
+ 	    fi
+ 	    ;;
++	opendiff)
++	    touch "$BACKUP"
++	    if base_present; then
++		opendiff $LOCAL $REMOTE -ancestor $BASE -merge $path | cat
++            else
++                opendiff $LOCAL $REMOTE -merge $path | cat
++            fi
++	    if test "$path" -nt "$BACKUP" ; then
++		status=0;
++	    else
++		while true; do
++		    echo "$path seems unchanged."
++		    echo -n "Was the merge successful? [y/n] "
++		    read answer < /dev/tty
++		    case "$answer" in
++			y*|Y*) status=0; break ;;
++			n*|N*) status=1; break ;;
++		    esac
++		done
++	    fi
++	    if test "$status" -eq 0; then
++		mv -- "$BACKUP" "$path.orig"
++	    fi
++	    ;;
+     esac
+     if test "$status" -ne 0; then
+ 	echo "merge of $path failed" 1>&2
+@@ -289,7 +313,7 @@ done
+ if test -z "$merge_tool"; then
+     merge_tool=`git-config merge.tool`
+     case "$merge_tool" in
+-	kdiff3 | tkdiff | xxdiff | meld | emerge | vimdiff)
++	kdiff3 | tkdiff | xxdiff | meld | emerge | vimdiff | opendiff)
+ 	    ;; # happy
+ 	*)
+ 	    echo >&2 "git config option merge.tool set to unknown tool: $merge_tool"
+@@ -312,6 +336,8 @@ if test -z "$merge_tool" ; then
+ 	merge_tool=emerge
+     elif type vimdiff >/dev/null 2>&1; then
+ 	merge_tool=vimdiff
++    elif type opendiff >/dev/null 2>&1; then
++	merge_tool=opendiff
+     else
+ 	echo "No available merge resolution programs available."
+ 	exit 1
+@@ -319,7 +345,7 @@ if test -z "$merge_tool" ; then
+ fi
+ 
+ case "$merge_tool" in
+-    kdiff3|tkdiff|meld|xxdiff|vimdiff)
++    kdiff3|tkdiff|meld|xxdiff|vimdiff|opendiff)
+ 	if ! type "$merge_tool" > /dev/null 2>&1; then
+ 	    echo "The merge tool $merge_tool is not available"
+ 	    exit 1
+-- 
+1.5.1.rc1.13.g0872
