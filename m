@@ -1,82 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Rename handling
-Date: Thu, 22 Mar 2007 04:32:25 +0100
-Message-ID: <200703220432.27071.jnareb@gmail.com>
-References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org> <200703220301.41180.jnareb@gmail.com> <46a038f90703211939j15dbda4cpfa2f49229b8c16cb@mail.gmail.com>
+Date: Wed, 21 Mar 2007 20:53:51 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703212047310.6730@woody.linux-foundation.org>
+References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org>
+ <200703220301.41180.jnareb@gmail.com> <46a038f90703211939j15dbda4cpfa2f49229b8c16cb@mail.gmail.com>
+ <200703220432.27071.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Steven Grimm" <koreth@midwinter.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Steven Grimm <koreth@midwinter.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 22 04:29:41 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 04:54:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUDzh-0002Il-3u
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 04:29:41 +0100
+	id 1HUENN-0005YV-4B
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 04:54:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964848AbXCVD3c (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 23:29:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965636AbXCVD3c
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 23:29:32 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:48369 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964848AbXCVD3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 23:29:31 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so565136uga
-        for <git@vger.kernel.org>; Wed, 21 Mar 2007 20:29:30 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=VXNTGR0rwnsvloqe+ITmHdLMjbQ9QUMmdKnlDiw8Ci2G1NLxFlr1jzqqiBxH6WOpFSjSmvNtV8sLK4BO9Q47UCg2mVK15FqVRuooyOiG5TADzNimcYbx0n1Kujy9r46ZPVDMpRWHybZtQtgpMtfyGP3/SX0JPKUgcMBkfRo9ggw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=tAGJ3bOiJx/z8LsJmgRerlwE4PfPkDUqVFy+CfLEzaBWcuWvqjk3pYXEuP3sPOy5MsndkAL7OhZ4iDoNktYJmDEjH7ElsvywS5NwF39Q8Q2sZDCgBXcTZmM+uva8PCpAwXY+7mCHRrrN8HPoLPoIBM463qyGDTgiDQqY2ewnWaM=
-Received: by 10.67.19.17 with SMTP id w17mr4181607ugi.1174534170486;
-        Wed, 21 Mar 2007 20:29:30 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id w7sm8644493mue.2007.03.21.20.29.28;
-        Wed, 21 Mar 2007 20:29:28 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <46a038f90703211939j15dbda4cpfa2f49229b8c16cb@mail.gmail.com>
-Content-Disposition: inline
+	id S965650AbXCVDyF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 23:54:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965645AbXCVDyF
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 23:54:05 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:37723 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965650AbXCVDyD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 23:54:03 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2M3rqG9017666
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 21 Mar 2007 20:53:53 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2M3rp5j011425;
+	Wed, 21 Mar 2007 20:53:52 -0700
+In-Reply-To: <200703220432.27071.jnareb@gmail.com>
+X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42836>
 
-Martin Langhoff wrote:
-> On 3/22/07, Jakub Narebski <jnareb@gmail.com> wrote:
->> Additional issue that we have to think about with respect to rename
->> support for merges is that git uses 3-way merge, taking into account
->> _only_ upstream commit (of the branch we want to merge to), side branch
->> commit (of the branch we want to merge) and common ancestor[*1*]
->> (merge base) for merging. What is important is that the intermediate
->> states, how we got to the current state, does not matter.
->>
->> Well, one could argue that if we remember explicit (provided by user)
->> info about renames for example in proposed 'note' field of a commit
->> object, or in other helper structure (we cannot remember the information
->> in blob or tree), we can gather and remember information about recorded
->> explicit renames when finding common ancestor...
+
+
+On Thu, 22 Mar 2007, Jakub Narebski wrote:
 > 
-> But we do have some of that already - if one trees being merged is
-> missing a path that changed on the other one, we walk back on the
-> ancestry looking for renames.
-> 
-> Or am I seeing things?
+> Second, I have thought that rename detection is done on final states: upstream,
+> branch and ancestor, not on intermediate commits. I guess I thought wrong.
 
-First, I was talking about hypotetical manually-provided helper information
-about explicit renames, entered by user, not guessed by SCM.
+No, you didn't think wrong, with a few caveats:
 
-Second, I have thought that rename detection is done on final states: upstream,
-branch and ancestor, not on intermediate commits. I guess I thought wrong.
- 
--- 
-Jakub Narebski
-Poland
+ - we *do* do intermediate commits occasionally (ie for the criss-cross 
+   merge case and the "recursive" part of the merge strategy). But that's 
+   strictly a "we had multiple potential merge bases" issue, not a "track 
+   renames through every commit" kind of thing.
+
+ - you should also see the 3-way merge as the *first* strategy. If it 
+   fails, you could do more involved stuff (ie the "blame" merge 
+   strategy).
+
+Personally, I think the three-way merge (aka "stupid") is absolutely the 
+right thing to do. SCM projects that always try to take intervening 
+commits into account (*cough*darcs*cough*) are just doing masturbation. 
+It's pointless. The history only matters as a "what was the common state" 
+thing, the intermediate mistakes you did in between are meaningless.
+
+But my point is that if you *wanted* to, you could do something fancy. I 
+think it would likely be stupid and wrong, and just cause subtle mismerges 
+rather than actually *help*, but that's just my opinion. Git itself 
+doesn't *force* you to just take the end-points into account, although my 
+opinion that they are the only things that matter certainly may have 
+colored how we do things right now ;)
+
+			Linus
