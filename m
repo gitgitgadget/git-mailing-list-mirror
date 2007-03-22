@@ -1,96 +1,89 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH] Bisect: implement "git bisect run <cmd>..." to automatically bisect.
-Date: Thu, 22 Mar 2007 22:59:48 +0100
-Message-ID: <200703222259.49089.chriscool@tuxfamily.org>
-References: <20070322070859.a86c0cb4.chriscool@tuxfamily.org> <7vejnhwy0y.fsf@assigned-by-dhcp.cox.net>
+From: "Nikolai Weibull" <now@bitwi.se>
+Subject: Re: git-check-ref-format returns 1 for valid branch names
+Date: Thu, 22 Mar 2007 22:58:07 +0100
+Message-ID: <dbfc82860703221458j690d1cafve01174eda8f149ee@mail.gmail.com>
+References: <dbfc82860703221324k48690833g6731ef75562839d6@mail.gmail.com>
+	 <7vejnht3x2.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0703221358420.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 22 22:51:39 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>, git <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Mar 22 22:58:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUVC7-00085t-0H
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 22:51:39 +0100
+	id 1HUVIT-00030W-9W
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 22:58:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161094AbXCVVvg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 22 Mar 2007 17:51:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161113AbXCVVvg
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 17:51:36 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:54012 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161094AbXCVVvf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Mar 2007 17:51:35 -0400
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 9C9F1B59B3;
-	Thu, 22 Mar 2007 22:51:33 +0100 (CET)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7vejnhwy0y.fsf@assigned-by-dhcp.cox.net>
+	id S1161123AbXCVV6K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 17:58:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161126AbXCVV6J
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 17:58:09 -0400
+Received: from an-out-0708.google.com ([209.85.132.251]:22478 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161123AbXCVV6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 17:58:08 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1062758ana
+        for <git@vger.kernel.org>; Thu, 22 Mar 2007 14:58:07 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=LpXMMOfN7beIhzfxWy1CSVhRssswobVgdU/kMycWyuv+IVRin//jrxRcknlXdGdb6HLz2UAtjikV5XeOcrCkXrsDYmT7qZ3dJEWQAbs4yOWO7JRhKaGgJmukDZXcQibZ+1/IeNsGgOYO39r5LU0hSv+Nnyint7gD+MLbzLnM/kA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=BiMacg+jofTK9X7DtiHB5A916FTGMHUx39+1qjiwDukAHhRqI6DbSvjygA1AQzXfSeLnZjkHDFIPOq6Bu+PcTjh4IedpDirB3Rxc+tme6O1xckbCnZcRgIZTcQlAUdXwpu+swPuB4itmzI9Z5xrEs3sgLInv7hC2UKl2Ymel9q0=
+Received: by 10.114.130.1 with SMTP id c1mr793348wad.1174600687072;
+        Thu, 22 Mar 2007 14:58:07 -0700 (PDT)
+Received: by 10.114.193.4 with HTTP; Thu, 22 Mar 2007 14:58:07 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0703221358420.6730@woody.linux-foundation.org>
 Content-Disposition: inline
+X-Google-Sender-Auth: 4b994b2acce3ce8e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42884>
 
-Junio C Hamano a =E9crit :
-
-[...]
-
-> > +      # Check for really bad run error.
-> > +      if [ $res -lt 0 -o $res -ge 128 ]; then
-> > +	  echo >&2 "bisect run failed:"
-> > +	  echo >&2 "exit code $res from '$@' is < 0 or >=3D 128"
-> > +	  exit $res
-> > +      fi
+On 3/22/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
 >
-> I am not sure if this flexibility/leniency is desirable.  It
-> certainly allows a sloppily written shell script that exits with
-> any random small-positive values to report a badness, which may
-> be handy, but allowing sloppiness might lead to wasted time
-> after all.  I dunno.  A more strict convention that says the run
-> script should exit 1 to signal "bad, please continue", 0 for
-> "good, please continue" and other values for "no good, abort"
-> might be less error prone.
-
-Perhaps, but when running "git bisect run make" to automatically find t=
-he=20
-commit that broke the build, it would fail because make will usually re=
-turn=20
-2 in case of error.=20
-
-It seems that there are few standards for exit code, so whatever conven=
-tion=20
-we choose will not work in all cases.
-
-> In any case, the exit status convention needs documentation.
-
-Yes, I will work on it.
-
-[...]
-
-> > +      # Use "git-bisect good" or "git-bisect bad"
-> > +      # depending on run success or failure.
-> > +      # We cannot use bisect_good or bisect_bad functions
-> > +      # because they can exit.
-> > +      if [ $res -gt 0 ]; then
-> > +	  next_bisect=3D'git-bisect bad'
-> > +      else
-> > +	  next_bisect=3D'git-bisect good'
-> > +      fi
-> > +
-> > +      $next_bisect > "$GIT_DIR/BISECT_RUN"
 >
-> If their exiting, and possibly variable assignments, are the
-> only problem, you can run that in subshell, can't you?  Like:
+> On Thu, 22 Mar 2007, Junio C Hamano wrote:
 >
-> 	( $next_bisect >"$GIT_DIR/BISECT_RUN" )
+> > "Nikolai Weibull" <now@bitwi.se> writes:
+> >
+> > > I'm obviously doing something wrong, but in git 1.5.0.4
+> > >
+> > > % git check-ref-format abc
+> > > % echo $?
+> > > 1
+> > >
+> > > What am I missing here?
+> >
+> > If you are trying to see if abc is a valid branch name, try refs/heads/abc.
+>
+> .. and before anybody wonders why it wants the "fully qualified" name,
+> it's because "abc" on its own is ambiguous. Is it a _tag_ called "abc", or
+> a branch, or what? That explains why - if you really want to verify a
+> ref-name, you need to give the full name..
+>
+> On the other hand, if you don't care, and you just want "is this a valid
+> commit name", use
+>
+>         sha1=$(git rev-parse --verify "$name"^0) || exit
 
-You are right. I will submit an updated patch with this change and some=
-=20
-documentation.
+Thanks for the clarification.
 
-Thanks,
-Christian.
+What I was after was a way to verify that a name is a valid new name
+of a branch, for the Zsh completion definition in the context of
+git-checkout -b <new_branch>. [1]  After posting I realized that
+perhaps checking out the sources for git-checkout would enlighten me,
+which it did, as it uses git-check-ref-format "heads/$newbranch" to
+verify that the new branch's name  is valid.
+
+[1] It's not really going to try to complete anything here, but verify
+that the new branch's name is valid while the user types it in. [2]
+[2]  Hm, perhaps completing existing branch-names makes more sense,
+allowing the user to create a new branch-name based on an old one.
