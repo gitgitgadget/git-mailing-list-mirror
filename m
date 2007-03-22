@@ -1,185 +1,169 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [EGIT PATCH] Use the alternates links for finding objects
-Date: Thu, 22 Mar 2007 00:59:32 +0100
-Message-ID: <20070321235931.23981.41286.stgit@lathund.dewire.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Set up for better tree diff optimizations
+Date: Wed, 21 Mar 2007 17:00:27 -0700
+Message-ID: <7vd532ywo4.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0703181506570.6730@woody.linux-foundation.org>
+	<7vircv3wfc.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0703210812590.6730@woody.linux-foundation.org>
+	<7vslby1qvw.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0703211110050.6730@woody.linux-foundation.org>
+	<7vhcse1kpu.fsf@assigned-by-dhcp.cox.net>
+	<7vslbyz81b.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Thu Mar 22 00:57:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Mar 22 01:01:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUAgh-0007VA-0j
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 00:57:51 +0100
+	id 1HUAk2-0000Ym-03
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 01:01:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934095AbXCUX51 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 19:57:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934101AbXCUX51
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 19:57:27 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:3054 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S934095AbXCUX5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 19:57:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 033AB802860;
-	Thu, 22 Mar 2007 00:52:01 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 27725-10; Thu, 22 Mar 2007 00:52:00 +0100 (CET)
-Received: from lathund.dewire.com (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 7DEB3802657;
-	Thu, 22 Mar 2007 00:51:58 +0100 (CET)
-Received: from localhost (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id C6589296C8;
-	Thu, 22 Mar 2007 00:59:44 +0100 (CET)
-X-Virus-Scanned: amavisd-new at localhost.localdomain
-Received: from lathund.dewire.com ([127.0.0.1])
-	by localhost (lathund.dewire.com [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id BIzwSRmQCiU2; Thu, 22 Mar 2007 00:59:33 +0100 (CET)
-Received: from lathund.dewire.com (lathund.dewire.com [127.0.0.1])
-	by lathund.dewire.com (Postfix) with ESMTP id B5840291BB;
-	Thu, 22 Mar 2007 00:59:32 +0100 (CET)
-User-Agent: StGIT/0.12
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S965483AbXCVAAc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 20:00:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965493AbXCVAAb
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 20:00:31 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:41233 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965483AbXCVAA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 20:00:29 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070322000030.NJL2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 21 Mar 2007 20:00:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id dc0U1W00C1kojtg0000000; Wed, 21 Mar 2007 20:00:28 -0400
+In-Reply-To: <7vslbyz81b.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 21 Mar 2007 12:54:56 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42827>
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Junio C Hamano <junkio@cox.net> writes:
+
+> So this is the round #2, as a replacement patch of what I sent
+> earlier.  Once we know that there are pathspecs that sort later
+> than the current path, we can defer doing strncmp() and skip
+> that pathspec early by comparing length.  If the path is longer
+> than the spec, we can tell that it would never match without
+> comparing.
+
+And then this comes on top of #2.
+
+-- >8 --
+tree_entry_interesting(): allow it to say "everything is interesting"
+
+In addition to optimizing pathspecs that would never match which
+was done earlier, this optimizes pathspecs that would always
+match (e.g. "arch/" while the traversal is already in
+"arch/i386/" hierarchy).
+
+With this, the worst case become slightly more palatable, while
+improving average case.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+
 ---
 
- .../src/org/spearce/jgit/lib/Repository.java       |   58 +++++++++++++++++------
- 1 files changed, 44 insertions(+), 14 deletions(-)
+  For example, best-of-ten user times of
+  "rev-list HEAD -- $pathspec" in the eclipse repository for
+  various pathspecs are:
 
-diff --git a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-index f1999d1..d74da7c 100644
---- a/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-+++ b/org.spearce.jgit/src/org/spearce/jgit/lib/Repository.java
-@@ -39,7 +39,7 @@ public class Repository {
+  * .cvsignore (best path, earliest in the tree)
+    11.84 (without any optimization)
+     6.35 (with patch #2)
+     6.35 (with patch #2 and this patch)
+
+  * platform-launcher (worst path, last in the tree)
+    12.20 (without any optimization)
+    12.90 (with patch #2)
+    12.75 (with patch #2 and this patch)
+
+  * org.eclipse.platform.macosx.carbon-feature (middle in the tree)
+    12.02 (without any optimization)
+    10.52 (with patch #2)
+    10.43 (with patch #2 and this patch)
+
+  The kernel archive number is similar.  Limited to arch/i386 and
+  include/asm-i386, the numbers are:
+
+     1.18 (without any optimization)
+     1.11 (with patch #2)
+     1.10 (with patch #2 and this patch).
+
+ tree-diff.c |   33 ++++++++++++++++++++++++++++-----
+ 1 files changed, 28 insertions(+), 5 deletions(-)
+
+diff --git a/tree-diff.c b/tree-diff.c
+index 15fd665..852498e 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -70,7 +70,8 @@ static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *t2, const
+  * Is a tree entry interesting given the pathspec we have?
+  *
+  * Return:
+- *  - positive for yes
++ *  - 2 for "yes, and all subsequent entries will be"
++ *  - 1 for yes
+  *  - zero for no
+  *  - negative for "no, and no subsequent entries will be either"
+  */
+@@ -100,8 +101,11 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
+ 			if (strncmp(base, match, matchlen))
+ 				continue;
  
- 	private final File gitDir;
- 
--	private final File objectsDir;
-+	private final File[] objectsDirs;
- 
- 	private final File refsDir;
- 
-@@ -54,11 +54,17 @@ public class Repository {
- 
- 	public Repository(final File d) throws IOException {
- 		gitDir = d.getAbsoluteFile();
--		objectsDir = new File(gitDir, "objects");
-+		try {
-+			objectsDirs = (File[])readObjectsDirs(new File(gitDir, "objects"), new ArrayList()).toArray(new File[0]);
-+		} catch (IOException e) {
-+			IOException ex = new IOException("Cannot find all object dirs for " + gitDir);
-+			ex.initCause(e);
-+			throw ex;
-+		}
- 		refsDir = new File(gitDir, "refs");
- 		packs = new PackFile[0];
- 		config = new RepositoryConfig(this);
--		if (objectsDir.exists()) {
-+		if (objectsDirs[0].exists()) {
- 			getConfig().load();
- 			final String repositoryFormatVersion = getConfig().getString(
- 					"core", "repositoryFormatVersion");
-@@ -71,6 +77,19 @@ public class Repository {
+-			/* The base is a subdirectory of a path which was specified. */
+-			return 1;
++			/*
++			 * The base is a subdirectory of a path which
++			 * was specified, so all of them are interesting.
++			 */
++			return 2;
  		}
- 	}
  
-+	private Collection readObjectsDirs(File objectsDir, Collection ret) throws IOException {
-+		ret.add(objectsDir);
-+		File alternatesFile = new File(objectsDir,"info/alternates");
-+		if (alternatesFile.exists()) {
-+			BufferedReader ar = new BufferedReader(new FileReader(alternatesFile));
-+			for (String alt=ar.readLine(); alt!=null; alt=ar.readLine()) {
-+				readObjectsDirs(new File(alt), ret);
-+			}
-+			ar.close();
-+		}
-+		return ret;
-+	}
+ 		/* Does the base match? */
+@@ -173,8 +177,18 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
+ /* A whole sub-tree went away or appeared */
+ static void show_tree(struct diff_options *opt, const char *prefix, struct tree_desc *desc, const char *base, int baselen)
+ {
++	int all_interesting = 0;
+ 	while (desc->size) {
+-		int show = tree_entry_interesting(desc, base, baselen, opt);
++		int show;
 +
- 	public void create() throws IOException {
- 		if (gitDir.exists()) {
- 			throw new IllegalStateException("Repository already exists: "
-@@ -79,9 +98,9 @@ public class Repository {
- 
- 		gitDir.mkdirs();
- 
--		objectsDir.mkdirs();
--		new File(objectsDir, "pack").mkdir();
--		new File(objectsDir, "info").mkdir();
-+		objectsDirs[0].mkdirs();
-+		new File(objectsDirs[0], "pack").mkdir();
-+		new File(objectsDirs[0], "info").mkdir();
- 
- 		refsDir.mkdir();
- 		new File(refsDir, "heads").mkdir();
-@@ -106,7 +125,7 @@ public class Repository {
- 	}
- 
- 	public File getObjectsDirectory() {
--		return objectsDir;
-+		return objectsDirs[0];
- 	}
- 
- 	public RepositoryConfig getConfig() {
-@@ -119,7 +138,14 @@ public class Repository {
- 
- 	public File toFile(final ObjectId objectId) {
- 		final String n = objectId.toString();
--		return new File(new File(objectsDir, n.substring(0, 2)), n.substring(2));
-+		String d=n.substring(0, 2);
-+		String f=n.substring(2);
-+		for (int i=0; i<objectsDirs.length; ++i) {
-+			File ret = new File(new File(objectsDirs[i], d), f);
-+			if (ret.exists())
-+				return ret;
++		if (all_interesting)
++			show = 1;
++		else {
++			show = tree_entry_interesting(desc, base, baselen,
++						      opt);
++			if (show == 2)
++				all_interesting = 1;
 +		}
-+		return new File(new File(objectsDirs[0], d), f);
- 	}
+ 		if (show < 0)
+ 			break;
+ 		if (show)
+@@ -215,8 +229,17 @@ static void show_entry(struct diff_options *opt, const char *prefix, struct tree
  
- 	public boolean hasObject(final ObjectId objectId) {
-@@ -291,7 +317,15 @@ public class Repository {
- 	}
- 
- 	public void scanForPacks() {
--		final File packDir = new File(objectsDir, "pack");
-+		final ArrayList p = new ArrayList();
-+		for (int i=0; i<objectsDirs.length; ++i)
-+			scanForPacks(new File(objectsDirs[i], "pack"), p);
-+		final PackFile[] arr = new PackFile[p.size()];
-+		p.toArray(arr);
-+		packs = arr;
-+	}
+ static void skip_uninteresting(struct tree_desc *t, const char *base, int baselen, struct diff_options *opt)
+ {
++	int all_interesting = 0;
+ 	while (t->size) {
+-		int show = tree_entry_interesting(t, base, baselen, opt);
++		int show;
 +
-+	public void scanForPacks(final File packDir, Collection packList) {
- 		final File[] list = packDir.listFiles(new FileFilter() {
- 			public boolean accept(final File f) {
- 				final String n = f.getName();
-@@ -304,18 +338,14 @@ public class Repository {
- 						&& idx.canRead();
- 			}
- 		});
--		final ArrayList p = new ArrayList(list.length);
- 		for (int k = 0; k < list.length; k++) {
- 			try {
--				p.add(new PackFile(this, list[k]));
-+				packList.add(new PackFile(this, list[k]));
- 			} catch (IOException ioe) {
- 				// Whoops. That's not a pack!
- 				//
- 			}
- 		}
--		final PackFile[] arr = new PackFile[p.size()];
--		p.toArray(arr);
--		packs = arr;
- 	}
- 
- 	private void writeSymref(final String name, final String target)
++		if (all_interesting)
++			show = 1;
++		else {
++			show = tree_entry_interesting(t, base, baselen, opt);
++			if (show == 2)
++				all_interesting = 1;
++		}
+ 		if (!show) {
+ 			update_tree_entry(t);
+ 			continue;
