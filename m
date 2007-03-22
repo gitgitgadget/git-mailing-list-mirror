@@ -1,78 +1,90 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: My git repo is broken, how to fix it ?
-Date: Thu, 22 Mar 2007 12:34:02 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703221215150.18328@xanadu.home>
+Date: Thu, 22 Mar 2007 09:48:30 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703220931120.6730@woody.linux-foundation.org>
 References: <200702281036.30539.litvinov2004@gmail.com>
- <Pine.LNX.4.64.0703200832150.6730@woody.linux-foundation.org>
  <Pine.LNX.4.64.0703200836490.6730@woody.linux-foundation.org>
- <200703210956.50018.litvinov2004@gmail.com>
- <Pine.LNX.4.64.0703220847540.6730@woody.linux-foundation.org>
+ <200703210956.50018.litvinov2004@gmail.com> <200703211024.04740.litvinov2004@gmail.com>
+ <Pine.LNX.4.64.0703220858400.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703220924590.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Alexander Litvinov <litvinov2004@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Mar 22 17:34:11 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Alexander Litvinov <litvinov2004@gmail.com>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 22 17:48:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUQEq-00076i-RO
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 17:34:09 +0100
+	id 1HUQSu-0005cv-5H
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 17:48:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934103AbXCVQeF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 12:34:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934112AbXCVQeF
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 12:34:05 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18639 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934103AbXCVQeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 12:34:04 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFB00DW9COQGT10@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 22 Mar 2007 12:34:03 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0703220847540.6730@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S934117AbXCVQsh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 12:48:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934118AbXCVQsg
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 12:48:36 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:39152 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934117AbXCVQsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 12:48:36 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2MGmWG9010134
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 22 Mar 2007 09:48:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2MGmVhk024860;
+	Thu, 22 Mar 2007 09:48:31 -0700
+In-Reply-To: <Pine.LNX.4.64.0703220924590.6730@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-0.47 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.176 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42866>
+
+
 
 On Thu, 22 Mar 2007, Linus Torvalds wrote:
+> 
+> Yeehaa! I think I'm on the right trail.
 
-> Ok, apart from #1, those should be in current -git now, along with better 
-> validation checks (by Nico) when packing. So hopefully at least when there 
-> is corruption in a loose object, we will now always notice when we do a 
-> "git repack", and will never generate a broken pack-file. Knock wood.
+.. and the reason only Alexander sees it, and nobody else does, is that 
+this one is a bug in the CR/LF creation. 
 
-Not yet actually.  What I did do is to make index-pack perform more 
-validation and ensure it never accept SHA1 collisions.
+Junio: I think it's your git-apply commit 67160271.
 
-For the repack case... I think there should be a better way.  Either we 
-revalidate the full SHA1 which would be expensive as we'd basically lose 
-most advantages of direct pack data copy.
+In "try_create_file()", we do:
 
-What I'm pondering is some sort of lightweight checksum like adler32 for 
-object data in the pack but stored in the index.  Since index-pack 
-already perform the full SHA1 already, it could as well provide a 
-checksum for the raw pack object data for the repack case.  Currently we 
-try to validate reused pack data by attempting an inflate pass on the 
-object payload, but that doesn't validate the object type nor the 
-reference SHA1 to delta base objects which could get corrupted and 
-copied without noticing into another pack.
+	...
+        if (convert_to_working_tree(path, &nbuf, &nsize)) {
+                free((char *) buf);
+                buf = nbuf;
+                size = nsize;
+        }
+	...
 
-> Of course, I actually wonder if the bug might be in your version of zlib 
-> (miscompiled or some other thing), in which case *any* amount of 
-> pre-validation won't really help, because it will become corrupted when we 
-> deflate it prior to writing. For example, if "deflateBound()" sometimes 
-> doesn't give a valid upper bound and we allocate too little space..
+but the thing is, the *caller* still uses the old "buf/nsize", so when you 
+free it, the caller will now use the free'd data structure, and if it gets 
+re-used by - for example - the zlib deflate() buffers, you'll get a 
+corrupt object (if it gets re-used *before*, you'll get the *wrong* 
+object!). Exactly Alexander's patterns.
 
-Well, since we provide the size of the allocated output buffer to zlib 
-it would be seriously broken if it overflowed it.  Also zlib perform a 
-checksum verification of the deflated data if I remember correctly.  So 
-it seems to me that zlib should be quite self validating already.
+Alexander - sorry for all the trouble, this was definitely our bad.
 
+I think the easy temporary fix is to just remove that "free()" and leak a 
+bit of memory. That gets it through that test with efence for me.
 
-Nicolas
+Does that fix it for you, Alexander?
+
+I can't really say whether there are other problems too - electric fence 
+has a few bugs in that it considers zero-length allocations to be 
+"probably a bug" and aborts. This makes some of the tests fail with 
+efence, when re_compile_internal wants to allocate a zero-length object.
+
+(It also writes crap to stderr, which could make others fail, I didn't 
+check).
+
+		Linus
