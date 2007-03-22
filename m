@@ -1,95 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] bisect: show the maximal number of commits to be tested
-Date: Thu, 22 Mar 2007 03:15:20 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703220314440.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070317141209.GA7838@cepheus>
- <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070317195840.GA20735@informatik.uni-freiburg.de> <20070321210454.GA2844@lala>
- <Pine.LNX.4.64.0703211521290.6730@woody.linux-foundation.org>
- <Pine.LNX.4.63.0703220240590.4045@wbgn013.biozentrum.uni-wuerzburg.de>
- <7vhcsexcc3.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Rename handling
+Date: Thu, 22 Mar 2007 14:39:38 +1200
+Message-ID: <46a038f90703211939j15dbda4cpfa2f49229b8c16cb@mail.gmail.com>
+References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org>
+	 <4601B199.9060300@midwinter.com>
+	 <46a038f90703211710q168a691cpa282f8e2afc5c8a6@mail.gmail.com>
+	 <200703220301.41180.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-1202942512-1174529720=:4045"
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Uwe =?utf-8?Q?Kleine-?= =?utf-8?Q?K=C3=B6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 22 03:15:36 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Steven Grimm" <koreth@midwinter.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 03:39:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUCq0-0001MH-7z
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 03:15:36 +0100
+	id 1HUDDK-0004Kr-RQ
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 03:39:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750974AbXCVCPW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 22:15:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751856AbXCVCPW
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 22:15:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58937 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751004AbXCVCPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 22:15:22 -0400
-Received: (qmail invoked by alias); 22 Mar 2007 02:15:20 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp031) with SMTP; 22 Mar 2007 03:15:20 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+je79W92ejM2BG+fJv5AuChcMDxtrk6LHVUtBEfi
-	/Tr+30BMxqw0KK
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vhcsexcc3.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1753224AbXCVCjk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 22:39:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226AbXCVCjk
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 22:39:40 -0400
+Received: from wx-out-0506.google.com ([66.249.82.238]:18084 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753224AbXCVCjj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 22:39:39 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so619623wxd
+        for <git@vger.kernel.org>; Wed, 21 Mar 2007 19:39:38 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UmtvABNgXATgaAXb1vP8QLG77Uvfs+/3+zFjb0tbPgSPhe2XMqLzjx2KUJesFce1YzynTRIJdTd1EFeLi6EAEHI9X12Po89Y2AY6ul56Y8kXMN9f4bIvrtlgLvVIsfOPeqI7XLBPiZcIFl55sgtj7aOWovvxDGnl9WJvHp8OOD4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bIhiWD2gPvNzIIzLdyA2BGqC7u+Ql+FHhZ0GuIF85k25K37Pg1CCieFYbwyvISc1i9iesOoWLVXL7yqwnVfUEN1BFGTvn2W4Er+b+IynpxTjol8OaUIhGld0CLgcNG4HEV/ll/7AkuduTykFE97+HbuABULWDnjo8xm/fpYIE2Y=
+Received: by 10.90.71.3 with SMTP id t3mr3022121aga.1174531178641;
+        Wed, 21 Mar 2007 19:39:38 -0700 (PDT)
+Received: by 10.90.52.17 with HTTP; Wed, 21 Mar 2007 19:39:38 -0700 (PDT)
+In-Reply-To: <200703220301.41180.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42834>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 3/22/07, Jakub Narebski <jnareb@gmail.com> wrote:
+> Additional issue that we have to think about with respect to rename
+> support for merges is that git uses 3-way merge, taking into account
+> _only_ upstream commit (of the branch we want to merge to), side branch
+> commit (of the branch we want to merge) and common ancestor[*1*]
+> (merge base) for merging. What is important is that the intermediate
+> states, how we got to the current state, does not matter.
+>
+> Well, one could argue that if we remember explicit (provided by user)
+> info about renames for example in proposed 'note' field of a commit
+> object, or in other helper structure (we cannot remember the information
+> in blob or tree), we can gather and remember information about recorded
+> explicit renames when finding common ancestor...
 
----1148973799-1202942512-1174529720=:4045
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+But we do have some of that already - if one trees being merged is
+missing a path that changed on the other one, we walk back on the
+ancestry looking for renames.
 
-Hi,
+Or am I seeing things?
 
-On Wed, 21 Mar 2007, Junio C Hamano wrote:
+> Still, it would be nice to have --follow=<file> option to git-log family,
+> besides path limiting.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > Since git-bisect already asks rev-list to find the midpoint (and rev-list
-> > consequently counts the number of commits), rev-list can pass it the
-> > maximal number of commits.
-> >
-> > As a bonus, this avoids an extra call to rev-list.
-> >
-> > Miscalculation noticed by Uwe, implementation suggested by Linus.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >
-> > 	On Wed, 21 Mar 2007, Linus Torvalds wrote:
-> >
-> > 	> On Wed, 21 Mar 2007, Uwe Kleine-König wrote:
-> > 	> >
-> > 	> > Up to now the number printed was calculated assuming that the 
-> > 	> > current revision to test is bad.  Given that it's not possible 
-> > 	> > that this always matches the number of suspicious revs if the 
-> > 	> > current one is good, the maximum of both is taken now.
-> > 	> 
-> > 	> How about adding a new flag to "git-rev-list", to make it count 
-> > 	> both ways?
-> >
-> > 	Did I understand you correctly?
-> 
-> Why not show both, or at least total?
-> 
-> This and the earlier optimization patch steps on each others
-> toes, ouch ;-).
++1 here - git log should have something equivalent to diff's -M. When
+the file "disappears", run a diff-tree -M -C against the parents to
+see whether there were any "related predecessors" to the file to add
+to the pathspec. Of course, there could be more than one.
 
-Yes... on both accounts. I'll let your patches settle first, and resubmit.
+For example, right now, git log git-cvsimport.perl ends at the big tool rename.
 
-Ciao,
-Dscho
+cheers,
 
----1148973799-1202942512-1174529720=:4045--
+
+martin
