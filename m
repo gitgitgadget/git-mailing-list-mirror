@@ -1,109 +1,68 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] have merge put FETCH_HEAD data in commit message
-Date: Thu, 22 Mar 2007 01:21:28 -0700
-Message-ID: <7vlkhpvgc7.fsf@assigned-by-dhcp.cox.net>
-References: <20070321120643.GI20583@mellanox.co.il>
-	<7v648u38ws.fsf@assigned-by-dhcp.cox.net>
-	<20070322043604.GA6303@mellanox.co.il>
-	<7vd531yicx.fsf@assigned-by-dhcp.cox.net>
-	<20070322062805.GD6303@mellanox.co.il>
-	<7vaby5wxyn.fsf@assigned-by-dhcp.cox.net>
-	<20070322074051.GA29341@mellanox.co.il>
+Date: Thu, 22 Mar 2007 04:33:31 -0400
+Message-ID: <20070322083330.GA16915@segfault.peff.net>
+References: <20070321120643.GI20583@mellanox.co.il> <7v648u38ws.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Thu Mar 22 09:21:36 2007
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 22 09:33:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUIYB-0002X3-SW
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 09:21:36 +0100
+	id 1HUIjO-0000Mg-Ry
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 09:33:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753162AbXCVIVc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 04:21:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753188AbXCVIVc
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 04:21:32 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:48253 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753162AbXCVIVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 04:21:30 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070322082129.HWTU2807.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 22 Mar 2007 04:21:29 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id dkMU1W00o1kojtg0000000; Thu, 22 Mar 2007 04:21:29 -0400
-In-Reply-To: <20070322074051.GA29341@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Thu, 22 Mar 2007 09:41:13 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965850AbXCVIdG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 04:33:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965854AbXCVIdG
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 04:33:06 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2632 "HELO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965850AbXCVIdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 04:33:05 -0400
+Received: (qmail 16935 invoked by uid 1000); 22 Mar 2007 04:33:31 -0400
+Content-Disposition: inline
+In-Reply-To: <7v648u38ws.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42847>
 
-"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
+On Wed, Mar 21, 2007 at 08:37:07AM -0700, Junio C Hamano wrote:
 
->> Quoting Junio C Hamano <junkio@cox.net>:
->> Subject: Re: [PATCH] have merge put FETCH_HEAD data in commit message
->> 
->> "Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
->> 
->> > BTW, is there some way to figure it out besides looking at the code
->> > or grepping git archives?
->> 
->> Like SubmittingPatches?
->
-> SubmittingPatches is for people contributing to git.
-> But how are *users* of git-am supposed to figure it out?
+> I often hear from people who seems to like "fetch & merge",
+> instead of "pull & reset ORIG_HEAD", as a workflow to avoid
+> undesirable merging.  This might largely be a matter of taste,
+> but from philosophical point of view, fetch & merge is a sign of
+> distrust (your default is not to merge, and you merge only when
+> you choose to), and pull & reset is the opposite (your default
+> is to merge, and after you inspect you may choose not to merge).
+> Tool support to encourage the former feels somewhat wrong.
 
-(1) SubmittingPatches describes the git project policy on patch
-    formatting, which happens to be similar to the kernel
-    project.
+I don't think it necessarily means distrust; I always do a fetch +
+inspect + merge, and I am often fetching my own code to a different
+platform!
 
-(2) Users of git-am, git-format-patch and friends in general are
-    not bound by SubmittingPatches, unless they are contributing
-    to the git project.  As the policy differs from project to
-    project, there is nothing authoritative in git documentation
-    set, nor there should be anything stronger than merely our
-    recommendation.  Yes, SubmittingPatches could be used as one
-    potential BCP that is managed with git, but we are not in
-    any position to impose that to other projects.  In other
-    words, *users* of git-am are not supposed to figure it out.
-    They will not find *their* project policy from git
-    documentation, unless their project happens to be the git
-    project.
+My reason is that the inspect step takes an arbitrary amount of time,
+and I don't want to lose my place. That is, I might go eat dinner in the
+middle of the 'inspect' and then come back. By using my branch head as a
+checkpoint, I am recording "I have inspected up to my master"; when I am
+done inspecting, the merge moves my checkpoint forward. That way I never
+fail to look over the commits; I don't do this out of distrust, but
+because I want to see all of the commits.
 
-(3) However, we are discussing your patch to support "git merge
-    FETCH_HEAD" better, which I took as your contribution to the
-    git project.  I asked you to follow the project policy for
-    your contribution, and pointed at the document that
-    describes the policy.
+I could just use FETCH_HEAD, but it is easy to overwrite accidentally
+(if I do another git-fetch after dinner, not realizing I'm in the middle
+of an inspection already, or if I'm looking to grab more changes). I
+could also use the reflog, but it will also change if I fetch again in
+the middle.
 
-Clear?
+Of course, I use this for small-ish projects like git, or personal
+projects. I don't think trying to glance over every commit to the kernel
+would be scalable.
 
-I think your patch means well, and when polished it might be a
-valuable addition.  "Hi!" and "Would the following be
-appropriate?" are the least of the problems I pointed out, but
-to clear the dust, let's finish them with responses: "Hi to
-you!", and "Yes, what the patch tries to do looks very nice, but
-there are a few issues I would want you to resolve" ;-).
-
-To reiterate the more important points (this is also for my own
-purpose because I do not want the patch lost in this noise we
-are making):
-
- - Checking readability of $GIT_DIR/$remote itself is too loose;
-   the name FETCH_HEAD should explicitly be checked, as that is
-   the file that has the specific format that is understood by
-   fmt-merge-msg.
-
- - "echo -n" is to be avoided for portability.
-
- - "git fetch $URL foo bar" would leave two lines in FETCH_HEAD;
-   subsequent "git merge FETCH_HEAD" would merge only foo.  Pick
-   the first line, stripping out not-for-merge marker and let it
-   processed by fmt-merge-msg.
+-Peff
