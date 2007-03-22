@@ -1,68 +1,54 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: My git repo is broken, how to fix it ?
-Date: Thu, 22 Mar 2007 13:28:55 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703221327370.18328@xanadu.home>
-References: <200702281036.30539.litvinov2004@gmail.com>
- <Pine.LNX.4.64.0703200836490.6730@woody.linux-foundation.org>
- <200703210956.50018.litvinov2004@gmail.com>
- <200703211024.04740.litvinov2004@gmail.com>
- <Pine.LNX.4.64.0703220858400.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703220924590.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703220931120.6730@woody.linux-foundation.org>
- <alpine.LFD.0.83.0703221257020.18328@xanadu.home>
- <Pine.LNX.4.64.0703221006360.6730@woody.linux-foundation.org>
+From: Bernt Hansen <bernt@norang.ca>
+Subject: Re: emacs and git...
+Date: Thu, 22 Mar 2007 13:19:35 -0400
+Organization: Norang Consulting Inc
+Message-ID: <878xdp9owo.fsf@gollum.intra.norang.ca>
+References: <38b2ab8a0703220753s67809e87l76ffc57adb725898@mail.gmail.com>
+	<86lkhpmftt.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Alexander Litvinov <litvinov2004@gmail.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Mar 22 18:29:20 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 22 18:30:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUR6A-0008IF-3B
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 18:29:14 +0100
+	id 1HUR7R-0000St-HB
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 18:30:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934136AbXCVR25 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 13:28:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934144AbXCVR25
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 13:28:57 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:50199 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934136AbXCVR24 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 13:28:56 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFB00A86F87EKE0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 22 Mar 2007 13:28:56 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0703221006360.6730@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S934148AbXCVRaT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 13:30:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934150AbXCVRaS
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 13:30:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:45758 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934148AbXCVRaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 13:30:14 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1HUR6v-0007nq-UJ
+	for git@vger.kernel.org; Thu, 22 Mar 2007 18:30:02 +0100
+Received: from cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com ([74.119.210.211])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Mar 2007 18:30:01 +0100
+Received: from bernt by cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 22 Mar 2007 18:30:01 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cpe000102d0fe75-cm0012256ecbde.cpe.net.cable.rogers.com
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/22.0.95 (gnu/linux)
+Cancel-Lock: sha1:J6YdY3EI2XI3WEG/DWzby/cX3GU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42872>
 
-On Thu, 22 Mar 2007, Linus Torvalds wrote:
+I use M-x term instead of shell mode to interact with git.  That works
+fine for me.
 
-> On Thu, 22 Mar 2007, Nicolas Pitre wrote:
-> 
-> > On Thu, 22 Mar 2007, Linus Torvalds wrote:
-> > 
-> > > I can't really say whether there are other problems too - electric fence 
-> > > has a few bugs in that it considers zero-length allocations to be 
-> > > "probably a bug" and aborts. This makes some of the tests fail with 
-> > > efence, when re_compile_internal wants to allocate a zero-length object.
-> > 
-> > You can tell it not to abort on zero-length allocations by setting the 
-> > EF_ALLOW_MALLOC_0 environment variable to 1.
-> 
-> Ahh,that gets me further, but then it bombs out on the added error 
-> messages. Is there something for that braindamage too?
-
-The efence man page doesn't mention any.
-
-
-Nicolas
+C-c C-j and C-c C-k switches between line and character mode so the
+regular emacs control sequences are not sent directly to the term
+session.
+ 
+-Bernt
