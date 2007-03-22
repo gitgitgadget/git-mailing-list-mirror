@@ -1,227 +1,120 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] bisect: show the maximal number of commits to be tested
-Date: Thu, 22 Mar 2007 02:43:18 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703220240590.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070317141209.GA7838@cepheus>
- <Pine.LNX.4.63.0703171845541.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <20070317195840.GA20735@informatik.uni-freiburg.de> <20070321210454.GA2844@lala>
- <Pine.LNX.4.64.0703211521290.6730@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Rename handling
+Date: Thu, 22 Mar 2007 03:01:39 +0100
+Message-ID: <200703220301.41180.jnareb@gmail.com>
+References: <slrnevtdfh.v0v.jgoerzen@katherina.lan.complete.org> <4601B199.9060300@midwinter.com> <46a038f90703211710q168a691cpa282f8e2afc5c8a6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148973799-917082937-1174527798=:4045"
-Cc: =?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Mar 22 02:43:26 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Steven Grimm" <koreth@midwinter.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Martin Langhoff" <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Mar 22 02:59:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUCKr-0004Be-Bs
-	for gcvg-git@gmane.org; Thu, 22 Mar 2007 02:43:25 +0100
+	id 1HUCZz-0002Ye-1S
+	for gcvg-git@gmane.org; Thu, 22 Mar 2007 02:59:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751220AbXCVBnW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 21 Mar 2007 21:43:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751334AbXCVBnV
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 21:43:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40107 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751220AbXCVBnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Mar 2007 21:43:20 -0400
-Received: (qmail invoked by alias); 22 Mar 2007 01:43:18 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp052) with SMTP; 22 Mar 2007 02:43:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+gTywpDaGgg+epjN73p7tjAk0/mhgoh8Vp1cY5wK
-	1zm+7qqbzx6559
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0703211521290.6730@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1753043AbXCVB6r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 21 Mar 2007 21:58:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753054AbXCVB6r
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Mar 2007 21:58:47 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:34874 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753026AbXCVB6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Mar 2007 21:58:46 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so547482uga
+        for <git@vger.kernel.org>; Wed, 21 Mar 2007 18:58:45 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=cz/pCA3Or4kbBsKFZphdB3O5qn6SrM4Pei7BYtSQNDo3HTIsHItqE/SWAvvWiljU/FousT3jN6xZu+Mot6CQ2x8Mdv8Ql7dgVffhn/1lid59zmPLt/Fn6iILdmKwxe13XNUYCEdGsrQUp4zhIdgUmcPvbvBiWgEBxLP0w3vj3DM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=f3CUO2mWSPKW4Fle25vrbcsNbVhdVj7nBfE0HFD6HNhEw+in3lmQJV1sPTAKezw47TJWHEevwteYxHW/Vu7RvXSrqEaxlJC+9P3Da+W++DW3PZcjGwuG2MLiG9WWjCYnIyokk5Ahh0v7cRs28rQWbg2/JZ8O8XwzStSpb2ArLQc=
+Received: by 10.66.225.1 with SMTP id x1mr4062317ugg.1174528724803;
+        Wed, 21 Mar 2007 18:58:44 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id g8sm407730muf.2007.03.21.18.58.42;
+        Wed, 21 Mar 2007 18:58:43 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <46a038f90703211710q168a691cpa282f8e2afc5c8a6@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42831>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Martin Langhoff wrote:
+> On 3/22/07, Steven Grimm <koreth@midwinter.com> wrote:
+>>
+>> Say you're tracking a directory full of video files. Even a slight tweak
+>> to one of them (to put a logo in the corner, say, while moving it into
+>> an "accessible by the public" directory) will result in a file that has
+>> no content in common at all if you look at it as purely a stream of
+> 
+> In that case, tracking the rename is not useful at all from the POV of
+> your SCM. The  reason the SCM needs to understand content-movement (of
+> which renames are a special type), it to help you as much as possible
+> at merge time.
+> 
+> So - git as an SCM focusses on tracking your content, and helping you
+> merge. It does _that_ probably better than any other SCM. So git
+> internat data structures care strictly about the stuff that is needed
+> for git's operation as an SCM.
+> 
+> And in the context of helping you merge, explicit rename tracking is a
+> red-herring. This point is arguable - Linus said earlier "you can do
+> better by tracking content and ignoring explicit renames" and we are
+> now getting there in terms of having code that does better.
 
----1148973799-917082937-1174527798=:4045
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: 8BIT
+Additional issue that we have to think about with respect to rename
+support for merges is that git uses 3-way merge, taking into account
+_only_ upstream commit (of the branch we want to merge to), side branch
+commit (of the branch we want to merge) and common ancestor[*1*] 
+(merge base) for merging. What is important is that the intermediate
+states, how we got to the current state, does not matter.
+
+Well, one could argue that if we remember explicit (provided by user)
+info about renames for example in proposed 'note' field of a commit
+object, or in other helper structure (we cannot remember the information
+in blob or tree), we can gather and remember information about recorded
+explicit renames when finding common ancestor...
+
+Although I think it would be better and easier to just provide rerere2
+cache to git-rerere to record corrections to rename detection, and use
+it in subsequent merges (this was proposed, but IIRC not implemented)...
+
+> Of course in your case the fact that there was a rename is important
+> -- for users. This kind of information is not metadata for the SCM but
+> for users. So that goes into the commit message, which is freeform. So
+> - working with your scenario, if this happens often, I would suggest
+> having a pre-commit hook that prepares a nice commit text message
+> listing likely renames if they can be sussed out automatically.
+> 
+> Or having a custom git-mv that collects mv operations and then your
+> pre-commit-hook preps your commit message with that manifest of moved
+> files.
+> 
+> Does it make sense? It is data-for-the-user, so it goes in the commit
+> msg. If it's data-for-the-SCM machinery, then it goes into the
+> tracking data git handles internally.
+
+Still, it would be nice to have --follow=<file> option to git-log family,
+besides path limiting. And this could have take use of explicit recording
+of renames (much easier than merge can).
 
 
-Since git-bisect already asks rev-list to find the midpoint (and rev-list
-consequently counts the number of commits), rev-list can pass it the
-maximal number of commits.
+References
+==========
+[*1*] Well, it can be a bit more complicated if there is more than one
+common ancestor; git uses recursive merge strategy.
 
-As a bonus, this avoids an extra call to rev-list.
-
-Miscalculation noticed by Uwe, implementation suggested by Linus.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	On Wed, 21 Mar 2007, Linus Torvalds wrote:
-
-	> On Wed, 21 Mar 2007, Uwe Kleine-König wrote:
-	> >
-	> > Up to now the number printed was calculated assuming that the 
-	> > current revision to test is bad.  Given that it's not possible 
-	> > that this always matches the number of suspicious revs if the 
-	> > current one is good, the maximum of both is taken now.
-	> 
-	> How about adding a new flag to "git-rev-list", to make it count 
-	> both ways?
-
-	Did I understand you correctly?
-
- Documentation/git-rev-list.txt |    8 ++++++++
- builtin-rev-list.c             |   40 +++++++++++++++++++++++++++++++++-------
- git-bisect.sh                  |    7 +++----
- 3 files changed, 44 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 4f145ea..5f6f2a3 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -26,6 +26,7 @@ SYNOPSIS
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
- 	     [ \--pretty | \--header ]
- 	     [ \--bisect ]
-+	     [ \--bisect-vars ]
- 	     [ \--merge ]
- 	     [ \--reverse ]
- 	     [ \--walk-reflogs ]
-@@ -249,6 +250,13 @@ introduces a regression is thus reduced to a binary search: repeatedly
- generate and test new 'midpoint's until the commit chain is of length
- one.
- 
-+--bisect-vars::
-+
-+This calculates the same as --bisect, but outputs a line ready to be
-+eval'ed by the shell. This line will assign the name of the midpoint
-+revision to the variable 'rev', and the maximal number of commits to
-+be tested after this revision to 'nr'.
-+
- --
- 
- Commit Ordering
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index c2db5a5..b653975 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -36,12 +36,12 @@ static const char rev_list_usage[] =
- "    --abbrev=nr | --no-abbrev\n"
- "    --abbrev-commit\n"
- "  special purpose:\n"
--"    --bisect"
-+"    --bisect\n"
-+"    --bisect-vars"
- ;
- 
- static struct rev_info revs;
- 
--static int bisect_list;
- static int show_timestamp;
- static int hdr_termination;
- static const char *header_prefix;
-@@ -168,7 +168,8 @@ static void clear_distance(struct commit_list *list)
- 	}
- }
- 
--static struct commit_list *find_bisection(struct commit_list *list)
-+static struct commit_list *find_bisection(struct commit_list *list,
-+	int *nr_bad, int *nr_good)
- {
- 	int nr, closest;
- 	struct commit_list *p, *best;
-@@ -198,8 +199,20 @@ static struct commit_list *find_bisection(struct commit_list *list)
- 			closest = distance;
- 		}
- 	}
--	if (best)
-+	if (best) {
- 		best->next = NULL;
-+		/*
-+		 * The variable nr_bad holds the number of revisions
-+		 * to be tested if "best" is marked as bad, and nr_good
-+		 * the number if "best" is marked as good.
-+		 *
-+		 * Since the given range is <good>..<bad>, we have to
-+		 * subtract one, because both <good> and <bad> were
-+		 * already tested.
-+		 */
-+		*nr_bad = nr - closest - 1;
-+		*nr_good = closest - 1;
-+	}
- 	return best;
- }
- 
-@@ -224,7 +237,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- {
- 	struct commit_list *list;
- 	int i;
--	int read_from_stdin = 0;
-+	int read_from_stdin = 0, bisect_list = 0, bisect_show_vars = 0;
- 
- 	git_config(git_default_config);
- 	init_revisions(&revs, prefix);
-@@ -247,6 +260,11 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 			bisect_list = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--bisect-vars")) {
-+			bisect_list = 1;
-+			bisect_show_vars = 1;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--stdin")) {
- 			if (read_from_stdin++)
- 				die("--stdin given twice?");
-@@ -285,8 +303,16 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	if (revs.tree_objects)
- 		mark_edges_uninteresting(revs.commits, &revs, show_edge);
- 
--	if (bisect_list)
--		revs.commits = find_bisection(revs.commits);
-+	if (bisect_list) {
-+		int nr_bad = 0, nr_good = 0;
-+		revs.commits = find_bisection(revs.commits, &nr_bad, &nr_good);
-+		if (bisect_show_vars) {
-+			printf("rev=%s;nr=%d;\n", !revs.commits ? "" :
-+				sha1_to_hex(revs.commits->item->object.sha1),
-+				nr_bad > nr_good ? nr_bad : nr_good);
-+			return 0;
-+		}
-+	}
- 
- 	traverse_commit_list(&revs, show_commit, show_object);
- 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index b1c3a6b..cd5e3c9 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -138,9 +138,9 @@ bisect_next() {
- 	bisect_autostart
- 	bisect_next_check fail
- 	bad=$(git-rev-parse --verify refs/bisect/bad) &&
--	good=$(git-rev-parse --sq --revs-only --not \
--		$(cd "$GIT_DIR" && ls refs/bisect/good-*)) &&
--	rev=$(eval "git-rev-list --bisect $good $bad -- $(cat $GIT_DIR/BISECT_NAMES)") || exit
-+	good=$(git-rev-parse --revs-only --not \
-+		$(cd "$GIT_DIR" && ls refs/bisect/good-*)) || exit
-+	eval "$(git-rev-list --bisect-vars $good $bad -- $(cat $GIT_DIR/BISECT_NAMES))" || exit
- 	if [ -z "$rev" ]; then
- 	    echo "$bad was both good and bad"
- 	    exit 1
-@@ -150,7 +150,6 @@ bisect_next() {
- 	    git-diff-tree --pretty $rev
- 	    exit 0
- 	fi
--	nr=$(eval "git-rev-list $rev $good -- $(cat $GIT_DIR/BISECT_NAMES)" | wc -l) || exit
- 	echo "Bisecting: $nr revisions left to test after this"
- 	echo "$rev" > "$GIT_DIR/refs/heads/new-bisect"
- 	git checkout -q new-bisect || exit
 -- 
-1.5.1.rc1.2306.g3d2f
-
----1148973799-917082937-1174527798=:4045--
+Jakub Narebski
+Poland
