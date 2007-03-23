@@ -1,76 +1,77 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Re: Errors pushing tags in "next"
-Date: Fri, 23 Mar 2007 02:43:31 -0700 (PDT)
-Message-ID: <884930.67488.qm@web31803.mail.mud.yahoo.com>
-References: <7vps70qpx8.fsf@assigned-by-dhcp.cox.net>
-Reply-To: ltuikov@yahoo.com
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: emacs and git...
+Date: Fri, 23 Mar 2007 10:54:51 +0100
+Message-ID: <38b2ab8a0703230254x585ff89fp3e425b08cac56900@mail.gmail.com>
+References: <38b2ab8a0703220753s67809e87l76ffc57adb725898@mail.gmail.com>
+	 <86lkhpmftt.fsf@blue.stonehenge.com>
+	 <38b2ab8a0703230029h7f3faa95u1e2ccb6a9ee4be5e@mail.gmail.com>
+	 <864poch0xl.fsf@blue.stonehenge.com>
+	 <38b2ab8a0703230132j64cf0b94x7c210593f3f31387@mail.gmail.com>
+	 <7vtzwcqqf9.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>,
-	Marco Roeland <marco.roeland@xs4all.nl>
-X-From: git-owner@vger.kernel.org Fri Mar 23 10:43:36 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 23 10:55:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUgJ5-0008UH-Ua
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 10:43:36 +0100
+	id 1HUgUC-0005sw-6w
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 10:55:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934275AbXCWJnd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 05:43:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934277AbXCWJnd
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 05:43:33 -0400
-Received: from web31803.mail.mud.yahoo.com ([68.142.207.66]:41439 "HELO
-	web31803.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S934275AbXCWJnc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Mar 2007 05:43:32 -0400
-Received: (qmail 82822 invoked by uid 60001); 23 Mar 2007 09:43:31 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=yPyJTAdWLUldvipa//JvaN6/Bn7l4zxb0EmuScOLhBjMD2/v98uq9PR8r8Q+BL1D87/CvN99gChMv9m2Ss6OQC/IbzceRu/DnIhkSwrwpOs7aOhGfmfuQP4RguWoh9GPSXNGGZ4o/tbjGOagZ62muI7Uo6T/PHhT9xtc8uccjI4=;
-X-YMail-OSG: NzI9qF8VM1mwKCpdXTiTntJUtVuu.DDjr_FdJS6GH0zxeiipT0hBnZ2mbc7x1pLG_rizRrxEV8QzYuRuwfoQTqHlZmSfenEfffPVypX9sn99JC1_STDm851ngPtN3hkfuprSRG2eXYxstTxbIRr_tkTn_g--
-Received: from [68.186.59.161] by web31803.mail.mud.yahoo.com via HTTP; Fri, 23 Mar 2007 02:43:31 PDT
-In-Reply-To: <7vps70qpx8.fsf@assigned-by-dhcp.cox.net>
+	id S1422762AbXCWJyy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 05:54:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422757AbXCWJyy
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 05:54:54 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:63651 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422762AbXCWJyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 05:54:53 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so972354uga
+        for <git@vger.kernel.org>; Fri, 23 Mar 2007 02:54:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=C8hgBaRM9gDP9PQazrspYOPQzg5Yx/PMEYSEZ2UX6di8MpZuAy8SfD97eWDVsS8iQ0IMa23SSQSeGkU6RrGDDD0byCEJ6YxSf20/HEWZekKMObFbmxhRV4C+6daviNE1qmuj5CkIj+Mc2pUICQyZ03woAt0L/Ijnta540xyX9Jg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=csBqQZb9EvqvI6VGdlwy6kBr6RJfSz/LKQO499pt7qQQFmQqph8aCu+KM96nHaur3qVSLR5ElEuqzCxIZpeJkaNhuIvuBXt8Cg50H1rqktfRv9+AoYNsRI7pH1vk5DMtou5eKEIVzoPX5v9CSwaWvQsWS+CACGVG0YYT/JsDZ5E=
+Received: by 10.115.76.1 with SMTP id d1mr1108195wal.1174643691115;
+        Fri, 23 Mar 2007 02:54:51 -0700 (PDT)
+Received: by 10.114.38.12 with HTTP; Fri, 23 Mar 2007 02:54:51 -0700 (PDT)
+In-Reply-To: <7vtzwcqqf9.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42921>
 
---- Junio C Hamano <junkio@cox.net> wrote:
-> > So Luben does seem to have a hook installed, perhaps this is the
-> > culprit.
-> 
-> Thanks for spotting this.  I do not use this hook (well, I only
-> use commit-msg, pre-commit, and pre-rebase patches) and it was
-> totally outside of my radar.
-> 
-> It runs describe to find the previous tag, but the parser is a
-> bit old fashioned.  It says:
-> 
-> 	prev=$(git describe "$3^" | sed 's/-g.*//')
-> 
-> but modern way to say the same is:
-> 
-> 	prev=$(git describe --abbrev=0 "$3^")
-> 
-> Luben, sorry for the trouble.
-> 
-> I do not know how much better the recent hooks--update is
-> compared to the version you use.  It is supposed to be backward
-> compatible, so you _might_ want to simply update it with the one
-> from 'master' after checking if it suits your needs.  Otherwise,
-> I think the above one-liner should work the problem around.
+On 3/23/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Francis Moreau" <francis.moro@gmail.com> writes:
+>
+> > Can't git make 'cat' the default pager when run on a dumb terminal ?
+>
+> IIRC, `more` works on a dumb terminal.
+>
 
-Yeah, that's what Andy suggested too.
+yes it does although the behaviour is a bit weird. Not all screen is used.
 
-I guess the problem is that my git repos, especially the web
-exported ones are truly of an ancient git...
+> But using PAGER=cat is a longstanding and widely used trick
+> among Emacs old timers, predating the EDITOR=emacsclient, which
+> is even nicer.  I would highly recommend it.  These two
+> environment variables make running *everything* in compilation
+> mode (or shell buffer) so much nicer than otherwise.
+>
 
-I'll just update the "update" hook from the most recent "next"
-I've got and see if I get this again.
+I think I'm going to give a try PAGER=more and EDITOR=emacsclient
+config with shell buffer and see if it can fit well my git usage.
 
-Thanks,
-   Luben
+I tried to use term mode but it's pretty annoying to switch between
+'line' and 'char' mode all the time.
+
+BTW Junio, just out of curiosity, do you use shell or term mode ?
+-- 
+Francis
