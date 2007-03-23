@@ -1,78 +1,63 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] hooks--update: new, required, config variable: hooks.envelopesender,
-Date: Fri, 23 Mar 2007 14:29:06 +0100
-Message-ID: <87wt186qcd.fsf@rho.meyering.net>
-References: <874poc88ix.fsf@rho.meyering.net>
-	<200703231258.34339.andyparkins@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] have merge put FETCH_HEAD data in commit message
+Date: Fri, 23 Mar 2007 14:57:38 +0100
+Organization: At home
+Message-ID: <eu0m6t$hln$1@sea.gmane.org>
+References: <20070321120643.GI20583@mellanox.co.il> <7v648u38ws.fsf@assigned-by-dhcp.cox.net> <20070322043604.GA6303@mellanox.co.il> <7vd531yicx.fsf@assigned-by-dhcp.cox.net> <20070322062805.GD6303@mellanox.co.il> <7vaby5wxyn.fsf@assigned-by-dhcp.cox.net> <20070322074051.GA29341@mellanox.co.il> <7vlkhpvgc7.fsf@assigned-by-dhcp.cox.net> <20070322083757.GC29341@mellanox.co.il> <7vr6rhtvr0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 14:29:21 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 23 14:55:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUjpQ-0002aP-MP
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 14:29:13 +0100
+	id 1HUkEc-0006Or-BS
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 14:55:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422883AbXCWN3J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 09:29:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422881AbXCWN3J
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 09:29:09 -0400
-Received: from mx.meyering.net ([82.230.74.64]:50440 "EHLO mx.meyering.net"
+	id S1422890AbXCWNzK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 23 Mar 2007 09:55:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422906AbXCWNzK
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 09:55:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:43281 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422883AbXCWN3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 09:29:08 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id DED436BDF; Fri, 23 Mar 2007 14:29:06 +0100 (CET)
-In-Reply-To: <200703231258.34339.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 23 Mar 2007 12:58:31 +0000")
+	id S1422890AbXCWNzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 09:55:08 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HUkEH-0002ZZ-MA
+	for git@vger.kernel.org; Fri, 23 Mar 2007 14:54:56 +0100
+Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Mar 2007 14:54:53 +0100
+Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 23 Mar 2007 14:54:53 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42930>
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> On Friday 2007 March 23 12:11, Jim Meyering wrote:
->> This change adds a new, required, config variable: hooks.envelopesender,
->> and use that with sendmail's -f option.  This is important in order
->> to avoid relying on sendmail's "guess" at an appropriate envelope
->> sender address.  Without this, and in the presence of strict servers,
->> it is far too easy not ever to be notified, or (more insidious) never
->> to receive bounce email.
->
-> Won't work.
+Junio C Hamano wrote:
 
-Thanks for the quick feedback.
+> +The commit message is formed by the title taken from the
+> +"Subject: ", a blank line and the body of the message up to
+> +where the patch begins. =A0Excess whitespaces at the end of the
+> +lines are automatically stripped.
 
-It works for me using the sendmail from sendmail, and I have tested
-this with the one from postfix, too.
+Does this mean that git-am cannot make a log message that doesn't
+follow git formatting commit message guidelines, namely short one-line
+description, then longer description and signoff? It means that
+you cannot get log message which starts with paragraph (no emty line
+after first line of commit message)?
 
->>From "man sendmail" (although my sendmail is actually exim)
-...
-> The hook scripts run under the identity of the user doing the push; so "-f"
-> won't have an effect.
-
-It has a dramatic effect for me.
-With it, mail is sent, without, it's not.
-
-> I'm not sure why you would even need it; as the above quote says, the sender
-> is set up as the user who ran the command.
-
-Part of the problem was that sendmail used a mangled hostname.
-Without -f, it would use user@foo.domain.com.domain.com.
-
-But IMHO, relying on the current behavior (using envelope sender same as
-the From: address) is not an option.  It must be configurable.  I want
-the envelope sender to be the same admin address for all outgoing mail,
-since that's where reports of delivery problems are sent.  Besides, the
-users in question don't even have "real" shell or email access on the server
-system, so receiving systems would not be able to authenticate them.
-
-In fact, some of the "users" in question are fake accounts used solely
-for write access (via git-server) to the shared git repository, so the
-user name exists only on the server system.
-
-If we can't do this portably via the sendmail program, then
-perhaps it's a good time to switch to using a module like Net::SMTP.
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
