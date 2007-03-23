@@ -1,86 +1,72 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH 2/2] Documentation: Add version information to man pages
-Date: Fri, 23 Mar 2007 19:54:05 +0100
-Message-ID: <11746760452311-git-send-email-frank@lichtenheld.de>
-References: <11746760451462-git-send-email-frank@lichtenheld.de>
-Cc: Frank Lichtenheld <frank@lichtenheld.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 23 19:55:49 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-revert: Revert revert message to old behaviour
+Date: Fri, 23 Mar 2007 20:13:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703232013330.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0703230805450.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0703231705150.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0703230926380.6730@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Mar 23 20:14:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUovO-0004WJ-QM
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 19:55:43 +0100
+	id 1HUpD5-0004X0-M2
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 20:14:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344AbXCWSzj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 14:55:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753354AbXCWSzi
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 14:55:38 -0400
-Received: from mail.lenk.info ([217.160.134.107]:59465 "EHLO mail.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753344AbXCWSzi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 14:55:38 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HUovo-00087I-Rz; Fri, 23 Mar 2007 19:56:09 +0100
-Received: from p3ee3db96.dip.t-dialin.net ([62.227.219.150] helo=goedel.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HUovH-0002vt-KK; Fri, 23 Mar 2007 19:55:35 +0100
-Received: from djpig by goedel.djpig.de with local (Exim 4.63)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HUou0-0000go-67; Fri, 23 Mar 2007 19:54:16 +0100
-X-Mailer: git-send-email 1.5.0.3
-In-Reply-To: <11746760451462-git-send-email-frank@lichtenheld.de>
+	id S1752450AbXCWTN4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 15:13:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753399AbXCWTNz
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 15:13:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36672 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752450AbXCWTNy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 15:13:54 -0400
+Received: (qmail invoked by alias); 23 Mar 2007 19:13:52 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp054) with SMTP; 23 Mar 2007 20:13:52 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+7cxsUj++7N08FgJeNp0fHLPF05IljrL2nK2BPnN
+	CrknEPIoiNHSqN
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0703230926380.6730@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42956>
 
-Override the [header] macro of asciidoc's docbook
-backend to add version information to the generated
-man pages.
+Hi,
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- Documentation/asciidoc.conf.in |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
+On Fri, 23 Mar 2007, Linus Torvalds wrote:
 
- I personally prefer to have this information available in the man page.
+> On Fri, 23 Mar 2007, Johannes Schindelin wrote:
+> > 
+> > When converting from the shell script, based on a misreading of the
+> > sed invocation, the builtin included the abbreviated commit name,
+> > and did _not_ include the quotes around the oneline message.
+> > 
+> > This fixes it.
+> 
+> How about the empty line in between the message and the "This reverts 
+> commit "..
+> 
+> > +		add_to_msg("Revert \"");
+> >  		add_to_msg(oneline);
+> > -		add_to_msg("\nThis reverts commit ");
+> > +		add_to_msg("\"\nThis reverts commit ");
+> 
+> This should probably be
+> 
+> 	add_to_msg("\"\n\nThis reverts commit ");
+> 
+> with *two* \n's, no?
 
- Copying the whole [header] template is at best ugly but works. Better
- suggestions welcome.
+Yes. Sorry.
 
-diff --git a/Documentation/asciidoc.conf.in b/Documentation/asciidoc.conf.in
-index 44b1ce4..a86c31d 100644
---- a/Documentation/asciidoc.conf.in
-+++ b/Documentation/asciidoc.conf.in
-@@ -31,6 +31,23 @@ ifdef::backend-docbook[]
- {title#}</example>
- endif::backend-docbook[]
- 
-+ifdef::backend-docbook[]
-+[header]
-+template::[header-declarations]
-+<refentry>
-+<refmeta>
-+<refentrytitle>{mantitle}</refentrytitle>
-+<manvolnum>{manvolnum}</manvolnum>
-+<refmiscinfo class="source">Git</refmiscinfo>
-+<refmiscinfo class="version">@@GIT_VERSION@@</refmiscinfo>
-+<refmiscinfo class="manual">Git Manual</refmiscinfo>
-+</refmeta>
-+<refnamediv>
-+  <refname>{manname}</refname>
-+  <refpurpose>{manpurpose}</refpurpose>
-+</refnamediv>
-+endif::backend-docbook[]
-+
- ifdef::backend-xhtml11[]
- [gitlink-inlinemacro]
- <a href="{target}.html">{target}{0?({0})}</a>
--- 
-1.5.0.3
+Ciao,
+Dscho
