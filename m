@@ -1,56 +1,108 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: emacs and git...
-Date: Fri, 23 Mar 2007 02:07:06 -0700
-Message-ID: <7vtzwcqqf9.fsf@assigned-by-dhcp.cox.net>
-References: <38b2ab8a0703220753s67809e87l76ffc57adb725898@mail.gmail.com>
-	<86lkhpmftt.fsf@blue.stonehenge.com>
-	<38b2ab8a0703230029h7f3faa95u1e2ccb6a9ee4be5e@mail.gmail.com>
-	<864poch0xl.fsf@blue.stonehenge.com>
-	<38b2ab8a0703230132j64cf0b94x7c210593f3f31387@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Errors pushing tags in "next"
+Date: Fri, 23 Mar 2007 09:13:10 +0000
+Message-ID: <200703230913.12742.andyparkins@gmail.com>
+References: <382665.13897.qm@web31804.mail.mud.yahoo.com> <7v7it8s7c4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-To: "Francis Moreau" <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 10:07:14 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>, ltuikov@yahoo.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 23 10:13:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUfju-00065Y-8Q
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 10:07:14 +0100
+	id 1HUfpr-0001Jm-TV
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 10:13:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422745AbXCWJHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 05:07:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422744AbXCWJHJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 05:07:09 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:49468 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422747AbXCWJHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 05:07:08 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070323090707.KIAF22511.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 23 Mar 2007 05:07:07 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id e9761W0051kojtg0000000; Fri, 23 Mar 2007 05:07:07 -0400
-In-Reply-To: <38b2ab8a0703230132j64cf0b94x7c210593f3f31387@mail.gmail.com>
-	(Francis Moreau's message of "Fri, 23 Mar 2007 09:32:50 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1422746AbXCWJNV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 05:13:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422748AbXCWJNV
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 05:13:21 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:63575 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422746AbXCWJNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 05:13:20 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so1899569nfa
+        for <git@vger.kernel.org>; Fri, 23 Mar 2007 02:13:19 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=agWzjfeIB0fhatVr42BP4vziI8m0qXSIWjkCL4WJKgQ4/s9syDVI3lXM3M94WKF6AOXE6ILLRQS6jxDq01+L1rGfqGD14H24olTXHfN9Yke/Cw4uuKUgEq5Fm+RNUSsccfCO+jYRVLw2imSlAZYtfInoRo12G4A64oMMFj8k5EM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=IVRU18jn2JNveGFY+CNCajhmV3P+7gzw2aOEwEi6ij798XC3/q14IbirQDSbnBc2sTLGKSnES5rJGyTrd7/YW9UyXcfBCmPXMG6gSQKQdfCf0CwMBnzlHRUJNG+745c2zv+3AG+knTs9f9zjNyTbEAJDo4G5FpzobYqhznRmuFM=
+Received: by 10.78.201.15 with SMTP id y15mr1406395huf.1174641198766;
+        Fri, 23 Mar 2007 02:13:18 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id n23sm10975116nfc.2007.03.23.02.13.17;
+        Fri, 23 Mar 2007 02:13:18 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7v7it8s7c4.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42914>
 
-"Francis Moreau" <francis.moro@gmail.com> writes:
+On Friday 2007 March 23 08:16, Junio C Hamano wrote:
 
-> Can't git make 'cat' the default pager when run on a dumb terminal ?
+> $ git grep -e 'to the masses' -e 'Pushing v'
+>
+> returns absolutely empty.
 
-IIRC, `more` works on a dumb terminal.
+As Doc Brown once said: "That's because you're not thinking four 
+dimensionally" ;-)
 
-But using PAGER=cat is a longstanding and widely used trick
-among Emacs old timers, predating the EDITOR=emacsclient, which
-is even nicer.  I would highly recommend it.  These two
-environment variables make running *everything* in compilation
-mode (or shell buffer) so much nicer than otherwise.
+ git-show v1.4.4:templates/hooks--update | grep masses
+
+Luben: that message is being generated by the remote version of git rather 
+than your local version.  It doesn't matter that /you/ don't have any hook 
+scripts enabled, what matters is that the remote repository has them enabled.  
+In particular the hooks/update script has been enabled.
+
+The output you show is from the update hook from an older version of git, but 
+the git you're running on the remote end is a newer version.  The hook 
+scripts don't get updated when you upgrade git because they're copied to the 
+repository from the latest template when you clone or init.
+
+Now: onto the fault; this same fault was fixed in the sample hook in revision 
+a2ee81bb7594b; the problem is that the older update hook used to split the 
+output of git-describe on the last dash and made the assumption that 
+everything before the dash was a tag name.  git-describe gained a nice new 
+feature were it would show the number of revisions since that tag as well.  
+So now the output of git-describe is
+
+  tag-N-revision
+
+So you can see that splitting on the last dash would return "tag-N" rather 
+than "tag".  Now, when the update hook uses this "tag-N" as if it were a tag, 
+git obviously doesn't find it, so you're fatal error is coming from running 
+something like:
+
+ git-rev-list v2.6.21-rc3-329..bac6eefe96204d0ad67d144f2511a6fc487aa594
+
+becuase "v2.6.21-rc3-329" is not a tag.
+
+The fix:  My own suggestion would be to just swap the update hook on the 
+server for the one that came with the latest version of git (although I'm 
+completely biased :-)).  Remember to do this on the remote repository, not 
+your local one.  Alternatively you could fix just that bug in the hook script 
+you have to leave things as close as possible to what you've got now, by 
+editing .git/hooks/update and making this change:
+
+-  prev=$(git describe "$3^" | sed 's/-g.*//')
++  prev=$(git describe --abbrev=0 "$3^")
+
+Alternatively; I've got a further update to the notification email script 
+prepared that I'm finishing testing and will send today that updates to use 
+the post-receive hook rather than the update hook and fixes a number of bugs.
+
+
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
