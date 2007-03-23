@@ -1,82 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git-revert: Revert revert message to old behaviour
-Date: Fri, 23 Mar 2007 17:06:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703231705150.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <Pine.LNX.4.64.0703230805450.6730@woody.linux-foundation.org>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: Installation instructions for gitweb?
+Date: Fri, 23 Mar 2007 17:12:10 +0100
+Message-ID: <20070323161210.GI8017@planck.djpig.de>
+References: <etufpl$7en$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 23 17:06:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+X-From: git-owner@vger.kernel.org Fri Mar 23 17:13:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUmHR-0001ns-TV
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 17:06:18 +0100
+	id 1HUmOB-00059x-CO
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 17:13:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992486AbXCWQGO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 12:06:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992485AbXCWQGO
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 12:06:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60807 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S2992486AbXCWQGN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 12:06:13 -0400
-Received: (qmail invoked by alias); 23 Mar 2007 16:06:12 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp020) with SMTP; 23 Mar 2007 17:06:12 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19DcQsuY8ZDnfO+1f6pdxA2XhQHb8GKG79kH9RXfb
-	/HGz3MJVySeQVE
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0703230805450.6730@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S2992516AbXCWQM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 12:12:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992513AbXCWQM4
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 12:12:56 -0400
+Received: from planck.djpig.de ([85.10.192.180]:36839 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2992500AbXCWQMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 12:12:12 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 5D43588136;
+	Fri, 23 Mar 2007 17:12:11 +0100 (CET)
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 27140-09; Fri, 23 Mar 2007 17:12:10 +0100 (CET)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 8AD7188137; Fri, 23 Mar 2007 17:12:10 +0100 (CET)
+Mail-Followup-To: Han-Wen Nienhuys <hanwen@xs4all.nl>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <etufpl$7en$1@sea.gmane.org>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42945>
 
+On Thu, Mar 22, 2007 at 02:52:53PM -0300, Han-Wen Nienhuys wrote:
+> I'm trying to get gitweb to serve my local repositories on the intranet
+> here, but I am not successful in getting it to run.  I got as far as
+> getting gitweb page, containing no projects but only "403 forbidden - No
+> projects found." I tried setting the projects_list to a directory, a
+> subdirectory, a file with the projects to be published, etc.
 
-When converting from the shell script, based on a misreading of the
-sed invocation, the builtin included the abbreviated commit name,
-and did _not_ include the quotes around the oneline message.
+>From looking at the code this error can mean quite a few things:
 
-This fixes it.
+- you set $projectroot incorrectly
+- you set $projects_list incorrectly
+- you set $export_ok to something != "" and didn't create
+  the necessary files
+- your repositories lack HEAD refs (don't know how this could happen,
+  though)
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+More diagnosis is difficult without knowing your exact setup.
 
-	On Fri, 23 Mar 2007, Linus Torvalds wrote:
-	
-	> 
-	> Can we please revert the "revert" changes to the default message?
-	> 
-	> Dscho?
+> Is there a guide on setting up gitweb for hare-brained people like me
+> that don't know apache and don't know perl? In particular, the format of
+> gitweb_conf.perl is not documented at all.
 
-	Yeah?
+gitweb_conf.perl is just included as perl code. It is primarly useful
+for overriding the variables defined at the top of gitweb.cgi
 
- builtin-revert.c |    6 ++----
- 1 files changed, 2 insertions(+), 4 deletions(-)
-
-diff --git a/builtin-revert.c b/builtin-revert.c
-index f3f3f5c..f4e1e22 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -296,11 +296,9 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	if (action == REVERT) {
- 		base = commit;
- 		next = commit->parents->item;
--		add_to_msg("Revert ");
--		add_to_msg(find_unique_abbrev(commit->object.sha1,
--					DEFAULT_ABBREV));
-+		add_to_msg("Revert \"");
- 		add_to_msg(oneline);
--		add_to_msg("\nThis reverts commit ");
-+		add_to_msg("\"\nThis reverts commit ");
- 		add_to_msg(sha1_to_hex(commit->object.sha1));
- 		add_to_msg(".\n");
- 	} else {
+Gruesse,
 -- 
-1.5.1.rc1.2356.g2054
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
