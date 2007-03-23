@@ -1,75 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] git-log --reflog -p --full-history: Show commit diffs instead
- of faked diffs
-Date: Fri, 23 Mar 2007 21:21:24 +0100 (CET)
-Message-ID: <Pine.LNX.4.63.0703232120560.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Christian Wiese <morfoh@opensde.org>
+Subject: Re: Git / Subversion Interoperability
+Date: Fri, 23 Mar 2007 23:30:36 +0200
+Message-ID: <20070323233036.77325e5a@athlon>
+References: <20070322224829.GA7048@c3sl.ufpr.br>
+	<20070323004335.GA17773@spearce.org>
+	<Pine.LNX.4.64.0703230052570.2746@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Mar 23 21:21:32 2007
+Content-Type: multipart/signed; boundary=Sig_9TEfYFC3QkQP5L8bZPGq2Ab;
+ protocol="application/pgp-signature"; micalg=PGP-SHA1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 23 22:31:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUqGP-0002EZ-Q6
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 21:21:30 +0100
+	id 1HUrLk-0001u4-Ta
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 22:31:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548AbXCWUV0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 16:21:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbXCWUV0
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 16:21:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49755 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752548AbXCWUVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 16:21:25 -0400
-Received: (qmail invoked by alias); 23 Mar 2007 20:21:24 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp044) with SMTP; 23 Mar 2007 21:21:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/qQTIBc9Dq/f3/xDQkuRrrBR1EPD+OjU9dVVQnPP
-	XGDy6V9OT70TmU
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-X-Y-GMX-Trusted: 0
+	id S932356AbXCWVbB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 17:31:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932463AbXCWVbA
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 17:31:00 -0400
+Received: from foxtrot388.server4you.de ([85.25.140.218]:49351 "EHLO
+	speakerboxxx.ixplanet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932356AbXCWVa7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 17:30:59 -0400
+Received: (qmail 8132 invoked from network); 23 Mar 2007 21:31:20 -0000
+X-Mail-Scanner: Scanned by qSheff-II-2.1-r2 (http://www.enderunix.org/qsheff/)
+Received: from unknown (HELO athlon) (morfoh@opensde.net@[80.97.102.202])
+          (envelope-sender <morfoh@opensde.org>)
+          by speakerboxxx.ixplanet.net (qmail-ldap-1.03) with SMTP
+          for <git@vger.kernel.org>; 23 Mar 2007 21:31:20 -0000
+In-Reply-To: <Pine.LNX.4.64.0703230052570.2746@beast.quantumfyre.co.uk>
+X-Mailer: Claws Mail 2.8.1 (GTK+ 2.10.6; i686-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42960>
 
+--Sig_9TEfYFC3QkQP5L8bZPGq2Ab
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-With `--reflog` and `-p`, git-log will show diffs according to the reflog 
-history, while adding `--full-history` will produce the true commit diffs.
+Hello,
 
-In other words, `git-log -g -p HEAD` will show the diff between HEAD@{n+1} 
-and HEAD@{n} with each commit HEAD@{n}.
+> > - Branches.  In SVN these are in the repository wide namespace,
+> > but in Git they aren't.  I imagine we'd want to just enforce the
+> > standard layout that the SVN people recommened:
+> >
+> >  /trunk/    --> refs/heads/master
+> >  /branches/ --> refs/heads/ (minus master)
+> >  /tags/     --> refs/tags/
+>=20
+> That would probably be good enough for the majority of=20
+> one-project-per-repo Subversion projects at least.  Though there is
+> still the issue that Subversion will actually let you create a "tag"
+> simply by committing whatever you currently have in your working copy
+> (including localally modified files ... yeuch).
 
-In contrast, `git-log -g -p --full-history HEAD`, will show the diff 
-between HEAD@{n}^ and HEAD@{n} with each commit HEAD@{n}.
+If the proposed solution just supports "one-project-per-repo"
+Subversion projects then you won't attract much projects which are
+currently using subversion. I don't know many svn repos of this kind.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- revision.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+What you should also consider, is that a project might have splitted a
+project within a repo into smaller subprojects.
+I'm currently facing this issue while trying to migrate from svn to git
+within my local working environment to gather experience while working
+with git to be able to effectively "sell" git to the other people of
+our project and provide a smooth migration path for them.
 
-diff --git a/revision.c b/revision.c
-index f23c1d5..edd7dfd 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1197,6 +1197,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 	do {
- 		struct commit_list *entry = revs->commits;
- 		struct commit *commit = entry->item;
-+		struct commit_list *parents = commit->parents;
- 
- 		revs->commits = entry->next;
- 		free(entry);
-@@ -1215,6 +1216,8 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 				continue;
- 			add_parents_to_list(revs, commit, &revs->commits);
- 		}
-+		if (revs->reflog_info && !revs->simplify_history)
-+			commit->parents = parents;
- 		if (commit->object.flags & SHOWN)
- 			continue;
- 
--- 
-1.5.1.rc1.2356.g2054
+Chris
+
+--Sig_9TEfYFC3QkQP5L8bZPGq2Ab
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (GNU/Linux)
+
+iD8DBQFGBEcEFAiA38MZhZ0RAvFbAJ982iOAvS37kXbJYRwAOZvSuWWaiwCggbz2
+Bdoh2yMydcpo9QRIWAX3mV0=
+=VnEk
+-----END PGP SIGNATURE-----
+
+--Sig_9TEfYFC3QkQP5L8bZPGq2Ab--
