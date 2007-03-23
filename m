@@ -1,84 +1,109 @@
-From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-Subject: Re: Git / Subversion Interoperability
-Date: Fri, 23 Mar 2007 12:21:02 -0300
-Message-ID: <20070323152102.GA4818@c3sl.ufpr.br>
-References: <20070322224829.GA7048@c3sl.ufpr.br> <20070323004335.GA17773@spearce.org> <Pine.LNX.4.64.0703230052570.2746@beast.quantumfyre.co.uk> <20070323012422.GC17773@spearce.org> <Pine.LNX.4.64.0703230128330.4001@beast.quantumfyre.co.uk> <20070323103426.GA15923@diana.vm.bytemark.co.uk>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] hooks--update: new, required, config variable: hooks.envelopesender,
+Date: Fri, 23 Mar 2007 16:25:35 +0100
+Message-ID: <87lkho6ky8.fsf@rho.meyering.net>
+References: <874poc88ix.fsf@rho.meyering.net>
+	<200703231258.34339.andyparkins@gmail.com>
+	<87wt186qcd.fsf@rho.meyering.net>
+	<200703231412.41591.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 16:21:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 16:25:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUlZm-0004za-CG
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 16:21:10 +0100
+	id 1HUle8-000785-PE
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 16:25:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945916AbXCWPVH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 23 Mar 2007 11:21:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945915AbXCWPVH
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 11:21:07 -0400
-Received: from mx.inf.ufpr.br ([200.17.202.3]:38271 "EHLO urquell.c3sl.ufpr.br"
+	id S1752007AbXCWPZh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 11:25:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbXCWPZh
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 11:25:37 -0400
+Received: from mx.meyering.net ([82.230.74.64]:60502 "EHLO mx.meyering.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1945916AbXCWPVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 11:21:05 -0400
-Received: from cohiba (cohiba.c3sl.ufpr.br [200.17.202.52])
-	by urquell.c3sl.ufpr.br (Postfix) with SMTP id 7C752301B310;
-	Fri, 23 Mar 2007 12:21:02 -0300 (BRT)
-Received: by cohiba (sSMTP sendmail emulation); Fri, 23 Mar 2007 12:21:02 -0300
-Content-Disposition: inline
-In-Reply-To: <20070323103426.GA15923@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752007AbXCWPZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 11:25:36 -0400
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 582DD188E; Fri, 23 Mar 2007 16:25:35 +0100 (CET)
+In-Reply-To: <200703231412.41591.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 23 Mar 2007 14:12:38 +0000")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42941>
 
-On Fri, Mar 23, 2007 at 11:34:26AM +0100, Karl Hasselstr=C3=B6m wrote:
-> On 2007-03-23 01:36:11 +0000, Julian Phillips wrote:
->=20
-> > On Thu, 22 Mar 2007, Shawn O. Pearce wrote:
-> >
-> > > I thought about the properties, but didn't bother to write
-> > > anything on that subject as we may just be able to say "look,
-> > > properties are not supported in git-svnserver, so don't try to us=
-e
-> > > them".
-> >
-> > Indeed. That's what I was aiming at with the the last sentence (not
-> > very clearly unfortunately). It would be nice if the server could
-> > tell the client that properties are not supported ... but I doubt
-> > that it can, since they are fundamental part of Subversion.
-> >
-> > In particular it's how the client finds out about things like
-> > symlinks and line ending conversion. It may be necessary to provide
-> > some basic support for some of the properties in the svn:...
-> > namespace in order for the Subversion repo access library not to
-> > refuse to talk to the git server.
->=20
-> Maybe the pragmatic solution would be to have built-in handling of a
-> few properties such as svn:executable and svn:ignore that have git
-> equivalents, and just emulate all other properties with files.
+Andy Parkins <andyparkins@gmail.com> wrote:
 
-My idea is to write the git-svnserver!!! I think it will be easier.
+> On Friday 2007 March 23 13:29, Jim Meyering wrote:
+>
+>> It works for me using the sendmail from sendmail, and I have tested
+>> this with the one from postfix, too.
+>
+> Is your user set as a trusted user for sendmail though?
 
-To begin coding, i plan to write basic functions [updade,commit,checkou=
-t,
-copy,merge,...] then start to implement most "complex" instructions.
+No.  There is no need for that.
 
-As spearce said before, the idea of this is to migrate from svn to git
-without many trouble in transition, so basic can work as the initial th=
-ought.
+> As a normal user wouldn't be allowed to do it.
 
->=20
-> --=20
-> Karl Hasselstr=C3=B6m, kha@treskal.com
->       www.treskal.com/kalle
+You mean with exim's sendmail?
+sendmail -f alt-envelope-sender works just fine when run by a
+non-privileged user when it's Sendmail's sendmail or the one from Postfix.
+It's a shame if it doesn't work with exim's implementation.
 
---=20
-Bruno Ribas - ribas@c3sl.ufpr.br
-http://web.inf.ufpr.br/ribas
-C3SL: http://www.c3sl.ufpr.br=20
+>> It has a dramatic effect for me.
+>> With it, mail is sent, without, it's not.
+>
+> Of course - I didn't doubt that it would, otherwise you wouldn't have bothered
+> posting your patch :-)  The point is that I don't think it's universally
+> applicable.  It's working for you; in your particular situation, but I'm
+> guessing that you are set up as a trusted user for sendmail on your system,
+> and so it's letting you rewrite the sender address.
+
+There is no need to declare a user "trusted" for sendmail to allow
+it to use the -f option.
+
+> That's not the current behaviour.  The "From:" in the email is set from the
+> committer information from the revision.  The sender address is set using the
+> local user account running sendmail; most email systems will ignore
+> the "From:" header and let you write what you want.  The sender field,
+> however is tightly controlled.
+
+Thanks for clarifying.  However, in any case, the current behavior
+is too constraining.  I've needed to change it now in two totally
+different environments, so I really doubt that this is an isolated
+case.  FYI, the first case was to allow commit email to be sent from
+the GNU coreutils git repository in a vserver on savannah.gnu.org.
+The second was at work last night.
+
+>> the envelope sender to be the same admin address for all outgoing mail,
+>> since that's where reports of delivery problems are sent.  Besides, the
+>
+> Erm: tough.  What you're asking for requires root/trusted privileges on the
+> box for the user sending the email.
+
+No.
+As I tried to make clear, above, for the sendmail programs I use,
+sendmail -f works fine for unprivileged users.
+
+> If it didn't, what would there be to
+> stop any user sending emails that appeared to be from the admin?
+
+Nothing.  We've always been able to do that, though when we do,
+we also get an X-Authentication-Warning header.
+
+>> users in question don't even have "real" shell or email access on the
+>> server system, so receiving systems would not be able to authenticate them.
+>
+> I'm not sure you've got the right idea about email; the receiving system
+> doesn't have to authenticate the /user/ sending the email (if it did, then
+
+Not the *final* recipient, of course.
+Some *internal* MX servers are very careful about sender addresses
+in outbound mail, verifying them before forwarding the message on.
+
+...
+Thanks for the explanation of how email works, but you may
+assume that I know a little more than the average hacker :-)
