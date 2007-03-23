@@ -1,108 +1,82 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Errors pushing tags in "next"
-Date: Fri, 23 Mar 2007 09:13:10 +0000
-Message-ID: <200703230913.12742.andyparkins@gmail.com>
-References: <382665.13897.qm@web31804.mail.mud.yahoo.com> <7v7it8s7c4.fsf@assigned-by-dhcp.cox.net>
+Date: Fri, 23 Mar 2007 02:17:55 -0700
+Message-ID: <7vps70qpx8.fsf@assigned-by-dhcp.cox.net>
+References: <382665.13897.qm@web31804.mail.mud.yahoo.com>
+	<7v7it8s7c4.fsf@assigned-by-dhcp.cox.net>
+	<20070323090213.GA7186@fiberbit.xs4all.nl>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, ltuikov@yahoo.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 23 10:13:25 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: ltuikov@yahoo.com, git@vger.kernel.org
+To: Marco Roeland <marco.roeland@xs4all.nl>
+X-From: git-owner@vger.kernel.org Fri Mar 23 10:18:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUfpr-0001Jm-TV
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 10:13:24 +0100
+	id 1HUfuK-0004mF-77
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 10:18:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422746AbXCWJNV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 05:13:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422748AbXCWJNV
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 05:13:21 -0400
-Received: from nf-out-0910.google.com ([64.233.182.184]:63575 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422746AbXCWJNU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 05:13:20 -0400
-Received: by nf-out-0910.google.com with SMTP id o25so1899569nfa
-        for <git@vger.kernel.org>; Fri, 23 Mar 2007 02:13:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=agWzjfeIB0fhatVr42BP4vziI8m0qXSIWjkCL4WJKgQ4/s9syDVI3lXM3M94WKF6AOXE6ILLRQS6jxDq01+L1rGfqGD14H24olTXHfN9Yke/Cw4uuKUgEq5Fm+RNUSsccfCO+jYRVLw2imSlAZYtfInoRo12G4A64oMMFj8k5EM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=IVRU18jn2JNveGFY+CNCajhmV3P+7gzw2aOEwEi6ij798XC3/q14IbirQDSbnBc2sTLGKSnES5rJGyTrd7/YW9UyXcfBCmPXMG6gSQKQdfCf0CwMBnzlHRUJNG+745c2zv+3AG+knTs9f9zjNyTbEAJDo4G5FpzobYqhznRmuFM=
-Received: by 10.78.201.15 with SMTP id y15mr1406395huf.1174641198766;
-        Fri, 23 Mar 2007 02:13:18 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id n23sm10975116nfc.2007.03.23.02.13.17;
-        Fri, 23 Mar 2007 02:13:18 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <7v7it8s7c4.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S1422696AbXCWJR5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 05:17:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934273AbXCWJR5
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 05:17:57 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:44187 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932570AbXCWJR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 05:17:56 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070323091756.KONO18070.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 23 Mar 2007 05:17:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id e9Hv1W0021kojtg0000000; Fri, 23 Mar 2007 05:17:55 -0400
+In-Reply-To: <20070323090213.GA7186@fiberbit.xs4all.nl> (Marco Roeland's
+	message of "Fri, 23 Mar 2007 10:02:13 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42915>
 
-On Friday 2007 March 23 08:16, Junio C Hamano wrote:
+Marco Roeland <marco.roeland@xs4all.nl> writes:
 
-> $ git grep -e 'to the masses' -e 'Pushing v'
+>> Luben Tuikov <ltuikov@yahoo.com> writes:
+>> 
+>> > BTW, git has always said to me "Pushing version ... to the masses"
+>> > whenever I'd do "git-push --tags web".
+>> 
+>> Sorry, I must be blind, and git-grep is too.
+>> 
+>> $ git grep -e 'to the masses' -e 'Pushing v'
+>> 
+>> returns absolutely empty.
 >
-> returns absolutely empty.
+> The line comes from an older version of templates/hooks--update. The
+> line was removed in commit 829a686f1b50ba96cac2d88494fa339efe0c0862 .
+>
+> So Luben does seem to have a hook installed, perhaps this is the
+> culprit.
 
-As Doc Brown once said: "That's because you're not thinking four 
-dimensionally" ;-)
+Thanks for spotting this.  I do not use this hook (well, I only
+use commit-msg, pre-commit, and pre-rebase patches) and it was
+totally outside of my radar.
 
- git-show v1.4.4:templates/hooks--update | grep masses
+It runs describe to find the previous tag, but the parser is a
+bit old fashioned.  It says:
 
-Luben: that message is being generated by the remote version of git rather 
-than your local version.  It doesn't matter that /you/ don't have any hook 
-scripts enabled, what matters is that the remote repository has them enabled.  
-In particular the hooks/update script has been enabled.
+	prev=$(git describe "$3^" | sed 's/-g.*//')
 
-The output you show is from the update hook from an older version of git, but 
-the git you're running on the remote end is a newer version.  The hook 
-scripts don't get updated when you upgrade git because they're copied to the 
-repository from the latest template when you clone or init.
+but modern way to say the same is:
 
-Now: onto the fault; this same fault was fixed in the sample hook in revision 
-a2ee81bb7594b; the problem is that the older update hook used to split the 
-output of git-describe on the last dash and made the assumption that 
-everything before the dash was a tag name.  git-describe gained a nice new 
-feature were it would show the number of revisions since that tag as well.  
-So now the output of git-describe is
+	prev=$(git describe --abbrev=0 "$3^")
 
-  tag-N-revision
+Luben, sorry for the trouble.
 
-So you can see that splitting on the last dash would return "tag-N" rather 
-than "tag".  Now, when the update hook uses this "tag-N" as if it were a tag, 
-git obviously doesn't find it, so you're fatal error is coming from running 
-something like:
-
- git-rev-list v2.6.21-rc3-329..bac6eefe96204d0ad67d144f2511a6fc487aa594
-
-becuase "v2.6.21-rc3-329" is not a tag.
-
-The fix:  My own suggestion would be to just swap the update hook on the 
-server for the one that came with the latest version of git (although I'm 
-completely biased :-)).  Remember to do this on the remote repository, not 
-your local one.  Alternatively you could fix just that bug in the hook script 
-you have to leave things as close as possible to what you've got now, by 
-editing .git/hooks/update and making this change:
-
--  prev=$(git describe "$3^" | sed 's/-g.*//')
-+  prev=$(git describe --abbrev=0 "$3^")
-
-Alternatively; I've got a further update to the notification email script 
-prepared that I'm finishing testing and will send today that updates to use 
-the post-receive hook rather than the update hook and fixes a number of bugs.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+I do not know how much better the recent hooks--update is
+compared to the version you use.  It is supposed to be backward
+compatible, so you _might_ want to simply update it with the one
+from 'master' after checking if it suits your needs.  Otherwise,
+I think the above one-liner should work the problem around.
