@@ -1,79 +1,65 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: Installation instructions for gitweb?
-Date: Fri, 23 Mar 2007 17:42:48 +0100
-Message-ID: <20070323164248.GJ8017@planck.djpig.de>
-References: <etufpl$7en$1@sea.gmane.org> <20070323161210.GI8017@planck.djpig.de> <f329bf540703230920r5034d025p5fd169b06837ad4e@mail.gmail.com>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: emacs and git...
+Date: Fri, 23 Mar 2007 18:29:48 +0100
+Message-ID: <38b2ab8a0703231029m4b010686t4428158013b4acbc@mail.gmail.com>
+References: <38b2ab8a0703220753s67809e87l76ffc57adb725898@mail.gmail.com>
+	 <86lkhpmftt.fsf@blue.stonehenge.com>
+	 <38b2ab8a0703230029h7f3faa95u1e2ccb6a9ee4be5e@mail.gmail.com>
+	 <864poch0xl.fsf@blue.stonehenge.com>
+	 <38b2ab8a0703230132j64cf0b94x7c210593f3f31387@mail.gmail.com>
+	 <7vtzwcqqf9.fsf@assigned-by-dhcp.cox.net>
+	 <38b2ab8a0703230254x585ff89fp3e425b08cac56900@mail.gmail.com>
+	 <7vaby4qnhk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: hanwen@xs4all.nl
-X-From: git-owner@vger.kernel.org Fri Mar 23 17:42:56 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Mar 23 18:30:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUmqt-0001zo-3u
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 17:42:55 +0100
+	id 1HUnaX-0006lT-Cn
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 18:30:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbXCWQmw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 12:42:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753110AbXCWQmw
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 12:42:52 -0400
-Received: from planck.djpig.de ([85.10.192.180]:36978 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753091AbXCWQmv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 12:42:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 0DE5888136;
-	Fri, 23 Mar 2007 17:42:50 +0100 (CET)
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 29557-07; Fri, 23 Mar 2007 17:42:49 +0100 (CET)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 0285288137; Fri, 23 Mar 2007 17:42:48 +0100 (CET)
-Mail-Followup-To: hanwen@xs4all.nl, git@vger.kernel.org
+	id S1753265AbXCWR3w (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 13:29:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753261AbXCWR3w
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 13:29:52 -0400
+Received: from nf-out-0910.google.com ([64.233.182.185]:40968 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753259AbXCWR3v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 13:29:51 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so2117393nfa
+        for <git@vger.kernel.org>; Fri, 23 Mar 2007 10:29:49 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AXzOgy4klaaA/ehw0ycnpGj/l197qs5BQgAqQLNtclNIF3F4Z6N8HZdiZ/blydcLMFYBvzIAu9gr2DhhbW52HzL5Ayg8c8mNo/xuJmksaaGkRPzBNEu63MP4Ykf6UsSKEboQL4Lee8Vq2IggGvo14kIn56l/qZ3hIa7M9ONZzIg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bor1jRYvJTE4S9WUoz6cii/+rYuhujQXTT3LTa1lgEg3pAd6dN5X9cz/hshP4ESNlZzd9IzCUGDOqzGWCUwhulYdBEFFCSAFLj2HzDCioEyoZh7FFWXLl+PhaIn3TFYKTfPaGFUrWpjiDBW75/PIHcyHxkZwPd9kjrV2rFeGKCw=
+Received: by 10.114.56.1 with SMTP id e1mr1292873waa.1174670988831;
+        Fri, 23 Mar 2007 10:29:48 -0700 (PDT)
+Received: by 10.114.38.12 with HTTP; Fri, 23 Mar 2007 10:29:48 -0700 (PDT)
+In-Reply-To: <7vaby4qnhk.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <f329bf540703230920r5034d025p5fd169b06837ad4e@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42950>
 
-On Fri, Mar 23, 2007 at 01:20:25PM -0300, Han-Wen Nienhuys wrote:
-> >gitweb_conf.perl is just included as perl code. It is primarly useful
-> >for overriding the variables defined at the top of gitweb.cgi
-> 
-> This explanation doesn't help me. Can you post an example snippet?
+On 3/23/07, Junio C Hamano <junkio@cox.net> wrote:
+> "Francis Moreau" <francis.moro@gmail.com> writes:
+>
+> > BTW Junio, just out of curiosity, do you use shell or term mode ?
+>
+> Neither.  Almost all of my external command session inside Emacs
+> is done in compilation mode.  I even bind "C-x c" to "compile".
+>
 
-e.g. the default config file distributed in the Debian packages for git:
-
-# path to git projects (<project>.git)
-$projectroot = "/var/cache/git";
-
-# directory to use for temp files
-$git_temp = "/tmp";
-
-# target of the home link on top of all pages
-$home_link = $my_uri;
-
-# html text to include at home page
-$home_text = "indextext.html";
-
-# file with project list; by default, simply scan the projectroot dir.
-$projects_list = $projectroot;
-
-# stylesheet to use
-$stylesheet = "/gitweb.css";
-
-# logo to use
-$logo = "/git-logo.png";
-
-# the 'favicon'
-$favicon = "/git-favicon.png";
-
-Gruesse,
+hm do you also run all git commands in this mode ??
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Francis
