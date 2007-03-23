@@ -1,97 +1,84 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH 4/5] cvsserver: Make the database backend configurable
-Date: Fri, 23 Mar 2007 16:17:58 +0100
-Message-ID: <20070323151757.GH8017@planck.djpig.de>
-References: <11743197614111-git-send-email-frank@lichtenheld.de> <11743197611364-git-send-email-frank@lichtenheld.de> <46a038f90703191247y6b70c272s2473ab28acd63682@mail.gmail.com>
+From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
+Subject: Re: Git / Subversion Interoperability
+Date: Fri, 23 Mar 2007 12:21:02 -0300
+Message-ID: <20070323152102.GA4818@c3sl.ufpr.br>
+References: <20070322224829.GA7048@c3sl.ufpr.br> <20070323004335.GA17773@spearce.org> <Pine.LNX.4.64.0703230052570.2746@beast.quantumfyre.co.uk> <20070323012422.GC17773@spearce.org> <Pine.LNX.4.64.0703230128330.4001@beast.quantumfyre.co.uk> <20070323103426.GA15923@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 16:18:08 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 16:21:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUlWp-0003bL-VR
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 16:18:08 +0100
+	id 1HUlZm-0004za-CG
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 16:21:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945909AbXCWPSE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 11:18:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945911AbXCWPSE
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 11:18:04 -0400
-Received: from planck.djpig.de ([85.10.192.180]:36610 "EHLO planck.djpig.de"
+	id S1945916AbXCWPVH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 23 Mar 2007 11:21:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945915AbXCWPVH
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 11:21:07 -0400
+Received: from mx.inf.ufpr.br ([200.17.202.3]:38271 "EHLO urquell.c3sl.ufpr.br"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934081AbXCWPSB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 11:18:01 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 76EB888136;
-	Fri, 23 Mar 2007 16:17:59 +0100 (CET)
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 22561-08; Fri, 23 Mar 2007 16:17:58 +0100 (CET)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 3020088137; Fri, 23 Mar 2007 16:17:58 +0100 (CET)
-Mail-Followup-To: Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
+	id S1945916AbXCWPVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 11:21:05 -0400
+Received: from cohiba (cohiba.c3sl.ufpr.br [200.17.202.52])
+	by urquell.c3sl.ufpr.br (Postfix) with SMTP id 7C752301B310;
+	Fri, 23 Mar 2007 12:21:02 -0300 (BRT)
+Received: by cohiba (sSMTP sendmail emulation); Fri, 23 Mar 2007 12:21:02 -0300
 Content-Disposition: inline
-In-Reply-To: <46a038f90703191247y6b70c272s2473ab28acd63682@mail.gmail.com>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
+In-Reply-To: <20070323103426.GA15923@diana.vm.bytemark.co.uk>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42940>
 
-On Tue, Mar 20, 2007 at 07:47:12AM +1200, Martin Langhoff wrote:
-> On 3/20/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
-> >Make all the different parts of the database backend connection
-> >configurable. This adds the following string configuration variables:
-> 
-> Nice. I guess the hard part of this is going to be creating DB schemas
-> that are reasonably portable. The SQL we use is as vanilla as it gets
-> ;-)
+On Fri, Mar 23, 2007 at 11:34:26AM +0100, Karl Hasselstr=C3=B6m wrote:
+> On 2007-03-23 01:36:11 +0000, Julian Phillips wrote:
+>=20
+> > On Thu, 22 Mar 2007, Shawn O. Pearce wrote:
+> >
+> > > I thought about the properties, but didn't bother to write
+> > > anything on that subject as we may just be able to say "look,
+> > > properties are not supported in git-svnserver, so don't try to us=
+e
+> > > them".
+> >
+> > Indeed. That's what I was aiming at with the the last sentence (not
+> > very clearly unfortunately). It would be nice if the server could
+> > tell the client that properties are not supported ... but I doubt
+> > that it can, since they are fundamental part of Subversion.
+> >
+> > In particular it's how the client finds out about things like
+> > symlinks and line ending conversion. It may be necessary to provide
+> > some basic support for some of the properties in the svn:...
+> > namespace in order for the Subversion repo access library not to
+> > refuse to talk to the git server.
+>=20
+> Maybe the pragmatic solution would be to have built-in handling of a
+> few properties such as svn:executable and svn:ignore that have git
+> equivalents, and just emulate all other properties with files.
 
-I've now actually made a quick test to see how we do when using other
-backends (with PostgreSQL 8.2, will also do one with MySQL later).
+My idea is to write the git-svnserver!!! I think it will be easier.
 
-Some problems that I saw:
+To begin coding, i plan to write basic functions [updade,commit,checkou=
+t,
+copy,merge,...] then start to implement most "complex" instructions.
 
- - It would probably cool to be able to tell git-cvsserver that it
-   should use only one database for all modules (i.e. git branches)
-   This way one doesn't need to give the users database creation
-   privileges. Of course pre-creating all databases possibly ever needed
-   is possible but somewhat cumbersome.
- 
- - DBI->tables seems to be a portability problem. e.g. with SQLite
-   it returns "head", "commitmsgs", etc; with PostgreSQL it returns
-   public.head, public.commitmsgs, etc. The output of MySQL might
-   be different, too.
+As spearce said before, the idea of this is to migrate from svn to git
+without many trouble in transition, so basic can work as the initial th=
+ought.
 
-> >Both dbname and dbuser support dynamic variable substitution where
-> >the available variables are:
-> >%m -- the CVS 'module' (i.e. GIT 'head') worked on
-> >%a -- CVS access method used (i.e. 'ext' or 'pserver')
-> >%u -- User name of the user invoking git-cvsserver
-> >%G -- .git directory name
-> >%g -- .git directory name, mangled to be used in a filename,
-> >      currently this substitutes all chars except for [\w.-]
-> >      with '_'
-> 
-> It's missing from the POD though ;-)
+>=20
+> --=20
+> Karl Hasselstr=C3=B6m, kha@treskal.com
+>       www.treskal.com/kalle
 
-You mean the asciidoc, right?
-
-And yeah, I know. Writing English documentation is not actually one of my
-preferred occupations :/ Will do it, though.
-
-[...]
-> with those 2 in place, we'd have a means of applying a "vampire tap"
-> to an existing cvs server and take over without anyone noticing. But
-> tehy are both hard, hard hard.
-
-Indeed.
-
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+--=20
+Bruno Ribas - ribas@c3sl.ufpr.br
+http://web.inf.ufpr.br/ribas
+C3SL: http://www.c3sl.ufpr.br=20
