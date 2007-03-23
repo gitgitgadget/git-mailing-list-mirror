@@ -1,55 +1,82 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Git / Subversion Interoperability
-Date: Fri, 23 Mar 2007 16:48:51 +0100
-Message-ID: <20070323154851.GA22517@diana.vm.bytemark.co.uk>
-References: <20070322224829.GA7048@c3sl.ufpr.br> <20070323004335.GA17773@spearce.org> <Pine.LNX.4.64.0703230052570.2746@beast.quantumfyre.co.uk> <20070323012422.GC17773@spearce.org> <Pine.LNX.4.64.0703230128330.4001@beast.quantumfyre.co.uk> <20070323103426.GA15923@diana.vm.bytemark.co.uk> <20070323152102.GA4818@c3sl.ufpr.br>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-revert: Revert revert message to old behaviour
+Date: Fri, 23 Mar 2007 17:06:11 +0100 (CET)
+Message-ID: <Pine.LNX.4.63.0703231705150.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.64.0703230805450.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julian Phillips <julian@quantumfyre.co.uk>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-X-From: git-owner@vger.kernel.org Fri Mar 23 16:49:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Mar 23 17:06:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUm16-0001oT-7A
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 16:49:24 +0100
+	id 1HUmHR-0001ns-TV
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 17:06:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992474AbXCWPtT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Fri, 23 Mar 2007 11:49:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992476AbXCWPtT
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 11:49:19 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2082 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992474AbXCWPtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 11:49:19 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HUm0Z-0005sN-00; Fri, 23 Mar 2007 15:48:51 +0000
-Content-Disposition: inline
-In-Reply-To: <20070323152102.GA4818@c3sl.ufpr.br>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S2992486AbXCWQGO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 12:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992485AbXCWQGO
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 12:06:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60807 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S2992486AbXCWQGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 12:06:13 -0400
+Received: (qmail invoked by alias); 23 Mar 2007 16:06:12 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp020) with SMTP; 23 Mar 2007 17:06:12 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19DcQsuY8ZDnfO+1f6pdxA2XhQHb8GKG79kH9RXfb
+	/HGz3MJVySeQVE
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.64.0703230805450.6730@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42944>
 
-On 2007-03-23 12:21:02 -0300, Bruno Cesar Ribas wrote:
 
-> On Fri, Mar 23, 2007 at 11:34:26AM +0100, Karl Hasselstr=F6m wrote:
->
-> > Maybe the pragmatic solution would be to have built-in handling of
-> > a few properties such as svn:executable and svn:ignore that have
-> > git equivalents, and just emulate all other properties with files.
->
-> My idea is to write the git-svnserver!!! I think it will be easier.
+When converting from the shell script, based on a misreading of the
+sed invocation, the builtin included the abbreviated commit name,
+and did _not_ include the quotes around the oneline message.
 
-Umm ... what I said was intended as a possible way to do the mapping
-between svn and git concepts. I was under the impresson that
-git-svnserver would need to use such a mapping.
+This fixes it.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+
+	On Fri, 23 Mar 2007, Linus Torvalds wrote:
+	
+	> 
+	> Can we please revert the "revert" changes to the default message?
+	> 
+	> Dscho?
+
+	Yeah?
+
+ builtin-revert.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-revert.c b/builtin-revert.c
+index f3f3f5c..f4e1e22 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -296,11 +296,9 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	if (action == REVERT) {
+ 		base = commit;
+ 		next = commit->parents->item;
+-		add_to_msg("Revert ");
+-		add_to_msg(find_unique_abbrev(commit->object.sha1,
+-					DEFAULT_ABBREV));
++		add_to_msg("Revert \"");
+ 		add_to_msg(oneline);
+-		add_to_msg("\nThis reverts commit ");
++		add_to_msg("\"\nThis reverts commit ");
+ 		add_to_msg(sha1_to_hex(commit->object.sha1));
+ 		add_to_msg(".\n");
+ 	} else {
+-- 
+1.5.1.rc1.2356.g2054
