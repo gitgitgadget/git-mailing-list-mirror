@@ -1,67 +1,56 @@
-From: "Francis Moreau" <francis.moro@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: emacs and git...
-Date: Fri, 23 Mar 2007 09:32:50 +0100
-Message-ID: <38b2ab8a0703230132j64cf0b94x7c210593f3f31387@mail.gmail.com>
+Date: Fri, 23 Mar 2007 02:07:06 -0700
+Message-ID: <7vtzwcqqf9.fsf@assigned-by-dhcp.cox.net>
 References: <38b2ab8a0703220753s67809e87l76ffc57adb725898@mail.gmail.com>
-	 <86lkhpmftt.fsf@blue.stonehenge.com>
-	 <38b2ab8a0703230029h7f3faa95u1e2ccb6a9ee4be5e@mail.gmail.com>
-	 <864poch0xl.fsf@blue.stonehenge.com>
+	<86lkhpmftt.fsf@blue.stonehenge.com>
+	<38b2ab8a0703230029h7f3faa95u1e2ccb6a9ee4be5e@mail.gmail.com>
+	<864poch0xl.fsf@blue.stonehenge.com>
+	<38b2ab8a0703230132j64cf0b94x7c210593f3f31387@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Fri Mar 23 09:33:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
+To: "Francis Moreau" <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 10:07:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUfD2-00057j-Ob
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 09:33:17 +0100
+	id 1HUfju-00065Y-8Q
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 10:07:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422692AbXCWIcz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 04:32:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422710AbXCWIcz
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 04:32:55 -0400
-Received: from wx-out-0506.google.com ([66.249.82.236]:11944 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422692AbXCWIcy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 04:32:54 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1181757wxd
-        for <git@vger.kernel.org>; Fri, 23 Mar 2007 01:32:54 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FnOxu6zD8EwNc0VCAb/8yK3Sj1S1hrOGeCL3jpT2EB7uP9YwIflR0LFQujA7O+kJJHrzlZlsBK6UscU2KXgzGx5jO4kixxWZ4velRCsjJy4bJMhQcKtdSU2hKZKqgNJBgd+vit24qa4o1nxk9UlS5lKYwmTWyzaSUdILicmHVOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Xpo6ydRQZtPoE1pxNRQuN/62nr6ztZ69xO07oskPsOpo9cR7V+TayXgNwwbG0xK9cAqoTVyZ1g9ZTFwlfGjHR5h/iwkaL89nWPUIZi9OvTFBA8rUWjUiB5YXY0TkDMf02i0514s97++H4AgSZbfUq3swIvvxXcQw0KCZQ7YXy2E=
-Received: by 10.115.17.1 with SMTP id u1mr1075792wai.1174638770688;
-        Fri, 23 Mar 2007 01:32:50 -0700 (PDT)
-Received: by 10.114.38.12 with HTTP; Fri, 23 Mar 2007 01:32:50 -0700 (PDT)
-In-Reply-To: <864poch0xl.fsf@blue.stonehenge.com>
-Content-Disposition: inline
+	id S1422745AbXCWJHJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 05:07:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422744AbXCWJHJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 05:07:09 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:49468 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422747AbXCWJHI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 05:07:08 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070323090707.KIAF22511.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 23 Mar 2007 05:07:07 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id e9761W0051kojtg0000000; Fri, 23 Mar 2007 05:07:07 -0400
+In-Reply-To: <38b2ab8a0703230132j64cf0b94x7c210593f3f31387@mail.gmail.com>
+	(Francis Moreau's message of "Fri, 23 Mar 2007 09:32:50 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42913>
 
-On 3/23/07, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
-> >>>>> "Francis" == Francis Moreau <francis.moro@gmail.com> writes:
->
-> Francis> $ PAGE=cat git diff HEAD^
->
-> PAGE?  or PAGER?
->
+"Francis Moreau" <francis.moro@gmail.com> writes:
 
-PAGER
+> Can't git make 'cat' the default pager when run on a dumb terminal ?
 
-But I actually know it doesn't print anything, because I put 'HEAD'
-instead of 'HEAD^', sorry for the wrong alert.
+IIRC, `more` works on a dumb terminal.
 
-Can't git make 'cat' the default pager when run on a dumb terminal ?
-
-thanks
--- 
-Francis
+But using PAGER=cat is a longstanding and widely used trick
+among Emacs old timers, predating the EDITOR=emacsclient, which
+is even nicer.  I would highly recommend it.  These two
+environment variables make running *everything* in compilation
+mode (or shell buffer) so much nicer than otherwise.
