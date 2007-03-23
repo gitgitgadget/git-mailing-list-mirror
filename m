@@ -1,104 +1,67 @@
-From: arjen@yaph.org (Arjen Laarhoven)
-Subject: Re: [PATCH] Teach git-mergetool about Apple's opendiff/FileMerge
-Date: Fri, 23 Mar 2007 09:25:01 +0100
-Message-ID: <20070323082501.GF3854@regex.yaph.org>
-References: <20070322213728.GD3854@regex.yaph.org> <7vbqiksh4a.fsf@assigned-by-dhcp.cox.net>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: emacs and git...
+Date: Fri, 23 Mar 2007 09:32:50 +0100
+Message-ID: <38b2ab8a0703230132j64cf0b94x7c210593f3f31387@mail.gmail.com>
+References: <38b2ab8a0703220753s67809e87l76ffc57adb725898@mail.gmail.com>
+	 <86lkhpmftt.fsf@blue.stonehenge.com>
+	 <38b2ab8a0703230029h7f3faa95u1e2ccb6a9ee4be5e@mail.gmail.com>
+	 <864poch0xl.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: tytso@mit.edu, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 23 09:25:15 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Fri Mar 23 09:33:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUf5G-0001Om-Nz
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 09:25:15 +0100
+	id 1HUfD2-00057j-Ob
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 09:33:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422708AbXCWIZH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 04:25:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422715AbXCWIZH
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 04:25:07 -0400
-Received: from regex.yaph.org ([193.202.115.201]:52915 "EHLO regex.yaph.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422708AbXCWIZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 04:25:03 -0400
-Received: by regex.yaph.org (Postfix, from userid 1000)
-	id ED5475B7CA; Fri, 23 Mar 2007 09:25:01 +0100 (CET)
+	id S1422692AbXCWIcz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 04:32:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422710AbXCWIcz
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 04:32:55 -0400
+Received: from wx-out-0506.google.com ([66.249.82.236]:11944 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422692AbXCWIcy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 04:32:54 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1181757wxd
+        for <git@vger.kernel.org>; Fri, 23 Mar 2007 01:32:54 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=FnOxu6zD8EwNc0VCAb/8yK3Sj1S1hrOGeCL3jpT2EB7uP9YwIflR0LFQujA7O+kJJHrzlZlsBK6UscU2KXgzGx5jO4kixxWZ4velRCsjJy4bJMhQcKtdSU2hKZKqgNJBgd+vit24qa4o1nxk9UlS5lKYwmTWyzaSUdILicmHVOg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Xpo6ydRQZtPoE1pxNRQuN/62nr6ztZ69xO07oskPsOpo9cR7V+TayXgNwwbG0xK9cAqoTVyZ1g9ZTFwlfGjHR5h/iwkaL89nWPUIZi9OvTFBA8rUWjUiB5YXY0TkDMf02i0514s97++H4AgSZbfUq3swIvvxXcQw0KCZQ7YXy2E=
+Received: by 10.115.17.1 with SMTP id u1mr1075792wai.1174638770688;
+        Fri, 23 Mar 2007 01:32:50 -0700 (PDT)
+Received: by 10.114.38.12 with HTTP; Fri, 23 Mar 2007 01:32:50 -0700 (PDT)
+In-Reply-To: <864poch0xl.fsf@blue.stonehenge.com>
 Content-Disposition: inline
-In-Reply-To: <7vbqiksh4a.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42912>
 
-Hi,
+On 3/23/07, Randal L. Schwartz <merlyn@stonehenge.com> wrote:
+> >>>>> "Francis" == Francis Moreau <francis.moro@gmail.com> writes:
+>
+> Francis> $ PAGE=cat git diff HEAD^
+>
+> PAGE?  or PAGER?
+>
 
-> I cannot comment on the calling interface of opendiff, as I do
-> not have access to an Apple.  Here are my first impressions.
-> 
-> > diff --git a/git-mergetool.sh b/git-mergetool.sh
-> > index 7942fd0..58ae201 100755
-> > --- a/git-mergetool.sh
-> > +++ b/git-mergetool.sh
-> > @@ -248,6 +248,30 @@ merge_file () {
-> >  		mv -- "$BACKUP" "$path.orig"
-> >  	    fi
-> >  	    ;;
-> > +	opendiff)
-> > +	    touch "$BACKUP"
-> > +	    if base_present; then
-> > +		opendiff $LOCAL $REMOTE -ancestor $BASE -merge $path | cat
-> > +            else
-> > +                opendiff $LOCAL $REMOTE -merge $path | cat
-> > +            fi
-> 
-> I sense inconsistent tabbing here.
+PAGER
 
-Somehow I missed this.
+But I actually know it doesn't print anything, because I put 'HEAD'
+instead of 'HEAD^', sorry for the wrong alert.
 
-> More seriously, all of the above $variable references must be
-> dq'ed; see other case arms for good examples.
+Can't git make 'cat' the default pager when run on a dumb terminal ?
 
-I don't use shell scripting  much, some reading up on quoting
-enlightened me :-)
-
-> What's the purpose of this cat anyway?  It looks like an
-> expensive no-op to me.
-
-opendiff is a wrapper for the FileMerge.app application.  It launches the
-FileMerge binary with the expanded filenames and returns immediately,
-which is confusing, as git-mergetool immediately continues.  When the
-output of opendiff is piped somewhere, it'll wait until FileMerge is
-exited (and the user has had a chance to save the merged file).
-
-I think there is another solution, I'll look into this.
-
-> > +	    if test "$path" -nt "$BACKUP" ; then
-> > +		status=0;
-> > +	    else
-> > +		while true; do
-> > +		    echo "$path seems unchanged."
-> > +		    echo -n "Was the merge successful? [y/n] "
-> > +		    read answer < /dev/tty
-> > +		    case "$answer" in
-> > +			y*|Y*) status=0; break ;;
-> > +			n*|N*) status=1; break ;;
-> > +		    esac
-> > +		done
-> > +	    fi
-> > +	    if test "$status" -eq 0; then
-> > +		mv -- "$BACKUP" "$path.orig"
-> > +	    fi
-> > +	    ;;
-> >      esac
-> 
-> This part is duplicated across meld|vimdiff and xxdiff arms; you
-> probably would want to have a patch that makes a shell function
-> to factor this out, and then another patch to add this opendiff
-> support.
-
-Will do.
-
-Arjen
+thanks
+-- 
+Francis
