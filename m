@@ -1,80 +1,47 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH 4/5] cvsserver: Make the database backend configurable
-Date: Fri, 23 Mar 2007 19:39:31 +0100
-Message-ID: <20070323183931.GK8017@planck.djpig.de>
-References: <11743197614111-git-send-email-frank@lichtenheld.de> <11743197611364-git-send-email-frank@lichtenheld.de> <46a038f90703191247y6b70c272s2473ab28acd63682@mail.gmail.com> <20070323151757.GH8017@planck.djpig.de>
+From: Marco Roeland <marco.roeland@xs4all.nl>
+Subject: Re: [PATCH] Teach git-mergetool about Apple's opendiff/FileMerge
+Date: Fri, 23 Mar 2007 19:42:35 +0100
+Message-ID: <20070323184235.GA11195@fiberbit.xs4all.nl>
+References: <20070322213728.GD3854@regex.yaph.org> <20070323141519.GA19649@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Martin Langhoff <martin.langhoff@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 23 19:39:40 2007
+Content-Type: text/plain; charset=iso-8859-1
+Cc: Arjen Laarhoven <arjen@yaph.org>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Mar 23 19:42:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUofq-0005J2-Fk
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 19:39:38 +0100
+	id 1HUoin-0006gw-I0
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 19:42:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753305AbXCWSjf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 14:39:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753307AbXCWSjf
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 14:39:35 -0400
-Received: from planck.djpig.de ([85.10.192.180]:37498 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753305AbXCWSje (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 14:39:34 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id C5CE288136;
-	Fri, 23 Mar 2007 19:39:32 +0100 (CET)
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 05385-10; Fri, 23 Mar 2007 19:39:32 +0100 (CET)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id EDB3488137; Fri, 23 Mar 2007 19:39:31 +0100 (CET)
-Mail-Followup-To: Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
+	id S1753306AbXCWSmi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 14:42:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753309AbXCWSmi
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 14:42:38 -0400
+Received: from fiberbit.xs4all.nl ([213.84.224.214]:47564 "EHLO
+	fiberbit.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753306AbXCWSmi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 14:42:38 -0400
+Received: from marco by fiberbit.xs4all.nl with local (Exim 4.63)
+	(envelope-from <marco.roeland@xs4all.nl>)
+	id 1HUoih-00031x-Ij; Fri, 23 Mar 2007 19:42:35 +0100
 Content-Disposition: inline
-In-Reply-To: <20070323151757.GH8017@planck.djpig.de>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
+In-Reply-To: <20070323141519.GA19649@thunk.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42953>
 
-On Fri, Mar 23, 2007 at 04:17:58PM +0100, Frank Lichtenheld wrote:
-> On Tue, Mar 20, 2007 at 07:47:12AM +1200, Martin Langhoff wrote:
-> > On 3/20/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
-> > >Make all the different parts of the database backend connection
-> > >configurable. This adds the following string configuration variables:
-> > 
-> > Nice. I guess the hard part of this is going to be creating DB schemas
-> > that are reasonably portable. The SQL we use is as vanilla as it gets
-> > ;-)
-> 
-> I've now actually made a quick test to see how we do when using other
-> backends (with PostgreSQL 8.2, will also do one with MySQL later).
+On Friday March 23rd 2007 at 10:15 Theodore Tso wrote:
 
-Done the MySQL tests, too.
+> I won't have access to my MacOS X machine until I get back home, so I
+> won't be able to try out your patch until early next week.  Is
+> opendiff in the standard MacOS release, or do I have to do something
+> special to get it?
 
-> Some problems that I saw:
-> 
->  - It would probably cool to be able to tell git-cvsserver that it
->    should use only one database for all modules (i.e. git branches)
->    This way one doesn't need to give the users database creation
->    privileges. Of course pre-creating all databases possibly ever needed
->    is possible but somewhat cumbersome.
->  
->  - DBI->tables seems to be a portability problem. e.g. with SQLite
->    it returns "head", "commitmsgs", etc; with PostgreSQL it returns
->    public.head, public.commitmsgs, etc. The output of MySQL might
->    be different, too.
-
-It is `head`, and `revision`. Fun ;)
-Why no etc.? Because pretty much every other used SQL command (than these
-two "create table") fails with syntax errors. Not that I actually expected
-anything else from MySQL...
-
-Gruesse,
+The man page says: "opendiff and FileMerge are installed as part of the
+Mac OS X Developer Tools" and it looks quite nice!
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Marco Roeland
