@@ -1,63 +1,70 @@
-From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-Subject: Git / Subversion Interoperability
-Date: Thu, 22 Mar 2007 19:48:29 -0300
-Message-ID: <20070322224829.GA7048@c3sl.ufpr.br>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: My git repo is broken, how to fix it ?
+Date: Thu, 22 Mar 2007 17:25:37 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703221720481.6730@woody.linux-foundation.org>
+References: <200702281036.30539.litvinov2004@gmail.com>
+ <Pine.LNX.4.64.0703200836490.6730@woody.linux-foundation.org>
+ <200703210956.50018.litvinov2004@gmail.com> <200703211024.04740.litvinov2004@gmail.com>
+ <Pine.LNX.4.64.0703220858400.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703220924590.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703220931120.6730@woody.linux-foundation.org>
+ <alpine.LFD.0.83.0703221257020.18328@xanadu.home>
+ <Pine.LNX.4.64.0703221006360.6730@woody.linux-foundation.org>
+ <20070322221340.GA13867@segfault.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 23 00:15:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>,
+	Alexander Litvinov <litvinov2004@gmail.com>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Mar 23 01:26:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUWUl-0008Mm-F5
-	for gcvg-git@gmane.org; Fri, 23 Mar 2007 00:14:59 +0100
+	id 1HUXbj-0002D3-TP
+	for gcvg-git@gmane.org; Fri, 23 Mar 2007 01:26:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750934AbXCVXOm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 22 Mar 2007 19:14:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932440AbXCVXOm
-	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 19:14:42 -0400
-Received: from mx.c3sl.ufpr.br ([200.17.202.3]:47463 "EHLO
-	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750934AbXCVXOm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Mar 2007 19:14:42 -0400
-X-Greylist: delayed 1570 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Mar 2007 19:14:41 EDT
-Received: from montecristo (montecristo.c3sl.ufpr.br [200.17.202.51])
-	by urquell.c3sl.ufpr.br (Postfix) with SMTP id 097293019A3D
-	for <git@vger.kernel.org>; Thu, 22 Mar 2007 19:48:30 -0300 (BRT)
-Received: by montecristo (sSMTP sendmail emulation); Thu, 22 Mar 2007 19:48:30 -0300
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752619AbXCWAZ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 22 Mar 2007 20:25:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752365AbXCWAZ6
+	(ORCPT <rfc822;git-outgoing>); Thu, 22 Mar 2007 20:25:58 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:58623 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751212AbXCWAZ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Mar 2007 20:25:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2N0Pceq027059
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 22 Mar 2007 17:25:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2N0PbBR001881;
+	Thu, 22 Mar 2007 17:25:37 -0700
+In-Reply-To: <20070322221340.GA13867@segfault.peff.net>
+X-Spam-Status: No, hits=-0.469 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42888>
 
-Hello,
 
-I'm going to apply for the Git / Subversion Interoperability project.
 
-I saw that there is no mentor yet assigned for the "job". So i'm sending this
-mail to get some help to start the project by submiting to GSOC and begin to
-work :)
+On Thu, 22 Mar 2007, Jeff King wrote:
+> 
+> Try EF_DISABLE_BANNER=1
 
-My idea on this project is to create:
-1.  git-svnserver
-2.  write a backend for Subversion
+That does nothing for me. Nor does
 
-And make it easy to work with SSH using those "common" flags in
-authorized_keys like:
-command="svnserve -t -r /home/svn --tunnel-user=bruno" ssh-dss bla bla
+	strings -- /usr/lib64/libefence.so | grep EF_
 
-And as an idea i would like to make the same funcionality to git, as it is
-not as easy today to do something like above :)
+show that string or anything else half-way promising..
 
-Well, that's it for now! And i'm waiting for replys
+Googling for that shows that some versions of efence have had that flag 
+(not necessarily as a environment variable, though). But certainly not the 
+version I have.
 
-Regards,
-Bruno
-
--- 
-Bruno Ribas - ribas@c3sl.ufpr.br
-http://web.inf.ufpr.br/ribas
-C3SL: http://www.c3sl.ufpr.br 
+		Linus
