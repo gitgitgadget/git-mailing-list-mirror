@@ -1,115 +1,76 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Initializing svn repo from git
-Date: Sat, 24 Mar 2007 15:35:17 -0700
-Message-ID: <20070324223517.GA26593@muzzle>
-References: <6efbd9b70703161440h762bd340x787f3258bc8dfcdc@mail.gmail.com>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: merge strategy request
+Date: Sat, 24 Mar 2007 14:46:40 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0703241430420.12864@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Chris Riddoch <riddochc@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 23:35:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 25 00:12:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVEpX-00016Y-Oy
-	for gcvg-git@gmane.org; Sat, 24 Mar 2007 23:35:24 +0100
+	id 1HVFPd-00037V-ID
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 00:12:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932873AbXCXWfV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 18:35:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932869AbXCXWfV
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 18:35:21 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:44369 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932873AbXCXWfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 18:35:19 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id ACA6A2DC01A;
-	Sat, 24 Mar 2007 15:35:17 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 24 Mar 2007 15:35:17 -0700
-Content-Disposition: inline
-In-Reply-To: <6efbd9b70703161440h762bd340x787f3258bc8dfcdc@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932396AbXCXXMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 19:12:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932875AbXCXXMY
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 19:12:24 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:62955 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S932396AbXCXXMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 19:12:24 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sat, 24 Mar 2007 15:12:23 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sat, 24 Mar 2007 16:12:16 -0700
+X-X-Sender: dlang@dlang.diginsite.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43022>
 
-Chris Riddoch <riddochc@gmail.com> wrote:
-> Hi, folks.  This is probably targeted at Eric Wong, but any assistance
+having just gone through a painful manual mere with a config file on a gentoo 
+system (not useing git) it seems to me that there should be a better way to deal 
+with merging config file updates. I know that gentoo doesn't use git for it's 
+config files, but I don't think that git would do a whole lot better currently 
+(but with access to the history, I think it could)
 
-In that case, feel free to Cc: me so I see it sooner :)
+what's happening is
 
-> is welcome.  I asked on #git, and decideded that a larger audience
-> might be interested in this question, and whatever its answer turns
-> out to be.
-> 
-> I've been working on a project, and tracking its history in git.  Due
-> to lack of windows support, and windows-only developers joining my
-> project, my higher-ups decided that we needed to use SVN.  I expect
-> I'll probably use git-svn, myself, but I'm faced with a task:
-> 
-> I need to use the contents of my git repository, which is *very*
-> linear with only one branch, to fill in some history for a new, empty
-> svn repository.
-> 
-> My current steps, which isn't complete (identifiers cleaned out to
-> protect... well, me.)
-> 
-> $ git svn init  svn://server/project project
-> $ cd project
-> project$ git svn fetch
-> Fetching git-svn
-> r0 = df2d1a798e85c75b9abbfd22fe06ff651a8fa9dd
+A---B
+      \
+   C---D
 
-With completely linear history, you can probably use grafts and add
-df2d1a798e85c75b9abbfd22fe06ff651a8fa9dd as a parent of your original,
-initial commit.   Afterwards, running dcommit should just work.  (I've
-never tried this, though).
+where A and C are the distro maintained config files, B is the one customized 
+for the local system, and D needs to be basicly the same as B, but accounting 
+for the changes between A and C
 
-> project$ git pull /git/project
-> warning: no common commits
-> remote: Generating pack...
-> remote: Done counting 850 objects.
-> remote: Deltifying 850 objects.
-> ...
-> 
-> project$ git log
-> commit <sha>
-> Merge: <sha>... <sha>...
-> Author: Chris Riddoch
-> Date: Fri Mar 16 15:13:58 2007 -0600
-> 
->    Merge /git/project/
-> 
-> commit <sha>
-> Author: (no author) <(no author)@641bd306-a92b-0410-b27c-7dcbb122c54d>
-> Date:   Wed Mar 14 20:41:10 2007 +0000
-> 
->    git-svn-id: svn://server/project@0 641bd306-a92b-0410-b27c-7dcbb122c54d
-> 
-> commit <sha>
-> Author: Chris Riddoch
-> Date:   Tue Mar 13 13:54:21 2007 -0600
-> 
->    Most recent commit
-> 
-> <skipping a bunch>
-> 
-> commit <sha>
-> Author: Chris Riddoch
-> Date:   Thu Feb 1 10:55:42 2007 -0700
-> 
->    Initial commit of project
-> 
-> 
-> 
-> Um... now what?  Can someone walk me through this?
+issues that I see (there are probably others)
 
-That will probably force you to discard your git-only history
-in SVN or have you duplicate history, neither is what you want.
-If it's not too late; I recommend you start over with the
-above instructions.
+1. blank lines and comments are 'uninteresting' changes in that they don't 
+affect the result, so if they get botched slightly it doesn't result in a broken 
+systems (although it can cause confusion), what's important are changes ourside 
+the comments. this is especially critical if the version in B strips out 
+comments compared to the sample version in A
 
--- 
-Eric Wong
+2. if B changes a config option and C doesn't (compared to A) then you want to 
+go with what's in B
+
+3. for most config files the order of the options doesn't matter, so look for 
+the same option name out of order.
+
+4. for some config files there are groupings in the config (tags nested inside 
+other tags), the nesting is important, even if the order isn't. frequently this 
+nesting is indicated by whitespace indentation  (or if it's an XML-like config 
+file the nesting can be determined directly from the tags) figuring out exactly 
+waht strategy to use here could be a case of 'try several and see which one 
+makes sense), or it could be that the user needs to identify the strategy to use 
+for a particular file.
+
+there's been talk about custom merge strategies for different types of files 
+(uncompressing office documents to merge them for example), so I think this is 
+along the same lines and wanted to let other people start thinking about the 
+problem and possible solutions.
+
+David Lang
