@@ -1,85 +1,81 @@
-From: Eric Wong <normalperson@yhbt.net>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Git / Subversion Interoperability
-Date: Sat, 24 Mar 2007 13:31:29 -0700
-Message-ID: <20070324203129.GA25571@muzzle>
+Date: Sat, 24 Mar 2007 13:37:40 -0700
+Message-ID: <7vfy7ufkdn.fsf@assigned-by-dhcp.cox.net>
 References: <20070322224829.GA7048@c3sl.ufpr.br>
+	<20070323004335.GA17773@spearce.org>
+	<Pine.LNX.4.64.0703230052570.2746@beast.quantumfyre.co.uk>
+	<20070323012422.GC17773@spearce.org>
+	<Pine.LNX.4.64.0703230128330.4001@beast.quantumfyre.co.uk>
+	<20070323103426.GA15923@diana.vm.bytemark.co.uk>
+	<20070324064130.GC25863@spearce.org>
+	<20070324185517.GA10876@diana.vm.bytemark.co.uk>
+	<Pine.LNX.4.64.0703241258560.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-X-From: git-owner@vger.kernel.org Sat Mar 24 21:31:37 2007
+Cc: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Julian Phillips <julian@quantumfyre.co.uk>,
+	Bruno Cesar Ribas <ribas@c3sl.ufpr.br>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Mar 24 21:37:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVCtj-0001Az-OB
-	for gcvg-git@gmane.org; Sat, 24 Mar 2007 21:31:36 +0100
+	id 1HVCzh-0004Ga-3E
+	for gcvg-git@gmane.org; Sat, 24 Mar 2007 21:37:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753319AbXCXUbd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 16:31:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753488AbXCXUbd
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 16:31:33 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:44319 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753319AbXCXUbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 16:31:31 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id CC8DC2DC01A;
-	Sat, 24 Mar 2007 13:31:29 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 24 Mar 2007 13:31:29 -0700
-Content-Disposition: inline
-In-Reply-To: <20070322224829.GA7048@c3sl.ufpr.br>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932716AbXCXUhm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 16:37:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933078AbXCXUhm
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 16:37:42 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:52231 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932716AbXCXUhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 16:37:41 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070324203741.XQRV748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 24 Mar 2007 16:37:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ekdg1W0041kojtg0000000; Sat, 24 Mar 2007 16:37:41 -0400
+In-Reply-To: <Pine.LNX.4.64.0703241258560.6730@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sat, 24 Mar 2007 13:13:06 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43018>
 
-Bruno Cesar Ribas <ribas@c3sl.ufpr.br> wrote:
-> Hello,
-> 
-> I'm going to apply for the Git / Subversion Interoperability project.
-> 
-> I saw that there is no mentor yet assigned for the "job". So i'm sending this
-> mail to get some help to start the project by submiting to GSOC and begin to
-> work :)
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-I work on git-svn and I can certainly help you in some ways.  However
-I'm uncomfortable committing myself to this because of time constraints;
-so I won't be signing up as a mentor.  Sorry.
+> So if your .gitignore looks like
+>
+> 	*.o
+>
+> it means that it recursively ignores all *.o files starting at that level.
+>
+> HOWEVER, if you write it as
+>
+> 	/*.o
+>
+> it means that it ignores *.o files only *within* that level (so it's 
+> "absolute" wrt the particular .gitignore file, not globally).
+>
+> So you can have both behaviours.
+>
+> [ I think the exact behaviour is: if there is a '/' anywhere in the name, 
+>   it's not a recursive match and has to match the file exactly, but 
+>   somebody like Junio should probably back me up on that ]
+> 		Linus
 
-> My idea on this project is to create:
-> 1.  git-svnserver
+Yes, that is what dir.c::excluded_1() says.  If it does not have
+'/' then fnmatch the basename, otherwise fnmatch with
+FNM_PATHNAME.  So I think if you write
 
-I'm not familiar with the internals of the SVN protocol, and my work
-with git-svn has sufficiently frightened me away from wanting to
-investigate further :).
+               /obj/*.o
 
-I also suggest you write a HTTP/DAV-based server/plugin/cgi instead of
-relying on the SVN protocol.  In my experience svnserve itself is quite
-finnicky.
-
-> 2.  write a backend for Subversion
-
-One key difference between git and Subversion is the design emphasis on
-data structures versus design emphasis on code/APIs.  Subversion
-certainly tries to keep their APIs stable (and for the most part seem
-successful), but their publically available storage backends are
-definitely lacking.
-
-I'm not sure this part of the project is going to help git very much
-unless it speeds up the libification effort.
-
-> And make it easy to work with SSH using those "common" flags in
-> authorized_keys like:
-> command="svnserve -t -r /home/svn --tunnel-user=bruno" ssh-dss bla bla
-> 
-> And as an idea i would like to make the same funcionality to git, as it is
-> not as easy today to do something like above :)
-
-One reason to work on your project is to help SVN users who have no idea
-what UNIX, ssh, and tunneling are.  This is also why I recommend working
-on the HTTP/DAV protocol instead.
-
--- 
-Eric Wong
+you can ignore *.o files in obj/ directory (but won't ignore a/obj/b.o).
