@@ -1,37 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: Git / Subversion Interoperability
-Date: Sat, 24 Mar 2007 02:45:56 -0400
-Message-ID: <20070324064556.GD25863@spearce.org>
-References: <20070322224829.GA7048@c3sl.ufpr.br> <20070323004335.GA17773@spearce.org> <eu0njb$q3b$1@sea.gmane.org>
+Date: Sat, 24 Mar 2007 02:56:32 -0400
+Message-ID: <20070324065632.GE25863@spearce.org>
+References: <20070322224829.GA7048@c3sl.ufpr.br> <20070323004335.GA17773@spearce.org> <Pine.LNX.4.64.0703230052570.2746@beast.quantumfyre.co.uk> <20070323233036.77325e5a@athlon> <46044DF6.6070902@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 07:46:05 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Wiese <morfoh@opensde.org>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 07:57:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HV00p-0004Xf-Rv
-	for gcvg-git@gmane.org; Sat, 24 Mar 2007 07:46:04 +0100
+	id 1HV0BP-0000zy-PX
+	for gcvg-git@gmane.org; Sat, 24 Mar 2007 07:57:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753465AbXCXGqB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 24 Mar 2007 02:46:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753466AbXCXGqB
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 02:46:01 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:36637 "EHLO
+	id S1753468AbXCXG4n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 02:56:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753469AbXCXG4m
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 02:56:42 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:36803 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753465AbXCXGqA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Mar 2007 02:46:00 -0400
+	with ESMTP id S1753468AbXCXG4m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 02:56:42 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HV00i-0005Ak-Qn; Sat, 24 Mar 2007 02:45:56 -0400
+	id 1HV0Az-0005Vi-DB; Sat, 24 Mar 2007 02:56:33 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7688820FBAE; Sat, 24 Mar 2007 02:45:56 -0400 (EDT)
+	id F31F420FBAE; Sat, 24 Mar 2007 02:56:32 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <eu0njb$q3b$1@sea.gmane.org>
+In-Reply-To: <46044DF6.6070902@midwinter.com>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -44,39 +43,52 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42986>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Shawn O. Pearce wrote:
->=20
-> > - Assigning repository-wide revision numbers. =A0Git doesn't have
-> > such a concept, but its key to SVN. =A0These would need to be store=
-d
-> > in a file so the server can quickly map from revision number to
-> > Git commit SHA-1. =A0The reflogs may help here, but currently they
-> > also expire. =A0Any reflog that is being used to do this mapping
-> > cannot be expired, ever.
->=20
-> Another idea is to use lightweight tags for that, especially now
-> with packed refs support in git.
+Steven Grimm <koreth@midwinter.com> wrote:
+> Christian Wiese wrote:
+> >I'm currently facing this issue while trying to migrate from svn to git
+> >within my local working environment to gather experience while working
+> >with git to be able to effectively "sell" git to the other people of
+> >our project and provide a smooth migration path for them.
+> >  
+> 
+> Would a git svn server be of interest in such a situation, though? 
+> That's exactly the situation I'm in, and git-svn is doing an admirable 
+> job of integrating the two environments without disrupting the folks who 
+> are happy with svn. It seems like the git svn server would be useful in 
+> the opposite environment, where you have a git project that people want 
+> to access with svn tools (e.g. because there's no git integration in an 
+> IDE or whatever.)
+> 
+> Maybe I'm just misunderstanding what the server in question would do, 
+> but it seems like it's not likely to be that useful in cases where you 
+> already have a real svn server running and holding the canonical copy of 
+> the project.
 
-Yes, not a bad idea.
+Well, it does make it harder to transparently remove the SVN server
+and drop in a Git based one.  ;-)
 
-Except the packed refs file can have variable sized records.  It has
-no faster access path than to just scan it.  Some SVN repositories
-have revision counts up into the 5 and 6 digits.  These would take
-quite a while to scan, even as packed refs.  ;-)
+But I think Steven is right; like the git-cvsserver you can't do
+everything with git-svnserver that you could have done with SVN or
+with Git.  But you can get basic access to the Git repository and
+still work with it through SVN based tools.
 
-I'm inclined to lean towards a really simple binary flat file holding
-just 20 byte SHA-1s, in "SVN order".  Then its just a simple array
-index operation to locate the correct Git commit.  And adding a
-new commit is really just an append to the end operation.
+If that means that we export things according to the suggested
+SVN repository layout, so be it.  Its difficult to argue with
+us when we've followed the SVN advice.  ;-)
 
-Yea, I know, append =3D=3D bad on some older Linux systems, and is
-hard to roll back if you partially appended as it gets into some
-possible nasty mess with truncate, but I think that when combined
-with a simple lock file we can make it safe enough that its not
-really going to be a problem.
+Christian pointed out that some projects may have different "slightly
+related" modules stored in the same repository, and have come to
+expect this to work in certain ways.  Moving to Git is difficult
+for them as git-svnimport and git-svn can have a difficult time
+divining the correct layout from the soup that is available in SVN.
 
---=20
+But its also hard for Git to export soup back.  That is, even once
+we've successfully decoded the soup we don't really have good
+submodule support, so we cannot (easily) take two different Git
+repositories (one per "slightly related" module) and export them
+under a single SVN name/revision-space.
+
+-- 
 Shawn.
