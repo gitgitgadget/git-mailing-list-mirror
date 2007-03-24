@@ -1,91 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Convert emailing part of hooks--update to hooks--post-receive
-Date: Sat, 24 Mar 2007 09:12:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703240858370.6730@woody.linux-foundation.org>
-References: <200703231023.58911.andyparkins@gmail.com>
- <7vlkhmg6c3.fsf@assigned-by-dhcp.cox.net> <200703241550.05590.andyparkins@gmail.com>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: [PATCH] update-hook: remove all functionality that should be in hooks/post-receive
+Date: Sat, 24 Mar 2007 19:15:50 +0100
+Message-ID: <38b2ab8a0703241115q39dc298clb15357268288b49e@mail.gmail.com>
+References: <200703231022.00189.andyparkins@gmail.com>
+	 <38b2ab8a0703240743t3ca2b091w12072046ee03dd5@mail.gmail.com>
+	 <200703241548.13775.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 17:12:45 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Andy Parkins" <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 19:16:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HV8rD-0007ri-9W
-	for gcvg-git@gmane.org; Sat, 24 Mar 2007 17:12:43 +0100
+	id 1HVAmg-0000tK-DJ
+	for gcvg-git@gmane.org; Sat, 24 Mar 2007 19:16:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753152AbXCXQMg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 12:12:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753160AbXCXQMg
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 12:12:36 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:43317 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753152AbXCXQMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 12:12:35 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2OGCT1o031921
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 24 Mar 2007 09:12:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2OGCSwN009163;
-	Sat, 24 Mar 2007 09:12:29 -0700
-In-Reply-To: <200703241550.05590.andyparkins@gmail.com>
-X-Spam-Status: No, hits=-2.473 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752635AbXCXSPx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 14:15:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752655AbXCXSPx
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 14:15:53 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:12265 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752635AbXCXSPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 14:15:52 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1814203ana
+        for <git@vger.kernel.org>; Sat, 24 Mar 2007 11:15:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pRlhtYByzWvqPm6lWEAh9P0K4jW4nkcMLxvDWn3d91J7mknDgKCiIt1E8ZFmc5KXSND2Qc8wAIv6LnsP/PB/V4T2QSipYvkaz5652tuRHA6ysYV4zpt2t0eLJ52oZLbOa+yfbDC3lfzlgXDzxxJdhATWPaCR+UKBkjmOFiLnVac=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=h5es2IYnrdVOl/pVGC18oK51lNwxR3MqT2NBbV2kM+66cBceXGjg4bU7471gjPypf+hIXDQc6NNngGR53DImmrfuzPM4NM5nrCW8huMzUBC+iX+KFE0Hav9xOOg+jRpHsrNYUIIqRLu7q4XgC5aD5i9g4o9EB2OoxhGLuMWTz0o=
+Received: by 10.114.152.17 with SMTP id z17mr1790837wad.1174760150590;
+        Sat, 24 Mar 2007 11:15:50 -0700 (PDT)
+Received: by 10.114.38.12 with HTTP; Sat, 24 Mar 2007 11:15:50 -0700 (PDT)
+In-Reply-To: <200703241548.13775.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43010>
 
+On 3/24/07, Andy Parkins <andyparkins@gmail.com> wrote:
+> On Saturday 2007, March 24, Francis Moreau wrote:
+>
+> > Are there any simple ways to enable this behaviour from your hooks ?
+>
+> Yes; have a look near the bottom of the post receive hook (update to
+> come today, so don't use it yet), but you'll see:
+>
+>  while read oldrev newrev refname
+>  do
+>   generate_email $oldrev $newrev $refname | /usr/sbin/sendmail -t
+>  done
+>
+> That pipe to send mail could be anything you want, say
+>
+>  generate_email >> /var/www/update-announcements.txt
+>
+> Would that suit you?
+>
 
+yes that almost would do the thing. But instead of hacking the hook,
+it would be great to have a trivial setup at the begining of the
+script to choose this config.
 
-On Sat, 24 Mar 2007, Andy Parkins wrote:
-> 
-> Oh dear; I had no idea that packed refs made the ref file itself 
-> disappear.
+Maybe a local config in the repo through the command `git config`
+could do the job ?
 
-Everybody should do
+$ git config hook.update.path "/var/www/"
 
-	git pack-refs --all --prune
+And if the config is to write the message to a file, skip the email
+stuffs generation (header, foorter...).
 
-occasionally to see this. In fact, I think we should probably make that 
-part of "git gc" (which currently doesn't pack branches at all, just tags, 
-since it omits the "--all").
-
-> Would
-> 
->  git-rev-parse $refname
-> 
-> Be a better way of getting the revision?
-
-That's always the correct way to get a revision, although you should use
-
-	git-rev-parse --verify "$refname"^0
-
-to make sure that you get a commit (of course, if you don't want a 
-commit, but any random ref-SHA1, remove the "^0" from the end!).
-
-HOWEVER. "git-rev-parse" will take any arbitrary SHA1-expression, which 
-may or may not be what you want. If you actually also want to verify that 
-it's strictly a branch name (or other ref-name), rather than just a random 
-SHA1 expression, you should do
-
-	git show-ref [--verify] refname
-
-where the "--verify" again enables strict checking. HOWEVER, it will not 
-check that it's a commit, so if you need the resulting SHA1 to be of a 
-specific type, you need to do that separately.
-
-Side note: those two "--verify" calls do two different kinds of strict 
-checking, because "show-ref" and "rev-parse" are different things. In 
-"git-rev-parse" it checks that the argument is exactly *one* SHA1 value, 
-and not some flag or a SHA1 range. Because "git rev-parse" can take a lot 
-of different input formats. In contrast, in "git show-ref", the stricter 
-checking enabled by "--verify" will just force it to not do any "pattern" 
-for the ref, but it wants an *exact* refname.
-
-		Linus
+thanks
+-- 
+Francis
