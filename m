@@ -1,77 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] have merge put FETCH_HEAD data in commit message
-Date: Sat, 24 Mar 2007 01:03:54 +0100
-Message-ID: <200703240103.55258.jnareb@gmail.com>
-References: <7v648u38ws.fsf@assigned-by-dhcp.cox.net> <200703231523.58150.jnareb@gmail.com> <20070323153314.GA2364@fieldses.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] update-hook: remove all functionality that should be in hooks/post-receive
+Date: Fri, 23 Mar 2007 18:09:56 -0700
+Message-ID: <7v648ro3a3.fsf@assigned-by-dhcp.cox.net>
+References: <200703231022.00189.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sat Mar 24 01:49:12 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 02:10:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HUuRR-0007bU-BA
-	for gcvg-git@gmane.org; Sat, 24 Mar 2007 01:49:09 +0100
+	id 1HUuld-0008MZ-Gn
+	for gcvg-git@gmane.org; Sat, 24 Mar 2007 02:10:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992646AbXCXAs7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 23 Mar 2007 20:48:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992648AbXCXAs6
-	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 20:48:58 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:11254 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992646AbXCXAsz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Mar 2007 20:48:55 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1168470uga
-        for <git@vger.kernel.org>; Fri, 23 Mar 2007 17:48:53 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=IaBmjCy+eKE5PK/RPaPTi6CilNBIpGLrscCf+71Ckywx4Sbd0XJ7zQyuY/oTEbUUI0U035Ehct16Jssot7nfMfHg6yqBrIMOYKw34IMdtoX8R5/wiIdmWqzEb1e0m2VxxDmQ7DTBZmevfvA0bhdeurA0HrdZFfz3IQtLQ06M5yI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=pgOteokeZadFYuixADotUtV5DdVDDVh3QBcoGih4Wvq97P0K3cgdiC4qVkjlUN8fsu0Ddfwbb8dttbNrgUjr7rSOFNviIoMdzTvZgjjkYfz4tEikg1n5/RdsCNSGi7S0pOr85NHS3ZmYrKjZIMA+glfq8uDE/b/pGd/4xEjcskk=
-Received: by 10.67.92.1 with SMTP id u1mr7608919ugl.1174697333407;
-        Fri, 23 Mar 2007 17:48:53 -0700 (PDT)
-Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id g8sm9590924muf.2007.03.23.17.48.51;
-        Fri, 23 Mar 2007 17:48:51 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20070323153314.GA2364@fieldses.org>
-Content-Disposition: inline
+	id S2992657AbXCXBJ6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 23 Mar 2007 21:09:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992659AbXCXBJ6
+	(ORCPT <rfc822;git-outgoing>); Fri, 23 Mar 2007 21:09:58 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38264 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992657AbXCXBJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Mar 2007 21:09:57 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070324010956.UEIY28911.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 23 Mar 2007 21:09:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id eR9w1W0171kojtg0000000; Fri, 23 Mar 2007 21:09:57 -0400
+In-Reply-To: <200703231022.00189.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 23 Mar 2007 10:21:59 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42972>
 
-J. Bruce Fields wrote:
-> On Fri, Mar 23, 2007 at 03:23:55PM +0100, Jakub Narebski wrote:
->> J. Bruce Fields wrote:
->>> 
->>> The input to git-am is email, not log messages.
->> 
->> But that means that commit message which doesn't have empty line after
->> first line cannot be send via git-send-email + git-am without changes,
->> not be subject to git-rebase (which uses git-am machinery unless invoked
->> with --merge option) without changing commit message, isn't it?
-> 
-> Yup.
-> 
-> Doesn't seem like a big deal to me.  But then it'd also seem more
-> sensible to me if git-rebase worked directly with the original commits
-> rather than going through git-format-patch/git-am.  Maybe what I want is
-> a git-cherry-pick that will accept a range.
+Andy Parkins <andyparkins@gmail.com> writes:
 
-git-rebase works directly with original commits if you use merge driven
-git-rebase, with --merge option (or -s <strategy> option, which implies
---merge), which is present since Jun 21, 2006.
+> Now that we have a post-receive hook; the update hook's only job is to
+> decide is a particular update is allowed or not.
+>
+> This example hook removes all of the functionality that should now
+> rightly be done by the post-receive hook.  In particular: the generation
+> of notification emails.
+>
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 
-BTW. I do wonder if "git rebase --merge" accepts and honors -C<n> option...
+I was quite impressed by seeing what Shawn did with his
+'continuous' stuff, not the way it is implemented, but the way
+it was presented as "you can do this to use it from your hook
+script".
 
--- 
-Jakub Narebski
-Poland
+You know what?  I am very tempted to take this patch, while
+dropping the other one.  Well, dropping is probably not quite
+accurate, because being a nice person (and I am good looking,
+too ;-), I would probably end up creating "contrib/mailhook/"
+hierarchy and stash the contents of your second patch there
+myself.
+
+I think I'd better let fancier hooks live in contrib/examples
+hierarchy for people to pick and choose, and keep the default
+templates/ directory lean and clean.
+
+There is a small detail of how users who use prepackaged git
+would get rich library of example hooks from, but that is
+something better left to distro people; that way I do not have
+to worry about them too much, and it would also make it crystal
+clear that these are just examples.
+
+The thing is, not many people are interested in sending e-mail
+out from post- any hooks (I don't do so, Linus doesn't either),
+and there is no strong justifiation to give e-mail sending users
+any preferential treatment and penalize others by copying rather
+huge hook scripts from templates/ that they are not going to
+ever use.
