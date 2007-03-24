@@ -1,76 +1,66 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH 1/2] Documentation: Allow @@GIT_VERSION@@ in asciidoc.conf
-Date: Sat, 24 Mar 2007 10:26:30 -0400
-Message-ID: <382A0F82-0CD9-43B8-8F91-4CAD6DBFF890@silverinsanity.com>
-References: <11746760451462-git-send-email-frank@lichtenheld.de> <7vejnfpqx5.fsf@assigned-by-dhcp.cox.net> <20070324120421.GL8017@planck.djpig.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: [PATCH] update-hook: remove all functionality that should be in hooks/post-receive
+Date: Sat, 24 Mar 2007 15:43:02 +0100
+Message-ID: <38b2ab8a0703240743t3ca2b091w12072046ee03dd5@mail.gmail.com>
+References: <200703231022.00189.andyparkins@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Sat Mar 24 15:26:40 2007
+Cc: git@vger.kernel.org
+To: "Andy Parkins" <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 15:43:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HV7CZ-0005b5-Qi
-	for gcvg-git@gmane.org; Sat, 24 Mar 2007 15:26:40 +0100
+	id 1HV7Sp-000555-JO
+	for gcvg-git@gmane.org; Sat, 24 Mar 2007 15:43:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751956AbXCXO0h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 10:26:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752010AbXCXO0h
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 10:26:37 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:40524 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751956AbXCXO0g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 10:26:36 -0400
-Received: from [IPv6???1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 24A2B1FFC02B;
-	Sat, 24 Mar 2007 14:26:35 +0000 (UTC)
-In-Reply-To: <20070324120421.GL8017@planck.djpig.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752643AbXCXOnI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 10:43:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752713AbXCXOnI
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 10:43:08 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:5649 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752643AbXCXOnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 10:43:05 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1251242uga
+        for <git@vger.kernel.org>; Sat, 24 Mar 2007 07:43:04 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=f3K+0sUAJnnS3ca3yCF0qWgplOUmh0oeUTu8pzxlVns4h7ECJnQ1S8TLFiTOI83Srp+DwwEVa7eu5HlMCjwuNm0s9YpcGXo/von0+CcvDfJUwd8S/DzIkXhFTRJRQLEj150BPw0tWszhXyyil0lWcEu9DtbFkyjIMTIT9FBJ60k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S1OGb38QKbcOydQ2vobt8Q3qtgYyvFNs4/JrCaW7wBSjOhkx8rMslzspn42kV1wNOoq8is/wYoy4J7kcgtgFfmoLHpWapLADRSENQ4OCSGJbfUNIGVMPU7ruGpdaYOgZYRql8Y0imjtflkzR0P7PextvpdRWkmUXLffOOFe/+/w=
+Received: by 10.114.168.1 with SMTP id q1mr1719148wae.1174747382750;
+        Sat, 24 Mar 2007 07:43:02 -0700 (PDT)
+Received: by 10.114.38.12 with HTTP; Sat, 24 Mar 2007 07:43:02 -0700 (PDT)
+In-Reply-To: <200703231022.00189.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43002>
 
+Hi,
 
-On Mar 24, 2007, at 8:04 AM, Frank Lichtenheld wrote:
-
-> On Fri, Mar 23, 2007 at 02:53:58PM -0700, Junio C Hamano wrote:
+On 3/23/07, Andy Parkins <andyparkins@gmail.com> wrote:
+> Now that we have a post-receive hook; the update hook's only job is to
+> decide is a particular update is allowed or not.
 >
->> While this is attractive to some degree, *I* am grumpy.  Doesn't
->> this patch make html and man branches update all files _every_
->> time any small change is made to some documentation?
+> This example hook removes all of the functionality that should now
+> rightly be done by the post-receive hook.  In particular: the generation
+> of notification emails.
 >
-> Not with my patch; which is a bug in the patch though because
-> asciidoc.conf should really depend on GIT-VERSION-FILE.
->
-> Another possibility would be to replace the @@GIT_VERSION@@ in the  
-> man pages
-> themself and not in the asciidoc.conf. This would mean perhaps  
-> slightly
-> bigger changes to the build system, but running sed on all the  
-> files is of
-> course a lot faster than regenerating them with asciidoc.
->
-> What do you think?
 
-I think that any change that causes the documentation to be rebuilt  
-without any change in the documentation is a horrible horrible idea.   
-The asciidoc+xmlto/xsltproc chain is noticeably slow, and I don't  
-think that having the version number is important enough to cause a  
-rebuild.  Using sed is definitely better than doing a rebuild from  
-the start at the cost of a fair amount of complexity (and extra  
-files, but that's fairly negligible).
+I would like to use this hook not for sending update annoucements by
+emails but rather for keeping those annoucements into files that I
+could published on the project site for example.
 
-I'm not convinced of the need to have a version in every doc file,  
-though.  The only use I can think of is to avoid version skew between  
-the documentation and the programs, and that's easily solved by  
-always building and installing them together.  Adding a version to  
-just the main git man file might not be a bad mid-point though to  
-make that skew easier to detect without having to rebuild *everything*.
+Are there any simple ways to enable this behaviour from your hooks ?
 
-~~ Brian
+thanks
+-- 
+Francis
