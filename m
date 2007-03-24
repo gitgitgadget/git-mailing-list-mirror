@@ -1,143 +1,75 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: [PATCH] hooks--update: new, required, config variable: hooks.envelopesender,
-Date: Sat, 24 Mar 2007 12:27:12 +0100
-Message-ID: <87wt1651bj.fsf@rho.meyering.net>
-References: <874poc88ix.fsf@rho.meyering.net>
-	<200703231412.41591.andyparkins@gmail.com>
-	<87lkho6ky8.fsf@rho.meyering.net>
-	<200703231615.28350.andyparkins@gmail.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH 1/2] Documentation: Allow @@GIT_VERSION@@ in asciidoc.conf
+Date: Sat, 24 Mar 2007 13:04:22 +0100
+Message-ID: <20070324120421.GL8017@planck.djpig.de>
+References: <11746760451462-git-send-email-frank@lichtenheld.de> <7vejnfpqx5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 24 12:27:20 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Mar 24 13:04:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HV4P0-00037Z-VB
-	for gcvg-git@gmane.org; Sat, 24 Mar 2007 12:27:19 +0100
+	id 1HV4zA-0004xT-QS
+	for gcvg-git@gmane.org; Sat, 24 Mar 2007 13:04:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443AbXCXL1P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 07:27:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751710AbXCXL1P
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 07:27:15 -0400
-Received: from mx.meyering.net ([82.230.74.64]:55207 "EHLO mx.meyering.net"
+	id S1752080AbXCXMEZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 08:04:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752100AbXCXMEY
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 08:04:24 -0400
+Received: from planck.djpig.de ([85.10.192.180]:41814 "EHLO planck.djpig.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751200AbXCXL1N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 07:27:13 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 11B3E197C; Sat, 24 Mar 2007 12:27:12 +0100 (CET)
-In-Reply-To: <200703231615.28350.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 23 Mar 2007 16:15:26 +0000")
+	id S1752080AbXCXMEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 08:04:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id C66CC88136;
+	Sat, 24 Mar 2007 13:04:22 +0100 (CET)
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 25776-02; Sat, 24 Mar 2007 13:04:22 +0100 (CET)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 0AFE188137; Sat, 24 Mar 2007 13:04:22 +0100 (CET)
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vejnfpqx5.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42995>
 
-> On Friday 2007 March 23 15:25, Jim Meyering wrote:
->> Andy Parkins <andyparkins@gmail.com> wrote:
->> > On Friday 2007 March 23 13:29, Jim Meyering wrote:
->> >> It works for me using the sendmail from sendmail, and I have tested
->> >> this with the one from postfix, too.
->> >
->> > Is your user set as a trusted user for sendmail though?
->>
->> No.  There is no need for that.
->>
->> > As a normal user wouldn't be allowed to do it.
->>
->> You mean with exim's sendmail?
->> sendmail -f alt-envelope-sender works just fine when run by a
->> non-privileged user when it's Sendmail's sendmail or the one from Postfix.
->> It's a shame if it doesn't work with exim's implementation.
->
-> Okay; I went and found a sendmail manpage:
->
-> "-fname       Sets the name of the ``from'' person (i.e., the sender of the
->               mail).  -f can only be used by ``trusted'' users (normally
->               root,  daemon, and network) or if the person you are trying to
->               become is the same as the person you are."
->
-> Seems the same as exim to me.  Perhaps your distribution sets it up to allow
-> if for anyone?
+On Fri, Mar 23, 2007 at 02:53:58PM -0700, Junio C Hamano wrote:
+> Frank Lichtenheld <frank@lichtenheld.de> writes:
+> 
+> > Rename asciidoc.conf to asciidoc.conf.in and create
+> > the former on build time after piping it through sed.
+> >
+> > This is useful to allow us to include the git version
+> > in the documentation.
 
-I suspect that the above is from older documentation.
-As you'll see in the excerpts below, the "can only be used"
-is replaced with "should...", to permit using -f in cases like mine.
+> When sending a patch like this, please use "format-patch -M".
 
-The documentation from sendmail-8.11.7/doc/op/op.me says this:
+Ok.
 
--f addr   The envelope sender address is set to addr.  This
-          address  may  also  be used in the From: header if
-          that header is missing during initial  submission.
-          The envelope sender address is used as the recipi-
-          ent for delivery status notifications and may also
-          appear in a Return-Path: header.
+> While this is attractive to some degree, *I* am grumpy.  Doesn't
+> this patch make html and man branches update all files _every_
+> time any small change is made to some documentation?
 
-Then, in cf/README, they explain the trusted-users file is solely
-to avoid a warning:
+Not with my patch; which is a bug in the patch though because
+asciidoc.conf should really depend on GIT-VERSION-FILE.
 
-use_ct_file     Read the file /etc/mail/trusted-users file to get the
-                names of users that will be ``trusted'', that is, able to
-                set their envelope from address using -f without generating
-                a warning message.  The actual filename can be overridden
-                by redefining confCT_FILE.
+Another possibility would be to replace the @@GIT_VERSION@@ in the man pages
+themself and not in the asciidoc.conf. This would mean perhaps slightly
+bigger changes to the build system, but running sed on all the files is of
+course a lot faster than regenerating them with asciidoc.
 
-A quick search found lots like this:
-  http://www.linuxmanpages.com/man8/sendmail.8.php
+What do you think?
 
-    -fname
-        Sets the name of the ``from'' person (i.e., the envelope sender of
-        the mail). This address may also be used in the From: header if
-        that header is missing during initial submission. The envelope
-        sender address is used as the recipient for delivery status
-        notifications and may also appear in a Return-Path: header. -f
-        should only be used by ``trusted'' users (normally root, daemon,
-        and network) or if the person you are trying to become is the
-        same as the person you are. Otherwise, an X-Authentication-Warning
-        header will be added to the message.
-
-So that was classic sendmail (8.11.7).  Here's the description of -f
-for postfix's sendmail (man sendmail):
-
-       -f sender
-              Set the envelope sender  address.  This  is  the  address  where
-              delivery problems are sent to. With Postfix versions before 2.1,
-              the  Errors-To:  message  header  overrides  the  error   return
-              address.
-
-In addition, I have tested this by sending myself a message
-via printf '...' |sendmail -f nobody@nowhere.com -oi -t -v, and
-examined the headers in the received messages.  The first I sent
-from a system running sendmail-8.11.7, the second from one running
-Debian/unstable's Postfix 2.3.8-2.  Both were sent by a "regular" (non-root)
-user, and the envelope sender was the requested "nobody@nowhere.com"
-in each case.
-
-> So; in short: I don't have a good answer to offer you, and it seems that "-f"
-> is working for you.
-
-Yes, it does work for me.  And it would work for anyone with
-sendmail or Postfix.  Whether it works for an exim-based
-sendmail is a question of policy, and the default in Debian-based
-systems is to allow it:
-
->From /etc/exim4/conf.d/main/02_exim4-config_options:
-
-  .ifndef MAIN_FORCE_SENDER
-  local_from_check = false
-  local_sender_retain = true
-  untrusted_set_sender = *
-  .endif
-
-> However, I'm still not convinced that this is the
-> correct thing to do in the default hook.  My main gripe is still all
-> these "trusted user" paragraphs in the MTA manual pages.
-
-There is a legitimate need for this functionality, and -f does
-usually work, so how about a compromise:
-
-  Include support for using sendmail's "-f envelope-sender" option
-  in the default hook, but enable it only if/when hooks.envelopesender
-  is set in the config file.
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
