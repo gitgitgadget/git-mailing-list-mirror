@@ -1,72 +1,143 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] update-hook: remove all functionality that should be in hooks/post-receive
-Date: Sat, 24 Mar 2007 03:41:30 -0700
-Message-ID: <7vodmikjol.fsf@assigned-by-dhcp.cox.net>
-References: <200703231022.00189.andyparkins@gmail.com>
-	<7v648ro3a3.fsf@assigned-by-dhcp.cox.net>
-	<200703240814.35525.andyparkins@gmail.com>
-	<20070324102652.GA15474@thunk.org>
+From: Jim Meyering <jim@meyering.net>
+Subject: Re: [PATCH] hooks--update: new, required, config variable: hooks.envelopesender,
+Date: Sat, 24 Mar 2007 12:27:12 +0100
+Message-ID: <87wt1651bj.fsf@rho.meyering.net>
+References: <874poc88ix.fsf@rho.meyering.net>
+	<200703231412.41591.andyparkins@gmail.com>
+	<87lkho6ky8.fsf@rho.meyering.net>
+	<200703231615.28350.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sat Mar 24 11:41:50 2007
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Mar 24 12:27:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HV3gz-0005qo-24
-	for gcvg-git@gmane.org; Sat, 24 Mar 2007 11:41:49 +0100
+	id 1HV4P0-00037Z-VB
+	for gcvg-git@gmane.org; Sat, 24 Mar 2007 12:27:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559AbXCXKlc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 06:41:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751049AbXCXKlc
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 06:41:32 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:40194 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750708AbXCXKlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 06:41:31 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070324104131.RYBV748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 24 Mar 2007 06:41:31 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id eahW1W0011kojtg0000000; Sat, 24 Mar 2007 06:41:30 -0400
-In-Reply-To: <20070324102652.GA15474@thunk.org> (Theodore Tso's message of
-	"Sat, 24 Mar 2007 06:26:52 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751443AbXCXL1P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 07:27:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751710AbXCXL1P
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 07:27:15 -0400
+Received: from mx.meyering.net ([82.230.74.64]:55207 "EHLO mx.meyering.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751200AbXCXL1N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 07:27:13 -0400
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 11B3E197C; Sat, 24 Mar 2007 12:27:12 +0100 (CET)
+In-Reply-To: <200703231615.28350.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 23 Mar 2007 16:15:26 +0000")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/42994>
 
-Theodore Tso <tytso@mit.edu> writes:
-
-> On Sat, Mar 24, 2007 at 08:14:31AM +0000, Andy Parkins wrote:
->> So: ideally, what /I/ would like is that git distributes the script in a 
->> standard location like /usr/share/doc/git/contrib/post-receive-emailer 
->> with the execute bit already set; that can be easily linked to or 
->> called from the actual post-receive hook.
+> On Friday 2007 March 23 15:25, Jim Meyering wrote:
+>> Andy Parkins <andyparkins@gmail.com> wrote:
+>> > On Friday 2007 March 23 13:29, Jim Meyering wrote:
+>> >> It works for me using the sendmail from sendmail, and I have tested
+>> >> this with the one from postfix, too.
+>> >
+>> > Is your user set as a trusted user for sendmail though?
+>>
+>> No.  There is no need for that.
+>>
+>> > As a normal user wouldn't be allowed to do it.
+>>
+>> You mean with exim's sendmail?
+>> sendmail -f alt-envelope-sender works just fine when run by a
+>> non-privileged user when it's Sendmail's sendmail or the one from Postfix.
+>> It's a shame if it doesn't work with exim's implementation.
 >
-> I wonder if this is a good idea to do for all or most of the template
-> scripts, so that they can get automatically updated when git is
-> updated, instead of having the problem we had before where the hook
-> script got updated to match changes in git, but ancient repositories
-> would still have the old script.
+> Okay; I went and found a sendmail manpage:
+>
+> "-fname       Sets the name of the ``from'' person (i.e., the sender of the
+>               mail).  -f can only be used by ``trusted'' users (normally
+>               root,  daemon, and network) or if the person you are trying to
+>               become is the same as the person you are."
+>
+> Seems the same as exim to me.  Perhaps your distribution sets it up to allow
+> if for anyone?
 
-I do agree that dealing with ancient scripts that casually used
-implementation details that later versions broke is a problem.
+I suspect that the above is from older documentation.
+As you'll see in the excerpts below, the "can only be used"
+is replaced with "should...", to permit using -f in cases like mine.
 
-But the recent updates to the mail-hook are backward compatible
-only in the sense that as long as the user configures it, the
-new script can mimic old version's behaviour (in other words, it
-was not backward compatible at all).  I think forcing updates to
-the hooks automatically is worse.  I'd rather keep hooks private
-to repository owner's concern.
+The documentation from sendmail-8.11.7/doc/op/op.me says this:
 
-While I think it would be great to have a central clearinghouse
-for people to share and enjoy useful hook collections for
-various workflows and use cases, I do not necessarily think
-inside git.git project itself is the best place to do so.
+-f addr   The envelope sender address is set to addr.  This
+          address  may  also  be used in the From: header if
+          that header is missing during initial  submission.
+          The envelope sender address is used as the recipi-
+          ent for delivery status notifications and may also
+          appear in a Return-Path: header.
+
+Then, in cf/README, they explain the trusted-users file is solely
+to avoid a warning:
+
+use_ct_file     Read the file /etc/mail/trusted-users file to get the
+                names of users that will be ``trusted'', that is, able to
+                set their envelope from address using -f without generating
+                a warning message.  The actual filename can be overridden
+                by redefining confCT_FILE.
+
+A quick search found lots like this:
+  http://www.linuxmanpages.com/man8/sendmail.8.php
+
+    -fname
+        Sets the name of the ``from'' person (i.e., the envelope sender of
+        the mail). This address may also be used in the From: header if
+        that header is missing during initial submission. The envelope
+        sender address is used as the recipient for delivery status
+        notifications and may also appear in a Return-Path: header. -f
+        should only be used by ``trusted'' users (normally root, daemon,
+        and network) or if the person you are trying to become is the
+        same as the person you are. Otherwise, an X-Authentication-Warning
+        header will be added to the message.
+
+So that was classic sendmail (8.11.7).  Here's the description of -f
+for postfix's sendmail (man sendmail):
+
+       -f sender
+              Set the envelope sender  address.  This  is  the  address  where
+              delivery problems are sent to. With Postfix versions before 2.1,
+              the  Errors-To:  message  header  overrides  the  error   return
+              address.
+
+In addition, I have tested this by sending myself a message
+via printf '...' |sendmail -f nobody@nowhere.com -oi -t -v, and
+examined the headers in the received messages.  The first I sent
+from a system running sendmail-8.11.7, the second from one running
+Debian/unstable's Postfix 2.3.8-2.  Both were sent by a "regular" (non-root)
+user, and the envelope sender was the requested "nobody@nowhere.com"
+in each case.
+
+> So; in short: I don't have a good answer to offer you, and it seems that "-f"
+> is working for you.
+
+Yes, it does work for me.  And it would work for anyone with
+sendmail or Postfix.  Whether it works for an exim-based
+sendmail is a question of policy, and the default in Debian-based
+systems is to allow it:
+
+>From /etc/exim4/conf.d/main/02_exim4-config_options:
+
+  .ifndef MAIN_FORCE_SENDER
+  local_from_check = false
+  local_sender_retain = true
+  untrusted_set_sender = *
+  .endif
+
+> However, I'm still not convinced that this is the
+> correct thing to do in the default hook.  My main gripe is still all
+> these "trusted user" paragraphs in the MTA manual pages.
+
+There is a legitimate need for this functionality, and -f does
+usually work, so how about a compromise:
+
+  Include support for using sendmail's "-f envelope-sender" option
+  in the default hook, but enable it only if/when hooks.envelopesender
+  is set in the config file.
