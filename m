@@ -1,76 +1,76 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: merge strategy request
-Date: Sat, 24 Mar 2007 14:46:40 -0800 (PST)
-Message-ID: <Pine.LNX.4.63.0703241430420.12864@qynat.qvtvafvgr.pbz>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Understanding version 4 packs
+Date: Sat, 24 Mar 2007 19:24:17 -0400 (EDT)
+Message-ID: <alpine.LFD.0.83.0703241913110.18328@xanadu.home>
+References: <20070324202356.GA20734@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 00:12:42 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Peter Eriksen <s022018@student.dtu.dk>
+X-From: git-owner@vger.kernel.org Sun Mar 25 00:24:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVFPd-00037V-ID
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 00:12:41 +0100
+	id 1HVFb9-0000ln-G7
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 00:24:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932396AbXCXXMZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 19:12:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932875AbXCXXMY
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 19:12:24 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:62955 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S932396AbXCXXMY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 19:12:24 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sat, 24 Mar 2007 15:12:23 -0800
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sat, 24 Mar 2007 16:12:16 -0700
-X-X-Sender: dlang@dlang.diginsite.com
+	id S932908AbXCXXYT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 19:24:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932910AbXCXXYT
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 19:24:19 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:55834 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932908AbXCXXYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 19:24:18 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JFF00LSJL0HWRS0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 24 Mar 2007 19:24:18 -0400 (EDT)
+In-reply-to: <20070324202356.GA20734@bohr.gbar.dtu.dk>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43023>
 
-having just gone through a painful manual mere with a config file on a gentoo 
-system (not useing git) it seems to me that there should be a better way to deal 
-with merging config file updates. I know that gentoo doesn't use git for it's 
-config files, but I don't think that git would do a whole lot better currently 
-(but with access to the history, I think it could)
+On Sat, 24 Mar 2007, Peter Eriksen wrote:
 
-what's happening is
+> There is a new tree type called OBJ_DICT_TREE, which looks something
+> like the following:
+> 
+> +-----------------+------------------------------------------------+----
+> |  Table offset   |  SHA-1 of the blob corresponding to the path.  | ...
+> +-----------------+------------------------------------------------+----
+>       6 bytes                     20 bytes
 
-A---B
-      \
-   C---D
+Actually it is a 2-byte index in the path table, and a 4-byte index in a 
+common SHA1 table.  So each tree entry is 6 bytes total.
 
-where A and C are the distro maintained config files, B is the one customized 
-for the local system, and D needs to be basicly the same as B, but accounting 
-for the changes between A and C
+> These new tree objects will remain uncompressed in the pack file, but
+> sorted with, and deltaed against other tree objects. All normal tree
+> objects are converted to OBJ_DICT_TREE when packing, and are converted
+> back on the fly to callers who need an ordinary OBJ_TREE.
 
-issues that I see (there are probably others)
+Right.
 
-1. blank lines and comments are 'uninteresting' changes in that they don't 
-affect the result, so if they get botched slightly it doesn't result in a broken 
-systems (although it can cause confusion), what's important are changes ourside 
-the comments. this is especially critical if the version in B strips out 
-comments compared to the sample version in A
+> The index (.idx) files are extended to have a 4 byte pointer to the
+> offset of this file name table in the pack file for easy lookup.
 
-2. if B changes a config option and C doesn't (compared to A) then you want to 
-go with what's in B
+Right.  And it will lose the SHA1 entries since they are already 
+available in the pack.
 
-3. for most config files the order of the options doesn't matter, so look for 
-the same option name out of order.
+> There is something similar with a table of common strings in commit
+> objects (e.g. author and timezone), and a new object OBJ_DICT_COMMIT,
+> but I have not understood that quite yet.
+> 
+> Is there something, I have gotten wrong with regards to my
+> understanding?
 
-4. for some config files there are groupings in the config (tags nested inside 
-other tags), the nesting is important, even if the order isn't. frequently this 
-nesting is indicated by whitespace indentation  (or if it's an XML-like config 
-file the nesting can be determined directly from the tags) figuring out exactly 
-waht strategy to use here could be a case of 'try several and see which one 
-makes sense), or it could be that the user needs to identify the strategy to use 
-for a particular file.
+I don't think so.  Note that the code is still a work in progress and 
+the resulting pack/index is not yet fully conform to the format we 
+envisaged.
 
-there's been talk about custom merge strategies for different types of files 
-(uncompressing office documents to merge them for example), so I think this is 
-along the same lines and wanted to let other people start thinking about the 
-problem and possible solutions.
 
-David Lang
+Nicolas
