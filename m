@@ -1,130 +1,270 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Sun, 25 Mar 2007 01:46:47 -0700
-Message-ID: <7vk5x54snc.fsf@assigned-by-dhcp.cox.net>
-References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net>
-	<7v8xep8dfk.fsf@assigned-by-dhcp.cox.net>
-	<7v7itx5mep.fsf@assigned-by-dhcp.cox.net>
-	<7vps7dle8j.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Understanding version 4 packs
+Date: Sun, 25 Mar 2007 04:46:41 -0400
+Message-ID: <20070325084641.GG25863@spearce.org>
+References: <20070324202356.GA20734@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 10:47:02 2007
+Cc: git@vger.kernel.org
+To: Peter Eriksen <s022018@student.dtu.dk>
+X-From: git-owner@vger.kernel.org Sun Mar 25 10:47:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVONQ-0001lE-Aq
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 10:47:00 +0200
+	id 1HVONR-0001lE-1w
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 10:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753489AbXCYIqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1753490AbXCYIq6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 04:46:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753491AbXCYIqv
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 04:46:51 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:43845 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753490AbXCYIqt (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 25 Mar 2007 04:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753491AbXCYIqt
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 04:46:49 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:39714 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753489AbXCYIqs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 04:46:48 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070325084648.LCXT28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 25 Mar 2007 04:46:48 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ewmn1W0021kojtg0000000; Sun, 25 Mar 2007 04:46:47 -0400
-X-master-at: 12d6697f3a9f07db0c437438804aec994fc34035
-X-next-at: 4208f7c8d29ade88a1fb7e4352ab1f35a702bfc8
-In-Reply-To: <7vps7dle8j.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 13 Mar 2007 01:49:48 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HVONA-0003Jo-Qu; Sun, 25 Mar 2007 04:46:45 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2951B20FBAE; Sun, 25 Mar 2007 04:46:43 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070324202356.GA20734@bohr.gbar.dtu.dk>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43042>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+Peter Eriksen <s022018@student.dtu.dk> wrote:
+> I have been reading the commits in the
+> git://repo.or.cz/git/fastimport.git/ repository (git makes it quite easy
+> to see what differs from mainline using "git log master..pack4"), and I
+> think, I have understood some of the details.
 
-* jc/bisect (Fri Mar 23 17:54:03 2007 -0700) 6 commits
- + make the previous optimization work also on path-limited rev-list
-   --bisect
- + rev-list --bisect: Fix "halfway" optimization.
- + t6004: add a bit more path optimization test.
- + git-rev-list --bisect: optimization
- + git-rev-list: add --bisect-vars option.
- + t6002: minor spelling fix.
+Just to be clear, that branch is strictly a proposed prototype of
+what a pack version 4 *might* look like.  Absolutely nothing has
+been set into stone for that file format.
 
-This improves "rev-list --bisect" performance, sometimes
-significantly, especially in a repository with long lines of
-single-parent commits.  This is only about performance, and as
-we are already in -rc1, the topic will have to wait 1.5.1.
+A good chunk of that code needs to be reworked just to get it merged
+onto Junio's current 'master' as Nico and myself have been doing a
+number of cleanups and bug fixes in some of the affected areas.  ;-)
+ 
+> The easiest thing to get was the file name table, which is placed in the
+> beginning of the pack (after the header) using the format:
 
-* fl/cvsserver (Mon Mar 19 16:56:01 2007 +0100) 5 commits
- + cvsserver: Abort if connect to database fails
- + cvsserver: Make the database backend configurable
- + cvsserver: Allow to override the configuration per access method
- + cvsserver: Handle three part keys in git config correctly
- + cvsserver: Introduce new state variable 'method'
+That's not true.  The filename table (EXTOBJ_FILENAME_TABLE) may
+appear at any position within the packfile (but like all objects
+it must appear somewhere after position 12, as that is where the
+header ends).
 
-This is a beginning of supporting use of different database
-backends, other than sqlite, with git-cvsserver.  Will not be in
-'master' until 1.5.1 is done.
+Now to help out the unpackers (index-pack and unpack-objects)
+we have the convention that this table is written out before the
+first OBJ_DICT_TREE.  That way the unpacker can load the table and
+have it ready to go when it sees the first OBJ_DICT_TREE.  If we
+didn't have this rule the unpackers would need to hang into all
+OBJ_DICT_TREEs they see until they get the EXTOBJ_FILENAME_TABLE,
+then they could actually process those pending OBJ_DICT_TREEs.
+This is somewhat expensive on memory, and is just ugly to code.
 
-* js/remote-show-push (Sun Mar 18 21:34:46 2007 +0100) 1 commit
- + Teach git-remote to list pushed branches.
+So what you will find is that the EXTOBJ_FILENAME_TABLE is dumped
+out behind all of the commits, but before the first OBJ_DICT_TREE,
+and since all trees tend to get converted to an OBJ_DICT_TREE,
+the EXTOBJ_FILENAME_TABLE is sandwiched exactly between the commits
+and the trees.
 
-This is a new feature but of very little risk of breaking
-anything, so I'll merge it to 'master'.
+Since the unpackers will probably never be smart enough to handle an
+OBJ_DICT_TREE before an EXTOBJ_FILENAME_TABLE, its likely that we'll
+just have the file format requirement that the EXTOBJ_FILENAME_TABLE
+must appear before the first OBJ_DICT_TREE, but can otherwise appear
+at any position in the file.
 
-* ml/workdir (Sat Mar 17 02:58:55 2007 +0100) 6 commits
- . git-init: set core.workdir when GIT_WORK_DIR is specified
- . test GIT_WORK_DIR
- . test git-rev-parse
- . core.workdir config variable
- . introduce GIT_WORK_DIR environment variable
- . rev-parse: --is-bare-repository option
+The reason we put the EXTOBJ_FILENAME_TABLE behind the commits is
+we often walk the commit chains (following parent pointers) without
+looking at the trees at all.  Consider `git log`, in the default
+settings we don't need the trees.  By keeping the filename table
+behind the commits the OS read-ahead buffering gets a better chance
+at loading all of the data we need, and none of the data we don't.
 
-Waiting for a resend without "oops", "ah this is better"
-iterations, but in no hurry, as it won't be in 'master' until
-1.5.1 is done.
+So that's why its where it is.
 
-* jc/fpl (Tue Mar 13 01:57:22 2007 -0700) 1 commit
- + git-log --first-parent: show only the first parent log
+> +------------+-------------------------------+
+> | NR_ENTRIES |  Compressed file name table   |
+> +------------+-------------------------------+
+>    4 bytes
 
-This makes viewing topic-heavy style of project history
-pleasant, at least in my opinion.  With a bit of cheering up,
-I'd merge it to 'master', as it has been cooking in 'next'
-without causing problems, and is of low-impact kind.  But it can
-wait until 1.5.1 is done.
+No.  A string table object (both the EXTOBJ_FILENAME_TABLE and the
+EXTOBJ_IDENT_TABLE) has its uncompressed size stored in the standard
+"size" field within the object header.  (This lets us malloc the
+proper buffer quickly.)  Immediately behind that object header is
+the deflated table.
 
-* jc/read-tree-df (Thu Mar 15 23:25:22 2007 -0700) 1 commit
- . Fix switching to a branch with D/F when current branch has file D.
+The deflated table looks like:
 
-This is unfortunately way premature as it seems to expose other
-breakages this too-strict safety measure prevents from
-happening.  We need to rethink the whole unpack_trees() business
-after 1.5.1.
++------------+-------+-------+-------+--------+----+
+| NR_ENTRIES | MODE1 | str1  | MODE2 | str2   | ...
++------------+-------+-------+-------+--------+----+
+   4 bytes    2 bytes   n1    2 bytes   n2
 
-* jc/pathattr (Thu Mar 1 01:20:21 2007 -0800) 5 commits
- . pathattr: allow piping to external program.
- . pathattr: read from git_config().
- . git-show: use pathattr to run "display"
- . pathattr: path based configuration of various attributes.
- + convert: add scaffolding for path based selection of conversion
-   routines.
+The field NR_ENTRIES is in big-endian (network) byte order.
+Each MODE field is also in big-endian byte order.  Each string is
+null terminated.  The lengths n1 and n2 in the diagram above would
+include the null terminating byte.  There is no end-of-table marker;
+the way to know the you reach the end of a table is by counting
+NR_ENTRIES records out.
 
-Stalled.  gitattributes support should be one of the focus in
-the 1.5.2 cycle.
+I did consider making NR_ENTRIES a vint (variable length int), but
+decided against it for the sake of simplicity.  ;-)
 
-* jc/merge-subtree (Thu Feb 15 16:32:45 2007 -0800) 1 commit
- - A new merge stragety 'subtree'.
-* js/fetch-progress (Sun Feb 25 13:13:17 2007 -0800) 1 commit
- + git-fetch: add --quiet
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- . test-para: combined diff between HEAD, index and working tree.
- . para-walk: walk n trees, index and working tree in parallel
+For starters its much easier to just treat the darn thing as a
+32 bit value and use ntohl.  Its also easier in the pack-objects
+code, as I can reserve that space at the front of the table, as the
+size is fixed.  Also, since its is actually inside of the deflated
+zlib stream, and null bytes are very common (string terminaters)
+any unnecessary leading nulls will probably compress quite well,
+as the null byte will probably get a relatively short encoding in
+the compressed stream.
 
-The above are stalled.
+The MODE fields are the standard POSIX mode bits in an
+EXTOBJ_FILENAME_TABLE.
+
+In an EXTOBJ_IDENT_TABLE the MODE fields actually store the
+preferred timezone offset (hours in the first/high byte, minutes
+in the second/low byte) of the user whose name/email is stored in
+the string field.
+
+> The table is sorted by path then mode for easy binary lookup, and so
+> that pointers into this table can be compared directly instead of
+> comparing the corresponding paths and modes.
+
+Uh, not quite.
+
+In the case of EXTOBJ_FILENAME_TABLE we sort by name+type using
+the messy base_name_compare.  In this sorting string entries whose
+mode match S_ISDIR (are directory modes) sort as though their name
+ends with "/" (even though they actually don't).  If there is a tie,
+we break the tie by sorting by the mode alone.
+
+In the case of EXTOBJ_IDENT_TABLE we plan to sort by frequency of
+occurance only.  This sorting puts the most frequent users at the
+start of the table, allowing us to reference the top 128 authors
+and committers in just 1 byte, and the next 16,257 top authors and
+committers in just 2 bytes (as we use vints to index into here,
+more later).
+
+> There is a new tree type called OBJ_DICT_TREE, which looks something
+> like the following:
+> 
+> +-----------------+------------------------------------------------+----
+> |  Table offset   |  SHA-1 of the blob corresponding to the path.  | ...
+> +-----------------+------------------------------------------------+----
+>       6 bytes                     20 bytes
+
+No.  As Nico stated the records of an OBJ_DICT_TREE are actually only
+6 bytes each.
+
+Actually an OBJ_DICT_TREE is *not* comprssed in the packfile.
+I want to stress this point, as its unlike most other object types
+where the data after the header is just a zlib stream.
+
+Its data looks like:
+
++------------+-------+-------+-------+-------+----
+| NR_ENTRIES | name1 | hash1 | name2 | hash2 | ...
++------------+-------+-------+-------+-------+----
+ vint        2 bytes 4 bytes 2 bytes 4 bytes
+
+The NR_ENTRIES field is our "standard" variable integer encoding
+(the encoding used by OBJ_OFS_DELTA).  It tells us how many tree
+entries to expect.
+
+name1 is an index into the packfile's sole EXTOBJ_FILENAME_TABLE.
+hash1 is an index into the packfile's sole SHA1 table.  This object
+type hasn't been declared yet, but will be.  Both fields are in
+big-endian / network byte order.
+ 
+> These new tree objects will remain uncompressed in the pack file, but
+> sorted with,
+
+Yes, correct.
+
+> and deltaed against other tree objects.
+
+*only* against other OBJ_DICT_TREEs.  If a tree could not be
+converted to an OBJ_DICT_TREE then it stays as an OBJ_TREE and only
+deltas against other OBJ_TREEs.
+
+> All normal tree
+> objects are converted to OBJ_DICT_TREE when packing,
+
+Almost.  We try to convert all trees to OBJ_DICT_TREE when packing,
+but we cannot do so if the EXTOBJ_FILENAME_TABLE does not contain
+one or more path/mode pairs required by that tree.  This can happen
+if the EXTOBJ_FILENAME_TABLE would need to contain more than 2**16
+entries, as the index into that table (name1 above) is strictly a
+16 bit unsigned value.
+
+Thus we have a rule in pack-objects where we first sort the
+EXTOBJ_FILENAME_TABLE by frequency, clipping it to the top 2**16
+entries, then we resort it according to the name+mode sort.
+
+> and are converted
+> back on the fly to callers who need an ordinary OBJ_TREE.
+
+Yes.  But we don't want to actually do that.  One of our
+goals is to adjust tree-walk.c (and if needed its callers)
+to directly handle an OBJ_DICT_TREE.  This way we can avoid
+a lot of costly decompression.
+
+Further I think we can play a game with the delta encoder and
+delta apply routines where we can even avoid applying OBJ_DICT_TREE
+deltas when we are walking the tree; instead we can walk the deltas
+directly.
+
+This is the primary motiviation for keeping the OBJ_DICT_TREE format
+a fixed width record, even if it might waste a tiny amount of space
+for some projects.
+ 
+> The index (.idx) files are extended to have a 4 byte pointer to the
+> offset of this file name table in the pack file for easy lookup.
+
+Yes.  But these may become 64 bit offsets, to allow for very large
+packfiles.
+ 
+> There is something similar with a table of common strings in commit
+> objects (e.g. author and timezone), and a new object OBJ_DICT_COMMIT,
+> but I have not understood that quite yet.
+
+Its actually EXTOBJ_DICT_COMMIT.
+
+The idea here is that author and committer strings appear very
+commonly thoughout a project.  Look at Junio for example in
+git.git, there are more than 3,000 commits with his name on them.
+These compress rather poorly, and don't delta against each other
+very well at all.  By pulling these common strings out to an
+EXTOBJ_IDENT_TABLE we can save some space.
+
+The other idea is to store the tree and the parent commits in pure
+binary (so SHA-1s are 20 bytes, not 40 bytes hex) and to avoid text
+headers, so that we can parse the important fields of a commit that
+are needed for revision walking immediately from the raw pack data.
+Since SHA-1s are uncompressable we aren't actually losing any disk
+space here either.  Actually in my early experiements (predates the
+packv4 code you looked at) this was saving about 63 bytes per commit.
+
+> Is there something, I have gotten wrong with regards to my
+> understanding?
+
+You're close.  Not bad for no documentation!  ;-)
+
+-- 
+Shawn.
