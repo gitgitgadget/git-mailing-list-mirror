@@ -1,60 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Removed the printf("rm 'file'") from git-rm.
-Date: Sat, 24 Mar 2007 23:22:16 -0700
-Message-ID: <7vodmhc06f.fsf@assigned-by-dhcp.cox.net>
-References: <11747590062554-git-send-email-tilman@code-monkey.de>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: merge strategy request
+Date: Sat, 24 Mar 2007 22:25:17 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0703242220510.13287@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.63.0703241430420.12864@qynat.qvtvafvgr.pbz><Pine.LNX
+ .4.63.0703250315461.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0703242130050.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tilman Sauerbeck <tilman@code-monkey.de>
-X-From: git-owner@vger.kernel.org Sun Mar 25 08:22:36 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Mar 25 08:54:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVM7f-0000wn-8B
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 08:22:35 +0200
+	id 1HVMcC-0006zY-MB
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 08:54:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753162AbXCYGWS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 02:22:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753177AbXCYGWS
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 02:22:18 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:50923 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753162AbXCYGWR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 02:22:17 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070325062217.MZFE321.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 25 Mar 2007 02:22:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id euNG1W00F1kojtg0000000; Sun, 25 Mar 2007 02:22:17 -0400
-In-Reply-To: <11747590062554-git-send-email-tilman@code-monkey.de> (Tilman
-	Sauerbeck's message of "Sat, 24 Mar 2007 18:56:46 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752779AbXCYGxu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 02:53:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752787AbXCYGxu
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 02:53:50 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:42522 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1752779AbXCYGxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 02:53:49 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sat, 24 Mar 2007 22:53:49 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sat, 24 Mar 2007 23:53:33 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <Pine.LNX.4.64.0703242130050.6730@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43034>
 
-Tilman Sauerbeck <tilman@code-monkey.de> writes:
+On Sat, 24 Mar 2007, Linus Torvalds wrote:
 
-> We used to print that, because you actually had to run the output
-> of git-rm to get rid of the files before Git 1.5. Now that git-rm
-> really removes the files, it's not needed anymore.
+> On Sun, 25 Mar 2007, Johannes Schindelin wrote:
+>>
+>> Basically, just write a program named "git-merge-david-lang", which takes
+>> arguments of the form
+>>
+>> 	merge-base [merge-base2...] -- head remote [remote...]
+>
+> I think you are missing what David wants.
+>
+> David does *not* want a new global strategy. Adding those is fairly easy.
+>
+> David seem sto want a new per-file merge strategy, with the bog-standard
+> recursive merge. We've talked about that possibility in the past, but we
+> don't do it now. We always end up doing just the three-way merge.
 
-Even though I admit I do not deeply care, as I never use 'git
-rm' myself, I do not necessarily agree with "because" part.
+right, I can see ways to further improve the merge for config files, but they 
+wouldn't applty to most other types of files, so it would require support for 
+per file merge options.
 
-I suspect people are by now accustomed to see the assuring
-feedback from the command when used this way:
+others have requested this in the past, this is just one more way that per-file 
+merge options would be useful.
 
-	$ git rm -r one
-        rm 'one/1'
-        rm 'one/2'
-        rm 'one/3'
-
-and even in non-recursive case, expect the similar output for
-consistecy's sake.
+David Lang
