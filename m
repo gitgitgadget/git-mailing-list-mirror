@@ -1,73 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Removed the printf("rm 'file'") from git-rm.
-Date: Sun, 25 Mar 2007 23:36:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0703252335280.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11747590062554-git-send-email-tilman@code-monkey.de>
- <7vodmhc06f.fsf@assigned-by-dhcp.cox.net> <20070325210418.GA29221@code-monkey.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: glossary and user-manual updates
+Date: Sun, 25 Mar 2007 15:09:13 -0700
+Message-ID: <7vlkhl2cxi.fsf@assigned-by-dhcp.cox.net>
+References: <20070325210816.GF30418@fieldses.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Tilman Sauerbeck <tilman@code-monkey.de>
-X-From: git-owner@vger.kernel.org Sun Mar 25 23:36:49 2007
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Mon Mar 26 00:09:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVaOG-0001Nj-AQ
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:36:40 +0200
+	id 1HVatq-0001J1-Dz
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 00:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932778AbXCYVgh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 17:36:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932810AbXCYVgh
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:36:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56465 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932806AbXCYVgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 17:36:36 -0400
-Received: (qmail invoked by alias); 25 Mar 2007 21:36:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp049) with SMTP; 25 Mar 2007 23:36:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18cysNj3kgcrqtAAnWB56n3FTeX85qLmw1X5Ku9pG
-	MwAEcKUw5bzx9L
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070325210418.GA29221@code-monkey.de>
-X-Y-GMX-Trusted: 0
+	id S1752843AbXCYWJQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 18:09:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbXCYWJP
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 18:09:15 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:44194 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752843AbXCYWJP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 18:09:15 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070325220914.MFUP748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 25 Mar 2007 18:09:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id fA9E1W0011kojtg0000000; Sun, 25 Mar 2007 18:09:14 -0400
+In-Reply-To: <20070325210816.GF30418@fieldses.org> (J. Bruce Fields's message
+	of "Sun, 25 Mar 2007 17:08:16 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43083>
 
-Hi,
+"J. Bruce Fields" <bfields@fieldses.org> writes:
 
-On Sun, 25 Mar 2007, Tilman Sauerbeck wrote:
+> On Sun, Mar 18, 2007 at 11:17:55PM -0400, J. Bruce Fields wrote:
+>> 
+>> Also available from:
+>> 
+>> 	git://linux-nfs.org/~bfields/git.git
+>
+> (Erm, I think I forgot to say they're in the "maint" branch in that
+> repo.)
+>
+>> The main change is just to maintain the glossary manually instead of by
+>> the sort_glossary.pl script; includes a subsequent patch to demonstrate
+>> the sort of cleanup that allows.
+>
+> It don't see these in the latest maint or master, but I don't think the
+> following discussion turned up any objections.  Let me know if there's
+> something more you need from me.
 
-> Junio C Hamano [2007-03-24 23:22]:
-> > Tilman Sauerbeck <tilman@code-monkey.de> writes:
-> > 
-> > > We used to print that, because you actually had to run the output
-> > > of git-rm to get rid of the files before Git 1.5. Now that git-rm
-> > > really removes the files, it's not needed anymore.
-> > 
-> > Even though I admit I do not deeply care, as I never use 'git
-> > rm' myself, I do not necessarily agree with "because" part.
-> > 
-> > I suspect people are by now accustomed to see the assuring
-> > feedback from the command when used this way:
-> > [snip]
-> 
-> Too bad, I find it rather annoying and irritating.
+You gave me exactly what I needed.  I simply forgot to pull
+after the discussion petered out.
 
-Why not do the common thing, and add a "--quiet" option? You can even add 
-a config variable to enable it by default (for git-rm). It's not like 
-git-rm is performance critical...
-
-> A: Because it messes up the order in which people normally read text.
-> Q: Why is top-posting such a bad thing?
-> A: Top-posting.
-> Q: What is the most annoying thing on usenet and in e-mail?
-
-Funny!
-
-Ciao,
-Dscho
+Thanks for the reminder.
