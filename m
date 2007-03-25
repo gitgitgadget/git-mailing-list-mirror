@@ -1,85 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Convert emailing part of hooks--update to hooks--post-receive
-Date: Sun, 25 Mar 2007 02:13:04 -0700
-Message-ID: <7v7it54rfj.fsf@assigned-by-dhcp.cox.net>
-References: <200703231023.58911.andyparkins@gmail.com>
-	<200703241550.05590.andyparkins@gmail.com>
-	<7vfy7tajiz.fsf@assigned-by-dhcp.cox.net>
-	<200703250951.04503.andyparkins@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] update-hook: remove all functionality that should be in hooks/post-receive
+Date: Sun, 25 Mar 2007 09:11:51 +0000
+Message-ID: <200703251011.53712.andyparkins@gmail.com>
+References: <200703231022.00189.andyparkins@gmail.com> <200703241548.13775.andyparkins@gmail.com> <38b2ab8a0703241115q39dc298clb15357268288b49e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Mar 25 11:13:14 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Francis Moreau" <francis.moro@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 25 11:14:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVOmj-00066l-Sf
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 11:13:10 +0200
+	id 1HVOoQ-0006xh-6o
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 11:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933271AbXCYJNI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 05:13:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933276AbXCYJNH
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 05:13:07 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:56749 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933271AbXCYJNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 05:13:06 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070325091305.PNZW22511.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 25 Mar 2007 05:13:05 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id exD31W0041kojtg0000000; Sun, 25 Mar 2007 05:13:04 -0400
-In-Reply-To: <200703250951.04503.andyparkins@gmail.com> (Andy Parkins's
-	message of "Sun, 25 Mar 2007 08:51:02 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933278AbXCYJOv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 05:14:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933277AbXCYJOv
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 05:14:51 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:48662 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933278AbXCYJOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 05:14:49 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1350585uga
+        for <git@vger.kernel.org>; Sun, 25 Mar 2007 02:14:48 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NB6jz+9Q4lO66XVSKH9/ulc+Sl7O/93YBIuIX8ZoGBdGyba7oYYXBmJkvKnjAsyRY4/GX5R7t2641shPTIox2a6yLwmv6EStPBE73e+kVgbA491ZIEpL+xUb81wWrD1W5X2XI+ann+Tc2cwwVPz3Zac9z5iyBoI5KSkrn7G/+i4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=oPSTkw+I/qhJ0hsL4NTfkoFyklEnFNg1saJ98qH7s4MDtwXItfGk88ayukWlG8n2f9N+5sXFAAEMv/++FUa9BAdQYjzoB7IZuwhask2kNcfT9IXmkxDvn/8X4EgDWBVusP57cepm7rw5GmTD1t878Oaq3jd1vEUeLQNp1qeCGx0=
+Received: by 10.66.244.11 with SMTP id r11mr10083972ugh.1174814088083;
+        Sun, 25 Mar 2007 02:14:48 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id b23sm6706568ugd.2007.03.25.02.14.45;
+        Sun, 25 Mar 2007 02:14:47 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <38b2ab8a0703241115q39dc298clb15357268288b49e@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43045>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On Saturday 2007, March 24, Francis Moreau wrote:
 
-> On Sunday 2007, March 25, Junio C Hamano wrote:
-> ...
->> I think you can do something along the following line.
->>
->>  (1) You say "for-each-ref --all" to get the ref information
->>      that is after update.
+> yes that almost would do the thing. But instead of hacking the hook,
+> it would be great to have a trivial setup at the begining of the
+> script to choose this config.
+
+I'd like Junio's permission before actually doing that; I know he is 
+worried about out-of-control growth of hook scripts and it's already 
+overly large just to do the one job it's got.
+
+> Maybe a local config in the repo through the command `git config`
+> could do the job ?
 >
-> Would you mind if I delayed that to a separate patch?
-
-Surely.
-
-As we discussed, I would prefer a patch to create this as a new
-file in
-
-	contrib/examples/hooks/
-
-directory.  A single-liner 
-
-	# see contrib/example/hooks for examples.
-
-in another new file "templates/hooks--post-receive" would be
-also nice.
-
->> Actually it was not quite "nicely done".  If taggername has an
->> unusual character then dq pair you hard coded there may not
->> quote the string correctly.
+> $ git config hook.update.path "/var/www/"
 >
-> Devious.
+> And if the config is to write the message to a file, skip the email
+> stuffs generation (header, foorter...).
 
-and funny, isn't it?
+Again; it's not hard to do, and I don't mind adding it, but I don't want 
+to set off Junio's bloat detector.  Bear in mind also that in the 
+example you ask for every repo user would need write access 
+to "/var/www"; because the hook script runs as the user performing the 
+push.
 
->   generate_email $2 $3 $1 | cat
->
-> This is to force the deactivation of the pager for all the git commands 
-> that generate_email calls.
 
-I think you could probably do the same with:
-
-	PAGER= generate_email "$2" "$3" "$1"
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
