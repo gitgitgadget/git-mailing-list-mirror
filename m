@@ -1,184 +1,127 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Sun, 25 Mar 2007 01:32:16 -0700
-Message-ID: <7v648p7mgf.fsf@assigned-by-dhcp.cox.net>
-References: <7vbqjp1dyx.fsf@assigned-by-dhcp.cox.net>
-	<7v3b4x9sst.fsf@assigned-by-dhcp.cox.net>
-	<7v8xed5mex.fsf@assigned-by-dhcp.cox.net>
-	<7vr6rtle8o.fsf@assigned-by-dhcp.cox.net>
+From: "Peter Eriksen" <s022018@student.dtu.dk>
+Subject: Re: Understanding version 4 packs
+Date: Sun, 25 Mar 2007 10:35:30 +0200
+Message-ID: <20070325083530.GA25523@bohr.gbar.dtu.dk>
+References: <20070324202356.GA20734@bohr.gbar.dtu.dk> <alpine.LFD.0.83.0703241913110.18328@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 10:32:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun Mar 25 10:35:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVO9G-0003AM-71
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 10:32:22 +0200
+	id 1HVOCN-0004ir-Cn
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 10:35:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933226AbXCYIcT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 25 Mar 2007 04:32:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933222AbXCYIcT
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 04:32:19 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:56840 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933226AbXCYIcR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Mar 2007 04:32:17 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070325083216.ETIL748.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Sun, 25 Mar 2007 04:32:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ewYG1W0041kojtg0000000; Sun, 25 Mar 2007 04:32:16 -0400
-X-maint-at: cd67c8e0bc6f61ffccc12d1775bc1a200df5fe85
-X-master-at: 12d6697f3a9f07db0c437438804aec994fc34035
-In-Reply-To: <7vr6rtle8o.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 13 Mar 2007 01:49:43 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933256AbXCYIfd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 04:35:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933262AbXCYIfc
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 04:35:32 -0400
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:34389 "HELO bohr.gbar.dtu.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933256AbXCYIfb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 04:35:31 -0400
+Received: (qmail 3130 invoked by uid 5842); 25 Mar 2007 10:35:30 +0200
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.83.0703241913110.18328@xanadu.home>
+User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43040>
 
-On the 'maint' front, there are a handful gitweb fixes, but
-there is nothing major.  I'll perhaps do a v1.5.0.6 if I have
-time when I do the v1.5.1-rc2.
+On Sat, Mar 24, 2007 at 07:24:17PM -0400, Nicolas Pitre wrote:
+> On Sat, 24 Mar 2007, Peter Eriksen wrote:
+> 
+> > There is a new tree type called OBJ_DICT_TREE, which looks something
+> > like the following:
+> > 
+> > +-----------------+------------------------------------------------+----
+> > |  Table offset   |  SHA-1 of the blob corresponding to the path.  | ...
+> > +-----------------+------------------------------------------------+----
+> >       6 bytes                     20 bytes
+> 
+> Actually it is a 2-byte index in the path table, and a 4-byte index in a 
+> common SHA1 table.  So each tree entry is 6 bytes total.
 
-I allowed a handful new features to the 'master' side, contrary
-to the promise of -rc1 which is supposed to be 'no new features,
-only fixes'.  They should be safe changes, though.
+What happens to the paths, that do not have a correponding entry in the
+path name table, because they are not among the 65535 most frequent
+paths in the pack?
 
- - 'git-diff --quiet' optimizes tree-level comparison by exiting
-   early when it finds one difference.  This speeds up path-limited
-   form of git-rev-list and git-log significantly.
+> > The index (.idx) files are extended to have a 4 byte pointer to the
+> > offset of this file name table in the pack file for easy lookup.
+> 
+> Right.  And it will lose the SHA1 entries since they are already 
+> available in the pack.
 
- - 'git-bisect run <script>' can be used to automate simple
-   bisection.=20
+Does this mean, that the current index format will change from:
 
-Notable fixes since -rc1 includes:
+  - The header is followed by sorted 24-byte entries, one entry
+    per object in the pack.  Each entry is:
 
- - 'git-clone -q' supresses the "walk" and "got" noises while
-   fetching over http.
+    4-byte network byte order integer, recording where the
+    object is stored in the packfile as the offset from the
+    beginning.
 
- - 'git-revert' does not add duplicated abbreviated commit
-   object name on the title line anymore.
+to just 4-byte entries, and are the SHA-1 entries in that extra table
+of SHA-1's referenced by OBJ_DICT_TREE objects in the pack file?
 
- - With core.legacyheaders turned off, zero-length loose object
-   was incorrectly judged corrupt.
+Regards,
 
- - 'git-apply' with core.autocrlf generated bogus results.
+Peter
 
- - path-limited 'git-bisect' terminated too early before finding
-   the guilty commit.
+P.S. I have updated my description of the pack format. Any comments are
+welcome.
 
- - the sample update hook does not generate change notification
-   e-mails anymore.=20
+On disk format of version 4 packs (v0.1)
+=================================
 
-----------------------------------------------------------------
-* The 'maint' branch has these fixes since v1.5.0.5.
+There is a file name table, EXT_OBJ_FILENAME_TABLE, which is placed
+anywhere in the pack file, but before any OBJ_DICT_TREE objects, which
+are referencing the table, so that the pack can be easily streamed. It
+is using the format:
 
- Jakub Narebski (4):
-  gitweb: Fix "next" link in commit view
-  gitweb: Don't escape attributes in CGI.pm HTML methods
-  gitweb: Fix not marking signoff lines in "log" view
-  gitweb: Add some installation notes in gitweb/INSTALL
++-------------------------------+
+|  Compressed file name table   |
++-------------------------------+
 
- Li Yang (1):
-  gitweb: Change to use explicitly function call cgi->escapHTML()
+The uncompressed file name table contains NR_ENTRIES entries,
+and looks like this:
 
- Michael S. Tsirkin (1):
-  fix typo in git-am manpage
++------------+------+--------------+------+--------------------+----
+| NR_ENTRIES | MODE |  Full path 1 | MODE | Full path 2        | ...
++------------+------+--------------+------+--------------------+----
+   4 bytes    2 bytes   n1 bytes    2 bytes     n2 bytes     
 
- Peter Eriksen (1):
-  Documentation/pack-format.txt: Clear up description of types.
+MODE is a network-byte-order integer representing the mode of the path,
+and the path is a variable length, null-terminated string.
 
+The table is sorted by path then mode for easy binary lookup, and so
+that pointers into this table can be compared directly instead of
+comparing the corresponding paths and modes. This table contains the
+65535 most used paths in the entire pack.
 
-* The 'master' branch has these since v1.5.1-rc1.
+There is a new tree type called OBJ_DICT_TREE, which looks like the
+following:
 
- Alex Riesen (2):
-  Document --quiet option to git-diff
-  Use diff* with --exit-code in git-am, git-rebase and git-merge-ours
++--------+----------------+----
+| P offs |   SHA-1 offs   | ...
++--------+----------------+----
+  2 bytes      4 bytes
 
- Andy Parkins (2):
-  update-hook: abort early if the project description is unset
-  update-hook: remove e-mail sending hook.
+That is, each entry contains a 2-byte index into the path table, and a
+corresponding 4-byte index into a SHA-1 table.
 
- Brandon Casey (1):
-  prefer "git COMMAND" over "git-COMMAND" in gitk
+These new tree objects will remain uncompressed in the pack file, but
+sorted with, and deltaed against other tree objects. All normal tree
+objects are converted to OBJ_DICT_TREE when packing, and are converted
+back on the fly to callers who need an ordinary OBJ_TREE.
 
- Chris Wright (1):
-  make git clone -q suppress the noise with http fetch
+The index (.idx) files are extended to have a 4 byte pointer to the
+offset of this file name table in the pack file for easy lookup.
 
- Christian Couder (6):
-  Bisect: implement "git bisect run <cmd>..." to automatically bisect.
-  Documentation: bisect: reformat some paragraphs.
-  Documentation: bisect: reword one paragraph.
-  Documentation: bisect: reformat more paragraphs.
-  Documentation: bisect: add some titles to some paragraphs.
-  Documentation: bisect: make a comment fit better in the man page.
-
- Eric Wong (1):
-  gitk: bind <F5> key to Update (reread commits)
-
- James Bowes (1):
-  Replace remaining instances of strdup with xstrdup.
-
- Johannes Schindelin (5):
-  xdiff/xutils.c(xdl_hash_record): factor out whitespace handling
-  Add a HOWTO for setting up a standalone git daemon
-  Provide some technical documentation for shallow clones
-  t4118: be nice to non-GNU sed
-  git-revert: Revert revert message to old behaviour
-
- Junio C Hamano (12):
-  blame: micro-optimize cmp_suspect()
-  blame: cmp_suspect is not "cmp" anymore.
-  Teach tree_entry_interesting() that the tree entries are sorted.
-  tree-diff: avoid strncmp()
-  tree_entry_interesting(): allow it to say "everything is interesting"
-  git-rebase: make 'rebase HEAD branch' work as expected.
-  git-apply: Do not free the wrong buffer when we convert the data for =
-writeout
-  checkout: report where the new HEAD is upon detaching HEAD
-  git-bisect: typofix
-  git-bisect.sh: properly dq $GIT_DIR
-  Fix path-limited "rev-list --bisect" termination condition.
-  git-am documentation: describe what is taken from where.
-
- Linus Torvalds (6):
-  Fix loose object uncompression check.
-  Don't ever return corrupt objects from "parse_object()"
-  Be more careful about zlib return values
-  Remove "pathlen" from "struct name_entry"
-  Initialize tree descriptors with a helper function rather than by han=
-d.
-  Switch over tree descriptors to contain a pre-parsed entry
-
- Michael S. Tsirkin (1):
-  git-merge: Put FETCH_HEAD data in merge commit message
-
- Nicolas Pitre (10):
-  clean up the delta base cache size a bit
-  use a LRU eviction policy for the delta base cache
-  don't ever allow SHA1 collisions to exist by fetching a pack
-  index-pack: use hash_sha1_file()
-  index-pack: more validation checks and cleanups
-  improve checkout message when asking for same branch
-  minor git-prune optimization
-  update HEAD reflog when branch pointed to by HEAD is directly modifie=
-d
-  make it more obvious that temporary files are temporary files
-  write_sha1_from_fd() should make new objects read-only
-
- Santi B=C3=A9jar (1):
-  git-fetch: Fix single_force in append_fetch_head
-
- Shawn O. Pearce (1):
-  contrib/continuous: a continuous integration build manager
-
- Uwe Kleine-K=C3=B6nig (1):
-  Bisect: convert revs given to good and bad to commits
+There is something similar with a table, EXT_OBJ_IDENT_TABLE of common
+strings in commit objects (e.g. author and timezone), and a new object
+OBJ_DICT_COMMIT, but I have not understood that quite yet.
