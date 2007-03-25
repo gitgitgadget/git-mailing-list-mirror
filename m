@@ -1,68 +1,62 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: merge strategy request
-Date: Sat, 24 Mar 2007 17:18:19 -0800 (PST)
-Message-ID: <Pine.LNX.4.63.0703241716410.12986@qynat.qvtvafvgr.pbz>
-References: <Pine.LNX.4.63.0703241430420.12864@qynat.qvtvafvgr.pbz>
- <Pine.LNX.4.63.0703250315461.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
+Subject: Re: [PATCH] gitweb: Add some installation notes in gitweb/INSTALL
+Date: Sat, 24 Mar 2007 23:18:48 -0300
+Message-ID: <f329bf540703241918y22830d50jbf20928d402c67fe@mail.gmail.com>
+References: <etufpl$7en$1@sea.gmane.org>
+	 <11747663931269-git-send-email-jnareb@gmail.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 25 03:44:11 2007
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 25 04:18:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVHmE-0004pO-Jc
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 03:44:10 +0200
+	id 1HVIJp-0004Rw-0i
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 04:18:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753324AbXCYBoH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 21:44:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753341AbXCYBoH
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 21:44:07 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:59852 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1753324AbXCYBoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 21:44:06 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Sat, 24 Mar 2007 17:44:04 -0800
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Sat, 24 Mar 2007 18:44:00 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <Pine.LNX.4.63.0703250315461.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S964806AbXCYCSu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 22:18:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964807AbXCYCSu
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 22:18:50 -0400
+Received: from an-out-0708.google.com ([209.85.132.251]:28061 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964806AbXCYCSt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 22:18:49 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1908932ana
+        for <git@vger.kernel.org>; Sat, 24 Mar 2007 19:18:48 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pOMEnY5a1Ym9W2XtJUle6rb/AE5ugeAb3BOj6W035LARtdrDBnzK3EFantXAdkB61sc66NTL3VzCZfmGeo43yHSQuXNAQvua6bWL8gcPG2hyQsMwC4YuobSOrS44JKP82S0zd+zEDVRct4cvRK89PXbdIm6w7LH9cCQply4T/2o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gajRQW0n0C/CcD0dzG9y6uXwhxm69MQ0o4YXkDpD8xRHrnDEt5SgLuc16FaL1TgDFfCJ9c793f7AGzftHgiDNw0fgRgL8gURuIM+l3rk2kg8tbFOIIXAB/FBb2FhE2TfhDPgwClAI0uSFQDARSylf73DWT0IIT5uAMDdPI1NJjQ=
+Received: by 10.100.112.19 with SMTP id k19mr3851887anc.1174789128379;
+        Sat, 24 Mar 2007 19:18:48 -0700 (PDT)
+Received: by 10.100.92.11 with HTTP; Sat, 24 Mar 2007 19:18:48 -0700 (PDT)
+In-Reply-To: <11747663931269-git-send-email-jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43030>
 
-On Sun, 25 Mar 2007, Johannes Schindelin wrote:
+2007/3/24, Jakub Narebski <jnareb@gmail.com>:
+> Add some installation and configuration notes for gitweb in
+> gitweb/INSTALL. Make use of filling gitweb configuration by
+> Makefile.
+>
+> It does not cover (yet?) all the configuration variables and
+> options.
 
-> On Sat, 24 Mar 2007, David Lang wrote:
->
->> there's been talk about custom merge strategies for different types of
->> files (uncompressing office documents to merge them for example), so I
->> think this is along the same lines and wanted to let other people start
->> thinking about the problem and possible solutions.
->
-> There is a nice example script, named git-merge-stupid, which you can
-> use as template.
->
-> Basically, just write a program named "git-merge-david-lang", which takes
-> arguments of the form
->
-> 	merge-base [merge-base2...] -- head remote [remote...]
->
-> IOW, all arguments up to "--" are merge bases, and after the "--" comes
-> the HEAD and all branches to be merged. All of these argument (except
-> "--") are given as commit hashes.
->
-> IIRC, if no merge bases are passed, the program is expected to find out
-> (basically, take the output of "git-merge-base --all <head> <remote>...").
->
-> And I really prefer _you_ working on it.
+I got it running with the help of the list, but this patch surely
+improves the state of the docs. Just one nit: it should give a small
+example of the desired syntax of the gitweb_conf.perl file
 
-I'll add it to my backlog of projects that I'd like to do someday ;-)
-
-unfortunantly it's not likely to be anytime soon (too many things on the list 
-ahead of it)
-
-David Lang
+-- 
+Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
