@@ -1,106 +1,85 @@
-From: Andy Parkins <andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH] Convert emailing part of hooks--update to hooks--post-receive
-Date: Sun, 25 Mar 2007 08:51:02 +0000
-Message-ID: <200703250951.04503.andyparkins@gmail.com>
-References: <200703231023.58911.andyparkins@gmail.com> <200703241550.05590.andyparkins@gmail.com> <7vfy7tajiz.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 25 Mar 2007 02:13:04 -0700
+Message-ID: <7v7it54rfj.fsf@assigned-by-dhcp.cox.net>
+References: <200703231023.58911.andyparkins@gmail.com>
+	<200703241550.05590.andyparkins@gmail.com>
+	<7vfy7tajiz.fsf@assigned-by-dhcp.cox.net>
+	<200703250951.04503.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 10:54:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 25 11:13:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVOUK-0005RQ-TW
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 10:54:09 +0200
+	id 1HVOmj-00066l-Sf
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 11:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753484AbXCYIx5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 04:53:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753493AbXCYIx5
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 04:53:57 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:32655 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753484AbXCYIxz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 04:53:55 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1348804uga
-        for <git@vger.kernel.org>; Sun, 25 Mar 2007 01:53:54 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GkQd9h3ZUDUVv4wYodKp0Er2a1i3+gbH4l2/lX/Tj1BHHU2vaf+9xgVMZBsY9zhRB6YbwVitGIDEiJHkXtMoX//NlSbPTttbzT6FWC0VMlYYuPrRfyGbi9zbsuuXXlGVdswkH1DbGyPKCgxuo8A/jNCUMZBJ9Ez+D3uXKg0iPk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=TCl5e5i3fBj5uMbIdEge6zjUzIie18RLgjB5Qm0Ppg6Z6hzUTFFv9bddxpYVIA5bKzt1pIuiFc1t9VJ111By8MRUspyFbOg5bFk/3M0eSl72xY+W6NlYC4PIVRz+h76coeyo75nw7M0RfmHwJ8Kt/UrokznCG3d+N1lQTLINvIU=
-Received: by 10.66.249.16 with SMTP id w16mr10029662ugh.1174812834735;
-        Sun, 25 Mar 2007 01:53:54 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id k1sm6697794ugf.2007.03.25.01.53.53;
-        Sun, 25 Mar 2007 01:53:54 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <7vfy7tajiz.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S933271AbXCYJNI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 05:13:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933276AbXCYJNH
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 05:13:07 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:56749 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933271AbXCYJNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 05:13:06 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070325091305.PNZW22511.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 25 Mar 2007 05:13:05 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id exD31W0041kojtg0000000; Sun, 25 Mar 2007 05:13:04 -0400
+In-Reply-To: <200703250951.04503.andyparkins@gmail.com> (Andy Parkins's
+	message of "Sun, 25 Mar 2007 08:51:02 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43044>
 
-On Sunday 2007, March 25, Junio C Hamano wrote:
+Andy Parkins <andyparkins@gmail.com> writes:
 
-> I think you can do something along the following line.
+> On Sunday 2007, March 25, Junio C Hamano wrote:
+> ...
+>> I think you can do something along the following line.
+>>
+>>  (1) You say "for-each-ref --all" to get the ref information
+>>      that is after update.
 >
->  (1) You say "for-each-ref --all" to get the ref information
->      that is after update.
+> Would you mind if I delayed that to a separate patch?
 
-Would you mind if I delayed that to a separate patch?  It's a 
-significant difference from the original update hook, so I think it's 
-worth having that change separately documented.
+Surely.
 
-> Sorry, what I meant was:
+As we discussed, I would prefer a patch to create this as a new
+file in
+
+	contrib/examples/hooks/
+
+directory.  A single-liner 
+
+	# see contrib/example/hooks for examples.
+
+in another new file "templates/hooks--post-receive" would be
+also nice.
+
+>> Actually it was not quite "nicely done".  If taggername has an
+>> unusual character then dq pair you hard coded there may not
+>> quote the string correctly.
 >
-> 	git show -s --pretty=oneline "$oldrev"
+> Devious.
 
-Ah - no problem.  Done.
+and funny, isn't it?
 
-> Actually it was not quite "nicely done".  If taggername has an
-> unusual character then dq pair you hard coded there may not
-> quote the string correctly.
-
-Devious.  Fixed as you suggest.
-
-> > (Andreas Ericsson   54)  prev=$(git describe "$3^" | sed
-> > 's/-g.*//')
+>   generate_email $2 $3 $1 | cat
 >
-> You could describe all the parents and see if they differ.  If
-> they reach different tag, we could see which one is newer.  Or
-> something like that.  In the special (but usual) case of a
-> single parent commit, "describing all the parents" is what you
-> are already doing, so it is not any more expensive in the normal
-> case.
+> This is to force the deactivation of the pager for all the git commands 
+> that generate_email calls.
 
-Again; I think I'll fix that one as a separate patch as it is a change 
-from the behaviour of hooks/update.
+I think you could probably do the same with:
 
-> Please do not have cat on either side of a pipe.  That makes a
-> shell script look ... eh, you know the word ;-).
->
-> 	sed -e 1q "$GIT_DIR/description"
-
-Done.  I've taken the liberty of adding a pipe-to-cat, that I hope 
-you'll forgive...
-
-# Output to the terminal in command line mode - if someone wanted to
-# resend an email; they could redirect the output to sendmail themselves
-  generate_email $2 $3 $1 | cat
-
-This is to force the deactivation of the pager for all the git commands 
-that generate_email calls.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+	PAGER= generate_email "$2" "$3" "$1"
