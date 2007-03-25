@@ -1,115 +1,65 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [ANNOUNCE] tig 0.6
-Date: Sun, 25 Mar 2007 14:51:33 +0200
-Message-ID: <20070325125133.GA11453@diku.dk>
+From: "Francis Moreau" <francis.moro@gmail.com>
+Subject: Re: [PATCH] update-hook: remove all functionality that should be in hooks/post-receive
+Date: Sun, 25 Mar 2007 16:04:24 +0200
+Message-ID: <38b2ab8a0703250704y54a93b0bpd109de9d6f7d809b@mail.gmail.com>
+References: <200703231022.00189.andyparkins@gmail.com>
+	 <200703241548.13775.andyparkins@gmail.com>
+	 <38b2ab8a0703241115q39dc298clb15357268288b49e@mail.gmail.com>
+	 <200703251011.53712.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 15:14:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Andy Parkins" <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 25 16:04:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVSYb-0005Wi-FB
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 15:14:49 +0200
+	id 1HVTKt-0004Xl-QP
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 16:04:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750797AbXCYNOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 09:14:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbXCYNOc
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 09:14:32 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:45089 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750797AbXCYNOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 09:14:30 -0400
-X-Greylist: delayed 1373 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Mar 2007 09:14:30 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 2EB85868054;
-	Sun, 25 Mar 2007 14:51:36 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DmNWW+vPSsYR; Sun, 25 Mar 2007 14:51:33 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id B10B0778006;
-	Sun, 25 Mar 2007 14:51:33 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 035C06DF835; Sun, 25 Mar 2007 14:51:10 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 9B48262A13; Sun, 25 Mar 2007 14:51:33 +0200 (CEST)
+	id S1750991AbXCYOE1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 10:04:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751122AbXCYOE1
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 10:04:27 -0400
+Received: from wr-out-0506.google.com ([64.233.184.239]:61184 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750991AbXCYOE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 10:04:26 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so1243631wra
+        for <git@vger.kernel.org>; Sun, 25 Mar 2007 07:04:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=PmuiB6obGJGVyjYgGt32ORiKhbmP1PdWBakuE21TfrjTGqBR9T0bEM3JCmBd0+CIyGD1oBstwWeQ7EuDFDlN2PpTmIzfOGmiWZ4Py4IuB3QI+LdHHAkAAslaD6PVD7zyYPKPlzzCl0l30iINMkXC/PQs7mKTjJvpjxIUxQTRhw8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WmVEYaoyJvQ8xVUk6dU4OAGCl/v+Ys4gN3/L+pcLqK0CFdUY7kJvvgjzDtb1DVM7ENvFwLKSN+nVk9a8c794oTo+YhVB7WTpPqbVStbtjZWqgL23HlnkZ2Qv6578svapp12kI1PbrcA4hQh/JV8LrF8AMMB/Qj5bgeHI5d5DW0U=
+Received: by 10.115.89.1 with SMTP id r1mr2162255wal.1174831464978;
+        Sun, 25 Mar 2007 07:04:24 -0700 (PDT)
+Received: by 10.114.38.12 with HTTP; Sun, 25 Mar 2007 07:04:24 -0700 (PDT)
+In-Reply-To: <200703251011.53712.andyparkins@gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43056>
 
-Hello,
+On 3/25/07, Andy Parkins <andyparkins@gmail.com> wrote:
+> Again; it's not hard to do, and I don't mind adding it, but I don't want
+> to set off Junio's bloat detector.  Bear in mind also that in the
+> example you ask for every repo user would need write access
+> to "/var/www"; because the hook script runs as the user performing the
+> push.
+>
 
-    tig version 0.6 is now available. The release mainly
-consists of various accumulated bug fixes and a merge of the
-still experimental rev-graph branch. The latter means that
-revision graphs "visualization" is now disabled by default.
-Add
+yes it should be fairly easy. But the point is that trivial feature
+should not imply any modifications IMHO or at least the simplest one:
+"FILE=<path>".
 
-	set show-rev-graph = yes
-
-to your ~/.tigrc to enable it always.
-
-     A special thanks goes out to Miciah for reporting many
-of the bugs that has been fixed. Also thanks to those who
-have sent patches.
-
-
-Grab the tarball at http://jonas.nitro.dk/tig/releases/
-or pull it from git://repo.or.cz/tig.git
-
-
-Following is a slightly trimmed shortlog:
-
-Alexey Tourbin (1):
-      Increase commit.title size from 75 to 128
-
-Horst H. von Brand (1):
-      Fix parameter warning for iconv(3)
-
-Jonas Fonseca (35 was 44):
-      Refactor stuff into draw_rev_graph
-      Remove fprintf stuff
-      Refactor graph drawing
-      Now it actually starts looking like something
-      Add graph_parent_is_merge
-      Simplify the update_rev_graph end-game
-      Move stuff to reset_rev_graph and rename it to done_rev_graph
-      Move rev graph code to own section
-      Use 'graph' instead of 'stack' in the rev graph code
-      Improve comments
-      draw_rev_graph: refactor stuff to get_rev_graph_symbol
-      More graph_parent_is_merge usage
-      Refactor (separator, line) chtype management to use 'fillers'
-      Always draw the space between end of rev graph and start of commit title
-      append_to_rev_graph: use local variable
-      Allow view readers to 'finalize' by calling with NULL line before closing
-      update_rev_graph: move code to prepare_rev_graph
-      Make the rev graph visualization have a one rev look-ahead
-      push_rev_graph: iterate all graph revs when looking for duplicates
-      add_keybinding: always allocate the new keybinding
-      Hardwire ERR to mean REQ_NONE in the main loop
-      main_read: handle titles that start with whitespace
-      Cast second arg to iconv to remove warning
-      Never split the tree view when opening another tree view
-      Fix commit author line parsing for when the name is empty
-      Discard error messages from git-describe
-      Fix SITES URLs; promote git://repo.or.cz/tig.git mirror more
-      Add note about using autoconf to detect iconv(3) presence in libc
-      Drop --stat usage from the main command assembled during option parsing
-      Make tig handle GIT_DIR better
-      TODO: use autoconf to detect newer git and git-config availability
-      Improve handling of remotes
-      Disable show-rev-graph by default
-      Oops, remove -liconv from LDFLAGS
-      Bump the version number to 0.6
-
-
+>From an external point of view, sending the announcement by email is
+an extension of generating a message for each update.
 -- 
-Jonas Fonseca
+Francis
