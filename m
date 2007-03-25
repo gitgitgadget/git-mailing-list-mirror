@@ -1,73 +1,75 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] git-svn: fix rel_path() when not connected to the repository root
-Date: Sun, 25 Mar 2007 16:35:31 -0700
-Message-ID: <20070325233531.GA13433@muzzle>
-References: <20070325180218.GI942MdfPADPa@greensroom.kotnet.org> <20070325201943.GE846@localdomain> <20070325204156.GK942MdfPADPa@greensroom.kotnet.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Question regarding: git pull --no-commit origin
+Date: Sun, 25 Mar 2007 19:38:23 -0400
+Message-ID: <20070325233823.GA13247@spearce.org>
+References: <93c3eada0703251632s3be48b60na03728ce72b8ab8c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sven Verdoolaege <skimo@kotnet.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 26 01:35:52 2007
+Cc: git@vger.kernel.org
+To: Geoff Russell <geoffrey.russell@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 01:38:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVcFb-0000q4-6q
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 01:35:51 +0200
+	id 1HVcIC-0002CV-GD
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 01:38:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753537AbXCYXfh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 19:35:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932903AbXCYXfh
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 19:35:37 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:44696 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753536AbXCYXfd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 19:35:33 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id A69002DC01A;
-	Sun, 25 Mar 2007 16:35:31 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sun, 25 Mar 2007 16:35:31 -0700
+	id S932911AbXCYXi3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 19:38:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932889AbXCYXi3
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 19:38:29 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:35650 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932903AbXCYXi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 19:38:28 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HVcHw-0005VL-SB; Sun, 25 Mar 2007 19:38:16 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 121AA20FBAE; Sun, 25 Mar 2007 19:38:24 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20070325204156.GK942MdfPADPa@greensroom.kotnet.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <93c3eada0703251632s3be48b60na03728ce72b8ab8c@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43095>
 
-This should fix fetching for people who did not use
-"git svn --minimize" or cannot connect to the repository root
-due to the lack of permissions.
+Geoff Russell <geoffrey.russell@gmail.com> wrote:
+> I do: git pull --no-commit origin
+> 
+> Receive messages ending in:
+> 
+>        ...
+>       Updating 6a29cdd..b7ba33d
+>       Fast forward
+>       interface/testfile |    1 +
+>       1 files changed, 1 insertions(+), 0 deletions(-)
+>       create mode 100644 interface/testfile
+...
+> However when I do: git commit -a
+> 
+> I'm told: nothing to commit (working directory clean)
+> 
+> Am I misunderstanding something?
 
-I'm not sure what I was on when I made the change to the
-rel_path() function in 4e9f6cc78e5d955bd0faffe76ae9aea6590189f1
-that made it die() when we weren't connected to the repository
-root :x
+The pull was strictly a fast-forward.  No merge commit was necessary
+to record the merge, so we didn't actually honor the --no-commit
+argument.
 
-Thanks to Sven Verdoolaege for reporting this bug.
----
+In other words, your current branch did not contain any commits
+that were not in the origin branch you were pulling from.  So
+a real merge wasn't required here.
 
-Sven: Let me know if this fixes things for your repo.
-
- git-svn.perl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index e845789..e0a48c2 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1327,8 +1327,10 @@ sub rel_path {
- 	my ($self) = @_;
- 	my $repos_root = $self->ra->{repos_root};
- 	return $self->{path} if ($self->{url} eq $repos_root);
--	die "BUG: rel_path failed! repos_root: $repos_root, Ra URL: ",
--	    $self->ra->{url}, " path: $self->{path},  URL: $self->{url}\n";
-+	my $url = $self->{url} .
-+	          (length $self->{path} ? "/$self->{path}" : $self->{path});
-+	$url =~ s!^\Q$repos_root\E(?:/+|$)!!g;
-+	$url;
- }
- 
- sub traverse_ignore {
 -- 
-Eric Wong
+Shawn.
