@@ -1,139 +1,67 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Use diff* with --exit-code in git-am, git-rebase and git-merge-ours
-Date: Sun, 25 Mar 2007 01:42:56 +0100
-Message-ID: <20070325004256.GB11507@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: merge strategy request
+Date: Sun, 25 Mar 2007 03:20:52 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0703250315461.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <Pine.LNX.4.63.0703241430420.12864@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 03:15:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: David Lang <david.lang@digitalinsight.com>
+X-From: git-owner@vger.kernel.org Sun Mar 25 03:21:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVHKI-0007JY-4d
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 03:15:18 +0200
+	id 1HVHPu-0001iP-8x
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 03:21:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221AbXCYBOz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 21:14:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753224AbXCYBOz
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 21:14:55 -0400
-Received: from mo-p07-fb.rzone.de ([81.169.146.191]:37633 "EHLO
-	mo-p07-fb.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753221AbXCYBOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 21:14:54 -0400
-Received: from mo-p07-ob.rzone.de (fruni-mo-p07-ob.mail [192.168.63.183])
-	by gibbsson-fb-05.store (RZmta 5.4) with ESMTP id 500d14j2OIjr2g
-	for <git@vger.kernel.org>; Sun, 25 Mar 2007 01:44:09 +0100 (MET)
-Received: from tigra.home (Fc89f.f.strato-dslnet.de [195.4.200.159])
-	by post.webmailer.de (fruni mo31) (RZmta 5.4)
-	with ESMTP id A0572dj2ONbgcY ; Sun, 25 Mar 2007 01:42:57 +0100 (MET)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 643EA277B6;
-	Sun, 25 Mar 2007 01:42:57 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id E432CBF79; Sun, 25 Mar 2007 01:42:56 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a4mM=
-X-RZG-CLASS-ID: mo07
-X-RZG-CLASS-ID: mo07
+	id S1753293AbXCYBUz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 21:20:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753295AbXCYBUz
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 21:20:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36327 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753293AbXCYBUy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 21:20:54 -0400
+Received: (qmail invoked by alias); 25 Mar 2007 01:20:52 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp045) with SMTP; 25 Mar 2007 03:20:52 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19gX49x409gOwGfKfPR5Qn8qWBzWZtSixON8K8B6Q
+	7X1CSe+U4Qzvcw
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <Pine.LNX.4.63.0703241430420.12864@qynat.qvtvafvgr.pbz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43028>
 
-This simplifies the shell code and reduces memory footprint, speeds
-things up. The performance improvements should be noticable by
-git-rebase, when it is used to rebase big commits.
+Hi,
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
- git-am.sh         |   18 +++++++-----------
- git-merge-ours.sh |    2 +-
- git-rebase.sh     |   10 ++++------
- 3 files changed, 12 insertions(+), 18 deletions(-)
+On Sat, 24 Mar 2007, David Lang wrote:
 
-diff --git a/git-am.sh b/git-am.sh
-index 88af8dd..e9d8d57 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -408,12 +408,10 @@ do
- 		# trust what the user has in the index file and the
- 		# working tree.
- 		resolved=
--		changed="$(git-diff-index --cached --name-only HEAD)"
--		if test '' = "$changed"
--		then
-+		git-diff-index --quiet --exit-code --cached HEAD && {
- 			echo "No changes - did you forget to use 'git add'?"
- 			stop_here_user_resolve $this
--		fi
-+		}
- 		unmerged=$(git-ls-files -u)
- 		if test -n "$unmerged"
- 		then
-@@ -435,13 +433,11 @@ do
- 		then
- 		    # Applying the patch to an earlier tree and merging the
- 		    # result may have produced the same tree as ours.
--		    changed="$(git-diff-index --cached --name-only HEAD)"
--		    if test '' = "$changed"
--		    then
--			    echo No changes -- Patch already applied.
--			    go_next
--			    continue
--		    fi
-+		    git-diff-index --quiet --exit-code --cached HEAD && {
-+			echo No changes -- Patch already applied.
-+			go_next
-+			continue
-+		    }
- 		    # clear apply_status -- we have successfully merged.
- 		    apply_status=0
- 		fi
-diff --git a/git-merge-ours.sh b/git-merge-ours.sh
-index 4f3d053..40491f2 100755
---- a/git-merge-ours.sh
-+++ b/git-merge-ours.sh
-@@ -9,6 +9,6 @@
- # because the current index is what we will be committing as the
- # merge result.
- 
--test "$(git-diff-index --cached --name-status HEAD)" = "" || exit 2
-+git-diff-index --quiet --exit-code --cached HEAD || exit 2
- 
- exit 0
-diff --git a/git-rebase.sh b/git-rebase.sh
-index aadd580..860c0ce 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -59,7 +59,7 @@ continue_merge () {
- 		die "$RESOLVEMSG"
- 	fi
- 
--	if test -n "`git-diff-index HEAD`"
-+	if ! git-diff-index --quiet --exit-code HEAD
- 	then
- 		if ! git-commit -C "`cat $dotest/current`"
- 		then
-@@ -124,13 +124,11 @@ while case "$#" in 0) break ;; esac
- do
- 	case "$1" in
- 	--continue)
--		diff=$(git-diff-files)
--		case "$diff" in
--		?*)	echo "You must edit all merge conflicts and then"
-+		git-diff-files --quiet --exit-code || {
-+			echo "You must edit all merge conflicts and then"
- 			echo "mark them as resolved using git update-index"
- 			exit 1
--			;;
--		esac
-+		}
- 		if test -d "$dotest"
- 		then
- 			prev_head="`cat $dotest/prev_head`"
--- 
-1.5.1.rc1.63.g59cc5
+> there's been talk about custom merge strategies for different types of 
+> files (uncompressing office documents to merge them for example), so I 
+> think this is along the same lines and wanted to let other people start 
+> thinking about the problem and possible solutions.
+
+There is a nice example script, named git-merge-stupid, which you can 
+use as template.
+
+Basically, just write a program named "git-merge-david-lang", which takes 
+arguments of the form
+
+	merge-base [merge-base2...] -- head remote [remote...]
+
+IOW, all arguments up to "--" are merge bases, and after the "--" comes 
+the HEAD and all branches to be merged. All of these argument (except 
+"--") are given as commit hashes.
+
+IIRC, if no merge bases are passed, the program is expected to find out 
+(basically, take the output of "git-merge-base --all <head> <remote>...").
+
+And I really prefer _you_ working on it.
+
+Ciao,
+Dscho
