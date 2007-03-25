@@ -1,91 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Understanding version 4 packs
-Date: Sun, 25 Mar 2007 05:40:34 -0400
-Message-ID: <20070325094033.GJ25863@spearce.org>
-References: <20070324202356.GA20734@bohr.gbar.dtu.dk> <20070325084641.GG25863@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sun, 25 Mar 2007 11:59:01 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0703251156530.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v7iudz33y.fsf@assigned-by-dhcp.cox.net> <7v8xep8dfk.fsf@assigned-by-dhcp.cox.net>
+ <7v7itx5mep.fsf@assigned-by-dhcp.cox.net> <7vps7dle8j.fsf@assigned-by-dhcp.cox.net>
+ <7vk5x54snc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Peter Eriksen <s022018@student.dtu.dk>
-X-From: git-owner@vger.kernel.org Sun Mar 25 11:40:48 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Mar 25 11:59:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVPDT-00034m-SL
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 11:40:48 +0200
+	id 1HVPVV-0003zV-Td
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 11:59:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750967AbXCYJki (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 05:40:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbXCYJki
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 05:40:38 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:44720 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750888AbXCYJkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 05:40:37 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HVPDF-0001pA-DV; Sun, 25 Mar 2007 05:40:33 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2403020FBAE; Sun, 25 Mar 2007 05:40:34 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20070325084641.GG25863@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751216AbXCYJ7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 05:59:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751487AbXCYJ7G
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 05:59:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47030 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751216AbXCYJ7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 05:59:05 -0400
+Received: (qmail invoked by alias); 25 Mar 2007 09:59:01 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 25 Mar 2007 11:59:01 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18SZSIryCgSYfhqs70Z1q1PgRaB7IvjfjibQab0Ob
+	EGtBmL6uGi1M5E
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vk5x54snc.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43051>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> So what you will find is that the EXTOBJ_FILENAME_TABLE is dumped
-> out behind all of the commits, but before the first OBJ_DICT_TREE,
-> and since all trees tend to get converted to an OBJ_DICT_TREE,
-> the EXTOBJ_FILENAME_TABLE is sandwiched exactly between the commits
-> and the trees.
-...
-> The reason we put the EXTOBJ_FILENAME_TABLE behind the commits is
-> we often walk the commit chains (following parent pointers) without
-> looking at the trees at all.  Consider `git log`, in the default
-> settings we don't need the trees.  By keeping the filename table
-> behind the commits the OS read-ahead buffering gets a better chance
-> at loading all of the data we need, and none of the data we don't.
+Hi,
+
+On Sun, 25 Mar 2007, Junio C Hamano wrote:
+
+> * jc/fpl (Tue Mar 13 01:57:22 2007 -0700) 1 commit
+>  + git-log --first-parent: show only the first parent log
 > 
-> So that's why its where it is.
+> This makes viewing topic-heavy style of project history pleasant, at 
+> least in my opinion.  With a bit of cheering up, I'd merge it to 
+> 'master', as it has been cooking in 'next' without causing problems, and 
+> is of low-impact kind.  But it can wait until 1.5.1 is done.
 
-I just talked with Junio about this on #git.
+*lol* I just tried it on 'next'...
 
-My real reason for putting the EXTOBJ_FILENAME_TABLE here is
-"lack of a better reason".  I just didn't write that above.  ;-)
+But I agree that it is ready to be merged, and that it is useful.
 
-We want it before the first OBJ_DICT_TREE to help the unpackers.
-
-And just like we don't currently ever store the delta base for an
-OBJ_TREE before the first commit (as commits always get packed first)
-we also don't store the EXTOBJ_FILENAME_TREE before the first commit.
-
-Junio raised the point that in large projects `git log -- asm/i386`
-can be a very common/useful/necessary operation, and that in such
-cases we need to evaluate trees as part of the log operation.
-Any attempt to optimize for git-log without a path spec is wrong,
-wrong, wrong.  I agree.
-
-The part I quoted above was not trying to imply that Nico and I
-are optimizing for using git-log without a path limiter.  It just
-read that way to Junio, and may read that way for others too.
-Hence this follow-up.
-
-I'm open to suggestions about placement for EXTOBJ_FILENAME_TABLE,
-but I think its current position between commits and trees is the
-probably the best we can get.
-
--- 
-Shawn.
+Ciao,
+Dscho
