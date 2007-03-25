@@ -1,52 +1,57 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: glossary and user-manual updates
-Date: Sun, 25 Mar 2007 17:08:16 -0400
-Message-ID: <20070325210816.GF30418@fieldses.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: git.git: topics and things like that
+Date: Sun, 25 Mar 2007 23:17:15 +0200
+Organization: GNU's Not UNIX!
+Message-ID: <200703252117.l2PLHFkl000601@localhost.localdomain>
+References: <200703252037.l2PKbhx6032045@localhost.localdomain> <7vslbt2g0p.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Xavier Maillard <zedek@gnu.org>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Mar 25 23:08:20 2007
+X-From: git-owner@vger.kernel.org Sun Mar 25 23:20:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVZwq-0003b2-It
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:08:20 +0200
+	id 1HVa8s-0001NL-UK
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:20:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752689AbXCYVIS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 17:08:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbXCYVIS
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:08:18 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:44039 "EHLO fieldses.org"
+	id S932431AbXCYVUo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 17:20:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932638AbXCYVUo
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:20:44 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:35097 "EHLO smtp5-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752689AbXCYVIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 17:08:17 -0400
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HVZwm-0000VV-3x; Sun, 25 Mar 2007 17:08:16 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932431AbXCYVUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 17:20:43 -0400
+Received: from zogzog.home (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id 0E2DE8BB5;
+	Sun, 25 Mar 2007 23:20:42 +0200 (CEST)
+Received: from localhost.localdomain (IDENT:1001@localhost [127.0.0.1])
+	by zogzog.home (8.13.8/8.13.8) with ESMTP id l2PLHFwA000604;
+	Sun, 25 Mar 2007 23:17:15 +0200
+Received: (from zedek@localhost)
+	by localhost.localdomain (8.13.8/8.13.8/Submit) id l2PLHFkl000601;
+	Sun, 25 Mar 2007 23:17:15 +0200
+X-Authentication-Warning: localhost.localdomain: zedek set sender to zedek@gnu.org using -f
+In-reply-to: <7vslbt2g0p.fsf@assigned-by-dhcp.cox.net> (junkio@cox.net)
+User-Agent: Rmail in GNU Emacs 23.0.51.1 on GNU/Linux
+Jabber-ID: zedek@im.lolica.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43079>
 
-On Sun, Mar 18, 2007 at 11:17:55PM -0400, J. Bruce Fields wrote:
-> 
-> Also available from:
-> 
-> 	git://linux-nfs.org/~bfields/git.git
+Hi,
 
-(Erm, I think I forgot to say they're in the "maint" branch in that
-repo.)
+   > So, how is git development organised ? I saw there are topics but
+   > I do not know how patches are applied mainline (onto tip of
+   > master).
 
-> The main change is just to maintain the glossary manually instead of by
-> the sort_glossary.pl script; includes a subsequent patch to demonstrate
-> the sort of cleanup that allows.
+   Your maintainer posts "A note from the maintainer" to the list
+   every once in a while describing this exact issue.
 
-It don't see these in the latest maint or master, but I don't think the
-following discussion turned up any objections.  Let me know if there's
-something more you need from me.
+I never have seen such message but I will read it now.
 
---b.
+Anyway, thank you.
+
+Xavier
