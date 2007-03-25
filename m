@@ -1,94 +1,115 @@
-From: Eric Lesh <eclesh@ucla.edu>
-Subject: .gitlink for Summer of Code
-Date: Sun, 25 Mar 2007 05:30:38 -0700
-Message-ID: <1174825838.12540.5.camel@localhost>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [ANNOUNCE] tig 0.6
+Date: Sun, 25 Mar 2007 14:51:33 +0200
+Message-ID: <20070325125133.GA11453@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 14:38:56 2007
+X-From: git-owner@vger.kernel.org Sun Mar 25 15:14:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVRzr-0004QI-1Z
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 14:38:55 +0200
+	id 1HVSYb-0005Wi-FB
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 15:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753503AbXCYMiw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 08:38:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753506AbXCYMiw
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 08:38:52 -0400
-Received: from smtp-5.smtp.ucla.edu ([169.232.47.137]:58842 "EHLO
-	smtp-5.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753503AbXCYMiv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 08:38:51 -0400
-X-Greylist: delayed 489 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Mar 2007 08:38:50 EDT
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.47.145])
-	by smtp-5.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l2PCUfXv020013
-	for <git@vger.kernel.org>; Sun, 25 Mar 2007 05:30:41 -0700
-Received: from [192.168.1.7] (adsl-75-26-170-64.dsl.scrm01.sbcglobal.net [75.26.170.64])
-	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l2PCUesN028794
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Sun, 25 Mar 2007 05:30:40 -0700
-X-Mailer: Evolution 2.8.1 
-X-Probable-Spam: no
-X-Scanned-By: smtp.ucla.edu on 169.232.47.137
+	id S1750797AbXCYNOc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 09:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750833AbXCYNOc
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 09:14:32 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:45089 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750797AbXCYNOa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 09:14:30 -0400
+X-Greylist: delayed 1373 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Mar 2007 09:14:30 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 2EB85868054;
+	Sun, 25 Mar 2007 14:51:36 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id DmNWW+vPSsYR; Sun, 25 Mar 2007 14:51:33 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id B10B0778006;
+	Sun, 25 Mar 2007 14:51:33 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 035C06DF835; Sun, 25 Mar 2007 14:51:10 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 9B48262A13; Sun, 25 Mar 2007 14:51:33 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43055>
 
-I would like to tackle .gitlink for Summer of Code.  The deadline is
-about a day away, but this is a chance to make sure you still think
-.gitlink is a good idea, and to see if there are any big problems with
-the idea in general (before a more detailed proposal is actually submitted).
+Hello,
 
-.gitlink is for a lightweight checkout of a branch into a separate
-directory on the local filesystem.  A .gitlink'ed checkout has its own
-index+HEAD, but otherwise refers back to the main repository for
-objects, refs, etc.
+    tig version 0.6 is now available. The release mainly
+consists of various accumulated bug fixes and a merge of the
+still experimental rev-graph branch. The latter means that
+revision graphs "visualization" is now disabled by default.
+Add
 
-Junio has said (http://www.spinics.net/lists/git/msg24964.html) he
-works in a similar way with many work trees which are symlinked to his
-main repo:
-: gitster git.wk0; ls -l .git/
-total 120
-drwxrwsr-x  3 junio src  4096 Mar  5 16:22 ./
-drwxrwsr-x 15 junio src 16384 Mar  5 16:23 ../
--rw-rw-r--  1 junio src    41 Mar  5 16:22 HEAD
-lrwxrwxrwx  1 junio src    27 Mar  3 22:53 config -> /src/git/.git/config
-lrwxrwxrwx  1 junio src    26 Mar  3 22:53 hooks -> /src/git/.git/hooks/
--rw-rw-r--  1 junio src 82455 Mar  5 16:22 index
-lrwxrwxrwx  1 junio src    25 Mar  3 22:53 info -> /src/git/.git/info/
-drwxrwsr-x  3 junio src  4096 Mar  3 22:59 logs/
-lrwxrwxrwx  1 junio src    28 Mar  3 22:53 objects -> /src/git/.git/objects/
-lrwxrwxrwx  1 junio src    32 Mar  3 22:53 packed-refs -> /src/git/.git/packed-refs
-lrwxrwxrwx  1 junio src    25 Mar  3 22:53 refs -> /src/git/.git/refs/
-lrwxrwxrwx  1 junio src    28 Mar  3 22:53 remotes -> /src/git/.git/remotes/
-lrwxrwxrwx  1 junio src    29 Mar  3 22:53 rr-cache -> /src/git/.git/rr-cache/
+	set show-rev-graph = yes
 
-A .gitlink could simplify this, ridding the directory of symlinks and
-instead having a .gitlink file that specifies a $GIT_DIR to which
-everything refers.
+to your ~/.tigrc to enable it always.
 
-My implementation will be based on Josef Weidendorfer's "[RFC]
-Lightweight checkouts via ".gitlink""
-(http://thread.gmane.org/gmane.comp.version-control.git/33755), which
-didn't receive much objection (or comment at all).  Hopefully this
-doesn't mean you simply aren't interested.
+     A special thanks goes out to Miciah for reporting many
+of the bugs that has been fixed. Also thanks to those who
+have sent patches.
 
-Goals:
-  o Lightweight checkouts are essentially branches that reside outside of the
-    main repository on the local filesystem.
-  o They act as normal git checkouts (i.e. git tools know about .gitlink)
-  o They can be moved around and maintain their link to the base repo
-  o They can exist within other checkouts (for eventual submodule support)
-  o git-clone --light-weight option to set this up
-  o porcelains (i.e. cogito) don't barf
 
-Is this something that you would like to see?  Any other comments?
+Grab the tarball at http://jonas.nitro.dk/tig/releases/
+or pull it from git://repo.or.cz/tig.git
 
-Thanks,
 
-Eric
+Following is a slightly trimmed shortlog:
+
+Alexey Tourbin (1):
+      Increase commit.title size from 75 to 128
+
+Horst H. von Brand (1):
+      Fix parameter warning for iconv(3)
+
+Jonas Fonseca (35 was 44):
+      Refactor stuff into draw_rev_graph
+      Remove fprintf stuff
+      Refactor graph drawing
+      Now it actually starts looking like something
+      Add graph_parent_is_merge
+      Simplify the update_rev_graph end-game
+      Move stuff to reset_rev_graph and rename it to done_rev_graph
+      Move rev graph code to own section
+      Use 'graph' instead of 'stack' in the rev graph code
+      Improve comments
+      draw_rev_graph: refactor stuff to get_rev_graph_symbol
+      More graph_parent_is_merge usage
+      Refactor (separator, line) chtype management to use 'fillers'
+      Always draw the space between end of rev graph and start of commit title
+      append_to_rev_graph: use local variable
+      Allow view readers to 'finalize' by calling with NULL line before closing
+      update_rev_graph: move code to prepare_rev_graph
+      Make the rev graph visualization have a one rev look-ahead
+      push_rev_graph: iterate all graph revs when looking for duplicates
+      add_keybinding: always allocate the new keybinding
+      Hardwire ERR to mean REQ_NONE in the main loop
+      main_read: handle titles that start with whitespace
+      Cast second arg to iconv to remove warning
+      Never split the tree view when opening another tree view
+      Fix commit author line parsing for when the name is empty
+      Discard error messages from git-describe
+      Fix SITES URLs; promote git://repo.or.cz/tig.git mirror more
+      Add note about using autoconf to detect iconv(3) presence in libc
+      Drop --stat usage from the main command assembled during option parsing
+      Make tig handle GIT_DIR better
+      TODO: use autoconf to detect newer git and git-config availability
+      Improve handling of remotes
+      Disable show-rev-graph by default
+      Oops, remove -liconv from LDFLAGS
+      Bump the version number to 0.6
+
+
+-- 
+Jonas Fonseca
