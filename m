@@ -1,48 +1,52 @@
 From: Alex Riesen <raa.lkml@gmail.com>
 Subject: [PATCH] Use diff* with --exit-code in git-am, git-rebase and git-merge-ours
-Date: Sun, 25 Mar 2007 01:56:13 +0100
-Message-ID: <20070325005613.GE11507@steel.home>
+Date: Sun, 25 Mar 2007 01:42:56 +0100
+Message-ID: <20070325004256.GB11507@steel.home>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 01:56:19 2007
+X-From: git-owner@vger.kernel.org Sun Mar 25 03:15:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVH1u-00062E-4l
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 01:56:18 +0100
+	id 1HVHKI-0007JY-4d
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 03:15:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753202AbXCYA4P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 20:56:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753221AbXCYA4P
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 20:56:15 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:17225 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753202AbXCYA4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 20:56:14 -0400
+	id S1753221AbXCYBOz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 21:14:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753224AbXCYBOz
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 21:14:55 -0400
+Received: from mo-p07-fb.rzone.de ([81.169.146.191]:37633 "EHLO
+	mo-p07-fb.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753221AbXCYBOy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 21:14:54 -0400
+Received: from mo-p07-ob.rzone.de (fruni-mo-p07-ob.mail [192.168.63.183])
+	by gibbsson-fb-05.store (RZmta 5.4) with ESMTP id 500d14j2OIjr2g
+	for <git@vger.kernel.org>; Sun, 25 Mar 2007 01:44:09 +0100 (MET)
 Received: from tigra.home (Fc89f.f.strato-dslnet.de [195.4.200.159])
-	by post.webmailer.de (mrclete mo23) (RZmta 5.4)
-	with ESMTP id B031f9j2OMZBNQ ; Sun, 25 Mar 2007 01:56:13 +0100 (MET)
+	by post.webmailer.de (fruni mo31) (RZmta 5.4)
+	with ESMTP id A0572dj2ONbgcY ; Sun, 25 Mar 2007 01:42:57 +0100 (MET)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 31B82277B6;
-	Sun, 25 Mar 2007 01:56:13 +0100 (CET)
+	by tigra.home (Postfix) with ESMTP id 643EA277B6;
+	Sun, 25 Mar 2007 01:42:57 +0100 (CET)
 Received: by steel.home (Postfix, from userid 1000)
-	id 2EC3BBF79; Sun, 25 Mar 2007 01:56:13 +0100 (CET)
+	id E432CBF79; Sun, 25 Mar 2007 01:42:56 +0100 (CET)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.13 (2006-08-11)
 X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a4mM=
 X-RZG-CLASS-ID: mo07
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43027>
 
-This simplifies the shell code, reduces its memory footprint, and
-speeds things up. The performance improvements should be noticable
-when git-rebase works on big commits.
+This simplifies the shell code and reduces memory footprint, speeds
+things up. The performance improvements should be noticable by
+git-rebase, when it is used to rebase big commits.
 
 Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
@@ -52,7 +56,7 @@ Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
  3 files changed, 12 insertions(+), 18 deletions(-)
 
 diff --git a/git-am.sh b/git-am.sh
-index 88af8dd..e69ecbf 100755
+index 88af8dd..e9d8d57 100755
 --- a/git-am.sh
 +++ b/git-am.sh
 @@ -408,12 +408,10 @@ do
@@ -62,7 +66,7 @@ index 88af8dd..e69ecbf 100755
 -		changed="$(git-diff-index --cached --name-only HEAD)"
 -		if test '' = "$changed"
 -		then
-+		git-diff-index --quiet --cached HEAD && {
++		git-diff-index --quiet --exit-code --cached HEAD && {
  			echo "No changes - did you forget to use 'git add'?"
  			stop_here_user_resolve $this
 -		fi
@@ -81,7 +85,7 @@ index 88af8dd..e69ecbf 100755
 -			    go_next
 -			    continue
 -		    fi
-+		    git-diff-index --quiet --cached HEAD && {
++		    git-diff-index --quiet --exit-code --cached HEAD && {
 +			echo No changes -- Patch already applied.
 +			go_next
 +			continue
@@ -90,7 +94,7 @@ index 88af8dd..e69ecbf 100755
  		    apply_status=0
  		fi
 diff --git a/git-merge-ours.sh b/git-merge-ours.sh
-index 4f3d053..2b6a5c0 100755
+index 4f3d053..40491f2 100755
 --- a/git-merge-ours.sh
 +++ b/git-merge-ours.sh
 @@ -9,6 +9,6 @@
@@ -98,11 +102,11 @@ index 4f3d053..2b6a5c0 100755
  # merge result.
  
 -test "$(git-diff-index --cached --name-status HEAD)" = "" || exit 2
-+git-diff-index --quiet --cached HEAD || exit 2
++git-diff-index --quiet --exit-code --cached HEAD || exit 2
  
  exit 0
 diff --git a/git-rebase.sh b/git-rebase.sh
-index aadd580..1d96f32 100755
+index aadd580..860c0ce 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
 @@ -59,7 +59,7 @@ continue_merge () {
@@ -110,7 +114,7 @@ index aadd580..1d96f32 100755
  	fi
  
 -	if test -n "`git-diff-index HEAD`"
-+	if ! git-diff-index --quiet HEAD
++	if ! git-diff-index --quiet --exit-code HEAD
  	then
  		if ! git-commit -C "`cat $dotest/current`"
  		then
@@ -121,7 +125,7 @@ index aadd580..1d96f32 100755
 -		diff=$(git-diff-files)
 -		case "$diff" in
 -		?*)	echo "You must edit all merge conflicts and then"
-+		git-diff-files --quiet || {
++		git-diff-files --quiet --exit-code || {
 +			echo "You must edit all merge conflicts and then"
  			echo "mark them as resolved using git update-index"
  			exit 1
