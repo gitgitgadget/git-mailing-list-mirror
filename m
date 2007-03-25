@@ -1,82 +1,73 @@
-From: Tilman Sauerbeck <tilman@code-monkey.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH] Removed the printf("rm 'file'") from git-rm.
-Date: Sun, 25 Mar 2007 23:04:19 +0200
-Message-ID: <20070325210418.GA29221@code-monkey.de>
-References: <11747590062554-git-send-email-tilman@code-monkey.de> <7vodmhc06f.fsf@assigned-by-dhcp.cox.net>
+Date: Sun, 25 Mar 2007 23:36:35 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0703252335280.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <11747590062554-git-send-email-tilman@code-monkey.de>
+ <7vodmhc06f.fsf@assigned-by-dhcp.cox.net> <20070325210418.GA29221@code-monkey.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 23:26:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Tilman Sauerbeck <tilman@code-monkey.de>
+X-From: git-owner@vger.kernel.org Sun Mar 25 23:36:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVaEN-0004OL-Th
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:26:28 +0200
+	id 1HVaOG-0001Nj-AQ
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:36:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932699AbXCYV0Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 17:26:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932750AbXCYV0Z
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:26:25 -0400
-Received: from code-monkey.de ([81.169.170.126]:1216 "EHLO code-monkey.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932699AbXCYV0Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 17:26:24 -0400
-X-Greylist: delayed 1323 seconds by postgrey-1.27 at vger.kernel.org; Sun, 25 Mar 2007 17:26:24 EDT
-Received: from hammerfest (dialin-145-254-158-113.pools.arcor-ip.net [145.254.158.113])
-	by code-monkey.de (Postfix) with ESMTP id 17DA0B427
-	for <git@vger.kernel.org>; Sun, 25 Mar 2007 23:04:18 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vodmhc06f.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.14 (2007-02-12)
+	id S932778AbXCYVgh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 17:36:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932810AbXCYVgh
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:36:37 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56465 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932806AbXCYVgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 17:36:36 -0400
+Received: (qmail invoked by alias); 25 Mar 2007 21:36:35 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp049) with SMTP; 25 Mar 2007 23:36:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18cysNj3kgcrqtAAnWB56n3FTeX85qLmw1X5Ku9pG
+	MwAEcKUw5bzx9L
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070325210418.GA29221@code-monkey.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43082>
 
+Hi,
 
---J2SCkAp4GZ/dPZZf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sun, 25 Mar 2007, Tilman Sauerbeck wrote:
 
-Junio C Hamano [2007-03-24 23:22]:
-> Tilman Sauerbeck <tilman@code-monkey.de> writes:
->=20
-> > We used to print that, because you actually had to run the output
-> > of git-rm to get rid of the files before Git 1.5. Now that git-rm
-> > really removes the files, it's not needed anymore.
->=20
-> Even though I admit I do not deeply care, as I never use 'git
-> rm' myself, I do not necessarily agree with "because" part.
->=20
-> I suspect people are by now accustomed to see the assuring
-> feedback from the command when used this way:
-> [snip]
+> Junio C Hamano [2007-03-24 23:22]:
+> > Tilman Sauerbeck <tilman@code-monkey.de> writes:
+> > 
+> > > We used to print that, because you actually had to run the output
+> > > of git-rm to get rid of the files before Git 1.5. Now that git-rm
+> > > really removes the files, it's not needed anymore.
+> > 
+> > Even though I admit I do not deeply care, as I never use 'git
+> > rm' myself, I do not necessarily agree with "because" part.
+> > 
+> > I suspect people are by now accustomed to see the assuring
+> > feedback from the command when used this way:
+> > [snip]
+> 
+> Too bad, I find it rather annoying and irritating.
 
-Too bad, I find it rather annoying and irritating.
+Why not do the common thing, and add a "--quiet" option? You can even add 
+a config variable to enable it by default (for git-rm). It's not like 
+git-rm is performance critical...
 
-Regards,
-Tilman
+> A: Because it messes up the order in which people normally read text.
+> Q: Why is top-posting such a bad thing?
+> A: Top-posting.
+> Q: What is the most annoying thing on usenet and in e-mail?
 
---=20
-A: Because it messes up the order in which people normally read text.
-Q: Why is top-posting such a bad thing?
-A: Top-posting.
-Q: What is the most annoying thing on usenet and in e-mail?
+Funny!
 
---J2SCkAp4GZ/dPZZf
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.3 (GNU/Linux)
-
-iD8DBQFGBuPS27uLisrW2w8RAvinAJ4mqn1pWKshvXingm979zLaPU4whgCfdI8X
-k2BR5pOMktoj3r6BJzGrzIo=
-=Qzic
------END PGP SIGNATURE-----
-
---J2SCkAp4GZ/dPZZf--
+Ciao,
+Dscho
