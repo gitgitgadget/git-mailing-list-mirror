@@ -1,72 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: .gitlink for Summer of Code
-Date: Sun, 25 Mar 2007 22:54:21 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0703252252500.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <1174825838.12540.5.camel@localhost> <vpqvegpe4e1.fsf@olympe.imag.fr>
- <20070325203901.GB12376@spearce.org>
+Date: Sun, 25 Mar 2007 13:55:31 -0700
+Message-ID: <7v3b3t3uws.fsf@assigned-by-dhcp.cox.net>
+References: <1174825838.12540.5.camel@localhost>
+	<vpqvegpe4e1.fsf@olympe.imag.fr> <20070325203901.GB12376@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
 	Eric Lesh <eclesh@ucla.edu>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Mar 25 22:54:27 2007
+X-From: git-owner@vger.kernel.org Sun Mar 25 22:55:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVZjO-0004qp-Mk
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 22:54:27 +0200
+	id 1HVZkW-0005Rs-0h
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 22:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752694AbXCYUyY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 16:54:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752700AbXCYUyY
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 16:54:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33359 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752694AbXCYUyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 16:54:23 -0400
-Received: (qmail invoked by alias); 25 Mar 2007 20:54:21 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 25 Mar 2007 22:54:21 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+CtQ1VQGGC0fEr/jADTgV60vktIyzF8aCB1emiUz
-	clNPOyfp8IkHN/
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070325203901.GB12376@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1752700AbXCYUzd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 16:55:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752800AbXCYUzd
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 16:55:33 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:58032 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752700AbXCYUzc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 16:55:32 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070325205532.VFZY1606.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 25 Mar 2007 16:55:32 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id f8vX1W00Z1kojtg0000000; Sun, 25 Mar 2007 16:55:32 -0400
+In-Reply-To: <20070325203901.GB12376@spearce.org> (Shawn O. Pearce's message
+	of "Sun, 25 Mar 2007 16:39:01 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43074>
 
-Hi,
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-On Sun, 25 Mar 2007, Shawn O. Pearce wrote:
+> Actually, I'd almost say put it into .git/config, e.g.:
+>
+> 	mkdir .git
+> 	cat >.git/config <<EOF
+> 	[core]
+> 		repositoryversion = 0
+> 		filemode = true
+> 		link = /path/to/source
+> 	EOF
+>
+> as then the index and HEAD file can both be stored in .git, just
+> like with the non-gitlink case.
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> > Eric Lesh <eclesh@ucla.edu> writes:
-> > 
-> > > .gitlink is for a lightweight checkout of a branch into a separate
-> > > directory on the local filesystem.
-> > 
-> > I think it's a pitty to restrict yourself to _local_ filesystem. There
-> > are tons of cases where you have a fast, non-NFS, access to a machine
-> > and would like to host your repository there.
-> > 
-> > That said, I suppose removing this restriction moves the solution from
-> > the category "quick and efficient hack" to something much harder.
-> 
-> Yes.  But there's another project on the ideas list that addresses
-> that (``Lazy Clone'').  It is quite a bit more difficult than the
-> .gitlink idea as the implementation requires a network protocol
-> client implemented somewhere near the read_sha1_file interface.
-
-Not only that. You'd have to change the way read_sha1_file() is called to 
-allow fetching more than one object at a time. Otherwise this will be so 
-slow as to be unusable.
-
-That's basically the reason why I changed my mind, and preferred shallow 
-clones over lazy clones.
-
-Ciao,
-Dscho
+This is not usable at least for me as it does not allow sharing
+the .git/config file across checkouts.
