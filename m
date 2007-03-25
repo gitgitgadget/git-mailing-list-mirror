@@ -1,76 +1,52 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Understanding version 4 packs
-Date: Sat, 24 Mar 2007 19:24:17 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703241913110.18328@xanadu.home>
-References: <20070324202356.GA20734@bohr.gbar.dtu.dk>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Use diff* with --exit-code in git-am, git-rebase and git-merge-ours
+Date: Sun, 25 Mar 2007 01:49:53 +0100
+Message-ID: <20070325004953.GC11507@steel.home>
+References: <20070325004256.GB11507@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Peter Eriksen <s022018@student.dtu.dk>
-X-From: git-owner@vger.kernel.org Sun Mar 25 00:24:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Mar 25 01:50:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVFb9-0000ln-G7
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 00:24:35 +0100
+	id 1HVGw5-00032Z-TR
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 01:50:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932908AbXCXXYT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 24 Mar 2007 19:24:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932910AbXCXXYT
-	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 19:24:19 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55834 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932908AbXCXXYS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Mar 2007 19:24:18 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFF00LSJL0HWRS0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 24 Mar 2007 19:24:18 -0400 (EDT)
-In-reply-to: <20070324202356.GA20734@bohr.gbar.dtu.dk>
-X-X-Sender: nico@xanadu.home
+	id S1753043AbXCYAt4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 24 Mar 2007 20:49:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbXCYAt4
+	(ORCPT <rfc822;git-outgoing>); Sat, 24 Mar 2007 20:49:56 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:56969 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753043AbXCYAtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Mar 2007 20:49:55 -0400
+X-Greylist: delayed 416 seconds by postgrey-1.27 at vger.kernel.org; Sat, 24 Mar 2007 20:49:55 EDT
+Received: from tigra.home (Fc89f.f.strato-dslnet.de [195.4.200.159])
+	by post.webmailer.de (klopstock mo35) (RZmta 5.4)
+	with ESMTP id E074f8j2P06Zbq ; Sun, 25 Mar 2007 01:49:54 +0100 (MET)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id D423F277B6;
+	Sun, 25 Mar 2007 01:49:53 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id AF47CBF79; Sun, 25 Mar 2007 01:49:53 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20070325004256.GB11507@steel.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a4mM=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43024>
 
-On Sat, 24 Mar 2007, Peter Eriksen wrote:
+Alex Riesen, Sun, Mar 25, 2007 01:42:56 +0100:
+> This simplifies the shell code and reduces memory footprint, speeds
+> things up. The performance improvements should be noticable by
+> git-rebase, when it is used to rebase big commits.
 
-> There is a new tree type called OBJ_DICT_TREE, which looks something
-> like the following:
-> 
-> +-----------------+------------------------------------------------+----
-> |  Table offset   |  SHA-1 of the blob corresponding to the path.  | ...
-> +-----------------+------------------------------------------------+----
->       6 bytes                     20 bytes
-
-Actually it is a 2-byte index in the path table, and a 4-byte index in a 
-common SHA1 table.  So each tree entry is 6 bytes total.
-
-> These new tree objects will remain uncompressed in the pack file, but
-> sorted with, and deltaed against other tree objects. All normal tree
-> objects are converted to OBJ_DICT_TREE when packing, and are converted
-> back on the fly to callers who need an ordinary OBJ_TREE.
-
-Right.
-
-> The index (.idx) files are extended to have a 4 byte pointer to the
-> offset of this file name table in the pack file for easy lookup.
-
-Right.  And it will lose the SHA1 entries since they are already 
-available in the pack.
-
-> There is something similar with a table of common strings in commit
-> objects (e.g. author and timezone), and a new object OBJ_DICT_COMMIT,
-> but I have not understood that quite yet.
-> 
-> Is there something, I have gotten wrong with regards to my
-> understanding?
-
-I don't think so.  Note that the code is still a work in progress and 
-the resulting pack/index is not yet fully conform to the format we 
-envisaged.
-
-
-Nicolas
+Please ignore, I forgot about "--quiet implies --exit-code" again.
+Just documented the option. Will resend.
