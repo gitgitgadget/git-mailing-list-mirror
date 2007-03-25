@@ -1,76 +1,52 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: .gitlink for Summer of Code
-Date: Sun, 25 Mar 2007 17:05:04 -0400
-Message-ID: <20070325210504.GG12376@spearce.org>
-References: <1174825838.12540.5.camel@localhost> <vpqvegpe4e1.fsf@olympe.imag.fr> <20070325203901.GB12376@spearce.org> <7v3b3t3uws.fsf@assigned-by-dhcp.cox.net>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: glossary and user-manual updates
+Date: Sun, 25 Mar 2007 17:08:16 -0400
+Message-ID: <20070325210816.GF30418@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Eric Lesh <eclesh@ucla.edu>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Mar 25 23:05:40 2007
+X-From: git-owner@vger.kernel.org Sun Mar 25 23:08:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVZtr-00022h-U6
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:05:34 +0200
+	id 1HVZwq-0003b2-It
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932140AbXCYVFM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 17:05:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbXCYVFM
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:05:12 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:60474 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752689AbXCYVFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 17:05:10 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HVZtZ-0001SV-Kt; Sun, 25 Mar 2007 17:04:57 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id D669720FBAE; Sun, 25 Mar 2007 17:05:04 -0400 (EDT)
+	id S1752689AbXCYVIS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 17:08:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbXCYVIS
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:08:18 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:44039 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752689AbXCYVIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 17:08:17 -0400
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HVZwm-0000VV-3x; Sun, 25 Mar 2007 17:08:16 -0400
 Content-Disposition: inline
-In-Reply-To: <7v3b3t3uws.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43078>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
+On Sun, Mar 18, 2007 at 11:17:55PM -0400, J. Bruce Fields wrote:
 > 
-> > Actually, I'd almost say put it into .git/config, e.g.:
-> >
-> > 	mkdir .git
-> > 	cat >.git/config <<EOF
-> > 	[core]
-> > 		repositoryversion = 0
-> > 		filemode = true
-> > 		link = /path/to/source
-> > 	EOF
-> >
-> > as then the index and HEAD file can both be stored in .git, just
-> > like with the non-gitlink case.
+> Also available from:
 > 
-> This is not usable at least for me as it does not allow sharing
-> the .git/config file across checkouts.
+> 	git://linux-nfs.org/~bfields/git.git
 
-Me either.
+(Erm, I think I forgot to say they're in the "maint" branch in that
+repo.)
 
-What I thought of after writing that was that core.link should
-also imply reading ${core.link}/config before .git/config, so that
-the repository config can override the master repository, but the
-master repository provides the bulk of the configuration.
+> The main change is just to maintain the glossary manually instead of by
+> the sort_glossary.pl script; includes a subsequent patch to demonstrate
+> the sort of cleanup that allows.
 
--- 
-Shawn.
+It don't see these in the latest maint or master, but I don't think the
+following discussion turned up any objections.  Let me know if there's
+something more you need from me.
+
+--b.
