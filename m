@@ -1,70 +1,70 @@
-From: Steven Grimm <koreth@midwinter.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: git.git: topics and things like that
-Date: Sun, 25 Mar 2007 15:46:14 -0700
-Message-ID: <4606FBB6.2040902@midwinter.com>
-References: <200703252037.l2PKbhx6032045@localhost.localdomain>	<7vslbt2g0p.fsf@assigned-by-dhcp.cox.net>	<200703252117.l2PLHFkl000601@localhost.localdomain> <7vhcs92cuu.fsf@assigned-by-dhcp.cox.net>
+Date: Mon, 26 Mar 2007 11:04:48 +1200
+Message-ID: <46a038f90703251604o21b2f805gfb280b76560de1e8@mail.gmail.com>
+References: <200703252037.l2PKbhx6032045@localhost.localdomain>
+	 <7vslbt2g0p.fsf@assigned-by-dhcp.cox.net>
+	 <200703252117.l2PLHFkl000601@localhost.localdomain>
+	 <7vhcs92cuu.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Xavier Maillard <zedek@gnu.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 26 00:46:25 2007
+Cc: "Xavier Maillard" <zedek@gnu.org>, git@vger.kernel.org
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Mar 26 01:04:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVbTi-00022X-GI
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 00:46:22 +0200
+	id 1HVble-0002xO-JO
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 01:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753519AbXCYWqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 18:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753520AbXCYWqT
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 18:46:19 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:44530 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753519AbXCYWqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 18:46:18 -0400
-Received: (qmail 18170 invoked from network); 25 Mar 2007 22:46:18 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=tIPONiWDslSDOox3USIkqlLFYencggMlQj+/X4hZWJwiIQjukgkW2n3aUu7fMN0g  ;
-Received: from localhost (HELO ?127.0.0.1?) (koreth@127.0.0.1)
-  by localhost with SMTP; 25 Mar 2007 22:46:18 -0000
-User-Agent: Mail/News 1.5.0.2 (Macintosh/20060324)
+	id S932810AbXCYXEu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 19:04:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932889AbXCYXEu
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 19:04:50 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:57187 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932810AbXCYXEt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 19:04:49 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1936547wxd
+        for <git@vger.kernel.org>; Sun, 25 Mar 2007 16:04:48 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OKBt7FFQc8kZe+lj9qbLRoSqqU1bM6UK/e82KMswyN/c1i6SGWrruymYL1PO2Kz2I3/SHLB1+DyWqnX6yi+Czc7WBhVVAcNBDDSjhMOnBkWqUQLV8P5TrvZaT5meMXSQO93f/DUIZ5UtF8kfTwYKEpChJ0XZpbjCf/KsjjfvNxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=HNPJs6/bKMGjpnSfydD5nkQgkQp5eRjquUzqIsmzcRilvL9NOKfskXrKwReJeB8mmQ4ZPQJ7h3j5VGfX2vNWKDlc/DGlWTYZm0EOThYs1FUBE23Z5UWg4/oE/B3QVnXaqHvdBlaJWa5gXinzQMue3OHTayu7/t+X/qYSu8ZiIUk=
+Received: by 10.90.118.12 with SMTP id q12mr6242657agc.1174863888426;
+        Sun, 25 Mar 2007 16:04:48 -0700 (PDT)
+Received: by 10.90.52.17 with HTTP; Sun, 25 Mar 2007 16:04:48 -0700 (PDT)
 In-Reply-To: <7vhcs92cuu.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43088>
 
-Junio C Hamano wrote:
+On 3/26/07, Junio C Hamano <junkio@cox.net> wrote:
 > Heh, how new are you to the list?
 >
 > Is every three months not often enough?  Meaning, is expecting
 > new users to look back that much backlog in the list archive too
 > much to ask?
->   
 
-I went looking for an answer to the "what does 'pu' mean?" question when 
-I first joined the list, failed to find one, then stumbled across it by 
-accident while randomly skimming the archives. "A message from the 
-maintainer" is not at first glance an obvious subject line to click on 
-if you're searching for that kind of introductory information -- putting 
-on my "unfamiliar with the list's conventions" hat, I'd expect a message 
-of that title to contain something like, "Hey guys, can you help test 
-XYZ?" or "The list archives will be moving in two weeks" or, more 
-likely, "Our hosting is costing us too much and we need donations."
+I'd say he probably didn't know. Maybe an extra paragraph at the end
+of the  README  ? along the lines of ...
 
-It would be convenient for new users and, I assume, not much additional 
-effort to put the URL of that Wiki page at the top of the "what's 
-cooking" messages. Barring that, maybe the "A message from the 
-maintainer" email should be titled "Introduction to git project 
-management" or something similar that would make it immediately obvious 
-to a new user that it's something they should read to get general 
-background information about the project.
+The project maintainer sends out regular emails to the list titled "A
+note from the maintainer", "What's cooking in git.git" and "Unresolved
+issues". These messages and the discussion following them are a good
+reference for project status, development direction and bugfixing
+tasks.
 
-Just IMO. At this point I've been lurking here long enough that I don't 
-need it for myself, but I do remember wishing that info were easier to find.
 
--Steve
+cheers,
+
+
+martin
