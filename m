@@ -1,37 +1,37 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: .gitlink for Summer of Code
-Date: Sun, 25 Mar 2007 17:03:22 -0400
-Message-ID: <20070325210322.GF12376@spearce.org>
-References: <1174825838.12540.5.camel@localhost> <vpqvegpe4e1.fsf@olympe.imag.fr> <20070325203901.GB12376@spearce.org> <Pine.LNX.4.63.0703252252500.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+Date: Sun, 25 Mar 2007 17:05:04 -0400
+Message-ID: <20070325210504.GG12376@spearce.org>
+References: <1174825838.12540.5.camel@localhost> <vpqvegpe4e1.fsf@olympe.imag.fr> <20070325203901.GB12376@spearce.org> <7v3b3t3uws.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
 	Eric Lesh <eclesh@ucla.edu>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Mar 25 23:03:33 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Mar 25 23:05:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVZsC-00019b-Lu
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:03:33 +0200
+	id 1HVZtr-00022h-U6
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 23:05:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932359AbXCYVDa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 17:03:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932140AbXCYVD3
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:03:29 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:60454 "EHLO
+	id S932140AbXCYVFM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 17:05:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbXCYVFM
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 17:05:12 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:60474 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932359AbXCYVD3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 17:03:29 -0400
+	with ESMTP id S1752689AbXCYVFK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 17:05:10 -0400
 Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.63)
 	(envelope-from <spearce@spearce.org>)
-	id 1HVZrw-0001Ob-0p; Sun, 25 Mar 2007 17:03:16 -0400
+	id 1HVZtZ-0001SV-Kt; Sun, 25 Mar 2007 17:04:57 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id EFF3320FBAE; Sun, 25 Mar 2007 17:03:22 -0400 (EDT)
+	id D669720FBAE; Sun, 25 Mar 2007 17:05:04 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0703252252500.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+In-Reply-To: <7v3b3t3uws.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -44,31 +44,33 @@ X-Source-Dir:
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43077>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 25 Mar 2007, Shawn O. Pearce wrote:
-> > Yes.  But there's another project on the ideas list that addresses
-> > that (``Lazy Clone'').  It is quite a bit more difficult than the
-> > .gitlink idea as the implementation requires a network protocol
-> > client implemented somewhere near the read_sha1_file interface.
+Junio C Hamano <junkio@cox.net> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
 > 
-> Not only that. You'd have to change the way read_sha1_file() is called to 
-> allow fetching more than one object at a time. Otherwise this will be so 
-> slow as to be unusable.
+> > Actually, I'd almost say put it into .git/config, e.g.:
+> >
+> > 	mkdir .git
+> > 	cat >.git/config <<EOF
+> > 	[core]
+> > 		repositoryversion = 0
+> > 		filemode = true
+> > 		link = /path/to/source
+> > 	EOF
+> >
+> > as then the index and HEAD file can both be stored in .git, just
+> > like with the non-gitlink case.
+> 
+> This is not usable at least for me as it does not allow sharing
+> the .git/config file across checkouts.
 
-Yes, and no. ;-)
+Me either.
 
-Lets say we put a repository on an NFS share, and clone it using
---shared.  So it's now an alternate ODB.  And read_sha1_file()
-is now doing synchronous reads, unless the client has something
-cached.  Which we could just as easily cache ourselves in the
-loose object directory
+What I thought of after writing that was that core.link should
+also imply reading ${core.link}/config before .git/config, so that
+the repository config can override the master repository, but the
+master repository provides the bulk of the configuration.
 
-We could make it faster by batching up requests.  But batching
-requests may be difficult in some contexts, as we don't know what
-else we need until we get back that commit or tree we are trying
-to read.  ;-)
- 
 -- 
 Shawn.
