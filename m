@@ -1,70 +1,78 @@
-From: Anand Kumria <wildfire@progsoc.org>
-Subject: Re: [PATCH] Removed the printf("rm 'file'") from git-rm.
-Date: Sun, 25 Mar 2007 16:38:59 +0000 (UTC)
-Message-ID: <pan.2007.03.25.16.39.10@progsoc.org>
-References: <11747590062554-git-send-email-tilman@code-monkey.de>
-	<7vodmhc06f.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Understanding version 4 packs
+Date: Sun, 25 Mar 2007 10:09:14 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703251004580.6730@woody.linux-foundation.org>
+References: <20070324202356.GA20734@bohr.gbar.dtu.dk>
+ <alpine.LFD.0.83.0703241913110.18328@xanadu.home> <20070325083530.GA25523@bohr.gbar.dtu.dk>
+ <20070325091806.GH25863@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Mar 25 18:39:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Peter Eriksen <s022018@student.dtu.dk>,
+	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Mar 25 19:09:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVVki-0001Er-JY
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 18:39:32 +0200
+	id 1HVWDx-0007X9-FC
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 19:09:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751857AbXCYQjS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 12:39:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751877AbXCYQjS
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 12:39:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:36781 "EHLO ciao.gmane.org"
+	id S1751951AbXCYRJm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 13:09:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932097AbXCYRJm
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 13:09:42 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:49375 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751857AbXCYQjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 12:39:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HVVkH-0000XM-TG
-	for git@vger.kernel.org; Sun, 25 Mar 2007 18:39:05 +0200
-Received: from user-54463d31.lns2-c12.dsl.pol.co.uk ([84.70.61.49])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Mar 2007 18:39:05 +0200
-Received: from wildfire by user-54463d31.lns2-c12.dsl.pol.co.uk with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 25 Mar 2007 18:39:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: user-54463d31.lns2-c12.dsl.pol.co.uk
-User-Agent: Pan/0.125 (Potzrebie)
+	id S1751951AbXCYRJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 13:09:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2PH9F1o019720
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 25 Mar 2007 10:09:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2PH9EMR031981;
+	Sun, 25 Mar 2007 10:09:14 -0700
+In-Reply-To: <20070325091806.GH25863@spearce.org>
+X-Spam-Status: No, hits=-0.473 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43059>
 
-On Sat, 24 Mar 2007 23:22:16 -0700, Junio C Hamano wrote:
 
-> Tilman Sauerbeck <tilman@code-monkey.de> writes:
+
+On Sun, 25 Mar 2007, Shawn O. Pearce wrote:
+> >
+> > What happens to the paths, that do not have a correponding entry in the
+> > path name table, because they are not among the 65535 most frequent
+> > paths in the pack?
 > 
->> We used to print that, because you actually had to run the output of
->> git-rm to get rid of the files before Git 1.5. Now that git-rm really
->> removes the files, it's not needed anymore.
-> 
-> Even though I admit I do not deeply care, as I never use 'git rm'
-> myself, I do not necessarily agree with "because" part.
-> 
-> I suspect people are by now accustomed to see the assuring feedback from
-> the command when used this way:
-> 
-> 	$ git rm -r one
->         rm 'one/1'
->         rm 'one/2'
->         rm 'one/3'
+> They don't appear in the table.  And any tree that uses them is
+> forced to use the "legacy" OBJ_TREE encoding.  Which is what we
+> have now in pack v2, and in loose objects.
 
-Heh. I didn't even know there was a recursive option.  So I'm definitely 
-not 'accustomed' to any form of output.
+Would it hurt too much to just make it four bytes, and avoid that issue?
 
-If me being a data point helps at all.
+Special cases - and *especially* special cases that are hard to trigger in 
+the first place - equal bugs. And bugs are much much worse than trying to 
+save a little bit of space.
 
-Anand
+> The author_time field is not present if flags & 128 is true.
+> If flags & 128 is false, its present, and uses the same encoding
+> as commit_time.  Why is this field optional?  Because its not
+> uncommon for it to match commit_time!  ;-)
+
+If the author time is the same as the commit time, most of the time the 
+author is the same as the committer too, no? So the field should be 
+conditional not for the author_time, but for the combination, no?
+
+Our email-parsing tools (which is the most common reason for a committer 
+not being the same as the author) all take the author date from the email. 
+So I don't think author_time == committer_time except when the committer 
+and the author are one and the same person.
+
+			Linus
