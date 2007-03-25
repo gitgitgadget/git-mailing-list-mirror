@@ -1,84 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Understanding version 4 packs
-Date: Sun, 25 Mar 2007 16:31:41 -0400
-Message-ID: <20070325203141.GA12376@spearce.org>
-References: <20070324202356.GA20734@bohr.gbar.dtu.dk> <alpine.LFD.0.83.0703241913110.18328@xanadu.home> <20070325083530.GA25523@bohr.gbar.dtu.dk> <20070325091806.GH25863@spearce.org> <Pine.LNX.4.64.0703251004580.6730@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Eriksen <s022018@student.dtu.dk>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Mar 25 22:31:57 2007
+From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH] gitweb: show no difference message
+Date: Sun, 25 Mar 2007 22:34:17 +0200
+Message-ID: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at>
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Mar 25 22:34:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVZNa-0001xD-Ex
-	for gcvg-git@gmane.org; Sun, 25 Mar 2007 22:31:54 +0200
+	id 1HVZQ4-0003Ft-MQ
+	for gcvg-git@gmane.org; Sun, 25 Mar 2007 22:34:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752389AbXCYUbv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 25 Mar 2007 16:31:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbXCYUbv
-	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 16:31:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59781 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752387AbXCYUbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Mar 2007 16:31:50 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HVZNG-0008Fi-Ll; Sun, 25 Mar 2007 16:31:34 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5D37F20FBAE; Sun, 25 Mar 2007 16:31:41 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0703251004580.6730@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752313AbXCYUeY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 25 Mar 2007 16:34:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752578AbXCYUeY
+	(ORCPT <rfc822;git-outgoing>); Sun, 25 Mar 2007 16:34:24 -0400
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:60099 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752313AbXCYUeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Mar 2007 16:34:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 8A107735D74C;
+	Sun, 25 Mar 2007 22:34:22 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qdEzx0HJTtiE; Sun, 25 Mar 2007 22:34:22 +0200 (CEST)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id 4E3E7735D743; Sun, 25 Mar 2007 22:34:22 +0200 (CEST)
+X-Mailer: git-send-email 1.5.0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43063>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Sun, 25 Mar 2007, Shawn O. Pearce wrote:
-> > >
-> > > What happens to the paths, that do not have a correponding entry in the
-> > > path name table, because they are not among the 65535 most frequent
-> > > paths in the pack?
-> > 
-> > They don't appear in the table.  And any tree that uses them is
-> > forced to use the "legacy" OBJ_TREE encoding.  Which is what we
-> > have now in pack v2, and in loose objects.
-> 
-> Would it hurt too much to just make it four bytes, and avoid that issue?
-> 
-> Special cases - and *especially* special cases that are hard to trigger in 
-> the first place - equal bugs. And bugs are much much worse than trying to 
-> save a little bit of space.
+Currently, gitweb shows only header and footer, if no differences are
+found. This patch adds a "No differences are found" message for the html
+output.
 
-Worth exploring.  When I get back to rebasing that topic onto
-Junio's tree I'll try a 4 byte index and see what kind of damage
-it does on space on large projects (Mozilla, linux-2.6, Eclipse).
-You may be right, an 8 byte record may just be worth the cost.
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+---
+ gitweb/gitweb.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5214050..fbadab4 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -2376,6 +2376,7 @@ sub git_patchset_body {
  
-> > The author_time field is not present if flags & 128 is true.
-> > If flags & 128 is false, its present, and uses the same encoding
-> > as commit_time.  Why is this field optional?  Because its not
-> > uncommon for it to match commit_time!  ;-)
-> 
-> If the author time is the same as the commit time, most of the time the 
-> author is the same as the committer too, no? So the field should be 
-> conditional not for the author_time, but for the combination, no?
-
-Excellent observation.  I'll make that change at the same time that I
-fix the meaning of flags & 128 to mean "more data follows".  Thanks!
-
+ 	my $patch_idx = 0;
+ 	my $patch_line;
++	my $empty = 0;
+ 	my $diffinfo;
+ 	my (%from, %to);
+ 
+@@ -2396,6 +2397,7 @@ sub git_patchset_body {
+ 		# git diff header
+ 		#assert($patch_line =~ m/^diff /) if DEBUG;
+ 		#assert($patch_line !~ m!$/$!) if DEBUG; # is chomp-ed
++		$empty++;
+ 		push @diff_header, $patch_line;
+ 
+ 		# extended diff header
+@@ -2559,6 +2561,8 @@ sub git_patchset_body {
+ 		print "</div>\n"; # class="patch"
+ 	}
+ 
++	print "<div class=\"diff header\">No differences found</div>\n" if (!$empty);
++
+ 	print "</div>\n"; # class="patchset"
+ }
+ 
 -- 
-Shawn.
+1.5.1.rc1.51.gb08b-dirty
