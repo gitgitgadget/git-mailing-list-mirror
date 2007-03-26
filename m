@@ -1,78 +1,76 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Submodule object store
-Date: Tue, 27 Mar 2007 01:36:03 +0200
-Message-ID: <20070326233603.GL22773@admingilde.org>
-References: <1174825838.12540.5.camel@localhost> <1174930688.5662.20.camel@localhost> <20070326183523.GG22773@admingilde.org> <200703262133.44520.Josef.Weidendorfer@gmx.de> <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] contrib/workdir: add a simple script to create a working directory
+Date: Mon, 26 Mar 2007 16:42:12 -0700
+Message-ID: <7vtzw7tvvv.fsf@assigned-by-dhcp.cox.net>
+References: <20070326232751.2647.19279.julian@quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="EVcIhgQsEzAXu06J"
-Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Eric Lesh <eclesh@ucla.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 27 01:36:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Tue Mar 27 01:42:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVyjh-0002NW-J3
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 01:36:25 +0200
+	id 1HVypO-0005VP-6A
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 01:42:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933796AbXCZXgH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 19:36:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933788AbXCZXgH
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 19:36:07 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:40874 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933804AbXCZXgF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 19:36:05 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HVyjM-0003Gm-0e; Tue, 27 Mar 2007 01:36:04 +0200
-Content-Disposition: inline
-In-Reply-To: <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S933805AbXCZXmO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 19:42:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933786AbXCZXmO
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 19:42:14 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39825 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933805AbXCZXmN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 19:42:13 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070326234212.TWYR22511.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 26 Mar 2007 19:42:12 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id fbiC1W0041kojtg0000000; Mon, 26 Mar 2007 19:42:12 -0400
+In-Reply-To: <20070326232751.2647.19279.julian@quantumfyre.co.uk> (Julian
+	Phillips's message of "Tue, 27 Mar 2007 00:15:32 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43208>
 
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
---EVcIhgQsEzAXu06J
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Add a simple script to create a working directory that uses symlinks
+> to point at an exisiting repository.  This allows having different
+> branches in different working directories but all from the same
+> repository.  A poor-man's .gitlink if you will.
 
-On Mon, Mar 26, 2007 at 04:28:28PM -0700, Junio C Hamano wrote:
-> Martin Waitz <tali@admingilde.org> writes:
->=20
-> > To make purge and fsck work we have the hard requirement that it
-> > must be possible to list all objects which belong to one submodule.
->=20
-> I understand you would want to separate the ref namespace, but I
-> still do not see why you would want to have a separate object
-> store, laid out in a funny way.  Unless you are thinking about
-> using rsync to transfer object store, that is.
+I would not call it poor-man's.  It is 'without complexity' and
+that is a good thing, especially when you are not doing any
+submodule stuff.
 
-I want to be able to list all objects which are not reachable in the
-object store, without traversing all submodules at the same time.
-The only way I can think of to achieve this is to have one separate
-object store per submodule and then do the traversal per submodule.
+> +# create the links to the original repo
+> +for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache
+> +do
+> +	case ${x} in
+> +	*/*)
+> +		mkdir -p $(dirname ${new_workdir}/.git/${x});
+> +		;;
+> +	esac
+> +	ln -s ${orig_git}/.git/${x} ${new_workdir}/.git/${x};
+> +done
 
---=20
-Martin Waitz
+I think the above list "for x" is correct, but probably the code
+wants to comment on why it specifically excludes logs/HEAD from
+the symlinked set ;-).
 
---EVcIhgQsEzAXu06J
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+> +# now setup the workdir
+> +cd ${new_workdir};
+> +# create a fake HEAD, to stop checkout complaining
+> +echo "ref: refs/heads/master" > .git/HEAD;
+> +# now checkout the branch that was asked for
+> +git checkout ${branch};
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGCFjjj/Eaxd/oD7IRAjG7AJ0cGMQy1jBqM3koc5r7XklJfKdicACfax5j
-n15zp53LdHTJJpfxs5R906Y=
-=v7zY
------END PGP SIGNATURE-----
-
---EVcIhgQsEzAXu06J--
+If ${branch} was 'master', does this do a checkout?  I think -f
+might be needed.
