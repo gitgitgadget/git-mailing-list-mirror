@@ -1,83 +1,275 @@
 From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH] Added make options NO_GUI and WITH_P4IMPORT.
-Date: Mon, 26 Mar 2007 11:31:43 +0400
-Message-ID: <20070326073143.GB44578@codelabs.ru>
-References: <20070320114525.GP96806@codelabs.ru> <etpuen$2uo$2@sea.gmane.org> <20070321051406.GW96806@codelabs.ru> <Pine.LNX.4.63.0703211213100.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321115004.GB14837@codelabs.ru> <Pine.LNX.4.63.0703211522320.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321144008.GE14837@codelabs.ru> <Pine.LNX.4.63.0703211630160.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321160126.GH14837@codelabs.ru> <7v1wji371q.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH] Added options NO_TCLTK, WITH_P4IMPORT and --with-tcltk/--without-tcltk.
+Date: Mon, 26 Mar 2007 11:32:50 +0400
+Message-ID: <20070326073250.GC44578@codelabs.ru>
+References: <etpuen$2uo$2@sea.gmane.org> <20070321051406.GW96806@codelabs.ru> <Pine.LNX.4.63.0703211213100.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321115004.GB14837@codelabs.ru> <Pine.LNX.4.63.0703211522320.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321144008.GE14837@codelabs.ru> <Pine.LNX.4.63.0703211630160.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321160126.GH14837@codelabs.ru> <7v1wji371q.fsf@assigned-by-dhcp.cox.net> <20070326073143.GB44578@codelabs.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=koi8-r
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 26 09:32:14 2007
+X-From: git-owner@vger.kernel.org Mon Mar 26 09:33:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVjgb-0001Wc-L3
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 09:32:13 +0200
+	id 1HVjhQ-0001xl-56
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 09:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231AbXCZHby (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 03:31:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932439AbXCZHbx
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 03:31:53 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:59284 "EHLO
+	id S932439AbXCZHc7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 03:32:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932566AbXCZHc7
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 03:32:59 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:50760 "EHLO
 	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932231AbXCZHbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 03:31:52 -0400
+	with ESMTP id S932439AbXCZHc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 03:32:58 -0400
 DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
 	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=Lgjo5G2b6E0Ge14Fa3vzUr3VhiV3MtNLpL7s8G/RtAbzwDK8Ae5sGsqw2sjepSUeIWzOm4FVodauSPp+4Sa07Qp74DLZDt0dt7vD4DBe7RRe00wCeRdMFF2mR/Rum/LXnnUAF2Wl6nJn40GjNwljBfHh+twUbBm4t8TQPLS7dPM=;
+	b=UINNTl9Lb9ivjfQDaktMK0hT3ks2KjcAIyUSBcKZgti4Yczz3V0A5QT6Mu4eWZSP4gGJgL4T1VXqiLkDlvkAMn4pR3/fEGSjMYiedhS9kKubImpg+UFOpLBYf/rr8h1WVVCY+GhSYJjAKoPF/9996m3xKD4vMBbhwJH5gpdX84k=;
 Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
 	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HVjgC-000Bbv-Fo; Mon, 26 Mar 2007 11:31:48 +0400
+	id 1HVjhH-000Bc8-GK; Mon, 26 Mar 2007 11:32:56 +0400
 Content-Disposition: inline
-In-Reply-To: <7v1wji371q.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, score=-3.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+In-Reply-To: <20070326073143.GB44578@codelabs.ru>
+X-Spam-Status: No, score=-2.0 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_40
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43119>
 
-Junio, good day.
+The following make options were added:
+- NO_TCLTK: disables building and installation of the git GUI part
+that depends on the Tcl/Tk.
+- WITH_P4IMPORT: enables the installation of the Perforce import
+script.
 
-Wed, Mar 21, 2007 at 09:17:21AM -0700, Junio C Hamano wrote:
-> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
-> 
-> > Technically, the checks in Makefile will look as 'ifndef NO_GUI && NO_TCL_TK'
-> > instead of 'ifndef NO_GUI'. Later they can diverge as the software will
-> > evolve.
-> >
-> > Are people happy with such plan?
-> 
-> Maybe later you might even want to view the graphical history
-> from the server displaying on remote X, who knows?
+Configure's options --with-tcltk and --without-tcltk were added and
+configure script teached to search for the Tcl/Tk interpreter.
+The GUI part will not be installed if system lacks Tcl/Tk binary.
 
-Not sure: I don't like X on the servers ;)) But others can...
+Internal make option TCLTK was added: it governs the location of
+the Tcl/Tk interpreter, so user can specify its own binary location
+either with './configure --with-tcltk=/path/to/binary' or
+'TCLTK=/path/to/binary make'.
 
-> We have NO_CURL and such because lack of the necessary libraries
-> and headers prevent your build from completing, but in the case
-> of git-gui and gitk, they are just scripts and you would not
-> have any trouble in building.  I do not know if adding more
-> conditional to Makefile in order to skip them is worth it.
+Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
+---
+ Makefile         |   56 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ config.mak.in    |    1 +
+ configure.ac     |   19 ++++++++++++++++++
+ git-gui/Makefile |    1 +
+ 4 files changed, 75 insertions(+), 2 deletions(-)
 
-OK, I reworked the patch following the suggestion of Jakub and Johannes:
-now configure has the built-in detection of the Tcl/Tk binary and has
-the --with-tcltk/--without-tcltk options. To implement this I still
-need the NO_TCLTK knob in the Makefile. Moreover, the configure's
-switch --with-tcltk=/path/to/binary works as expected: the location
-of the Tcl/Tk interpreter will be rewritten in the gitk and git-gui.
-The patch follows on this thread.
-
-And regarding the building troubles and the additional knob in the
-Makefile: the trouble is in the packaging process. For example, RPM
-or FreeBSD ports are looking at what is really installed, so if
-user do not want the Tcl/Tk part, then no package parts that depend
-on it should be installed. And the bare 'make install' installs all
-things. Sure, you can make 'make install && rm -f <not needed
-files>', but it is always a pain for the package builders to get
-the idea about the precise file list. So I just wanted to integrate
-the desired behaviour in the mainstream Git to make packager's life
-a bit easy. May be by the cost of making developer's life a bit
-harder: he should watch for the NO_TCLTK in his Makefiles.
+diff --git a/Makefile b/Makefile
+index 51c1fed..3cccf79 100644
+--- a/Makefile
++++ b/Makefile
+@@ -110,6 +110,13 @@ all::
+ # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+ # MakeMaker (e.g. using ActiveState under Cygwin).
+ #
++# Define NO_TCLTK if you do not want Tcl/Tk GUI.
++#
++# The TCLTK variable governs the location of the Tck/Tk interpreter.
++# If not set it defaults to the bare 'wish'.
++#
++# Define WITH_P4IMPORT to build and install Python git-p4import script.
++#
+ 
+ GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -159,6 +166,7 @@ AR = ar
+ TAR = tar
+ INSTALL = install
+ RPMBUILD = rpmbuild
++TCLTK ?= wish
+ 
+ # sparse is architecture-neutral, which means that we need to tell it
+ # explicitly what architecture to check for. Fix this up for yours..
+@@ -196,9 +204,20 @@ SCRIPT_PERL = \
+ 	git-svnimport.perl git-cvsexportcommit.perl \
+ 	git-send-email.perl git-svn.perl
+ 
++SCRIPT_PYTHON = \
++	git-p4import.py
++
++ifdef WITH_P4IMPORT
+ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+ 	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
++	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
+ 	  git-status git-instaweb
++else
++SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
++	  $(patsubst %.perl,%,$(SCRIPT_PERL)) \
++	  git-status git-instaweb
++endif
++
+ 
+ # ... and all the rest that could be moved out of bindir to gitexecdir
+ PROGRAMS = \
+@@ -241,6 +260,9 @@ endif
+ ifndef PERL_PATH
+ 	PERL_PATH = /usr/bin/perl
+ endif
++ifndef PYTHON_PATH
++	PYTHON_PATH = /usr/local/bin/python
++endif
+ 
+ export PERL_PATH
+ 
+@@ -608,6 +630,10 @@ ifdef NO_PERL_MAKEMAKER
+ 	export NO_PERL_MAKEMAKER
+ endif
+ 
++ifeq ($(TCLTK),)
++NO_TCLTK=YesPlease
++endif
++
+ QUIET_SUBDIR0  = $(MAKE) -C # space to separate -C and subdir
+ QUIET_SUBDIR1  =
+ 
+@@ -646,6 +672,7 @@ prefix_SQ = $(subst ','\'',$(prefix))
+ 
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+ PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
++PYTHON_PATH_SQ = $(subst ','\'',$(PYTHON_PATH))
+ 
+ LIBS = $(GITLIBS) $(EXTLIBS)
+ 
+@@ -667,7 +694,9 @@ ifneq (,$X)
+ endif
+ 
+ all::
++ifndef NO_TCLTK
+ 	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) all
++endif
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' all
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1)
+ 
+@@ -699,6 +728,15 @@ $(patsubst %.sh,%,$(SCRIPT_SH)) : % : %.sh
+ 
+ $(patsubst %.perl,%,$(SCRIPT_PERL)): perl/perl.mak
+ 
++$(patsubst %.py,%,$(SCRIPT_PYTHON)) : % : %.py
++	rm -f $@ $@+
++	sed -e '1s|#!.*/python|#!$(PYTHON_PATH_SQ)|' \
++	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
++	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
++	    $@.py >$@+
++	chmod +x $@+
++	mv $@+ $@
++
+ perl/perl.mak: GIT-CFLAGS
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' $(@F)
+ 
+@@ -892,10 +930,16 @@ install: all
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+-	$(INSTALL) git$X gitk '$(DESTDIR_SQ)$(bindir_SQ)'
++	$(INSTALL) git$X '$(DESTDIR_SQ)$(bindir_SQ)'
++ifndef NO_TCLTK
++	sed -i .bak -e'1,3s|^exec .* "$$0"|exec '"$(TCLTK)"' "$$0"|' gitk && rm -f gitk.bak
++	$(INSTALL) gitk '$(DESTDIR_SQ)$(bindir_SQ)'
++endif
+ 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
+ 	$(MAKE) -C perl prefix='$(prefix_SQ)' install
+-	$(MAKE) -C git-gui install
++ifndef NO_TCLTK
++	$(MAKE) -C git-gui TCLTK='$(TCLTK)' install
++endif
+ 	if test 'z$(bindir_SQ)' != 'z$(gitexecdir_SQ)'; \
+ 	then \
+ 		ln -f '$(DESTDIR_SQ)$(bindir_SQ)/git$X' \
+@@ -929,11 +973,17 @@ dist: git.spec git-archive
+ 	@mkdir -p $(GIT_TARNAME)
+ 	@cp git.spec $(GIT_TARNAME)
+ 	@echo $(GIT_VERSION) > $(GIT_TARNAME)/version
++ifndef NO_TCLTK
+ 	@$(MAKE) -C git-gui TARDIR=../$(GIT_TARNAME)/git-gui dist-version
+ 	$(TAR) rf $(GIT_TARNAME).tar \
+ 		$(GIT_TARNAME)/git.spec \
+ 		$(GIT_TARNAME)/version \
+ 		$(GIT_TARNAME)/git-gui/version
++else
++	$(TAR) rf $(GIT_TARNAME).tar \
++		$(GIT_TARNAME)/git.spec \
++		$(GIT_TARNAME)/version
++endif
+ 	@rm -rf $(GIT_TARNAME)
+ 	gzip -f -9 $(GIT_TARNAME).tar
+ 
+@@ -974,7 +1024,9 @@ clean:
+ 	rm -f gitweb/gitweb.cgi
+ 	$(MAKE) -C Documentation/ clean
+ 	$(MAKE) -C perl clean
++ifndef NO_TCLTK
+ 	$(MAKE) -C git-gui clean
++endif
+ 	$(MAKE) -C templates/ clean
+ 	$(MAKE) -C t/ clean
+ 	rm -f GIT-VERSION-FILE GIT-CFLAGS
+diff --git a/config.mak.in b/config.mak.in
+index 9a57840..8e441dd 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -6,6 +6,7 @@ CFLAGS = @CFLAGS@
+ AR = @AR@
+ TAR = @TAR@
+ #INSTALL = @INSTALL@		# needs install-sh or install.sh in sources
++TCLTK = @TCLTK@
+ 
+ prefix = @prefix@
+ exec_prefix = @exec_prefix@
+diff --git a/configure.ac b/configure.ac
+index 3a8e778..a95dbfb 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -75,6 +75,12 @@ GIT_ARG_SET_PATH(shell)
+ # Define PERL_PATH to provide path to Perl.
+ GIT_ARG_SET_PATH(perl)
+ #
++# Declare the with-tcltk/without-tcltk options.
++AC_ARG_WITH(tcltk,
++AS_HELP_STRING([--with-tcltk],[use Tcl/Tk GUI (default is YES)])
++AS_HELP_STRING([],[ARG is the full path to the Tcl/Tk interpreter]),\
++GIT_PARSE_WITH(tcltk))
++#
+ 
+ 
+ ## Checks for programs.
+@@ -84,6 +90,19 @@ AC_PROG_CC([cc gcc])
+ #AC_PROG_INSTALL		# needs install-sh or install.sh in sources
+ AC_CHECK_TOOL(AR, ar, :)
+ AC_CHECK_PROGS(TAR, [gtar tar])
++# TCLTK will be set to some value if we want Tcl/Tk
++# or will be empty otherwise.
++if test -z "$NO_TCLTK"; then
++  if test "$with_tcltk" = "yes" -o "$with_tcltk" = ""; then
++    AC_CHECK_PROGS(TCLTK, [wish], )
++  elif ! test -x "$with_tcltk"; then
++    AC_MSG_ERROR([Tcl/Tk interpreter was not found in $with_tcltk])
++  else
++    AC_MSG_RESULT([Using Tcl/Tk interpreter $with_tcltk])
++    TCLTK="$with_tcltk"
++    AC_SUBST(TCLTK)
++  fi
++fi
+ 
+ ## Checks for libraries.
+ AC_MSG_NOTICE([CHECKS for libraries])
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index b82789e..09c28ed 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -55,6 +55,7 @@ all:: $(ALL_PROGRAMS)
+ 
+ install: all
+ 	$(INSTALL) -d -m755 '$(DESTDIR_SQ)$(gitexecdir_SQ)'
++	sed -i .bak -e'1,3s|^exec .* "$$0"|exec '"$(TCLTK)"' "$$0"|' git-gui && rm git-gui.bak
+ 	$(INSTALL) git-gui '$(DESTDIR_SQ)$(gitexecdir_SQ)'
+ 	$(foreach p,$(GITGUI_BUILT_INS), rm -f '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' && ln '$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' '$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' ;)
+ 
 -- 
-Eygene
+1.5.0.3-dirty
