@@ -1,71 +1,93 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Martin Waitz <tali@admingilde.org>
 Subject: Re: .gitlink for Summer of Code
-Date: Mon, 26 Mar 2007 16:24:09 -0700
-Message-ID: <7v3b3rvbae.fsf@assigned-by-dhcp.cox.net>
-References: <1174825838.12540.5.camel@localhost>
-	<20070326220302.GH22773@admingilde.org>
-	<7vfy7rvct2.fsf@assigned-by-dhcp.cox.net>
-	<200703270117.59205.Josef.Weidendorfer@gmx.de>
+Date: Tue, 27 Mar 2007 01:27:46 +0200
+Message-ID: <20070326232744.GK22773@admingilde.org>
+References: <1174825838.12540.5.camel@localhost> <200703262133.44520.Josef.Weidendorfer@gmx.de> <20070326220302.GH22773@admingilde.org> <200703270100.12920.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Waitz <tali@admingilde.org>, Eric Lesh <eclesh@ucla.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Ublo+h3cBgJ33ahC"
+Cc: Eric Lesh <eclesh@ucla.edu>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	git@vger.kernel.org
 To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 27 01:24:16 2007
+X-From: git-owner@vger.kernel.org Tue Mar 27 01:27:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVyXv-0003yV-PX
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 01:24:16 +0200
+	id 1HVybQ-0005z4-BO
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 01:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932406AbXCZXYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 19:24:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933700AbXCZXYM
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 19:24:12 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:65380 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932406AbXCZXYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 19:24:12 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070326232412.RZWW1606.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 26 Mar 2007 19:24:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id fbQ91W00Z1kojtg0000000; Mon, 26 Mar 2007 19:24:10 -0400
-In-Reply-To: <200703270117.59205.Josef.Weidendorfer@gmx.de> (Josef
-	Weidendorfer's message of "Tue, 27 Mar 2007 01:17:58 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S932853AbXCZX1t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 19:27:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933699AbXCZX1t
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 19:27:49 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:46358 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932853AbXCZX1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 19:27:48 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HVybK-0003CY-Sh; Tue, 27 Mar 2007 01:27:47 +0200
+Content-Disposition: inline
+In-Reply-To: <200703270100.12920.Josef.Weidendorfer@gmx.de>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43204>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
 
-> On Tuesday 27 March 2007, Junio C Hamano wrote:
->> Martin Waitz <tali@admingilde.org> writes:
->> 
->> > For submodules I currently use <parent>/.git/objects/module/<submodule>/
->> > to store the objects belonging to the submodule.
->> 
->> I was not following the gitlink discussion closely, but what is
->> the motivation behind this separation of the object store?
->
-> The separation issue is about scalability of submodules, and not
-> directly about gitlink.
+--Ublo+h3cBgJ33ahC
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Unless you are thinking about rsync of object store, it is not
-clear what "scalability of submodules" has to do with having
-separate object database.
+hoi :)
 
-The issue I recall from earlier discussion on scalability of
-submodules was about the direct placement of commit objects in
-supermodule trees (which would force fetching in supermodule to
-drag in all submodules even when the "integration" or "build
-infrastructure" person does not want to have submodules pulled).
-But I think that is an issue of the definition of connectivity.
-It should be orthogonal to the issue of how object store is laid
-out, shouldn't it?
+On Tue, Mar 27, 2007 at 01:00:12AM +0200, Josef Weidendorfer wrote:
+> On Tuesday 27 March 2007, Martin Waitz wrote:
+> > For submodules I currently use <parent>/.git/objects/module/<submodule>/
+> > to store the objects belonging to the submodule.
+> > Perhaps it makes sense to extend this to a full .git directory per
+> > submodule, I'm not yet decided on that.
+>=20
+> IMHO this would be a nice property. As the submodule could exist
+> independently with its own remote heads/tags, you probably would want
+> to at least track these, even if it is a submodule in your
+> superproject.  And then it makes sense to move it directly to
+> .git/module/...
+
+I am not sure that all the other submodule heads and tags really belong
+into the superproject.  Perhaps they should simply be handled in some
+other way -- after all the submodule is a normal git repository and can
+handle heads and tags on its own quite well.
+But I haven't thought tag-handling for submodules through yet.
+
+> There also was a use case where one library project is used in >10
+> superprojects. It would be nice to be able to make the submodule git dir
+> be outside of the supermodules git dir. However, this also can be done
+> with symlinks without any special support (aside from sharing the
+> head namespace).
+
+Of course you can always have a normal library.git repository with all
+the tags and stuff somewhere and just fetch from there if you need
+some central location for it.  You could even add alternate entries
+pointing there to the libraries object store inside the supermodule.
+
+--=20
+Martin Waitz
+
+--Ublo+h3cBgJ33ahC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGCFbwj/Eaxd/oD7IRAirrAJwJCluV0WKu7DLPXnfJyCQGA1bhbACfRNRi
+qDp1JerV/8ccAM0lGlP1V/Y=
+=81La
+-----END PGP SIGNATURE-----
+
+--Ublo+h3cBgJ33ahC--
