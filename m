@@ -1,76 +1,71 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] Removed the printf("rm 'file'") from git-rm.
-Date: Tue, 27 Mar 2007 00:13:48 +0200
-Message-ID: <20070326221347.GI22773@admingilde.org>
-References: <11747590062554-git-send-email-tilman@code-monkey.de> <7vodmhc06f.fsf@assigned-by-dhcp.cox.net> <20070325210418.GA29221@code-monkey.de> <Pine.LNX.4.63.0703252335280.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-rm: don't remove newly added file without -f
+Date: Mon, 26 Mar 2007 18:22:39 -0400
+Message-ID: <20070326222239.GA3498@coredump.intra.peff.net>
+References: <8aa486160703260759v438d445ev82161600d8e8bf02@mail.gmail.com> <20070326185539.GA1650@coredump.intra.peff.net> <7v1wjbwvzl.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0703262314090.4045@wbgn013.biozentrum.uni-wuerzburg.de> <7vslbrvgf1.fsf@assigned-by-dhcp.cox.net> <8aa486160703260759v438d445ev82161600d8e8bf02@mail.gmail.com> <20070326185539.GA1650@coredump.intra.peff.net> <7v1wjbwvzl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PNpeiK4tTqhYOExY"
-Cc: Tilman Sauerbeck <tilman@code-monkey.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 27 00:13:54 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 00:22:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVxRo-0008WK-Ne
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 00:13:53 +0200
+	id 1HVxaR-0004t2-5n
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 00:22:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932700AbXCZWNt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 18:13:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932710AbXCZWNt
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 18:13:49 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:60992 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932700AbXCZWNt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 18:13:49 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HVxRk-0002dj-1p; Tue, 27 Mar 2007 00:13:48 +0200
+	id S933338AbXCZWWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 18:22:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933347AbXCZWWn
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 18:22:43 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2509 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933338AbXCZWWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 18:22:42 -0400
+Received: (qmail 15054 invoked from network); 26 Mar 2007 22:23:11 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 26 Mar 2007 22:23:11 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2007 18:22:39 -0400
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0703252335280.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7vslbrvgf1.fsf@assigned-by-dhcp.cox.net> <7v1wjbwvzl.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43193>
 
+On Mon, Mar 26, 2007 at 02:11:42PM -0700, Junio C Hamano wrote:
 
---PNpeiK4tTqhYOExY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Unstaging request would have looked like "git reset HEAD new",
+> wouldn't it?
 
-hoi :)
+Yes, I think I am still in the habit of using "git rm" from its old
+usage. I unstage so rarely that I don't think my fingers have adjusted.
 
-On Sun, Mar 25, 2007 at 11:36:35PM +0200, Johannes Schindelin wrote:
-> Why not do the common thing, and add a "--quiet" option? You can even add=
-=20
-> a config variable to enable it by default (for git-rm). It's not like=20
-> git-rm is performance critical...
+> "git rm" later is reverting that intent.  Jeff's patch does
+> exactly the same thing for new files what we already do for
+> existing ones --- we ask for a confirmation when "git rm" is
 
-But when we have to add --quiet to all sorts of commands that may be
-the sign that they really are too chatty.
+Yes, regardless of how git-rm is "supposed" to be used, I think this
+patch is worth it for two reasons:
+  1. consistency; we should treat newly added files just like existing
+     files (after all, content is content, right?)
+  2. safety; I work under the assumption that I can do whatever I want
+     with git-rm, and it will _never_ lose my data unless I use -f.
+     Granted, without this patch my data would still be available
+     somewhere in the object database, but it is hard to find and
+     susceptible to pruning.
 
-If I want a short output I don't want to type extra options.
-So adding a --verbose for those that really depend on more output
-makes more sense, IMHO.  (Even when I don't see any useful information
-in the git-rm output, to be honest.)
+> Having said that, we do _not_ ask for confirmation when you do
+> "git add existing-file" after doing "edit ; git add", which is
+> theoretically inconsistent, but rm is special so that is
+> probably Ok.
 
---=20
-Martin Waitz
+Hmm, yes, I agree that is inconsistent. However, it's such a common
+workflow that forcing a '-f' would become meaningless. And you _can_
+rescue the blob from the object database in a pinch, though finding it
+can be tedious.
 
---PNpeiK4tTqhYOExY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGCEWbj/Eaxd/oD7IRAo+OAJ4jEDtvmMyFGA26stdREpYnCIRq/wCfRv78
-Vbadk1PVHzAkT9VrK4YG/mo=
-=X85P
------END PGP SIGNATURE-----
-
---PNpeiK4tTqhYOExY--
+-Peff
