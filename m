@@ -1,97 +1,64 @@
-From: Eric Lesh <eclesh@ucla.edu>
-Subject: [PATCH] git-rm: add --quiet option to suppress "rm 'file'" messages
-Date: Mon, 26 Mar 2007 03:28:24 -0700
-Message-ID: <1174904904.5662.8.camel@localhost>
-References: <11747590062554-git-send-email-tilman@code-monkey.de>
-	 <7vodmhc06f.fsf@assigned-by-dhcp.cox.net>
-	 <20070325210418.GA29221@code-monkey.de>
-	 <Pine.LNX.4.63.0703252335280.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Nicolas Vilz <niv@iaglans.de>
+Subject: Re: git-send-email and aliases
+Date: Mon, 26 Mar 2007 12:08:49 +0200
+Message-ID: <20070326100849.GA5822@fry.bender.fht>
+References: <38b2ab8a0703260239j3f3f0be2teee70fc502f6f7c1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Tilman Sauerbeck <tilman@code-monkey.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Mar 26 12:28:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 12:29:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVmRO-0000ga-2o
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 12:28:42 +0200
+	id 1HVmRy-00011h-A0
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 12:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753620AbXCZK2i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 06:28:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753627AbXCZK2h
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 06:28:37 -0400
-Received: from smtp-2.smtp.ucla.edu ([169.232.47.136]:46110 "EHLO
-	smtp-2.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753620AbXCZK2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 06:28:36 -0400
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.46.157])
-	by smtp-2.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l2QASVI5025528;
-	Mon, 26 Mar 2007 03:28:31 -0700
-Received: from [192.168.1.7] (adsl-75-26-166-168.dsl.scrm01.sbcglobal.net [75.26.166.168])
-	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l2QASUO5026417
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
-	Mon, 26 Mar 2007 03:28:30 -0700
-In-Reply-To: <Pine.LNX.4.63.0703252335280.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Mailer: Evolution 2.8.1 
-X-Probable-Spam: no
-X-Scanned-By: smtp.ucla.edu on 169.232.47.136
+	id S1753635AbXCZK25 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 06:28:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753634AbXCZK25
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 06:28:57 -0400
+Received: from mail.hs-esslingen.de ([134.108.32.78]:51557 "EHLO
+	mail.hs-esslingen.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753631AbXCZK24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 06:28:56 -0400
+X-Greylist: delayed 1199 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Mar 2007 06:28:56 EDT
+Received: from localhost (mail.hs-esslingen.de [134.108.32.78])
+	by mail.hs-esslingen.de (Postfix) with ESMTP id F02EB13EEB;
+	Mon, 26 Mar 2007 12:08:54 +0200 (CEST)
+Received: from mail.hs-esslingen.de ([134.108.32.78])
+	by localhost (rslx211 [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 27590-10; Mon, 26 Mar 2007 12:08:51 +0200 (CEST)
+Received: from localhost (ovpn66102.hs-esslingen.de [134.108.66.102])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.hs-esslingen.de (Postfix) with ESMTP id BF90E13EF1;
+	Mon, 26 Mar 2007 12:08:50 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <38b2ab8a0703260239j3f3f0be2teee70fc502f6f7c1@mail.gmail.com>
+X-message-flag: Please send plain text messages only. Thank you.
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at hs-esslingen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43149>
 
-Signed-off-by: Eric Lesh <eclesh@ucla.edu>
-
----
-
-On Sun, 2007-03-25 at 23:36 +0200, Johannes Schindelin wrote:
-> > Too bad, I find it rather annoying and irritating.
+On Mon, Mar 26, 2007 at 11:39:52AM +0200, Francis Moreau wrote:
+> Hi,
 > 
-> Why not do the common thing, and add a "--quiet" option? You can even add 
-> a config variable to enable it by default (for git-rm). It's not like 
-> git-rm is performance critical...
+> I'm trying to make an alias for 'git send-email' as following but it's
+> not working:
 > 
+> [alias]
+> 	send-email = send-email --no-signed-off-cc --suppress-from
+> 
+> Is it failing because git-send-email is an external command ?
 
-Is something like this right?
+i remember that if this command exists in git (built-in or script), then
+the built-in is used, for not breaking any scripts. I think, if you set
+sm or s-m or something like that, it would work.
 
- builtin-rm.c |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-rm.c b/builtin-rm.c
-index 00dbe39..d193fb0 100644
---- a/builtin-rm.c
-+++ b/builtin-rm.c
-@@ -114,7 +114,7 @@ static struct lock_file lock_file;
- int cmd_rm(int argc, const char **argv, const char *prefix)
- {
- 	int i, newfd;
--	int show_only = 0, force = 0, index_only = 0, recursive = 0;
-+	int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
- 	const char **pathspec;
- 	char *seen;
- 
-@@ -142,6 +142,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 			force = 1;
- 		else if (!strcmp(arg, "-r"))
- 			recursive = 1;
-+		else if (!strcmp(arg, "-q") || !strcmp(arg, "--quiet"))
-+			quiet = 1;
- 		else
- 			usage(builtin_rm_usage);
- 	}
-@@ -197,7 +199,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 	 */
- 	for (i = 0; i < list.nr; i++) {
- 		const char *path = list.name[i];
--		printf("rm '%s'\n", path);
-+		if (!quiet)
-+			printf("rm '%s'\n", path);
- 
- 		if (remove_file_from_cache(path))
- 			die("git-rm: unable to remove %s", path);
--- 
-1.5.1-rc1.GIT
+Sincerly
+Nicolas
