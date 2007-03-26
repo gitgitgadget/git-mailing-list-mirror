@@ -1,54 +1,72 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] Bisect: Use "git-show-ref --verify" when reseting.
-Date: Mon, 26 Mar 2007 06:14:40 +0200
-Message-ID: <20070326061440.26f506d4.chriscool@tuxfamily.org>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: Subproject status
+Date: Mon, 26 Mar 2007 01:34:53 -0300
+Message-ID: <46074D6D.1050301@xs4all.nl>
+References: <Pine.LNX.4.64.0703251304280.6485@iabervon.org> <eu70tc$38c$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 26 06:06:34 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Mar 26 06:35:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVgTZ-0007Qa-IL
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 06:06:33 +0200
+	id 1HVgvT-00051R-FX
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 06:35:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933535AbXCZEG3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 00:06:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933430AbXCZEG3
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 00:06:29 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:37966 "EHLO smtp1-g19.free.fr"
+	id S933581AbXCZEfU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 00:35:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933590AbXCZEfU
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 00:35:20 -0400
+Received: from main.gmane.org ([80.91.229.2]:43486 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933535AbXCZEG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 00:06:28 -0400
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 33D049B880;
-	Mon, 26 Mar 2007 06:06:27 +0200 (CEST)
-X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
+	id S933581AbXCZEfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 00:35:19 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HVgvG-0002PR-LW
+	for git@vger.kernel.org; Mon, 26 Mar 2007 06:35:10 +0200
+Received: from bhe200139179018.res-com.wayinternet.com.br ([200.139.179.18])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Mar 2007 06:35:10 +0200
+Received: from hanwen by bhe200139179018.res-com.wayinternet.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 26 Mar 2007 06:35:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: bhe200139179018.res-com.wayinternet.com.br
+User-Agent: Thunderbird 1.5.0.10 (X11/20070306)
+In-Reply-To: <eu70tc$38c$1@sea.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43111>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-bisect.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Jakub Narebski wrote:
+> [Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org]
+> 
+> Daniel Barkalow wrote:
+> 
+>> I remember that last time I checked, there were a number of designs for 
+>> subprojects and at least a couple of implementations, but none that was 
+>> complete to the point of being mergeable. Are there any subproject 
+>> implementations available that haven't run into unsolveable problems? I'm 
+>> presently only looking at stuff that totals to a reasonable single project 
+>> size and rate of growth, so I'm not worried about the large-scale storage 
+>> requirement issue.
+> 
+> Check out http://git.or.cz/gitwiki/SubprojectSupport
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 936b4a4..fda1712 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -173,7 +173,7 @@ bisect_reset() {
- 	   else
- 	       branch=master
- 	   fi ;;
--	1) test -f "$GIT_DIR/refs/heads/$1" || {
-+	1) git-show-ref --verify --quiet -- "refs/heads/$1" || {
- 	       echo >&2 "$1 does not seem to be a valid branch"
- 	       exit 1
- 	   }
--- 
-1.5.1.rc2.1.g850a
+this points to
+
+  http://www.kernel.org/git/?p=git/git.git;a=blob;hb=todo;f=Subpro.txt
+
+which is a broken. It results in
+
+
+
+1Reading blob failed.
+
+
+Han-Wen
