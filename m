@@ -1,75 +1,60 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH] gitweb: Support comparing blobs (files) with different names
-Date: Mon, 26 Mar 2007 22:41:16 +0200
-Message-ID: <20070326204116.GB1128@auto.tuwien.ac.at>
-References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <11748548621186-git-send-email-mkoegler@auto.tuwien.ac.at> <200703261912.09445.jnareb@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] sha1_file.c (write_sha1_from_fd): Detect close failure.
+Date: Mon, 26 Mar 2007 16:42:59 -0400 (EDT)
+Message-ID: <alpine.LFD.0.83.0703261636410.3041@xanadu.home>
+References: <874po8umyk.fsf@rho.meyering.net>
+ <7v8xdjwxr4.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 22:41:23 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Mar 26 22:43:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVw0I-0001JM-W8
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 22:41:23 +0200
+	id 1HVw1x-0002BY-A3
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 22:43:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752141AbXCZUlU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 26 Mar 2007 16:41:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752546AbXCZUlU
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 16:41:20 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:39324 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752141AbXCZUlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 16:41:19 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id BCE1272C8FB4;
-	Mon, 26 Mar 2007 22:41:16 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id H-bT0eig1bbn; Mon, 26 Mar 2007 22:41:16 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 719F673839AD; Mon, 26 Mar 2007 22:41:16 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200703261912.09445.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751024AbXCZUnB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 16:43:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbXCZUnB
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 16:43:01 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:64598 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751024AbXCZUnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 16:43:00 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JFJ0010B2VN5940@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 26 Mar 2007 16:42:59 -0400 (EDT)
+In-reply-to: <7v8xdjwxr4.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43184>
 
-On Mon, Mar 26, 2007 at 06:12:09PM +0100, Jakub Narebski wrote:
-> It is done by adding $file_parent ('fp') to the path limiter, meaning
-> that diff command becomes:
->=20
-> 	git diff-tree [options] hpb hb -- fp f
->=20
-> instead of finding hash of a blob using git_get_hash_by_path subrouti=
-ne
-> or using extended SHA-1 syntax:
->=20
-> 	git diff [options] hpb:fp hp:f
->=20
+On Mon, 26 Mar 2007, Junio C Hamano wrote:
 
-As far as I tested, this only works for renames, not
-for comparing different objects, eg:
+> Hmph.  Not catching error from close() is wrong, so this is an
+> improvement, but it still leaves tmpfile on the filesystem,
+> doesn't it?
+> 
+> Looking at write_sha1_file(), which is in a sense more important
+> than this function, it is worse.  We should also detect error
+> from close(), nuke the temporary file and return an error there.
 
-git-diff -r -p 08727ea8bba8c81678e5cf15124ada23ad097bc3:grep.h bb95e19c=
-5f1e470d2efe1c0e4e04c291019e4b25:refs.h
-shows differences
+Actually, the temp file is always left there whenever there is an error 
+or die() is called or CTRL_C is issued.
 
-git-diff-tree -r 08727ea8bba8c81678e5cf15124ada23ad097bc3 bb95e19c5f1e4=
-70d2efe1c0e4e04c291019e4b25 -- grep.h refs.h
-shows no difference
+I don't think it is worth bothering with the removal of temp files given 
+all the cases that would have to be considered, and most probably not 
+exercised that often (increasing their likelihood of bing buggy).
 
-As I want gitweb to be able to even do such compares (not just renames)=
-,
-I'll still need a solution for this.
+Instead, teaching git-purge about those tmp files might be a better 
+idea.
 
-My idea is, that if I got hb:f and hpb:fp, the user exactly specified
-the blobs to be compared. Then I don't want any guessing logic.
 
-mfg Martin K=F6gler
+Nicolas
