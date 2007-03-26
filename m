@@ -1,68 +1,59 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH] Added options NO_TCLTK, WITH_P4IMPORT and --with-tcltk/--without-tcltk.
-Date: Mon, 26 Mar 2007 14:03:44 +0400
-Message-ID: <20070326100344.GV14837@codelabs.ru>
-References: <etpuen$2uo$2@sea.gmane.org> <20070326073143.GB44578@codelabs.ru> <20070326073250.GC44578@codelabs.ru> <200703261030.49382.jnareb@gmail.com> <7vmz20xuxq.fsf@assigned-by-dhcp.cox.net>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH 1/5] Consistently use user-defined UI font everywhere in GUI tools.
+Date: Mon, 26 Mar 2007 12:06:35 +0200
+Message-ID: <20070326100635.GN8017@planck.djpig.de>
+References: <20070326073715.GE44578@codelabs.ru> <7vr6rcxv5x.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Eygene Ryabinkin <rea-git@codelabs.ru>, git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Mar 26 12:04:30 2007
+X-From: git-owner@vger.kernel.org Mon Mar 26 12:06:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVm3q-0004Qk-Jm
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 12:04:22 +0200
+	id 1HVm6D-0005jC-R4
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 12:06:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964844AbXCZKD4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 06:03:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965047AbXCZKD4
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 06:03:56 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:56387 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964844AbXCZKDy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 06:03:54 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=GhAze4HUvJs74zYKjEC35g9GRoZBMycLg3ipFDJ9JG2mu3BGlArB0JjncLs/ZAbIWGVrd+tfT3eG4OdjrXq08Ctth3ZktkHKyw/zB/oGPR6301+6FzBKDiaFXJu52G8/leKkfP0NAvDLq2B5xhL3bNJbgQE0wjeWZoSMfSBgwoQ=;
-Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HVm3J-000Bno-AR; Mon, 26 Mar 2007 14:03:49 +0400
+	id S1753586AbXCZKGq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 06:06:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753584AbXCZKGq
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 06:06:46 -0400
+Received: from planck.djpig.de ([85.10.192.180]:53717 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753583AbXCZKGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 06:06:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 452E888136;
+	Mon, 26 Mar 2007 12:06:36 +0200 (CEST)
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 18236-03; Mon, 26 Mar 2007 12:06:35 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 7C26A88137; Mon, 26 Mar 2007 12:06:35 +0200 (CEST)
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
+	Eygene Ryabinkin <rea-git@codelabs.ru>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vmz20xuxq.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, score=-2.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_20
+In-Reply-To: <7vr6rcxv5x.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
+X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43144>
 
-Jakub, Junio,
-
-Mon, Mar 26, 2007 at 01:36:49AM -0700, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+On Mon, Mar 26, 2007 at 01:31:54AM -0700, Junio C Hamano wrote:
+>  (2) address gitk patches to Paul Mackerras <paulus@samba.org>,
+>      with cc: the list;
 > 
-> > Thanks a lot for the patch, but...
-> >
-> > Eygene Ryabinkin wrote:
-> >
-> >> Internal make option TCLTK was added: it governs the location of
-> >> the Tcl/Tk interpreter, so user can specify its own binary location
-> >> either with './configure --with-tcltk=/path/to/binary' or
-> >> 'TCLTK=/path/to/binary make'.
-> >
-> > ...shouldn't it be TCLTK_PATH?
+>  (3) address git-gui patches to Shawn Pearce <spearce@spearce.org>
+>      with cc: the list.
 
-Yes, probably is should be TCLTK_PATH.
+Maybe such information could be added to
+Documentation/SubmittingPatches? Currently it only talks about
+contrib/ vs. everything else and not e.g. about gitk and git-gui.
 
-> Thanks for sanity checking.  That means that the absense of
-> tcltk would make it impossible to munge the scripts to point at
-> the wish binary, so makes the NO_TCLTK stuff easier to swallow.
-
-Sorry, did not get the point. The TCLTK is initialized to the 'wish'
-by 'TCLTK ?= wish', so TCLTK will always be here and initialized
-to the wish by-default.
+Gruesse,
 -- 
-Eygene
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
