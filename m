@@ -1,76 +1,77 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] pager: default to LESS=FRX not LESS=FRSX
-Date: Mon, 26 Mar 2007 13:27:15 -0700
-Message-ID: <7vd52vwy1o.fsf@assigned-by-dhcp.cox.net>
-References: <20070326073502.GD44578@codelabs.ru>
-	<7vwt14xvaw.fsf@assigned-by-dhcp.cox.net>
-	<20070326083617.GG13247@spearce.org>
-	<7v8xdkxukt.fsf@assigned-by-dhcp.cox.net>
-	<17928.7076.871485.136142@lisa.zopyra.com>
+Subject: Re: [PATCH] sha1_file.c (write_sha1_from_fd): Detect close failure.
+Date: Mon, 26 Mar 2007 13:33:35 -0700
+Message-ID: <7v8xdjwxr4.fsf@assigned-by-dhcp.cox.net>
+References: <874po8umyk.fsf@rho.meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eygene Ryabinkin <rea-git@codelabs.ru>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 22:27:23 2007
+Cc: git@vger.kernel.org
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Mon Mar 26 22:33:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVvmj-00028b-0C
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 22:27:21 +0200
+	id 1HVvsq-0005Z7-Gk
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 22:33:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbXCZU1S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 16:27:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbXCZU1S
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 16:27:18 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:52607 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751334AbXCZU1R (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 16:27:17 -0400
+	id S1751546AbXCZUdh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 16:33:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752916AbXCZUdh
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 16:33:37 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:47429 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751546AbXCZUdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 16:33:36 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070326202716.NTTK18070.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 26 Mar 2007 16:27:16 -0400
+          id <20070326203336.PWDC22511.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 26 Mar 2007 16:33:36 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id fYTF1W00e1kojtg0000000; Mon, 26 Mar 2007 16:27:16 -0400
-In-Reply-To: <17928.7076.871485.136142@lisa.zopyra.com> (Bill Lear's message
-	of "Mon, 26 Mar 2007 13:14:44 -0600")
+	id fYZb1W00N1kojtg0000000; Mon, 26 Mar 2007 16:33:36 -0400
+In-Reply-To: <874po8umyk.fsf@rho.meyering.net> (Jim Meyering's message of
+	"Mon, 26 Mar 2007 15:57:23 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43181>
 
-Bill Lear <rael@zopyra.com> writes:
+Jim Meyering <jim@meyering.net> writes:
 
-> On Monday, March 26, 2007 at 01:44:34 (-0700) Junio C Hamano writes:
->>"Shawn O. Pearce" <spearce@spearce.org> writes:
->>
->>> Junio C Hamano <junkio@cox.net> wrote:
->>>> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
->>>> 
->>>> > Remove unnecessary '-S' option that enabled less to chop long lines.
->>>> > It used to provide some confusion at least for the 'git diff':
->>>> > "Where are my long lines? Are they missed from the patch?".
->>>> 
->>>> It is not "unnecessary", but only "what _you_ are not used to".
->>>> As this breaks expectentions of people already familiar with
->>>> what git does by default, I cannot take this patch.
->>>
->>> Hear hear.  I completely agree with Junio.  I (and a number of
->>> other users that I work with) expect this behevaior by default.
->>
->>Two tips.
->>
->> (1) Learn to use left/right arrow keys under "less -S" if you
->>     have occasional lines that are too long.
+> I stumbled across this in the context of the fchmod 0444 patch.
+> At first, I was going to unlink and call error like the two subsequent
+> tests do, but a failed write (above) provokes a "die", so I made
+> this do the same.  This is testing for a write failure, after all.
 >
-> Hmm, looking at the code: why, if the environment variable LESS is
-> already set, should this all be worth talking about?  Shouldn't the
-> user be able to set LESS to whatever they want, once, and be done with
-> it?  The current setenv() call to set up the pager does this, correct?
+> Signed-off-by: Jim Meyering <jim@meyering.net>
+> ---
+>  sha1_file.c |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 0897b94..42aef33 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2155,7 +2155,8 @@ int write_sha1_from_fd(const unsigned char *sha1, int fd, char *buffer,
+>  	inflateEnd(&stream);
+>
+>  	fchmod(local, 0444);
+> -	close(local);
+> +	if (close(local) != 0)
+> +		die("unable to write sha1 file");
+>  	SHA1_Final(real_sha1, &c);
+>  	if (ret != Z_STREAM_END) {
+>  		unlink(tmpfile);
+> --
+> 1.5.1.rc1.51.gb08b
 
-Yes.  That would make the third tip ;-).
+Hmph.  Not catching error from close() is wrong, so this is an
+improvement, but it still leaves tmpfile on the filesystem,
+doesn't it?
+
+Looking at write_sha1_file(), which is in a sense more important
+than this function, it is worse.  We should also detect error
+from close(), nuke the temporary file and return an error there.
