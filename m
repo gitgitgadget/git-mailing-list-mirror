@@ -1,162 +1,106 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Understanding version 4 packs
-Date: Mon, 26 Mar 2007 19:10:05 +0200
-Message-ID: <e5bfff550703261010u67aa1207j1c6f0200bb7744a@mail.gmail.com>
-References: <20070324202356.GA20734@bohr.gbar.dtu.dk>
-	 <alpine.LFD.0.83.0703241913110.18328@xanadu.home>
-	 <20070325083530.GA25523@bohr.gbar.dtu.dk>
-	 <20070325091806.GH25863@spearce.org>
-	 <e5bfff550703260516q5da5f46et8aab2ebadcd9cceb@mail.gmail.com>
-	 <alpine.LFD.0.83.0703261015110.3041@xanadu.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Support comparing blobs (files) with different names
+Date: Mon, 26 Mar 2007 18:12:09 +0100
+Message-ID: <200703261912.09445.jnareb@gmail.com>
+References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <11748548621186-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Peter Eriksen" <s022018@student.dtu.dk>, git@vger.kernel.org
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Mar 26 19:10:17 2007
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Mon Mar 26 19:11:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVshw-0003Ha-WE
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 19:10:13 +0200
+	id 1HVsiv-0003jP-6g
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 19:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753005AbXCZRKJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 13:10:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753008AbXCZRKI
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 13:10:08 -0400
-Received: from nz-out-0506.google.com ([64.233.162.232]:9616 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753005AbXCZRKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 13:10:07 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so2095197nze
-        for <git@vger.kernel.org>; Mon, 26 Mar 2007 10:10:06 -0700 (PDT)
+	id S1753015AbXCZRLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 13:11:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbXCZRLK
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 13:11:10 -0400
+Received: from mu-out-0910.google.com ([209.85.134.185]:20876 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753006AbXCZRLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 13:11:08 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so2813383muf
+        for <git@vger.kernel.org>; Mon, 26 Mar 2007 10:11:06 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=exiSdeuNx3Bqq+HbaV3jHUG8r0z+0Y/DLio5A0+KXaW5ouv9SWFvq4sk5Ne4eADRXGltwByWgNLK1GlVuHqQXJMr6v/EW0yzKmdJpauoQzv+nk/8Iueazz7XSHc/cW0NRiQO2sgxPvmTlNIOvywCQiszFKxWqkAQqgiXkHK+lQA=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=Qi4KI2+9JPNKHrTMSL3cctfeK7c7z79RtP3GEkcxaqMPh6vTBSpp0LL2MFmmasK7eecNjm8iS1MOSvnq9UYmANP0XIwMogfHc0bH6hKm5JpwvdovsaMbCh+N3LS0gWJjok2BHf5pmd1OdVfLGOF+3iBw+JCPjFt+FE5u1ZdTWmM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=D1EqsQvNoGW10EzP3zrzHnihS55I2XOAwlPT25QAr8N9AA3ZC1O5I7MO1JJZevCw2V8gCpyUVnhofdYKkEtxKUVgiyQO6tDDqwuqp8NT4hxrT6fyiWNQnX36lRpPTecgtdGzMctw1/ifqJPYdRV46XpPjolW7gVbaniVBde44ks=
-Received: by 10.114.195.19 with SMTP id s19mr2712795waf.1174929005734;
-        Mon, 26 Mar 2007 10:10:05 -0700 (PDT)
-Received: by 10.114.60.16 with HTTP; Mon, 26 Mar 2007 10:10:05 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.83.0703261015110.3041@xanadu.home>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
+        b=QLAhblHJv2tC7p8uneDLPLWTKAvZIOSGqfxm0F3OXqX/2fUp5bb7JlWErCdqk7bkb3OpZDFt3JFoSlhJIrTYkNlQBc3DNHG+YNYq5VkT9HZM7UV/BZj+lpXixqSsVygfwi3jgCNo39hdENhNjG5UXfDiXjZBU2j6f7pOMmnvPhU=
+Received: by 10.82.178.11 with SMTP id a11mr14142228buf.1174929066402;
+        Mon, 26 Mar 2007 10:11:06 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id e9sm22102910muf.2007.03.26.10.11.04;
+        Mon, 26 Mar 2007 10:11:04 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <11748548621186-git-send-email-mkoegler@auto.tuwien.ac.at>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43161>
 
-On 3/26/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Mon, 26 Mar 2007, Marco Costalba wrote:
->
-> > Experimenting with file names cache in qgit I have found a big saving
-> > splitting the paths in base name and file name and indexing both:
-> >
-> > drivers\usb\host\ehci.h
-> > drivers\usb\host\ehci-pci.c
-> > drivers\usb\host\ohci-pci.c
-> > kernel\sched.c
-> >
-> > became:
-> >
-> > dir names table
-> >
-> > 0 drivers\usb\host
-> > 1 kernel
-> >
-> >
-> > file name table
-> >
-> > 0 ehci.h
-> > 1 ehci-pci.c
-> > 2 ohci-pci.c
-> >
-> > In this way a big saving is achieved in case of directories deep in
-> > the tree (long paths) and a lot of files.
->
-> Sure, but if you also consider drivers/usb/Makefile and drivers/Kconfig
-> for example then you start losing on space saving.
+Fix the bug that caused "blobdiff" view called with new style URI
+(it means with $hash_base ('hb') and $hash_parent_base ('hpb') denoting
+tree-ish, usually commit, which have blobs being compared) for
+renamed files (it means with both $file_name ('f') and $file_parent ('fp')
+parameters set) to be show as new (added) file diff.
 
-In your example you'd have:
+It is done by adding $file_parent ('fp') to the path limiter, meaning
+that diff command becomes:
 
-drivers/usb/Makefile
-drivers/Kconfig
+	git diff-tree [options] hpb hb -- fp f
 
-became
+instead of finding hash of a blob using git_get_hash_by_path subroutine
+or using extended SHA-1 syntax:
 
-dir names table
-0 drivers
-1 drivers/usb
+	git diff [options] hpb:fp hp:f
 
-file name table
-0 Makefile
-1 Kconfig
+Currently code for "blobdiff" does not support well mixed style URI,
+for example asking for diff between blob given by its hash only, or
+by hash and filename (without hash of tree-ish / commit), and blob
+given by hash base (hash of tree-ish / commit) and filename but without
+hash of blob itself, and probably would never will.
 
-I fail to see wher's the losing on space saving. More, you probably
-have many paths both under 'drivers' and 'drivers/usb' and for each
-added path it would be possible to avoid to store the prefix ('driver'
-or 'driver/usb').
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Martin, sorry for the confusing suggestion about using tree-ish:path
+syntax to compare (generate diff of) two file with different name.
 
-To better clarify, OBJ_DICT_TREE data *currently* looks like:
+This patch is less invasive and I think better solution.
 
-+------------+-------+-------+-------+-------+----
-| NR_ENTRIES | name1 | hash1 | name2 | hash2 | ...
-+------------+-------+-------+-------+-------+----
-  vint        2 bytes 4 bytes 2 bytes 4 bytes
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-where name1 is an index into the packfile's sole EXTOBJ_FILENAME_TABLE.
-
-The possible improve is to define OBJ_DICT_TREE like
-
-+------------+-------+-------+-------+-------+----
-| NR_ENTRIES | dir1   | fiile1 | hash1| dir 2| fiile2|...
-+------------+-------+-------+-------+-------+----
-  vint        2 bytes 2 bytes 2 bytes 4 bytes
-
-where dir1 is an index into a new EXTOBJ_DIRNAME_TABLE and file1 is an
-index in a new  EXTOBJ_FILENAME_TABLE.
-
-
-EXTOBJ_FILENAME_TABLE is defined as the currently (but much smaller in
-size!!) and keeps only the file names, not the full paths, while
-EXTOBJ_DIRNAME_TABLE is defined as EXTOBJ_FILENAME_TABLE but without
-MODE field (associated to files only) and is used to store the dir
-names.
-
-Decopuling dir names from file names could improve saving space
-because the length of proposed EXTOBJ_FILENAME_TABLE +
-EXTOBJ_DIRNAME_TABLE < current EXTOBJ_FILENAME_TABLE.
-
-  Marco
-
-P.S: Of course now you'd save 2+2 bytes in OBJ_DICT_TREE instead of 2
-for 'name' index.
-To avoid this and keep the idea of decopuling dir and file names an
-still use 2 bytes in OBJ_DICT_TREE a possible layout of
-EXTOBJ_FILENAME_TABLE could be:
-
-
- +------------+------+-------+-----------------+---
--+----------------+-------+------+----------+
- | NR_ENTRIES | dirA  |  file name1 | ofs1| file name2 | ofs 2|dirB
-|file name3 | ofs3 | ....
- +------------+------+-------+-----------------+----
-+---------------+--------+------+----------+
-
-Where ofs1 and ofs2 are 2-bytes values pointing to dirA, ofs3 points
-to dirB and so on.
-
-Where the tree layout of the above example is:
-
-dirA \ file name1
-dirA \ file name2
-dirB \ file name3
-
-With this approach you have both the saving in case of directories
-with many files and still 2 bytes per 'name' index in OBJ_DICT_TREE
-(that points to 'file name' field). This approach saves space as soon
-as directory names are longer then 2 chars.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5214050..c79bfeb 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3885,7 +3885,7 @@ sub git_blobdiff {
+ 			# read raw output
+ 			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+ 				$hash_parent_base, $hash_base,
+-				"--", $file_name
++				"--", (defined $file_parent ? $file_parent : ()), $file_name
+ 				or die_error(undef, "Open git-diff-tree failed");
+ 			@difftree = map { chomp; $_ } <$fd>;
+ 			close $fd
+@@ -3935,7 +3935,7 @@ sub git_blobdiff {
+ 		# open patch output
+ 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+ 			'-p', $hash_parent_base, $hash_base,
+-			"--", $file_name
++			"--", (defined $file_parent ? $file_parent : ()), $file_name
+ 			or die_error(undef, "Open git-diff-tree failed");
+ 	}
+ 
+-- 
+1.5.0.5
