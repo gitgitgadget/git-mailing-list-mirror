@@ -1,87 +1,84 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Submodule object store
-Date: Tue, 27 Mar 2007 01:55:27 +0200
-Message-ID: <20070326235527.GM22773@admingilde.org>
-References: <1174825838.12540.5.camel@localhost> <1174930688.5662.20.camel@localhost> <20070326183523.GG22773@admingilde.org> <200703262133.44520.Josef.Weidendorfer@gmx.de> <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net> <20070326233603.GL22773@admingilde.org> <Pine.LNX.4.63.0703261515330.14387@qynat.qvtvafvgr.pbz>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: show no difference message
+Date: Mon, 26 Mar 2007 22:01:38 +0100
+Message-ID: <200703262301.38858.jnareb@gmail.com>
+References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <200703261911.54013.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="QWRRbczYj8mXuejp"
-Cc: Junio C Hamano <junkio@cox.net>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Eric Lesh <eclesh@ucla.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: David Lang <david.lang@digitalinsight.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 01:55:36 2007
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Tue Mar 27 02:04:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVz2F-0003po-FC
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 01:55:35 +0200
+	id 1HVzAf-0008Jy-NO
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 02:04:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933814AbXCZXzc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 19:55:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933815AbXCZXzc
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 19:55:32 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:40703 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933814AbXCZXzc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 19:55:32 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HVz2A-0003QC-DP; Tue, 27 Mar 2007 01:55:30 +0200
+	id S933827AbXC0AEO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 20:04:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933834AbXC0AEO
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 20:04:14 -0400
+Received: from mu-out-0910.google.com ([209.85.134.190]:55744 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933827AbXC0AEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 20:04:12 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so2920865muf
+        for <git@vger.kernel.org>; Mon, 26 Mar 2007 17:04:10 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=h/1338NiHxqDD89xOosVpaAoOR7ZTzhFVcSOcnQnfDBByWgQl2SJgM0ZXIbImpjuoYsZvEV8I929IwNnrU9aMJbjaRC6+plECpVkVK3BtSd1ijRvI/HNsPyubFp4KOFdh37gj9SbznoKBHNMb4c5nImPLdc3iqgMT2zOOqRARr8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=YYDM62Hc7HYVGgoHSYUeHfx4rIT8ufK7+NHsx89vMznY99dmYlIrTgeFP+PS5ffA/Ol1BnTF2Dtf5Ypfda2xTw8r4DlUIDG6B4w91YM+T5Lw3yeBm++RyqPuTQClxB5MhV/+/Qidr/2SnSD1IzoKwWKWWGc+K7++d8L+8+F0pKQ=
+Received: by 10.82.108.9 with SMTP id g9mr14974519buc.1174953850502;
+        Mon, 26 Mar 2007 17:04:10 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id y2sm30209120mug.2007.03.26.17.04.08;
+        Mon, 26 Mar 2007 17:04:09 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <200703261911.54013.jnareb@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.63.0703261515330.14387@qynat.qvtvafvgr.pbz>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43210>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43211>
 
+On Mon, Mar 26, 2007, Jakub Narebski wrote:
+> On Sun, Mar 25, 2007, Martin Koegler wrote:
 
---QWRRbczYj8mXuejp
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 5214050..fbadab4 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -2376,6 +2376,7 @@ sub git_patchset_body {
+>>  
+>>  	my $patch_idx = 0;
+>>  	my $patch_line;
+>> +	my $empty = 0;
+>>  	my $diffinfo;
+>>  	my (%from, %to);
+>>  
+>> @@ -2396,6 +2397,7 @@ sub git_patchset_body {
+>>  		# git diff header
+>>  		#assert($patch_line =~ m/^diff /) if DEBUG;
+>>  		#assert($patch_line !~ m!$/$!) if DEBUG; # is chomp-ed
+>> +		$empty++;
+>>  		push @diff_header, $patch_line;
+>>  
+>>  		# extended diff header
+[...]
+> First, programming style. You named the variable $empty, when it
+> evaluates to true when the patch is _not_ empty, i.e. when some
+> differences are found.
 
-hoi :)
+By the way, I _think_ that you can use $patch_idx instead of creating
+new variable for that.
 
-On Mon, Mar 26, 2007 at 03:20:34PM -0800, David Lang wrote:
-> >I want to be able to list all objects which are not reachable in the
-> >object store, without traversing all submodules at the same time.
-> >The only way I can think of to achieve this is to have one separate
-> >object store per submodule and then do the traversal per submodule.
->=20
-> why do you want to optimize for the relativly rare fsck function rather=
-=20
-> then the more common read functions (which would benifit from shareing=20
-> object that are identical between projects)?
-
-Because I don't know how to make it _possible_ for large repositories
-otherwise.  Consider a Linux-distribution which handles each package
-as one submodule.
-
-I don't think that it's too much balanced towards fsck.
-The separated object store also helps reduce the memory requirement for
-large pushs/pulls.
-Sharing objects can be achieved by alternates if you want.
-If someone comes up with a nice way to handle everything in one big
-object store I would happily use that! :-)
-
---=20
-Martin Waitz
-
---QWRRbczYj8mXuejp
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGCF1vj/Eaxd/oD7IRAp+SAJ44GGvj6wzbmj9gmn+nw1ZtQvmKpgCeJx7D
-th4Jb1JWPgM3JYJId4AOE9w=
-=HXoa
------END PGP SIGNATURE-----
-
---QWRRbczYj8mXuejp--
+-- 
+Jakub Narebski
+Poland
