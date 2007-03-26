@@ -1,145 +1,134 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Supporting more gitweb diff possibities
-Date: Mon, 26 Mar 2007 18:11:38 +0100
-Message-ID: <200703261911.39328.jnareb@gmail.com>
-References: <20070325202642.GA20201@auto.tuwien.ac.at>
+Subject: Re: [PATCH] gitweb: support filename prefix in git_patchset_body
+Date: Mon, 26 Mar 2007 18:12:18 +0100
+Message-ID: <200703261912.18549.jnareb@gmail.com>
+References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <11748548623841-git-send-email-mkoegler@auto.tuwien.ac.at> <11748548622060-git-send-email-mkoegler@auto.tuwien.ac.at>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="iso-8859-1"
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-X-From: git-owner@vger.kernel.org Mon Mar 26 19:11:21 2007
+X-From: git-owner@vger.kernel.org Mon Mar 26 19:11:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVsiu-0003jP-LG
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 19:11:13 +0200
+	id 1HVsjB-0003rL-1m
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 19:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753012AbXCZRLJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 13:11:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbXCZRLJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 13:11:09 -0400
+	id S1753045AbXCZRLO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 13:11:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753018AbXCZRLM
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 13:11:12 -0400
 Received: from ug-out-1314.google.com ([66.249.92.170]:59275 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753012AbXCZRLH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 13:11:07 -0400
+	with ESMTP id S1753022AbXCZRLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 13:11:09 -0400
 Received: by ug-out-1314.google.com with SMTP id 44so1654982uga
-        for <git@vger.kernel.org>; Mon, 26 Mar 2007 10:11:02 -0700 (PDT)
+        for <git@vger.kernel.org>; Mon, 26 Mar 2007 10:11:08 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        b=tqDvWPAZB/lyJSU/a1LPVz1k7wB1BAPCDm9DfQ7+JQMGDrsCbAT6bZTU3VsxBlnWLBD37gndjPiF/5FLMdscgURhlBp8fhaojGepRokSscZyDsTqPv4Sd8qqC72zQCEdD+IfxmGxpOHh854vmBglXsahIAlCxlrWCREJ05+UvKw=
+        b=LB2RUUUHKtYg2M/JnTvEJxomQmiGQKzt262OuMUVfjLjFgd40JtbG6t3M4CP7RbJO3/NW5gYYko/pgVbAVClAHcxxGwT6tOCoFcbJYRs08Fv78ygroGBk24LM0Td5fhcH2CmVJsuKTD7nZRMl1T1pY8JP5bD4vPXPfB6j72PVt0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        b=F1VotlWfO6J16pW3t8CBEOR3RzXZFqmx5HAMjeMeEDtVSnZx0TcN3t1XRPFMEABHjtrVozyf8zTpftgtVcWrBfB99saWGsTqNknWj9ug4haz+avZPvdgSO3NsMD8tFDk3++VgCHXtezdSKQtPGic0r7kB8/EyHQNwJokXxJOaKw=
-Received: by 10.78.81.20 with SMTP id e20mr3121488hub.1174929062025;
-        Mon, 26 Mar 2007 10:11:02 -0700 (PDT)
+        b=gbO7ftGZrfIpmWYg3if/03+YQAKg7eg3nuUznO6POFnQRL8MsmhyPoXqdfBEEr3XtRJRSXbH6tXF1EcU7eInR9lXqWOjGobQNpXQWYC9uKf28Oq7XPxVFvXMU3j0nfPpPlt55xTP75q8iBDuHXDUgqCLodmSicYNjwwxHrTTXKM=
+Received: by 10.78.149.15 with SMTP id w15mr3119539hud.1174929068243;
+        Mon, 26 Mar 2007 10:11:08 -0700 (PDT)
 Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id e9sm22102910muf.2007.03.26.10.10.58;
-        Mon, 26 Mar 2007 10:10:59 -0700 (PDT)
+        by mx.google.com with ESMTP id e9sm22102910muf.2007.03.26.10.11.06;
+        Mon, 26 Mar 2007 10:11:07 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <20070325202642.GA20201@auto.tuwien.ac.at>
+In-Reply-To: <11748548622060-git-send-email-mkoegler@auto.tuwien.ac.at>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43163>
 
 On Sun, Mar 25, 2007, Martin Koegler wrote:
 
-> I have done a first series of 6 patches, which improves blobdiff and
-> adds treediff.
-
-Just a few nits.
-
-First, I think it would be better to have individual patches to be
-replies to this cover letter, either directly (all patch mails
-are replies to cover letter) or indirectly (i.e. chained, the later
-patch is reply to earlier patch, first patch ir reply to cover letter).
-
-Second, it is a good idea to _number_ patches in series, i.e. have
-  "[PATCH 0/6] Supporting more gitweb diff possibities"
-as cover letter subject, and number patches respectively. The option
-`-n' of git-format-patch (together with --start-number if you make
-patches one by one) takes care of that.
-
-> [PATCH] gitweb: show no difference message
-
-This should be I think: 
-  "[PATCH 1/6] gitweb: show "no difference" message for empty diff"
-
-> This patch shows an "no difference" message instead of nothing for
-> equal objects.
-
-This is a good patch, worth doing even without rest of the patches.
-
-Currently we have only one place (I think) where gitweb can generate
-link to "blobdiff", namely "diff to parent" link in "history" view
-for plain file, when e.g. some change was (explicitely or accidentally)
-reverted.
-
-The few comments about style (variable naming, CSS style for 
-"no differences" message) are in the reply to the patch.
-
-> [PATCH] gitweb: Support comparing blobs with different names
+> git_treediff supports comparing subdirectories. As the output of
+> git-difftree is missing the path to the compared directories,
+> the links in the output would be wrong.
 > 
-> This patch adds support for comparing objects with different file
-> names using hb/hbp.
+> The patch adds two new parameters to add the missing path prefix.
 
-Good idea; I have replied with an alternate solution, involving adding
-'fp' to git-diff-tree path limit instead of git-diff with hpb:fp.
+Wouldn't it be better to concatenate the two "path prefix" patches
+together? They are about the same thing.
 
-I'm sorry for the confusing advice wrt. git_blobdiff and rename diffs.
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 4c371b2..4195b1a 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2372,7 +2372,7 @@ sub git_difftree_body {
+>  }
+>  
+>  sub git_patchset_body {
+> -	my ($fd, $difftree, $hash, $hash_parent) = @_;
+> +	my ($fd, $difftree, $hash, $hash_parent, $file_name, $file_parent) = @_;
+>  
+>  	my $patch_idx = 0;
+>  	my $patch_line;
 
-> [PATCH] gitweb: link base commit (hpb) to blobdiff output
-> 
-> Add link the parent commit, as there is currently no such link.
+I'd rather use $from_prefix, $to_prefix here, or $basedif_name,
+$basedir_parent, or $dir_name, $dir_parent (my preference is to
+$from_prefix, $to_prefix variables).
 
-I'm rather ambivalent about this patch. Perhaps there is currently no such
-link, but you can always click on one of the links to parent blob, and
-from blob view to commit, commitdiff or tree.
+> @@ -2380,6 +2380,9 @@ sub git_patchset_body {
+>  	my $diffinfo;
+>  	my (%from, %to);
+>  
+> +	$file_name = (!defined $file_name)?"":($file_name."/");
+> +	$file_parent = (!defined $file_parent)?"":($file_parent."/");
+> +
+>  	print "<div class=\"patchset\">\n";
+>  
+>  	# skip to first patch
 
-By the way, the "(from: _commitdiff_)" link in "commitdiff" view
-(and similar one in "commit" view) is part of the "next link" family
-of "(parent: _commitdiff_)" and "(merge: _commitdiff_ _commitdiff_)"
-which allow to go down the line of parents without need to change
-views (or go to the 'parent' header in the case of "commit" view),
-just like you would press PageDown during "git log" or "git log -p"
-invocation from the command line. "(from: _commitdiff_)" was added
-only for completeness (and because it was easy to do).
+Minor nit: I'd rather write
 
-> [PATCH] gitweb: support filename prefix in git_patchset_body
-> [PATCH] gitweb: support filename prefix in git_difftree_body
++	$from_prefix = !defined $from_prefix ? '' : $from_prefix.'/';
++	$to_prefix   = !defined $to_prefix   ? '' : $to_prefix . '/';
++	$to_prefix ||= $from_prefix;  # to allow to pass common prefix once
++
 
-I'm not sure if those patches should or should not be concatenated
-together in one commit.
+or something like that, or just modify $from{'file'} and $to{'file'}
 
-See further comments on style (variable naming) and alternate solution
-in the comments to first patch of those two: they refer to both patches.
+	$from{'file'} = (!defined $from_prefix ? '' : $from_prefix.'/') . $from{'file'};
+	$to{'file'}   = (!defined $to_prefix   ? '' : $to_prefix . '/') . $to{'file'};
 
-> [PATCH] gitweb: Add treediff
+just after setting $from{'file'} and $to{'file'}, although the second
+solution would additionally add prefix to the shown patch body itself.
 
-Shouldn't it be:
-  "[PATCH 6/6] gitweb: Add "treediff" and "treediff_plain" views"
+> @@ -2439,14 +2442,14 @@ sub git_patchset_body {
+>  			if ($diffinfo->{'status'} ne "A") { # not new (added) file
+>  				$from{'href'} = href(action=>"blob", hash_base=>$hash_parent,
+>  				                     hash=>$diffinfo->{'from_id'},
+> -				                     file_name=>$from{'file'});
+> +				                     file_name=>$file_parent.$from{'file'});
+>  			} else {
+>  				delete $from{'href'};
+>  			}
+>  			if ($diffinfo->{'status'} ne "D") { # not deleted file
+>  				$to{'href'} = href(action=>"blob", hash_base=>$hash,
+>  				                   hash=>$diffinfo->{'to_id'},
+> -				                   file_name=>$to{'file'});
+> +				                   file_name=>$file_name.$to{'file'});
+>  			} else {
+>  				delete $to{'href'};
+>  			}
 
-> These 3 patches add the treediff method. Its a complete reworked
-> verion. As git-diff-tree outputs relative patches (discards part of the
-> compared tree objects), the first two patches are necessary to produce
-> correct links in the treediff output.
+Another solution would be to not add additional parameters to
+git_difftree_body and git_patchset_body subroutines (although it is nice
+touch towards completeness), but modify %diffinfo in the caller, but this
+would change also patch contents (in from-file / to-file diff header, etc.)
+which might not be a good thing.
 
-See comments for that patch.
-
-> I do not see many possibilties for code sharing with git_commitdiff:
-> The only large portion of common code is calling git-diff-tree. I
-> don't think that this would justify the more complex code.
-
-I was not thinking about using git_commitdiff to generate "treediff"
-view, but rather about extracting the common code into separate subroutine.
-But it might (or might not) be not worth the hassle. And it can always
-be done in separate "refactoring" patch.
+I'm not sure if we should not add information somewhere that paths are
+prefixed/shortened, but this might be left for later patch.
 
 -- 
 Jakub Narebski
