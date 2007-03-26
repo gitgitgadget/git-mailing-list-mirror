@@ -1,95 +1,63 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Understanding version 4 packs
-Date: Mon, 26 Mar 2007 10:27:39 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703261015110.3041@xanadu.home>
-References: <20070324202356.GA20734@bohr.gbar.dtu.dk>
- <alpine.LFD.0.83.0703241913110.18328@xanadu.home>
- <20070325083530.GA25523@bohr.gbar.dtu.dk> <20070325091806.GH25863@spearce.org>
- <e5bfff550703260516q5da5f46et8aab2ebadcd9cceb@mail.gmail.com>
+From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
+Subject: Removing a newly added file
+Date: Mon, 26 Mar 2007 16:59:57 +0200
+Message-ID: <8aa486160703260759v438d445ev82161600d8e8bf02@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Mar 26 16:27:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Mar 26 17:00:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVqAi-0004jJ-Fy
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 16:27:44 +0200
+	id 1HVqgM-0002xP-4f
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 17:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720AbXCZO1l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 10:27:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752754AbXCZO1l
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 10:27:41 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:22087 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752720AbXCZO1k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 10:27:40 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFI00J7ZLI3WG30@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 26 Mar 2007 10:27:39 -0400 (EDT)
-In-reply-to: <e5bfff550703260516q5da5f46et8aab2ebadcd9cceb@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1752795AbXCZPAA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 11:00:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752814AbXCZPAA
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 11:00:00 -0400
+Received: from nf-out-0910.google.com ([64.233.182.184]:9541 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752795AbXCZO77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 10:59:59 -0400
+Received: by nf-out-0910.google.com with SMTP id o25so2918300nfa
+        for <git@vger.kernel.org>; Mon, 26 Mar 2007 07:59:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=lUNnFrmtKarLvZxy5kH2hu/0PIcf/4chRD8Luee0hRVImoqE62Qg2E9nphH00iQlRAla6aqKDxagYaYBIpHwon/itg0CRs66ipWtx/u1M1DtnDoyggxiZF7g/nz3FEyA7MOLW3x+A+G6hMq4KtOJQmBnE47R2IB6tUeVevwttPA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=Zf/6ZBSDc0KaWvkHII3lE5M6nOXGHwOeb3GXHyQqOdWZAwroz8Z/y5REolqH8Jtlf8NBBLxN3TwRj6uIZcQXbXq2dxFBtorlilX7xPZKgOk/44pkeCHnyIRUoDxTt8xeb0Xb82N+f+KgzP0Rw1tpRB7STFS2W5dGtYfcW3BxCEs=
+Received: by 10.78.106.3 with SMTP id e3mr3023373huc.1174921197956;
+        Mon, 26 Mar 2007 07:59:57 -0700 (PDT)
+Received: by 10.78.69.4 with HTTP; Mon, 26 Mar 2007 07:59:57 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43156>
 
-On Mon, 26 Mar 2007, Marco Costalba wrote:
+Hi *,
 
-> Experimenting with file names cache in qgit I have found a big saving
-> splitting the paths in base name and file name and indexing both:
-> 
-> drivers\usb\host\ehci.h
-> drivers\usb\host\ehci-pci.c
-> drivers\usb\host\ohci-pci.c
-> kernel\sched.c
-> 
-> became:
-> 
-> dir names table
-> 
-> 0 drivers\usb\host
-> 1 kernel
-> 
-> 
-> file name table
-> 
-> 0 ehci.h
-> 1 ehci-pci.c
-> 2 ohci-pci.c
-> 
-> In this way a big saving is achieved in case of directories deep in
-> the tree (long paths) and a lot of files. 
+  when you try removing a newly added file it success and removes the
+file from the working directory. So if you do:
 
-Sure, but if you also consider drivers/usb/Makefile and drivers/Kconfig 
-for example then you start losing on space saving.  Maybe that makes 
-sense for qgit but it has no advantage in a pack which contains every 
-possible files.
+$ echo "newly added file" > new
+$ git add new
+$ git rm new
 
-> Regarding MODE field an observation could be that is almost always the
-> same, so an idea could be to store a 'default mode' just after
-> nr_entries and do not add the field any more except in case path mode
-> is different from default mode.
+the file "new" is lost, it is not in the index, neither in HEAD. At
+this moment the only way to recover the file new is searching for
+unreachable objects. (Am I missing something?)
 
-If the mode is always the same, or most likely similar for many entries 
-then it will compress very well.  In fact in the current table format 
-the tree byte sequence NULL+16-bit-mode will be quite common and likely 
-to deflate accordingly.  This is therefore not worth adding more complex 
-handling at runtime for deciding which mode to use, and still you'd have 
-to store a flag for each path component to decide if the default mode 
-should be used or not anyway.
+  I think that the "git rm new" should remove "new" from the index or
+should fail, maybe with:
 
-> In case this could bring to unaligned
-> entries another idea could be to store _all_ mode fields at the
-> beginning (or at the end and let deflate to remove almost everything
-> more easily)
+$ git rm new
+error: 'new' is not in HEAD (hint: try --cached)
 
-That's worth trying indeed.
-
-
-Nicolas
+  Santi
