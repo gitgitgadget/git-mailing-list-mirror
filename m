@@ -1,97 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: .gitlink for Summer of Code
-Date: Mon, 26 Mar 2007 21:49:30 +0200
-Message-ID: <vpqodmfss39.fsf@olympe.imag.fr>
-References: <1174825838.12540.5.camel@localhost>
-	<1174930688.5662.20.camel@localhost>
-	<20070326183523.GG22773@admingilde.org>
-	<200703262133.44520.Josef.Weidendorfer@gmx.de>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] pager: default to LESS=FRX not LESS=FRSX
+Date: Mon, 26 Mar 2007 13:27:15 -0700
+Message-ID: <7vd52vwy1o.fsf@assigned-by-dhcp.cox.net>
+References: <20070326073502.GD44578@codelabs.ru>
+	<7vwt14xvaw.fsf@assigned-by-dhcp.cox.net>
+	<20070326083617.GG13247@spearce.org>
+	<7v8xdkxukt.fsf@assigned-by-dhcp.cox.net>
+	<17928.7076.871485.136142@lisa.zopyra.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 26 21:49:43 2007
+Cc: Eygene Ryabinkin <rea-git@codelabs.ru>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 22:27:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVvCH-0007Kl-OI
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 21:49:42 +0200
+	id 1HVvmj-00028b-0C
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 22:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753755AbXCZTti (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 15:49:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753754AbXCZTti
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 15:49:38 -0400
-Received: from imag.imag.fr ([129.88.30.1]:48725 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751250AbXCZTth (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 15:49:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l2QJnUcY028599
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 26 Mar 2007 21:49:30 +0200 (CEST)
-Received: from olympe.imag.fr ([129.88.43.60])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HVvC6-0007z7-8G
-	for git@vger.kernel.org; Mon, 26 Mar 2007 21:49:30 +0200
-Received: from moy by olympe.imag.fr with local (Exim 4.50)
-	id 1HVvC6-00019M-5l
-	for git@vger.kernel.org; Mon, 26 Mar 2007 21:49:30 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <200703262133.44520.Josef.Weidendorfer@gmx.de> (Josef Weidendorfer's message of "Mon\, 26 Mar 2007 21\:33\:44 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 26 Mar 2007 21:49:30 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751334AbXCZU1S (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 16:27:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751831AbXCZU1S
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 16:27:18 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:52607 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751334AbXCZU1R (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 16:27:17 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070326202716.NTTK18070.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 26 Mar 2007 16:27:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id fYTF1W00e1kojtg0000000; Mon, 26 Mar 2007 16:27:16 -0400
+In-Reply-To: <17928.7076.871485.136142@lisa.zopyra.com> (Bill Lear's message
+	of "Mon, 26 Mar 2007 13:14:44 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43180>
 
-Josef Weidendorfer <Josef.Weidendorfer@gmx.de> writes:
+Bill Lear <rael@zopyra.com> writes:
 
-> This would work. However, you can not clone from an almost empty .git
-> directory with current git.
+> On Monday, March 26, 2007 at 01:44:34 (-0700) Junio C Hamano writes:
+>>"Shawn O. Pearce" <spearce@spearce.org> writes:
+>>
+>>> Junio C Hamano <junkio@cox.net> wrote:
+>>>> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+>>>> 
+>>>> > Remove unnecessary '-S' option that enabled less to chop long lines.
+>>>> > It used to provide some confusion at least for the 'git diff':
+>>>> > "Where are my long lines? Are they missed from the patch?".
+>>>> 
+>>>> It is not "unnecessary", but only "what _you_ are not used to".
+>>>> As this breaks expectentions of people already familiar with
+>>>> what git does by default, I cannot take this patch.
+>>>
+>>> Hear hear.  I completely agree with Junio.  I (and a number of
+>>> other users that I work with) expect this behevaior by default.
+>>
+>>Two tips.
+>>
+>> (1) Learn to use left/right arrow keys under "less -S" if you
+>>     have occasional lines that are too long.
+>
+> Hmm, looking at the code: why, if the environment variable LESS is
+> already set, should this all be worth talking about?  Shouldn't the
+> user be able to set LESS to whatever they want, once, and be done with
+> it?  The current setenv() call to set up the pager does this, correct?
 
-Of course not. If you say "have .git/ <=> is a repository", then your
-lightweight checkout should not have a .git/. But why should anything
-that have a .git/ directory be a repository??
-
-> The original proposal was to have a standard .git directory for every
-> light-weight checkout inside of the base .git directory, e.g.
-> in <base>/.git/ext/<name>.git where <name> is some identifier for the
-> lightweight checkout, either provided in the .gitlink file or
-> automatically determined.
-
-That seems really weird. That implies for example:
-
-* Deleting a checkout means deleting both your local tree _and_ a part
-  of the .git/ directory of the repository. Have you ever imagined
-  having to do more than "rm -fr working-tree" even with an inferior
-  VCS such as CVS?
-
-* It makes it impossible to have a checkout of a read-only location.
-  For example, if one of my colleague has a repository in
-  /home/otheruser/repo/, if I want to get a working tree of it, I need
-  to get a complete clone of his repo to be able to do it. Assuming
-  someone ever implements a "lightweight checkout of a remote
-  location" (bzr has this for example. You can run 
-  "bzr checkout --lightweigth http://whatever.com/), this would mean
-  creating a directory on the server for each of the potential
-  clients, not to mention the impossibility to do it over http.
-
-* You have to manage a name for each lightweight checkout. What would
-  be such name? User-provided? uuidgen-like?
-
-
-I find the way bzr deals with this pretty elegant: a repository with a
-working tree is just a working tree and a repository located in the
-same directory. The repository stores its files (content of each
-revisions in history, ...) in .bzr/repository/, and the working tree
-stores them (the index, pending merges, ... and pointer to the
-corresponding branch) in .bzr/checkout/.
-
--- 
-Matthieu
+Yes.  That would make the third tip ;-).
