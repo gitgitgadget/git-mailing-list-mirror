@@ -1,72 +1,72 @@
-From: Han-Wen Nienhuys <hanwen@xs4all.nl>
-Subject: Re: Subproject status
-Date: Mon, 26 Mar 2007 01:34:53 -0300
-Message-ID: <46074D6D.1050301@xs4all.nl>
-References: <Pine.LNX.4.64.0703251304280.6485@iabervon.org> <eu70tc$38c$1@sea.gmane.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Documentation: Replace @@GIT_VERSION@@ in documentation
+Date: Sun, 25 Mar 2007 22:33:42 -0700
+Message-ID: <7v7it41scp.fsf@assigned-by-dhcp.cox.net>
+References: <7vircqe389.fsf@assigned-by-dhcp.cox.net>
+	<11748238102228-git-send-email-frank@lichtenheld.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Mar 26 06:35:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Mon Mar 26 07:33:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVgvT-00051R-FX
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 06:35:23 +0200
+	id 1HVhpz-0000EU-0w
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 07:33:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933581AbXCZEfU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 00:35:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933590AbXCZEfU
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 00:35:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:43486 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933581AbXCZEfT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 00:35:19 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HVgvG-0002PR-LW
-	for git@vger.kernel.org; Mon, 26 Mar 2007 06:35:10 +0200
-Received: from bhe200139179018.res-com.wayinternet.com.br ([200.139.179.18])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 26 Mar 2007 06:35:10 +0200
-Received: from hanwen by bhe200139179018.res-com.wayinternet.com.br with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 26 Mar 2007 06:35:10 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: bhe200139179018.res-com.wayinternet.com.br
-User-Agent: Thunderbird 1.5.0.10 (X11/20070306)
-In-Reply-To: <eu70tc$38c$1@sea.gmane.org>
+	id S933590AbXCZFdo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 01:33:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933593AbXCZFdo
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 01:33:44 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:64056 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933590AbXCZFdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 01:33:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070326053344.CLJJ1606.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 26 Mar 2007 01:33:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id fHZi1W00B1kojtg0000000; Mon, 26 Mar 2007 01:33:43 -0400
+In-Reply-To: <11748238102228-git-send-email-frank@lichtenheld.de> (Frank
+	Lichtenheld's message of "Sun, 25 Mar 2007 13:56:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43112>
 
-Jakub Narebski wrote:
-> [Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org]
-> 
-> Daniel Barkalow wrote:
-> 
->> I remember that last time I checked, there were a number of designs for 
->> subprojects and at least a couple of implementations, but none that was 
->> complete to the point of being mergeable. Are there any subproject 
->> implementations available that haven't run into unsolveable problems? I'm 
->> presently only looking at stuff that totals to a reasonable single project 
->> size and rate of growth, so I'm not worried about the large-scale storage 
->> requirement issue.
-> 
-> Check out http://git.or.cz/gitwiki/SubprojectSupport
+Frank Lichtenheld <frank@lichtenheld.de> writes:
 
-this points to
+>  %.html : %.txt
+>  	$(ASCIIDOC) -b xhtml11 -d manpage -f asciidoc.conf $(ASCIIDOC_EXTRA) $<
+> +	sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' $@ >$@+
+> +	mv $@+ $@
+>  
+>  %.1 %.7 : %.xml
+>  	xmlto -m callouts.xsl man $<
+>  
+>  %.xml : %.txt
+>  	$(ASCIIDOC) -b docbook -d manpage -f asciidoc.conf $<
+> +	sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' $@ >$@+
+> +	mv $@+ $@
+>  
+>  user-manual.xml: user-manual.txt user-manual.conf
+>  	$(ASCIIDOC) -b docbook -d book $<
 
-  http://www.kernel.org/git/?p=git/git.git;a=blob;hb=todo;f=Subpro.txt
+Sorry, but these compositions are wrong, as the build procedure
+can die after asciidoc finishes but before it manages to finish
+sed/mv.  The next make invocation would not know that the
+previous one did not complete and would assume that the build
+product %.html or %.xml are up to date.
 
-which is a broken. It results in
+Ideally if we can persuade asciidoc to output to its stdout, we
+could do this:
 
-
-
-1Reading blob failed.
-
-
-Han-Wen
+	rm -f $@+ $@
+        $(ASCIIDOC) --to-stdout ... | sed -e $(script) >$@+
+        mv $@+ $@
