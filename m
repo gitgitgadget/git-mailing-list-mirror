@@ -1,103 +1,61 @@
-From: Mark Nudelman <markn@greenwoodsoftware.com>
-Subject: Re: [Announce] GIT v1.5.0-rc2
-Date: Mon, 26 Mar 2007 17:07:55 -0700
-Message-ID: <4608605B.7050105@greenwoodsoftware.com>
-References: <7v64b04v2e.fsf@assigned-by-dhcp.cox.net> <eovccc$usc$1@sea.gmane.org> <Pine.LNX.4.63.0701211207500.22628@wbgn013.biozentrum.uni-wuerzburg.de> <17846.20498.635623.173653@lisa.zopyra.com> <Pine.LNX.4.64.0701231157430.32200@woody.linux-foundation.org>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: Subproject status
+Date: Mon, 26 Mar 2007 15:46:58 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0703261541370.14387@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.64.0703251304280.6485@iabervon.org><20070326093906.G
+ F22773@admingilde.org> <Pine.LNX.4.64.0703261920070.6485@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Bill Lear <rael@zopyra.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Mar 27 02:13:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Martin Waitz <tali@admingilde.org>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Mar 27 02:13:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVzJC-0004OZ-SZ
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 02:13:07 +0200
+	id 1HVzJU-0004XM-5e
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 02:13:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933786AbXC0AM6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 20:12:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933853AbXC0AM6
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 20:12:58 -0400
-Received: from alnrmhc13.comcast.net ([204.127.225.93]:36876 "EHLO
-	alnrmhc13.comcast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933786AbXC0AM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 20:12:57 -0400
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Mar 2007 20:12:57 EDT
-Received: from [192.168.1.143] (c-24-6-147-161.hsd1.ca.comcast.net[24.6.147.161])
-          by comcast.net (alnrmhc13) with ESMTP
-          id <20070327000754b13009lbite>; Tue, 27 Mar 2007 00:07:55 +0000
-User-Agent: Thunderbird 1.5.0.7 (Windows/20060909)
-In-Reply-To: <Pine.LNX.4.64.0701231157430.32200@woody.linux-foundation.org>
+	id S933846AbXC0ANU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 20:13:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933850AbXC0ANU
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 20:13:20 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:36937 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S933846AbXC0ANT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 20:13:19 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 26 Mar 2007 16:13:19 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Mon, 26 Mar 2007 17:13:07 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <Pine.LNX.4.64.0703261920070.6485@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43216>
 
-Hi all,
-I'm not sure if you are still interested in this, but I have posted a 
-beta release of less (less-401) which I believe fixes both of these 
-problems.  See http://www.greenwoodsoftware.com/less.  If you try it, 
-let me know how it works for you.
+On Mon, 26 Mar 2007, Daniel Barkalow wrote:
 
---Mark
+>
+> So, I had the nutty idea that it would be convenient if I could make
+> different files in a single directory come from different projects. But I
+> can't think of a sane user interface, so I think that this isn't
+> practical from that direction, so it's probably not worth worrying about
+> from the data structure end, either. (Answer for the usecase:
+> "ln -s make/Makefile Makefile; git add Makefile", and mock systems that
+> don't handle symlinks).
+>
 
+this would definantly be useful (managing files in /etc or /home are easy 
+examples
 
-On 1/23/2007 12:32 PM, Linus Torvalds wrote:
-> [ Added "less" author Mark Nudelman to Cc: ]
-> 
-> On Tue, 23 Jan 2007, Bill Lear wrote:
->> I can't seem to get this to work, no matter what I do, using the
->> latest 1.5.0-rc2 code.  I have the environment variables LESS, PAGER,
->> PAGER_FLAGS, and I can't seem to get 'git diff' to not plough through
->> my screen each time it is run, no matter the combinations...  Could
->> someone post the magic?
-> 
-> I think "less" is actually seriously buggy with -F.
-> 
-> There are two bugs:
-> 
->  - it will always screw up the screen and move to the end. It does this 
->    even if you use -FX which should disable any init sequences, so it's 
->    not about that problem.
-> 
->  - if you resize the terminal while less is waiting for input, less
->    will exit entirely without even showing the output. This is very
->    noticeable if you do something like "git diff" on a big and cold-cache 
->    tree and git takes a few seconds to think, and then you resize the 
->    window while it's preparing. Boom. No output AT ALL.
-> 
-> Both bugs are easily seen with this simple command line
-> 
-> 	clear ; (sleep 5 ; echo Hello) | less -F
-> 
-> where you would EXPECT that the "Hello" would show up at the first line of 
-> the screen (since we cleared the screen and moved to the top left corner), 
-> but in fact it doesn't.
-> 
-> And try resizing the terminal to make it bigger during the five-second 
-> pause, and now you'll see less not show the "Hello" at _all_. It's just 
-> gone (this is true even if the output was _more_ than a screen: try with
-> 
-> 	(sleep 10 ; yes ) | less -F
-> 
-> and resize the screen, and it will exit silently after 10 seconds - never 
-> showing any output at all! Even though the output is obviously bigger than 
-> a screen..
-> 
-> Tested with Kterm, gnome-terminal and xterm. They all behave the same for 
-> me.
-> 
-> I don't know exactly what the bug is, but I find the "eof" handling very
-> confusing in the less sources. It makes me suspect that there is something 
-> that gets confused by the partial read, sets EOF (since we're on the last 
-> line), and then thinks that it should quit, since EOF is set.
-> 
-> I dunno. Mark?
-> 
-> 		Linus
-> 
+for this sort of thing doing 'git add file -index project' would be a fair 
+first-cut at a UI. later on how about creating a dummy .git directory that would 
+record 'file X is part of project Y' so that you could get away with only 
+specifying it once, and then either have a default, or have git add complain if 
+there are multiple places to put things and you don't specify which one (and if 
+you add fules to multiple projects at the same time then you could either prompt 
+for additional checkin comments as needed, or use the same comment for all 
+projects)
+
+David Lang
