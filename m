@@ -1,92 +1,105 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Subproject status
-Date: Mon, 26 Mar 2007 20:04:59 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0703261920070.6485@iabervon.org>
-References: <Pine.LNX.4.64.0703251304280.6485@iabervon.org>
- <20070326093906.GF22773@admingilde.org>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: Submodule object store
+Date: Mon, 26 Mar 2007 15:40:15 -0800 (PST)
+Message-ID: <Pine.LNX.4.63.0703261530030.14387@qynat.qvtvafvgr.pbz>
+References: <1174825838.12540.5.camel@localhost> <1174930688.5662.20.camel@localhost>
+ <20070326183523.GG22773@admingilde.org> <200703262133.44520.Josef.Weidendorfer@gmx.de>
+ <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net>
+ <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net>
+ <20070326233603.GL22773@admingilde.org> <Pine.LNX.4.63.0703261515330.14387@qynat.qvtvafvgr.pbz>
+ <20070326235527.GM22773@admingilde.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Eric Lesh <eclesh@ucla.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
 To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Tue Mar 27 02:05:47 2007
+X-From: git-owner@vger.kernel.org Tue Mar 27 02:07:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVzBT-0000L6-6g
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 02:05:24 +0200
+	id 1HVzDT-0001V4-DR
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 02:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933834AbXC0AFC (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 20:05:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933836AbXC0AFB
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 20:05:01 -0400
-Received: from iabervon.org ([66.92.72.58]:4019 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933834AbXC0AFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 20:05:00 -0400
-Received: (qmail 20822 invoked by uid 1000); 26 Mar 2007 20:04:59 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 26 Mar 2007 20:04:59 -0400
-In-Reply-To: <20070326093906.GF22773@admingilde.org>
+	id S933837AbXC0AHH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 20:07:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933843AbXC0AHH
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 20:07:07 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:61467 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S933837AbXC0AHF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 20:07:05 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Mon, 26 Mar 2007 16:07:05 -0800
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Mon, 26 Mar 2007 17:06:25 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <20070326235527.GM22773@admingilde.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43214>
 
-On Mon, 26 Mar 2007, Martin Waitz wrote:
+On Tue, 27 Mar 2007, Martin Waitz wrote:
 
-> You can try to play with my prototype:
-> git.admingilde.org/tali/git.git, branch module2
-> (to get an example of how to use it, look at the test script in
-> t/t7500-submodule.sh).
+> hoi :)
+>
+> On Mon, Mar 26, 2007 at 03:20:34PM -0800, David Lang wrote:
+>>> I want to be able to list all objects which are not reachable in the
+>>> object store, without traversing all submodules at the same time.
+>>> The only way I can think of to achieve this is to have one separate
+>>> object store per submodule and then do the traversal per submodule.
+>>
+>> why do you want to optimize for the relativly rare fsck function rather
+>> then the more common read functions (which would benifit from shareing
+>> object that are identical between projects)?
+>
+> Because I don't know how to make it _possible_ for large repositories
+> otherwise.  Consider a Linux-distribution which handles each package
+> as one submodule.
+>
+> I don't think that it's too much balanced towards fsck.
+> The separated object store also helps reduce the memory requirement for
+> large pushs/pulls.
+> Sharing objects can be achieved by alternates if you want.
 
-I tried that yesterday, but I fail reading comprehension; I lost the 
-"module2" bit by the time I actually fetched. I'll look into this.
+alternates require explicitly setting up the sharing.
 
-> The core operations should work, but not all the user interface is
-> adapted to support submodules.  E.g. git-status will not show if a
-> submodule has dirty changes, it will only show submodule changes which
-> are already commited to the submodule but not yet to the supermodule.
-> But at least simple merges do work with submodules.
-> 
-> I abondoned this branch (no further work, only occasionally pulling in
-> updates from upstream git.git) as it has scalability problems with
-> large projects.
+useing the same object store makes this work automaticaly (think of all the 
+copies of COPYING that would end up being the same as a trivial example)
 
-That's what I remember. But it's only an issue with super-scale projects 
-(i.e., where your subprojects are full-sized projects in their own right, 
-and you've got a hundred of them), right? I'm working on the other end 
-(factoring out the common bit from a bunch of similar small projects), so 
-I should be fine with respect to scalability of the implementation.
+> If someone comes up with a nice way to handle everything in one big
+> object store I would happily use that! :-)
 
-Would you guess that a patch series to complete the module2 user interface 
-adaptation would also apply to module3 and therefore be useful in the 
-future?
+what exactly are the problems with one big object store?
 
-> The objects created by the module2 and module3 branches are the same,
-> module3 only moves those belonging to the submodule to another location.
-> So If you start using module2 branch now you should be able to upgrade
-> later.  But to be extra sure, we should have some discussion about the
-> object format here.  (There is nothing new here, really: Just one more
-> tree entry file mode which says that this is not a file or directory
-> entry, but a submodule, represented by one commit.)
+ones that I can think of:
 
-So, I had the nutty idea that it would be convenient if I could make 
-different files in a single directory come from different projects. But I 
-can't think of a sane user interface, so I think that this isn't 
-practical from that direction, so it's probably not worth worrying about 
-from the data structure end, either. (Answer for the usecase: 
-"ln -s make/Makefile Makefile; git add Makefile", and mock systems that 
-don't handle symlinks).
+1. when you are doing a fsck you need to walk all the trees and find out the 
+list of objects that you know about.
 
-But, just to be clear, the semantics of having a commit abcd at a path foo 
-are, with respect to the tree this represents, that abcd:* appears at 
-foo/*. Right?
+   done as a tree of binary values you can hold a LOT in memory before running 
+into swap.
 
-Are there any standards we should discuss with respect to refs related to 
-subprojects?
+   if it's enough larger then available ram then an option for fsck to use trees 
+on disk is an option.
 
-I've updated the wiki page with this information.
+2. when creating a pack you will eventually run into pack-size limits with too 
+many objects
 
-	-Daniel
-*This .sig left intentionally blank*
+   teach the pack creators to make packs that are subsets rather then everything 
+(I belive that most of the smarts are there, it just needs the upper control 
+logic to tell the existing things what to include)
+
+3. when doing a pull it takes longer to figure out what to pull to get a 
+duplicate of _everything_
+
+   add a way to do a 'pull projectlist' that would look at what objects are 
+needed by the project(s) requested and only try to pack up those objects
+
+what else is there that I'm not thinking of? so far these look like long-term 
+problems as opposed to short-term problems, and all of them have fairly simple 
+fixes that can be implemented as they become an issue.
+
+David Lang
