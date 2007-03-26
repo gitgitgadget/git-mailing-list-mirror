@@ -1,90 +1,211 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-Subject: Re: Submodule object store
-Date: Tue, 27 Mar 2007 13:50:29 +0200
-Organization: Universitaet Freiburg, Institut f. Informatik
-Message-ID: <20070327115029.GC12178@informatik.uni-freiburg.de>
-References: <1174825838.12540.5.camel@localhost> <1174930688.5662.20.camel@localhost> <20070326183523.GG22773@admingilde.org> <200703262133.44520.Josef.Weidendorfer@gmx.de> <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net> <20070326233603.GL22773@admingilde.org> <20070327112549.GA12178@informatik.uni-freiburg.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Martin Waitz <tali@admingilde.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Eric Lesh <eclesh@ucla.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 27 13:50:49 2007
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [PATCH v3] contrib/workdir: add a simple script to create a working
+	directory
+Date: Tue, 27 Mar 2007 00:15:32 +0100
+Message-ID: <20070327115427.10016.93595.julian@quantumfyre.co.uk>
+References: <7vabxzrzur.fsf@assigned-by-dhcp.cox.net>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 13:59:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWACI-00086o-CI
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 13:50:42 +0200
+	id 1HWAL2-0004Ds-Mh
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 13:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753821AbXC0Luh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 27 Mar 2007 07:50:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753823AbXC0Lug
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 07:50:36 -0400
-Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:47002 "EHLO
-	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753821AbXC0Lug (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2007 07:50:36 -0400
-Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
-	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
-	(Exim 4.66)
-	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
-	id 1HWAC8-0005xj-GQ; Tue, 27 Mar 2007 13:50:32 +0200
-Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2RBoTij013445;
-	Tue, 27 Mar 2007 13:50:29 +0200 (MEST)
-Received: (from zeisberg@localhost)
-	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2RBoTpP013444;
-	Tue, 27 Mar 2007 13:50:29 +0200 (MEST)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
-	Martin Waitz <tali@admingilde.org>, Junio C Hamano <junkio@cox.net>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Eric Lesh <eclesh@ucla.edu>, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070327112549.GA12178@informatik.uni-freiburg.de>
-User-Agent: Mutt/1.5.14+cvs20070315 (2007-03-14)
+	id S1753825AbXC0L7k (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 07:59:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753826AbXC0L7k
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 07:59:40 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:54127 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753825AbXC0L7i (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2007 07:59:38 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 7E4DAC61A7
+	for <git@vger.kernel.org>; Tue, 27 Mar 2007 12:59:37 +0100 (BST)
+Received: (qmail 8187 invoked by uid 103); 27 Mar 2007 12:59:34 +0100
+Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90/2937. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.2):. 
+ Processed in 0.026175 secs); 27 Mar 2007 11:59:34 -0000
+Received: from reaper.quantumfyre.co.uk (192.168.0.2)
+  by neutron.datavampyre.co.uk with SMTP; 27 Mar 2007 12:59:34 +0100
+X-git-sha1: f133c83bbf07da54fcad2ea3fe450467e247a9c6 
+X-Mailer: git-mail-commits v0.1
+In-Reply-To: <7vabxzrzur.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43270>
 
-Hallo again,
+Add a simple script to create a working directory that uses symlinks
+to point at an exisiting repository.  This allows having different
+branches in different working directories but all from the same
+repository.
 
-Uwe Kleine-K=F6nig wrote:
-> > I want to be able to list all objects which are not reachable in th=
-e
-> > object store, without traversing all submodules at the same time.
-> > The only way I can think of to achieve this is to have one separate
-> > object store per submodule and then do the traversal per submodule.
-> I might have understood something wrongly, but to list objects that a=
-re
-> not reachable you need to traverse all trees anyhow, don't you. =20
->=20
-> Then how big is the difference between a directory and an submodule?
-> I'd expect it's not so big if the submodules included in different
-> revisions of the supermodule share most of their history.  Of course =
-you
-> need to exploit that.  Thinking again that might be the problem?
-I didn't look at the code, but an other issue might be:
+Based on a description from Junio of how he creates multiple working
+directories[1].  With the following caveat:
 
-If you separate the odbs e.g by the pathname of the subproject, what
-happens if I choose to move the linux kernel in my embedded Linux
-project from /linux to /kernel/linux?
+"This risks confusion for an uninitiated if you update a ref that
+is checked out in another working tree, but modulo that caveat
+it works reasonably well."
 
-Or maybe worse:  If I currently track the Kernel in a tree (because of
-git lacking submodule support) and switch to submodule.  Then
-linux/Makefile has to exist in both the supermodule's and the
-submodule's odb.
+[1] http://article.gmane.org/gmane.comp.version-control.git/41513/
 
-Best regards
-Uwe
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
 
---=20
-Uwe Kleine-K=F6nig
+On Mon, 26 Mar 2007, Junio C Hamano wrote:
 
-http://www.google.com/search?q=3D30+hours+and+4+days+in+seconds
+> Julian Phillips <julian@quantumfyre.co.uk> writes:
+>
+>> diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+>> new file mode 100755
+>> index 0000000..5bfd87e
+>> --- /dev/null
+>> +++ b/contrib/workdir/git-new-workdir
+>> @@ -0,0 +1,55 @@
+>> +#!/bin/bash
+>
+> I do not see anything bash specific you need to do in your
+> script.
+
+No.  Sorry, old habits die hard ...
+
+>
+>> +
+>> +function usage () {
+>> +	echo "usage:" $1;
+>> +	exit 127;
+>> +}
+>> +
+>> +function die () {
+>> +	echo $1;
+>> +	exit 128;
+>> +}
+>
+> Do not add noiseword "function" in our shell scripts, please.
+> This is the only thing POSIX says "produces unspecified results"
+> I found in your script, so if you lose them you shouldn't have
+> to say "#!/bin/bash".
+>
+>> +test $# -eq 3 || usage "$0 <original> <new_workdir> <branch>";
+>> +
+>> +orig_git=$1;
+>> +new_workdir=$2;
+>> +branch=$3;
+>
+> Perhaps default branch to whatever original's HEAD points at?
+
+Yes, sounds good.
+
+>
+>> +
+>> +# want to make sure that what is pointed to has a .git directory ...
+>> +test -d ${orig_git}/.git || die "${original_git} is not a git
+repository!";
+>> +
+>> +# don't link to a workdir, link to the original repo the workdir is
+linked to
+>> +if test -L ${orig_git}/.git/config
+>> +then
+>> +	orig_git=$(dirname $(dirname $(readlink -f gm/.git/config)));
+>> +fi
+>
+> "gm"?  I think it is not worth doing this, as readlink is not
+> all that portable.  Just see if it is a symlink and error out.
+
+Er, quite.  Shouldn't write scripts at 02:00 ...
+Didn't know readlink wasn't portable - so now I've learnt my one thing for today ... ;)
+
+>
+> Dq all pathname values you get from the user, like "$orig_git".
+> They may have SP in them.
+
+Oops.
+
+>
+> Do you need all those braces around shell variable names?
+
+No, old habits again I'm afraid.
+
+>
+>> +# vim: tabstop=8
+>> +# vim: noexpandtab
+>
+> Lose these two lines, please.
+>
+
+Gone.
+
+ contrib/workdir/git-new-workdir |   57 +++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 57 insertions(+), 0 deletions(-)
+ create mode 100755 contrib/workdir/git-new-workdir
+
+diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+new file mode 100755
+index 0000000..9e70a59
+--- /dev/null
++++ b/contrib/workdir/git-new-workdir
+@@ -0,0 +1,57 @@
++#!/bin/sh
++
++usage () {
++	echo "usage:" $@;
++	exit 127;
++}
++
++die () {
++	echo $@;
++	exit 128;
++}
++
++if test $# -lt 2 || test $# -gt 3
++then
++	usage "$0 <repository> <new_workdir> [<branch>]";
++fi
++
++orig_git=$1;
++new_workdir=$2;
++branch=$3;
++
++# want to make sure that what is pointed to has a .git directory ...
++test -d "$orig_git/.git" || die "\"$orig_git\" is not a git repository!";
++
++# don't link to a workdir
++if test -L "$orig_git/.git/config"
++then
++	die "\"$orig_git\" is a working directory only, please specify" \
++		"a complete repository.";
++fi
++
++# make sure the the links use full paths
++orig_git=$(cd "$orig_git"; pwd);
++
++# create the workdir
++mkdir -p "$new_workdir/.git" || die "unable to create \"$new_workdir\"!";
++
++# create the links to the original repo.  explictly exclude index, HEAD and
++# logs/HEAD from the list since they are purely related to the current working
++# directory, and should not be shared.
++for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache
++do
++	case $x in
++	*/*)
++		mkdir -p "$(dirname "$new_workdir/.git/$x")";
++		;;
++	esac
++	ln -s "$orig_git/.git/$x" "$new_workdir/.git/$x";
++done
++
++# now setup the workdir
++cd "$new_workdir";
++# copy the HEAD from the original repository as a default branch
++cp "$orig_git/.git/HEAD" .git/HEAD;
++# checkout the branch (either the same as HEAD from the original repository, or
++# the one that was asked for)
++git checkout -f $branch;
+-- 
+1.5.0.5
