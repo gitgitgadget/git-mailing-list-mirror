@@ -1,63 +1,110 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] pager: default to LESS=FRX not LESS=FRSX
-Date: Mon, 26 Mar 2007 11:45:26 -0700
-Message-ID: <7vlkhjx2rd.fsf@assigned-by-dhcp.cox.net>
-References: <20070326073502.GD44578@codelabs.ru>
-	<7vwt14xvaw.fsf@assigned-by-dhcp.cox.net>
-	<20070326083617.GG13247@spearce.org>
-	<7v8xdkxukt.fsf@assigned-by-dhcp.cox.net>
-	<20070326100857.GW14837@codelabs.ru>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] git-rm: don't remove newly added file without -f
+Date: Mon, 26 Mar 2007 14:55:39 -0400
+Message-ID: <20070326185539.GA1650@coredump.intra.peff.net>
+References: <8aa486160703260759v438d445ev82161600d8e8bf02@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Mon Mar 26 20:45:36 2007
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Mar 26 20:55:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HVuCD-00080g-2p
-	for gcvg-git@gmane.org; Mon, 26 Mar 2007 20:45:33 +0200
+	id 1HVuM7-00057j-9Q
+	for gcvg-git@gmane.org; Mon, 26 Mar 2007 20:55:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753674AbXCZSpa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 14:45:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753686AbXCZSpa
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 14:45:30 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:55965 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753674AbXCZSp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 14:45:29 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070326184528.LUIK1606.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 26 Mar 2007 14:45:28 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id fWlT1W00A1kojtg0000000; Mon, 26 Mar 2007 14:45:27 -0400
-In-Reply-To: <20070326100857.GW14837@codelabs.ru> (Eygene Ryabinkin's message
-	of "Mon, 26 Mar 2007 14:08:57 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753695AbXCZSzo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 26 Mar 2007 14:55:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753697AbXCZSzn
+	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 14:55:43 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2754 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753695AbXCZSzm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Mar 2007 14:55:42 -0400
+Received: (qmail 22966 invoked from network); 26 Mar 2007 18:56:11 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 26 Mar 2007 18:56:11 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Mar 2007 14:55:39 -0400
+Content-Disposition: inline
+In-Reply-To: <8aa486160703260759v438d445ev82161600d8e8bf02@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43175>
 
-Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+Given this set of commands:
 
->> Two tips.
->> 
->>  (1) Learn to use left/right arrow keys under "less -S" if you
->>      have occasional lines that are too long.
->
-> I do not like the left/right keys: it is wery hard to get the
-> right typing speed ...
+  $ echo "newly added file" >new
+  $ git add new
+  $ git rm new
 
-Heh, who types 120-word a minute while perusing the source with
-"less"?
+the file "new" was previously removed from the working
+directory and the index. Because it was not in HEAD, it is
+available only by searching for unreachable objects.
 
-I do not like to move my hand from the home position on the
-keyboard either, so I never touch arrow keys while I am typing
-to produce, but I never thought of bothering to reconfigure less
-keybindings for the reason you stated, as I do not have infinite
-amount of time.
+Instead, we now err on the safe side and refuse to remove
+a file which is not referenced by HEAD.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+> I think that the "git rm new" should remove "new" from the index or
+> should fail, maybe with:
+
+Something like this?
+
+I think there are still some issues with the safety valve, though; this
+triggers on 'git rm --cached new' which should be a perfectly safe
+operation. However, that is not new to this change; we already
+erroneously trigger the valve on a --cached removal of a file with
+matching index and working directory, but mismatch with HEAD. Example:
+
+  git-add foo
+  git-commit -m 'added foo'
+  echo changes >>foo
+  git-add foo
+  git-rm --cached foo ;# should be OK because we have working copy
+
+I think the logic for "safe to remove" and "safe to remove --cached"
+needs to be separate. I will take a look.
+
+Also, this just implements "error, try -f" when it would be safe to drop
+back to --cached for that file. Is there any interest in trying to make
+git-rm more clever in this way, or is simple and predictable preferred?
+
+ builtin-rm.c |   18 ++++--------------
+ 1 files changed, 4 insertions(+), 14 deletions(-)
+
+diff --git a/builtin-rm.c b/builtin-rm.c
+index 00dbe39..bf42003 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -89,20 +89,10 @@ static int check_local_mod(unsigned char *head)
+ 		if (ce_match_stat(ce, &st, 0))
+ 			errs = error("'%s' has local modifications "
+ 				     "(hint: try -f)", ce->name);
+-		if (no_head)
+-			continue;
+-		/*
+-		 * It is Ok to remove a newly added path, as long as
+-		 * it is cache-clean.
+-		 */
+-		if (get_tree_entry(head, name, sha1, &mode))
+-			continue;
+-		/*
+-		 * Otherwise make sure the version from the HEAD
+-		 * matches the index.
+-		 */
+-		if (ce->ce_mode != create_ce_mode(mode) ||
+-		    hashcmp(ce->sha1, sha1))
++		if (no_head
++		     || get_tree_entry(head, name, sha1, &mode)
++		     || ce->ce_mode != create_ce_mode(mode)
++		     || hashcmp(ce->sha1, sha1))
+ 			errs = error("'%s' has changes staged in the index "
+ 				     "(hint: try -f)", name);
+ 	}
+-- 
+1.5.1.rc2.615.g992d-dirty
