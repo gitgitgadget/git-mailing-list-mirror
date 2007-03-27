@@ -1,82 +1,93 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Submodule object store
-Date: Tue, 27 Mar 2007 18:44:28 +0200
-Message-ID: <20070327164428.GR22773@admingilde.org>
-References: <1174930688.5662.20.camel@localhost> <20070327115029.GC12178@informatik.uni-freiburg.de> <20070327155306.GQ22773@admingilde.org> <200703271856.09492.Josef.Weidendorfer@gmx.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Fix "getaddrinfo()" buglet
+Date: Tue, 27 Mar 2007 09:50:20 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703270938380.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ZqRzwd/9tauJXEMK"
-Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>,
-	Junio C Hamano <junkio@cox.net>, Eric Lesh <eclesh@ucla.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Mar 27 18:44:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Mar 27 18:50:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWEmm-0005T2-6A
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 18:44:40 +0200
+	id 1HWEsO-00080a-UP
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 18:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933222AbXC0Qob (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 12:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933226AbXC0Qob
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 12:44:31 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:45727 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933222AbXC0Qoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 12:44:30 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HWEma-0002yD-Mb; Tue, 27 Mar 2007 18:44:28 +0200
-Content-Disposition: inline
-In-Reply-To: <200703271856.09492.Josef.Weidendorfer@gmx.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+	id S933226AbXC0QuZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 12:50:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933271AbXC0QuY
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 12:50:24 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:33634 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933226AbXC0QuX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 12:50:23 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2RGoKU2006277
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Mar 2007 09:50:21 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2RGoK4V020904;
+	Tue, 27 Mar 2007 09:50:20 -0700
+X-Spam-Status: No, hits=-0.471 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43283>
 
 
---ZqRzwd/9tauJXEMK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+At least in Linux glibc, "getaddrinfo()" has a very irritating feature (or 
+bug, who knows..).
 
-hoi :)
+Namely if you pass it in an empty string for the service name, it will 
+happily and quietly consider it identical to a NULL port pointer, and 
+return port number zero and no errors. Which obviously will not work.
 
-On Tue, Mar 27, 2007 at 06:56:09PM +0200, Josef Weidendorfer wrote:
-> On Tuesday 27 March 2007, Martin Waitz wrote:
-> > For any other way to separate the odb (project id, whatever), we
-> > can't get a list of references into it by a path-limited traversal
-> > in the parent. Thus separate odbs which are not bound to a special
-> > location have some serious downsides.
->=20
-> For path-limited traversal, you still need to know all the paths
-> with super/subproject boundaries somewhere in the history.
-> Do you store this information somewhere?
-> If so, how is this different from directly storing the boundaries
-> (aside from size)?
+Maybe that's what it's really expected to do, although the man-page for 
+getaddrinfo() certainly implies that it's a bug.
 
-You only need the path-limited traversal when you want to look at one
-individual submodule.  And then you start the operation in this
-submodule, so you know the path.
+So when somebody passes me a "please pull" request pointing to something 
+like the following
 
---=20
-Martin Waitz
+	git://git.kernel.org:/pub/scm/linux/kernel/git/mchehab/v4l-dvb.git
 
---ZqRzwd/9tauJXEMK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+(note the extraneous colon at the end of the host name), git would happily 
+try to connect to port 0, which would generally just cause the remote to 
+not even answer, and the "connect()" will take a long time to time out.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+So to work around the glibc feature/bug, just notice this empty port case 
+automatically. Also, add the port information to the error information 
+when it fails to look up (maybe it's the host-name that fails, maybe it's 
+the port-name - we should print out both).
 
-iD8DBQFGCUnsj/Eaxd/oD7IRAoeSAJ9K7emwGk93g8RWj7TXMU+OwfmNsQCbBeb7
-2QMjFy8IkBjVibKh3TxZUxg=
-=a2DK
------END PGP SIGNATURE-----
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
 
---ZqRzwd/9tauJXEMK--
+ connect.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index 5048653..da89c9c 100644
+--- a/connect.c
++++ b/connect.c
+@@ -417,6 +417,8 @@ static int git_tcp_connect_sock(char *host)
+ 	if (colon) {
+ 		*colon = 0;
+ 		port = colon + 1;
++		if (!*port)
++			port = "<none>";
+ 	}
+ 
+ 	memset(&hints, 0, sizeof(hints));
+@@ -425,7 +427,7 @@ static int git_tcp_connect_sock(char *host)
+ 
+ 	gai = getaddrinfo(host, port, &hints, &ai);
+ 	if (gai)
+-		die("Unable to look up %s (%s)", host, gai_strerror(gai));
++		die("Unable to look up %s (port %s) (%s)", host, port, gai_strerror(gai));
+ 
+ 	for (ai0 = ai; ai; ai = ai->ai_next) {
+ 		sockfd = socket(ai->ai_family,
