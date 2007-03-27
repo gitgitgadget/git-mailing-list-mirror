@@ -1,71 +1,64 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: .gitlink for Summer of Code
-Date: Tue, 27 Mar 2007 05:40:59 +0200
-Message-ID: <20070327034059.GJ4489@pasky.or.cz>
-References: <1174825838.12540.5.camel@localhost> <vpqvegpe4e1.fsf@olympe.imag.fr> <20070325203901.GB12376@spearce.org> <7v3b3t3uws.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Added options NO_TCLTK, WITH_P4IMPORT and --with-tcltk/--without-tcltk.
+Date: Mon, 26 Mar 2007 21:12:17 -0700
+Message-ID: <7vejnbtjdq.fsf@assigned-by-dhcp.cox.net>
+References: <etpuen$2uo$2@sea.gmane.org> <20070326073143.GB44578@codelabs.ru>
+	<20070326073250.GC44578@codelabs.ru>
+	<200703261030.49382.jnareb@gmail.com>
+	<7vmz20xuxq.fsf@assigned-by-dhcp.cox.net>
+	<20070326100344.GV14837@codelabs.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Eric Lesh <eclesh@ucla.edu>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 27 05:41:14 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Tue Mar 27 06:12:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HW2YZ-000854-U9
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 05:41:12 +0200
+	id 1HW32z-0006FP-Tn
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 06:12:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753165AbXC0DlF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 26 Mar 2007 23:41:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753095AbXC0DlF
-	(ORCPT <rfc822;git-outgoing>); Mon, 26 Mar 2007 23:41:05 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:42126 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753165AbXC0DlC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Mar 2007 23:41:02 -0400
-Received: (qmail 845 invoked by uid 2001); 27 Mar 2007 05:40:59 +0200
-Content-Disposition: inline
-In-Reply-To: <7v3b3t3uws.fsf@assigned-by-dhcp.cox.net>
-X-message-flag: Outlook : A program to spread viri, but it can do mail too.
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932487AbXC0EMU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 00:12:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932817AbXC0EMU
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 00:12:20 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:51757 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932487AbXC0EMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 00:12:19 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070327041219.XUDF321.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 27 Mar 2007 00:12:19 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id fgCJ1W0081kojtg0000000; Tue, 27 Mar 2007 00:12:19 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43225>
 
-On Sun, Mar 25, 2007 at 10:55:31PM CEST, Junio C Hamano wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > Actually, I'd almost say put it into .git/config, e.g.:
-> >
-> > 	mkdir .git
-> > 	cat >.git/config <<EOF
-> > 	[core]
-> > 		repositoryversion = 0
-> > 		filemode = true
-> > 		link = /path/to/source
-> > 	EOF
-> >
-> > as then the index and HEAD file can both be stored in .git, just
-> > like with the non-gitlink case.
-> 
-> This is not usable at least for me as it does not allow sharing
-> the .git/config file across checkouts.
+Eygene Ryabinkin <rea-git@codelabs.ru> writes:
 
-Can't you take linked .git/config and override it with stuff from local
-.git/config in that case? Don't replace, supraposition.
+> Mon, Mar 26, 2007 at 01:36:49AM -0700, Junio C Hamano wrote:
+> ...
+>> Thanks for sanity checking.  That means that the absense of
+>> tcltk would make it impossible to munge the scripts to point at
+>> the wish binary, so makes the NO_TCLTK stuff easier to swallow.
+>
+> Sorry, did not get the point. The TCLTK is initialized to the 'wish'
+> by 'TCLTK ?= wish', so TCLTK will always be here and initialized
+> to the wish by-default.
 
-Take somewhat contrived example of having checkout on a FAT partition
-linking to a repository on a sane filesystem (are you permanently short
-on disk space on your /home partition too, except for about two months
-right after you double your disk capacity? :). You might want to disable
-core.fileMode there. Maybe this will not ever happen in real world and
-we might not care. Maybe not...
-
--- 
-				Petr "Pasky" Baudis
-Stuff: http://pasky.or.cz/
-Ever try. Ever fail. No matter. // Try again. Fail again. Fail better.
-		-- Samuel Beckett
+Earlier I said I did not see a reason for not building wish
+applications on a build system that lack them.  I am stating
+that you could argue that your rewriting the path to wish is a
+good reason (I would say it is half-good, as you can still tell
+the build procedure where wish will be on the deployed system
+without having it on your build system) for not building wish
+applications in a build that lacks wish installation.
