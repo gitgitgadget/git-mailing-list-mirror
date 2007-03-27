@@ -1,115 +1,52 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: [PATCH(amend)] test git-rev-parse
-Date: Wed, 28 Mar 2007 00:07:21 +0200
-Message-ID: <20070327220721.GA20495@moooo.ath.cx>
-References: <20070317015855.GB19305@moooo.ath.cx> <7vbqiss4yw.fsf@assigned-by-dhcp.cox.net> <20070317143452.GA21140@moooo.ath.cx> <20070317144342.GB26290@moooo.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: James Bowes <jbowes@dangerouslyinc.com>
+Subject: [PATCH] use xrealloc in help.c
+Date: Tue, 27 Mar 2007 18:30:08 -0400
+Message-ID: <1175034608589-git-send-email-jbowes@dangerouslyinc.com>
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 28 00:07:41 2007
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Mar 28 00:32:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWJpM-00048g-T0
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 00:07:41 +0200
+	id 1HWKDi-0007de-88
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 00:32:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934196AbXC0WH0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 18:07:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934208AbXC0WH0
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 18:07:26 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49494 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934196AbXC0WHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 18:07:25 -0400
-Received: (qmail invoked by alias); 27 Mar 2007 22:07:23 -0000
-Received: from pD9EBB62D.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.182.45]
-  by mail.gmx.net (mp039) with SMTP; 28 Mar 2007 00:07:23 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX19Xfs9odsJXwr/qM4SBGAeBRbXF8B8tIvJvp2aLQj
-	FvXwIK3tFeXt0h
-Content-Disposition: inline
-In-Reply-To: <20070317144342.GB26290@moooo.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S934260AbXC0Wbt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 18:31:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934247AbXC0Wbs
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 18:31:48 -0400
+Received: from ms-smtp-01.southeast.rr.com ([24.25.9.100]:51627 "EHLO
+	ms-smtp-01.southeast.rr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934260AbXC0Wbq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2007 18:31:46 -0400
+Received: from localhost (cpe-066-057-086-146.nc.res.rr.com [66.57.86.146])
+	by ms-smtp-01.southeast.rr.com (8.13.6/8.13.6) with ESMTP id l2RMViN0018612;
+	Tue, 27 Mar 2007 18:31:44 -0400 (EDT)
+X-Mailer: git-send-email 1.5.0.5
+X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43313>
 
-this tests --is-bare-repository, --is-inside-git-dir, --show-cdup and
---show-prefix
-
-Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
 ---
-The old version used --git-dir twice which was unnecessary.
----
- t/t1500-rev-parse.sh |   57 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 57 insertions(+), 0 deletions(-)
- create mode 100755 t/t1500-rev-parse.sh
+ help.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
-new file mode 100755
-index 0000000..bfc615d
---- /dev/null
-+++ b/t/t1500-rev-parse.sh
-@@ -0,0 +1,57 @@
-+#!/bin/sh
-+
-+test_description='test git rev-parse'
-+. ./test-lib.sh
-+
-+test_expect_success 'toplevel: is-bare-repository' \
-+	'test "false" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'toplevel: is-inside-git-dir' \
-+	'test "false" = "$(git rev-parse --is-inside-git-dir)"'
-+test_expect_success 'toplevel: show-cdup' \
-+	'test "" = "$(git rev-parse --show-cdup)"'
-+test_expect_success 'toplevel: show-prefix' \
-+	'test "" = "$(git rev-parse --show-prefix)"'
-+
-+cd .git/objects || exit 1
-+test_expect_success 'in-git-dir: is-bare-repository' \
-+	'test "false" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'in-git-dir: is-inside-git-dir' \
-+	'test "true" = "$(git rev-parse --is-inside-git-dir)"'
-+test_expect_success 'in-git-dir: show-cdup' \
-+	'test "../../" = "$(git rev-parse --show-cdup)"'
-+test_expect_success 'in-git-dir: show-prefix' \
-+	'test ".git/objects/" = "$(git rev-parse --show-prefix)"'
-+cd ../.. || exit 1
-+
-+mkdir sub || exit 1
-+cd sub || exit 1
-+test_expect_success 'subdirectory: is-bare-repository' \
-+	'test "false" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'subdirectory: is-inside-git-dir' \
-+	'test "false" = "$(git rev-parse --is-inside-git-dir)"'
-+test_expect_success 'subdirectory: show-cdup' \
-+	'test "../" = "$(git rev-parse --show-cdup)"'
-+test_expect_success 'subdirectory: show-prefix' \
-+	'test "sub/" = "$(git rev-parse --show-prefix)"'
-+cd .. || exit 1
-+
-+test_expect_success 'core.bare = true: is-bare-repository' \
-+	'git config core.bare true &&
-+	test "true" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'unset core.bare: is-bare-repository' \
-+	'git config --unset core.bare &&
-+	test "false" = "$(git rev-parse --is-bare-repository)"'
-+
-+mv .git foo.git || exit 1
-+export GIT_DIR=foo.git
-+export GIT_CONFIG=foo.git/config
-+test_expect_success 'GIT_DIR=foo.git: is-bare-repository' \
-+	'test "true" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'GIT_DIR=foo.git, core.bare = true: is-bare-repository' \
-+	'git config core.bare true &&
-+	test "true" = "$(git rev-parse --is-bare-repository)"'
-+test_expect_success 'GIT_DIR=foo.git, core.bare = false: is-bare-repository' \
-+	'git config core.bare false &&
-+	test "false" = "$(git rev-parse --is-bare-repository)"'
-+
-+test_done
+diff --git a/help.c b/help.c
+index be8651a..34b1dda 100644
+--- a/help.c
++++ b/help.c
+@@ -54,7 +54,7 @@ static void add_cmdname(const char *name, int len)
+ 	struct cmdname *ent;
+ 	if (cmdname_alloc <= cmdname_cnt) {
+ 		cmdname_alloc = cmdname_alloc + 200;
+-		cmdname = realloc(cmdname, cmdname_alloc * sizeof(*cmdname));
++		cmdname = xrealloc(cmdname, cmdname_alloc * sizeof(*cmdname));
+ 		if (!cmdname)
+ 			oom();
+ 	}
 -- 
-1.5.1.rc2.621.gd841-dirty
+1.5.0.5
