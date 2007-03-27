@@ -1,78 +1,59 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: Understanding version 4 packs
-Date: Tue, 27 Mar 2007 08:46:20 +0200
-Message-ID: <e5bfff550703262346q54853791scca3bab217a043aa@mail.gmail.com>
-References: <20070324202356.GA20734@bohr.gbar.dtu.dk>
-	 <alpine.LFD.0.83.0703241913110.18328@xanadu.home>
-	 <20070325083530.GA25523@bohr.gbar.dtu.dk>
-	 <20070325091806.GH25863@spearce.org>
-	 <e5bfff550703260516q5da5f46et8aab2ebadcd9cceb@mail.gmail.com>
-	 <alpine.LFD.0.83.0703261015110.3041@xanadu.home>
-	 <e5bfff550703261010u67aa1207j1c6f0200bb7744a@mail.gmail.com>
-	 <alpine.LFD.0.83.0703261417520.3041@xanadu.home>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: [PATCH] pager: default to LESS=FRX not LESS=FRSX
+Date: Tue, 27 Mar 2007 10:47:59 +0400
+Message-ID: <20070327064759.GA51155@codelabs.ru>
+References: <20070326073502.GD44578@codelabs.ru> <7vwt14xvaw.fsf@assigned-by-dhcp.cox.net> <20070326083617.GG13247@spearce.org> <7v8xdkxukt.fsf@assigned-by-dhcp.cox.net> <20070326100857.GW14837@codelabs.ru> <20070326190304.GB31844@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Peter Eriksen" <s022018@student.dtu.dk>, git@vger.kernel.org
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Mar 27 08:46:34 2007
+Content-Type: text/plain; charset=koi8-r
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 08:48:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HW5Rx-0005AC-Sd
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 08:46:34 +0200
+	id 1HW5TZ-000642-S4
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 08:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965055AbXC0Gqa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 02:46:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965194AbXC0Gqa
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 02:46:30 -0400
-Received: from wr-out-0506.google.com ([64.233.184.235]:22623 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965055AbXC0Gq3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 02:46:29 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so1822719wra
-        for <git@vger.kernel.org>; Mon, 26 Mar 2007 23:46:28 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ob66Y6+qgckBsU3tGRhyn1Kc8bjNSOkC1PiSo84PgHlGixxI6rjV7z7/DtM5SIeOIp+ECDY/iddWee77ml9gVzHBk4BAhqKy1iHz/bEx1Hdqhhv9bNKg+4U8msVhuTKvRWjqZblT/eGahzBjg4eW7rs9P5PctUX5YhvPVfxhz8o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OqRQr+ZNWX0sI809FEQTRhAo6I/Z5/7ilDgUm7LhPMc3phBmXEEfRNSzVYl2rqVBZbMzkI+Y8ZT1ol3Pki4FZLowSDi1AcqYeOeSGcvx8nWNfkmkrfMcM0m2xN4A/VUChEkNvZD8O2AYFgdFU/5zXkhA+r4UuMS33fcq7/BdBNI=
-Received: by 10.114.205.1 with SMTP id c1mr3043059wag.1174977980257;
-        Mon, 26 Mar 2007 23:46:20 -0700 (PDT)
-Received: by 10.114.60.16 with HTTP; Mon, 26 Mar 2007 23:46:20 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.83.0703261417520.3041@xanadu.home>
+	id S965194AbXC0GsK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 02:48:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965197AbXC0GsK
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 02:48:10 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:57601 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965194AbXC0GsI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 02:48:08 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
+	b=E3cBMHaC0MdNNsdSide8MVcC8yvUMvgjsaTCLtYJZxFLeMvOli7jmU+6mDwwAoW8GZx/CkISyIdlBLpIIV82XnZUK6mSbzG+BPcz2zGGpClH/VeYWdF59Ao8Z9IDkgy45wr1LNSacYMpUOYt+g5mneMDLjPvs5c0jojOfS5B8QU=;
+Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HW5TP-000DJr-W0; Tue, 27 Mar 2007 10:48:04 +0400
 Content-Disposition: inline
+In-Reply-To: <20070326190304.GB31844@coredump.intra.peff.net>
+X-Spam-Status: No, score=-1.9 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43233>
 
-On 3/26/07, Nicolas Pitre <nico@cam.org> wrote:
-> On Mon, 26 Mar 2007, Marco Costalba wrote:
->
-> Hence, the path component table would contain:
->
->         drivers
->         usb
->         host
->         Kconfig
->         Makefile
->         ehci.h
->         ehci-pci.c
->         ohci-pci.c
->         sched.c
->
-> along with the mode bits for each of those path components, and this is
-> what the new tree object would index into for each tree record.
->
+Jeff, good day.
 
-Now I understand.
+Mon, Mar 26, 2007 at 03:03:04PM -0400, Jeff King wrote:
+> On Mon, Mar 26, 2007 at 02:08:57PM +0400, Eygene Ryabinkin wrote:
+> 
+> > I do not like the left/right keys: it is wery hard to get the
+> > right typing speed if we're using the arrow keys. But it is just
+> > my habit since I learned to 10 fingers typing.
+> 
+> You might try:
+> 
+> cat >>$HOME/.lesskey <<'EOF'
+> h left-scroll
+> l right-scroll
+> EOF
+> lesskey
 
-Just a question. So getting full paths does it requires some additional work?
-
- Marco
+Very good, thanks!
+-- 
+Eygene
