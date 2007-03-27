@@ -1,53 +1,125 @@
-From: Bryan Wu <bryan.wu@analog.com>
-Subject: Help: git-quiltimport error
-Date: Wed, 28 Mar 2007 01:01:07 +0800
-Organization: Analog Devices, Ltd.
-Message-ID: <1175014867.15767.13.camel@roc-laptop>
-Reply-To: bryan.wu@analog.com
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: .gitlink for Summer of Code
+Date: Tue, 27 Mar 2007 10:04:53 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703270952020.6730@woody.linux-foundation.org>
+References: <1174825838.12540.5.camel@localhost> <20070326220302.GH22773@admingilde.org>
+ <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <200703270117.59205.Josef.Weidendorfer@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, Eric Biederman <ebiederm@lnxi.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 19:01:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	Martin Waitz <tali@admingilde.org>,
+	Eric Lesh <eclesh@ucla.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Mar 27 19:06:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWF35-0004R4-Ui
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 19:01:32 +0200
+	id 1HWF7w-0006d1-Oc
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 19:06:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933326AbXC0RBP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 13:01:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933306AbXC0RBO
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 13:01:14 -0400
-Received: from nwd2mail10.analog.com ([137.71.25.55]:43854 "EHLO
-	nwd2mail10.analog.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933326AbXC0RBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 13:01:12 -0400
-Received: from nwd2mhb1.analog.com ([137.71.5.12])
-  by nwd2mail10.analog.com with ESMTP; 27 Mar 2007 13:01:11 -0400
-X-IronPort-AV: i="4.14,335,1170651600"; 
-   d="scan'208"; a="32770256:sNHT48130362"
-Received: from nwd2exm4.ad.analog.com (nwd2exm4.ad.analog.com [10.64.53.123])
-	by nwd2mhb1.analog.com (8.9.3 (PHNE_28810+JAGae91741)/8.9.3) with ESMTP id NAA08781;
-	Tue, 27 Mar 2007 13:01:07 -0400 (EDT)
-Received: from 220.232.78.92 ([220.232.78.92]) by nwd2exm4.ad.analog.com ([10.64.53.123]) via Exchange Front-End Server owa.analog.com ([10.64.25.31]) with Microsoft Exchange Server HTTP-DAV ;
- Tue, 27 Mar 2007 17:01:07 +0000
-Received: from roc-laptop by owa.analog.com; 28 Mar 2007 01:01:07 +0800
-X-Mailer: Evolution 2.10.0 
+	id S933688AbXC0RGI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 13:06:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933776AbXC0RGI
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 13:06:08 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:34081 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933688AbXC0RGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 13:06:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2RH4sU2006672
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Mar 2007 10:04:55 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2RH4r3W021225;
+	Tue, 27 Mar 2007 10:04:53 -0700
+In-Reply-To: <200703270117.59205.Josef.Weidendorfer@gmx.de>
+X-Spam-Status: No, hits=-0.47 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43286>
 
-Hi folks,
 
-When I am using latest git-quiltimport, I met following errors. 
 
-$git-quiltimport --dry-run --author "Bryan Wu <bryan.wu@analog.com>" --patches "/home/roc/mm-tree/patches" 
-/usr/local/bin/git-quiltimport: 114: Syntax error: Missing '))'
+On Tue, 27 Mar 2007, Josef Weidendorfer wrote:
 
-Could you please help me on this?
+> On Tuesday 27 March 2007, Junio C Hamano wrote:
+> > Martin Waitz <tali@admingilde.org> writes:
+> > 
+> > > For submodules I currently use <parent>/.git/objects/module/<submodule>/
+> > > to store the objects belonging to the submodule.
+> > 
+> > I was not following the gitlink discussion closely, but what is
+> > the motivation behind this separation of the object store?
+> 
+> The separation issue is about scalability of submodules, and not
+> directly about gitlink.
 
-Thanks
--Bryan Wu
+NOTE! It's fine to share the *object*store* for a supermodule setup.
+
+The scalability concerns are not about the number of objects, but about 
+the operations that work on them, and specifically *traverse* the objects.
+
+So while it's fine to share the same GIT_OBJECT_DIR for all the 
+submodules, it's *not* ok if "git clone" on a supermodule will consider 
+things to be one single repository, and clone it as one huge thing, 
+generating (and having to look up!) a ten-million object pack for a 
+hundred smaller projects. THAT won't scale.
+
+Basically, a "git-rev-list --objects HEAD" in the super-module should only 
+list the objects in the supermodule itself, not in all the submodules. And 
+that implies that cloning a supermodule is not about cloning a single big 
+repository: it would be a matter of:
+
+ - first cloning first the supermodule itself (which is often fairly 
+   small: just a top-level directory, with some top-level Makefiles and a 
+   number of directories that are submodules)
+
+ - then parsing some supermodule data structure, and cloning each 
+   submodule individually.
+
+Similarly for "fetch" (and merging too, of course - it ends up having to 
+merge each sub-project separately). 
+
+Think of it this way: if you think people find it a bit annoying that you 
+currently have to get all the history when you do clone (and why people 
+have worked on "shallow clones" in git), imagine just *how* frustrating it 
+is if you have to get all five-hundred subprojects when you only want to 
+work on one small one!
+
+Think of something like a huge *BSD "world" tree, where the supermodule 
+contains *everything*. Do you really _really_ expect that every single 
+developer wants to clone it all? I have no idea how much that is, but I 
+can well imagine that it's several thousand subprojects, some of which are 
+quite big in their own right. 
+
+Also, imagine the server side.. Anybody who thinks that the server wants 
+to (or is even *able* to) do things like a fsck on the totality, or keep 
+every single object in memory, is in for a nasty surprise..
+
+So I think that:
+
+ - sharing object directories should not be a requirement, but it should 
+   certainly be *possible*. Quite often you might want to do it, although 
+   for really big superprojects it might well make sense to have 
+   individual object stores too.
+
+ - walking the *global* object list is simply not possible. You need to 
+   fsck every single subtree individually, and fsck the superproject on 
+   its own, *without* recursing into the subprojects. And you need to be 
+   able to clone the superproject and only one or two subprojects, and 
+   never see it as one "atomic" big repository.
+
+I really think people should think about the *BSD kind of "world" setup. 
+You absolutely do _not_ want supermodules to be indivisible "everything or 
+nothign" kind of things. You want submodules to be very much separate 
+repostories, although you *can* of course share the object store if you 
+want to (the same way git can do it between any number of totally 
+unrelated repositories!)
+
+		Linus
