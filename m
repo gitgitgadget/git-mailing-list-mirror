@@ -1,70 +1,79 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: .gitlink for Summer of Code
-Date: Tue, 27 Mar 2007 16:02:06 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0703271547040.6485@iabervon.org>
-References: <1174825838.12540.5.camel@localhost> <20070326220302.GH22773@admingilde.org>
- <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <200703270117.59205.Josef.Weidendorfer@gmx.de>
- <Pine.LNX.4.64.0703270952020.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703271338210.6485@iabervon.org> <4609643C.9050803@midwinter.com>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: git-svn, remote tracking branch question
+Date: Tue, 27 Mar 2007 13:26:43 -0700
+Message-ID: <m2ps6usa9o.fsf@ziti.fhcrc.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Junio C Hamano <junkio@cox.net>,
-	Martin Waitz <tali@admingilde.org>,
-	Eric Lesh <eclesh@ucla.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 22:02:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 27 22:26:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWHrw-0002Oj-T1
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 22:02:13 +0200
+	id 1HWIFu-0005Ys-Pq
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 22:26:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964934AbXC0UCJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 16:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965059AbXC0UCJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 16:02:09 -0400
-Received: from iabervon.org ([66.92.72.58]:1044 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964934AbXC0UCI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 16:02:08 -0400
-Received: (qmail 3621 invoked by uid 1000); 27 Mar 2007 16:02:07 -0400
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Mar 2007 16:02:07 -0400
-In-Reply-To: <4609643C.9050803@midwinter.com>
+	id S932234AbXC0U0t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 16:26:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934005AbXC0U0t
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 16:26:49 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:8347 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932234AbXC0U0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 16:26:48 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so8177uga
+        for <git@vger.kernel.org>; Tue, 27 Mar 2007 13:26:46 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:to:cc:subject:from:date:message-id:user-agent:mime-version:content-type;
+        b=lAFuHmEaR5BhOhLu8+m63RjaoX1+TctlwkbLenX68Yr0FwmFW8IIQEDlcyCtw5Y4vcApQo/LVGjL00qHk8rcle9pBphgVNFuG4Sc2ohL8vBEz/k/BoT4A6E6wV4r1oonKcubE6JHwx3+FaeVNQhxtizKEtkXSu/UUyIK3Oo2aT0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:cc:subject:from:date:message-id:user-agent:mime-version:content-type;
+        b=CY3KF/Xb3RnPwWmKcRuedpAbA21t2r2sAXZq4yzN8JGyV1xzOXtEtjWn0Mq9dvPoauEwHLPNd4fjOpeQ9s8SOn8yrU42i47enbFbIJFGlmmIQx2RECu9ZRkcU5qbePU7QV+7H5AePqdRopbkPMemLXS1UvUkVaH3UQ0ssIw4tKs=
+Received: by 10.114.161.11 with SMTP id j11mr3318707wae.1175027205592;
+        Tue, 27 Mar 2007 13:26:45 -0700 (PDT)
+Received: from ziti.fhcrc.org ( [140.107.156.111])
+        by mx.google.com with ESMTP id y11sm1427550pod.2007.03.27.13.26.45;
+        Tue, 27 Mar 2007 13:26:45 -0700 (PDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43304>
 
-On Tue, 27 Mar 2007, Steven Grimm wrote:
+Hi,
 
-> The obvious use case for "I want the superproject and just one submodule" is
-> when the superproject has build tools, header files, or other pieces of data
-> that are shared by some/all of the submodules. Maybe not the case in BSD per
-> se, but having a top-level file full of settings, paths to tools, etc. that
-> gets included by the individual Makefiles in subdirectories isn't all that
-> uncommon in complex multi-part projects.
+I've edited my <repos>/.git/config file so that git-svn is tracking
+the main devel line as well as a release branch of a project.  This
+seems to work well.
 
-This is actually the case I'm personally interested in. But in that case, 
-you want to reverse the superproject/subproject organization, because that 
-way each project part can use the desired version of the common stuff, and 
-people can modify the common stuff without then testing the whole 
-universe.
+So I have:
 
-I.e., at some point, you'll want to change the behavior of the build 
-system in such a way that all of the per-part configuration information 
-sets needs to be updated to work with it. If the build system is in the 
-superproject, you need to do everything at once. If the build system is in 
-a subsubproject, you can make the change without affecting anything, and, 
-as subprojects pull the build system change, they update the subsubproject 
-entry and the configuration files as a single subproject commit. For 
-sanity, you want to reach the point where all of the projects are using 
-the same subsubproject version, but that doesn't have to happen overnight, 
-and you don't have a single commit which touches every subproject.
+[svn-remote "svn"]
+	url = https://svn.url.com/root
+	fetch = branches/release-2-5:refs/remotes/2.5
+	fetch = trunk:refs/remotes/git-svn
 
-	-Daniel
-*This .sig left intentionally blank*
+I can checkout the 2.5 release branch like this:
+
+   git checkout -b 2.5 remotes/2.5
+
+But at this point, how do I ask git-svn to update it?  When working on
+the devel line, I can do 'git svn rebase' and I would like to do the
+same thing but relative to the branch.
+
+Perhaps there is some config I can add so that I don't have to do:
+
+   git svn fetch
+   git rebase remotes/2.5
+
+That isn't so bad except for having to remember where you are...
+
+Thanks,
+
++ seth
+
+-- 
+Seth Falcon
