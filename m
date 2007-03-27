@@ -1,69 +1,96 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: Re: git svn fetch spewing warnings
-Date: Tue, 27 Mar 2007 12:17:46 -0700
-Message-ID: <m23b3qts11.fsf@ziti.fhcrc.org>
-References: <m28xdkvsxx.fsf@ziti.fhcrc.org>
-	<20070327190004.GD16591@localdomain>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: Submodule object store
+Date: Tue, 27 Mar 2007 21:42:33 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070327194233.GA28229@informatik.uni-freiburg.de>
+References: <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net> <20070326233603.GL22773@admingilde.org> <20070327112549.GA12178@informatik.uni-freiburg.de> <20070327115029.GC12178@informatik.uni-freiburg.de> <20070327155306.GQ22773@admingilde.org> <20070327172216.GA24200@informatik.uni-freiburg.de> <Pine.LNX.4.64.0703271124590.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Mar 27 21:17:59 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Martin Waitz <tali@admingilde.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Eric Lesh <eclesh@ucla.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Mar 27 21:43:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWHB8-0007fE-O6
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 21:17:59 +0200
+	id 1HWHZP-00025k-20
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 21:43:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934201AbXC0TR4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 15:17:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934203AbXC0TR4
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 15:17:56 -0400
-Received: from nz-out-0506.google.com ([64.233.162.225]:27500 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934201AbXC0TRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 15:17:54 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so2516658nze
-        for <git@vger.kernel.org>; Tue, 27 Mar 2007 12:17:53 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=QfH5WkdMM69PmeTlOqSQSCNWHCJ+usc244e8k6eFw+u7VD/xRG80k6OLrn4tDYikjoPu7LJ5yt1NAHI1CYHw/LY4fxOBpNZoTlGvQ0PK9N0aRRgw9jjmXTpjwWdgCU9RF2U7HkmFnamKmBLUW4govm6wy010TyurlRdPt2h1rII=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        b=Viy+cpl0KigqCFB8nxKfcGCO2Q6D6uJq6xGynhUwS1049lMl3UaKkmTdn1Iz7PSIqfv/fUVwH2xiFwvUYGJylmBsGMs0eLLruorBgvdgdFqNrqWj9ZhAjNsnhOvzuLguSK4AkSk7VraeYEo1LtNg4Bbfl96H2mX/nYdOtPyk4aY=
-Received: by 10.114.254.1 with SMTP id b1mr3294373wai.1175023072958;
-        Tue, 27 Mar 2007 12:17:52 -0700 (PDT)
-Received: from ziti.fhcrc.org ( [140.107.156.111])
-        by mx.google.com with ESMTP id m26sm1264046pof.2007.03.27.12.17.52;
-        Tue, 27 Mar 2007 12:17:52 -0700 (PDT)
-In-Reply-To: <20070327190004.GD16591@localdomain> (Eric Wong's message of "Tue, 27 Mar 2007 12:00:04 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+	id S932359AbXC0Tmp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 27 Mar 2007 15:42:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934204AbXC0Tmp
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 15:42:45 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:51022 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932359AbXC0Tmn (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2007 15:42:43 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HWHZ0-0005y0-6w; Tue, 27 Mar 2007 21:42:38 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2RJgY7j028859;
+	Tue, 27 Mar 2007 21:42:35 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2RJgXbX028858;
+	Tue, 27 Mar 2007 21:42:33 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Martin Waitz <tali@admingilde.org>, Junio C Hamano <junkio@cox.net>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Eric Lesh <eclesh@ucla.edu>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0703271124590.6730@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.14+cvs20070315 (2007-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43298>
 
-Eric Wong <normalperson@yhbt.net> writes:
-> We now try harder to find previous versions of the path we're tracking.
-> I've also changed the window from 1000 to 100 revisions, so the
-> warning message spewing is 10 times more frequent.  Don't worry, though
-> it's harmless :)
+Hello Linus,
 
-Not a big deal.  But perhaps those warnings could go to a log file of
-some kind and then a summary at the end could say:
+Linus Torvalds wrote:
+> On Tue, 27 Mar 2007, Uwe Kleine-K=F6nig wrote:
+> >=20
+> > 	embeddedproject$ git ls-tree HEAD | grep linux
+> > 	040000 commit 0123456789abcde0... linux-2.6
+> >=20
+> > (or how ever you save submodules).  Then you might have to duplicat=
+e the
+> > objects of linux-2.6, because they are part of both histories.
+>=20
+> No they are not. Unless you do it wrong.
+>=20
+> The *only* object that is part of the superproject would be the tree =
+that=20
+> *contains* that entry itself.
+Yes, I got that.  I think my concern is still valid, so probably I was
+just unable to phrase it explicitly.  So I retry:
 
-  There were 500 warning messages, check git-svn-fetch-TIMESTAMP.log
-  for details.
+In the state above (i.e. linux-2.6 being a commit) the
+superproject's odb doesn't necessarily needs the object
+0123456789abcde0, right.  But the commit before that had linux-2.6 bein=
+g
+a tree.  And in that state linux-2.6/Makefile has to be in the
+superproject's odb.  So if you choose the save the objects of submodule=
+s
+in a different odb, linux-2.6/Makefile has to be in both of them.
+=20
+I agree with the things you said afterwards, but they don't match the
+issue I wanted to point out.
 
-And to push a bit further, why do I care about these messages.  What
-action might I take based on them?  I almost didn't discover that the
-warnings were harmless because I C-c'd out a few times thinking that
-something was really wrong before deciding to just let it run.
+Best regards
+Uwe
 
-+ seth
+--=20
+Uwe Kleine-K=F6nig
 
--- 
-Seth Falcon
+http://www.google.com/search?q=3D2004+in+roman+numerals
