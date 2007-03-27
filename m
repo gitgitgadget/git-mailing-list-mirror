@@ -1,72 +1,74 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH] Added options NO_TCLTK, WITH_P4IMPORT and --with-tcltk/--without-tcltk.
-Date: Tue, 27 Mar 2007 10:59:40 +0400
-Message-ID: <20070327065940.GC51155@codelabs.ru>
-References: <etpuen$2uo$2@sea.gmane.org> <20070326073143.GB44578@codelabs.ru> <20070326073250.GC44578@codelabs.ru> <200703261030.49382.jnareb@gmail.com> <7vmz20xuxq.fsf@assigned-by-dhcp.cox.net> <20070326100344.GV14837@codelabs.ru> <7vejnbtjdq.fsf@assigned-by-dhcp.cox.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Bisect: add checks at the beginning of "git bisect run".
+Date: Tue, 27 Mar 2007 09:15:12 +0200
+Message-ID: <200703270915.12408.chriscool@tuxfamily.org>
+References: <20070327064957.34dad72a.chriscool@tuxfamily.org> <7vzm5zs1aq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 27 08:59:53 2007
+X-From: git-owner@vger.kernel.org Tue Mar 27 09:07:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HW5eq-0003ZW-HG
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 08:59:52 +0200
+	id 1HW5ls-00077X-3Z
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 09:07:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965254AbXC0G7t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 02:59:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965233AbXC0G7t
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 02:59:49 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:60821 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965254AbXC0G7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 02:59:48 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=cNpbhDlD1W9HR7nx2pRI4ikFGxmiI1Eu9/0DDSIqyhtjr4OcDwGz04xAGLWZ4DaVPKDDqocBwhj4BTMFZWLZ8oBRU5bnYhd3+uQJATqZdy2uob+z6jKbfbWeAHHJr5PQa1xlcwj2gaM6adgFnyV0/EGLQ+mlwWd+wD29/HpqbaU=;
-Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HW5ei-000DL1-Tq; Tue, 27 Mar 2007 10:59:45 +0400
+	id S965275AbXC0HHD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 27 Mar 2007 03:07:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965277AbXC0HHD
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 03:07:03 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:51069 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965275AbXC0HHB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2007 03:07:01 -0400
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 989E6B5ADD;
+	Tue, 27 Mar 2007 09:06:59 +0200 (CEST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vzm5zs1aq.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <7vejnbtjdq.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, score=-2.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_20
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43238>
 
-Junio, good day.
-
-Mon, Mar 26, 2007 at 09:12:17PM -0700, Junio C Hamano wrote:
-> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
-> 
-> > Mon, Mar 26, 2007 at 01:36:49AM -0700, Junio C Hamano wrote:
-> > ...
-> >> Thanks for sanity checking.  That means that the absense of
-> >> tcltk would make it impossible to munge the scripts to point at
-> >> the wish binary, so makes the NO_TCLTK stuff easier to swallow.
+Le mardi 27 mars 2007 07:28, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
 > >
-> > Sorry, did not get the point. The TCLTK is initialized to the 'wish'
-> > by 'TCLTK ?= wish', so TCLTK will always be here and initialized
-> > to the wish by-default.
-> 
-> Earlier I said I did not see a reason for not building wish
-> applications on a build system that lack them.  I am stating
-> that you could argue that your rewriting the path to wish is a
-> good reason (I would say it is half-good, as you can still tell
-> the build procedure where wish will be on the deployed system
-> without having it on your build system) for not building wish
-> applications in a build that lacks wish installation.
+> >  bisect_run () {
+> > +    # Check that we have everything to run correctly.
+> > +    test -d "$GIT_DIR/refs/bisect" || {
+> > +	echo >&2 'You need to start by "git bisect start".'
+> > +	echo >&2 'And then by "git bisect bad" and "git bisect good".'
+> > +	exit 1
+> > +    }
+> > +    bisect_next_check fail
+> > +
+>
+> I think you shouldn't need the first "test -d blah"; doesn't
+> "bisect_next_check fail" already give that message?
 
-OK, so, probably, I should modify the behaviour of the --with-tcltk
-and configure to look for the Tcl/Tk interpreter _only_ if
---with-tcltk[=PATH] was given and to leave the things unmodified
-in the case of absence of that option. But still, --without-tcltk
-will disable Tcl/Tk dependant parts. Will people be happy with such
-behaviour?
--- 
-Eygene
+Without the first "test -d blah", if "bisect start" was not already use=
+d,=20
+then the user will only see :
+
+'You need to give me at least one good and one bad revisions.'
+
+And then when using "git bisect good" or "git bisect bad" to give good =
+or=20
+bad revision:
+
+'You need to start by "git bisect start"
+Do you want me to do it for you [Y/n]?'
+
+So I thought that it would be better to tell the user upfront everythin=
+g=20
+that should be done.
+
+But it's up to you.
+
+Thanks,
+Christian.
