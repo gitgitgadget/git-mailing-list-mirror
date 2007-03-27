@@ -1,106 +1,89 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH] gitweb: Support comparing blobs (files) with different names
-Date: Tue, 27 Mar 2007 21:56:27 +0200
-Message-ID: <20070327195627.GA23205@auto.tuwien.ac.at>
-References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <200703261912.09445.jnareb@gmail.com> <20070326204116.GB1128@auto.tuwien.ac.at> <200703270256.24295.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Submodule object store
+Date: Tue, 27 Mar 2007 12:59:22 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703271254190.6730@woody.linux-foundation.org>
+References: <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net>
+ <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net>
+ <20070326233603.GL22773@admingilde.org> <20070327112549.GA12178@informatik.uni-freiburg.de>
+ <20070327115029.GC12178@informatik.uni-freiburg.de> <20070327155306.GQ22773@admingilde.org>
+ <20070327172216.GA24200@informatik.uni-freiburg.de>
+ <Pine.LNX.4.64.0703271124590.6730@woody.linux-foundation.org>
+ <20070327194233.GA28229@informatik.uni-freiburg.de>
+ <Pine.LNX.4.64.0703271250130.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 21:56:37 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin Waitz <tali@admingilde.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Eric Lesh <eclesh@ucla.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Tue Mar 27 22:00:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWHmX-0008Hb-0w
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 21:56:37 +0200
+	id 1HWHq8-0001Ua-6j
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 22:00:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965261AbXC0T4b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 27 Mar 2007 15:56:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965153AbXC0T4b
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 15:56:31 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:54959 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965261AbXC0T43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 15:56:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id BD5CA7386C1E;
-	Tue, 27 Mar 2007 21:56:27 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3RRq5iG2VLDm; Tue, 27 Mar 2007 21:56:27 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 661007386C01; Tue, 27 Mar 2007 21:56:27 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200703270256.24295.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S965310AbXC0UAP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 16:00:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965059AbXC0UAP
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 16:00:15 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:40713 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965310AbXC0UAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 16:00:13 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2RJxNU2011760
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Mar 2007 12:59:23 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2RJxMPM026466;
+	Tue, 27 Mar 2007 12:59:22 -0700
+In-Reply-To: <Pine.LNX.4.64.0703271250130.6730@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-0.468 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43302>
 
-On Tue, Mar 27, 2007 at 01:56:24AM +0100, Jakub Narebski wrote:
-> Martin Koegler wrote:
-> > My idea is, that if I got hb:f and hpb:fp, the user exactly specifi=
-ed
-> > the blobs to be compared. Then I don't want any guessing logic.
->=20
-> I'd rather you reuse the "no hash_parent" code, which also hand-craft=
-s
-> diffinfo. Perhaps removing "git-diff-tree hpb hb -- f" code entirely.
-> Besides, code dealing with "blobdiff" coming from "commit", "commitdi=
-ff"
-> and "history" views are tested to work as expected, not so with
-> arbitrary diffs.
 
-I don't like the whole rename detection code, so I offer to simplify
-git_blobdiff. For all calls to git_blobdiff (except those from git_hist=
-ory),
-I'm sure, that I can assume $file_parent ||=3D $file_name.
 
-If you think, its safe, I can simplify git_blobdiff. I propose
-doing the following way (pseudo-code):
+On Tue, 27 Mar 2007, Linus Torvalds wrote:
+> 
+> In other words, I don't think that's an argument for or against sharing 
+> the object database. You should *always* be able to share the object 
+> database by setting GIT_OBJECT_DIR if you want (or by using alternates). 
+> But that's independent of whether you are a sub/supermodule..
 
-sub git_blobdiff {
-$file_parent ||=3D $file_name;
+In fact, I suspect that you might well have a situation where there are 
+more objects to be shared "across" superproject boundaries than within 
+them.
 
-if (defined $hash_base && defined $file_name && !defined $hash)
-$hash=3Dgit_get_hash_by_path($hash_base,$file_name);
+For example, say that I'm a mirror site, and I mirror two different 
+distributions, both of which use superprojects (but *different* 
+superprojects!) to track their distro stuff.
 
-if (defined $hash_parent_base && defined $file_parent && !defined $hash=
-_parent)
-$hash_parent=3Dgit_get_hash_by_path($hash_parent_base,$file_parent);
+Obviously, the top-level setup is likely totally different, and they 
+probably differ a bit in which subprojects they have too, but in many 
+cases, those two *different* superprojects will have subprojects that 
+could often share 99% of all their objects not within the superproject, 
+but individually *across* superprojects.
 
-if (!defined $hash || ! defined $hash_parent )
-die_error(....);
+So you would not want to have a object store that is tied to the 
+superproject, but you might well want to have each superproject share the 
+object store for the subprojects that they have in common. The "kernel" 
+subproject in the "ubuntu" superproject might want to share the object 
+store for the "linux-2.6" subproject in the Fedora 7 superproject.
 
-$diffinfo{'from_mode'} =3D $diffinfo{'to_mode'} =3D "blob";
-$diffinfo{'from_file'} =3D $file_parent || $hash_parent;
-$diffinfo{'to_file'}   =3D $file_name || $hash;
-$diffinfo{'status'} =3D '2';
-$diffinfo{'to_id'}   =3D $hash;
-$diffinfo{'from_id'}   =3D $hash_parent;
+(Similarly, there migh be sharing with totally *individual* projects, ie 
+you might want to make both just have an alternate that points 
+directly to the "official" tree that is in neither of the two 
+superprojects and that I maintain separately).
 
- open $fd, "-|", git_cmd(), "diff", '-p', @diff_opts,
-    $hash_parent, $hash
-    or die_error(undef, "Open git-diff failed");
-
-/* print output */
-
-}
-
-Else I will keep a reworked version of my patch.
-
-> By the way, if you call git_get_hash_by_path (which is expensive, as =
-it
-> calls git command), you can use resulting hash in place of
-> hash_base:filename as an argument to git-diff.
-=20
-I must check, if we need to resolve $hash ($hash_parent) by
-git_get_hash_by_path, if we construct it out of $hash_base and
-$file_name. Maybe we can avoid this call.
-
-mfg Martin K=F6gler
-=20
+		Linus
