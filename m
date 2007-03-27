@@ -1,79 +1,99 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: git-svn, remote tracking branch question
-Date: Tue, 27 Mar 2007 13:26:43 -0700
-Message-ID: <m2ps6usa9o.fsf@ziti.fhcrc.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: .gitlink for Summer of Code
+Date: Tue, 27 Mar 2007 16:54:33 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0703271602110.6485@iabervon.org>
+References: <1174825838.12540.5.camel@localhost> <20070326220302.GH22773@admingilde.org>
+ <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <200703270117.59205.Josef.Weidendorfer@gmx.de>
+ <Pine.LNX.4.64.0703270952020.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0703271338210.6485@iabervon.org>
+ <Pine.LNX.4.64.0703271115580.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 27 22:26:59 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Martin Waitz <tali@admingilde.org>,
+	Eric Lesh <eclesh@ucla.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Mar 27 22:54:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWIFu-0005Ys-Pq
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 22:26:59 +0200
+	id 1HWIgh-0001at-8u
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 22:54:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932234AbXC0U0t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 16:26:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934005AbXC0U0t
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 16:26:49 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:8347 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932234AbXC0U0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 16:26:48 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so8177uga
-        for <git@vger.kernel.org>; Tue, 27 Mar 2007 13:26:46 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:to:cc:subject:from:date:message-id:user-agent:mime-version:content-type;
-        b=lAFuHmEaR5BhOhLu8+m63RjaoX1+TctlwkbLenX68Yr0FwmFW8IIQEDlcyCtw5Y4vcApQo/LVGjL00qHk8rcle9pBphgVNFuG4Sc2ohL8vBEz/k/BoT4A6E6wV4r1oonKcubE6JHwx3+FaeVNQhxtizKEtkXSu/UUyIK3Oo2aT0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:to:cc:subject:from:date:message-id:user-agent:mime-version:content-type;
-        b=CY3KF/Xb3RnPwWmKcRuedpAbA21t2r2sAXZq4yzN8JGyV1xzOXtEtjWn0Mq9dvPoauEwHLPNd4fjOpeQ9s8SOn8yrU42i47enbFbIJFGlmmIQx2RECu9ZRkcU5qbePU7QV+7H5AePqdRopbkPMemLXS1UvUkVaH3UQ0ssIw4tKs=
-Received: by 10.114.161.11 with SMTP id j11mr3318707wae.1175027205592;
-        Tue, 27 Mar 2007 13:26:45 -0700 (PDT)
-Received: from ziti.fhcrc.org ( [140.107.156.111])
-        by mx.google.com with ESMTP id y11sm1427550pod.2007.03.27.13.26.45;
-        Tue, 27 Mar 2007 13:26:45 -0700 (PDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+	id S934203AbXC0Uyg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 16:54:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934207AbXC0Uyg
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 16:54:36 -0400
+Received: from iabervon.org ([66.92.72.58]:2933 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934203AbXC0Uye (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 16:54:34 -0400
+Received: (qmail 4420 invoked by uid 1000); 27 Mar 2007 16:54:33 -0400
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Mar 2007 16:54:33 -0400
+In-Reply-To: <Pine.LNX.4.64.0703271115580.6730@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43305>
 
-Hi,
+On Tue, 27 Mar 2007, Linus Torvalds wrote:
 
-I've edited my <repos>/.git/config file so that git-svn is tracking
-the main devel line as well as a release branch of a project.  This
-seems to work well.
+> On Tue, 27 Mar 2007, Daniel Barkalow wrote:
+> > 
+> > Is it fair to say that subproject support means that there's a use case 
+> > where everybody will need shallow clones? And that it points out natural 
+> > triggers for shallowness?
+> 
+> No.
+> 
+> I personally don't believe in shallow clones. And I *certainly* don't 
+> believe that it has anything to do with subprojects. So people may want 
+> shallow clones, but it's at least independent of the issue of submodules.
+> 
+> With subprojects, it's not that you don't want the history. It's just that 
+> you don't want the history for *all* projects. Most people care about a 
+> very small subset.
 
-So I have:
+Are you talking about submodule history, or submodule state? If they care 
+about any state but not the corresponding history, they need to do a 
+shallow clone of the subproject, right?
 
-[svn-remote "svn"]
-	url = https://svn.url.com/root
-	fetch = branches/release-2-5:refs/remotes/2.5
-	fetch = trunk:refs/remotes/git-svn
+Or are you assuming that people only want to have every subproject either 
+there with full history or entirely absent?
 
-I can checkout the 2.5 release branch like this:
+I think that one common thing would be to care about the sequence of linux 
+kernel snapshots selected by openembedded in their commits, without caring 
+about the linux kernel history in between those snapshots. And they 
+probably even want to bisect the superproject (still without getting into 
+kernel versions that were never in superproject commits), so they can 
+track down what caused their PDA to stop booting, where it's not clear 
+which program is even responsible. Maybe once the bug is down to a single 
+superproject commit, they'd want the history for the responsible 
+subproject.
 
-   git checkout -b 2.5 remotes/2.5
+In any case, I think that the superproject object database needs to keep 
+track of where references came from (e.g., if you pull somebody's 
+superproject commit, and the point of that commit is to use a 
+custom-modified subproject commit, that subproject commit must come from 
+the same person, and you need to be able to fetch it correctly after the 
+fact if you don't get it immediately, even if you've personally forgotten 
+the URL).
 
-But at this point, how do I ask git-svn to update it?  When working on
-the devel line, I can do 'git svn rebase' and I would like to do the
-same thing but relative to the branch.
+> (The exception, of course, is when the superproject simply isn't that big, 
+> and only has a couple of subprojects. In git, for example, the xdiff stuff 
+> could be a subproject if you wanted to do it that way. But then, the 
+> subproject isn't a size issue, it's purely an organizational thing, and 
+> there is no argument for/against shallowness there either).
 
-Perhaps there is some config I can add so that I don't have to do:
+Of course. And to make this use case also viable, it's probably necessary 
+to be able to tell git to fetch these subprojects automatically, because 
+you'll be sad if you leave for a long plane trip with the latest git but 
+not the xdiff it uses. (Clearly an application for .gitattributes, but 
+that'd be extra fun to implement.)
 
-   git svn fetch
-   git rebase remotes/2.5
-
-That isn't so bad except for having to remember where you are...
-
-Thanks,
-
-+ seth
-
--- 
-Seth Falcon
+	-Daniel
+*This .sig left intentionally blank*
