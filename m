@@ -1,116 +1,91 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: [PATCH] Added git-p4 package to the list of git RPMs.
-Date: Tue, 27 Mar 2007 15:25:15 +0400
-Message-ID: <20070327112514.GC14837@codelabs.ru>
-References: <20070321144008.GE14837@codelabs.ru> <Pine.LNX.4.63.0703211630160.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321160126.GH14837@codelabs.ru> <7v1wji371q.fsf@assigned-by-dhcp.cox.net> <20070326073143.GB44578@codelabs.ru> <20070326073250.GC44578@codelabs.ru> <7v1wjcz9x1.fsf@assigned-by-dhcp.cox.net> <20070327102601.GN14837@codelabs.ru> <7vps6vnehz.fsf@assigned-by-dhcp.cox.net> <20070327112202.GB14837@codelabs.ru>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: Submodule object store
+Date: Tue, 27 Mar 2007 13:25:49 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070327112549.GA12178@informatik.uni-freiburg.de>
+References: <1174825838.12540.5.camel@localhost> <1174930688.5662.20.camel@localhost> <20070326183523.GG22773@admingilde.org> <200703262133.44520.Josef.Weidendorfer@gmx.de> <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net> <20070326233603.GL22773@admingilde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Mar 27 13:25:34 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Eric Lesh <eclesh@ucla.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Tue Mar 27 13:26:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HW9nw-0003z5-5Q
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 13:25:32 +0200
+	id 1HW9oP-0004DG-V1
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 13:26:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753812AbXC0LZ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 07:25:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753813AbXC0LZ2
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 07:25:28 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:64531 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753812AbXC0LZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 07:25:27 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=BhZfWuQtIfJXmalMHPGa4GzJVUqN53C8+TEmhVeuzWXxQCT/LosENgLEnZEobubwr2o9XXPd/viieEN69OUNX7MYdPbUnt9hhIw7GXuYQi0kC9iqk1W6L/3J34TXt4w9Aw2CX88+hOy7tyy7qz/4ObManlYrrgYcm89WIM6sUPE=;
-Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HW9nl-000Df6-Rx; Tue, 27 Mar 2007 15:25:22 +0400
+	id S1753813AbXC0LZ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 27 Mar 2007 07:25:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753817AbXC0LZ7
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 07:25:59 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:46680 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753813AbXC0LZ6 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 07:25:58 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HW9oI-0005DC-Ai; Tue, 27 Mar 2007 13:25:54 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2RBPouj012567;
+	Tue, 27 Mar 2007 13:25:50 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2RBPnd6012566;
+	Tue, 27 Mar 2007 13:25:49 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Martin Waitz <tali@admingilde.org>, Junio C Hamano <junkio@cox.net>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Eric Lesh <eclesh@ucla.edu>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20070327112202.GB14837@codelabs.ru>
-X-Spam-Status: No, score=-2.0 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_40
+In-Reply-To: <20070326233603.GL22773@admingilde.org>
+User-Agent: Mutt/1.5.14+cvs20070315 (2007-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43266>
 
-Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
----
- git.spec.in |   25 +++++++++++++++++++++----
- 1 files changed, 21 insertions(+), 4 deletions(-)
+Hello,
 
-diff --git a/git.spec.in b/git.spec.in
-index 46aee88..8c79a79 100644
---- a/git.spec.in
-+++ b/git.spec.in
-@@ -50,6 +50,13 @@ Requires:       git-core = %{version}-%{release}, tla
- %description arch
- Git tools for importing Arch repositories.
- 
-+%package p4
-+Summary:        Git tools for importing Perforce repositories
-+Group:          Development/Tools
-+Requires:       git-core = %{version}-%{release}, python
-+%description p4
-+Git tools for importing Perforce repositories.
-+
- %package email
- Summary:        Git tools for sending email
- Group:          Development/Tools
-@@ -86,22 +93,22 @@ Perl interface to Git
- 
- %build
- make %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" WITH_OWN_SUBPROCESS_PY=YesPlease \
--     prefix=%{_prefix} all %{!?_without_docs: doc}
-+     WITH_P4IMPORT=YesPlease prefix=%{_prefix} all %{!?_without_docs: doc}
- 
- %install
- rm -rf $RPM_BUILD_ROOT
- make %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" DESTDIR=$RPM_BUILD_ROOT \
--     WITH_OWN_SUBPROCESS_PY=YesPlease \
-+     WITH_OWN_SUBPROCESS_PY=YesPlease WITH_P4IMPORT=YesPlease \
-      prefix=%{_prefix} mandir=%{_mandir} INSTALLDIRS=vendor \
-      install %{!?_without_docs: install-doc}
- find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
- find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -exec rm -f {} ';'
- find $RPM_BUILD_ROOT -type f -name perllocal.pod -exec rm -f {} ';'
- 
--(find $RPM_BUILD_ROOT%{_bindir} -type f | grep -vE "archimport|svn|cvs|email|gitk|git-gui|git-citool" | sed -e s@^$RPM_BUILD_ROOT@@)               > bin-man-doc-files
-+(find $RPM_BUILD_ROOT%{_bindir} -type f | grep -vE "p4import|archimport|svn|cvs|email|gitk|git-gui|git-citool" | sed -e s@^$RPM_BUILD_ROOT@@)               > bin-man-doc-files
- (find $RPM_BUILD_ROOT%{perl_vendorlib} -type f | sed -e s@^$RPM_BUILD_ROOT@@) >> perl-files
- %if %{!?_without_docs:1}0
--(find $RPM_BUILD_ROOT%{_mandir} $RPM_BUILD_ROOT/Documentation -type f | grep -vE "archimport|svn|git-cvs|email|gitk|git-gui|git-citool" | sed -e s@^$RPM_BUILD_ROOT@@ -e 's/$/*/' ) >> bin-man-doc-files
-+(find $RPM_BUILD_ROOT%{_mandir} $RPM_BUILD_ROOT/Documentation -type f | grep -vE "p4import|archimport|svn|git-cvs|email|gitk|git-gui|git-citool" | sed -e s@^$RPM_BUILD_ROOT@@ -e 's/$/*/' ) >> bin-man-doc-files
- %else
- rm -rf $RPM_BUILD_ROOT%{_mandir}
- %endif
-@@ -133,6 +140,13 @@ rm -rf $RPM_BUILD_ROOT
- %{!?_without_docs: %{_mandir}/man1/git-archimport.1*}
- %{!?_without_docs: %doc Documentation/git-archimport.html }
- 
-+%files p4
-+%defattr(-,root,root)
-+%doc Documentation/git-p4import.txt
-+%{_bindir}/git-p4import
-+%{!?_without_docs: %{_mandir}/man1/git-p4import.1*}
-+%{!?_without_docs: %doc Documentation/git-p4import.html }
-+
- %files email
- %defattr(-,root,root)
- %doc Documentation/*email*.txt
-@@ -167,6 +181,9 @@ rm -rf $RPM_BUILD_ROOT
- %{!?_without_docs: %doc Documentation/*.html }
- 
- %changelog
-+* Tue Mar 27 2007 Eygene Ryabinkin <rea-git@codelabs.ru>
-+- Added the git-p4 package: Perforce import stuff.
-+
- * Mon Feb 13 2007 Nicolas Pitre <nico@cam.org>
- - Update core package description (Git isn't as stupid as it used to be)
- 
--- 
-1.5.0.3-dirty
+Martin Waitz wrote:
+> On Mon, Mar 26, 2007 at 04:28:28PM -0700, Junio C Hamano wrote:
+> > Martin Waitz <tali@admingilde.org> writes:
+> >=20
+> > > To make purge and fsck work we have the hard requirement that it
+> > > must be possible to list all objects which belong to one submodul=
+e.
+> >=20
+> > I understand you would want to separate the ref namespace, but I
+> > still do not see why you would want to have a separate object
+> > store, laid out in a funny way.  Unless you are thinking about
+> > using rsync to transfer object store, that is.
+>=20
+> I want to be able to list all objects which are not reachable in the
+> object store, without traversing all submodules at the same time.
+> The only way I can think of to achieve this is to have one separate
+> object store per submodule and then do the traversal per submodule.
+I might have understood something wrongly, but to list objects that are
+not reachable you need to traverse all trees anyhow, don't you. =20
+
+Then how big is the difference between a directory and an submodule?
+I'd expect it's not so big if the submodules included in different
+revisions of the supermodule share most of their history.  Of course yo=
+u
+need to exploit that.  Thinking again that might be the problem?
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+5 out of 4 people have trouble with fractions.
