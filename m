@@ -1,96 +1,59 @@
-From: rogan@dawes.za.net
-Subject: [PATCH] Fix type confusion in pkt-line
-Date: Tue, 27 Mar 2007 03:54:07 -0700
-Message-ID: <1174992847659-git-send-email-rogan@dawes.za.net>
-Cc: Rogan Dawes <rogan@dawes.za.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 27 13:21:09 2007
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: [PATCH] Add the WITH_P4IMPORT knob to the Makefile.
+Date: Tue, 27 Mar 2007 15:22:03 +0400
+Message-ID: <20070327112202.GB14837@codelabs.ru>
+References: <Pine.LNX.4.63.0703211522320.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321144008.GE14837@codelabs.ru> <Pine.LNX.4.63.0703211630160.22628@wbgn013.biozentrum.uni-wuerzburg.de> <20070321160126.GH14837@codelabs.ru> <7v1wji371q.fsf@assigned-by-dhcp.cox.net> <20070326073143.GB44578@codelabs.ru> <20070326073250.GC44578@codelabs.ru> <7v1wjcz9x1.fsf@assigned-by-dhcp.cox.net> <20070327102601.GN14837@codelabs.ru> <7vps6vnehz.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=koi8-r
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 13:22:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HW9jg-0001gM-Uf
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 13:21:09 +0200
+	id 1HW9kl-0002HE-PY
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 13:22:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753815AbXC0LUl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 07:20:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbXC0LUl
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 07:20:41 -0400
-Received: from judo.dreamhost.com ([66.33.216.100]:52564 "EHLO
-	judo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753815AbXC0LUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 07:20:40 -0400
-X-Greylist: delayed 1591 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Mar 2007 07:20:40 EDT
-Received: from smarty.dreamhost.com (smarty.dreamhost.com [66.33.216.24])
-	by judo.dreamhost.com (Postfix) with ESMTP id A75F4179B4D
-	for <git@vger.kernel.org>; Tue, 27 Mar 2007 03:55:13 -0700 (PDT)
-Received: from lucas.dreamhost.com (lucas.dreamhost.com [64.111.99.14])
-	by smarty.dreamhost.com (Postfix) with ESMTP id 856A8EE249;
-	Tue, 27 Mar 2007 03:54:07 -0700 (PDT)
-Received: by lucas.dreamhost.com (Postfix, from userid 81257)
-	id 73830784BA; Tue, 27 Mar 2007 03:54:07 -0700 (PDT)
-X-Mailer: git-send-email 1.5.0.2
+	id S1753801AbXC0LWN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 07:22:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbXC0LWN
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 07:22:13 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:58505 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753801AbXC0LWM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 07:22:12 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
+	b=jdaF/PjEOEUTHyFFsSLLC8RrKJz7Z5PyPzPqRZYI/EcNnFgcOonzJFgCIkj2aIsywDD5oa4+FDLMCPlVGgQW/EvdKiq7MgmBPTY3cfvRSTQWlDl7Z/pY7yN9JwF+Qi0UeaxtXAI4pCCoj2zorjRqugN/8LvSryvRhGq/x7XSs60=;
+Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HW9kg-000Des-1O; Tue, 27 Mar 2007 15:22:10 +0400
+Content-Disposition: inline
+In-Reply-To: <7vps6vnehz.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-1.9 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43264>
 
-From: Rogan Dawes <rogan@dawes.za.net>
+Tue, Mar 27, 2007 at 03:54:16AM -0700, Junio C Hamano wrote:
+> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+> 
+> > WITH_P4IMPORT: enables the installation of the Perforce import
+> > script.
+> >
+> > Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
+> 
+> Thanks.
 
-We were using unsigend and signed int when we should have been
-using size_t and ssize_t.
+You're welcome ;))
 
-Signed-off-by: Rogan Dawes <rogan@dawes.za.net>
----
- pkt-line.c |   10 +++++-----
- pkt-line.h |    2 +-
- 2 files changed, 6 insertions(+), 6 deletions(-)
+> I wonder if we need to update git.spec.in file if we
+> were to take this patch.
 
-diff --git a/pkt-line.c b/pkt-line.c
-index b4cb7e2..559a944 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -63,12 +63,12 @@ void packet_write(int fd, const char *fmt, ...)
- 	safe_write(fd, buffer, n);
- }
- 
--static void safe_read(int fd, void *buffer, unsigned size)
-+static void safe_read(int fd, void *buffer, size_t size)
- {
--	int n = 0;
-+	size_t n = 0;
- 
- 	while (n < size) {
--		int ret = xread(fd, (char *) buffer + n, size - n);
-+		ssize_t ret = xread(fd, (char *) buffer + n, size - n);
- 		if (ret < 0)
- 			die("read error (%s)", strerror(errno));
- 		if (!ret)
-@@ -77,10 +77,10 @@ static void safe_read(int fd, void *buffer, unsigned size)
- 	}
- }
- 
--int packet_read_line(int fd, char *buffer, unsigned size)
-+ssize_t packet_read_line(int fd, char *buffer, size_t size)
- {
- 	int n;
--	unsigned len;
-+	size_t len;
- 	char linelen[4];
- 
- 	safe_read(fd, linelen, 4);
-diff --git a/pkt-line.h b/pkt-line.h
-index 9df653f..073fcd4 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -9,7 +9,7 @@
- void packet_flush(int fd);
- void packet_write(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- 
--int packet_read_line(int fd, char *buffer, unsigned size);
-+ssize_t packet_read_line(int fd, char *buffer, size_t size);
- ssize_t safe_write(int, const void *, ssize_t);
- 
- #endif
+Created a quick patch, but have no Linux host with autoconf >= 2.59
+at hand, so can not test. The patch follows.
 -- 
-1.5.0.3
+Eygene
