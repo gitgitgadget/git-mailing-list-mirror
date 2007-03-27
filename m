@@ -1,44 +1,74 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Listing of branch creation time?
-Date: Tue, 27 Mar 2007 15:52:06 -0600
-Message-ID: <17929.37382.984339.742025@lisa.zopyra.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn, remote tracking branch question
+Date: Tue, 27 Mar 2007 15:00:15 -0700
+Message-ID: <20070327220015.GA16344@untitled>
+References: <m2ps6usa9o.fsf@ziti.fhcrc.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Mar 27 23:52:14 2007
+Cc: git@vger.kernel.org
+To: Seth Falcon <sethfalcon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 00:00:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWJaP-00055v-2y
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 23:52:13 +0200
+	id 1HWJiK-0000kc-39
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 00:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932954AbXC0VwK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 17:52:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932966AbXC0VwK
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 17:52:10 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:61478 "EHLO zopyra.com"
+	id S934005AbXC0WAV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 18:00:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934209AbXC0WAU
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 18:00:20 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:45502 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932954AbXC0VwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 17:52:08 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l2RLq7I30245;
-	Tue, 27 Mar 2007 15:52:07 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S934005AbXC0WAT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 18:00:19 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 45E312DC01A;
+	Tue, 27 Mar 2007 15:00:16 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 27 Mar 2007 15:00:15 -0700
+Content-Disposition: inline
+In-Reply-To: <m2ps6usa9o.fsf@ziti.fhcrc.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43311>
 
-I'm sure the git developers grow tired of working with addle-brained
-users, but I sometimes forget what the contents of a topic branch are,
-how old it is, etc.  As to content, I can make better branch names,
-but I think it would be useful to be able to query git as to the
-creation time of all of my branches, perhaps sorted from newest to
-oldest.
+Seth Falcon <sethfalcon@gmail.com> wrote:
+> Hi,
+> 
+> I've edited my <repos>/.git/config file so that git-svn is tracking
+> the main devel line as well as a release branch of a project.  This
+> seems to work well.
+> 
+> So I have:
+> 
+> [svn-remote "svn"]
+> 	url = https://svn.url.com/root
+> 	fetch = branches/release-2-5:refs/remotes/2.5
+> 	fetch = trunk:refs/remotes/git-svn
+> 
+> I can checkout the 2.5 release branch like this:
+> 
+>    git checkout -b 2.5 remotes/2.5
+> 
+> But at this point, how do I ask git-svn to update it?  When working on
+> the devel line, I can do 'git svn rebase' and I would like to do the
+> same thing but relative to the branch.
+> 
+> Perhaps there is some config I can add so that I don't have to do:
+> 
+>    git svn fetch
+>    git rebase remotes/2.5
+> 
+> That isn't so bad except for having to remember where you are...
 
-Would it be reasonable to add an option to git-branch to do this?
+'git svn rebase' should be capable auto-discovering the remote ref that
+you last branched from.  I'm not sure if the '2.5' that's common in the
+remote ref and your local branch would cause ambiguity, however...
 
+I'll look into this more when/if I have time tonight.
 
-Bill
+-- 
+Eric Wong
