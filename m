@@ -1,231 +1,58 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: [PATCH 4/4] Do not break git-gui messages into multiple lines.
-Date: Tue, 27 Mar 2007 14:31:55 +0400
-Message-ID: <20070327103155.GR14837@codelabs.ru>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: Type mismatches in safe_read and friends?
+Date: Tue, 27 Mar 2007 12:34:03 +0200
+Message-ID: <4608F31B.8070204@dawes.za.net>
+References: <4607D4F6.80703@dawes.za.net> <20070326164755.GH13247@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Tue Mar 27 12:32:14 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Mar 27 12:34:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HW8yK-0002mG-85
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 12:32:12 +0200
+	id 1HW90U-0003tJ-Aw
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 12:34:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770AbXC0KcI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 06:32:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753773AbXC0KcI
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 06:32:08 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:51513 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753770AbXC0KcG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 06:32:06 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:MIME-Version:Content-Type:Content-Disposition:Sender:X-Spam-Status:Subject;
-	b=hCfGWDFMAOWpIfmjh1eTmet/FNHfFH6kEFObqOr4tMjQnFErOZQHEr8AYdXou/BcWuIMb+ZvOMwq5MYXRx2OTmBMZxLIwZkIFQTbCfR3C05ybPN7EkVRd2l0QUGRCiMASxQ6LnlcvEZ65fXJ46Ep/p/rA/pfw2q0E29BssYIYcw=;
-Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HW8y8-000Dac-1J; Tue, 27 Mar 2007 14:32:00 +0400
-Content-Disposition: inline
-X-Spam-Status: No, score=-3.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	id S1753779AbXC0KeX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 06:34:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753782AbXC0KeX
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 06:34:23 -0400
+Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:59576 "EHLO
+	spunkymail-a7.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753779AbXC0KeW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Mar 2007 06:34:22 -0400
+Received: from [192.168.201.103] (dsl-146-24-118.telkomadsl.co.za [165.146.24.118])
+	by spunkymail-a7.g.dreamhost.com (Postfix) with ESMTP id A84A25C238;
+	Tue, 27 Mar 2007 03:34:20 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <20070326164755.GH13247@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43254>
 
-Many git-gui messages were broken into a multiple lines to make
-good paragraph width. Unfortunately in reality it breaks the paragraph
-width completely, because the dialog window width does not coincide
-with the paragraph width created by the current font.
+Shawn O. Pearce wrote:
+>  
+>> Or is it just a case that we don't really care, since we control the 
+>> ranges of the values, and the underlying types are int anyway? Patches 
+>> to follow if I get an indication that anyone cares, otherwise I'd be 
+>> posting my question to a C newbies group. ;-)
+> 
+> It is sort of a case we don't care.  These probably should be fixed.
+> A patch would be nice.  You want to learn C...  ;-)
+> 
 
-Tcl/Tk's standard dialog boxes are breaking the long lines
-automatically, so it is better to make long lines and let the
-interpreter do the job.
+Ok. So I did a little patch, but I'm not sure whether I solved anything. 
+Now we have an implicit cast from size_t to ssize_t in packet_read_line.
 
-Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
----
- git-gui/git-gui.sh |   64 ++++++++++++++-------------------------------------
- 1 files changed, 18 insertions(+), 46 deletions(-)
+I guess this echoes your comment about requesting a large size_t, and 
+getting a ssize_t result back. I suppose in theory we should be refusing 
+to handle a length greater than that which would fit into a ssize_t? Or 
+simply making sure to always return data smaller than max(ssize_t)?
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 7c2ec6b..5b53891 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -735,12 +735,9 @@ proc handle_empty_diff {} {
- 
- [short_path $path] has no changes.
- 
--The modification date of this file was updated
--by another application, but the content within
--the file was not changed.
-+The modification date of this file was updated by another application, but the content within the file was not changed.
- 
--A rescan will be automatically started to find
--other files which may have the same state."
-+A rescan will be automatically started to find other files which may have the same state."
- 
- 	clear_diff
- 	display_file $path __
-@@ -1041,8 +1038,7 @@ proc load_last_commit {} {
- 	if {[llength $PARENT] == 0} {
- 		error_popup {There is nothing to amend.
- 
--You are about to create the initial commit.
--There is no commit before this to amend.
-+You are about to create the initial commit.  There is no commit before this to amend.
- }
- 		return
- 	}
-@@ -1051,10 +1047,7 @@ There is no commit before this to amend.
- 	if {$curType eq {merge}} {
- 		error_popup {Cannot amend while merging.
- 
--You are currently in the middle of a merge that
--has not been fully completed.  You cannot amend
--the prior commit unless you first abort the
--current merge activity.
-+You are currently in the middle of a merge that has not been fully completed.  You cannot amend the prior commit unless you first abort the current merge activity.
- }
- 		return
- 	}
-@@ -1144,9 +1137,7 @@ proc commit_tree {} {
- 	} elseif {$commit_type ne $curType || $HEAD ne $curHEAD} {
- 		info_popup {Last scanned state does not match repository state.
- 
--Another Git program has modified this repository
--since the last scan.  A rescan must be performed
--before another commit can be created.
-+Another Git program has modified this repository since the last scan.  A rescan must be performed before another commit can be created.
- 
- The rescan will be automatically started now.
- }
-@@ -1167,8 +1158,7 @@ The rescan will be automatically started now.
- 		U? {
- 			error_popup "Unmerged files cannot be committed.
- 
--File [short_path $path] has merge conflicts.
--You must resolve them and add the file before committing.
-+File [short_path $path] has merge conflicts.  You must resolve them and add the file before committing.
- "
- 			unlock_index
- 			return
-@@ -1284,8 +1274,7 @@ proc commit_committree {fd_wt curHEAD msg} {
- 		if {$tree_id eq $old_tree} {
- 			info_popup {No changes to commit.
- 
--No files were modified by this commit and it
--was not a merge commit.
-+No files were modified by this commit and it was not a merge commit.
- 
- A rescan will be automatically started now.
- }
-@@ -2408,9 +2397,7 @@ proc switch_branch {new_branch} {
- 	} elseif {$commit_type ne $curType || $HEAD ne $curHEAD} {
- 		info_popup {Last scanned state does not match repository state.
- 
--Another Git program has modified this repository
--since the last scan.  A rescan must be performed
--before the current branch can be changed.
-+Another Git program has modified this repository since the last scan.  A rescan must be performed before the current branch can be changed.
- 
- The rescan will be automatically started now.
- }
-@@ -2501,12 +2488,9 @@ Staying on branch '$current_branch'."
- 	if {[catch {git symbolic-ref HEAD "refs/heads/$new_branch"} err]} {
- 		error_popup "Failed to set current branch.
- 
--This working directory is only partially switched.
--We successfully updated your files, but failed to
--update an internal Git file.
-+This working directory is only partially switched.  We successfully updated your files, but failed to update an internal Git file.
- 
--This should not have occurred.  [appname] will now
--close and give up.
-+This should not have occurred.  [appname] will now close and give up.
- 
- $err"
- 		do_quit
-@@ -2823,8 +2807,7 @@ proc can_merge {} {
- 	if {[string match amend* $commit_type]} {
- 		info_popup {Cannot merge while amending.
- 
--You must finish amending this commit before
--starting any type of merge.
-+You must finish amending this commit before starting any type of merge.
- }
- 		return 0
- 	}
-@@ -2838,9 +2821,7 @@ starting any type of merge.
- 	if {$commit_type ne $curType || $HEAD ne $curHEAD} {
- 		info_popup {Last scanned state does not match repository state.
- 
--Another Git program has modified this repository
--since the last scan.  A rescan must be performed
--before a merge can be performed.
-+Another Git program has modified this repository since the last scan.  A rescan must be performed before a merge can be performed.
- 
- The rescan will be automatically started now.
- }
-@@ -2859,9 +2840,7 @@ The rescan will be automatically started now.
- 
- File [short_path $path] has merge conflicts.
- 
--You must resolve them, add the file, and commit to
--complete the current merge.  Only then can you
--begin another merge.
-+You must resolve them, add the file, and commit to complete the current merge.  Only then can you begin another merge.
- "
- 			unlock_index
- 			return 0
-@@ -2871,9 +2850,7 @@ begin another merge.
- 
- File [short_path $path] is modified.
- 
--You should complete the current commit before
--starting a merge.  Doing so will help you abort
--a failed merge, should the need arise.
-+You should complete the current commit before starting a merge.  Doing so will help you abort a failed merge, should the need arise.
- "
- 			unlock_index
- 			return 0
-@@ -2949,13 +2926,11 @@ proc finish_merge {revcnt w ok} {
- 
- Your merge of $revcnt branches has failed.
- 
--There are file-level conflicts between the
--branches which must be resolved manually.
-+There are file-level conflicts between the branches which must be resolved manually.
- 
- The working directory will now be reset.
- 
--You can attempt this merge again
--by merging only one branch at a time." $w
-+You can attempt this merge again by merging only one branch at a time." $w
- 
- 			set fd [open "| git read-tree --reset -u HEAD" r]
- 			fconfigure $fd -blocking 0 -translation binary
-@@ -3068,8 +3043,7 @@ You must finish amending this commit.
- 
- 	if {[ask_popup "Abort $op?
- 
--Aborting the current $op will cause
--*ALL* uncommitted changes to be lost.
-+Aborting the current $op will cause *ALL* uncommitted changes to be lost.
- 
- Continue with aborting the current $op?"] eq {yes}} {
- 		set fd [open "| git read-tree --reset -u HEAD" r]
-@@ -6076,9 +6050,7 @@ if {[is_enabled multicommit]} {
- 		if {[ask_popup \
- 			"This repository currently has $objects_current loose objects.
- 
--To maintain optimal performance it is strongly
--recommended that you compress the database
--when more than $object_limit loose objects exist.
-+To maintain optimal performance it is strongly recommended that you compress the database when more than $object_limit loose objects exist.
- 
- Compress the database now?"] eq yes} {
- 			do_gc
--- 
-1.5.0.3-dirty
+Patch to follow.
+
+Rogan
