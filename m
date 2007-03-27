@@ -1,94 +1,117 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-send-email and aliases
-Date: Tue, 27 Mar 2007 03:29:37 -0700
-Message-ID: <7vircnou7i.fsf@assigned-by-dhcp.cox.net>
-References: <38b2ab8a0703260239j3f3f0be2teee70fc502f6f7c1@mail.gmail.com>
-	<7vwt14wd38.fsf@assigned-by-dhcp.cox.net>
-	<38b2ab8a0703270238n655bdee1kac227a6675261210@mail.gmail.com>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: [PATCH 2/4] Fix drop-down menus in the git-gui dialogs.
+Date: Tue, 27 Mar 2007 14:30:05 +0400
+Message-ID: <20070327103005.GP14837@codelabs.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=koi8-r
 Cc: git@vger.kernel.org
-To: "Francis Moreau" <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Mar 27 12:29:46 2007
+To: paulus@samba.org
+X-From: git-owner@vger.kernel.org Tue Mar 27 12:30:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HW8vu-0001Rk-G6
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 12:29:42 +0200
+	id 1HW8wT-0001ka-Dn
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 12:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753761AbXC0K3j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 06:29:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753769AbXC0K3j
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 06:29:39 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:47386 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753761AbXC0K3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 06:29:38 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070327102938.ZVRP748.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 27 Mar 2007 06:29:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id fmVd1W00D1kojtg0000000; Tue, 27 Mar 2007 06:29:37 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753769AbXC0KaN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 06:30:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753773AbXC0KaN
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 06:30:13 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:59730 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753769AbXC0KaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 06:30:12 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Message-ID:MIME-Version:Content-Type:Content-Disposition:Sender:X-Spam-Status:Subject;
+	b=o8cy7PuHcZEUfcP7PRZDUf1RNWpTwtmdxCG9vmSBoGrl49f9OuCdq8ojkEt5zPgLEpsnqD3AzRfQVpz1iwoPNrE1aHuHL1geigVOZFbnIDhlSRBsbibv0/MI1gIb4JsXLZ5AoIe47zJi+a8z3QNm3ss1LC06c/9MInIeYwRLXCE=;
+Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HW8wM-000DaG-7c; Tue, 27 Mar 2007 14:30:10 +0400
+Content-Disposition: inline
+X-Spam-Status: No, score=-1.9 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43250>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43251>
 
-"Francis Moreau" <francis.moro@gmail.com> writes:
+If the drop-down menu (for example "Local Branch" from the dialog
+activated by the "Branch/Create..." menu item) is chosen with the
+left mouse button, then the pointer is moved off the drop-down menu
+while the mouse button is still pressed and then the 'Escape' key
+is pressed, the main menu will be broken. Next time when you will
+try to select any main menu item, the Tcl/Tk interpreter will spawn
+an internal error.
 
-> On 3/26/07, Junio C Hamano <junkio@cox.net> wrote:
->> > [alias]
->> >       send-email = send-email --no-signed-off-cc --suppress-from
->> >
->> > Is it failing because git-send-email is an external command ?
->>
->> $ sed -ne '/^alias\.\*/,/^$/p' Documentation/config.txt
->
-> That said I think it's not really convenient. I'll end up doing:
->
-> [aliases]
->    my-send-email = send-email --no-signed-off-cc --suppress-from
->    my-am = am -3 -s
->
-> etc...
->
-> Isn't possible to mimic bash alias handling:. From man: "Aliases are
-> not expanded when the shell is not interactive,... "
->
-> IOW is it possible for git to know if it has been invoked interactively ?
+Error was fixed by "grab"bing the drop-down menu windows on their
+activation. Now all drop-down menus are disappearing once the mouse
+button is depressed, no matter what is the current position of the
+mouse pointer.
 
-I do not think so, but I think alias expanding "git foo" while
-not expanding "git-foo" should not be too hard.  You need two
-extra preparation steps for such a change to be useful, though.
+Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
+---
+ git-gui/git-gui.sh |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
 
- (1) Build with $(gitexecdir) set to outside the usual $PATH
-     (/usr/libexec/git was suggested in the past) to make sure
-     we still support that configuration.  Under this model,
-     only a handful programs ("git" wrapper itself and "gitk")
-     should be installed on user's PATH and everything else goes
-     under $(gitexecdir).  The user's interactive session MUST
-     run "git foo" and not "git-foo" as bulk of the stuff is now
-     outside of $PATH.  Fix any breakage if found (I do not
-     expect many, but there might be some problems around object
-     transfers, such as git-daemon spawning git-upload-pack, or
-     git-push running git-receive-pack on the other end of the
-     connection).
-
- (2) Audit all our scripts so that they run git commands with
-     "git-foo" form, not "git foo" form.  As "git" wrapper is
-     supposed to add $(gitexecdir) early in the $PATH while it
-     runs itself and its subprocesses, they should find the true
-     "git-foo" binary even after $(gitexecdir) is set outside of
-     the usual $PATH.  Make sure things still work.
-
-After the above two steps is done, we can be confident that the
-scripts will not be broken even if we allow a user to say
-something silly like "alias.cat-file = log --stat", as the
-scripts will never say "git cat-file" to cause the command to be
-expanded to "git log --stat" (instead they say "git-cat-file",
-thanks to your audit in step (2)), thusly avoid the confusion.
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 8157184..1f3ee05 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -2126,6 +2126,7 @@ proc do_create_branch {} {
+ 		-font font_ui
+ 	set lbranchm [eval tk_optionMenu $w.from.head_m create_branch_head \
+ 		$all_heads]
++	bind $lbranchm <Visibility> "grab $lbranchm"
+ 	$lbranchm configure -font font_ui
+ 	$w.from.head_m configure -font font_ui
+ 	grid $w.from.head_r $w.from.head_m -sticky w
+@@ -2140,6 +2141,7 @@ proc do_create_branch {} {
+ 		set tbranchm [eval tk_optionMenu $w.from.tracking_m \
+ 			create_branch_trackinghead \
+ 			$all_trackings]
++		bind $tbranchm <Visibility> "grab $tbranchm"
+ 		$tbranchm configure -font font_ui
+ 		$w.from.tracking_m configure -font font_ui
+ 		grid $w.from.tracking_r $w.from.tracking_m -sticky w
+@@ -2155,6 +2157,7 @@ proc do_create_branch {} {
+ 		set tagsm [eval tk_optionMenu $w.from.tag_m \
+ 			create_branch_tag \
+ 			$all_tags]
++		bind $tagsm <Visibility> "grab $tagsm"
+ 		$tagsm configure -font font_ui
+ 		$w.from.tag_m configure -font font_ui
+ 		grid $w.from.tag_r $w.from.tag_m -sticky w
+@@ -2353,6 +2356,7 @@ proc do_delete_branch {} {
+ 	set mergedlocalm [eval tk_optionMenu $w.validate.head_m \
+ 		delete_branch_head \
+ 		$all_heads]
++	bind $mergedlocalm <Visibility> "grab $mergedlocalm"
+ 	$mergedlocalm configure -font font_ui
+ 	$w.validate.head_m configure -font font_ui
+ 	grid $w.validate.head_r $w.validate.head_m -sticky w
+@@ -2367,6 +2371,7 @@ proc do_delete_branch {} {
+ 		set mergedtrackm [eval tk_optionMenu $w.validate.tracking_m \
+ 			delete_branch_trackinghead \
+ 			$all_trackings]
++		bind $mergedtrackm <Visibility> "grab $mergedtrackm"
+ 		$mergedtrackm configure -font font_ui
+ 		$w.validate.tracking_m configure -font font_ui
+ 		grid $w.validate.tracking_r $w.validate.tracking_m -sticky w
+@@ -2744,6 +2749,7 @@ proc do_push_anywhere {} {
+ 			-font font_ui
+ 		set remmenu [eval tk_optionMenu $w.dest.remote_m push_remote \
+ 			$all_remotes]
++		bind $remmenu <Visibility> "grab $remmenu"
+ 		$remmenu configure -font font_ui
+ 		$w.dest.remote_m configure -font font_ui
+ 		grid $w.dest.remote_r $w.dest.remote_m -sticky w
+@@ -4713,6 +4719,7 @@ proc do_options {} {
+ 		set fontmenu [eval tk_optionMenu $w.global.$name.family \
+ 			global_config_new(gui.$font^^family) \
+ 			$all_fonts]
++		bind $fontmenu <Visibility> "grab $fontmenu"
+ 		$w.global.$name.family configure -font font_ui
+ 		$fontmenu configure -font font_ui
+ 		spinbox $w.global.$name.size \
+-- 
+1.5.0.3-dirty
