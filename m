@@ -1,87 +1,75 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: Submodule object store
-Date: Tue, 27 Mar 2007 17:53:06 +0200
-Message-ID: <20070327155306.GQ22773@admingilde.org>
-References: <1174930688.5662.20.camel@localhost> <20070326183523.GG22773@admingilde.org> <200703262133.44520.Josef.Weidendorfer@gmx.de> <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net> <20070326233603.GL22773@admingilde.org> <20070327112549.GA12178@informatik.uni-freiburg.de> <20070327115029.GC12178@informatik.uni-freiburg.de>
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Remove unused WITH_OWN_SUBPROCESS_PY from RPM spec
+Date: Tue, 27 Mar 2007 12:03:43 -0400
+Message-ID: <20070327160343.GA1884@170.242.249.10.in-addr.arpa>
+References: <20070327112514.GC14837@codelabs.ru>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+gHRqQ1BTyNna/y8"
-Cc: Junio C Hamano <junkio@cox.net>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Eric Lesh <eclesh@ucla.edu>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<ukleinek@informatik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Tue Mar 27 17:53:13 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Mar 27 18:04:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWDyy-0007bC-QQ
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 17:53:13 +0200
+	id 1HWE9u-0004KS-Aa
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 18:04:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932465AbXC0PxJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 11:53:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932473AbXC0PxJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 11:53:09 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:55130 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932424AbXC0PxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 11:53:08 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HWDys-0002WZ-HS; Tue, 27 Mar 2007 17:53:06 +0200
+	id S932690AbXC0QDt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 12:03:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932652AbXC0QDs
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 12:03:48 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:58473 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932690AbXC0QDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 12:03:47 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by silverinsanity.com (Postfix) with ESMTP id A893B1FFC157
+	for <git@vger.kernel.org>; Tue, 27 Mar 2007 16:03:46 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
 Content-Disposition: inline
-In-Reply-To: <20070327115029.GC12178@informatik.uni-freiburg.de>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <20070327112514.GC14837@codelabs.ru>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43277>
 
+We don't have a copy of subprocess.py anymore, so we removed that
+option from the Makefile.  Let's not leave that cruft around the RPM
+spec file either.
+---
 
---+gHRqQ1BTyNna/y8
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This applies on top of "[PATCH] Added git-p4 package to the list of git
+RPMs.", which is what made me notice that it was there.  Untested, but
+simply removing a completely unused option from the make command line
+shouldn't cause any problems, right?  Right?
 
-hoi :)
+ git.spec.in |    9 ++++-----
+ 1 files changed, 4 insertions(+), 5 deletions(-)
 
-On Tue, Mar 27, 2007 at 01:50:29PM +0200, Uwe Kleine-K=F6nig wrote:
-> If you separate the odbs e.g by the pathname of the subproject, what
-> happens if I choose to move the linux kernel in my embedded Linux
-> project from /linux to /kernel/linux?
-
-Then a new separate object database would have to be created.
-This is the part I really don't like about separate object databases,
-but perhaps some persistent alternates information could help here.
-
-For any other way to separate the odb (project id, whatever), we
-can't get a list of references into it by a path-limited traversal
-in the parent. Thus separate odbs which are not bound to a special
-location have some serious downsides.
-
-> Or maybe worse:  If I currently track the Kernel in a tree (because of
-> git lacking submodule support) and switch to submodule.  Then
-> linux/Makefile has to exist in both the supermodule's and the
-> submodule's odb.
-
-Sorry, I don't understand you here.
-
---=20
-Martin Waitz
-
---+gHRqQ1BTyNna/y8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGCT3ij/Eaxd/oD7IRAmSnAJ90zinJ8movLDN6iu0o5RHWzTHSpgCeMI6X
-ZfzwVheUEb+EBnrGm2kcMjo=
-=muXt
------END PGP SIGNATURE-----
-
---+gHRqQ1BTyNna/y8--
+diff --git a/git.spec.in b/git.spec.in
+index e469f21..4bf7a8f 100644
+--- a/git.spec.in
++++ b/git.spec.in
+@@ -92,15 +92,14 @@ Perl interface to Git
+ %setup -q
+ 
+ %build
+-make %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" WITH_OWN_SUBPROCESS_PY=YesPlease \
+-     WITH_P4IMPORT=YesPlease prefix=%{_prefix} all %{!?_without_docs: doc}
++make %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" WITH_P4IMPORT=YesPlease \
++     prefix=%{_prefix} all %{!?_without_docs: doc}
+ 
+ %install
+ rm -rf $RPM_BUILD_ROOT
+ make %{_smp_mflags} CFLAGS="$RPM_OPT_FLAGS" DESTDIR=$RPM_BUILD_ROOT \
+-     WITH_OWN_SUBPROCESS_PY=YesPlease WITH_P4IMPORT=YesPlease \
+-     prefix=%{_prefix} mandir=%{_mandir} INSTALLDIRS=vendor \
+-     install %{!?_without_docs: install-doc}
++     WITH_P4IMPORT=YesPlease prefix=%{_prefix} mandir=%{_mandir} \
++     INSTALLDIRS=vendor install %{!?_without_docs: install-doc}
+ find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} ';'
+ find $RPM_BUILD_ROOT -type f -name '*.bs' -empty -exec rm -f {} ';'
+ find $RPM_BUILD_ROOT -type f -name perllocal.pod -exec rm -f {} ';'
+-- 
+1.5.1.rc2
