@@ -1,92 +1,47 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Listing of branch creation time?
-Date: Tue, 27 Mar 2007 19:35:52 -0400
-Message-ID: <20070327233552.GA7186@coredump.intra.peff.net>
-References: <17929.37382.984339.742025@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] --pretty=format: fix broken %ct and %at interpolation
+Date: Wed, 28 Mar 2007 01:42:49 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0703280142230.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <20070327232628.GA9981@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 01:36:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 28 01:43:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWLCo-0003YU-Pm
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 01:35:59 +0200
+	id 1HWLJZ-0006ik-28
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 01:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933594AbXC0Xfz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 19:35:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934303AbXC0Xfz
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 19:35:55 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2714 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933594AbXC0Xfy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 19:35:54 -0400
-Received: (qmail 6076 invoked from network); 27 Mar 2007 23:36:24 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 27 Mar 2007 23:36:24 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Mar 2007 19:35:52 -0400
-Content-Disposition: inline
-In-Reply-To: <17929.37382.984339.742025@lisa.zopyra.com>
+	id S1751468AbXC0Xmx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 19:42:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752431AbXC0Xmw
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 19:42:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34971 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752812AbXC0Xmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 19:42:51 -0400
+Received: (qmail invoked by alias); 27 Mar 2007 23:42:50 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp030) with SMTP; 28 Mar 2007 01:42:50 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1848w0eoVc4P3q1zlrZOSnkbkxHmQPY4q7hVhAn1T
+	SqLp/WLIJzScXH
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20070327232628.GA9981@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43323>
 
-On Tue, Mar 27, 2007 at 03:52:06PM -0600, Bill Lear wrote:
+Hi,
 
-> I'm sure the git developers grow tired of working with addle-brained
-> users, but I sometimes forget what the contents of a topic branch are,
-> how old it is, etc.  As to content, I can make better branch names,
-> but I think it would be useful to be able to query git as to the
-> creation time of all of my branches, perhaps sorted from newest to
-> oldest.
+On Tue, 27 Mar 2007, Jeff King wrote:
 
-I'm not sure you can always accurately get that information. If you have
-reflogs turned on, you can look at the oldest reflog for the that ref;
-however, the reflog may have been pruned. You can also try looking at
-the commit graph, but then you need a reference branch ("when did I
-branch from master"), and even that's not entirely useful. You have to
-look at the latest merge-base, but that tells you the last time you
-merged with master, not necessarily the first time.
+> A pointer arithmetic error in fill_person caused random data
+> from the commit object to be included with the timestamp,
 
-That being said, something like this should work:
-
--- >8 --
-#!/bin/sh
-
-branch_date() {
-  git-rev-list -g --pretty=format:'%ct %cd' $1 | tail -n 1
-}
-
-git-show-ref --heads |
-  while read sha1 branch; do
-    echo "$branch `branch_date $branch`"
-  done |
-  sort -k 2nr |
-  while read branch timestamp date; do
-    printf '%20s %s\n' ${branch#refs/heads/} "$date"
-  done
--- >8 --
-
-Unfortunately, there is a bug in git-rev-list; I've just posted a patch, but
-the one-liner fix is:
-
-diff --git a/commit.c b/commit.c
-index 718e568..a92958c 100644
---- a/commit.c
-+++ b/commit.c
-@@ -760,7 +760,7 @@ static void fill_person(struct interp *table, const char *msg, int len)
- 	if (msg + start == ep)
- 		return;
- 
--	table[5].value = xstrndup(msg + start, ep - msg + start);
-+	table[5].value = xstrndup(msg + start, ep - (msg + start));
- 
- 	/* parse tz */
- 	for (start = ep - msg + 1; start < len && isspace(msg[start]); start++)
-
-With that fix, the script above should hopefully produce what you want.
-
--Peff
+Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
