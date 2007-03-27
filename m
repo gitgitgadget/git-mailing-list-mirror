@@ -1,66 +1,76 @@
-From: Eric Lesh <eclesh@ucla.edu>
-Subject: Re: [PATCH] contrib/workdir: add a simple script to create a
-	working directory
-Date: Tue, 27 Mar 2007 06:50:18 -0700
-Message-ID: <1175003418.6140.7.camel@localhost>
-References: <7vtzw7tvvv.fsf@assigned-by-dhcp.cox.net>
-	 <20070327003033.4226.8413.julian@quantumfyre.co.uk>
-	 <1174963350.6018.3.camel@localhost>
-	 <Pine.LNX.4.64.0703271356590.1024@reaper.quantumfyre.co.uk>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: Submodule object store
+Date: Tue, 27 Mar 2007 16:28:40 +0200
+Message-ID: <20070327142840.GN22773@admingilde.org>
+References: <20070326183523.GG22773@admingilde.org> <200703262133.44520.Josef.Weidendorfer@gmx.de> <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net> <20070326233603.GL22773@admingilde.org> <Pine.LNX.4.63.0703261515330.14387@qynat.qvtvafvgr.pbz> <20070326235527.GM22773@admingilde.org> <7vps6vttpq.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Tue Mar 27 15:50:38 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="fDP66DSfTvWAYVew"
+Cc: David Lang <david.lang@digitalinsight.com>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Eric Lesh <eclesh@ucla.edu>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 16:28:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWC4H-0004hX-C8
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 15:50:33 +0200
+	id 1HWCfJ-00049b-5d
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 16:28:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753856AbXC0Nu3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 09:50:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753863AbXC0Nu3
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 09:50:29 -0400
-Received: from smtp-5.smtp.ucla.edu ([169.232.47.137]:57623 "EHLO
-	smtp-5.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753856AbXC0Nu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 09:50:28 -0400
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.46.157])
-	by smtp-5.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l2RDoMT9023326;
-	Tue, 27 Mar 2007 06:50:22 -0700
-Received: from [192.168.1.7] (adsl-75-26-185-14.dsl.scrm01.sbcglobal.net [75.26.185.14])
-	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l2RDoMtD020727
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
-	Tue, 27 Mar 2007 06:50:22 -0700
-In-Reply-To: <Pine.LNX.4.64.0703271356590.1024@reaper.quantumfyre.co.uk>
-X-Mailer: Evolution 2.8.1 
-X-Probable-Spam: no
-X-Scanned-By: smtp.ucla.edu on 169.232.47.137
+	id S1753883AbXC0O2n (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 10:28:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753888AbXC0O2n
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 10:28:43 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:56710 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753883AbXC0O2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 10:28:42 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HWCfA-0001rG-Bo; Tue, 27 Mar 2007 16:28:40 +0200
+Content-Disposition: inline
+In-Reply-To: <7vps6vttpq.fsf@assigned-by-dhcp.cox.net>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43273>
 
-On Tue, 2007-03-27 at 13:59 +0100, Julian Phillips wrote:
-> > Shouldn't this be made to work with bare repositories as well?
-> 
-> I guess that depends ...
-> 
-> There's probably no reason that it couldn't, but it wasn't something that 
-> I was interested in seeing it do.  I don't have any bare repositories on 
-> my development machine, and don't anticipate having any in the future.
-> 
 
-Also, the symlinked config file will have core.bare = true, which will
-make anything with require_work_tree refuse to run.  (Unless
-git-sh-setup's is_bare_repository was made to look for .git first, then
-check for core.bare.  But that is probably useless.)
+--fDP66DSfTvWAYVew
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You're right in that there may not be many use cases for this.  Sorry
-for the noise.
+hoi :)
 
--Eric
+On Mon, Mar 26, 2007 at 05:29:05PM -0700, Junio C Hamano wrote:
+> Martin Waitz <tali@admingilde.org> writes:
+> > The separated object store also helps reduce the memory requirement for
+> > large pushs/pulls.
+>=20
+> That's a total bull.  The size of push/pull only depends on how
+> you separate set of refs (which affects the traversal hence
+> affects the set of objects to be exchanged).
+
+of course you are right.
+
+--=20
+Martin Waitz
+
+--fDP66DSfTvWAYVew
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGCSoYj/Eaxd/oD7IRAoPIAJwMWIrce6CKEcJmcgfT98ySjkUosgCfdxwq
+jpM2C7DP6q6Y1GLF9bOU6D0=
+=ZKzn
+-----END PGP SIGNATURE-----
+
+--fDP66DSfTvWAYVew--
