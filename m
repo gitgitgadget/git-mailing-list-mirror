@@ -1,223 +1,217 @@
-From: Xavier Maillard <zedek@gnu.org>
-Subject: [PATCH] git-blame.el: pick a set of random colors for each git-blame turn
-Date: Tue, 27 Mar 2007 23:51:52 +0200
-Organization: GNU's Not UNIX!
-Message-ID: <200703272151.l2RLpqD7012317@localhost.localdomain>
-References: <87bqifrs7r.fsf@morpheus.local>
-Reply-To: Xavier Maillard <zedek@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] git-branch: add --sort-by-date option
+Date: Wed, 28 Mar 2007 01:03:57 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0703280056140.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <17929.37382.984339.742025@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, zedek@gnu.org
-To: davidk@lysator.liu.se
-X-From: git-owner@vger.kernel.org Wed Mar 28 00:55:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 01:04:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWKZF-0001JF-5R
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 00:55:05 +0200
+	id 1HWKiB-0005K2-7o
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 01:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933247AbXC0WzA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 27 Mar 2007 18:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933258AbXC0WzA
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 18:55:00 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:50810 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933247AbXC0Wy7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 18:54:59 -0400
-Received: from localhost.localdomain (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id DD55538234;
-	Wed, 28 Mar 2007 00:54:57 +0200 (CEST)
-Received: from localhost.localdomain (IDENT:1001@localhost [127.0.0.1])
-	by localhost.localdomain (8.13.8/8.13.8) with ESMTP id l2RLpr7Y012320;
-	Tue, 27 Mar 2007 23:51:58 +0200
-Received: (from zedek@localhost)
-	by localhost.localdomain (8.13.8/8.13.8/Submit) id l2RLpqD7012317;
-	Tue, 27 Mar 2007 23:51:52 +0200
-X-Authentication-Warning: localhost.localdomain: zedek set sender to zedek@gnu.org using -f
-In-Reply-To: <87bqifrs7r.fsf@morpheus.local>
-User-Agent: Rmail in GNU Emacs 23.0.51.1 on GNU/Linux
-Jabber-ID: zedek@im.lolica.org
-Content-type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+	id S933187AbXC0XEB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 19:04:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933230AbXC0XEB
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 19:04:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52260 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933187AbXC0XD7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 19:03:59 -0400
+Received: (qmail invoked by alias); 27 Mar 2007 23:03:58 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp054) with SMTP; 28 Mar 2007 01:03:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/VFel21VbVxSJhGsut/JGr1TsQq/WbtBVr5hsw7F
+	MxoOmbPRiuxx1J
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <17929.37382.984339.742025@lisa.zopyra.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43317>
 
 
-I thought it would be cool to have different set of colors for each
-git-blame-mode. Function `git-blame-new-commit' does this for us
-picking when possible, a random colors based on the set we build on
-startup. When it fails, `git-blame-ancient-color' will be used. We
-also take care not to use the same color more than once (thank you
-David K=C3=A5gedal).
+With `--sort-by-date`, git-branch prints the refs sorted by date of the
+refs' tips (newest first). If this option is combined with `-v`, also
+print the dates of the tips.
 
-* Prevent (future possible) namespace clash by renaming `color-scale'
-into `git-blame-color-scale'. Definition has been changed to be more
-in the "lisp" way (thanks for help to #emacs). Also added a small
-description of what it does.
-
-* Added docstrings at some point and instructed defvar when a variable
-was candidate to customisation by users.
-
-* Added missing defvar to silent byte-compilers (git-blame-file,
-git-blame-current)
-
-* Do not require 'cl at startup
-
-* Added more informations on compatibility
-
-Signed-off-by: Xavier Maillard <zedek@gnu.org>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/emacs/git-blame.el |   82 ++++++++++++++++++++++++++++--------=
---------
- 1 files changed, 52 insertions(+), 30 deletions(-)
 
-diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
-index bd87a86..4703442 100644
---- a/contrib/emacs/git-blame.el
-+++ b/contrib/emacs/git-blame.el
-@@ -8,8 +8,8 @@
- ;; License:    GPL
- ;; Keywords:   git, version control, release management
- ;;
--;; Compatibility: Emacs21
--
-+;; Compatibility: Emacs21, Emacs22 and EmacsCVS
-+;;                Git 1.5 and up
-=20
- ;; This file is *NOT* part of GNU Emacs.
- ;; This file is distributed under the same terms as GNU Emacs.
-@@ -61,8 +61,9 @@
-=20
- ;;; Compatibility:
- ;;
--;; It requires GNU Emacs 21.  If you'are using Emacs 20, try
--;; changing this:
-+;; It requires GNU Emacs 21 or later and Git 1.5.0 and up
-+;;=20
-+;; If you'are using Emacs 20, try changing this:
- ;;
- ;;            (overlay-put ovl 'face (list :background
- ;;                                         (cdr (assq 'color (cddddr i=
-nfo)))))
-@@ -77,30 +78,43 @@
- ;;
- ;;; Code:
-=20
--(require 'cl)			      ; to use `push', `pop'
--
--(defun color-scale (l)
--  (let* ((colors ())
--         r g b)
--    (setq r l)
--    (while r
--      (setq g l)
--      (while g
--        (setq b l)
--        (while b
--          (push (concat "#" (car r) (car g) (car b)) colors)
--          (pop b))
--        (pop g))
--      (pop r))
--    colors))
-+(eval-when-compile (require 'cl))			      ; to use `push', `pop'
+	On Tue, 27 Mar 2007, Bill Lear wrote:
+
+	> [...] I sometimes forget what the contents of a topic branch 
+	> are, how old it is, etc.  As to content, I can make better 
+	> branch names, but I think it would be useful to be able to query 
+	> git as to the creation time of all of my branches, perhaps 
+	> sorted from newest to oldest.
+
+	This is only lightly tested, and I will not have time to work any 
+	more on this. So, if this does not what you want, you will have to 
+	fix it yourself.
+
+ Documentation/git-branch.txt |    5 +++-
+ builtin-branch.c             |   52 +++++++++++++++++++++++++++++++++--------
+ 2 files changed, 46 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index 603f87f..ca32d5d 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-branch' [--color | --no-color] [-r | -a]
+-	   [-v [--abbrev=<length> | --no-abbrev]]
++	   [-v [--abbrev=<length> | --no-abbrev]] [--sort-by-date]
+ 'git-branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
+ 'git-branch' (-m | -M) [<oldbranch>] <newbranch>
+ 'git-branch' (-d | -D) [-r] <branchname>...
+@@ -91,6 +91,9 @@ OPTIONS
+ --no-abbrev::
+ 	Display the full sha1s in output listing rather than abbreviating them.
+ 
++--sort-by-date::
++	Instead of sorting by name, sort the refs by date of their tips.
++
+ <branchname>::
+ 	The name of the branch to create or delete.
+ 	The new branch name must pass all checks defined by
+diff --git a/builtin-branch.c b/builtin-branch.c
+index a4494ee..8deb155 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -12,7 +12,7 @@
+ #include "builtin.h"
+ 
+ static const char builtin_branch_usage[] =
+-  "git-branch [-r] (-d | -D) <branchname> | [--track | --no-track] [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [--color | --no-color] [-r | -a] [-v [--abbrev=<length> | --no-abbrev]]";
++  "git-branch [-r] (-d | -D) <branchname> | [--track | --no-track] [-l] [-f] <branchname> [<start-point>] | (-m | -M) [<oldbranch>] <newbranch> | [--color | --no-color] [-r | -a] [-v [--abbrev=<length> | --no-abbrev]] [--sort-by-date]";
+ 
+ #define REF_UNKNOWN_TYPE    0x00
+ #define REF_LOCAL_BRANCH    0x01
+@@ -236,8 +236,26 @@ static int ref_cmp(const void *r1, const void *r2)
+ 	return strcmp(c1->name, c2->name);
+ }
+ 
++static int ref_cmp_by_author_date(const void *r1, const void *r2)
++{
++	struct ref_item *i1 = (struct ref_item *)r1;
++	struct ref_item *i2 = (struct ref_item *)r2;
++	struct commit *c1 = lookup_commit(i1->sha1);
++	struct commit *c2 = lookup_commit(i2->sha1);
++	if (!c1 || parse_commit(c1))
++		return +1;
++	if (!c2 || parse_commit(c2))
++		return -1;
++	if (c1->date < c2->date)
++		return +1;
++	else if (c1->date > c2->date)
++		return -1;
++	return 0;
++}
 +
 +
-+(defun git-blame-color-scale (&rest elements)
-+  "Given a list, returns a list of triples formed with each
-+elements of the list.
-+
-+a b =3D> bbb bba bab baa abb aba aaa aab"
-+  (let (result)
-+    (dolist (a elements)
-+      (dolist (b elements)
-+        (dolist (c elements)
-+          (setq result (cons (format "#%s%s%s" a b c) result)))))
-+    result))
-+
-+;; (git-blame-color-scale "0c" "04" "24" "1c" "2c" "34" "14" "3c") =3D=
->
-+;; ("#3c3c3c" "#3c3c14" "#3c3c34" "#3c3c2c" "#3c3c1c" "#3c3c24"
-+;; "#3c3c04" "#3c3c0c" "#3c143c" "#3c1414" "#3c1434" "#3c142c" ...)
-=20
- (defvar git-blame-dark-colors
--  (color-scale '("0c" "04" "24" "1c" "2c" "34" "14" "3c")))
-+  (git-blame-color-scale "0c" "04" "24" "1c" "2c" "34" "14" "3c")
-+  "*List of colors (format #RGB) to use in a dark environment.
-+
-+To check out the list, evaluate (list-colors-display git-blame-dark-co=
-lors).")
-=20
- (defvar git-blame-light-colors
--  (color-scale '("c4" "d4" "cc" "dc" "f4" "e4" "fc" "ec")))
-+  (git-blame-color-scale "c4" "d4" "cc" "dc" "f4" "e4" "fc" "ec")
-+  "*List of colors (format #RGB) to use in a light environment.
-+
-+To check out the list, evaluate (list-colors-display git-blame-light-c=
-olors).")
-=20
--(defvar git-blame-ancient-color "dark green")
-+(defvar git-blame-colors '()
-+  "Colors used by git-blame. The list is built once when activating gi=
-t-blame
-+minor mode.")
-+ =20
-+(defvar git-blame-ancient-color "dark green"
-+  "*Color to be used for ancient commit.")
-=20
- (defvar git-blame-autoupdate t
-   "*Automatically update the blame display while editing")
-@@ -125,6 +139,10 @@
-   "A queue of update requests")
- (make-variable-buffer-local 'git-blame-update-queue)
-=20
-+;; FIXME: docstrings
-+(defvar git-blame-file nil)
-+(defvar git-blame-current nil)
-+
- (defvar git-blame-mode nil)
- (make-variable-buffer-local 'git-blame-mode)
-=20
-@@ -177,7 +195,7 @@ See also function `git-blame-mode'."
-   "Recalculate all blame information in the current buffer"
-   (interactive)
-   (unless git-blame-mode
--    (error "git-blame is not active"))
-+    (error "Git-blame is not active"))
-  =20
-   (git-blame-cleanup)
-   (git-blame-run))
-@@ -294,18 +312,22 @@ See also function `git-blame-mode'."
-         (t
-          nil)))
-=20
--
- (defun git-blame-new-commit (hash src-line res-line num-lines)
-   (save-excursion
-     (set-buffer git-blame-file)
-     (let ((info (gethash hash git-blame-cache))
-           (inhibit-point-motion-hooks t)
--          (inhibit-modification-hooks t))
-+          (inhibit-modification-hooks t)
-+	  (colors git-blame-colors))
-       (when (not info)
--        (let ((color (pop git-blame-colors)))
--          (unless color
--            (setq color git-blame-ancient-color))
--          (setq info (list hash src-line res-line num-lines
-+	;; Assign a random color to each new commit info
-+	;; Take care not to select the same color multiple times
-+	(let* ((idx (random (length colors)))
-+	       (color (or (elt colors idx)
-+			  git-blame-ancient-color)))
-+	  (and (assoc color colors)
-+	       (setq colors (delete idx colors)))
-+	  (setq info (list hash src-line res-line num-lines
-                            (git-describe-commit hash)
-                            (cons 'color color))))
-         (puthash hash info git-blame-cache))
---=20
-1.5.0.5
+ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+-			   int abbrev, int current)
++			   int abbrev, int current, int show_author_date)
+ {
+ 	char c;
+ 	int color;
+@@ -264,11 +282,17 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 
+ 	if (verbose) {
+ 		commit = lookup_commit(item->sha1);
+-		if (commit && !parse_commit(commit))
++		if (commit && !parse_commit(commit)) {
++			int offset = 0;
++			if (show_author_date)
++				offset = snprintf(subject, sizeof(subject),
++					"%s ", show_date(commit->date, 0,
++					DATE_SHORT));
+ 			pretty_print_commit(CMIT_FMT_ONELINE, commit, ~0,
+-					    subject, sizeof(subject), 0,
++					    subject + offset,
++					    sizeof(subject) - offset, 0,
+ 					    NULL, NULL, 0);
+-		else
++		} else
+ 			strcpy(subject, " **** invalid ref ****");
+ 		printf("%c %s%-*s%s %s %s\n", c, branch_get_color(color),
+ 		       maxwidth, item->name,
+@@ -280,7 +304,8 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 	}
+ }
+ 
+-static void print_ref_list(int kinds, int detached, int verbose, int abbrev)
++static void print_ref_list(int kinds, int detached, int verbose, int abbrev,
++	int sort_by_date)
+ {
+ 	int i;
+ 	struct ref_list ref_list;
+@@ -289,7 +314,8 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev)
+ 	ref_list.kinds = kinds;
+ 	for_each_ref(append_ref, &ref_list);
+ 
+-	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item), ref_cmp);
++	qsort(ref_list.list, ref_list.index, sizeof(struct ref_item),
++		sort_by_date ? ref_cmp_by_author_date : ref_cmp);
+ 
+ 	detached = (detached && (kinds & REF_LOCAL_BRANCH));
+ 	if (detached) {
+@@ -299,7 +325,8 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev)
+ 		hashcpy(item.sha1, head_sha1);
+ 		if (strlen(item.name) > ref_list.maxwidth)
+ 			      ref_list.maxwidth = strlen(item.name);
+-		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1);
++		print_ref_item(&item, ref_list.maxwidth, verbose, abbrev, 1,
++			sort_by_date);
+ 		free(item.name);
+ 	}
+ 
+@@ -308,7 +335,7 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev)
+ 			(ref_list.list[i].kind == REF_LOCAL_BRANCH) &&
+ 			!strcmp(ref_list.list[i].name, head);
+ 		print_ref_item(&ref_list.list[i], ref_list.maxwidth, verbose,
+-			       abbrev, current);
++			       abbrev, current, sort_by_date);
+ 	}
+ 
+ 	free_ref_list(&ref_list);
+@@ -530,6 +557,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	int verbose = 0, abbrev = DEFAULT_ABBREV, detached = 0;
+ 	int reflog = 0, track;
+ 	int kinds = REF_LOCAL_BRANCH;
++	int sort_by_date = 0;
+ 	int i;
+ 
+ 	git_config(git_branch_config);
+@@ -610,6 +638,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 			branch_use_color = 0;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--sort-by-date")) {
++			sort_by_date = 1;
++			continue;
++		}
+ 		usage(builtin_branch_usage);
+ 	}
+ 
+@@ -632,7 +664,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	if (delete)
+ 		return delete_branches(argc - i, argv + i, force_delete, kinds);
+ 	else if (i == argc)
+-		print_ref_list(kinds, detached, verbose, abbrev);
++		print_ref_list(kinds, detached, verbose, abbrev, sort_by_date);
+ 	else if (rename && (i == argc - 1))
+ 		rename_branch(head, argv[i], force_rename);
+ 	else if (rename && (i == argc - 2))
+-- 
+1.5.1.rc2.2330.g2388
