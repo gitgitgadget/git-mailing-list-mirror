@@ -1,64 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] contrib/workdir: add a simple script to create a working directory
-Date: Mon, 26 Mar 2007 21:13:39 -0700
-Message-ID: <7v4po7tjbg.fsf@assigned-by-dhcp.cox.net>
-References: <7vtzw7tvvv.fsf@assigned-by-dhcp.cox.net>
-	<20070327003033.4226.8413.julian@quantumfyre.co.uk>
-	<1174963350.6018.3.camel@localhost>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Bisect: add checks at the beginning of "git bisect run".
+Date: Tue, 27 Mar 2007 06:49:57 +0200
+Message-ID: <20070327064957.34dad72a.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: Eric Lesh <eclesh@ucla.edu>
-X-From: git-owner@vger.kernel.org Tue Mar 27 06:13:44 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Mar 27 06:42:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HW344-0006nz-00
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 06:13:44 +0200
+	id 1HW3VP-0003Lk-P5
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 06:42:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933963AbXC0ENl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 00:13:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933964AbXC0ENl
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 00:13:41 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:42130 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933963AbXC0ENk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 00:13:40 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070327041340.ARM22511.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 27 Mar 2007 00:13:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id fgDf1W00J1kojtg0000000; Tue, 27 Mar 2007 00:13:39 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933059AbXC0Elp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 00:41:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933078AbXC0Elp
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 00:41:45 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:55297 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933059AbXC0Elp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 00:41:45 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 486E6B5A50;
+	Tue, 27 Mar 2007 06:41:43 +0200 (CEST)
+X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43227>
 
-Eric Lesh <eclesh@ucla.edu> writes:
+We may be able to "run" with only one good revision given
+and then verify that the result of the first run is bad.
+And perhaps also the other way around.
 
-> On Tue, 2007-03-27 at 00:15 +0100, Julian Phillips wrote:
->> +# want to make sure that what is pointed to has a .git directory ...
->> +test -d ${orig_git}/.git || die "${original_git} is not a git repository!";
->> +
->
-> Shouldn't this be made to work with bare repositories as well?
+But for now let's check that we have at least one bad and
+one good revision before we start to run.
 
-I think you could enhance Julian's script for that.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-But you need to be careful that bare and non-bare repositories
-are often of quite different nature.  The script might need to
-decide which parts to borrow from the original and which parts
-to have in the borrowing repository depending on that.
-
-For example, a bare repository by default does not have reflog,
-but a working tree that borrows from the bare repository might
-want to enable reflog.  In such a case, creating a symlink to
-orig.git/logs/refs would not be sufficient, and you would either
-want to enable reflog for the original bare repository and/or
-have .git/logs/refs hierarchy as a non-symlinked, real directory
-of your own.
+diff --git a/git-bisect.sh b/git-bisect.sh
+index fda1712..57d6754 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -223,6 +223,14 @@ bisect_replay () {
+ }
+ 
+ bisect_run () {
++    # Check that we have everything to run correctly.
++    test -d "$GIT_DIR/refs/bisect" || {
++	echo >&2 'You need to start by "git bisect start".'
++	echo >&2 'And then by "git bisect bad" and "git bisect good".'
++	exit 1
++    }
++    bisect_next_check fail
++
+     while true
+     do
+       echo "running $@"
+-- 
+1.5.1.rc2.2.gcc08
