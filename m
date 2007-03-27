@@ -1,58 +1,132 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: .gitlink for Summer of Code
-Date: Tue, 27 Mar 2007 11:36:44 -0700
-Message-ID: <4609643C.9050803@midwinter.com>
-References: <1174825838.12540.5.camel@localhost> <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net> <200703270117.59205.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0703270952020.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0703271338210.6485@iabervon.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Submodule object store
+Date: Tue, 27 Mar 2007 11:41:11 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703271124590.6730@woody.linux-foundation.org>
+References: <20070326183523.GG22773@admingilde.org> <200703262133.44520.Josef.Weidendorfer@gmx.de>
+ <20070326220302.GH22773@admingilde.org> <7vfy7rvct2.fsf@assigned-by-dhcp.cox.net>
+ <20070326231637.GJ22773@admingilde.org> <7vy7ljtwir.fsf@assigned-by-dhcp.cox.net>
+ <20070326233603.GL22773@admingilde.org> <20070327112549.GA12178@informatik.uni-freiburg.de>
+ <20070327115029.GC12178@informatik.uni-freiburg.de> <20070327155306.GQ22773@admingilde.org>
+ <20070327172216.GA24200@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+Content-Type: MULTIPART/MIXED; BOUNDARY="-1463790079-1168663986-1175020871=:6730"
+Cc: Martin Waitz <tali@admingilde.org>,
 	Junio C Hamano <junkio@cox.net>,
-	Martin Waitz <tali@admingilde.org>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
 	Eric Lesh <eclesh@ucla.edu>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Mar 27 20:37:02 2007
+To: =?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Tue Mar 27 20:42:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWGXK-0005Ys-4a
-	for gcvg-git@gmane.org; Tue, 27 Mar 2007 20:36:50 +0200
+	id 1HWGcR-000832-D3
+	for gcvg-git@gmane.org; Tue, 27 Mar 2007 20:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934141AbXC0Sgq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 14:36:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934167AbXC0Sgq
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 14:36:46 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:37091 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S934163AbXC0Sgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 14:36:45 -0400
-Received: (qmail 939 invoked from network); 27 Mar 2007 18:36:43 -0000
-Received: from c-76-21-17-123.hsd1.ca.comcast.net (HELO ?192.168.0.131?) (koreth@76.21.17.123)
-  by tater.midwinter.com with SMTP; 27 Mar 2007 18:36:43 -0000
-User-Agent: Thunderbird 1.5.0.10 (Macintosh/20070221)
-In-Reply-To: <Pine.LNX.4.64.0703271338210.6485@iabervon.org>
+	id S934169AbXC0SmB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 14:42:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934168AbXC0SmB
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 14:42:01 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:37428 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934169AbXC0Sl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 14:41:59 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2RIfDU2009579
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Mar 2007 11:41:13 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2RIfBr4024769;
+	Tue, 27 Mar 2007 11:41:12 -0700
+In-Reply-To: <20070327172216.GA24200@informatik.uni-freiburg.de>
+X-Spam-Status: No, hits=-0.469 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43295>
 
-Daniel Barkalow wrote:
-> Somebody working on gcc for *BSD would presumably want to get all of gcc 
-> and a shallow clone of the other 1000 submodules, right? Or they'd just 
-> clone the submodule and ignore the superproject. At least, they'd need 
-> shallow clones of a bunch of the submodules, because it's not interesting 
-> to have the superproject otherwise.
->   
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The obvious use case for "I want the superproject and just one 
-submodule" is when the superproject has build tools, header files, or 
-other pieces of data that are shared by some/all of the submodules. 
-Maybe not the case in BSD per se, but having a top-level file full of 
-settings, paths to tools, etc. that gets included by the individual 
-Makefiles in subdirectories isn't all that uncommon in complex 
-multi-part projects.
+---1463790079-1168663986-1175020871=:6730
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 
--Steve
+
+
+On Tue, 27 Mar 2007, Uwe Kleine-König wrote:
+> 
+> 	embeddedproject$ git ls-tree HEAD | grep linux
+> 	040000 commit 0123456789abcde0... linux-2.6
+> 
+> (or how ever you save submodules).  Then you might have to duplicate the
+> objects of linux-2.6, because they are part of both histories.
+
+No they are not. Unless you do it wrong.
+
+The *only* object that is part of the superproject would be the tree that 
+*contains* that entry itself.
+
+We should *never* automatically follow such an entry down, *exactly* 
+because that doesn't scale. So to actually follow that entry for something 
+like a recursive, you'd literally "cd into linux, and start 'git diff' 
+from commit 0123456.."
+
+In other words, the subproject would be its own project, and the 
+superproject never sees it as "part of itself". I really think, for 
+example, that the "git diff" family of programs (diff-index, diff-tree, 
+diff-files) and things like "git ls-tree" should literally:
+
+ - have a mode where they don't even recurse into subprojects, and I 
+   personally think that it could/should be the default!
+
+ - when they recurse, they should literally (at least to begin with) do 
+   that kind of "fork() ; if (child) { chdir(subproject); execve(myself) }" 
+
+The latter is really to make sure that *even*by*mistake* we don't screw 
+things up and tie the sub/superproject together too tightly. 
+
+I'm serious. I really think that the first version (which ends up being 
+the one that sets semantics) should be very careful here, so that 
+subprojects never get mixed up with the superproject.
+
+And I'm also serious about the "don't recurse into subproject by default 
+at all". If I'm at the superproject, and I maintain the superproject, I 
+think the state of the subprojects themselves are a totally separate 
+issue. It's quite a valid thing to do to maintain the build 
+infrastructure, and if I'm the maintainer of that, and I do "git diff", I 
+sure as hell don't want to wait for git to do "git diff" on the 
+subprojects when there are 5000 of them!
+
+Sure, "git diff" is fast (on the kernel, it takes me 0.069s on a clean 
+tree), but 
+
+ - multiply that 0.069s by 5000 and it's not so fast any more
+
+ - when you have a thousand subprojects, it's quite possible (even likely) 
+   that all your directories won't fit in the cache any more, and suddenly 
+   even a single "git diff" takes several seconds.
+
+Really! Try this on the Linux tree (that "drop_caches" thing needs root 
+privileges):
+
+	echo 3 > /proc/sys/vm/drop_caches
+	git diff
+
+and see it take something like 5 seconds. Now, imagine that you have a 
+hundred subprojects, and they're big enough that the caches are *never* 
+warm.
+
+People sometimes don't seem to understand what "scalability" really means. 
+Scalability means that something that is so fast that you don't even 
+*think* about it will become a major bottleneck when you do it a thousand 
+times, and the working set has grown so big that it totally blows out 
+several levels of caches (both CPU caches and disk caches)
+
+		Linus
+---1463790079-1168663986-1175020871=:6730--
