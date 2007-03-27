@@ -1,74 +1,115 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn, remote tracking branch question
-Date: Tue, 27 Mar 2007 15:00:15 -0700
-Message-ID: <20070327220015.GA16344@untitled>
-References: <m2ps6usa9o.fsf@ziti.fhcrc.org>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: [PATCH(amend)] test git-rev-parse
+Date: Wed, 28 Mar 2007 00:07:21 +0200
+Message-ID: <20070327220721.GA20495@moooo.ath.cx>
+References: <20070317015855.GB19305@moooo.ath.cx> <7vbqiss4yw.fsf@assigned-by-dhcp.cox.net> <20070317143452.GA21140@moooo.ath.cx> <20070317144342.GB26290@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Seth Falcon <sethfalcon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 00:00:24 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Mar 28 00:07:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWJiK-0000kc-39
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 00:00:24 +0200
+	id 1HWJpM-00048g-T0
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 00:07:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934005AbXC0WAV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 18:00:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934209AbXC0WAU
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 18:00:20 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:45502 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934005AbXC0WAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 18:00:19 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 45E312DC01A;
-	Tue, 27 Mar 2007 15:00:16 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 27 Mar 2007 15:00:15 -0700
+	id S934196AbXC0WH0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 18:07:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934208AbXC0WH0
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 18:07:26 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49494 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934196AbXC0WHZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 18:07:25 -0400
+Received: (qmail invoked by alias); 27 Mar 2007 22:07:23 -0000
+Received: from pD9EBB62D.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.182.45]
+  by mail.gmx.net (mp039) with SMTP; 28 Mar 2007 00:07:23 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX19Xfs9odsJXwr/qM4SBGAeBRbXF8B8tIvJvp2aLQj
+	FvXwIK3tFeXt0h
 Content-Disposition: inline
-In-Reply-To: <m2ps6usa9o.fsf@ziti.fhcrc.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20070317144342.GB26290@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43312>
 
-Seth Falcon <sethfalcon@gmail.com> wrote:
-> Hi,
-> 
-> I've edited my <repos>/.git/config file so that git-svn is tracking
-> the main devel line as well as a release branch of a project.  This
-> seems to work well.
-> 
-> So I have:
-> 
-> [svn-remote "svn"]
-> 	url = https://svn.url.com/root
-> 	fetch = branches/release-2-5:refs/remotes/2.5
-> 	fetch = trunk:refs/remotes/git-svn
-> 
-> I can checkout the 2.5 release branch like this:
-> 
->    git checkout -b 2.5 remotes/2.5
-> 
-> But at this point, how do I ask git-svn to update it?  When working on
-> the devel line, I can do 'git svn rebase' and I would like to do the
-> same thing but relative to the branch.
-> 
-> Perhaps there is some config I can add so that I don't have to do:
-> 
->    git svn fetch
->    git rebase remotes/2.5
-> 
-> That isn't so bad except for having to remember where you are...
+this tests --is-bare-repository, --is-inside-git-dir, --show-cdup and
+--show-prefix
 
-'git svn rebase' should be capable auto-discovering the remote ref that
-you last branched from.  I'm not sure if the '2.5' that's common in the
-remote ref and your local branch would cause ambiguity, however...
+Signed-off-by: Matthias Lederhofer <matled@gmx.net>
+---
+The old version used --git-dir twice which was unnecessary.
+---
+ t/t1500-rev-parse.sh |   57 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 57 insertions(+), 0 deletions(-)
+ create mode 100755 t/t1500-rev-parse.sh
 
-I'll look into this more when/if I have time tonight.
-
+diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+new file mode 100755
+index 0000000..bfc615d
+--- /dev/null
++++ b/t/t1500-rev-parse.sh
+@@ -0,0 +1,57 @@
++#!/bin/sh
++
++test_description='test git rev-parse'
++. ./test-lib.sh
++
++test_expect_success 'toplevel: is-bare-repository' \
++	'test "false" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'toplevel: is-inside-git-dir' \
++	'test "false" = "$(git rev-parse --is-inside-git-dir)"'
++test_expect_success 'toplevel: show-cdup' \
++	'test "" = "$(git rev-parse --show-cdup)"'
++test_expect_success 'toplevel: show-prefix' \
++	'test "" = "$(git rev-parse --show-prefix)"'
++
++cd .git/objects || exit 1
++test_expect_success 'in-git-dir: is-bare-repository' \
++	'test "false" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'in-git-dir: is-inside-git-dir' \
++	'test "true" = "$(git rev-parse --is-inside-git-dir)"'
++test_expect_success 'in-git-dir: show-cdup' \
++	'test "../../" = "$(git rev-parse --show-cdup)"'
++test_expect_success 'in-git-dir: show-prefix' \
++	'test ".git/objects/" = "$(git rev-parse --show-prefix)"'
++cd ../.. || exit 1
++
++mkdir sub || exit 1
++cd sub || exit 1
++test_expect_success 'subdirectory: is-bare-repository' \
++	'test "false" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'subdirectory: is-inside-git-dir' \
++	'test "false" = "$(git rev-parse --is-inside-git-dir)"'
++test_expect_success 'subdirectory: show-cdup' \
++	'test "../" = "$(git rev-parse --show-cdup)"'
++test_expect_success 'subdirectory: show-prefix' \
++	'test "sub/" = "$(git rev-parse --show-prefix)"'
++cd .. || exit 1
++
++test_expect_success 'core.bare = true: is-bare-repository' \
++	'git config core.bare true &&
++	test "true" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'unset core.bare: is-bare-repository' \
++	'git config --unset core.bare &&
++	test "false" = "$(git rev-parse --is-bare-repository)"'
++
++mv .git foo.git || exit 1
++export GIT_DIR=foo.git
++export GIT_CONFIG=foo.git/config
++test_expect_success 'GIT_DIR=foo.git: is-bare-repository' \
++	'test "true" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'GIT_DIR=foo.git, core.bare = true: is-bare-repository' \
++	'git config core.bare true &&
++	test "true" = "$(git rev-parse --is-bare-repository)"'
++test_expect_success 'GIT_DIR=foo.git, core.bare = false: is-bare-repository' \
++	'git config core.bare false &&
++	test "false" = "$(git rev-parse --is-bare-repository)"'
++
++test_done
 -- 
-Eric Wong
+1.5.1.rc2.621.gd841-dirty
