@@ -1,67 +1,82 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-send-email and aliases
-Date: Tue, 27 Mar 2007 18:52:33 -0700
-Message-ID: <7vk5x2m8wu.fsf@assigned-by-dhcp.cox.net>
-References: <38b2ab8a0703260239j3f3f0be2teee70fc502f6f7c1@mail.gmail.com>
-	<7vwt14wd38.fsf@assigned-by-dhcp.cox.net>
-	<38b2ab8a0703270238n655bdee1kac227a6675261210@mail.gmail.com>
-	<7vircnou7i.fsf@assigned-by-dhcp.cox.net>
-	<20070327104623.GA26796@sigill.intra.peff.net>
-	<7vlkhjne9k.fsf@assigned-by-dhcp.cox.net>
-	<20070327110246.GA30217@sigill.intra.peff.net>
+Subject: Re: Listing of branch creation time?
+Date: Tue, 27 Mar 2007 19:04:18 -0700
+Message-ID: <7vd52um8d9.fsf@assigned-by-dhcp.cox.net>
+References: <17929.37382.984339.742025@lisa.zopyra.com>
+	<20070327233552.GA7186@coredump.intra.peff.net>
+	<Pine.LNX.4.64.0703271759510.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 28 03:52:39 2007
+Cc: Jeff King <peff@peff.net>, Bill Lear <rael@zopyra.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Mar 28 04:04:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWNL4-00082h-MG
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 03:52:39 +0200
+	id 1HWNWS-0005BY-04
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 04:04:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932739AbXC1Bwg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 21:52:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932672AbXC1Bwg
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 21:52:36 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:33480 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752558AbXC1Bwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 21:52:34 -0400
+	id S932759AbXC1CEV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 22:04:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933103AbXC1CEV
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 22:04:21 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:39595 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932759AbXC1CEU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 22:04:20 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
+          by fed1rmmtao107.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070328015233.WKET28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 27 Mar 2007 21:52:33 -0400
+          id <20070328020419.LGEM27119.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 27 Mar 2007 22:04:19 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id g1sZ1W00D1kojtg0000000; Tue, 27 Mar 2007 21:52:34 -0400
+	id g24J1W00f1kojtg0000000; Tue, 27 Mar 2007 22:04:19 -0400
+In-Reply-To: <Pine.LNX.4.64.0703271759510.6730@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 27 Mar 2007 18:06:11 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43343>
 
-Jeff King <peff@peff.net> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Tue, Mar 27, 2007 at 03:59:19AM -0700, Junio C Hamano wrote:
+> On Tue, 27 Mar 2007, Jeff King wrote:
+>>
+>> You have to look at the latest merge-base, but that tells you the last 
+>> time you merged with master, not necessarily the first time.
 >
->> It might be easier but I do not think that is useful.  When
->> git-commit runs the $EDITOR for the commit log message, I think
->> people would expect (if you are using vi) "!!git log" to honor
->> their alias.
+> Well, if you know which branch it is a branch off of, don't use 
+> merge-base, just do
 >
-> Then git-commit can unset GIT_NOALIAS when it expects to call into
-> "user" code such as the editor.
+> 	git log --reverse -1 origin..branch
+>
+> which should pick up the first commit that is on that branch but haven't 
+> been merged back to the original branch.
 
-Surely, but then it is not just a matter of "setting GIT_NOALIAS
-at the top of all git programs" anymore.  You need to audit the
-code.
+I suspect you fell into the common trap of confused interaction
+between --max-count and --reverse here.  This will show the
+latest one commit on the branch that is still not in origin.
 
-> A potentially bigger problem with any such scheme is that non-git
-> scripts would have to set GIT_NOALIAS. Not a big deal for new scripts,
-> but it might break old scripts.
+Similarly, "git log --reverse -1 master" is _not_ the way to
+find the root commit of the project.
 
-You are right.  Both GIT_NOALIAS and "write git-foo if you do
-not want to be affected with alias" would fail that.
+> (Personally, if I didn't want the graphical version, I'd likely just do
+>
+> 	git log origin..branch
+>
+> and then do '>' in the pager to get to the bottom. That way I can then 
+> scroll up and down if I decide I want to get a bigger picture)
+
+What I use myself is git-topic.perl script from the 'todo'
+branch.  It essentially is:
+
+	for topic
+        do
+        	git [short]log --no-merges master..$topic
+	done
+
+with frills.
