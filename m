@@ -1,70 +1,84 @@
-From: Eric Lesh <eclesh@ucla.edu>
-Subject: [PATCH guilt] Documentation/guilt-fork: document argument to
-	choose name of new patch
-Date: Tue, 27 Mar 2007 20:48:13 -0700
-Message-ID: <1175053693.5945.13.camel@localhost>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Bisect: add checks at the beginning of "git bisect run".
+Date: Tue, 27 Mar 2007 22:46:47 -0700
+Message-ID: <7vk5x1ly2g.fsf@assigned-by-dhcp.cox.net>
+References: <20070327064957.34dad72a.chriscool@tuxfamily.org>
+	<7vmz1zs0g5.fsf@assigned-by-dhcp.cox.net>
+	<200703280544.47569.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: jsipek@cs.sunysb.edu
-X-From: git-owner@vger.kernel.org Wed Mar 28 06:15:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Mar 28 07:46:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWPZQ-0001as-N4
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 06:15:37 +0200
+	id 1HWQzk-0002ya-S8
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 07:46:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753912AbXC1EPd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Mar 2007 00:15:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753914AbXC1EPd
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 00:15:33 -0400
-Received: from smtp-3.smtp.ucla.edu ([169.232.48.136]:60319 "EHLO
-	smtp-3.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753912AbXC1EPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2007 00:15:32 -0400
-X-Greylist: delayed 1631 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Mar 2007 00:15:32 EDT
-Received: from mail.ucla.edu (mail.ucla.edu [169.232.48.150])
-	by smtp-3.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l2S3mEic029988;
-	Tue, 27 Mar 2007 20:48:14 -0700
-Received: from [192.168.1.7] (adsl-75-26-189-151.dsl.scrm01.sbcglobal.net [75.26.189.151])
-	(authenticated bits=0)
-	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l2S3mDUQ026368
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
-	Tue, 27 Mar 2007 20:48:14 -0700
-X-Mailer: Evolution 2.8.1 
-X-Probable-Spam: no
-X-Scanned-By: smtp.ucla.edu on 169.232.48.136
+	id S1753196AbXC1Fqt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Mar 2007 01:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753199AbXC1Fqt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 01:46:49 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:42277 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753196AbXC1Fqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2007 01:46:48 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070328054647.DDTB1606.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 28 Mar 2007 01:46:47 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id g5mn1W00f1kojtg0000000; Wed, 28 Mar 2007 01:46:48 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43354>
 
-From: Eric Lesh <eclesh@ucla.edu>
-Date: Tue, 27 Mar 2007 20:36:27 -0700
-Subject: [PATCH] Documentation/guilt-fork: document argument to choose name of new patch
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Signed-off-by: Eric Lesh <eclesh@ucla.edu>
----
- Documentation/guilt-fork.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+> For example "git bisect run" could accept the following options:
+>
+> --not
+> mark current revision as bad instead of good and as good instead of bad
 
-diff --git a/Documentation/guilt-fork.txt b/Documentation/guilt-fork.txt
-index c5b9ed3..c474345 100644
---- a/Documentation/guilt-fork.txt
-+++ b/Documentation/guilt-fork.txt
-@@ -14,6 +14,11 @@ DESCRIPTION
- Create a copy of the top most patch, and replace the entry in the series
- file to use this new patch file.
- 
-+OPTIONS
-+-------
-+<new_name>::
-+	The name of the new patch to create.
-+
- Author
- ------
- Written by Josef "Jeff" Sipek <jsipek@cs.sunysb.edu>
--- 
-1.5.1-rc1.GIT
+Do you mean this is a useful option when the "run-script"
+reports failure with 0 exit and success with non-zero exit?  In
+other words, exit code has reversed meanings from the usual?
+
+> --strict
+> all exit code except 0 and 1 abort the bisect run process
+
+This I can understand...
+
+> --good <rev1>
+> --bad <rev2>
+> use rev1 as good and rev2 as bad
+
+I am not sure what you mean by these two.
+
+> --check or --test
+> run the script once and then do nothing if the result is good
+
+How would you use this?  Presumably this makes the command keep
+running while the commit is bad, until you hit a good commit and
+then stop.
+
+I wonder why this is useful.
+
+Stopping at a commit that happens to be good, without narrowing
+the range all the way down is sometimes useful, as you can
+usually guess which one of the remaining commits are likely to
+be involved with the problem you are seeing, when the remaining
+set is sufficiently narrow.  But how narrow the remaining set is
+does not have much to do with your finding a good commit for the
+first time.  If you start from a single bad commit at the tip of
+10-year old project, you would probably try 5-year old commit,
+which may well be good (or maybe it is too old to be relevant)
+and then this option would make the cycle stop, and you have
+5-year worth of history still left to be bisected.  I am not
+sure what the assumed workflow would be after that point.
