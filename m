@@ -1,84 +1,79 @@
-From: Bruno Cesar Ribas <ribas@c3sl.ufpr.br>
-Subject: [PATCH] use xmalloc in diff-delta.c and removed NULL verification in builtin-pack-objects.c from create_delta_index()
-Date: Tue, 27 Mar 2007 22:04:30 -0300
-Message-ID: <20070328010430.GA8783@c3sl.ufpr.br>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Listing of branch creation time?
+Date: Tue, 27 Mar 2007 18:06:11 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0703271759510.6730@woody.linux-foundation.org>
+References: <17929.37382.984339.742025@lisa.zopyra.com>
+ <20070327233552.GA7186@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Mar 28 03:04:56 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Mar 28 03:06:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWMap-0002dy-JN
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 03:04:51 +0200
+	id 1HWMcM-0003HC-7N
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 03:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934164AbXC1BEe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 21:04:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753923AbXC1BEd
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 21:04:33 -0400
-Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:45196 "EHLO
-	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753922AbXC1BEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 21:04:33 -0400
-Received: from cohiba (cohiba.c3sl.ufpr.br [200.17.202.52])
-	by urquell.c3sl.ufpr.br (Postfix) with SMTP id 1B75B3019A2C
-	for <git@vger.kernel.org>; Tue, 27 Mar 2007 22:04:30 -0300 (BRT)
-Received: by cohiba (sSMTP sendmail emulation); Tue, 27 Mar 2007 22:04:30 -0300
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S965525AbXC1BGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 21:06:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965539AbXC1BGS
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 21:06:18 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:49348 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965525AbXC1BGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 21:06:17 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2S16CU2019996
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 27 Mar 2007 18:06:12 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2S16BYM032135;
+	Tue, 27 Mar 2007 18:06:12 -0700
+In-Reply-To: <20070327233552.GA7186@coredump.intra.peff.net>
+X-Spam-Status: No, hits=-0.468 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43338>
 
- builtin-pack-objects.c |    2 --
- diff-delta.c           |    8 ++------
- 2 files changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index b5f9648..04a4abc 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1254,8 +1254,6 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
-        }
-        if (!src->index) {
-                src->index = create_delta_index(src->data, src_size);
--               if (!src->index)
--                       die("out of memory");
-        }
- 
-        delta_buf = create_delta(src->index, trg->data, trg_size, &delta_size, max_size);
-diff --git a/diff-delta.c b/diff-delta.c
-index 9f998d0..011d7d6 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -157,9 +157,7 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
-        memsize = sizeof(*index) +
-                  sizeof(*hash) * hsize +
-                  sizeof(*entry) * entries;
--       mem = malloc(memsize);
--       if (!mem)
--               return NULL;
-+       mem = xmalloc(memsize);
-        index = mem;
-        mem = index + 1;
-        hash = mem;
-@@ -258,9 +256,7 @@ create_delta(const struct delta_index *index,
-        outsize = 8192;
-        if (max_size && outsize >= max_size)
-                outsize = max_size + MAX_OP_SIZE + 1;
--       out = malloc(outsize);
--       if (!out)
--               return NULL;
-+       out = xmalloc(outsize);
- 
-        /* store reference buffer size */
-        i = index->src_size;
--- 
-1.5.0.3
 
--- 
-Bruno Ribas - ribas@c3sl.ufpr.br
-http://web.inf.ufpr.br/ribas
-C3SL: http://www.c3sl.ufpr.br 
+On Tue, 27 Mar 2007, Jeff King wrote:
+>
+> You have to look at the latest merge-base, but that tells you the last 
+> time you merged with master, not necessarily the first time.
+
+Well, if you know which branch it is a branch off of, don't use 
+merge-base, just do
+
+	git log --reverse -1 origin..branch
+
+which should pick up the first commit that is on that branch but haven't 
+been merged back to the original branch.
+
+The merge-base is the right thing to do for *merging*, but if you keep 
+merging into the branch you are developing on (to keep up-to-date), the 
+above "what is on the branch but not in the origin" is definitely the 
+right thing to do.
+
+Of course, people already pointed out "gitk". And I agree. Quite often, 
+it's worth the full graphical output to do
+
+	gitk origin..branch
+
+to see the big picture. But if you want to work on the command line, the 
+above "git log" command line isn't really that bad to type..
+
+(Personally, if I didn't want the graphical version, I'd likely just do
+
+	git log origin..branch
+
+and then do '>' in the pager to get to the bottom. That way I can then 
+scroll up and down if I decide I want to get a bigger picture)
+
+		Linus
