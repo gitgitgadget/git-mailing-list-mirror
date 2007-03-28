@@ -1,130 +1,135 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git-blame.el: pick a set of random colors for each git-blame turn
-Date: Wed, 28 Mar 2007 11:15:25 +0200
-Message-ID: <874po54tle.fsf@morpheus.local>
-References: <87bqifrs7r.fsf@morpheus.local>
-	<200703272151.l2RLpqD7012317@localhost.localdomain>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] http-fetch: don't use double-slash as directory separator in URLs
+Date: Wed, 28 Mar 2007 09:46:15 +0000
+Message-ID: <20070328094615.32277.qmail@47bcc7bfa0b709.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Xavier Maillard <zedek@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Mar 28 11:15:35 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 28 11:46:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWUFg-0000nY-Lj
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 11:15:33 +0200
+	id 1HWUjT-00005G-Lc
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 11:46:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934023AbXC1JP3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Mar 2007 05:15:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934031AbXC1JP3
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 05:15:29 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:35439 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934023AbXC1JP2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2007 05:15:28 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 5CF74200A1FA;
-	Wed, 28 Mar 2007 11:15:27 +0200 (CEST)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 31892-01-81; Wed, 28 Mar 2007 11:15:26 +0200 (CEST)
-Received: from morpheus (dns.vtab.com [62.20.90.195])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 4F376200A1E2;
-	Wed, 28 Mar 2007 11:15:26 +0200 (CEST)
-Received: by morpheus (Postfix, from userid 1000)
-	id D4902BFF27; Wed, 28 Mar 2007 11:15:25 +0200 (CEST)
-In-Reply-To: <200703272151.l2RLpqD7012317@localhost.localdomain> (Xavier Maillard's message of "Tue, 27 Mar 2007 23:51:52 +0200")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S933638AbXC1Jp7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Mar 2007 05:45:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933691AbXC1Jp7
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 05:45:59 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:51200 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S933638AbXC1Jp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2007 05:45:58 -0400
+Received: (qmail 32278 invoked by uid 1000); 28 Mar 2007 09:46:15 -0000
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43365>
 
-Xavier Maillard <zedek@gnu.org> writes:
+Please see http://bugs.debian.org/409887
 
-> @@ -294,18 +312,22 @@ See also function `git-blame-mode'."
->          (t
->           nil)))
-> =20
-> -
->  (defun git-blame-new-commit (hash src-line res-line num-lines)
->    (save-excursion
->      (set-buffer git-blame-file)
->      (let ((info (gethash hash git-blame-cache))
->            (inhibit-point-motion-hooks t)
-> -          (inhibit-modification-hooks t))
-> +          (inhibit-modification-hooks t)
-> +	  (colors git-blame-colors))
->        (when (not info)
-> -        (let ((color (pop git-blame-colors)))
-> -          (unless color
-> -            (setq color git-blame-ancient-color))
-> -          (setq info (list hash src-line res-line num-lines
-> +	;; Assign a random color to each new commit info
-> +	;; Take care not to select the same color multiple times
-> +	(let* ((idx (random (length colors)))
-> +	       (color (or (elt colors idx)
-> +			  git-blame-ancient-color)))
-> +	  (and (assoc color colors)
-> +	       (setq colors (delete idx colors)))
-> +	  (setq info (list hash src-line res-line num-lines
->                             (git-describe-commit hash)
->                             (cons 'color color))))
->          (puthash hash info git-blame-cache))
+http-fetch expected the URL given at the command line to have a trailing
+slash anyway, and then added '/objects...' when requesting objects files
+from the http server.
 
-I have a few questions here.  Why do you make a local reference
-(color) to git-blame-colors, but you are still destructively updating
-the list (using delete), possibly making git-blame-colors point to a
-partial ruin of the original list?  My original version may look
-similar, but pop is only destructive on the variable it is popping
-from.  Any other references to the original list will be intact.
+Now it doesn't require the trailing slash in <url> anymore, and strips
+trailing slashes if given nonetheless.
 
-Remember that git-blame-colors is a buffer-local variable, but if it
-points to a global list, any destructive changes will mess up the
-global list.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ git-clone.sh |    2 +-
+ git-fetch.sh |    2 +-
+ http-fetch.c |   21 ++++++++++++---------
+ 3 files changed, 14 insertions(+), 11 deletions(-)
 
-Then it's this part
-
-> +	(let* ((idx (random (length colors)))
-> +	       (color (or (elt colors idx)
-> +			  git-blame-ancient-color)))
-
-If you have already consumed all colors, (length colors) will be zero
-and random will return an arbitrary integer. And then you will do (elt
-'() -47100) and check if that was nil.  It should work, but only by
-luck.
-
-I'd prefer something like this:
-
-    (let ((color (if colors
-                   (elt colors (random (length colors)))
-                  git-blame-ancient-color)))
-
-Then you have to remove it, and your (assoc color colors) looks
-"weird", since assoc compares the car of each list element in colors,
-but colors doesn't contain any pairs, so I don't really see how it
-would ever return something.
-
-You could break this out to a function:
-
-(defmacro random-pop (l)
-  "Remove a random element from l and update l"
-  ;; only works on lists with unique elements
-  `(let ((e (elt ,l (random (length ,l)))))
-     (setq ,l (remove e ,l))
-     e))
-
-and use it like this:
-
-    (let ((color (if colors
-                   (random-pop colors)
-                  git-blame-ancient-color)))
-
---=20
-David K=C3=A5gedal
+diff --git a/git-clone.sh b/git-clone.sh
+index 6ba477d..513b574 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -60,7 +60,7 @@ Perhaps git-update-server-info needs to be run there?"
+ 		else
+ 			tname=$name
+ 		fi
+-		git-http-fetch $v -a -w "$tname" "$name" "$1/" || exit 1
++		git-http-fetch $v -a -w "$tname" "$name" "$1" || exit 1
+ 	done <"$clone_tmp/refs"
+ 	rm -fr "$clone_tmp"
+ 	http_fetch "$1/HEAD" "$GIT_DIR/REMOTE_HEAD" ||
+diff --git a/git-fetch.sh b/git-fetch.sh
+index 9334933..fd70696 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -248,7 +248,7 @@ fetch_per_ref () {
+ 	  expr "z$head" : "z$_x40\$" >/dev/null ||
+ 		die "No such ref $remote_name at $remote"
+ 	  echo >&2 "Fetching $remote_name from $remote using $proto"
+-	  git-http-fetch -v -a "$head" "$remote/" || exit
++	  git-http-fetch -v -a "$head" "$remote" || exit
+ 	  ;;
+       rsync://*)
+ 	  test -n "$shallow_depth" &&
+diff --git a/http-fetch.c b/http-fetch.c
+index e6cd11d..58b77a7 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -16,7 +16,7 @@ static struct curl_slist *no_pragma_header;
+ 
+ struct alt_base
+ {
+-	const char *base;
++	char *base;
+ 	int path_len;
+ 	int got_indices;
+ 	struct packed_git *packs;
+@@ -158,12 +158,12 @@ static void start_object_request(struct object_request *obj_req)
+ 
+ 	SHA1_Init(&obj_req->c);
+ 
+-	url = xmalloc(strlen(obj_req->repo->base) + 50);
+-	obj_req->url = xmalloc(strlen(obj_req->repo->base) + 50);
++	url = xmalloc(strlen(obj_req->repo->base) + 51);
++	obj_req->url = xmalloc(strlen(obj_req->repo->base) + 51);
+ 	strcpy(url, obj_req->repo->base);
+ 	posn = url + strlen(obj_req->repo->base);
+-	strcpy(posn, "objects/");
+-	posn += 8;
++	strcpy(posn, "/objects/");
++	posn += 9;
+ 	memcpy(posn, hex, 2);
+ 	posn += 2;
+ 	*(posn++) = '/';
+@@ -938,14 +938,14 @@ static char *quote_ref_url(const char *base, const char *ref)
+ 	int len, baselen, ch;
+ 
+ 	baselen = strlen(base);
+-	len = baselen + 6; /* "refs/" + NUL */
++	len = baselen + 7; /* "/refs/" + NUL */
+ 	for (cp = ref; (ch = *cp) != 0; cp++, len++)
+ 		if (needs_quote(ch))
+ 			len += 2; /* extra two hex plus replacement % */
+ 	qref = xmalloc(len);
+ 	memcpy(qref, base, baselen);
+-	memcpy(qref + baselen, "refs/", 5);
+-	for (cp = ref, dp = qref + baselen + 5; (ch = *cp) != 0; cp++) {
++	memcpy(qref + baselen, "/refs/", 6);
++	for (cp = ref, dp = qref + baselen + 6; (ch = *cp) != 0; cp++) {
+ 		if (needs_quote(ch)) {
+ 			*dp++ = '%';
+ 			*dp++ = hex((ch >> 4) & 0xF);
+@@ -1044,7 +1044,10 @@ int main(int argc, const char **argv)
+ 	no_pragma_header = curl_slist_append(no_pragma_header, "Pragma:");
+ 
+ 	alt = xmalloc(sizeof(*alt));
+-	alt->base = url;
++	alt->base = xmalloc(strlen(url) + 1);
++	strcpy(alt->base, url);
++	for (path = alt->base + strlen(alt->base) - 1; *path == '/'; --path)
++		*path = 0;
+ 	alt->got_indices = 0;
+ 	alt->packs = NULL;
+ 	alt->next = NULL;
+-- 
+1.5.1-rc2.GIT
