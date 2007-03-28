@@ -1,108 +1,136 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Bisect: add checks at the beginning of "git bisect run".
-Date: Wed, 28 Mar 2007 00:57:12 -0700
-Message-ID: <7vbqidls13.fsf@assigned-by-dhcp.cox.net>
-References: <20070327064957.34dad72a.chriscool@tuxfamily.org>
-	<200703280544.47569.chriscool@tuxfamily.org>
-	<7vk5x1ly2g.fsf@assigned-by-dhcp.cox.net>
-	<200703280952.57058.chriscool@tuxfamily.org>
+From: Liu Yubao <yubao.liu@gmail.com>
+Subject: problems of git-status
+Date: Wed, 28 Mar 2007 15:59:16 +0800
+Message-ID: <460A2054.20404@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Mar 28 09:57:38 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 28 10:01:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWT2B-000269-9n
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 09:57:31 +0200
+	id 1HWT6O-0004LM-02
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 10:01:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933808AbXC1H50 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Mar 2007 03:57:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753215AbXC1H50
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 03:57:26 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:51102 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753233AbXC1H5O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2007 03:57:14 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070328075713.BUBN28911.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 28 Mar 2007 03:57:13 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id g7xD1W00F1kojtg0000000; Wed, 28 Mar 2007 03:57:13 -0400
-In-Reply-To: <200703280952.57058.chriscool@tuxfamily.org> (Christian Couder's
-	message of "Wed, 28 Mar 2007 09:52:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965136AbXC1IBt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Mar 2007 04:01:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965148AbXC1IBt
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 04:01:49 -0400
+Received: from wx-out-0506.google.com ([66.249.82.239]:21863 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965136AbXC1IBs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2007 04:01:48 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so2745897wxd
+        for <git@vger.kernel.org>; Wed, 28 Mar 2007 01:01:47 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=I6BJ3xDVipy9qY/lB8U9lZPZ0JaV4fGgYKW1ZD1Wt0OPASOqGBuH/8bUpeTqilYZxPrimjH7iHhIDsbOnkvRDIXXF05pep4FWFcIZidziV0k2JxMSmGik4481pFNp6Izcdjv1FngA8YafK0kL9MNjQ7VFd7n18vlX2/jReTNECE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=R0nbKMpF9kHRCnxY8BYg5QyNgWExC5NJf+4DIRB6HfLacsF7iAddqOnY/B3Jy6F1i9/0fLwGA2GpBSyzNPj/imbyE4lx3AEtTSS0BFgxpmU2PVuBjEHiLSUzcNXpGT+zJ8xclKrKZMzq+wZ44PAG9r644df4+gobOZPOXDg7D+k=
+Received: by 10.70.77.2 with SMTP id z2mr14726698wxa.1175068907564;
+        Wed, 28 Mar 2007 01:01:47 -0700 (PDT)
+Received: from ?192.168.88.85? ( [221.122.47.70])
+        by mx.google.com with ESMTP id 5sm39783405nzk.2007.03.28.01.01.45;
+        Wed, 28 Mar 2007 01:01:47 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.7) Gecko/20060909 Thunderbird/1.5.0.7 Mnenhy/0.7.4.666
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43358>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Hi,
+   I find "git status" and "git status ." have different output and the latter
+will go wrong in the case below:
 
-> git bisect run --not grep string my_file
->
-> instead of something like
->
-> git bisect run ! grep string my_file
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#!/bin/sh
+rm -rf tt; mkdir tt; cd tt
 
-How's the former more useful than the latter was what I was
-wondering but I do not care too deeply.
+git init
+mkdir AA
+echo hello>a
+git add .
+echo world>a
 
-> For example one could write:
->
-> git bisect run --good rev1 --bad rev2 my_script
->
-> instead of
->
-> git bisect start
-> git bisect good rev1
-> git bisect bad rev2
-> git bisect run my_script
+echo "different output..."
+echo "--------------------git status-------------"
+git status
+echo "--------------------git status . ----------"
+git status .
 
-Likewise.
+git add a
+git commit -m "test"
+echo hello world>a
+git add a
+sleep 4
+echo world hello>a
+echo "--------------------git status-------------"
+git status
+echo "--------------------git status . ----------"
+git status .
 
->> > --check or --test
->> > run the script once and then do nothing if the result is good
->>
->> How would you use this?=20
->
-> For example if you know that the last nightly build=20
-> tagged "nightly_2007_03_27" was ok, you could use:
->
-> git bisect start
-> git bisect good nightly_2007_03_27
-> git bisect run --check make > /dev/null || {
-> 	# extract commit and author email address from "$GIT_DIR/BISECT_RUN"
-> 	#=C2=A0and send flame to author who broke the build with the commit
-> }
->
-> to automatically check that current source code builds ok.
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-As I said, bisect fundamentally needs one bad commit to start
-bisecting, so after you give only one good commit, it would not
-move to bisect branch nor suggest which commit to test.  I
-assume you intend to run the test on the tip of the current
-branch here, but then your "git bisect run --check ./run-script"
-is equivalent to running ./run-script and checking the exit
-value.
+I use git version 1.5.1.rc2.15.g465b3, "git repo-config -l" shows:
+	core.filemode=false
+	core.logallrefupdates=true
+	core.compression=9
+	diff.color=auto
+	pack.window=64
+	merge.summary=true
+	core.repositoryformatversion=0
+	core.filemode=false
+	core.bare=false
 
-In other words, the above would be equilvalent to
 
-  git bisect start
-  git bisect good nightly_2007_03_27
-  make >/dev/null || {
-	  git bisect bad
-          git bisect run make >/dev/null
-          # extract commit and author email address from "$GIT_DIR/BISE=
-CT_RUN"
-          #=C2=A0and send flame to author who broke the build with the =
-commit
-  }
+Here is the output of that script:
 
-I happen to find the latter easier to read as a shell script.
+Initialized empty Git repository in .git/
+different output...
+--------------------git status-------------
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#	new file: a
+#
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#	modified:   a
+#
+--------------------git status . ----------
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+#   (use "git rm --cached <file>..." to unstage)
+#
+#	new file: a
+#
+Created initial commit dc57cb444335e73ce3320c1e368765b1a92e3be5
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 a
+--------------------git status-------------
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   a
+#
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#	modified:   a
+#
+--------------------git status . ----------
+fatal: Entry 'a' not uptodate. Cannot merge.
