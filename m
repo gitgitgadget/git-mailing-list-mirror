@@ -1,161 +1,98 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH] gitweb: Support comparing blobs (files) with different names
-Date: Wed, 28 Mar 2007 23:03:01 +0200
-Message-ID: <20070328210301.GA57@auto.tuwien.ac.at>
-References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <200703270256.24295.jnareb@gmail.com> <20070327195627.GA23205@auto.tuwien.ac.at> <200703280158.54929.jnareb@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] t/t6006: add tests for a slightly more complex commit message
+Date: Wed, 28 Mar 2007 17:08:36 -0400
+Message-ID: <20070328210836.GA7898@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 23:03:11 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Mar 28 23:08:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWfIU-0008Er-EA
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 23:03:10 +0200
+	id 1HWfNq-0002iw-AH
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 23:08:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752904AbXC1VDH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Mar 2007 17:03:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752943AbXC1VDG
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 17:03:06 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:60157 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752904AbXC1VDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2007 17:03:05 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 18493738CB60;
-	Wed, 28 Mar 2007 23:03:03 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Fo91myoTLp6j; Wed, 28 Mar 2007 23:03:02 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id F02ED738CB43; Wed, 28 Mar 2007 23:03:01 +0200 (CEST)
+	id S1752987AbXC1VIj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Mar 2007 17:08:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752988AbXC1VIj
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 17:08:39 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3501 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752987AbXC1VIi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2007 17:08:38 -0400
+Received: (qmail 13702 invoked from network); 28 Mar 2007 21:09:09 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 28 Mar 2007 21:09:09 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 28 Mar 2007 17:08:36 -0400
 Content-Disposition: inline
-In-Reply-To: <200703280158.54929.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43387>
 
-On Wed, Mar 28, 2007 at 12:58:54AM +0100, Jakub Narebski wrote:
-> On Thu, Mar 27, 2007, Martin Koegler wrote:
-> > On Tue, Mar 27, 2007 at 01:56:24AM +0100, Jakub Narebski wrote:
-> > If you think, its safe, I can simplify git_blobdiff. I propose
-> > doing the following way (pseudo-code):
->=20
-> > $file_parent ||=3D $file_name;
-> [...]
-> > $hash=3Dgit_get_hash_by_path($hash_base,$file_name);
-> [...]
-> > $hash_parent=3Dgit_get_hash_by_path($hash_parent_base,$file_parent)=
-;
-> [...]
-> >  open $fd, "-|", git_cmd(), "diff", '-p', @diff_opts,
-> >     $hash_parent, $hash
-> >     or die_error(undef, "Open git-diff failed");
-> [...]
-> > Else I will keep a reworked version of my patch.
->=20
-> The trouble with this is that we may lose mode change (symlink to
-> ordinary file etc.) because we hand-generate %diffinfo.
+This test does not pass; there is a bug in the printing of
+the 'encoding' parameter.
 
-If we need the correct mode in %diffinfo, this is not difficult:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t6006-rev-list-format.sh |   42 ++++++++++++++++++++++++++++++++++++=
+++++++
+ 1 files changed, 42 insertions(+), 0 deletions(-)
 
-$from_mode=3D"blob";
-if (defined $hash_base && defined $file_name)
-($to_mode,$hash)=3Dgit_get_hash_by_path($hash_base,$file_name);
-
-$to_mode=3D"blob";
-if (defined $hash_parent_base && defined $file_parent)
-($from_mode,$hash_parent)=3Dgit_get_hash_by_path_mode($hash_parent_base=
-,$file_parent);
-
-Then we set to_mode and from_mode in %diffinfo to $to_mode and $from_mo=
-de.
-
-git_get_hash_by_path_mode is like git_get_hash_by_path, only that it
-returns an array with the mode and the hash.
-
-Blobdiff (html output) in its current version can not handle symlinks:
-> diff --git a/x b/x
-> deleted file mode 100644 (file)
-> index 190a180..873fb8d
-> --- a/x
-> +++ /dev/null
-> @@ -1 +0,0 @@
-> -123
-> diff --git a/ b/
-> new file mode 120000 (symlink)
-> index 190a180..873fb8d
-> --- /dev/null
-> +++ b/
-> @@ -0,0 +1 @@
-> +file3
-> \ No newline at end of file
-
-This was generated by "diff to current" in the history view of a file,
-which was changed between symlink and normal file.
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index ce9c7dc..aab17fa 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -105,4 +105,46 @@ commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+ =1B[31mfoo=1B[32mbar=1B[34mbaz=1B[mxyzzy
+ EOF
 =20
-Additionally, to_mode and from_mode of %diffinfo seem to be ignored by
-git_patchset_body.
-
-> >> By the way, if you call git_get_hash_by_path (which is expensive, =
-as it
-> >> calls git command), you can use resulting hash in place of
-> >> hash_base:filename as an argument to git-diff.
-> > =20
-> > I must check, if we need to resolve $hash ($hash_parent) by
-> > git_get_hash_by_path, if we construct it out of $hash_base and
-> > $file_name. Maybe we can avoid this call.
->=20
-> We can use "$hash_base:$file_name" as second parameter to git-diff et=
-c.,
-> but I don't think we want to create links with "$hash_base:$file_name=
-"
-> instead of sha-1 id of a blob as 'h' parameter.
->=20
-> It can be first implementation, thought, and later we can try to use
-> "index <hash>..<hash> <mode>" lines from extended header to get $hash
-> and $hash_parent (with exception of pure rename, but then we need onl=
-y
-> one invocation of git_get_hash_by_path subroutine).
-
-The <mode> must be discarded, as it is wrong for anything which as not
-a mode of 100644, as we specify a two blob as parameter to git-diff.
-
-> But I think it is better left for later patch.
-
-As git_patchset_body requires an information about the compared file
-as parameter, a new formating function will be needed. I'm not sure,
-if the overhead of git_get_hash_by_path is this worth. Additionally,
-if we have the hash passed by parameter in most cases, there is no
-need to call it in these cases.
-
-mfg Martin K=F6gler
-PS:
-I created a blob with a "strange" filename: &()=3D!"=A7$%[<>]*#+_;.
-In the result of the blob view, the " is not escaped in the filename in=
- the header
-and a strage content type is returned:
-
-$ telnet localhost 80
-Trying 127.0.0.1...
-Connected to localhost.
-Escape character is '^]'.
-GET /gitweb/gitweb.cgi?p=3Dt/.git;a=3Dblob;f=3D%26()%3D%21%22%A7%24%25%=
-5B%3C%3E%5D%2A%23%2B_%3B.;hb=3D7bfed2588bee66b33db544830606fa6606478fd9=
- HTTP/1.0
-
-HTTP/1.1 200 OK
-Date: Wed, 28 Mar 2007 19:55:36 GMT
-Server: Apache
-Content-disposition: inline; filename=3D"&()=3D!"=C2=A7$%[<>]*#+_;."
-Expires: Thu, 29 Mar 2007 19:55:39 GMT
-Connection: close
-Content-Type: application/vnd.mif
-
-xx
++cat >commit-msg <<'EOF'
++Test printing of complex bodies
++
++This commit message is much longer than the others,
++and it will be encoded in iso8859-1. We should therefore
++include an iso8859 character: =A1bueno!
++EOF
++test_expect_success 'setup complex body' '
++git-config i18n.commitencoding iso8859-1 &&
++  echo change2 >foo && git-commit -a -F commit-msg
++'
++
++test_format complex-encoding %e <<'EOF'
++commit f58db70b055c5718631e5c61528b28b12090cdea
++iso8859-1
++commit 131a310eb913d107dd3c09a65d1651175898735d
++<unknown>
++commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++<unknown>
++EOF
++
++test_format complex-subject %s <<'EOF'
++commit f58db70b055c5718631e5c61528b28b12090cdea
++Test printing of complex bodies
++commit 131a310eb913d107dd3c09a65d1651175898735d
++changed foo
++commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++added foo
++EOF
++
++test_format complex-body %b <<'EOF'
++commit f58db70b055c5718631e5c61528b28b12090cdea
++This commit message is much longer than the others,
++and it will be encoded in iso8859-1. We should therefore
++include an iso8859 character: =A1bueno!
++
++commit 131a310eb913d107dd3c09a65d1651175898735d
++<unknown>
++commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
++<unknown>
++EOF
++
+ test_done
+--=20
+1.5.1.rc2.636.gff57
