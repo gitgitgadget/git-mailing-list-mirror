@@ -1,94 +1,125 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [PATCH] git-blame.el: pick a set of random colors for each git-blame turn
-Date: Wed, 28 Mar 2007 14:02:53 +0200
-Message-ID: <871wj94lua.fsf@morpheus.local>
-References: <874po54tle.fsf@morpheus.local>
-	<200703281031.l2SAVhj7004802@localhost.localdomain>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: [PATCH] bisect: use update-ref to update refs
+Date: Wed, 28 Mar 2007 14:35:20 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070328123519.GA4472@cepheus>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Xavier Maillard <zedek@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Mar 28 14:03:18 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Mar 28 14:35:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWWs1-0005H2-Mo
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 14:03:18 +0200
+	id 1HWXNE-0004Du-K8
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 14:35:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752937AbXC1MC6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Mar 2007 08:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752999AbXC1MC6
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 08:02:58 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:36807 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752937AbXC1MC5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2007 08:02:57 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 8346E200A1E8;
-	Wed, 28 Mar 2007 14:02:56 +0200 (CEST)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 29294-01-15; Wed, 28 Mar 2007 14:02:55 +0200 (CEST)
-Received: from morpheus (oden.vtab.com [62.20.90.195])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id B241E200A1E2;
-	Wed, 28 Mar 2007 14:02:55 +0200 (CEST)
-Received: by morpheus (Postfix, from userid 1000)
-	id EFF9DC00A6; Wed, 28 Mar 2007 14:02:53 +0200 (CEST)
-In-Reply-To: <200703281031.l2SAVhj7004802@localhost.localdomain> (Xavier Maillard's message of "Wed, 28 Mar 2007 12:31:43 +0200")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1751498AbXC1MfY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Mar 2007 08:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751676AbXC1MfY
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 08:35:24 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:57121 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751498AbXC1MfX (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Mar 2007 08:35:23 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HWXN4-0007dX-NP
+	for git@vger.kernel.org; Wed, 28 Mar 2007 14:35:22 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l2SCZKMK015486
+	for <git@vger.kernel.org>; Wed, 28 Mar 2007 14:35:20 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l2SCZK5N015485
+	for git@vger.kernel.org; Wed, 28 Mar 2007 14:35:20 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.14+cvs20070321 (2007-03-20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43371>
 
-Xavier Maillard <zedek@gnu.org> writes:
+update-ref is safer than manualy echoing values to various files in
+$GIT_DIR/refs/heads/.
 
-> I thought it would be cool to have different set of colors for each
-> git-blame-mode. Function `git-blame-new-commit' does this for us
-> picking when possible, a random colors based on the set we build on
-> startup. When it fails, `git-blame-ancient-color' will be used. We
-> also take care not to use the same color more than once (thank you
-> David K=C3=A5gedal).
+bisect predates update-ref and was never updated to use the latter.
 
-Closer, but still no cigar :-)
+Signed-off-by: Uwe Kleine-K=F6nig <ukleinek@informatik.uni-freiburg.de>
+---
 
->  (defun git-blame-new-commit (hash src-line res-line num-lines)
->    (save-excursion
->      (set-buffer git-blame-file)
->      (let ((info (gethash hash git-blame-cache))
->            (inhibit-point-motion-hooks t)
-> -          (inhibit-modification-hooks t))
-> +          (inhibit-modification-hooks t)
-> +	  (colors git-blame-colors))
->        (when (not info)
-> -        (let ((color (pop git-blame-colors)))
-> -          (unless color
-> -            (setq color git-blame-ancient-color))
-> -          (setq info (list hash src-line res-line num-lines
-> +	;; Assign a random color to each new commit info
-> +	;; Take care not to select the same color multiple times
-> +	(let ((color (if colors
-> +			 (git-blame-random-pop colors)
-> +		       git-blame-ancient-color)))
-> +	  (setq info (list hash src-line res-line num-lines
->                             (git-describe-commit hash)
->                             (cons 'color color))))
->          (puthash hash info git-blame-cache))
+There are some style nits in git-bisect.sh that I found while producing=
+ that
+patch.  E.g. the 3rd hunk shows=20
 
-You are still making a copy of the list head pointer (colors ->
-git-blame-colors), and then you do (git-blame-random-pop colors).
-This will not update git-blame-colors if the first element was popped,
-which means that you will keep reusing that color.  Since you really
-do want to always update the buffer-local git-blame-colors, I don't
-see why you bind a local variable and work with that instead.
+	GIT_DIR=3D"$GIT_DIR" git-$command ...
 
-And the last diff line is whitespace-only.  You replaced eight spaces
-with a TAB.
+where the assignment to GIT_DIR should be superfluous?  In some places
+git-command is used, and in other git command.
+
+ git-bisect.sh |   13 +++++++------
+ 1 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index a12ea31..1589870 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -90,7 +90,7 @@ bisect_bad() {
+ 	*)
+ 		usage ;;
+ 	esac || exit
+-	echo "$rev" >"$GIT_DIR/refs/bisect/bad"
++	git update-ref "refs/bisect/bad" "$rev"
+ 	echo "# bad: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
+ 	echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
+ 	bisect_auto_next
+@@ -106,7 +106,7 @@ bisect_good() {
+ 	for rev in $revs
+ 	do
+ 		rev=3D$(git-rev-parse --verify "$rev^{commit}") || exit
+-		echo "$rev" >"$GIT_DIR/refs/bisect/good-$rev"
++		git update-ref "refs/bisect/good-$rev" "$rev"
+ 		echo "# good: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
+ 		echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
+ 	done
+@@ -159,9 +159,10 @@ bisect_next() {
+ 		nr=3D"$nr_good";
+ 	fi;
+ 	echo "Bisecting: maximal $nr revisions left to test"
+-	echo "$rev" > "$GIT_DIR/refs/heads/new-bisect"
++	git update-ref refs/heads/new-bisect "$rev"
+ 	git checkout -q new-bisect || exit
+-	mv "$GIT_DIR/refs/heads/new-bisect" "$GIT_DIR/refs/heads/bisect" &&
++	git update-ref refs/heads/bisect "$rev" &&
++	git update-ref -d refs/heads/new-bisect "$rev" &&
+ 	GIT_DIR=3D"$GIT_DIR" git-symbolic-ref HEAD refs/heads/bisect
+ 	git-show-branch "$rev"
+ }
+@@ -211,12 +212,12 @@ bisect_replay () {
+ 			eval "$cmd"
+ 			;;
+ 		good)
+-			echo "$rev" >"$GIT_DIR/refs/bisect/good-$rev"
++			git update-ref "refs/bisect/good-$rev" "$rev"
+ 			echo "# good: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
+ 			echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
+ 			;;
+ 		bad)
+-			echo "$rev" >"$GIT_DIR/refs/bisect/bad"
++			git update-ref "refs/bisect/bad" "$rev"
+ 			echo "# bad: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
+ 			echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
+ 			;;
+--=20
+1.5.0.2.260.g2eb065
+
 
 --=20
-David K=C3=A5gedal
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3D1+newton+in+kg*m+%2F+s%5E2
