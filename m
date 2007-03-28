@@ -1,113 +1,161 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Fix "--pretty=format:" for parent related items.
-Date: Wed, 28 Mar 2007 13:37:08 -0700
-Message-ID: <7vhcs5f6kr.fsf_-_@assigned-by-dhcp.cox.net>
-References: <20070328000828.GA13273@coredump.intra.peff.net>
-	<20070328192111.GA2588@steel.home>
+From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
+Subject: Re: [PATCH] gitweb: Support comparing blobs (files) with different names
+Date: Wed, 28 Mar 2007 23:03:01 +0200
+Message-ID: <20070328210301.GA57@auto.tuwien.ac.at>
+References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <200703270256.24295.jnareb@gmail.com> <20070327195627.GA23205@auto.tuwien.ac.at> <200703280158.54929.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Mar 28 22:37:16 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Mar 28 23:03:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWetP-0002un-2G
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 22:37:15 +0200
+	id 1HWfIU-0008Er-EA
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 23:03:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbXC1UhL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Mar 2007 16:37:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752769AbXC1UhL
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 16:37:11 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:32991 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751884AbXC1UhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2007 16:37:10 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070328203709.CBKU28126.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 28 Mar 2007 16:37:09 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id gLd81W00N1kojtg0000000; Wed, 28 Mar 2007 16:37:09 -0400
-In-Reply-To: <20070328192111.GA2588@steel.home> (Alex Riesen's message of
-	"Wed, 28 Mar 2007 21:21:11 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752904AbXC1VDH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Wed, 28 Mar 2007 17:03:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752943AbXC1VDG
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 17:03:06 -0400
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:60157 "EHLO
+	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752904AbXC1VDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2007 17:03:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 18493738CB60;
+	Wed, 28 Mar 2007 23:03:03 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
+Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
+	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Fo91myoTLp6j; Wed, 28 Mar 2007 23:03:02 +0200 (CEST)
+Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
+	id F02ED738CB43; Wed, 28 Mar 2007 23:03:01 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200703280158.54929.jnareb@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43386>
 
-There are two breakages in the %P/%p interpolation.  It appended
-an excess SP at the end of the list, and it gave uninitialized
-contents of a buffer on the stack for root commits.
+On Wed, Mar 28, 2007 at 12:58:54AM +0100, Jakub Narebski wrote:
+> On Thu, Mar 27, 2007, Martin Koegler wrote:
+> > On Tue, Mar 27, 2007 at 01:56:24AM +0100, Jakub Narebski wrote:
+> > If you think, its safe, I can simplify git_blobdiff. I propose
+> > doing the following way (pseudo-code):
+>=20
+> > $file_parent ||=3D $file_name;
+> [...]
+> > $hash=3Dgit_get_hash_by_path($hash_base,$file_name);
+> [...]
+> > $hash_parent=3Dgit_get_hash_by_path($hash_parent_base,$file_parent)=
+;
+> [...]
+> >  open $fd, "-|", git_cmd(), "diff", '-p', @diff_opts,
+> >     $hash_parent, $hash
+> >     or die_error(undef, "Open git-diff failed");
+> [...]
+> > Else I will keep a reworked version of my patch.
+>=20
+> The trouble with this is that we may lose mode change (symlink to
+> ordinary file etc.) because we hand-generate %diffinfo.
 
-This fixes it, while updating the t6006 test which expected the
-wrong output.
+If we need the correct mode in %diffinfo, this is not difficult:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- commit.c                   |   12 ++++++++----
- t/t6006-rev-list-format.sh |    8 ++++----
- 2 files changed, 12 insertions(+), 8 deletions(-)
- mode change 100644 => 100755 t/t6006-rev-list-format.sh
+$from_mode=3D"blob";
+if (defined $hash_base && defined $file_name)
+($to_mode,$hash)=3Dgit_get_hash_by_path($hash_base,$file_name);
 
-diff --git a/commit.c b/commit.c
-index a92958c..33b63c4 100644
---- a/commit.c
-+++ b/commit.c
-@@ -849,19 +849,23 @@ static long format_commit_message(const struct commit *commit,
- 	interp_set_entry(table, ITREE_ABBREV,
- 			find_unique_abbrev(commit->tree->object.sha1,
- 				DEFAULT_ABBREV));
-+
-+	parents[1] = 0;
- 	for (i = 0, p = commit->parents;
- 			p && i < sizeof(parents) - 1;
- 			p = p->next)
--		i += snprintf(parents + i, sizeof(parents) - i - 1, "%s ",
-+		i += snprintf(parents + i, sizeof(parents) - i - 1, " %s",
- 			sha1_to_hex(p->item->object.sha1));
--	interp_set_entry(table, IPARENTS, parents);
-+	interp_set_entry(table, IPARENTS, parents + 1);
-+
-+	parents[1] = 0;
- 	for (i = 0, p = commit->parents;
- 			p && i < sizeof(parents) - 1;
- 			p = p->next)
--		i += snprintf(parents + i, sizeof(parents) - i - 1, "%s ",
-+		i += snprintf(parents + i, sizeof(parents) - i - 1, " %s",
- 			find_unique_abbrev(p->item->object.sha1,
- 				DEFAULT_ABBREV));
--	interp_set_entry(table, IPARENTS_ABBREV, parents);
-+	interp_set_entry(table, IPARENTS_ABBREV, parents + 1);
- 
- 	for (i = 0, state = HEADER; msg[i] && state < BODY; i++) {
- 		int eol;
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-old mode 100644
-new mode 100755
-index cf096c3..ce9c7dc
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -39,11 +39,11 @@ EOF
- 
- test_format parents %P%n%p <<'EOF'
- commit 131a310eb913d107dd3c09a65d1651175898735d
--86c75cfd708a0e5868dc876ed5b8bb66c80b4873 
--86c75cf 
-+86c75cfd708a0e5868dc876ed5b8bb66c80b4873
-+86c75cf
- commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
--86c75cf 
--86c75cf 
-+
-+
- EOF
- 
- # we don't test relative here
--- 
-1.5.1.rc2.632.g054ea8
+$to_mode=3D"blob";
+if (defined $hash_parent_base && defined $file_parent)
+($from_mode,$hash_parent)=3Dgit_get_hash_by_path_mode($hash_parent_base=
+,$file_parent);
+
+Then we set to_mode and from_mode in %diffinfo to $to_mode and $from_mo=
+de.
+
+git_get_hash_by_path_mode is like git_get_hash_by_path, only that it
+returns an array with the mode and the hash.
+
+Blobdiff (html output) in its current version can not handle symlinks:
+> diff --git a/x b/x
+> deleted file mode 100644 (file)
+> index 190a180..873fb8d
+> --- a/x
+> +++ /dev/null
+> @@ -1 +0,0 @@
+> -123
+> diff --git a/ b/
+> new file mode 120000 (symlink)
+> index 190a180..873fb8d
+> --- /dev/null
+> +++ b/
+> @@ -0,0 +1 @@
+> +file3
+> \ No newline at end of file
+
+This was generated by "diff to current" in the history view of a file,
+which was changed between symlink and normal file.
+=20
+Additionally, to_mode and from_mode of %diffinfo seem to be ignored by
+git_patchset_body.
+
+> >> By the way, if you call git_get_hash_by_path (which is expensive, =
+as it
+> >> calls git command), you can use resulting hash in place of
+> >> hash_base:filename as an argument to git-diff.
+> > =20
+> > I must check, if we need to resolve $hash ($hash_parent) by
+> > git_get_hash_by_path, if we construct it out of $hash_base and
+> > $file_name. Maybe we can avoid this call.
+>=20
+> We can use "$hash_base:$file_name" as second parameter to git-diff et=
+c.,
+> but I don't think we want to create links with "$hash_base:$file_name=
+"
+> instead of sha-1 id of a blob as 'h' parameter.
+>=20
+> It can be first implementation, thought, and later we can try to use
+> "index <hash>..<hash> <mode>" lines from extended header to get $hash
+> and $hash_parent (with exception of pure rename, but then we need onl=
+y
+> one invocation of git_get_hash_by_path subroutine).
+
+The <mode> must be discarded, as it is wrong for anything which as not
+a mode of 100644, as we specify a two blob as parameter to git-diff.
+
+> But I think it is better left for later patch.
+
+As git_patchset_body requires an information about the compared file
+as parameter, a new formating function will be needed. I'm not sure,
+if the overhead of git_get_hash_by_path is this worth. Additionally,
+if we have the hash passed by parameter in most cases, there is no
+need to call it in these cases.
+
+mfg Martin K=F6gler
+PS:
+I created a blob with a "strange" filename: &()=3D!"=A7$%[<>]*#+_;.
+In the result of the blob view, the " is not escaped in the filename in=
+ the header
+and a strage content type is returned:
+
+$ telnet localhost 80
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+GET /gitweb/gitweb.cgi?p=3Dt/.git;a=3Dblob;f=3D%26()%3D%21%22%A7%24%25%=
+5B%3C%3E%5D%2A%23%2B_%3B.;hb=3D7bfed2588bee66b33db544830606fa6606478fd9=
+ HTTP/1.0
+
+HTTP/1.1 200 OK
+Date: Wed, 28 Mar 2007 19:55:36 GMT
+Server: Apache
+Content-disposition: inline; filename=3D"&()=3D!"=C2=A7$%[<>]*#+_;."
+Expires: Thu, 29 Mar 2007 19:55:39 GMT
+Connection: close
+Content-Type: application/vnd.mif
+
+xx
