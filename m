@@ -1,91 +1,141 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Sanity checking request
-Date: Wed, 28 Mar 2007 12:38:02 -0700
-Message-ID: <7vwt11f9b9.fsf@assigned-by-dhcp.cox.net>
-References: <7vwt11itbz.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0703280759230.6730@woody.linux-foundation.org>
+Subject: Re: [PATCH] Add --with-tcltk and --without-tcltk to configure.
+Date: Wed, 28 Mar 2007 12:48:45 -0700
+Message-ID: <7vps6tf8te.fsf@assigned-by-dhcp.cox.net>
+References: <20070326073250.GC44578@codelabs.ru>
+	<200703261030.49382.jnareb@gmail.com>
+	<7vmz20xuxq.fsf@assigned-by-dhcp.cox.net>
+	<20070326100344.GV14837@codelabs.ru>
+	<7vejnbtjdq.fsf@assigned-by-dhcp.cox.net>
+	<20070327065940.GC51155@codelabs.ru>
+	<20070327102437.GM14837@codelabs.ru>
+	<7vtzw7nej6.fsf@assigned-by-dhcp.cox.net>
+	<20070327110714.GA14837@codelabs.ru>
+	<7vps6um8wv.fsf@assigned-by-dhcp.cox.net>
+	<20070328091209.GQ14837@codelabs.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Mar 28 21:38:36 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Wed Mar 28 21:48:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWdyc-00060T-UQ
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 21:38:35 +0200
+	id 1HWe8a-0002f1-J8
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 21:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933273AbXC1TiG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Mar 2007 15:38:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933275AbXC1TiG
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 15:38:06 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60025 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933273AbXC1TiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2007 15:38:05 -0400
+	id S965717AbXC1Tss (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Mar 2007 15:48:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965713AbXC1Tss
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 15:48:48 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:44959 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965717AbXC1Tsr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2007 15:48:47 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070328193804.ZPBG25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 28 Mar 2007 15:38:04 -0400
+          id <20070328194845.BEOF28126.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 28 Mar 2007 15:48:45 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id gKe21W00R1kojtg0000000; Wed, 28 Mar 2007 15:38:02 -0400
-In-Reply-To: <Pine.LNX.4.64.0703280759230.6730@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 28 Mar 2007 08:13:38 -0700 (PDT)")
+	id gKol1W00i1kojtg0000000; Wed, 28 Mar 2007 15:48:46 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43382>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Eygene Ryabinkin <rea-git@codelabs.ru> writes:
 
-> That said, I actually think the newer "git read-tree -m" behaviour makes 
-> sense. So I think we're much better off adding "-i" to git-commit.sh, than 
-> to force "-i" on when doing the one-way merge. The latter change just 
-> effectively disables a possible check entirely, the former at least allows 
-> other users to actually use that form if they ever want to.
+> --with-tcltk enables the search of the Tcl/Tk interpreter. If no
+> interpreter is found then Tcl/Tk dependend parts are disabled.
+>
+> --without-tcltk unconditionally disables Tcl/Tk dependent parts.
+>
+> The original behaviour is not changed: bare './configure' just
+> installs the Tcl/Tk part doing no checks for the interpreter.
+>
+> Makefile knob named NO_TCLTK was introduced. It prevents the build
+> and installation of the Tcl/Tk dependent parts.
+>
+> Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
+> ---
 
-Thanks, I agree.
+Thanks.
 
-> (Looking at git-commit.sh, the thing I *really* think we should do is to 
-> have a "GIT_INDEX_FILE_OUTPUT" environment variable that does locking on 
-> the input file, but writes the result to another file: rigth now 
-> git-commit.sh (a) wastes time copying the old index file by hand and (b) 
-> as a result doesn't even honor any locking on it. I think whether it uses 
-> "-i" or not is actually less important - if you commit only a subset of 
-> files, maybe the extra checks in git-read-tree are actually ok?)
+Is this supposed to be the first in the series?  I thought you
+said you were going to do NO_TCLTK without anything else at all
+first, and then TCLTK_PATH patch.  I am a bit lost here.
 
-Good point on locking.
+> +# Define NO_TCLTK if you do not want Tcl/Tk GUI.
+> +#
+> +# The TCLTK_PATH variable governs the location of the Tck/Tk interpreter.
+> +# If not set it defaults to the bare 'wish'. If it is set to the empty
+> +# string then NO_TCLTK will be forced (this is used by configure script).
+> +#
 
-The reason missing -i matters because it defeats the previous
-158d0577:
+Grumble.  If you are doing this, then there is not much point to
+have two separate patches, is it?
 
-commit 158d0577891441c01457bbcaf45585d3b50f5d75
-Author: Junio C Hamano <junkio@cox.net>
-Date:   Sat Dec 9 22:32:43 2006 -0800
+> @@ -684,7 +696,9 @@ ifneq (,$X)
+>  endif
+>  
+>  all::
+> +ifndef NO_TCLTK
+>  	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) all
+> +endif
+>  	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' all
+>  	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1)
 
-    git-commit: allow --only to lose what was staged earlier.
-    
-    The command used to have a safety valve to prevent this sequence:
-    
-    	edit foo
-    	git update-index foo
-    	edit foo
-    	git diff foo
-    	git commit --only foo
-    
-    The reason for this was because an inexperienced user might
-    mistakenly think what is shown with the last-minute diff
-    contains all the change that is being committed (instead, what
-    the user asked to check was an incremental diff since what has
-    been staged so far).  However, this turns out to only annoy
-    people who know what they are doing.  Inexperienced people
-    would not be using the first "update-index" anyway, in which
-    case they would see the full changes in the "git diff".
-    
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
+Although you were not supposed to be talking about paths, since
+you've already introduced TCLTK_PATH, it should be passed down
+to git-gui here, I think.
 
-and that is why I noticed this issue.
+> @@ -955,11 +974,17 @@ dist: git.spec git-archive
+>  	@mkdir -p $(GIT_TARNAME)
+>  	@cp git.spec $(GIT_TARNAME)
+>  	@echo $(GIT_VERSION) > $(GIT_TARNAME)/version
+> +ifndef NO_TCLTK
+>  	@$(MAKE) -C git-gui TARDIR=../$(GIT_TARNAME)/git-gui dist-version
+>  	$(TAR) rf $(GIT_TARNAME).tar \
+>  		$(GIT_TARNAME)/git.spec \
+>  		$(GIT_TARNAME)/version \
+>  		$(GIT_TARNAME)/git-gui/version
+> +else
+> +	$(TAR) rf $(GIT_TARNAME).tar \
+> +		$(GIT_TARNAME)/git.spec \
+> +		$(GIT_TARNAME)/version
+> +endif
+>  	@rm -rf $(GIT_TARNAME)
+>  	gzip -f -9 $(GIT_TARNAME).tar
+>  
+
+Why should a source distribution exclude git-gui/ directory?  I
+think it is sensible to ship a source that contains all.  You
+are shipping gitk even without NO_TCLTK anyway, too.
+
+And from the part 2:
+
+> @@ -705,6 +709,12 @@ endif
+>  strip: $(PROGRAMS) git$X
+>  	$(STRIP) $(STRIP_OPTS) $(PROGRAMS) git$X
+>  
+> +gitk-wish: gitk GIT-GUI-VARS
+> +	$(QUIET_GEN)rm -f $@ $@+ && \
+> +	sed -e'1,3s|^exec .* "$$0"|exec $(subst |,'\|',$(TCLTK_PATH_SQ)) "$$0"|' < gitk > $@+ && \
+> +	chmod +x $@+ && \
+> +	mv -f $@+ $@
+> +
+
+This subst() is a nice attention to the detail.  I like it,
+although in practice I do not think anybody is insane enough to
+have a pipe character in the directory name that leads to wish.
+
+I separated your two patches into three with minor modifications
+and parked them in 'pu'.  We need to arrange with Shawn when to
+apply the git-gui/ parts of the patch to his tree, but we are
+not in a rush.
