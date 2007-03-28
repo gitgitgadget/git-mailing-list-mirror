@@ -1,79 +1,62 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Sanity checking request
-Date: Wed, 28 Mar 2007 08:13:38 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703280759230.6730@woody.linux-foundation.org>
-References: <7vwt11itbz.fsf@assigned-by-dhcp.cox.net>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: git-svn, remote tracking branch question
+Date: Wed, 28 Mar 2007 08:24:17 -0700
+Message-ID: <m23b3pqtlq.fsf@ziti.fhcrc.org>
+References: <m2ps6usa9o.fsf@ziti.fhcrc.org> <20070327220015.GA16344@untitled>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Mar 28 17:14:04 2007
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Mar 28 17:24:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWZqZ-0000aV-U0
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 17:14:00 +0200
+	id 1HWa0f-0005YQ-8y
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 17:24:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932224AbXC1PNn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Mar 2007 11:13:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932226AbXC1PNn
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 11:13:43 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:47370 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932224AbXC1PNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2007 11:13:42 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2SFDdU2011978
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 28 Mar 2007 08:13:39 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2SFDcUM013471;
-	Wed, 28 Mar 2007 08:13:38 -0700
-In-Reply-To: <7vwt11itbz.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.467 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932247AbXC1PYW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 28 Mar 2007 11:24:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932279AbXC1PYV
+	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 11:24:21 -0400
+Received: from wr-out-0506.google.com ([64.233.184.235]:40967 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932247AbXC1PYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Mar 2007 11:24:21 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so2440526wra
+        for <git@vger.kernel.org>; Wed, 28 Mar 2007 08:24:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=rc0Tw+lUJ3wSlFXl/YwiSDfxlw2iRjnVEOeRb6ud1BYhsauiQBnUghvvo1RATzz2PHWEtLOD5yF1DV3ZOcpGb5xmvZYz3idSKKTkFQnczL90o4BEGTBsCp1nuzK/QaSHqoNf8pCwUhxgu1z58Q1NZfeYvx4klzLLfZhkpGfsD+8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:cc:subject:references:from:date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        b=Fx2+KVYATToifa+uqr06LnGuHjvPRwvyizyQuYywU2KFlzW59g8aA4TkomV3ylhp1HLop+Hj/BPqMixNuLGsE2j0sGAdEoZ3WR2MsYLVu3yLK3Bc7QveDPfgbqOxs66qYucUpdb6OM6B5DboO5i2wFKMAC9rZFg0qKDtCXVD4CQ=
+Received: by 10.114.56.1 with SMTP id e1mr3777764waa.1175095459377;
+        Wed, 28 Mar 2007 08:24:19 -0700 (PDT)
+Received: from ziti.fhcrc.org ( [67.171.24.140])
+        by mx.google.com with ESMTP id m28sm4765605poh.2007.03.28.08.24.18;
+        Wed, 28 Mar 2007 08:24:18 -0700 (PDT)
+In-Reply-To: <20070327220015.GA16344@untitled> (Eric Wong's message of "Tue, 27 Mar 2007 15:00:15 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43376>
 
-
-
-On Wed, 28 Mar 2007, Junio C Hamano wrote:
+Eric Wong <normalperson@yhbt.net> writes:
+> 'git svn rebase' should be capable auto-discovering the remote ref that
+> you last branched from.  I'm not sure if the '2.5' that's common in the
+> remote ref and your local branch would cause ambiguity, however...
 >
-> We've been saying that:
-> 
-> 	git read-tree -m $tree
-> 
-> is a quicker way to do "git read-tree $tree" (i.e. populate the
-> index from a given tree), and except for the reuse of cached
-> stat info to gain performance, there is no difference.
+> I'll look into this more when/if I have time tonight.
 
-That was never technically correct. You need to use the "--reset" flag 
-instead of "-m" if you want to just do a "git-read-tree" that also 
-populates the index stat information.
+ok.  In the meantime, I renamed my branch to avoid any potential name
+conflict and it seems to be working automagically as you described.
+That's really useful, thanks.
 
-Without "--reset", any old unmerged entries will be error cases.
++ seth
 
-Of course, when it comes to "git commit", you do *not* want to use 
-"--reset", as erroring out when hitting an unmerged index entry is likely 
-the right thing, even for the "git commit <paths>" case.
-
-That said, I actually think the newer "git read-tree -m" behaviour makes 
-sense. So I think we're much better off adding "-i" to git-commit.sh, than 
-to force "-i" on when doing the one-way merge. The latter change just 
-effectively disables a possible check entirely, the former at least allows 
-other users to actually use that form if they ever want to.
-
-(Looking at git-commit.sh, the thing I *really* think we should do is to 
-have a "GIT_INDEX_FILE_OUTPUT" environment variable that does locking on 
-the input file, but writes the result to another file: rigth now 
-git-commit.sh (a) wastes time copying the old index file by hand and (b) 
-as a result doesn't even honor any locking on it. I think whether it uses 
-"-i" or not is actually less important - if you commit only a subset of 
-files, maybe the extra checks in git-read-tree are actually ok?)
-
-		Linus
+-- 
+Seth Falcon
