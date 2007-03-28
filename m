@@ -1,79 +1,67 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: Listing of branch creation time?
-Date: Tue, 27 Mar 2007 18:06:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703271759510.6730@woody.linux-foundation.org>
+Date: Tue, 27 Mar 2007 21:25:48 -0400 (EDT)
+Message-ID: <alpine.LFD.0.83.0703272114300.3041@xanadu.home>
 References: <17929.37382.984339.742025@lisa.zopyra.com>
  <20070327233552.GA7186@coredump.intra.peff.net>
+ <17929.45060.6228.797279@lisa.zopyra.com>
+ <20070328000149.GA12808@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Mar 28 03:06:27 2007
+X-From: git-owner@vger.kernel.org Wed Mar 28 03:26:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWMcM-0003HC-7N
-	for gcvg-git@gmane.org; Wed, 28 Mar 2007 03:06:26 +0200
+	id 1HWMvC-0003xs-4B
+	for gcvg-git@gmane.org; Wed, 28 Mar 2007 03:25:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965525AbXC1BGS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 27 Mar 2007 21:06:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965539AbXC1BGS
-	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 21:06:18 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:49348 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965525AbXC1BGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Mar 2007 21:06:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2S16CU2019996
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 27 Mar 2007 18:06:12 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2S16BYM032135;
-	Tue, 27 Mar 2007 18:06:12 -0700
-In-Reply-To: <20070327233552.GA7186@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-0.468 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965583AbXC1BZv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 27 Mar 2007 21:25:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965584AbXC1BZv
+	(ORCPT <rfc822;git-outgoing>); Tue, 27 Mar 2007 21:25:51 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:41686 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965583AbXC1BZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Mar 2007 21:25:50 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JFL00ES1AN1MRB0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 27 Mar 2007 21:25:49 -0400 (EDT)
+In-reply-to: <20070328000149.GA12808@coredump.intra.peff.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43338>
-
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43339>
 
 On Tue, 27 Mar 2007, Jeff King wrote:
->
-> You have to look at the latest merge-base, but that tells you the last 
-> time you merged with master, not necessarily the first time.
 
-Well, if you know which branch it is a branch off of, don't use 
-merge-base, just do
+> On Tue, Mar 27, 2007 at 06:00:04PM -0600, Bill Lear wrote:
+> 
+> > Ok, thank you.  I will try this out and keep this in mind as I test
+> > out the patch Johannes posted.
+> 
+> This is, btw, completely different than what Johannes posted. His patch
+> shows you the date of the _tip_ of each of the branches. My script shows
+> the _oldest_ reflog for the branch. So it depends on whether you want
+> them in order of "last worked on" or "created" (you said "created", but
+> I wonder if "last worked on" is actually more useful).
 
-	git log --reverse -1 origin..branch
+I think "last worked on" is the only thing that makes sense.  Anything 
+else is completely ambigous, especially in the presence of forks and 
+merges.  And eventually all reflogs will have about the same age when 
+they extend past the expiration period, at which point the "oldest 
+reflog" is not meaningful anymore.
 
-which should pick up the first commit that is on that branch but haven't 
-been merged back to the original branch.
+However Johannes' patch uses the author date for sorting.  I think 
+branches 
+really should be sorted by committer's date though.  The committer's 
+date is a much better indicator of when a given branch has been updated 
+while the author's date might be any time in the past.
 
-The merge-base is the right thing to do for *merging*, but if you keep 
-merging into the branch you are developing on (to keep up-to-date), the 
-above "what is on the branch but not in the origin" is definitely the 
-right thing to do.
 
-Of course, people already pointed out "gitk". And I agree. Quite often, 
-it's worth the full graphical output to do
-
-	gitk origin..branch
-
-to see the big picture. But if you want to work on the command line, the 
-above "git log" command line isn't really that bad to type..
-
-(Personally, if I didn't want the graphical version, I'd likely just do
-
-	git log origin..branch
-
-and then do '>' in the pager to get to the bottom. That way I can then 
-scroll up and down if I decide I want to get a bigger picture)
-
-		Linus
+Nicolas
