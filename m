@@ -1,254 +1,82 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: SEGV in git-merge recursive:
-Date: Thu, 29 Mar 2007 17:04:31 +0200
-Message-ID: <81b0412b0703290804n13af6f40we79f7251562c540@mail.gmail.com>
-References: <20070329075010.GA3493@hermes>
-	 <81b0412b0703290429k63642a34u6bea1e08803ffba7@mail.gmail.com>
-	 <20070329125803.GA16739@hermes>
-	 <81b0412b0703290634j6e62ba89tce3c8c963be3fb92@mail.gmail.com>
-	 <20070329141230.GB16739@hermes>
-	 <81b0412b0703290744h34b6ef01s4e6f90b1d7ed231b@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_68931_21503970.1175180671919"
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Tom Prince" <tom.prince@ualberta.net>
-X-From: git-owner@vger.kernel.org Thu Mar 29 17:04:43 2007
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: [PATCH] mergetool: Fix abort command when resolving symlinks and deleted files
+Date: Thu, 29 Mar 2007 11:44:22 -0400
+Message-ID: <11751830653835-git-send-email-tytso@mit.edu>
+References: <11751830653554-git-send-email-tytso@mit.edu> <11751830653871-git-send-email-tytso@mit.edu> <11751830651770-git-send-email-tytso@mit.edu> <11751830653157-git-send-email-tytso@mit.edu> <1175183065710-git-send-email-tytso@mit.edu> <11751830651361-git-send-email-tytso@mit.edu> <11751830654112-git-send-email-tytso@mit.edu> <11751830652803-git-send-email-tytso@mit.edu>
+Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 29 17:44:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWwB6-0002P2-5r
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 17:04:40 +0200
+	id 1HWwnj-0003tu-2z
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 17:44:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769AbXC2PEe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 11:04:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753771AbXC2PEe
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 11:04:34 -0400
-Received: from wr-out-0506.google.com ([64.233.184.237]:34086 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753770AbXC2PEd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 11:04:33 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so256427wra
-        for <git@vger.kernel.org>; Thu, 29 Mar 2007 08:04:32 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=XaAeWBQG6QbCgUZbrwVCJEGG8RT1uKj+BjHZNNetEyc5IgS0GqyT3Qz1J8OAux/ntfh4KGULWg+o8YgMvZj2ZR/w0NGJY6q//Li50bwX5YV7oozT/K1msN42LX3lxFNx5PVx5zMx9y8J81GSF4HnLNmh2WR0Mr54n/2lwy3obp4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=hxX2N381hpLOvaWjFCrfadahg7CXP/4xmZEs+s99+sRVljeVNm40VFxg54VzNeMXqusA7gDgVvrz1YuQVd/vfbbySeySjFdt10Zh0ELR3oRnxYVyZ7THpyr7aWpltjvqIAAghZE3WkS0UZQgFU7y0NAYrchA1XQ0h+9WLb8pn/M=
-Received: by 10.100.140.6 with SMTP id n6mr475507and.1175180672114;
-        Thu, 29 Mar 2007 08:04:32 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Thu, 29 Mar 2007 08:04:31 -0700 (PDT)
-In-Reply-To: <81b0412b0703290744h34b6ef01s4e6f90b1d7ed231b@mail.gmail.com>
+	id S932501AbXC2Pob (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 11:44:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932189AbXC2Poa
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 11:44:30 -0400
+Received: from thunk.org ([69.25.196.29]:36578 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932267AbXC2Po3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 11:44:29 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HWwtd-0007J5-Q6; Thu, 29 Mar 2007 11:50:42 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HWwnZ-0000xt-IZ; Thu, 29 Mar 2007 11:44:25 -0400
+X-Mailer: git-send-email 1.5.1.rc2.1.g8afe-dirty
+In-Reply-To: <11751830652803-git-send-email-tytso@mit.edu>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43441>
 
-------=_Part_68931_21503970.1175180671919
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
+---
+ git-mergetool.sh |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-On 3/29/07, Alex Riesen <raa.lkml@gmail.com> wrote:
-> > Here is the output from that more verbose version:
-> >
-> > Merging HEAD with 0134d595adb023841750f1ce84ecb94dd4e4c9cb
-> > Merging:
-> > 922ee6e3f1222c8e171e6ea0b6ac0f28fb1f0683 Mail.
-> > 0134d595adb023841750f1ce84ecb94dd4e4c9cb Mail.
-> > found 2 common ancestor(s):
-> > 29e722de58df3cd82600fa5215ec26f80a8c0f9a Mail.
-> > 2c3490d82610d12d8dfde36b29c4ec5a50955b89 Mail.
-> >   Merging:
-> >   29e722de58df3cd82600fa5215ec26f80a8c0f9a Mail.
-> >   2c3490d82610d12d8dfde36b29c4ec5a50955b89 Mail.
-> >   found 1 common ancestor(s):
-> >   e2123cfd9a53e441c7c715627953606c6093e0e4 Merge commit 'origin'
-> >   CONFLICT (rename/rename): Rename .drafts/new/1175001142.P509Q1.hermes->.mom/cur/1175098106.P18146Q0M209985.socrates:2,S in branch Temporary merge branch 1 rename .drafts/new/1175001142.P509Q1.hermes->.drafts/cur/1175001142.P509Q1.hermes:2, in Temporary merge branch 2
->
-> Rename conflict... Will see, if I can reproduce it without your repo.
-
-I failed to reproduce it. My attempt attached (that's for your
-reference pleasure, Dscho).
-The output was:
-
-GIT_MERGE_VERBOSITY=99 git merge B
-Merging HEAD with B
-Merging:
-18d0538 rename
-d4badb1 rename
-found 2 common ancestor(s):
-962b369 change
-9cc8ebd change
-  Merging:
-  962b369 change
-  9cc8ebd change
-  found 1 common ancestor(s):
-  a46f64f init
-CONFLICT (rename/rename): Rename 1->a in branch HEAD rename 1->b in B
-Automatic merge failed; fix conflicts and then commit the result.
-
-Tom, either the stack trace of -O0 -ggdb or your repo is badly needed.
-The stack preferred, as I have that feeling it'll just work everywhere
-else but your system (can you try it somewhere else, BTW?).
-
-------=_Part_68931_21503970.1175180671919
-Content-Type: application/x-bzip2; name=ren-conflict.tar.bz2
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_ezvc8xb9
-Content-Disposition: attachment; filename="ren-conflict.tar.bz2"
-
-QlpoOTFBWSZTWaPR6iAAH2p/////////////////////////////////////////////4B43Pr6G
-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
-
-------=_Part_68931_21503970.1175180671919--
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index 5de2433..f73072a 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -73,13 +73,13 @@ resolve_symlink_merge () {
+ 		cleanup_temp_files --save-backup
+ 		return
+ 		;;
+-	   [rR]*)
++	    [rR]*)
+ 		git-checkout-index -f --stage=3 -- "$path"
+ 		git-add -- "$path"
+ 		cleanup_temp_files --save-backup
+ 		return
+ 		;;
+-	    [qQ]*)
++	    [aA]*)
+ 		exit 1
+ 		;;
+ 	    esac
+@@ -96,12 +96,12 @@ resolve_deleted_merge () {
+ 		cleanup_temp_files --save-backup
+ 		return
+ 		;;
+-	   [dD]*)
++	    [dD]*)
+ 		git-rm -- "$path"
+ 		cleanup_temp_files
+ 		return
+ 		;;
+-	    [qQ]*)
++	    [aA]*)
+ 		exit 1
+ 		;;
+ 	    esac
+-- 
+1.5.1.rc2.1.g8afe-dirty
