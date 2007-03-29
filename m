@@ -1,55 +1,51 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [PATCH] mergetool: Replace use of "echo -n" with printf(3) to be more portable
-Date: Thu, 29 Mar 2007 17:57:41 +0200
-Message-ID: <20070329155741.GA18413@moooo.ath.cx>
-References: <11751830653554-git-send-email-tytso@mit.edu> <11751830651770-git-send-email-tytso@mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Xavier Maillard <zedek@gnu.org>
+Subject: Re: [PATCH] checkout -d: explicitly detach HEAD even when switching to the tip of a branch
+Date: Thu, 29 Mar 2007 12:44:42 +0200
+Organization: GNU's Not UNIX!
+Message-ID: <200703291044.l2TAig5M021533@localhost.localdomain>
+References: <7vr6r879zp.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Xavier Maillard <zedek@gnu.org>
 Cc: git@vger.kernel.org
-To: Theodore Ts'o <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 29 17:57:59 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 29 18:22:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWx0Z-0001lr-FY
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 17:57:51 +0200
+	id 1HWxOA-0003kA-VJ
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 18:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030293AbXC2P5q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 11:57:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030295AbXC2P5p
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 11:57:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35014 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1030293AbXC2P5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 11:57:45 -0400
-Received: (qmail invoked by alias); 29 Mar 2007 15:57:43 -0000
-Received: from pd9ebbcca.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.188.202]
-  by mail.gmx.net (mp023) with SMTP; 29 Mar 2007 17:57:43 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX1/34CNfgk/3vPklxv8W5qHjxst94ZwmxCz9j7sR9I
-	B6I0kDy3PDugiE
-Content-Disposition: inline
-In-Reply-To: <11751830651770-git-send-email-tytso@mit.edu>
-X-Y-GMX-Trusted: 0
+	id S932411AbXC2QWM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 12:22:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932991AbXC2QWM
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 12:22:12 -0400
+Received: from smtp5-g19.free.fr ([212.27.42.35]:44602 "EHLO smtp5-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932411AbXC2QWL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 12:22:11 -0400
+Received: from zogzog.home (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
+	by smtp5-g19.free.fr (Postfix) with ESMTP id 62BCF38463;
+	Thu, 29 Mar 2007 18:22:09 +0200 (CEST)
+Received: from zogzog.home (IDENT:25@localhost [127.0.0.1])
+	by zogzog.home (8.13.8/8.13.8) with ESMTP id l2TFJEmG001355;
+	Thu, 29 Mar 2007 17:19:14 +0200
+Received: (from zedek@localhost)
+	by localhost.localdomain (8.13.8/8.13.8/Submit) id l2TAig5M021533;
+	Thu, 29 Mar 2007 12:44:42 +0200
+X-Authentication-Warning: localhost.localdomain: zedek set sender to zedek@gnu.org using -f
+In-reply-to: <7vr6r879zp.fsf@assigned-by-dhcp.cox.net> (junkio@cox.net)
+User-Agent: Rmail in GNU Emacs 23.0.51.1 on GNU/Linux
+Jabber-ID: zedek@im.lolica.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43454>
 
-The subject should probably refer to printf(1) instead of printf(3).
+   This allows you to detach your HEAD and place it at such a
 
-Theodore Ts'o <tytso@mit.edu> wrote:
-> -	echo -n "'$path' was deleted"
-> +	printf  "'$path' was deleted"
-Here is one space too much after printf.
+       $ git checkout -d master
 
-> -	echo -n "'$path' is a symlink containing '"
-> +	printf "'$path' is a symlink containing '"
-You should use printf "'%s' [..]" "$path" as you do in some other
-places (in case $path contains conversion specifiers).
+Hum, excuse my ignorance, but can you explain what exactly could
+be a use case of this ?
 
-> -    echo -n "Hit return to start merge resolution tool ($merge_tool): "
-> +    printf "Hit return to start merge resolution tool ($merge_tool): "
-Here it is much more unlikely that $merge_tool contains a conversion
-specifier but anyway I'd prefer to use %s.
+Xavier
