@@ -1,99 +1,227 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add --with-tcltk and --without-tcltk to configure.
-Date: Thu, 29 Mar 2007 01:00:35 -0700
-Message-ID: <7vwt107a3g.fsf@assigned-by-dhcp.cox.net>
-References: <7vmz20xuxq.fsf@assigned-by-dhcp.cox.net>
-	<20070326100344.GV14837@codelabs.ru>
-	<7vejnbtjdq.fsf@assigned-by-dhcp.cox.net>
-	<20070327065940.GC51155@codelabs.ru>
-	<20070327102437.GM14837@codelabs.ru>
-	<7vtzw7nej6.fsf@assigned-by-dhcp.cox.net>
-	<20070327110714.GA14837@codelabs.ru>
-	<7vps6um8wv.fsf@assigned-by-dhcp.cox.net>
-	<20070328091209.GQ14837@codelabs.ru>
-	<7vps6tf8te.fsf@assigned-by-dhcp.cox.net>
-	<20070329074424.GD59098@codelabs.ru>
+Subject: [PATCH] checkout -d: explicitly detach HEAD even when switching to the tip of a branch
+Date: Thu, 29 Mar 2007 01:02:50 -0700
+Message-ID: <7vr6r879zp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Thu Mar 29 10:00:43 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Mar 29 10:03:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWpYp-0000yc-8d
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 10:00:43 +0200
+	id 1HWpb7-0001vV-Bc
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 10:03:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753314AbXC2IAk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 04:00:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753208AbXC2IAk
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 04:00:40 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:37834 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753314AbXC2IAj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 04:00:39 -0400
+	id S933591AbXC2IDB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 04:03:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933993AbXC2IDB
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 04:03:01 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:61783 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933591AbXC2IC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 04:02:58 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao107.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070329080037.PLVH792.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 29 Mar 2007 04:00:37 -0400
+          id <20070329080250.QPWO27119.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 29 Mar 2007 04:02:50 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id gY0b1W0091kojtg0000000; Thu, 29 Mar 2007 04:00:36 -0400
-In-Reply-To: <20070329074424.GD59098@codelabs.ru> (Eygene Ryabinkin's message
-	of "Thu, 29 Mar 2007 11:44:24 +0400")
+	id gY2q1W00J1kojtg0000000; Thu, 29 Mar 2007 04:02:51 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43410>
 
-Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+You cannot currently checkout the tip of an existing branch
+without moving to the branch.
 
-> Wed, Mar 28, 2007 at 12:48:45PM -0700, Junio C Hamano wrote:
->> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
->> ...
->> > +gitk-wish: gitk GIT-GUI-VARS
->> > +	$(QUIET_GEN)rm -f $@ $@+ && \
->> > +	sed -e'1,3s|^exec .* "$$0"|exec $(subst |,'\|',$(TCLTK_PATH_SQ)) "$$0"|' < gitk > $@+ && \
->> > +	chmod +x $@+ && \
->> > +	mv -f $@+ $@
->> ...
-> Thanks! And for the sanity: I do not think that the single quote
-> in the path it sane too. But as I was teached, "if we should
-> quote something, we must quote it". ;))
+This allows you to detach your HEAD and place it at such a
+commit, with:
 
-Actually, look at the wish script you are running sed on.
+    $ git checkout -d master
 
-	exec wish "$0" -- "$@"
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ Documentation/git-checkout.txt |    6 +++-
+ git-checkout.sh                |   18 +++++++++--
+ t/t7201-co.sh                  |   63 +++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 81 insertions(+), 6 deletions(-)
 
-If you substitute "wish" with "/i use stupid/$PATH/to/wish", I
-think Tcl splits the path at SP and does not protect $var
-reference, so the careful quoting in the Makefile is still not
-good enough ;-).
-
-But come to think of it, it lets shell handle $PATH to find wish
-anyway, so *unless* we have specific version dependency to wish
-that wish binary normally found on user's $PATH is inadequate,
-we probably should not even need to be doing any of this path
-munging.  You might end up discovering the path to wish binary
-in your autoconf script, we do not have to use it.  ./configure
-can just see if there is wish, and set NO_TCLTK appropriately
-without any of the path business.
-
-What do you think?
-
-> By the way, when I was creating the git.spec from the git.spec.in,
-> I had the 'Version' field equal to the '1.5.1-rc1.GIT' and RPM
-> does not like the '-' characters inside the versions.
-
-That is semi-intended, in that you are not even supposed to be
-building with "1.5.1-rc1.GIT".  The version file in the tarball
-that git.spec file lives in should use git-describe, built from
-the source before the tarball was made, to get the version
-number, and wouldn't be "$anything.GIT", which is the last-ditch
-fallback string, which is set by GIT-VERSION-GEN for people who
-build in a wrong way.
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index f5b2d50..d00eeaa 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -8,7 +8,7 @@ git-checkout - Checkout and switch to a branch
+ SYNOPSIS
+ --------
+ [verse]
+-'git-checkout' [-q] [-f] [-b [--track | --no-track] <new_branch> [-l]] [-m] [<branch>]
++'git-checkout' [-q] [-f] [-b [--track | --no-track] <new_branch> [-l] | -d] [-m] [<branch>]
+ 'git-checkout' [<tree-ish>] <paths>...
+ 
+ DESCRIPTION
+@@ -61,6 +61,10 @@ OPTIONS
+ 	all changes to made the branch ref, enabling use of date
+ 	based sha1 expressions such as "<branchname>@{yesterday}".
+ 
++-d::
++	Explicitly ask to detach HEAD, even when named revision
++	to switch to is at the tip of a branch.
++
+ -m::
+ 	If you have local modifications to one or more files that
+ 	are different between the current branch and the branch to
+diff --git a/git-checkout.sh b/git-checkout.sh
+index a7390e8..e551443 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-USAGE='[-q] [-f] [-b <new_branch>] [-m] [<branch>] [<paths>...]'
++USAGE='[-q] [-f] [-b <new_branch> | -d] [-m] [<branch>] [<paths>...]'
+ SUBDIRECTORY_OK=Sometimes
+ . git-sh-setup
+ require_work_tree
+@@ -17,6 +17,7 @@ newbranch=
+ newbranch_log=
+ merge=
+ quiet=
++explicit_detach=
+ LF='
+ '
+ while [ "$#" != "0" ]; do
+@@ -39,6 +40,9 @@ while [ "$#" != "0" ]; do
+ 	"--track"|"--no-track")
+ 		track="$arg"
+ 		;;
++	-d)
++		explicit_detach=1
++		;;
+ 	"-f")
+ 		force=1
+ 		;;
+@@ -94,6 +98,11 @@ case "$newbranch,$track" in
+ 	die "git checkout: --track and --no-track require -b"
+ esac
+ 
++case "$newbranch$explicit_detach" in
++11)
++	die "git checkout: -d and -b are incompatible"
++esac
++
+ case "$force$merge" in
+ 11)
+ 	die "git checkout: -f and -m are incompatible"
+@@ -117,7 +126,7 @@ then
+ 		hint="
+ Did you intend to checkout '$@' which can not be resolved as commit?"
+ 	fi
+-	if test '' != "$newbranch$force$merge"
++	if test '' != "$newbranch$force$merge$explicit_detach"
+ 	then
+ 		die "git checkout: updating paths is incompatible with switching branches/forcing$hint"
+ 	fi
+@@ -170,7 +179,8 @@ describe_detached_head () {
+ 	}
+ }
+ 
+-if test -z "$branch$newbranch" && test "$new" != "$old"
++if test -z "$branch$newbranch" && test "$new" != "$old" ||
++   test -n "$explicit_detach"
+ then
+ 	detached="$new"
+ 	if test -n "$oldbranch" && test -z "$quiet"
+@@ -254,7 +264,7 @@ if [ "$?" -eq 0 ]; then
+ 		git-branch $track $newbranch_log "$newbranch" "$new_name" || exit
+ 		branch="$newbranch"
+ 	fi
+-	if test -n "$branch"
++	if test -n "$branch" && test -z "$explicit_detach"
+ 	then
+ 		GIT_DIR="$GIT_DIR" git-symbolic-ref -m "checkout: moving to $branch" HEAD "refs/heads/$branch"
+ 		if test -n "$quiet"
+diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+index 867bbd2..caa04f9 100755
+--- a/t/t7201-co.sh
++++ b/t/t7201-co.sh
+@@ -3,7 +3,20 @@
+ # Copyright (c) 2006 Junio C Hamano
+ #
+ 
+-test_description='git-checkout tests.'
++test_description='git-checkout tests.
++
++Creates master, forks renamer and side branches from it.
++Test switching across them.
++
++  ! [master] Initial A one, A two
++   * [renamer] Renamer R one->uno, M two
++    ! [side] Side M one, D two, A three
++  ---
++    + [side] Side M one, D two, A three
++   *  [renamer] Renamer R one->uno, M two
++  +*+ [master] Initial A one, A two
++
++'
+ 
+ . ./test-lib.sh
+ 
+@@ -129,4 +142,52 @@ test_expect_success 'checkout -m with merge conflict' '
+ 	! test -s current
+ '
+ 
++test_expect_success 'checkout to detach HEAD' '
++
++	git checkout -f renamer && git clean &&
++	git checkout renamer^ &&
++	H=$(git rev-parse --verify HEAD) &&
++	M=$(git show-ref -s --verify refs/heads/master) &&
++	test "z$H" = "z$M" &&
++	if git symbolic-ref HEAD >/dev/null 2>&1
++	then
++		echo "OOPS, HEAD is still symbolic???"
++		false
++	else
++		: happy
++	fi
++'
++
++test_expect_success 'checkout to detach HEAD with explicit -d' '
++
++	git checkout -f master && git clean &&
++	git checkout -d renamer^ &&
++	H=$(git rev-parse --verify HEAD) &&
++	M=$(git show-ref -s --verify refs/heads/master) &&
++	test "z$H" = "z$M" &&
++	if git symbolic-ref HEAD >/dev/null 2>&1
++	then
++		echo "OOPS, HEAD is still symbolic???"
++		false
++	else
++		: happy
++	fi
++'
++
++test_expect_success 'checkout to detach HEAD with explicit -d' '
++
++	git checkout -f master && git clean &&
++	git checkout -d &&
++	H=$(git rev-parse --verify HEAD) &&
++	M=$(git show-ref -s --verify refs/heads/master) &&
++	test "z$H" = "z$M" &&
++	if git symbolic-ref HEAD >/dev/null 2>&1
++	then
++		echo "OOPS, HEAD is still symbolic???"
++		false
++	else
++		: happy
++	fi
++'
++
+ test_done
+-- 
+1.5.1.rc3.1.ga429d
