@@ -1,56 +1,55 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-quiltimport /bin/sh-ism fix
-Date: Thu, 29 Mar 2007 16:06:03 -0700
-Message-ID: <7vr6r71wh0.fsf@assigned-by-dhcp.cox.net>
-References: <20070329213820.GY24561@craic.sysops.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] An attempt to resolve a rename/rename conflict in recursive merge
+Date: Fri, 30 Mar 2007 01:13:08 +0200
+Message-ID: <20070329231308.GF2809@steel.home>
+References: <20070329075010.GA3493@hermes> <81b0412b0703290429k63642a34u6bea1e08803ffba7@mail.gmail.com> <20070329125803.GA16739@hermes> <81b0412b0703290634j6e62ba89tce3c8c963be3fb92@mail.gmail.com> <20070329141230.GB16739@hermes> <81b0412b0703290744h34b6ef01s4e6f90b1d7ed231b@mail.gmail.com> <81b0412b0703290804n13af6f40we79f7251562c540@mail.gmail.com> <20070329183237.GB2809@steel.home> <20070329185501.GC2809@steel.home> <20070329230156.GE2809@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Francis Daly <francis@daoine.org>
-X-From: git-owner@vger.kernel.org Fri Mar 30 01:06:12 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Tom Prince <tom.prince@ualberta.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 30 01:13:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HX3h3-00029T-SB
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 01:06:10 +0200
+	id 1HX3o9-00064z-TB
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 01:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934359AbXC2XGG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 19:06:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934361AbXC2XGG
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 19:06:06 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:48466 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934359AbXC2XGF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 19:06:05 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070329230602.CIJS25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 29 Mar 2007 19:06:02 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id gn621W00S1kojtg0000000; Thu, 29 Mar 2007 19:06:03 -0400
-In-Reply-To: <20070329213820.GY24561@craic.sysops.org> (Francis Daly's message
-	of "Thu, 29 Mar 2007 22:38:20 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1422673AbXC2XNL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 19:13:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422682AbXC2XNL
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 19:13:11 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:35377 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422673AbXC2XNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 19:13:10 -0400
+Received: from tigra.home (Fcb18.f.strato-dslnet.de [195.4.203.24])
+	by post.webmailer.de (fruni mo50) (RZmta 5.5)
+	with ESMTP id B039bdj2TM896K ; Fri, 30 Mar 2007 01:13:08 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 9A26E277B6;
+	Fri, 30 Mar 2007 01:13:08 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 810B1D150; Fri, 30 Mar 2007 01:13:08 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070329230156.GE2809@steel.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg7nw==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43489>
 
-Francis Daly <francis@daoine.org> writes:
+Alex Riesen, Fri, Mar 30, 2007 01:01:56 +0200:
+> 
+> I just left all three entries in the index for the virtual commit to
+> pick them up: it'll usually(always?) generate a conflict which has to
+> be resolved manually. Many times, perhaps.
+> 
 
-> Bryan Wu reported
-> /usr/local/bin/git-quiltimport: 114: Syntax error: Missing '))'
->
-> Most bourne-ish shells I have here accept
->  x=$((echo x)|cat)
-> but all bourne-ish shells I have here accept
->  x=$( (echo x)|cat)
-> because $(( might mean arithmetic expansion.
-
-Well spotted, thanks.
-
-
-Sheesh, this is even warned in POSIX sh manpage.
+Nah, doesn't do anything good. Does not crash, though.
