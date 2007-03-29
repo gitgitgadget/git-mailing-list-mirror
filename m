@@ -1,55 +1,51 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] checkout -d: explicitly detach HEAD even when switching to the tip of a branch
-Date: Thu, 29 Mar 2007 19:10:24 +0200
-Message-ID: <20070329171024.GA2809@steel.home>
-References: <7vr6r879zp.fsf@assigned-by-dhcp.cox.net> <200703291044.l2TAig5M021533@localhost.localdomain>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Josef Sipek <jsipek@fsl.cs.sunysb.edu>
+Subject: Re: [PATCH guilt] guilt: Add -h option to show man pages
+Date: Thu, 29 Mar 2007 13:24:38 -0400
+Message-ID: <20070329172438.GA13254@filer.fsl.cs.sunysb.edu>
+References: <1175171890.27597.5.camel@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Xavier Maillard <zedek@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Mar 29 19:10:38 2007
+Cc: Josef Jeff Sipek <jsipek@cs.sunysb.edu>, git <git@vger.kernel.org>
+To: Eric Lesh <eclesh@ucla.edu>
+X-From: git-owner@vger.kernel.org Thu Mar 29 19:25:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWy8x-0001pP-S1
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 19:10:36 +0200
+	id 1HWyNI-0000Rp-LG
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 19:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030456AbXC2RK2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 13:10:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030476AbXC2RK2
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 13:10:28 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:29871 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030456AbXC2RK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 13:10:27 -0400
-Received: from tigra.home (Fcb18.f.strato-dslnet.de [195.4.203.24])
-	by post.webmailer.de (klopstock mo48) (RZmta 5.5)
-	with ESMTP id I03fa1j2TFqf2P ; Thu, 29 Mar 2007 19:10:25 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id D14D6277B6;
-	Thu, 29 Mar 2007 19:10:24 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 8D25CD24E; Thu, 29 Mar 2007 19:10:24 +0200 (CEST)
+	id S933222AbXC2RYv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 13:24:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933226AbXC2RYv
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 13:24:51 -0400
+Received: from filer.fsl.cs.sunysb.edu ([130.245.126.2]:60665 "EHLO
+	filer.fsl.cs.sunysb.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933222AbXC2RYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 13:24:50 -0400
+Received: from filer.fsl.cs.sunysb.edu (localhost.localdomain [127.0.0.1])
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1) with ESMTP id l2THOcto015306;
+	Thu, 29 Mar 2007 13:24:38 -0400
+Received: (from jsipek@localhost)
+	by filer.fsl.cs.sunysb.edu (8.12.11.20060308/8.13.1/Submit) id l2THOciG015304;
+	Thu, 29 Mar 2007 13:24:38 -0400
 Content-Disposition: inline
-In-Reply-To: <200703291044.l2TAig5M021533@localhost.localdomain>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg7nw==
-X-RZG-CLASS-ID: mo07
+In-Reply-To: <1175171890.27597.5.camel@localhost>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43460>
 
-Xavier Maillard, Thu, Mar 29, 2007 12:44:42 +0200:
->    This allows you to detach your HEAD and place it at such a
-> 
->        $ git checkout -d master
-> 
-> Hum, excuse my ignorance, but can you explain what exactly could
-> be a use case of this ?
+On Thu, Mar 29, 2007 at 05:38:10AM -0700, Eric Lesh wrote:
+> From: Eric Lesh <eclesh@ucla.edu>
+> Date: Thu, 29 Mar 2007 04:38:49 -0700
+> Subject: [PATCH] guilt: Add -h option to show man pages
 
-A throw-away or an experimental work. A commit importer which cares
-about the branch it commits on: to update the branch reference only
-when it has reached a stable state.
+Thanks for all (4) of the patches. I applied them, and pushed them to
+kernel.org.
+
+Josef "Jeff" Sipek.
+
+-- 
+NT is to UNIX what a doughnut is to a particle accelerator.
