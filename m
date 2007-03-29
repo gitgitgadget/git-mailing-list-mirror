@@ -1,60 +1,93 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: Help: git-quiltimport error
-Date: Thu, 29 Mar 2007 17:48:17 +0100
-Message-ID: <tnxlkhgdmi6.fsf@arm.com>
-References: <1175014867.15767.13.camel@roc-laptop>
-	<euc6ra$qqu$1@sea.gmane.org> <1175053761.15391.7.camel@roc-desktop>
-Reply-To: Catalin Marinas <catalin.marinas@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] mergetool: Replace use of "echo -n" with printf(3) to be more portable
+Date: Thu, 29 Mar 2007 13:09:14 -0400
+Message-ID: <20070329170914.GA9435@thunk.org>
+References: <11751830653554-git-send-email-tytso@mit.edu> <11751830651770-git-send-email-tytso@mit.edu> <20070329155741.GA18413@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Eric Biederman <ebiederm@lnxi.com>, git@vger.kernel.org
-To: bryan.wu@analog.com
-X-From: git-owner@vger.kernel.org Thu Mar 29 19:01:25 2007
+Cc: git@vger.kernel.org
+To: Matthias Lederhofer <matled@gmx.net>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 29 19:09:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWy02-0005te-SN
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 19:01:23 +0200
+	id 1HWy8B-0001Po-7z
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 19:09:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030473AbXC2RAw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 13:00:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030476AbXC2RAv
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 13:00:51 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:56261 "EHLO
-	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1030473AbXC2RAv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2007 13:00:51 -0400
-X-Greylist: delayed 731 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Mar 2007 13:00:50 EDT
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id l2TGmJYo005424;
-	Thu, 29 Mar 2007 17:48:19 +0100 (BST)
-Received: from localhost.localdomain ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.0);
-	 Thu, 29 Mar 2007 17:48:18 +0100
-In-Reply-To: <1175053761.15391.7.camel@roc-desktop> (Bryan Wu's message of
- "Wed, 28 Mar 2007 11:49:21 +0800")
-User-Agent: Gnus/5.1007 (Gnus v5.10.7) Emacs/21.4 (gnu/linux)
-X-OriginalArrivalTime: 29 Mar 2007 16:48:18.0805 (UTC) FILETIME=[0DB94A50:01C77222]
+	id S1030472AbXC2RJa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 13:09:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030463AbXC2RJ3
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 13:09:29 -0400
+Received: from thunk.org ([69.25.196.29]:43521 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1030360AbXC2RJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 13:09:17 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HWyDg-0007Vh-Bc; Thu, 29 Mar 2007 13:15:28 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HWy7e-0006HC-23; Thu, 29 Mar 2007 13:09:14 -0400
+Content-Disposition: inline
+In-Reply-To: <20070329155741.GA18413@moooo.ath.cx>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43458>
 
-"Wu, Bryan" <bryan.wu@analog.com> wrote:
-> oh, can this fix the bug?
-> I am trying to import -mm series patch set to a git tree. Is there any
-> git command similar with quilt push/pop? I am trying StGit, but it can't
-> recognize the commits from git-quiltimport. Could you give me some
-> hints?
+On Thu, Mar 29, 2007 at 05:57:41PM +0200, Matthias Lederhofer wrote:
+> The subject should probably refer to printf(1) instead of printf(3).
 
-You could either import with 'stg import --series' directly or, if you
-had already done git-quiltimport, just run 'stg uncommit -n ...'
-passing it the number of commits you want transformed in patches.
+Yep.
 
-Note that with a huge series like the -mm one, the git tools like
-StGIT (or guilt, but haven't tried it) are much slower compared to
-plain quilt.
+> Theodore Ts'o <tytso@mit.edu> wrote:
+> > +	printf  "'$path' was deleted"
+> Here is one space too much after printf.
 
--- 
-Catalin
+This was fixed in a later patch.
+
+> > +	printf "'$path' is a symlink containing '"
+> You should use printf "'%s' [..]" "$path" as you do in some other
+> places (in case $path contains conversion specifiers).
+
+This was also obsoleted in a later patch, but you're right.
+
+> > +    printf "Hit return to start merge resolution tool ($merge_tool): "
+> Here it is much more unlikely that $merge_tool contains a conversion
+> specifier but anyway I'd prefer to use %s.
+
+Yep, agreed.
+
+Junio, I've prepared an alterate patch series.  If you haven't pulled
+from repo.or.cz, I'd appreciate it if you could pull from the
+mergetool branch (instead of master) instead:
+
+	http://repo.or.cz/w/git/mergetool.git
+
+The differences between the patch series in the master and mergetool
+branch are:
+
+	* Change the description of the printf patch to say: 
+		printf(3)->printf(1)
+	* Fix the double space after printf and symlink %s conversion
+		earlier in the patch series (only to have it disappear
+		in the last patch, so this is a no-op at the end of
+		the day, but more of an excuse to go play with stgit
+		and in the name of anal-rententive correctness)
+	* Use a %s printf conversion for the "Hit return to start merge..."
+		statement as noted above in the last patch.
+
+Thanks!!
+
+(Apparently there's no way to forcibly reset the pointer of the master
+head on repo.or.cz, probably for security/sanity reasons, without
+going through an administrator.)
+
+						- Ted
