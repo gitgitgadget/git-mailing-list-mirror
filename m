@@ -1,54 +1,78 @@
 From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] Documentation/git-svnimport.txt: fix typo.
-Date: Thu, 29 Mar 2007 06:41:42 +0000
-Message-ID: <20070329064142.31967.qmail@9e1b5fdb164509.315fe32.mid.smarden.org>
+Subject: [PATCH] Documentation/git-rev-parse.txt: fix example in SPECIFYING RANGES.
+Date: Thu, 29 Mar 2007 06:42:44 +0000
+Message-ID: <20070329064244.32053.qmail@f726f3c4b7218b.315fe32.mid.smarden.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 29 08:41:30 2007
+X-From: git-owner@vger.kernel.org Thu Mar 29 08:42:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWoK9-0000Rx-73
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 08:41:29 +0200
+	id 1HWoL5-0000xj-Gn
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 08:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933510AbXC2Gl0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 02:41:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934000AbXC2GlZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 02:41:25 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:55468 "HELO a.mx.smarden.org"
+	id S1753285AbXC2GmY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 02:42:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753287AbXC2GmY
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 02:42:24 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:55473 "HELO a.mx.smarden.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933510AbXC2GlZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 02:41:25 -0400
-Received: (qmail 31968 invoked by uid 1000); 29 Mar 2007 06:41:42 -0000
+	id S1753285AbXC2GmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 02:42:24 -0400
+Received: (qmail 32054 invoked by uid 1000); 29 Mar 2007 06:42:44 -0000
 Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43405>
 
-This was noticed by Frederik Schwarzer.  SVN's repository by default has
-trunk, tags/, and branch_es_/.
+Please see http://bugs.debian.org/404795:
+
+ In git-rev-parse(1), there is an example commit tree, which is used twice.
+ The explanation for this tree is very clear: B and C are commit *parents* to
+ A.
+
+ However, when the tree is reused as an example in the SPECIFYING RANGES, the
+ manpage author screws up and uses A as a commit *parent* to B and C!  I.e.,
+ he inverts the tree.
+
+ And the fact that for this example you need to read the tree backwards is
+ not explained anywhere (and it would be confusing even if it was).
 
 Signed-off-by: Gerrit Pape <pape@smarden.org>
 ---
- Documentation/git-svnimport.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ Documentation/git-rev-parse.txt |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-svnimport.txt b/Documentation/git-svnimport.txt
-index b166cf3..bdae7d8 100644
---- a/Documentation/git-svnimport.txt
-+++ b/Documentation/git-svnimport.txt
-@@ -27,7 +27,7 @@ repository, or incrementally import into an existing one.
- SVN access is done by the SVN::Perl module.
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index ccc66aa..a8bf656 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -265,14 +265,14 @@ its all parents.
  
- git-svnimport assumes that SVN repositories are organized into one
--"trunk" directory where the main development happens, "branch/FOO"
-+"trunk" directory where the main development happens, "branches/FOO"
- directories for branches, and "/tags/FOO" directories for tags.
- Other subdirectories are ignored.
+ Here are a handful examples:
  
+-   D                A B D
+-   D F              A B C D F
+-   ^A G             B D
+-   ^A F             B C F
+-   G...I            C D F G I
+-   ^B G I           C D F G I
+-   F^@              A B C
+-   F^! H            D F H
++   D                G H D
++   D F              G H I J D F
++   ^G D             H D
++   ^D B             E I J F B
++   B...C            G H D E B C
++   ^D B C           E I J F B C
++   C^@              I J F
++   F^! D            G H D F
+ 
+ Author
+ ------
 -- 
 1.5.1-rc2.GIT
