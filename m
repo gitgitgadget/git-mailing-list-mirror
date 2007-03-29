@@ -1,90 +1,76 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: Re: [PATCH 0/3] Somebody updated my branch tip underneath me.
-Date: Thu, 29 Mar 2007 11:55:36 +0000 (UTC)
-Message-ID: <loom.20070329T133700-713@post.gmane.org>
-References: <7vslbo4fwx.fsf@assigned-by-dhcp.cox.net>
+From: Eric Lesh <eclesh@ucla.edu>
+Subject: [PATCH guilt] guilt: Add -h option to show man pages
+Date: Thu, 29 Mar 2007 05:38:10 -0700
+Message-ID: <1175171890.27597.5.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 29 13:56:05 2007
+Cc: git <git@vger.kernel.org>
+To: "Josef \"Jeff\" Sipek" <jsipek@cs.sunysb.edu>
+X-From: git-owner@vger.kernel.org Thu Mar 29 14:38:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWtEY-0006IG-7x
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 13:56:02 +0200
+	id 1HWttd-000255-Fo
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 14:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753334AbXC2Lz7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 07:55:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753342AbXC2Lz7
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 07:55:59 -0400
-Received: from main.gmane.org ([80.91.229.2]:43448 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753334AbXC2Lz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 07:55:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HWtEJ-0003uA-Ng
-	for git@vger.kernel.org; Thu, 29 Mar 2007 13:55:48 +0200
-Received: from mars-fw.arces.unibo.it ([137.204.143.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Mar 2007 13:55:47 +0200
-Received: from scallegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 29 Mar 2007 13:55:47 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20060601 Firefox/2.0.0.3 (Ubuntu-edgy))
+	id S1753406AbXC2Mi0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 08:38:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753410AbXC2Mi0
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 08:38:26 -0400
+Received: from smtp-4.smtp.ucla.edu ([169.232.46.137]:33038 "EHLO
+	smtp-4.smtp.ucla.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753406AbXC2MiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 08:38:25 -0400
+Received: from mail.ucla.edu (mail.ucla.edu [169.232.46.158])
+	by smtp-4.smtp.ucla.edu (8.13.8/8.13.8) with ESMTP id l2TCcHSC029845;
+	Thu, 29 Mar 2007 05:38:17 -0700
+Received: from [192.168.1.7] (adsl-75-26-178-23.dsl.scrm01.sbcglobal.net [75.26.178.23])
+	(authenticated bits=0)
+	by mail.ucla.edu (8.13.8/8.13.8) with ESMTP id l2TCcGmc014580
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT);
+	Thu, 29 Mar 2007 05:38:17 -0700
+X-Mailer: Evolution 2.8.1 
+X-Probable-Spam: no
+X-Scanned-By: smtp.ucla.edu on 169.232.46.137
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43430>
 
-Junio C Hamano <junkio <at> cox.net> writes:
+From: Eric Lesh <eclesh@ucla.edu>
+Date: Thu, 29 Mar 2007 04:38:49 -0700
+Subject: [PATCH] guilt: Add -h option to show man pages
 
-> 
-> With this series, I am taking hints from Linus and trying to
-> illustrate a problem, show an approach to its solution and code
-> minimally to get others interested enough to follow through.
-> 
-> [PATCH 1/3] Add BASE index extension.
-> [PATCH 2/3] update-index --{set,get}-base
-> [PATCH 3/3] Use BASE index extension in git-commit and git-merge.
-> 
-> The problem description and the strategy to solve it are in the
-> commit log message of [PATCH 3/3].  There I only talk about
-> git-push from elsewhere while we are looking the other way, but
-> the same situation can also happen when you use a lightweight
-> shared working tree (i.e. Julian phillips's git-new-workdir) and
-> make a commit on a branch in one working tree while the other
-> working tree has a checkout of the same branch.
-> 
-> Let's see who are motivated enough to bite.
-> 
-> 
+git-sh-setup steals the -h|--h* argument and prints the usage message
+of the command that calls it, which in this case is guilt.  Rather than
+print the unhelpful guilt usage message, call guilt-help on the given
+command instead.
 
-This seems very nice, not just because of under-the-hood pushes, but also wrt
-the contrib/workdir thing: good to solve two slightly different problems in a
-single consistent way.
+Signed-off-by: Eric Lesh <eclesh@ucla.edu>
+---
+ guilt |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-Just a minor question:
-
-From, your comments to patch 3/3 it looks like when a "commit" or "status" (or
-whatever command) catches the mismatch in the head from the index-commit, it
-only exits with a notice.  And you also mention that recovery then happens via
-head detaching (that in your example is done manually)...
-
-If (as I am guessing) head detaching is the /only/ possible path to recovery,
-wouldn't it make sense to do it automatically, storing somewhere the latest
-branch one was on (e.g. to be used for subsequent merge)?
-
-Also, in general: whenever head gets detached (e.g. by a checkout) would it make
-sense to "by default" store somewhere the previous branch name? (e.g. to gain a
-shorthand command to get back to the former branch)?
-
-Thanks,
-
-Sergio
+diff --git a/guilt b/guilt
+index b1ab5a1..88f5a1b 100755
+--- a/guilt
++++ b/guilt
+@@ -9,6 +9,14 @@ GUILT_NAME="Space Rock"
+ # we change directories ourselves
+ SUBDIRECTORY_OK=1
+ 
++case $1 in
++	-h|--h|--he|--hel|--help)
++	dir=`dirname $0`
++	shift
++	exec "$dir/guilt-help" "$@"
++	exit
++esac
++
+ . git-sh-setup
+ 
+ function guilt_commands
+-- 
+1.5.1-rc1.GIT
