@@ -1,94 +1,140 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: basics... when reading docs doesn't help
-Date: Thu, 29 Mar 2007 15:35:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703291531030.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange>
- <20070329211616.GH6143@fieldses.org> <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
- <20070329214654.GI6143@fieldses.org> <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] An attempt to resolve a rename/rename conflict in recursive merge
+Date: Fri, 30 Mar 2007 01:01:56 +0200
+Message-ID: <20070329230156.GE2809@steel.home>
+References: <20070329075010.GA3493@hermes> <81b0412b0703290429k63642a34u6bea1e08803ffba7@mail.gmail.com> <20070329125803.GA16739@hermes> <81b0412b0703290634j6e62ba89tce3c8c963be3fb92@mail.gmail.com> <20070329141230.GB16739@hermes> <81b0412b0703290744h34b6ef01s4e6f90b1d7ed231b@mail.gmail.com> <81b0412b0703290804n13af6f40we79f7251562c540@mail.gmail.com> <20070329183237.GB2809@steel.home> <20070329185501.GC2809@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 30 00:35:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <junkio@cox.net>,
+	Tom Prince <tom.prince@ualberta.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 30 01:02:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HX3Dd-00035y-VC
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 00:35:46 +0200
+	id 1HX3d4-0008Rf-Cl
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 01:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422675AbXC2Wfl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 18:35:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422684AbXC2Wfl
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 18:35:41 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:41588 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422675AbXC2Wfk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 18:35:40 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2TMZVU2001668
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 29 Mar 2007 15:35:31 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2TMZTU9013954;
-	Thu, 29 Mar 2007 15:35:30 -0700
-In-Reply-To: <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
-X-Spam-Status: No, hits=-0.463 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1945908AbXC2XB7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 19:01:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945907AbXC2XB7
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 19:01:59 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:46382 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945908AbXC2XB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 19:01:58 -0400
+Received: from tigra.home (Fcb18.f.strato-dslnet.de [195.4.203.24])
+	by post.webmailer.de (mrclete mo51) (RZmta 5.5)
+	with ESMTP id C06f18j2TFx0TM ; Fri, 30 Mar 2007 01:01:56 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 43890277B6;
+	Fri, 30 Mar 2007 01:01:56 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 2367FD150; Fri, 30 Mar 2007 01:01:55 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070329185501.GC2809@steel.home>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg7nw==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43487>
 
+The structure looks like this:
 
+     o---A-o-o---o-o-o-o-AA
+      \   ____\_/
+       \ /     \
+        B-------o-o-o-BB
 
-On Fri, 30 Mar 2007, Guennadi Liakhovetski wrote:
-> > > 
-> > > How about suggesting "clone -l -s"?
-> 
-> Yes, but how do "advanced git users" kernel developers work? Do they just 
-> do 1 clone and build / clean every time they want to test another 
-> configuration / arch, or do they clone -l or what? Do they create branches 
-> for each development thread, then pull / push between trees?...
+There is a rename/rename conflict somewhere around A and B commits.
+The conflict was resolved at the merge points. Now, the problem is
+that when the merge-recursive generates that virtual merge there seem
+to be no way to get to the resolved state. The ends up resolving the
+conflict again, and of course does not do it without intelligent help,
+leaving index with unresolved entries. git_write_tree fails, returning
+NULL and the rest breaks.
 
-I suspect it depends on the developer.
+I just left all three entries in the index for the virtual commit to
+pick them up: it'll usually(always?) generate a conflict which has to
+be resolved manually. Many times, perhaps.
 
-I end up just using different branches and switching between them, but 
-then, my branches tend to all be pretty small test-stuff (I only end up 
-using one main branch, since 99% of what I do is merge other peoples stuff 
-that has already gone through a test-cycle).
+The small change in git_write_tree() was useful to see the relevant
+portion of the index. The output in rename/rename conflict handling
+code modified to improve its readability: it can be a lot of text.
 
-> But I don't want to re-build. Apart from i386 I build for a couple of ARM 
-> and PPC targets too...
+---
+ merge-recursive.c |   37 +++++++++++++++++++++++++++++++------
+ 1 files changed, 31 insertions(+), 6 deletions(-)
 
-You're probably fine with "git clone -l -s" then.
-
-> Strange. Is my git 1.4.0 criminally broken? I have a clone of Linus' tree 
-> on a USB disk on ext3 without any objects, which I just cloned at some 
-> point and then did a couple of pulls from the same source. Now
-> 
-> 1545084 /mnt/sda2/kernel-git/linux-2.6/
-> 1255084 /mnt/sda2/kernel-git/linux-2.6/.git
-
-The old git that always exploded all pulls and generated lots of loose 
-objects? You can check with "git count-objects".
-
-And to fix it, just do a "git gc" (or with older git versions, the secret 
-handshake is just a simple "git repack -a -d").
-
-> But that's a freshly cloned tree, without any pulls. I re-cloned it, 
-> because the tree I had earlier had the problem with each pull:
-> 
-> Unpacking 12452 objects
->  100% (12452/12452) done
-> * refs/heads/origin: does not fast forward to branch 'master' of 
-> git://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc;
->   not updating.
-
-Sounds like either Paul re-based his tree, or you did some work on your 
-"origin" branch..
-
-			Linus
+diff --git a/merge-recursive.c b/merge-recursive.c
+index c96e1a7..2568c4e 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -278,8 +278,16 @@ static struct tree *git_write_tree(void)
+ {
+ 	struct tree *result = NULL;
+ 
+-	if (unmerged_index())
++	if (unmerged_index()) {
++		output(0, "There are unmerged index entries:");
++		int i;
++		for (i = 0; i < active_nr; i++) {
++			struct cache_entry *ce = active_cache[i];
++			if (ce_stage(ce))
++				output(0, "%d %.*s", ce_stage(ce), ce_namelen(ce), ce->name);
++		}
+ 		return NULL;
++	}
+ 
+ 	if (!active_cache_tree)
+ 		active_cache_tree = cache_tree();
+@@ -735,8 +743,17 @@ static void conflict_rename_rename(struct rename *ren1,
+ 		       ren2_dst, branch1, dst_name2);
+ 		remove_file(0, ren2_dst, 0);
+ 	}
+-	update_stages(dst_name1, NULL, ren1->pair->two, NULL, 1);
+-	update_stages(dst_name2, NULL, NULL, ren2->pair->two, 1);
++	if (index_only) {
++		remove_file_from_cache(dst_name1);
++		remove_file_from_cache(dst_name2);
++		add_cacheinfo(ren1->pair->two->mode, ren1->pair->two->sha1, dst_name1,
++			      0, 0, ADD_CACHE_OK_TO_ADD);
++		add_cacheinfo(ren1->pair->two->mode, ren2->pair->two->sha1, dst_name2,
++			      0, 0, ADD_CACHE_OK_TO_ADD);
++	} else {
++		update_stages(dst_name1, NULL, ren1->pair->two, NULL, 1);
++		update_stages(dst_name2, NULL, NULL, ren2->pair->two, 1);
++	}
+ 	while (delp--)
+ 		free(del[delp]);
+ }
+@@ -852,10 +869,18 @@ static int process_renames(struct path_list *a_renames,
+ 			if (strcmp(ren1_dst, ren2_dst) != 0) {
+ 				clean_merge = 0;
+ 				output(1, "CONFLICT (rename/rename): "
+-				       "Rename %s->%s in branch %s "
+-				       "rename %s->%s in %s",
++				       "Rename \"%s\"->\"%s\" in branch \"%s\" "
++				       "rename \"%s\"->\"%s\" in \"%s\"%s",
+ 				       src, ren1_dst, branch1,
+-				       src, ren2_dst, branch2);
++				       src, ren2_dst, branch2,
++				       index_only ? " (left unresolved)": "");
++				if (index_only) {
++					remove_file_from_cache(src);
++					add_cacheinfo(ren1->pair->one->mode,
++						      ren1->pair->one->sha1,
++						      src,
++						      0, 0, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
++				}
+ 				conflict_rename_rename(ren1, branch1, ren2, branch2);
+ 			} else {
+ 				struct merge_file_info mfi;
+-- 
+1.5.1.rc2.18.g157b4
