@@ -1,74 +1,48 @@
-From: Tom Prince <tom.prince@ualberta.net>
-Subject: Re: SEGV in git-merge recursive:
-Date: Thu, 29 Mar 2007 23:55:46 +0400
-Message-ID: <20070329195546.GB8830@hermes>
-References: <20070329075010.GA3493@hermes> <81b0412b0703290429k63642a34u6bea1e08803ffba7@mail.gmail.com> <20070329125803.GA16739@hermes> <81b0412b0703290634j6e62ba89tce3c8c963be3fb92@mail.gmail.com> <20070329141230.GB16739@hermes> <81b0412b0703290744h34b6ef01s4e6f90b1d7ed231b@mail.gmail.com> <81b0412b0703290804n13af6f40we79f7251562c540@mail.gmail.com> <20070329183237.GB2809@steel.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: git-mailinfo munges the patch?
+Date: Thu, 29 Mar 2007 13:18:51 -0700
+Message-ID: <7v1wj74xck.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Mar 29 21:55:46 2007
+Cc: git@vger.kernel.org
+To: Don Zickus <dzickus@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Mar 29 22:18:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HX0im-00055H-9Q
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 21:55:44 +0200
+	id 1HX15E-0008FB-Fj
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 22:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030622AbXC2Tzg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 15:55:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030624AbXC2Tzg
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 15:55:36 -0400
-Received: from hu-out-0506.google.com ([72.14.214.231]:65235 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030622AbXC2Tzf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 15:55:35 -0400
-Received: by hu-out-0506.google.com with SMTP id 36so12628905hui
-        for <git@vger.kernel.org>; Thu, 29 Mar 2007 12:55:34 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=TWiDABjidRVej8tGa63IcTFlaCwPvmQplUJoImUB1Z/Xdn9U3b+6IAky/qpcLaKNH+hGB/UbQfbcOaw0w6+iqOfegK9sn3lq33hWUhe+hGOInvXjgTveDX+iLqESn2vynyc/K2mROZug50KeVFYuweElp+yVcSNvCjmooEYT/j4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=nVozk/QOuZgeMKJyrB9+YnuvrU8aTrIhjs1DzedFRBvrvV+NB+2ciS5KMEBkkP2MyMegoT/fbaXD9iZQAGQL7JdFJ6Ho+j9uAP4nxOQWwpNMAAEnsVtWix6UZ++WrT+U+n/1kCqqAF1AbDUwIAQzJROoojj29Wfevzw0FFJfnjM=
-Received: by 10.66.243.2 with SMTP id q2mr1638011ugh.1175198133835;
-        Thu, 29 Mar 2007 12:55:33 -0700 (PDT)
-Received: from hermes ( [80.240.215.209])
-        by mx.google.com with ESMTP id m1sm1483319uge.2007.03.29.12.55.32;
-        Thu, 29 Mar 2007 12:55:33 -0700 (PDT)
-Received: by hermes (nbSMTP-1.00) for uid 500
-	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
-	Tom; Thu, 29 Mar 2007 23:55:49 +0400 (MSD)
-Mail-Followup-To: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <junkio@cox.net>
-Content-Disposition: inline
-In-Reply-To: <20070329183237.GB2809@steel.home>
-User-Agent: Mutt/1.5.14 (2007-02-12)
+	id S1030657AbXC2USx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 16:18:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030667AbXC2USx
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 16:18:53 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:36235 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030657AbXC2USw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 16:18:52 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070329201852.BQXD28126.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 29 Mar 2007 16:18:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id gkJr1W00T1kojtg0000000; Thu, 29 Mar 2007 16:18:52 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43466>
 
-On Thu, Mar 29, 2007 at 08:32:37PM +0200, Alex Riesen wrote:
-> Alex Riesen, Thu, Mar 29, 2007 17:04:31 +0200:
-> > CONFLICT (rename/rename): Rename 1->a in branch HEAD rename 1->b in B
-> > Automatic merge failed; fix conflicts and then commit the result.
-> > 
-> > Tom, either the stack trace of -O0 -ggdb or your repo is badly needed.
-> > The stack preferred, as I have that feeling it'll just work everywhere
-> > else but your system (can you try it somewhere else, BTW?).
-> 
-> Ok-key... Thanks Tom, for the testcase. I believe we haven't had this
-> one yet: the merge base in the second (inner) merge is the initial
-> commit. Which is strange:
+I noticed that the new mailinfo when splitting a message into
+cover letter and the patch text seems to munge the patch text,
+applying the same "if content-type is not there then assume
+latin-1 and recode to utf-8" logic that is applied to the commit
+log message.  That munging should not be done to the patch text,
+and it appears the current code botches it.
 
-The actual case that caused the error didn't have the initial commit, I
-used cg-admin-rewritehist to create a (slightly) smaller test case that
-exhibited the behavior.
-
-  Tom
+I am a bit too busy with day job today and haven't had a chance
+to look into this problem fully, but 1.5.0.3 does not seem to
+have this problem but post 87ab7992 mailinfo is problematic.
