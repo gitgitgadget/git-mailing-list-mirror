@@ -1,97 +1,131 @@
 From: Theodore Ts'o <tytso@mit.edu>
-Subject: [PATCH] mergetool: Add support for Apple Mac OS X's opendiff command
-Date: Thu, 29 Mar 2007 11:44:23 -0400
-Message-ID: <11751830651076-git-send-email-tytso@mit.edu>
-References: <11751830653554-git-send-email-tytso@mit.edu> <11751830653871-git-send-email-tytso@mit.edu> <11751830651770-git-send-email-tytso@mit.edu> <11751830653157-git-send-email-tytso@mit.edu> <1175183065710-git-send-email-tytso@mit.edu> <11751830651361-git-send-email-tytso@mit.edu> <11751830654112-git-send-email-tytso@mit.edu> <11751830652803-git-send-email-tytso@mit.edu> <11751830653835-git-send-email-tytso@mit.edu>
-Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>,
-	Arjen Laarhoven <arjen@yaph.org>
+Subject: [PATCH] mergetool: Clean up description of files and prompts for merge resolutions
+Date: Thu, 29 Mar 2007 11:44:25 -0400
+Message-ID: <11751830652230-git-send-email-tytso@mit.edu>
+References: <11751830653554-git-send-email-tytso@mit.edu> <11751830653871-git-send-email-tytso@mit.edu> <11751830651770-git-send-email-tytso@mit.edu> <11751830653157-git-send-email-tytso@mit.edu> <1175183065710-git-send-email-tytso@mit.edu> <11751830651361-git-send-email-tytso@mit.edu> <11751830654112-git-send-email-tytso@mit.edu> <11751830652803-git-send-email-tytso@mit.edu> <11751830653835-git-send-email-tytso@mit.edu> <11751830651076-git-send-email-tytso@mit.edu> <11751830652512-git-send-email-tytso@mit.edu>
+Cc: git@vger.kernel.org, Theodore Ts'o <tytso@mit.edu>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 29 17:45:20 2007
+X-From: git-owner@vger.kernel.org Thu Mar 29 17:45:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWwoL-0004BP-DE
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 17:45:13 +0200
+	id 1HWwoM-0004BP-G3
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 17:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030259AbXC2Pom (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 11:44:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030268AbXC2Pom
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 11:44:42 -0400
-Received: from thunk.org ([69.25.196.29]:36603 "EHLO thunker.thunk.org"
+	id S1030263AbXC2Pop (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 11:44:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030279AbXC2Pop
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 11:44:45 -0400
+Received: from thunk.org ([69.25.196.29]:36605 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030259AbXC2Pob (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1030263AbXC2Pob (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 29 Mar 2007 11:44:31 -0400
 Received: from root (helo=candygram.thunk.org)
 	by thunker.thunk.org with local-esmtps 
 	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HWwte-0007J6-Ho; Thu, 29 Mar 2007 11:50:43 -0400
+	id 1HWwtf-0007Iy-Nu; Thu, 29 Mar 2007 11:50:44 -0400
 Received: from tytso by candygram.thunk.org with local (Exim 4.62)
 	(envelope-from <tytso@thunk.org>)
-	id 1HWwnZ-0000xy-Jr; Thu, 29 Mar 2007 11:44:25 -0400
+	id 1HWwnZ-0000y8-LD; Thu, 29 Mar 2007 11:44:25 -0400
 X-Mailer: git-send-email 1.5.1.rc2.1.g8afe-dirty
-In-Reply-To: <11751830653835-git-send-email-tytso@mit.edu>
+In-Reply-To: <11751830652512-git-send-email-tytso@mit.edu>
 X-SA-Exim-Connect-IP: <locally generated>
 X-SA-Exim-Mail-From: tytso@thunk.org
 X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43446>
 
-Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
+This fixes complaints from Junio for how messages and prompts are
+printed when resolving symlink and deleted file merges.
+
 Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
 ---
- git-mergetool.sh |   16 ++++++++++++++--
- 1 files changed, 14 insertions(+), 2 deletions(-)
+ git-mergetool.sh |   29 +++++++++++++++--------------
+ 1 files changed, 15 insertions(+), 14 deletions(-)
 
 diff --git a/git-mergetool.sh b/git-mergetool.sh
-index f73072a..b0d28fd 100755
+index b9d81f5..9b824ac 100755
 --- a/git-mergetool.sh
 +++ b/git-mergetool.sh
-@@ -232,6 +232,16 @@ merge_file () {
- 	    check_unchanged
- 	    save_backup
- 	    ;;
-+	opendiff)
-+	    touch "$BACKUP"
-+	    if base_present; then
-+		opendiff "$LOCAL" "$REMOTE" -ancestor "$BASE" -merge "$path" | cat
-+	    else
-+		opendiff "$LOCAL" "$REMOTE" -merge "$path" | cat
-+	    fi
-+	    check_unchanged
-+	    save_backup
-+	    ;;
- 	emerge)
- 	    if base_present ; then
- 		emacs -f emerge-files-with-ancestor-command "$LOCAL" "$REMOTE" "$BASE" "$path"
-@@ -282,7 +292,7 @@ done
- if test -z "$merge_tool"; then
-     merge_tool=`git-config merge.tool`
-     case "$merge_tool" in
--	kdiff3 | tkdiff | xxdiff | meld | emerge | vimdiff | "")
-+	kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff | "")
- 	    ;; # happy
- 	*)
- 	    echo >&2 "git config option merge.tool set to unknown tool: $merge_tool"
-@@ -301,6 +311,8 @@ if test -z "$merge_tool" ; then
- 	merge_tool=xxdiff
-     elif type meld >/dev/null 2>&1 && test -n "$DISPLAY"; then
- 	merge_tool=meld
-+    elif type opendiff >/dev/null 2>&1; then
-+	merge_tool=opendiff
-     elif type emacs >/dev/null 2>&1; then
- 	merge_tool=emerge
-     elif type vimdiff >/dev/null 2>&1; then
-@@ -312,7 +324,7 @@ if test -z "$merge_tool" ; then
- fi
+@@ -44,27 +44,24 @@ describe_file () {
+     branch="$2"
+     file="$3"
  
- case "$merge_tool" in
--    kdiff3|tkdiff|meld|xxdiff|vimdiff)
-+    kdiff3|tkdiff|meld|xxdiff|vimdiff|opendiff)
- 	if ! type "$merge_tool" > /dev/null 2>&1; then
- 	    echo "The merge tool $merge_tool is not available"
- 	    exit 1
+-    printf "    "
++    printf "  {$branch}: "
+     if test -z "$mode"; then
+-	printf "'$path' was deleted"
++	echo "deleted"
+     elif is_symlink "$mode" ; then
+-	printf "'$path' is a symlink containing '"
+-	cat "$file"
+-	printf "'"
++	echo "a symbolic link -> '$(cat "$file")'"
+     else
+ 	if base_present; then
+-	    printf "'%s' was created" "$path"
++	    echo "modified"
+ 	else
+-	    printf "'%s' was modified" "$path"
++	    echo "created"
+ 	fi
+     fi
+-    echo " in the $branch branch"
+ }
+ 
+ 
+ resolve_symlink_merge () {
+     while true; do
+-	printf "Use (r)emote or (l)ocal, or (a)bort? "
++	printf "Use (l)ocal or (r)emote, or (a)bort? "
+ 	read ans
+ 	case "$ans" in
+ 	    [lL]*)
+@@ -88,10 +85,14 @@ resolve_symlink_merge () {
+ 
+ resolve_deleted_merge () {
+     while true; do
+-	printf "Use (m)odified or (d)eleted file, or (a)bort? "
++	if base_present; then
++	    printf "Use (m)odified or (d)eleted file, or (a)bort? "
++	else
++	    printf "Use (c)reated or (d)eleted file, or (a)bort? "
++	fi
+ 	read ans
+ 	case "$ans" in
+-	    [mM]*)
++	    [mMcC]*)
+ 		git-add -- "$path"
+ 		cleanup_temp_files --save-backup
+ 		return
+@@ -166,7 +167,7 @@ merge_file () {
+     remote_present && git cat-file blob ":3:$path" > "$REMOTE" 2>/dev/null
+ 
+     if test -z "$local_mode" -o -z "$remote_mode"; then
+-	echo "Deleted merge conflict for $path:"
++	echo "Deleted merge conflict for '$path':"
+ 	describe_file "$local_mode" "local" "$LOCAL"
+ 	describe_file "$remote_mode" "remote" "$REMOTE"
+ 	resolve_deleted_merge
+@@ -174,14 +175,14 @@ merge_file () {
+     fi
+ 
+     if is_symlink "$local_mode" || is_symlink "$remote_mode"; then
+-	echo "Symlink merge conflict for $path:"
++	echo "Symbolic link merge conflict for '$path':"
+ 	describe_file "$local_mode" "local" "$LOCAL"
+ 	describe_file "$remote_mode" "remote" "$REMOTE"
+ 	resolve_symlink_merge
+ 	return
+     fi
+ 
+-    echo "Normal merge conflict for $path:"
++    echo "Normal merge conflict for '$path':"
+     describe_file "$local_mode" "local" "$LOCAL"
+     describe_file "$remote_mode" "remote" "$REMOTE"
+     printf "Hit return to start merge resolution tool ($merge_tool): "
 -- 
 1.5.1.rc2.1.g8afe-dirty
