@@ -1,52 +1,60 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: SEGV in git-merge recursive:
-Date: Thu, 29 Mar 2007 10:18:14 +0200
-Message-ID: <81b0412b0703290118q3e602a7bx650ac41241855546@mail.gmail.com>
-References: <20070329075010.GA3493@hermes>
+From: Matthias Lederhofer <matled@gmx.net>
+Subject: Re: [PATCH/RFC] introduce GIT_WORK_TREE environment variable
+Date: Thu, 29 Mar 2007 10:22:03 +0200
+Message-ID: <20070329082202.GA4974@moooo.ath.cx>
+References: <20070328141505.GA16600@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 29 10:18:21 2007
+X-From: git-owner@vger.kernel.org Thu Mar 29 10:22:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWppr-0001TR-Ab
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 10:18:19 +0200
+	id 1HWptc-0003Xy-QG
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 10:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934048AbXC2ISP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 04:18:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934050AbXC2ISP
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 04:18:15 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:31157 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934048AbXC2ISO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 04:18:14 -0400
-Received: by an-out-0708.google.com with SMTP id b33so101396ana
-        for <git@vger.kernel.org>; Thu, 29 Mar 2007 01:18:14 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VV9Cq7luz7rtR0KMaRXcaibNtpfGSXwwCQllZTYUfXpbKI0dL++j3WJqJhgzRifAfsFMfOU9BN/BNocuNIKz6+8h18GtZ3rxOAuWvaUWgMLRo4FuGuACnh3W2vU4vqK8ndO5j9hBnytdcJfQK8sofUvAookfgDbvYyLONpn3y9w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BefCh4cZKRqLQ2T/4wEIqh4AEmhwWS8t/etbWSSQi6v/7PFarK48lindSQje89nYmron6cF3gA0QeH5Q64uRhY9pKndjLm4QCFmSKDA6yyRYnk7XB82xhC7q6iSoEfqLL1ln9XqQyp3zfaXO9jDsJl3mtXxEINHzFE6OCaZQks0=
-Received: by 10.100.13.12 with SMTP id 12mr181159anm.1175156294198;
-        Thu, 29 Mar 2007 01:18:14 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Thu, 29 Mar 2007 01:18:14 -0700 (PDT)
-In-Reply-To: <20070329075010.GA3493@hermes>
+	id S1750735AbXC2IWJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 04:22:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750827AbXC2IWJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 04:22:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42911 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750735AbXC2IWG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 04:22:06 -0400
+Received: (qmail invoked by alias); 29 Mar 2007 08:22:05 -0000
+Received: from pD9EBB3EC.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.179.236]
+  by mail.gmx.net (mp051) with SMTP; 29 Mar 2007 10:22:05 +0200
+X-Authenticated: #5358227
+X-Provags-ID: V01U2FsdGVkX1+d7fIvsHadSX9PwZw0gGp4breVG7JeIloW864+Ew
+	rTWcpXU6YITsf2
 Content-Disposition: inline
+In-Reply-To: <20070328141505.GA16600@moooo.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43412>
 
-On 3/29/07, Tom Prince <tom.prince@ualberta.net> wrote:
-> I have been keeping my Maildir in git, a non-trivial merge that causes a
-> segfault in git-merge-recursive.
+Matthias Lederhofer <matled@gmx.net> wrote:
+> +	git_config(git_setup_config);
 
-Can you try and get a stack trace? Do, for example, GIT_TRACE=1 git merge ...
-... find the call to git-merge-recursive and start that in gdb.
-Wait until it crash.
+When $GIT_DIR was not set and the repository is found as a .git
+directory $GIT_DIR will be the full path to the .git directory when
+calling git_config().  git_config() calls git_path() which calls
+get_git_dir() which calls getenv("GIT_DIR").
+I'm not sure this is defined behaviour at all:
+    
+    char *foo = getenv("FOO");
+    unsetenv("FOO");
+
+Does foo still point to the old content of the FOO environment
+variable?  If it does get_git_dir() will always return the full path
+to the repository directory.
+
+I can think of two ways to solve this (in case this is a problem):
+1. Add a function to environment.c which will cause setup_git_env to
+   be called again (either directly or by setting all the pointers to
+   NULL again).
+2. Use git_config_from_file() instead of git_config().  This will
+   probably duplicate code from git_config().
