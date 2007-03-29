@@ -1,72 +1,75 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: basics... when reading docs doesn't help
-Date: Thu, 29 Mar 2007 17:46:54 -0400
-Message-ID: <20070329214654.GI6143@fieldses.org>
-References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange> <20070329211616.GH6143@fieldses.org> <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
+From: Don Zickus <dzickus@redhat.com>
+Subject: Re: git-mailinfo munges the patch?
+Date: Thu, 29 Mar 2007 17:52:48 -0400
+Message-ID: <20070329215248.GG11029@redhat.com>
+References: <7v1wj74xck.fsf@assigned-by-dhcp.cox.net> <20070329205357.GF11029@redhat.com> <Pine.LNX.4.64.0703291417250.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Guennadi Liakhovetski <g.liakhovetski@gmx.de>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Mar 29 23:47:04 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Mar 29 23:54:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HX2ST-00022s-BE
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 23:47:01 +0200
+	id 1HX2Ze-0006CE-C8
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 23:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934352AbXC2Vq5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 17:46:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934353AbXC2Vq5
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 17:46:57 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:41287 "EHLO fieldses.org"
+	id S934355AbXC2VyX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 17:54:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934357AbXC2VyX
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 17:54:23 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:55458 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934352AbXC2Vq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 17:46:57 -0400
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HX2SM-0007b4-61; Thu, 29 Mar 2007 17:46:54 -0400
+	id S934355AbXC2VyW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 17:54:22 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2TLsHkM017237;
+	Thu, 29 Mar 2007 17:54:17 -0400
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2TLsG2b004005;
+	Thu, 29 Mar 2007 17:54:16 -0400
+Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
+	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2TLsGIe028096;
+	Thu, 29 Mar 2007 17:54:16 -0400
+Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
+	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2TLqmrn030527;
+	Thu, 29 Mar 2007 17:52:48 -0400
+Received: (from dzickus@localhost)
+	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2TLqmA6030526;
+	Thu, 29 Mar 2007 17:52:48 -0400
+X-Authentication-Warning: drseuss.boston.redhat.com: dzickus set sender to dzickus@redhat.com using -f
 Content-Disposition: inline
-In-Reply-To: <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <Pine.LNX.4.64.0703291417250.6730@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43478>
 
-On Thu, Mar 29, 2007 at 02:26:10PM -0700, Junio C Hamano wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
+On Thu, Mar 29, 2007 at 02:19:26PM -0700, Linus Torvalds wrote:
 > 
-> > On Thu, Mar 29, 2007 at 10:50:51PM +0200, Guennadi Liakhovetski wrote:
-> >> Now, my copy of Linus' tree was ATM 1.5GiB big...  Slowly it's getting
-> >> scary.
-> >
-> > On my laptop:
-> >
-> > [bfields@pad linux]$ du -hs .
-> > 1.5G    .
-> > [bfields@pad linux]$ du -hs .git
-> > 334M    .git
-> >
-> > So it's mostly the checked out working directory and build
-> > stuff.
-> >
-> > If you really need a ton of build trees then you might just want to do
-> > cp -al or something.
 > 
-> How about suggesting "clone -l -s"?
+> On Thu, 29 Mar 2007, Don Zickus wrote:
+> > 
+> > Ok.  I see what you are saying with the old code.  Sorry about that.  Do
+> > you have a sample file that I can play with to test my fix?
+> 
+> On that note - here's an unrelated simple case that the old mailinfo got 
+> right, but the new one seems to screw up: multiple Subject: lines.
+> 
+> The old one would make later Subject: lines override the earlier ones, and 
+> I depended on that when I fix up peoples emails to me manually (you 
+> wouldn't believe how bad explanations or subject lines people use for 
+> perfectly good patches ;)
 
-If you really want to share as much as possible, then I guess you want
-to share the working trees too, since (as evidenced above), they're at
-least as large as the compressed history.
+I see what happened.  The old code allowed rewriting of the mail headers
+but blocked rewriting of the inbody headers.  For some reason I thought it
+was by accident that the mail headers were allow to be rewritten.  Oops.
+:(
 
-Though actually on a second look, clone -l -s produces something that's
-only 377M.  I hadn't realized how much space the build output takes up.
-So judging from du the 1.5G Guennadi Liakhovetski mentions above seems
-to break down into something like:
+I wrote the code to have both header types block rewriting.  I'll change
+that.  
 
-	330M .git
-	380M working tree
-	750M build output
-
---b.
+Cheers,
+Don
