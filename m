@@ -1,78 +1,87 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] Documentation/git-rev-parse.txt: fix example in SPECIFYING RANGES.
-Date: Thu, 29 Mar 2007 06:42:44 +0000
-Message-ID: <20070329064244.32053.qmail@f726f3c4b7218b.315fe32.mid.smarden.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Bisect: Improve error message in "bisect_next_check".
+Date: Thu, 29 Mar 2007 09:42:35 +0200
+Message-ID: <20070329094235.816d15e9.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 29 08:42:31 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 29 09:34:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWoL5-0000xj-Gn
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 08:42:27 +0200
+	id 1HWp9j-0003vy-Qf
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 09:34:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753285AbXC2GmY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 02:42:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753287AbXC2GmY
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 02:42:24 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:55473 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753285AbXC2GmY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 02:42:24 -0400
-Received: (qmail 32054 invoked by uid 1000); 29 Mar 2007 06:42:44 -0000
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
+	id S1753292AbXC2Hea (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 03:34:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753300AbXC2Hea
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 03:34:30 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:50933 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753298AbXC2Hea (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 03:34:30 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id C2678B6242;
+	Thu, 29 Mar 2007 09:34:24 +0200 (CEST)
+X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43406>
 
-Please see http://bugs.debian.org/404795:
+So we can remove the specific message in "bisect_run".
 
- In git-rev-parse(1), there is an example commit tree, which is used twice.
- The explanation for this tree is very clear: B and C are commit *parents* to
- A.
-
- However, when the tree is reused as an example in the SPECIFYING RANGES, the
- manpage author screws up and uses A as a commit *parent* to B and C!  I.e.,
- he inverts the tree.
-
- And the fact that for this example you need to read the tree backwards is
- not explained anywhere (and it would be confusing even if it was).
-
-Signed-off-by: Gerrit Pape <pape@smarden.org>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-rev-parse.txt |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index ccc66aa..a8bf656 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -265,14 +265,14 @@ its all parents.
+Junio C Hamano wrote:
+
+> Doesn't that suggest the existing messages from "git bisect good/bad"
+> can use the same improvement you added only to "bisect run"?
+
+You mean something like this patch ?
+(It does not print a long message any more.)
+
+
+ git-bisect.sh |   16 +++++++++-------
+ 1 files changed, 9 insertions(+), 7 deletions(-)
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 57d6754..7fcdc74 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -123,7 +123,15 @@ bisect_next_check() {
+ 	case "$next_ok,$1" in
+ 	no,) false ;;
+ 	no,fail)
+-	    echo >&2 'You need to give me at least one good and one bad revisions.'
++	    ALSO=''
++	    test -d "$GIT_DIR/refs/bisect" || {
++		echo >&2 'You need to start by "git bisect start".'
++		ALSO='also '
++	    }
++	    echo >&2 'You '$ALSO'need to give me at least one good' \
++		'and one bad revisions.'
++	    echo >&2 '(You can use "git bisect bad" and' \
++		'"git bisect good" for that.)'
+ 	    exit 1 ;;
+ 	*)
+ 	    true ;;
+@@ -223,12 +231,6 @@ bisect_replay () {
+ }
  
- Here are a handful examples:
+ bisect_run () {
+-    # Check that we have everything to run correctly.
+-    test -d "$GIT_DIR/refs/bisect" || {
+-	echo >&2 'You need to start by "git bisect start".'
+-	echo >&2 'And then by "git bisect bad" and "git bisect good".'
+-	exit 1
+-    }
+     bisect_next_check fail
  
--   D                A B D
--   D F              A B C D F
--   ^A G             B D
--   ^A F             B C F
--   G...I            C D F G I
--   ^B G I           C D F G I
--   F^@              A B C
--   F^! H            D F H
-+   D                G H D
-+   D F              G H I J D F
-+   ^G D             H D
-+   ^D B             E I J F B
-+   B...C            G H D E B C
-+   ^D B C           E I J F B C
-+   C^@              I J F
-+   F^! D            G H D F
- 
- Author
- ------
+     while true
 -- 
-1.5.1-rc2.GIT
+1.5.1.rc2.15.g465b3-dirty
