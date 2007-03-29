@@ -1,141 +1,82 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add git-mergetool to run an appropriate merge conflict resolution program
-Date: Wed, 28 Mar 2007 20:58:49 -0700
-Message-ID: <7vabxwbszq.fsf@assigned-by-dhcp.cox.net>
-References: <E1HORtY-0000zK-8B@candygram.thunk.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Bisect: add checks at the beginning of "git bisect run".
+Date: Thu, 29 Mar 2007 07:02:47 +0200
+Message-ID: <200703290702.47972.chriscool@tuxfamily.org>
+References: <20070327064957.34dad72a.chriscool@tuxfamily.org> <200703280952.57058.chriscool@tuxfamily.org> <7vbqidls13.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Theodore Ts'o" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Mar 29 05:59:10 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Mar 29 06:54:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWln3-0006N2-Eq
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 05:59:09 +0200
+	id 1HWmer-0001n4-I7
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 06:54:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752259AbXC2D6v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 28 Mar 2007 23:58:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752004AbXC2D6v
-	(ORCPT <rfc822;git-outgoing>); Wed, 28 Mar 2007 23:58:51 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:39382 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752194AbXC2D6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Mar 2007 23:58:50 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070329035849.JHSF792.fed1rmmtao101.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 28 Mar 2007 23:58:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id gTyo1W00R1kojtg0000000; Wed, 28 Mar 2007 23:58:49 -0400
-In-Reply-To: <E1HORtY-0000zK-8B@candygram.thunk.org> (Theodore Ts'o's message
-	of "Tue, 06 Mar 2007 00:07:28 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933986AbXC2Eyj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 29 Mar 2007 00:54:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933997AbXC2Eyi
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 00:54:38 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:39113 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933986AbXC2Eyi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Mar 2007 00:54:38 -0400
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id F1699B5D7E;
+	Thu, 29 Mar 2007 06:54:36 +0200 (CEST)
+User-Agent: KMail/1.9.5
+In-Reply-To: <7vbqidls13.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43402>
 
-I had a chance to use git-mergetool in real life for the first
-time today, when I merged 'maint' into 'master'.  It has a
-symlink vs symlink conflict, so I got something like this:
+Le mercredi 28 mars 2007 09:57, Junio C Hamano a =C3=A9crit :
+>
+> In other words, the above would be equilvalent to
+>
+>   git bisect start
+>   git bisect good nightly_2007_03_27
+>   make >/dev/null || {
+> 	  git bisect bad
+>           git bisect run make >/dev/null
+>           # extract commit and author email address from
+> "$GIT_DIR/BISECT_RUN" #=C2=A0and send flame to author who broke the b=
+uild with
+> the commit }
 
-================================================================
-Merging the files: RelNotes
+Yes, it would be equivalent but a little shorter.
 
-Symlink merge conflict for RelNotes:
-    'RelNotes' is a symlink containing 'Documentation/RelNotes-1.5.1.txt' in the local branch
-    'RelNotes' is a symlink containing 'Documentation/RelNotes-1.5.0.6.txt' in the remote branch
-Use (r)emote or (l)ocal, or (a)bort?
-================================================================
+So while we are at it, what about a new subcommand "git bisect test" th=
+at=20
+could be used like this:
 
-A few observations.
+git bisect test good_rev my_script
 
-(1) Saying "a" <Return> does not let me exit.  It keeps asking
-    the same question.
+equivalent to the following :
 
-(2) The word "symlink" might be less geekish if worded "symbolic
-    link".
+my_script || {
+	git bisect start &&
+	git bisect bad &&
+	git bisect good good_rev &&
+	git bisect run my_script
+}
 
-(3) The message look very long, and repeats the same information.
+that could be used like this:
 
-(4) The status info gives local and then remote, but the choice
-    is between remote and local.
+git bisect test good_rev my_script || {
+	echo >&2 "my_script failed but 'git bisect test' failed too"
+	exit 1
+}
+test -f "$GIT_DIR/BISECT_RUN" && {
+	# extract commit and author email address from
+	# "$GIT_DIR/BISECT_RUN" and send flames
+	git bisect reset
+}
 
-The attached is a minimum fix for the above issues, but not for
-immediate application, as I am sure the rewording would make
-messages inconsistent with other cases.  The updated output
-would look like this:
-
-================================================================
-Merging the files: RelNotes
-
-Symbolic link merge conflict for 'RelNotes':
-  local: a symbolic link -> 'Documentation/RelNotes-1.5.1.txt'
-  remote: a symbolic link -> 'Documentation/RelNotes-1.5.0.6.txt'
-Use (l)ocal or (r)emote, or (a)bort? l
-================================================================
-
----
- git-mergetool.sh |   19 ++++++++-----------
- 1 files changed, 8 insertions(+), 11 deletions(-)
-
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 7942fd0..0b30133 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -44,27 +44,24 @@ function describe_file () {
-     branch="$2"
-     file="$3"
- 
--    echo -n "    "
-+    echo -n "  ${branch}: "
-     if test -z "$mode"; then
--	echo -n "'$path' was deleted"
-+	echo "deleted"
-     elif is_symlink "$mode" ; then
--	echo -n "'$path' is a symlink containing '"
--	cat "$file"
--	echo -n "'"
-+	echo "a symbolic link -> '$(cat "$file")'"
-     else
- 	if base_present; then
--	    echo -n "'$path' was created"
-+	    echo "created"
- 	else
--	    echo -n "'$path' was modified"
-+	    echo "modified"
- 	fi
-     fi
--    echo " in the $branch branch"
- }
- 
- 
- resolve_symlink_merge () {
-     while /bin/true; do
--	echo -n "Use (r)emote or (l)ocal, or (a)bort? "
-+	echo -n "Use (l)ocal or (r)emote, or (a)bort? "
- 	read ans
- 	case "$ans" in
- 	    [lL]*)
-@@ -79,7 +76,7 @@ resolve_symlink_merge () {
- 		cleanup_temp_files --save-backup
- 		return
- 		;;
--	    [qQ]*)
-+	    [aAqQ]*)
- 		exit 1
- 		;;
- 	    esac
-@@ -147,7 +144,7 @@ merge_file () {
-     fi
- 
-     if is_symlink "$local_mode" || is_symlink "$remote_mode"; then
--	echo "Symlink merge conflict for $path:"
-+	echo "Symbolic link conflict for '$path':"
- 	describe_file "$local_mode" "local" "$LOCAL"
- 	describe_file "$remote_mode" "remote" "$REMOTE"
- 	resolve_symlink_merge
+Thanks,
+Christian.
