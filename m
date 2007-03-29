@@ -1,63 +1,56 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: SEGV in git-merge recursive:
-Date: Thu, 29 Mar 2007 15:34:00 +0200
-Message-ID: <81b0412b0703290634j6e62ba89tce3c8c963be3fb92@mail.gmail.com>
-References: <20070329075010.GA3493@hermes>
-	 <81b0412b0703290429k63642a34u6bea1e08803ffba7@mail.gmail.com>
-	 <20070329125803.GA16739@hermes>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] Teach git-mergetool about Apple's opendiff/FileMerge
+Date: Thu, 29 Mar 2007 10:03:12 -0400
+Message-ID: <20070329140312.GG2913@thunk.org>
+References: <20070322213728.GD3854@regex.yaph.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Alex Riesen" <raa.lkml@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Mar 29 15:34:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Arjen Laarhoven <arjen@yaph.org>
+X-From: git-owner@vger.kernel.org Thu Mar 29 16:03:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HWulU-0002Yn-E7
-	for gcvg-git@gmane.org; Thu, 29 Mar 2007 15:34:08 +0200
+	id 1HWvDv-0007cy-0G
+	for gcvg-git@gmane.org; Thu, 29 Mar 2007 16:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753491AbXC2NeE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 29 Mar 2007 09:34:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753496AbXC2NeE
-	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 09:34:04 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:47504 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753491AbXC2NeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Mar 2007 09:34:01 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so221521wra
-        for <git@vger.kernel.org>; Thu, 29 Mar 2007 06:34:01 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KGRZI46mNSaR0B6Z8T56GZ6i/fjMmorEgY7uFMz4fHezhPxUFRilwSZWSUcTJ+xSJEqXeRGqUyhtJafAggJUE6eQtYPwJO7NAg9MtBGe9qR5KB8sy4nnXWJzwD24N3fMugpvo3xhFVyk8vus4KfgpR73VaLY5dAEeJpje3rS6K4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sGJkAAdvx6zM5J+Wb9sQ2aUm/1sne/LMkgAKyPK89PPWvT1TUhtbG01vaT/E6yep+W4clc66Y1111LUX8xh9KlEbcc4t0pMJAETMcZ2vzKSgS/svqtUh/L7DZbQGFWlXXjggXkKzWv2VrZnK1lpJIOp9PU8hy6bXylyq6Da9m6U=
-Received: by 10.100.142.12 with SMTP id p12mr356080and.1175175240309;
-        Thu, 29 Mar 2007 06:34:00 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Thu, 29 Mar 2007 06:34:00 -0700 (PDT)
-In-Reply-To: <20070329125803.GA16739@hermes>
+	id S1751951AbXC2ODP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 29 Mar 2007 10:03:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753567AbXC2ODP
+	(ORCPT <rfc822;git-outgoing>); Thu, 29 Mar 2007 10:03:15 -0400
+Received: from thunk.org ([69.25.196.29]:58787 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751951AbXC2ODO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Mar 2007 10:03:14 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HWvJe-00071q-TH; Thu, 29 Mar 2007 10:09:27 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HWvDc-0003x6-He; Thu, 29 Mar 2007 10:03:12 -0400
 Content-Disposition: inline
+In-Reply-To: <20070322213728.GD3854@regex.yaph.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43433>
 
-On 3/29/07, Tom Prince <tom.prince@ualberta.net> wrote:
-> On Thu, Mar 29, 2007 at 01:29:46PM +0200, Alex Riesen wrote:
-> > On 3/29/07, Tom Prince <tom.prince@ualberta.net> wrote:
-> > >I have been keeping my Maildir in git, a non-trivial merge that causes a
-> > >segfault in git-merge-recursive.
-> > >
-> > >It does not appear to matter which direction I try to merge.
-> > >
-> >
-> > BTW, what git do you have? git --version?
->
-> 1.5.1.rc3
->
+Hi Arjen,
 
-Did it crash before? If it didn't, is it possible for you to bisect
-the commit which caused the problem?
+	The version of your patch which I just checked into my sources
+fixes the issues which Junio raised (whitespace issues, double quotes,
+factoring out common code).  The other change I made was that I
+changed the search order so that by default opendiff is preferred over
+emerge (on the assumption that MacOS developers are more likely to
+want to use the GUI merge tool than emacs's merge tool).  Of course,
+people are free to set whatever they choose in their .gitconfig file.
+
+	Thanks for the patch!
+
+						- Ted
