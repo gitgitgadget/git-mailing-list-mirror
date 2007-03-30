@@ -1,99 +1,69 @@
-From: Theodore Tso <tytso@mit.edu>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: basics... when reading docs doesn't help
-Date: Fri, 30 Mar 2007 16:23:12 -0400
-Message-ID: <20070330202312.GG3198@thunk.org>
-References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange> <20070329211616.GH6143@fieldses.org> <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net> <20070329214654.GI6143@fieldses.org> <Pine.LNX.4.60.0703292354100.10351@poirot.grange> <Pine.LNX.4.64.0703291531030.6730@woody.linux-foundation.org> <Pine.LNX.4.60.0703301855480.4757@poirot.grange> <Pine.LNX.4.64.0703301126390.6730@woody.linux-foundation.org> <Pine.LNX.4.60.0703302135590.10784@poirot.grange>
+Date: Fri, 30 Mar 2007 13:39:56 -0700
+Message-ID: <7v7isy1n4z.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange>
+	<20070329211616.GH6143@fieldses.org>
+	<7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
+	<20070329214654.GI6143@fieldses.org>
+	<Pine.LNX.4.60.0703292354100.10351@poirot.grange>
+	<Pine.LNX.4.64.0703291531030.6730@woody.linux-foundation.org>
+	<Pine.LNX.4.60.0703301855480.4757@poirot.grange>
+	<Pine.LNX.4.64.0703301126390.6730@woody.linux-foundation.org>
+	<Pine.LNX.4.60.0703302135590.10784@poirot.grange>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
 To: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 30 22:23:34 2007
+X-From: git-owner@vger.kernel.org Fri Mar 30 22:40:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXNdE-0000E1-QH
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 22:23:33 +0200
+	id 1HXNtV-0003p8-EJ
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 22:40:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753587AbXC3UX3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 16:23:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753594AbXC3UX3
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 16:23:29 -0400
-Received: from thunk.org ([69.25.196.29]:41447 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753587AbXC3UX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 16:23:28 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HXNiz-0006A3-TF; Fri, 30 Mar 2007 16:29:30 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HXNcu-000669-GE; Fri, 30 Mar 2007 16:23:12 -0400
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.60.0703302135590.10784@poirot.grange>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1753605AbXC3Uj6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 16:39:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbXC3Uj6
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 16:39:58 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:36797 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753605AbXC3Uj5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 16:39:57 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070330203957.WMDI25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 30 Mar 2007 16:39:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id h8fw1W0031kojtg0000000; Fri, 30 Mar 2007 16:39:56 -0400
+In-Reply-To: <Pine.LNX.4.60.0703302135590.10784@poirot.grange> (Guennadi
+	Liakhovetski's message of "Fri, 30 Mar 2007 21:49:20 +0200 (CEST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 30, 2007 at 09:49:20PM +0200, Guennadi Liakhovetski wrote:
+Guennadi Liakhovetski <g.liakhovetski@gmx.de> writes:
+
+>> Yeah, this is all a bit complex, and it takes a while to wrap your head 
+>> around it, but I have to say, once you do, the git-1.5.x layout really 
+>> *is* very powerful, and it's actually very natural too (but the "very 
+>> natural" part only comes after you have that "Aaahh!" moment!)
+>
 > Aha, so, that's how it is then! Why hasn't anybody explained this to me 
 > strait away?!:-))))
 
-A lot of this is in the git 1.5's User Manual:
+Because I and others have explained that to other people on the
+list a few times already, perhaps?  The list archive is your
+friend.
 
-	http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
+> .... There isn't a way to convert such a "old style" tree to the 
+> "new style", is there?
 
-See also the man page for git-remote, or here:
-
-	http://www.kernel.org/pub/software/scm/git/docs/git-remote.html
-
-
-> Yeah, hopefully, I'll learn to at least use this thing efficiently enough. 
-> Someone has to write a book on it though...
-
-The user-manual and the git tutorials are pretty good --- just make
-sure you look at the ones that come with git 1.5.0, or the ones at
-http://www.kernel.org/pub/software/svm/git/docs (which reflects the
-Documentation as of the latest development version of git).
-
-The problem is that there are some tutorials on the web which assume
-git 1.4.x, or cogito, and that has been listed as a defect by people
-who have been confused because those tutorials are out of date with
-respect to modern git.[1]
-
-[1] http://changelog.complete.org/posts/594-More-on-Git,-Mercurial,-and-Bzr.html
-
-> And, so, it's a pity I cloned Paul's tree yesterday with the "old" git. 
-> And from your answer above it seems like some features of the "new" git 
-> will not be available with this tree, like equally named local and remote 
-> branches, etc. There isn't a way to convert such a "old style" tree to the 
-> "new style", is there? Not a big deal, will re-clone at some point, maybe 
-> when we get local git mirrors...
-
-Yeah, we need to really make sure the word gets out that new git users
-should really make sure they are using git 1.5, and not git 1.4.x; it
-is such an improvement in terms of usability over git 1.4.x that there
-really is no comparison.  (Of course, guess what Debian is going to
-ship in their soon-to-be-release "stable" distribution?  git 1.4.4.  Sigh...)
-
-It is possible to get the new style naming, by using the git remote
-command.  Just do
-
-	git remote add origin <url>
-
-...and that will adjust your git configuration file appropriate.
-Check out the git 1.5.0 release notes, and the git-config man page,
-and there are some other adjustments you can make as well that will
-make git more efficiently, at the cost of breaking some level of
-compatibility with git 1.4.x tools which replicate via the "dumb" http
-protocol.  But for local development repositories that generally isn't
-a concern.
-
-						- Ted
+That also can be found in the list archive.  I think Shawn
+Pearce wrote that script using contrib/remotes2config.sh from
+the git.git project source tree.
