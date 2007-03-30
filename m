@@ -1,92 +1,135 @@
-From: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
-Subject: Re: basics... when reading docs doesn't help
-Date: Fri, 30 Mar 2007 23:11:46 +0200 (CEST)
-Message-ID: <Pine.LNX.4.60.0703302300430.10784@poirot.grange>
-References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange>
- <20070329211616.GH6143@fieldses.org> <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
- <20070329214654.GI6143@fieldses.org> <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
- <Pine.LNX.4.64.0703291531030.6730@woody.linux-foundation.org>
- <Pine.LNX.4.60.0703301855480.4757@poirot.grange>
- <Pine.LNX.4.64.0703301126390.6730@woody.linux-foundation.org>
- <Pine.LNX.4.60.0703302135590.10784@poirot.grange> <7v7isy1n4z.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-mailinfo fixes for patch munging
+Date: Fri, 30 Mar 2007 14:19:42 -0700
+Message-ID: <7vmz1uzaxd.fsf@assigned-by-dhcp.cox.net>
+References: <20070330161845.GI11029@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 30 23:19:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Don Zickus <dzickus@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Mar 30 23:20:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXOV3-0007Kn-Ac
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 23:19:09 +0200
+	id 1HXOWN-00083i-FP
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 23:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753821AbXC3VSh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 17:18:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbXC3VLy
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 17:11:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59746 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753987AbXC3VLs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 17:11:48 -0400
-Received: (qmail invoked by alias); 30 Mar 2007 21:11:47 -0000
-Received: from dynamic-unidsl-85-197-31-110.westend.de (EHLO poirot.grange) [85.197.31.110]
-  by mail.gmx.net (mp043) with SMTP; 30 Mar 2007 23:11:47 +0200
-X-Authenticated: #20450766
-X-Provags-ID: V01U2FsdGVkX1+unMJ4ToquqAUWC7zWdPO9/SgyPwfONifRtMib2m
-	PAAmU3DNLQlvXR
-Received: from lyakh (helo=localhost)
-	by poirot.grange with local-esmtp (Exim 3.36 #1 (Debian))
-	id 1HXONu-0004HB-00; Fri, 30 Mar 2007 23:11:46 +0200
-In-Reply-To: <7v7isy1n4z.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1754005AbXC3VUO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 17:20:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbXC3VTs
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 17:19:48 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46864 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753825AbXC3VTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 17:19:43 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070330211944.WXLW373.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 30 Mar 2007 17:19:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id h9Ki1W00P1kojtg0000000; Fri, 30 Mar 2007 17:19:43 -0400
+In-Reply-To: <20070330161845.GI11029@redhat.com> (Don Zickus's message of
+	"Fri, 30 Mar 2007 12:18:45 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43499>
 
-On Fri, 30 Mar 2007, Junio C Hamano wrote:
+Don Zickus <dzickus@redhat.com> writes:
 
-> Guennadi Liakhovetski <g.liakhovetski@gmx.de> writes:
-> 
-> >> Yeah, this is all a bit complex, and it takes a while to wrap your head 
-> >> around it, but I have to say, once you do, the git-1.5.x layout really 
-> >> *is* very powerful, and it's actually very natural too (but the "very 
-> >> natural" part only comes after you have that "Aaahh!" moment!)
-> >
-> > Aha, so, that's how it is then! Why hasn't anybody explained this to me 
-> > strait away?!:-))))
-> 
-> Because I and others have explained that to other people on the
-> list a few times already, perhaps?  The list archive is your
-> friend.
+> Don't translate the patch to UTF-8, instead preserve the data as is.  Also
+> allow overwriting the primary mail headers (addresses Linus's concern).  
+>
+> I also revert a test case that was included in the original patch.  Now it
+> makes sense why it was the way it was. :)
+>
+> Cheers,
+> Don
 
-Emn, sorry, that was supposed to be a joke...
+Thanks.  Sign-off would have been nice.
 
-In my original post I said something like "I know, this most probably has 
-been asked (many times) before, but since the questions are pretty 
-generic, I don't have a very good idea what to search archives for, but 
-any pointer to a thread in archive would be appreciated". I am greatful 
-somebody took his time to explain a couple of things to me even knowing I 
-will only understand a few percent strait away. And I am usually the first 
-one to point others to list archives:-) It is easy to search for isp1761, 
-but it is not so easy to search for "clone multiple trees reuse disk 
-space..."
+> diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+> index d94578c..71b6457 100644
+> --- a/builtin-mailinfo.c
+> +++ b/builtin-mailinfo.c
+> @@ -294,14 +294,14 @@ static char *header[MAX_HDR_PARSED] = {
+>  	"From","Subject","Date",
+>  };
+>  
+> -static int check_header(char *line, char **hdr_data)
+> +static int check_header(char *line, char **hdr_data, int overwrite)
+>  {
+>  	int i;
+>  
+>  	/* search for the interesting parts */
+>  	for (i = 0; header[i]; i++) {
+>  		int len = strlen(header[i]);
+> -		if (!hdr_data[i] &&
+> +		if ((!hdr_data[i] || overwrite) &&
+>  		    !strncasecmp(line, header[i], len) &&
+>  		    line[len] == ':' && isspace(line[len + 1])) {
+>  			/* Unwrap inline B and Q encoding, and optionally
 
-I am greatful for any help and I can well understand those who decided not 
-to repeat what they've already explained a 100 times before.
+This check_header is called from each multi-part boundary with
+overwrite=1, so if you have two parts and you have From: or
+Subject: in the multi-part header (not in-body), wouldn't they
+overwrite what we already have?  That is not desired, I would
+think.
 
-> > .... There isn't a way to convert such a "old style" tree to the 
-> > "new style", is there?
-> 
-> That also can be found in the list archive.  I think Shawn
-> Pearce wrote that script using contrib/remotes2config.sh from
-> the git.git project source tree.
+For non multi-part case, what we traditionally have done is:
 
-Thanks, now this is easy to search!
+	* Take Subject:, Date:, and From: from RFC2822 headers
+          to prime the title and authorship information.
 
-Thanks
-Guennadi
----
-Guennadi Liakhovetski
+	* The first lines of the body of the message (i.e. after
+          the blank line that separates 2822 headers and the
+          body) can look like the above header lines to
+          override.
+
+	* A line that does not look like an overriding in-body
+          header line is the first line of the commit log
+          message.  After that, nothing is taken as an
+          overriding in-body header.
+
+For a multi-part, I think we only processed the first part as
+the commit log message, potentially starting with the overriding
+in-body headers.  In other words, in-body headers are what the
+user *types* to override what the MUA says in RFC2822 headers.
+As the stuff that follow the multi-part boundary (like
+content-type and transfer encoding) are of the MUA kind, I
+suspect we do not want it to override what the sender said in
+the earlier parts of the message.
+
+> @@ -614,6 +614,7 @@ static int find_boundary(void)
+>  
+>  static int handle_boundary(void)
+>  {
+> +	char newline[]="\n";
+>  again:
+>  	if (!memcmp(line+content_top->boundary_len, "--", 2)) {
+>  		/* we hit an end boundary */
+> @@ -628,7 +629,7 @@ again:
+>  					"can't recover\n");
+>  			exit(1);
+>  		}
+> -		handle_filter("\n");
+> +		handle_filter(newline);
+>  
+>  		/* skip to the next boundary */
+>  		if (!find_boundary())
+
+These two hunks certainly do not hurt, but why?  Is this about
+the constness of the first parameter to handle_filter() and its
+call chain?
+
+Having said that, the result of the patch is much better.  
+
+In fact, I couldn't "git am" this patch (the part that reverts
+the test vector) with the current tip of 'master' because of the
+breakage you are fixing with it ;-).
+
+Now I can.  So I'd probably take this patch for now.
