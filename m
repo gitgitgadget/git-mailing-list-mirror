@@ -1,82 +1,99 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git-add has gone lstat() mad
-Date: Fri, 30 Mar 2007 21:20:22 +0100
-Message-ID: <200703302120.23713.andyparkins@gmail.com>
-References: <200703302055.13619.andyparkins@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: basics... when reading docs doesn't help
+Date: Fri, 30 Mar 2007 16:23:12 -0400
+Message-ID: <20070330202312.GG3198@thunk.org>
+References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange> <20070329211616.GH6143@fieldses.org> <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net> <20070329214654.GI6143@fieldses.org> <Pine.LNX.4.60.0703292354100.10351@poirot.grange> <Pine.LNX.4.64.0703291531030.6730@woody.linux-foundation.org> <Pine.LNX.4.60.0703301855480.4757@poirot.grange> <Pine.LNX.4.64.0703301126390.6730@woody.linux-foundation.org> <Pine.LNX.4.60.0703302135590.10784@poirot.grange>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Mar 30 22:23:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 30 22:23:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXNd3-0000BE-BK
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 22:23:21 +0200
+	id 1HXNdE-0000E1-QH
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 22:23:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753584AbXC3UXS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 16:23:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753587AbXC3UXS
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 16:23:18 -0400
-Received: from ug-out-1314.google.com ([66.249.92.173]:9125 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753581AbXC3UXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 16:23:17 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so927570uga
-        for <git@vger.kernel.org>; Fri, 30 Mar 2007 13:23:14 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=HnmfsStZ11ImQ8nJMYfOYlU59ErATu5h69paFM0wjx5cuKvalhxJLnTH3Nat89LMHFgBQp53WQEHqItfLbW70GYBPAp68TMZT36qCrx36UfhXgjxxqPavfflCdBj2QpTaJ0MkGZzFnt9LudwkpR60mmug4NrUA5Hyvn2wbrr2RY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=eqd3qrWbOokw2w/Lqfa7NVOnO420uCMFGSz7AsH6ySWNWLzg1S5uQppd5HqSTTI/ogKbhZSIazPnfN7HKq6cjplgpnuCQVxndqkomCeBCEZjDC2g1OejLUOAPwRK57OvhGBl9CxelBQiH8RHC6M758QIz8jIK2CDaFaAymXZ3JQ=
-Received: by 10.66.237.9 with SMTP id k9mr2212817ugh.1175286194635;
-        Fri, 30 Mar 2007 13:23:14 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id o24sm3670513ugd.2007.03.30.13.23.13;
-        Fri, 30 Mar 2007 13:23:14 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <200703302055.13619.andyparkins@gmail.com>
+	id S1753587AbXC3UX3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 16:23:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753594AbXC3UX3
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 16:23:29 -0400
+Received: from thunk.org ([69.25.196.29]:41447 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753587AbXC3UX2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 16:23:28 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HXNiz-0006A3-TF; Fri, 30 Mar 2007 16:29:30 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HXNcu-000669-GE; Fri, 30 Mar 2007 16:23:12 -0400
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.60.0703302135590.10784@poirot.grange>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Friday 2007, March 30, Andy Parkins wrote:
+On Fri, Mar 30, 2007 at 09:49:20PM +0200, Guennadi Liakhovetski wrote:
+> Aha, so, that's how it is then! Why hasn't anybody explained this to me 
+> strait away?!:-))))
 
-> At this point the CPU pegs at 100% systime.  An strace shows that git
-> is calling lstat64() on every file in my home directory.  I killed
-> git before it scanned everything I've ever done.
+A lot of this is in the git 1.5's User Manual:
 
-Okay.  I've tracked down the culprit function, but I have no idea what 
-the fix is.
+	http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
 
-builtin-add.c:fill_directory() calls
-dir.c:read_directory() which calls
-dir.c:read_directory_recursive()
+See also the man page for git-remote, or here:
 
-I can't see why git feels that it has to recurse the entire subtree.  It 
-seems to be something to do with the gitignore stuff.  Surely there is 
-no need to use a recursive search when no directories are being added?
-
-If git-add were given
-
- file1
- dir1/file2
- dir2/dir3/file3
-
-Then only the directories "."; "dir1/"; "dir2"; and "dir2/dir3" need 
-checking for .gitignore files; and in none of those cases does the 
-search need to be recursive.
+	http://www.kernel.org/pub/software/scm/git/docs/git-remote.html
 
 
+> Yeah, hopefully, I'll learn to at least use this thing efficiently enough. 
+> Someone has to write a book on it though...
 
-Andy
+The user-manual and the git tutorials are pretty good --- just make
+sure you look at the ones that come with git 1.5.0, or the ones at
+http://www.kernel.org/pub/software/svm/git/docs (which reflects the
+Documentation as of the latest development version of git).
 
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+The problem is that there are some tutorials on the web which assume
+git 1.4.x, or cogito, and that has been listed as a defect by people
+who have been confused because those tutorials are out of date with
+respect to modern git.[1]
+
+[1] http://changelog.complete.org/posts/594-More-on-Git,-Mercurial,-and-Bzr.html
+
+> And, so, it's a pity I cloned Paul's tree yesterday with the "old" git. 
+> And from your answer above it seems like some features of the "new" git 
+> will not be available with this tree, like equally named local and remote 
+> branches, etc. There isn't a way to convert such a "old style" tree to the 
+> "new style", is there? Not a big deal, will re-clone at some point, maybe 
+> when we get local git mirrors...
+
+Yeah, we need to really make sure the word gets out that new git users
+should really make sure they are using git 1.5, and not git 1.4.x; it
+is such an improvement in terms of usability over git 1.4.x that there
+really is no comparison.  (Of course, guess what Debian is going to
+ship in their soon-to-be-release "stable" distribution?  git 1.4.4.  Sigh...)
+
+It is possible to get the new style naming, by using the git remote
+command.  Just do
+
+	git remote add origin <url>
+
+...and that will adjust your git configuration file appropriate.
+Check out the git 1.5.0 release notes, and the git-config man page,
+and there are some other adjustments you can make as well that will
+make git more efficiently, at the cost of breaking some level of
+compatibility with git 1.4.x tools which replicate via the "dumb" http
+protocol.  But for local development repositories that generally isn't
+a concern.
+
+						- Ted
