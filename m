@@ -1,70 +1,114 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-add has gone lstat() mad
-Date: Fri, 30 Mar 2007 18:38:56 -0700
-Message-ID: <7vslbmxkcv.fsf@assigned-by-dhcp.cox.net>
-References: <200703302055.13619.andyparkins@gmail.com>
-	<200703302120.23713.andyparkins@gmail.com>
+From: "Andreas Herrmann" <andreas.herrmann3@amd.com>
+Subject: Re: basics... when reading docs doesn't help
+Date: Fri, 30 Mar 2007 20:02:11 +0200
+Message-ID: <20070330180211.GI16087@alberich.amd.com>
+References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange>
+ <20070329211616.GH6143@fieldses.org>
+ <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
+ <20070329214654.GI6143@fieldses.org>
+ <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 03:39:13 2007
+Content-Type: text/plain;
+ charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
+To: "Guennadi Liakhovetski" <g.liakhovetski@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Mar 30 20:02:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXSYg-0002X0-Q3
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 03:39:11 +0200
+	id 1HXLQs-0004cp-9d
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 20:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933290AbXCaBi6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 21:38:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933294AbXCaBi6
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 21:38:58 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:50846 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933290AbXCaBi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 21:38:57 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070331013856.BFVL25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 30 Mar 2007 21:38:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id hDew1W00P1kojtg0000000; Fri, 30 Mar 2007 21:38:57 -0400
-In-Reply-To: <200703302120.23713.andyparkins@gmail.com> (Andy Parkins's
-	message of "Fri, 30 Mar 2007 21:20:22 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752284AbXC3SCe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 14:02:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752226AbXC3SCe
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 14:02:34 -0400
+Received: from outbound-blu.frontbridge.com ([65.55.251.16]:8528 "EHLO
+	outbound1-blu-R.bigfish.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752068AbXC3SCd (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2007 14:02:33 -0400
+Received: from outbound1-blu.bigfish.com (localhost.localdomain [127.0.0.1])
+	by outbound1-blu-R.bigfish.com (Postfix) with ESMTP id 8BB2F1288FF3;
+	Fri, 30 Mar 2007 18:02:32 +0000 (UTC)
+Received: from mail38-blu-R.bigfish.com (unknown [10.1.252.3])
+	by outbound1-blu.bigfish.com (Postfix) with ESMTP id 4465412E004F;
+	Fri, 30 Mar 2007 18:02:32 +0000 (UTC)
+Received: from mail38-blu (localhost.localdomain [127.0.0.1])
+	by mail38-blu-R.bigfish.com (Postfix) with ESMTP id 82BB645023F;
+	Fri, 30 Mar 2007 18:02:30 +0000 (UTC)
+X-BigFish: VP
+Received: by mail38-blu (MessageSwitch) id 1175277748803661_4002; Fri, 30 Mar 2007 18:02:28 +0000 (UCT)
+Received: from ausb3extmailp01.amd.com (unknown [163.181.251.8])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail38-blu.bigfish.com (Postfix) with ESMTP id 3BC411130092;
+	Fri, 30 Mar 2007 18:02:26 +0000 (UTC)
+Received: from SAUSGW01.amd.com (sausgw01.amd.com [163.181.250.21])
+	by ausb3extmailp01.amd.com (Switch-3.2.5/Switch-3.2.5) with ESMTP id l2UI1oLT011291;
+	Fri, 30 Mar 2007 13:02:21 -0500
+Received: from 163.181.22.102 by SAUSGW01.amd.com with ESMTP (AMD SMTP
+ Relay (Email Firewall v6.1.0)); Fri, 30 Mar 2007 13:02:18 -0500
+X-Server-Uuid: 8C3DB987-180B-4465-9446-45C15473FD3E
+Received: from SAUSEXMB3.amd.com ([163.181.22.202]) by sausexbh2.amd.com
+ with Microsoft SMTPSVC(6.0.3790.2499); Fri, 30 Mar 2007 13:02:18 -0500
+Received: from SDRSEXMB1.amd.com ([172.20.3.116]) by SAUSEXMB3.amd.com
+ with Microsoft SMTPSVC(6.0.3790.2499); Fri, 30 Mar 2007 13:02:18 -0500
+Received: from amd.com ([165.204.85.18]) by SDRSEXMB1.amd.com with
+ Microsoft SMTPSVC(6.0.3790.2499); Fri, 30 Mar 2007 20:02:15 +0200
+Received: by amd.com (nbSMTP-1.00) for uid 41369 aherrma3@amd.com; Fri,
+ 30 Mar 2007 20:02:11 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
+User-Agent: mutt-ng/devel-r804 (Linux)
+X-OriginalArrivalTime: 30 Mar 2007 18:02:15.0847 (UTC)
+ FILETIME=[8CD1EB70:01C772F5]
+X-WSS-ID: 6A138F202EW2717782-01-01
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43523>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+On Fri, Mar 30, 2007 at 12:13:02AM +0200, Guennadi Liakhovetski wrote:
+> On Thu, 29 Mar 2007, J. Bruce Fields wrote:
+> 
+> > On Thu, Mar 29, 2007 at 02:26:10PM -0700, Junio C Hamano wrote:
+> > > 
+> > > How about suggesting "clone -l -s"?
+> 
+> Yes, but how do "advanced git users" kernel developers work? Do they just 
+> do 1 clone and build / clean every time they want to test another 
+> configuration / arch, or do they clone -l or what? Do they create branches 
+> for each development thread, then pull / push between trees?...
+> 
+> > If you really want to share as much as possible, then I guess you want
+> > to share the working trees too, since (as evidenced above), they're at
+> > least as large as the compressed history.
+> 
+> But I don't want to re-build. Apart from i386 I build for a couple of ARM 
+> and PPC targets too...
 
-> I can't see why git feels that it has to recurse the entire subtree.  It 
-> seems to be something to do with the gitignore stuff.  Surely there is 
-> no need to use a recursive search when no directories are being added?
+Seems to be trivial but:
+Why don't you use "make O=/foo/bar/arch<x>-config<y>" to put output
+files into separate directories? So you can have one source tree and
+put each different kernel config and arch into a separate output
+directory.
 
-I do not think this is anything new.
+And if you have different sources for you trees put them into branches.
 
-> If git-add were given
->
->  file1
->  dir1/file2
->  dir2/dir3/file3
+When switching between branches, atime of files are updated accordingly.
+So even make should be happy with that.
 
-The thing is, you are not giving the above three pathnames,
-although you might think you are.
+Just one drawback:
+Switching back and forth between two branches will cause
+recompilation of sources that differ between that branches -
+although nothing might have changed within a branch in the meantime.
 
-You are giving three path *patterns* and asking git-add: "please
-run 'git ls-files --others' and add the ones that match these
-patterns".
+(Not that I have used such an setup, yet.
+But I think that should work.)
 
-You can teach it to detect cases where you do not have wildcard
-(that is both shell glob wildcard and directory names; the
-latter means "grab everything in that named directory") to limit
-the set of directories to descend into.
 
-Patches are welcome, but applying them to 'master' needs to wait
-post 1.5.1.
+Regards,
+
+Andreas
