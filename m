@@ -1,88 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Packing large repositories
-Date: Fri, 30 Mar 2007 02:23:25 -0400
-Message-ID: <20070330062324.GU13247@spearce.org>
-References: <56b7f5510703280005o7998d65pcbcd4636b46d8d23@mail.gmail.com> <Pine.LNX.4.64.0703280943450.6730@woody.linux-foundation.org>
+From: "Raimund Bauer" <ray@softwarelandschaft.com>
+Subject: RE: Problem with gitk on cygwin
+Date: Fri, 30 Mar 2007 09:36:22 +0200
+Organization: Softwarelandschaft
+Message-ID: <000201c7729e$1d7c40b0$0b0aa8c0@abf.local>
+References: <20070330052533.GQ13247@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Mar 30 08:23:50 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'git'" <git@vger.kernel.org>
+To: <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Mar 30 09:35:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXAWb-0001Iz-HO
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 08:23:49 +0200
+	id 1HXBeB-0007va-KD
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 09:35:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753836AbXC3GXb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 02:23:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbXC3GXb
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 02:23:31 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58400 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753836AbXC3GXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 02:23:30 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HXAWE-0006Z7-Od; Fri, 30 Mar 2007 02:23:27 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6AAE920FBAE; Fri, 30 Mar 2007 02:23:25 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0703280943450.6730@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752274AbXC3Hfk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 03:35:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753173AbXC3Hfk
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 03:35:40 -0400
+Received: from s15211414.onlinehome-server.info ([87.106.16.196]:47651 "EHLO
+	s15211414.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752274AbXC3Hfk (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2007 03:35:40 -0400
+Received: (qmail 809 invoked from network); 30 Mar 2007 09:41:03 +0200
+Received: from host-62-245-155-90.customer.m-online.net (HELO swl011) (62.245.155.90)
+  by s15211414.onlinehome-server.info with SMTP; 30 Mar 2007 09:41:03 +0200
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.6626
+Importance: Normal
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3028
+In-Reply-To: <20070330052533.GQ13247@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43496>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Wed, 28 Mar 2007, Dana How wrote:
-> > Of course this is unusable, since object_entry's in an .idx
-> > file have only 32 bits in their offset fields.  I conclude that
-> > for such large projects,  git-repack/git-pack-objects would need
-> > new options to control maximum packfile size.
+> From: spearce@spearce.org [mailto:spearce@spearce.org] 
 > 
-> Either that, or update the index file format. I think that your approach 
-> of having a size limiter is actually the *better* one, though. 
+> I have seen this failure before, and its usually a result of 
+> having your CYGWIN environment variable including 'notty':
+> 
+>   http://www.cygwin.com/cygwin-ug-net/using-cygwinenv.html
+> 
+> Or maybe its the opposite.  I don't have access to my Cygwin 
+> system right now, so I cannot check if I have notty, tty, or 
+> just ommitted it entirely from my CYGWIN environment varible. 
+>  But I think that's the issue.
 
-Nico and I were hoping we could push the index file format change back
-until pack v4 was also worthy of merging.  So I had also started work
-on an index-pack splitter:
+Thanks a lot, that was the right pointer, even if I don't
+understand what went wrong.
+My CYGWIN environment variable was set to "ntsec tty", and after
+doing a 
+export CYGWIN=ntsec
+in the shell (which according to your link shouldn't change
+anything) gitk magically started working!
 
-  URL:    git://repo.or.cz/git/fastimport.git
-  Branch: sp/splitpack
- 
-Its far from complete.
+> Shawn.
 
-> Well, it does affect fetching, in that "git index-pack" obviously would 
-> also need to be taught how to split the resulting indexed packs up into 
-> multiple smaller ones from one large incoming one. But that shouldn't be 
-> fundamentally hard either, apart from the inconvenience of having to 
-> rewrite the object count in the pack headers..
+Thank you very much my saviour, now I can use gitk in office too ;-)
 
-We already do this if its a thin-pack that is being made non-thin.
-So its annoying, yea, but we already have one toe in that particular
-pond...
- 
-> To avoid that issue, it may be that it's actually better to split things 
-> up at pack-generation time *even* for the case of --stdout
-
-This is actually a pretty good idea.  index-pack knows when the end
-of its current packfile is; if there are 12 more bytes available in
-the input stream and it looks like another pack header then it can
-just restart itself over again with that next pack.  This is actually
-a pretty small change in index-pack, certainly a lot less intrusive
-than what I was trying to do in my sp/splitpack topic above.
- 
 -- 
-Shawn.
+best regards
+
+  Ray 
