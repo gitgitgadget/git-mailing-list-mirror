@@ -1,66 +1,56 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] checkout -d: explicitly detach HEAD even when switching to the tip of a branch
-Date: Sat, 31 Mar 2007 02:11:45 +0200
-Organization: At home
-Message-ID: <euk8ps$vu1$1@sea.gmane.org>
-References: <7vr6r879zp.fsf@assigned-by-dhcp.cox.net>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] mergetool: Clean up description of files and prompts  for merge resolutions
+Date: Fri, 30 Mar 2007 07:46:47 -0700
+Message-ID: <86648ikcvc.fsf@blue.stonehenge.com>
+References: <11751830653554-git-send-email-tytso@mit.edu>
+	<11751830652230-git-send-email-tytso@mit.edu>
+	<20070329222905.GA25347@moooo.ath.cx>
+	<20070330025411.GD3198@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 31 02:08:51 2007
+Cc: Matthias Lederhofer <matled@gmx.net>, git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Mar 30 16:47:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXR9G-0004ja-S9
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 02:08:51 +0200
+	id 1HXINa-0001Sb-4A
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 16:47:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933156AbXCaAIm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 20:08:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933161AbXCaAIm
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 20:08:42 -0400
-Received: from main.gmane.org ([80.91.229.2]:54048 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933156AbXCaAIm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 20:08:42 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HXR93-0007KE-9g
-	for git@vger.kernel.org; Sat, 31 Mar 2007 02:08:37 +0200
-Received: from host-89-229-25-173.torun.mm.pl ([89.229.25.173])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 31 Mar 2007 02:08:37 +0200
-Received: from jnareb by host-89-229-25-173.torun.mm.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 31 Mar 2007 02:08:37 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: host-89-229-25-173.torun.mm.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751597AbXC3Oqs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 10:46:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752625AbXC3Oqs
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 10:46:48 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:13207 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751597AbXC3Oqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 10:46:48 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 69C981DE3B1; Fri, 30 Mar 2007 07:46:47 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.3.7; tzolkin = 4 Manik; haab = 0 Uayeb
+In-Reply-To: <20070330025411.GD3198@thunk.org> (Theodore Tso's message of "Thu, 29 Mar 2007 22:54:11 -0400")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43511>
 
-Junio C Hamano wrote:
+>>>>> "Theodore" == Theodore Tso <tytso@mit.edu> writes:
 
-> You cannot currently checkout the tip of an existing branch
-> without moving to the branch.
-> 
-> This allows you to detach your HEAD and place it at such a
-> commit, with:
-> 
->     $ git checkout -d master
+Theodore> On Fri, Mar 30, 2007 at 12:29:05AM +0200, Matthias Lederhofer wrote:
+>> Theodore Ts'o <tytso@mit.edu> wrote:
+>> > +    printf "  {$branch}: "
+>> This should use %s too.
 
-What about
+Theodore> It's strictly not necessary since $branch is either "local" or "remote".
 
-      $ git checkout master^0
+... this week. :)
 
-trick to force detaching?
+Best to be safe, and provide a good model for later cut-n-pasters, I've
+always said.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
