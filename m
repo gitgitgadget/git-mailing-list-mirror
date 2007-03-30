@@ -1,135 +1,209 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] git-mailinfo fixes for patch munging
-Date: Fri, 30 Mar 2007 14:19:42 -0700
-Message-ID: <7vmz1uzaxd.fsf@assigned-by-dhcp.cox.net>
-References: <20070330161845.GI11029@redhat.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Support comparing blobs (files) with different names
+Date: Fri, 30 Mar 2007 09:48:26 +0100
+Message-ID: <200703301048.27636.jnareb@gmail.com>
+References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <200703280158.54929.jnareb@gmail.com> <20070328210301.GA57@auto.tuwien.ac.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Don Zickus <dzickus@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Mar 30 23:20:32 2007
+To: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+X-From: git-owner@vger.kernel.org Fri Mar 30 10:45:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXOWN-00083i-FP
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 23:20:31 +0200
+	id 1HXCjl-0004XA-BW
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 10:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754005AbXC3VUO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 17:20:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753994AbXC3VTs
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 17:19:48 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:46864 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753825AbXC3VTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 17:19:43 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070330211944.WXLW373.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 30 Mar 2007 17:19:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id h9Ki1W00P1kojtg0000000; Fri, 30 Mar 2007 17:19:43 -0400
-In-Reply-To: <20070330161845.GI11029@redhat.com> (Don Zickus's message of
-	"Fri, 30 Mar 2007 12:18:45 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933454AbXC3Ipa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Fri, 30 Mar 2007 04:45:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933566AbXC3Ipa
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 04:45:30 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:1452 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933454AbXC3Ip3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 04:45:29 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so744032uga
+        for <git@vger.kernel.org>; Fri, 30 Mar 2007 01:45:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WMQHZOpWxBmfJU1A7om8Z13VPbsgYH4sKd3nz2fojUjI/kjQs2c8Utu+GsoziRN+NR9zoTT/JJtj4ZqTw3/rlS4Ju5oeYXsUfV135pp8cs+Jy0vz5dnWBIXunpZUrbe0mtr/bw07kubQZV5FAn4QNC+kyXuInRBphXVWwEOyCh8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=LpO9oAkxvWp1x+u2jGIK9Iqx1i3+HQAmS5dfg7UsH/iGs+flkDSB80u04w+KKUa3MshcuB3BNNOzpWB07vBsCW0t4BnJJmfBmsHNNaSrtAeyVAZW68mLV5wui7PcAqSpx+zVHC3ml/kilDe992TzHUQqTWuLFxrKxpG60cRd2fM=
+Received: by 10.82.155.10 with SMTP id c10mr3399495bue.1175244327201;
+        Fri, 30 Mar 2007 01:45:27 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id i5sm6536484mue.2007.03.30.01.45.21;
+        Fri, 30 Mar 2007 01:45:22 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20070328210301.GA57@auto.tuwien.ac.at>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43499>
 
-Don Zickus <dzickus@redhat.com> writes:
+On Wed, Mar 28, 2007 at 23:03 +0200, Martin Koegler wrote:
+> On Wed, Mar 28, 2007 at 12:58:54AM +0100, Jakub Narebski wrote:
+>> On Thu, Mar 27, 2007, Martin Koegler wrote:
+>>> On Tue, Mar 27, 2007 at 01:56:24AM +0100, Jakub Narebski wrote:
 
-> Don't translate the patch to UTF-8, instead preserve the data as is.  Also
-> allow overwriting the primary mail headers (addresses Linus's concern).  
->
-> I also revert a test case that was included in the original patch.  Now it
-> makes sense why it was the way it was. :)
->
-> Cheers,
-> Don
+>>> If you think, its safe, I can simplify git_blobdiff. I propose
+>>> doing the following way (pseudo-code):
+>>=20
+>>> $file_parent ||=3D $file_name;
+>> [...]
+>>> $hash=3Dgit_get_hash_by_path($hash_base,$file_name);
+>> [...]
+>>> $hash_parent=3Dgit_get_hash_by_path($hash_parent_base,$file_parent)=
+;
+>> [...]
+>>>  open $fd, "-|", git_cmd(), "diff", '-p', @diff_opts,
+>>>     $hash_parent, $hash
+>>>     or die_error(undef, "Open git-diff failed");
+>> [...]
+>>> Else I will keep a reworked version of my patch.
+>>=20
+>> The trouble with this is that we may lose mode change (symlink to
+>> ordinary file etc.) because we hand-generate %diffinfo.
+>=20
+> If we need the correct mode in %diffinfo, this is not difficult:
+>=20
+> $from_mode=3D"blob";
+> if (defined $hash_base && defined $file_name)
+> ($to_mode,$hash)=3Dgit_get_hash_by_path($hash_base,$file_name);
+[...]
+> Then we set to_mode and from_mode in %diffinfo to $to_mode and $from_=
+mode.
+>=20
+> git_get_hash_by_path_mode is like git_get_hash_by_path, only that it
+> returns an array with the mode and the hash.
 
-Thanks.  Sign-off would have been nice.
+I'd rather either have git_get_ls_tree_line_by_path, which we would the=
+n
+parse using parse_ls_tree_line, or have git_get_info_by_path which woul=
+d
+return already parsed information (as hash reference, or as a list).
 
-> diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
-> index d94578c..71b6457 100644
-> --- a/builtin-mailinfo.c
-> +++ b/builtin-mailinfo.c
-> @@ -294,14 +294,14 @@ static char *header[MAX_HDR_PARSED] = {
->  	"From","Subject","Date",
->  };
->  
-> -static int check_header(char *line, char **hdr_data)
-> +static int check_header(char *line, char **hdr_data, int overwrite)
->  {
->  	int i;
->  
->  	/* search for the interesting parts */
->  	for (i = 0; header[i]; i++) {
->  		int len = strlen(header[i]);
-> -		if (!hdr_data[i] &&
-> +		if ((!hdr_data[i] || overwrite) &&
->  		    !strncasecmp(line, header[i], len) &&
->  		    line[len] == ':' && isspace(line[len + 1])) {
->  			/* Unwrap inline B and Q encoding, and optionally
+>>>> By the way, if you call git_get_hash_by_path (which is expensive, =
+as it
+>>>> calls git command), you can use resulting hash in place of
+>>>> hash_base:filename as an argument to git-diff.
+>>> =20
+>>> I must check, if we need to resolve $hash ($hash_parent) by
+>>> git_get_hash_by_path, if we construct it out of $hash_base and
+>>> $file_name. Maybe we can avoid this call.
+>>=20
+>> We can use "$hash_base:$file_name" as second parameter to git-diff e=
+tc.,
+>> but I don't think we want to create links with "$hash_base:$file_nam=
+e"
+>> instead of SHA-1 id (hash) of a blob as 'h' parameter.
+>>=20
+>> It can be first implementation, thought, and later we can try to use
+>> "index <hash>..<hash> <mode>" lines from extended header to get $has=
+h
+>> and $hash_parent (with exception of pure rename, but then we need on=
+ly
+>> one invocation of git_get_hash_by_path subroutine).
+>=20
+> The <mode> must be discarded, as it is wrong for anything which as no=
+t
+> a mode of 100644, as we specify a two blob as parameter to git-diff.
 
-This check_header is called from each multi-part boundary with
-overwrite=1, so if you have two parts and you have From: or
-Subject: in the multi-part header (not in-body), wouldn't they
-overwrite what we already have?  That is not desired, I would
-think.
+The <mode> information might be discarded, or might be saved. "blob"
+can have 100644 mode, can have 100755 mode (executable file), or can
+have 120000 mode (symbolic link).
+=20
+>> But I think it is better left for later patch.
+>=20
+> As git_patchset_body requires an information about the compared file
+> as parameter, a new formating function will be needed. I'm not sure,
+> if the overhead of git_get_hash_by_path is this worth. Additionally,
+> if we have the hash passed by parameter in most cases, there is no
+> need to call it in these cases.
 
-For non multi-part case, what we traditionally have done is:
+git_patchset_body currently buffers (caches) diff header (up to=20
+from-file / to-file header) to catch situation where one "raw" format
+line (one difftree line) correspond to two patches (like e.g. type chan=
+ge
+situation below, from ordinary file to symlink or vice versa, and which
+_should_ be handled by git_patchset_body). So I think it would not be
+hard to parse extended diff header and fill values which are not presen=
+t
+in %diffinfo from extended diff header. This includes filling $from_has=
+h
+and $to_hash ($hash_parent and $hash) information from the=20
+"index <hash>..<hash> <mode>" or "index <hash>..<hash>" extended diff
+header line.
 
-	* Take Subject:, Date:, and From: from RFC2822 headers
-          to prime the title and authorship information.
+The (only?) rare exception is when files (blobs) does _not_ differ, as
+patch in this situation is empty, and we would have to get hash of blob
+(which would be the same for from and to, for $hash_parent and $hash)
+using git_get_hash_by_name or new git_get_info_by_name.
 
-	* The first lines of the body of the message (i.e. after
-          the blank line that separates 2822 headers and the
-          body) can look like the above header lines to
-          override.
+> Blobdiff (html output) in its current version can not handle symlinks=
+:
 
-	* A line that does not look like an overriding in-body
-          header line is the first line of the commit log
-          message.  After that, nothing is taken as an
-          overriding in-body header.
+I'd investigate that. Is "commitdiff" view correct in this situation?
 
-For a multi-part, I think we only processed the first part as
-the commit log message, potentially starting with the overriding
-in-body headers.  In other words, in-body headers are what the
-user *types* to override what the MUA says in RFC2822 headers.
-As the stuff that follow the multi-part boundary (like
-content-type and transfer encoding) are of the MUA kind, I
-suspect we do not want it to override what the sender said in
-the earlier parts of the message.
+>> diff --git a/x b/x
+>> deleted file mode 100644 (file)
+>> index 190a180..873fb8d
+>> --- a/x
+>> +++ /dev/null
+>> @@ -1 +0,0 @@
+>> -123
+>> diff --git a/ b/
+>> new file mode 120000 (symlink)
+>> index 190a180..873fb8d
+>> --- /dev/null
+>> +++ b/
+>> @@ -0,0 +1 @@
+>> +file3
+>> \ No newline at end of file
+>=20
+> This was generated by "diff to current" in the history view of a file=
+,
+> which was changed between symlink and normal file.
 
-> @@ -614,6 +614,7 @@ static int find_boundary(void)
->  
->  static int handle_boundary(void)
->  {
-> +	char newline[]="\n";
->  again:
->  	if (!memcmp(line+content_top->boundary_len, "--", 2)) {
->  		/* we hit an end boundary */
-> @@ -628,7 +629,7 @@ again:
->  					"can't recover\n");
->  			exit(1);
->  		}
-> -		handle_filter("\n");
-> +		handle_filter(newline);
->  
->  		/* skip to the next boundary */
->  		if (!find_boundary())
 
-These two hunks certainly do not hurt, but why?  Is this about
-the constness of the first parameter to handle_filter() and its
-call chain?
+> Additionally, to_mode and from_mode of %diffinfo seem to be ignored b=
+y
+> git_patchset_body.
 
-Having said that, the result of the patch is much better.  
+As it should, I think.
 
-In fact, I couldn't "git am" this patch (the part that reverts
-the test vector) with the current tip of 'master' because of the
-breakage you are fixing with it ;-).
+> mfg Martin K=F6gler
+> PS:
+> I created a blob with a "strange" filename: &()=3D!"=A7$%[<>]*#+_;.
+> In the result of the blob view, the " is not escaped in the filename =
+in the header
+> and a strange content type is returned:
+>=20
+> $ telnet localhost 80
+> Trying 127.0.0.1...
+> Connected to localhost.
+> Escape character is '^]'.
+> GET /gitweb/gitweb.cgi?p=3Dt/.git;a=3Dblob;f=3D%26()%3D%21%22%A7%24%2=
+5%5B%3C%3E%5D%2A%23%2B_%3B.;hb=3D7bfed2588bee66b33db544830606fa6606478f=
+d9 HTTP/1.0
+>=20
+> HTTP/1.1 200 OK
+> Date: Wed, 28 Mar 2007 19:55:36 GMT
+> Server: Apache
+> Content-disposition: inline; filename=3D"&()=3D!"=C2=A7$%[<>]*#+_;."
+> Expires: Thu, 29 Mar 2007 19:55:39 GMT
+> Connection: close
+> Content-Type: application/vnd.mif
+>=20
+> xx
 
-Now I can.  So I'd probably take this patch for now.
+I'd try to check that
+
+--=20
+Jakub Narebski
+Poland
