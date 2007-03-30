@@ -1,78 +1,75 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] Packing large repositories
-Date: Fri, 30 Mar 2007 09:01:22 -0400 (EDT)
-Message-ID: <alpine.LFD.0.83.0703300851270.3041@xanadu.home>
-References: <56b7f5510703280005o7998d65pcbcd4636b46d8d23@mail.gmail.com>
- <Pine.LNX.4.64.0703280943450.6730@woody.linux-foundation.org>
- <20070330062324.GU13247@spearce.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (resend)] gitweb: Support comparing blobs (files) with different names
+Date: Sat, 31 Mar 2007 01:41:35 +0200
+Message-ID: <200703310141.36552.jnareb@gmail.com>
+References: <200703302341.27225.jnareb@gmail.com> <7virciz6gm.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Dana How <danahow@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Mar 30 15:01:29 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Mar 31 01:38:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXGjP-0001pC-KE
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 15:01:27 +0200
+	id 1HXQfx-0007cQ-5M
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 01:38:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992AbXC3NBY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 09:01:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751059AbXC3NBY
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 09:01:24 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:28604 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750992AbXC3NBY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 09:01:24 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFP00M1CW6AQZ90@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 30 Mar 2007 09:01:23 -0400 (EDT)
-In-reply-to: <20070330062324.GU13247@spearce.org>
-X-X-Sender: nico@xanadu.home
+	id S933020AbXC3Xia (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 19:38:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933133AbXC3Xia
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 19:38:30 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:24124 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933020AbXC3Xi3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 19:38:29 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so967724uga
+        for <git@vger.kernel.org>; Fri, 30 Mar 2007 16:38:27 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rOWXW2PLr42gDlYEfGCcn+N9XxQsOGU7AkjWniP6zzZdupFjuruDENu69oG8BH/kz/u/vNaVQYavLGtDzKQZ9SB1mzUgewLSer5yi8RbU76LYceyoVnWx1D0ZDJ557e1Oni+FdQRkcqGXR4ymC09cYwTYAUrybJkD+Pt5AZIiSE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=H376bMRNqkzQYkGoWb+6Gk58URbhzhzwAf/ry8pWdmHgXnowUNF0iVjp325R3IorUGzbNA/RorA5UaFXXwi/nfkdbEAY/dUXoO/TeLNYq9mlGo0a7A787SE29/yQHEIwPHI20c56dnKXj/ZGgzSvjajVrwzWNWRsbVkndRH8WEU=
+Received: by 10.82.113.6 with SMTP id l6mr5020990buc.1175297907343;
+        Fri, 30 Mar 2007 16:38:27 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id w5sm9952480mue.2007.03.30.16.38.22;
+        Fri, 30 Mar 2007 16:38:22 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7virciz6gm.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43509>
 
-On Fri, 30 Mar 2007, Shawn O. Pearce wrote:
-
-> Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > On Wed, 28 Mar 2007, Dana How wrote:
-> > > Of course this is unusable, since object_entry's in an .idx
-> > > file have only 32 bits in their offset fields.  I conclude that
-> > > for such large projects,  git-repack/git-pack-objects would need
-> > > new options to control maximum packfile size.
-> > 
-> > Either that, or update the index file format. I think that your approach 
-> > of having a size limiter is actually the *better* one, though. 
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> Nico and I were hoping we could push the index file format change back
-> until pack v4 was also worthy of merging.  So I had also started work
-> on an index-pack splitter:
+>> Fix the bug that caused "blobdiff" view called with new style URI
+>> for a rename with change diff to be show as new (added) file diff.
+[...]
+>> ---
+>> Junio, could you apply this? It looks like it was lost in the noise.
 > 
->   URL:    git://repo.or.cz/git/fastimport.git
->   Branch: sp/splitpack
->  
-> Its far from complete.
+> I was waiting for dust to settle.  Ack's from people involved in
+> the discussion would be nice.
 
-Well... actually I really think the best solution might simply be a new 
-index format right now.  All the preparatory work has been done already 
-anyway.
+I can understand that.
 
-IMHO that's the solution that would require the least work at this 
-point, with the least possibility of issues/bugs.
+This patch is _a_ solution: it fixes "blobdiff" view for all blobdiff 
+URIs gitweb generates now. But it is not _the_ solution, as it doesn't 
+work with Martin work on adding "(base | diff)" links to allow to view 
+diff between arbitrary commits, trees or blobs; which includes 
+"blobdiff" view of arbitrary blobs.
 
-Pack v4 could just use an index v3 which would be almost the same as 
-index v2.
-
-Remains only to determine what this new index format should look like.  
-I think that the SHA1 table and the offset table should be separate.  
-For one it will require less mmap space to binary search through 
-the SHA1 table, and it will make things much easier if pack v4 stores 
-the SHA1 table itself.
-
-
-Nicolas
+So if/when Martin finishes his series of patches, this part would be 
+rewritten. But it is some time in the future...
+-- 
+Jakub Narebski
+Poland
