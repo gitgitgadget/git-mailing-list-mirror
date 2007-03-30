@@ -1,114 +1,91 @@
-From: "Andreas Herrmann" <andreas.herrmann3@amd.com>
+From: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
 Subject: Re: basics... when reading docs doesn't help
-Date: Fri, 30 Mar 2007 20:02:11 +0200
-Message-ID: <20070330180211.GI16087@alberich.amd.com>
+Date: Fri, 30 Mar 2007 20:16:57 +0200 (CEST)
+Message-ID: <Pine.LNX.4.60.0703301855480.4757@poirot.grange>
 References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange>
- <20070329211616.GH6143@fieldses.org>
- <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
- <20070329214654.GI6143@fieldses.org>
- <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
+ <20070329211616.GH6143@fieldses.org> <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
+ <20070329214654.GI6143@fieldses.org> <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
+ <Pine.LNX.4.64.0703291531030.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	"Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Guennadi Liakhovetski" <g.liakhovetski@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 30 20:02:44 2007
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Mar 30 20:17:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXLQs-0004cp-9d
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 20:02:38 +0200
+	id 1HXLf3-0007hI-1c
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 20:17:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752284AbXC3SCe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 14:02:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752226AbXC3SCe
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 14:02:34 -0400
-Received: from outbound-blu.frontbridge.com ([65.55.251.16]:8528 "EHLO
-	outbound1-blu-R.bigfish.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752068AbXC3SCd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Mar 2007 14:02:33 -0400
-Received: from outbound1-blu.bigfish.com (localhost.localdomain [127.0.0.1])
-	by outbound1-blu-R.bigfish.com (Postfix) with ESMTP id 8BB2F1288FF3;
-	Fri, 30 Mar 2007 18:02:32 +0000 (UTC)
-Received: from mail38-blu-R.bigfish.com (unknown [10.1.252.3])
-	by outbound1-blu.bigfish.com (Postfix) with ESMTP id 4465412E004F;
-	Fri, 30 Mar 2007 18:02:32 +0000 (UTC)
-Received: from mail38-blu (localhost.localdomain [127.0.0.1])
-	by mail38-blu-R.bigfish.com (Postfix) with ESMTP id 82BB645023F;
-	Fri, 30 Mar 2007 18:02:30 +0000 (UTC)
-X-BigFish: VP
-Received: by mail38-blu (MessageSwitch) id 1175277748803661_4002; Fri, 30 Mar 2007 18:02:28 +0000 (UCT)
-Received: from ausb3extmailp01.amd.com (unknown [163.181.251.8])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail38-blu.bigfish.com (Postfix) with ESMTP id 3BC411130092;
-	Fri, 30 Mar 2007 18:02:26 +0000 (UTC)
-Received: from SAUSGW01.amd.com (sausgw01.amd.com [163.181.250.21])
-	by ausb3extmailp01.amd.com (Switch-3.2.5/Switch-3.2.5) with ESMTP id l2UI1oLT011291;
-	Fri, 30 Mar 2007 13:02:21 -0500
-Received: from 163.181.22.102 by SAUSGW01.amd.com with ESMTP (AMD SMTP
- Relay (Email Firewall v6.1.0)); Fri, 30 Mar 2007 13:02:18 -0500
-X-Server-Uuid: 8C3DB987-180B-4465-9446-45C15473FD3E
-Received: from SAUSEXMB3.amd.com ([163.181.22.202]) by sausexbh2.amd.com
- with Microsoft SMTPSVC(6.0.3790.2499); Fri, 30 Mar 2007 13:02:18 -0500
-Received: from SDRSEXMB1.amd.com ([172.20.3.116]) by SAUSEXMB3.amd.com
- with Microsoft SMTPSVC(6.0.3790.2499); Fri, 30 Mar 2007 13:02:18 -0500
-Received: from amd.com ([165.204.85.18]) by SDRSEXMB1.amd.com with
- Microsoft SMTPSVC(6.0.3790.2499); Fri, 30 Mar 2007 20:02:15 +0200
-Received: by amd.com (nbSMTP-1.00) for uid 41369 aherrma3@amd.com; Fri,
- 30 Mar 2007 20:02:11 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
-User-Agent: mutt-ng/devel-r804 (Linux)
-X-OriginalArrivalTime: 30 Mar 2007 18:02:15.0847 (UTC)
- FILETIME=[8CD1EB70:01C772F5]
-X-WSS-ID: 6A138F202EW2717782-01-01
-Content-Disposition: inline
+	id S1750714AbXC3SRO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 14:17:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750844AbXC3SRO
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 14:17:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56052 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750714AbXC3SRM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 14:17:12 -0400
+Received: (qmail invoked by alias); 30 Mar 2007 18:17:10 -0000
+Received: from dynamic-unidsl-85-197-31-110.westend.de (EHLO poirot.grange) [85.197.31.110]
+  by mail.gmx.net (mp045) with SMTP; 30 Mar 2007 20:17:10 +0200
+X-Authenticated: #20450766
+X-Provags-ID: V01U2FsdGVkX1/K+k9rvY7KDodf43B7oxlXpjPt6Mf6fCtKBHsOnH
+	T3+R4Wro+/GGAY
+Received: from lyakh (helo=localhost)
+	by poirot.grange with local-esmtp (Exim 3.36 #1 (Debian))
+	id 1HXLek-0002gx-00; Fri, 30 Mar 2007 20:16:58 +0200
+In-Reply-To: <Pine.LNX.4.64.0703291531030.6730@woody.linux-foundation.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 30, 2007 at 12:13:02AM +0200, Guennadi Liakhovetski wrote:
-> On Thu, 29 Mar 2007, J. Bruce Fields wrote:
+On Thu, 29 Mar 2007, Linus Torvalds wrote:
+
+> On Fri, 30 Mar 2007, Guennadi Liakhovetski wrote:
 > 
-> > On Thu, Mar 29, 2007 at 02:26:10PM -0700, Junio C Hamano wrote:
-> > > 
-> > > How about suggesting "clone -l -s"?
+> > Strange. Is my git 1.4.0 criminally broken? I have a clone of Linus' tree 
+> > on a USB disk on ext3 without any objects, which I just cloned at some 
+> > point and then did a couple of pulls from the same source. Now
+> > 
+> > 1545084 /mnt/sda2/kernel-git/linux-2.6/
+> > 1255084 /mnt/sda2/kernel-git/linux-2.6/.git
 > 
-> Yes, but how do "advanced git users" kernel developers work? Do they just 
-> do 1 clone and build / clean every time they want to test another 
-> configuration / arch, or do they clone -l or what? Do they create branches 
-> for each development thread, then pull / push between trees?...
+> The old git that always exploded all pulls and generated lots of loose 
+> objects? You can check with "git count-objects".
+
+Installed 1.5.0.6 and its output of "git count-objects" is
+
+180932 objects, 1112656 kilobytes
+
+git gc removed everything (uh?) and then
+
+linux-2.6$ du -ks .git
+183040  .git
+
+cool...
+
+> And to fix it, just do a "git gc" (or with older git versions, the secret 
+> handshake is just a simple "git repack -a -d").
 > 
-> > If you really want to share as much as possible, then I guess you want
-> > to share the working trees too, since (as evidenced above), they're at
-> > least as large as the compressed history.
+> > But that's a freshly cloned tree, without any pulls. I re-cloned it, 
+> > because the tree I had earlier had the problem with each pull:
+> > 
+> > Unpacking 12452 objects
+> >  100% (12452/12452) done
+> > * refs/heads/origin: does not fast forward to branch 'master' of 
+> > git://git.kernel.org/pub/scm/linux/kernel/git/paulus/powerpc;
+> >   not updating.
 > 
-> But I don't want to re-build. Apart from i386 I build for a couple of ARM 
-> and PPC targets too...
+> Sounds like either Paul re-based his tree, or you did some work on your 
+> "origin" branch..
 
-Seems to be trivial but:
-Why don't you use "make O=/foo/bar/arch<x>-config<y>" to put output
-files into separate directories? So you can have one source tree and
-put each different kernel config and arch into a separate output
-directory.
+It must be the former then:-) Did I have a chance to re-synchronize 
+locally to be able to pull normally again or was the only way to re-clone?
 
-And if you have different sources for you trees put them into branches.
-
-When switching between branches, atime of files are updated accordingly.
-So even make should be happy with that.
-
-Just one drawback:
-Switching back and forth between two branches will cause
-recompilation of sources that differ between that branches -
-although nothing might have changed within a branch in the meantime.
-
-(Not that I have used such an setup, yet.
-But I think that should work.)
-
-
-Regards,
-
-Andreas
+Thanks
+Guennadi
+---
+Guennadi Liakhovetski
