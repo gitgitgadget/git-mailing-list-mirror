@@ -1,82 +1,82 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: basics... when reading docs doesn't help
-Date: Fri, 30 Mar 2007 13:06:11 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703301256230.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.60.0703292225100.10351@poirot.grange>
- <20070329211616.GH6143@fieldses.org> <7vabxv3fnx.fsf@assigned-by-dhcp.cox.net>
- <20070329214654.GI6143@fieldses.org> <Pine.LNX.4.60.0703292354100.10351@poirot.grange>
- <Pine.LNX.4.64.0703291531030.6730@woody.linux-foundation.org>
- <Pine.LNX.4.60.0703301855480.4757@poirot.grange>
- <Pine.LNX.4.64.0703301126390.6730@woody.linux-foundation.org>
- <Pine.LNX.4.60.0703302135590.10784@poirot.grange>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: git-add has gone lstat() mad
+Date: Fri, 30 Mar 2007 21:20:22 +0100
+Message-ID: <200703302120.23713.andyparkins@gmail.com>
+References: <200703302055.13619.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Guennadi Liakhovetski <g.liakhovetski@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Mar 30 22:06:31 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Mar 30 22:23:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXNMj-0005DQ-Rx
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 22:06:30 +0200
+	id 1HXNd3-0000BE-BK
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 22:23:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753075AbXC3UG1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 16:06:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753533AbXC3UG1
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 16:06:27 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:50544 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753075AbXC3UG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 16:06:26 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2UK6DrF008383
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 30 Mar 2007 13:06:13 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2UK6B8Q003782;
-	Fri, 30 Mar 2007 13:06:12 -0700
-In-Reply-To: <Pine.LNX.4.60.0703302135590.10784@poirot.grange>
-X-Spam-Status: No, hits=-0.462 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753584AbXC3UXS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 16:23:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753587AbXC3UXS
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 16:23:18 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:9125 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753581AbXC3UXR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 16:23:17 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so927570uga
+        for <git@vger.kernel.org>; Fri, 30 Mar 2007 13:23:14 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=HnmfsStZ11ImQ8nJMYfOYlU59ErATu5h69paFM0wjx5cuKvalhxJLnTH3Nat89LMHFgBQp53WQEHqItfLbW70GYBPAp68TMZT36qCrx36UfhXgjxxqPavfflCdBj2QpTaJ0MkGZzFnt9LudwkpR60mmug4NrUA5Hyvn2wbrr2RY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=eqd3qrWbOokw2w/Lqfa7NVOnO420uCMFGSz7AsH6ySWNWLzg1S5uQppd5HqSTTI/ogKbhZSIazPnfN7HKq6cjplgpnuCQVxndqkomCeBCEZjDC2g1OejLUOAPwRK57OvhGBl9CxelBQiH8RHC6M758QIz8jIK2CDaFaAymXZ3JQ=
+Received: by 10.66.237.9 with SMTP id k9mr2212817ugh.1175286194635;
+        Fri, 30 Mar 2007 13:23:14 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id o24sm3670513ugd.2007.03.30.13.23.13;
+        Fri, 30 Mar 2007 13:23:14 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <200703302055.13619.andyparkins@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
+On Friday 2007, March 30, Andy Parkins wrote:
+
+> At this point the CPU pegs at 100% systime.  An strace shows that git
+> is calling lstat64() on every file in my home directory.  I killed
+> git before it scanned everything I've ever done.
+
+Okay.  I've tracked down the culprit function, but I have no idea what 
+the fix is.
+
+builtin-add.c:fill_directory() calls
+dir.c:read_directory() which calls
+dir.c:read_directory_recursive()
+
+I can't see why git feels that it has to recurse the entire subtree.  It 
+seems to be something to do with the gitignore stuff.  Surely there is 
+no need to use a recursive search when no directories are being added?
+
+If git-add were given
+
+ file1
+ dir1/file2
+ dir2/dir3/file3
+
+Then only the directories "."; "dir1/"; "dir2"; and "dir2/dir3" need 
+checking for .gitignore files; and in none of those cases does the 
+search need to be recursive.
 
 
-On Fri, 30 Mar 2007, Guennadi Liakhovetski wrote:
-> 
-> And, so, it's a pity I cloned Paul's tree yesterday with the "old" git. 
-> And from your answer above it seems like some features of the "new" git 
-> will not be available with this tree, like equally named local and remote 
-> branches, etc. There isn't a way to convert such a "old style" tree to the 
-> "new style", is there? Not a big deal, will re-clone at some point, maybe 
-> when we get local git mirrors...
 
-There's a conversion script to help you convert in place if you care.
+Andy
 
-Look at the git list for an email that looks something like this:
-
-	Date: Wed, 14 Mar 2007 02:16:12 -0400
-	From: Shawn O. Pearce <spearce@spearce.org>
-	To: git@vger.kernel.org
-	Subject: Upgrade to 1.5.0 utility
-
-	Yesterday on #git DrNick wanted a script to update a pre-1.5.0
-	Git repository to be like a 1.5.0 (and later) style repository.
-	...
-
-which has a script in it to do this (it uses another script that is 
-already in git/contrib/ that just moves all the ".git/remotes" entries 
-as-is from the remotes files into the .git/config file)
-
-I haven't tested it myself, so caveat emptor. But the config file format 
-really isn't *that* complicated - do the conversion with the script, and 
-then just go back and look at .git/config and verify that it looks sane, 
-or edit it to match your taste.
-
-		Linus
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
