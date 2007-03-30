@@ -1,100 +1,50 @@
-From: Don Zickus <dzickus@redhat.com>
-Subject: Re: [PATCH] git-mailinfo fixes for patch munging
-Date: Fri, 30 Mar 2007 17:32:10 -0400
-Message-ID: <20070330213210.GL11029@redhat.com>
-References: <20070330161845.GI11029@redhat.com> <7vmz1uzaxd.fsf@assigned-by-dhcp.cox.net>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] mergetool: Clean up description of files and prompts for merge resolutions
+Date: Thu, 29 Mar 2007 22:54:11 -0400
+Message-ID: <20070330025411.GD3198@thunk.org>
+References: <11751830653554-git-send-email-tytso@mit.edu> <11751830652230-git-send-email-tytso@mit.edu> <20070329222905.GA25347@moooo.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Mar 30 23:34:20 2007
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Mar 30 13:59:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXOjg-0007HW-Mi
-	for gcvg-git@gmane.org; Fri, 30 Mar 2007 23:34:17 +0200
+	id 1HXFlH-00069l-FH
+	for gcvg-git@gmane.org; Fri, 30 Mar 2007 13:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932398AbXC3Vdt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 30 Mar 2007 17:33:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932458AbXC3Vdt
-	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 17:33:49 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:37088 "EHLO mx1.redhat.com"
+	id S933566AbXC3L7Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 30 Mar 2007 07:59:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933618AbXC3L7Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 30 Mar 2007 07:59:16 -0400
+Received: from thunk.org ([69.25.196.29]:34756 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932398AbXC3Vdr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Mar 2007 17:33:47 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l2ULXivo026944;
-	Fri, 30 Mar 2007 17:33:44 -0400
-Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l2ULXcGc021697;
-	Fri, 30 Mar 2007 17:33:38 -0400
-Received: from drseuss.boston.redhat.com (drseuss.boston.redhat.com [172.16.80.234])
-	by mail.boston.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l2ULXcxN019456;
-	Fri, 30 Mar 2007 17:33:38 -0400
-Received: from drseuss.boston.redhat.com (localhost.localdomain [127.0.0.1])
-	by drseuss.boston.redhat.com (8.13.7/8.13.4) with ESMTP id l2ULWBcf016109;
-	Fri, 30 Mar 2007 17:32:11 -0400
-Received: (from dzickus@localhost)
-	by drseuss.boston.redhat.com (8.13.7/8.13.7/Submit) id l2ULWBK0016108;
-	Fri, 30 Mar 2007 17:32:11 -0400
-X-Authentication-Warning: drseuss.boston.redhat.com: dzickus set sender to dzickus@redhat.com using -f
+	id S933566AbXC3L7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Mar 2007 07:59:15 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HXFrE-0001t1-Ui; Fri, 30 Mar 2007 08:05:29 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HX7Fj-0007wK-5k; Thu, 29 Mar 2007 22:54:11 -0400
 Content-Disposition: inline
-In-Reply-To: <7vmz1uzaxd.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <20070329222905.GA25347@moooo.ath.cx>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43501>
 
-On Fri, Mar 30, 2007 at 02:19:42PM -0700, Junio C Hamano wrote:
-> Don Zickus <dzickus@redhat.com> writes:
-> 
-> > Don't translate the patch to UTF-8, instead preserve the data as is.  Also
-> > allow overwriting the primary mail headers (addresses Linus's concern).  
-> >
-> > I also revert a test case that was included in the original patch.  Now it
-> > makes sense why it was the way it was. :)
-> >
-> > Cheers,
-> > Don
-> 
-> Thanks.  Sign-off would have been nice.
+On Fri, Mar 30, 2007 at 12:29:05AM +0200, Matthias Lederhofer wrote:
+> Theodore Ts'o <tytso@mit.edu> wrote:
+> > +    printf "  {$branch}: "
+> This should use %s too.
 
-Doh. Sorry.  Should I repost with fix below?
+It's strictly not necessary since $branch is either "local" or "remote".
 
-> This check_header is called from each multi-part boundary with
-> overwrite=1, so if you have two parts and you have From: or
-> Subject: in the multi-part header (not in-body), wouldn't they
-> overwrite what we already have?  That is not desired, I would
-> think.
-
-Hmm.  I guess I never thought about that case.  You are right, that check
-can be changed to a zero (because the rfc2822 are checked elsewhere).
-
-> > @@ -614,6 +614,7 @@ static int find_boundary(void)
-> >  
-> >  static int handle_boundary(void)
-> >  {
-> > +	char newline[]="\n";
-> >  again:
-> >  	if (!memcmp(line+content_top->boundary_len, "--", 2)) {
-> >  		/* we hit an end boundary */
-> > @@ -628,7 +629,7 @@ again:
-> >  					"can't recover\n");
-> >  			exit(1);
-> >  		}
-> > -		handle_filter("\n");
-> > +		handle_filter(newline);
-> >  
-> >  		/* skip to the next boundary */
-> >  		if (!find_boundary())
-> 
-> These two hunks certainly do not hurt, but why?  Is this about
-> the constness of the first parameter to handle_filter() and its
-> call chain?
-
-Yeah, I SEGFAULT'd when trying to convert_to_utf8() a fixed string. :-)
-
-Cheers,
-Don
+						- Ted
