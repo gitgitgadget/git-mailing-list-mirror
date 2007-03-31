@@ -1,222 +1,127 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [RFC] Packing large repositories
-Date: Sat, 31 Mar 2007 11:36:35 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0703311033290.6730@woody.linux-foundation.org>
+Date: Sat, 31 Mar 2007 14:51:23 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0703311112340.28181@xanadu.home>
 References: <56b7f5510703280005o7998d65pcbcd4636b46d8d23@mail.gmail.com>
  <Pine.LNX.4.64.0703280943450.6730@woody.linux-foundation.org>
- <20070330062324.GU13247@spearce.org> <alpine.LFD.0.83.0703300851270.3041@xanadu.home>
+ <20070330062324.GU13247@spearce.org>
+ <alpine.LFD.0.83.0703300851270.3041@xanadu.home>
  <78639417-ACDB-484F-85BB-EC0AF694949A@adacore.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Dana How <danahow@gmail.com>, git@vger.kernel.org
 To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 20:38:03 2007
+X-From: git-owner@vger.kernel.org Sat Mar 31 20:51:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXiSg-0005gm-U8
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 20:38:03 +0200
+	id 1HXifg-0004FO-OM
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 20:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753811AbXCaSho (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 31 Mar 2007 14:37:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753877AbXCaSho
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 14:37:44 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:60284 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753811AbXCaShn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 14:37:43 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l2VIagod015857
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 31 Mar 2007 11:36:42 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l2VIaZSP027840;
-	Sat, 31 Mar 2007 11:36:39 -0700
-In-Reply-To: <78639417-ACDB-484F-85BB-EC0AF694949A@adacore.com>
-X-Spam-Status: No, hits=-0.965 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753888AbXCaSv0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 31 Mar 2007 14:51:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753892AbXCaSv0
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 14:51:26 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:21947 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753888AbXCaSvZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 14:51:25 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JFS00B5971NFK30@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 31 Mar 2007 14:51:24 -0400 (EDT)
+In-reply-to: <78639417-ACDB-484F-85BB-EC0AF694949A@adacore.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43564>
-
-
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43565>
 
 On Sat, 31 Mar 2007, Geert Bosch wrote:
-> 
+
 > I've been working on a design for a new index file format, and I'll
 > include my current draft at the end of this message. It is not finished,
 > and I've not written much code yet, but I'd like to prevent duplicated
 > work and give others the opportunity to borrow from the ideas so far.
 
-Ok, here's one comment...
+I'm glad you posted this as I intended to work on the index today.
 
-I think your basic assumption that the current index-pack is bad is 
-broken ;)
+> My main focus is to minimize the amount of data accessed in a random
+> fashion, allow for multiple packs and virtually unlimited scaling.
+> This is achieved through a fan-out table that grows with the number
+> of items in the pack, keeping the fan-out table overhead under 2 bits
+> per object while encoding a growing prefix of the object ID. This
+> frees up bits for a pack number. The pack number is either used to
+> find the correct pack, or alternatively for the right chunk of a
+> very large pack file.
 
-The thing is, I think the index-pack could be improved, but I think we can 
-get a bigger improvement from just being more intelligent about searching 
-than from actually needing to re-organize the pack.
+And how do you determine that pack number?
 
-Here's a few clues:
- - binary search is certainly not the only way to do lookups on sorted 
-   contents
- - one of the fundamental rules about cryptographic hashes is that they 
-   are *evenly*distributed*
- - currently we do not take advantage of our inherent knowledge of the 
-   distribution when we look things up, and we use a stupid binary lookup 
-   that is guaranteed to basically always take O(log2(n)) random jumps 
-   around the data area, with bad locality.
+The index should be tied to the pack it is indexing and nothing else 
+like the presence of other packs if possible.  When given a 20-byte SHA1 
+you don't know what packnumber that corresponds to anyway.
 
-In other words, the 256-entry fan-out was meant to avoid the first eight 
-levels of binary lookup. But the thing is, we should be able to generally 
-do a *lot* better than any binary lookup by just doing a LINEAR SEARCH, 
-which is also more cache-friendly, and prefetches much better when it's 
-not in the cache.
+> The linear search through packs is very inefficient
+> with large numbers of packs. Having packs much larger
+> than a GB is also problematic, due to this as repacking
+> and otherwise modifying packs gets very expensive.
 
-The only thing we want for a linear search is a good starting point. Which 
-gets us back to the simple: "SHA1 hashes are evenly distributed". In other 
-words, getting a good starting point should be *trivial*.
+Repacking is not a frequent operation, and it can be done 
+asynchronously.  So I don't consider that to be a big issue if it is 
+expensive.  It is already extremely expensive compared to other GIT 
+operations.  So it is better to have fewer and bigger packs to speed up 
+runtime object searching than making repack less expensive with more 
+smaller packs.
 
-So here's a suggestion:
+> Another issue is that binary search requires many
+> semi-random accesses spread over the index. Finally,
+> most of the information actually read consists of
+> SHA1's that are never needed.
 
- - start finding a range using the 256-entry fan-out, exactly the way we 
-   did for the binary search. It's cheap. We could probably avoid EVEN 
-   THIS, and just do one more newton-raphson iteration more. But since we 
-   have the data, we migth as well use it. After all, it really *is* just 
-   a first approximation of newton-raphson, and while it uses only 8 bits 
-   (and we could do better), at least it's an *exact* one.
+Of course the pack v4 design allow for bypassing all this altogether in 
+most cases.  But it doesn't eliminate the need for an index in every 
+cases.  So let's optimize the index first, especially since the pressing 
+need now is to lift the 4G pack size limit. And pack v4 will come after 
+that.
 
- - use newton-raphson to iterate closer. It should be a much faster way to 
-   find the rough area for the entry we're searching for than binary 
-   search. Two or three iterations should get us there, easily.
+Just to say that the index doesn't need to be the ultimate thing as pack 
+v4 will scale much better than any index format could ever do due to its 
+direct object reference design.
 
- - do a linear search once you're close enough.
+However, a big detail that would greatly help pack v4 is to have the 
+SHA1 table together in one block with no other fields inserted between 
+entries.  Then the only difference between current packs and pack v4 
+would be that the SHA1 table will be located in the pack itself instead 
+of the index (pack v4 will carry the sorted SHA1 table already so the 
+index won't have to store it).
 
-Here's a stupid patch that does that. It's biggest weakness is that it 
-only does a single iteration of newton-raphson. It should probably do at 
-least one more iteration. I bet that you'd get so close that you find it 
-really quickly if you did that. As it is, it doesn't seem to be any slower 
-than the binary search..
+> This proposed pack index format does not focus on reducing
+> used disk space, but instead aims to reduce the number
+> of blocks that needs to be read to perform lookups.
+> This is done using three techniques:
+>   1) scale the number of fan-out bins with the number
+>      of objects in the index, keeping the expected
+>      number of objects in each bin constant
+>   2) take advantage of 1) by only storing a few bits
+>      following the common prefix in the main lookup table
+>      as a discriminant. Store the rest of the SHA1 and
+>      the pack offest in a separate, parallel, object table.
+>   3) Instead of repeating the variable-length common prefix
+>      and the discriminant, use the space for the prefix
+>      for a pack identifier and omit the discriminant altogether.
 
-And the nice thing is that I think that in large packs the "evenly 
-distributed" should be *more*true* than in small packs, so this should 
-scale up very nicely, and I'm hoping that it would get much better cache 
-behaviour (because we wouldn't bounce around in the index file too much). 
-I wouldn't be surprised if we basically hit it on the first try if we did 
-two or three iterations of newton-raphson.
+I think (2) conflicts with my goal of having the SHA1 table independent. 
+It is really important for future compatibility with pack v4 that the 
+SHA1 table remains a sorted list of contiguous 20-byte records.
 
-Comments? Does anybody want to take this and run with it?
+I really like your adaptative fanout idea though.  So it could be 
+possible to have something based on the largest common SHA1 prefix 
+within a pack for example.  Or maybe it could be made multi level for an 
+arbitrary portion of the largest common prefix.
 
-(No guarantees that this really can ever beat binary search, but somebody 
-might find this interesting. And I think the potential is there, but I 
-think you do need to do at *least* two iterations).
 
-		Linus
----
- sha1_file.c |   79 +++++++++++++++++++++++++++++++++++++++++++++++-----------
- 1 files changed, 64 insertions(+), 15 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 9c26038..fc4dbc7 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1543,29 +1543,78 @@ int nth_packed_object_sha1(const struct packed_git *p, uint32_t n,
- 	return 0;
- }
- 
--off_t find_pack_entry_one(const unsigned char *sha1,
--				  struct packed_git *p)
-+struct index_entry {
-+	uint32_t nb_offset;	/* pack-file offset in network byte order */
-+	unsigned char sha1[20];	/* SHA1 of the object */
-+};
-+
-+static off_t pack_search_backward(const struct index_entry *index, uint32_t guess, const unsigned char *sha1)
- {
--	const uint32_t *level1_ofs = p->index_data;
--	int hi = ntohl(level1_ofs[*sha1]);
--	int lo = ((*sha1 == 0x0) ? 0 : ntohl(level1_ofs[*sha1 - 1]));
--	const unsigned char *index = p->index_data;
-+	int count = 1;
-+	while (guess) {
-+		int cmp;
- 
--	index += 4 * 256;
-+		guess--;
-+		index--;
-+		cmp = hashcmp(index->sha1, sha1);
-+		if (!cmp)
-+			return ntohl(index->nb_offset);
-+		if (cmp < 0)
-+			break;
-+		count++;
-+	}
-+	return 0;
-+}
- 
--	do {
--		int mi = (lo + hi) / 2;
--		int cmp = hashcmp(index + 24 * mi + 4, sha1);
-+static off_t pack_search_forward(const struct index_entry *index, uint32_t guess, uint32_t max, const unsigned char *sha1)
-+{
-+	int count = 1;
-+	while (++guess < max) {
-+		int cmp;
-+
-+		index++;
-+		cmp = hashcmp(index->sha1, sha1);
- 		if (!cmp)
--			return ntohl(*((uint32_t *)((char *)index + (24 * mi))));
-+			return ntohl(index->nb_offset);
- 		if (cmp > 0)
--			hi = mi;
--		else
--			lo = mi+1;
--	} while (lo < hi);
-+			break;
-+		count++;
-+	}
- 	return 0;
- }
- 
-+off_t find_pack_entry_one(const unsigned char *sha1,
-+				  struct packed_git *p)
-+{
-+	const struct index_entry *index;
-+	const uint32_t *level1_ofs = p->index_data;
-+	uint32_t min, max, first;
-+	uint32_t hash_val;
-+	uint32_t guess;
-+	int cmp;
-+
-+	first = *sha1;
-+	min = first ? ntohl(level1_ofs[first - 1]) : 0;
-+	max = ntohl(level1_ofs[first]);
-+
-+	hash_val = (sha1[1] << 24) |
-+		   (sha1[2] << 16) |
-+		   (sha1[3] << 8) |
-+		   (sha1[4]);
-+	guess = ((uint64_t)(max - min) * hash_val) >> 32;
-+	guess += min;
-+
-+	index = (const struct index_entry *)((char *) p->index_data + 4 * 256);
-+	index += guess;
-+
-+	cmp = hashcmp(index->sha1, sha1);
-+	if (!cmp)
-+		return ntohl(index->nb_offset);
-+	if (cmp > 0)
-+		return pack_search_backward(index, guess, sha1);
-+	return pack_search_forward(index, guess, max, sha1);
-+}
-+
- static int matches_pack_name(struct packed_git *p, const char *ig)
- {
- 	const char *last_c, *c;
+Nicolas
