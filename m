@@ -1,76 +1,78 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Pruning objects from history?
-Date: Sat, 31 Mar 2007 09:11:34 -0400
-Message-ID: <20070331131134.GC25539@thunk.org>
-References: <460DC0F7.1070607@midwinter.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 15:11:45 2007
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH (resend)] cvsserver: Don't lie about binary mode in asciidoc documentation
+Date: Sat, 31 Mar 2007 15:32:13 +0200
+Message-ID: <11753479333854-git-send-email-frank@lichtenheld.de>
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Mar 31 15:32:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXdMs-0001x4-UZ
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 15:11:43 +0200
+	id 1HXdh9-0005GN-AD
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 15:32:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750782AbXCaNLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 31 Mar 2007 09:11:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbXCaNLk
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 09:11:40 -0400
-Received: from thunk.org ([69.25.196.29]:56725 "EHLO thunker.thunk.org"
+	id S1753014AbXCaNcg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 31 Mar 2007 09:32:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753023AbXCaNcg
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 09:32:36 -0400
+Received: from mail.lenk.info ([217.160.134.107]:51908 "EHLO mail.lenk.info"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750782AbXCaNLj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 09:11:39 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HXdSq-0003qI-7Y; Sat, 31 Mar 2007 09:17:52 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.62)
-	(envelope-from <tytso@thunk.org>)
-	id 1HXdMk-0006LW-BT; Sat, 31 Mar 2007 09:11:34 -0400
-Content-Disposition: inline
-In-Reply-To: <460DC0F7.1070607@midwinter.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1753014AbXCaNcg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 09:32:36 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HXdhQ-0004Vn-BJ; Sat, 31 Mar 2007 15:32:56 +0200
+Received: from p3ee3dbc9.dip.t-dialin.net ([62.227.219.201] helo=goedel.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HXdh3-0004e9-S3; Sat, 31 Mar 2007 15:32:34 +0200
+Received: from djpig by goedel.djpig.de with local (Exim 4.63)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1HXdgk-0003Bj-4v; Sat, 31 Mar 2007 15:32:14 +0200
+X-Mailer: git-send-email 1.5.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43555>
 
-On Fri, Mar 30, 2007 at 07:01:27PM -0700, Steven Grimm wrote:
-> I've imported the full history of a large project from Subversion using 
-> the latest git-svn. The resulting repo is huge, and I believe it's due 
-> in large part to a series of big tar.gz files that got checked into the 
-> Subversion repository by mistake early in the project's history. They 
-> were subsequently removed from svn, but of course git-svn grabs them and 
-> puts them in my local history.
-> 
-> Is there any way to excise those files? They are of no interest to us 
-> now -- they were data files for a third-party application we ended up 
-> not using -- and they're making git look bad in the disk usage department.
-> 
-> I believe this has been asked before in the context of removing 
-> copyrighted content from public repositories. However, I have a twist 
-> that may make it easier: nobody else has cloned this repository yet. I 
-> am free to rewrite history with no risk of messing up any downstream 
-> repositories, and I don't have to worry about propagating the deletions 
-> out to anyone. I just don't know how to do it (assuming it's doable at all.)
+The git-cvsserver documentation claims that the server will set
+-k modes if appropriate which is not really the case. On the other
+hand the available gitcvs.allbinary variable is not documented at
+all. Fix both these issues by rewording the related paragraph.
 
-It's painful to rewrite history, since you end up needing to rewrite
-every single commit after the point where you've tampered with time to
-fix up the parent commit ID.
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ Documentation/git-cvsserver.txt |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
 
-Are you planning on doing a one-shot import, or are you hoping to be
-able to do bidirectional gatewaying between svn and git?  If you want
-to do the latter, rewriting history is going to be very painful if you
-want the bidirectional gateway to work afterwards.
+I send this before but it seems to have been lost in the noise.
+Also CCed Andy Parkins this time who introduced the gitcvs.allbinary
+variable.
 
-If you just want to do a one-way import, it's probably going to be
-much easier to modify whatever importer you use to not import the big
-files in the first place.
+I think this should be suitable for 1.5.1.
 
-						- Ted
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 1c6f6a7..85d0950 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -134,9 +134,11 @@ checkout, diff, status, update, log, add, remove, commit.
+ Legacy monitoring operations are not supported (edit, watch and related).
+ Exports and tagging (tags and branches) are not supported at this stage.
+ 
+-The server will set the -k mode to binary when relevant. In proper GIT
+-tradition, the contents of the files are always respected.
+-No keyword expansion or newline munging is supported.
++The server should set the -k mode to binary when relevant, however,
++this is not really implemented yet. For now, you can force the server
++to set `-kb` for all files by setting the `gitcvs.allbinary` config
++variable. In proper GIT tradition, the contents of the files are
++always respected. No keyword expansion or newline munging is supported.
+ 
+ Dependencies
+ ------------
+-- 
+1.5.0.3
