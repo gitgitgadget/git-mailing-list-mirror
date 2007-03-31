@@ -1,106 +1,106 @@
-From: mkoegler@auto.tuwien.ac.at (Martin Koegler)
-Subject: Re: [PATCH] gitweb: Support comparing blobs (files) with different names
-Date: Sat, 31 Mar 2007 11:18:06 +0200
-Message-ID: <20070331091806.GA12442@auto.tuwien.ac.at>
-References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <200703280158.54929.jnareb@gmail.com> <20070328210301.GA57@auto.tuwien.ac.at> <200703310155.14452.jnareb@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git (stable)
+Date: Sat, 31 Mar 2007 02:34:14 -0700
+Message-ID: <7v1wj5ycx5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 11:18:25 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 31 11:34:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXZj5-0007tb-Kd
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 11:18:23 +0200
+	id 1HXZyV-0001js-He
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 11:34:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752456AbXCaJSL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sat, 31 Mar 2007 05:18:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752450AbXCaJSK
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 05:18:10 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:43946 "EHLO
-	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752456AbXCaJSJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 05:18:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 5A55A73B995A;
-	Sat, 31 Mar 2007 11:18:07 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
-Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
-	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id FhClq11LoD+A; Sat, 31 Mar 2007 11:18:06 +0200 (CEST)
-Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id E0CE773B993F; Sat, 31 Mar 2007 11:18:06 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <200703310155.14452.jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752568AbXCaJeQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 31 Mar 2007 05:34:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752617AbXCaJeQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 05:34:16 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:42768 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752568AbXCaJeQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 05:34:16 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070331093414.FCUO373.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Sat, 31 Mar 2007 05:34:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id hMaF1W0041kojtg0000000; Sat, 31 Mar 2007 05:34:15 -0400
+X-maint-at: 3ac53e0d13fa7483cce90eb6a1cfcdcbda5b8e35
+X-master-at: 4f01748d51b530c297eeb5a0ece9af923d5db937
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43541>
 
-On Sat, Mar 31, 2007 at 01:55:14AM +0200, Jakub Narebski wrote:
-> Second is detecting file as binary (for text files we always return
-> HTML), and content type set. Gitweb checks mimetype of a file (based
-> on extension, mainly) by default using /etc/mime.magic, and if it is
-> neither text/* nor HTML images (png, jpg, gif) it uses "blobdiff_plai=
-n"
-> view. Perhaps instead of just calling git_blob_plain($mimetype) we
-> should do a redirect (but then how to pass detected mimetype?). It lo=
-oks
-> like there is an error with mimetype detection: could you tell me the
-> line with "application/vnd.mif" in your /etc/mime.types?
+As you can see, there are a few more fixes on the 'maint' branch
+since 1.5.0.6; I might do 1.5.0.7 just for the sake of it, but I
+am fairly determined to tag 1.5.1 on Apr 4th in a shape that is
+"no worse" than 1.5.0, so it might not be strictly necessary.
 
-The system is a Debian system. /etc/mime.types is part of mime-support:
-$dpkg -l mime-support
-Desired=3DUnknown/Install/Remove/Purge/Hold
-| Status=3DNot/Installed/Config-files/Unpacked/Failed-config/Half-insta=
-lled
-|/ Err?=3D(none)/Hold/Reinst-required/X=3Dboth-problems (Status,Err: up=
-percase=3Dbad)
-||/ Name                         Version                      Descripti=
-on
-+++-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
-ii  mime-support                 3.28-1                       MIME file=
-s 'mime.types' & 'mailcap', and support programs
+If you can remind me of patches that are "must have"s for 1.5.1
+that I've missed, that would be very nice.  We've broken "git
+am" and "git rebase" (without --merge) on 'master' branch for
+people who has i18n contents after 1.5.0 but they should be
+fixed now.
 
-$ grep vnd.mif /etc/mime.types
-application/vnd.mif           mif
+Please, remember that the key word for this weekend is "make
+1.5.1 NO WORSE than 1.5.0".  IOW, the focus is on obvious
+regression fixes.
 
-As it's a config file, this line could be added by an other package.
+----------------------------------------------------------------
+* The 'maint' branch has these fixes since the last announcement.
 
-The context of this entry is:
-application/vnd.koan
-application/vnd.lotus-1-2-3
-application/vnd.lotus-approach
-application/vnd.lotus-freelance
-application/vnd.lotus-notes
-application/vnd.lotus-organizer
-application/vnd.lotus-screencam
-application/vnd.lotus-wordpro
-application/vnd.mcd
-application/vnd.mediastation.cdkey
-application/vnd.meridian-slingshot
-application/vnd.mif           mif
-application/vnd.minisoft-hp3000-save
-application/vnd.mitsubishi.misty-guard.trustweb
-application/vnd.mobius.daf
-application/vnd.mobius.dis
-application/vnd.mobius.msl
-application/vnd.mobius.plc
-application/vnd.mobius.txf
-application/vnd.motorola.flexsuite
-application/vnd.motorola.flexsuite.adsi
-application/vnd.motorola.flexsuite.fis
-application/vnd.motorola.flexsuite.gotap
+ Gerrit Pape (2):
+  Documentation/git-svnimport.txt: fix typo.
+  Documentation/git-rev-parse.txt: fix example in SPECIFYING RANGES.
 
-Hope, it helps.
+ H. Peter Anvin (1):
+  git-upload-pack: make sure we close unused pipe ends
 
-mfg Martin K=F6gler
+
+* The 'master' branch has these since the last announcement
+  in addition to the above.
+
+ Andy Parkins (1):
+  Reimplement emailing part of hooks--update in contrib/hooks/post-receive-email
+
+ Christian Couder (1):
+  Bisect: Improve error message in "bisect_next_check".
+
+ Don Zickus (1):
+  git-mailinfo fixes for patch munging
+
+ Eric Wong (1):
+  git-svn: avoid respewing similar error messages for missing paths
+
+ Francis Daly (1):
+  git-quiltimport /bin/sh-ism fix
+
+ Jakub Narebski (1):
+  gitweb: Support comparing blobs (files) with different names
+
+ Julian Phillips (1):
+  contrib/workdir: add a simple script to create a working directory
+
+ Junio C Hamano (2):
+  Update draft release notes for 1.5.1
+  Do not bother documenting fetch--tool
+
+ Theodore Ts'o (12):
+  Fix minor formatting issue in man page for git-mergetool
+  mergetool: Replace use of "echo -n" with printf(1) to be more portable
+  mergetool: Don't error out in the merge case where the local file is deleted
+  mergetool: portability fix: don't assume true is in /bin
+  mergetool: portability fix: don't use reserved word function
+  mergetool: factor out common code
+  mergetool: Remove spurious error message if merge.tool config option not set
+  mergetool: Fix abort command when resolving symlinks and deleted files
+  mergetool: Add support for Apple Mac OS X's opendiff command
+  mergetool: Make git-rm quiet when resolving a deleted file conflict
+  mergetool: Clean up description of files and prompts for merge resolutions
+  Rename warn() to warning() to fix symbol conflicts on BSD and Mac OS
