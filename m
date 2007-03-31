@@ -1,106 +1,79 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Sat, 31 Mar 2007 02:34:14 -0700
-Message-ID: <7v1wj5ycx5.fsf@assigned-by-dhcp.cox.net>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: git-add has gone lstat() mad
+Date: Sat, 31 Mar 2007 11:18:58 +0100
+Message-ID: <200703311119.10581.andyparkins@gmail.com>
+References: <200703302055.13619.andyparkins@gmail.com> <7vslbmxkcv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703302020510.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 31 11:34:20 2007
+X-From: git-owner@vger.kernel.org Sat Mar 31 12:22:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXZyV-0001js-He
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 11:34:19 +0200
+	id 1HXail-0008KY-DJ
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 12:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568AbXCaJeQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 31 Mar 2007 05:34:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752617AbXCaJeQ
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 05:34:16 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:42768 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752568AbXCaJeQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 05:34:16 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070331093414.FCUO373.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 31 Mar 2007 05:34:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id hMaF1W0041kojtg0000000; Sat, 31 Mar 2007 05:34:15 -0400
-X-maint-at: 3ac53e0d13fa7483cce90eb6a1cfcdcbda5b8e35
-X-master-at: 4f01748d51b530c297eeb5a0ece9af923d5db937
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752842AbXCaKWE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 31 Mar 2007 06:22:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbXCaKWE
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 06:22:04 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:19832 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752842AbXCaKWC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 06:22:02 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1051440uga
+        for <git@vger.kernel.org>; Sat, 31 Mar 2007 03:22:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=uO6xFHr+xhZUdrRfqap6kD7trbDFcwk9wHai5AbIEwQVvGDBPx6ZivGEtcPSoLUWmJccSJVcsyMAjDssJvjgU47qEdZ0aZwGee3tFwE0qDRTOjgNUZfPxpmSxsqyw8AZii52VoXnNRweDCDDSR4XhAKtOsPIEm93AGpwxt0JwQ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=NgchnhG6teoeiCUa5uJo7JjO+lLAiq44jNFQn12+FG1FGeOqk38hhp+4I7sp+MlZtQNXD3//D3FpAeToYLJO9DEPr6JL3RmpBaeTKh4Q+hUfFhGOeIznKF3rWSXrLjqo2uO5ewJBTqxu5SFWSho99DSSXwLwqRZtRTRF1qITGd4=
+Received: by 10.67.29.7 with SMTP id g7mr2662048ugj.1175336520646;
+        Sat, 31 Mar 2007 03:22:00 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id e34sm4342713ugd.2007.03.31.03.21.59;
+        Sat, 31 Mar 2007 03:22:00 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0703302020510.6730@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43542>
 
-As you can see, there are a few more fixes on the 'maint' branch
-since 1.5.0.6; I might do 1.5.0.7 just for the sake of it, but I
-am fairly determined to tag 1.5.1 on Apr 4th in a shape that is
-"no worse" than 1.5.0, so it might not be strictly necessary.
+On Saturday 2007, March 31, Linus Torvalds wrote:
 
-If you can remind me of patches that are "must have"s for 1.5.1
-that I've missed, that would be very nice.  We've broken "git
-am" and "git rebase" (without --merge) on 'master' branch for
-people who has i18n contents after 1.5.0 but they should be
-fixed now.
+> on the kernel took 0.110s for me before, and it now takes 0.014s. And
+> maybe Andy's case more noticeable. Andy?
 
-Please, remember that the key word for this weekend is "make
-1.5.1 NO WORSE than 1.5.0".  IOW, the focus is on obvious
-regression fixes.
+Blindingly fast.
 
-----------------------------------------------------------------
-* The 'maint' branch has these fixes since the last announcement.
+Previously, I never completed a git add .bashrc as it was taking so 
+long.  Now it's instant.  This is back to true git form - I wasn't 
+entirely sure git-add had done anything :-).  git-status confirmed that 
+it had worked successfully though.
 
- Gerrit Pape (2):
-  Documentation/git-svnimport.txt: fix typo.
-  Documentation/git-rev-parse.txt: fix example in SPECIFYING RANGES.
+I've not done any extensive tests for regressions, but I've done
 
- H. Peter Anvin (1):
-  git-upload-pack: make sure we close unused pipe ends
+ cd $HOME
+ git init
+ git add .bashrc
+ git add somedirectory/
+
+And they work fine.  So - it's works for me from me, and a big happy 
+grin.
 
 
-* The 'master' branch has these since the last announcement
-  in addition to the above.
 
- Andy Parkins (1):
-  Reimplement emailing part of hooks--update in contrib/hooks/post-receive-email
-
- Christian Couder (1):
-  Bisect: Improve error message in "bisect_next_check".
-
- Don Zickus (1):
-  git-mailinfo fixes for patch munging
-
- Eric Wong (1):
-  git-svn: avoid respewing similar error messages for missing paths
-
- Francis Daly (1):
-  git-quiltimport /bin/sh-ism fix
-
- Jakub Narebski (1):
-  gitweb: Support comparing blobs (files) with different names
-
- Julian Phillips (1):
-  contrib/workdir: add a simple script to create a working directory
-
- Junio C Hamano (2):
-  Update draft release notes for 1.5.1
-  Do not bother documenting fetch--tool
-
- Theodore Ts'o (12):
-  Fix minor formatting issue in man page for git-mergetool
-  mergetool: Replace use of "echo -n" with printf(1) to be more portable
-  mergetool: Don't error out in the merge case where the local file is deleted
-  mergetool: portability fix: don't assume true is in /bin
-  mergetool: portability fix: don't use reserved word function
-  mergetool: factor out common code
-  mergetool: Remove spurious error message if merge.tool config option not set
-  mergetool: Fix abort command when resolving symlinks and deleted files
-  mergetool: Add support for Apple Mac OS X's opendiff command
-  mergetool: Make git-rm quiet when resolving a deleted file conflict
-  mergetool: Clean up description of files and prompts for merge resolutions
-  Rename warn() to warning() to fix symbol conflicts on BSD and Mac OS
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
