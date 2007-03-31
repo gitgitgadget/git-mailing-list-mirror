@@ -1,78 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Keep rename/rename conflicts of intermediate merges
- while doing recursive merge
-Date: Sat, 31 Mar 2007 14:50:46 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0703311445190.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070329141230.GB16739@hermes> <81b0412b0703290744h34b6ef01s4e6f90b1d7ed231b@mail.gmail.com>
- <81b0412b0703290804n13af6f40we79f7251562c540@mail.gmail.com>
- <20070329183237.GB2809@steel.home> <Pine.LNX.4.64.0703291232190.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703291237240.6730@woody.linux-foundation.org>
- <Pine.LNX.4.63.0703302239050.4045@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0703301728510.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703301754590.6730@woody.linux-foundation.org>
- <20070331104947.GA4377@steel.home> <20070331114938.GB4377@steel.home>
+From: Sergio Callegari <scallegari@arces.unibo.it>
+Subject: Re: [PATCH 0/3] Somebody updated my branch tip underneath me.
+Date: Sat, 31 Mar 2007 12:50:42 +0000 (UTC)
+Message-ID: <loom.20070331T144714-311@post.gmane.org>
+References: <7vslbo4fwx.fsf@assigned-by-dhcp.cox.net> <loom.20070329T133700-713@post.gmane.org> <7vwt0z3ipb.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Tom Prince <tom.prince@ualberta.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 14:50:59 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Mar 31 14:51:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXd2m-0006bs-E8
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 14:50:56 +0200
+	id 1HXd3V-0006l3-6A
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 14:51:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240AbXCaMuu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 31 Mar 2007 08:50:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbXCaMuu
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 08:50:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58507 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751240AbXCaMut (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 08:50:49 -0400
-Received: (qmail invoked by alias); 31 Mar 2007 12:50:47 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 31 Mar 2007 14:50:47 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+sOAhnctSswFyggvaur5nyyVryDsb8j4U6zj57XG
-	C0FMLnxjDory1Z
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20070331114938.GB4377@steel.home>
-X-Y-GMX-Trusted: 0
+	id S1751707AbXCaMvG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sat, 31 Mar 2007 08:51:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751951AbXCaMvF
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 08:51:05 -0400
+Received: from main.gmane.org ([80.91.229.2]:60239 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751707AbXCaMvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 08:51:04 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HXd2i-0000EJ-Dp
+	for git@vger.kernel.org; Sat, 31 Mar 2007 14:50:52 +0200
+Received: from adsl-ull-16-10.41-151.net24.it ([151.41.10.16])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 31 Mar 2007 14:50:52 +0200
+Received: from scallegari by adsl-ull-16-10.41-151.net24.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 31 Mar 2007 14:50:52 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 151.41.10.16 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20060601 Firefox/2.0.0.3 (Ubuntu-edgy))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43552>
 
-Hi,
+Junio C Hamano <junkio <at> cox.net> writes:
 
-On Sat, 31 Mar 2007, Alex Riesen wrote:
+>=20
+> Answering that is part of "let's see who are motivated enough"
+> area .  Are you?
+>=20
+>=20
 
-> This patch leaves the base name in the resulting intermediate tree, to
-> propagate the conflict from intermediate merges up to the top-level merge.
+Touch=C3=A9! :-)
 
-I'd rather have conflict files, i.e.
-
-	for each entry in the index which is unmerged,
-		write the file in this form:
-		<<<<<<
-		[stage2]
-		======
-		[stage3]
-		>>>>>>
-
-		mark as merged (i.e. remove stages 1--3 from the index, 
-		and add the conflicted file as stage 0)
-
-The big problem is that you _cannot_ leave unmerged entries in 
-intermediate stages, because then, you could not write the tree. OTOH, you 
-_need_ to mark them as unmerged _in the end_.
-		
-That problem keeps me from just whipping up a patch in a few minutes, 
-sending it untested to the list, and get all the blame for it.
-
-Ciao,
-Dscho
+Sergio
