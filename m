@@ -1,67 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Rename warn() to warning() to fix symbol conflicts on
- BSD and Mac OS
-Date: Sat, 31 Mar 2007 12:46:05 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0703311245510.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <11752960251394-git-send-email-tytso@mit.edu>
- <7vejn5ygkc.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: SEGV in git-merge recursive:
+Date: Sat, 31 Mar 2007 12:49:47 +0200
+Message-ID: <20070331104947.GA4377@steel.home>
+References: <81b0412b0703290634j6e62ba89tce3c8c963be3fb92@mail.gmail.com> <20070329141230.GB16739@hermes> <81b0412b0703290744h34b6ef01s4e6f90b1d7ed231b@mail.gmail.com> <81b0412b0703290804n13af6f40we79f7251562c540@mail.gmail.com> <20070329183237.GB2809@steel.home> <Pine.LNX.4.64.0703291232190.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0703291237240.6730@woody.linux-foundation.org> <Pine.LNX.4.63.0703302239050.4045@wbgn013.biozentrum.uni-wuerzburg.de> <Pine.LNX.4.64.0703301728510.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0703301754590.6730@woody.linux-foundation.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Mar 31 12:46:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Tom Prince <tom.prince@ualberta.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Mar 31 12:49:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXb64-00035S-8p
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 12:46:12 +0200
+	id 1HXb9d-0003ct-Uk
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 12:49:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852AbXCaKqJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 31 Mar 2007 06:46:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbXCaKqI
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 06:46:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49665 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752871AbXCaKqH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 06:46:07 -0400
-Received: (qmail invoked by alias); 31 Mar 2007 10:46:06 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 31 Mar 2007 12:46:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19NbmEmJU9N5vP++c9wuzRsPGiu3vU1T2FOIo2eCe
-	gZQJgXP330/+Ky
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <7vejn5ygkc.fsf@assigned-by-dhcp.cox.net>
-X-Y-GMX-Trusted: 0
+	id S1752854AbXCaKtv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 31 Mar 2007 06:49:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752860AbXCaKtv
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 06:49:51 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:15007 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752854AbXCaKtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 06:49:50 -0400
+Received: from tigra.home (Fc8c6.f.strato-dslnet.de [195.4.200.198])
+	by post.webmailer.de (mrclete mo27) (RZmta 5.5)
+	with ESMTP id F01890j2V3DQrx ; Sat, 31 Mar 2007 12:49:48 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id BFEBF277B6;
+	Sat, 31 Mar 2007 12:49:47 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 48097D150; Sat, 31 Mar 2007 12:49:46 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0703301754590.6730@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+WNdA=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43544>
 
-Hi,
-
-On Sat, 31 Mar 2007, Junio C Hamano wrote:
-
-> Theodore Ts'o <tytso@mit.edu> writes:
+Linus Torvalds, Sat, Mar 31, 2007 03:03:36 +0200:
+> > 
+> > We're looking for a base version for a merge - think of a three-way merge 
+> > on a file level. And the easiest base version is actually an empty base 
+> > file (or, when it comes to a rename conflict, no base names at all).
 > 
-> > This fixes a problem reported by Randal Schwartz:
-> >
-> >>I finally tracked down all the (albeit inconsequential) errors I was getting
-> >>on both OpenBSD and OSX.  It's the warn() function in usage.c.  There's
-> >>warn(3) in BSD-style distros.  It'd take a "great rename" to change it, but if
-> >>someone with better C skills than I have could do that, my linker and I would
-> >>appreciate it.
-> >
-> > It was annoying to me, too, when I was doing some mergetool testing on
-> > Mac OS X, so here's a fix.
+> Note that "easiest" isn't "best".
 > 
-> I'd take this for now, but I wonder where we should stop.  If
-> somebody exports error() or die(), would we end up renaming them
-> to git_error() and git_die()?
+> For data conflicts in intermediate merges, we use the conficted file, 
+> conflict markers and all, as the base.
+> 
+> I suspect we should do exactly the same for filename conflicts. Write the 
+> intermediate tree with *both* files, including conflict markers. I'd 
+> suggest writing out the conflicting names to the intermediate tree 
+> *exactly* the same way we do for the final tree in the working tree, but 
+> mayne we could just write them with the SHA of the content appended to the 
+> filename or something..)
+> 
 
-Libification, here we come ;-)
-
-Ciao,
-Dscho
+The names are already different (base->a, base->b), what is the SHA for?
+I tried leaving all three names in the computed tree (base, a and b).
+The result is sometimes spectacular, but seldom useful.
