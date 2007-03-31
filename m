@@ -1,59 +1,54 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH] cvsserver: Use DBI->table_info instead of DBI->tables
-Date: Sat, 31 Mar 2007 16:09:19 +0200
-Message-ID: <20070331140919.GW8017@planck.djpig.de>
-References: <11743197614111-git-send-email-frank@lichtenheld.de> <1175349467524-git-send-email-frank@lichtenheld.de>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] Rename warn() to warning() to fix symbol conflicts on BSD and Mac OS
+Date: Sat, 31 Mar 2007 07:48:35 -0700
+Message-ID: <863b3lfozg.fsf@blue.stonehenge.com>
+References: <11752960251394-git-send-email-tytso@mit.edu>
+	<7vejn5ygkc.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Mar 31 16:09:27 2007
+Cc: Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Mar 31 16:48:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXeGj-0003SW-07
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 16:09:25 +0200
+	id 1HXesi-0001vN-2R
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 16:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753096AbXCaOJW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 31 Mar 2007 10:09:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753108AbXCaOJW
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 10:09:22 -0400
-Received: from planck.djpig.de ([85.10.192.180]:59636 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753096AbXCaOJV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 10:09:21 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 3AC6E88136
-	for <git@vger.kernel.org>; Sat, 31 Mar 2007 16:09:20 +0200 (CEST)
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (smtp.lichtenheld.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 23133-02 for <git@vger.kernel.org>;
-	Sat, 31 Mar 2007 16:09:19 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 5FD8C88137; Sat, 31 Mar 2007 16:09:19 +0200 (CEST)
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1175349467524-git-send-email-frank@lichtenheld.de>
-User-Agent: Mutt/1.5.9i
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lichtenheld.net
+	id S1753135AbXCaOsh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 31 Mar 2007 10:48:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753137AbXCaOsh
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 10:48:37 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:29843 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753135AbXCaOsg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 10:48:36 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id E34B21DE55A; Sat, 31 Mar 2007 07:48:35 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.3.8; tzolkin = 5 Lamat; haab = 1 Uayeb
+In-Reply-To: <7vejn5ygkc.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Sat, 31 Mar 2007 01:15:31 -0700")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43558>
 
-On Sat, Mar 31, 2007 at 03:57:47PM +0200, Frank Lichtenheld wrote:
-> DBI->table_info is portable across different DBD backends,
-> DBI->tables is not.
-> 
-> Limit the output to objects of type TABLE.
-> ---
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-I just noticed I forgot to add the
-"Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>"
+Junio> I'd take this for now, but I wonder where we should stop.  If
+Junio> somebody exports error() or die(), would we end up renaming them
+Junio> to git_error() and git_die()?
 
-Does one resend the patch in such cases?
+I realize you may see it as a slippery slope, but I haven't heard anything
+else reported yet, and git has already been ported quite a bit.  But since C
+has a flat namespace, this will always be a problem.
 
-Gruesse,
+Picking a name like warn(3) was probably dumb on bsd's part, but it *is* a
+generic call like perror(3).
+
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
