@@ -1,75 +1,65 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC] Packing large repositories
-Date: Sat, 31 Mar 2007 15:02:56 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0703311459000.28181@xanadu.home>
-References: <56b7f5510703280005o7998d65pcbcd4636b46d8d23@mail.gmail.com>
- <Pine.LNX.4.64.0703280943450.6730@woody.linux-foundation.org>
- <20070330062324.GU13247@spearce.org>
- <alpine.LFD.0.83.0703300851270.3041@xanadu.home>
- <78639417-ACDB-484F-85BB-EC0AF694949A@adacore.com>
- <Pine.LNX.4.64.0703311033290.6730@woody.linux-foundation.org>
+From: Tom Prince <tom.prince@ualberta.net>
+Subject: Re: git-add has gone lstat() mad
+Date: Sat, 31 Mar 2007 23:28:37 +0400
+Message-ID: <20070331192835.GA25016@hermes>
+References: <200703302055.13619.andyparkins@gmail.com> <7vslbmxkcv.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0703302020510.6730@woody.linux-foundation.org> <200703311119.10581.andyparkins@gmail.com> <86lkhdqx8y.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Geert Bosch <bosch@adacore.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Dana How <danahow@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Mar 31 21:03:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 21:28:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXiqq-0002ON-T2
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 21:03:01 +0200
+	id 1HXjFQ-0008PT-64
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 21:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbXCaTC5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 31 Mar 2007 15:02:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753182AbXCaTC5
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 15:02:57 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:34073 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751495AbXCaTC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 15:02:57 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFS00GDT7KWOK70@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 31 Mar 2007 15:02:56 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0703311033290.6730@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S1753258AbXCaT2V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 31 Mar 2007 15:28:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753265AbXCaT2V
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 15:28:21 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:37557 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258AbXCaT2U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 15:28:20 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1143528uga
+        for <git@vger.kernel.org>; Sat, 31 Mar 2007 12:28:18 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=E+kA1zsGcjHLwBFWighitd/pKaWXzSvMWC4uqGp6BbHWCKIHVwgCZR80aWHxx0rVrDxUf5zWJZioqDD9qhkOLWfgrJ6rlBQJA0xVUpLau1mQC2vHZiUS0ZgFGCEJbmgsPQ0YgCmJjdWEr6g0KJZz/6bx6GoSsWbxj6wK2OQW9t8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
+        b=lsRbGKySbFeRncniwLLHyq/0zGbsg2nOUiwryDNvxkNbDDyRJNHAnd9BiguutjvBu5CmD56ZkJCDTvwQms6vB/HqZYOGV6ujN51L4ldLjix50IqsQMQBmA3B7IxshjKGdEDWD1wRTB7JOuDIbqFM2zuUnlnU9fxsJmYfIdeWhkE=
+Received: by 10.67.119.13 with SMTP id w13mr3211002ugm.1175369298583;
+        Sat, 31 Mar 2007 12:28:18 -0700 (PDT)
+Received: from hermes ( [80.240.215.209])
+        by mx.google.com with ESMTP id 20sm3708332uga.2007.03.31.12.28.17;
+        Sat, 31 Mar 2007 12:28:17 -0700 (PDT)
+Received: by hermes (nbSMTP-1.00) for uid 500
+	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
+	Tom; Sat, 31 Mar 2007 23:28:38 +0400 (MSD)
+Mail-Followup-To: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <86lkhdqx8y.fsf@blue.stonehenge.com>
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43567>
 
-On Sat, 31 Mar 2007, Linus Torvalds wrote:
+On Sat, Mar 31, 2007 at 07:54:37AM -0700, Randal L. Schwartz wrote:
+> Given that git currently doesn't maintain any metadata other than +x/-x, how
+> are you maintaining the metadata for your homedir items?  I know some
+> schemes
+> were discussed here in the past, but I'm curious as to what you settled on.
+> For example, your .netrc file needs to be 600, but git won't track that.
 
-> The thing is, I think the index-pack could be improved, but I think we can 
-> get a bigger improvement from just being more intelligent about searching 
-> than from actually needing to re-organize the pack.
-> 
-> Here's a few clues:
->  - one of the fundamental rules about cryptographic hashes is that they 
->    are *evenly*distributed*
+I personally just don't track files that have sensitive data. I tend to have
+copies of my home dir on somewhat public servers, so I don't want that data
+copied around anyway.
 
-I was thinking about that too.
-
-> So here's a suggestion:
-> 
->  - start finding a range using the 256-entry fan-out, exactly the way we 
->    did for the binary search. It's cheap. We could probably avoid EVEN 
->    THIS, and just do one more newton-raphson iteration more. But since we 
->    have the data, we migth as well use it. After all, it really *is* just 
->    a first approximation of newton-raphson, and while it uses only 8 bits 
->    (and we could do better), at least it's an *exact* one.
-> 
->  - use newton-raphson to iterate closer. It should be a much faster way to 
->    find the rough area for the entry we're searching for than binary 
->    search. Two or three iterations should get us there, easily.
-> 
->  - do a linear search once you're close enough.
-
-I like that.
-
-
-Nicolas
+  Tom
