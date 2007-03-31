@@ -1,78 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Keep rename/rename conflicts of intermediate merges
- while doing recursive merge
-Date: Sat, 31 Mar 2007 14:53:47 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0703311452300.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070329141230.GB16739@hermes> <81b0412b0703290744h34b6ef01s4e6f90b1d7ed231b@mail.gmail.com>
- <81b0412b0703290804n13af6f40we79f7251562c540@mail.gmail.com>
- <20070329183237.GB2809@steel.home> <Pine.LNX.4.64.0703291232190.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703291237240.6730@woody.linux-foundation.org>
- <Pine.LNX.4.63.0703302239050.4045@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0703301728510.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0703301754590.6730@woody.linux-foundation.org>
- <20070331104947.GA4377@steel.home> <20070331114938.GB4377@steel.home>
- <Pine.LNX.4.63.0703311445190.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Pruning objects from history?
+Date: Sat, 31 Mar 2007 09:11:34 -0400
+Message-ID: <20070331131134.GC25539@thunk.org>
+References: <460DC0F7.1070607@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
-	Tom Prince <tom.prince@ualberta.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Mar 31 14:53:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sat Mar 31 15:11:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXd5d-00079H-6o
-	for gcvg-git@gmane.org; Sat, 31 Mar 2007 14:53:53 +0200
+	id 1HXdMs-0001x4-UZ
+	for gcvg-git@gmane.org; Sat, 31 Mar 2007 15:11:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751003AbXCaMxu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 31 Mar 2007 08:53:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752004AbXCaMxu
-	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 08:53:50 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41379 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751003AbXCaMxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Mar 2007 08:53:49 -0400
-Received: (qmail invoked by alias); 31 Mar 2007 12:53:48 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp019) with SMTP; 31 Mar 2007 14:53:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+TFVx6a0CTmUgepoXTfQOvhJi1vL8nxA+rM69Ebh
-	ycL+kgi1UF93Pj
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.63.0703311445190.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-X-Y-GMX-Trusted: 0
+	id S1750782AbXCaNLk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 31 Mar 2007 09:11:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752388AbXCaNLk
+	(ORCPT <rfc822;git-outgoing>); Sat, 31 Mar 2007 09:11:40 -0400
+Received: from thunk.org ([69.25.196.29]:56725 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750782AbXCaNLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Mar 2007 09:11:39 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HXdSq-0003qI-7Y; Sat, 31 Mar 2007 09:17:52 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.62)
+	(envelope-from <tytso@thunk.org>)
+	id 1HXdMk-0006LW-BT; Sat, 31 Mar 2007 09:11:34 -0400
+Content-Disposition: inline
+In-Reply-To: <460DC0F7.1070607@midwinter.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43554>
 
-Hi,
-
-On Sat, 31 Mar 2007, Johannes Schindelin wrote:
-
-> On Sat, 31 Mar 2007, Alex Riesen wrote:
+On Fri, Mar 30, 2007 at 07:01:27PM -0700, Steven Grimm wrote:
+> I've imported the full history of a large project from Subversion using 
+> the latest git-svn. The resulting repo is huge, and I believe it's due 
+> in large part to a series of big tar.gz files that got checked into the 
+> Subversion repository by mistake early in the project's history. They 
+> were subsequently removed from svn, but of course git-svn grabs them and 
+> puts them in my local history.
 > 
-> > This patch leaves the base name in the resulting intermediate tree, to
-> > propagate the conflict from intermediate merges up to the top-level merge.
+> Is there any way to excise those files? They are of no interest to us 
+> now -- they were data files for a third-party application we ended up 
+> not using -- and they're making git look bad in the disk usage department.
 > 
-> I'd rather have conflict files, i.e.
-> 
-> 	for each entry in the index which is unmerged,
-> 		write the file in this form:
-> 		<<<<<<
-> 		[stage2]
-> 		======
-> 		[stage3]
-> 		>>>>>>
-> 
-> 		mark as merged (i.e. remove stages 1--3 from the index, 
-> 		and add the conflicted file as stage 0)
+> I believe this has been asked before in the context of removing 
+> copyrighted content from public repositories. However, I have a twist 
+> that may make it easier: nobody else has cloned this repository yet. I 
+> am free to rewrite history with no risk of messing up any downstream 
+> repositories, and I don't have to worry about propagating the deletions 
+> out to anyone. I just don't know how to do it (assuming it's doable at all.)
 
-Side note: for the "src->dest1,dest2" case, I really would like to see a 
-threeway merge. But I would want the above-mentioned behaviour _before_ 
-that, to make sure that we have a reasonable fallback for hard cases.
+It's painful to rewrite history, since you end up needing to rewrite
+every single commit after the point where you've tampered with time to
+fix up the parent commit ID.
 
-Ciao,
-Dscho
+Are you planning on doing a one-shot import, or are you hoping to be
+able to do bidirectional gatewaying between svn and git?  If you want
+to do the latter, rewriting history is going to be very painful if you
+want the bidirectional gateway to work afterwards.
+
+If you just want to do a one-way import, it's probably going to be
+much easier to modify whatever importer you use to not import the big
+files in the first place.
+
+						- Ted
