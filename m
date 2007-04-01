@@ -1,271 +1,60 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH] Bisect: teach "bisect start" to optionally use one bad
- and many good revs.
-Date: Sun, 1 Apr 2007 14:57:23 +0200
-Message-ID: <20070401145723.27e17177.chriscool@tuxfamily.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 0/2] Alternate index output file
+Date: Sun, 1 Apr 2007 09:08:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704010904430.6730@woody.linux-foundation.org>
+References: <7vwt11itbz.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0703280759230.6730@woody.linux-foundation.org>
+ <7v4po04nit.fsf_-_@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 01 14:49:26 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Apr 01 18:08:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXzUp-0003Jv-Oq
-	for gcvg-git@gmane.org; Sun, 01 Apr 2007 14:49:24 +0200
+	id 1HY2bq-0008NC-MG
+	for gcvg-git@gmane.org; Sun, 01 Apr 2007 18:08:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932969AbXDAMtU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Apr 2007 08:49:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933012AbXDAMtU
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Apr 2007 08:49:20 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:52263 "EHLO smtp1-g19.free.fr"
+	id S933576AbXDAQIj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Apr 2007 12:08:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933591AbXDAQIj
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Apr 2007 12:08:39 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:44809 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932969AbXDAMtT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Apr 2007 08:49:19 -0400
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 3DE3BB62A5;
-	Sun,  1 Apr 2007 14:49:17 +0200 (CEST)
-X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
+	id S933576AbXDAQIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Apr 2007 12:08:38 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l31G8Yod010170
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sun, 1 Apr 2007 09:08:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l31G8X4g013745;
+	Sun, 1 Apr 2007 09:08:33 -0700
+In-Reply-To: <7v4po04nit.fsf_-_@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.964 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43590>
 
-As Junio said:
 
-"One bad commit is fundamentally needed for bisect to run,
-and if we beforehand know more good commits, we can narrow
-the bisect space down without doing the whole tree checkout
-every time we give good commits.  I think it may be a good
-idea to have:
 
-    git bisect start [$bad [$good1 $good2...]] [-- <paths>...]
+On Sat, 31 Mar 2007, Junio C Hamano wrote:
+>
+> If a curious user has the environment variable set to something
+> other than the file GIT_INDEX_FILE points at, almost everything
+> will break.  This should instead be a command line parameter to
+> tell these plumbing commands to write the result in the named
+> file, to prevent stupid mistakes.
 
-as a short-hand for this command sequence:
+I agree, that sounds sane. In general, we should probably support 
+command-line parameters for most of those things, rather than force the 
+use of environment parameters (the way we already do with "--author", for 
+example).
 
-    git bisect start
-    git bisect bad $bad
-    git bisect good $good1 $good2...
-
-That would be a good script-shorterner, without limiting it to
-any specific use scenario."
-
-In fact this patch implements:
-
-    git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
-
-I think this is more backward compatible because older script
-probably didn't used -- before <pathspec>...
-
-On the other hand, there may be some confusion between revs
-(<bad> and <good>...) and <pathspec>... if -- is not used
-and if an invalid rev or a pathspec that looks like a rev is
-given.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-bisect.sh         |  105 ++++++++++++++++++++++++++++++++++++++-----------
- t/t6030-bisect-run.sh |   20 ++++++++-
- 2 files changed, 99 insertions(+), 26 deletions(-)
-
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 11313a7..d5a13ee 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -1,15 +1,24 @@
- #!/bin/sh
- 
- USAGE='[start|bad|good|next|reset|visualize|replay|log|run]'
--LONG_USAGE='git bisect start [<pathspec>]	reset bisect state and start bisection.
--git bisect bad [<rev>]		mark <rev> a known-bad revision.
--git bisect good [<rev>...]	mark <rev>... known-good revisions.
--git bisect next			find next bisection to test and check it out.
--git bisect reset [<branch>]	finish bisection search and go back to branch.
--git bisect visualize            show bisect status in gitk.
--git bisect replay <logfile>	replay bisection log.
--git bisect log			show bisect log.
--git bisect run <cmd>... 	use <cmd>... to automatically bisect.'
-+LONG_USAGE='git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
-+        reset bisect state and start bisection.
-+git bisect bad [<rev>]
-+        mark <rev> a known-bad revision.
-+git bisect good [<rev>...]
-+        mark <rev>... known-good revisions.
-+git bisect next
-+        find next bisection to test and check it out.
-+git bisect reset [<branch>]
-+        finish bisection search and go back to branch.
-+git bisect visualize
-+        show bisect status in gitk.
-+git bisect replay <logfile>
-+        replay bisection log.
-+git bisect log
-+        show bisect log.
-+git bisect run <cmd>...
-+        use <cmd>... to automatically bisect.'
- 
- . git-sh-setup
- require_work_tree
-@@ -70,14 +79,48 @@ bisect_start() {
- 	#
- 	# Get rid of any old bisect state
- 	#
--	rm -f "$GIT_DIR/refs/heads/bisect"
--	rm -rf "$GIT_DIR/refs/bisect/"
-+	bisect_clean_state
- 	mkdir "$GIT_DIR/refs/bisect"
-+
-+	#
-+	# Check for one bad and then some good revisions.
-+	#
-+	has_double_dash=0
-+	for arg in "$@"; do
-+	    case "$arg" in --) has_double_dash=1; break ;; esac
-+	done
-+	orig_args="$@"
-+	bad_seen=0
-+	while [ $# -gt 0 ]; do
-+	    arg="$1"
-+	    case "$arg" in
-+	    --)
-+	        shift
-+		break
-+		;;
-+	    *)
-+	        rev=$(git-rev-parse --verify "$arg^{commit}" 2>/dev/null) || {
-+		    test $has_double_dash -eq 1 &&
-+		        die "'$arg' does not appear to be a valid revision"
-+		    break
-+		}
-+		if [ $bad_seen -eq 0 ]; then
-+		    bad_seen=1
-+		    bisect_write_bad "$rev"
-+		else
-+		    bisect_write_good "$rev"
-+		fi
-+	        shift
-+		;;
-+	    esac
-+        done
-+
-+	sq "$@" >"$GIT_DIR/BISECT_NAMES"
- 	{
- 	    printf "git-bisect start"
--	    sq "$@"
--	} >"$GIT_DIR/BISECT_LOG"
--	sq "$@" >"$GIT_DIR/BISECT_NAMES"
-+	    sq "$orig_args"
-+	} >>"$GIT_DIR/BISECT_LOG"
-+	bisect_auto_next
- }
- 
- bisect_bad() {
-@@ -90,12 +133,17 @@ bisect_bad() {
- 	*)
- 		usage ;;
- 	esac || exit
--	echo "$rev" >"$GIT_DIR/refs/bisect/bad"
--	echo "# bad: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
-+	bisect_write_bad "$rev"
- 	echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
- 	bisect_auto_next
- }
- 
-+bisect_write_bad() {
-+	rev="$1"
-+	echo "$rev" >"$GIT_DIR/refs/bisect/bad"
-+	echo "# bad: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
-+}
-+
- bisect_good() {
- 	bisect_autostart
-         case "$#" in
-@@ -106,13 +154,19 @@ bisect_good() {
- 	for rev in $revs
- 	do
- 		rev=$(git-rev-parse --verify "$rev^{commit}") || exit
--		echo "$rev" >"$GIT_DIR/refs/bisect/good-$rev"
--		echo "# good: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
-+		bisect_write_good "$rev"
- 		echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
-+
- 	done
- 	bisect_auto_next
- }
- 
-+bisect_write_good() {
-+	rev="$1"
-+	echo "$rev" >"$GIT_DIR/refs/bisect/good-$rev"
-+	echo "# good: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
-+}
-+
- bisect_next_check() {
- 	next_ok=no
-         test -f "$GIT_DIR/refs/bisect/bad" &&
-@@ -190,14 +244,19 @@ bisect_reset() {
- 	    usage ;;
- 	esac
- 	if git checkout "$branch"; then
--		rm -fr "$GIT_DIR/refs/bisect"
--		rm -f "$GIT_DIR/refs/heads/bisect" "$GIT_DIR/head-name"
--		rm -f "$GIT_DIR/BISECT_LOG"
--		rm -f "$GIT_DIR/BISECT_NAMES"
--		rm -f "$GIT_DIR/BISECT_RUN"
-+		rm -f "$GIT_DIR/head-name"
-+		bisect_clean_state
- 	fi
- }
- 
-+bisect_clean_state() {
-+	rm -fr "$GIT_DIR/refs/bisect"
-+	rm -f "$GIT_DIR/refs/heads/bisect"
-+	rm -f "$GIT_DIR/BISECT_LOG"
-+	rm -f "$GIT_DIR/BISECT_NAMES"
-+	rm -f "$GIT_DIR/BISECT_RUN"
-+}
-+
- bisect_replay () {
- 	test -r "$1" || {
- 		echo >&2 "cannot read $1 for replaying"
-diff --git a/t/t6030-bisect-run.sh b/t/t6030-bisect-run.sh
-index 39c7228..455dc60 100755
---- a/t/t6030-bisect-run.sh
-+++ b/t/t6030-bisect-run.sh
-@@ -40,8 +40,8 @@ test_expect_success \
- # We want to automatically find the commit that
- # introduced "Another" into hello.
- test_expect_success \
--    'git bisect run simple case' \
--    'echo "#!/bin/sh" > test_script.sh &&
-+    '"git bisect run" simple case' \
-+    'echo "#"\!"/bin/sh" > test_script.sh &&
-      echo "grep Another hello > /dev/null" >> test_script.sh &&
-      echo "test \$? -ne 0" >> test_script.sh &&
-      chmod +x test_script.sh &&
-@@ -49,7 +49,21 @@ test_expect_success \
-      git bisect good $HASH1 &&
-      git bisect bad $HASH4 &&
-      git bisect run ./test_script.sh > my_bisect_log.txt &&
--     grep "$HASH3 is first bad commit" my_bisect_log.txt'
-+     grep "$HASH3 is first bad commit" my_bisect_log.txt &&
-+     git bisect reset'
-+
-+# We want to automatically find the commit that
-+# introduced "Ciao" into hello.
-+test_expect_success \
-+    '"git bisect run" with more complex "git bisect start"' \
-+    'echo "#"\!"/bin/sh" > test_script.sh &&
-+     echo "grep Ciao hello > /dev/null" >> test_script.sh &&
-+     echo "test \$? -ne 0" >> test_script.sh &&
-+     chmod +x test_script.sh &&
-+     git bisect start $HASH4 $HASH1 &&
-+     git bisect run ./test_script.sh > my_bisect_log.txt &&
-+     grep "$HASH4 is first bad commit" my_bisect_log.txt &&
-+     git bisect reset'
- 
- #
- #
--- 
-1.5.1.rc3.21.g177f7-dirty
+		Linus
