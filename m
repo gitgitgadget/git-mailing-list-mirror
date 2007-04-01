@@ -1,78 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] Human friendly git: add another human readable option.
-Date: Sun, 1 Apr 2007 03:47:01 -0400
-Message-ID: <20070401074701.GD15922@spearce.org>
-References: <7vk5wx556z.fsf@assigned-by-dhcp.cox.net> <e5bfff550704010038g74173d2ekb78b2da41a5779c0@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 1/3] Human friendly git: accept imperative mood.
+Date: Sun, 1 Apr 2007 09:06:23 +0100
+Message-ID: <200704010906.24429.andyparkins@gmail.com>
+References: <7vmz1t557v.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sloof Lirpa <sitemaster@cox.net>, Junio C Hamamo <junkio@cox.net>,
-	git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 01 09:47:12 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Sloof Lirpa <sitemaster@cox.net>, Junio C Hamamo <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Apr 01 10:09:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXumO-0000Zt-0D
-	for gcvg-git@gmane.org; Sun, 01 Apr 2007 09:47:12 +0200
+	id 1HXv7r-00042a-0i
+	for gcvg-git@gmane.org; Sun, 01 Apr 2007 10:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932190AbXDAHrJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Apr 2007 03:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932189AbXDAHrI
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Apr 2007 03:47:08 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41576 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932190AbXDAHrH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Apr 2007 03:47:07 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HXumF-0004DV-9u; Sun, 01 Apr 2007 03:47:03 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 59DC020FBAE; Sun,  1 Apr 2007 03:47:02 -0400 (EDT)
+	id S932098AbXDAIJT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Apr 2007 04:09:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932224AbXDAIJS
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Apr 2007 04:09:18 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:32023 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932098AbXDAIJR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Apr 2007 04:09:17 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1239858uga
+        for <git@vger.kernel.org>; Sun, 01 Apr 2007 01:09:15 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=qV874xnTv8eT0XXrv3uM7mN74eD4g8AqiB9JgcFWbFDtj8XhJswkv6kc1WdSnXvD3pMsa3nyGQF3+nh/jyE3LRL2WvHD2nUddPOPrYhGMxu/ntQjK1rfCCgR0msz9I+OD99K1CEtYSdNcc9mrqnLZNS70P/4xX5kOukMF/16laM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ZQxCc4a6Rg9RVR9MSEY9SRQJZxnmSs3cuCPk/kz0jT9zFCJiIvUrWTCerJ30XCYolWerzGMQYm2AWsS1a+VUoTgKaLJKosKN7yzs8tInDmLfOeLofvct48jSiPLA5qM3f5JYbEn/jlLva+UdK7U3mS9YLmlCvjvpq8Z7c+o3HaQ=
+Received: by 10.66.232.10 with SMTP id e10mr3331496ugh.1175414955939;
+        Sun, 01 Apr 2007 01:09:15 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id k30sm5494013ugc.2007.04.01.01.09.13;
+        Sun, 01 Apr 2007 01:09:14 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vmz1t557v.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <e5bfff550704010038g74173d2ekb78b2da41a5779c0@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43585>
 
-Marco Costalba <mcostalba@gmail.com> wrote:
-> On 4/1/07, Sloof Lirpa <sitemaster@cox.net> wrote:
-> >Building on top of the previous patches, this allows you to say:
-> >
-> >        $ git, please nicely ls-files
-> >
-> >to get a paginated output of ls-files.
-> >
-> 
-> When 'talking' to a computer I would rather prefer to type as less as
-> possible, but I understand it's a personal taste.
+On Sunday 2007, April 01, Sloof Lirpa wrote:
 
-I once worked with someone whose PS1 was set to:
+> With this patch, you can now say:
+>
+> 	$ git, fetch $URL
 
-	PS1='and now I shall '
+I assume your next patch will be:
 
-It was quite humerous to read the screenbuffer from a terminal:
+ $ git north
+ git: you are in the cellar
+ $ git look
+ git: you have a series of windy source code, all alike.  Commit?
 
-   and now I shall make world
-   ...
-   and now I shall make clean
-   ...
-   and now I shall telnet remotesystem
-   ...
-   and now I shall kill 1899
 
-;-)
-
+Andy
 -- 
-Shawn.
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
