@@ -1,72 +1,59 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git-add has gone lstat() mad
-Date: Sun, 1 Apr 2007 09:25:24 +0100
-Message-ID: <200704010925.26590.andyparkins@gmail.com>
-References: <200703302055.13619.andyparkins@gmail.com> <Pine.LNX.4.64.0703302020510.6730@woody.linux-foundation.org> <7vy7ld3p33.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Rename warn() to warning() to fix symbol conflicts on BSD and Mac OS
+Date: Sun, 1 Apr 2007 12:25:54 +0200
+Message-ID: <20070401102554.GA20579@steel.home>
+References: <11752960251394-git-send-email-tytso@mit.edu> <7vejn5ygkc.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 01 10:28:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Theodore Ts'o <tytso@mit.edu>, git@vger.kernel.org,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Apr 01 12:26:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HXvQM-0005vM-12
-	for gcvg-git@gmane.org; Sun, 01 Apr 2007 10:28:30 +0200
+	id 1HXxG4-0006bT-8t
+	for gcvg-git@gmane.org; Sun, 01 Apr 2007 12:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932224AbXDAI2T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 1 Apr 2007 04:28:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932238AbXDAI2T
-	(ORCPT <rfc822;git-outgoing>); Sun, 1 Apr 2007 04:28:19 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:54571 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932224AbXDAI2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Apr 2007 04:28:18 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1242547uga
-        for <git@vger.kernel.org>; Sun, 01 Apr 2007 01:28:17 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=dwilKZPXBASUDojtdxgpbyHYk+B1w5U9YRh0HtX9mdvSOHd4V72sHmvqmWlQ/h5TMg1pPsANqF+Vwx3O4VfcMuKDQMKgEUyEX3v1JoP3nOn5dQZg4rf2XPQwRSe25kGSGBK+NkFaJPZd1tkfPSkVWAfVxuNooVQPUIIkPfgtm34=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Ir8JRkFp4hiT+vMB6NDOuQj2fpHwEH+p3KJHNxd+4lD0tWrUFrI0ZvwXaKOvicIKe+CA0P8DZgCsx6KGwBPhRkCAKkHXVFqR+4lXEYGvLzKDdZYCuJHfpX7/ThDLAgND07XQ/8265I7jjhga0yE3kPL5tgYGzI7FN00HILR13ds=
-Received: by 10.67.115.11 with SMTP id s11mr3338398ugm.1175416096867;
-        Sun, 01 Apr 2007 01:28:16 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id 32sm5379224ugf.2007.04.01.01.28.15;
-        Sun, 01 Apr 2007 01:28:16 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <7vy7ld3p33.fsf@assigned-by-dhcp.cox.net>
+	id S932396AbXDAKZ5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 1 Apr 2007 06:25:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932418AbXDAKZ5
+	(ORCPT <rfc822;git-outgoing>); Sun, 1 Apr 2007 06:25:57 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:62157 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932396AbXDAKZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Apr 2007 06:25:56 -0400
+Received: from tigra.home (Fc969.f.strato-dslnet.de [195.4.201.105])
+	by post.webmailer.de (mrclete mo25) (RZmta 5.5)
+	with ESMTP id D0188aj318ilD4 ; Sun, 1 Apr 2007 12:25:55 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id B564A277B6;
+	Sun,  1 Apr 2007 12:25:54 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 309F6D150; Sun,  1 Apr 2007 12:25:53 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7vejn5ygkc.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzATso3c=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43587>
 
-On Sunday 2007, April 01, Junio C Hamano wrote:
+Junio C Hamano, Sat, Mar 31, 2007 10:15:31 +0200:
+> >>I finally tracked down all the (albeit inconsequential) errors I was getting
+> >>on both OpenBSD and OSX.  It's the warn() function in usage.c.  There's
+> >>warn(3) in BSD-style distros.  It'd take a "great rename" to change it, but if
+> >>someone with better C skills than I have could do that, my linker and I would
+> >>appreciate it.
+> >
+> > It was annoying to me, too, when I was doing some mergetool testing on
+> > Mac OS X, so here's a fix.
+> 
+> I'd take this for now, but I wonder where we should stop. 
 
-> But I like this patch better.  We need to look at .gitignore to
-> warn about adding ignored files, so we cannot just stuff what
-> are found to dir without checking if they are ignored.
-
-I needed the following needed on top of current pu:
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index fa36495..d4f7589 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -521,7 +521,7 @@ static void verify_clean_subdirectory(const char *path, const char *action,
- 	memset(&d, 0, sizeof(d));
- 	if (o->dir)
- 		d.exclude_per_dir = o->dir->exclude_per_dir;
--	i = read_directory(&d, path, pathbuf, namelen+1);
-+	i = read_directory(&d, path, pathbuf, namelen+1, NULL);
- 	if (i)
- 		die("Updating '%s' would lose untracked files in it",
- 		    path);
+Glibc also has warn(3) - see err.h for example.
+(why is it part of libc, I wonder...)
