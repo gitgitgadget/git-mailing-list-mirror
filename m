@@ -1,112 +1,85 @@
 From: "Peter Eriksen" <s022018@student.dtu.dk>
-Subject: Distribution of longest common hash prefixes
-Date: Mon, 2 Apr 2007 16:58:57 +0200
-Message-ID: <20070402145857.GA13293@bohr.gbar.dtu.dk>
+Subject: Re: Distribution of longest common hash prefixes
+Date: Mon, 2 Apr 2007 17:28:35 +0200
+Message-ID: <20070402152835.GB13293@bohr.gbar.dtu.dk>
+References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 02 16:59:06 2007
+X-From: git-owner@vger.kernel.org Mon Apr 02 17:28:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYNzt-0004W3-65
-	for gcvg-git@gmane.org; Mon, 02 Apr 2007 16:59:05 +0200
+	id 1HYOSW-0000j1-IQ
+	for gcvg-git@gmane.org; Mon, 02 Apr 2007 17:28:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753496AbXDBO7A (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Apr 2007 10:59:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753008AbXDBO7A
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Apr 2007 10:59:00 -0400
-Received: from bohr.gbar.dtu.dk ([192.38.95.24]:36582 "HELO bohr.gbar.dtu.dk"
+	id S1751566AbXDBP2h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Apr 2007 11:28:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751540AbXDBP2h
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Apr 2007 11:28:37 -0400
+Received: from bohr.gbar.dtu.dk ([192.38.95.24]:37069 "HELO bohr.gbar.dtu.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753497AbXDBO7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2007 10:59:00 -0400
-Received: (qmail 14250 invoked by uid 5842); 2 Apr 2007 16:58:57 +0200
+	id S1751209AbXDBP2h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2007 11:28:37 -0400
+Received: (qmail 15789 invoked by uid 5842); 2 Apr 2007 17:28:35 +0200
 Content-Disposition: inline
+In-Reply-To: <20070402145857.GA13293@bohr.gbar.dtu.dk>
 User-Agent: Mutt/1.5.7i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43601>
 
-Hello,
+On Mon, Apr 02, 2007 at 04:58:57PM +0200, Peter Eriksen wrote:
+...
+> Why does it look so sparse and strange?
 
-With the recent and ongoing discussion about a more efficient .idx
-format, I got curious about how long the longest common prefix between
-two hashes is in git various projects. So I did
+... and here is the nonbroken version, which is neither sparse nor
+strange. Thanks to chris on #git for the nice programming lesson.
+More correct output and program bellow.
 
-$ git rev-list --objects HEAD | cut -b1-40 | sort >proj.list
-$ lcprefix proj.list
-
-and decided to compare all neighbour hashes with each other, finding the
-longest common prefix in bits between them. These numbers were then
-tabulated into bins on the number of bits.
-
-Why does it look so sparse and strange?
-
-The following is the output of the program bellow on the linux-2.6.git
-archive:
+Peter
 
 
-0000d162d198a60d558ab4be3f54f608ff8b7473
-0000de01ec150d1a291564818571f719a6a6190f
-lcprefix = 20
-00038c17317a3633f176f17876e69d8e31a5c708
-00038ef0cad0a60ee7cace23ade5dfb325b7700d
-lcprefix = 22
-00108a8dd8d4d772ac6a91efde40191392ba4624
-00108ba9a78dcef5629ead0e8bea35d0c08c9ea7
-lcprefix = 23
-001c2d57248586464da570017e368e188eb4d270
-001c2d594f26b529fdabb6cf05deaa384f400e12
-lcprefix = 28
-002c9920c7bc3cbf74b4cdc03491f80f68917528
-002c9922e55255556f1bebea8772aa58c9724825
-lcprefix = 30
-15d954e50cae6e816b534bf959c49a2920bef808
-15d954e51e5b40cf4d5930708fe98076adb1063a
-lcprefix = 35
-d37bdb4d4930ddb390902c19cffe6552d93d3fcf
-d37bdb4d4c9c821e4765f10c206fa613f7781b65
-lcprefix = 37
- 0:  0
- 1:  0
- 2:  0
- 3:  0
- 4:  0
- 5:  0
- 6:  0
- 7:  0
- 8:  0
- 9:  0
-10:  0
-11:  0
-12:  0
-13:  0
-14:  0
-15:  0
-16:  0
-17:  0
-18:  0
-19:  8
-20: 19
-21:  0
-22: 87
-23: 70
-24:  0
-25:  0
-26:  0
-27:  0
-28: 116
-29:  0
-30: 36975
-31:  0
-32:  0
-33:  0
-34:  0
-35: 325071
+ 0:  1
+ 1:  2
+ 2:  4
+ 3:  8
+ 4: 16
+ 5: 32
+ 6: 64
+ 7: 128
+ 8: 256
+ 9: 512
+10: 1024
+11: 2048
+12: 4096
+13: 8192
+14: 16384
+15: 32685
+16: 60921
+17: 86511
+18: 84426
+19: 61518
+20: 37450
+21: 20728
+22: 11035
+23: 5562
+24: 2812
+25: 1467
+26: 738
+27: 355
+28: 191
+29: 83
+30: 49
+31: 27
+32: 10
+33:  3
+34:  1
+35:  2
 36:  0
-37: 76996
+37:  1
 38:  0
 39:  0
 40:  0
@@ -135,7 +108,7 @@ lcprefix = 37
 63:  0
 
 
-======================= >8 ============================
+
 #include <stdio.h>
 #include <string.h>
 
@@ -161,6 +134,11 @@ int lcprefix(char *a, char *b)
 	return i*4 + j - 4;
 }
 
+int max(int a, int b)
+{
+	return a < b ? b : a;
+}
+
 int main(int argc, char **argv)
 {
 	FILE *fp;
@@ -169,6 +147,7 @@ int main(int argc, char **argv)
 	int lcp = 0;
 	int table[64];
 	int i;
+	int tmp;
 
 	memset(table, 0, 64*sizeof(int));
 	memset(old, '0', 40);
@@ -177,14 +156,15 @@ int main(int argc, char **argv)
 	fp = fopen(argv[1], "r");
 	fscanf(fp, "%s\n", cur);
 
-	if (lcp < lcprefix(old, cur)) {
-		lcp = lcprefix(old, cur);
-	}
+	tmp = lcprefix(old, cur);
+	table[tmp]++;
+	lcp = max(lcp, tmp);
 
-	table[lcp]++;
 	while (fscanf(fp, "%s\n", cur) != EOF) {
-		table[lcp]++;
-		if (lcp < lcprefix(old, cur)) {
+		tmp = lcprefix(old, cur);
+		table[tmp]++;
+		lcp = max(lcp, tmp);
+		if (lcp < tmp) {
 			printf("%s\n%s\n", old, cur);
 			lcp = lcprefix(old, cur);
 			printf("lcprefix = %d\n", lcp);
