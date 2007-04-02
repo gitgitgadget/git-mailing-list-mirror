@@ -1,61 +1,142 @@
-From: Xavier Maillard <zedek@gnu.org>
-Subject: Re: [PATCH] checkout -d: explicitly detach HEAD even when switching to the tip of a branch
-Date: Sat, 31 Mar 2007 16:55:17 +0200
-Organization: GNU's Not UNIX!
-Message-ID: <200703311455.l2VEtHO5021300@localhost.localdomain>
-References: <7vr6r879zp.fsf@assigned-by-dhcp.cox.net> <euk8ps$vu1$1@sea.gmane.org>
-Reply-To: Xavier Maillard <zedek@gnu.org>
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 02 18:07:44 2007
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Distribution of longest common hash prefixes
+Date: Mon, 02 Apr 2007 09:29:20 -0700
+Message-ID: <86bqi6kae7.fsf@blue.stonehenge.com>
+References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
+	<Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Apr 02 18:29:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYP4J-0002S0-Tv
-	for gcvg-git@gmane.org; Mon, 02 Apr 2007 18:07:44 +0200
+	id 1HYPPI-0004Yl-VU
+	for gcvg-git@gmane.org; Mon, 02 Apr 2007 18:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932508AbXDBQHk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Apr 2007 12:07:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933215AbXDBQHj
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Apr 2007 12:07:39 -0400
-Received: from smtp5-g19.free.fr ([212.27.42.35]:60076 "EHLO smtp5-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932508AbXDBQHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2007 12:07:39 -0400
-Received: from zogzog.home (chn51-3-88-163-173-156.fbx.proxad.net [88.163.173.156])
-	by smtp5-g19.free.fr (Postfix) with ESMTP id 8F34838440;
-	Mon,  2 Apr 2007 18:07:37 +0200 (CEST)
-Received: from zogzog.home (IDENT:25@localhost [127.0.0.1])
-	by zogzog.home (8.13.8/8.13.8) with ESMTP id l32F4VjS001331;
-	Mon, 2 Apr 2007 17:04:34 +0200
-Received: (from zedek@localhost)
-	by localhost.localdomain (8.13.8/8.13.8/Submit) id l2VEtHO5021300;
-	Sat, 31 Mar 2007 16:55:17 +0200
-X-Authentication-Warning: localhost.localdomain: zedek set sender to zedek@gnu.org using -f
-In-reply-to: <euk8ps$vu1$1@sea.gmane.org> (jnareb@gmail.com)
-User-Agent: Rmail in GNU Emacs 23.0.51.1 on GNU/Linux
-Jabber-ID: zedek@im.lolica.org
+	id S932962AbXDBQ3W (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Apr 2007 12:29:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933215AbXDBQ3W
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Apr 2007 12:29:22 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:8105 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932962AbXDBQ3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2007 12:29:20 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id 6BF3A1DE372; Mon,  2 Apr 2007 09:29:20 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.3.10; tzolkin = 7 Oc; haab = 3 Uayeb
+In-Reply-To: <Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org> (Linus Torvalds's message of "Mon, 2 Apr 2007 08:20:51 -0700 (PDT)")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43604>
+
+>>>>> "Linus" == Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+Linus> On Mon, 2 Apr 2007, Peter Eriksen wrote:
+
+Linus> #include <stdio.h>
+Linus> #include <string.h>
 
 
-   > You cannot currently checkout the tip of an existing branch
-   > without moving to the branch.
-   > 
-   > This allows you to detach your HEAD and place it at such a
-   > commit, with:
-   > 
-   >     $ git checkout -d master
+Linus> int h2d(char c)
+Linus> {
+Linus> 	if ('a' <= c && c <= 'f')
+Linus> 		return c-'a'+10;
+Linus> 	else
+Linus> 		return c-'0';
+Linus> }
 
-   What about
+Linus> int lcprefix(char *a, char *b)
+Linus> {
+Linus> 	int bits = 0;
+Linus> 	unsigned n1, n2;
 
-	 $ git checkout master^0
+Linus> 	while (*a == *b) {
+Linus> 		bits += 4;
+Linus> 		a++;
+Linus> 		b++;
+Linus> 	}
 
-   trick to force detaching?
+Linus> 	n1 = h2d(*a);
+Linus> 	n2 = h2d(*b);
 
-I love this idea.
+Linus> 	/* Would make more sense to start from bit 0.. */
+Linus> 	while ((n1 & 8) == (n2 & 8)) {
+Linus> 		bits++;
+Linus> 		n1 <<= 1;
+Linus> 		n2 <<= 1;
+Linus> 	}
+	
+Linus> 	return bits;
+Linus> }
 
-Xavier
+Linus> int main(int argc, char **argv)
+Linus> {
+Linus> 	FILE *fp;
+Linus> 	char old[41];
+Linus> 	char cur[41];
+Linus> 	int lcp = 0;
+Linus> 	int table[64];
+Linus> 	int i;
+
+Linus> 	memset(table, 0, 64*sizeof(int));
+Linus> 	memset(old, '0', 40);
+Linus> 	old[40] = '\0';
+
+Linus> 	fp = fopen(argv[1], "r");
+Linus> 	fscanf(fp, "%s\n", cur);
+
+Linus> 	if (lcp < lcprefix(old, cur)) {
+Linus> 		lcp = lcprefix(old, cur);
+Linus> 	}
+
+Linus> 	table[lcp]++;
+Linus> 	while (fscanf(fp, "%s\n", cur) != EOF) {
+Linus> 		int newlcp = lcprefix(old, cur);
+Linus> 		table[newlcp]++;
+Linus> 		if (lcp < newlcp) {
+Linus> 			printf("%s\n%s\n", old, cur);
+Linus> 			lcp = newlcp;
+Linus> 			printf("lcprefix = %d\n", newlcp);
+Linus> 		}
+Linus> 		memcpy(old, cur, 40);
+Linus> 	}
+
+Linus> 	for(i = 0; i < 64; i++) {
+Linus> 		printf("%2d: %2d\n", i, table[i]);
+Linus> 	}
+	
+Linus> 	return 0;
+Linus> }
+
+I don't have access to the linux-2.6 kernel, but on git.git at
+d8b6a1a10b93666246984a50d64a163e71163aeb I get this:
+
+    $ git-rev-list --objects HEAD | sort | perl -lne '
+      substr($_, 40) = "";
+      ($p ^ $_) =~ /^(\0*)/;
+      $count[length $1]++;
+      $p = $_;
+      END { print "$_: $count[$_]" for 0..$#count }
+    '
+    0: 16
+    1: 240
+    2: 3839
+    3: 24458
+    4: 8275
+    5: 619
+    6: 45
+    7: 
+    8: 1
+
+Yeay Perl. :)
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
