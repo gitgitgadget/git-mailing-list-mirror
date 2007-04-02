@@ -1,93 +1,74 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
+From: James Cloos <cloos@jhcloos.com>
 Subject: Re: Distribution of longest common hash prefixes
-Date: Mon, 02 Apr 2007 10:17:12 -0700
-Message-ID: <86y7laitlz.fsf@blue.stonehenge.com>
+Date: Mon, 02 Apr 2007 13:18:22 -0400
+Message-ID: <m3tzvylmoa.fsf@lugabout.jhcloos.org>
 References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
 	<Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
 	<86bqi6kae7.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Peter Eriksen <s022018@student.dtu.dk>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 02 19:17:19 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Eriksen <s022018@student.dtu.dk>,
+	merlyn@stonehenge.com (Randal L. Schwartz)
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 02 19:19:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYQ9c-0001bE-GD
-	for gcvg-git@gmane.org; Mon, 02 Apr 2007 19:17:16 +0200
+	id 1HYQBc-0002dC-Ea
+	for gcvg-git@gmane.org; Mon, 02 Apr 2007 19:19:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964988AbXDBRRN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Apr 2007 13:17:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933686AbXDBRRN
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Apr 2007 13:17:13 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:9682 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933648AbXDBRRM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2007 13:17:12 -0400
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id 43BDD1DE524; Mon,  2 Apr 2007 10:17:12 -0700 (PDT)
-x-mayan-date: Long count = 12.19.14.3.10; tzolkin = 7 Oc; haab = 3 Uayeb
-In-Reply-To: <Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org> (Linus Torvalds's message of "Mon, 2 Apr 2007 10:00:22 -0700 (PDT)")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S933686AbXDBRTR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Apr 2007 13:19:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933875AbXDBRTR
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Apr 2007 13:19:17 -0400
+Received: from atl.uu.jhcloos.net ([207.210.96.115]:47264 "EHLO
+	atl.uu.jhcloos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933686AbXDBRTQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2007 13:19:16 -0400
+Received: by atl.uu.jhcloos.net (Postfix, from userid 10)
+	id 23A86BB4B7; Mon,  2 Apr 2007 17:19:11 +0000 (UTC)
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id B12EC1EB787; Mon,  2 Apr 2007 17:18:46 +0000 (UTC)
+In-Reply-To: <86bqi6kae7.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "Mon\, 02 Apr 2007 09\:29\:20 -0700")
+Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMnRFWHRUaXRsZQAvbWF4dG9y
+ L2Nsb29zL2luY29taW5nLzIwMDQvMDIvUFdHL0pIQzE2LnBuZyJMlEwAAAAadEVYdFNvZnR3YXJl
+ AEdOT01FIEljb24gRWRpdG9ynioKbAAAAHFJREFUeJzFk8EKwCAMQ1/ED9cvzw6iuM0N9WIvDTWE
+ 1KjAxmKnLBEBjLcEIBCeI2nccy5YKrjxwbbvAvZ37zlo4GB9iRMC/cq/AppItwmMyJ5I98wd9G7P
+ xxgrSKlYS2lMrOcV13o95aVSKA7E5ndGXG+IIzcl4BNfAAAAAElFTkSuQmCC
+Copyright: Copyright 2007 James Cloos
+X-Hashcash: 1:23:070402:merlyn@stonehenge.com::fIJG4nxxVL5EkOvw:00000000000000000000000000000000000000002Oqd
+X-Hashcash: 1:23:070402:s022018@student.dtu.dk::8vgk4B9Vnq+oF8ue:000000000000000000000000000000000000000BLkA
+X-Hashcash: 1:23:070402:git@vger.kernel.org::gYyRXG3p/U3tnmXU:000000000000000000000000000000000000000000CkoX
+X-Hashcash: 1:23:070402:torvalds@linux-foundation.org::Spjgj28QEPeV02cc:00000000000000000000000000000000ECqt
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.0 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43607>
 
->>>>> "Linus" == Linus Torvalds <torvalds@linux-foundation.org> writes:
+>>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
 
-Linus> No yay yet.. That counts hex digits, not bits.
+Randal> I don't have access to the linux-2.6 kernel
 
-I thought the goal was to figure out how long (on the average) you had to give
-a SHA1 to be "unique".
+As of commit b6a8b31, I get this for the kernel tree from Randal's code:
 
-But even that's wrong, because of the following:
+0: 16
+1: 240
+2: 3840
+3: 61357
+4: 293437
+5: 74792
+6: 5373
+7: 350
+8: 16
+9: 1
 
-CAFEFEED357
-DEADBEEF123
-DEADBEEF456
-DEADBEEF467
-DEADBEEF478
+(That is, of course, counting hex digits (aka nybbles), not bits as
+Peter's code does.)
 
-for that sequence, I'd count 0, 8, 9, 9 when in fact, it should be 8, 9, 9, 9.
-It's not the items in common with the previous value... it's the longer of the
-items in common with the string on either side.  The easiest way for that
-would be to use a 3-item window:
-
-git-rev-list --objects HEAD | sort | perl -lne '
-  substr($_, 40) = "";
-  if (defined $p) {
-    ($p ^ $_) =~ /^(\0*)/;
-    $common = length $1;
-    if (defined $pcommon) {
-      $count[$pcommon > $common ? $pcommon : $common]++;
-    }
-  }
-  $p = $_;
-  $pcommon = $common;
-  END { print "$_: $count[$_]" for 0..$#count }
-'
-
-this also fixes the bug where I compare the first line to nothing.
-With this, I get (on git.git):
-
-    0: 
-    1: 
-    2: 6
-    3: 21153
-    4: 15008
-    5: 1232
-    6: 90
-    7: 
-    8: 2
-
-which now makes sense.  There are 2 items that need 9 hex chars
-to be unique.
-
+-JimC
 -- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
