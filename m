@@ -1,75 +1,64 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: Distribution of longest common hash prefixes
-Date: Tue, 3 Apr 2007 10:50:34 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
+Date: Tue, 03 Apr 2007 11:22:55 -0700
+Message-ID: <7vhcrxz5a8.fsf@assigned-by-dhcp.cox.net>
 References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
- <Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
- <86bqi6kae7.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
- <86y7laitlz.fsf@blue.stonehenge.com> <86r6r2isva.fsf@blue.stonehenge.com>
- <m3r6r1jsmq.fsf@lugabout.jhcloos.org> <867istcrhr.fsf@blue.stonehenge.com>
- <20070403172123.GD27706@spearce.org>
+	<Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
+	<86bqi6kae7.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
+	<86y7laitlz.fsf@blue.stonehenge.com>
+	<86r6r2isva.fsf@blue.stonehenge.com>
+	<m3r6r1jsmq.fsf@lugabout.jhcloos.org>
+	<867istcrhr.fsf@blue.stonehenge.com>
+	<20070403172123.GD27706@spearce.org>
+	<Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
 	James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
 	Peter Eriksen <s022018@student.dtu.dk>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Apr 03 19:52:03 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 20:23:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYnAW-0006KT-EV
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 19:51:44 +0200
+	id 1HYnep-0006yc-Dq
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 20:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161023AbXDCRvF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 13:51:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161042AbXDCRvF
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 13:51:05 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:34027 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161035AbXDCRvC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 13:51:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33HoaPD017334
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 Apr 2007 10:50:36 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33HoYdM031537;
-	Tue, 3 Apr 2007 10:50:34 -0700
-In-Reply-To: <20070403172123.GD27706@spearce.org>
-X-Spam-Status: No, hits=-0.458 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1161071AbXDCSW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 14:22:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161062AbXDCSW5
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 14:22:57 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:63178 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161071AbXDCSW4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 14:22:56 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070403182256.SIMY27119.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Apr 2007 14:22:56 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id iiNv1W00A1kojtg0000000; Tue, 03 Apr 2007 14:22:56 -0400
+In-Reply-To: <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 3 Apr 2007 10:50:34 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43635>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> Yeah, the short SHA1 form is obviously always going to be risky. But in 
+> practice, since people almost always use it just for commits, it's 
+> probably good enough in practice, and even if you get a collision in 8 
+> nibbles, most of the time it will probably be trivial to figure out which 
+> one was meant, so it's not like it's a disaster if somebody ends up 
+> reporting a bug with a non-unique abbreviation.
 
-On Tue, 3 Apr 2007, Shawn O. Pearce wrote:
-> 
-> Well, the other thing is those 2 commits at 9 bytes probably were
-> not that way a year ago.  One of those might have only needed 8,
-> and the other is newer, so now you need 9.
-
-Well, neither of the the two objects at 9 bytes may not be (and probably 
-aren't) commits and of the 32 8-nibble cases who knows how many are 
-actually commits (probably none), so an 8-byte SHA1 is *probably* unique 
-at least if you just look at commits.
-
-Remove the "--objects" to find out.
-
-> What the above tells me is that 8 is almost a safe default for our
-> abbreviations, but isn't safe enough, as there are collisions past 8.
-
-Yeah, the short SHA1 form is obviously always going to be risky. But in 
-practice, since people almost always use it just for commits, it's 
-probably good enough in practice, and even if you get a collision in 8 
-nibbles, most of the time it will probably be trivial to figure out which 
-one was meant, so it's not like it's a disaster if somebody ends up 
-reporting a bug with a non-unique abbreviation.
-
-		Linus
+Are you hinting to update sha1_name.c::get_sha1() so that we do
+not accept abbreviated non-commit object names?
