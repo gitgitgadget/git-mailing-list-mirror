@@ -1,75 +1,88 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: git-index-pack really does suck..
-Date: Tue, 3 Apr 2007 15:52:32 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704031544110.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org> 
- <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com> 
- <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org> 
- <alpine.LFD.0.98.0704031625050.28181@xanadu.home> 
- <Pine.LNX.4.64.0704031346250.6730@woody.linux-foundation.org> 
- <20070403210319.GH27706@spearce.org>  <Pine.LNX.4.64.0704031411320.6730@woody.linux-foundation.org>
-  <20070403211709.GJ27706@spearce.org>  <alpine.LFD.0.98.0704031730300.28181@xanadu.home>
- <56b7f5510704031540i4df918e6g5a82389b6759c50b@mail.gmail.com>
+Date: Tue, 03 Apr 2007 18:55:05 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704031836350.28181@xanadu.home>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+ <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
+ <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0704031322490.6730@woody.linux-foundation.org>
+ <alpine.LFD.0.98.0704031657130.28181@xanadu.home>
+ <Pine.LNX.4.64.0704031413200.6730@woody.linux-foundation.org>
+ <alpine.LFD.0.98.0704031735470.28181@xanadu.home>
+ <Pine.LNX.4.64.0704031511580.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, Chris Lee <clee@kde.org>,
-	Junio C Hamano <junkio@cox.net>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Chris Lee <clee@kde.org>, Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 00:53:48 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 04 00:55:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYrso-0003Fw-LB
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 00:53:47 +0200
+	id 1HYruD-00049F-0K
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 00:55:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992476AbXDCWxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 18:53:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992478AbXDCWxn
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 18:53:43 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:47111 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992476AbXDCWxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 18:53:42 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33MqXPD025837
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 Apr 2007 15:52:33 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33MqWhF005619;
-	Tue, 3 Apr 2007 15:52:33 -0700
-In-Reply-To: <56b7f5510704031540i4df918e6g5a82389b6759c50b@mail.gmail.com>
-X-Spam-Status: No, hits=-0.454 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S2992478AbXDCWzJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 18:55:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992474AbXDCWzJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 18:55:09 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:11680 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992470AbXDCWzH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 18:55:07 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JFY008ET2BTCW70@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 03 Apr 2007 18:55:06 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.64.0704031511580.6730@woody.linux-foundation.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43689>
 
+On Tue, 3 Apr 2007, Linus Torvalds wrote:
 
-
-On Tue, 3 Apr 2007, Dana How wrote:
+> I don't care *what* it is conditional on, but your arguments suck. You 
+> claim that it's not a normal case to already have the objects, when it 
+> *is* a normal case for alternates, etc.
 > 
-> Larger and larger pack files make me nervous.
-> They are expensive to manipulate,
-> and >2GB requires a file format change.
+> I don't understand why you argue against hard numbers. You have none of 
+> your own.
 
-It sometimes also requires a new filesystem. There are a lot of 
-filesystems that can handle more than 4GB total, but not necessarily in a 
-single file.
+Are hard numbers like 7% overhead (because right now that's all we have) 
+really worth it against bad _perceptions_?
 
-The only really useful such filesystem is probably FAT, which is still 
-quite useful for things like USB memory sticks. But that is probably 
-already worth supporting.
+Sure, the SHA1 collision attack is paranoia.  But it is becoming 
+increasingly *possible*.
 
-So I think we want to support 64-bit (or at least something like 40+ bit) 
-pack-files, but yes, I think that even if/when we support it, we still 
-want to support the "multiple smaller pack-files" schenario exactly 
-because for some uses it's much *better* to have ten 2GB packfiles rather 
-than one 20GB pack-file.
+And when we only had unpack-objects on the receiving end of a fetch, you 
+yourself bragged about the implied security of GIT in the presence of a 
+SHA1 collision attack.  Because let's admit it: when a SHA1 collision 
+will happen it is way more probable to come on purpose than from pure 
+accident.  But as you said at the time, it is not a problem because GIT 
+trusts local objects more than remote ones and incidentally 
+unpack-objects doesn't overwrite existing objects.
 
-			Linus
+The keeping of fetched packs broke that presumption of trust towards 
+local objects and it opened a real path for potential future attacks.  
+Those attacks are still fairly theoretical of course.  But for how 
+_long_?  Do we want GIT to be considered backdoor prone in a couple 
+years from now just because we were obsessed by a 7% CPU overhead?
+
+I think we have much more to gain by playing it safe and being more 
+secure and paranoid than trying to squeeze some CPU cycles out of an 
+operation that is likely to ever be bounded by network speed for most 
+people.
+
+And we _know_ that the operation can be optimized further anyway.
+
+So IMHO in this case hard numbers alone aren't the end of it.  Not as 
+long as they're reasonably low.  And especially not for a command which 
+is 1) rather infrequent and 2) not really interactive like git-log might 
+be.
+
+
+Nicolas
