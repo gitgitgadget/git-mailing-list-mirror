@@ -1,66 +1,74 @@
-From: Jeff King <peff@peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: git-index-pack really does suck..
-Date: Tue, 3 Apr 2007 18:10:07 -0400
-Message-ID: <20070403221006.GA17948@coredump.intra.peff.net>
-References: <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org> <alpine.LFD.0.98.0704031625050.28181@xanadu.home> <Pine.LNX.4.64.0704031346250.6730@woody.linux-foundation.org> <20070403210319.GH27706@spearce.org> <Pine.LNX.4.64.0704031411320.6730@woody.linux-foundation.org> <20070403211709.GJ27706@spearce.org> <alpine.LFD.0.98.0704031730300.28181@xanadu.home> <20070403213710.GK27706@spearce.org> <7vvegduo9e.fsf@assigned-by-dhcp.cox.net> <20070403215342.GL27706@spearce.org>
+Date: Tue, 3 Apr 2007 18:11:26 -0400
+Message-ID: <20070403221126.GM27706@spearce.org>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org> <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com> <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0704031322490.6730@woody.linux-foundation.org> <alpine.LFD.0.98.0704031657130.28181@xanadu.home> <Pine.LNX.4.64.0704031413200.6730@woody.linux-foundation.org> <alpine.LFD.0.98.0704031735470.28181@xanadu.home> <7vodm5un61.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
+Cc: Nicolas Pitre <nico@cam.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Chris Lee <clee@kde.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 00:10:16 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 04 00:11:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYrCh-0007bk-Qn
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 00:10:16 +0200
+	id 1HYrEC-0000B8-DG
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 00:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753694AbXDCWKM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 18:10:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753696AbXDCWKM
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 18:10:12 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1341 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753694AbXDCWKK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 18:10:10 -0400
-Received: (qmail 5114 invoked from network); 3 Apr 2007 22:10:43 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 3 Apr 2007 22:10:43 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 03 Apr 2007 18:10:07 -0400
+	id S1946010AbXDCWLp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 18:11:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946011AbXDCWLp
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 18:11:45 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52863 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946010AbXDCWLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 18:11:45 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HYrDj-0005vx-D9; Tue, 03 Apr 2007 18:11:19 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0E10320FBAE; Tue,  3 Apr 2007 18:11:27 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20070403215342.GL27706@spearce.org>
+In-Reply-To: <7vodm5un61.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43680>
 
-On Tue, Apr 03, 2007 at 05:53:42PM -0400, Shawn O. Pearce wrote:
-
-> > If that is the only reason we have these reprepare_packed_git()
-> > sprinkled all over in sha1_file.c (by 637cdd9d), perhaps we
-> > should rethink that.  Is there a cheap way to trigger these
-> > rescanning only when a prune-packed is in progress, I wonder...
+Junio C Hamano <junkio@cox.net> wrote:
+> Nicolas Pitre <nico@cam.org> writes:
 > 
-> Yea, it is the only reason.  So... if we could have some
-> magic to trigger that, it would be good.  I just don't
-> know what magic that would be.
+> > Make it conditionnal on --stdin then.  This covers all cases where we 
+> > really want the secure thing to happen, and the --stdin case already 
+> > perform the atomic rename-and-move thing when the pack is fully indexed.
+> 
+> Repacking objects in a repository uses pack-objects without
+> using index-pack, as you suggested Chris.  Is there a sane usage
+> of index-pack that does not use --stdin?  I do not think of any.
+> 
+> If there isn't, the "conditional on --stdin" suggestion means we
+> unconditionally do the secure thing for all the sane usage, and
+> go unsecure for an insane usage that we do not really care about.
+> 
+> If so, it seems to me that it would be the simplest not to touch
+> the code at all, except that missing free().
+> 
+> Am I missing something?
 
-It doesn't have to be in progress; it might have started and completed
-between pack-scanning and object lookup. Something like:
+Nope. I agree with you completely.
 
-  1. start git-repack -a -d
-  2. start git-rev-list, scan for packs
-  3. repack moves finished pack into place, starts git-prune-packed
-  4. git-prune-pack completes
-  5. git-rev-list looks up object
-
-So you would need to have some sort of incremented counter that says
-"there's a new pack available."
-
-Perhaps instead of rescanning unconditionally, it should simply stat()
-the pack directory and look for a change? That should be much cheaper.
-
--Jeff
+-- 
+Shawn.
