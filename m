@@ -1,71 +1,75 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation: A few minor fixes to Git User's Manual
-Date: Tue, 3 Apr 2007 13:21:13 -0400
-Message-ID: <20070403172113.GB26201@fieldses.org>
-References: <11756176481314-git-send-email-jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Distribution of longest common hash prefixes
+Date: Tue, 3 Apr 2007 10:50:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
+References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
+ <Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
+ <86bqi6kae7.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
+ <86y7laitlz.fsf@blue.stonehenge.com> <86r6r2isva.fsf@blue.stonehenge.com>
+ <m3r6r1jsmq.fsf@lugabout.jhcloos.org> <867istcrhr.fsf@blue.stonehenge.com>
+ <20070403172123.GD27706@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 03 19:21:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
+	James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
+	Peter Eriksen <s022018@student.dtu.dk>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 19:52:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYmhU-00067O-Ge
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 19:21:44 +0200
+	id 1HYnAW-0006KT-EV
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 19:51:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965714AbXDCRVQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 13:21:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965918AbXDCRVQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 13:21:16 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:50606 "EHLO fieldses.org"
+	id S1161023AbXDCRvF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 13:51:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161042AbXDCRvF
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 13:51:05 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:34027 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965714AbXDCRVP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 13:21:15 -0400
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HYmgz-0001cp-Fu; Tue, 03 Apr 2007 13:21:13 -0400
-Content-Disposition: inline
-In-Reply-To: <11756176481314-git-send-email-jnareb@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1161035AbXDCRvC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 13:51:02 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33HoaPD017334
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Apr 2007 10:50:36 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33HoYdM031537;
+	Tue, 3 Apr 2007 10:50:34 -0700
+In-Reply-To: <20070403172123.GD27706@spearce.org>
+X-Spam-Status: No, hits=-0.458 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43634>
 
-On Tue, Apr 03, 2007 at 06:27:28PM +0200, Jakub Narebski wrote:
-> Mainly consistent usage of "git command" and not "git-command" syntax
 
-Looks good, thanks!
 
-> A few [shorthand] comments about Git User's Manual:
+On Tue, 3 Apr 2007, Shawn O. Pearce wrote:
+> 
+> Well, the other thing is those 2 commits at 9 bytes probably were
+> not that way a year ago.  One of those might have only needed 8,
+> and the other is newer, so now you need 9.
 
-And thanks very much for the comments.
+Well, neither of the the two objects at 9 bytes may not be (and probably 
+aren't) commits and of the 32 8-nibble cases who knows how many are 
+actually commits (probably none), so an 8-byte SHA1 is *probably* unique 
+at least if you just look at commits.
 
-> * inconsistent use of header levels
->         Level 0 (top level):     ======================
->         Level 1:                 ----------------------
->         Level 2:                 ~~~~~~~~~~~~~~~~~~~~~~
->         Level 3:                 ^^^^^^^^^^^^^^^^^^^^^^
->         Level 4 (bottom level):  ++++++++++++++++++++++
+Remove the "--objects" to find out.
 
-Have you found internal inconsistencies, or are you just referring to
-the fact that it's using different syntax from the default?
+> What the above tells me is that 8 is almost a safe default for our
+> abbreviations, but isn't safe enough, as there are collisions past 8.
 
-My original intention was to suck in other articles under Documentation/
-as chapters.  Shifting all the headers by one allows us to do that, at
-least initially, by just including the articles without modification.
-The glossary is the only thing we're currently using that way, though.
+Yeah, the short SHA1 form is obviously always going to be risky. But in 
+practice, since people almost always use it just for commits, it's 
+probably good enough in practice, and even if you get a collision in 8 
+nibbles, most of the time it will probably be trivial to figure out which 
+one was meant, so it's not like it's a disaster if somebody ends up 
+reporting a bug with a non-unique abbreviation.
 
-The "Git interals" chapter is obviously most taken from the README,
-which has gotten out of date in a few places.
-
-My vague medium-term plan is to revise that chapter and then merge
-tutorial-2.txt into it, and maybe core-tutorial too, but I haven't had
-time to work on it recently.  (Any help appreciated.)
-
-I'd kinda like to remove all the tutorials some day and absorb them into
-the manual instead, but maybe that would be unpopular.
-
---b.
+		Linus
