@@ -1,88 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: git-index-pack really does suck..
-Date: Tue, 03 Apr 2007 17:42:01 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704031735470.28181@xanadu.home>
+Date: Tue, 03 Apr 2007 14:44:13 -0700
+Message-ID: <7vvegduo9e.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
- <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
- <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0704031322490.6730@woody.linux-foundation.org>
- <alpine.LFD.0.98.0704031657130.28181@xanadu.home>
- <Pine.LNX.4.64.0704031413200.6730@woody.linux-foundation.org>
+	<db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
+	<Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0704031625050.28181@xanadu.home>
+	<Pine.LNX.4.64.0704031346250.6730@woody.linux-foundation.org>
+	<20070403210319.GH27706@spearce.org>
+	<Pine.LNX.4.64.0704031411320.6730@woody.linux-foundation.org>
+	<20070403211709.GJ27706@spearce.org>
+	<alpine.LFD.0.98.0704031730300.28181@xanadu.home>
+	<20070403213710.GK27706@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Chris Lee <clee@kde.org>, Junio C Hamano <junkio@cox.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Chris Lee <clee@kde.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 03 23:42:09 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 23:44:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYqlU-0007xU-Dj
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 23:42:08 +0200
+	id 1HYqna-0000lw-EN
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 23:44:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753662AbXDCVmF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 17:42:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753684AbXDCVmF
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 17:42:05 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:49346 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753662AbXDCVmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 17:42:04 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFX00CKFYY1OG30@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 Apr 2007 17:42:02 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0704031413200.6730@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S1945985AbXDCVoP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 17:44:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752269AbXDCVoP
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 17:44:15 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38111 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751968AbXDCVoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 17:44:14 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070403214414.GCTJ28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Apr 2007 17:44:14 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ilkC1W00K1kojtg0000000; Tue, 03 Apr 2007 17:44:13 -0400
+In-Reply-To: <20070403213710.GK27706@spearce.org> (Shawn O. Pearce's message
+	of "Tue, 3 Apr 2007 17:37:10 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43676>
 
-On Tue, 3 Apr 2007, Linus Torvalds wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> 
-> 
-> On Tue, 3 Apr 2007, Nicolas Pitre wrote:
-> >
-> > I don't see where that might be.  The only thing that the paranoia check 
-> > triggers is:
-> > 
-> > 	foo = read_sha1_file(blah);
-> > 	memcmp(foo with bar);
-> > 	free(foo);
-> > 
-> > So where is that commit ID information actually stored when using 
-> > read_sha1_file()?
-> 
-> I've got the numbers: it uses much more memory when doing even failing 
-> lookups, ie:
-> 
-> 	With --paranoid: 5583 minor pagefaults (21MB)
-> 	Without --paranoid: 2957 minor pagefaults (11MB)
-> 
-> (remember, this was *just* the git pack, not the kernel pack)
-> 
-> It could be as simple as just the index file itself. That's 11MB for the 
-> kernel. Imagine if the index file was 20 times bigger - 200MB of memory 
-> paged in with bad access patterns just for unnecessary lookups.
+> Nicolas Pitre <nico@cam.org> wrote:
+>> First, I truly believe we should have a 64-bit pack index and fewer 
+>> larger packs than many small packs.
+>
+> I'll buy that.  ;-)
+>  
+>> Which leaves us with the actual pack index lookup.  At that point the 
+>> cost of finding an existing object and finding that a given object 
+>> doesn't exist is about the same thing, isn't it?
+>
+> Here's the rub:  in the missing object case we didn't find it
+> in the pack index, but it could be loose.  That's one failed
+> syscall per object if the object isn't loose.  If the object
+> isn't loose, it could be that it was *just* removed by a
+> running prune-packed, and the packfile that it was moved
+> to was created after we scanned for packfiles, so time to
+> rescan...
 
-Again that presumes you have to page in the whole index, which should 
-not happen when pulling (much smaller packs) and with a better lookup 
-algorithm.
-
-> > Not if you consider that it is performed _while_ receiving (and waiting 
-> > for) the pack data over the net in the normal case.
-> 
-> ..which is why I think it makes sense for "pull" to be paranoid. I just 
-> don't think it makes sense to be paranoid *all* the time, since it's 
-> clearly expensive.
-
-Make it conditionnal on --stdin then.  This covers all cases where we 
-really want the secure thing to happen, and the --stdin case already 
-perform the atomic rename-and-move thing when the pack is fully indexed.
-
-
-Nicolas
+If that is the only reason we have these reprepare_packed_git()
+sprinkled all over in sha1_file.c (by 637cdd9d), perhaps we
+should rethink that.  Is there a cheap way to trigger these
+rescanning only when a prune-packed is in progress, I wonder...
