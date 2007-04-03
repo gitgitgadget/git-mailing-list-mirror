@@ -1,212 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Mon, 02 Apr 2007 22:41:16 -0700
-Message-ID: <7vwt0uypz7.fsf@assigned-by-dhcp.cox.net>
+From: Alberto Bertogli <albertito@gmail.com>
+Subject: Re: Commit cherry-picking
+Date: Tue, 3 Apr 2007 02:45:02 -0300
+Message-ID: <20070403054502.GD24722@gmail.com>
+References: <20070403034234.GB24722@gmail.com> <20070403051947.GE15922@spearce.org> <20070403053344.GG15922@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 03 07:41:22 2007
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 07:44:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYblh-0001s4-DS
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 07:41:21 +0200
+	id 1HYboP-0003Jr-3t
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 07:44:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752974AbXDCFlS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 01:41:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752992AbXDCFlS
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 01:41:18 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:62024 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752887AbXDCFlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 01:41:17 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070403054116.FRXS24385.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 3 Apr 2007 01:41:16 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id iVhG1W0031kojtg0000000; Tue, 03 Apr 2007 01:41:16 -0400
-X-master-at: a8f4ef727a7e626f23878e7e3f9f19f0a1052df0
-X-next-at: f53293103c326065db653b11a7b8670611153359
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752992AbXDCFoD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 01:44:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752999AbXDCFoD
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 01:44:03 -0400
+Received: from wx-out-0506.google.com ([66.249.82.226]:19649 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752992AbXDCFoB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 01:44:01 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1670893wxd
+        for <git@vger.kernel.org>; Mon, 02 Apr 2007 22:44:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=TSn0znCKLw5ihcP+itzbyiLhjUsZzKVOcBRucPlEVK/LRxjw5HqJ2/HDMH2K9hvWdXhmuURHP6q3K+9Zbh0RLAtVzGp8Mg2uZIpokV8mvvPZ0b9jGT+9kG6QN/zYNGo5ezgmUdKU8OBGq9vN97FOF4kV7Urv/zk76l+G847gpws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=ZaMPt/DqbvEdsMan0LMRuwym4Jmx3hioA86y+eNsbMzQKCMGA8NuYGUoBE0pnIgAQY1K+AuYONqIYkgLrC5kfSQXxsOlon7nQYQr2Zs+tmaGlKz4/pdkxVgt6RvSzpvdrpBCvwo7/37Jr60cVqgp8jzAkxjo6orZ0c6JXByz/Ok=
+Received: by 10.70.65.8 with SMTP id n8mr10309558wxa.1175579040853;
+        Mon, 02 Apr 2007 22:44:00 -0700 (PDT)
+Received: from gmail.com ( [190.30.3.127])
+        by mx.google.com with ESMTP id h7sm7442017wxd.2007.04.02.22.43.58;
+        Mon, 02 Apr 2007 22:43:59 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20070403053344.GG15922@spearce.org>
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43617>
 
-Being in the pre-release freeze, nothing should be cooking in
-'next' nor 'pu', and you should not be reading this ;-)
+On Tue, Apr 03, 2007 at 01:33:44AM -0400, Shawn O. Pearce wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> wrote:
+> > Alberto Bertogli <albertito@gmail.com> wrote:
+> > > I often use darcs, and one feature I miss when I use git is the ability
+> > > to do cherry-picking on what I'm about to commit.
+> > 
+> > Have you tried:
+> > 
+> > 	git add -i
+> > 	git commit
+[...]
+> 
+> Also `git gui` (or `git citool`) offers this hunk selection feature,
 
-In any case, on the 'master' front there is only one fix since
-the last -rc.  Will tag and declare 1.5.1 this Wednesday.  And
-after that happens, here is a list of what will come.
+Argh, how can I have missed all that!
 
-Commits prefixed with '-' are only in 'pu' while commits
-prefixed with '+' are in 'next'.  The topics list the commits in
-reverse chronological order.
+Sorry for the noise, and thanks for the suggestions.
 
-=======================================
-=== To merge immediately post 1.5.1 ===
-=======================================
-
-* lt/dirwalk (Fri Mar 30 20:39:30 2007 -0700) 1 commit
- + Optimize directory listing with pathspec limiter.
-
-This is to help "git add single-path" in a huge directory that
-does not have .gitignore.
-
-* post1.5.1/tcltk (Fri Mar 30 00:59:43 2007 -0700) 5 commits
- + Optional Tck/Tk: ignore generated files.
- + Eliminate checks of user-specified Tcl/Tk interpreter.
- + Rewrite Tcl/Tk interpreter path for the GUI tools.
- + Add --with-tcltk and --without-tcltk to configure.
- + NO_TCLTK
-
-* post1.5.1/p4 (Thu Mar 29 14:07:47 2007 +0400) 4 commits
- + Added correct Python path to the RPM specfile.
- + Remove unused WITH_OWN_SUBPROCESS_PY from RPM spec
- + Added git-p4 package to the list of git RPMs.
- + Add the WITH_P4IMPORT knob to the Makefile.
-
-Build tweaks.
-
-* post1.5.1/blame.el (Wed Mar 28 18:44:34 2007 +0200) 2 commits
- + git-blame.el: pick a set of random colors for each git-blame turn
- + git-blame.el: separate git-blame-mode to ease maintenance
-
-Emacs.
-
-* fl/doc (Mon Mar 26 23:45:23 2007 -0700) 3 commits
- + Documentation: unbreak user-manual.
- + Documentation: Add version information to man pages
- + Documentation: Replace @@GIT_VERSION@@ in documentation
-
-Add autogenerated version stamp in documentation.
-
-* jc/bisect (Fri Mar 23 17:54:03 2007 -0700) 6 commits
- + make the previous optimization work also on path-limited rev-list
-   --bisect
- + rev-list --bisect: Fix "halfway" optimization.
- + t6004: add a bit more path optimization test.
- + git-rev-list --bisect: optimization
- + git-rev-list: add --bisect-vars option.
- + t6002: minor spelling fix.
-
-Speeding up bisection between v2.6.18..v2.6.20 in the kernel
-repository from 22 seconds down to 4 seconds.
-
-===============================
-=== Will cook a bit further ===
-===============================
-
-* jc/index-output (Sat Mar 31 23:27:41 2007 -0700) 2 commits
- - git-read-tree --index-output=<file>
- - _GIT_INDEX_OUTPUT: allow plumbing to output to an alternative
-   index file.
-
-This is to avoid an extra copy during index-jumping commit.
-Will merge to 'next' post 1.5.1, and hopefully 'master' soon.
-
-* fl/cvsserver (Sat Mar 31 15:57:47 2007 +0200) 6 commits
- + cvsserver: Use DBI->table_info instead of DBI->tables
- + cvsserver: Abort if connect to database fails
- + cvsserver: Make the database backend configurable
- + cvsserver: Allow to override the configuration per access method
- + cvsserver: Handle three part keys in git config correctly
- + cvsserver: Introduce new state variable 'method'
-
-I do think there is no need to rush this without positive
-reports by people who tested with backends other than SQLite.
-
-* jc/checkout (Thu Mar 29 01:23:12 2007 -0700) 4 commits
- - Use BASE index extension in git-commit and git-merge.
- - update-index --{set,get}-base
- - Add BASE index extension.
- - checkout -d: explicitly detach HEAD even when switching to the tip
-   of a branch
-
-This lays the foundation to detect and warn cases where the tip
-of the current branch is modified underneath you.  Will merge to
-'next' post 1.5.1, but this has to wait for motivated people to 
-the cases the series currently does not record and/or check the
-base where it should, before graduating to 'master'.
-
-* jc/read-tree-df (Thu Mar 15 23:25:22 2007 -0700) 6 commits
- - Fix switching to a branch with D/F when current branch has file D.
- - Fix twoway_merge that passed d/f conflict marker to
-   merged_entry().
- - Fix read-tree --prefix=dir/.
- - unpack-trees: get rid of *indpos parameter.
- - unpack_trees.c: pass unpack_trees_options structure to
-   keep_entry() as well.
- - add_cache_entry(): removal of file foo does not conflict with
-   foo/bar
-
-This series is almost re-done since I sent the initial patch.
-The code is much nicer, and I think it is safer.
-
-* jc/the-index (Sun Apr 1 23:26:07 2007 -0700) 7 commits
- - Make read-cache.c "the_index" free.
- - Move index-related variables into a structure.
- - Rename add_file_to_index() to add_file_to_cache()
- - Rename static variable write_index to update_index in builtin-
-   apply.c
- - Rename internal function "add_file_to_cache" in builtin-update-
-   index.c
- - Propagate cache error internal to refresh_cache() via parameter.
- - Fix bogus error message from merge-recursive error path
-
-This defines a structure that bundles active_cache, active_nr,
-active_cache_tree and friends, defines a single instance of such
-structure "the_index".  All cache access/manipulation functions
-in read-cache.c are updated to take a pointer to this structure
-to specify which index to operate on.  The traditional functions
-are redefined as macros, e.g.
-
-    #define add_cache_entry(ce,opt) add_index_entry(&the_index, (ce), (opt))
-
-This fell out by accident while I was working on jc/read-tree-df
-topic.  The largest problem there was that we lose sight of what
-was originally in the index, after replacing a set of paths
-(e.g. path/a path/b path/c) in the current index with a single
-parent path (e.g. "path" becomes a blob) from the other tree.
-To solve this, I initially planned to modify unpack_trees() to
-read from the current index and build into a separate index, and
-that is why I needed this conversion.
-
-But it turns out that I can use a single index to solve that, so
-this series is not needed.  But people into libification may
-find it interesting.
-
-==========================
-=== not ready for next ===
-==========================
-
-* jc/blame (Tue Mar 27 01:58:01 2007 -0700) 3 commits
- - git-blame: optimize get_origin() from linear search to hash-
-   lookup.
- - git-blame: pass "struct scoreboard *" pointers around.
- - blame: lift structure definitions up
-
-I've been trying to optimize this on and off but haven't made
-much progress.
-
-* jc/pathattr (Thu Mar 1 01:20:21 2007 -0800) 5 commits
- - pathattr: allow piping to external program.
- - pathattr: read from git_config().
- - git-show: use pathattr to run "display"
- - pathattr: path based configuration of various attributes.
- + convert: add scaffolding for path based selection of conversion
-   routines.
-* js/fetch-progress (Sun Feb 25 13:13:17 2007 -0800) 1 commit
- + git-fetch: add --quiet
-* jc/merge-subtree (Thu Feb 15 16:32:45 2007 -0800) 1 commit
- - A new merge stragety 'subtree'.
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- - test-para: combined diff between HEAD, index and working tree.
- - para-walk: walk n trees, index and working tree in parallel
-
-Stalled.
+		Alberto
