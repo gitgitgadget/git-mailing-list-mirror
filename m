@@ -1,67 +1,92 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: fsck missing dangling commits that are candidate heads?
-Date: Tue, 03 Apr 2007 15:53:14 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704031551090.28181@xanadu.home>
-References: <loom.20070403T213135-68@post.gmane.org>
+From: "Chris Lee" <clee@kde.org>
+Subject: Re: git-index-pack really does suck..
+Date: Tue, 3 Apr 2007 12:54:18 -0700
+Message-ID: <db69205d0704031254s23460558ycb9715362768be16@mail.gmail.com>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+	 <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
+	 <alpine.LFD.0.98.0704031540140.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Sergio Callegari <scallegari@arces.unibo.it>
-X-From: git-owner@vger.kernel.org Tue Apr 03 21:53:29 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 21:54:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYp4E-0006aO-Ah
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 21:53:22 +0200
+	id 1HYp5D-00078J-9q
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 21:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422665AbXDCTxT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 15:53:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422667AbXDCTxT
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 15:53:19 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:13835 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422665AbXDCTxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 15:53:18 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFX002WWTWQ1KI1@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 Apr 2007 15:53:14 -0400 (EDT)
-In-reply-to: <loom.20070403T213135-68@post.gmane.org>
-X-X-Sender: nico@xanadu.home
+	id S965148AbXDCTyU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 15:54:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933104AbXDCTyU
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 15:54:20 -0400
+Received: from wx-out-0506.google.com ([66.249.82.225]:11658 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933094AbXDCTyT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 15:54:19 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1919862wxd
+        for <git@vger.kernel.org>; Tue, 03 Apr 2007 12:54:19 -0700 (PDT)
+Received: by 10.114.179.1 with SMTP id b1mr2411394waf.1175630058504;
+        Tue, 03 Apr 2007 12:54:18 -0700 (PDT)
+Received: by 10.114.66.10 with HTTP; Tue, 3 Apr 2007 12:54:18 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.98.0704031540140.28181@xanadu.home>
+Content-Disposition: inline
+X-Google-Sender-Auth: a19ce20ef68b1d82
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43648>
 
-On Tue, 3 Apr 2007, Sergio Callegari wrote:
+On 4/3/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Tue, 3 Apr 2007, Chris Lee wrote:
+>
+> > There's another issue here.
+> >
+> > I'm running git-index-pack as part of a workflow like so:
+> >
+> > $ git-verify-pack -v .git/objects/pack/*.idx > /tmp/all-objects
+> > $ grep 'blob' /tmp/all-objects > /tmp/blob-objects
+> > $ cat /tmp/blob-objects | awk '{print $1;}' | git-pack-objects
+> > --delta-base-offset --all-progress --stdout > blob.pack
+> > $ git-index-pack -v blob.pack
+>
+> Instead of using --stdout with git-pack-object, you should provide it
+> with a suitable base name for the resulting pack and the index will be
+> created automatically along side the pack for you.  No need to use
+> index-pack for that.
 
-> Hi,
-> 
-> on git 1.5.0.6, I have done the following:
-> 
-> work work
-> 
-> git commit -a
-> 
-> git reset HEAD^         (assume a mistake)
-> 
-> git fsck
-> 
-> the last fsck shows nothing...
-> Is this correct?
+Right. But then I wouldn't have discovered how much git-index-pack sucks. :)
 
-Yes.
+> > Now, when I run 'git-index-pack' on blob.pack in the current
+> > directory, memory usage is pretty horrific (even with the applied
+> > patch to not leak all everything). Shawn tells me that index-pack
+> > should only be decompressing the object twice - once from the repo and
+> > once from blob.pack - iff I call git-index-pack with --stdin, which I
+> > am not.
+> >
+> > If I move the blob.pack into /tmp, and run git-index-pack on it there,
+> > it completes much faster and the memory usage never exceeds 200MB.
+> > (Inside the repo, it takes up over 3G of RES according to top.)
+>
+> The 3G should definitely be fixed with the added free().
 
-> Shouldn't the latest commit (the one made unreachable by the
-> reset) be reported as dangling and as a candidate branch head?
-> 
-> Also git lost-found misses the commit...
-> But it is there... I can find it manually in the object database and tag it.
+Not really. This packfile is 2.6GB in size, and apparently it gets mmap'd.
 
-It is not lost.  Try git log -g and you'll probably find it there... at 
-least until the reflog entry corresponding to it gets expired.
+(Yesterday, my machine ran out of memory trying to do index-pack when
+the memleak still existed; I have 4G of RAM and, normally, 4G of swap,
+but I upped it to 32G of swap and it still ran out of memory.)
 
+> The CPU usage is explained by the fact that you're running index-pack on
+> objects that are all already found in your repo so the collision check
+> is triggered.  This is more or like the same issue as if you tried to
+> run unpack-objects on the same pack where none of your objects will
+> actually be unpacked.
 
-Nicolas
+Right, and if I was using --stdin, I would expect that. But I'm not.
+And, according to Shawn anyway, the current behaviour is not what was
+intended.
+
+-clee
