@@ -1,168 +1,101 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-index-pack really does suck..
-Date: Tue, 3 Apr 2007 13:18:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
- <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/3] gitweb: Few doublequoted strings cleanups
+Date: Tue, 03 Apr 2007 13:20:33 -0700
+Message-ID: <7vlkh9w6pa.fsf@assigned-by-dhcp.cox.net>
+References: <200704012221.01676.jnareb@gmail.com>
+	<200704012223.00087.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Chris Lee <clee@kde.org>, Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 03 22:20:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 03 22:20:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYpUD-0003sc-A6
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:20:13 +0200
+	id 1HYpUg-0004B2-13
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:20:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422699AbXDCUTg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 16:19:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422704AbXDCUTf
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:19:35 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:41834 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422695AbXDCUTd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 16:19:33 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33KIYPD021640
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 Apr 2007 13:18:34 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33KIXfY002121;
-	Tue, 3 Apr 2007 13:18:33 -0700
-In-Reply-To: <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
-X-Spam-Status: No, hits=-0.457 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1422696AbXDCUUg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 16:20:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422693AbXDCUUg
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:20:36 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:36403 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422696AbXDCUUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 16:20:35 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070403202034.TJMM25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Apr 2007 16:20:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ikLZ1W00e1kojtg0000000; Tue, 03 Apr 2007 16:20:34 -0400
+In-Reply-To: <200704012223.00087.jnareb@gmail.com> (Jakub Narebski's message
+	of "Sun, 1 Apr 2007 22:22:59 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43652>
+
+Jakub Narebski <jnareb@gmail.com> writes:
+
+> Replace a few doublequoted strings by theirs singlequoted equivalent,
+> lose doublequotes around variable in string containing only
+> of a variable name, use '' consistently as an empty string (and not
+> sometimes as "").
+
+Why?  I do not in particular like a micro-cleanup like this (it
+seems more of personal taste than cleanup).
+
+> -	} elsif ($char eq "\\") {
+> +	} elsif ($char eq '\\') {
+>  		$diff_class = " incomplete";
+>  	}
+
+Especially this makes a shell scripter think twice before
+realizing that this is Perl and a backslash expands inside
+single quotes.  In other words, I find that the former is easier
+to read.
+
+> @@ -1052,7 +1052,7 @@ sub git_get_projects_list {
+>  		my $dir = $projects_list . ($filter ? "/$filter" : '');
+>  		# remove the trailing "/"
+>  		$dir =~ s!/+$!!;
+> -		my $pfxlen = length("$dir");
+> +		my $pfxlen = length($dir);
+
+On the other hand, I think this makes the code easier to read.
+
+> @@ -1261,7 +1261,7 @@ sub parse_tag {
+>  		} elsif ($line =~ m/--BEGIN/) {
+>  			push @comment, $line;
+>  			last;
+
+One thing I noticed is that we seem to have needless 'm' as in
+the above m/--BEGIN/ in some places.  My preferences are (this
+falls within "personal taste" category):
+
+ * Unless the pattern has slashes, drop 'm' for match, always
+   use '|' as the delimiter for substitution s/A/B;
+
+ * If the pattern has slashes, consistently use the same
+   alternate letter as the delimiter (gitweb seems to use '!').
 
 
+> @@ -3616,7 +3616,7 @@ sub git_snapshot {
+>  
+>  	print $cgi->header(
+>  		-type => "application/$ctype",
+> -		-content_disposition => 'inline; filename="' . "$filename" . '"',
+> +		-content_disposition => 'inline; filename="' . $filename . '"',
+>  		-status => '200 OK');
+>  
 
-On Tue, 3 Apr 2007, Chris Lee wrote:
-> 
-> There's another issue here.
-> 
-> I'm running git-index-pack as part of a workflow like so:
-> 
-> $ git-verify-pack -v .git/objects/pack/*.idx > /tmp/all-objects
-> $ grep 'blob' /tmp/all-objects > /tmp/blob-objects
-> $ cat /tmp/blob-objects | awk '{print $1;}' | git-pack-objects
-> --delta-base-offset --all-progress --stdout > blob.pack
-> $ git-index-pack -v blob.pack
-> 
-> Now, when I run 'git-index-pack' on blob.pack in the current
-> directory, memory usage is pretty horrific (even with the applied
-> patch to not leak all everything). Shawn tells me that index-pack
-> should only be decompressing the object twice - once from the repo and
-> once from blob.pack - iff I call git-index-pack with --stdin, which I
-> am not.
-> 
-> If I move the blob.pack into /tmp, and run git-index-pack on it there,
-> it completes much faster and the memory usage never exceeds 200MB.
-> (Inside the repo, it takes up over 3G of RES according to top.)
+Wouldn't it be easier to read if we did
 
-Yeah. What happens is that inside the repo, because we do all the 
-duplicate object checks (verifying that there are no evil hash collisions) 
-even after fixing the memory leak, we end up keeping *track* of all those 
-objects.
+	"inline; filename=\"$filename\""
 
-And with a large repository, it's quite the expensive operation.
-
-That whole "verify no SHA1 hash collision" code is really pretty damn 
-paranoid. Maybe we shouldn't have it enabled by default.
-
-So how about this updated patch? We could certainly make "git pull" imply 
-"--paranoid" if we want to, but even that is likely pretty unnecessary. 
-It's not like anybody has ever shown a SHA1 collision, and if the *local* 
-repository is corrupt (and has an object with the wrong SHA1 - that's what 
-the testsuite checks for), then it's probably good to get the valid object 
-from the remote..
-
-This includes the previous one-liner, but also adds the "--paranoid" flag 
-and fixes up the Documentation and tests to match.
-
-Junio, your choice, but regardless which one you choose:
-
-	Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-
-Thanks,
-
-		Linus
-
----
- Documentation/git-index-pack.txt |    3 +--
- index-pack.c                     |    6 +++++-
- t/t5300-pack-object.sh           |    4 ++--
- 3 files changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 2229ee8..7d8d33b 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -8,8 +8,7 @@ git-index-pack - Build pack index file for an existing packed archive
- 
- SYNOPSIS
- --------
--'git-index-pack' [-v] [-o <index-file>] <pack-file>
--'git-index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>] [<pack-file>]
-+'git-index-pack' [--stdin [--fix-thin] [--keep]] [-v] [--paranoid] [-o <index-file>] <pack-file>
- 
- 
- DESCRIPTION
-diff --git a/index-pack.c b/index-pack.c
-index 6284fe3..8a4c27a 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -45,6 +45,7 @@ static int nr_resolved_deltas;
- 
- static int from_stdin;
- static int verbose;
-+static int paranoid;
- 
- static volatile sig_atomic_t progress_update;
- 
-@@ -348,7 +349,7 @@ static void sha1_object(const void *data, unsigned long size,
- 			enum object_type type, unsigned char *sha1)
- {
- 	hash_sha1_file(data, size, typename(type), sha1);
--	if (has_sha1_file(sha1)) {
-+	if (paranoid && has_sha1_file(sha1)) {
- 		void *has_data;
- 		enum object_type has_type;
- 		unsigned long has_size;
-@@ -358,6 +359,7 @@ static void sha1_object(const void *data, unsigned long size,
- 		if (size != has_size || type != has_type ||
- 		    memcmp(data, has_data, size) != 0)
- 			die("SHA1 COLLISION FOUND WITH %s !", sha1_to_hex(sha1));
-+		free(has_data);
- 	}
- }
- 
-@@ -839,6 +841,8 @@ int main(int argc, char **argv)
- 		if (*arg == '-') {
- 			if (!strcmp(arg, "--stdin")) {
- 				from_stdin = 1;
-+			} else if (!strcmp(arg, "--paranoid")) {
-+				paranoid = 1;
- 			} else if (!strcmp(arg, "--fix-thin")) {
- 				fix_thin_pack = 1;
- 			} else if (!strcmp(arg, "--keep")) {
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 35e036a..407c71e 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -262,7 +262,7 @@ test_expect_success \
- 		.git/objects/c8/2de19312b6c3695c0c18f70709a6c535682a67'
- 
- test_expect_failure \
--    'make sure index-pack detects the SHA1 collision' \
--    'git-index-pack -o bad.idx test-3.pack'
-+    'make sure index-pack detects the SHA1 collision when paranoid' \
-+    'git-index-pack --paranoid -o bad.idx test-3.pack'
- 
- test_done
+instead?
