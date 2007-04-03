@@ -1,70 +1,68 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Distribution of longest common hash prefixes
-Date: Tue, 03 Apr 2007 16:39:02 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704031635100.28181@xanadu.home>
-References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
- <Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
- <86bqi6kae7.fsf@blue.stonehenge.com>
- <Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
- <86y7laitlz.fsf@blue.stonehenge.com> <86r6r2isva.fsf@blue.stonehenge.com>
- <m3r6r1jsmq.fsf@lugabout.jhcloos.org> <867istcrhr.fsf@blue.stonehenge.com>
- <20070403172123.GD27706@spearce.org>
- <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
- <7vhcrxz5a8.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.98.0704031529300.28181@xanadu.home>
- <7vhcrxw6h5.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-index-pack really does suck..
+Supersedes: <7v7istw5w7.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 03 Apr 2007 13:40:35 -0700
+Message-ID: <7vzm5pur7g.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+	<db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
+	<Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0704031625050.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
-	Peter Eriksen <s022018@student.dtu.dk>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 03 22:39:35 2007
+	Chris Lee <clee@kde.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 22:40:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYpmv-0005Oy-M4
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:39:34 +0200
+	id 1HYpo0-00062b-CO
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945925AbXDCUjG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 16:39:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945933AbXDCUjG
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:39:06 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:25441 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945925AbXDCUjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 16:39:04 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFX00H94W12Z460@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 Apr 2007 16:39:02 -0400 (EDT)
-In-reply-to: <7vhcrxw6h5.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1945930AbXDCUkh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 16:40:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945933AbXDCUkh
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:40:37 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:44777 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945930AbXDCUkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 16:40:36 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070403204036.TTVA25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Apr 2007 16:40:36 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id ikgb1W00E1kojtg0000000; Tue, 03 Apr 2007 16:40:35 -0400
+In-Reply-To: <alpine.LFD.0.98.0704031625050.28181@xanadu.home> (Nicolas
+	Pitre's message of "Tue, 03 Apr 2007 16:32:25 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43658>
 
-On Tue, 3 Apr 2007, Junio C Hamano wrote:
+[sorry, sent a message without finishing]
 
-> I stated it wrongly.  What I was getting at was that we might
-> want to consider an abbreviation that matches only a single
-> commit unambiguous even when there are ambiguous objects of
-> other kinds.
+Nicolas Pitre <nico@cam.org> writes:
 
-Maybe.  But by the time your object hash distribution starts showing 
-ambiguous objects with a given abbreviated name between a commit and a 
-non commit, I'll bet you'll start to see ambiguities between commits 
-soon enough as well.
+> Maybe we shouldn't run index-pack on packs for which we _already_ have 
+> an index for which is the most likely reason for the collision check to 
+> trigger in the first place.
+>
+> This is in the same category as trying to run unpack-objects on a pack 
+> within a repository and wondering why it doesn't work.
+> ...
+> I'm of the opinion that this patch is unnecessary.  It only helps in 
+> bogus workflows to start with, and it makes the default behavior unsafe 
+> (unsafe from a paranoid pov, but still).  And in the _normal_ workflow 
+> it should never trigger.
 
-> Not that I consider it a pressing issue, though.
+Hmmmm.  You may have a point.
 
-Indeed.  And even then it is not something really hard to implement 
-either.
-
-
-Nicolas
+So maybe we should retitle this thread from "git-index-pack
+really does suck.." to "I used git-index-pack in a stupid way"?
+ 
