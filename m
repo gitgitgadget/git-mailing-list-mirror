@@ -1,94 +1,93 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git-index-pack really does suck..
-Date: Tue, 03 Apr 2007 16:53:57 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704031639470.28181@xanadu.home>
+Date: Tue, 3 Apr 2007 13:56:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704031346250.6730@woody.linux-foundation.org>
 References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
  <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
  <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
- <7vbqi5w62c.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0704031625050.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Chris Lee <clee@kde.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Chris Lee <clee@kde.org>, Junio C Hamano <junkio@cox.net>,
 	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 03 22:54:10 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 22:58:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYq13-0005BH-Rb
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:54:10 +0200
+	id 1HYq4n-0007TY-3K
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149AbXDCUyG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 16:54:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753648AbXDCUyG
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:54:06 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:45797 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149AbXDCUyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 16:54:03 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFX00CSAWPXOE10@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 Apr 2007 16:53:58 -0400 (EDT)
-In-reply-to: <7vbqi5w62c.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1753610AbXDCU55 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 16:57:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753626AbXDCU55
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:57:57 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:43659 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753610AbXDCU55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 16:57:57 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33KupPD022616
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Apr 2007 13:56:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33KuoKP002984;
+	Tue, 3 Apr 2007 13:56:50 -0700
+In-Reply-To: <alpine.LFD.0.98.0704031625050.28181@xanadu.home>
+X-Spam-Status: No, hits=-0.457 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43661>
 
-On Tue, 3 Apr 2007, Junio C Hamano wrote:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+
+On Tue, 3 Apr 2007, Nicolas Pitre wrote:
+> > 
+> > Yeah. What happens is that inside the repo, because we do all the 
+> > duplicate object checks (verifying that there are no evil hash collisions) 
+> > even after fixing the memory leak, we end up keeping *track* of all those 
+> > objects.
 > 
-> > That whole "verify no SHA1 hash collision" code is really pretty damn 
-> > paranoid. Maybe we shouldn't have it enabled by default.
-> >
-> > So how about this updated patch? We could certainly make "git pull" imply 
-> > "--paranoid" if we want to, but even that is likely pretty unnecessary. 
-> > It's not like anybody has ever shown a SHA1 collision, and if the *local* 
-> > repository is corrupt (and has an object with the wrong SHA1 - that's what 
-> > the testsuite checks for), then it's probably good to get the valid object 
-> > from the remote..
-> 
-> I agree with that reasoning.
+> What do you mean?
 
-For the record, I don't agree.  I stated why in my other email.
+Look at what we have to do to look up a SHA1 object.. We create all the 
+lookup infrastructure, we don't *just* read the object. The delta base 
+cache is the most obvious one. 
 
-> We did not do paranoid in git-pull long after we introduced the .keep 
-> thing anyway,
+> I'm of the opinion that this patch is unnecessary.  It only helps in 
+> bogus workflows to start with, and it makes the default behavior unsafe 
+> (unsafe from a paranoid pov, but still).  And in the _normal_ workflow 
+> it should never trigger.
 
-That doesn't make it more "correct".
+Actually, even in the normal workflow it will do all the extra unnecessary 
+work, if only because the lookup costs of *not* finding the entry.
 
-> so I do not
-> think the following patch is even needed, but I am throwing it
-> out just for discussion.
+Lookie here:
 
-1) None of the objects in a pack should exist in the local repo when 
-   fetching, meaning that the paranoia code should not be executed 
-   normally.
+ - git index-pack of the *git* pack-file in the v2.6/linux directory (zero 
+   overlap of objects)
 
-2) Running index-pack on a pack _inside_ a repository is a dubious thing 
-   to do with questionable usefulness already.
+   With --paranoid:
 
-3) It is unefficient to run pack-objects with --stdout just to feed the 
-   result to index-pack afterwards while repack-objects can create the 
-   index itself, which is the source of this discussion.
-   
-4) I invite you to read the commit log for 8685da42561 where the 
-   _perception_ of GIT's security is discussed which led to the paranoia 
-   check, and sometimes the perception is more valuable than the 
-   reality, especially when it is free.
+	2.75user 0.37system 0:03.13elapsed 99%CPU
+	0major+5583minor pagefaults
 
-Therefore Linus' patch and this one are working around the wrong issue 
-as described in (3) IMHO.
+   Without --paranoid:
 
-What could be done instead, if really really needed, is to have the 
-paranoia test be made conditional on index-pack --stdin instead.  But 
-please no bogus extra switches pretty please.
+	2.55user 0.12system 0:02.68elapsed 99%CPU
+	0major+2957minor pagefaults
 
+See? That's the *normal* workflow. Zero objects found. 7% CPU overhead 
+from just the unnecessary work, and almost twice as much memory used. Just 
+from the index file lookup etc for a decent-sized project.
 
-Nicolas
+Now, in the KDE situation, the *unnecessary* lookups will be about ten 
+times more expensive, both on memory and CPU, just because the repository 
+is about 20x the size. Even with no actual hits.
+
+		Linus
