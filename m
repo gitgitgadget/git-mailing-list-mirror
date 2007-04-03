@@ -1,104 +1,119 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: git-index-pack really does suck..
-Date: Tue, 03 Apr 2007 12:40:14 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704031235490.28181@xanadu.home>
-References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0704030913060.6730@woody.linux-foundation.org>
+From: James Cloos <cloos@jhcloos.com>
+Subject: Re: Distribution of longest common hash prefixes
+Date: Tue, 03 Apr 2007 13:04:54 -0400
+Message-ID: <m3r6r1jsmq.fsf@lugabout.jhcloos.org>
+References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
+	<Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
+	<86bqi6kae7.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
+	<86y7laitlz.fsf@blue.stonehenge.com>
+	<86r6r2isva.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 03 18:40:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Eriksen <s022018@student.dtu.dk>,
+	merlyn@stonehenge.com (Randal L. Schwartz)
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 03 19:09:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYm3S-0008RO-Ig
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 18:40:22 +0200
+	id 1HYmVE-0007dj-RW
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 19:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934012AbXDCQkS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 12:40:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934015AbXDCQkR
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 12:40:17 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:48535 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934012AbXDCQkP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 12:40:15 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JFX0030KKZ29O20@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 03 Apr 2007 12:40:15 -0400 (EDT)
-In-reply-to: <Pine.LNX.4.64.0704030913060.6730@woody.linux-foundation.org>
-X-X-Sender: nico@xanadu.home
+	id S965641AbXDCRJA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 13:09:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965654AbXDCRJA
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 13:09:00 -0400
+Received: from atl.uu.jhcloos.net ([207.210.96.115]:52460 "EHLO
+	atl.uu.jhcloos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965641AbXDCRI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 13:08:59 -0400
+Received: by atl.uu.jhcloos.net (Postfix, from userid 10)
+	id ABEF5BB482; Tue,  3 Apr 2007 17:08:58 +0000 (UTC)
+Received: by lugabout.jhcloos.org (Postfix, from userid 500)
+	id 432F93C032B; Tue,  3 Apr 2007 17:05:17 +0000 (UTC)
+In-Reply-To: <86r6r2isva.fsf@blue.stonehenge.com> (Randal L. Schwartz's
+	message of "Mon\, 02 Apr 2007 10\:33\:13 -0700")
+Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMnRFWHRUaXRsZQAvbWF4dG9y
+ L2Nsb29zL2luY29taW5nLzIwMDQvMDIvUFdHL0pIQzE2LnBuZyJMlEwAAAAadEVYdFNvZnR3YXJl
+ AEdOT01FIEljb24gRWRpdG9ynioKbAAAAHFJREFUeJzFk8EKwCAMQ1/ED9cvzw6iuM0N9WIvDTWE
+ 1KjAxmKnLBEBjLcEIBCeI2nccy5YKrjxwbbvAvZ37zlo4GB9iRMC/cq/AppItwmMyJ5I98wd9G7P
+ xxgrSKlYS2lMrOcV13o95aVSKA7E5ndGXG+IIzcl4BNfAAAAAElFTkSuQmCC
+Copyright: Copyright 2007 James Cloos
+X-Hashcash: 1:23:070403:torvalds@linux-foundation.org::geXi0qbFG3zLzXpP:000000000000000000000000000000008abr
+X-Hashcash: 1:23:070403:git@vger.kernel.org::CsKE2d3fyFS/ntRH:000000000000000000000000000000000000000000InI3
+X-Hashcash: 1:23:070403:s022018@student.dtu.dk::5F07v5MCDPU0qTjP:000000000000000000000000000000000000000M989
+X-Hashcash: 1:23:070403:merlyn@stonehenge.com::1fUuMzBSBKiIfEbF:0000000000000000000000000000000000000000Vlo3
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.0 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43630>
 
-On Tue, 3 Apr 2007, Linus Torvalds wrote:
+>>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
 
-> 
-> 
-> On Tue, 3 Apr 2007, Linus Torvalds wrote:
-> > 
-> > and it uses 52s of CPU-time, and on my 4GB machine it actually started 
-> > doing IO and swapping, because git-index-pack grew to 4.8GB in size.
-> 
-> Ahh. False alarm.
-> 
-> The problem is actually largely a really stupid memory leak in the SHA1 
-> collision checking (which wouldn't trigger on a normal pull, but obviously 
-> does trigger for every single object when testing!)
+Randal> git-rev-list --objects HEAD | sort | perl -lne '
+Randal>   substr($_, 40) = "";
+Randal>   if (defined $p) {
+Randal>     ($p ^ $_) =~ /^(\0*)/;
+Randal>     $common = length $1;
+Randal>     if (defined $pcommon) {
+Randal>       $count[$pcommon > $common ? $pcommon : $common]++;
+Randal>     } else {
+Randal>       $count[$common]++; # first item
+Randal>     }
+Randal>   }
+Randal>   $p = $_;
+Randal>   $pcommon = $common;
+Randal>   END {
+Randal>     $count[$common]++; # last item
+Randal>     print "$_: $count[$_]" for 0..$#count;
+Randal>   }
+Randal> '
 
-Damn!
+With that version the kernel gives:
 
-Please don't report those things when I'm out for lunch so I could have 
-a chance to fix my own stupidities myself in time!  :-)
+0: 
+1: 
+2: 
+3: 565
+4: 288450
+5: 139080
+6: 10699
+7: 700
+8: 32
+9: 2
 
-> This trivial patch fixes most of it. git-index-pack still uses too much 
-> memory, but it does a *lot* better.
-> 
-> Junio, please get this into 1.5.1 (I *think* the SHA1 checking is new, but 
-> if it exists in 1.5.0 too, it obviously needs the same fix).
+Adding in  $_ = unpack("B*",pack("H*",$_));
+to the script, to do the work on bits, gives:
 
-No, it is new to 1.5.1.
+14: 
+15: 565
+16: 14723
+17: 66765
+18: 107838
+19: 99124
+20: 67367
+21: 39238
+22: 21503
+23: 10972
+24: 5591
+25: 2927
+26: 1472
+27: 709
+28: 382
+29: 166
+30: 98
+31: 54
+32: 20
+33: 6
+34: 2
+35: 4
+36: 
+37: 2
 
-> It still grows, but it grew to just 287M in size now for the 170M kernel 
-> object:
-> 
-> 	41.59user 1.39system 0:43.64elapsed
-> 	0major+73552minor
-> 
-> which is quite a lot better.
-> 
-> Duh.
-
-Indeed.
-
-Acked-by: Nicolas Pitre <nico@cam.org>
-
->  index-pack.c |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
-> 
-> diff --git a/index-pack.c b/index-pack.c
-> index 6284fe3..3c768fb 100644
-> --- a/index-pack.c
-> +++ b/index-pack.c
-> @@ -358,6 +358,7 @@ static void sha1_object(const void *data, unsigned long size,
->  		if (size != has_size || type != has_type ||
->  		    memcmp(data, has_data, size) != 0)
->  			die("SHA1 COLLISION FOUND WITH %s !", sha1_to_hex(sha1));
-> +		free(has_data);
->  	}
->  }
->  
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-
-
-Nicolas
+-JimC
+-- 
+James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
