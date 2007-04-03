@@ -1,542 +1,377 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [RFC] Packing large repositories
-Date: Mon, 2 Apr 2007 14:19:29 -0700
-Message-ID: <56b7f5510704021419s4f8635abs8544df2f1065a5d4@mail.gmail.com>
-References: <56b7f5510703280005o7998d65pcbcd4636b46d8d23@mail.gmail.com>
-	 <Pine.LNX.4.64.0703280943450.6730@woody.linux-foundation.org>
+From: Alberto Bertogli <albertito@gmail.com>
+Subject: Commit cherry-picking
+Date: Tue, 3 Apr 2007 00:42:37 -0300
+Message-ID: <20070403034234.GB24722@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_125023_4935805.1175548769232"
-Cc: git@vger.kernel.org, danahow@gmail.com
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 02 23:20:20 2007
+Content-Type: multipart/mixed; boundary="pWyiEgJYm5f9v55/"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 03 05:50:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYTwp-0007gn-PF
-	for gcvg-git@gmane.org; Mon, 02 Apr 2007 23:20:20 +0200
+	id 1HYa2H-0008M3-GR
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 05:50:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965889AbXDBVTe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 2 Apr 2007 17:19:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965918AbXDBVTe
-	(ORCPT <rfc822;git-outgoing>); Mon, 2 Apr 2007 17:19:34 -0400
-Received: from wx-out-0506.google.com ([66.249.82.232]:4337 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965889AbXDBVTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Apr 2007 17:19:31 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1548729wxd
-        for <git@vger.kernel.org>; Mon, 02 Apr 2007 14:19:30 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=UgT+4ufud0FR2DGP4itRqmXfbz8dJXVAZxvcslLifX09jYTBTlLqKVBQjo7XdFtm6MDCWrhiDdjDhAJ1UFxBa2sFjO9td/yINQu61OKpUZ0twnQXlcy6gG6gjAI5bPFGsBIdLXtzj99XeI0yPeCqi8MiJRMGXTyq797MuI1KzsU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:references;
-        b=e3QTF/xkIq1Zk3X3cnCYuOet0tom+EfKKVmYSbq1KOA6c2OVxPTuN5jarK9LSKFsKwGLk5rS4xvD1zT1t6h29D6wBN8E9NUcIeblCAeRn6V3DRFtFD9o1pmSeQV/MWst5Aw8RtiOC8qOc8bGEjjO0/K2/JyNTCKNTKQIBMdWyRc=
-Received: by 10.114.130.1 with SMTP id c1mr1977795wad.1175548769595;
-        Mon, 02 Apr 2007 14:19:29 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Mon, 2 Apr 2007 14:19:29 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0703280943450.6730@woody.linux-foundation.org>
+	id S1751673AbXDCDuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 2 Apr 2007 23:50:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbXDCDuR
+	(ORCPT <rfc822;git-outgoing>); Mon, 2 Apr 2007 23:50:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:44782 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751673AbXDCDuP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Apr 2007 23:50:15 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1HYa1x-0003D8-VS
+	for git@vger.kernel.org; Tue, 03 Apr 2007 05:50:02 +0200
+Received: from host136.201-252-53.telecom.net.ar ([201.252.53.136])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Apr 2007 05:50:01 +0200
+Received: from albertito by host136.201-252-53.telecom.net.ar with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Apr 2007 05:50:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: host136.201-252-53.telecom.net.ar
+Content-Disposition: inline
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43611>
 
-------=_Part_125023_4935805.1175548769232
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+
+--pWyiEgJYm5f9v55/
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On 3/28/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > I just started experimenting with using git ...
-> > Part of a checkout is about 55GB;
-> > after an initial commit and packing I have a 20GB+ packfile.
-> > Of course this is unusable, ... . I conclude that
-> > for such large projects,  git-repack/git-pack-objects would need
-> > new options to control maximum packfile size.
->
-> Either that, or update the index file format. I think that your approach
-> of having a size limiter is actually the *better* one, though.
->
-> > [ I don't think this affects git-{fetch,receive,send}-pack
-> > since apparently only the pack is transferred and it only uses
-> > the variable-length size and delta base offset encodings
-> > (of course the accumulation of the 7 bit chunks in a 32b
-> > variable would need to be corrected, but at least the data
-> > format doesn't change).]
->
-> Well, it does affect fetching, in that "git index-pack" obviously would
-> also need to be taught how to split the resulting indexed packs up into
-> multiple smaller ones from one large incoming one. But that shouldn't be
-> fundamentally hard either, apart from the inconvenience of having to
-> rewrite the object count in the pack headers..
->
-> To avoid that issue, it may be that it's actually better to split things
-> up at pack-generation time *even* for the case of --stdout, exactly so
-> that "git index-pack" wouldn't have to split things up (we potentially
-> know a lot more about object sizes up-front at pack-generation time than
-> we know at re-indexing).
 
-The attached patch adds a --pack-limit[=N] option
-to git-repack/git-pack-objects.  N defaults to 1<<31,
-and the result with --pack-limit is that no packfile
-can be equal to or larger than N.  A --blob-limit=N
-option is also added (see below).
+Hi!
 
-My original plan was simply to ensure that no
-object started at a file offset not representable in 31 bits.
-However,  I became concerned about the arithmetic involved
-when mmap'ing a pack,  so I decided to make sure *all*
-bytes lived at offsets representable in 31 bits.
+I often use darcs, and one feature I miss when I use git is the ability
+to do cherry-picking on what I'm about to commit.
 
-Consequently after an object is written out,
-the new offset is checked.  If the limit has been exceeded,
-the write is rolled back (see sha1mark/sha1undo).
-This is awkward and inefficient,  but yields packs closer
-to the limit and happens too infrequently to be of much impact.
+It allows me to do small changes to the code when I'm working on
+something else, and don't do ugly commits.
 
-However, there are really two modes when packing:
-packing to disk, and packing to stdout.
-Since you can't rollback a write on stdout,  the initial
-file-offset-limit technique is used when --stdout is specified.
-[Note:  I did not *test* the --pack-limit && --stdout combination.]
+I know the proper way to do this would be to have different branches and
+all. But that means I have to switch between branches to do quick fixes,
+which is an expensive operation in human terms, because I have to stop
+thinking about the code and switch branches and so on.
 
-To fully guarantee that a pack file doesn't exceed a certain size,
-objects above that size must not be packed into it.
-But I think this makes sense -- I don't see a lot of advantage
-to packing a 100MB+ object into a pack,  except for fetch/send
-which is a serial stream without index anyway.  Thus
-this patch automatically excludes any object whose uncompressed
-size is 1/4 or more of the packfile size limit when --stdout
-is not specified.  This behavior can be altered with an explicit
---blob-limit=N option.
+So I wrote two small scripts to do that: git-pcp and git-commit-cp. The
+former acts as a helper to the later. Both are attached.
 
-Two interesting twists presented themselves.
-First,  the packfile contains the number of objects in
-the header at the beginning,  and this header is included
-in the final SHA1.  But I don't know the final count until
-the limit is reached.  Consequently the header must be
-rewritten and the entire file rescanned to make the correct
-checksum.  This already happens in two other places in git.
+git-pcp takes a diff file, and produces two files: one with the hunks to
+apply, and another one with the ones to skip. It asks the user to
+select, for each hunk, where to put it.
 
-Secondly,  when using --pack-limit with --stdout,  the header
-can't be rewritten.  Instead the object count in the header
-is left at 0 to flag that it's wrong.  The end of an individual
-pack inside a multi-pack stream COULD be detected by checking,
-after each object,  if the next 20 bytes are equal to the SHA1
-of what's come before.  I've made no additional effort beyond
-this minimal solution because it's not clear that splitting
-a pack up at the transmitter is better than at the receiver.
-An alternative method is to add,  before the final SHA1,  a last
-object of type OBJ_NONE and length 0 (thus a single zero byte).
-This would function as an EOF marker.  I've indicated where this
-would go in write_pack_file but didn't put it in since the current
-code doesn't tolerate a 0 object count in the header anyway (yet?).
-[Note: I have *not* started in on teaching git-index-pack etc.
- how to read such concatenated split packs since (a) I'd like
- to see which way people will prefer and (b) I don't plan on
- using the feature anyway and I'm wondering if I'm alone
- in that reaction.]
+git-commit-cp is the command to use, which calls git-pcp to do the
+cherrypicking, and then applies the corresponding patches.
 
-Some code has been added but
-very few function relationships have been changed,
-with the exception that write_pack_file now calls write_index_file
-directly since write_pack_file decides when to split packs
-and thus must call write_index_file before moving on to the next pack.
 
-In response to my original post,  I've seen some emails about
-changing the pack file/index file format.  This is exactly what I
-*didn't* want to do,  since (1) it would delay a feature I'd like to
-use now,  (2) the current format is better than people seem to realize,
-and (3) it would create yet another flag in the config file
-to help phase in a new feature over a year or two.
+The implementation of git-pcp should be better (the diff parsing is not
+as strong as it should be, although it works for most cases; and the
+user interaction sucks, because I don't like UI =), so it's working but
+it needs some improvements.
 
-If,  however,  there are other pent-up reasons for changing the format
-which might make it happen sometime soon,  I can see some small tweaks
-that could be useful.
 
-* [For stdout/serial access:] Tolerate "0" for object count in a .pack
-file;  it would mean look for the pack end by either matching a SHA1 or
-looking for an OBJ_NONE/0 record,  all as explained above.
-(The point is to avoid any need to rescan a file to rebuild checksums.)
+I wanted to ask you if this was an acceptable command to add to git, and
+if you had any recommendations or thoughts about the implementation.
 
-* [For disk/random access:] Don't change the current .pack/.idx files,
-but do add a third file type which would be a "super index" with a format
-similar to .idx.  It would map sorted SHA1s to (pack#,offset) pairs,
-either in one table of triples or two parallel tables, one of SHA1s and
-the other of pairs.  It probably would only be used if mentioned in
-objects/info/packs (and it would be automatically ignored if older than
-objects/info/packs?).  It could be searched by taking advantage of the
-uniform SHA1 distribution recently discussed.  There would be at most
-one such file in a repository;  perhaps the .idx files from which it was
-generated could be removed.  For safety the "super index" could contain
-a small table of all the SHA1s for the packs it indexes.
+Thanks a lot,
+		Alberto
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
 
-cat GIT-VERSION-FILE
-GIT_VERSION = 1.5.1.rc2.18.g9c88-dirty
+PS: Is there a way of telling git-diff how many context lines to use?
 
-------=_Part_125023_4935805.1175548769232
-Content-Type: application/octet-stream; name=large.patch
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_f01faao2
-Content-Disposition: attachment; filename="large.patch"
 
-ZGlmZiAtLWdpdCBhL2J1aWx0aW4tcGFjay1vYmplY3RzLmMgYi9idWlsdGluLXBhY2stb2JqZWN0
-cy5jCmluZGV4IGI1Zjk2NDguLjBhMTExMTMgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tcGFjay1vYmpl
-Y3RzLmMKKysrIGIvYnVpbHRpbi1wYWNrLW9iamVjdHMuYwpAQCAtMTQsOCArMTQsOCBAQAogI2lu
-Y2x1ZGUgImxpc3Qtb2JqZWN0cy5oIgogCiBzdGF0aWMgY29uc3QgY2hhciBwYWNrX3VzYWdlW10g
-PSAiXAotZ2l0LXBhY2stb2JqZWN0cyBbeyAtcSB8IC0tcHJvZ3Jlc3MgfCAtLWFsbC1wcm9ncmVz
-cyB9XSBcblwKLQlbLS1sb2NhbF0gWy0taW5jcmVtZW50YWxdIFstLXdpbmRvdz1OXSBbLS1kZXB0
-aD1OXSBcblwKK2dpdC1wYWNrLW9iamVjdHMgW3sgLXEgfCAtLXByb2dyZXNzIHwgLS1hbGwtcHJv
-Z3Jlc3MgfV0gWy0tcGFjay1saW1pdFs9Tl1dXG5cCisJWy0tYmxvYi1saW1pdD1OXSBbLS1sb2Nh
-bF0gWy0taW5jcmVtZW50YWxdIFstLXdpbmRvdz1OXSBbLS1kZXB0aD1OXVxuXAogCVstLW5vLXJl
-dXNlLWRlbHRhXSBbLS1kZWx0YS1iYXNlLW9mZnNldF0gWy0tbm9uLWVtcHR5XSBcblwKIAlbLS1y
-ZXZzIFstLXVucGFja2VkIHwgLS1hbGxdKl0gWy0tcmVmbG9nXSBbLS1zdGRvdXQgfCBiYXNlLW5h
-bWVdIFxuXAogCVs8cmVmLWxpc3QgfCA8b2JqZWN0LWxpc3RdIjsKQEAgLTI5LDYgKzI5LDcgQEAg
-c3RydWN0IG9iamVjdF9lbnRyeSB7CiAJdW5zaWduZWQgaW50IGRlcHRoOwkvKiBkZWx0YSBkZXB0
-aCAqLwogCXVuc2lnbmVkIGludCBkZWx0YV9saW1pdDsJLyogYmFzZSBhZGp1c3RtZW50IGZvciBp
-bi1wYWNrIGRlbHRhICovCiAJdW5zaWduZWQgaW50IGhhc2g7CS8qIG5hbWUgaGludCBoYXNoICov
-CisJY2hhciBub193cml0ZTsJCS8qIGZsYWc6IHdyaXR0ZW4gdG8gcHJldmlvdXMgcGFjayBPUiB0
-b28gYmlnICovCiAJZW51bSBvYmplY3RfdHlwZSB0eXBlOwogCWVudW0gb2JqZWN0X3R5cGUgaW5f
-cGFja190eXBlOwkvKiBjb3VsZCBiZSBkZWx0YSAqLwogCXVuc2lnbmVkIGxvbmcgZGVsdGFfc2l6
-ZTsJLyogZGVsdGEgZGF0YSBzaXplICh1bmNvbXByZXNzZWQpICovCkBAIC02OCw3ICs2OSwxMCBA
-QCBzdGF0aWMgaW50IGFsbG93X29mc19kZWx0YTsKIAogc3RhdGljIHN0cnVjdCBvYmplY3RfZW50
-cnkgKipzb3J0ZWRfYnlfc2hhLCAqKnNvcnRlZF9ieV90eXBlOwogc3RhdGljIHN0cnVjdCBvYmpl
-Y3RfZW50cnkgKm9iamVjdHM7Ci1zdGF0aWMgdWludDMyX3QgbnJfb2JqZWN0cywgbnJfYWxsb2Ms
-IG5yX3Jlc3VsdDsKK3N0YXRpYyBzdHJ1Y3Qgb2JqZWN0X2VudHJ5ICoqd3JpdHRlbl9saXN0Owor
-c3RhdGljIHVpbnQzMl90IG5yX29iamVjdHMsIG5yX2FsbG9jLCBucl9yZXN1bHQsIG5yX3dyaXR0
-ZW4sIG5yX3NraXBwZWQgPSAwOworc3RhdGljIHVpbnQzMl90IG9mZnNldF9saW1pdCA9IDA7Citz
-dGF0aWMgdWludDMyX3QgYmxvYl9saW1pdCA9IDA7CiBzdGF0aWMgY29uc3QgY2hhciAqYmFzZV9u
-YW1lOwogc3RhdGljIHVuc2lnbmVkIGNoYXIgcGFja19maWxlX3NoYTFbMjBdOwogc3RhdGljIGlu
-dCBwcm9ncmVzcyA9IDE7CkBAIC00MTUsMTMgKzQxOSwxNyBAQCBzdGF0aWMgb2ZmX3Qgd3JpdGVf
-b2JqZWN0KHN0cnVjdCBzaGExZmlsZSAqZiwKIAl9CiAKIAlpZiAoIXRvX3JldXNlKSB7CisJCWlu
-dCB1c2FibGVfZGVsdGEgPQkhZW50cnktPmRlbHRhID8gMCA6CisJCQkJCSFvZmZzZXRfbGltaXQg
-PyAxIDoKKwkJCQkJZW50cnktPmRlbHRhLT5ub193cml0ZSA/IDAgOgorCQkJCQllbnRyeS0+ZGVs
-dGEtPm9mZnNldCA/IDEgOiAwOwogCQlidWYgPSByZWFkX3NoYTFfZmlsZShlbnRyeS0+c2hhMSwg
-JnR5cGUsICZzaXplKTsKIAkJaWYgKCFidWYpCiAJCQlkaWUoInVuYWJsZSB0byByZWFkICVzIiwg
-c2hhMV90b19oZXgoZW50cnktPnNoYTEpKTsKIAkJaWYgKHNpemUgIT0gZW50cnktPnNpemUpCiAJ
-CQlkaWUoIm9iamVjdCAlcyBzaXplIGluY29uc2lzdGVuY3kgKCVsdSB2cyAlbHUpIiwKIAkJCSAg
-ICBzaGExX3RvX2hleChlbnRyeS0+c2hhMSksIHNpemUsIGVudHJ5LT5zaXplKTsKLQkJaWYgKGVu
-dHJ5LT5kZWx0YSkgeworCQlpZiAodXNhYmxlX2RlbHRhKSB7CiAJCQlidWYgPSBkZWx0YV9hZ2Fp
-bnN0KGJ1Ziwgc2l6ZSwgZW50cnkpOwogCQkJc2l6ZSA9IGVudHJ5LT5kZWx0YV9zaXplOwogCQkJ
-b2JqX3R5cGUgPSAoYWxsb3dfb2ZzX2RlbHRhICYmIGVudHJ5LT5kZWx0YS0+b2Zmc2V0KSA/CkBA
-IC01MDMsNjIgKzUxMSwyMTIgQEAgc3RhdGljIG9mZl90IHdyaXRlX29uZShzdHJ1Y3Qgc2hhMWZp
-bGUgKmYsCiAJCQkgICAgICAgc3RydWN0IG9iamVjdF9lbnRyeSAqZSwKIAkJCSAgICAgICBvZmZf
-dCBvZmZzZXQpCiB7Ci0JaWYgKGUtPm9mZnNldCB8fCBlLT5wcmVmZXJyZWRfYmFzZSkKKwlzdHJ1
-Y3Qgc2hhMXBvc24gcG9zbjsKKwl1aW50MzJfdCBzYXZlX3dyaXR0ZW4gPSAwLCBzYXZlX3dyaXR0
-ZW5fZGVsdGEgPSAwOworCXVpbnQzMl90IHNhdmVfcmV1c2VkID0gMCwgc2F2ZV9yZXVzZWRfZGVs
-dGEgPSAwOworCWlmIChlLT5vZmZzZXQgfHwgZS0+cHJlZmVycmVkX2Jhc2UgfHwgZS0+bm9fd3Jp
-dGUpCiAJCS8qIG9mZnNldCBzdGFydHMgZnJvbSBoZWFkZXIgc2l6ZSBhbmQgY2Fubm90IGJlIHpl
-cm8KIAkJICogaWYgaXQgaXMgd3JpdHRlbiBhbHJlYWR5LgogCQkgKi8KIAkJcmV0dXJuIG9mZnNl
-dDsKIAkvKiBpZiB3ZSBhcmUgZGVsdGlmaWVkLCB3cml0ZSBvdXQgaXRzIGJhc2Ugb2JqZWN0IGZp
-cnN0LiAqLwotCWlmIChlLT5kZWx0YSkKKwlpZiAoZS0+ZGVsdGEpIHsKIAkJb2Zmc2V0ID0gd3Jp
-dGVfb25lKGYsIGUtPmRlbHRhLCBvZmZzZXQpOworCQlpZiAoIW9mZnNldCkKKwkJCXJldHVybiBv
-ZmZzZXQ7CisJfQorCWlmIChvZmZzZXRfbGltaXQpIHsKKwkJaWYgKCAhcGFja190b19zdGRvdXQg
-KSB7CisJCQkvKiBzYXZlIHN0YXRlIGJlZm9yZSB3cml0ZSBmb3IgcG9zc2libGUgbGF0ZXIgc2Vl
-a2JhY2sgKi8KKwkJCXNhdmVfd3JpdHRlbiA9IHdyaXR0ZW4sIHNhdmVfd3JpdHRlbl9kZWx0YSA9
-IHdyaXR0ZW5fZGVsdGE7CisJCQlzYXZlX3JldXNlZCA9IHJldXNlZCwgc2F2ZV9yZXVzZWRfZGVs
-dGEgPSByZXVzZWRfZGVsdGE7CisJCQlzaGExbWFyayhmLCAmcG9zbik7CisJCX0gZWxzZSBpZiAo
-ICh1bnNpZ25lZCBsb25nKW9mZnNldCA+PSAodW5zaWduZWQgbG9uZylvZmZzZXRfbGltaXQgKQor
-CQkJLyoKKwkJCSAqIFRoaXMgZW5zdXJlcyB0aGF0IG5vIG9iamVjdCdzIG9mZnNldCBpbiB0aGUg
-cGFjaworCQkJICogZXhjZWVkcyBvciBpcyBlcXVhbCB0byB0aGUgb2Zmc2V0X2xpbWl0LiAgSXQg
-aXMKKwkJCSAqIGEgbG9vc2VyIHdheSBvZiBsaW1pdGluZyBwYWNrc2l6ZSB3L28gc2Vla2luZyBh
-bmQKKwkJCSAqIGlzIHVzZWQgaW4gLS1zdGRvdXQgbW9kZS4KKwkJCSAqLworCQkJcmV0dXJuIDA7
-CisJfQogCWUtPm9mZnNldCA9IG9mZnNldDsKLQlyZXR1cm4gb2Zmc2V0ICsgd3JpdGVfb2JqZWN0
-KGYsIGUpOworCW9mZnNldCArPSB3cml0ZV9vYmplY3QoZiwgZSk7CisJLyoKKwkgKiBUaGlzIGVu
-c3VyZXMgdGhhdCB0aGUgcGFja2ZpbGUgc2l6ZSBuZXZlciBleGNlZWRzIG9yIG1hdGNoZXMKKwkg
-KiB0aGUgb2Zmc2V0X2xpbWl0IGlmIHN1cHBsaWVkLiAgVGhlICIyMCIgaXMgZm9yIHRoZSBmaW5h
-bCBTSEExLgorCSAqIFRoaXMgbGltaXQgaXNuJ3QgdXNlZCB3aXRoIC0tc3Rkb3V0IHNpbmNlIGl0
-IHJlcXVpcmVzIHNlZWtpbmcuCisJICovCisJaWYgKG9mZnNldF9saW1pdCAmJiAhcGFja190b19z
-dGRvdXQgJiYKKwkgICAgKHVuc2lnbmVkIGxvbmcpb2Zmc2V0ID49ICh1bnNpZ25lZCBsb25nKShv
-ZmZzZXRfbGltaXQgLSAyMCkpIHsKKwkJd3JpdHRlbiA9IHNhdmVfd3JpdHRlbiwgd3JpdHRlbl9k
-ZWx0YSA9IHNhdmVfd3JpdHRlbl9kZWx0YTsKKwkJcmV1c2VkID0gc2F2ZV9yZXVzZWQsIHJldXNl
-ZF9kZWx0YSA9IHNhdmVfcmV1c2VkX2RlbHRhOworCQlzaGExdW5kbyhmLCAmcG9zbiwgb2Zmc2V0
-LCBlLT5vZmZzZXQpOworCQllLT5vZmZzZXQgPSAwOworCQlyZXR1cm4gMDsKKwl9CisJKndyaXR0
-ZW5fbGlzdCsrID0gZTsKKwlyZXR1cm4gb2Zmc2V0OworfQorCisvKgorICogTW92ZSB0aGlzLCB0
-aGUgdmVyc2lvbiBpbiBmYXN0LWltcG9ydC5jLAorICogYW5kIGluZGV4X3BhY2suYzpyZWFkanVz
-dF9wYWNrX2hlYWRlcl9hbmRfc2hhMSBpbnRvIHNoYTFfZmlsZS5jID8KKyAqLworc3RhdGljIHZv
-aWQgZml4dXBfaGVhZGVyX2Zvb3RlcihpbnQgcGFja19mZCwgdW5zaWduZWQgY2hhciAqcGFja19m
-aWxlX3NoYTEsCisJCQkJY2hhciAqcGFja19uYW1lLCB1aW50MzJfdCBvYmplY3RfY291bnQpCit7
-CisJc3RhdGljIGNvbnN0IGludCBidWZfc3ogPSAxMjggKiAxMDI0OworCVNIQV9DVFggYzsKKwlz
-dHJ1Y3QgcGFja19oZWFkZXIgaGRyOworCWNoYXIgKmJ1ZjsKKworCWlmIChsc2VlayhwYWNrX2Zk
-LCAwLCBTRUVLX1NFVCkgIT0gMCkKKwkJZGllKCJGYWlsZWQgc2Vla2luZyB0byBzdGFydDogJXMi
-LCBzdHJlcnJvcihlcnJubykpOworCWlmIChyZWFkX2luX2Z1bGwocGFja19mZCwgJmhkciwgc2l6
-ZW9mKGhkcikpICE9IHNpemVvZihoZHIpKQorCQlkaWUoIlVuYWJsZSB0byByZXJlYWQgaGVhZGVy
-IG9mICVzIiwgcGFja19uYW1lKTsKKwlpZiAobHNlZWsocGFja19mZCwgMCwgU0VFS19TRVQpICE9
-IDApCisJCWRpZSgiRmFpbGVkIHNlZWtpbmcgdG8gc3RhcnQ6ICVzIiwgc3RyZXJyb3IoZXJybm8p
-KTsKKwloZHIuaGRyX2VudHJpZXMgPSBodG9ubChvYmplY3RfY291bnQpOworCXdyaXRlX29yX2Rp
-ZShwYWNrX2ZkLCAmaGRyLCBzaXplb2YoaGRyKSk7CisKKwlTSEExX0luaXQoJmMpOworCVNIQTFf
-VXBkYXRlKCZjLCAmaGRyLCBzaXplb2YoaGRyKSk7CisKKwlidWYgPSB4bWFsbG9jKGJ1Zl9zeik7
-CisJZm9yICg7OykgeworCQlzaXplX3QgbiA9IHhyZWFkKHBhY2tfZmQsIGJ1ZiwgYnVmX3N6KTsK
-KwkJaWYgKCFuKQorCQkJYnJlYWs7CisJCWlmIChuIDwgMCkKKwkJCWRpZSgiRmFpbGVkIHRvIGNo
-ZWNrc3VtICVzIiwgcGFja19uYW1lKTsKKwkJU0hBMV9VcGRhdGUoJmMsIGJ1Ziwgbik7CisJfQor
-CWZyZWUoYnVmKTsKKworCVNIQTFfRmluYWwocGFja19maWxlX3NoYTEsICZjKTsKKwl3cml0ZV9v
-cl9kaWUocGFja19mZCwgcGFja19maWxlX3NoYTEsIDIwKTsKKwljbG9zZShwYWNrX2ZkKTsKIH0K
-IAordHlwZWRlZiBpbnQgKCplbnRyeV9zb3J0X3QpKGNvbnN0IHN0cnVjdCBvYmplY3RfZW50cnkg
-KiwgY29uc3Qgc3RydWN0IG9iamVjdF9lbnRyeSAqKTsKKworc3RhdGljIGVudHJ5X3NvcnRfdCBj
-dXJyZW50X3NvcnQ7CisKKy8qIGZvcndhcmQgZGVjbGFyYXRpb25zIGZvciB3cml0ZV9wYWNrX2Zp
-bGUgKi8KKy8qIChwcm9iYWJseSBzaG91bGQgbW92ZSBzb3J0aW5nIHN0dWZmIHVwIGhlcmUpICov
-CitzdGF0aWMgaW50IHNvcnRfY29tcGFyYXRvcihjb25zdCB2b2lkICpfYSwgY29uc3Qgdm9pZCAq
-X2IpOworc3RhdGljIGludCBzaGExX3NvcnQoY29uc3Qgc3RydWN0IG9iamVjdF9lbnRyeSAqYSwg
-Y29uc3Qgc3RydWN0IG9iamVjdF9lbnRyeSAqYik7CitzdGF0aWMgdm9pZCB3cml0ZV9pbmRleF9m
-aWxlKHZvaWQpOworCiBzdGF0aWMgdm9pZCB3cml0ZV9wYWNrX2ZpbGUodm9pZCkKIHsKLQl1aW50
-MzJfdCBpOworCXVpbnQzMl90IGksIGo7CiAJc3RydWN0IHNoYTFmaWxlICpmOwogCW9mZl90IG9m
-ZnNldDsKIAlzdHJ1Y3QgcGFja19oZWFkZXIgaGRyOwogCXVuc2lnbmVkIGxhc3RfcGVyY2VudCA9
-IDk5OTsKLQlpbnQgZG9fcHJvZ3Jlc3MgPSBwcm9ncmVzczsKKwlpbnQgZG9fcHJvZ3Jlc3MgPSBw
-cm9ncmVzcyA+PiAhYmFzZV9uYW1lOworCWNoYXIgb2xkbmFtZVtQQVRIX01BWF07CisJaW50IHBh
-Y2tfZmQ7CisJc3RydWN0IG9iamVjdF9lbnRyeSAqKmxpc3Q7CisJU0hBX0NUWCBjdHg7CisJdWlu
-dDMyX3QgbnJfYWN0dWFsID0gbnJfcmVzdWx0IC0gbnJfc2tpcHBlZDsKIAotCWlmICghYmFzZV9u
-YW1lKSB7Ci0JCWYgPSBzaGExZmQoMSwgIjxzdGRvdXQ+Iik7Ci0JCWRvX3Byb2dyZXNzID4+PSAx
-OwotCX0KLQllbHNlCi0JCWYgPSBzaGExY3JlYXRlKCIlcy0lcy4lcyIsIGJhc2VfbmFtZSwKLQkJ
-CSAgICAgICBzaGExX3RvX2hleChvYmplY3RfbGlzdF9zaGExKSwgInBhY2siKTsKIAlpZiAoZG9f
-cHJvZ3Jlc3MpCi0JCWZwcmludGYoc3RkZXJyLCAiV3JpdGluZyAldSBvYmplY3RzLlxuIiwgbnJf
-cmVzdWx0KTsKLQotCWhkci5oZHJfc2lnbmF0dXJlID0gaHRvbmwoUEFDS19TSUdOQVRVUkUpOwot
-CWhkci5oZHJfdmVyc2lvbiA9IGh0b25sKFBBQ0tfVkVSU0lPTik7Ci0JaGRyLmhkcl9lbnRyaWVz
-ID0gaHRvbmwobnJfcmVzdWx0KTsKLQlzaGExd3JpdGUoZiwgJmhkciwgc2l6ZW9mKGhkcikpOwot
-CW9mZnNldCA9IHNpemVvZihoZHIpOwotCWlmICghbnJfcmVzdWx0KQotCQlnb3RvIGRvbmU7Ci0J
-Zm9yIChpID0gMDsgaSA8IG5yX29iamVjdHM7IGkrKykgewotCQlvZmZzZXQgPSB3cml0ZV9vbmUo
-Ziwgb2JqZWN0cyArIGksIG9mZnNldCk7Ci0JCWlmIChkb19wcm9ncmVzcykgewotCQkJdW5zaWdu
-ZWQgcGVyY2VudCA9IHdyaXR0ZW4gKiAxMDAgLyBucl9yZXN1bHQ7Ci0JCQlpZiAocHJvZ3Jlc3Nf
-dXBkYXRlIHx8IHBlcmNlbnQgIT0gbGFzdF9wZXJjZW50KSB7Ci0JCQkJZnByaW50ZihzdGRlcnIs
-ICIlNHUlJSAoJXUvJXUpIGRvbmVcciIsCi0JCQkJCXBlcmNlbnQsIHdyaXR0ZW4sIG5yX3Jlc3Vs
-dCk7Ci0JCQkJcHJvZ3Jlc3NfdXBkYXRlID0gMDsKLQkJCQlsYXN0X3BlcmNlbnQgPSBwZXJjZW50
-OworCQlmcHJpbnRmKHN0ZGVyciwgIldyaXRpbmcgJXUgb2JqZWN0cy5cbiIsIG5yX2FjdHVhbCk7
-CisJd3JpdHRlbl9saXN0ID0gbGlzdCA9IHhtYWxsb2MobnJfb2JqZWN0cyAqIHNpemVvZihzdHJ1
-Y3Qgb2JqZWN0X2VudHJ5ICopKTsKKworCWZvciAoaSA9IDA7IGkgPCBucl9vYmplY3RzOykgewor
-CQlpZiAoIWJhc2VfbmFtZSkgeworCQkJZiA9IHNoYTFmZChwYWNrX2ZkID0gMSwgIjxzdGRvdXQ+
-Iik7CisJCX0KKwkJZWxzZSB7CisJCQlpbnQgbGVuID0gc25wcmludGYob2xkbmFtZSwgc2l6ZW9m
-IG9sZG5hbWUsICIlcy1YWFhYWFgiLCBiYXNlX25hbWUpOworCQkJaWYgKGxlbiA+PSBQQVRIX01B
-WCkKKwkJCQlkaWUoImV4Y2Vzc2l2ZSBwYXRobmFtZSBsZW5ndGggZm9yIGluaXRpYWwgcGFja2Zp
-bGUgbmFtZSIpOworCQkJcGFja19mZCA9IG1rc3RlbXAob2xkbmFtZSk7CisJCQlpZiAocGFja19m
-ZCA8IDApCisJCQkJZGllKCJjYW4ndCBjcmVhdGUgJXM6ICVzIiwgb2xkbmFtZSwgc3RyZXJyb3Io
-ZXJybm8pKTsKKwkJCWYgPSBzaGExZmQocGFja19mZCwgb2xkbmFtZSk7CisJCX0KKworCQloZHIu
-aGRyX3NpZ25hdHVyZSA9IGh0b25sKFBBQ0tfU0lHTkFUVVJFKTsKKwkJaGRyLmhkcl92ZXJzaW9u
-ID0gaHRvbmwoUEFDS19WRVJTSU9OKTsKKwkJaGRyLmhkcl9lbnRyaWVzID0gaHRvbmwoIWJhc2Vf
-bmFtZSAmJiBvZmZzZXRfbGltaXQgPyAwIDogbnJfYWN0dWFsKTsKKwkJc2hhMXdyaXRlKGYsICZo
-ZHIsIHNpemVvZihoZHIpKTsKKwkJb2Zmc2V0ID0gc2l6ZW9mKGhkcik7CisJCWZvciAoOyBpIDwg
-bnJfb2JqZWN0czsgaSsrKSB7CisJCQlvZmZfdCBvZmZzZXRfb25lID0gd3JpdGVfb25lKGYsIG9i
-amVjdHMgKyBpLCBvZmZzZXQpOworCQkJaWYgKCFvZmZzZXRfb25lKQorCQkJCWJyZWFrOworCQkJ
-b2Zmc2V0ID0gb2Zmc2V0X29uZTsKKwkJCWlmIChkb19wcm9ncmVzcykgeworCQkJCXVuc2lnbmVk
-IHBlcmNlbnQgPSB3cml0dGVuICogMTAwIC8gbnJfYWN0dWFsOworCQkJCWlmIChwcm9ncmVzc191
-cGRhdGUgfHwgcGVyY2VudCAhPSBsYXN0X3BlcmNlbnQpIHsKKwkJCQkJZnByaW50ZihzdGRlcnIs
-ICIlNHUlJSAoJXUvJXUpIGRvbmVcciIsCisJCQkJCQlwZXJjZW50LCB3cml0dGVuLCBucl9hY3R1
-YWwpOworCQkJCQlwcm9ncmVzc191cGRhdGUgPSAwOworCQkJCQlsYXN0X3BlcmNlbnQgPSBwZXJj
-ZW50OworCQkJCX0KIAkJCX0KIAkJfQorCQlucl93cml0dGVuID0gd3JpdHRlbl9saXN0IC0gbGlz
-dDsKKwkJd3JpdHRlbl9saXN0ID0gbGlzdDsKKworCQkvKgorCQkgKiBXcml0ZSB0ZXJtaW5hdG9y
-IHJlY29yZCBoZXJlIGlmIGRlc2lyZWQ6CisJCSAqIHR5cGU9T0JKX05PTkUsIGxlbj0wOyAgdGhp
-cyBpcyBhIHplcm8gYnl0ZS4KKwkJICovCisKKwkJLyoKKwkJICogRGlkIHdlIHdyaXRlIHRoZSB3
-cm9uZyAjIGVudHJpZXMgaW4gdGhlIGhlYWRlcj8KKwkJICogSWYgc28sIHJld3JpdGUgaXQgbGlr
-ZSBpbiBmYXN0LWltcG9ydCAoZ2Fja2spLgorCQkgKi8KKwkJaWYgKCAhYmFzZV9uYW1lIHx8IG5y
-X3dyaXR0ZW4gPT0gbnJfYWN0dWFsICkgeworCQkJc2hhMWNsb3NlKGYsIHBhY2tfZmlsZV9zaGEx
-LCAxKTsKKwkJfSBlbHNlIHsKKwkJCXNoYTFjbG9zZShmLCBwYWNrX2ZpbGVfc2hhMSwgLTEpOwor
-CQkJZml4dXBfaGVhZGVyX2Zvb3RlcihwYWNrX2ZkLCBwYWNrX2ZpbGVfc2hhMSwgb2xkbmFtZSwg
-bnJfd3JpdHRlbik7CisJCX0KKworCQkvKgorCQkgKiBjb21wdXRlIG9iamVjdF9saXN0X3NoYTEg
-b2Ygc29ydGVkIHNoYSdzIHdlIGp1c3Qgd3JvdGUgb3V0OworCQkgKiB3ZSBhbHNvIG1hcmsgdGhl
-c2Ugb2JqZWN0cyBhcyB3cml0dGVuCisJCSAqLworCQljdXJyZW50X3NvcnQgPSBzaGExX3NvcnQ7
-CisJCXFzb3J0KGxpc3QsIG5yX3dyaXR0ZW4sIHNpemVvZihzdHJ1Y3Qgb2JqZWN0X2VudHJ5ICop
-LCBzb3J0X2NvbXBhcmF0b3IpOworCQlTSEExX0luaXQoJmN0eCk7CisJCWZvciAoaiA9IDA7IGog
-PCBucl93cml0dGVuOyBqKyspIHsKKwkJCXN0cnVjdCBvYmplY3RfZW50cnkgKmVudHJ5ID0gKmxp
-c3QrKzsKKwkJCWVudHJ5LT5ub193cml0ZSA9IDE7CisJCQlTSEExX1VwZGF0ZSgmY3R4LCBlbnRy
-eS0+c2hhMSwgMjApOworCQl9CisJCVNIQTFfRmluYWwob2JqZWN0X2xpc3Rfc2hhMSwgJmN0eCk7
-CisJCWxpc3QgPSB3cml0dGVuX2xpc3Q7CisJCS8qCisJCSAqIG5vdyB3ZSBjYW4gcmVuYW1lIHRo
-ZSBwYWNrIGNvcnJlY3RseSBhbmQgd3JpdGUgdGhlIGluZGV4IGZpbGUKKwkJICovCisJCWlmIChi
-YXNlX25hbWUpIHsKKwkJCWNoYXIgbmV3bmFtZVtQQVRIX01BWF07CisJCQlpbnQgbGVuID0gc25w
-cmludGYobmV3bmFtZSwgc2l6ZW9mIG5ld25hbWUsICIlcy0lcy4lcyIsCisJCQkJCQliYXNlX25h
-bWUsIHNoYTFfdG9faGV4KG9iamVjdF9saXN0X3NoYTEpLCAicGFjayIpOworCQkJaWYgKGxlbiA+
-PSBQQVRIX01BWCkKKwkJCQlkaWUoImV4Y2Vzc2l2ZSBwYXRobmFtZSBsZW5ndGggZm9yIGZpbmFs
-IHBhY2tmaWxlIG5hbWUiKTsKKwkJCWlmIChyZW5hbWUob2xkbmFtZSwgbmV3bmFtZSkgPCAwKQor
-CQkJCWRpZSgiY291bGQgbm90IHJlbmFtZSB0aGUgcGFjayBmaWxlIik7CisJCX0KKwkJaWYgKCFw
-YWNrX3RvX3N0ZG91dCkgeworCQkJd3JpdGVfaW5kZXhfZmlsZSgpOworCQkJcHV0cyhzaGExX3Rv
-X2hleChvYmplY3RfbGlzdF9zaGExKSk7CisJCX0KIAl9Ci0JaWYgKGRvX3Byb2dyZXNzKQorCisJ
-ZnJlZSh3cml0dGVuX2xpc3QpOworCWlmIChucl9hY3R1YWwgJiYgZG9fcHJvZ3Jlc3MpCiAJCWZw
-dXRjKCdcbicsIHN0ZGVycik7Ci0gZG9uZToKLQlpZiAod3JpdHRlbiAhPSBucl9yZXN1bHQpCi0J
-CWRpZSgid3JvdGUgJXUgb2JqZWN0cyB3aGlsZSBleHBlY3RpbmcgJXUiLCB3cml0dGVuLCBucl9y
-ZXN1bHQpOwotCXNoYTFjbG9zZShmLCBwYWNrX2ZpbGVfc2hhMSwgMSk7CisJaWYgKHdyaXR0ZW4g
-IT0gbnJfYWN0dWFsKQorCQlkaWUoIndyb3RlICV1IG9iamVjdHMgd2hpbGUgZXhwZWN0aW5nICV1
-Iiwgd3JpdHRlbiwgbnJfYWN0dWFsKTsKIH0KIAogc3RhdGljIHZvaWQgd3JpdGVfaW5kZXhfZmls
-ZSh2b2lkKQpAQCAtNTY2LDggKzcyNCw4IEBAIHN0YXRpYyB2b2lkIHdyaXRlX2luZGV4X2ZpbGUo
-dm9pZCkKIAl1aW50MzJfdCBpOwogCXN0cnVjdCBzaGExZmlsZSAqZiA9IHNoYTFjcmVhdGUoIiVz
-LSVzLiVzIiwgYmFzZV9uYW1lLAogCQkJCQlzaGExX3RvX2hleChvYmplY3RfbGlzdF9zaGExKSwg
-ImlkeCIpOwotCXN0cnVjdCBvYmplY3RfZW50cnkgKipsaXN0ID0gc29ydGVkX2J5X3NoYTsKLQlz
-dHJ1Y3Qgb2JqZWN0X2VudHJ5ICoqbGFzdCA9IGxpc3QgKyBucl9yZXN1bHQ7CisJc3RydWN0IG9i
-amVjdF9lbnRyeSAqKmxpc3QgPSB3cml0dGVuX2xpc3Q7CisJc3RydWN0IG9iamVjdF9lbnRyeSAq
-Kmxhc3QgPSBsaXN0ICsgbnJfd3JpdHRlbjsKIAl1aW50MzJfdCBhcnJheVsyNTZdOwogCiAJLyoK
-QEAgLTU4Myw3ICs3NDEsNyBAQCBzdGF0aWMgdm9pZCB3cml0ZV9pbmRleF9maWxlKHZvaWQpCiAJ
-CQkJYnJlYWs7CiAJCQluZXh0Kys7CiAJCX0KLQkJYXJyYXlbaV0gPSBodG9ubChuZXh0IC0gc29y
-dGVkX2J5X3NoYSk7CisJCWFycmF5W2ldID0gaHRvbmwobmV4dCAtIHdyaXR0ZW5fbGlzdCk7CiAJ
-CWxpc3QgPSBuZXh0OwogCX0KIAlzaGExd3JpdGUoZiwgYXJyYXksIDI1NiAqIDQpOwpAQCAtNTkx
-LDggKzc0OSw4IEBAIHN0YXRpYyB2b2lkIHdyaXRlX2luZGV4X2ZpbGUodm9pZCkKIAkvKgogCSAq
-IFdyaXRlIHRoZSBhY3R1YWwgU0hBMSBlbnRyaWVzLi4KIAkgKi8KLQlsaXN0ID0gc29ydGVkX2J5
-X3NoYTsKLQlmb3IgKGkgPSAwOyBpIDwgbnJfcmVzdWx0OyBpKyspIHsKKwlsaXN0ID0gd3JpdHRl
-bl9saXN0OworCWZvciAoaSA9IDA7IGkgPCBucl93cml0dGVuOyBpKyspIHsKIAkJc3RydWN0IG9i
-amVjdF9lbnRyeSAqZW50cnkgPSAqbGlzdCsrOwogCQl1aW50MzJfdCBvZmZzZXQgPSBodG9ubChl
-bnRyeS0+b2Zmc2V0KTsKIAkJc2hhMXdyaXRlKGYsICZvZmZzZXQsIDQpOwpAQCAtMTAxNCw3ICsx
-MTcyLDcgQEAgc3RhdGljIHZvaWQgY2hlY2tfb2JqZWN0KHN0cnVjdCBvYmplY3RfZW50cnkgKmVu
-dHJ5KQogCQkJCW9mcyA9IGMgJiAxMjc7CiAJCQkJd2hpbGUgKGMgJiAxMjgpIHsKIAkJCQkJb2Zz
-ICs9IDE7Ci0JCQkJCWlmICghb2ZzIHx8IG9mcyAmIH4ofjBVTCA+PiA3KSkKKwkJCQkJaWYgKCFv
-ZnMgfHwgb2ZzICYgfih+MFVMID4+IDEpKQogCQkJCQkJZGllKCJkZWx0YSBiYXNlIG9mZnNldCBv
-dmVyZmxvdyBpbiBwYWNrIGZvciAlcyIsCiAJCQkJCQkgICAgc2hhMV90b19oZXgoZW50cnktPnNo
-YTEpKTsKIAkJCQkJYyA9IGJ1Zlt1c2VkXzArK107CkBAIC0xMDU4LDYgKzEyMTYsNyBAQCBzdGF0
-aWMgdm9pZCBjaGVja19vYmplY3Qoc3RydWN0IG9iamVjdF9lbnRyeSAqZW50cnkpCiAJfQogCiAJ
-ZW50cnktPnR5cGUgPSBzaGExX29iamVjdF9pbmZvKGVudHJ5LT5zaGExLCAmZW50cnktPnNpemUp
-OworCW5yX3NraXBwZWQgKz0gZW50cnktPm5vX3dyaXRlID0gYmxvYl9saW1pdCAmJiAodW5zaWdu
-ZWQgbG9uZyllbnRyeS0+c2l6ZSA+PSBibG9iX2xpbWl0OwogCWlmIChlbnRyeS0+dHlwZSA8IDAp
-CiAJCWRpZSgidW5hYmxlIHRvIGdldCB0eXBlIG9mIG9iamVjdCAlcyIsCiAJCSAgICBzaGExX3Rv
-X2hleChlbnRyeS0+c2hhMSkpOwpAQCAtMTEwMywxMCArMTI2Miw2IEBAIHN0YXRpYyB2b2lkIGdl
-dF9vYmplY3RfZGV0YWlscyh2b2lkKQogCX0KIH0KIAotdHlwZWRlZiBpbnQgKCplbnRyeV9zb3J0
-X3QpKGNvbnN0IHN0cnVjdCBvYmplY3RfZW50cnkgKiwgY29uc3Qgc3RydWN0IG9iamVjdF9lbnRy
-eSAqKTsKLQotc3RhdGljIGVudHJ5X3NvcnRfdCBjdXJyZW50X3NvcnQ7Ci0KIHN0YXRpYyBpbnQg
-c29ydF9jb21wYXJhdG9yKGNvbnN0IHZvaWQgKl9hLCBjb25zdCB2b2lkICpfYikKIHsKIAlzdHJ1
-Y3Qgb2JqZWN0X2VudHJ5ICphID0gKihzdHJ1Y3Qgb2JqZWN0X2VudHJ5ICoqKV9hOwpAQCAtMTE5
-Nyw2ICsxMzUyLDEyIEBAIHN0YXRpYyBpbnQgdHJ5X2RlbHRhKHN0cnVjdCB1bnBhY2tlZCAqdHJn
-LCBzdHJ1Y3QgdW5wYWNrZWQgKnNyYywKIAlpZiAodHJnX2VudHJ5LT50eXBlICE9IHNyY19lbnRy
-eS0+dHlwZSkKIAkJcmV0dXJuIC0xOwogCisJLyogRG9uJ3QgdHJ5IGRlbHRhcyBpbnZvbHZpbmcg
-ZXhjZXNzaXZlbHkgbGFyZ2Ugb2JqZWN0cyB3aGVuCisJICogcGFjayBzaXplIGlzIGxpbWl0ZWQK
-KwkgKi8KKwlpZiAodHJnX2VudHJ5LT5ub193cml0ZSB8fCBzcmNfZW50cnktPm5vX3dyaXRlKQor
-CQlyZXR1cm4gLTE7CisKIAkvKiBXZSBkbyBub3QgY29tcHV0ZSBkZWx0YSB0byAqY3JlYXRlKiBv
-YmplY3RzIHdlIGFyZSBub3QKIAkgKiBnb2luZyB0byBwYWNrLgogCSAqLwpAQCAtMTUzOCw2ICsx
-Njk5LDcgQEAgaW50IGNtZF9wYWNrX29iamVjdHMoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2
-LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJY29uc3QgY2hhciAqKnJwX2F2OwogCWludCBycF9hY19h
-bGxvYyA9IDY0OwogCWludCBycF9hYzsKKwlpbnQgYWRkZWQgPSAwOwogCiAJcnBfYXYgPSB4Y2Fs
-bG9jKHJwX2FjX2FsbG9jLCBzaXplb2YoKnJwX2F2KSk7CiAKQEAgLTE1NjYsNiArMTcyOCwyNCBA
-QCBpbnQgY21kX3BhY2tfb2JqZWN0cyhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0
-IGNoYXIgKnByZWZpeCkKIAkJCWluY3JlbWVudGFsID0gMTsKIAkJCWNvbnRpbnVlOwogCQl9CisJ
-CWlmICghc3RyY21wKCItLXBhY2stbGltaXQiLCBhcmcpKSB7CisJCQlvZmZzZXRfbGltaXQgPSAx
-VUwgPDwgMzE7CisJCQljb250aW51ZTsKKwkJfQorCQlpZiAoIXByZWZpeGNtcChhcmcsICItLXBh
-Y2stbGltaXQ9IikpIHsKKwkJCWNoYXIgKmVuZDsKKwkJCW9mZnNldF9saW1pdCA9IHN0cnRvdWwo
-YXJnKzEzLCAmZW5kLCAwKTsKKwkJCWlmICghYXJnWzEzXSB8fCAqZW5kKQorCQkJCXVzYWdlKHBh
-Y2tfdXNhZ2UpOworCQkJY29udGludWU7CisJCX0KKwkJaWYgKCFwcmVmaXhjbXAoYXJnLCAiLS1i
-bG9iLWxpbWl0PSIpKSB7CisJCQljaGFyICplbmQ7CisJCQlibG9iX2xpbWl0ID0gc3RydG91bChh
-cmcrMTMsICZlbmQsIDApOworCQkJaWYgKCFhcmdbMTNdIHx8ICplbmQpCisJCQkJdXNhZ2UocGFj
-a191c2FnZSk7CisJCQljb250aW51ZTsKKwkJfQogCQlpZiAoIXByZWZpeGNtcChhcmcsICItLXdp
-bmRvdz0iKSkgewogCQkJY2hhciAqZW5kOwogCQkJd2luZG93ID0gc3RydG91bChhcmcrOSwgJmVu
-ZCwgMCk7CkBAIC0xNjI5LDYgKzE4MDksMjQgQEAgaW50IGNtZF9wYWNrX29iamVjdHMoaW50IGFy
-Z2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJCX0KIAkJdXNhZ2Uo
-cGFja191c2FnZSk7CiAJfQorCWlmICggb2Zmc2V0X2xpbWl0ICYmICFibG9iX2xpbWl0ICYmICFw
-YWNrX3RvX3N0ZG91dCApIHsKKwkJLyogbmVlZCB0byBsaW1pdCBibG9iIHNpemUgd2hlbiBjcmVh
-dGluZyBib3VuZGVkIHBhY2tzIG9uIGRpc2sgKi8KKwkJYmxvYl9saW1pdCA9IG9mZnNldF9saW1p
-dCA+PiAyOworCQlhZGRlZCB8PSAyOworCX0KKwlpZiAoIG9mZnNldF9saW1pdCAmJiAhbm9fcmV1
-c2VfZGVsdGEgKSB7CisJCS8qIGRpZG4ndCBhdWRpdCB0aGlzIGNhc2UgeWV0ICovCisJCW5vX3Jl
-dXNlX2RlbHRhID0gMTsKKwkJYWRkZWQgfD0gMTsKKwl9CisJaWYgKCBhZGRlZCApIHsKKwkJZnBy
-aW50ZihzdGRlcnIsICJBZGRlZCB0byBjb21tYW5kIGxpbmU6Iik7CisJCWlmICggYWRkZWQgJiAx
-ICkKKwkJCWZwcmludGYoc3RkZXJyLCAiIC0tbm8tcmV1c2UtZGVsdGEiKTsKKwkJaWYgKCBhZGRl
-ZCAmIDIgKQorCQkJZnByaW50ZihzdGRlcnIsICIgLS1ibG9iLWxpbWl0PSV1IiwgYmxvYl9saW1p
-dCk7CisJCWZwcmludGYoc3RkZXJyLCAiXG4iKTsKKwl9CiAKIAkvKiBUcmFkaXRpb25hbGx5ICJw
-YWNrLW9iamVjdHMgW29wdGlvbnNdIGJhc2UgZXh0cmEiIGZhaWxlZDsKIAkgKiB3ZSB3b3VsZCBo
-b3dldmVyIHdhbnQgdG8gdGFrZSByZWZzIHBhcmFtZXRlciB0aGF0IHdvdWxkCkBAIC0xNjk1LDEw
-ICsxODkzLDYgQEAgaW50IGNtZF9wYWNrX29iamVjdHMoaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiph
-cmd2LCBjb25zdCBjaGFyICpwcmVmaXgpCiAJCQlwcm9ncmVzc191cGRhdGUgPSAwOwogCQl9CiAJ
-CXdyaXRlX3BhY2tfZmlsZSgpOwotCQlpZiAoIXBhY2tfdG9fc3Rkb3V0KSB7Ci0JCQl3cml0ZV9p
-bmRleF9maWxlKCk7Ci0JCQlwdXRzKHNoYTFfdG9faGV4KG9iamVjdF9saXN0X3NoYTEpKTsKLQkJ
-fQogCX0KIAlpZiAocHJvZ3Jlc3MpCiAJCWZwcmludGYoc3RkZXJyLCAiVG90YWwgJXUgKGRlbHRh
-ICV1KSwgcmV1c2VkICV1IChkZWx0YSAldSlcbiIsCmRpZmYgLS1naXQgYS9idWlsdGluLXVucGFj
-ay1vYmplY3RzLmMgYi9idWlsdGluLXVucGFjay1vYmplY3RzLmMKaW5kZXggMzk1NmM1Ni4uODRh
-NmM1YyAxMDA2NDQKLS0tIGEvYnVpbHRpbi11bnBhY2stb2JqZWN0cy5jCisrKyBiL2J1aWx0aW4t
-dW5wYWNrLW9iamVjdHMuYwpAQCAtMjA5LDcgKzIwOSw3IEBAIHN0YXRpYyB2b2lkIHVucGFja19k
-ZWx0YV9lbnRyeShlbnVtIG9iamVjdF90eXBlIHR5cGUsIHVuc2lnbmVkIGxvbmcgZGVsdGFfc2l6
-ZSwKIAkJYmFzZV9vZmZzZXQgPSBjICYgMTI3OwogCQl3aGlsZSAoYyAmIDEyOCkgewogCQkJYmFz
-ZV9vZmZzZXQgKz0gMTsKLQkJCWlmICghYmFzZV9vZmZzZXQgfHwgYmFzZV9vZmZzZXQgJiB+KH4w
-VUwgPj4gNykpCisJCQlpZiAoIWJhc2Vfb2Zmc2V0IHx8IGJhc2Vfb2Zmc2V0ICYgfih+MFVMID4+
-IDEpKQogCQkJCWRpZSgib2Zmc2V0IHZhbHVlIG92ZXJmbG93IGZvciBkZWx0YSBiYXNlIG9iamVj
-dCIpOwogCQkJcGFjayA9IGZpbGwoMSk7CiAJCQljID0gKnBhY2s7CmRpZmYgLS1naXQgYS9jc3Vt
-LWZpbGUuYyBiL2NzdW0tZmlsZS5jCmluZGV4IGI3MTc0YzYuLmUyYmVmNzUgMTAwNjQ0Ci0tLSBh
-L2NzdW0tZmlsZS5jCisrKyBiL2NzdW0tZmlsZS5jCkBAIC0zNSw3ICszNSwxMCBAQCBpbnQgc2hh
-MWNsb3NlKHN0cnVjdCBzaGExZmlsZSAqZiwgdW5zaWduZWQgY2hhciAqcmVzdWx0LCBpbnQgdXBk
-YXRlKQogCWlmIChvZmZzZXQpIHsKIAkJU0hBMV9VcGRhdGUoJmYtPmN0eCwgZi0+YnVmZmVyLCBv
-ZmZzZXQpOwogCQlzaGExZmx1c2goZiwgb2Zmc2V0KTsKKwkJZi0+b2Zmc2V0ID0gMDsKIAl9CisJ
-aWYgKHVwZGF0ZSA8IDApCisJCXJldHVybiAwOwkvKiBvbmx5IHdhbnQgdG8gZmx1c2ggKG5vIGNo
-ZWNrc3VtIHdyaXRlLCBubyBjbG9zZSkgKi8KIAlTSEExX0ZpbmFsKGYtPmJ1ZmZlciwgJmYtPmN0
-eCk7CiAJaWYgKHJlc3VsdCkKIAkJaGFzaGNweShyZXN1bHQsIGYtPmJ1ZmZlcik7CkBAIC02OSw2
-ICs3Miw0NCBAQCBpbnQgc2hhMXdyaXRlKHN0cnVjdCBzaGExZmlsZSAqZiwgdm9pZCAqYnVmLCB1
-bnNpZ25lZCBpbnQgY291bnQpCiAJcmV0dXJuIDA7CiB9CiAKKy8qCisgKiBTYXZlIGN1cnJlbnQg
-cG9zaXRpb24vc3RhdGUgaW4gb3V0cHV0IGZpbGUKKyAqIChuZWVkcyB0byBiZSBmYXN0IC0tIG5v
-IHN5c3RlbSBjYWxscyEpCisgKi8KK3ZvaWQgc2hhMW1hcmsoc3RydWN0IHNoYTFmaWxlICpmLCBz
-dHJ1Y3Qgc2hhMXBvc24gKnApCit7CisJcC0+b2Zmc2V0ID0gZi0+b2Zmc2V0OworCXAtPmN0eCA9
-IGYtPmN0eDsJLyogbGFyZ2VyIHRoYW4gSSdkIGxpa2UgKi8KK30KKworLyoKKyAqIFJlc3RvcmUg
-cHJldmlvdXMgcG9zaXRpb24vc3RhdGUgaW4gb3V0cHV0IGZpbGUKKyAqIChjYW4gYmUgc2xvdykK
-KyAqLwordm9pZCBzaGExdW5kbyhzdHJ1Y3Qgc2hhMWZpbGUgKmYsIHN0cnVjdCBzaGExcG9zbiAq
-cCwgbG9uZyBuZXcsIGxvbmcgb2xkKQoreworCWlmIChuZXcgLSBvbGQgPT0gKGxvbmcpZi0+b2Zm
-c2V0IC0gKGxvbmcpcC0+b2Zmc2V0KSB7CisJCWYtPmN0eCA9IHAtPmN0eDsKKwkJZi0+b2Zmc2V0
-ID0gcC0+b2Zmc2V0OworCQlyZXR1cm47CisJfQorCWlmIChsc2VlayhmLT5mZCwgKG9mZl90KW9s
-ZCAtIChvZmZfdClwLT5vZmZzZXQsIFNFRUtfU0VUKSA9PSAob2ZmX3QpLTEpCisJCWRpZSgic2hh
-MSBmaWxlICclcycgdW5kbyBzZWVrYmFjayBlcnJvciAoJXMpIiwgZi0+bmFtZSwgc3RyZXJyb3Io
-ZXJybm8pKTsKKwlmLT5jdHggPSBwLT5jdHg7CisJd2hpbGUgKHAtPm9mZnNldCkgeworCQlpbnQg
-cmV0ID0geHJlYWQoZi0+ZmQsIGYtPmJ1ZmZlciwgcC0+b2Zmc2V0KTsKKwkJaWYgKCFyZXQpCisJ
-CQlkaWUoInNoYTEgZmlsZSAnJXMnIHVuZG8gcmVhZGJhY2sgZXJyb3IuIE5vIGRhdGEiLCBmLT5u
-YW1lKTsKKwkJaWYgKHJldCA8IDApCisJCQlkaWUoInNoYTEgZmlsZSAnJXMnIHVuZG8gcmVhZGJh
-Y2sgZXJyb3IgKCVzKSIsIGYtPm5hbWUsIHN0cmVycm9yKGVycm5vKSk7CisJCVNIQTFfVXBkYXRl
-KCZmLT5jdHgsIGYtPmJ1ZmZlciwgcmV0KTsKKwkJcC0+b2Zmc2V0IC09IHJldDsKKwl9CisJaWYg
-KGZ0cnVuY2F0ZShmLT5mZCwgKG9mZl90KW9sZCkpCisJCWRpZSgic2hhMSBmaWxlICclcycgdW5k
-byB0cnVuY2F0ZSBlcnJvciAoJXMpIiwgZi0+bmFtZSwgc3RyZXJyb3IoZXJybm8pKTsKKwlmLT5v
-ZmZzZXQgPSAwOworfQorCiBzdHJ1Y3Qgc2hhMWZpbGUgKnNoYTFjcmVhdGUoY29uc3QgY2hhciAq
-Zm10LCAuLi4pCiB7CiAJc3RydWN0IHNoYTFmaWxlICpmOwpkaWZmIC0tZ2l0IGEvY3N1bS1maWxl
-LmggYi9jc3VtLWZpbGUuaAppbmRleCAzYWQxYTk5Li43ODBkZjE3IDEwMDY0NAotLS0gYS9jc3Vt
-LWZpbGUuaAorKysgYi9jc3VtLWZpbGUuaApAQCAtOSwxMSArOSwxNyBAQCBzdHJ1Y3Qgc2hhMWZp
-bGUgewogCWNoYXIgbmFtZVtQQVRIX01BWF07CiAJdW5zaWduZWQgY2hhciBidWZmZXJbODE5Ml07
-CiB9Oworc3RydWN0IHNoYTFwb3NuIHsKKwl1bnNpZ25lZCBpbnQgb2Zmc2V0OworCVNIQV9DVFgg
-Y3R4OworfTsKIAogZXh0ZXJuIHN0cnVjdCBzaGExZmlsZSAqc2hhMWZkKGludCBmZCwgY29uc3Qg
-Y2hhciAqbmFtZSk7CiBleHRlcm4gc3RydWN0IHNoYTFmaWxlICpzaGExY3JlYXRlKGNvbnN0IGNo
-YXIgKmZtdCwgLi4uKSBfX2F0dHJpYnV0ZV9fKChmb3JtYXQgKHByaW50ZiwgMSwgMikpKTsKIGV4
-dGVybiBpbnQgc2hhMWNsb3NlKHN0cnVjdCBzaGExZmlsZSAqLCB1bnNpZ25lZCBjaGFyICosIGlu
-dCk7CiBleHRlcm4gaW50IHNoYTF3cml0ZShzdHJ1Y3Qgc2hhMWZpbGUgKiwgdm9pZCAqLCB1bnNp
-Z25lZCBpbnQpOwogZXh0ZXJuIGludCBzaGExd3JpdGVfY29tcHJlc3NlZChzdHJ1Y3Qgc2hhMWZp
-bGUgKiwgdm9pZCAqLCB1bnNpZ25lZCBpbnQpOworZXh0ZXJuIHZvaWQgc2hhMW1hcmsoc3RydWN0
-IHNoYTFmaWxlICosIHN0cnVjdCBzaGExcG9zbiAqKTsKK2V4dGVybiB2b2lkIHNoYTF1bmRvKHN0
-cnVjdCBzaGExZmlsZSAqLCBzdHJ1Y3Qgc2hhMXBvc24gKiwgbG9uZywgbG9uZyk7CiAKICNlbmRp
-ZgpkaWZmIC0tZ2l0IGEvZ2l0LXJlcGFjay5zaCBiL2dpdC1yZXBhY2suc2gKaW5kZXggZGRmYThi
-NC4uMDI5OWZmMSAxMDA3NTUKLS0tIGEvZ2l0LXJlcGFjay5zaAorKysgYi9naXQtcmVwYWNrLnNo
-CkBAIC0xOCw2ICsxOCw5IEBAIGRvCiAJLXEpCXF1aWV0PS1xIDs7CiAJLWYpCW5vX3JldXNlX2Rl
-bHRhPS0tbm8tcmV1c2UtZGVsdGEgOzsKIAktbCkJbG9jYWw9LS1sb2NhbCA7OworCS0tcGFjay1s
-aW1pdCkgZXh0cmE9IiRleHRyYSAkMSIgOzsKKwktLXBhY2stbGltaXQ9KikgZXh0cmE9IiRleHRy
-YSAkMSIgOzsKKwktLWJsb2ItbGltaXQ9KikgZXh0cmE9IiRleHRyYSAkMSIgOzsKIAktLXdpbmRv
-dz0qKSBleHRyYT0iJGV4dHJhICQxIiA7OwogCS0tZGVwdGg9KikgZXh0cmE9IiRleHRyYSAkMSIg
-OzsKIAkqKQl1c2FnZSA7OwpAQCAtNjIsMTEgKzY1LDEyIEBAIGNhc2UgIiwkYWxsX2ludG9fb25l
-LCIgaW4KIGVzYWMKIAogYXJncz0iJGFyZ3MgJGxvY2FsICRxdWlldCAkbm9fcmV1c2VfZGVsdGEk
-ZXh0cmEiCi1uYW1lPSQoZ2l0LXBhY2stb2JqZWN0cyAtLW5vbi1lbXB0eSAtLWFsbCAtLXJlZmxv
-ZyAkYXJncyA8L2Rldi9udWxsICIkUEFDS1RNUCIpIHx8CituYW1lcz0kKGdpdC1wYWNrLW9iamVj
-dHMgLS1ub24tZW1wdHkgLS1hbGwgLS1yZWZsb2cgJGFyZ3MgPC9kZXYvbnVsbCAiJFBBQ0tUTVAi
-KSB8fAogCWV4aXQgMQotaWYgWyAteiAiJG5hbWUiIF07IHRoZW4KK2lmIFsgLXogIiRuYW1lcyIg
-XTsgdGhlbgogCWVjaG8gTm90aGluZyBuZXcgdG8gcGFjay4KLWVsc2UKK2ZpCitmb3IgbmFtZSBp
-biAkbmFtZXMgOyBkbwogCWNobW9kIGEtdyAiJFBBQ0tUTVAtJG5hbWUucGFjayIKIAljaG1vZCBh
-LXcgIiRQQUNLVE1QLSRuYW1lLmlkeCIKIAlpZiB0ZXN0ICIkcXVpZXQiICE9ICctcSc7IHRoZW4K
-QEAgLTkyLDcgKzk2LDcgQEAgZWxzZQogCQlleGl0IDEKIAl9CiAJcm0gLWYgIiRQQUNLRElSL29s
-ZC1wYWNrLSRuYW1lLnBhY2siICIkUEFDS0RJUi9vbGQtcGFjay0kbmFtZS5pZHgiCi1maQorZG9u
-ZQogCiBpZiB0ZXN0ICIkcmVtb3ZlX3JlZHVuZGFudCIgPSB0CiB0aGVuCmRpZmYgLS1naXQgYS9o
-dHRwLWZldGNoLmMgYi9odHRwLWZldGNoLmMKaW5kZXggNTU3YjQwMy4uMDliYWVkYyAxMDA2NDQK
-LS0tIGEvaHR0cC1mZXRjaC5jCisrKyBiL2h0dHAtZmV0Y2guYwpAQCAtMTk4LDcgKzE5OCw3IEBA
-IHN0YXRpYyB2b2lkIHN0YXJ0X29iamVjdF9yZXF1ZXN0KHN0cnVjdCBvYmplY3RfcmVxdWVzdCAq
-b2JqX3JlcSkKIAkJU0hBMV9Jbml0KCZvYmpfcmVxLT5jKTsKIAkJaWYgKHByZXZfcG9zbj4wKSB7
-CiAJCQlwcmV2X3Bvc24gPSAwOwotCQkJbHNlZWsob2JqX3JlcS0+bG9jYWwsIFNFRUtfU0VULCAw
-KTsKKwkJCWxzZWVrKG9ial9yZXEtPmxvY2FsLCAwLCBTRUVLX1NFVCk7CiAJCQlmdHJ1bmNhdGUo
-b2JqX3JlcS0+bG9jYWwsIDApOwogCQl9CiAJfQpkaWZmIC0tZ2l0IGEvaHR0cC1wdXNoLmMgYi9o
-dHRwLXB1c2guYwppbmRleCA3MjQ3MjBjLi5lM2Y3Njc1IDEwMDY0NAotLS0gYS9odHRwLXB1c2gu
-YworKysgYi9odHRwLXB1c2guYwpAQCAtMzEyLDcgKzMxMiw3IEBAIHN0YXRpYyB2b2lkIHN0YXJ0
-X2ZldGNoX2xvb3NlKHN0cnVjdCB0cmFuc2Zlcl9yZXF1ZXN0ICpyZXF1ZXN0KQogCQlTSEExX0lu
-aXQoJnJlcXVlc3QtPmMpOwogCQlpZiAocHJldl9wb3NuPjApIHsKIAkJCXByZXZfcG9zbiA9IDA7
-Ci0JCQlsc2VlayhyZXF1ZXN0LT5sb2NhbF9maWxlbm8sIFNFRUtfU0VULCAwKTsKKwkJCWxzZWVr
-KHJlcXVlc3QtPmxvY2FsX2ZpbGVubywgMCwgU0VFS19TRVQpOwogCQkJZnRydW5jYXRlKHJlcXVl
-c3QtPmxvY2FsX2ZpbGVubywgMCk7CiAJCX0KIAl9CmRpZmYgLS1naXQgYS9pbmRleC1wYWNrLmMg
-Yi9pbmRleC1wYWNrLmMKaW5kZXggNjI4NGZlMy4uZDM1YzRjNCAxMDA2NDQKLS0tIGEvaW5kZXgt
-cGFjay5jCisrKyBiL2luZGV4LXBhY2suYwpAQCAtMjQ5LDcgKzI0OSw3IEBAIHN0YXRpYyB2b2lk
-ICp1bnBhY2tfcmF3X2VudHJ5KHN0cnVjdCBvYmplY3RfZW50cnkgKm9iaiwgdW5pb24gZGVsdGFf
-YmFzZSAqZGVsdGFfCiAJCWJhc2Vfb2Zmc2V0ID0gYyAmIDEyNzsKIAkJd2hpbGUgKGMgJiAxMjgp
-IHsKIAkJCWJhc2Vfb2Zmc2V0ICs9IDE7Ci0JCQlpZiAoIWJhc2Vfb2Zmc2V0IHx8IGJhc2Vfb2Zm
-c2V0ICYgfih+MFVMID4+IDcpKQorCQkJaWYgKCFiYXNlX29mZnNldCB8fCBiYXNlX29mZnNldCAm
-IH4ofjBVTCA+PiAxKSkKIAkJCQliYWRfb2JqZWN0KG9iai0+b2Zmc2V0LCAib2Zmc2V0IHZhbHVl
-IG92ZXJmbG93IGZvciBkZWx0YSBiYXNlIG9iamVjdCIpOwogCQkJcCA9IGZpbGwoMSk7CiAJCQlj
-ID0gKnA7CmRpZmYgLS1naXQgYS9zaGExX2ZpbGUuYyBiL3NoYTFfZmlsZS5jCmluZGV4IDljMjYw
-MzguLjcwODJkM2UgMTAwNjQ0Ci0tLSBhL3NoYTFfZmlsZS5jCisrKyBiL3NoYTFfZmlsZS5jCkBA
-IC0xMTQ5LDcgKzExNDksNyBAQCBzdGF0aWMgb2ZmX3QgZ2V0X2RlbHRhX2Jhc2Uoc3RydWN0IHBh
-Y2tlZF9naXQgKnAsCiAJCWJhc2Vfb2Zmc2V0ID0gYyAmIDEyNzsKIAkJd2hpbGUgKGMgJiAxMjgp
-IHsKIAkJCWJhc2Vfb2Zmc2V0ICs9IDE7Ci0JCQlpZiAoIWJhc2Vfb2Zmc2V0IHx8IGJhc2Vfb2Zm
-c2V0ICYgfih+MFVMID4+IDcpKQorCQkJaWYgKCFiYXNlX29mZnNldCB8fCBiYXNlX29mZnNldCAm
-IH4ofjBVTCA+PiAxKSkKIAkJCQlkaWUoIm9mZnNldCB2YWx1ZSBvdmVyZmxvdyBmb3IgZGVsdGEg
-YmFzZSBvYmplY3QiKTsKIAkJCWMgPSBiYXNlX2luZm9bdXNlZCsrXTsKIAkJCWJhc2Vfb2Zmc2V0
-ID0gKGJhc2Vfb2Zmc2V0IDw8IDcpICsgKGMgJiAxMjcpOwo=
-------=_Part_125023_4935805.1175548769232--
+--pWyiEgJYm5f9v55/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=git-pcp
+
+#!/usr/bin/env python
+
+"""
+Patch Cherry-Picking
+
+This scripts takes a patch and asks you which chunks you want to apply. Then
+it creates two output files: one with the ones to apply, and one with the ones
+to skip.
+
+Note that the output patches are NOT fixed, you might want to run them through
+rediff (although git-commit-cp does not need to).
+"""
+
+import sys
+
+
+#
+# Classes and main data structures
+#
+
+class Diff:
+	def __init__(self):
+		self.parts = []
+
+	def append(self, part):
+		self.parts.append(part)
+
+	def __str__(self):
+		s = ''.join((str(i) for i in self.parts))
+		return s
+
+	def __eq__(self, other):
+		if self.parts == other.parts:
+			return True
+		return False
+
+
+class File:
+	def __init__(self, fname):
+		self.fname = fname
+		self.parts = []
+
+	def append(self, part):
+		self.parts.append(part)
+
+	def __str__(self):
+		s = ''.join((str(i) for i in self.parts))
+		return s
+
+	def __eq__(self, other):
+		if self.parts == other.parts:
+			return True
+		return False
+
+
+class Hunk:
+	def __init__(self):
+		self.parts = []
+
+	def append(self, line):
+		self.parts.append(line)
+
+	def __str__(self):
+		s = ''.join(self.parts)
+		return s
+
+	def __eq__(self, other):
+		if self.parts == other.parts:
+			return True
+		return False
+
+
+#
+# Diff parsing
+#
+
+def startswithany(l, *starts):
+	for s in starts:
+		if l.startswith(s):
+			return True
+	return False
+
+
+def parse(fd):
+	diff = Diff()
+	file = None
+	hunk = None
+	current = diff
+	trailing = []
+
+	for line in fd:
+		if line.startswith('+++ '):
+			unused, fname = line.strip().split(' ', 1)
+			if hunk:
+				file.append(hunk)
+				hunk = Hunk()
+			if file:
+				diff.append(file)
+			file = File(fname)
+			for i in trailing:
+				file.append(i)
+			file.append(line)
+			trailing = []
+
+		elif line.startswith('@@ '):
+			if hunk:
+				file.append(hunk)
+			hunk = Hunk()
+			hunk.append(line)
+
+		elif startswithany(line, '+', '-', ' ') \
+				and not line.startswith('---'):
+			if hunk:
+				hunk.append(line)
+			else:
+				trailing.append(line)
+
+		else:
+			if hunk:
+				file.append(hunk)
+				hunk = None
+			trailing.append(line)
+
+	if hunk:
+		file.append(hunk)
+	if file:
+		if trailing:
+			for i in trailing:
+				file.append(i)
+		trailing = []
+		diff.append(file)
+	if trailing:
+		for i in trailing:
+			diff.append(i)
+	return diff
+
+
+#
+# Cherry-picking
+#
+
+def cherrypick(original, toapply, toskip):
+	for part in original.parts:
+		if isinstance(part, File):
+			print '+++ ', part.fname
+			happly, hskip = select_parts(part.parts)
+			print
+
+			if happly:
+				f = File(part.fname)
+				for i in happly:
+					f.append(i)
+				toapply.append(f)
+
+			if hskip:
+				f = File(part.fname)
+				for i in hskip:
+					f.append(i)
+				toskip.append(f)
+		else:
+			toapply.append(part)
+			toskip.append(part)
+
+
+def ask(prompt, valid_options, default = None, help = ()):
+
+	while True:
+		r = raw_input(prompt)
+		if not r:
+			if default:
+				r = default
+			else:
+				continue
+
+		if r in valid_options:
+			return r
+		elif help and r == help[0]:
+			print help[1]
+		else:
+			print " -- Unknown option"
+
+
+def select_parts(parts):
+	happly = []
+	hskip = []
+
+	for h in parts:
+		if not isinstance(h, Hunk):
+			# we don't care about lines
+			happly.append(h)
+			hskip.append(h)
+			continue
+
+		sys.stdout.write(str(h))
+		print
+		r = ask("* Include in commit? [y/n/Y/N/?] ", 'ynYN',
+			help = ('?', 'Help not implemented') )
+
+		if r == 'y':
+			happly.append(h)
+		elif r == 'n':
+			hskip.append(h)
+		elif r == 'Y':
+			return (parts, [])
+		elif r == 'N':
+			return ([], parts)
+
+	# if we don't have any chunks, skip everything
+	if len( [h for h in happly if isinstance(h, Hunk)] ) == 0:
+		hskip = []
+	if len( [h for h in hskip if isinstance(h, Hunk)] ) == 0:
+		hskip = []
+
+	return (happly, hskip)
+
+
+#
+# Main
+#
+
+if __name__ == '__main__':
+	if len(sys.argv) != 4:
+		print "Usage: pccp diff_file to_apply to_skip"
+		sys.exit(1)
+
+	fin, fapply, fskip = sys.argv[1:4]
+
+	original = parse(open(fin))
+	toapply = Diff()
+	toskip = Diff()
+	cherrypick(original, toapply, toskip)
+
+	open(fapply, 'w').write(str(toapply))
+	open(fskip, 'w').write(str(toskip))
+
+
+
+--pWyiEgJYm5f9v55/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=git-commit-cp
+
+#!/bin/bash
+
+set -e
+SUBDIRECTORY_OK=Yes
+. git-sh-setup
+require_work_tree
+cd_to_toplevel
+
+
+TMPB=`mktemp -t git-commit-cp.XXXXXX` || exit 1
+ORIGINAL="$TMPB-original"
+TOAPPLY="$TMPB-apply"
+TOSKIP="$TMPB-skip"
+
+function cleanup() {
+	rm $TMPB $ORIGINAL $TOAPPLY $TOSKIP
+}
+
+
+git-diff --full-index HEAD > $ORIGINAL
+
+git-pcp $ORIGINAL $TOAPPLY $TOSKIP
+
+if [ ! -s $TOAPPLY ]; then
+	echo "* Nothing to commit!"
+	cleanup
+	exit 1
+fi
+
+if [ -s $TOSKIP ]; then
+	git-apply -R $TOSKIP;
+fi
+
+git-commit -a "$@"
+
+if [ -s $TOSKIP ]; then
+	git-apply --index $TOSKIP;
+fi
+
+cleanup
+exit 0
+
+--pWyiEgJYm5f9v55/--
