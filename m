@@ -1,74 +1,70 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-index-pack really does suck..
-Date: Tue, 03 Apr 2007 13:34:19 -0700
-Message-ID: <7vbqi5w62c.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
-	<db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
-	<Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Distribution of longest common hash prefixes
+Date: Tue, 03 Apr 2007 16:39:02 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704031635100.28181@xanadu.home>
+References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
+ <Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
+ <86bqi6kae7.fsf@blue.stonehenge.com>
+ <Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
+ <86y7laitlz.fsf@blue.stonehenge.com> <86r6r2isva.fsf@blue.stonehenge.com>
+ <m3r6r1jsmq.fsf@lugabout.jhcloos.org> <867istcrhr.fsf@blue.stonehenge.com>
+ <20070403172123.GD27706@spearce.org>
+ <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
+ <7vhcrxz5a8.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0704031529300.28181@xanadu.home>
+ <7vhcrxw6h5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Lee <clee@kde.org>, Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 03 22:34:26 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
+	Peter Eriksen <s022018@student.dtu.dk>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 03 22:39:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYphw-0002g3-Iz
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:34:24 +0200
+	id 1HYpmv-0005Oy-M4
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945922AbXDCUeW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 16:34:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945924AbXDCUeV
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:34:21 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:36141 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945922AbXDCUeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 16:34:21 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070403203420.WJDW24385.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Apr 2007 16:34:20 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ikaK1W00V1kojtg0000000; Tue, 03 Apr 2007 16:34:20 -0400
-In-Reply-To: <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 3 Apr 2007 13:18:33 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1945925AbXDCUjG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 16:39:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945933AbXDCUjG
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:39:06 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:25441 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945925AbXDCUjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 16:39:04 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JFX00H94W12Z460@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 03 Apr 2007 16:39:02 -0400 (EDT)
+In-reply-to: <7vhcrxw6h5.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43657>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Tue, 3 Apr 2007, Junio C Hamano wrote:
 
-> That whole "verify no SHA1 hash collision" code is really pretty damn 
-> paranoid. Maybe we shouldn't have it enabled by default.
->
-> So how about this updated patch? We could certainly make "git pull" imply 
-> "--paranoid" if we want to, but even that is likely pretty unnecessary. 
-> It's not like anybody has ever shown a SHA1 collision, and if the *local* 
-> repository is corrupt (and has an object with the wrong SHA1 - that's what 
-> the testsuite checks for), then it's probably good to get the valid object 
-> from the remote..
+> I stated it wrongly.  What I was getting at was that we might
+> want to consider an abbreviation that matches only a single
+> commit unambiguous even when there are ambiguous objects of
+> other kinds.
 
-I agree with that reasoning. We did not do paranoid in git-pull
-long after we introduced the .keep thing anyway, so I do not
-think the following patch is even needed, but I am throwing it
-out just for discussion.
+Maybe.  But by the time your object hash distribution starts showing 
+ambiguous objects with a given abbreviated name between a commit and a 
+non commit, I'll bet you'll start to see ambiguities between commits 
+soon enough as well.
+
+> Not that I consider it a pressing issue, though.
+
+Indeed.  And even then it is not something really hard to implement 
+either.
 
 
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 06f4aec..c687f9f 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -522,6 +522,7 @@ static int get_pack(int xd[2])
- 
- 	if (do_keep) {
- 		*av++ = "index-pack";
-+		*av++ = "--paranoid";
- 		*av++ = "--stdin";
- 		if (!quiet && !no_progress)
- 			*av++ = "-v";
+Nicolas
