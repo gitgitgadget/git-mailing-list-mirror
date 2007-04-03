@@ -1,155 +1,168 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH] Bisect: teach "bisect start" to optionally use one bad and many good revs.
-Date: Tue, 03 Apr 2007 13:02:13 -0700
-Message-ID: <7vzm5pw7ju.fsf@assigned-by-dhcp.cox.net>
-References: <20070401145723.27e17177.chriscool@tuxfamily.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-index-pack really does suck..
+Date: Tue, 3 Apr 2007 13:18:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+ <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Apr 03 22:02:18 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Chris Lee <clee@kde.org>, Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 03 22:20:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYpCs-0003MA-7y
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:02:18 +0200
+	id 1HYpUD-0003sc-A6
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 22:20:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422658AbXDCUCP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 16:02:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422671AbXDCUCP
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:02:15 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:61583 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422658AbXDCUCO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 16:02:14 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070403200215.SZZV25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 3 Apr 2007 16:02:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id ik2C1W00h1kojtg0000000; Tue, 03 Apr 2007 16:02:13 -0400
-In-Reply-To: <20070401145723.27e17177.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Sun, 1 Apr 2007 14:57:23 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1422699AbXDCUTg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 16:19:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422704AbXDCUTf
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 16:19:35 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:41834 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422695AbXDCUTd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 16:19:33 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33KIYPD021640
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Apr 2007 13:18:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33KIXfY002121;
+	Tue, 3 Apr 2007 13:18:33 -0700
+In-Reply-To: <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
+X-Spam-Status: No, hits=-0.457 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43651>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
 
-> In fact this patch implements:
->
->     git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
->
-> I think this is more backward compatible because older script
-> probably didn't used -- before <pathspec>...
->
-> On the other hand, there may be some confusion between revs
-> (<bad> and <good>...) and <pathspec>... if -- is not used
-> and if an invalid rev or a pathspec that looks like a rev is
-> given.
 
-I think the intent of the check you have for '--' to cover the
-above issue is good.
+On Tue, 3 Apr 2007, Chris Lee wrote:
+> 
+> There's another issue here.
+> 
+> I'm running git-index-pack as part of a workflow like so:
+> 
+> $ git-verify-pack -v .git/objects/pack/*.idx > /tmp/all-objects
+> $ grep 'blob' /tmp/all-objects > /tmp/blob-objects
+> $ cat /tmp/blob-objects | awk '{print $1;}' | git-pack-objects
+> --delta-base-offset --all-progress --stdout > blob.pack
+> $ git-index-pack -v blob.pack
+> 
+> Now, when I run 'git-index-pack' on blob.pack in the current
+> directory, memory usage is pretty horrific (even with the applied
+> patch to not leak all everything). Shawn tells me that index-pack
+> should only be decompressing the object twice - once from the repo and
+> once from blob.pack - iff I call git-index-pack with --stdin, which I
+> am not.
+> 
+> If I move the blob.pack into /tmp, and run git-index-pack on it there,
+> it completes much faster and the memory usage never exceeds 200MB.
+> (Inside the repo, it takes up over 3G of RES according to top.)
 
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  git-bisect.sh         |  105 ++++++++++++++++++++++++++++++++++++++-----------
->  t/t6030-bisect-run.sh |   20 ++++++++-
->  2 files changed, 99 insertions(+), 26 deletions(-)
->
-> diff --git a/git-bisect.sh b/git-bisect.sh
-> index 11313a7..d5a13ee 100755
-> --- a/git-bisect.sh
-> +++ b/git-bisect.sh
-> @@ -1,15 +1,24 @@
->  #!/bin/sh
->  
->  USAGE='[start|bad|good|next|reset|visualize|replay|log|run]'
-> -LONG_USAGE='git bisect start [<pathspec>]	reset bisect state and start bisection.
-> -git bisect bad [<rev>]		mark <rev> a known-bad revision.
-> -git bisect good [<rev>...]	mark <rev>... known-good revisions.
-> -git bisect next			find next bisection to test and check it out.
-> -git bisect reset [<branch>]	finish bisection search and go back to branch.
-> -git bisect visualize            show bisect status in gitk.
-> -git bisect replay <logfile>	replay bisection log.
-> -git bisect log			show bisect log.
-> -git bisect run <cmd>... 	use <cmd>... to automatically bisect.'
-> +LONG_USAGE='git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
-> +        reset bisect state and start bisection.
-> +git bisect bad [<rev>]
-> +        mark <rev> a known-bad revision.
-> +git bisect good [<rev>...]
-> +        mark <rev>... known-good revisions.
-> +git bisect next
-> +        find next bisection to test and check it out.
-> +git bisect reset [<branch>]
-> +        finish bisection search and go back to branch.
-> +git bisect visualize
-> +        show bisect status in gitk.
-> +git bisect replay <logfile>
-> +        replay bisection log.
-> +git bisect log
-> +        show bisect log.
-> +git bisect run <cmd>...
-> +        use <cmd>... to automatically bisect.'
+Yeah. What happens is that inside the repo, because we do all the 
+duplicate object checks (verifying that there are no evil hash collisions) 
+even after fixing the memory leak, we end up keeping *track* of all those 
+objects.
 
-Much easier to read ;-).
+And with a large repository, it's quite the expensive operation.
 
->  	mkdir "$GIT_DIR/refs/bisect"
-> +
-> +	#
-> +	# Check for one bad and then some good revisions.
-> +	#
-> +	has_double_dash=0
-> +	for arg in "$@"; do
-> +	    case "$arg" in --) has_double_dash=1; break ;; esac
-> +	done
+That whole "verify no SHA1 hash collision" code is really pretty damn 
+paranoid. Maybe we shouldn't have it enabled by default.
 
-Style.  'in "$@"' is superfluous.
+So how about this updated patch? We could certainly make "git pull" imply 
+"--paranoid" if we want to, but even that is likely pretty unnecessary. 
+It's not like anybody has ever shown a SHA1 collision, and if the *local* 
+repository is corrupt (and has an object with the wrong SHA1 - that's what 
+the testsuite checks for), then it's probably good to get the valid object 
+from the remote..
 
-	for arg
-        do
-        	...
-	done
+This includes the previous one-liner, but also adds the "--paranoid" flag 
+and fixes up the Documentation and tests to match.
 
-> +	orig_args="$@"
+Junio, your choice, but regardless which one you choose:
 
-Doesn't this defeat the whole point of later running 'sq' on it?
-The reason we do sq is to protect whitespaces in pathspecs and
-make the strings correctly split when evaled/sourced.
+	Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 
-A simple test program:
+Thanks,
 
-        #!/bin/sh
-        sq () {
-                echo "** fake sq $* **"
-                i=0
-                for j
-                do
-                        echo "$i: <$j>"
-                        i=$(( $i + 1 ))
-                done
-                echo
-        }
+		Linus
 
-        set x a 'b c' d
-        shift
-        # Now, $# = 3, $1 = 'a', $2 = 'b c' and $3 = 'd'
-        orig_args="$@"
-        sq "$@"
-        sq "$orig_args"
+---
+ Documentation/git-index-pack.txt |    3 +--
+ index-pack.c                     |    6 +++++-
+ t/t5300-pack-object.sh           |    4 ++--
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-> ...
-> -	    sq "$@"
-> -	} >"$GIT_DIR/BISECT_LOG"
-> -	sq "$@" >"$GIT_DIR/BISECT_NAMES"
-> +	    sq "$orig_args"
-> +	} >>"$GIT_DIR/BISECT_LOG"
-> +	bisect_auto_next
->  }
+diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
+index 2229ee8..7d8d33b 100644
+--- a/Documentation/git-index-pack.txt
++++ b/Documentation/git-index-pack.txt
+@@ -8,8 +8,7 @@ git-index-pack - Build pack index file for an existing packed archive
+ 
+ SYNOPSIS
+ --------
+-'git-index-pack' [-v] [-o <index-file>] <pack-file>
+-'git-index-pack' --stdin [--fix-thin] [--keep] [-v] [-o <index-file>] [<pack-file>]
++'git-index-pack' [--stdin [--fix-thin] [--keep]] [-v] [--paranoid] [-o <index-file>] <pack-file>
+ 
+ 
+ DESCRIPTION
+diff --git a/index-pack.c b/index-pack.c
+index 6284fe3..8a4c27a 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -45,6 +45,7 @@ static int nr_resolved_deltas;
+ 
+ static int from_stdin;
+ static int verbose;
++static int paranoid;
+ 
+ static volatile sig_atomic_t progress_update;
+ 
+@@ -348,7 +349,7 @@ static void sha1_object(const void *data, unsigned long size,
+ 			enum object_type type, unsigned char *sha1)
+ {
+ 	hash_sha1_file(data, size, typename(type), sha1);
+-	if (has_sha1_file(sha1)) {
++	if (paranoid && has_sha1_file(sha1)) {
+ 		void *has_data;
+ 		enum object_type has_type;
+ 		unsigned long has_size;
+@@ -358,6 +359,7 @@ static void sha1_object(const void *data, unsigned long size,
+ 		if (size != has_size || type != has_type ||
+ 		    memcmp(data, has_data, size) != 0)
+ 			die("SHA1 COLLISION FOUND WITH %s !", sha1_to_hex(sha1));
++		free(has_data);
+ 	}
+ }
+ 
+@@ -839,6 +841,8 @@ int main(int argc, char **argv)
+ 		if (*arg == '-') {
+ 			if (!strcmp(arg, "--stdin")) {
+ 				from_stdin = 1;
++			} else if (!strcmp(arg, "--paranoid")) {
++				paranoid = 1;
+ 			} else if (!strcmp(arg, "--fix-thin")) {
+ 				fix_thin_pack = 1;
+ 			} else if (!strcmp(arg, "--keep")) {
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 35e036a..407c71e 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -262,7 +262,7 @@ test_expect_success \
+ 		.git/objects/c8/2de19312b6c3695c0c18f70709a6c535682a67'
+ 
+ test_expect_failure \
+-    'make sure index-pack detects the SHA1 collision' \
+-    'git-index-pack -o bad.idx test-3.pack'
++    'make sure index-pack detects the SHA1 collision when paranoid' \
++    'git-index-pack --paranoid -o bad.idx test-3.pack'
+ 
+ test_done
