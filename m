@@ -1,64 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: git-index-pack really does suck..
-Date: Tue, 3 Apr 2007 14:26:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704031425220.6730@woody.linux-foundation.org>
+Date: Tue, 03 Apr 2007 17:28:26 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704031722590.28181@xanadu.home>
 References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
  <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
  <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
  <alpine.LFD.0.98.0704031625050.28181@xanadu.home>
- <Pine.LNX.4.64.0704031346250.6730@woody.linux-foundation.org>
- <20070403210319.GH27706@spearce.org> <Pine.LNX.4.64.0704031411320.6730@woody.linux-foundation.org>
- <20070403211709.GJ27706@spearce.org>
+ <7vzm5pur7g.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0704031357470.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Chris Lee <clee@kde.org>,
-	Junio C Hamano <junkio@cox.net>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, Chris Lee <clee@kde.org>,
 	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Apr 03 23:28:10 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 03 23:28:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYqXv-00089Z-3h
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 23:28:07 +0200
+	id 1HYqYK-0008PP-4y
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 23:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945968AbXDCV1h (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 17:27:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945974AbXDCV1h
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 17:27:37 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:44804 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1945968AbXDCV1g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 17:27:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33LQgPD023439
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 Apr 2007 14:26:43 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33LQfMG003711;
-	Tue, 3 Apr 2007 14:26:42 -0700
-In-Reply-To: <20070403211709.GJ27706@spearce.org>
-X-Spam-Status: No, hits=-0.455 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1945973AbXDCV22 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 17:28:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945966AbXDCV21
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 17:28:27 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:31896 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945973AbXDCV21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 17:28:27 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JFX00HFOYBEM7B0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 03 Apr 2007 17:28:26 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.64.0704031357470.6730@woody.linux-foundation.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43671>
 
+On Tue, 3 Apr 2007, Linus Torvalds wrote:
 
-
-On Tue, 3 Apr 2007, Shawn O. Pearce wrote:
+> See my separate timing numbers, although I bet that Chris can give even 
+> better ones..
 > 
-> Right.  But maybe we shouldn't be scanning for packfiles every
-> time we don't find a loose object.  Especially if the caller is in
-> a context where we actually *expect* to not find said object like
-> half of the time... say in git-add/update-index.  ;-)
+> Chris, try applying my patch, and then inside the KDE repo you have, do
+> 
+> 	git index-pack --paranoid --stdin --fix-thin new.pack < ~/git/.git/objects/pack/pack-*.pack
+> 
+> (ie index the objects of the *git* repository, not the KDE one). That 
+> should approximate doing a fair-sized "git pull" - getting new objects. Do 
+> it with and without --paranoid, and time it.
 
-Yes, we could definitely skip the re-lookup if we had a "don't really 
-care, I can recreate the object myself" flag (ie anybody who is going to 
-write that object)
+Like I said this is bogus since the index-pack is throttled by the 
+network making this overhead a non issue in real life.
 
-			Linus
+And like I said there should _not_ be such a memory usage difference 
+which is probably showing potential problems *elsewhere*.
+
+> I bet that what I see as a 7% slowdown will be much bigger for you, just 
+> because the negative lookups will be all that much more expensive when you 
+> have tons of objects.
+
+And I bet your newton-raphson lookup idea would shine and bring that 
+overhead down considerably in that case.
+
+
+Nicolas
