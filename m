@@ -1,97 +1,129 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Distribution of longest common hash prefixes
-Date: Tue, 3 Apr 2007 16:22:41 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704031613210.6730@woody.linux-foundation.org>
-References: <86y7laitlz.fsf@blue.stonehenge.com> <86r6r2isva.fsf@blue.stonehenge.com>
- <m3r6r1jsmq.fsf@lugabout.jhcloos.org> <867istcrhr.fsf@blue.stonehenge.com>
- <20070403172123.GD27706@spearce.org> <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
- <7vhcrxz5a8.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704031529300.28181@xanadu.home>
- <7vhcrxw6h5.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704031635100.28181@xanadu.home>
- <20070403230846.GB8479@dspnet.fr.eu.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] rerere should not repeat the earlier hunks in later ones
+Date: Tue, 03 Apr 2007 16:28:46 -0700
+Message-ID: <7v1wj1ujf5.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
-	Peter Eriksen <s022018@student.dtu.dk>
-To: Olivier Galibert <galibert@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 01:23:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 04 01:28:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYsLU-0004Vn-JB
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 01:23:24 +0200
+	id 1HYsQl-0007uQ-Fu
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 01:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753234AbXDCXXU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 19:23:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945915AbXDCXXU
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 19:23:20 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:48063 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753234AbXDCXXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 19:23:19 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33NMkPD026697
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 Apr 2007 16:22:47 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33NMf3j006232;
-	Tue, 3 Apr 2007 16:22:42 -0700
-In-Reply-To: <20070403230846.GB8479@dspnet.fr.eu.org>
-X-Spam-Status: No, hits=-0.453 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1946030AbXDCX2s (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 19:28:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946033AbXDCX2s
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 19:28:48 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:56922 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946030AbXDCX2r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 19:28:47 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070403232848.XFHJ25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 3 Apr 2007 19:28:48 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id inUm1W00D1kojtg0000000; Tue, 03 Apr 2007 19:28:47 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43696>
 
+When a file has more then one conflicting hunks, it repeated the
+contents of previous hunks in output for later ones.
 
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-On Wed, 4 Apr 2007, Olivier Galibert wrote:
-> 
-> Isn't the number of objects an order of magnitude bigger than the
-> number of commits?  Well, I guess that depends on your workflow...
-
-Judging by the kernel tree, it's not an order of magnitude, although it's 
-fairly close:
-
-	[torvalds@woody linux]$ git rev-list --all | wc -l
-	51156
-
-	[torvalds@woody linux]$ git rev-list --all --objects | wc -l
-	444265
-
-So you have about 50k commit objects, and about 390k "other" objects. 
-About 7.7 "other" objects per commit. Not quite an order-of-magnitude, but 
-close.
-
-Part of the reason for this is that the kernel people tend to encourage 
-lots of smaller commits over single large commits, so we have lots of 
-commits.
-
-To counter-act that somewhat, the kernel tree is also pretty deep, so a 
-lot of the "other" objects are actually the tree objects that create the 
-directory structure - it's quite normal to have a single file (blob) 
-change, and then three new trees that lead up to that file, and the one 
-commit that explains it.
-
-Other projects - like git itself - have relatively fewer tree objects, 
-which is probably why the ratio for git itself is just 3.04 "other" 
-objects for each commit (ie on average, commits probably touch two blobs 
-and the top-level tree - about 10 commits, and 30k non-commit objects).
-
-So repo layout matters. Iirc, last I did the statistics, the git 
-repository had more blobs than trees, while the kernel repo had more trees 
-than blobs. And the commits-to-other-objects is obviously fairly different 
-as a result (I think both git and the kernel have the "many small changes" 
-approach, so they're similar in that respect).
-
-Other repositories probably have more "big changes". Especially if you 
-create the repo initially by importing just big releases over time, you'll 
-have relatively few commits, and lots of blob/tree changes. 
-
-			Linus
+diff --git a/builtin-rerere.c b/builtin-rerere.c
+index b8867ab..b463c07 100644
+--- a/builtin-rerere.c
++++ b/builtin-rerere.c
+@@ -78,6 +78,13 @@ static void append_line(struct buffer *buffer, const char *line)
+ 	buffer->nr += len;
+ }
+ 
++static void clear_buffer(struct buffer *buffer)
++{
++	free(buffer->ptr);
++	buffer->ptr = NULL;
++	buffer->nr = buffer->alloc = 0;
++}
++
+ static int handle_file(const char *path,
+ 	 unsigned char *sha1, const char *output)
+ {
+@@ -131,6 +138,8 @@ static int handle_file(const char *path,
+ 				SHA1_Update(&ctx, two->ptr, two->nr);
+ 				SHA1_Update(&ctx, "\0", 1);
+ 			}
++			clear_buffer(one);
++			clear_buffer(two);
+ 		} else if (hunk == 1)
+ 			append_line(one, buf);
+ 		else if (hunk == 2)
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index e081b32..8b611bb 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -34,7 +34,8 @@ EOF
+ git commit -q -a -m first
+ 
+ git checkout -b second master
+-git show first:a1 | sed 's/To die, t/To die! T/' > a1
++git show first:a1 |
++sed -e 's/To die, t/To die! T/' -e 's/life;$/life./' > a1
+ git commit -q -a -m second
+ 
+ # activate rerere
+@@ -42,19 +43,26 @@ mkdir .git/rr-cache
+ 
+ test_expect_failure 'conflicting merge' 'git pull . first'
+ 
+-sha1=4f58849a60b4f969a2848966b6d02893b783e8fb
++sha1=$(sed -e 's/\t.*//' .git/rr-cache/MERGE_RR)
+ rr=.git/rr-cache/$sha1
+ test_expect_success 'recorded preimage' "grep ======= $rr/preimage"
+ 
+ test_expect_success 'no postimage or thisimage yet' \
+ 	"test ! -f $rr/postimage -a ! -f $rr/thisimage"
+ 
++test_expect_success 'preimage have right number of lines' '
++
++	cnt=$(sed -ne "/^<<<<<<</,/^>>>>>>>/p" $rr/preimage | wc -l) &&
++	test "$cnt" = 10
++
++'
++
+ git show first:a1 > a1
+ 
+ cat > expect << EOF
+ --- a/a1
+ +++ b/a1
+-@@ -6,11 +6,7 @@
++@@ -6,17 +6,9 @@
+  The heart-ache and the thousand natural shocks
+  That flesh is heir to, 'tis a consummation
+  Devoutly to be wish'd.
+@@ -66,8 +74,13 @@ cat > expect << EOF
+  To sleep: perchance to dream: ay, there's the rub;
+  For in that sleep of death what dreams may come
+  When we have shuffled off this mortal coil,
++ Must give us pause: there's the respect
++-<<<<<<<
++-That makes calamity of so long life.
++-=======
++ That makes calamity of so long life;
++->>>>>>>
+ EOF
+-
+ git rerere diff > out
+ 
+ test_expect_success 'rerere diff' 'git diff expect out'
