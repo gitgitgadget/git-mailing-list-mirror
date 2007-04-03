@@ -1,86 +1,84 @@
-From: "Chris Lee" <clee@kde.org>
-Subject: Re: git-index-pack really does suck..
-Date: Tue, 3 Apr 2007 12:27:05 -0700
-Message-ID: <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
-References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Distribution of longest common hash prefixes
+Date: Tue, 3 Apr 2007 12:27:02 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704031219430.6730@woody.linux-foundation.org>
+References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
+ <Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
+ <86bqi6kae7.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
+ <86y7laitlz.fsf@blue.stonehenge.com> <86r6r2isva.fsf@blue.stonehenge.com>
+ <m3r6r1jsmq.fsf@lugabout.jhcloos.org> <867istcrhr.fsf@blue.stonehenge.com>
+ <20070403172123.GD27706@spearce.org> <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
+ <7vhcrxz5a8.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 03 21:27:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>,
+	James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
+	Peter Eriksen <s022018@student.dtu.dk>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 03 21:27:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYoew-00007T-1k
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 21:27:14 +0200
+	id 1HYofR-0000Qm-MT
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 21:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647AbXDCT1K (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 15:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753652AbXDCT1J
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 15:27:09 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:59818 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753643AbXDCT1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 15:27:08 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so2012189wra
-        for <git@vger.kernel.org>; Tue, 03 Apr 2007 12:27:06 -0700 (PDT)
-Received: by 10.114.56.1 with SMTP id e1mr2359064waa.1175628425185;
-        Tue, 03 Apr 2007 12:27:05 -0700 (PDT)
-Received: by 10.114.66.10 with HTTP; Tue, 3 Apr 2007 12:27:05 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: bec8b81e1b34e831
+	id S966108AbXDCT13 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 15:27:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966114AbXDCT13
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 15:27:29 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:38303 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966108AbXDCT12 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 15:27:28 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33JR9PD020098
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Apr 2007 12:27:09 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33JR2kw001044;
+	Tue, 3 Apr 2007 12:27:04 -0700
+In-Reply-To: <7vhcrxz5a8.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.458 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43641>
 
-On 4/3/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
-> Junio, Nico,
->  I think we need to do something about it.
->
-> CLee was complaining about git-index-pack on #irc with the partial KDE
-> repo, and while I don't have the KDE repo, I decided to investigate a bit.
->
-> Even with just the kernel repo (with a single 170MB pack-file), I can do
->
->         git index-pack --stdin --fix-thin new.pack < .git/objects/pack/pack-*.pack
->
-> and it uses 52s of CPU-time, and on my 4GB machine it actually started
-> doing IO and swapping, because git-index-pack grew to 4.8GB in size. So
-> while I initially thought I'd want a bigger test-case to see the problem,
-> I sure as heck don't.
 
-There's another issue here.
 
-I'm running git-index-pack as part of a workflow like so:
+On Tue, 3 Apr 2007, Junio C Hamano wrote:
+> 
+> Are you hinting to update sha1_name.c::get_sha1() so that we do
+> not accept abbreviated non-commit object names?
 
-$ git-verify-pack -v .git/objects/pack/*.idx > /tmp/all-objects
-$ grep 'blob' /tmp/all-objects > /tmp/blob-objects
-$ cat /tmp/blob-objects | awk '{print $1;}' | git-pack-objects
---delta-base-offset --all-progress --stdout > blob.pack
-$ git-index-pack -v blob.pack
+No, but it might be nice if we had some fairly graceful way of handling 
+abbreviated SHA1's that ended up being ambiguous (maybe they weren't 
+ambiguous in the original context, but became ambiguous later).
 
-Now, when I run 'git-index-pack' on blob.pack in the current
-directory, memory usage is pretty horrific (even with the applied
-patch to not leak all everything). Shawn tells me that index-pack
-should only be decompressing the object twice - once from the repo and
-once from blob.pack - iff I call git-index-pack with --stdin, which I
-am not.
+Some way of just listing the alternatives, and sorting - and showing - by 
+type (so that if you know it's supposed to be a commit, you can trivially 
+pick it out from other objects that happen to collide in the first <n> 
+digits).
 
-If I move the blob.pack into /tmp, and run git-index-pack on it there,
-it completes much faster and the memory usage never exceeds 200MB.
-(Inside the repo, it takes up over 3G of RES according to top.)
+Right now we can do it with
 
-By "much faster", I mean: the entire pack was indexed and completed in
-17:42.40, whereas I cancelled the inside-the-repo index because after
-56 minutes it was only at 46%.
+	git-rev-list --objects --all | grep '^<abbrev-sha1>'
 
-(And, as far as getting this huge repo published - I have it burned to
-a DVD, and I'm going to drop it in the mail to hpa today on my lunch
-break, which I should be taking soon.)
+but that's actually not even correct (maybe the reason sha1_name decided 
+it was ambiguous was due to an _unreachable_ SHA1?), and it's also very 
+inefficient.
 
--clee
+We could have some helper that just looked things up (it's easy enough to 
+look up all potential SHA1 matches both in the filesystem and in a 
+pack-file - no need for any rev-list thing that lists all objects).
+
+Is this a pressing concern? Absolutely not. I don't think we've ever had 
+any real problems with this, and you *can* do it by hand with a bit of 
+inefficient scripting right now..
+
+			Linus
