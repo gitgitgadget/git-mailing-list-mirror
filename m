@@ -1,74 +1,212 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [RFC] Packing large repositories
-Date: Tue, 3 Apr 2007 01:39:59 -0400
-Message-ID: <20070403053959.GH15922@spearce.org>
-References: <56b7f5510703280005o7998d65pcbcd4636b46d8d23@mail.gmail.com> <Pine.LNX.4.64.0703280943450.6730@woody.linux-foundation.org> <20070330062324.GU13247@spearce.org> <alpine.LFD.0.83.0703300851270.3041@xanadu.home> <78639417-ACDB-484F-85BB-EC0AF694949A@adacore.com> <Pine.LNX.4.64.0703311033290.6730@woody.linux-foundation.org> <64E16DEF-E572-4384-9E68-42EBBCE678B1@adacore.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Mon, 02 Apr 2007 22:41:16 -0700
+Message-ID: <7vwt0uypz7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Nicolas Pitre <nico@cam.org>, Dana How <danahow@gmail.com>,
-	git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Tue Apr 03 07:40:30 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 03 07:41:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYbkr-0001R5-GD
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 07:40:29 +0200
+	id 1HYblh-0001s4-DS
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 07:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752962AbXDCFkT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 01:40:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752991AbXDCFkT
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 01:40:19 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:51840 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752962AbXDCFkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 01:40:18 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HYbkP-0006uW-0h; Tue, 03 Apr 2007 01:40:01 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9673E20FBAE; Tue,  3 Apr 2007 01:39:59 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <64E16DEF-E572-4384-9E68-42EBBCE678B1@adacore.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752974AbXDCFlS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 01:41:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752992AbXDCFlS
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 01:41:18 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:62024 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752887AbXDCFlR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 01:41:17 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070403054116.FRXS24385.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 3 Apr 2007 01:41:16 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id iVhG1W0031kojtg0000000; Tue, 03 Apr 2007 01:41:16 -0400
+X-master-at: a8f4ef727a7e626f23878e7e3f9f19f0a1052df0
+X-next-at: f53293103c326065db653b11a7b8670611153359
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43616>
 
-Geert Bosch <bosch@adacore.com> wrote:
-> Actually, I had implemented this first, using two newton-raphson
-> iterations and then binary search. With just one iteration is
-> too little, and one iteration+binary search often is no win.
-> Two iterations followed by binary search cuts the nr of steps in
-> half for the Linux kernel. Two iterations followed by linear search
-> is often worse, because of "unlucky" cases that end up doing many
-> probes. Still, during the 5-8 probes in moderately large repositories
-> (1M objects), each probe pretty much requires its own cache line:
-> very cache unfriendly.
+Being in the pre-release freeze, nothing should be cooking in
+'next' nor 'pu', and you should not be reading this ;-)
 
-If Nico and I can ever find the time to get our ideas for pack v4
-coded into something executable, I think you will find this is less
-of an issue than you think.
+In any case, on the 'master' front there is only one fix since
+the last -rc.  Will tag and declare 1.5.1 this Wednesday.  And
+after that happens, here is a list of what will come.
 
-We're hoping to change enough of the commit and tree traversal
-code that the "tight" loops around chasing tree, parent, and blob
-pointers can be done using strictly pack offsets and completely
-avoid these SHA-1 lookups.  Thus the only time we'd fall into the
-above-mentioned SHA-1 lookup path is on initial entry to a revision
-walk, or when spanning to another packfile.  This would mean most
-workloads should only hit that code once per command line argument.
+Commits prefixed with '-' are only in 'pu' while commits
+prefixed with '+' are in 'next'.  The topics list the commits in
+reverse chronological order.
 
--- 
-Shawn.
+=======================================
+=== To merge immediately post 1.5.1 ===
+=======================================
+
+* lt/dirwalk (Fri Mar 30 20:39:30 2007 -0700) 1 commit
+ + Optimize directory listing with pathspec limiter.
+
+This is to help "git add single-path" in a huge directory that
+does not have .gitignore.
+
+* post1.5.1/tcltk (Fri Mar 30 00:59:43 2007 -0700) 5 commits
+ + Optional Tck/Tk: ignore generated files.
+ + Eliminate checks of user-specified Tcl/Tk interpreter.
+ + Rewrite Tcl/Tk interpreter path for the GUI tools.
+ + Add --with-tcltk and --without-tcltk to configure.
+ + NO_TCLTK
+
+* post1.5.1/p4 (Thu Mar 29 14:07:47 2007 +0400) 4 commits
+ + Added correct Python path to the RPM specfile.
+ + Remove unused WITH_OWN_SUBPROCESS_PY from RPM spec
+ + Added git-p4 package to the list of git RPMs.
+ + Add the WITH_P4IMPORT knob to the Makefile.
+
+Build tweaks.
+
+* post1.5.1/blame.el (Wed Mar 28 18:44:34 2007 +0200) 2 commits
+ + git-blame.el: pick a set of random colors for each git-blame turn
+ + git-blame.el: separate git-blame-mode to ease maintenance
+
+Emacs.
+
+* fl/doc (Mon Mar 26 23:45:23 2007 -0700) 3 commits
+ + Documentation: unbreak user-manual.
+ + Documentation: Add version information to man pages
+ + Documentation: Replace @@GIT_VERSION@@ in documentation
+
+Add autogenerated version stamp in documentation.
+
+* jc/bisect (Fri Mar 23 17:54:03 2007 -0700) 6 commits
+ + make the previous optimization work also on path-limited rev-list
+   --bisect
+ + rev-list --bisect: Fix "halfway" optimization.
+ + t6004: add a bit more path optimization test.
+ + git-rev-list --bisect: optimization
+ + git-rev-list: add --bisect-vars option.
+ + t6002: minor spelling fix.
+
+Speeding up bisection between v2.6.18..v2.6.20 in the kernel
+repository from 22 seconds down to 4 seconds.
+
+===============================
+=== Will cook a bit further ===
+===============================
+
+* jc/index-output (Sat Mar 31 23:27:41 2007 -0700) 2 commits
+ - git-read-tree --index-output=<file>
+ - _GIT_INDEX_OUTPUT: allow plumbing to output to an alternative
+   index file.
+
+This is to avoid an extra copy during index-jumping commit.
+Will merge to 'next' post 1.5.1, and hopefully 'master' soon.
+
+* fl/cvsserver (Sat Mar 31 15:57:47 2007 +0200) 6 commits
+ + cvsserver: Use DBI->table_info instead of DBI->tables
+ + cvsserver: Abort if connect to database fails
+ + cvsserver: Make the database backend configurable
+ + cvsserver: Allow to override the configuration per access method
+ + cvsserver: Handle three part keys in git config correctly
+ + cvsserver: Introduce new state variable 'method'
+
+I do think there is no need to rush this without positive
+reports by people who tested with backends other than SQLite.
+
+* jc/checkout (Thu Mar 29 01:23:12 2007 -0700) 4 commits
+ - Use BASE index extension in git-commit and git-merge.
+ - update-index --{set,get}-base
+ - Add BASE index extension.
+ - checkout -d: explicitly detach HEAD even when switching to the tip
+   of a branch
+
+This lays the foundation to detect and warn cases where the tip
+of the current branch is modified underneath you.  Will merge to
+'next' post 1.5.1, but this has to wait for motivated people to 
+the cases the series currently does not record and/or check the
+base where it should, before graduating to 'master'.
+
+* jc/read-tree-df (Thu Mar 15 23:25:22 2007 -0700) 6 commits
+ - Fix switching to a branch with D/F when current branch has file D.
+ - Fix twoway_merge that passed d/f conflict marker to
+   merged_entry().
+ - Fix read-tree --prefix=dir/.
+ - unpack-trees: get rid of *indpos parameter.
+ - unpack_trees.c: pass unpack_trees_options structure to
+   keep_entry() as well.
+ - add_cache_entry(): removal of file foo does not conflict with
+   foo/bar
+
+This series is almost re-done since I sent the initial patch.
+The code is much nicer, and I think it is safer.
+
+* jc/the-index (Sun Apr 1 23:26:07 2007 -0700) 7 commits
+ - Make read-cache.c "the_index" free.
+ - Move index-related variables into a structure.
+ - Rename add_file_to_index() to add_file_to_cache()
+ - Rename static variable write_index to update_index in builtin-
+   apply.c
+ - Rename internal function "add_file_to_cache" in builtin-update-
+   index.c
+ - Propagate cache error internal to refresh_cache() via parameter.
+ - Fix bogus error message from merge-recursive error path
+
+This defines a structure that bundles active_cache, active_nr,
+active_cache_tree and friends, defines a single instance of such
+structure "the_index".  All cache access/manipulation functions
+in read-cache.c are updated to take a pointer to this structure
+to specify which index to operate on.  The traditional functions
+are redefined as macros, e.g.
+
+    #define add_cache_entry(ce,opt) add_index_entry(&the_index, (ce), (opt))
+
+This fell out by accident while I was working on jc/read-tree-df
+topic.  The largest problem there was that we lose sight of what
+was originally in the index, after replacing a set of paths
+(e.g. path/a path/b path/c) in the current index with a single
+parent path (e.g. "path" becomes a blob) from the other tree.
+To solve this, I initially planned to modify unpack_trees() to
+read from the current index and build into a separate index, and
+that is why I needed this conversion.
+
+But it turns out that I can use a single index to solve that, so
+this series is not needed.  But people into libification may
+find it interesting.
+
+==========================
+=== not ready for next ===
+==========================
+
+* jc/blame (Tue Mar 27 01:58:01 2007 -0700) 3 commits
+ - git-blame: optimize get_origin() from linear search to hash-
+   lookup.
+ - git-blame: pass "struct scoreboard *" pointers around.
+ - blame: lift structure definitions up
+
+I've been trying to optimize this on and off but haven't made
+much progress.
+
+* jc/pathattr (Thu Mar 1 01:20:21 2007 -0800) 5 commits
+ - pathattr: allow piping to external program.
+ - pathattr: read from git_config().
+ - git-show: use pathattr to run "display"
+ - pathattr: path based configuration of various attributes.
+ + convert: add scaffolding for path based selection of conversion
+   routines.
+* js/fetch-progress (Sun Feb 25 13:13:17 2007 -0800) 1 commit
+ + git-fetch: add --quiet
+* jc/merge-subtree (Thu Feb 15 16:32:45 2007 -0800) 1 commit
+ - A new merge stragety 'subtree'.
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
+
+Stalled.
