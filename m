@@ -1,57 +1,117 @@
-From: Olivier Galibert <galibert@pobox.com>
-Subject: Re: Distribution of longest common hash prefixes
-Date: Wed, 4 Apr 2007 01:08:46 +0200
-Message-ID: <20070403230846.GB8479@dspnet.fr.eu.org>
-References: <86y7laitlz.fsf@blue.stonehenge.com> <86r6r2isva.fsf@blue.stonehenge.com> <m3r6r1jsmq.fsf@lugabout.jhcloos.org> <867istcrhr.fsf@blue.stonehenge.com> <20070403172123.GD27706@spearce.org> <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org> <7vhcrxz5a8.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704031529300.28181@xanadu.home> <7vhcrxw6h5.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704031635100.28181@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-index-pack really does suck..
+Date: Tue, 3 Apr 2007 16:12:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704031553080.6730@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org> 
+ <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com> 
+ <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org> 
+ <alpine.LFD.0.98.0704031625050.28181@xanadu.home>  <7vzm5pur7g.fsf@assigned-by-dhcp.cox.net>
+  <Pine.LNX.4.64.0704031357470.6730@woody.linux-foundation.org>
+ <db69205d0704031549g7273da53g817f885705735db2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	James Cloos <cloos@jhcloos.com>, git@vger.kernel.org,
-	Peter Eriksen <s022018@student.dtu.dk>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 01:08:54 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Chris Lee <clee@kde.org>
+X-From: git-owner@vger.kernel.org Wed Apr 04 01:13:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYs7R-0004HQ-RS
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 01:08:54 +0200
+	id 1HYsC4-0007Cl-3Q
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 01:13:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992486AbXDCXIs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 19:08:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992493AbXDCXIs
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 19:08:48 -0400
-Received: from dspnet.fr.eu.org ([213.186.44.138]:3706 "EHLO dspnet.fr.eu.org"
+	id S1946023AbXDCXNg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 19:13:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946026AbXDCXNg
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 19:13:36 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:47750 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992486AbXDCXIr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 19:08:47 -0400
-Received: by dspnet.fr.eu.org (Postfix, from userid 1007)
-	id 68411A420A; Wed,  4 Apr 2007 01:08:46 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0704031635100.28181@xanadu.home>
-User-Agent: Mutt/1.4.2.2i
+	id S1946023AbXDCXNf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 19:13:35 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33NCXPD026421
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Apr 2007 16:12:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33NCWWA006053;
+	Tue, 3 Apr 2007 16:12:33 -0700
+In-Reply-To: <db69205d0704031549g7273da53g817f885705735db2@mail.gmail.com>
+X-Spam-Status: No, hits=-0.453 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43694>
 
-On Tue, Apr 03, 2007 at 04:39:02PM -0400, Nicolas Pitre wrote:
-> On Tue, 3 Apr 2007, Junio C Hamano wrote:
+
+
+On Tue, 3 Apr 2007, Chris Lee wrote:
+>
+> git-index-pack --paranoid --stdin --fix-thin paranoid.pack < 
+> 5.28s user 0.24s system 98% cpu 5.592 total
 > 
-> > I stated it wrongly.  What I was getting at was that we might
-> > want to consider an abbreviation that matches only a single
-> > commit unambiguous even when there are ambiguous objects of
-> > other kinds.
-> 
-> Maybe.  But by the time your object hash distribution starts showing 
-> ambiguous objects with a given abbreviated name between a commit and a 
-> non commit, I'll bet you'll start to see ambiguities between commits 
-> soon enough as well.
+> git-index-pack --stdin --fix-thin trusting.pack < 
+> 5.07s user 0.12s system 99% cpu 5.202 total
 
-Isn't the number of objects an order of magnitude bigger than the
-number of commits?  Well, I guess that depends on your workflow...
+Ok, that's not a big enough of a difference to care.
 
-  OG.
+> So, in my case, at least... not really much of a difference, which is
+> puzzling.
+
+It's entirely possible that the object lookup is good enough to not be a 
+problem even for huge packs, and it really only gets to be a problem when 
+you actually unpack all the objects.
+
+In that case, the only real case to worry about is indeed the "alternates" 
+case (or if people actually use a shared git object directory, but I don't 
+think anybody really does - alternates just work well enough, and shared 
+object directories are painful enough that I doubt anybody *really* uses 
+it).
+
+> I also mailed out the DVD with the repo on it to hpa today, so
+> hopefully by tomorrow he'll get it. (He's not even two cities over,
+> and I suspect I could have just driven it to his place, but that might
+> have been a little awkward since I've never met him.)
+
+Heh. Ok, good. I'll torrent it or something when it's up.
+
+> Anyway, so, hopefully once he gets it he can put it up somewhere that
+> you guys can grab it. For reference, the KDE repo is pretty big, but a
+> "real" conversion of the repo would be bigger; the one that I've been
+> playing with only has the KDE svn trunk, and only the first 409k
+> revisions - there are, as of right now, over 650k revisions in KDE's
+> svn repo. So, realistically speaking, a fully-converted KDE git repo
+> would probably take up at least 6GB, packed, if not more. Subproject
+> support would probably be *really* helpful to mitigate that.
+
+Sure. I think subproject support is likely the big "missing feature" of 
+git right now. The rest is "details", even if they can be big and involved 
+details.
+
+But even at only 409k revisions, it's still going to be an order of 
+magnitude bigger than what the kernel is, exactly *because* it's such a 
+disaster from a maintenance setup standpoint, and it's going to be a 
+useful real-world test-case. So whether that is a "good" git archive or 
+not, it's going to be useful.
+
+Long ago we used to be able to look at the historic Linux archive as an 
+example of a "big" archive, but it's not actually all that much bigger 
+than the normal Linux archive any more, and we've pretty much fixed the 
+problems we used to have.
+
+[ The historical pack-file is actually smaller, but that's because it was 
+  done with a much deeper delta-chain to make it small: the historical 
+  archive still has more objects in it than the current active git kernel 
+  tree - but it's only in the 20% range, not "20 *times* bigger" ]
+
+The Eclipse tree was useful (and I think we already improved performance 
+for you thanks to working with it - I don't know how much faster the 
+delta-base cache made things for you, but I'd assume it was at *least* by 
+the factor-of-2.5 that we saw on Eclipse), but the KDE is bigger *and* 
+deeper (the eclipse tree is 1.7GB, and 136k revisions in the main branch, 
+so the KDE tree is more than twice the revisions).
+
+		Linus
