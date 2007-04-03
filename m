@@ -1,99 +1,75 @@
-From: "Chris Lee" <clee@kde.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git-index-pack really does suck..
-Date: Tue, 3 Apr 2007 15:49:59 -0700
-Message-ID: <db69205d0704031549g7273da53g817f885705735db2@mail.gmail.com>
-References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
-	 <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
-	 <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
-	 <alpine.LFD.0.98.0704031625050.28181@xanadu.home>
-	 <7vzm5pur7g.fsf@assigned-by-dhcp.cox.net>
-	 <Pine.LNX.4.64.0704031357470.6730@woody.linux-foundation.org>
+Date: Tue, 3 Apr 2007 15:52:32 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704031544110.6730@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org> 
+ <db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com> 
+ <Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org> 
+ <alpine.LFD.0.98.0704031625050.28181@xanadu.home> 
+ <Pine.LNX.4.64.0704031346250.6730@woody.linux-foundation.org> 
+ <20070403210319.GH27706@spearce.org>  <Pine.LNX.4.64.0704031411320.6730@woody.linux-foundation.org>
+  <20070403211709.GJ27706@spearce.org>  <alpine.LFD.0.98.0704031730300.28181@xanadu.home>
+ <56b7f5510704031540i4df918e6g5a82389b6759c50b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, "Nicolas Pitre" <nico@cam.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 00:50:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, Chris Lee <clee@kde.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 00:53:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYrpL-0000o2-Ik
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 00:50:11 +0200
+	id 1HYrso-0003Fw-LB
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 00:53:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992464AbXDCWuE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 18:50:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992466AbXDCWuE
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 18:50:04 -0400
-Received: from wr-out-0506.google.com ([64.233.184.239]:22236 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992464AbXDCWuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 18:50:01 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so4794wra
-        for <git@vger.kernel.org>; Tue, 03 Apr 2007 15:50:00 -0700 (PDT)
-Received: by 10.114.161.11 with SMTP id j11mr2467979wae.1175640600059;
-        Tue, 03 Apr 2007 15:50:00 -0700 (PDT)
-Received: by 10.114.66.10 with HTTP; Tue, 3 Apr 2007 15:49:59 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704031357470.6730@woody.linux-foundation.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: 2e723a5deb717a66
+	id S2992476AbXDCWxn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 18:53:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992478AbXDCWxn
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 18:53:43 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:47111 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2992476AbXDCWxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 18:53:42 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33MqXPD025837
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Apr 2007 15:52:33 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33MqWhF005619;
+	Tue, 3 Apr 2007 15:52:33 -0700
+In-Reply-To: <56b7f5510704031540i4df918e6g5a82389b6759c50b@mail.gmail.com>
+X-Spam-Status: No, hits=-0.454 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43688>
 
-On 4/3/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Tue, 3 Apr 2007, Junio C Hamano wrote:
-> > So maybe we should retitle this thread from "git-index-pack
-> > really does suck.." to "I used git-index-pack in a stupid way"?
 
-Well, I never claimed to be a genius. :)
 
-> See my separate timing numbers, although I bet that Chris can give even
-> better ones..
->
-> Chris, try applying my patch, and then inside the KDE repo you have, do
->
->         git index-pack --paranoid --stdin --fix-thin new.pack < ~/git/.git/objects/pack/pack-*.pack
->
-> (ie index the objects of the *git* repository, not the KDE one). That
-> should approximate doing a fair-sized "git pull" - getting new objects. Do
-> it with and without --paranoid, and time it.
+On Tue, 3 Apr 2007, Dana How wrote:
+> 
+> Larger and larger pack files make me nervous.
+> They are expensive to manipulate,
+> and >2GB requires a file format change.
 
-% time git-index-pack --paranoid --stdin --fix-thin paranoid.pack <
-/usr/local/src/git/.git/objects/pack/*pack
-pack	bf8ba7897da9c84d1981ecdc92c0b1979506a4b9
-git-index-pack --paranoid --stdin --fix-thin paranoid.pack <   5.28s
-user 0.24s system 98% cpu 5.592 total
+It sometimes also requires a new filesystem. There are a lot of 
+filesystems that can handle more than 4GB total, but not necessarily in a 
+single file.
 
-% time git-index-pack --stdin --fix-thin trusting.pack <
-/usr/local/src/git/.git/objects/pack/*pack
-pack	bf8ba7897da9c84d1981ecdc92c0b1979506a4b9
-git-index-pack --stdin --fix-thin trusting.pack <   5.07s user 0.12s
-system 99% cpu 5.202 total
+The only really useful such filesystem is probably FAT, which is still 
+quite useful for things like USB memory sticks. But that is probably 
+already worth supporting.
 
-So, in my case, at least... not really much of a difference, which is puzzling.
+So I think we want to support 64-bit (or at least something like 40+ bit) 
+pack-files, but yes, I think that even if/when we support it, we still 
+want to support the "multiple smaller pack-files" schenario exactly 
+because for some uses it's much *better* to have ten 2GB packfiles rather 
+than one 20GB pack-file.
 
-> I bet that what I see as a 7% slowdown will be much bigger for you, just
-> because the negative lookups will be all that much more expensive when you
-> have tons of objects.
-
-I applied exactly the patch you sent, and it applied perfectly cleanly
-- no failures.
-
-I also mailed out the DVD with the repo on it to hpa today, so
-hopefully by tomorrow he'll get it. (He's not even two cities over,
-and I suspect I could have just driven it to his place, but that might
-have been a little awkward since I've never met him.)
-
-Anyway, so, hopefully once he gets it he can put it up somewhere that
-you guys can grab it. For reference, the KDE repo is pretty big, but a
-"real" conversion of the repo would be bigger; the one that I've been
-playing with only has the KDE svn trunk, and only the first 409k
-revisions - there are, as of right now, over 650k revisions in KDE's
-svn repo. So, realistically speaking, a fully-converted KDE git repo
-would probably take up at least 6GB, packed, if not more. Subproject
-support would probably be *really* helpful to mitigate that.
-
--clee
+			Linus
