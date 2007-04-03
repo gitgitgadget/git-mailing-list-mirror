@@ -1,119 +1,66 @@
-From: James Cloos <cloos@jhcloos.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
 Subject: Re: Distribution of longest common hash prefixes
-Date: Tue, 03 Apr 2007 13:04:54 -0400
-Message-ID: <m3r6r1jsmq.fsf@lugabout.jhcloos.org>
+Date: Tue, 03 Apr 2007 10:11:44 -0700
+Message-ID: <867istcrhr.fsf@blue.stonehenge.com>
 References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
 	<Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
 	<86bqi6kae7.fsf@blue.stonehenge.com>
 	<Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
 	<86y7laitlz.fsf@blue.stonehenge.com>
 	<86r6r2isva.fsf@blue.stonehenge.com>
+	<m3r6r1jsmq.fsf@lugabout.jhcloos.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Eriksen <s022018@student.dtu.dk>,
-	merlyn@stonehenge.com (Randal L. Schwartz)
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 03 19:09:11 2007
+Cc: git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Peter Eriksen <s022018@student.dtu.dk>
+To: James Cloos <cloos@jhcloos.com>
+X-From: git-owner@vger.kernel.org Tue Apr 03 19:12:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYmVE-0007dj-RW
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 19:09:05 +0200
+	id 1HYmY1-0000mn-Ed
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 19:11:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965641AbXDCRJA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 13:09:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965654AbXDCRJA
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 13:09:00 -0400
-Received: from atl.uu.jhcloos.net ([207.210.96.115]:52460 "EHLO
-	atl.uu.jhcloos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965641AbXDCRI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 13:08:59 -0400
-Received: by atl.uu.jhcloos.net (Postfix, from userid 10)
-	id ABEF5BB482; Tue,  3 Apr 2007 17:08:58 +0000 (UTC)
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id 432F93C032B; Tue,  3 Apr 2007 17:05:17 +0000 (UTC)
-In-Reply-To: <86r6r2isva.fsf@blue.stonehenge.com> (Randal L. Schwartz's
-	message of "Mon\, 02 Apr 2007 10\:33\:13 -0700")
-Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMnRFWHRUaXRsZQAvbWF4dG9y
- L2Nsb29zL2luY29taW5nLzIwMDQvMDIvUFdHL0pIQzE2LnBuZyJMlEwAAAAadEVYdFNvZnR3YXJl
- AEdOT01FIEljb24gRWRpdG9ynioKbAAAAHFJREFUeJzFk8EKwCAMQ1/ED9cvzw6iuM0N9WIvDTWE
- 1KjAxmKnLBEBjLcEIBCeI2nccy5YKrjxwbbvAvZ37zlo4GB9iRMC/cq/AppItwmMyJ5I98wd9G7P
- xxgrSKlYS2lMrOcV13o95aVSKA7E5ndGXG+IIzcl4BNfAAAAAElFTkSuQmCC
-Copyright: Copyright 2007 James Cloos
-X-Hashcash: 1:23:070403:torvalds@linux-foundation.org::geXi0qbFG3zLzXpP:000000000000000000000000000000008abr
-X-Hashcash: 1:23:070403:git@vger.kernel.org::CsKE2d3fyFS/ntRH:000000000000000000000000000000000000000000InI3
-X-Hashcash: 1:23:070403:s022018@student.dtu.dk::5F07v5MCDPU0qTjP:000000000000000000000000000000000000000M989
-X-Hashcash: 1:23:070403:merlyn@stonehenge.com::1fUuMzBSBKiIfEbF:0000000000000000000000000000000000000000Vlo3
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.0 (gnu/linux)
+	id S965724AbXDCRLq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 13:11:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965661AbXDCRLq
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 13:11:46 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:48702 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965724AbXDCRLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 13:11:45 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id CA3491DEB76; Tue,  3 Apr 2007 10:11:44 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.3.11; tzolkin = 8 Chuen; haab = 4 Uayeb
+In-Reply-To: <m3r6r1jsmq.fsf@lugabout.jhcloos.org> (James Cloos's message of "Tue, 03 Apr 2007 13:04:54 -0400")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43631>
 
->>>>> "Randal" == Randal L Schwartz <merlyn@stonehenge.com> writes:
+>>>>> "James" == James Cloos <cloos@jhcloos.com> writes:
 
-Randal> git-rev-list --objects HEAD | sort | perl -lne '
-Randal>   substr($_, 40) = "";
-Randal>   if (defined $p) {
-Randal>     ($p ^ $_) =~ /^(\0*)/;
-Randal>     $common = length $1;
-Randal>     if (defined $pcommon) {
-Randal>       $count[$pcommon > $common ? $pcommon : $common]++;
-Randal>     } else {
-Randal>       $count[$common]++; # first item
-Randal>     }
-Randal>   }
-Randal>   $p = $_;
-Randal>   $pcommon = $common;
-Randal>   END {
-Randal>     $count[$common]++; # last item
-Randal>     print "$_: $count[$_]" for 0..$#count;
-Randal>   }
-Randal> '
+James> With that version the kernel gives:
 
-With that version the kernel gives:
+James> 0: 
+James> 1: 
+James> 2: 
+James> 3: 565
+James> 4: 288450
+James> 5: 139080
+James> 6: 10699
+James> 7: 700
+James> 8: 32
+James> 9: 2
 
-0: 
-1: 
-2: 
-3: 565
-4: 288450
-5: 139080
-6: 10699
-7: 700
-8: 32
-9: 2
+Fascinating.  So you can spell out *any* commit in linux-2.6.git with
+10 hex chars.  What do we need 40 for, again? :)
 
-Adding in  $_ = unpack("B*",pack("H*",$_));
-to the script, to do the work on bits, gives:
-
-14: 
-15: 565
-16: 14723
-17: 66765
-18: 107838
-19: 99124
-20: 67367
-21: 39238
-22: 21503
-23: 10972
-24: 5591
-25: 2927
-26: 1472
-27: 709
-28: 382
-29: 166
-30: 98
-31: 54
-32: 20
-33: 6
-34: 2
-35: 4
-36: 
-37: 2
-
--JimC
 -- 
-James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
