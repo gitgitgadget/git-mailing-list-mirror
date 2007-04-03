@@ -1,89 +1,140 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-index-pack really does suck..
-Date: Tue, 3 Apr 2007 09:21:26 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704030913060.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gitweb: Support comparing blobs (files) with different names
+Date: Tue, 3 Apr 2007 16:57:24 +0200
+Message-ID: <200704031657.25698.jnareb@gmail.com>
+References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <200703311816.05283.jnareb@gmail.com> <7vmz1t6oe2.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <junkio@cox.net>, Nicolas Pitre <nico@cam.org>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 03 18:21:52 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 03 18:23:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYllU-0006v2-6h
-	for gcvg-git@gmane.org; Tue, 03 Apr 2007 18:21:48 +0200
+	id 1HYlnE-0007t0-AF
+	for gcvg-git@gmane.org; Tue, 03 Apr 2007 18:23:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753545AbXDCQVp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 12:21:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753553AbXDCQVp
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 12:21:45 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:58902 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753545AbXDCQVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 12:21:44 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l33GLRPD014859
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 Apr 2007 09:21:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l33GLQZb029438;
-	Tue, 3 Apr 2007 09:21:26 -0700
-In-Reply-To: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.458 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932526AbXDCQXb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 12:23:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932787AbXDCQXb
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 12:23:31 -0400
+Received: from mu-out-0910.google.com ([209.85.134.190]:10122 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932526AbXDCQXa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 12:23:30 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so1930223muf
+        for <git@vger.kernel.org>; Tue, 03 Apr 2007 09:23:28 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=fGsmZIKEHnySbZ4FaCY8NbDDw5S8dXuSyHisLviZ1jx3VCV4SuXfcrD2L+QujZFnbz3xq2um0KgbalvcYRDxRFFYjmAlxr2HrLo1bZkyZlHeTrxCmsDPil4REzWvWqqOVnx35COg5DYMIKuy/YJCkWuGF0mQW6z67ITLivGPk5E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rHWYTXtoOFJXdLjkX1PsV8N66r6oM3AOqDQo/PK9VGyotlCdEi5BTBS74l3jyARb26CMXRaFruki6t6XulvlRxia3rHKUAkUw4aXamab7iIvHwPidX8op6IAHIhGq4RIz/xF65DAAdNZyLxyoTRa+a4u6uMTzMlNzHCf4tdNtkk=
+Received: by 10.82.148.7 with SMTP id v7mr3597780bud.1175617408289;
+        Tue, 03 Apr 2007 09:23:28 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id g1sm24624800muf.2007.04.03.09.23.25;
+        Tue, 03 Apr 2007 09:23:25 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vmz1t6oe2.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43626>
 
-
-
-On Tue, 3 Apr 2007, Linus Torvalds wrote:
+On Sun, Apr 1, 2007, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> and it uses 52s of CPU-time, and on my 4GB machine it actually started 
-> doing IO and swapping, because git-index-pack grew to 4.8GB in size.
+>>> First is not escaped filename in HTTP header. There was some discussion
+>>> about this, and even patch by Luben Tuikov which added to_qtext 
+>>> subroutine to deal with escaping in HTTP (which has diferent rules than
+>>> escaping in HTML, or in HTML attributes)
+>>>  * gitweb: using quotemeta
+>>>    http://thread.gmane.org/gmane.comp.version-control.git/28050/
+>>>  * [PATCH] gitweb: Convert Content-Disposition filenames into qtext
+>>>    http://thread.gmane.org/gmane.comp.version-control.git/28437
+>>> But the patch was newer accepted; either lost in the noise, or in lack
+>>> of summary to the discussion.
+>>
+>> Junio, do you remember by chance why this patch was dropped?
+> 
+> No, but I suspect that was because the noisiness of the thread
+> around them suggested they were not ready to be applied.  I do
+> not remember if people submitted the patch and commented on
+> reached a consensus.
 
-Ahh. False alarm.
+Probably not. Here is alternative proposal. It does not implement
+  RFC2184: MIME Parameter Value and Encoded Word Extensions
+but I'm not sure if 1) it is needed for _HTTP_ Content-Disposition
+header filename, 2) all browsers implement it.
 
-The problem is actually largely a really stupid memory leak in the SHA1 
-collision checking (which wouldn't trigger on a normal pull, but obviously 
-does trigger for every single object when testing!)
+By the way, $str =~ s/[\n\r]/_/g; line (as per Junio Hamano and Petr
+Baudis suggestion) is needed not only for buggy browsers, but also for
+buggy CGI implementation:
 
-This trivial patch fixes most of it. git-index-pack still uses too much 
-memory, but it does a *lot* better.
+  $ perl -wle \
+  'use CGI; \
+   our $cgi = new CGI; \
+   print $cgi->header(-content_disposition => "inline; filename=\"file\nname\"");'
 
-Junio, please get this into 1.5.1 (I *think* the SHA1 checking is new, but 
-if it exists in 1.5.0 too, it obviously needs the same fix).
+generates (for CGI version 3.10)
 
-It still grows, but it grew to just 287M in size now for the 170M kernel 
-object:
+  Content-disposition="inline; filename=&quot;file
+  name&quot;"
 
-	41.59user 1.39system 0:43.64elapsed
-	0major+73552minor
+which is a bit strange. Single LF (not CRLF pair) does not need to be
+quoted in the header, as per RFC822.
 
-which is quite a lot better.
+-- >8 --
+# Generate value of Content-Disposition header field, with "inline"
+# disposition type, for a given filename parameter
+# Usage: $cgi->header( [...],
+#          -content_disposition => content_disposition($filename))
+# References: RFC 2183, RFC 822 and RFC 2045
+sub content_disposition {
+	my $filename = shift;
 
-Duh.
+	#RFC2183: The Content-Disposition Header Field
+	# parameter value containing only non-`tspecials' characters [RFC 2045]
+	# SHOULD be represented as a single `token'.
+	#RFC2045: MIME Part One: Format of Internet Message Bodies
+	# token := 1*<any (US-ASCII) CHAR except SPACE, CTLs,
+	#             or tspecials>
+	if ($filename =~ m/[[:space:][:cntrl:]()<>@,;:\\"\/\[\]?=]/) {
+		#RFC2183: The Content-Disposition Header Field
+		# parameter value containing only ASCII characters, but including
+		# `tspecials' characters, SHOULD be represented as `quoted-string'.
 
-		Linus
+		# It not worth potential problems to try to carry newlines (and such)
+		# in the header; it is just _suggested_ filename
+		$filename =~ s/[[:cntrl:]\n\r]/_/g;
 
----
- index-pack.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+		#RFC822: Standard for the Format of ARPA Internet Text Messages
+		# quoting is REQUIRED for CR and "\" and for the character(s) that
+		# delimit the token (e.g., "(" and ")" for a comment).  However,
+		# quoting is PERMITTED for any character.
+		$filename =~ s/([\\"\r])/\\$1/g;
+		$filename = '"' . $filename . '"';
+	}
+	return "inline; filename=$filename";
+}
+-- >8 --
+P.S. We could probably always quote filename parameter, even if it
+is not needed ("SHOULD be represented as a single `token'" part).
 
-diff --git a/index-pack.c b/index-pack.c
-index 6284fe3..3c768fb 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -358,6 +358,7 @@ static void sha1_object(const void *data, unsigned long size,
- 		if (size != has_size || type != has_type ||
- 		    memcmp(data, has_data, size) != 0)
- 			die("SHA1 COLLISION FOUND WITH %s !", sha1_to_hex(sha1));
-+		free(has_data);
- 	}
- }
- 
+P.P.S. Here is an example of RFC2184 encoded header:
+
+   Content-Type: application/x-stuff
+    title*1*=us-ascii'en'This%20is%20even%20more%20
+    title*2*=%2A%2A%2Afun%2A%2A%2A%20
+    title*3="isn't it!"
+
+-- 
+Jakub Narebski
+Poland
