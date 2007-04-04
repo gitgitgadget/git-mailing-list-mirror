@@ -1,59 +1,88 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: [PATCH] Show binary file size change in diff --stat
-Date: Wed, 04 Apr 2007 18:26:41 +0200
-Message-ID: <4613D1C1.6010002@dawes.za.net>
-References: <200704041414.14797.andyparkins@gmail.com> <4613A974.60808@dawes.za.net> <200704041540.59977.andyparkins@gmail.com> <4613C97C.9050600@dawes.za.net> <Pine.LNX.4.63.0704041819340.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/4] Fix drop-down menus in the git-gui dialogs.
+Date: Wed, 4 Apr 2007 12:37:09 -0400
+Message-ID: <20070404163709.GA5167@spearce.org>
+References: <20070327103005.GP14837@codelabs.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Apr 04 18:27:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Wed Apr 04 18:38:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZ8KM-00085b-UE
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 18:27:19 +0200
+	id 1HZ8Uq-0004Vw-H9
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 18:38:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753596AbXDDQ1Q (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 12:27:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753600AbXDDQ1Q
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 12:27:16 -0400
-Received: from sd-green-bigip-207.dreamhost.com ([208.97.132.207]:38523 "EHLO
-	spunkymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753596AbXDDQ1P (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2007 12:27:15 -0400
-Received: from [192.168.201.103] (dsl-146-24-118.telkomadsl.co.za [165.146.24.118])
-	by spunkymail-a11.g.dreamhost.com (Postfix) with ESMTP id 71830B82D3;
-	Wed,  4 Apr 2007 09:27:11 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <Pine.LNX.4.63.0704041819340.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+	id S2992993AbXDDQhW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 12:37:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992994AbXDDQhW
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 12:37:22 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48667 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992993AbXDDQhT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 12:37:19 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HZ8Tq-00032M-BE; Wed, 04 Apr 2007 12:37:07 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id E2D8920FBAE; Wed,  4 Apr 2007 12:37:09 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20070327103005.GP14837@codelabs.ru>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43754>
 
-Johannes Schindelin wrote:
-> Hi,
+git-gui patches should be addressed to me, not Paul.
+
+Eygene Ryabinkin <rea-git@codelabs.ru> wrote:
+> If the drop-down menu (for example "Local Branch" from the dialog
+> activated by the "Branch/Create..." menu item) is chosen with the
+> left mouse button, then the pointer is moved off the drop-down menu
+> while the mouse button is still pressed and then the 'Escape' key
+> is pressed, the main menu will be broken. Next time when you will
+> try to select any main menu item, the Tcl/Tk interpreter will spawn
+> an internal error.
 > 
-> On Wed, 4 Apr 2007, Rogan Dawes wrote:
-> 
->> Andy Parkins wrote:
->>
->>> As an example: compress a file, change a byte, compress it again, 
->>> perform a binary diff; what is that diff telling you about the change?  
->>> (My answer is: not much).
->> Well, at least as much as the resulting sizes tell you, if not more.
-> 
-> The subtle difference: your approach is _expensive_ in terms of CPU time, 
-> while the byte change approach is _dirt cheap_.
+> Error was fixed by "grab"bing the drop-down menu windows on their
+> activation. Now all drop-down menus are disappearing once the mouse
+> button is depressed, no matter what is the current position of the
+> mouse pointer.
 
-I don't dispute that for a second.
+This fix actually horribly breaks on Mac OS X.  The problem
+appears to be that the <Visibility> event on that system doesn't
+get delivered until after the menu is destroyed, yet I'm getting
+a %s of VisibilityUnobscured in the event handler.  Go figure.
 
-> Since it seems that there are gazillions of examples where one or the 
-> other (or both) do not make sense, I'd rather have the fast one.
+So anyway, I cannot apply this patch as-is, because it breaks
+my main development system.  I understand and feel your pain,
+but you either need to make this binding apply only on your OS,
+or find another way to workaround that Tk bug...
 
-Fair enough.
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index 8157184..1f3ee05 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -2126,6 +2126,7 @@ proc do_create_branch {} {
+>  		-font font_ui
+>  	set lbranchm [eval tk_optionMenu $w.from.head_m create_branch_head \
+>  		$all_heads]
+> +	bind $lbranchm <Visibility> "grab $lbranchm"
+>  	$lbranchm configure -font font_ui
+>  	$w.from.head_m configure -font font_ui
+>  	grid $w.from.head_r $w.from.head_m -sticky w
 
-Rogan
+-- 
+Shawn.
