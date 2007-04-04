@@ -1,91 +1,296 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Partitioned packs
-Date: Tue, 3 Apr 2007 19:52:56 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704031944540.6730@woody.linux-foundation.org>
-References: <db69205d0704031836u3b3dfc2pb9825dd649aca58@mail.gmail.com>
- <Pine.LNX.4.64.0704031858470.6730@woody.linux-foundation.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Bisect: teach "bisect start" to optionally use one bad and
+ many good revs.
+Date: Wed, 4 Apr 2007 07:12:02 +0200
+Message-ID: <20070404071202.483030b8.chriscool@tuxfamily.org>
+References: <7vzm5pw7ju.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Chris Lee <clee@kde.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 04:54:11 2007
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 04 07:04:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYvdS-0007ME-SN
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 04:54:11 +0200
+	id 1HYxf6-0006rK-9X
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 07:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992534AbXDDCxd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 22:53:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992536AbXDDCxc
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 22:53:32 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:54548 "EHLO smtp.osdl.org"
+	id S2992600AbXDDFD4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 01:03:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992602AbXDDFD4
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 01:03:56 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:41275 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992534AbXDDCxb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 22:53:31 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l342quPD032383
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 3 Apr 2007 19:52:57 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l342qurm010468;
-	Tue, 3 Apr 2007 19:52:56 -0700
-In-Reply-To: <Pine.LNX.4.64.0704031858470.6730@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.453 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S2992600AbXDDFDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 01:03:54 -0400
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 47C55B8BB0;
+	Wed,  4 Apr 2007 07:03:52 +0200 (CEST)
+In-Reply-To: <7vzm5pw7ju.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43707>
+
+As Junio said:
+
+"One bad commit is fundamentally needed for bisect to run,
+and if we beforehand know more good commits, we can narrow
+the bisect space down without doing the whole tree checkout
+every time we give good commits.  I think it may be a good
+idea to have:
+
+    git bisect start [$bad [$good1 $good2...]] [-- <paths>...]
+
+as a short-hand for this command sequence:
+
+    git bisect start
+    git bisect bad $bad
+    git bisect good $good1 $good2...
+
+That would be a good script-shorterner, without limiting it to
+any specific use scenario."
+
+In fact this patch implements:
+
+    git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
+
+I think this is more backward compatible because older script
+probably didn't used -- before <pathspec>...
+
+On the other hand, there may be some confusion between revs
+(<bad> and <good>...) and <pathspec>... if -- is not used
+and if an invalid rev or a pathspec that looks like a rev is
+given.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+
+Junio wrote:
+
+> > +	for arg in "$@"; do
+> > +	    case "$arg" in --) has_double_dash=1; break ;; esac
+> > +	done
+>
+> Style.  'in "$@"' is superfluous.
+
+Fixed in this patch.
+
+> > +	orig_args="$@"
+>
+> Doesn't this defeat the whole point of later running 'sq' on it?
+> The reason we do sq is to protect whitespaces in pathspecs and
+> make the strings correctly split when evaled/sourced.
+
+This should also be fixed.
+
+Thanks,
+Christian.
 
 
+ git-bisect.sh         |  105 ++++++++++++++++++++++++++++++++++++++-----------
+ t/t6030-bisect-run.sh |   20 ++++++++-
+ 2 files changed, 99 insertions(+), 26 deletions(-)
 
-On Tue, 3 Apr 2007, Linus Torvalds wrote:
-> 
-> So trying to partition things doesn't help (because the objects are 
-> already well sorted), and it does hurt.
-
-Side note: I think that there *are* cases where partitioned packs can do 
-better, but I think that in order to do better you should
-
- - partition by "recency", ie put objects that are not reachable from any 
-   recent point in older packs.
-
- - make sure that the "packed_git" list is always sorted so that the older 
-   data packs are at the end.
-
-and that should actually speed up many loads, just because the recent 
-objects are all in one pack, and because it's smaller, that pack can be 
-looked up a bit faster.
-
-On the other hand, the power of a log(n) function like a binary search is 
-that lookup in a big pack that is four times the size of four smaller 
-packs is really not all that much more expensive, so the advantage is 
-probably pretty small.
-
-And for things that need old objects (and "git blame" does obviously very 
-much tend to fall into that category), any partitioning is likely to be 
-bad.
-
-So I think partitioning is valid, but my suspicion is that you'd want to 
-partition for *other* reasons than highest performance. Better reasons to 
-have multiple packs:
-
- - just because you haven't repacked ;)
- - to keep "git repack" times down by marking old big packs as "keep" once 
-   they get big enough (the space advantage of packing eventually flattens 
-   out, so there's no real overwhelming reason to repack old stuff if you 
-   have "enough")
- - filesystem and pack-file limitations (ie the 2**31 limit)
-
-but I doubt performance is ever going to be a really compelling one.
-
-You can obviously always optimize for some very *particular* load by 
-packing optimally for just that one (keep exactly the objects you need in 
-one particular pack, don't even touch any other packs), but I don't think 
-any load is *so* special that you shouldn't think of other loads.
-
-			Linus
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 11313a7..2e68e3d 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -1,15 +1,24 @@
+ #!/bin/sh
+ 
+ USAGE='[start|bad|good|next|reset|visualize|replay|log|run]'
+-LONG_USAGE='git bisect start [<pathspec>]	reset bisect state and start bisection.
+-git bisect bad [<rev>]		mark <rev> a known-bad revision.
+-git bisect good [<rev>...]	mark <rev>... known-good revisions.
+-git bisect next			find next bisection to test and check it out.
+-git bisect reset [<branch>]	finish bisection search and go back to branch.
+-git bisect visualize            show bisect status in gitk.
+-git bisect replay <logfile>	replay bisection log.
+-git bisect log			show bisect log.
+-git bisect run <cmd>... 	use <cmd>... to automatically bisect.'
++LONG_USAGE='git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
++        reset bisect state and start bisection.
++git bisect bad [<rev>]
++        mark <rev> a known-bad revision.
++git bisect good [<rev>...]
++        mark <rev>... known-good revisions.
++git bisect next
++        find next bisection to test and check it out.
++git bisect reset [<branch>]
++        finish bisection search and go back to branch.
++git bisect visualize
++        show bisect status in gitk.
++git bisect replay <logfile>
++        replay bisection log.
++git bisect log
++        show bisect log.
++git bisect run <cmd>...
++        use <cmd>... to automatically bisect.'
+ 
+ . git-sh-setup
+ require_work_tree
+@@ -70,14 +79,48 @@ bisect_start() {
+ 	#
+ 	# Get rid of any old bisect state
+ 	#
+-	rm -f "$GIT_DIR/refs/heads/bisect"
+-	rm -rf "$GIT_DIR/refs/bisect/"
++	bisect_clean_state
+ 	mkdir "$GIT_DIR/refs/bisect"
++
++	#
++	# Check for one bad and then some good revisions.
++	#
++	has_double_dash=0
++	for arg; do
++	    case "$arg" in --) has_double_dash=1; break ;; esac
++	done
++	orig_args=$(sq "$@")
++	bad_seen=0
++	while [ $# -gt 0 ]; do
++	    arg="$1"
++	    case "$arg" in
++	    --)
++	        shift
++		break
++		;;
++	    *)
++	        rev=$(git-rev-parse --verify "$arg^{commit}" 2>/dev/null) || {
++		    test $has_double_dash -eq 1 &&
++		        die "'$arg' does not appear to be a valid revision"
++		    break
++		}
++		if [ $bad_seen -eq 0 ]; then
++		    bad_seen=1
++		    bisect_write_bad "$rev"
++		else
++		    bisect_write_good "$rev"
++		fi
++	        shift
++		;;
++	    esac
++        done
++
++	sq "$@" >"$GIT_DIR/BISECT_NAMES"
+ 	{
+ 	    printf "git-bisect start"
+-	    sq "$@"
+-	} >"$GIT_DIR/BISECT_LOG"
+-	sq "$@" >"$GIT_DIR/BISECT_NAMES"
++	    echo "$orig_args"
++	} >>"$GIT_DIR/BISECT_LOG"
++	bisect_auto_next
+ }
+ 
+ bisect_bad() {
+@@ -90,12 +133,17 @@ bisect_bad() {
+ 	*)
+ 		usage ;;
+ 	esac || exit
+-	echo "$rev" >"$GIT_DIR/refs/bisect/bad"
+-	echo "# bad: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
++	bisect_write_bad "$rev"
+ 	echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
+ 	bisect_auto_next
+ }
+ 
++bisect_write_bad() {
++	rev="$1"
++	echo "$rev" >"$GIT_DIR/refs/bisect/bad"
++	echo "# bad: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
++}
++
+ bisect_good() {
+ 	bisect_autostart
+         case "$#" in
+@@ -106,13 +154,19 @@ bisect_good() {
+ 	for rev in $revs
+ 	do
+ 		rev=$(git-rev-parse --verify "$rev^{commit}") || exit
+-		echo "$rev" >"$GIT_DIR/refs/bisect/good-$rev"
+-		echo "# good: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
++		bisect_write_good "$rev"
+ 		echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
++
+ 	done
+ 	bisect_auto_next
+ }
+ 
++bisect_write_good() {
++	rev="$1"
++	echo "$rev" >"$GIT_DIR/refs/bisect/good-$rev"
++	echo "# good: "$(git-show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
++}
++
+ bisect_next_check() {
+ 	next_ok=no
+         test -f "$GIT_DIR/refs/bisect/bad" &&
+@@ -190,14 +244,19 @@ bisect_reset() {
+ 	    usage ;;
+ 	esac
+ 	if git checkout "$branch"; then
+-		rm -fr "$GIT_DIR/refs/bisect"
+-		rm -f "$GIT_DIR/refs/heads/bisect" "$GIT_DIR/head-name"
+-		rm -f "$GIT_DIR/BISECT_LOG"
+-		rm -f "$GIT_DIR/BISECT_NAMES"
+-		rm -f "$GIT_DIR/BISECT_RUN"
++		rm -f "$GIT_DIR/head-name"
++		bisect_clean_state
+ 	fi
+ }
+ 
++bisect_clean_state() {
++	rm -fr "$GIT_DIR/refs/bisect"
++	rm -f "$GIT_DIR/refs/heads/bisect"
++	rm -f "$GIT_DIR/BISECT_LOG"
++	rm -f "$GIT_DIR/BISECT_NAMES"
++	rm -f "$GIT_DIR/BISECT_RUN"
++}
++
+ bisect_replay () {
+ 	test -r "$1" || {
+ 		echo >&2 "cannot read $1 for replaying"
+diff --git a/t/t6030-bisect-run.sh b/t/t6030-bisect-run.sh
+index 39c7228..455dc60 100755
+--- a/t/t6030-bisect-run.sh
++++ b/t/t6030-bisect-run.sh
+@@ -40,8 +40,8 @@ test_expect_success \
+ # We want to automatically find the commit that
+ # introduced "Another" into hello.
+ test_expect_success \
+-    'git bisect run simple case' \
+-    'echo "#!/bin/sh" > test_script.sh &&
++    '"git bisect run" simple case' \
++    'echo "#"\!"/bin/sh" > test_script.sh &&
+      echo "grep Another hello > /dev/null" >> test_script.sh &&
+      echo "test \$? -ne 0" >> test_script.sh &&
+      chmod +x test_script.sh &&
+@@ -49,7 +49,21 @@ test_expect_success \
+      git bisect good $HASH1 &&
+      git bisect bad $HASH4 &&
+      git bisect run ./test_script.sh > my_bisect_log.txt &&
+-     grep "$HASH3 is first bad commit" my_bisect_log.txt'
++     grep "$HASH3 is first bad commit" my_bisect_log.txt &&
++     git bisect reset'
++
++# We want to automatically find the commit that
++# introduced "Ciao" into hello.
++test_expect_success \
++    '"git bisect run" with more complex "git bisect start"' \
++    'echo "#"\!"/bin/sh" > test_script.sh &&
++     echo "grep Ciao hello > /dev/null" >> test_script.sh &&
++     echo "test \$? -ne 0" >> test_script.sh &&
++     chmod +x test_script.sh &&
++     git bisect start $HASH4 $HASH1 &&
++     git bisect run ./test_script.sh > my_bisect_log.txt &&
++     grep "$HASH4 is first bad commit" my_bisect_log.txt &&
++     git bisect reset'
+ 
+ #
+ #
+-- 
+1.5.1.rc3.21.g02918
