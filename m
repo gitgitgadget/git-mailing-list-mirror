@@ -1,158 +1,420 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] display shortlog after git-commit
-Date: Wed, 04 Apr 2007 01:15:53 -0700
-Message-ID: <7vd52k7dxi.fsf@assigned-by-dhcp.cox.net>
-References: <20070322104021.GJ29341@mellanox.co.il>
-	<7v7it7kkl9.fsf@assigned-by-dhcp.cox.net>
-	<20070404060213.GB31984@mellanox.co.il>
-	<7v7iss8xo6.fsf@assigned-by-dhcp.cox.net>
-	<20070404070135.GF31984@mellanox.co.il>
+Subject: [ANNOUNCE] GIT 1.5.1
+Date: Wed, 04 Apr 2007 02:12:12 -0700
+Message-ID: <7v648c7bbn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Apr 04 10:16:01 2007
+Cc: linux-kernel@vger.kernel.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 04 11:12:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZ0ev-0006wd-5O
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 10:16:01 +0200
+	id 1HZ1Xi-00048V-RP
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 11:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992730AbXDDIP5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 04:15:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992734AbXDDIP5
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 04:15:57 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:64022 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992730AbXDDIPz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 04:15:55 -0400
+	id S2992775AbXDDJMR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 05:12:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992774AbXDDJMR
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 05:12:17 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:54962 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992767AbXDDJMO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 05:12:14 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070404081554.GOZS27119.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 4 Apr 2007 04:15:54 -0400
+          id <20070404091214.ERGV373.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 4 Apr 2007 05:12:14 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id iwFt1W0071kojtg0000000; Wed, 04 Apr 2007 04:15:54 -0400
-In-Reply-To: <20070404070135.GF31984@mellanox.co.il> (Michael S. Tsirkin's
-	message of "Wed, 4 Apr 2007 10:01:35 +0300")
+	id ixCC1W0081kojtg0000000; Wed, 04 Apr 2007 05:12:13 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43723>
 
-"Michael S. Tsirkin" <mst@dev.mellanox.co.il> writes:
+The latest feature release GIT 1.5.1 is available at the usual
+places:
 
->> I actually find it awkward that author/summary information is never
->> shown during git commit - sometimes one does git commit
->> on a machine where GIT_AUTHOR_EMAIL has not been setup
->> correctly, and the result often is mst@mst-desktop.(none).
+  http://www.kernel.org/pub/software/scm/git/
 
-That is something that needs to be set up once.  I do not think
-it justifies wasting three more lines (one of them being an
-empty line) per every commit.
+  git-1.5.1.tar.{gz,bz2}			(tarball)
+  git-htmldocs-1.5.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.5.1.tar.{gz,bz2}		(preformatted docs)
+  RPMS/$arch/git-*-1.5.1-1.$arch.rpm	(RPM)
 
->> Or people sometimes forget that the first line will show up
->> in the pretty=short summary and the result is that what
->> ends up being there is just 2 first lines of the long description.
->>
->> One has to remember to always do git log --pretty=short
->> after commit to verify that one did get these details right.
+----------------------------------------------------------------
+GIT v1.5.1 Release Notes
+========================
 
->> Ideas:
->> - Maybe have git-commit display shortlog summary for commit just created?
->
-> Hopefully this will make people fix the git config up and amend their commits themselves.
-> Does this sound like a good idea?
+Updates since v1.5.0
+--------------------
 
-Maybe protect it with "[user] novice" in .git/config?  Otherwise
-I think it gets too noisy once you get used to it. 
+* Deprecated commands and options.
 
-I think reviewing and fixing is best done in the editor (that's
-why git-commit does not start reading from stdin when it expects
-you to type a log message, but gives you an editor), and
-pointing out a mistake after the fact, while it is probably
-better than not pointing out at all, is not all that useful.  If
-there is no mistake, it is just an added noise, and if there is
-a mistake, the user needs to take another action (i.e. --amend)
-to correct it.
+  - git-diff-stages and git-resolve have been removed.
 
-I think a much better thing you could do is to have a mode that
-the commit log message editor is started with something like
-this...
+* New commands and options.
 
-	----------------------------------------------------------------
-	From: A U Thor <au.thor@example.com>
-        Subject: << the summary of the commit comes here >>
-        
-	# << more detailed explanations come here >>
-	# Please enter the commit message for your changes.
-        # (comment lines starting with '#' will not be included)
-	# On branch 'master'
-        # Changes to be committed:
-        # ...
-	----------------------------------------------------------------
+  - "git log" and friends take --reverse, which instructs them
+    to give their output in the order opposite from their usual.
+    They typically output from new to old, but with this option
+    their output would read from old to new.  "git shortlog"
+    usually lists older commits first, but with this option,
+    they are shown from new to old.
 
-and teach git-commit to notice the first paragraph that is
-formatted like RFC2822 headers, and do appropriate things.
+  - "git log --pretty=format:<string>" to allow more flexible
+    custom log output.
 
-"Something like" this patch, although this time I have these two
-words in quotes because I know the part to unmunge the buffer
-needs more work.
+  - "git diff" learned --ignore-space-at-eol.  This is a weaker
+    form of --ignore-space-change.
 
-diff --git a/git-commit.sh b/git-commit.sh
-index 292cf96..d7a7b0b 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -546,10 +546,13 @@ else
- fi
- set_reflog_action "$rloga"
- 
-+summary_mark='<< the summary of the commit comes here >>'
- if test -z "$no_edit"
- then
- 	{
-+		echo "$summary_mark"
- 		echo ""
-+		echo "# << more detailed explanations come here >>"
- 		echo "# Please enter the commit message for your changes."
- 		echo "# (Comment lines starting with '#' will not be included)"
- 		test -z "$only_include_assumed" || echo "$only_include_assumed"
-@@ -579,7 +582,34 @@ case "$no_edit" in
- 	esac
- 	git-var GIT_AUTHOR_IDENT > /dev/null  || die
- 	git-var GIT_COMMITTER_IDENT > /dev/null  || die
--	${VISUAL:-${EDITOR:-vi}} "$GIT_DIR/COMMIT_EDITMSG"
-+	{
-+		echo "From: $(expr "$(git-var GIT_AUTHOR_IDENT)" : '\(.*>\)')"
-+		sed -e '1s/^/Subject: /' "$GIT_DIR/COMMIT_EDITMSG"
-+		echo ""
-+	} >"$GIT_DIR/COMMIT_EDITMSG+"
-+	mv "$GIT_DIR/COMMIT_EDITMSG+" "$GIT_DIR/COMMIT_EDITMSG"
-+	${VISUAL:-${EDITOR:-vi}} "$GIT_DIR/COMMIT_EDITMSG" || exit
-+
-+	AU=$(sed -n -e '
-+		/^$/q
-+		/^From: /{
-+			s///p
-+			q
-+	}' "$GIT_DIR/COMMIT_EDITMSG")
-+	if	test -n "$AU" &&
-+		AN=$(expr "$AU" : '\(.*[^ ]\)  *<') &&
-+		AE=$(expr "$AU" : '.*[^ ]  *<\(.*\)>$')
-+	then
-+		GIT_AUTHOR_NAME=$AN
-+		GIT_AUTHOR_EMAIL=$AE
-+		export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
-+	fi
-+	sed -e '
-+		/^From: /d
-+		/^Subject: '"$summary_mark"'/d
-+		s/^Subject: //
-+	' "$GIT_DIR/COMMIT_EDITMSG" >"$GIT_DIR/COMMIT_EDITMSG+"
-+	mv "$GIT_DIR/COMMIT_EDITMSG+" "$GIT_DIR/COMMIT_EDITMSG"
- 	;;
- esac
- 
+  - "git diff --no-index pathA pathB" can be used as diff
+    replacement with git specific enhancements.
+
+  - "git diff --no-index" can read from '-' (standard input).
+
+  - "git diff" also learned --exit-code to exit with non-zero
+    status when it found differences.  In the future we might
+    want to make this the default but that would be a rather big
+    backward incompatible change; it will stay as an option for
+    now.
+
+  - "git diff --quiet" is --exit-code with output turned off,
+    meant for scripted use to quickly determine if there is any
+    tree-level difference.
+
+  - Textual patch generation with "git diff" without -w/-b
+    option has been significantly optimized.  "git blame" got
+    faster because of the same change.
+
+  - "git log" and "git rev-list" has been optimized
+    significantly when they are used with pathspecs.
+
+  - "git branch --track" can be used to set up configuration
+    variables to help it easier to base your work on branches
+    you track from a remote site.
+
+  - "git format-patch --attach" now emits attachments.  Use
+    --inline to get an inlined multipart/mixed.
+
+  - "git name-rev" learned --refs=<pattern>, to limit the tags
+    used for naming the given revisions only to the ones
+    matching the given pattern.
+
+  - "git remote update" is to run "git fetch" for defined remotes
+    to update tracking branches.
+
+  - "git cvsimport" can now take '-d' to talk with a CVS
+    repository different from what are recorded in CVS/Root
+    (overriding it with environment CVSROOT does not work).
+
+  - "git bundle" can help sneaker-netting your changes between
+    repositories.
+
+  - "git mergetool" can help 3-way file-level conflict
+    resolution with your favorite graphical merge tools.
+
+  - A new configuration "core.symlinks" can be used to disable
+    symlinks on filesystems that do not support them; they are
+    checked out as regular files instead.
+
+  - You can name a commit object with its first line of the
+    message.  The syntax to use is ':/message text'.  E.g.
+
+    $ git show ":/object name: introduce ':/<oneline prefix>' notation"
+
+    means the same thing as:
+
+    $ git show 28a4d940443806412effa246ecc7768a21553ec7
+
+  - "git bisect" learned a new command "run" that takes a script
+    to run after each revision is checked out to determine if it
+    is good or bad, to automate the bisection process.
+
+  - "git log" family learned a new traversal option --first-parent,
+    which does what the name suggests.
+
+
+* Updated behavior of existing commands.
+
+  - "git-merge-recursive" used to barf when there are more than
+    one common ancestors for the merge, and merging them had a
+    rename/rename conflict.  This has been fixed.
+
+  - "git fsck" does not barf on corrupt loose objects.
+
+  - "git rm" does not remove newly added files without -f.
+
+  - "git archimport" allows remapping when coming up with git
+    branch names from arch names.
+
+  - git-svn got almost a rewrite.
+
+  - core.autocrlf configuration, when set to 'true', makes git
+    to convert CRLF at the end of lines in text files to LF when
+    reading from the filesystem, and convert in reverse when
+    writing to the filesystem.  The variable can be set to
+    'input', in which case the conversion happens only while
+    reading from the filesystem but files are written out with
+    LF at the end of lines.  Currently, which paths to consider
+    'text' (i.e. be subjected to the autocrlf mechanism) is
+    decided purely based on the contents, but the plan is to
+    allow users to explicitly override this heuristic based on
+    paths.
+
+  - The behavior of 'git-apply', when run in a subdirectory,
+    without --index nor --cached were inconsistent with that of
+    the command with these options.  This was fixed to match the
+    behavior with --index.  A patch that is meant to be applied
+    with -p1 from the toplevel of the project tree can be
+    applied with any custom -p<n> option.  A patch that is not
+    relative to the toplevel needs to be applied with -p<n>
+    option with or without --index (or --cached).
+
+  - "git diff" outputs a trailing HT when pathnames have embedded
+    SP on +++/--- header lines, in order to help "GNU patch" to
+    parse its output.  "git apply" was already updated to accept
+    this modified output format since ce74618d (Sep 22, 2006).
+
+  - "git cvsserver" runs hooks/update and honors its exit status.
+
+  - "git cvsserver" can be told to send everything with -kb.
+
+  - "git diff --check" also honors the --color output option.
+
+  - "git name-rev" used to stress the fact that a ref is a tag too
+    much, by saying something like "v1.2.3^0~22".  It now says
+    "v1.2.3~22" in such a case (it still says "v1.2.3^0" if it does
+    not talk about an ancestor of the commit that is tagged, which
+    makes sense).
+
+  - "git rev-list --boundary" now shows boundary markers for the
+    commits omitted by --max-age and --max-count condition.
+
+  - The configuration mechanism now reads $(prefix)/etc/gitconfig.
+
+  - "git apply --verbose" shows what preimage lines were wanted
+    when it couldn't find them.
+
+  - "git status" in a read-only repository got a bit saner.
+
+  - "git fetch" (hence "git clone" and "git pull") are less
+    noisy when the output does not go to tty.
+
+  - "git fetch" between repositories with many refs were slow
+    even when there are not many changes that needed
+    transferring.  This has been sped up by partially rewriting
+    the heaviest parts in C.
+
+  - "git mailinfo" which splits an e-mail into a patch and the
+    meta-information was rewritten, thanks to Don Zickus.  It
+    handles nested multipart better.  The command was broken for
+    a brief period on 'master' branch since 1.5.0 but the
+    breakage is fixed now.
+
+  - send-email learned configurable bcc and chain-reply-to.
+
+  - "git remote show $remote" also talks about branches that
+    would be pushed if you run "git push remote".
+
+  - Using objects from packs is now seriously optimized by clever
+    use of a cache.  This should be most noticeable in git-log
+    family of commands that involve reading many tree objects.
+    In addition, traversing revisions while filtering changes
+    with pathspecs is made faster by terminating the comparison
+    between the trees as early as possible.
+
+
+* Hooks
+
+  - The part to send out notification e-mails was removed from
+    the sample update hook, as it was not an appropriate place
+    to do so.  The proper place to do this is the new post-receive
+    hook.  An example hook has been added to contrib/hooks/.
+
+
+* Others
+
+  - git-revert, git-gc and git-cherry-pick are now built-ins.
+
+Fixes since v1.5.0
+------------------
+
+These are all in v1.5.0.x series.
+
+* Documentation updates
+
+  - Clarifications and corrections to 1.5.0 release notes.
+
+  - The main documentation did not link to git-remote documentation.
+
+  - Clarified introductory text of git-rebase documentation.
+
+  - Converted remaining mentions of update-index on Porcelain
+    documents to git-add/git-rm.
+
+  - Some i18n.* configuration variables were incorrectly
+    described as core.*; fixed.
+
+  - added and clarified core.bare, core.legacyheaders configurations.
+
+  - updated "git-clone --depth" documentation.
+
+  - user-manual updates.
+
+  - Options to 'git remote add' were described insufficiently.
+
+  - Configuration format.suffix was not documented.
+
+  - Other formatting and spelling fixes.
+
+  - user-manual has better cross references.
+
+  - gitweb installation/deployment procedure is now documented.
+
+
+* Bugfixes
+
+  - git-upload-pack closes unused pipe ends; earlier this caused
+    many zombies to hang around.
+
+  - git-rerere was recording the contents of earlier hunks
+    duplicated in later hunks.  This prevented resolving the same
+    conflict when performing the same merge the other way around.
+
+  - git-add and git-update-index on a filesystem on which
+    executable bits are unreliable incorrectly reused st_mode
+    bits even when the path changed between symlink and regular
+    file.
+
+  - git-daemon marks the listening sockets with FD_CLOEXEC so
+    that it won't be leaked into the children.
+
+  - segfault from git-blame when the mandatory pathname
+    parameter was missing was fixed; usage() message is given
+    instead.
+
+  - git-rev-list did not read $GIT_DIR/config file, which means
+    that did not honor i18n.logoutputencoding correctly.
+
+  - Automated merge conflict handling when changes to symbolic
+    links conflicted were completely broken.  The merge-resolve
+    strategy created a regular file with conflict markers in it
+    in place of the symbolic link.  The default strategy,
+    merge-recursive was even more broken.  It removed the path
+    that was pointed at by the symbolic link.  Both of these
+    problems have been fixed.
+
+  - 'git diff maint master next' did not correctly give combined
+    diff across three trees.
+
+  - 'git fast-import' portability fix for Solaris.
+
+  - 'git show-ref --verify' without arguments did not error out
+    but segfaulted.
+
+  - 'git diff :tracked-file `pwd`/an-untracked-file' gave an extra
+    slashes after a/ and b/.
+
+  - 'git format-patch' produced too long filenames if the commit
+    message had too long line at the beginning.
+
+  - Running 'make all' and then without changing anything
+    running 'make install' still rebuilt some files.  This
+    was inconvenient when building as yourself and then
+    installing as root (especially problematic when the source
+    directory is on NFS and root is mapped to nobody).
+
+  - 'git-rerere' failed to deal with two unconflicted paths that
+    sorted next to each other.
+
+  - 'git-rerere' attempted to open(2) a symlink and failed if
+    there was a conflict.  Since a conflicting change to a
+    symlink would not benefit from rerere anyway, the command
+    now ignores conflicting changes to symlinks.
+
+  - 'git-repack' did not like to pass more than 64 arguments
+    internally to underlying 'rev-list' logic, which made it
+    impossible to repack after accumulating many (small) packs
+    in the repository.
+
+  - 'git-diff' to review the combined diff during a conflicted
+    merge were not reading the working tree version correctly
+    when changes to a symbolic link conflicted.  It should have
+    read the data using readlink(2) but read from the regular
+    file the symbolic link pointed at.
+
+  - 'git-remote' did not like period in a remote's name.
+
+  - 'git.el' honors the commit coding system from the configuration.
+
+  - 'blameview' in contrib/ correctly digs deeper when a line is
+    clicked.
+
+  - 'http-push' correctly makes sure the remote side has leading
+    path.  Earlier it started in the middle of the path, and
+    incorrectly.
+
+  - 'git-merge' did not exit with non-zero status when the
+    working tree was dirty and cannot fast forward.  It does
+    now.
+
+  - 'cvsexportcommit' does not lose yet-to-be-used message file.
+
+  - int-vs-size_t typefix when running combined diff on files
+    over 2GB long.
+
+  - 'git apply --whitespace=strip' should not touch unmodified
+    lines.
+
+  - 'git-mailinfo' choke when a logical header line was too long.
+
+  - 'git show A..B' did not error out.  Negative ref ("not A" in
+    this example) does not make sense for the purpose of the
+    command, so now it errors out.
+
+  - 'git fmt-merge-msg --file' without file parameter did not
+    correctly error out.
+
+  - 'git archimport' barfed upon encountering a commit without
+    summary.
+
+  - 'git index-pack' did not protect itself from getting a short
+    read out of pread(2).
+
+  - 'git http-push' had a few buffer overruns.
+
+  - Build dependency fixes to rebuild fetch.o when other headers
+    change.
+
+  - git.el does not add duplicate sign-off lines.
+
+  - git-commit shows the full stat of the resulting commit, not
+    just about the files in the current directory, when run from
+    a subdirectory.
+
+  - "git-checkout -m '@{8 hours ago}'" had a funny failure from
+    eval; fixed.
+
+  - git-merge (hence git-pull) did not refuse fast-forwarding
+    when the working tree had local changes that would have
+    conflicted with it.
+
+  - a handful small fixes to gitweb.
+
+  - build procedure for user-manual is fixed not to require locally
+    installed stylesheets.
+
+  - "git commit $paths" on paths whose earlier contents were
+    already updated in the index were failing out.
+
+
+* Tweaks
+
+  - sliding mmap() inefficiently mmaped the same region of a
+    packfile with an access pattern that used objects in the
+    reverse order.  This has been made more efficient.
