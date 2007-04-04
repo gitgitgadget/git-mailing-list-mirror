@@ -1,62 +1,73 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: Partitioned packs
-Date: Tue, 3 Apr 2007 18:16:12 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0704031813100.21680@qynat.qvtvafvgr.pbz>
-References: <db69205d0704031836u3b3dfc2pb9825dd649aca58@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] checkout -d: explicitly detach HEAD even when switching
+ to the tip of a branch
+Date: Tue, 3 Apr 2007 18:55:03 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704031850240.6730@woody.linux-foundation.org>
+References: <7vr6r879zp.fsf@assigned-by-dhcp.cox.net> <euk8ps$vu1$1@sea.gmane.org>
+ <200703311455.l2VEtHO5021300@localhost.localdomain> <7vtzvxt2v3.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Chris Lee <clee@kde.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 03:45:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Xavier Maillard <zedek@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 04 03:55:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYuYq-0004UD-Ar
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 03:45:20 +0200
+	id 1HYuiW-0002Wx-6r
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 03:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966263AbXDDBpQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 21:45:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966262AbXDDBpP
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 21:45:15 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:39360 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S966263AbXDDBpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 21:45:14 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Tue, 3 Apr 2007 18:45:14 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 03 Apr 2007 18:44:33 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <db69205d0704031836u3b3dfc2pb9825dd649aca58@mail.gmail.com>
+	id S966273AbXDDBzP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 21:55:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966275AbXDDBzP
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 21:55:15 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:52754 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966273AbXDDBzN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 21:55:13 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l341t4PD030972
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 3 Apr 2007 18:55:05 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l341t3GT009445;
+	Tue, 3 Apr 2007 18:55:04 -0700
+In-Reply-To: <7vtzvxt2v3.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.452 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43703>
 
-On Tue, 3 Apr 2007, Chris Lee wrote:
 
-> Date: Tue, 3 Apr 2007 18:36:44 -0700
-> From: Chris Lee <clee@kde.org>
-> To: git@vger.kernel.org
-> Subject: Partitioned packs
+
+On Tue, 3 Apr 2007, Junio C Hamano wrote:
 > 
-> I've been running some experiments, as hinted earlier by the
-> discussion about just how much git-index-pack sucks (which, really,
-> isn't much since the gaping memleak is gone now).
->
-> These experiments include trying to see if there's a noticeable
-> performance improvement by splitting out objects of different types
-> into different packs. So far, it definitely seems to make a
-> difference, though not the one I was initially expecting. For all of
-> these tests, I did 'sysctl -w vm.drop_caches=3' before running, to
-> effectively simulate a cold-cache run.
+> Could anybody remind me why we have the "new != old" check here?
 
-I wonder what order the packs ended up in. if git had to go through the wrong 
-pack completely first before finding the pack that it needed, that coudl account 
-for extra time.
+Afaik, it's just so that you can do
 
-is it worth makeing up single packs that order the three different types of 
-object differently within the one pack to see what difference it makes to have 
-to walk past all the blobs to get to the commits and trees?
+	git checkout -f
 
-David Lang
+without having it complain. And I think it just comes from the earlier:
+
+	[ -z "$new" ] && new=$old && new_name="$old_name"
+
+that we did - ie without that it would incorrectly just overwrite the 
+current working tree with the new commit, but not actually do the "git 
+reset" part.
+
+So without that check, the way things used to work (*before* detached 
+heads), if you were to have done
+
+	git checkout <some-random-head>
+
+it would have screwed up the current branch horribly.
+
+With detached heads, I don't think it's needed.
+
+		Linus
