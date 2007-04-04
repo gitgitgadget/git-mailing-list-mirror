@@ -1,71 +1,178 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] rerere should not repeat the earlier hunks in later ones
-Date: Wed, 04 Apr 2007 15:55:54 -0700
-Message-ID: <7vmz1nycjp.fsf@assigned-by-dhcp.cox.net>
-References: <7v1wj1ujf5.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0704041746580.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-	<7v8xd83sfn.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.63.0704042359470.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation: A few minor fixes to Git User's Manual
+Date: Wed, 4 Apr 2007 20:31:41 +0200
+Message-ID: <200704042031.41475.jnareb@gmail.com>
+References: <11756176481314-git-send-email-jnareb@gmail.com> <7vlkh9xotn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Apr 05 00:56:00 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@fieldses.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Apr 05 01:14:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZEOV-0001h4-LF
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 00:56:00 +0200
+	id 1HZEgY-0002vs-On
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 01:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752558AbXDDWz4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 18:55:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752573AbXDDWz4
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 18:55:56 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:57438 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752558AbXDDWzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 18:55:55 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070404225556.RBPP373.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 4 Apr 2007 18:55:56 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id jAvv1W0021kojtg0000000; Wed, 04 Apr 2007 18:55:55 -0400
-In-Reply-To: <Pine.LNX.4.63.0704042359470.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 5 Apr 2007 00:00:40 +0200
-	(CEST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752789AbXDDXOe (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 19:14:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbXDDXOe
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 19:14:34 -0400
+Received: from mu-out-0910.google.com ([209.85.134.186]:3707 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752789AbXDDXOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 19:14:32 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so527378muf
+        for <git@vger.kernel.org>; Wed, 04 Apr 2007 16:14:30 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Q6tKp6odGtQNp7pFCSy5lbvba87K2e444nNZ17FDs2KiwYFpIM9dXLg9VKwMb8fM2pKPjH9ge5lfCt/XWz2lRKAGTOhnvhrVUo3u+C6QGZDI6r1K0GvkP2gHvSqk8TXu+FRyiaUOgFEdnvKYB34ul5Td9VquU3SSstYiEyf7OfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=kME/OJhsian3a1M3Ky68cUPrTjcxBP5bsjHr6C8Bifj75nqJ/fDUFsfJFC9sVp0l8t+MY/GH0Ox+pcO3tOUV1PjBpE4rxU6ZJIGnQJL3B24B71fwr6WjQW/P89W5vJqdtbN987mwHt9Rzqq9Xc5VZoQoxxtmdSWhUQqr5uNvNgc=
+Received: by 10.82.178.11 with SMTP id a11mr1723876buf.1175728470445;
+        Wed, 04 Apr 2007 16:14:30 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id w5sm2670402mue.2007.04.04.16.14.28;
+        Wed, 04 Apr 2007 16:14:29 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vlkh9xotn.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43787>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, Apr 03, 2007, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> * no "detached head" feature (since 1.5.0.5 at least)
+> 
+> That is a 1.5.0 feature.
+> 
+> Care to volunteer to write that section?
 
->> > @@ -112,7 +112,8 @@ static int handle_file(const char *path,
->> >  		else if (!prefixcmp(buf, ">>>>>>> ")) {
->> >  			hunk_no++;
->> >  			hunk = 0;
->> > -			if (memcmp(one->ptr, two->ptr, one->nr < two->nr ?
->> > +			if (one->nr > two->nr || memcmp(one->ptr, two->ptr,
->> > +						one->nr < two->nr ?
->> >  						one->nr : two->nr) > 0) {
->> >  				struct buffer *swap = one;
->> >  				one = two;
->> >
->> > in case that one conflicting region is prefix of the other one.
->> 
->> If one is not a prefix of two but simply longer what does that
->> code do?
->
-> You're right. With the eager merging algorithm, it is no longer possible 
-> that one side is a strict prefix of the other.
->
-> So please forget about my comment.
+I'd rather not write about somthing I don't personally use.
+But I can add one sentence mentioning detached head as an
+alternative to "checkout -b tmp", "reset --hard" for sightseeing.
+See also below.
+ 
+>                                          I think illustrating 
+> what you would want to achieve by detaching your HEAD would be
+> useful, and I offhand know of two different uses:
+> 
+>  - Sightseeing.  You do not intend to build on, but seek around
+>    to see what was there in the past.  Checking out a tag or a
+>    remote branch falls into this.
+> 
+>  - Rebuilding history.  When you want to futz with a commit 5
+>    revs ago, you would detach your HEAD to that commit, fix it
+>    up, and rebase the original branch on top of that detached
+>    HEAD.
+> 
+> I am sure people may have invented more creative ways to use it.
+> The topic probably belongs to "advanced user's manual", though.
 
-Now you confused me even more...
+If I remember correctly I have added this note because of using
+"git checkout -b new remotes/branch" (or tag) together with
+"git reset --hard tag" for sight-seeing.
+ 
+>> * uses ssh://host/path syntax instead of scp-like host:path
+>>   (which one is preferred? documentation has URL-like first)
+> 
+> My impression is that site:path is preferred.
 
-Isn't there a case where one is full of text and two is empty?
+So perhaps we should use this syntax in Git User's Manual?
+ 
+>> * no mention of receive.denyNonFastForwards (in about push)
+> 
+> I think the "Setting up a shared repository" section refers most
+> of the material to cvs-migration.txt, so you probably want to
+> add a sentence to "Advanced Shared Repository Management"
+> section in the latter.
+
+I was referring to the following fragment:
+
+  As with git-fetch, git-push will complain if this does not result in
+  a <<fast-forwards,fast forward>>.  Normally this is a sign of
+  something wrong.  However, if you are sure you know what you're
+  doing, you may force git-push to perform the update anyway by
+  proceeding the branch name by a plus sign:
+
+  -------------------------------------------------
+  $ git push ssh://yourserver.com/~you/proj.git +master
+  -------------------------------------------------
+
+I'd like to have note here that if receive.denyNonFastForwards is set
+on remote repository side (and it is set by default when initializing
+shared repository), then you would not be able to force non fast-forward
+push. Just to avoid potential confusion (why it is not accepting push?).
+ 
+>> * no git rebase --merge (e.g. renames)
+>> * git cherry-pick --no-commit + git commit, instead of
+>>   git cherry-pick + git commit --amend
+> 
+> It usually is not a good idea for a manual to show two ways to
+> do the same thing without explaining pros and cons.
+> 
+> I typically use rebase *without* --merge because it tends to be
+> faster (recently 'mailinfo' was broken for i18n contents, and I
+> had to use "rebase --merge" until it was fixed; now I can go
+> back to my old ways of running it without --merge ;-)).  I think
+> the only reason to use --merge is when you want the rename thing
+> in merge-recursive.
+
+It would be enough to have one sentence mentioning it, like e.g.
+"Use 'git rebase --merge' if rebased commits include renames",
+or something like that.
+ 
+> I do not think "cherry-pick -n + commit" vs "cherry-pick +
+> commit --amend" is an interesting contrast for a single commit.
+> Squashing more than one commit is why you would want to pick
+> without committing, which you cannot do with the latter.  So
+> they are not "instead of" -- they serve different purposes.
+
+Well, perhaps in "Advanced..." section it should be mentioned
+that you can use 'git cherry-pick --no-commit' to concatenate
+together some commits (and 'git merge --squash' to concatenate
+whole branch to single commit).
+
+Chosing "cherry-pick -n + commit" vs "cherry-pick + commit --amend"
+is IMVHO a matter of taste; I think commit --amend is encouraged.
+
+>> * legitimate use of multiple root commits: joining projects
+>>   (e.g. git = git-core + git-tools (mail) + gitk + gitweb + git-gui)
+> 
+> I am not sure if you would even need to talk about it.  As long
+> as the document does not say "you shouldn't have more than one
+> root", I think we are Ok.
+
+I was thinking about adding a sentence that you can have multiple
+root commits in repository, and usually they are result of joining
+two projects (git can join projects, which is a plus), or rather
+including one project in the other.
+
+Git User's Manual says:
+
+  As a special case, a commit object with no parents is called the
+  "root" object, and is the point of an initial project commit.  Each
+  project must have at least one root, and while you can tie several
+  different root objects together into one project by creating a commit
+  object which has two or more separate roots as its ultimate parents,
+  that's probably just going to confuse people.  So aim for the notion
+  of "one root object per project", even if git itself does not enforce
+  that.
+
+I'd rather have this softened: try do not use it for the sake of using 
+it, but joining projects (swallowing other project) results in multiple 
+roots.
+
+-- 
+Jakub Narebski
+ShadeHawk on #git
+Poland
