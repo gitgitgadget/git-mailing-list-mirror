@@ -1,81 +1,114 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Documentation: A few minor fixes to Git User's Manual
-Date: Wed, 4 Apr 2007 17:22:58 +0200
-Message-ID: <200704041722.58780.jnareb@gmail.com>
-References: <11756176481314-git-send-email-jnareb@gmail.com> <20070403172113.GB26201@fieldses.org>
+Subject: Re: [PATCH] gitweb: Support comparing blobs (files) with different names
+Date: Wed, 4 Apr 2007 23:27:49 +0200
+Message-ID: <200704042327.49632.jnareb@gmail.com>
+References: <11748548622888-git-send-email-mkoegler@auto.tuwien.ac.at> <7vmz1t6oe2.fsf@assigned-by-dhcp.cox.net> <200704031657.25698.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Thu Apr 05 01:15:34 2007
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Apr 05 01:15:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZEhQ-0003Sf-I0
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 01:15:32 +0200
+	id 1HZEhR-0003Sf-3o
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 01:15:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752810AbXDDXOg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 19:14:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbXDDXOg
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 19:14:36 -0400
+	id S1752779AbXDDXOk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 19:14:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752791AbXDDXOi
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 19:14:38 -0400
 Received: from ug-out-1314.google.com ([66.249.92.168]:30891 "EHLO
 	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752779AbXDDXOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 19:14:33 -0400
+	with ESMTP id S1752797AbXDDXOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 19:14:35 -0400
 Received: by ug-out-1314.google.com with SMTP id 44so836577uga
-        for <git@vger.kernel.org>; Wed, 04 Apr 2007 16:14:28 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 04 Apr 2007 16:14:34 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=C7D/lKmAd8cK6UOvosw+3ktyULfWwRL+rB3jGSmqXTHKN9c4T73XdrUxJH/kAsMb3HDtTbazHCrfF7FmzTB4S2blW0RyYk7FLH2xFtZgmmRowX/f41SmB8deAmokJHZHs2cYXHHyxe4bwA3PBjdzGktUmFktFKDYEfORwuKh3KQ=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:message-id:content-type:content-transfer-encoding;
+        b=U7BKOYqnEByLbWQcMXkMaLnhUpIhPNnN3GkG/5yj5lf370f67Hj7aMOAqS+N7aFFp8GGMBvsWmw2anbuNnfU3KiigFwAKQV1TaxlWVIXOthohHcXlyNbDdCndmuZkqQOub8muKWKar2RHHSNn3z5YftzgEymUTQbW7ah0BprINY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=gD2433oOpLvTlMRDkG7kREoO01POrIWfTW+m1h9DcxVN4BBKB2ZoW8drPSIb2yW5qKASjXDbLbTsblgJ7KElvXoj/tAwuR6PA1OinBlSQIGcQUz7faPEfD2R1MSPlw4TVHkL/BwjMoaokKkvgxprouduJwM6gr+oMvSAYVUM0XQ=
-Received: by 10.67.102.16 with SMTP id e16mr472824ugm.1175728468037;
-        Wed, 04 Apr 2007 16:14:28 -0700 (PDT)
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:message-id:content-type:content-transfer-encoding;
+        b=diEwSgRTsNd+iejrggeZozv4cBKKtKZ2lMcnuXI0U6pNp5WpLf2OvkV6ypmuaheK1BgLfMPZFvbjRowSCSr13uuUKeT1z1utUvtUg7X2Rh5bWlMQ83MPF9NRmIuo69YvGS0khjIZRroFmAVY3osBq6o9f6puADFkW+VjK1BAbTc=
+Received: by 10.66.221.6 with SMTP id t6mr1735138ugg.1175728474421;
+        Wed, 04 Apr 2007 16:14:34 -0700 (PDT)
 Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
-        by mx.google.com with ESMTP id w5sm2670402mue.2007.04.04.16.14.26;
-        Wed, 04 Apr 2007 16:14:26 -0700 (PDT)
+        by mx.google.com with ESMTP id w5sm2670402mue.2007.04.04.16.14.32;
+        Wed, 04 Apr 2007 16:14:33 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <20070403172113.GB26201@fieldses.org>
+In-Reply-To: <200704031657.25698.jnareb@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43789>
 
-On Tue, Apr 03, 2007, J. Bruce Fields wrote:
-> On Tue, Apr 03, 2007 at 06:27:28PM +0200, Jakub Narebski wrote:
->>
->> A few [shorthand] comments about Git User's Manual:
-[...]
->> * inconsistent use of header levels
->>         Level 0 (top level):     ======================
->>         Level 1:                 ----------------------
->>         Level 2:                 ~~~~~~~~~~~~~~~~~~~~~~
->>         Level 3:                 ^^^^^^^^^^^^^^^^^^^^^^
->>         Level 4 (bottom level):  ++++++++++++++++++++++
+On Tue, Apr 03, 2007 at 16:57 +0200, Jakub Narebski wrote:
+> On Sun, Apr 1, 2007, Junio C Hamano wrote:
+>> Jakub Narebski <jnareb@gmail.com> writes:
+>> 
+>>>> First is not escaped filename in HTTP header. There was some discussion
+>>>> about this, and even patch by Luben Tuikov which added to_qtext 
+>>>> subroutine to deal with escaping in HTTP [...]
+>>>
+>>> Junio, do you remember by chance why this patch was dropped?
+>> 
+>> No, but I suspect that was because the noisiness of the thread
+>> around them suggested they were not ready to be applied.  I do
+>> not remember if people submitted the patch and commented on
+>> reached a consensus.
 > 
-> Have you found internal inconsistencies, or are you just referring to
-> the fact that it's using different syntax from the default?
+> Probably not. Here is alternative proposal. It does not implement
+>   RFC2184: MIME Parameter Value and Encoded Word Extensions
+> but I'm not sure if 1) it is needed for _HTTP_ Content-Disposition
+> header filename, 2) all browsers implement it.
 
-Both, but more the fact that I haven't noticed that user-manual uses
-different syntax (____ and not ==== is Level 0), and that I mistook
-____ for ---- (perhaps #### would be better, if it is possible), but
-also the fact that parts Git User's Manual is composed of use different
-sectioning.
+[...]
+> P.P.S. Here is an example of RFC2184 encoded header:
+> 
+>    Content-Type: application/x-stuff
+>     title*1*=us-ascii'en'This%20is%20even%20more%20
+>     title*2*=%2A%2A%2Afun%2A%2A%2A%20
+>     title*3="isn't it!"
 
-> I'd kinda like to remove all the tutorials some day and absorb them into
-> the manual instead, but maybe that would be unpopular.
+Another example:
 
-I'd rather keep the tutorials, perhaps making them more tutorial-ish,
-and adding proposed but not as a patch and not included "Branching and
-Merging" tutorial, and making Git User's Manual more a reference material.
+  Content-Type: text/plain; charset=utf-8\r
+  Content-Disposition: inline; filename*=utf-8'en-US'This%20is%0A%20%2A%2A%2Afun%2A%2A%2A
+
+
+Although "RFC 2183: The Content-Disposition Header Field" says:
+
+  Parameter values longer than 78 characters, or which contain non-ASCII
+  characters, MUST be encoded as specified in [RFC 2184].
+
+the limit of 78 characters is because it is was created for mail, and
+some old MUA had limit on line length. It is not the case of HTTP
+protocol: lines can be, and are, quite long. Besides for example
+Apache 2.0.54 does not understand MUA-style continued HTTP headers
+if in 'parse headers' mode: it returns server error.
+
+As to browsers: Mozilla 1.7.12 implements RFC2183 correctly, although for
+example shows %0A / \n as a strange symbol in "save as" dialog, created
+file has embedded newline in filename, as it should. But both Lynx 2.8.5,
+and ELinks 0.10.3 do not implement it fully and without errors.
+
+So that is why we have:
+
+	# It not worth potential problems to try to carry newlines
+	# in the header; it is just _suggested_ filename
+	$filename =~ s/[[:cntrl:]\n\r]/_/g;
+
+
+P.S. If there were no objections (no discussion), I'd resend
+content_disposition subroutine as patch to gitweb in about a week.
 
 -- 
 Jakub Narebski
+ShadeHawk on #git
 Poland
