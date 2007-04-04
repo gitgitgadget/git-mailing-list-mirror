@@ -1,73 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Show binary file size change in diff --stat
-Date: Wed, 4 Apr 2007 18:59:35 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0704041856210.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <200704041414.14797.andyparkins@gmail.com> <4613A974.60808@dawes.za.net>
- <200704041540.59977.andyparkins@gmail.com> <4613C97C.9050600@dawes.za.net>
- <Pine.LNX.4.63.0704041819340.4045@wbgn013.biozentrum.uni-wuerzburg.de>
- <Pine.LNX.4.64.0704040935350.6730@woody.linux-foundation.org>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH/RFC] introduce GIT_WORK_TREE environment variable
+Date: Wed, 4 Apr 2007 09:59:57 -0700
+Message-ID: <56b7f5510704040959n17795c1aj5792fef712bae1b8@mail.gmail.com>
+References: <20070328141505.GA16600@moooo.ath.cx>
+	 <20070404140853.GA31372@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Rogan Dawes <lists@dawes.za.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 18:59:53 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, danahow@gmail.com
+To: "Matthias Lederhofer" <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Apr 04 19:00:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZ8ph-0005u2-Mn
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 18:59:42 +0200
+	id 1HZ8q8-00066c-5i
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 19:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751341AbXDDQ7i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 12:59:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751349AbXDDQ7i
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 12:59:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49454 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751341AbXDDQ7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 12:59:37 -0400
-Received: (qmail invoked by alias); 04 Apr 2007 16:59:35 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp048) with SMTP; 04 Apr 2007 18:59:35 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/bfQg8Ak3bdTBVlvTZRYbK80APAX6ZwKPlWFOqXs
-	AAL322CsmS7LVI
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <Pine.LNX.4.64.0704040935350.6730@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1751366AbXDDRAB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 13:00:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbXDDRAB
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 13:00:01 -0400
+Received: from ik-out-1112.google.com ([66.249.90.181]:6891 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751366AbXDDRAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 13:00:00 -0400
+Received: by ik-out-1112.google.com with SMTP id c21so176761ika
+        for <git@vger.kernel.org>; Wed, 04 Apr 2007 09:59:58 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=BYiqdkHCSBHizeBa6PuFEwxRLHyMTFkzKHQfDjtlxsdtoovwMhLeJ2nMf5NSaozB2hxJ6xIloaGFz884shKFeFPmfokznjIyxrrsIcdhPrDDM7lssK4iqiInBZTpqYnDLZI3niFWTT10ueuRXLDuSoPDdzBBi/n+uwplkNxeUpc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GrseIs2hdQuVZ8s10rzUT9Ql6lu4P9mOzwgxugF5V1oTUCivCTY+ICr7MebNPmDAxeQGykzrcn94wM2PLRBy6lESm7pKC2EtWoGTFBy7NaVjETuBY5cc8Dvrawd4P52+/pvug0PpzPsN9VLbxA5+QA8uaq6r2cU8QfeGUu7tkTY=
+Received: by 10.115.60.1 with SMTP id n1mr336635wak.1175705997982;
+        Wed, 04 Apr 2007 09:59:57 -0700 (PDT)
+Received: by 10.114.46.4 with HTTP; Wed, 4 Apr 2007 09:59:57 -0700 (PDT)
+In-Reply-To: <20070404140853.GA31372@moooo.ath.cx>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43758>
 
-Hi,
+On 4/4/07, Matthias Lederhofer <matled@gmx.net> wrote:
+> As 1.5.1 is released now: any comments on this patch?
 
-On Wed, 4 Apr 2007, Linus Torvalds wrote:
+Ditto for "Handling large repositories".
+I guess I should resubmit it against 1.5.1.
 
-> On Wed, 4 Apr 2007, Johannes Schindelin wrote:
-> > 
-> > The subtle difference: your approach is _expensive_ in terms of CPU time, 
-> > while the byte change approach is _dirt cheap_.
-> 
-> Well, you could do a combination (still dirt cheap):
->  - show the size before/after (and yes, new/delete should be separate from 
->    "zero size before/after")
->  - show the size of the binary patch.
-
-... and by this (size of binary patch) you mean the deltified object?
-
-In general, we do not have the binary patch. And the generation of that 
-binary patch is what I was referring to being expensive.
-
-Remember, most binary files are way larger than the average source code 
-files we have, since it is much, much easier to generate binary data than 
-to write meaningful code. Therefore, the binary patch generation has to 
-look at much larger pieces to begin with, which translates into CPU time.
-
-Having said that, I have to admit that I don't have numbers backing this 
-reasoning up. So, if somebody comes up with numbers contradicting my 
-theory, I will gladly change my mind.
-
-Ciao,
-Dscho
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
