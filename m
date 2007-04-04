@@ -1,56 +1,57 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH/RFC] introduce GIT_WORK_TREE environment variable
-Date: Wed, 4 Apr 2007 09:59:57 -0700
-Message-ID: <56b7f5510704040959n17795c1aj5792fef712bae1b8@mail.gmail.com>
-References: <20070328141505.GA16600@moooo.ath.cx>
-	 <20070404140853.GA31372@moooo.ath.cx>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Show binary file size change in diff --stat
+Date: Wed, 4 Apr 2007 10:12:38 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704041011170.6730@woody.linux-foundation.org>
+References: <200704041414.14797.andyparkins@gmail.com> <4613A974.60808@dawes.za.net>
+ <200704041540.59977.andyparkins@gmail.com> <4613C97C.9050600@dawes.za.net>
+ <Pine.LNX.4.63.0704041819340.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+ <Pine.LNX.4.64.0704040935350.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0704041856210.4045@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, danahow@gmail.com
-To: "Matthias Lederhofer" <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Wed Apr 04 19:00:09 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Rogan Dawes <lists@dawes.za.net>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 04 19:12:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZ8q8-00066c-5i
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 19:00:08 +0200
+	id 1HZ92P-0003BY-Mt
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 19:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366AbXDDRAB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 13:00:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbXDDRAB
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 13:00:01 -0400
-Received: from ik-out-1112.google.com ([66.249.90.181]:6891 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751366AbXDDRAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 13:00:00 -0400
-Received: by ik-out-1112.google.com with SMTP id c21so176761ika
-        for <git@vger.kernel.org>; Wed, 04 Apr 2007 09:59:58 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BYiqdkHCSBHizeBa6PuFEwxRLHyMTFkzKHQfDjtlxsdtoovwMhLeJ2nMf5NSaozB2hxJ6xIloaGFz884shKFeFPmfokznjIyxrrsIcdhPrDDM7lssK4iqiInBZTpqYnDLZI3niFWTT10ueuRXLDuSoPDdzBBi/n+uwplkNxeUpc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GrseIs2hdQuVZ8s10rzUT9Ql6lu4P9mOzwgxugF5V1oTUCivCTY+ICr7MebNPmDAxeQGykzrcn94wM2PLRBy6lESm7pKC2EtWoGTFBy7NaVjETuBY5cc8Dvrawd4P52+/pvug0PpzPsN9VLbxA5+QA8uaq6r2cU8QfeGUu7tkTY=
-Received: by 10.115.60.1 with SMTP id n1mr336635wak.1175705997982;
-        Wed, 04 Apr 2007 09:59:57 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Wed, 4 Apr 2007 09:59:57 -0700 (PDT)
-In-Reply-To: <20070404140853.GA31372@moooo.ath.cx>
-Content-Disposition: inline
+	id S1751571AbXDDRMp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 13:12:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751612AbXDDRMp
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 13:12:45 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:48299 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751571AbXDDRMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 13:12:45 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l34HCdPD023776
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 4 Apr 2007 10:12:39 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l34HCcis025737;
+	Wed, 4 Apr 2007 10:12:38 -0700
+In-Reply-To: <Pine.LNX.4.63.0704041856210.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Spam-Status: No, hits=-2.454 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43759>
 
-On 4/4/07, Matthias Lederhofer <matled@gmx.net> wrote:
-> As 1.5.1 is released now: any comments on this patch?
 
-Ditto for "Handling large repositories".
-I guess I should resubmit it against 1.5.1.
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+On Wed, 4 Apr 2007, Johannes Schindelin wrote:
+> 
+> ... and by this (size of binary patch) you mean the deltified object?
+
+yes. Just the size of the delta. Although I guess you're right - we 
+may not have generated that.
+
+		Linus
