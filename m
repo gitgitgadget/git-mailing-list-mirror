@@ -1,119 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Honor -p<n> when applying git diffs
-Date: Wed, 4 Apr 2007 11:19:14 -0400
-Message-ID: <20070404151914.GA4910@spearce.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: git-gui blame dividing by zero
+Date: Wed, 4 Apr 2007 16:21:49 +0100
+Message-ID: <200704041621.51390.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 04 17:19:35 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 04 17:22:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZ7Gk-0001bu-Rm
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 17:19:31 +0200
+	id 1HZ7JW-0002z7-T4
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 17:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992916AbXDDPTS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 11:19:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992921AbXDDPTS
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 11:19:18 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46367 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2992916AbXDDPTR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 11:19:17 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HZ7GQ-00056v-8Z; Wed, 04 Apr 2007 11:19:10 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8AB8020FBAE; Wed,  4 Apr 2007 11:19:14 -0400 (EDT)
+	id S2992922AbXDDPWA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 11:22:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992923AbXDDPWA
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 11:22:00 -0400
+Received: from ug-out-1314.google.com ([66.249.92.173]:39658 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992922AbXDDPV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 11:21:58 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so700676uga
+        for <git@vger.kernel.org>; Wed, 04 Apr 2007 08:21:55 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=rtGl5lqOM81pw8SyR4apM+/tRbsRxok42grCf2jdnL4s8SoaLIzPj0Ic24HmoaojfsL4Sa8eGRlve/ovfWFHoqDWXkSookBfcdT3crT/I7gsFnYtD8Kh43kCXK5FoTzprC0cX6ibqOV6laQK9+a3zsJ5jrXRkHyA/6qrHM1qnf0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=hRdwmaJ/d0TSC8R2YW/91yDvsUSqq82ya5tHdZ+jr6DTSUbiUtgn2anqNbJWZQSfrj10KfSPYBjyfKUUe6920bZoj6YQWFw12N6JaIx7RSXlBSY2rhZN/xY0Brq00ueCQs8vn7ZVTM7ThC3UX9TH3cxtBEFj5tqoF6aeh5MUZNo=
+Received: by 10.66.218.15 with SMTP id q15mr1498424ugg.1175700115379;
+        Wed, 04 Apr 2007 08:21:55 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id b36sm1463223ika.2007.04.04.08.21.54;
+        Wed, 04 Apr 2007 08:21:54 -0700 (PDT)
+User-Agent: KMail/1.9.5
 Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43746>
 
-If the user is trying to apply a Git generated diff file and they
-have specified a -p<n> option, where <n> is not 1, the user probably
-has a good reason for doing this.  Such as they are me, trying to
-apply a patch generated in git.git for the git-gui subdirectory to
-the git-gui.git repository, where there is no git-gui subdirectory
-present.
+Hello,
 
-Users shouldn't supply -p2 unless they mean it.  But if they are
-supplying it, they probably have thought about how to make this
-patch apply to their working directory, and want to risk whatever
-results may come from that.
+I've not used it before, but I thought I'd give it a go:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- builtin-apply.c       |    4 ++--
- t/t4120-apply-popt.sh |   25 +++++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 2 deletions(-)
- create mode 100755 t/t4120-apply-popt.sh
+ $ git --version
+ git version 1.5.1
+ $ $ git-gui --version
+ git-gui version 0.6.5
+ $ git-gui blame HEAD somefile.cc
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 27a182b..a5d6126 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -417,7 +417,7 @@ static int gitdiff_hdrend(const char *line, struct patch *patch)
- static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name, const char *oldnew)
- {
- 	if (!orig_name && !isnull)
--		return find_name(line, NULL, 1, TERM_TAB);
-+		return find_name(line, NULL, p_value, TERM_TAB);
- 
- 	if (orig_name) {
- 		int len;
-@@ -427,7 +427,7 @@ static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name,
- 		len = strlen(name);
- 		if (isnull)
- 			die("git-apply: bad git-diff - expected /dev/null, got %s on line %d", name, linenr);
--		another = find_name(line, NULL, 1, TERM_TAB);
-+		another = find_name(line, NULL, p_value, TERM_TAB);
- 		if (!another || memcmp(another, name, len))
- 			die("git-apply: bad git-diff - inconsistent %s filename on line %d", oldnew, linenr);
- 		free(another);
-diff --git a/t/t4120-apply-popt.sh b/t/t4120-apply-popt.sh
-new file mode 100755
-index 0000000..2f672f3
---- /dev/null
-+++ b/t/t4120-apply-popt.sh
-@@ -0,0 +1,25 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Shawn O. Pearce
-+#
-+
-+test_description='git-apply -p handling.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	mkdir sub &&
-+	echo A >sub/file1 &&
-+	cp sub/file1 file1 &&
-+	git add sub/file1 &&
-+	echo B >sub/file1 &&
-+	git diff >patch.file &&
-+	rm sub/file1 &&
-+	rmdir sub
-+'
-+
-+test_expect_success 'apply git diff with -p2' '
-+	git apply -p2 patch.file
-+'
-+
-+test_done
+I just get a window that contains:
+
+divide by zero
+divide by zero
+    while executing
+"expr {100 * $blame_data($w,blame_lines)
+			/ $blame_data($w,total_lines)}"
+    (procedure "blame_incremental_status" line 4)
+    invoked from within
+"blame_incremental_status $w"
+    (procedure "read_blame_catfile" line 27)
+    invoked from within
+"read_blame_catfile file6 {} HEAD 
+somefile.cc .cm.t .out.loaded_t .out.linenumber_t .out.file_t"
+
+Am I doing something wrong?
+
+
+Andy
 -- 
-1.5.1.rc3.672.gf5329
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
