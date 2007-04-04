@@ -1,77 +1,88 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] wt-status: show author info if status.showauthor is set
-Date: Wed, 4 Apr 2007 02:55:05 -0400
-Message-ID: <20070404065504.GD30309@spearce.org>
-References: <20070322104021.GJ29341@mellanox.co.il> <7v7it7kkl9.fsf@assigned-by-dhcp.cox.net> <20070404060213.GB31984@mellanox.co.il> <20070404062447.GA4136@coredump.intra.peff.net> <20070404064917.GE31984@mellanox.co.il>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: [PATCH] display shortlog after git-commit
+Date: Wed, 4 Apr 2007 10:01:35 +0300
+Message-ID: <20070404070135.GF31984@mellanox.co.il>
+References: <20070322104021.GJ29341@mellanox.co.il>
+	<7v7it7kkl9.fsf@assigned-by-dhcp.cox.net>
+	<20070404060213.GB31984@mellanox.co.il>
+	<7v7iss8xo6.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <junkio@cox.net>,
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
 	Git Mailing List <git@vger.kernel.org>
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Wed Apr 04 08:55:22 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 04 09:01:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYzOo-0004kM-CC
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 08:55:18 +0200
+	id 1HYzV0-0000EH-Sw
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 09:01:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966319AbXDDGzO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 02:55:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966321AbXDDGzO
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 02:55:14 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:35789 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966319AbXDDGzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 02:55:12 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HYzOc-0004Jb-8B; Wed, 04 Apr 2007 02:55:06 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 861F020FBAE; Wed,  4 Apr 2007 02:55:05 -0400 (EDT)
+	id S2992700AbXDDHBi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 03:01:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992705AbXDDHBi
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 03:01:38 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:41367 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992700AbXDDHBh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 03:01:37 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so559500uga
+        for <git@vger.kernel.org>; Wed, 04 Apr 2007 00:01:35 -0700 (PDT)
+Received: by 10.67.76.16 with SMTP id d16mr1218940ugl.1175670095159;
+        Wed, 04 Apr 2007 00:01:35 -0700 (PDT)
+Received: from ?127.0.0.1? ( [89.138.119.177])
+        by mx.google.com with ESMTP id s1sm1628313uge.2007.04.04.00.01.33;
+        Wed, 04 Apr 2007 00:01:34 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20070404064917.GE31984@mellanox.co.il>
+In-Reply-To: <7v7iss8xo6.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43720>
 
-"Michael S. Tsirkin" <mst@dev.mellanox.co.il> wrote:
-> > Quoting Jeff King <peff@peff.net>:
-> > On Wed, Apr 04, 2007 at 09:02:13AM +0300, Michael S. Tsirkin wrote:
-> > 
-> > > - Maybe put Author: (or From:? and maybe Subject:?) line in the pre-formatted
-> > >   commit message, and let the user edit them?
-> > 
-> > Personally I think it's just clutter, but hey, it's off by default. Of
-> > course what is the chance that you've turned on status.showauthor in
-> > your ~/.gitconfig, but you don't have your identity set up properly? :)
-> 
-> The point is that *someone else* can have showauthor set up in .gitconfig,
-> and then he'll be able to use git commit --amend to fix up
-> the identity without using --author explicitly.
+This might be useful to make people review their log messages
+as recorded by git, to make sure they match project guidelines:
+among the things most commonly misconfigured are author mail,
+and the commit title line.
 
-Hmm.  Actually I'd like to be able to set (or change) the author
-using a From: line, much like email headers.  Especially in the case
-of git-commit --amend, as sometimes I make a new commit as myself,
-then realize *after* I've quit the editor that the patch really
-came from someone else, and I should record the right author.
+Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
 
-And no, the patch wasn't really a patch.  It was a set of files
-from the user that I manually copy in, then commit.  Though I have
-to wonder why I keep doing that as said user also does use the same
-Git repository as me...  and edits and commits other files on their
-own just fine...  ;-)
+---
 
+> I actually find it awkward that author/summary information is never
+> shown during git commit - sometimes one does git commit
+> on a machine where GIT_AUTHOR_EMAIL has not been setup
+> correctly, and the result often is mst@mst-desktop.(none).
+> Or people sometimes forget that the first line will show up
+> in the pretty=short summary and the result is that what
+> ends up being there is just 2 first lines of the long description.
+>
+> One has to remember to always do git log --pretty=short
+> after commit to verify that one did get these details right.
+>
+> Ideas:
+> - Maybe have git-commit display shortlog summary for commit just created?
+
+Hopefully this will make people fix the git config up and amend their commits themselves.
+Does this sound like a good idea?
+BTW, it's a pity that --no-commit-id breaks --pretty=short.
+Maybe use something like --pretty='format:Author: %an <%ae>%n%s' instead?
+
+diff --git a/git-commit.sh b/git-commit.sh
+index 292cf96..88e487f 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -650,7 +650,7 @@ then
+ 	if test -z "$quiet"
+ 	then
+ 		echo "Created${initial_commit:+ initial} commit $commit"
+-		git-diff-tree --shortstat --summary --root --no-commit-id HEAD --
++		git-diff-tree --shortstat --pretty=short --summary --root HEAD --
+ 	fi
+ fi
+ 
 -- 
-Shawn.
+MST
