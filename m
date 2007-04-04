@@ -1,62 +1,81 @@
-From: Sergio Callegari <scallegari@arces.unibo.it>
-Subject: Re: fsck missing dangling commits that are candidate heads?
-Date: Wed, 4 Apr 2007 13:32:54 +0000 (UTC)
-Message-ID: <loom.20070404T152916-290@post.gmane.org>
-References: <loom.20070403T213135-68@post.gmane.org> <20070403194750.GG27706@spearce.org> <loom.20070403T215123-220@post.gmane.org>
+From: Rogan Dawes <lists@dawes.za.net>
+Subject: Re: [PATCH] Show binary file size change in diff --stat
+Date: Wed, 04 Apr 2007 15:34:44 +0200
+Message-ID: <4613A974.60808@dawes.za.net>
+References: <200704041414.14797.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 04 15:33:18 2007
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 04 15:35:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZ5bw-0001Un-0p
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 15:33:16 +0200
+	id 1HZ5dr-0002MD-Se
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 15:35:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753806AbXDDNdM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 09:33:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbXDDNdM
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 09:33:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:38067 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753806AbXDDNdK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 09:33:10 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HZ5bi-0002gN-36
-	for git@vger.kernel.org; Wed, 04 Apr 2007 15:33:02 +0200
-Received: from 137.204.98.183 ([137.204.98.183])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 04 Apr 2007 15:33:02 +0200
-Received: from scallegari by 137.204.98.183 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 04 Apr 2007 15:33:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.98.183 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20060601 Firefox/2.0.0.3 (Ubuntu-edgy))
+	id S1753807AbXDDNfM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 09:35:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbXDDNfL
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 09:35:11 -0400
+Received: from sd-green-bigip-145.dreamhost.com ([208.97.132.145]:55967 "EHLO
+	spunkymail-a12.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1753807AbXDDNfK (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Apr 2007 09:35:10 -0400
+Received: from [192.168.201.103] (dsl-146-24-118.telkomadsl.co.za [165.146.24.118])
+	by spunkymail-a12.g.dreamhost.com (Postfix) with ESMTP id 85D447FA9;
+	Wed,  4 Apr 2007 06:35:08 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <200704041414.14797.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43739>
 
-Sergio Callegari <scallegari <at> arces.unibo.it> writes:
-
- 
-> Many thanks! I was quite sure I was missing something...
-> At least I am in good company since the fsck man page does not mention the 
-> logs 
+Andy Parkins wrote:
+> Previously, a binary file in the diffstat would show as:
 > 
-> Then... is there any shorthand for finding candidate branch-heads (i.e. for
-> having something like fsck without looking at the logs) ?
+>  some-binary-file.bin       |  Bin
 > 
+> The space after the "Bin" was never used.  This patch changes binary
+> lines in the diffstat to be:
+> 
+>  some-binary-file.bin       |  Bin 12345 -> 123456 bytes
+> 
+> The very nice "->" notation was suggested by Johannes Schindelin, and
+> shows the before and after sizes more clearly than "+" and "-" would.
+> If a size is 0 it's not shown (although it would probably be better to
+> treat no-file differently from zero-byte-file).
+> 
+> The user can see what changed in the binary file, and how big the new
+> file is.  This is in keeping with the information in the rest of the
+> diffstat.
+> 
+> The diffstat_t members "added" and "deleted" were unused when the file
+> was binary, so this patch loads them with the file sizes in
+> builtin_diffstat().  These figures are then read in show_stats() when
+> the file is marked binary.
+> 
+> Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+> ---
+> This is a resend; I still wish for it every time I see a --stat with
+> binary files changed.
+> 
+> Is there any objection to it that I can address?
 
-I mean, so that git lost-found can take advantage of it... in fact git gc is
-surely doing the right thing by considering reflogs, but probably git lost-found
-should not (at least wrt its documentation this script appears to be not in its
-best shape right now).
 
-Sergio 
+Well, how about my comments in <45E67978.9030805@dawes.za.net>, 
+suggesting that the edit difference (number of steps required to 
+transform one to the other) would be a better indication?
+
+I think it is better because it is consistent with what we currently do 
+for text files: show the number of lines added/deleted.
+
+For binary files, it would be consistent to show the number of bytes 
+added/deleted. I have not investigated the output format for the 
+libxdiff binary patch format, but hopefully it would not be too 
+difficult to calculate the deletions and additions.
+
+Rogan
