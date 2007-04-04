@@ -1,66 +1,97 @@
-From: Srijak Rijal <srijak@gmail.com>
-Subject: Re: Gittorent .. avahi ?
-Date: Tue, 03 Apr 2007 20:58:11 -0400
-Message-ID: <4612F823.2060503@gmail.com>
-References: <9d916d5b0704011059g31394159kfdd5e01ba81915c2@mail.gmail.com> <euurc0$js8$1@sea.gmane.org>
+From: "Chris Lee" <clee@kde.org>
+Subject: Partitioned packs
+Date: Tue, 3 Apr 2007 18:36:44 -0700
+Message-ID: <db69205d0704031836u3b3dfc2pb9825dd649aca58@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 04 02:58:28 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 04 03:37:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYtpP-0000iY-Tp
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 02:58:24 +0200
+	id 1HYuRh-0008UJ-V2
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 03:37:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966215AbXDDA6V (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 20:58:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966218AbXDDA6V
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 20:58:21 -0400
-Received: from an-out-0708.google.com ([209.85.132.249]:47372 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966215AbXDDA6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 20:58:20 -0400
-Received: by an-out-0708.google.com with SMTP id b33so38536ana
-        for <git@vger.kernel.org>; Tue, 03 Apr 2007 17:58:19 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding;
-        b=WeXq+zY63MqBg2y/ppa5TRDSyWUQKvurrhaCc5bFUJHB8wTUZQPck+WELYoc4IlQEBmvSiRQN+IJUFInE9KfJkM/G4QcLdQiQxFnMsdz1eQxgCMYW8AoBscgNs5vnyY0GB7vf6+LNWLPCldn+MYZLjQ8Q+0nbCcdZ++3io0h2Bw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:x-enigmail-version:content-type:content-transfer-encoding;
-        b=FOcxjkgutEM/6Wb3G9AaJifSZyip+eXsTnTJB4AoBps9hOnF2sseXalOo3ERNhqEXasLJcipOZrJnPuXBIz2VUGYHy+osKP0l31U2PdDe3tco7UhVd3RnHppjE836GjJVt4bOELn5NAlmkc6PYe6j4ZZZG5SBE3ZpsaLGu30Ino=
-Received: by 10.100.143.1 with SMTP id q1mr68455and.1175648299721;
-        Tue, 03 Apr 2007 17:58:19 -0700 (PDT)
-Received: from ?192.168.2.8? ( [24.127.52.205])
-        by mx.google.com with ESMTP id c20sm205633ana.2007.04.03.17.58.18;
-        Tue, 03 Apr 2007 17:58:19 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.9 (Windows/20061207)
-In-Reply-To: <euurc0$js8$1@sea.gmane.org>
-X-Enigmail-Version: 0.94.3.0
+	id S966266AbXDDBhM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 21:37:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966246AbXDDBhB
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 21:37:01 -0400
+Received: from nz-out-0506.google.com ([64.233.162.224]:23521 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966262AbXDDBgq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 21:36:46 -0400
+Received: by nz-out-0506.google.com with SMTP id s1so3734nze
+        for <git@vger.kernel.org>; Tue, 03 Apr 2007 18:36:45 -0700 (PDT)
+Received: by 10.115.46.9 with SMTP id y9mr42353waj.1175650604863;
+        Tue, 03 Apr 2007 18:36:44 -0700 (PDT)
+Received: by 10.114.66.10 with HTTP; Tue, 3 Apr 2007 18:36:44 -0700 (PDT)
+Content-Disposition: inline
+X-Google-Sender-Auth: 3fa9af19dad32070
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43701>
 
-Hi Jakub,
-> I hope that you have not missed deadline.
->
->   
-I have already applied :)
-> Avahi is Zeroconf implementation... wouldn't it be better to think
-> about implementing Kademlia?
->
->   
-Kademlia is something to look at. But not anytime soon :).
-The current-"est" and working plan is to strictly follow the spec for
-functionality.
-Then, according to community requirement/recommendation etc. features
-will be added.
+I've been running some experiments, as hinted earlier by the
+discussion about just how much git-index-pack sucks (which, really,
+isn't much since the gaping memleak is gone now).
+
+These experiments include trying to see if there's a noticeable
+performance improvement by splitting out objects of different types
+into different packs. So far, it definitely seems to make a
+difference, though not the one I was initially expecting. For all of
+these tests, I did 'sysctl -w vm.drop_caches=3' before running, to
+effectively simulate a cold-cache run.
+
+Single 3.1GB pack file containing all commits, blobs, and trees
+First run (cold cache):
+git-rev-list --all > /dev/null  5.52s user 0.32s system 45% cpu 12.872 total
+git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.01s system 0%
+cpu 40.218s total
+git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.48s user
+0.10s system 5% cpu 10.143 total
+
+Subsequent runs (warm cache):
+git-rev-list --all > /dev/null  5.19s user 0.48s system 98% cpu 5.750 total
+git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
+cpu 11.960 total
+git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.43s user
+0.04s system 100% cpu 0.472 total
 
 
-Srijak.
+Single pack for commit objects and another pack for the rest
+First run (cold cache):
+git-rev-list --all > /dev/null  5.84s user 0.34s system 31% cpu 19.427 total
+git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
+cpu 9:42.74 total
+git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.50s user
+0.26s system 0% cpu 1:35.44 total
+
+Subsequent runs (warm cache):
+git-rev-list --all > /dev/null  5.94s user 0.26s system 99% cpu 6.204 total
+git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
+cpu 12.394 total
+git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.41s user
+0.07s system 98% cpu 0.486 total
+
+Fully-partitioned separate packs for commit, tree, and blob objects
+First run (cold cache):
+git-rev-list --all > /dev/null  6.24s user 0.32s system 25% cpu 25.689 total
+git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
+cpu 1:08.76 total
+git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.38s user
+0.30s system 0% cpu 1:35.89 total
+
+Subsequent runs (warm cache):
+git-rev-list --all > /dev/null  6.28s user 0.24s system 99% cpu 6.527 total
+git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
+cpu 13.895 total
+git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.42s user
+0.06s system 99% cpu 0.476 total
+
+I packed all of these using --delta-base-offset, with a window of 100
+and a depth of 10.
+
+-clee
