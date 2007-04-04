@@ -1,57 +1,56 @@
-From: Bruno Ribas <ribas@c3sl.ufpr.br>
-Subject: [PATCH 2/2] Removed NULL check on builtin-pack-objects.c from create_delta_index() as it just checks for Out of Memory
-Date: Wed,  4 Apr 2007 15:50:09 -0300
-Message-ID: <11757126101733-git-send-email-ribas@c3sl.ufpr.br>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 1/2] Added use of xmalloc() on diff-delta.c
+Date: Wed, 04 Apr 2007 12:22:40 -0700
+Message-ID: <7vejn02bcv.fsf@assigned-by-dhcp.cox.net>
 References: <11757126093105-git-send-email-ribas@c3sl.ufpr.br>
-Cc: Junio C Hamano <junkio@cox.net>, Bruno Ribas <ribas@c3sl.ufpr.br>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 04 20:51:32 2007
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bruno Ribas <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Wed Apr 04 21:22:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZAZt-00006j-6Z
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 20:51:29 +0200
+	id 1HZB4A-0007Ln-3S
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 21:22:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993017AbXDDSuR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 14:50:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753960AbXDDSuR
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 14:50:17 -0400
-Received: from urquell.c3sl.ufpr.br ([200.17.202.3]:58333 "EHLO
-	urquell.c3sl.ufpr.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753915AbXDDSuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 14:50:14 -0400
-Received: from localhost (labatt.c3sl.ufpr.br [200.17.202.89])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: ribas)
-	by urquell.c3sl.ufpr.br (Postfix) with ESMTP id A1FA5301B431;
-	Wed,  4 Apr 2007 15:50:11 -0300 (BRT)
-X-Mailer: git-send-email 1.5.0.6
-In-Reply-To: <11757126093105-git-send-email-ribas@c3sl.ufpr.br>
+	id S934089AbXDDTWn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 15:22:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934087AbXDDTWm
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 15:22:42 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:55703 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934080AbXDDTWl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 15:22:41 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070404192241.QQMF24385.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 4 Apr 2007 15:22:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id j7Ng1W00E1kojtg0000000; Wed, 04 Apr 2007 15:22:40 -0400
+In-Reply-To: <11757126093105-git-send-email-ribas@c3sl.ufpr.br> (Bruno Ribas's
+	message of "Wed, 4 Apr 2007 15:50:08 -0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43768>
 
+These two functions, create_delta_index() and create_delta(),
+are already nicely libified.  They allow the caller to deal with
+oom condition.  The caller may die(), or it may decide to
+continue its operation with reduced functionality without using
+delta data.  A good example of this is found a few lines after
+the lines the second patch touches.  When create_delta() cannot
+find memory to work with, the entire function returns 0, saying
+"sorry, cannot deltify these two", which would cause the object
+stored without deltification.
 
-Signed-off-by: Bruno Ribas <ribas@c3sl.ufpr.br>
----
- builtin-pack-objects.c |    2 --
- 1 files changed, 0 insertions(+), 2 deletions(-)
+These patches take that nice property away, making libification
+more difficult, which is the downside.  Is there an upside?
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index b5f9648..04a4abc 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1254,8 +1254,6 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	}
- 	if (!src->index) {
- 		src->index = create_delta_index(src->data, src_size);
--		if (!src->index)
--			die("out of memory");
- 	}
- 
- 	delta_buf = create_delta(src->index, trg->data, trg_size, &delta_size, max_size);
--- 
-1.5.0.3
+If anything, I suspect that the part that calls die() you
+touched in the second patch could return NULL.
