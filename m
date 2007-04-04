@@ -1,207 +1,142 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH(amend)] introduce GIT_WORK_TREE environment variable
-Date: Wed, 04 Apr 2007 15:34:48 -0700
-Message-ID: <7vslbfydiv.fsf@assigned-by-dhcp.cox.net>
-References: <20070328141505.GA16600@moooo.ath.cx>
-	<20070404201313.GB22782@moooo.ath.cx>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH] git-{repack,pack-objects} accept --{pack,blob}-limit to control pack size
+Date: Wed, 4 Apr 2007 15:55:18 -0700
+Message-ID: <56b7f5510704041555q4e735961ra9ee8008be0d33db@mail.gmail.com>
+References: <56b7f5510704041340l5997b04dp853e8270a644ab28@mail.gmail.com>
+	 <alpine.LFD.0.98.0704041750030.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthias Lederhofer <matled@gmx.net>
-X-From: git-owner@vger.kernel.org Thu Apr 05 00:34:57 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Apr 05 00:55:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZE48-00071t-7V
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 00:34:56 +0200
+	id 1HZENy-0001No-EZ
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 00:55:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbXDDWew (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 18:34:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752387AbXDDWew
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 18:34:52 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:58439 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751467AbXDDWet (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 18:34:49 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070404223449.BVXP1606.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 4 Apr 2007 18:34:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id jAao1W00N1kojtg0000000; Wed, 04 Apr 2007 18:34:48 -0400
-In-Reply-To: <20070404201313.GB22782@moooo.ath.cx> (Matthias Lederhofer's
-	message of "Wed, 4 Apr 2007 22:13:13 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752552AbXDDWzW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 18:55:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752558AbXDDWzV
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 18:55:21 -0400
+Received: from wr-out-0506.google.com ([64.233.184.239]:18574 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752552AbXDDWzT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 18:55:19 -0400
+Received: by wr-out-0506.google.com with SMTP id 76so281281wra
+        for <git@vger.kernel.org>; Wed, 04 Apr 2007 15:55:19 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=M4Cn/MqVhbviRyJllebwsONBSJ81yw3lbonVD6YCAA2GF2QR2pJiIHlPnNux8oK+rf1GZW9+tEaV5WkiJqB2VmccMz13acxDnJGSmWIfpf7a/ootYW8Vj3aTiAoAzx4cOuTWHdhHGVhGT/VWRrDVpFN4JhNTaKS9AcR/wt3H6Zo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=UmlcU8gtCTxJdJbGtgRu7/wo0x6ZST49jD1t3be/LwRCOloSahSg5HtghDhmgXyKXHAudBqbCh31mvPnQIaezGIaM4LL59lL0tWNaYfgvDT0LGQwwSy7w+qrrNK9dUaNVNGECw2pUBSsIQGF0GVKy9o27LZzvT2NSdKLAEja8S4=
+Received: by 10.114.13.1 with SMTP id 1mr439390wam.1175727318498;
+        Wed, 04 Apr 2007 15:55:18 -0700 (PDT)
+Received: by 10.114.46.4 with HTTP; Wed, 4 Apr 2007 15:55:18 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.98.0704041750030.28181@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43785>
 
-Matthias Lederhofer <matled@gmx.net> writes:
-
-> GIT_WORK_TREE can be used with GIT_DIR to specify the working tree.
-> As for GIT_DIR there is also the option `git
-> --work-tree=GIT_WORK_TREE` which overrides the environment
-> variable and a config setting core.worktree which is used as
-> default value.
-
-I haven't followed the latest code to see if it does what it
-claims to in the log message (although I looked at the last
-round briefly).
-
-Most of my comments below are not objections but questions.
-
-> setup_git_directory_gently() is rewritten and does the
-> following now:
+On 4/4/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Wed, 4 Apr 2007, Dana How wrote:
+> > The motivations are to better support portable media,
+> > older filesystems,  and larger repositories without
+> > awkward enormous packfiles.
 >
->   find the repository directory ($GIT_DIR, ".git" in parent
->   directories, ".")
+> I wouldn't qualify "enormous" pack files as "awkward".
 >
->   read the configuration (core.bare and core.worktree are used)
+> It will always be more efficient to have only one pack to deal with
+> (when possible of course).
+Yes.  "(when possible of course)" refers to the remaining motivations
+I didn't explicitly mention: the 32b offset limit in .idx files,
+and keeping the mmap code working on a 32b system.
+I realize there are better solutions in the pipeline,
+but I'd like to address this now (for my own use) and hopefully
+also create something useful for 4GB-limited filesystems,
+USB sticks, etc.
+
+> > When --pack-limit[=N] is specified and --stdout is not,
+> > all bytes in the resulting packfile(s) appear at offsets
+> > less than N (which defaults to 1<<31).  The default
+> > guarantees mmap(2) on 32b systems never sees signed off_t's.
+> > The object stream may be broken into multiple packfiles
+> > as a result,  each properly and conventionally built.
+> >
 >
->   if core.bare is not set assume the repository is not bare if a
->   working tree is specified or guess based on the name of the
->   repository directory
+> This sounds fine.  *However* how do you ensure that the second pack (or
+> subsequent packs) is self contained with regards to delta base objects
+> when it is _not_ meant to be a thin pack?
+Good question.  Search for "int usable_delta" in the patch.
+With --pack-limit (offset_limit in C), you can use a delta if the base
+is in the same pack and already written out.  The first condition
+addresses your concern, and the second handles the case
+where the base object gets pushed to the next pack.
+These restrictions should be loosened for --thin-pack
+but I didn't do that yet.
+Also, --pack-limit turns on --no-reuse-delta.
+This is not necessary, but not doing it would have meant
+hacking up even more conditions which I didn't want to do
+on a newbie submission.
 
-Sounds sane so far.
+> > When --stdout is also specified,  all objects in the
+> > resulting packfile(s) _start_ at offsets less than N.
+> > All the packfiles appear concatenated on stdout,
+> > and each has its object count set to 0.  The behavior
+> > without --stdout cannot be duplicated here since
+> > lseek(2) is not generally possible on stdout.
+>
+> Please scrap that.  There is simply no point making --pack-limit and
+> --stdout work together.  If the amount of data to send over the GIT
+> protocol exceeds 4G (or whatever) it is the receiving end's business to
+> split it up _if_ it wants/has to.  The alternative is just too ugly.
+I have a similar but much weaker reaction, but Linus specifically asked for
+this combination to work.  So I made it work as well as possible
+given no seeking.
 
->   for a bare repository:
->     set GIT_DIR if it is not set already and stop (this wont change
->     the directory even if the repository was found as .git in a
->     parent directory)
+> > When --blob-limit=N is specified,  blobs whose uncompressed
+> > size is greater than or equal to N are omitted from the pack(s).
+> > If --pack-limit is specified, --blob-limit is not, and
+> > --stdout is not,  then --blob-limit defaults to 1/4
+> > of the --pack-limit.
+> Is this really useful?
+>
+> If you have a pack size limit and a blob cannot make it even in a pack
+> of its
+> own then you're screwed anyway.  It is much better to simply fail the
+> operation than leaving some blobs behind.  IOW I don't see the
+> usefulness of this feature.
+I agree if --stdout is specified.  This is why --pack-limit && --stdout
+DON'T turn on --blob-limit if not specified.
 
-If you have a normal non-bare layout repository and have
-core.bare set (perhaps by mistake), currently we chdir(2) up to
-the working tree root, but the new code doesn't.  Is it a
-problem in practice?
+However, if I'm building packs inside a non-(web-)published
+repository, I find this useful. First of all, if there's some blob bigger
+than the --pack-limit I must drop it anyway -- it's not clear to me that
+the mmap window code works on 32b systems
+with >2GB-sized objects in packs.  An "all-or-nothing" limitation
+wouldn't be helpful to me.
+But blobs even close to the packfile limit don't seem all that useful
+to pack either (this of course is a weaker argument).
+In the sample (p4) checkout I'm testing on [i.e. no history],
+I have 56K+ objects consuming ~55GB uncompressed;
+there are 9 blobs over 500MB each uncompressed.
+I'm guessing packing them is not a performance advantage,
+and I certainly wouldn't want frequently-used objects to be
+stuck between them.  [ I guess my repo stats are going to
+be a bit strange ;-) ]
 
-If you have a truly bare repository (perhaps a one that is
-serving the general public over gitweb), and you use GIT_DIR and
-GIT_WORK_TREE to have a working tree elsewhere so that you can
-hack on it, running a git command from a subdirectory would not
-chdir(2) up to the root of the working tree.  I suspect that the
-callers of setup_git_directory() would expect to see the same
-"cd up to the root and return the prefix" behaviour.  Is this a
-problem in practice?
+Packing plays two roles: archive storage (long life) and
+transmission (possibly short life).
+These seem to pull the packing code in different directions.
 
->   for a non-bare repository:
->     if GIT_DIR is specified:
->       use GIT_WORK_TREE, core.worktree or "." as working tree
->     if the repository was found as .git in a parent directory:
->       use the parent directory of the .git directory as working tree
-
-Sounds sane so far.
-
->     if the repository was found in ".":
->       use "." as working tree
-
-I am not sure about this.
-
-Is there ever a case that the repository (i.e. the directory
-that has objects/, refs/, and HEAD) can also be a sane working
-tree root?  Wouldn't it be saner to say this case is without any
-working tree and fail commands that require a working tree?
-
->     set inside_git_dir and inside_working_tree based on getcwd() and
->     prefixcmp()
-
-> is_bare_repository() is also changed to return true if the working
-> directory is outside of the working tree.
-
-What does this mean from operational perspective?  Suppose you
-are using GIT_DIR and GIT_WORK_TREE to have a working tree that
-is separate from your working area, and get interrupted and go
-somewhere else (say "pushd /var/tmp").  Does this suddenly allow
-"git fetch" into the repository to update the current branch
-tip?  That does not sound right, but it might not be a good use
-case to begin with.  I dunno, but I think is_bare_repository
-should mean "I am treating this repository as a bare
-repository".  That means I do not want to have "no-working-tree"
-semantics applied to the repository operation, regardless of
-where my $cwd happens to be, once I say GIT_WORK_TREE to name
-which working tree I am using to work with that repository.
-
-What problem are you solving with this is_bare_repository()
-thing?  Could it be that you are working around problems with
-the current callers that behave inappropriately, based on
-is_bare_repository(), when they should really be checking
-inside_work_tree() instead, perhaps?
-
->     - call setup_git_env() from setup_git_directory_gently() if needed
-
-Calling setup_git_env() again would leak memory for
-git_object_dir and friends, but I have a bigger worry about this
-change.
-
-If calling setup_git_env() explicitly after resetting GIT_DIR
-and stuff in this code makes any difference, doesn't that mean
-somebody else already called a function in environment.c (say,
-get_refs_directory()) and also have already _acted_ on it
-(e.g. calling get_packed_refs() which populates the list of refs
-based on the old value of "$GIT_DIR/packed-refs")?  Calling the
-function again would not undo/redo that, so maybe the calling
-sequence into setup_git_env() needs to be made safer.
-
-I think the only thing you care about in your "where is the repo
-and where is the worktree" codepath are get_git_dir() and
-is_bare_repository().  As a side effect of calling these
-functions for your own purpose, you later have to call
-setup_git_env() again to clean up, which is fine.  I would feel
-better if there is an assert in setup_git_env that catches the
-case where it is called for the second time even though the
-first caller was something other than this repository/worktree
-discovery code.
-
-> diff --git a/environment.c b/environment.c
-> index 713a011..769d409 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -60,8 +60,15 @@ void setup_git_env(void)
->  int is_bare_repository(void)
->  {
->  	const char *dir, *s;
-> -	if (0 <= is_bare_repository_cfg)
-> -		return is_bare_repository_cfg;
-> +	/* definitely bare */
-> +	if (is_bare_repository_cfg == 1)
-> +		return 1;
-> +	/* bare if cwd is outside of the working tree */
-> +	if (inside_working_tree >= 0)
-> +		return !inside_working_tree;
-> +	/* configuration says it is not bare */
-> +	if (is_bare_repository_cfg == 0)
-> +		return 0;
->  
->  	dir = get_git_dir();
->  	if (!strcmp(dir, DEFAULT_GIT_DIR_ENVIRONMENT))
-
-For example, calling this function from programs before calling
-the repository/worktree discovery is an error, isn't it?  Can we
-have a safety here to catch such a programming error?
-
-> diff --git a/setup.c b/setup.c
-> index a45ea83..794edcf 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -192,67 +192,168 @@ int is_inside_git_dir(void)
->  	return inside_git_dir;
->  }
->  
-> +static char *git_work_tree;
-> +
-> +static int git_setup_config(const char *var, const char *value)
-> +{
-> +	if (git_work_tree && !strcmp(var, "core.worktree")) {
-> +		strlcpy(git_work_tree, value, PATH_MAX);
-> +	}
-> +	return git_default_config(var, value);
-> +}
-> +
-
-Other config functions do not pass already handled variables to
-git_default_config().  You probably would care about core.bare
-in your own code, so falling back to git_default_config() is
-fine, although it may look wasteful.
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
