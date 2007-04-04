@@ -1,106 +1,244 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Show binary file size change in diff --stat
-Date: Wed, 04 Apr 2007 10:47:56 -0700
-Message-ID: <7vbqi458vn.fsf@assigned-by-dhcp.cox.net>
-References: <200704041414.14797.andyparkins@gmail.com>
-	<4613A974.60808@dawes.za.net>
-	<200704041540.59977.andyparkins@gmail.com>
-	<4613C97C.9050600@dawes.za.net>
-	<Pine.LNX.4.63.0704041819340.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-	<Pine.LNX.4.64.0704040935350.6730@woody.linux-foundation.org>
+Subject: A note from the maintainer
+Date: Wed, 04 Apr 2007 11:26:52 -0700
+Message-ID: <7vd52k3sib.fsf@assigned-by-dhcp.cox.net>
+References: <7v648c7bbn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Rogan Dawes <lists@dawes.za.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 04 19:48:17 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 04 20:35:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZ9ae-0003Ba-Vz
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 19:48:13 +0200
+	id 1HZAK1-0000Jo-Tf
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 20:35:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752156AbXDDRsI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 13:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbXDDRsI
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 13:48:08 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58926 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752205AbXDDRsG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 13:48:06 -0400
+	id S934079AbXDDS1l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 14:27:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934070AbXDDS1i
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 14:27:38 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55213 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932456AbXDDS1C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 14:27:02 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao105.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070404174756.KXLB792.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 4 Apr 2007 13:47:56 -0400
+          id <20070404182653.MHDV25613.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 4 Apr 2007 14:26:55 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id j5nw1W00X1kojtg0000000; Wed, 04 Apr 2007 13:47:57 -0400
-In-Reply-To: <Pine.LNX.4.64.0704040935350.6730@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 4 Apr 2007 09:40:13 -0700 (PDT)")
+	id j6Ss1W00W1kojtg0000000; Wed, 04 Apr 2007 14:26:53 -0400
+In-Reply-To: <7v648c7bbn.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 04 Apr 2007 02:12:12 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43762>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Now a new feature release is out, it's time to welcome new
+people to the list.  This message talks about how git.git is
+managed, and how you can work with it.
 
-> On Wed, 4 Apr 2007, Johannes Schindelin wrote:
->> 
->> The subtle difference: your approach is _expensive_ in terms of CPU time, 
->> while the byte change approach is _dirt cheap_.
->
-> Well, you could do a combination (still dirt cheap):
->  - show the size before/after (and yes, new/delete should be separate from 
->    "zero size before/after")
->  - show the size of the binary patch.
->
-> No "X added bytes" vs "Y bytes deleted", just "size of binary patch". It 
-> could be really small, even if 10k was deleted, or the file was totally 
-> re-organized by moving chunks around.
->
-> It would still be a meaningful thing to know - if only because it tells 
-> you how much space the delta takes.
+* IRC and Mailing list
 
-I agree wrt the kind of information to give, except that I am
-not so sure about new/delete vs zero before/after.  We do not do
-that for a text file, and when people do care about the
-distinction, they would use --summary.
+Many active members of development community hang around on #git
+IRC channel.  Its log is available at:
 
-I often have wished that we could make --stat imply --summary;
-the only reason we did not do that is because the --stat option
-started its life as an imitation of "diffstat".
+	http://colabti.de/irclogger/irclogger_log/git
 
-I've seen our diff-delta change its output size once.  It was a
-nice improvement to make the delta much smaller than before, but
-I had to rewrite the rename similarity in diffcore not to depend
-on the diff-delta algorithm change, to keep it stable across
-diff-delta improvements (the alternative was to futz with the
-default threshold).  I suspect we might see similar confusion if
-we show the delta size, depending on people's expectations.
-This is a very minor issue, but I thought I should mention it.
+The development however is primarily done on this mailing list
+you are reading right now.  If you have patches, please send
+them to the list, following Documentation/SubmittingPatches.
 
-There is a machine readable output format for the same --stat
-information called --numstat.  It currently signals the
-binary-ness by showing '-' instead of line count.  We could
-extend it by showing '-' + number of bytes.
+I usually read all patches posted to the list, and follow almost
+all the discussions on the list, unless the topic is about an
+obscure corner that I do not personally use.  But I am obviously
+not perfect.  If you sent a patch that you did not hear from
+anybody for three days, that is a very good indication that it
+was dropped on the floor --- please do not hesitate to remind
+me.
 
-So here are some more suggestions:
+The list archive is available at a few public sites as well:
 
- (1) --stat for binary files to show preimage and postimage
-     sizes like this (if we were to do delta size -- otherwise
-     drop " (.*" at the end):
+	http://marc.theaimsgroup.com/?l=git
+	http://news.gmane.org/gmane.comp.version-control.git
 
-	penguin.jpg |  Bin 745245 -> 660689 (delta: 4434)
+and some people seem to prefer to read it over NNTP:
 
- (2) --numstat for binary files to show preimage and postimage
-     sizes like this:
+	nntp://news.gmane.org/gmane.comp.version-control.git
 
-	penguin.jpg	-745245	-660689
 
- (3) independent from all of the above, make --stat imply
-     --summary and perhaps introduce --no-summary if people do not
-     want --summary given when they say --stat;
+* Repositories, branches and documentation.
+
+My public git.git repository is at:
+
+	git://git.kernel.org/pub/scm/git/git.git/
+
+This is mirrored at Pasky's site at
+
+	git://repo.or.cz/git.git/
+
+but the first has a few hours mirroring delay after I publish
+updates, and the latter, being a mirror of former, lags behind
+it further.  Immediately after I publish to the primary
+repository at kernel.org, I also push into an alternate here:
+
+	git://repo.or.cz/alt-git.git/
+
+Impatient people would have better luck with the last one (but
+the last repository does not have "html", "man" and "todo"
+branches, described next).
+
+There are three branches in git.git repository that are not
+about the source tree of git: "todo", "html" and "man".  The
+first one was meant to contain TODO list for me, but I am not
+good at maintaining such a list so it is not as often updated as
+it could/should be.  It also contains some helper scripts I use
+to maintain git.
+
+The "html" and "man" are autogenerated documentation from the
+tip of the "master" branch; the tip of "html" is extracted to be
+visible at kernel.org at:
+
+	http://www.kernel.org/pub/software/scm/git/docs/
+
+The above URL is the top-level documentation page, and it has
+links to documentation of older releases.
+
+The script to maintain these two documentation branches are
+found in "todo" branch as dodoc.sh, if you are interested.  It
+is a good demonstration of how to use an update hook to automate
+a task.
+
+There are four branches in git.git repository that track the
+source tree of git: "master", "maint", "next", and "pu".
+
+The "master" branch is meant to contain what are very well
+tested and ready to be used in a production setting.  There
+could occasionally be minor breakages or brown paper bag bugs
+but they are not expected to be anything major.  Every now and
+then, a "feature release" is cut from the tip of this branch and
+they typically are named with three dotted decimal digits.  The
+last such release was v1.5.1 done on April 4th this year.
+
+Whenever a feature release is made, "maint" branch is forked off
+from "master" at that point.  Obvious, safe and urgent fixes
+after a feature release are applied to this branch and
+maintenance releases are cut from it.  The maintenance releases
+are named with four dotted decimal, named after the feature
+release they are updates to; the last such release was v1.5.0.7.
+New features never goes to this branch.  This branch is also
+merged into "master" to propagate the fixes forward.
+
+A trivial and safe enhancement goes directly on top of "master".
+A new development, either initiated by myself or more often by
+somebody who found his or her own itch to scratch, does not
+usually happen on "master", however.  Instead, a separate topic
+branch is forked from the tip of "master", and it first is
+tested in isolation; I may make minimum fixups at this point.
+Usually there are a handful such topic branches that are running
+ahead of "master" in git.git repository.  I do not publish the
+tip of these branches in my public repository, however, partly
+to keep the number of branches that downstream developers need
+to worry about low, and primarily because I am lazy.
+
+I judge the quality of topic branches, taking advices from the
+mailing list discussions.  Some of them start out as "good idea
+but obviously is broken in some areas (e.g. breaks the existing
+testsuite)" and then with some more work (either by the original
+contributor or help from other people on the list) becomes "more
+or less done and can now be tested by wider audience".  Luckily,
+most of them start out in the latter, better shape.
+
+The "next" branch is to merge and test topic branches in the
+latter category.  In general, the branch always contains the tip
+of "master".  It might not be quite rock-solid production ready,
+but is expected to work more or less without major breakage.  I
+usually use "next" version of git for my own work, so it cannot
+be _that_ broken to prevent me from pushing the changes out.
+The "next" branch is where new and exciting things take place.
+
+The above three branches, "master", "maint" and "next" are never
+rewound, so you should be able to safely track them (this
+automatically means the topics that have been merged into "next"
+are not rebased, and you can find the tip of topic branches you
+are interested in out of "git log next" output).
+
+The "pu" (proposed updates) branch bundles all the remainder of
+topic branches.  The "pu" branch, and topic branches that are
+only in "pu", are subject to rebasing in general.
+
+When a topic that was in "pu" proves to be in testable shape, it
+graduates to "next".  I do this with:
+
+	git checkout next
+        git merge that-topic-branch
+
+Sometimes, an idea that looked promising turns out to be not so
+hot and the topic can be dropped from "pu" in such a case.
+
+A topic that is in "next" is expected to be tweaked and fixed to
+perfection before it is merged to "master".  Similarly to the
+above I do it with this:
+
+	git checkout master
+        git merge that-topic-branch
+        git branch -d that-topic-branch
+
+However, being in "next" is not a guarantee to appear in the
+next release (being in "master" is such a guarantee, unless it
+is later found seriously broken and reverted), or even in any
+future release.  There even were cases that topics needed a few
+reverting before graduating to "master", or a topic that already
+was in "next" were reverted from "next" because fatal flaws were
+found in them later.
+
+Starting from v1.5.0, "master" and "maint" have release notes
+for the next release in Documentation/RelNotes-* files, so that
+I do not have to run around summarizing what happened just
+before the release.
+
+
+* Other people's trees, trusted lieutenants and credits.
+
+Documentation/SubmittingPatches outlines who your changes should
+be sent to.  As described in contrib/README, I would delegate
+fixes and enhancements in contrib/ area to primary contributors
+of them.
+
+Although the following are included in git.git repository, they
+have their own authoritative repository and maintainers:
+
+ git-gui/ -- this subdirectory comes from Shawn Pearce's git-gui
+             project, which is found at:
+
+             git://repo.or.cz/git-gui.git
+
+ gitk     -- this file is maintained by Paul Packerras, at:
+
+	     git://git.kernel.org/pub/scm/gitk/gitk.git
+
+I would like to thank everybody who helped to raise git into the
+current shape.  Especially I would like to thank the git list
+regulars whose help I have relied on and expect to continue
+relying on heavily:
+
+ - Linus on general design issues.
+
+ - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre, and
+   Rene Scharfe on general implementation issues.
+
+ - Shawn and Nicolas Pitre on pack issues.
+
+ - Martin Langhoff on cvsserver and cvsimport.
+
+ - Paul Packerras on gitk.
+
+ - Eric Wong on git-svn.
+
+ - Jakub Narebski and Luben Tuikov on gitweb.
+
+ - J. Bruce Fields on documentaton issues.
