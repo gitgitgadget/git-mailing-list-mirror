@@ -1,97 +1,62 @@
-From: "Chris Lee" <clee@kde.org>
-Subject: Partitioned packs
-Date: Tue, 3 Apr 2007 18:36:44 -0700
-Message-ID: <db69205d0704031836u3b3dfc2pb9825dd649aca58@mail.gmail.com>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: Partitioned packs
+Date: Tue, 3 Apr 2007 18:16:12 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0704031813100.21680@qynat.qvtvafvgr.pbz>
+References: <db69205d0704031836u3b3dfc2pb9825dd649aca58@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 04 03:37:59 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Chris Lee <clee@kde.org>
+X-From: git-owner@vger.kernel.org Wed Apr 04 03:45:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HYuRh-0008UJ-V2
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 03:37:58 +0200
+	id 1HYuYq-0004UD-Ar
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 03:45:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966266AbXDDBhM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 3 Apr 2007 21:37:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966246AbXDDBhB
-	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 21:37:01 -0400
-Received: from nz-out-0506.google.com ([64.233.162.224]:23521 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966262AbXDDBgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Apr 2007 21:36:46 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so3734nze
-        for <git@vger.kernel.org>; Tue, 03 Apr 2007 18:36:45 -0700 (PDT)
-Received: by 10.115.46.9 with SMTP id y9mr42353waj.1175650604863;
-        Tue, 03 Apr 2007 18:36:44 -0700 (PDT)
-Received: by 10.114.66.10 with HTTP; Tue, 3 Apr 2007 18:36:44 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: 3fa9af19dad32070
+	id S966263AbXDDBpQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 3 Apr 2007 21:45:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966262AbXDDBpP
+	(ORCPT <rfc822;git-outgoing>); Tue, 3 Apr 2007 21:45:15 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:39360 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S966263AbXDDBpO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Apr 2007 21:45:14 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Tue, 3 Apr 2007 18:45:14 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 03 Apr 2007 18:44:33 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <db69205d0704031836u3b3dfc2pb9825dd649aca58@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43702>
 
-I've been running some experiments, as hinted earlier by the
-discussion about just how much git-index-pack sucks (which, really,
-isn't much since the gaping memleak is gone now).
+On Tue, 3 Apr 2007, Chris Lee wrote:
 
-These experiments include trying to see if there's a noticeable
-performance improvement by splitting out objects of different types
-into different packs. So far, it definitely seems to make a
-difference, though not the one I was initially expecting. For all of
-these tests, I did 'sysctl -w vm.drop_caches=3' before running, to
-effectively simulate a cold-cache run.
+> Date: Tue, 3 Apr 2007 18:36:44 -0700
+> From: Chris Lee <clee@kde.org>
+> To: git@vger.kernel.org
+> Subject: Partitioned packs
+> 
+> I've been running some experiments, as hinted earlier by the
+> discussion about just how much git-index-pack sucks (which, really,
+> isn't much since the gaping memleak is gone now).
+>
+> These experiments include trying to see if there's a noticeable
+> performance improvement by splitting out objects of different types
+> into different packs. So far, it definitely seems to make a
+> difference, though not the one I was initially expecting. For all of
+> these tests, I did 'sysctl -w vm.drop_caches=3' before running, to
+> effectively simulate a cold-cache run.
 
-Single 3.1GB pack file containing all commits, blobs, and trees
-First run (cold cache):
-git-rev-list --all > /dev/null  5.52s user 0.32s system 45% cpu 12.872 total
-git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.01s system 0%
-cpu 40.218s total
-git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.48s user
-0.10s system 5% cpu 10.143 total
+I wonder what order the packs ended up in. if git had to go through the wrong 
+pack completely first before finding the pack that it needed, that coudl account 
+for extra time.
 
-Subsequent runs (warm cache):
-git-rev-list --all > /dev/null  5.19s user 0.48s system 98% cpu 5.750 total
-git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
-cpu 11.960 total
-git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.43s user
-0.04s system 100% cpu 0.472 total
+is it worth makeing up single packs that order the three different types of 
+object differently within the one pack to see what difference it makes to have 
+to walk past all the blobs to get to the commits and trees?
 
-
-Single pack for commit objects and another pack for the rest
-First run (cold cache):
-git-rev-list --all > /dev/null  5.84s user 0.34s system 31% cpu 19.427 total
-git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
-cpu 9:42.74 total
-git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.50s user
-0.26s system 0% cpu 1:35.44 total
-
-Subsequent runs (warm cache):
-git-rev-list --all > /dev/null  5.94s user 0.26s system 99% cpu 6.204 total
-git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
-cpu 12.394 total
-git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.41s user
-0.07s system 98% cpu 0.486 total
-
-Fully-partitioned separate packs for commit, tree, and blob objects
-First run (cold cache):
-git-rev-list --all > /dev/null  6.24s user 0.32s system 25% cpu 25.689 total
-git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
-cpu 1:08.76 total
-git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.38s user
-0.30s system 0% cpu 1:35.89 total
-
-Subsequent runs (warm cache):
-git-rev-list --all > /dev/null  6.28s user 0.24s system 99% cpu 6.527 total
-git-blame -- kdelibs/kdeui/kmenubar.cpp  0.00s user 0.00s system 0%
-cpu 13.895 total
-git-archive --format=tar HEAD -- kdelibs >> /dev/null  0.42s user
-0.06s system 99% cpu 0.476 total
-
-I packed all of these using --delta-base-offset, with a window of 100
-and a depth of 10.
-
--clee
+David Lang
