@@ -1,244 +1,66 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: A note from the maintainer
-Date: Wed, 04 Apr 2007 11:26:52 -0700
-Message-ID: <7vd52k3sib.fsf@assigned-by-dhcp.cox.net>
-References: <7v648c7bbn.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] rerere should not repeat the earlier hunks in later ones
+Date: Wed, 04 Apr 2007 11:28:28 -0700
+Message-ID: <7v8xd83sfn.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wj1ujf5.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0704041746580.4045@wbgn013.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 04 20:35:18 2007
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 04 20:35:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZAK1-0000Jo-Tf
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 20:35:06 +0200
+	id 1HZAK7-0000Jo-D9
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 20:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934079AbXDDS1l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 14:27:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934070AbXDDS1i
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 14:27:38 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:55213 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932456AbXDDS1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 14:27:02 -0400
+	id S1753941AbXDDS3e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 14:29:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753940AbXDDS3U
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 14:29:20 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:44711 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752080AbXDDS3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 14:29:02 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao107.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070404182653.MHDV25613.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 4 Apr 2007 14:26:55 -0400
+          id <20070404182829.NUSL27119.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 4 Apr 2007 14:28:29 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id j6Ss1W00W1kojtg0000000; Wed, 04 Apr 2007 14:26:53 -0400
-In-Reply-To: <7v648c7bbn.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 04 Apr 2007 02:12:12 -0700")
+	id j6UU1W00g1kojtg0000000; Wed, 04 Apr 2007 14:28:29 -0400
+In-Reply-To: <Pine.LNX.4.63.0704041746580.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+	(Johannes Schindelin's message of "Wed, 4 Apr 2007 17:51:21 +0200
+	(CEST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43763>
 
-Now a new feature release is out, it's time to welcome new
-people to the list.  This message talks about how git.git is
-managed, and how you can work with it.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-* IRC and Mailing list
+> I wonder if we should also do
+>
+> diff --git a/builtin-rerere.c b/builtin-rerere.c
+> index b8867ab..4eae27b 100644
+> --- a/builtin-rerere.c
+> +++ b/builtin-rerere.c
+> @@ -112,7 +112,8 @@ static int handle_file(const char *path,
+>  		else if (!prefixcmp(buf, ">>>>>>> ")) {
+>  			hunk_no++;
+>  			hunk = 0;
+> -			if (memcmp(one->ptr, two->ptr, one->nr < two->nr ?
+> +			if (one->nr > two->nr || memcmp(one->ptr, two->ptr,
+> +						one->nr < two->nr ?
+>  						one->nr : two->nr) > 0) {
+>  				struct buffer *swap = one;
+>  				one = two;
+>
+> in case that one conflicting region is prefix of the other one.
 
-Many active members of development community hang around on #git
-IRC channel.  Its log is available at:
-
-	http://colabti.de/irclogger/irclogger_log/git
-
-The development however is primarily done on this mailing list
-you are reading right now.  If you have patches, please send
-them to the list, following Documentation/SubmittingPatches.
-
-I usually read all patches posted to the list, and follow almost
-all the discussions on the list, unless the topic is about an
-obscure corner that I do not personally use.  But I am obviously
-not perfect.  If you sent a patch that you did not hear from
-anybody for three days, that is a very good indication that it
-was dropped on the floor --- please do not hesitate to remind
-me.
-
-The list archive is available at a few public sites as well:
-
-	http://marc.theaimsgroup.com/?l=git
-	http://news.gmane.org/gmane.comp.version-control.git
-
-and some people seem to prefer to read it over NNTP:
-
-	nntp://news.gmane.org/gmane.comp.version-control.git
-
-
-* Repositories, branches and documentation.
-
-My public git.git repository is at:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-
-This is mirrored at Pasky's site at
-
-	git://repo.or.cz/git.git/
-
-but the first has a few hours mirroring delay after I publish
-updates, and the latter, being a mirror of former, lags behind
-it further.  Immediately after I publish to the primary
-repository at kernel.org, I also push into an alternate here:
-
-	git://repo.or.cz/alt-git.git/
-
-Impatient people would have better luck with the last one (but
-the last repository does not have "html", "man" and "todo"
-branches, described next).
-
-There are three branches in git.git repository that are not
-about the source tree of git: "todo", "html" and "man".  The
-first one was meant to contain TODO list for me, but I am not
-good at maintaining such a list so it is not as often updated as
-it could/should be.  It also contains some helper scripts I use
-to maintain git.
-
-The "html" and "man" are autogenerated documentation from the
-tip of the "master" branch; the tip of "html" is extracted to be
-visible at kernel.org at:
-
-	http://www.kernel.org/pub/software/scm/git/docs/
-
-The above URL is the top-level documentation page, and it has
-links to documentation of older releases.
-
-The script to maintain these two documentation branches are
-found in "todo" branch as dodoc.sh, if you are interested.  It
-is a good demonstration of how to use an update hook to automate
-a task.
-
-There are four branches in git.git repository that track the
-source tree of git: "master", "maint", "next", and "pu".
-
-The "master" branch is meant to contain what are very well
-tested and ready to be used in a production setting.  There
-could occasionally be minor breakages or brown paper bag bugs
-but they are not expected to be anything major.  Every now and
-then, a "feature release" is cut from the tip of this branch and
-they typically are named with three dotted decimal digits.  The
-last such release was v1.5.1 done on April 4th this year.
-
-Whenever a feature release is made, "maint" branch is forked off
-from "master" at that point.  Obvious, safe and urgent fixes
-after a feature release are applied to this branch and
-maintenance releases are cut from it.  The maintenance releases
-are named with four dotted decimal, named after the feature
-release they are updates to; the last such release was v1.5.0.7.
-New features never goes to this branch.  This branch is also
-merged into "master" to propagate the fixes forward.
-
-A trivial and safe enhancement goes directly on top of "master".
-A new development, either initiated by myself or more often by
-somebody who found his or her own itch to scratch, does not
-usually happen on "master", however.  Instead, a separate topic
-branch is forked from the tip of "master", and it first is
-tested in isolation; I may make minimum fixups at this point.
-Usually there are a handful such topic branches that are running
-ahead of "master" in git.git repository.  I do not publish the
-tip of these branches in my public repository, however, partly
-to keep the number of branches that downstream developers need
-to worry about low, and primarily because I am lazy.
-
-I judge the quality of topic branches, taking advices from the
-mailing list discussions.  Some of them start out as "good idea
-but obviously is broken in some areas (e.g. breaks the existing
-testsuite)" and then with some more work (either by the original
-contributor or help from other people on the list) becomes "more
-or less done and can now be tested by wider audience".  Luckily,
-most of them start out in the latter, better shape.
-
-The "next" branch is to merge and test topic branches in the
-latter category.  In general, the branch always contains the tip
-of "master".  It might not be quite rock-solid production ready,
-but is expected to work more or less without major breakage.  I
-usually use "next" version of git for my own work, so it cannot
-be _that_ broken to prevent me from pushing the changes out.
-The "next" branch is where new and exciting things take place.
-
-The above three branches, "master", "maint" and "next" are never
-rewound, so you should be able to safely track them (this
-automatically means the topics that have been merged into "next"
-are not rebased, and you can find the tip of topic branches you
-are interested in out of "git log next" output).
-
-The "pu" (proposed updates) branch bundles all the remainder of
-topic branches.  The "pu" branch, and topic branches that are
-only in "pu", are subject to rebasing in general.
-
-When a topic that was in "pu" proves to be in testable shape, it
-graduates to "next".  I do this with:
-
-	git checkout next
-        git merge that-topic-branch
-
-Sometimes, an idea that looked promising turns out to be not so
-hot and the topic can be dropped from "pu" in such a case.
-
-A topic that is in "next" is expected to be tweaked and fixed to
-perfection before it is merged to "master".  Similarly to the
-above I do it with this:
-
-	git checkout master
-        git merge that-topic-branch
-        git branch -d that-topic-branch
-
-However, being in "next" is not a guarantee to appear in the
-next release (being in "master" is such a guarantee, unless it
-is later found seriously broken and reverted), or even in any
-future release.  There even were cases that topics needed a few
-reverting before graduating to "master", or a topic that already
-was in "next" were reverted from "next" because fatal flaws were
-found in them later.
-
-Starting from v1.5.0, "master" and "maint" have release notes
-for the next release in Documentation/RelNotes-* files, so that
-I do not have to run around summarizing what happened just
-before the release.
-
-
-* Other people's trees, trusted lieutenants and credits.
-
-Documentation/SubmittingPatches outlines who your changes should
-be sent to.  As described in contrib/README, I would delegate
-fixes and enhancements in contrib/ area to primary contributors
-of them.
-
-Although the following are included in git.git repository, they
-have their own authoritative repository and maintainers:
-
- git-gui/ -- this subdirectory comes from Shawn Pearce's git-gui
-             project, which is found at:
-
-             git://repo.or.cz/git-gui.git
-
- gitk     -- this file is maintained by Paul Packerras, at:
-
-	     git://git.kernel.org/pub/scm/gitk/gitk.git
-
-I would like to thank everybody who helped to raise git into the
-current shape.  Especially I would like to thank the git list
-regulars whose help I have relied on and expect to continue
-relying on heavily:
-
- - Linus on general design issues.
-
- - Linus, Shawn Pearce, Johannes Schindelin, Nicolas Pitre, and
-   Rene Scharfe on general implementation issues.
-
- - Shawn and Nicolas Pitre on pack issues.
-
- - Martin Langhoff on cvsserver and cvsimport.
-
- - Paul Packerras on gitk.
-
- - Eric Wong on git-svn.
-
- - Jakub Narebski and Luben Tuikov on gitweb.
-
- - J. Bruce Fields on documentaton issues.
+If one is not a prefix of two but simply longer what does that
+code do?
