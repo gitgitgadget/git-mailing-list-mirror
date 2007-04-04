@@ -1,90 +1,109 @@
-From: James Cloos <cloos@jhcloos.com>
-Subject: Re: Distribution of longest common hash prefixes
-Date: Wed, 04 Apr 2007 17:03:02 -0400
-Message-ID: <m3bqi3ons2.fsf@lugabout.jhcloos.org>
-References: <20070402145857.GA13293@bohr.gbar.dtu.dk>
-	<Pine.LNX.4.64.0704020817250.6730@woody.linux-foundation.org>
-	<86bqi6kae7.fsf@blue.stonehenge.com>
-	<Pine.LNX.4.64.0704020938470.6730@woody.linux-foundation.org>
-	<86y7laitlz.fsf@blue.stonehenge.com>
-	<86r6r2isva.fsf@blue.stonehenge.com>
-	<m3r6r1jsmq.fsf@lugabout.jhcloos.org>
-	<867istcrhr.fsf@blue.stonehenge.com>
-	<20070403172123.GD27706@spearce.org>
-	<Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] rerere: make sorting really stable.
+Date: Wed, 04 Apr 2007 14:13:35 -0700
+Message-ID: <7vircb2680.fsf@assigned-by-dhcp.cox.net>
+References: <7v1wj1ujf5.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.63.0704041746580.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+	<7v8xd83sfn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Peter Eriksen <s022018@student.dtu.dk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 04 23:12:40 2007
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Apr 04 23:13:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZCmW-0004gN-7V
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 23:12:40 +0200
+	id 1HZCne-0005EV-0P
+	for gcvg-git@gmane.org; Wed, 04 Apr 2007 23:13:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751592AbXDDVM3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 17:12:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751608AbXDDVM3
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 17:12:29 -0400
-Received: from eagle.jhcloos.com ([207.210.242.212]:4838 "EHLO
-	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751592AbXDDVM1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 17:12:27 -0400
-X-Greylist: delayed 494 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Apr 2007 17:12:27 EDT
-Received: by eagle.jhcloos.com (Postfix, from userid 10)
-	id D42AB4028B; Wed,  4 Apr 2007 21:04:12 +0000 (UTC)
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id B406B2A267F; Wed,  4 Apr 2007 21:03:25 +0000 (UTC)
-In-Reply-To: <Pine.LNX.4.64.0704031046150.6730@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue\, 3 Apr 2007 10\:50\:34 -0700 \(PDT\)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.0 (gnu/linux)
-Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMnRFWHRUaXRsZQAvbWF4dG9y
- L2Nsb29zL2luY29taW5nLzIwMDQvMDIvUFdHL0pIQzE2LnBuZyJMlEwAAAAadEVYdFNvZnR3YXJl
- AEdOT01FIEljb24gRWRpdG9ynioKbAAAAHFJREFUeJzFk8EKwCAMQ1/ED9cvzw6iuM0N9WIvDTWE
- 1KjAxmKnLBEBjLcEIBCeI2nccy5YKrjxwbbvAvZ37zlo4GB9iRMC/cq/AppItwmMyJ5I98wd9G7P
- xxgrSKlYS2lMrOcV13o95aVSKA7E5ndGXG+IIzcl4BNfAAAAAElFTkSuQmCC
-Copyright: Copyright 2007 James Cloos
-X-Hashcash: 1:23:070404:torvalds@linux-foundation.org::nn5ZwAVR1ssAl2mA:00000000000000000000000000000000Ddor
-X-Hashcash: 1:23:070404:s022018@student.dtu.dk::qPMDkt0yLTS4Uukh:000000000000000000000000000000000000000Ex2u
-X-Hashcash: 1:23:070404:merlyn@stonehenge.com::5xDoXoDyJmcurzxY:0000000000000000000000000000000000000000gvbB
-X-Hashcash: 1:23:070404:git@vger.kernel.org::VfjtBbtJQInK9crj:000000000000000000000000000000000000000000xk2G
-X-Hashcash: 1:23:070404:spearce@spearce.org::awJJI6Xk2Y4PWRML:000000000000000000000000000000000000000000+bYN
+	id S1751709AbXDDVNi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 17:13:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751669AbXDDVNi
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 17:13:38 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:36942 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751635AbXDDVNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 17:13:36 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070404211334.BBVE28911.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 4 Apr 2007 17:13:34 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id j9Db1W00l1kojtg0000000; Wed, 04 Apr 2007 17:13:36 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43778>
 
->>>>> "Linus" == Linus Torvalds <torvalds@linux-foundation.org> writes:
+The earlier code does not swap hunks when the beginning of the
+first side is identical to the whole of the second side.  In
+such a case, the first one should sort later.
 
-Linus> Well, neither of the the two objects at 9 bytes may not be (and
-Linus> probably aren't) commits and of the 32 8-nibble cases who knows
-Linus> how many are actually commits (probably none), so an 8-byte SHA1
-Linus> is *probably* unique at least if you just look at commits.
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
+ builtin-rerere.c  |    7 +++++--
+ t/t4200-rerere.sh |    9 +++++----
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-Linus> Remove the "--objects" to find out.
-
-That makes for:
-
-0: 
-1: 
-2: 1
-3: 23320
-4: 25431
-5: 2259
-6: 134
-7: 8
-
-But is the kernel large enough to be sufficiently representative?
-
-Did Jon complete an import of the 'zilla src?  
-
-Has anyone tried to import OOo?
-
--JimC
+diff --git a/builtin-rerere.c b/builtin-rerere.c
+index b463c07..8c2c8bd 100644
+--- a/builtin-rerere.c
++++ b/builtin-rerere.c
+@@ -117,10 +117,13 @@ static int handle_file(const char *path,
+ 		else if (!prefixcmp(buf, "======="))
+ 			hunk = 2;
+ 		else if (!prefixcmp(buf, ">>>>>>> ")) {
++			int one_is_longer = (one->nr > two->nr);
++			int common_len = one_is_longer ? two->nr : one->nr;
++			int cmp = memcmp(one->ptr, two->ptr, common_len);
++
+ 			hunk_no++;
+ 			hunk = 0;
+-			if (memcmp(one->ptr, two->ptr, one->nr < two->nr ?
+-						one->nr : two->nr) > 0) {
++			if ((cmp > 0) || ((cmp == 0) && one_is_longer)) {
+ 				struct buffer *swap = one;
+ 				one = two;
+ 				two = swap;
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index bc878d7..6ba63d7 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -35,7 +35,8 @@ git commit -q -a -m first
+ 
+ git checkout -b second master
+ git show first:a1 |
+-sed -e 's/To die, t/To die! T/' -e 's/life;$/life./' > a1
++sed -e 's/To die, t/To die! T/' > a1
++echo "* END *" >>a1
+ git commit -q -a -m second
+ 
+ # activate rerere
+@@ -53,7 +54,7 @@ test_expect_success 'no postimage or thisimage yet' \
+ test_expect_success 'preimage has right number of lines' '
+ 
+ 	cnt=$(sed -ne "/^<<<<<<</,/^>>>>>>>/p" $rr/preimage | wc -l) &&
+-	test $cnt = 10
++	test $cnt = 9
+ 
+ '
+ 
+@@ -75,10 +76,10 @@ cat > expect << EOF
+  For in that sleep of death what dreams may come
+  When we have shuffled off this mortal coil,
+  Must give us pause: there's the respect
++ That makes calamity of so long life;
+ -<<<<<<<
+--That makes calamity of so long life.
+ -=======
+- That makes calamity of so long life;
++-* END *
+ ->>>>>>>
+ EOF
+ git rerere diff > out
 -- 
-James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
+1.5.1.31.ge421f
