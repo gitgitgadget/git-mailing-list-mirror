@@ -1,80 +1,76 @@
-From: "Fernando J. Pereda" <ferdy@gentoo.org>
-Subject: [PATCH] Makefile: Add '+' to QUIET_SUBDIR0 to fix parallel make.
-Date: Wed, 4 Apr 2007 22:42:33 +0200
-Message-ID: <20070404204233.GA14252@ferdyx.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rerere should not repeat the earlier hunks in later ones
+Date: Thu, 5 Apr 2007 00:00:40 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0704042359470.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v1wj1ujf5.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0704041746580.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v8xd83sfn.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 04 23:15:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Apr 05 00:01:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZCpP-000672-Dv
-	for gcvg-git@gmane.org; Wed, 04 Apr 2007 23:15:39 +0200
+	id 1HZDXT-0005cR-Rx
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 00:01:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751615AbXDDVPg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 4 Apr 2007 17:15:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751669AbXDDVPg
-	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 17:15:36 -0400
-Received: from 170.Red-213-96-222.staticIP.rima-tde.net ([213.96.222.170]:56168
-	"EHLO smtp.ferdyx.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751661AbXDDVPf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Apr 2007 17:15:35 -0400
-X-Greylist: delayed 1974 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Apr 2007 17:15:34 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.ferdyx.org (Postfix) with ESMTP id A7AD68D316
-	for <git@vger.kernel.org>; Wed,  4 Apr 2007 13:29:46 +0200 (CEST)
-Received: from smtp.ferdyx.org ([127.0.0.1])
-	by localhost (tungsteno [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 26934-09 for <git@vger.kernel.org>;
-	Wed, 4 Apr 2007 13:29:42 +0200 (CEST)
-Received: from posidon.ferdyx.org (posidon.ferdyx.org [192.168.0.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.ferdyx.org (Postfix) with ESMTP id 80E9F8D304
-	for <git@vger.kernel.org>; Wed,  4 Apr 2007 13:29:41 +0200 (CEST)
-Received: by posidon.ferdyx.org (nbSMTP-1.01-cvs) for uid 1000
-	(using TLSv1/SSLv3 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	ferdy@ferdyx.org; Wed,  4 Apr 2007 22:42:34 +0200 (CEST)
-Mail-Followup-To: "Fernando J. Pereda" <ferdy@gentoo.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.14 (2007-02-12)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at ferdyx.org
+	id S1751674AbXDDWAo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 4 Apr 2007 18:00:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752277AbXDDWAo
+	(ORCPT <rfc822;git-outgoing>); Wed, 4 Apr 2007 18:00:44 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49519 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752259AbXDDWAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Apr 2007 18:00:42 -0400
+Received: (qmail invoked by alias); 04 Apr 2007 22:00:40 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 05 Apr 2007 00:00:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+sykloh62snptEdI/Rt8mfW4nzK5/BjP0LFvxlvA
+	EinIlvrQuoLyEt
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7v8xd83sfn.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43780>
 
-Signed-off-by: Fernando J. Pereda <ferdy@gentoo.org>
----
+Hi,
 
-  I don't know if this breaks non-gnu make, and don't have an easy way
-  to test it right now. So someone should do that before it is applied.
+On Wed, 4 Apr 2007, Junio C Hamano wrote:
 
-  This is needed for GNU make to let sub-makes connect to the jobserver
-  when multiple jobs are specified (-j option to make). It was not
-  needed before 74f2b2a8d006a49e1be7e30731c2f7365d2741d1 because of how
-  GNU make works.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > I wonder if we should also do
+> >
+> > diff --git a/builtin-rerere.c b/builtin-rerere.c
+> > index b8867ab..4eae27b 100644
+> > --- a/builtin-rerere.c
+> > +++ b/builtin-rerere.c
+> > @@ -112,7 +112,8 @@ static int handle_file(const char *path,
+> >  		else if (!prefixcmp(buf, ">>>>>>> ")) {
+> >  			hunk_no++;
+> >  			hunk = 0;
+> > -			if (memcmp(one->ptr, two->ptr, one->nr < two->nr ?
+> > +			if (one->nr > two->nr || memcmp(one->ptr, two->ptr,
+> > +						one->nr < two->nr ?
+> >  						one->nr : two->nr) > 0) {
+> >  				struct buffer *swap = one;
+> >  				one = two;
+> >
+> > in case that one conflicting region is prefix of the other one.
+> 
+> If one is not a prefix of two but simply longer what does that
+> code do?
 
-  - ferdy
+You're right. With the eager merging algorithm, it is no longer possible 
+that one side is a strict prefix of the other.
 
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+So please forget about my comment.
 
-diff --git a/Makefile b/Makefile
-index ad321b3..090ea98 100644
---- a/Makefile
-+++ b/Makefile
-@@ -657,7 +657,7 @@ ifndef V
- 	QUIET_LINK     = @echo '   ' LINK $@;
- 	QUIET_BUILT_IN = @echo '   ' BUILTIN $@;
- 	QUIET_GEN      = @echo '   ' GEN $@;
--	QUIET_SUBDIR0  = @subdir=
-+	QUIET_SUBDIR0  = +@subdir=
- 	QUIET_SUBDIR1  = ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
- 			 $(MAKE) $(PRINT_DIR) -C $$subdir
- 	export V
--- 
-1.5.1
+Ciao,
+Dscho
