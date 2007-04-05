@@ -1,121 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH (resend)] gitweb: Fix bug in "blobdiff" view for split (e.g. file to symlink) patches
-Date: Thu,  5 Apr 2007 13:45:41 +0200
-Message-ID: <1175773541251-git-send-email-jnareb@gmail.com>
-Cc: Martin Koegler <mkoegler@auto.tuwien.ac.at>,
-	Junio C Hamano <junkio@cox.net>,
-	Jakub Narebski <jnareb@gmail.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: How can git pull be up-to-date and git push fail?
+Date: Thu, 5 Apr 2007 07:15:54 -0500
+Message-ID: <17940.59514.150325.738141@lisa.zopyra.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 13:42:39 2007
+X-From: git-owner@vger.kernel.org Thu Apr 05 14:16:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZQMO-00031S-Fs
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 13:42:36 +0200
+	id 1HZQsm-0006hP-Gi
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 14:16:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766947AbXDELmb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 07:42:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766948AbXDELmb
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 07:42:31 -0400
-Received: from mu-out-0910.google.com ([209.85.134.184]:7727 "EHLO
-	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1766947AbXDELm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 07:42:29 -0400
-Received: by mu-out-0910.google.com with SMTP id g7so830995muf
-        for <git@vger.kernel.org>; Thu, 05 Apr 2007 04:42:28 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        b=lUWBts8/zov7KvhvM3E02g7DAP4xeSZmhURGu4mpLIn6ISWQ6XMmXgmai5Z0MozRkO1J4WiVJ2L/D9I59J+P161GA8ZZUKf51xG98Zxbhhz2G8abmw7vUrjAtAz5LFArKkKRZOC6PpYq00z43Yyo1qQi7ijdmzGPpVERHPsKKo8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=ALSwaq+jNFMm9R8dAi2KCP2N6h6JJZzqZAcEvPA5/Z9esH/3Uvw/0vAhDqEplUDSlD5N3vnV/rI2kVWi82fdXHQ6mOaTln7e1CG/Lk4IoOM9lsIBSNHoNXozHmvvOR4FJdC+4s5P/cha5TLINahiHo04f+8qVYLMml2FjZpVyXI=
-Received: by 10.82.148.7 with SMTP id v7mr2398022bud.1175773347714;
-        Thu, 05 Apr 2007 04:42:27 -0700 (PDT)
-Received: from roke.D-201 ( [89.229.25.173])
-        by mx.google.com with ESMTP id y2sm881082mug.2007.04.05.04.42.22;
-        Thu, 05 Apr 2007 04:42:23 -0700 (PDT)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id l35Bjh1T009587;
-	Thu, 5 Apr 2007 13:45:45 +0200
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id l35BjfwV009585;
-	Thu, 5 Apr 2007 13:45:41 +0200
-X-Mailer: git-send-email 1.5.1
+	id S1766956AbXDEMP7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 08:15:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992698AbXDEMP7
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 08:15:59 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:60701 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2992693AbXDEMP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 08:15:58 -0400
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l35CFvC30771;
+	Thu, 5 Apr 2007 06:15:57 -0600
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43819>
 
-git_patchset_body needs patch generated with --full-index option to
-detect split patches, meaning two patches which corresponds to single
-difftree (raw diff) entry.  An example of such situation is changing
-type (mode) of a file, e.g. from plain file to symbolic link.
+I'm trying to explain this behavior to a co-worker, and how to solve
+it:
 
-Add, in git_blobdiff, --full-index option to patch generating git diff
-invocation, for the 'html' format output ("blobdiff" view).
+% git pull
+Already up-to-date.
 
-"blobdiff_plain" still uses shortened sha1 in the extended git diff
-header "index <hash>..<hash>[ <mode>]" line.
+% git push
+error: remote 'refs/remotes/origin/flexify' is not a strict subset of
+localref 'refs/remotes/origin/flexify'. maybe you are not up-to-date
+and need to pull first?
 
-Noticed-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-On Wed, Mar 28, 2007 at 23:03 +0200, Martin Koegler wrote:
+I believe he is using git 1.5.0 and that the above was tried from the
+master branch.
 
-> Blobdiff (html output) in its current version can not handle symlinks:
->
->   diff --git a/x b/x
->   deleted file mode 100644 (file)
->   index 190a180..873fb8d
->   --- a/x
->   +++ /dev/null
->   @@ -1 +0,0 @@
->   -123
->   diff --git a/ b/
->   new file mode 120000 (symlink)
->   index 190a180..873fb8d
->   --- /dev/null
->   +++ b/
->   @@ -0,0 +1 @@
->   +file3
->   \ No newline at end of file
-> 
-> This was generated by "diff to current" in the history view of a file,
-> which was changed between symlink and normal file.
+So, I'm confused: I would have thought the way you solve the problem
+in step 2 is by executing step 1.  Would he need to do this:
 
-This patch fixes this bug in git_blobdiff (in "blobdiff" view).
+% git checkout flexify
+% git pull flexify:flexify
+% git checkout master
+% git push
 
-Junio, you probably have missed this patch in the noise...
 
- gitweb/gitweb.perl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 4f34c29..d1f4aeb 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3936,7 +3936,8 @@ sub git_blobdiff {
- 
- 		# open patch output
- 		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
--			'-p', $hash_parent_base, $hash_base,
-+			'-p', ($format eq 'html' ? "--full-index" : ()),
-+			$hash_parent_base, $hash_base,
- 			"--", (defined $file_parent ? $file_parent : ()), $file_name
- 			or die_error(undef, "Open git-diff-tree failed");
- 	}
-@@ -3971,7 +3972,8 @@ sub git_blobdiff {
- 		}
- 
- 		# open patch output
--		open $fd, "-|", git_cmd(), "diff", '-p', @diff_opts,
-+		open $fd, "-|", git_cmd(), "diff", @diff_opts,
-+			'-p', ($format eq 'html' ? "--full-index" : ()),
- 			$hash_parent, $hash, "--"
- 			or die_error(undef, "Open git-diff failed");
- 	} else  {
--- 
-1.5.0.5
+Bill
