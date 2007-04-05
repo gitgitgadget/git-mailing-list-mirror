@@ -1,7 +1,7 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/2] git-fetch--tool pick-rref
-Date: Thu, 05 Apr 2007 03:22:54 -0700
-Message-ID: <7v7isrrugx.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 2/2] git-fetch: use fetch--tool pick-rref to avoid local fetch from alternate
+Date: Thu, 05 Apr 2007 03:22:55 -0700
+Message-ID: <7v1wizrugw.fsf@assigned-by-dhcp.cox.net>
 References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
 	<db69205d0704031227q1009eabfhdd82aa3636f25bb6@mail.gmail.com>
 	<Pine.LNX.4.64.0704031304420.6730@woody.linux-foundation.org>
@@ -18,188 +18,130 @@ Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Nicolas Pitre <nico@cam.org>, Chris Lee <clee@kde.org>,
 	Git Mailing List <git@vger.kernel.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 05 12:23:02 2007
+X-From: git-owner@vger.kernel.org Thu Apr 05 12:23:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZP7N-00087P-IQ
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 12:23:01 +0200
+	id 1HZP7P-00087P-1T
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 12:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966025AbXDEKW5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 06:22:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966063AbXDEKW5
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 06:22:57 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:58410 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966025AbXDEKWz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 06:22:55 -0400
+	id S966051AbXDEKW6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 06:22:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966063AbXDEKW6
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 06:22:58 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:47804 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966051AbXDEKW4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 06:22:56 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070405102255.GRU792.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Apr 2007 06:22:55 -0400
+          id <20070405102256.RYB373.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 5 Apr 2007 06:22:56 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id jNNu1W0091kojtg0000000; Thu, 05 Apr 2007 06:22:55 -0400
+	id jNNv1W00K1kojtg0000000; Thu, 05 Apr 2007 06:22:56 -0400
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43813>
 
-This script helper takes list of fully qualified refnames and
-results from ls-remote and grabs only the lines for the named
-refs from the latter.
+When we are fetching from a repository that is on a local
+filesystem, first check if we have all the objects that we are
+going to fetch available locally, by not just checking the tips
+of what we are fetching, but with a full reachability analysis
+to our existing refs.  In such a case, we do not have to run
+git-fetch-pack which would send many needless objects.  This is
+especially true when the other repository is an alternate of the
+current repository (e.g. perhaps the repository was created by
+running "git clone -l -s" from there).
+
+The useless objects transferred used to be discarded when they
+were expanded by git-unpack-objects called from git-fetch-pack,
+but recent git-fetch-pack prefers to keep the data it receives
+from the other end without exploding them into loose objects,
+resulting in a pack full of duplicated data when fetching from
+your own alternate.
+
+This also uses fetch--tool pick-rref on dumb transport side to
+remove a shell loop to do the same.
 
 Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
 
-  Linus Torvalds <torvalds@linux-foundation.org> writes:
-  > On Tue, 3 Apr 2007, Linus Torvalds wrote:
-  >> 
-  >> Yes, we could definitely skip the re-lookup if we had a "don't really 
-  >> care, I can recreate the object myself" flag (ie anybody who is going to 
-  >> write that object)
-  >
-  > Side note: with "alternates" files, you might well *always* have the 
-  > objects. If you do
-  >
-  > 	git clone -l -s ...
-  >
-  > to create various branches, and then pull between them, you'll actually 
-  > end up in the situation that you'll always find the objects and get back 
-  > to the really expensive case..
+ * Strictly speaking, there is no need to even check if $remote
+   is a local directory for this to operate properly, as
+   rev-list would barf and die as soon as it finds something
+   unavailable, while limiting the traversal to stop immediately
+   after it hits what are known to be reachable locally.  On the
+   other hand, if we really want to limit this to the case to a
+   repository with an alternate to "clone -l -s" origin, we
+   could add 'test -f "$GIT_OBJECT_DIRECTORY/info/alternates"',
+   but I chose not to.
 
-  Ah, that's true.  If you "git clone -l -s A B", create new
-  objects in A and pull from B, the transfer would not exclude
-  new objects as they are not visible from B's refs.
+ git-fetch.sh |   41 ++++++++++++++++++++++++++++-------------
+ 1 files changed, 28 insertions(+), 13 deletions(-)
 
-  In that scenario, the keep-pack behaviour is already worse than
-  the unpack-objects behaviour.  The former creates a packfile
-  that duplicates objects that are in A while the latter, although
-  expensive, ends up doing nothing.
-
-  I wonder if we can have a backdoor to avoid any object transfer
-  in such a case to begin with...
-
-  ... and this two patch series does exactly that.
-
- builtin-fetch--tool.c |   84 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 84 insertions(+), 0 deletions(-)
-
-diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
-index e9d6764..be341c1 100644
---- a/builtin-fetch--tool.c
-+++ b/builtin-fetch--tool.c
-@@ -436,10 +436,87 @@ static int expand_refs_wildcard(const char *ls_remote_result, int numrefs,
- 	return 0;
- }
+diff --git a/git-fetch.sh b/git-fetch.sh
+index fd70696..5dc3063 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -173,9 +173,32 @@ fetch_all_at_once () {
+ 	    git-bundle unbundle "$remote" $rref ||
+ 	    echo failed "$remote"
+ 	else
+-	  git-fetch-pack --thin $exec $keep $shallow_depth $no_progress \
+-		"$remote" $rref ||
+-	  echo failed "$remote"
++		if	test -d "$remote" &&
++
++			# The remote might be our alternate.  With
++			# this optimization we will bypass fetch-pack
++			# altogether, which means we cannot be doing
++			# the shallow stuff at all.
++			test ! -f "$GIT_DIR/shallow" &&
++			test -z "$shallow_depth" &&
++
++			# See if all of what we are going to fetch are
++			# connected to our repository's tips, in which
++			# case we do not have to do any fetch.
++			theirs=$(git-fetch--tool -s pick-rref \
++					"$rref" "$ls_remote_result") &&
++
++			# This will barf when $theirs reach an object that
++			# we do not have in our repository.  Otherwise,
++			# we already have everything the fetch would bring in.
++			git-rev-list --objects $theirs --not --all 2>/dev/null
++		then
++			git-fetch--tool pick-rref "$rref" "$ls_remote_result"
++		else
++			git-fetch-pack --thin $exec $keep $shallow_depth \
++				$no_progress "$remote" $rref ||
++			echo failed "$remote"
++		fi
+ 	fi
+       ) |
+       (
+@@ -235,16 +258,8 @@ fetch_per_ref () {
+ 	  fi
  
-+static int pick_rref(int sha1_only, const char *rref, const char *ls_remote_result)
-+{
-+	int err = 0;
-+	int lrr_count = lrr_count, i, pass;
-+	const char *cp;
-+	struct lrr {
-+		const char *line;
-+		const char *name;
-+		int namelen;
-+		int shown;
-+	} *lrr_list = lrr_list;
-+
-+	for (pass = 0; pass < 2; pass++) {
-+		/* pass 0 counts and allocates, pass 1 fills... */
-+		cp = ls_remote_result;
-+		i = 0;
-+		while (1) {
-+			const char *np;
-+			while (*cp && isspace(*cp))
-+				cp++;
-+			if (!*cp)
-+				break;
-+			np = strchr(cp, '\n');
-+			if (!np)
-+				np = cp + strlen(cp);
-+			if (pass) {
-+				lrr_list[i].line = cp;
-+				lrr_list[i].name = cp + 41;
-+				lrr_list[i].namelen = np - (cp + 41);
-+			}
-+			i++;
-+			cp = np;
-+		}
-+		if (!pass) {
-+			lrr_count = i;
-+			lrr_list = xcalloc(lrr_count, sizeof(*lrr_list));
-+		}
-+	}
-+
-+	while (1) {
-+		const char *next;
-+		int rreflen;
-+		int i;
-+
-+		while (*rref && isspace(*rref))
-+			rref++;
-+		if (!*rref)
-+			break;
-+		next = strchr(rref, '\n');
-+		if (!next)
-+			next = rref + strlen(rref);
-+		rreflen = next - rref;
-+
-+		for (i = 0; i < lrr_count; i++) {
-+			struct lrr *lrr = &(lrr_list[i]);
-+
-+			if (rreflen == lrr->namelen &&
-+			    !memcmp(lrr->name, rref, rreflen)) {
-+				if (!lrr->shown)
-+					printf("%.*s\n",
-+					       sha1_only ? 40 : lrr->namelen + 41,
-+					       lrr->line);
-+				lrr->shown = 1;
-+				break;
-+			}
-+		}
-+		if (lrr_count <= i) {
-+			error("pick-rref: %.*s not found", rreflen, rref);
-+			err = 1;
-+		}
-+		rref = next;
-+	}
-+	free(lrr_list);
-+	return err;
-+}
-+
- int cmd_fetch__tool(int argc, const char **argv, const char *prefix)
- {
- 	int verbose = 0;
- 	int force = 0;
-+	int sopt = 0;
- 
- 	while (1 < argc) {
- 		const char *arg = argv[1];
-@@ -447,6 +524,8 @@ int cmd_fetch__tool(int argc, const char **argv, const char *prefix)
- 			verbose = 1;
- 		else if (!strcmp("-f", arg))
- 			force = 1;
-+		else if (!strcmp("-s", arg))
-+			sopt = 1;
- 		else
- 			break;
- 		argc--;
-@@ -491,6 +570,11 @@ int cmd_fetch__tool(int argc, const char **argv, const char *prefix)
- 			reflist = get_stdin();
- 		return parse_reflist(reflist);
- 	}
-+	if (!strcmp("pick-rref", argv[1])) {
-+		if (argc != 4)
-+			return error("pick-rref takes 2 args");
-+		return pick_rref(sopt, argv[2], argv[3]);
-+	}
- 	if (!strcmp("expand-refs-wildcard", argv[1])) {
- 		const char *reflist;
- 		if (argc < 4)
+ 	  # Find $remote_name from ls-remote output.
+-	  head=$(
+-		IFS='	'
+-		echo "$ls_remote_result" |
+-		while read sha1 name
+-		do
+-			test "z$name" = "z$remote_name" || continue
+-			echo "$sha1"
+-			break
+-		done
+-	  )
++	  head=$(git-fetch--tool -s pick-rref \
++			"$remote_name" "$ls_remote_result")
+ 	  expr "z$head" : "z$_x40\$" >/dev/null ||
+ 		die "No such ref $remote_name at $remote"
+ 	  echo >&2 "Fetching $remote_name from $remote using $proto"
 -- 
 1.5.1.45.g1ddb
