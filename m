@@ -1,71 +1,69 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: How can I easily verify my diffs are in parent branch?
-Date: Wed, 04 Apr 2007 22:25:05 -0700
-Message-ID: <7vircbwfym.fsf@assigned-by-dhcp.cox.net>
-References: <1175686583.19898.68.camel@okra.transitives.com>
-	<Pine.LNX.4.64.0704040744160.6730@woody.linux-foundation.org>
+Subject: Re: [PATCH] Makefile: Add '+' to QUIET_SUBDIR0 to fix parallel make.
+Date: Wed, 04 Apr 2007 22:39:11 -0700
+Message-ID: <7vabxnwfb4.fsf@assigned-by-dhcp.cox.net>
+References: <20070404204233.GA14252@ferdyx.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 05 07:25:17 2007
+Cc: git@vger.kernel.org
+To: "Fernando J. Pereda" <ferdy@gentoo.org>
+X-From: git-owner@vger.kernel.org Thu Apr 05 07:39:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZKTE-0003fm-HN
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 07:25:16 +0200
+	id 1HZKgn-0001vj-H7
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 07:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161202AbXDEFZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 01:25:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161204AbXDEFZI
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 01:25:08 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:62862 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161202AbXDEFZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 01:25:06 -0400
+	id S1161205AbXDEFjO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 01:39:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161213AbXDEFjO
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 01:39:14 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:58296 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161205AbXDEFjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 01:39:13 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
+          by fed1rmmtao105.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070405052505.CRMK24385.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Apr 2007 01:25:05 -0400
+          id <20070405053912.EMM25613.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 5 Apr 2007 01:39:12 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id jHR51W00Q1kojtg0000000; Thu, 05 Apr 2007 01:25:05 -0400
-In-Reply-To: <Pine.LNX.4.64.0704040744160.6730@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 4 Apr 2007 08:12:20 -0700 (PDT)")
+	id jHfB1W00b1kojtg0000000; Thu, 05 Apr 2007 01:39:12 -0400
+In-Reply-To: <20070404204233.GA14252@ferdyx.org> (Fernando J. Pereda's message
+	of "Wed, 4 Apr 2007 22:42:33 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43797>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+"Fernando J. Pereda" <ferdy@gentoo.org> writes:
 
-> So to compare all patch-ID's, you can do
+> Signed-off-by: Fernando J. Pereda <ferdy@gentoo.org>
+> ---
 >
-> 	git cherry cvs-upstream my-branch
->
-> adn it should look at all the commits that are in *your* branch but not 
-> upstream, and report their ID's preceded by a "-" if they are upstream, 
-> and a "+" if they are not.
->
-> You can then look at the "+" commits more closely, to see whether maybe 
-> they actually did get merged, but got changed/fixed in the process, or 
-> whether they really are missing.
+>   I don't know if this breaks non-gnu make, and don't have an easy way
+>   to test it right now. So someone should do that before it is applied.
 
-Funny.
+I had an impression that our makefile is quite dependent on GNU
+make already.  Do people build git without gmake?
 
-Last night I was thinking about git-cherry, as it is one of the
-few commands that have "funny parameter semantics that do not
-mesh well with git-log family" (others are format-patch and
-rebase).
+>   This is needed for GNU make to let sub-makes connect to the jobserver
+>   when multiple jobs are specified (-j option to make). It was not
+>   needed before 74f2b2a8d006a49e1be7e30731c2f7365d2741d1 because of how
+>   GNU make works.
 
-I think we should be able to use --left-right and ... operator
-to express what the above cherry does with something like:
+Thanks.  The info page does not talk about -j but '+' apparently
+is needed for jobserver.
 
-    $ git log --left-right --ignore-common-patch cvs-upstream...my-branch
-
-The --ignore-common-patch option does not exist yet, but the
-basic code to implement it should already be accessible from the
-log family, as that is what format-patch needs to do.
+       As a special feature, using the variable `MAKE' in the commands of a
+    rule alters the effects of the `-t' (`--touch'), `-n' (`--just-print'),
+    or `-q' (`--question') option.  Using the `MAKE' variable has the same
+    effect as using a `+' character at the beginning of the command line.
+    *Note Instead of Executing the Commands: Instead of Execution.  This
+    special feature is only enabled if the `MAKE' variable appears directly
+    in the command script: it does not apply if the `MAKE' variable is
+    referenced through expansion of another variable.  In the latter case
+    you must use the `+' token to get these special effects.
