@@ -1,63 +1,68 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: [PATCH] git-{repack,pack-objects} accept --{pack,blob}-limit to control pack size
-Date: Thu, 05 Apr 2007 23:17:58 +0200
-Message-ID: <87r6qy7c6x.fsf@mid.deneb.enyo.de>
-References: <56b7f5510704041340l5997b04dp853e8270a644ab28@mail.gmail.com>
-	<alpine.LFD.0.98.0704041750030.28181@xanadu.home>
-	<56b7f5510704041555q4e735961ra9ee8008be0d33db@mail.gmail.com>
-	<20070405065433.GD5436@spearce.org>
-	<Pine.LNX.4.64.0704050831520.6730@woody.linux-foundation.org>
-	<20070405155306.GI5436@spearce.org>
-	<Pine.LNX.4.64.0704050910590.6730@woody.linux-foundation.org>
-	<20070405171432.GK5436@spearce.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: How can git pull be up-to-date and git push fail?
+Date: Thu, 05 Apr 2007 14:18:58 -0700
+Message-ID: <7vodm2o6yl.fsf@assigned-by-dhcp.cox.net>
+References: <17940.59514.150325.738141@lisa.zopyra.com>
+	<20070405134954.GA18402@coredump.intra.peff.net>
+	<17941.655.192938.792088@lisa.zopyra.com>
+	<20070405204604.GA24779@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 23:18:22 2007
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Apr 05 23:19:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZZLZ-0000U9-Ku
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 23:18:21 +0200
+	id 1HZZME-0000p6-PB
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 23:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767165AbXDEVSE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 17:18:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767173AbXDEVSD
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 17:18:03 -0400
-Received: from mail.enyo.de ([212.9.189.167]:2103 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767165AbXDEVSB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 17:18:01 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1HZZLD-0002PS-LO
-	for git@vger.kernel.org; Thu, 05 Apr 2007 23:17:59 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.63)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1HZZLC-0005C8-8V
-	for git@vger.kernel.org; Thu, 05 Apr 2007 23:17:58 +0200
-In-Reply-To: <20070405171432.GK5436@spearce.org> (Shawn O. Pearce's message of
-	"Thu, 5 Apr 2007 13:14:32 -0400")
+	id S1767311AbXDEVTA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 17:19:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767312AbXDEVTA
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 17:19:00 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:52693 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767311AbXDEVS7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 17:18:59 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070405211859.LNAO25613.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 5 Apr 2007 17:18:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id jZJy1W00E1kojtg0000000; Thu, 05 Apr 2007 17:18:58 -0400
+In-Reply-To: <20070405204604.GA24779@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 5 Apr 2007 16:46:04 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43857>
 
-* Shawn O. Pearce:
+Jeff King <peff@peff.net> writes:
 
-> So we'd probably have to do something like:
+> On Thu, Apr 05, 2007 at 09:07:11AM -0500, Bill Lear wrote:
 >
-> 	#ifndef _LFS_LARGEFILE
-> 	#define open64 open
-> 	#define lseek64 lseek
-> 	#endif
+>> Here is the local:
+>> 
+>> [core]
+>>         repositoryformatversion = 0
+>>         filemode = true
+>>         bare = false
+>>         logallrefupdates = true
+>> [remote "origin"]
+>>         url = ssh://poire/home/jml/repos/new/fusion
+>>         fetch = +refs/heads/*:refs/remotes/origin/*
+>> [branch "master"]
+>>         remote = origin
+>>         merge = refs/heads/master
 >
-> and then start using the open64/lseek64 variants instead.  Or do
-> the reverse #define's.  ;-)
+> I don't see anything there that should cause branches under refs/remotes
+> to be pushed. Was he using 'git-push --all' by any chance?
 
-This is actually what "#define _FILE_OFFSET_BITS 64" does.  It's
-usually not a bad idea per se, but you must not use off_t in library
-header files if you do this.
-
-lseek64 and friends are under -D_LARGEFILE64_SOURCE, it seems.  Pitty
-we couldn't get rid of this mess when switching to libc6. 8-(
+IIRC "git push" without explicit refspecs push the matching
+refs, but I am a bit under the weather and feverish, so don't
+take my word literally but look at git-push manual page please.
