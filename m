@@ -1,63 +1,55 @@
-From: John Gateley <gateley@jriver.com>
-Subject: cg-admin-setuprepo
-Date: Thu, 5 Apr 2007 11:56:53 -0500
-Organization: J. River, Inc.
-Message-ID: <20070405115653.b028db2c.gateley@jriver.com>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: kde.git is now online
+Date: Thu, 05 Apr 2007 10:03:49 -0700
+Message-ID: <46152BF5.3050502@zytor.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 19:04:12 2007
+To: Git Mailing List <git@vger.kernel.org>, Chris Lee <clee@kde.org>
+X-From: git-owner@vger.kernel.org Thu Apr 05 19:04:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZVNX-0007Ls-8W
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 19:04:07 +0200
+	id 1HZVOG-0007hm-I1
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 19:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753317AbXDERDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 13:03:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753312AbXDERDk
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 13:03:40 -0400
-Received: from nm.jriver.com ([204.29.156.98]:43108 "HELO linux.jriver.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1753317AbXDERDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 13:03:39 -0400
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Apr 2007 13:03:38 EDT
-Received: (qmail 26666 invoked from network); 5 Apr 2007 16:56:57 -0000
-Received: from unknown (HELO gateley.jriver.com) (199.242.131.137)
-  by 0 with SMTP; 5 Apr 2007 16:56:57 -0000
-X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.10.6; i486-pc-linux-gnu)
+	id S1753335AbXDEREs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 13:04:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753327AbXDEREs
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 13:04:48 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:42465 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753329AbXDEREr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 13:04:47 -0400
+Received: from [172.27.0.16] (c-67-180-238-171.hsd1.ca.comcast.net [67.180.238.171])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l35H3ouo013332
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 5 Apr 2007 10:03:50 -0700
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+X-Virus-Scanned: ClamAV 0.88.7/3021/Thu Apr  5 04:05:27 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=2.1 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_96_XX,RCVD_IN_NJABL_DUL,RCVD_IN_SORBS_DUL autolearn=no
+	version=3.1.8
+X-Spam-Level: **
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43843>
 
-Hi,
+I received the DVD from Chris Lee with a test conversion of KDE's 
+Subversion repository to git.
 
-I'm trying to do a cg-admin-setuprepo directory, and I'm getting
-an error:
+I have uploaded it to:
 
-bash: line 12: syntax error near unexpected token `&&'
-bash: line 12: `[[  --ee "/home/gateley/git/firewall.git""  ]]  &&&&  ddiiee "/home/gateley/git/firewall.gitt  aallrreeaaddyy  eexxiisstts""'
+http://userweb.kernel.org/~hpa/kdegit/
 
-Looking at the source, the duplicated character problems happen here:
+It's available both as a tarball and as an expanded tree.
 
-# Careful here, no cg-Xlib functions! Also, mind that the variables
-# are substituted _before_ executing the script, not as we go. Which
-# is somewhat unfortunate in case the user passed us a path containing
-# quotes or backslashes, but only sick people do that and they receive
-# what they deserve. ;-)
-_git="$uri"
-cat <<_SCRIPT_EOF_ | $shell $shellarg
+	-hpa
 
-die() { echo "$*" >&2; exit 1; }
-
-
-The "$*" is where the doubled characters begin.
-I'm not enough of a shell programmer to know what's happening.
-Any ideas?
-
-Thanks and please cc me on replies - I'm not on the mailing list yet...
-
-j
+P.S. I still want Kcharselect to display the Unicode names of the 
+characters.
