@@ -1,58 +1,68 @@
-From: "Chris Lee" <clee@kde.org>
-Subject: Re: kde.git is now online
-Date: Thu, 5 Apr 2007 11:03:37 -0700
-Message-ID: <db69205d0704051103u1b3e18f8o37806086a3f01c2b@mail.gmail.com>
-References: <46152BF5.3050502@zytor.com>
-	 <Pine.LNX.4.64.0704051029240.6730@woody.linux-foundation.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Fix passing of TCLTK_PATH to git-gui
+Date: Thu, 5 Apr 2007 21:31:53 +0200
+Message-ID: <20070405193153.GA15907@steel.home>
+References: <81b0412b0704050049u746842ebn270998c5732927d3@mail.gmail.com> <7v8xd7tdl0.fsf@assigned-by-dhcp.cox.net> <81b0412b0704050610m19a72984u34888af00d70eeab@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "H. Peter Anvin" <hpa@zytor.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 05 20:05:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Eygene Ryabinkin <rea-git@codelabs.ru>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Apr 05 21:32:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZWL6-0001xF-1M
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 20:05:40 +0200
+	id 1HZXge-0001HD-It
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 21:32:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767184AbXDESDp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 14:03:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767191AbXDESDo
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 14:03:44 -0400
-Received: from nz-out-0506.google.com ([64.233.162.233]:51591 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767178AbXDESDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 14:03:39 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so363563nze
-        for <git@vger.kernel.org>; Thu, 05 Apr 2007 11:03:38 -0700 (PDT)
-Received: by 10.114.132.5 with SMTP id f5mr854934wad.1175796217974;
-        Thu, 05 Apr 2007 11:03:37 -0700 (PDT)
-Received: by 10.114.66.10 with HTTP; Thu, 5 Apr 2007 11:03:37 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704051029240.6730@woody.linux-foundation.org>
+	id S1767248AbXDETb5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 15:31:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767232AbXDETb5
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 15:31:57 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:30127 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767248AbXDETb4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 15:31:56 -0400
+Received: from tigra.home (Fc944.f.strato-dslnet.de [195.4.201.68])
+	by post.webmailer.de (fruni mo11) (RZmta 5.5)
+	with ESMTP id 804df0j35GhLri ; Thu, 5 Apr 2007 21:31:54 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 4186C277B6;
+	Thu,  5 Apr 2007 21:31:54 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id C8F6DD150; Thu,  5 Apr 2007 21:31:53 +0200 (CEST)
 Content-Disposition: inline
-X-Google-Sender-Auth: a747c33af4477486
+In-Reply-To: <81b0412b0704050610m19a72984u34888af00d70eeab@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAPqgw==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43849>
 
-On 4/5/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
-> On Thu, 5 Apr 2007, H. Peter Anvin wrote:
-> >
-> > http://userweb.kernel.org/~hpa/kdegit/
-> >
-> > It's available both as a tarball and as an expanded tree.
->
-> Thanks. Am downloading it right now ("0% 146.99kB/s" - it will take quite
-> some time ;)
+GNU make does not include environment variables by default
+in its namespace. Just pass them in make command line.
 
-Imagine how much longer it'd take if it were being served up from my
-home connection. :)
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Many thanks to hpa for putting this up!
-
--clee
+diff --git a/Makefile b/Makefile
+index ad321b3..507ad91 100644
+--- a/Makefile
++++ b/Makefile
+@@ -703,7 +703,7 @@ endif
+ 
+ all::
+ ifndef NO_TCLTK
+-	$(QUIET_SUBDIR0)git-gui TCLTK_PATH='$(TCLTK_PATH_SQ)' $(QUIET_SUBDIR1) all
++	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) TCLTK_PATH='$(TCLTK_PATH_SQ)' all
+ endif
+ 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' all
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1)
+-- 
+1.5.1.rc3.48.g803f1
