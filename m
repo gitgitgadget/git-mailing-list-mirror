@@ -1,98 +1,71 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-{repack,pack-objects} accept --{pack,blob}-limit to control pack size
-Date: Thu, 5 Apr 2007 11:53:06 -0400
-Message-ID: <20070405155306.GI5436@spearce.org>
-References: <56b7f5510704041340l5997b04dp853e8270a644ab28@mail.gmail.com> <alpine.LFD.0.98.0704041750030.28181@xanadu.home> <56b7f5510704041555q4e735961ra9ee8008be0d33db@mail.gmail.com> <20070405065433.GD5436@spearce.org> <Pine.LNX.4.64.0704050831520.6730@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>, Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 05 17:53:21 2007
+From: Geert Bosch <bosch@gnat.com>
+Subject: Re: [PATCH] Fix renaming branch without config file
+Date: Thu, 5 Apr 2007 12:00:58 -0400
+Message-ID: <B0C79D8E-07A8-4178-B0A6-698EB2BB5A2A@gnat.com>
+References: <20070405144359.4B8832A7C67@potomac.gnat.com> <Pine.LNX.4.63.0704051728400.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Apr 05 18:01:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZUH1-00080H-NB
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 17:53:20 +0200
+	id 1HZUOi-0003Dr-Qj
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 18:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767118AbXDEPxR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 11:53:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767117AbXDEPxQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 11:53:16 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39462 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767118AbXDEPxP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 11:53:15 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HZUGk-0005x0-8W; Thu, 05 Apr 2007 11:53:02 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 828A720FBAE; Thu,  5 Apr 2007 11:53:06 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0704050831520.6730@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1767121AbXDEQBF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 12:01:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767116AbXDEQBF
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 12:01:05 -0400
+Received: from nile.gnat.com ([205.232.38.5]:55429 "EHLO nile.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1767121AbXDEQBE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 12:01:04 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by filtered-nile.gnat.com (Postfix) with ESMTP id E1B2448CDA0;
+	Thu,  5 Apr 2007 12:00:59 -0400 (EDT)
+Received: from nile.gnat.com ([127.0.0.1])
+ by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 11271-01-10; Thu,  5 Apr 2007 12:00:59 -0400 (EDT)
+Received: from [205.232.38.124] (potomac.gnat.com [205.232.38.124])
+	by nile.gnat.com (Postfix) with ESMTP id A62D948CDF1;
+	Thu,  5 Apr 2007 12:00:59 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.63.0704051728400.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43839>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> 
-> On Thu, 5 Apr 2007, Shawn O. Pearce wrote:
-> > 
-> > For glibc we do try to set _FILE_OFFSET_BITS to 64
-> 
-> I repeat: that's _broken_.
-> 
-> It's in no way portable. It's a glibc horror. It should not be used.
-> 
-> It was a quick hack, but the real way to do it is to use "loff_t" and 
-> "llseek".
 
-Sure, OK, but that libc function doesn't exist on Mac OS X:
+On Apr 5, 2007, at 11:30, Johannes Schindelin wrote:
+> I don't think this is correct. git_config_rename_section() _should_  
+> return
+> an error.
+>
+>> Otherwise, renaming a branch would abort, leaving the repository  
+>> in an
+>> inconsistent state.
+>
+> This should take the hint from --rename-section, and print a  
+> warning (or
+> not).
 
-man llseek:
+Looking at the code, I deduced that git_config_rename_section()
+returns a positive count of sections renamed, 0 if no matching
+section exists and negative for another error condition.
 
-  This function is Linux-specific, and should not be used in programs
-  intended to be portable.
+The proposed patch makes the behavior of an absent config file the
+same as the behavior of an empty one, which seems sane to me.
+There should be no warning, as it is perfectly fine to have no
+config file. Could you elaborate on why you believe my patch
+is not correct?
 
-So we'd need our own horror to wrap llseek as an lseek fake-alike
-anyway.  That's what that glibc horror does, and we didn't have to
-write that code.  :-)
- 
-> But there simply isn't any way to do mmap() or pread() portably outside 
-> the 32-bit area. So there are good reasons why we should just limit 
-> pack-files to 32-bits on 32-bit architectures.
+Currently, a repository without "config" file will be messed up by
+trying to rename a branch, as the rename will mostly succeed but
+leaves the HEAD dangling, requiring manual file editing to recover.
 
-Not unless your off_t is 64 bits, no.  If it is 64 bits then you
-should be able to do a pread or mmap starting past the first 2 GiB.
-You just might not be able to ask for a mmap that exceeds 2 GiB in
-size, as your size_t may not be that large.  E.g., Darwin/Mac OS X.
-Hence the sliding window mmap.
-
-> So I think that Dana's approach is just fundamentally correct. Yeah, we 
-> should probably have a 64-bit index as a *possibility*, but it simply 
-> isn't a replacement for "keep packs under 2GB in size".
-
-I'm not disagreeing.  Some filesystems (FAT on a USB stick, Dana's
-example) just don't want files larger than 2 GiB.  So keeping them
-small has a number of advantages.  Plus they are easier to burn on
-DVD: 2 packs per DVD.  ;-)
-
-I was simply trying to point out that the mmap code isn't broken
-if the off_t is able to handle a file of that size; and if it can't
-then other things are broken, like a simple lseek.
-
--- 
-Shawn.
+   -Geert
