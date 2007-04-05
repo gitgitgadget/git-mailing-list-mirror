@@ -1,163 +1,118 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Thu, 05 Apr 2007 00:03:37 -0700
-Message-ID: <7vhcrvti9i.fsf@assigned-by-dhcp.cox.net>
-References: <7vwt0uypz7.fsf@assigned-by-dhcp.cox.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] git-{repack,pack-objects} accept --{pack,blob}-limit to control pack size
+Date: Thu, 5 Apr 2007 03:15:12 -0400
+Message-ID: <20070405071511.GE5436@spearce.org>
+References: <56b7f5510704041340l5997b04dp853e8270a644ab28@mail.gmail.com> <alpine.LFD.0.98.0704041750030.28181@xanadu.home> <56b7f5510704041555q4e735961ra9ee8008be0d33db@mail.gmail.com> <alpine.LFD.0.98.0704042203160.28181@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 09:03:44 2007
+Cc: Dana How <danahow@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Thu Apr 05 09:15:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZM0V-0000j5-MR
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 09:03:44 +0200
+	id 1HZMBs-0006iq-5C
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 09:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161232AbXDEHDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 03:03:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161240AbXDEHDk
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 03:03:40 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:45099 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161232AbXDEHDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 03:03:38 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070405070338.YSL25613.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Apr 2007 03:03:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id jK3d1W00H1kojtg0000000; Thu, 05 Apr 2007 03:03:38 -0400
-X-master-at: 1ddb47acbdfae4ee43b54b3b96d108b814a9c751
-X-next-at: 9a83558fc7517090b21289a51cabd6bbe0fd945b
-In-Reply-To: <7vwt0uypz7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 02 Apr 2007 22:41:16 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752387AbXDEHPZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 03:15:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752204AbXDEHPY
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 03:15:24 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:54922 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752151AbXDEHPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 03:15:23 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HZMBe-0006xD-27; Thu, 05 Apr 2007 03:15:14 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 9399720FBAE; Thu,  5 Apr 2007 03:15:12 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.98.0704042203160.28181@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43803>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+Nicolas Pitre <nico@cam.org> wrote:
+> But let's take a moment to talk about your "newbie submission".  This 
+> patch is _way_ too large and covers too many things at once.  You'll 
+> have to split it in many smaller logical units pretty please.
 
-* cc/bisect (Thu Apr 5 05:33:53 2007 +0200) 2 commits
- + Documentation: bisect: "start" accepts one bad and many good
-   commits
- + Bisect: teach "bisect start" to optionally use one bad and many
-   good revs.
+Yes, absolutely!  If I was doing this series I'd probably have this
+broken into at least 5, maybe even 8 patches.  There's a lot of
+stuff here, and some of it was completely unrelated to each other.
+Like a fix for lseek arguments?  Uhh, that's so not what this patch
+was about, but is still a good fix.  Nice catch.  Lets get it in,
+but properly please.
 
-This allows "git bisect start <bad> <good1> <good2>... -- <paths>".
+I also noticed a lot of "/* and here we could do... */" markers.
+I think these belong more in the commit message than in the code
+itself, as the code gets really cluttered after a while with the
+todo markers that nobody has done yet.  Odds are, if you don't do
+it in this series, it won't get done for quite a while, if ever.
+Mention it in your commit message, so others are aware of it,
+and leave it at that.
 
-Being able to give more than one good commits upfront may not
-happen very often, but when you are, this makes it unnecessary
-to avoid an extra whole-tree checkout that happens when you give
-a new good commit every time.
+> On Wed, 4 Apr 2007, Dana How wrote:
+> > I have a similar but much weaker reaction, but Linus specifically asked for
+> > this combination to work.
+> 
+> Linus is a total imcompetent who knows nothing about programming or good 
+> taste.  So never ever listen to what he says.  He is wrong, always.
 
-Being able to bisect without any good commit is outside of the
-scope of this series, but I suspect that it probably is a simple
-matter of making "git bisect next", after getting a <bad> commit
-but before gettingt a <good> commit, not to barf but warn
-(because it would pick an ancient commit and wastes one checkout
-if done by mistake), ask confirmation if interactive, and drive
-"git-rev-list --bisect".
+Now now, I wouldn't go that far...
+ 
+> And in this case he's more wrong than usual.
 
-* fp/make-j (Wed Apr 4 22:42:33 2007 +0200) 1 commit
- + Makefile: Add '+' to QUIET_SUBDIR0 to fix parallel make.
+But yes, in this case I certainly I agree with you Nico.  ;-)
+ 
+> The appropriate location for the splitting of packs in a fetch 
+> context is really within index-pack not in pack-objects.  And it is 
+> probably so much easier to do in index-pack anyway.
 
-This makes our Makefile more dependent on GNU make, but I think
-it already is.
+Or in a push context.  I have started down the road of doing the
+pack splitting in index-pack, but never was able to finish it.
+It is totally doable in index-pack, but it turned out to be more
+work than I had time for when I started it.
 
-* jc/index-output (Sat Mar 31 23:27:41 2007 -0700) 2 commits
- + git-read-tree --index-output=<file>
- + _GIT_INDEX_OUTPUT: allow plumbing to output to an alternative
-   index file.
+I still have the topic laying in my repository, and it is pushed
+to my fastimport.git fork on repo.or.cz, if someone wants to take
+a look at it.  The patch is far from complete, hence no patch to
+mailing list.
 
-This is primarily to make index manipulation more efficient and
-safer in the codepath to do "git commit <paths>".  Although I
-tested the results, I do not know if it breaks things for other
-people in real life projects, as I almost never do this "index
-jumping" commit myself.  Testing and feedback is appreciated.
+> > But blobs even close to the packfile limit don't seem all that useful
+> > to pack either (this of course is a weaker argument).
+> 
+> So you still have to convince me this is a useful feature.
 
-I think the above three series are ready for 'master'.
+Me too.  Nico's right.  And lets just assume we are in a bad case
+where we need to put one (and only one) such blob into each packfile.
+The packfile on disk will be an additional 32 bytes larger than if
+it were to stay a loose file, and that's assuming the loose file was
+created using the newer-style loose file format.  This is unlikely
+to cause a large disk space overhead.
 
-* fl/cvsserver (Sat Mar 31 15:57:47 2007 +0200) 6 commits
- + cvsserver: Use DBI->table_info instead of DBI->tables
- + cvsserver: Abort if connect to database fails
- + cvsserver: Make the database backend configurable
- + cvsserver: Allow to override the configuration per access method
- + cvsserver: Handle three part keys in git config correctly
- + cvsserver: Introduce new state variable 'method'
-
-Although the code looked sane, I do not interact with git
-repositories over CVS protocol in real life, so I haven't
-personally tested it.  I cannot push this out to 'master'
-without positive feedbacks.  Testing needed.
-
-* jc/checkout (Thu Mar 29 01:23:12 2007 -0700) 4 commits
- + Use BASE index extension in git-commit and git-merge.
- + update-index --{set,get}-base
- + Add BASE index extension.
- + checkout: allow detaching to HEAD even when switching to the tip
-   of a branch
-
-I've rewritten the bottom commit not to require an explicit -d
-option when detaching.  You can say "git checkout master^0"
-instead to get a detached head that is at the tip of master.  I
-may make that one commit graduate to 'master' earlier than
-others.
-
-This series is primarily to make it safer when somebody else
-updates the tip of the branch you have currently checked out.
-As I said in previous messages, I think the series covers basic
-operations fine but there probably are gaps in the coverage.
-Motivated volunteers are needed to fill them.
-
-* jc/read-tree-df (Thu Mar 15 23:25:22 2007 -0700) 6 commits
- + Fix switching to a branch with D/F when current branch has file D.
- + Fix twoway_merge that passed d/f conflict marker to
-   merged_entry().
- + Fix read-tree --prefix=dir/.
- + unpack-trees: get rid of *indpos parameter.
- + unpack_trees.c: pass unpack_trees_options structure to
-   keep_entry() as well.
- + add_cache_entry(): removal of file foo does not conflict with
-   foo/bar
-
-I think this fixes the "my branch has foo/bar and I cannot
-switch to another branch that has foo as a file" issue better
-than the previous attempts.  Heavy testing and reporting is
-needed until it graduates to 'master'.
-
-* jc/the-index (Sun Apr 1 23:26:07 2007 -0700) 2 commits
- - Make read-cache.c "the_index" free.
- - Move index-related variables into a structure.
-
-This libifies the "cache" part of the system.  Parked in 'pu' as
-there is no immediate need.
-
-* jc/blame (Tue Mar 27 01:58:01 2007 -0700) 3 commits
- - git-blame: optimize get_origin() from linear search to hash-
-   lookup.
- - git-blame: pass "struct scoreboard *" pointers around.
- - blame: lift structure definitions up
-* jc/pathattr (Thu Mar 1 01:20:21 2007 -0800) 5 commits
- - pathattr: allow piping to external program.
- - pathattr: read from git_config().
- - git-show: use pathattr to run "display"
- - pathattr: path based configuration of various attributes.
- + convert: add scaffolding for path based selection of conversion
-   routines.
-* js/fetch-progress (Sun Feb 25 13:13:17 2007 -0800) 1 commit
- + git-fetch: add --quiet
-* jc/merge-subtree (Thu Feb 15 16:32:45 2007 -0800) 1 commit
- - A new merge stragety 'subtree'.
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- - test-para: combined diff between HEAD, index and working tree.
- - para-walk: walk n trees, index and working tree in parallel
-
-These are stalled.
+Yea, we to have an extra SHA-1 we have to compute when we created
+the file, but then we also have another SHA-1 to verify that the
+zlib stream is not corrupt, *without* unpacking the zlib stream.
+That in and of itself could be useful for an fsck, we could do a
+faster rule that says "if there's only a couple of blobs in this
+packfile, and the thing is *big*, just do a check of the packfile
+SHA-1 and assume the blobs are OK".  So there actually might be
+value to that extra SHA-1 after all.
+ 
+-- 
+Shawn.
