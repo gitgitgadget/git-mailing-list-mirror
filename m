@@ -1,63 +1,71 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] rename contrib/hooks/post-receieve-email to contrib/hooks/post-receive-email.
-Date: Wed, 04 Apr 2007 22:19:53 -0700
-Message-ID: <7vmz1nwg7a.fsf@assigned-by-dhcp.cox.net>
-References: <20070404115212.17022.qmail@44e948019c99c4.315fe32.mid.smarden.org>
-	<ev08qg$fib$1@sea.gmane.org>
+Subject: Re: How can I easily verify my diffs are in parent branch?
+Date: Wed, 04 Apr 2007 22:25:05 -0700
+Message-ID: <7vircbwfym.fsf@assigned-by-dhcp.cox.net>
+References: <1175686583.19898.68.camel@okra.transitives.com>
+	<Pine.LNX.4.64.0704040744160.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 07:20:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 05 07:25:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZKOP-0001Nt-Pw
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 07:20:18 +0200
+	id 1HZKTE-0003fm-HN
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 07:25:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161187AbXDEFT4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Thu, 5 Apr 2007 01:19:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161199AbXDEFTz
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 01:19:55 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:32862 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161187AbXDEFTz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Apr 2007 01:19:55 -0400
+	id S1161202AbXDEFZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 01:25:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161204AbXDEFZI
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 01:25:08 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:62862 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161202AbXDEFZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 01:25:06 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070405051955.YTRR373.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Apr 2007 01:19:55 -0400
+          id <20070405052505.CRMK24385.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 5 Apr 2007 01:25:05 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id jHKu1W0021kojtg0000000; Thu, 05 Apr 2007 01:19:54 -0400
-In-Reply-To: <ev08qg$fib$1@sea.gmane.org> (Jakub Narebski's message of "Wed,
-	04 Apr 2007 15:25:48 +0200")
+	id jHR51W00Q1kojtg0000000; Thu, 05 Apr 2007 01:25:05 -0400
+In-Reply-To: <Pine.LNX.4.64.0704040744160.6730@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 4 Apr 2007 08:12:20 -0700 (PDT)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43796>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Gerrit Pape wrote:
+> So to compare all patch-ID's, you can do
 >
->> ---
->> =C2=A0contrib/hooks/post-receieve-email | =C2=A0588 ----------------=
----------------------
->> =C2=A0contrib/hooks/post-receive-email =C2=A0| =C2=A0588 +++++++++++=
-++++++++++++++++++++++++++
->> =C2=A02 files changed, 588 insertions(+), 588 deletions(-)
->> =C2=A0delete mode 100644 contrib/hooks/post-receieve-email
->> =C2=A0create mode 100644 contrib/hooks/post-receive-email
+> 	git cherry cvs-upstream my-branch
 >
-> Would it be better to use git-format-patch -M ?
+> adn it should look at all the commits that are in *your* branch but not 
+> upstream, and report their ID's preceded by a "-" if they are upstream, 
+> and a "+" if they are not.
+>
+> You can then look at the "+" commits more closely, to see whether maybe 
+> they actually did get merged, but got changed/fixed in the process, or 
+> whether they really are missing.
 
-Yes, it would be better for reviewing.
+Funny.
 
-But as I trust Gerrit, the issue the patch deals with is so
-clearly defined and trivial, _and_ I verify with "git show -M"
-after applying the patch, it is not a big deal.
+Last night I was thinking about git-cherry, as it is one of the
+few commands that have "funny parameter semantics that do not
+mesh well with git-log family" (others are format-patch and
+rebase).
+
+I think we should be able to use --left-right and ... operator
+to express what the above cherry does with something like:
+
+    $ git log --left-right --ignore-common-patch cvs-upstream...my-branch
+
+The --ignore-common-patch option does not exist yet, but the
+basic code to implement it should already be accessible from the
+log family, as that is what format-patch needs to do.
