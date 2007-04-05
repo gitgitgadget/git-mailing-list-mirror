@@ -1,85 +1,94 @@
 From: "Dana How" <danahow@gmail.com>
-Subject: [PATCH 10/13] update delta handling in write_object() for --pack-limit
-Date: Thu, 5 Apr 2007 15:38:22 -0700
-Message-ID: <56b7f5510704051538na4393d7k5e51ed2a511cc86e@mail.gmail.com>
+Subject: [PATCH 11/13] implement write rollback in write_one() if --pack-limit exceeded
+Date: Thu, 5 Apr 2007 15:39:24 -0700
+Message-ID: <56b7f5510704051539p36ba3368xd827acd3fa4a3181@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_59091_21658950.1175812702210"
+	boundary="----=_Part_59103_2149137.1175812764946"
 Cc: git@vger.kernel.org, danahow@gmail.com
 To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 06 00:39:03 2007
+X-From: git-owner@vger.kernel.org Fri Apr 06 00:39:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZabW-0008B9-Qk
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 00:38:55 +0200
+	id 1HZacA-0008Mc-6z
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 00:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767238AbXDEWiY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 18:38:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767381AbXDEWiY
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 18:38:24 -0400
-Received: from nz-out-0506.google.com ([64.233.162.233]:14236 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767378AbXDEWiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 18:38:23 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so403332nze
-        for <git@vger.kernel.org>; Thu, 05 Apr 2007 15:38:22 -0700 (PDT)
+	id S1767388AbXDEWj2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 18:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767387AbXDEWj2
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 18:39:28 -0400
+Received: from wr-out-0506.google.com ([64.233.184.228]:27148 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767388AbXDEWj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 18:39:26 -0400
+Received: by wr-out-0506.google.com with SMTP id 71so466815wri
+        for <git@vger.kernel.org>; Thu, 05 Apr 2007 15:39:25 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=idRFc/jNyQMtZV6jPRgTzxgFZ6AKJ2SC7BzqJgdfUq/1CttEnnk7EYCHMZbmwhOPDLuXLNT3aT6C+XR2S8d6+GwU020WGn3u66iNcgOL5Y2hoLP9d9Mf6wDqS8YBd7x0lXsB89cUQMms9+SHXvO6N3pnJs/MKk193U7bDXvLxHI=
+        b=N+QDlocPGqgxUo8fmpBvT/H5uzwDpFTdCgbfJnX2YpJh0C19WfHzAKGj+rJPt2F4WRtpy1ue0ZOAxam9DeZxQCwrnHyf2FUVi8CbzWUGTFcwdVum/UlcchW6iuWsBo5y53LSCtiRxcYXh4yjpmu8Upmf+nJMir7qJffH31r1wsY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=kfO144W/PUIPSz8oUQflvy64ayA5jC4LhgDdhsrSa0/OdS5zAi3K4zYEjtY8g1AR9P5TCMBGZG7iSkeuxv/80A08TrjNgEC8N8F3tCEV4pN9GV7FnmNkiGG9M3MjOAFXnDqmpB/1G7/rlxgLdMz8p2XIQAu8XB+mPTvWJNeR3cs=
-Received: by 10.114.137.2 with SMTP id k2mr979778wad.1175812702268;
-        Thu, 05 Apr 2007 15:38:22 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Thu, 5 Apr 2007 15:38:22 -0700 (PDT)
+        b=rOem6lvmEcL6kFrRSZe7UBLzj0+TV2Vjm77vcyZ/hrZb5yyLAvok9G5MMrJkVz+lwxGvcnmvL5j2KZa1LQA3UzoX0C4eWNx0yHUf+OiwQec3g9sdfTRGbHbHr2JxL5G9AMp/oYq7V3oI1G0+cX5yteB6k6a/N2ytgqZ6UXaRW1Y=
+Received: by 10.114.183.1 with SMTP id g1mr967022waf.1175812765032;
+        Thu, 05 Apr 2007 15:39:25 -0700 (PDT)
+Received: by 10.114.46.4 with HTTP; Thu, 5 Apr 2007 15:39:24 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43874>
 
-------=_Part_59091_21658950.1175812702210
+------=_Part_59103_2149137.1175812764946
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
 
 ---
- builtin-pack-objects.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+ builtin-pack-objects.c |   26 ++++++++++++++++++++++++--
+ 1 files changed, 24 insertions(+), 2 deletions(-)
 
 -- 
 Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
 
-------=_Part_59091_21658950.1175812702210
-Content-Type: text/plain; 
-	name=0010-update-delta-handling-in-write_object-for-pack-l.patch.txt; 
-	charset=ANSI_X3.4-1968
+------=_Part_59103_2149137.1175812764946
+Content-Type: text/plain; name="0011-implement-write-rollback-in-write_one-if-pack-li.patch.txt"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f_f05sif9a
-Content-Disposition: attachment; filename="0010-update-delta-handling-in-write_object-for-pack-l.patch.txt"
+Content-Disposition: attachment; filename="0011-implement-write-rollback-in-write_one-if-pack-li.patch.txt"
+X-Attachment-Id: f_f05sk0yg
 
-RnJvbSA3ZWU1MDVhY2NhYzE2NzUyNjlkMWZjZmM3YTZlM2JjZjcwNzkyYTJmIE1vbiBTZXAgMTcg
+RnJvbSBkN2Q3M2E5MTRlN2M0NTg3ODQ1ZWEwNDA4ZDNlNjJmYTQ0YjRhYzY1IE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5hIEhvdyA8aG93QGRlYXRodmFsbGV5LmNzd2l0Y2guY29t
-PgpEYXRlOiBUaHUsIDUgQXByIDIwMDcgMTQ6MTE6MjEgLTA3MDAKU3ViamVjdDogW1BBVENIIDEw
-LzEzXSB1cGRhdGUgZGVsdGEgaGFuZGxpbmcgaW4gd3JpdGVfb2JqZWN0KCkgZm9yIC0tcGFjay1s
-aW1pdAoKLS0tCiBidWlsdGluLXBhY2stb2JqZWN0cy5jIHwgICAgNiArKysrKy0KIDEgZmlsZXMg
-Y2hhbmdlZCwgNSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1
-aWx0aW4tcGFjay1vYmplY3RzLmMgYi9idWlsdGluLXBhY2stb2JqZWN0cy5jCmluZGV4IGNjYzJk
-MTUuLmEyNDNlZWQgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tcGFjay1vYmplY3RzLmMKKysrIGIvYnVp
-bHRpbi1wYWNrLW9iamVjdHMuYwpAQCAtNDE5LDEzICs0MTksMTcgQEAgc3RhdGljIG9mZl90IHdy
-aXRlX29iamVjdChzdHJ1Y3Qgc2hhMWZpbGUgKmYsCiAJfQogCiAJaWYgKCF0b19yZXVzZSkgewor
-CQlpbnQgdXNhYmxlX2RlbHRhID0JIWVudHJ5LT5kZWx0YSA/IDAgOgorCQkJCQkhb2Zmc2V0X2xp
-bWl0ID8gMSA6CisJCQkJCWVudHJ5LT5kZWx0YS0+bm9fd3JpdGUgPyAwIDoKKwkJCQkJZW50cnkt
-PmRlbHRhLT5vZmZzZXQgPyAxIDogMDsKIAkJYnVmID0gcmVhZF9zaGExX2ZpbGUoZW50cnktPnNo
-YTEsICZ0eXBlLCAmc2l6ZSk7CiAJCWlmICghYnVmKQogCQkJZGllKCJ1bmFibGUgdG8gcmVhZCAl
-cyIsIHNoYTFfdG9faGV4KGVudHJ5LT5zaGExKSk7CiAJCWlmIChzaXplICE9IGVudHJ5LT5zaXpl
-KQogCQkJZGllKCJvYmplY3QgJXMgc2l6ZSBpbmNvbnNpc3RlbmN5ICglbHUgdnMgJWx1KSIsCiAJ
-CQkgICAgc2hhMV90b19oZXgoZW50cnktPnNoYTEpLCBzaXplLCBlbnRyeS0+c2l6ZSk7Ci0JCWlm
-IChlbnRyeS0+ZGVsdGEpIHsKKwkJaWYgKHVzYWJsZV9kZWx0YSkgewogCQkJYnVmID0gZGVsdGFf
-YWdhaW5zdChidWYsIHNpemUsIGVudHJ5KTsKIAkJCXNpemUgPSBlbnRyeS0+ZGVsdGFfc2l6ZTsK
-IAkJCW9ial90eXBlID0gKGFsbG93X29mc19kZWx0YSAmJiBlbnRyeS0+ZGVsdGEtPm9mZnNldCkg
-PwotLSAKMS41LjEucmMyLjE4Lmc5Yzg4LWRpcnR5Cgo=
-------=_Part_59091_21658950.1175812702210--
+PgpEYXRlOiBUaHUsIDUgQXByIDIwMDcgMTQ6MjU6NTAgLTA3MDAKU3ViamVjdDogW1BBVENIIDEx
+LzEzXSBpbXBsZW1lbnQgd3JpdGUgcm9sbGJhY2sgaW4gd3JpdGVfb25lKCkgaWYgLS1wYWNrLWxp
+bWl0IGV4Y2VlZGVkCgotLS0KIGJ1aWx0aW4tcGFjay1vYmplY3RzLmMgfCAgIDI2ICsrKysrKysr
+KysrKysrKysrKysrKysrKy0tCiAxIGZpbGVzIGNoYW5nZWQsIDI0IGluc2VydGlvbnMoKyksIDIg
+ZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEvYnVpbHRpbi1wYWNrLW9iamVjdHMuYyBiL2J1aWx0
+aW4tcGFjay1vYmplY3RzLmMKaW5kZXggYTI0M2VlZC4uYWM2NDNkZCAxMDA2NDQKLS0tIGEvYnVp
+bHRpbi1wYWNrLW9iamVjdHMuYworKysgYi9idWlsdGluLXBhY2stb2JqZWN0cy5jCkBAIC01MTEs
+MTUgKzUxMSwzNyBAQCBzdGF0aWMgb2ZmX3Qgd3JpdGVfb25lKHN0cnVjdCBzaGExZmlsZSAqZiwK
+IAkJCSAgICAgICBzdHJ1Y3Qgb2JqZWN0X2VudHJ5ICplLAogCQkJICAgICAgIG9mZl90IG9mZnNl
+dCkKIHsKLQlpZiAoZS0+b2Zmc2V0IHx8IGUtPnByZWZlcnJlZF9iYXNlKQorCWlmIChlLT5vZmZz
+ZXQgfHwgZS0+cHJlZmVycmVkX2Jhc2UgfHwgZS0+bm9fd3JpdGUpCiAJCS8qIG9mZnNldCBzdGFy
+dHMgZnJvbSBoZWFkZXIgc2l6ZSBhbmQgY2Fubm90IGJlIHplcm8KIAkJICogaWYgaXQgaXMgd3Jp
+dHRlbiBhbHJlYWR5LgogCQkgKi8KIAkJcmV0dXJuIG9mZnNldDsKIAkvKiBpZiB3ZSBhcmUgZGVs
+dGlmaWVkLCB3cml0ZSBvdXQgaXRzIGJhc2Ugb2JqZWN0IGZpcnN0LiAqLwotCWlmIChlLT5kZWx0
+YSkKKwlpZiAoZS0+ZGVsdGEpIHsKIAkJb2Zmc2V0ID0gd3JpdGVfb25lKGYsIGUtPmRlbHRhLCBv
+ZmZzZXQpOworCQlpZiAoIW9mZnNldCkKKwkJCXJldHVybiBvZmZzZXQ7CisJfQogCWUtPm9mZnNl
+dCA9IG9mZnNldDsKKwlpZiAob2Zmc2V0X2xpbWl0KSB7CisJCS8qIHNhdmUgc3RhdGUgYmVmb3Jl
+IHdyaXRlIGZvciBwb3NzaWJsZSBsYXRlciBzZWVrYmFjayAqLworCQlzdHJ1Y3Qgc2hhMXBvc24g
+cG9zbjsKKwkJdWludDMyX3Qgc2F2ZV93cml0dGVuID0gd3JpdHRlbiwgc2F2ZV93cml0dGVuX2Rl
+bHRhID0gd3JpdHRlbl9kZWx0YTsKKwkJdWludDMyX3Qgc2F2ZV9yZXVzZWQgPSByZXVzZWQsIHNh
+dmVfcmV1c2VkX2RlbHRhID0gcmV1c2VkX2RlbHRhOworCQlzaGExbWFyayhmLCAmcG9zbik7CisJ
+CW9mZnNldCArPSB3cml0ZV9vYmplY3QoZiwgZSk7CisJCS8qCisJCSAqIEVuc3VyZSB0aGUgcGFj
+a2ZpbGUgc2l6ZSBuZXZlciBleGNlZWRzIG9yIG1hdGNoZXMgb2Zmc2V0X2xpbWl0LgorCQkgKiBU
+aGUgIjIwIiBpcyBmb3IgdGhlIGZpbmFsIFNIQTEuCisJCSAqLworCQlpZiAoKHVuc2lnbmVkIGxv
+bmcpb2Zmc2V0IDwgKHVuc2lnbmVkIGxvbmcpKG9mZnNldF9saW1pdCAtIDIwKSkKKwkJCXJldHVy
+biBvZmZzZXQ7CisJCXdyaXR0ZW4gPSBzYXZlX3dyaXR0ZW4sIHdyaXR0ZW5fZGVsdGEgPSBzYXZl
+X3dyaXR0ZW5fZGVsdGE7CisJCXJldXNlZCA9IHNhdmVfcmV1c2VkLCByZXVzZWRfZGVsdGEgPSBz
+YXZlX3JldXNlZF9kZWx0YTsKKwkJc2hhMXVuZG8oZiwgJnBvc24sIG9mZnNldCwgZS0+b2Zmc2V0
+KTsKKwkJZS0+b2Zmc2V0ID0gMDsKKwkJcmV0dXJuIDA7CisJfQogCXJldHVybiBvZmZzZXQgKyB3
+cml0ZV9vYmplY3QoZiwgZSk7CiB9CiAKLS0gCjEuNS4xLnJjMi4xOC5nOWM4OC1kaXJ0eQoK
+------=_Part_59103_2149137.1175812764946--
