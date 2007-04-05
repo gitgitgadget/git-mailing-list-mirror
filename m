@@ -1,65 +1,111 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: How can git pull be up-to-date and git push fail?
-Date: Thu, 5 Apr 2007 09:25:29 -0500
-Message-ID: <17941.1753.893556.725405@lisa.zopyra.com>
-References: <17940.59514.150325.738141@lisa.zopyra.com>
-	<20070405134954.GA18402@coredump.intra.peff.net>
-	<17941.655.192938.792088@lisa.zopyra.com>
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Document --left-right option to rev-list.
+Date: Thu, 5 Apr 2007 10:53:07 -0400
+Message-ID: <20070405145307.GA18458@174.242.249.10.in-addr.arpa>
+References: <7vwt0rqftv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 16:25:40 2007
+Content-Type: text/plain; charset=unknown-8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, davidk@lysator.liu.se
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Apr 05 16:53:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZSu9-0001EG-5v
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 16:25:37 +0200
+	id 1HZTL5-0006X1-Ra
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 16:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767010AbXDEOZd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 10:25:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767008AbXDEOZd
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 10:25:33 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:61088 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767010AbXDEOZc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 10:25:32 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l35EPU514624;
-	Thu, 5 Apr 2007 08:25:30 -0600
-In-Reply-To: <17941.655.192938.792088@lisa.zopyra.com>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1767027AbXDEOxS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 5 Apr 2007 10:53:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767029AbXDEOxR
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 10:53:17 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:44942 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767027AbXDEOxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 10:53:16 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by silverinsanity.com (Postfix) with ESMTP id 8131E1FFC143;
+	Thu,  5 Apr 2007 14:53:10 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
+Content-Disposition: inline
+In-Reply-To: <7vwt0rqftv.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43830>
 
-On Thursday, April 5, 2007 at 09:07:11 (-0500) Bill Lear writes:
->...
->Hmm.... I wonder if his remote repo is non-bare... I'll try to find
->out.
+Explanation is paraphrased from "577ed5c... rev-list --left-right"
+---
 
-Yes, it is.  Here is the reply I got from my friend:
+Junio C Hamano <junkio@cox.net> writes:
 
->Bill Lear writes:
-> > So, the remote repo to which you pushed originally is non-bare?  That
-> > is, it has working files checked out?
+> David K=C3=A5gedal <davidk@lysator.liu.se> writes:
 >
->Correct.
+>> "git log -Sleft-right" will actually give me the documentation I wan=
+t,
+>> since the docs are written but only put in the commit message.
 >
-> > If so, that is a problem, but
-> > perhaps not the cause of your problems.  Never push to a non-bare
-> > repo: you need to go that repo and do a pull instead.
->
->I've been able to work around such problems.  I know well about the
->double-commit reversal whammy that can happen (since it happened to me).
->If I push to a non-bare repo that's otherwise got no file modifications
->in it, I can do a "git status" to see what files it thinks are out of
->date, which tells me (by the file list) that the push succeeded.  Then
->I just do a "git checkout -f" to sync up.  Up til now, has worked like
->a charm.  Alternately, I switch to some bogus temporary branch in the
->non-bare repo I'm pushing to & switch back after.
+> Fair enough.  Perhaps the list can help out ;-).
 
+Like this?  :-)
 
-Bill
+ Documentation/git-rev-list.txt |   19 +++++++++++++++++++
+ builtin-rev-list.c             |    1 +
+ 2 files changed, 20 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-lis=
+t.txt
+index 3fa45b8..5b33865 100644
+--- a/Documentation/git-rev-list.txt
++++ b/Documentation/git-rev-list.txt
+@@ -21,6 +21,7 @@ SYNOPSIS
+ 	     [ \--stdin ]
+ 	     [ \--topo-order ]
+ 	     [ \--parents ]
++	     [ \--left-right ]
+ 	     [ \--encoding[=3D<encoding>] ]
+ 	     [ \--(author|committer|grep)=3D<pattern> ]
+ 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
+@@ -101,6 +102,24 @@ include::pretty-formats.txt[]
+=20
+ 	Print the parents of the commit.
+=20
++--left-right::
++
++	Mark which side of a symmetric diff a commit is reachable from.
++	Commits from the left side are prefixed with `<` and those from
++	the right with `>`.  If combined with `--boundary`, those
++	commits are prefixed with `-`.  For example:
++
++----------------------------------------------------------------------=
+-
++	$ git rev-list --left-right --boundary --pretty=3Doneline A...B
++
++	>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb 3rd on b
++	>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb 2nd on b
++	<aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 3rd on a
++	<aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 2nd on a
++	-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 1st on b
++	-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 1st on a
++----------------------------------------------------------------------=
+-
++
+ Diff Formatting
+ ~~~~~~~~~~~~~~~
+=20
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index f91685a..09774f9 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -35,6 +35,7 @@ static const char rev_list_usage[] =3D
+ "    --header | --pretty\n"
+ "    --abbrev=3Dnr | --no-abbrev\n"
+ "    --abbrev-commit\n"
++"    --left-right\n"
+ "  special purpose:\n"
+ "    --bisect\n"
+ "    --bisect-vars"
+--=20
+1.5.1.32.gdd6cd
