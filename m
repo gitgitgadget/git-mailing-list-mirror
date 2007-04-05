@@ -1,56 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix passing of TCLTK_PATH to git-gui
-Date: Thu, 05 Apr 2007 01:44:43 -0700
-Message-ID: <7v8xd7tdl0.fsf@assigned-by-dhcp.cox.net>
-References: <81b0412b0704050049u746842ebn270998c5732927d3@mail.gmail.com>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: How can I easily verify my diffs are in parent branch?
+Date: Thu, 05 Apr 2007 11:16:12 +0200
+Message-ID: <87y7l7tc4j.fsf@morpheus.local>
+References: <1175686583.19898.68.camel@okra.transitives.com> <Pine.LNX.4.64.0704040744160.6730@woody.linux-foundation.org> <7vircbwfym.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Eygene Ryabinkin" <rea-git@codelabs.ru>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 10:44:52 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 05 11:16:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZNaN-0002Fl-Sm
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 10:44:52 +0200
+	id 1HZO5J-0002wB-Pu
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 11:16:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964959AbXDEIop (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 04:44:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965030AbXDEIop
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 04:44:45 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:60779 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964959AbXDEIoo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 04:44:44 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070405084444.MJNK28911.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Apr 2007 04:44:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id jLkj1W00N1kojtg0000000; Thu, 05 Apr 2007 04:44:44 -0400
-In-Reply-To: <81b0412b0704050049u746842ebn270998c5732927d3@mail.gmail.com>
-	(Alex Riesen's message of "Thu, 5 Apr 2007 09:49:57 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S965105AbXDEJQd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 5 Apr 2007 05:16:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965158AbXDEJQd
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 05:16:33 -0400
+Received: from main.gmane.org ([80.91.229.2]:35922 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965105AbXDEJQd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 05:16:33 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HZO4r-0004rH-O6
+	for git@vger.kernel.org; Thu, 05 Apr 2007 11:16:21 +0200
+Received: from c83-253-22-207.bredband.comhem.se ([83.253.22.207])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 05 Apr 2007 11:16:21 +0200
+Received: from davidk by c83-253-22-207.bredband.comhem.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 05 Apr 2007 11:16:21 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: c83-253-22-207.bredband.comhem.se
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:sYWCMuXAJaufXMPG7HeJub5p9M0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43811>
 
-"Alex Riesen" <raa.lkml@gmail.com> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
+> I think we should be able to use --left-right and ... operator
+> to express what the above cherry does with something like:
 >
-> GNU make does not include environment variables by default
-> in its namespace.
+>     $ git log --left-right --ignore-common-patch cvs-upstream...my-br=
+anch
 
-Shouldn't this be part of proposed commit log message?
+--left-right is not documented, so I think it's hard for people (for
+me at least) to follow your reasoning.
 
-Also I'd appreciate if you did not attach the format-patch
-output, but send a properly formatted e-mail.  I would not be so
-picky to non-regulars, but I expect I'd be getting many more
-patches from you, so...
+Would it be to much to ask for to want to have all options have some
+kind of documentation? As in not accepting patches for new options
+that don't include documentation?
+
+"git log -Sleft-right" will actually give me the documentation I want,
+since the docs are written but only put in the commit message.  A git
+user that only uses a git installation has no way of finding that,
+though.
+
+--=20
+David K=C3=A5gedal
