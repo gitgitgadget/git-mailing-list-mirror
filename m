@@ -1,48 +1,79 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH] Added git-p4 package to the list of git RPMs.
-Date: Thu, 5 Apr 2007 16:50:28 +0400
-Message-ID: <20070405125027.GW26348@codelabs.ru>
-References: <20070321160126.GH14837@codelabs.ru> <7v1wji371q.fsf@assigned-by-dhcp.cox.net> <20070326073143.GB44578@codelabs.ru> <20070326073250.GC44578@codelabs.ru> <7v1wjcz9x1.fsf@assigned-by-dhcp.cox.net> <20070327102601.GN14837@codelabs.ru> <7vps6vnehz.fsf@assigned-by-dhcp.cox.net> <20070327112202.GB14837@codelabs.ru> <20070327112514.GC14837@codelabs.ru> <7v3b3g3sbk.fsf@assigned-by-dhcp.cox.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rerere should not repeat the earlier hunks in later ones
+Date: Thu, 5 Apr 2007 15:03:49 +0200 (CEST)
+Message-ID: <Pine.LNX.4.63.0704051502540.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+References: <7v1wj1ujf5.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0704041746580.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v8xd83sfn.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0704042359470.4045@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7vmz1nycjp.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Apr 05 14:50:45 2007
+X-From: git-owner@vger.kernel.org Thu Apr 05 15:03:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZRQL-0007lz-3p
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 14:50:45 +0200
+	id 1HZRd5-0005S4-Vm
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 15:03:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766971AbXDEMuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 08:50:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766973AbXDEMuk
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 08:50:40 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:54846 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1766971AbXDEMuj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 08:50:39 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=aI3WCzlFULsXGn0jBCkMaNSsMMzMHben46QtJdUZ0kVxkwwPOhAjJ1RyPfS4Ld1hw4QuNPKmWJw08Dk7H6nEa+xFV0NDR1e7kd5OYl7s6UMEEQY5epzZ56hAeD8IvdvVvdbvkbMOb4OoMAstRq2zrw0BmjkNH/wrKSSYoLidUD4=;
-Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HZRQA-000N2X-RY; Thu, 05 Apr 2007 16:50:35 +0400
-Content-Disposition: inline
-In-Reply-To: <7v3b3g3sbk.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, score=-2.0 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
+	id S1766976AbXDENDw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 09:03:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766975AbXDENDw
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 09:03:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45821 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1766976AbXDENDv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 09:03:51 -0400
+Received: (qmail invoked by alias); 05 Apr 2007 13:03:49 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
+  by mail.gmx.net (mp056) with SMTP; 05 Apr 2007 15:03:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18uYr5C2GIuFhQrMRZvI6nIlxwnHnD8G35NJNkJo5
+	xO6UYXxEJF4xdt
+X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
+In-Reply-To: <7vmz1nycjp.fsf@assigned-by-dhcp.cox.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43823>
 
-Junio, good day.
+Hi,
 
-Wed, Apr 04, 2007 at 11:30:55AM -0700, Junio C Hamano wrote:
-> Thanks. I'll also add git-p4 here.
+On Wed, 4 Apr 2007, Junio C Hamano wrote:
 
-Thank you.
--- 
-Eygene
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> > @@ -112,7 +112,8 @@ static int handle_file(const char *path,
+> >> >  		else if (!prefixcmp(buf, ">>>>>>> ")) {
+> >> >  			hunk_no++;
+> >> >  			hunk = 0;
+> >> > -			if (memcmp(one->ptr, two->ptr, one->nr < two->nr ?
+> >> > +			if (one->nr > two->nr || memcmp(one->ptr, two->ptr,
+> >> > +						one->nr < two->nr ?
+> >> >  						one->nr : two->nr) > 0) {
+> >> >  				struct buffer *swap = one;
+> >> >  				one = two;
+> >> >
+> >> > in case that one conflicting region is prefix of the other one.
+> >> 
+> >> If one is not a prefix of two but simply longer what does that
+> >> code do?
+> >
+> > You're right. With the eager merging algorithm, it is no longer possible 
+> > that one side is a strict prefix of the other.
+> >
+> > So please forget about my comment.
+> 
+> Now you confused me even more...
+> 
+> Isn't there a case where one is full of text and two is empty?
+
+If one is empty, yes, there can be a conflict. I only did not think of the 
+empty string as a prefix to everything, but you are right.
+
+Ciao,
+Dscho
