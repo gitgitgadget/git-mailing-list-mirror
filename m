@@ -1,71 +1,88 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 02/13] declare overflow during base128 decoding when 1 MSB nonzero, not 7
-Date: Thu, 05 Apr 2007 15:51:36 -0700
-Message-ID: <7vr6qymo3r.fsf@assigned-by-dhcp.cox.net>
-References: <56b7f5510704051524p28eafc18mae3131ef13cdabfa@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH (resend)] gitweb: Fix bug in "blobdiff" view for split (e.g. file to symlink) patches
+Date: Fri, 6 Apr 2007 00:58:23 +0200
+Message-ID: <200704060058.24524.jnareb@gmail.com>
+References: <1175773541251-git-send-email-jnareb@gmail.com> <7v3b3epn0a.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org
-To: "Dana How" <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Apr 06 00:51:41 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Apr 06 00:55:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZant-0003m1-Ag
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 00:51:41 +0200
+	id 1HZarG-0004sG-2c
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 00:55:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767249AbXDEWvi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 18:51:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767392AbXDEWvi
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 18:51:38 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:60442 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767249AbXDEWvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 18:51:37 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070405225138.NFJR25613.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 5 Apr 2007 18:51:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id jarc1W00Y1kojtg0000000; Thu, 05 Apr 2007 18:51:37 -0400
-In-Reply-To: <56b7f5510704051524p28eafc18mae3131ef13cdabfa@mail.gmail.com>
-	(Dana How's message of "Thu, 5 Apr 2007 15:24:49 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767252AbXDEWzF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 18:55:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767387AbXDEWzF
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 18:55:05 -0400
+Received: from mu-out-0910.google.com ([209.85.134.186]:5658 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767252AbXDEWzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 18:55:02 -0400
+Received: by mu-out-0910.google.com with SMTP id g7so1144338muf
+        for <git@vger.kernel.org>; Thu, 05 Apr 2007 15:55:00 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=mSkGEYPCacFYg16ohkmUqZP4+34CTH9cIBu3kXSvv5aYkqMBJJptGK1KHP9BWb6Xkz55wPJfbM58FXO9+jthc3DapaBSTbpeHxh/hHqgUuUuANIIav0AHSx1/cHFwTd4KFKnEiihQaGOcXMVBVotIHJJa5VpTSn15h7+u1v7ZB4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dSNO0SFPbvNm8Nvb8+OSQJc1lfs0EXPsfFMV3yTpzBYYJH1UOFSD1VzmF1W1eVHvUJCPPUe3fTDfFuZwddzIzffnGhbPeESjW1w2LT+SKHGKQ60dAQ/Zmh2B7qUzV6k2Cw8NZQaMh6OwGAmDH2RTTgSb9ciYIaujFOYrhXpctZc=
+Received: by 10.82.175.2 with SMTP id x2mr3582733bue.1175813699793;
+        Thu, 05 Apr 2007 15:54:59 -0700 (PDT)
+Received: from host-89-229-25-173.torun.mm.pl ( [89.229.25.173])
+        by mx.google.com with ESMTP id w7sm7973405mue.2007.04.05.15.54.58;
+        Thu, 05 Apr 2007 15:54:58 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v3b3epn0a.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43878>
 
-"Dana How" <danahow@gmail.com> writes:
+DJunio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+>> git_patchset_body needs patch generated with --full-index option to
+>> detect split patches,...
+>> ...
+>> This patch fixes this bug in git_blobdiff (in "blobdiff" view).
+>>
+>> Junio, you probably have missed this patch in the noise...
+> 
+> Probably.  Although I do remember seeing the patch, it was
+> unclear why --full-index is needed (and it still is unclear to
+> me).  Do you have a parser that expects/depends on full
+> 40-hexdigit hash on the index line?
+> 
+> Not a complaint but a question -- I do not mind (actually prefer,
+> probably) if gitweb worked on full 40-hexdigit internally to
+> avoid possible ambiguity issues, although the output may need to
+> be truncated to save people from having to see unneeded precision.
 
-> Subject: [PATCH 02/13] declare overflow during base128 decoding when 1 MSB nonzero, not 7
->
-> ---
->  builtin-pack-objects.c   |    2 +-
->  builtin-unpack-objects.c |    2 +-
->  index-pack.c             |    2 +-
->  sha1_file.c              |    2 +-
->  4 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-> index b5f9648..50246e1 100644
-> --- a/builtin-pack-objects.c
-> +++ b/builtin-pack-objects.c
-> @@ -1014,7 +1014,7 @@ static void check_object(struct object_entry *entry)
->  				ofs = c & 127;
->  				while (c & 128) {
->  					ofs += 1;
-> -					if (!ofs || ofs & ~(~0UL >> 7))
-> +					if (!ofs || ofs & ~(~0UL >> 1))
->  						die("delta base offset overflow in pack for %s",
->  						    sha1_to_hex(entry->sha1));
->  					c = buf[used_0++];
+Yes, the parser (in git_patchset_body subroutine) checks for
+presence of fully expanded 40-hexdigit hash, and compares it with
+the fully expanded 40-hexdigit hash it has in $difftree hashref
+(from the "raw" diff output, or "raw" part of diff output, or 
+hand-crafted "raw" diff output). It is needed only for the 'html'
+format case (for "commitdiff" / "blobdiff" view), for git_patchset_body
+to know what values use for hyperlinking and replacements.
 
-The line after these context does this:
+The output is truncated (and hyperlinked) in 'html' format case.
 
-	ofs = (ofs << 7) + (c & 127);
 
-If you do not check the top 7 bits, wouldn't you miss overflow?
+I could have relaxed the parser, and compare up to the precision
+of hash in the "^index ..." line of extended git diff header in
+"patch" diff output...
+
+-- 
+Jakub Narebski
+Poland
