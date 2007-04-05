@@ -1,71 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix renaming branch without config file
-Date: Thu, 5 Apr 2007 19:51:57 +0200 (CEST)
-Message-ID: <Pine.LNX.4.63.0704051951170.4045@wbgn013.biozentrum.uni-wuerzburg.de>
-References: <20070405144359.4B8832A7C67@potomac.gnat.com>
- <Pine.LNX.4.63.0704051728400.4045@wbgn013.biozentrum.uni-wuerzburg.de>
- <B0C79D8E-07A8-4178-B0A6-698EB2BB5A2A@gnat.com>
+From: "Chris Lee" <clee@kde.org>
+Subject: Re: kde.git is now online
+Date: Thu, 5 Apr 2007 11:03:37 -0700
+Message-ID: <db69205d0704051103u1b3e18f8o37806086a3f01c2b@mail.gmail.com>
+References: <46152BF5.3050502@zytor.com>
+	 <Pine.LNX.4.64.0704051029240.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Geert Bosch <bosch@gnat.com>
-X-From: git-owner@vger.kernel.org Thu Apr 05 19:52:05 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "H. Peter Anvin" <hpa@zytor.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 05 20:05:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZW7v-0004GH-Q7
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 19:52:04 +0200
+	id 1HZWL6-0001xF-1M
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 20:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767035AbXDERwA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 13:52:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767143AbXDERwA
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 13:52:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:48590 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1767035AbXDERv7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 13:51:59 -0400
-Received: (qmail invoked by alias); 05 Apr 2007 17:51:58 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO wbgn013.biozentrum.uni-wuerzburg.de) [132.187.25.13]
-  by mail.gmx.net (mp034) with SMTP; 05 Apr 2007 19:51:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/bHRxdtb7bwfMG61blIaiie8JmusWJ5sZbh+vVnx
-	GJRbHYFEofgMeM
-X-X-Sender: gene099@wbgn013.biozentrum.uni-wuerzburg.de
-In-Reply-To: <B0C79D8E-07A8-4178-B0A6-698EB2BB5A2A@gnat.com>
-X-Y-GMX-Trusted: 0
+	id S1767184AbXDESDp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 14:03:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767191AbXDESDo
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 14:03:44 -0400
+Received: from nz-out-0506.google.com ([64.233.162.233]:51591 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767178AbXDESDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 14:03:39 -0400
+Received: by nz-out-0506.google.com with SMTP id s1so363563nze
+        for <git@vger.kernel.org>; Thu, 05 Apr 2007 11:03:38 -0700 (PDT)
+Received: by 10.114.132.5 with SMTP id f5mr854934wad.1175796217974;
+        Thu, 05 Apr 2007 11:03:37 -0700 (PDT)
+Received: by 10.114.66.10 with HTTP; Thu, 5 Apr 2007 11:03:37 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0704051029240.6730@woody.linux-foundation.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: a747c33af4477486
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43848>
 
-Hi,
+On 4/5/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+> On Thu, 5 Apr 2007, H. Peter Anvin wrote:
+> >
+> > http://userweb.kernel.org/~hpa/kdegit/
+> >
+> > It's available both as a tarball and as an expanded tree.
+>
+> Thanks. Am downloading it right now ("0% 146.99kB/s" - it will take quite
+> some time ;)
 
-On Thu, 5 Apr 2007, Geert Bosch wrote:
+Imagine how much longer it'd take if it were being served up from my
+home connection. :)
 
-> 
-> On Apr 5, 2007, at 11:30, Johannes Schindelin wrote:
-> > I don't think this is correct. git_config_rename_section() _should_ return
-> > an error.
-> > 
-> > > Otherwise, renaming a branch would abort, leaving the repository in an
-> > > inconsistent state.
-> > 
-> > This should take the hint from --rename-section, and print a warning (or
-> > not).
-> 
-> Looking at the code, I deduced that git_config_rename_section()
-> returns a positive count of sections renamed, 0 if no matching
-> section exists and negative for another error condition.
+Many thanks to hpa for putting this up!
 
-Ah, yes. You are completely right!
-
-> The proposed patch makes the behavior of an absent config file the same 
-> as the behavior of an empty one, which seems sane to me. There should be 
-> no warning, as it is perfectly fine to have no config file. Could you 
-> elaborate on why you believe my patch is not correct?
-
-I elaborate by taking my objections back. Fair enough?
-
-Ciao,
-Dscho
+-clee
