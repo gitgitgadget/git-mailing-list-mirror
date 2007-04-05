@@ -1,69 +1,48 @@
 From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH 2/4] Fix drop-down menus in the git-gui dialogs.
-Date: Thu, 5 Apr 2007 16:49:20 +0400
-Message-ID: <20070405124920.GV26348@codelabs.ru>
-References: <20070327103005.GP14837@codelabs.ru> <20070404163709.GA5167@spearce.org>
+Subject: Re: [PATCH] Added git-p4 package to the list of git RPMs.
+Date: Thu, 5 Apr 2007 16:50:28 +0400
+Message-ID: <20070405125027.GW26348@codelabs.ru>
+References: <20070321160126.GH14837@codelabs.ru> <7v1wji371q.fsf@assigned-by-dhcp.cox.net> <20070326073143.GB44578@codelabs.ru> <20070326073250.GC44578@codelabs.ru> <7v1wjcz9x1.fsf@assigned-by-dhcp.cox.net> <20070327102601.GN14837@codelabs.ru> <7vps6vnehz.fsf@assigned-by-dhcp.cox.net> <20070327112202.GB14837@codelabs.ru> <20070327112514.GC14837@codelabs.ru> <7v3b3g3sbk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Apr 05 14:49:33 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Apr 05 14:50:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZRPA-0007Ao-0q
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 14:49:32 +0200
+	id 1HZRQL-0007lz-3p
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 14:50:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766970AbXDEMt3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 08:49:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766972AbXDEMt3
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 08:49:29 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:61863 "EHLO
+	id S1766971AbXDEMuk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 08:50:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766973AbXDEMuk
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 08:50:40 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:54846 "EHLO
 	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1766970AbXDEMt2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 08:49:28 -0400
+	with ESMTP id S1766971AbXDEMuj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 08:50:39 -0400
 DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
 	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=EzJRs6gvhzwXx2repwgoErx8L+DYh/mEHda/pdPZWpTDnPhruAP1NljCrNlAQkt1NMensSOKpG6L6nAJwqOhlWTYdPnOw9r86yWGelrJU3DfJFPVLSpbCsJ+ANm4SwuznkQ6u/UF24MtCt0OL7Bb4eYw5FoMGbPB1XayuxO5LWE=;
+	b=aI3WCzlFULsXGn0jBCkMaNSsMMzMHben46QtJdUZ0kVxkwwPOhAjJ1RyPfS4Ld1hw4QuNPKmWJw08Dk7H6nEa+xFV0NDR1e7kd5OYl7s6UMEEQY5epzZ56hAeD8IvdvVvdbvkbMOb4OoMAstRq2zrw0BmjkNH/wrKSSYoLidUD4=;
 Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
 	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HZRP5-000N2N-13; Thu, 05 Apr 2007 16:49:27 +0400
+	id 1HZRQA-000N2X-RY; Thu, 05 Apr 2007 16:50:35 +0400
 Content-Disposition: inline
-In-Reply-To: <20070404163709.GA5167@spearce.org>
-X-Spam-Status: No, score=-2.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_05
+In-Reply-To: <7v3b3g3sbk.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, score=-2.0 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43821>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43822>
 
-Shawn, good day.
+Junio, good day.
 
-Wed, Apr 04, 2007 at 12:37:09PM -0400, Shawn O. Pearce wrote:
-> git-gui patches should be addressed to me, not Paul.
+Wed, Apr 04, 2007 at 11:30:55AM -0700, Junio C Hamano wrote:
+> Thanks. I'll also add git-p4 here.
 
-Yep, I just messed with the mail addresses, since I was doing patches
-both for gitk and git-gui. Sorry for it!
-
-> > Error was fixed by "grab"bing the drop-down menu windows on their
-> > activation. Now all drop-down menus are disappearing once the mouse
-> > button is depressed, no matter what is the current position of the
-> > mouse pointer.
-> 
-> This fix actually horribly breaks on Mac OS X.  The problem
-> appears to be that the <Visibility> event on that system doesn't
-> get delivered until after the menu is destroyed, yet I'm getting
-> a %s of VisibilityUnobscured in the event handler.  Go figure.
->
-> So anyway, I cannot apply this patch as-is, because it breaks
-> my main development system.  I understand and feel your pain,
-> but you either need to make this binding apply only on your OS,
-> or find another way to workaround that Tk bug...
-
-OK, I will try to find the other workaround, but I have no Mac OS
-X at hand (they are a bit expensive to me), so I hope you will find
-some time to test the new approaches, if I will come up with any.
-
-Thank you!
+Thank you.
 -- 
 Eygene
