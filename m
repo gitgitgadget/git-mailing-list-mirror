@@ -1,70 +1,63 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] git-{repack,pack-objects} accept --{pack,blob}-limit to
- control pack size
-Date: Thu, 5 Apr 2007 09:21:33 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704050910590.6730@woody.linux-foundation.org>
-References: <56b7f5510704041340l5997b04dp853e8270a644ab28@mail.gmail.com>
- <alpine.LFD.0.98.0704041750030.28181@xanadu.home>
- <56b7f5510704041555q4e735961ra9ee8008be0d33db@mail.gmail.com>
- <20070405065433.GD5436@spearce.org> <Pine.LNX.4.64.0704050831520.6730@woody.linux-foundation.org>
- <20070405155306.GI5436@spearce.org>
+From: John Gateley <gateley@jriver.com>
+Subject: cg-admin-setuprepo
+Date: Thu, 5 Apr 2007 11:56:53 -0500
+Organization: J. River, Inc.
+Message-ID: <20070405115653.b028db2c.gateley@jriver.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Dana How <danahow@gmail.com>, Nicolas Pitre <nico@cam.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Apr 05 18:22:24 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 05 19:04:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZUj3-0004V6-Qa
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 18:22:18 +0200
+	id 1HZVNX-0007Ls-8W
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 19:04:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753134AbXDEQV4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 12:21:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753152AbXDEQVz
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 12:21:55 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:42820 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753134AbXDEQVy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 12:21:54 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l35GLYPD032664
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 5 Apr 2007 09:21:35 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l35GLXje019962;
-	Thu, 5 Apr 2007 09:21:34 -0700
-In-Reply-To: <20070405155306.GI5436@spearce.org>
-X-Spam-Status: No, hits=-2.457 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753317AbXDERDk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 13:03:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753312AbXDERDk
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 13:03:40 -0400
+Received: from nm.jriver.com ([204.29.156.98]:43108 "HELO linux.jriver.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1753317AbXDERDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 13:03:39 -0400
+X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Apr 2007 13:03:38 EDT
+Received: (qmail 26666 invoked from network); 5 Apr 2007 16:56:57 -0000
+Received: from unknown (HELO gateley.jriver.com) (199.242.131.137)
+  by 0 with SMTP; 5 Apr 2007 16:56:57 -0000
+X-Mailer: Sylpheed version 2.2.7 (GTK+ 2.10.6; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43842>
+
+Hi,
+
+I'm trying to do a cg-admin-setuprepo directory, and I'm getting
+an error:
+
+bash: line 12: syntax error near unexpected token `&&'
+bash: line 12: `[[  --ee "/home/gateley/git/firewall.git""  ]]  &&&&  ddiiee "/home/gateley/git/firewall.gitt  aallrreeaaddyy  eexxiisstts""'
+
+Looking at the source, the duplicated character problems happen here:
+
+# Careful here, no cg-Xlib functions! Also, mind that the variables
+# are substituted _before_ executing the script, not as we go. Which
+# is somewhat unfortunate in case the user passed us a path containing
+# quotes or backslashes, but only sick people do that and they receive
+# what they deserve. ;-)
+_git="$uri"
+cat <<_SCRIPT_EOF_ | $shell $shellarg
+
+die() { echo "$*" >&2; exit 1; }
 
 
+The "$*" is where the doubled characters begin.
+I'm not enough of a shell programmer to know what's happening.
+Any ideas?
 
-On Thu, 5 Apr 2007, Shawn O. Pearce wrote:
-> 
-> Sure, OK, but that libc function doesn't exist on Mac OS X:
+Thanks and please cc me on replies - I'm not on the mailing list yet...
 
-My bad. It's *not* linux-specific like the OSX man-page apparently says, 
-it's very traditional. But the right name is "lseek64()" (and offt64_t for 
-the size).
-
-Of course, OSX didn't have some of the backwards-compatibility issues with 
-decades ago, so they just made off_t 64-bit by default. Maybe they don't 
-even bother to do the trivial portability things to support programs that 
-try to be portable..
-
-Anyway, we should use open64(), lseek64() and friends to be as portable as 
-possible.. And if some system doesn't have them, just use the normal ops, 
-and pray that they are already 64-bit safe..
-
-
-		Linus
+j
