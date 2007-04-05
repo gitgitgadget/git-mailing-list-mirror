@@ -1,77 +1,85 @@
 From: "Dana How" <danahow@gmail.com>
-Subject: [PATCH 09/13] drop objects larger than --blob-limit if specified
-Date: Thu, 5 Apr 2007 15:36:52 -0700
-Message-ID: <56b7f5510704051536s7de9638fs8cd811d580f6a7dc@mail.gmail.com>
+Subject: [PATCH 10/13] update delta handling in write_object() for --pack-limit
+Date: Thu, 5 Apr 2007 15:38:22 -0700
+Message-ID: <56b7f5510704051538na4393d7k5e51ed2a511cc86e@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_59071_12479061.1175812612307"
+	boundary="----=_Part_59091_21658950.1175812702210"
 Cc: git@vger.kernel.org, danahow@gmail.com
 To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 06 00:37:05 2007
+X-From: git-owner@vger.kernel.org Fri Apr 06 00:39:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZaZf-0007W4-P2
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 00:37:00 +0200
+	id 1HZabW-0008B9-Qk
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 00:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767374AbXDEWgz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 18:36:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767381AbXDEWgz
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 18:36:55 -0400
-Received: from nz-out-0506.google.com ([64.233.162.236]:13812 "EHLO
+	id S1767238AbXDEWiY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 18:38:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767381AbXDEWiY
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 18:38:24 -0400
+Received: from nz-out-0506.google.com ([64.233.162.233]:14236 "EHLO
 	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767376AbXDEWgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 18:36:53 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so403161nze
-        for <git@vger.kernel.org>; Thu, 05 Apr 2007 15:36:52 -0700 (PDT)
+	with ESMTP id S1767378AbXDEWiX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 18:38:23 -0400
+Received: by nz-out-0506.google.com with SMTP id s1so403332nze
+        for <git@vger.kernel.org>; Thu, 05 Apr 2007 15:38:22 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=UuKCD3yosLlLKMg4BkgFtrnoh0cPkSliXMNPZZFQaBKepj9mfEF5Zeb31hecH2Qe12BRct6KipRd8ucqBm5p4htSR6K+a4g9MY/OPJbBk0aebY2eumaocTYgHeSW8NQWCaGV9ilkqPd2Byqy/qLhl2nkVa5tfYUlR4MyHjYvseE=
+        b=idRFc/jNyQMtZV6jPRgTzxgFZ6AKJ2SC7BzqJgdfUq/1CttEnnk7EYCHMZbmwhOPDLuXLNT3aT6C+XR2S8d6+GwU020WGn3u66iNcgOL5Y2hoLP9d9Mf6wDqS8YBd7x0lXsB89cUQMms9+SHXvO6N3pnJs/MKk193U7bDXvLxHI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=KXSpEJzY0KL2fyRnprQx/jKcW/mW8w5lNhUK6hWvOUCWNXmRkgbcEzH3dgLsdKTeaICEPjnlh90x0Po4K/tHOWtgLPBZXNLUv0COHWVlSaOiCQp+weRgyjB6R2iDiaxCp41D5Ygc1qNTCOdvmcYJxWlUZ/sqc6RLRUwtO+Af1ek=
-Received: by 10.114.205.1 with SMTP id c1mr976310wag.1175812612351;
-        Thu, 05 Apr 2007 15:36:52 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Thu, 5 Apr 2007 15:36:52 -0700 (PDT)
+        b=kfO144W/PUIPSz8oUQflvy64ayA5jC4LhgDdhsrSa0/OdS5zAi3K4zYEjtY8g1AR9P5TCMBGZG7iSkeuxv/80A08TrjNgEC8N8F3tCEV4pN9GV7FnmNkiGG9M3MjOAFXnDqmpB/1G7/rlxgLdMz8p2XIQAu8XB+mPTvWJNeR3cs=
+Received: by 10.114.137.2 with SMTP id k2mr979778wad.1175812702268;
+        Thu, 05 Apr 2007 15:38:22 -0700 (PDT)
+Received: by 10.114.46.4 with HTTP; Thu, 5 Apr 2007 15:38:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43873>
 
-------=_Part_59071_12479061.1175812612307
+------=_Part_59091_21658950.1175812702210
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
 
 ---
- builtin-pack-objects.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ builtin-pack-objects.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
 -- 
 Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
 
-------=_Part_59071_12479061.1175812612307
-Content-Type: text/plain; name="0009-drop-objects-larger-than-blob-limit-if-specified.patch.txt"
+------=_Part_59091_21658950.1175812702210
+Content-Type: text/plain; 
+	name=0010-update-delta-handling-in-write_object-for-pack-l.patch.txt; 
+	charset=ANSI_X3.4-1968
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="0009-drop-objects-larger-than-blob-limit-if-specified.patch.txt"
-X-Attachment-Id: f_f05sgomt
+X-Attachment-Id: f_f05sif9a
+Content-Disposition: attachment; filename="0010-update-delta-handling-in-write_object-for-pack-l.patch.txt"
 
-RnJvbSA2MjUzMmRlMmE4YzE5Y2E4ZDhiZmIyZTRiYzAyYmZmMzliY2M3Y2E4IE1vbiBTZXAgMTcg
+RnJvbSA3ZWU1MDVhY2NhYzE2NzUyNjlkMWZjZmM3YTZlM2JjZjcwNzkyYTJmIE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5hIEhvdyA8aG93QGRlYXRodmFsbGV5LmNzd2l0Y2guY29t
-PgpEYXRlOiBUaHUsIDUgQXByIDIwMDcgMTQ6MDY6MDUgLTA3MDAKU3ViamVjdDogW1BBVENIIDA5
-LzEzXSBkcm9wIG9iamVjdHMgbGFyZ2VyIHRoYW4gLS1ibG9iLWxpbWl0IGlmIHNwZWNpZmllZAoK
-LS0tCiBidWlsdGluLXBhY2stb2JqZWN0cy5jIHwgICAgMSArCiAxIGZpbGVzIGNoYW5nZWQsIDEg
-aW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9idWlsdGluLXBhY2st
-b2JqZWN0cy5jIGIvYnVpbHRpbi1wYWNrLW9iamVjdHMuYwppbmRleCAzN2IwMTUwLi5jY2MyZDE1
-IDEwMDY0NAotLS0gYS9idWlsdGluLXBhY2stb2JqZWN0cy5jCisrKyBiL2J1aWx0aW4tcGFjay1v
-YmplY3RzLmMKQEAgLTExMTYsNiArMTExNiw3IEBAIHN0YXRpYyB2b2lkIGNoZWNrX29iamVjdChz
-dHJ1Y3Qgb2JqZWN0X2VudHJ5ICplbnRyeSkKIAl9CiAKIAllbnRyeS0+dHlwZSA9IHNoYTFfb2Jq
-ZWN0X2luZm8oZW50cnktPnNoYTEsICZlbnRyeS0+c2l6ZSk7CisJbnJfc2tpcHBlZCArPSBlbnRy
-eS0+bm9fd3JpdGUgPSBibG9iX2xpbWl0ICYmICh1bnNpZ25lZCBsb25nKWVudHJ5LT5zaXplID49
-IGJsb2JfbGltaXQ7CiAJaWYgKGVudHJ5LT50eXBlIDwgMCkKIAkJZGllKCJ1bmFibGUgdG8gZ2V0
-IHR5cGUgb2Ygb2JqZWN0ICVzIiwKIAkJICAgIHNoYTFfdG9faGV4KGVudHJ5LT5zaGExKSk7Ci0t
-IAoxLjUuMS5yYzIuMTguZzljODgtZGlydHkKCg==
-------=_Part_59071_12479061.1175812612307--
+PgpEYXRlOiBUaHUsIDUgQXByIDIwMDcgMTQ6MTE6MjEgLTA3MDAKU3ViamVjdDogW1BBVENIIDEw
+LzEzXSB1cGRhdGUgZGVsdGEgaGFuZGxpbmcgaW4gd3JpdGVfb2JqZWN0KCkgZm9yIC0tcGFjay1s
+aW1pdAoKLS0tCiBidWlsdGluLXBhY2stb2JqZWN0cy5jIHwgICAgNiArKysrKy0KIDEgZmlsZXMg
+Y2hhbmdlZCwgNSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1
+aWx0aW4tcGFjay1vYmplY3RzLmMgYi9idWlsdGluLXBhY2stb2JqZWN0cy5jCmluZGV4IGNjYzJk
+MTUuLmEyNDNlZWQgMTAwNjQ0Ci0tLSBhL2J1aWx0aW4tcGFjay1vYmplY3RzLmMKKysrIGIvYnVp
+bHRpbi1wYWNrLW9iamVjdHMuYwpAQCAtNDE5LDEzICs0MTksMTcgQEAgc3RhdGljIG9mZl90IHdy
+aXRlX29iamVjdChzdHJ1Y3Qgc2hhMWZpbGUgKmYsCiAJfQogCiAJaWYgKCF0b19yZXVzZSkgewor
+CQlpbnQgdXNhYmxlX2RlbHRhID0JIWVudHJ5LT5kZWx0YSA/IDAgOgorCQkJCQkhb2Zmc2V0X2xp
+bWl0ID8gMSA6CisJCQkJCWVudHJ5LT5kZWx0YS0+bm9fd3JpdGUgPyAwIDoKKwkJCQkJZW50cnkt
+PmRlbHRhLT5vZmZzZXQgPyAxIDogMDsKIAkJYnVmID0gcmVhZF9zaGExX2ZpbGUoZW50cnktPnNo
+YTEsICZ0eXBlLCAmc2l6ZSk7CiAJCWlmICghYnVmKQogCQkJZGllKCJ1bmFibGUgdG8gcmVhZCAl
+cyIsIHNoYTFfdG9faGV4KGVudHJ5LT5zaGExKSk7CiAJCWlmIChzaXplICE9IGVudHJ5LT5zaXpl
+KQogCQkJZGllKCJvYmplY3QgJXMgc2l6ZSBpbmNvbnNpc3RlbmN5ICglbHUgdnMgJWx1KSIsCiAJ
+CQkgICAgc2hhMV90b19oZXgoZW50cnktPnNoYTEpLCBzaXplLCBlbnRyeS0+c2l6ZSk7Ci0JCWlm
+IChlbnRyeS0+ZGVsdGEpIHsKKwkJaWYgKHVzYWJsZV9kZWx0YSkgewogCQkJYnVmID0gZGVsdGFf
+YWdhaW5zdChidWYsIHNpemUsIGVudHJ5KTsKIAkJCXNpemUgPSBlbnRyeS0+ZGVsdGFfc2l6ZTsK
+IAkJCW9ial90eXBlID0gKGFsbG93X29mc19kZWx0YSAmJiBlbnRyeS0+ZGVsdGEtPm9mZnNldCkg
+PwotLSAKMS41LjEucmMyLjE4Lmc5Yzg4LWRpcnR5Cgo=
+------=_Part_59091_21658950.1175812702210--
