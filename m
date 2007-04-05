@@ -1,84 +1,108 @@
 From: "Dana How" <danahow@gmail.com>
-Subject: [PATCH 01/13] Fix lseek(2) calls with args 2 and 3 swapped
-Date: Thu, 5 Apr 2007 15:23:29 -0700
-Message-ID: <56b7f5510704051523l30c422c6ie2ba561577fecb73@mail.gmail.com>
+Subject: [PATCH 02/13] declare overflow during base128 decoding when 1 MSB nonzero, not 7
+Date: Thu, 5 Apr 2007 15:24:49 -0700
+Message-ID: <56b7f5510704051524p28eafc18mae3131ef13cdabfa@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: multipart/mixed; 
-	boundary="----=_Part_58939_26733031.1175811809042"
+	boundary="----=_Part_58963_21877745.1175811889115"
 Cc: git@vger.kernel.org, danahow@gmail.com
 To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 06 00:23:48 2007
+X-From: git-owner@vger.kernel.org Fri Apr 06 00:25:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZaMg-0003Me-PF
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 00:23:35 +0200
+	id 1HZaNy-0003pd-Bk
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 00:24:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767206AbXDEWXc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 18:23:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767215AbXDEWXb
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 18:23:31 -0400
-Received: from ik-out-1112.google.com ([66.249.90.178]:3242 "EHLO
-	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767206AbXDEWXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 18:23:31 -0400
-Received: by ik-out-1112.google.com with SMTP id c21so474537ika
-        for <git@vger.kernel.org>; Thu, 05 Apr 2007 15:23:29 -0700 (PDT)
+	id S1767215AbXDEWYv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 18:24:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767367AbXDEWYv
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 18:24:51 -0400
+Received: from nz-out-0506.google.com ([64.233.162.239]:10343 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767215AbXDEWYu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 18:24:50 -0400
+Received: by nz-out-0506.google.com with SMTP id s1so401704nze
+        for <git@vger.kernel.org>; Thu, 05 Apr 2007 15:24:49 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=FsbYOvM8PgGbBxvUA5mUoArrj9BMtrZIXcqgPuTs5+plB+aqR8jYTZrqLLOfqiwyJV4eAxnY2R0obj5BqppZlev+GSKDF3fuDuZ0iqmOzrtzuWMNNQdsGVWsyKRL265gAExd39zzuAuVVeE53aQwc6ulHu36xDog771ZfXHiHnk=
+        b=eTMEbctWT51nEJ73Ub23BCd713lwYhzJSVHOWO5MYNrzqW7jXHleiq+fpmf/srikQHsU/eE9lBz3i1WaxvzXxb0vCP0p4L78bGHppv54EL+VWbKlyLMdsrmi304Yf9gJ1wSFuq2m6X+g5RlfnCvGuPXiFYx4bm7vMU1YnFKrAHk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:mime-version:content-type;
-        b=CW6fAq0UpcT1dlko4QzHQZHR2lx1juu8pmAN75C7IUlhMFwGVVEnUiezjIuL3LGfCVfreJI26xG3+z+6ACy3jBeav/6XhfOiaxcg1skJz4Bw85jbKxBfzWrKbwtibKKTo2syXlpxCkGSJbXAkYjExEGCIhNllFuDM6C5yjkNSfI=
-Received: by 10.114.205.1 with SMTP id c1mr942962wag.1175811809080;
-        Thu, 05 Apr 2007 15:23:29 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Thu, 5 Apr 2007 15:23:29 -0700 (PDT)
+        b=rc5JmMhQvn9sxAVG1/mCLX/FQ4iIcPGWgXhenJHBkNKuPBraYKn/aLp/ooSuPFT8DyLuYLm6BNYBpDpJk8DBfFGDPASWB/ruANjbQrsyVhynkSHXB0kZYEb8JNiw0akCP7P5DV25po+NVjHjEaRLQ4TZrg9YHaZ2/eMpeDPrbf4=
+Received: by 10.115.33.1 with SMTP id l1mr954585waj.1175811889188;
+        Thu, 05 Apr 2007 15:24:49 -0700 (PDT)
+Received: by 10.114.46.4 with HTTP; Thu, 5 Apr 2007 15:24:49 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43865>
 
-------=_Part_58939_26733031.1175811809042
+------=_Part_58963_21877745.1175811889115
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Disposition: inline
 
 ---
- http-fetch.c |    2 +-
- http-push.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ builtin-pack-objects.c   |    2 +-
+ builtin-unpack-objects.c |    2 +-
+ index-pack.c             |    2 +-
+ sha1_file.c              |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
 -- 
 Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
 
-------=_Part_58939_26733031.1175811809042
-Content-Type: text/plain; name="0001-Fix-lseek-2-calls-with-args-2-and-3-swapped.patch.txt"
+------=_Part_58963_21877745.1175811889115
+Content-Type: text/plain; name="0002-declare-overflow-during-base128-decoding-when-1-MSB.patch.txt"
 Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="0001-Fix-lseek-2-calls-with-args-2-and-3-swapped.patch.txt"
-X-Attachment-Id: f_f05rz3p0
+Content-Disposition: attachment; filename="0002-declare-overflow-during-base128-decoding-when-1-MSB.patch.txt"
+X-Attachment-Id: f_f05s185s
 
-RnJvbSBhZmFhM2ZhNzU0ZDhhYmMyOTYyNjEyNzUzMzllYzUwMTgyOTgzZGQ3IE1vbiBTZXAgMTcg
+RnJvbSA5MDkzN2I3MjJmMzkxYWJlMWNiYzAzNWMyOWIzM2Y1MDBjMzg5MzM0IE1vbiBTZXAgMTcg
 MDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5hIEhvdyA8aG93QGRlYXRodmFsbGV5LmNzd2l0Y2guY29t
-PgpEYXRlOiBUaHUsIDUgQXByIDIwMDcgMTI6MDU6NTcgLTA3MDAKU3ViamVjdDogW1BBVENIIDAx
-LzEzXSBGaXggbHNlZWsoMikgY2FsbHMgd2l0aCBhcmdzIDIgYW5kIDMgc3dhcHBlZAoKLS0tCiBo
-dHRwLWZldGNoLmMgfCAgICAyICstCiBodHRwLXB1c2guYyAgfCAgICAyICstCiAyIGZpbGVzIGNo
-YW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9odHRw
-LWZldGNoLmMgYi9odHRwLWZldGNoLmMKaW5kZXggNTU3YjQwMy4uMDliYWVkYyAxMDA2NDQKLS0t
-IGEvaHR0cC1mZXRjaC5jCisrKyBiL2h0dHAtZmV0Y2guYwpAQCAtMTk4LDcgKzE5OCw3IEBAIHN0
-YXRpYyB2b2lkIHN0YXJ0X29iamVjdF9yZXF1ZXN0KHN0cnVjdCBvYmplY3RfcmVxdWVzdCAqb2Jq
-X3JlcSkKIAkJU0hBMV9Jbml0KCZvYmpfcmVxLT5jKTsKIAkJaWYgKHByZXZfcG9zbj4wKSB7CiAJ
-CQlwcmV2X3Bvc24gPSAwOwotCQkJbHNlZWsob2JqX3JlcS0+bG9jYWwsIFNFRUtfU0VULCAwKTsK
-KwkJCWxzZWVrKG9ial9yZXEtPmxvY2FsLCAwLCBTRUVLX1NFVCk7CiAJCQlmdHJ1bmNhdGUob2Jq
-X3JlcS0+bG9jYWwsIDApOwogCQl9CiAJfQpkaWZmIC0tZ2l0IGEvaHR0cC1wdXNoLmMgYi9odHRw
-LXB1c2guYwppbmRleCA3MjQ3MjBjLi5lM2Y3Njc1IDEwMDY0NAotLS0gYS9odHRwLXB1c2guYwor
-KysgYi9odHRwLXB1c2guYwpAQCAtMzEyLDcgKzMxMiw3IEBAIHN0YXRpYyB2b2lkIHN0YXJ0X2Zl
-dGNoX2xvb3NlKHN0cnVjdCB0cmFuc2Zlcl9yZXF1ZXN0ICpyZXF1ZXN0KQogCQlTSEExX0luaXQo
-JnJlcXVlc3QtPmMpOwogCQlpZiAocHJldl9wb3NuPjApIHsKIAkJCXByZXZfcG9zbiA9IDA7Ci0J
-CQlsc2VlayhyZXF1ZXN0LT5sb2NhbF9maWxlbm8sIFNFRUtfU0VULCAwKTsKKwkJCWxzZWVrKHJl
-cXVlc3QtPmxvY2FsX2ZpbGVubywgMCwgU0VFS19TRVQpOwogCQkJZnRydW5jYXRlKHJlcXVlc3Qt
-PmxvY2FsX2ZpbGVubywgMCk7CiAJCX0KIAl9Ci0tIAoxLjUuMS5yYzIuMTguZzljODgtZGlydHkK
-Cg==
-------=_Part_58939_26733031.1175811809042--
+PgpEYXRlOiBUaHUsIDUgQXByIDIwMDcgMTI6MTU6MjIgLTA3MDAKU3ViamVjdDogW1BBVENIIDAy
+LzEzXSBkZWNsYXJlIG92ZXJmbG93IGR1cmluZyBiYXNlMTI4IGRlY29kaW5nIHdoZW4gMSBNU0Ig
+bm9uemVybywgbm90IDcKCi0tLQogYnVpbHRpbi1wYWNrLW9iamVjdHMuYyAgIHwgICAgMiArLQog
+YnVpbHRpbi11bnBhY2stb2JqZWN0cy5jIHwgICAgMiArLQogaW5kZXgtcGFjay5jICAgICAgICAg
+ICAgIHwgICAgMiArLQogc2hhMV9maWxlLmMgICAgICAgICAgICAgIHwgICAgMiArLQogNCBmaWxl
+cyBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDQgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0IGEv
+YnVpbHRpbi1wYWNrLW9iamVjdHMuYyBiL2J1aWx0aW4tcGFjay1vYmplY3RzLmMKaW5kZXggYjVm
+OTY0OC4uNTAyNDZlMSAxMDA2NDQKLS0tIGEvYnVpbHRpbi1wYWNrLW9iamVjdHMuYworKysgYi9i
+dWlsdGluLXBhY2stb2JqZWN0cy5jCkBAIC0xMDE0LDcgKzEwMTQsNyBAQCBzdGF0aWMgdm9pZCBj
+aGVja19vYmplY3Qoc3RydWN0IG9iamVjdF9lbnRyeSAqZW50cnkpCiAJCQkJb2ZzID0gYyAmIDEy
+NzsKIAkJCQl3aGlsZSAoYyAmIDEyOCkgewogCQkJCQlvZnMgKz0gMTsKLQkJCQkJaWYgKCFvZnMg
+fHwgb2ZzICYgfih+MFVMID4+IDcpKQorCQkJCQlpZiAoIW9mcyB8fCBvZnMgJiB+KH4wVUwgPj4g
+MSkpCiAJCQkJCQlkaWUoImRlbHRhIGJhc2Ugb2Zmc2V0IG92ZXJmbG93IGluIHBhY2sgZm9yICVz
+IiwKIAkJCQkJCSAgICBzaGExX3RvX2hleChlbnRyeS0+c2hhMSkpOwogCQkJCQljID0gYnVmW3Vz
+ZWRfMCsrXTsKZGlmZiAtLWdpdCBhL2J1aWx0aW4tdW5wYWNrLW9iamVjdHMuYyBiL2J1aWx0aW4t
+dW5wYWNrLW9iamVjdHMuYwppbmRleCAzOTU2YzU2Li44NGE2YzVjIDEwMDY0NAotLS0gYS9idWls
+dGluLXVucGFjay1vYmplY3RzLmMKKysrIGIvYnVpbHRpbi11bnBhY2stb2JqZWN0cy5jCkBAIC0y
+MDksNyArMjA5LDcgQEAgc3RhdGljIHZvaWQgdW5wYWNrX2RlbHRhX2VudHJ5KGVudW0gb2JqZWN0
+X3R5cGUgdHlwZSwgdW5zaWduZWQgbG9uZyBkZWx0YV9zaXplLAogCQliYXNlX29mZnNldCA9IGMg
+JiAxMjc7CiAJCXdoaWxlIChjICYgMTI4KSB7CiAJCQliYXNlX29mZnNldCArPSAxOwotCQkJaWYg
+KCFiYXNlX29mZnNldCB8fCBiYXNlX29mZnNldCAmIH4ofjBVTCA+PiA3KSkKKwkJCWlmICghYmFz
+ZV9vZmZzZXQgfHwgYmFzZV9vZmZzZXQgJiB+KH4wVUwgPj4gMSkpCiAJCQkJZGllKCJvZmZzZXQg
+dmFsdWUgb3ZlcmZsb3cgZm9yIGRlbHRhIGJhc2Ugb2JqZWN0Iik7CiAJCQlwYWNrID0gZmlsbCgx
+KTsKIAkJCWMgPSAqcGFjazsKZGlmZiAtLWdpdCBhL2luZGV4LXBhY2suYyBiL2luZGV4LXBhY2su
+YwppbmRleCAzYzc2OGZiLi4wMjcyMmY3IDEwMDY0NAotLS0gYS9pbmRleC1wYWNrLmMKKysrIGIv
+aW5kZXgtcGFjay5jCkBAIC0yNDksNyArMjQ5LDcgQEAgc3RhdGljIHZvaWQgKnVucGFja19yYXdf
+ZW50cnkoc3RydWN0IG9iamVjdF9lbnRyeSAqb2JqLCB1bmlvbiBkZWx0YV9iYXNlICpkZWx0YV8K
+IAkJYmFzZV9vZmZzZXQgPSBjICYgMTI3OwogCQl3aGlsZSAoYyAmIDEyOCkgewogCQkJYmFzZV9v
+ZmZzZXQgKz0gMTsKLQkJCWlmICghYmFzZV9vZmZzZXQgfHwgYmFzZV9vZmZzZXQgJiB+KH4wVUwg
+Pj4gNykpCisJCQlpZiAoIWJhc2Vfb2Zmc2V0IHx8IGJhc2Vfb2Zmc2V0ICYgfih+MFVMID4+IDEp
+KQogCQkJCWJhZF9vYmplY3Qob2JqLT5vZmZzZXQsICJvZmZzZXQgdmFsdWUgb3ZlcmZsb3cgZm9y
+IGRlbHRhIGJhc2Ugb2JqZWN0Iik7CiAJCQlwID0gZmlsbCgxKTsKIAkJCWMgPSAqcDsKZGlmZiAt
+LWdpdCBhL3NoYTFfZmlsZS5jIGIvc2hhMV9maWxlLmMKaW5kZXggOWMyNjAzOC4uNzA4MmQzZSAx
+MDA2NDQKLS0tIGEvc2hhMV9maWxlLmMKKysrIGIvc2hhMV9maWxlLmMKQEAgLTExNDksNyArMTE0
+OSw3IEBAIHN0YXRpYyBvZmZfdCBnZXRfZGVsdGFfYmFzZShzdHJ1Y3QgcGFja2VkX2dpdCAqcCwK
+IAkJYmFzZV9vZmZzZXQgPSBjICYgMTI3OwogCQl3aGlsZSAoYyAmIDEyOCkgewogCQkJYmFzZV9v
+ZmZzZXQgKz0gMTsKLQkJCWlmICghYmFzZV9vZmZzZXQgfHwgYmFzZV9vZmZzZXQgJiB+KH4wVUwg
+Pj4gNykpCisJCQlpZiAoIWJhc2Vfb2Zmc2V0IHx8IGJhc2Vfb2Zmc2V0ICYgfih+MFVMID4+IDEp
+KQogCQkJCWRpZSgib2Zmc2V0IHZhbHVlIG92ZXJmbG93IGZvciBkZWx0YSBiYXNlIG9iamVjdCIp
+OwogCQkJYyA9IGJhc2VfaW5mb1t1c2VkKytdOwogCQkJYmFzZV9vZmZzZXQgPSAoYmFzZV9vZmZz
+ZXQgPDwgNykgKyAoYyAmIDEyNyk7Ci0tIAoxLjUuMS5yYzIuMTguZzljODgtZGlydHkKCg==
+------=_Part_58963_21877745.1175811889115--
