@@ -1,57 +1,59 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: How can git pull be up-to-date and git push fail?
-Date: Thu, 5 Apr 2007 07:15:54 -0500
-Message-ID: <17940.59514.150325.738141@lisa.zopyra.com>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: [PATCH 4/4] Do not break git-gui messages into multiple lines.
+Date: Thu, 5 Apr 2007 16:45:19 +0400
+Message-ID: <20070405124519.GU26348@codelabs.ru>
+References: <20070327103155.GR14837@codelabs.ru> <20070404164300.GB5167@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 05 14:16:12 2007
+Content-Type: text/plain; charset=koi8-r
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Apr 05 14:45:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZQsm-0006hP-Gi
-	for gcvg-git@gmane.org; Thu, 05 Apr 2007 14:16:04 +0200
+	id 1HZRLM-0005Dl-4U
+	for gcvg-git@gmane.org; Thu, 05 Apr 2007 14:45:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1766956AbXDEMP7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 08:15:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992698AbXDEMP7
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 08:15:59 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60701 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992693AbXDEMP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 08:15:58 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l35CFvC30771;
-	Thu, 5 Apr 2007 06:15:57 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1766964AbXDEMpc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 08:45:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1766969AbXDEMpc
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 08:45:32 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:61114 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1766964AbXDEMpb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 08:45:31 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
+	b=KdQNaZgi4Xi/VnZAkHDlKvMCmXd4fD11o4L95IBGngNPzGy5CfVb7YzGPDgXxcAo20kpXqA0UFar03SrnDiHdF4xfeeN3eeFZU1Bd2hX/Vhm0Bb25AXY4KPoPIHTa8PHnHy3kytmBComWjrG07jP6HPHfJHjcRG8sPCQRShiKiw=;
+Received: from codelabs.ru (pobox.codelabs.ru [144.206.177.45])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HZRLA-000N2A-L0; Thu, 05 Apr 2007 16:45:24 +0400
+Content-Disposition: inline
+In-Reply-To: <20070404164300.GB5167@spearce.org>
+X-Spam-Status: No, score=-2.0 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_40
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43820>
 
-I'm trying to explain this behavior to a co-worker, and how to solve
-it:
+Shawn, good day.
 
-% git pull
-Already up-to-date.
+Wed, Apr 04, 2007 at 12:43:00PM -0400, Shawn O. Pearce wrote:
+> Eygene Ryabinkin <rea-git@codelabs.ru> wrote:
+> > Many git-gui messages were broken into a multiple lines to make
+> > good paragraph width. Unfortunately in reality it breaks the paragraph
+> > width completely, because the dialog window width does not coincide
+> > with the paragraph width created by the current font.
+> 
+> Thanks.  I've applied this series, except for the option menu fix.
+> I'll test later on Windows to make sure there is no breakage there,
+> but I think it looks sane and will move to my master branch soon.
 
-% git push
-error: remote 'refs/remotes/origin/flexify' is not a strict subset of
-localref 'refs/remotes/origin/flexify'. maybe you are not up-to-date
-and need to pull first?
+OK, thank you!
 
-I believe he is using git 1.5.0 and that the above was tried from the
-master branch.
+> Sorry it took so long, been busy...  ;-)
 
-So, I'm confused: I would have thought the way you solve the problem
-in step 2 is by executing step 1.  Would he need to do this:
-
-% git checkout flexify
-% git pull flexify:flexify
-% git checkout master
-% git push
-
-
-Bill
+No problems ;))
+-- 
+Eygene
