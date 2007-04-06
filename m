@@ -1,66 +1,140 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-index-pack really does suck..
-Date: Fri, 06 Apr 2007 15:47:40 -0700
-Message-ID: <7vslbdi0hf.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0704031413200.6730@woody.linux-foundation.org>
-	<alpine.LFD.0.98.0704031836350.28181@xanadu.home>
-	<Pine.LNX.4.63.0704031532390.21680@qynat.qvtvafvgr.pbz>
-	<81b0412b0704040251j34b0bc5eh1518eadcfa2ed299@mail.gmail.com>
-	<Pine.LNX.4.63.0704061455380.24050@qynat.qvtvafvgr.pbz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Chris Lee <clee@kde.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Lang <david.lang@digitalinsight.com>
-X-From: git-owner@vger.kernel.org Sat Apr 07 01:32:38 2007
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: [PATCH(resend)] gitweb: Allow forks with project list file
+Date: Fri,  6 Apr 2007 23:58:11 +0200
+Message-ID: <11758966911292-git-send-email-frank@lichtenheld.de>
+Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Apr 07 01:33:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZxDu-0007zc-2b
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 00:48:02 +0200
+	id 1HZwSA-0007Q7-1p
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 23:58:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933286AbXDFWrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 18:47:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933278AbXDFWrn
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 18:47:43 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:37730 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933279AbXDFWrm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 18:47:42 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070406224742.IKGY27119.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 6 Apr 2007 18:47:42 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id jyng1W00E1kojtg0000000; Fri, 06 Apr 2007 18:47:41 -0400
-In-Reply-To: <Pine.LNX.4.63.0704061455380.24050@qynat.qvtvafvgr.pbz> (David
-	Lang's message of "Fri, 6 Apr 2007 14:56:51 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751643AbXDFV6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 17:58:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751572AbXDFV6j
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 17:58:39 -0400
+Received: from mail.lenk.info ([217.160.134.107]:59444 "EHLO mail.lenk.info"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751209AbXDFV6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 17:58:38 -0400
+Received: from herkules.lenk.info
+	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
+	by mail.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HZwSL-0006Qc-KV; Fri, 06 Apr 2007 23:58:53 +0200
+Received: from p54b0f96b.dip.t-dialin.net ([84.176.249.107] helo=goedel.djpig.de)
+	by smtp.lenk.info with esmtpsa 
+	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
+	id 1HZwS2-0001ld-SG; Fri, 06 Apr 2007 23:58:35 +0200
+Received: from djpig by goedel.djpig.de with local (Exim 4.63)
+	(envelope-from <frank@lichtenheld.de>)
+	id 1HZwRf-0003Aw-Qm; Fri, 06 Apr 2007 23:58:11 +0200
+X-Mailer: git-send-email 1.5.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43931>
 
-David Lang <david.lang@digitalinsight.com> writes:
+Make it possible to use the forks feature even when
+reading the list of projects from a file, by creating
+a list of known prefixes as we go. Forks have to be
+listed after the main project in order to be recognised
+as such.
 
-> On Wed, 4 Apr 2007, Alex Riesen wrote:
-> ...
->> You never know what pull is networked (or should I say: remote enough
->> to cause a collision).
->
-> so leave it on for all pulls, but for other commands don't turn it on.
->
-> remember that the command that linus ran into at the start of the
-> thread wasn't a pull.
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ gitweb/gitweb.perl |   34 +++++++++++++++++++++++++++-------
+ 1 files changed, 27 insertions(+), 7 deletions(-)
 
-Are you referring to this command
+Probably got lost in the noise since I never received a comment on it.
 
- $ git index-pack --stdin --fix-thin new.pack < .git/objects/pack/pack-*.pack
-
-in this message?
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index ea49156..379c89c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -176,8 +176,8 @@ our %feature = (
+ 	# projects matching $projname/*.git will not be shown in the main
+ 	# projects list, instead a '+' mark will be added to $projname
+ 	# there and a 'forks' view will be enabled for the project, listing
+-	# all the forks. This feature is supported only if project list
+-	# is taken from a directory, not file.
++	# all the forks. If project list is taken from a file, forks have
++	# to be listed after the main project.
+ 
+ 	# To enable system wide have in $GITWEB_CONFIG
+ 	# $feature{'forks'}{'default'} = [1];
+@@ -1047,6 +1047,8 @@ sub git_get_projects_list {
+ 	$filter ||= '';
+ 	$filter =~ s/\.git$//;
+ 
++	my ($check_forks) = gitweb_check_feature('forks');
++
+ 	if (-d $projects_list) {
+ 		# search in directory
+ 		my $dir = $projects_list . ($filter ? "/$filter" : '');
+@@ -1054,8 +1056,6 @@ sub git_get_projects_list {
+ 		$dir =~ s!/+$!!;
+ 		my $pfxlen = length("$dir");
+ 
+-		my ($check_forks) = gitweb_check_feature('forks');
+-
+ 		File::Find::find({
+ 			follow_fast => 1, # follow symbolic links
+ 			dangling_symlinks => 0, # ignore dangling symlinks, silently
+@@ -1081,7 +1081,9 @@ sub git_get_projects_list {
+ 		# 'git%2Fgit.git Linus+Torvalds'
+ 		# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
+ 		# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
++		my %paths;
+ 		open my ($fd), $projects_list or return;
++	PROJECT:
+ 		while (my $line = <$fd>) {
+ 			chomp $line;
+ 			my ($path, $owner) = split ' ', $line;
+@@ -1094,11 +1096,27 @@ sub git_get_projects_list {
+ 				# looking for forks;
+ 				my $pfx = substr($path, 0, length($filter));
+ 				if ($pfx ne $filter) {
+-					next;
++					next PROJECT;
+ 				}
+ 				my $sfx = substr($path, length($filter));
+ 				if ($sfx !~ /^\/.*\.git$/) {
+-					next;
++					next PROJECT;
++				}
++			} elsif ($check_forks) {
++			PATH:
++				foreach my $filter (keys %paths) {
++					# looking for forks;
++					my $pfx = substr($path, 0, length($filter));
++					if ($pfx ne $filter) {
++						next PATH;
++					}
++					my $sfx = substr($path, length($filter));
++					if ($sfx !~ /^\/.*\.git$/) {
++						next PATH;
++					}
++					# is a fork, don't include it in
++					# the list
++					next PROJECT;
+ 				}
+ 			}
+ 			if (check_export_ok("$projectroot/$path")) {
+@@ -1106,7 +1124,9 @@ sub git_get_projects_list {
+ 					path => $path,
+ 					owner => to_utf8($owner),
+ 				};
+-				push @list, $pr
++				push @list, $pr;
++				(my $forks_path = $path) =~ s/\.git$//;
++				$paths{$forks_path}++;
+ 			}
+ 		}
+ 		close $fd;
+-- 
+1.5.1
