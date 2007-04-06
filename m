@@ -1,91 +1,62 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] Make builtin-branch.c handle the git config file
-Date: Fri,  6 Apr 2007 14:13:00 +0200
-Message-ID: <11758615802537-git-send-email-hjemli@gmail.com>
-Cc: Geert Bosch <bosch@gnat.com>, git@vger.kernel.org,
-	Lars Hjemli <hjemli@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Fri Apr 06 14:19:06 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: kde.git is now online
+Date: Fri, 06 Apr 2007 08:59:00 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704060857240.28181@xanadu.home>
+References: <46152BF5.3050502@zytor.com>
+ <7vk5wqo6ms.fsf@assigned-by-dhcp.cox.net>
+ <43336D7E-AFE7-4BAF-93C7-B302933363B5@adacore.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Geert Bosch <bosch@adacore.com>
+X-From: git-owner@vger.kernel.org Fri Apr 06 15:03:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZnIe-0007uN-9w
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 14:12:16 +0200
+	id 1HZo2E-0007IB-NQ
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 14:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767596AbXDFMLy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 08:11:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767598AbXDFMLx
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 08:11:53 -0400
-Received: from mail42.e.nsc.no ([193.213.115.42]:48345 "EHLO mail42.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767596AbXDFMLw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 08:11:52 -0400
-Received: from localhost.localdomain (ti231210a080-10075.bb.online.no [80.212.183.97])
-	by mail42.nsc.no (8.13.8/8.13.5) with ESMTP id l36CBdo0002029;
-	Fri, 6 Apr 2007 14:11:39 +0200 (CEST)
-X-Mailer: git-send-email 1.5.1.53.g77e6f
+	id S1767598AbXDFM7G (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 08:59:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767601AbXDFM7G
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 08:59:06 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:47972 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767598AbXDFM7F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 08:59:05 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JG2001PGUQFU810@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 06 Apr 2007 08:59:03 -0400 (EDT)
+In-reply-to: <43336D7E-AFE7-4BAF-93C7-B302933363B5@adacore.com>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43911>
 
-This moves the knowledge about .git/config usage out of refs.c and into
-builtin-branch.c instead, which allows git-branch to update HEAD to point
-at the moved branch before attempting to update the config file. It also
-allows git-branch to exit with an error code if updating the config file
-should fail.
+On Fri, 6 Apr 2007, Geert Bosch wrote:
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
- builtin-branch.c |    6 ++++++
- refs.c           |   10 ----------
- 2 files changed, 6 insertions(+), 10 deletions(-)
+> On my Mac OS X system, cloning this fails with:
+> 
+> potomac:~/kde%git clone http://userweb.kernel.org/~hpa/kdegit/kde.git
+> Initialized empty Git repository in /Users/bosch/kde/kde/.git/
+> Getting alternates list for http://userweb.kernel.org/~hpa/kdegit/kde.git/
+> Getting pack list for http://userweb.kernel.org/~hpa/kdegit/kde.git/
+> Getting index for pack c3df59bc67f69b3861ebef8de308156f1c5fe017
+> Getting pack c3df59bc67f69b3861ebef8de308156f1c5fe017
+> which contains ca908d2d51f154aab9f5727c1e57fb23a2942485
+> fatal: packfile
+> /Users/bosch/kde/kde/.git/objects/pack/pack-c3df59bc67f69b3861ebef8de308156f1c5fe017.pack
+> cannot be mapped.
+> 
+> Even worse, al files seem to have been deleted, so I have to
+> download this again. I guess, I shouldn't have used git clone...
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index a4494ee..7408285 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -493,6 +493,7 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- {
- 	char oldref[PATH_MAX], newref[PATH_MAX], logmsg[PATH_MAX*2 + 100];
- 	unsigned char sha1[20];
-+	char oldsection[PATH_MAX], newsection[PATH_MAX];
- 
- 	if (!oldname)
- 		die("cannot rename the current branch while not on any.");
-@@ -521,6 +522,11 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 	/* no need to pass logmsg here as HEAD didn't really move */
- 	if (!strcmp(oldname, head) && create_symref("HEAD", newref, NULL))
- 		die("Branch renamed to %s, but HEAD is not updated!", newname);
-+
-+	snprintf(oldsection, sizeof(oldsection), "branch.%s", oldref + 11);
-+	snprintf(newsection, sizeof(newsection), "branch.%s", newref + 11);
-+	if (git_config_rename_section(oldsection, newsection) < 0)
-+		die("Branch is renamed, but update of config-file failed");
- }
- 
- int cmd_branch(int argc, const char **argv, const char *prefix)
-diff --git a/refs.c b/refs.c
-index 2ac6384..d2b7b7f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -828,16 +828,6 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- 		goto rollback;
- 	}
- 
--	if (!prefixcmp(oldref, "refs/heads/") &&
--			!prefixcmp(newref, "refs/heads/")) {
--		char oldsection[1024], newsection[1024];
--
--		snprintf(oldsection, 1024, "branch.%s", oldref + 11);
--		snprintf(newsection, 1024, "branch.%s", newref + 11);
--		if (git_config_rename_section(oldsection, newsection) < 0)
--			error("unable to update config-file");
--	}
--
- 	return 0;
- 
-  rollback:
--- 
-1.5.1.53.g77e6f
+Given that this repo is pushing it to the limits, you better download 
+the .tar.bz2 archive and play with it locally first.
+
+
+Nicolas
