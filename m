@@ -1,128 +1,128 @@
-From: "Dana How" <danahow@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 09/13] drop objects larger than --blob-limit if specified
-Date: Fri, 6 Apr 2007 11:09:16 -0700
-Message-ID: <56b7f5510704061109n2878a221p391b7c3edba89c63@mail.gmail.com>
-References: <56b7f5510704051536s7de9638fs8cd811d580f6a7dc@mail.gmail.com>
-	 <alpine.LFD.0.98.0704052103410.28181@xanadu.home>
-	 <56b7f5510704051919v7daac590m6ac52c4fcabd5321@mail.gmail.com>
-	 <alpine.LFD.0.98.0704052257200.28181@xanadu.home>
-	 <Pine.LNX.4.64.0704060845120.6730@woody.linux-foundation.org>
+Date: Fri, 6 Apr 2007 12:24:53 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704061214230.6730@woody.linux-foundation.org>
+References: <56b7f5510704051536s7de9638fs8cd811d580f6a7dc@mail.gmail.com> 
+ <alpine.LFD.0.98.0704052103410.28181@xanadu.home> 
+ <56b7f5510704051919v7daac590m6ac52c4fcabd5321@mail.gmail.com> 
+ <alpine.LFD.0.98.0704052257200.28181@xanadu.home> 
+ <Pine.LNX.4.64.0704060845120.6730@woody.linux-foundation.org>
+ <56b7f5510704061109n2878a221p391b7c3edba89c63@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Nicolas Pitre" <nico@cam.org>, "Junio C Hamano" <junkio@cox.net>,
-	git@vger.kernel.org, danahow@gmail.com
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Apr 06 22:01:54 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: Dana How <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 06 23:26:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZssD-0007l9-EF
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 20:09:21 +0200
+	id 1HZu3j-0004PX-KE
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 21:25:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2993040AbXDFSJT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 14:09:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2993049AbXDFSJT
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 14:09:19 -0400
-Received: from nz-out-0506.google.com ([64.233.162.228]:64154 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S2993040AbXDFSJR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 14:09:17 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so564288nze
-        for <git@vger.kernel.org>; Fri, 06 Apr 2007 11:09:16 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pIiDk4mD2hqXcH7Pu2TtnisVbfO2NIVVRf/WLeFKN/0WUxfDQcCmqK7LM1Iq6lDNtLEQ8ew2V/vJ1vQ1Y7xdIVfkQPfvdlOkX+mDhnlE2oQZZN9Ad4AwfHhE4YvuVbKuH5dX+9/Ta3SDj1vFhVPJ86wJ0e4PJtKV3A9nUWMZFZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=KDTnAEuZ8HfuWPDopjSvXrAUF21Sp/hFVtW8yjUb2Nx52Ft4LyzrRal2ZHJNcFsvv585J5maWfqMOM5DNrmleCGQgpzh4twFUZXcsevoTCS+Gdju5OlGDxbIJXO0LjuK3Q/mfSq7WMU3AC72O11yZBhcmMEOOQLRVV2RC2zwQNY=
-Received: by 10.114.168.1 with SMTP id q1mr1291542wae.1175882956333;
-        Fri, 06 Apr 2007 11:09:16 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Fri, 6 Apr 2007 11:09:16 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704060845120.6730@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1751672AbXDFTZP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 15:25:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751697AbXDFTZP
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 15:25:15 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:60209 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751672AbXDFTZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 15:25:12 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l36JOsPD015519
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 6 Apr 2007 12:24:54 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l36JOrFL016969;
+	Fri, 6 Apr 2007 12:24:54 -0700
+In-Reply-To: <56b7f5510704061109n2878a221p391b7c3edba89c63@mail.gmail.com>
+X-Spam-Status: No, hits=-0.954 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43918>
 
-On 4/6/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> On Thu, 5 Apr 2007, Nicolas Pitre wrote:
-> > > (2) Pack the object any way and let the packfile size exceed
-> > >     my specification.  Ignoring a clear preference from the user
-> > >     doesn't seem good.
-> > It is not indeed.
+
+
+On Fri, 6 Apr 2007, Dana How wrote:
 >
-> Well, I think there is an easy solution.
->
-> Just go back and say that when the user limits the size, it limits the
-> offset at which objects can *start*.
-Yes,  this is what my original, unsplit patch did in order to support
-the --pack-limit && --stdout combination, since lseek doesn't
-always work on stdout.
+> I agree with your arguments, but packs have different uses
+> and to me there are several differing (non-)reasons for --pack-limit.
+> * To split packs into smaller chunks when the .pack format is used as a
+>  communications protocol. But the discussion has converged to
+>  "we're not going to split packs at the transmitter". I agree with this
+>  conclusion,  since it would make the total transmission larger (loss
+>  of deltas).
 
-> Not only is that the only thing that the index file itself cares about, it
-> also means that
->
->  - you don't ever need to undo anything at all (because you know the
->    starting offset) when you begin packing a new object.
-Yes, that was true.
+I don't agree with it, since I don't think the delta advantage is 
+noticeable once packs are "big enough". 
 
->    This should simplify your patch a lot.
-It removes the calls to, and the additions of, sha1mark() and sha1undo()
-in csum-file.[ch].  The changes to builtin-pack-objects.c are almost
-the same -- an "if" moves from after the write_object() to before.
+Splitting on the sending side means that it needs to split just in one 
+place, rather than have the same logic in two different places.
 
->  - the object size issue just goes away. Sure, the pack-file limit looks a
->    bit strange (it's no longer a hard limit on the *size* of the
->    pack-file, just on the object offsets), but let's face it, we really
->    really don't care.
->
-> And in practice, by setting the pack-file limit to 2GB (or even 1GB), you
-> never ever have to worry about the 32-bit filesystem limits any more,
-> unless your repository is fundamentally so screwed that you simply
-> *cannot* reporesent it well on something like FATFS (ie any object that is
-> 2GB in size will probably have a blob that is even bigger, and FATFS
-> already has problems with it).
->
-> So in practice, just limiting the index offsets is what you really want
-> anyway.
-I agree with your arguments, but packs have different uses
-and to me there are several differing (non-)reasons for --pack-limit.
-* To split packs into smaller chunks when the .pack format is used as a
-  communications protocol. But the discussion has converged to
-  "we're not going to split packs at the transmitter". I agree with this
-  conclusion,  since it would make the total transmission larger (loss
-of deltas).
-  Since no .idx file is sent there is no requirement for --pack-limit here.
-* To avoid offsets larger than 31 bits in .idx files.  Your proposal,
-  and what I was doing for --pack-limit && --stdout, is sufficient to
-address this.
-* Avoiding (e.g.) 2GB+ files when none already exist in the repository --
-  either the filesystem doesn't support anything beyond the limit,
-  or we don't want to use a >31b off_t with mmap.  (Perhaps
-  the latter case is completely avoided by some glibc 64b trickery,
-  but is that always true?)  Only the write rollback approach can address this.
-* Creating .pack files that fit on e.g. CDROM etc.
-The 2nd and 3rd cases are what I'm thinking about,
-which is why the first version of my patch did both.
+I don't think it really "convered" on anything, I think the discussion 
+just didn't continue along that thing.
 
-Anyway, now that I understand Nicolas's issues with the patchset,
-and realize I agree with his concerns, I'm going to let this percolate
-a little bit until I've got the least number of added behaviors and
-command line options.  At the moment I'm leaning towards killing my
---blob-limit idea, keeping --pack-limit based on rollback but with the
-additional twist that the first object written to a packfile is never
-"rolled back" [meaning (a) everything is packed to make Nicolas happy,
-(b) any illegally-sized pack has only one object and could be removed
-to make me happy, and (c) my patchset has one less bug], and
-adding --index-limit which is what normal people might use on a large
-repository [and could be made the default later].  So I think what you
-discuss is the most common use for limiting.
+>  Since no .idx file is sent there is no requirement for --pack-limit here.
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+I really don't think the idx file is the only - or even primary - reason. 
+We need *some* size limiter for a lot of reasons. If the idx file was the 
+only reason, we should just switch to a new index format and forget about 
+it.
+
+But since there are *other* reasons that cannot go away, that doesn't 
+obviate the need for size limits, so while I think the idx one is the 
+*first* reason to do this, I don't think it is really the most important 
+one, exactly because the idx file we *could* solve other ways.
+
+> * To avoid offsets larger than 31 bits in .idx files.  Your proposal,
+>  and what I was doing for --pack-limit && --stdout, is sufficient to
+>  address this.
+
+Right. 
+
+> * Avoiding (e.g.) 2GB+ files when none already exist in the repository --
+>  either the filesystem doesn't support anything beyond the limit,
+>  or we don't want to use a >31b off_t with mmap.  (Perhaps
+>  the latter case is completely avoided by some glibc 64b trickery,
+>  but is that always true?)  Only the write rollback approach can address this.
+
+I disagree violently. 
+
+IN THEORY only write rollback can address that. But "theory" is not 
+practice, and anybody who thinks that theory is even *relevant* here is 
+missing the big picture.
+
+If you use FATFS as the place to store your objects, it's really easy to 
+just say: you can't have objects bigger than 2GB. That's the real life 
+solution. The "theory" that you could have pack-files larger than 32 bits 
+is just about as relevant as quantum mechanics is to designing the tensile 
+strength of a sky-scraper. Sure, *in*theory* quantum mechanics matters, 
+but in practice, you'd be crazy if you tried to convince anybody that it 
+should be done using QM rather than traditional means.
+
+Quite frankly, if you have objects that compress to >2GB, you're going to 
+be in so much pain even on *other* filesystems, that I seriously doubt 
+you'd want to track them using git anyway. And even if you want to, just 
+tell people: don't use FATFS, because this repository is insane.
+
+> * Creating .pack files that fit on e.g. CDROM etc.
+> The 2nd and 3rd cases are what I'm thinking about,
+> which is why the first version of my patch did both.
+
+Again, *in*practice*, for any sane situation, if you want to fit things on 
+a CD-ROM, just give a limit of 600MB, and I can pretty much guarantee that 
+you'll see a slop of just a percent or two for any realistic setup. And if 
+it goes up to 660MB, you'll still fit on any CD.
+
+So please ignore theory, when theory isn't relevant. Designing for 
+something that practically cannot happen sounds pretty wrong.
+
+(Of course, since you have a 55GB archive, you probably have an insane 
+thing in the first place. My condoleances if so ;)
+
+		Linus
