@@ -1,93 +1,77 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 09/13] drop objects larger than --blob-limit if specified
-Date: Fri, 06 Apr 2007 15:33:23 -0700
-Message-ID: <7v1wixjfpo.fsf@assigned-by-dhcp.cox.net>
-References: <56b7f5510704051536s7de9638fs8cd811d580f6a7dc@mail.gmail.com>
-	<alpine.LFD.0.98.0704052103410.28181@xanadu.home>
-	<56b7f5510704051919v7daac590m6ac52c4fcabd5321@mail.gmail.com>
-	<alpine.LFD.0.98.0704052257200.28181@xanadu.home>
-	<Pine.LNX.4.64.0704060845120.6730@woody.linux-foundation.org>
-	<56b7f5510704061109n2878a221p391b7c3edba89c63@mail.gmail.com>
-	<Pine.LNX.4.64.0704061214230.6730@woody.linux-foundation.org>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: git-index-pack really does suck..
+Date: Fri, 6 Apr 2007 15:22:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0704061521320.24050@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org><Pi
+ ne.LNX.4.64.0704031413200.6730@woody.linux-foundation.org><alpine.LFD.0.98.
+ 0704031836350.28181@xanadu.home><Pine.LNX.4.63.0704031532390.21680@qynat.qv
+ tvafvgr.pbz><81b0412b0704040251j34b0bc5eh1518eadcfa2ed299@mail.gmail.com><P
+ ine.LNX.4.63.0704061455380.24050@qynat.qvtvafvgr.pbz><7vslbdi0hf.fsf@assign
+ ed-by-dhcp.cox.net> <7vlkh5i0e7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dana How <danahow@gmail.com>, Nicolas Pitre <nico@cam.org>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Apr 07 01:57:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Alex Riesen <raa.lkml@gmail.com>, Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Chris Lee <clee@kde.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Apr 07 02:03:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZwzp-0004u2-EW
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 00:33:29 +0200
+	id 1HZxIe-0000cI-AZ
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 00:52:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933152AbXDFWd0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 18:33:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933256AbXDFWd0
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 18:33:26 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:60141 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933217AbXDFWdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 18:33:24 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070406223324.JCCG24385.fed1rmmtao103.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 6 Apr 2007 18:33:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id jyZP1W0041kojtg0000000; Fri, 06 Apr 2007 18:33:23 -0400
-In-Reply-To: <Pine.LNX.4.64.0704061214230.6730@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Fri, 6 Apr 2007 12:24:53 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S933290AbXDFWwv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 18:52:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933297AbXDFWwu
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 18:52:50 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:40427 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S933290AbXDFWwu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 18:52:50 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Fri, 6 Apr 2007 15:52:49 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Fri, 06 Apr 2007 15:51:32 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <7vlkh5i0e7.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43937>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Fri, 6 Apr 2007, Junio C Hamano wrote:
 
-> On Fri, 6 Apr 2007, Dana How wrote:
->> ...
->> * Avoiding (e.g.) 2GB+ files when none already exist in the repository --
->>  either the filesystem doesn't support anything beyond the limit,
->>  or we don't want to use a >31b off_t with mmap.  (Perhaps
->>  the latter case is completely avoided by some glibc 64b trickery,
->>  but is that always true?)  Only the write rollback approach can address this.
+> Subject: Re: git-index-pack really does suck..
+> 
+> Junio C Hamano <junkio@cox.net> writes:
 >
-> I disagree violently. 
+>> David Lang <david.lang@digitalinsight.com> writes:
+>>
+>>> On Wed, 4 Apr 2007, Alex Riesen wrote:
+>>> ...
+>>>> You never know what pull is networked (or should I say: remote enough
+>>>> to cause a collision).
+>>>
+>>> so leave it on for all pulls, but for other commands don't turn it on.
+>>>
+>>> remember that the command that linus ran into at the start of the
+>>> thread wasn't a pull.
+>>
+>> Are you referring to this command
+>>
+>>  $ git index-pack --stdin --fix-thin new.pack < .git/objects/pack/pack-*.pack
+>>
+>> in this message?
 >
-> IN THEORY only write rollback can address that. But "theory" is not 
-> practice, and anybody who thinks that theory is even *relevant* here is 
-> missing the big picture.
+>  From: Linus Torvalds <torvalds@linux-foundation.org>
+>  Subject: git-index-pack really does suck..
+>  Date: Tue, 3 Apr 2007 08:15:12 -0700 (PDT)
+>  Message-ID: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+>
+> (sorry, chomped the message).
 
-Although I agree the "starting offset" is a very good
-compromise, if we talk about THEORY, you should be able to
-notice you are going to go beyond the limit inside write_one().
-At that point, we know everything we need to know about all
-objects that might be involved in writing that one object: if
-they have been written out, what their offsets are, and how big
-their in-pack representation will be.
+probably (I useually don't keep the mail after I read or reply to it)
 
-And I agree with Nico that rollback after a failed write beyond
-the boundary may not work correctly, so if we really want to do
-this safely and sanely while satisfying Dana's desire to have a
-hard limit, I think something like this is needed:
-
- - use "starting offset" to decide when to split;
-
- - introduce a "hard limit", perhaps optionally, to make sure
-   that the result of writing out a packfile does not overstep
-   that limit (i.e. the last object written below the "starting
-   offset limit" might make the pack go over 700MB).
-
-which means you would specify 600 as starting offset limit and
-680 (or something like that) as the hard tail offset limit
-
-> Again, *in*practice*, for any sane situation, if you want to fit things on 
-> a CD-ROM, just give a limit of 600MB, and I can pretty much guarantee that 
-> you'll see a slop of just a percent or two for any realistic setup. And if 
-> it goes up to 660MB, you'll still fit on any CD.
-
-if you really care the result fits on a CD.
+David Lang
