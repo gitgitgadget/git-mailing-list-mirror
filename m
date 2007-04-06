@@ -1,140 +1,63 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH(resend)] gitweb: Allow forks with project list file
-Date: Fri,  6 Apr 2007 23:58:11 +0200
-Message-ID: <11758966911292-git-send-email-frank@lichtenheld.de>
-Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 07 01:33:23 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Distinguish branches by more than case in tests.
+Date: Fri, 6 Apr 2007 15:06:33 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704061502000.6730@woody.linux-foundation.org>
+References: <20070406054204.GA13108@Hermes.local> <7v7ispjhtx.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sat Apr 07 01:35:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZwSA-0007Q7-1p
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 23:58:42 +0200
+	id 1HZwbt-0000b7-E6
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 00:08:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751643AbXDFV6j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 17:58:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751572AbXDFV6j
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 17:58:39 -0400
-Received: from mail.lenk.info ([217.160.134.107]:59444 "EHLO mail.lenk.info"
+	id S933190AbXDFWHc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 18:07:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933264AbXDFWHb
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 18:07:31 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:35820 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751209AbXDFV6i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 17:58:38 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HZwSL-0006Qc-KV; Fri, 06 Apr 2007 23:58:53 +0200
-Received: from p54b0f96b.dip.t-dialin.net ([84.176.249.107] helo=goedel.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HZwS2-0001ld-SG; Fri, 06 Apr 2007 23:58:35 +0200
-Received: from djpig by goedel.djpig.de with local (Exim 4.63)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HZwRf-0003Aw-Qm; Fri, 06 Apr 2007 23:58:11 +0200
-X-Mailer: git-send-email 1.5.1
+	id S933176AbXDFWGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 18:06:39 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l36M6XPD020191
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 6 Apr 2007 15:06:34 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l36M6Xca020371;
+	Fri, 6 Apr 2007 15:06:33 -0700
+In-Reply-To: <7v7ispjhtx.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-2.453 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43932>
 
-Make it possible to use the forks feature even when
-reading the list of projects from a file, by creating
-a list of known prefixes as we go. Forks have to be
-listed after the main project in order to be recognised
-as such.
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- gitweb/gitweb.perl |   34 +++++++++++++++++++++++++++-------
- 1 files changed, 27 insertions(+), 7 deletions(-)
 
-Probably got lost in the noise since I never received a comment on it.
+On Fri, 6 Apr 2007, Junio C Hamano wrote:
+> 
+> I always wonder why people pay money to buy case insensitive
+> filesystems (MacOS is not free, is it?).
+> 
+> More mysterious is that there apparently are peole who are paid
+> to produce such systems (Apple has paid employees to work on
+> MacOS, doesn't it?).
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ea49156..379c89c 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -176,8 +176,8 @@ our %feature = (
- 	# projects matching $projname/*.git will not be shown in the main
- 	# projects list, instead a '+' mark will be added to $projname
- 	# there and a 'forks' view will be enabled for the project, listing
--	# all the forks. This feature is supported only if project list
--	# is taken from a directory, not file.
-+	# all the forks. If project list is taken from a file, forks have
-+	# to be listed after the main project.
- 
- 	# To enable system wide have in $GITWEB_CONFIG
- 	# $feature{'forks'}{'default'} = [1];
-@@ -1047,6 +1047,8 @@ sub git_get_projects_list {
- 	$filter ||= '';
- 	$filter =~ s/\.git$//;
- 
-+	my ($check_forks) = gitweb_check_feature('forks');
-+
- 	if (-d $projects_list) {
- 		# search in directory
- 		my $dir = $projects_list . ($filter ? "/$filter" : '');
-@@ -1054,8 +1056,6 @@ sub git_get_projects_list {
- 		$dir =~ s!/+$!!;
- 		my $pfxlen = length("$dir");
- 
--		my ($check_forks) = gitweb_check_feature('forks');
--
- 		File::Find::find({
- 			follow_fast => 1, # follow symbolic links
- 			dangling_symlinks => 0, # ignore dangling symlinks, silently
-@@ -1081,7 +1081,9 @@ sub git_get_projects_list {
- 		# 'git%2Fgit.git Linus+Torvalds'
- 		# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
- 		# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
-+		my %paths;
- 		open my ($fd), $projects_list or return;
-+	PROJECT:
- 		while (my $line = <$fd>) {
- 			chomp $line;
- 			my ($path, $owner) = split ' ', $line;
-@@ -1094,11 +1096,27 @@ sub git_get_projects_list {
- 				# looking for forks;
- 				my $pfx = substr($path, 0, length($filter));
- 				if ($pfx ne $filter) {
--					next;
-+					next PROJECT;
- 				}
- 				my $sfx = substr($path, length($filter));
- 				if ($sfx !~ /^\/.*\.git$/) {
--					next;
-+					next PROJECT;
-+				}
-+			} elsif ($check_forks) {
-+			PATH:
-+				foreach my $filter (keys %paths) {
-+					# looking for forks;
-+					my $pfx = substr($path, 0, length($filter));
-+					if ($pfx ne $filter) {
-+						next PATH;
-+					}
-+					my $sfx = substr($path, length($filter));
-+					if ($sfx !~ /^\/.*\.git$/) {
-+						next PATH;
-+					}
-+					# is a fork, don't include it in
-+					# the list
-+					next PROJECT;
- 				}
- 			}
- 			if (check_export_ok("$projectroot/$path")) {
-@@ -1106,7 +1124,9 @@ sub git_get_projects_list {
- 					path => $path,
- 					owner => to_utf8($owner),
- 				};
--				push @list, $pr
-+				push @list, $pr;
-+				(my $forks_path = $path) =~ s/\.git$//;
-+				$paths{$forks_path}++;
- 			}
- 		}
- 		close $fd;
--- 
-1.5.1
+It's doubly strange, because:
+ - it's basically impossible to do well
+ - even *trying* to do it introduces other (even subtler) problems, like 
+   locale-dependencies and trying to force some "canonical" encoding.
+
+People who do it tend to universally do it because they haven't thought it 
+through, and are supporting some older behaviour. And in the process they 
+make their filesystem less reliable *and* slower.
+
+		Linus
