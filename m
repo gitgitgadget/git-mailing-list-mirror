@@ -1,69 +1,80 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH 2/4] Fix drop-down menus in the git-gui dialogs.
-Date: Fri, 6 Apr 2007 11:42:42 +0400
-Message-ID: <20070406074242.GC1458@twilight.grid.kiae.ru>
-References: <20070327103005.GP14837@codelabs.ru> <20070404163709.GA5167@spearce.org> <20070405124920.GV26348@codelabs.ru> <20070405153226.GH5436@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Apr 06 09:44:57 2007
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] rename_ref(): only print a warning when config-file update fails
+Date: Fri,  6 Apr 2007 10:33:06 +0200
+Message-ID: <11758483861506-git-send-email-hjemli@gmail.com>
+Cc: Geert Bosch <bosch@gnat.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Apr 06 11:19:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZj6T-0004I4-H3
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 09:43:25 +0200
+	id 1HZkYh-0003zO-IT
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 11:16:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767544AbXDFHnV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 03:43:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767546AbXDFHnV
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 03:43:21 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:65222 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767545AbXDFHnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 03:43:19 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=Lvl+v0NcWh9W7HeNYsQwE5wCbJDdwvM1bU+thEjCN+cfdlWTTOQEZtbQUZlNl19vmEVSZi2bX881I8zn0tTeVvUHPvjReRS7xRmDkAgENWV8DlPgjtyft9s7k/jyS/h2dfuFL3rOe4lMWTd0dTRAEkEHCeG6jrZ1gPk/ifXT2I4=;
-Received: from twilight (daemon.grid.kiae.ru [144.206.66.47])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1HZj5q-000OTS-P7; Fri, 06 Apr 2007 11:43:10 +0400
-Content-Disposition: inline
-In-Reply-To: <20070405153226.GH5436@spearce.org>
-X-Spam-Status: No, score=-3.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	id S1752411AbXDFJQg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 05:16:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932526AbXDFJQg
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 05:16:36 -0400
+Received: from mail45.e.nsc.no ([193.213.115.45]:54009 "EHLO mail45.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752421AbXDFJQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 05:16:35 -0400
+X-Greylist: delayed 2677 seconds by postgrey-1.27 at vger.kernel.org; Fri, 06 Apr 2007 05:16:35 EDT
+Received: from localhost.localdomain (ti231210a080-10075.bb.online.no [80.212.183.97])
+	by mail45.nsc.no (8.13.8/8.13.5) with ESMTP id l368Vj25023693;
+	Fri, 6 Apr 2007 10:31:45 +0200 (CEST)
+X-Mailer: git-send-email 1.5.1.53.g77e6f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43906>
 
-Shawn, good day.
+If git_config_rename_section() fails, rename_ref() used to return 1, which
+left HEAD pointing to an absent refs/heads file (since the actual renaming
+had already occurred).
 
-Thu, Apr 05, 2007 at 11:32:26AM -0400, Shawn O. Pearce wrote:
-> > OK, I will try to find the other workaround, but I have no Mac OS
-> > X at hand (they are a bit expensive to me), so I hope you will find
-> > some time to test the new approaches, if I will come up with any.
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+
+On 4/5/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
 > 
-> That's fine.  I'd be happy to retest something.  If I understood your
-> problem description right, this bug doesn't appear on either Cygwin's
-> Tcl/Tk implementation or my Mac OS X implementation.  Maybe this
-> is one of those things that we just have to do conditionally per OS.
+> On Thu, 5 Apr 2007, Geert Bosch wrote:
+> 
+> > Make git_config_rename_section return success if no config file
+> > exists.
+> 
+> I don't think this is correct. git_config_rename_section() _should_ return
+> an error.
+> 
+> > Otherwise, renaming a branch would abort, leaving the repository in an
+> > inconsistent state.
+> 
+> This should take the hint from --rename-section, and print a warning (or
+> not).
 
-I was not tested this under Cygwin. But the wrong list behaviour I
-got is appearing only in dialogs. I am not getting this in the gitk:
-there are many drop-down menus in the main window. All of them are
-disappearing once I depress the mouse button no matter where the
-cursor is. So this issue can be dialog-specific, but I believe that
-the main window and dialog windows are handled by Tcl/Tk on the
-same footing. Thought, I do not 100% sure.
+I think both arguments makes sense. There really is no reason to abort the
+rename operation if the config file update fails (for any reason).
 
-> If that's the case, maybe we should also consider making our own
-> local variant of tk_optionMenu (a wrapper of sorts) that sets our
-> font_ui, and does this grab fix on your platform.
 
-I think this would be the last hope. I will try to understand the
-problem a bit deeper first.
+ refs.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Thank you!
+diff --git a/refs.c b/refs.c
+index f471152..2ac6384 100644
+--- a/refs.c
++++ b/refs.c
+@@ -835,7 +835,7 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
+ 		snprintf(oldsection, 1024, "branch.%s", oldref + 11);
+ 		snprintf(newsection, 1024, "branch.%s", newref + 11);
+ 		if (git_config_rename_section(oldsection, newsection) < 0)
+-			return 1;
++			error("unable to update config-file");
+ 	}
+ 
+ 	return 0;
 -- 
-Eygene
+1.5.1.53.g77e6f
