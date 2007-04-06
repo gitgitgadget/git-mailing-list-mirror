@@ -1,99 +1,66 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 1/2] t6030: add a bit more tests to git-bisect
-Date: Thu, 05 Apr 2007 23:30:50 -0700
-Message-ID: <7v648ako9x.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7vzm5pw7ju.fsf@assigned-by-dhcp.cox.net>
-	<20070404071202.483030b8.chriscool@tuxfamily.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [ANNOUNCE] GIT 1.5.1
+Date: Fri, 06 Apr 2007 09:24:43 +0200
+Message-ID: <vpq8xd6ge2s.fsf@bauges.imag.fr>
+References: <7v648c7bbn.fsf@assigned-by-dhcp.cox.net>
+	<200704041038.36183.andyparkins@gmail.com>
+	<7vwt0s5tsc.fsf@assigned-by-dhcp.cox.net>
+	<vpq8xd8o0q6.fsf@olympe.imag.fr>
+	<7vlkh6kqk6.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Apr 06 08:31:49 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 06 09:25:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZhye-0007Uu-IF
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 08:31:16 +0200
+	id 1HZioq-00019m-9Q
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 09:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753500AbXDFGbH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 02:31:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbXDFGbG
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 02:31:06 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:41491 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753500AbXDFGav (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 02:30:51 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070406063051.FORT28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Fri, 6 Apr 2007 02:30:51 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id jiWq1W00D1kojtg0000000; Fri, 06 Apr 2007 02:30:51 -0400
-In-Reply-To: <20070404071202.483030b8.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Wed, 4 Apr 2007 07:12:02 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1767541AbXDFHZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 03:25:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767536AbXDFHZI
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 03:25:08 -0400
+Received: from imag.imag.fr ([129.88.30.1]:60355 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1767542AbXDFHZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 03:25:06 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l367OhnV013095
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 6 Apr 2007 09:24:44 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1HZioN-0007Eg-QA; Fri, 06 Apr 2007 09:24:43 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1HZioN-0004ko-Mz; Fri, 06 Apr 2007 09:24:43 +0200
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <7vlkh6kqk6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu\, 05 Apr 2007 22\:41\:29 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 06 Apr 2007 09:24:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43904>
 
-Verify that git-bisect does not start before getting one bad and
-one good commit.
+Junio C Hamano <junkio@cox.net> writes:
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- t/t6030-bisect-run.sh |   36 ++++++++++++++++++++++++++++++++++++
- 1 files changed, 36 insertions(+), 0 deletions(-)
+> Soon after 1.5.0 was released, I think we said these two were
+> not used in practice and declared them as deprecated.  So there
+> is no "use this instead".
 
-diff --git a/t/t6030-bisect-run.sh b/t/t6030-bisect-run.sh
-index 455dc60..1c38f08 100755
---- a/t/t6030-bisect-run.sh
-+++ b/t/t6030-bisect-run.sh
-@@ -37,6 +37,42 @@ test_expect_success \
-      HASH3=$(git rev-list HEAD | head -2 | tail -1) &&
-      HASH4=$(git rev-list HEAD | head -1)'
- 
-+test_expect_success 'bisect does not start with only one bad' '
-+	git bisect reset &&
-+	git bisect start &&
-+	git bisect bad $HASH4 || return 1
-+
-+	if git bisect next
-+	then
-+		echo Oops, should have failed.
-+		false
-+	else
-+		:
-+	fi
-+'
-+
-+test_expect_success 'bisect does not start with only one good' '
-+	git bisect reset &&
-+	git bisect start &&
-+	git bisect good $HASH1 || return 1
-+
-+	if git bisect next
-+	then
-+		echo Oops, should have failed.
-+		false
-+	else
-+		:
-+	fi
-+'
-+
-+test_expect_success 'bisect start with one bad and good' '
-+	git bisect reset &&
-+	git bisect start &&
-+	git bisect good $HASH1 &&
-+	git bisect bad $HASH4 &&
-+	git bisect next
-+'
-+
- # We want to automatically find the commit that
- # introduced "Another" into hello.
- test_expect_success \
+$ man git-resolve | grep -i 'use .* instead'
+Reformatting git-resolve(1), please wait...
+       DEPRECATED and will be removed in 1.5.1. Use git-merge instead.
+
+;-)
+
 -- 
-1.5.1.53.g77e6f
+Matthieu
