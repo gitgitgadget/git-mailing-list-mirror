@@ -1,71 +1,79 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH 08/13] prevent try_delta from using objects not in pack
-Date: Thu, 5 Apr 2007 19:28:20 -0700
-Message-ID: <56b7f5510704051928l5d1f5a02yccc8e57c222e5f64@mail.gmail.com>
-References: <56b7f5510704051535ya98e86eu7f786f118c4fe229@mail.gmail.com>
-	 <alpine.LFD.0.98.0704052100420.28181@xanadu.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: How can git pull be up-to-date and git push fail?
+Date: Thu, 5 Apr 2007 22:52:56 -0400
+Message-ID: <20070406025255.GA31909@coredump.intra.peff.net>
+References: <17940.59514.150325.738141@lisa.zopyra.com> <20070405134954.GA18402@coredump.intra.peff.net> <17941.655.192938.792088@lisa.zopyra.com> <20070405204604.GA24779@coredump.intra.peff.net> <7vodm2o6yl.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <junkio@cox.net>, git@vger.kernel.org,
-	danahow@gmail.com
-To: "Nicolas Pitre" <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Apr 06 04:28:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Fri Apr 06 04:53:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZeBd-0008L8-Q2
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 04:28:26 +0200
+	id 1HZeZl-00061O-MU
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 04:53:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767508AbXDFC2X (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 22:28:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767504AbXDFC2X
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 22:28:23 -0400
-Received: from nz-out-0506.google.com ([64.233.162.226]:12384 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767508AbXDFC2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 22:28:22 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so428885nze
-        for <git@vger.kernel.org>; Thu, 05 Apr 2007 19:28:21 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LTn3WwHew/N7HMpqcePOrSSzWUII6U+dwm4O1NQIvUq7p/YqV1OKXK4rL2+UBzOKtV5K6+++f/k5kx36V+mSJiBn3K3F/TRj55uenBZbW3HbGZTa82tpnT4/IuyigMEDT8LKVho0TIvkjfcjggCsyE2ZDiLQSrL8U/uiaqSYuLs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AkHK29zeohRkrfr2TPCeVg1uZl/xUkAPH32gyhugbQrllWtV9jwIvFr6N3y49npiiXBcJfSSbOB4l+J2dt0j6rYIsqh92a3EdTsPGELmW/R6eYRdUVSDG2laHUFO8QgneSYwHEVHgm48YqU0vsfLw1cyNRYD3ATBCMfEMw2GYPU=
-Received: by 10.114.183.1 with SMTP id g1mr1043928waf.1175826500911;
-        Thu, 05 Apr 2007 19:28:20 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Thu, 5 Apr 2007 19:28:20 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.98.0704052100420.28181@xanadu.home>
+	id S1767515AbXDFCxA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 22:53:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767517AbXDFCxA
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 22:53:00 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4963 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1767515AbXDFCw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 22:52:58 -0400
+Received: (qmail 31684 invoked from network); 6 Apr 2007 02:53:33 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 6 Apr 2007 02:53:33 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 05 Apr 2007 22:52:56 -0400
 Content-Disposition: inline
+In-Reply-To: <7vodm2o6yl.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43896>
 
-On 4/5/07, Nicolas Pitre <nico@cam.org> wrote:
-> What is the purpose of this patch?
->
-> The try_delta() function is called with all objects before any object is
-> written to a pack to find out how to deltify objects upfront.
+On Thu, Apr 05, 2007 at 02:18:58PM -0700, Junio C Hamano wrote:
 
-I set no_write for 2 different reasons in the patchset.
-(1) When the blob is too big (--blob-limit) and will never be written.
-(2) When the blob has been written to a previous, finished pack.
+> IIRC "git push" without explicit refspecs push the matching
+> refs, but I am a bit under the weather and feverish, so don't
+> take my word literally but look at git-push manual page please.
 
-You're correct that this patch will never see condition (2).
+Ah, yes you're right. It really doesn't make sense to push
+refs/remotes/* in most cases, since they're just tracking branches, and
+if the destination _does_ have them, then it is unlikely to be in sync
+with you (leading to Bill's problem).  OTOH, you might want to be able
+to push them explicitly if you are doing a strict mirror of a
+repository.
 
-I think my repository statistics are a little unusual.
-Perhaps I'm getting ahead of myself here,
-but I also wanted to experiment with writing all blobs to one set
-of packs,  and all trees, commits, and tags to another set
-(but probably just one small pack).
-I would use no_write for that and it would matter here.
-But I haven't run any experiments yet so I don't know
-if it makes any difference.  I have seen related discussions
-on the mailing list so I know this isn't a new idea.
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+The patch below turns off refs/remotes/ sending for "git-push" and
+"git-push --all", but still allows "git-push origin
+remotes/origin/master". I'm not sure about the semantics; maybe --all
+should imply even remotes?
+
+It also only impacts send-pack; I suspect pushing over dumb transports
+now has different behavior, but I haven't looked. My testing was light,
+so I may have totally broken something else, too. Input from more
+clueful people would be helpful.
+
+Does this seem like a sane direction to take? It just seems silly to be
+pushing refs/remotes, which 99% of the time should be a purely local
+thing.
+
+-Peff
+
+---
+diff --git a/send-pack.c b/send-pack.c
+index d5b5162..39829e3 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -131,6 +131,8 @@ static int one_local_ref(const char *refname, const unsigned char *sha1, int fla
+ {
+ 	struct ref *ref;
+ 	int len = strlen(refname) + 1;
++	if (!prefixcmp(refname, "refs/remotes/"))
++		return 0;
+ 	ref = xcalloc(1, sizeof(*ref) + len);
+ 	hashcpy(ref->new_sha1, sha1);
+ 	memcpy(ref->name, refname, len);
