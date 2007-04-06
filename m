@@ -1,64 +1,79 @@
-From: YOSHIFUJI Hideaki / =?iso-2022-jp?B?GyRCNUhGIzFRTEAbKEI=?= 
-	<yoshfuji@linux-ipv6.org>
-Subject: [PATCH] Avoid composing too long "References" header.
-Date: Fri, 06 Apr 2007 08:50:24 +0900 (JST)
-Organization: USAGI/WIDE Project
-Message-ID: <20070406.085024.18669509.yoshfuji@linux-ipv6.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 02/13] declare overflow during base128 decoding when 1 MSB nonzero, not 7
+Date: Thu, 05 Apr 2007 17:29:29 -0700
+Message-ID: <7vvegal506.fsf@assigned-by-dhcp.cox.net>
+References: <56b7f5510704051524p28eafc18mae3131ef13cdabfa@mail.gmail.com>
+	<7vr6qymo3r.fsf@assigned-by-dhcp.cox.net>
+	<56b7f5510704051608g4bf9ffb7t9f94b532c7a0ebdf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Fri Apr 06 01:49:36 2007
+To: "Dana How" <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 06 02:29:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZbhv-0003HQ-ME
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 01:49:36 +0200
+	id 1HZcKc-0004lO-E5
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 02:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767447AbXDEXtc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 5 Apr 2007 19:49:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767448AbXDEXtc
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 19:49:32 -0400
-Received: from yue.linux-ipv6.org ([203.178.140.15]:40353 "EHLO
-	yue.st-paulia.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1767447AbXDEXtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Apr 2007 19:49:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by yue.st-paulia.net (Postfix) with ESMTP id BE4E133B40;
-	Fri,  6 Apr 2007 08:50:25 +0900 (JST)
-X-URL: http://www.yoshifuji.org/%7Ehideaki/
-X-Fingerprint: 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
-X-PGP-Key-URL: http://www.yoshifuji.org/%7Ehideaki/hideaki@yoshifuji.org.asc
-X-Face: "5$Al-.M>NJ%a'@hhZdQm:."qn~PA^gq4o*>iCFToq*bAi#4FRtx}enhuQKz7fNqQz\BYU]
- $~O_5m-9'}MIs`XGwIEscw;e5b>n"B_?j/AkL~i/MEa<!5P`&C$@oP>ZBLP
-X-Mailer: Mew version 3.3 on Emacs 20.7 / Mule 4.1 (AOI)
+	id S1767456AbXDFA3b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 5 Apr 2007 20:29:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767452AbXDFA3b
+	(ORCPT <rfc822;git-outgoing>); Thu, 5 Apr 2007 20:29:31 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:58850 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767456AbXDFA3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Apr 2007 20:29:30 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070406002930.OIKS373.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 5 Apr 2007 20:29:30 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id jcVV1W00n1kojtg0000000; Thu, 05 Apr 2007 20:29:30 -0400
+In-Reply-To: <56b7f5510704051608g4bf9ffb7t9f94b532c7a0ebdf@mail.gmail.com>
+	(Dana How's message of "Thu, 5 Apr 2007 16:08:55 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43887>
 
-The number of characters in a line MUST be no more than 998 characters,
-and SHOULD be no more than 78 characters (RFC2822).
-It is much safer to fold the header by ourselves.
+"Dana How" <danahow@gmail.com> writes:
 
-Signed-off-by: YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+> Concerning SEEK_SET,
+> you are correct: my unistd.h #define's SEEK_SET to 0.
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index ae50990..1278fcb 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -595,7 +595,7 @@ foreach my $t (@files) {
- 	if ($chain_reply_to || !defined $reply_to || length($reply_to) == 0) {
- 		$reply_to = $message_id;
- 		if (length $references > 0) {
--			$references .= " $message_id";
-+			$references .= "\n $message_id";
- 		} else {
- 			$references = "$message_id";
- 		}
+My understanding of the history is back when there was seek()
+but not lseek() nor SEEK_X macros, everybody passed bare
+integers and it was quite well established that 0 meant what
+SEEK_SET means now, so I would be quite surprised if there is
+_any_ platform that defines SEEK_SET to anything but zero.
 
--- 
-YOSHIFUJI Hideaki @ USAGI Project  <yoshfuji@linux-ipv6.org>
-GPG-FP  : 9022 65EB 1ECF 3AD1 0BDF  80D8 4807 F894 E062 0EEA
+Having said that, I wonder if this kind of thing can be caught
+with sparse.  We should be able to express (or perhaps sparse
+could have a built-in rule that says) something like "although
+the standard says the third parameter to lseek() can be any
+integer, you should not use anything but SEEK_X preprocessor
+macros; also SEEK_X preprocessor macros, although they are
+typically just "#define"s of small integer literals, can never
+appear anywhere other than the third parameter as seek() and
+lseek()".  I realize that there needs some data-flow analysis to
+allow a code like this, though:
+
+	int move_to(int fd, ofs_t offset, int relative)
+	{
+		int whence = SEEK_SET;
+
+	        if (relative) {
+                	whence = SEEK_CUR;
+	                offset += relative;
+	        }
+		return lseek(fd, offset, whence) != (off_t)-1;
+	}
+
+> But if someone edits this, the arg order might remain.
+
+Very true, and that is why I said I am going to take the patch.
