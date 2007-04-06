@@ -1,112 +1,66 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH(resend)] gitweb: Allow configuring the default projects order and add order 'none'
-Date: Fri,  6 Apr 2007 23:58:24 +0200
-Message-ID: <11758967042669-git-send-email-frank@lichtenheld.de>
-Cc: Jakub Narebski <jnareb@gmail.com>, Junio C Hamano <junkio@cox.net>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 07 01:28:30 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-index-pack really does suck..
+Date: Fri, 06 Apr 2007 15:47:40 -0700
+Message-ID: <7vslbdi0hf.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0704031413200.6730@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0704031836350.28181@xanadu.home>
+	<Pine.LNX.4.63.0704031532390.21680@qynat.qvtvafvgr.pbz>
+	<81b0412b0704040251j34b0bc5eh1518eadcfa2ed299@mail.gmail.com>
+	<Pine.LNX.4.63.0704061455380.24050@qynat.qvtvafvgr.pbz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>, Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Chris Lee <clee@kde.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Lang <david.lang@digitalinsight.com>
+X-From: git-owner@vger.kernel.org Sat Apr 07 01:32:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZwSM-0007TG-FW
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 23:58:54 +0200
+	id 1HZxDu-0007zc-2b
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 00:48:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751572AbXDFV6v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 17:58:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbXDFV6v
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 17:58:51 -0400
-Received: from mail.lenk.info ([217.160.134.107]:59454 "EHLO mail.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751572AbXDFV6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 17:58:50 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HZwSY-0006Qu-3R; Fri, 06 Apr 2007 23:59:06 +0200
-Received: from p54b0f96b.dip.t-dialin.net ([84.176.249.107] helo=goedel.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HZwSF-0001m9-TJ; Fri, 06 Apr 2007 23:58:48 +0200
-Received: from djpig by goedel.djpig.de with local (Exim 4.63)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HZwRs-0003BJ-OD; Fri, 06 Apr 2007 23:58:24 +0200
-X-Mailer: git-send-email 1.5.1
+	id S933286AbXDFWrn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 18:47:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933278AbXDFWrn
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 18:47:43 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:37730 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933279AbXDFWrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 18:47:42 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070406224742.IKGY27119.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 6 Apr 2007 18:47:42 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id jyng1W00E1kojtg0000000; Fri, 06 Apr 2007 18:47:41 -0400
+In-Reply-To: <Pine.LNX.4.63.0704061455380.24050@qynat.qvtvafvgr.pbz> (David
+	Lang's message of "Fri, 6 Apr 2007 14:56:51 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43930>
 
-Introduce new configuration variable $default_projects_order
-that can be used to specify the default order of projects on
-the index page if no 'o' parameter is given.
+David Lang <david.lang@digitalinsight.com> writes:
 
-Allow a new value 'none' for order that will cause the projects
-to be in the order we learned about them. In case of reading the
-list of projects from a file, this should be the order as they are
-listed in the file. In case of reading the list of projects from
-a directory this will probably give random results depending on the
-filesystem in use.
+> On Wed, 4 Apr 2007, Alex Riesen wrote:
+> ...
+>> You never know what pull is networked (or should I say: remote enough
+>> to cause a collision).
+>
+> so leave it on for all pulls, but for other commands don't turn it on.
+>
+> remember that the command that linus ran into at the start of the
+> thread wasn't a pull.
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- gitweb/gitweb.perl |   11 +++++++----
- 1 files changed, 7 insertions(+), 4 deletions(-)
+Are you referring to this command
 
-Directly send after the other patch the first time, too, and equally
-lost.
+ $ git index-pack --stdin --fix-thin new.pack < .git/objects/pack/pack-*.pack
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 379c89c..1d265ea 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -71,6 +71,10 @@ our $logo_label = "git homepage";
- # source of projects list
- our $projects_list = "++GITWEB_LIST++";
- 
-+# default order of projects list
-+# valid values are none, project, descr, owner, and age
-+our $default_projects_order = "project";
-+
- # show repository only if this file exists
- # (only effective if this variable evaluates to true)
- our $export_ok = "++GITWEB_EXPORT_OK++";
-@@ -1131,7 +1135,6 @@ sub git_get_projects_list {
- 		}
- 		close $fd;
- 	}
--	@list = sort {$a->{'path'} cmp $b->{'path'}} @list;
- 	return @list;
- }
- 
-@@ -2618,7 +2621,7 @@ sub git_project_list_body {
- 		push @projects, $pr;
- 	}
- 
--	$order ||= "project";
-+	$order ||= $default_projects_order;
- 	$from = 0 unless defined $from;
- 	$to = $#projects if (!defined $to || $#projects < $to);
- 
-@@ -2977,7 +2980,7 @@ sub git_search_grep_body {
- 
- sub git_project_list {
- 	my $order = $cgi->param('o');
--	if (defined $order && $order !~ m/project|descr|owner|age/) {
-+	if (defined $order && $order !~ m/none|project|descr|owner|age/) {
- 		die_error(undef, "Unknown order parameter");
- 	}
- 
-@@ -3000,7 +3003,7 @@ sub git_project_list {
- 
- sub git_forks {
- 	my $order = $cgi->param('o');
--	if (defined $order && $order !~ m/project|descr|owner|age/) {
-+	if (defined $order && $order !~ m/none|project|descr|owner|age/) {
- 		die_error(undef, "Unknown order parameter");
- 	}
- 
--- 
-1.5.1
+in this message?
