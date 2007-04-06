@@ -1,66 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [ANNOUNCE] GIT 1.5.1
-Date: Fri, 06 Apr 2007 09:24:43 +0200
-Message-ID: <vpq8xd6ge2s.fsf@bauges.imag.fr>
-References: <7v648c7bbn.fsf@assigned-by-dhcp.cox.net>
-	<200704041038.36183.andyparkins@gmail.com>
-	<7vwt0s5tsc.fsf@assigned-by-dhcp.cox.net>
-	<vpq8xd8o0q6.fsf@olympe.imag.fr>
-	<7vlkh6kqk6.fsf@assigned-by-dhcp.cox.net>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: [PATCH 2/4] Fix drop-down menus in the git-gui dialogs.
+Date: Fri, 6 Apr 2007 11:42:42 +0400
+Message-ID: <20070406074242.GC1458@twilight.grid.kiae.ru>
+References: <20070327103005.GP14837@codelabs.ru> <20070404163709.GA5167@spearce.org> <20070405124920.GV26348@codelabs.ru> <20070405153226.GH5436@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 06 09:25:24 2007
+Content-Type: text/plain; charset=koi8-r
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Apr 06 09:44:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZioq-00019m-9Q
-	for gcvg-git@gmane.org; Fri, 06 Apr 2007 09:25:12 +0200
+	id 1HZj6T-0004I4-H3
+	for gcvg-git@gmane.org; Fri, 06 Apr 2007 09:43:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1767541AbXDFHZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 03:25:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767536AbXDFHZI
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 03:25:08 -0400
-Received: from imag.imag.fr ([129.88.30.1]:60355 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1767542AbXDFHZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 03:25:06 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l367OhnV013095
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 6 Apr 2007 09:24:44 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HZioN-0007Eg-QA; Fri, 06 Apr 2007 09:24:43 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HZioN-0004ko-Mz; Fri, 06 Apr 2007 09:24:43 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <7vlkh6kqk6.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Thu\, 05 Apr 2007 22\:41\:29 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 06 Apr 2007 09:24:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1767544AbXDFHnV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 03:43:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1767546AbXDFHnV
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 03:43:21 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:65222 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1767545AbXDFHnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 03:43:19 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
+	b=Lvl+v0NcWh9W7HeNYsQwE5wCbJDdwvM1bU+thEjCN+cfdlWTTOQEZtbQUZlNl19vmEVSZi2bX881I8zn0tTeVvUHPvjReRS7xRmDkAgENWV8DlPgjtyft9s7k/jyS/h2dfuFL3rOe4lMWTd0dTRAEkEHCeG6jrZ1gPk/ifXT2I4=;
+Received: from twilight (daemon.grid.kiae.ru [144.206.66.47])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1HZj5q-000OTS-P7; Fri, 06 Apr 2007 11:43:10 +0400
+Content-Disposition: inline
+In-Reply-To: <20070405153226.GH5436@spearce.org>
+X-Spam-Status: No, score=-3.3 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43905>
 
-Junio C Hamano <junkio@cox.net> writes:
+Shawn, good day.
 
-> Soon after 1.5.0 was released, I think we said these two were
-> not used in practice and declared them as deprecated.  So there
-> is no "use this instead".
+Thu, Apr 05, 2007 at 11:32:26AM -0400, Shawn O. Pearce wrote:
+> > OK, I will try to find the other workaround, but I have no Mac OS
+> > X at hand (they are a bit expensive to me), so I hope you will find
+> > some time to test the new approaches, if I will come up with any.
+> 
+> That's fine.  I'd be happy to retest something.  If I understood your
+> problem description right, this bug doesn't appear on either Cygwin's
+> Tcl/Tk implementation or my Mac OS X implementation.  Maybe this
+> is one of those things that we just have to do conditionally per OS.
 
-$ man git-resolve | grep -i 'use .* instead'
-Reformatting git-resolve(1), please wait...
-       DEPRECATED and will be removed in 1.5.1. Use git-merge instead.
+I was not tested this under Cygwin. But the wrong list behaviour I
+got is appearing only in dialogs. I am not getting this in the gitk:
+there are many drop-down menus in the main window. All of them are
+disappearing once I depress the mouse button no matter where the
+cursor is. So this issue can be dialog-specific, but I believe that
+the main window and dialog windows are handled by Tcl/Tk on the
+same footing. Thought, I do not 100% sure.
 
-;-)
+> If that's the case, maybe we should also consider making our own
+> local variant of tk_optionMenu (a wrapper of sorts) that sets our
+> font_ui, and does this grab fix on your platform.
 
+I think this would be the last hope. I will try to understand the
+problem a bit deeper first.
+
+Thank you!
 -- 
-Matthieu
+Eygene
