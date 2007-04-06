@@ -1,56 +1,59 @@
 From: arjen@yaph.org (Arjen Laarhoven)
-Subject: [PATCH] Makefile: iconv() on Darwin has the old interface
-Date: Sat, 7 Apr 2007 01:49:17 +0200
-Message-ID: <20070406234917.GK3854@regex.yaph.org>
+Subject: [PATCH] t5300-pack-object.sh: portability issue using /usr/bin/stat
+Date: Sat, 7 Apr 2007 01:49:03 +0200
+Message-ID: <20070406234903.GJ3854@regex.yaph.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Apr 07 02:48:57 2007
+X-From: git-owner@vger.kernel.org Sat Apr 07 02:48:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZyBF-0003So-JB
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 01:49:21 +0200
+	id 1HZyB4-0003Pv-4Y
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 01:49:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933454AbXDFXtS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 19:49:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933455AbXDFXtS
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 19:49:18 -0400
-Received: from regex.yaph.org ([193.202.115.201]:33936 "EHLO regex.yaph.org"
+	id S933430AbXDFXtG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 19:49:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933454AbXDFXtG
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 19:49:06 -0400
+Received: from regex.yaph.org ([193.202.115.201]:33934 "EHLO regex.yaph.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933454AbXDFXtS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 19:49:18 -0400
+	id S933455AbXDFXtF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 19:49:05 -0400
 Received: by regex.yaph.org (Postfix, from userid 1000)
-	id 30EA15B7CA; Sat,  7 Apr 2007 01:49:17 +0200 (CEST)
+	id 728C75B7CA; Sat,  7 Apr 2007 01:49:03 +0200 (CEST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43945>
 
-The libiconv on Darwin uses the old iconv() interface (2nd argument is a
-const char **, instead of a char **).  Add OLD_ICONV to the Darwin
-variable definitions to handle this.
+In the test 'compare delta flavors', /usr/bin/stat is used to get file size.
+This isn't portable.  There already is a dependency on Perl, use its '-s'
+operator to get the file size.
 
 Signed-off-by: Arjen Laarhoven <arjen@yaph.org>
 ---
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ t/t5300-pack-object.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index ad321b3..2146403 100644
---- a/Makefile
-+++ b/Makefile
-@@ -385,6 +385,7 @@ endif
- ifeq ($(uname_S),Darwin)
- 	NEEDS_SSL_WITH_CRYPTO = YesPlease
- 	NEEDS_LIBICONV = YesPlease
-+	OLD_ICONV = UnfortunatelyYes
- 	NO_STRLCPY = YesPlease
- endif
- ifeq ($(uname_S),SunOS)
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 35e036a..a400e7a 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -125,8 +125,8 @@ cd "$TRASH"
+ 
+ test_expect_success \
+     'compare delta flavors' \
+-    'size_2=`stat -c "%s" test-2-${packname_2}.pack` &&
+-     size_3=`stat -c "%s" test-3-${packname_3}.pack` &&
++    'size_2=`perl -e "print -s q[test-2-${packname_2}.pack]"` &&
++     size_3=`perl -e "print -s q[test-3-${packname_3}.pack]"` &&
+      test $size_2 -gt $size_3'
+ 
+ rm -fr .git2
 -- 
 1.5.1.rc3.29.gd8b6
