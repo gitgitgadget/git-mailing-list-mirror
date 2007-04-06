@@ -1,73 +1,76 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: How can git pull be up-to-date and git push fail?
-Date: Thu, 5 Apr 2007 15:55:18 -0500
-Message-ID: <17941.25142.88657.766384@lisa.zopyra.com>
-References: <17940.59514.150325.738141@lisa.zopyra.com>
-	<20070405134954.GA18402@coredump.intra.peff.net>
-	<17941.655.192938.792088@lisa.zopyra.com>
-	<20070405204604.GA24779@coredump.intra.peff.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-index-pack really does suck..
+Date: Fri, 06 Apr 2007 15:49:36 -0700
+Message-ID: <7vlkh5i0e7.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0704031413200.6730@woody.linux-foundation.org>
+	<alpine.LFD.0.98.0704031836350.28181@xanadu.home>
+	<Pine.LNX.4.63.0704031532390.21680@qynat.qvtvafvgr.pbz>
+	<81b0412b0704040251j34b0bc5eh1518eadcfa2ed299@mail.gmail.com>
+	<Pine.LNX.4.63.0704061455380.24050@qynat.qvtvafvgr.pbz>
+	<7vslbdi0hf.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Apr 07 01:42:09 2007
+Cc: Alex Riesen <raa.lkml@gmail.com>, Nicolas Pitre <nico@cam.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Chris Lee <clee@kde.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Lang <david.lang@digitalinsight.com>
+X-From: git-owner@vger.kernel.org Sat Apr 07 01:52:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZwj7-0001qp-1o
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 00:16:13 +0200
+	id 1HZxFW-0008Mv-2X
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 00:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932282AbXDFWQJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 18:16:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933175AbXDFWQJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 18:16:09 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60913 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932787AbXDFWQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 18:16:07 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l35KtKh16437;
-	Thu, 5 Apr 2007 14:55:20 -0600
-In-Reply-To: <20070405204604.GA24779@coredump.intra.peff.net>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S933278AbXDFWtj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 18:49:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933291AbXDFWtj
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 18:49:39 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:38537 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933278AbXDFWth (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 18:49:37 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070406224938.ILAO27119.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 6 Apr 2007 18:49:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id jypc1W00A1kojtg0000000; Fri, 06 Apr 2007 18:49:37 -0400
+In-Reply-To: <7vslbdi0hf.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Fri, 06 Apr 2007 15:47:40 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43934>
 
-On Thursday, April 5, 2007 at 16:46:04 (-0400) Jeff King writes:
->On Thu, Apr 05, 2007 at 09:07:11AM -0500, Bill Lear wrote:
+Junio C Hamano <junkio@cox.net> writes:
+
+> David Lang <david.lang@digitalinsight.com> writes:
 >
->> Here is the local:
->> 
->> [core]
->>         repositoryformatversion = 0
->>         filemode = true
->>         bare = false
->>         logallrefupdates = true
->> [remote "origin"]
->>         url = ssh://poire/home/jml/repos/new/fusion
->>         fetch = +refs/heads/*:refs/remotes/origin/*
->> [branch "master"]
->>         remote = origin
->>         merge = refs/heads/master
+>> On Wed, 4 Apr 2007, Alex Riesen wrote:
+>> ...
+>>> You never know what pull is networked (or should I say: remote enough
+>>> to cause a collision).
+>>
+>> so leave it on for all pulls, but for other commands don't turn it on.
+>>
+>> remember that the command that linus ran into at the start of the
+>> thread wasn't a pull.
 >
->I don't see anything there that should cause branches under refs/remotes
->to be pushed. Was he using 'git-push --all' by any chance?
+> Are you referring to this command
+>
+>  $ git index-pack --stdin --fix-thin new.pack < .git/objects/pack/pack-*.pack
+>
+> in this message?
 
-No, just plain ol' git push.  One possibility is that in mediating
-between him and the list, there has been a loss of information.
-Perhaps he omitted details in his account of how things progressed ---
-who knows, perhaps he was on the wrong branch (though I doubt this, he
-only works on the master branch, and the other branch in question was
-someone else's entirely).
+  From: Linus Torvalds <torvalds@linux-foundation.org>
+  Subject: git-index-pack really does suck..
+  Date: Tue, 3 Apr 2007 08:15:12 -0700 (PDT)
+  Message-ID: <Pine.LNX.4.64.0704030754020.6730@woody.linux-foundation.org>
 
-Regardless, does my assumption --- a 'git pull' should rectify
-the 'you are not up to date' problem --- hold in general?
-
-Thanks for helping.
-
-
-Bill
+(sorry, chomped the message).
