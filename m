@@ -1,86 +1,83 @@
 From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH 1/3] cvsserver: small corrections to asciidoc documentation
-Date: Sat,  7 Apr 2007 16:58:08 +0200
-Message-ID: <11759578902278-git-send-email-frank@lichtenheld.de>
-References: <11759575342765-git-send-email-frank@lichtenheld.de>
+Subject: [PATCH 2/3] cvsserver: Corrections to the database backend configuration
+Date: Sat,  7 Apr 2007 16:58:09 +0200
+Message-ID: <11759578901878-git-send-email-frank@lichtenheld.de>
+References: <11759575342765-git-send-email-frank@lichtenheld.de> <11759578902278-git-send-email-frank@lichtenheld.de>
 Cc: Junio C Hamano <junkio@cox.net>,
 	Frank Lichtenheld <frank@lichtenheld.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 07 17:01:30 2007
+X-From: git-owner@vger.kernel.org Sat Apr 07 17:01:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaCP8-0007ux-5v
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 17:00:38 +0200
+	id 1HaCP8-0007ux-UM
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 17:00:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965941AbXDGPAK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Apr 2007 11:00:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965953AbXDGPAJ
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 11:00:09 -0400
-Received: from mail.lenk.info ([217.160.134.107]:65074 "EHLO mail.lenk.info"
+	id S965942AbXDGPAL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Apr 2007 11:00:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965953AbXDGPAL
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 11:00:11 -0400
+Received: from mail.lenk.info ([217.160.134.107]:65077 "EHLO mail.lenk.info"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965941AbXDGPAI (ORCPT <rfc822;git@vger.kernel.org>);
+	id S965942AbXDGPAI (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 7 Apr 2007 11:00:08 -0400
 Received: from herkules.lenk.info
 	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
 	by mail.lenk.info with esmtpsa 
 	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HaCOv-0003J1-Ta; Sat, 07 Apr 2007 17:00:25 +0200
+	id 1HaCOw-0003J2-3v; Sat, 07 Apr 2007 17:00:26 +0200
 Received: from p54b0f651.dip.t-dialin.net ([84.176.246.81] helo=goedel.djpig.de)
 	by smtp.lenk.info with esmtpsa 
 	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HaCOb-0005Ty-S1; Sat, 07 Apr 2007 17:00:06 +0200
+	id 1HaCOc-0005UD-0C; Sat, 07 Apr 2007 17:00:06 +0200
 Received: from djpig by goedel.djpig.de with local (Exim 4.63)
 	(envelope-from <frank@lichtenheld.de>)
-	id 1HaCMk-0007AG-Mb; Sat, 07 Apr 2007 16:58:10 +0200
+	id 1HaCMk-0007AI-V8; Sat, 07 Apr 2007 16:58:10 +0200
 X-Mailer: git-send-email 1.5.1
-In-Reply-To: <11759575342765-git-send-email-frank@lichtenheld.de>
+In-Reply-To: <11759578902278-git-send-email-frank@lichtenheld.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43975>
 
-Fix a typo: s/Not/Note/
+Don't include the scheme name in gitcvs.dbdriver, it is
+always 'dbi' anyway.
 
-Some formating fixes: Use ` ` syntax for all filenames and
-' ' syntax for all commandline switches.
+Don't allow ':' in driver names nor ';' in database names for
+sanity reasons.
 
 Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
 ---
- Documentation/git-cvsserver.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ git-cvsserver.perl |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 6904aad..2cf8153 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -122,12 +122,12 @@ To get a checkout with the Eclipse CVS client:
- Protocol notes: If you are using anonymous access via pserver, just select that.
- Those using SSH access should choose the 'ext' protocol, and configure 'ext'
- access on the Preferences->Team->CVS->ExtConnection pane. Set CVS_SERVER to
--'git-cvsserver'. Not that password support is not good when using 'ext',
-+'git-cvsserver'. Note that password support is not good when using 'ext',
- you will definitely want to have SSH keys setup.
+ I wasn't sure whether I should send this as a new patch or as a new version of my
+ older one?
+
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 5532ae7..7fe7949 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -2149,7 +2149,7 @@ sub new
+     die "Git repo '$self->{git_path}' doesn't exist" unless ( -d $self->{git_path} );
  
- Alternatively, you can just use the non-standard extssh protocol that Eclipse
- offer. In that case CVS_SERVER is ignored, and you will have to replace
--the cvs utility on the server with git-cvsserver or manipulate your .bashrc
-+the cvs utility on the server with git-cvsserver or manipulate your `.bashrc`
- so that calling 'cvs' effectively calls git-cvsserver.
+     $self->{dbdriver} = $cfg->{gitcvs}{$state->{method}}{dbdriver} ||
+-        $cfg->{gitcvs}{dbdriver} || "dbi:SQLite";
++        $cfg->{gitcvs}{dbdriver} || "SQLite";
+     $self->{dbname} = $cfg->{gitcvs}{$state->{method}}{dbname} ||
+         $cfg->{gitcvs}{dbname} || "%Ggitcvs.%m.sqlite";
+     $self->{dbuser} = $cfg->{gitcvs}{$state->{method}}{dbuser} ||
+@@ -2165,7 +2165,9 @@ sub new
+     $self->{dbname} =~ s/%([mauGg])/$mapping{$1}/eg;
+     $self->{dbuser} =~ s/%([mauGg])/$mapping{$1}/eg;
  
- Clients known to work
-@@ -146,9 +146,9 @@ checkout, diff, status, update, log, add, remove, commit.
- Legacy monitoring operations are not supported (edit, watch and related).
- Exports and tagging (tags and branches) are not supported at this stage.
- 
--The server should set the -k mode to binary when relevant, however,
-+The server should set the '-k' mode to binary when relevant, however,
- this is not really implemented yet. For now, you can force the server
--to set `-kb` for all files by setting the `gitcvs.allbinary` config
-+to set '-kb' for all files by setting the `gitcvs.allbinary` config
- variable. In proper GIT tradition, the contents of the files are
- always respected. No keyword expansion or newline munging is supported.
- 
+-    $self->{dbh} = DBI->connect("$self->{dbdriver}:dbname=$self->{dbname}",
++    die "Invalid char ':' in dbdriver" if $self->{dbdriver} =~ /:/;
++    die "Invalid char ';' in dbname" if $self->{dbname} =~ /;/;
++    $self->{dbh} = DBI->connect("dbi:$self->{dbdriver}:dbname=$self->{dbname}",
+                                 $self->{dbuser},
+                                 $self->{dbpass});
+     die "Error connecting to database\n" unless defined $self->{dbh};
 -- 
 1.5.1
