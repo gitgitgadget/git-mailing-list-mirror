@@ -1,72 +1,87 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] t5300-pack-object.sh: portability issue using /usr/bin/stat
-Date: Fri, 06 Apr 2007 22:33:34 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704062227430.28181@xanadu.home>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] t5300-pack-object.sh: portability issue using  /usr/bin/stat
+Date: Fri, 06 Apr 2007 19:45:06 -0700
+Message-ID: <86odm0sy19.fsf@blue.stonehenge.com>
 References: <20070406234903.GJ3854@regex.yaph.org>
- <7vfy7dgcn1.fsf@assigned-by-dhcp.cox.net>
+	<7vfy7dgcn1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Arjen Laarhoven <arjen@yaph.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: arjen@yaph.org (Arjen Laarhoven),
 	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 07 04:33:56 2007
+X-From: git-owner@vger.kernel.org Sat Apr 07 04:45:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ha0kU-0006S0-Rt
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 04:33:55 +0200
+	id 1Ha0vl-0000at-In
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 04:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965109AbXDGCdg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 22:33:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965116AbXDGCdg
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 22:33:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:37177 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965109AbXDGCdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 22:33:35 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JG300LLPWFYYQ60@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 06 Apr 2007 22:33:34 -0400 (EDT)
-In-reply-to: <7vfy7dgcn1.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S965153AbXDGCpI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 22:45:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965145AbXDGCpI
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 22:45:08 -0400
+Received: from blue.stonehenge.com ([209.223.236.162]:28633 "EHLO
+	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965116AbXDGCpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 22:45:07 -0400
+Received: by blue.stonehenge.com (Postfix, from userid 1001)
+	id AA7291DEF8E; Fri,  6 Apr 2007 19:45:06 -0700 (PDT)
+x-mayan-date: Long count = 12.19.14.3.14; tzolkin = 11 Ix; haab = 2 Pop
+In-Reply-To: <7vfy7dgcn1.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Fri, 06 Apr 2007 19:08:02 -0700")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43957>
 
-On Fri, 6 Apr 2007, Junio C Hamano wrote:
+>>>>> "Junio" == Junio C Hamano <junkio@cox.net> writes:
 
-> arjen@yaph.org (Arjen Laarhoven) writes:
-> 
-> > In the test 'compare delta flavors', /usr/bin/stat is used to get file size.
-> > This isn't portable.  There already is a dependency on Perl, use its '-s'
-> > operator to get the file size.
-> 
-> If you do use Perl, then you do not want to do it as two
-> separate invocations with their result compared with test.
-> 
-> How about this on top of your patch?
+Junio> arjen@yaph.org (Arjen Laarhoven) writes:
+>> In the test 'compare delta flavors', /usr/bin/stat is used to get file size.
+>> This isn't portable.  There already is a dependency on Perl, use its '-s'
+>> operator to get the file size.
 
-Well... since this test already depends on wc then why not just use that 
-instead of adding a perl dependency?
+Junio> If you do use Perl, then you do not want to do it as two
+Junio> separate invocations with their result compared with test.
 
-Something like:
+Junio> How about this on top of your patch?
 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 35e036a..ba785cf 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -125,8 +125,8 @@ cd "$TRASH"
+Junio> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+Junio> index a400e7a..5710a23 100755
+Junio> --- a/t/t5300-pack-object.sh
+Junio> +++ b/t/t5300-pack-object.sh
+Junio> @@ -123,11 +123,13 @@ test_expect_success \
+Junio>       done'
+Junio>  cd "$TRASH"
  
- test_expect_success \
-     'compare delta flavors' \
--    'size_2=`stat -c "%s" test-2-${packname_2}.pack` &&
--     size_3=`stat -c "%s" test-3-${packname_3}.pack` &&
-+    'size_2=`wc -c < test-2-${packname_2}.pack` &&
-+     size_3=`wc -c < test-3-${packname_3}.pack` &&
-      test $size_2 -gt $size_3'
- 
- rm -fr .git2
+Junio> -test_expect_success \
+Junio> -    'compare delta flavors' \
+Junio> -    'size_2=`perl -e "print -s q[test-2-${packname_2}.pack]"` &&
+Junio> -     size_3=`perl -e "print -s q[test-3-${packname_3}.pack]"` &&
+Junio> -     test $size_2 -gt $size_3'
+Junio> +test_expect_success 'compare delta flavors' '
+Junio> +	perl -e "
+Junio> +		exit ( ((-s q[test-2-${packname_2}.pack]) >
+Junio> +			(-s q[test-3-${packname_3}.pack]))
+Junio> +			? 0 : 1);
+Junio> +	"
+Junio> +'
+
+I'd go with:
+
+    perl -e '
+      defined($_ = -s $_) or die for @ARGV;
+      exit 1 if $ARGV[0] <= $ARGV[1];
+    ' test-2-$packname_2.pack test-3.$packname_3.pack
+
+which also tests to make sure the -s returned something, and works a lot less
+hard to quote the filenames coming in (they come in via @ARGV instead of
+triple interpolation).  I'm not sure how to shoehorn that into
+test_expect_success, but this is better Perl at least. :)
+
+-- 
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
+See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
