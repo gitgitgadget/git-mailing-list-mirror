@@ -1,70 +1,95 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 2/5] Treat D/F conflict entry more carefully in
- unpack-trees.c::threeway_merge()
-Date: Sat, 7 Apr 2007 15:08:06 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0704071456470.27922@iabervon.org>
-References: <7vabxkcknp.fsf@assigned-by-dhcp.cox.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [RFC] git pull and importers
+Date: Sat, 7 Apr 2007 13:24:09 -0700
+Message-ID: <20070407202409.GA5107@muzzle>
+References: <Pine.LNX.4.64.0704062239420.27922@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 07 21:44:03 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat Apr 07 23:02:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaGGk-0004iZ-Nj
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 21:08:15 +0200
+	id 1HaHSJ-00087X-A9
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 22:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966300AbXDGTIL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Apr 2007 15:08:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966281AbXDGTIL
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 15:08:11 -0400
-Received: from iabervon.org ([66.92.72.58]:4996 "EHLO iabervon.org"
+	id S966328AbXDGUYM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Apr 2007 16:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966330AbXDGUYM
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 16:24:12 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:50033 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966300AbXDGTIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2007 15:08:09 -0400
-Received: (qmail 25903 invoked by uid 1000); 7 Apr 2007 19:08:06 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 Apr 2007 19:08:06 -0000
-In-Reply-To: <7vabxkcknp.fsf@assigned-by-dhcp.cox.net>
+	id S966328AbXDGUYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Apr 2007 16:24:11 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id C25C67DC091;
+	Sat,  7 Apr 2007 13:24:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0704062239420.27922@iabervon.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43981>
 
-On Sat, 7 Apr 2007, Junio C Hamano wrote:
+Daniel Barkalow <barkalow@iabervon.org> wrote:
+> There's an SVN project I'm trying to track with git-svn. "git svn fetch" 
+> fetches and imports the commits perfectly, but I can't figure out a way to 
+> merge upstream commits into my branch automatically.
 
-> This fixes three buglets in threeway_merge() regarding D/F
-> conflict entries.
+I don't suggest using merge with git-svn since it can generate
+non-linear history.  Non-linear history does not map well to SVN.
+
+"git svn rebase" (in 1.5.1) is handy for getting upstream commits into
+your branch (it's a wrapper around "git rebase")
+
+> It seems like the right solution should be:
 > 
-> * After finishing with path D and handling path D/F, some stages
->   have D/F conflict entry which are obviously non-NULL.  For the
->   purpose of determining if the path D/F is missing in the
->   ancestor, they should not be taken into account.
-> 
-> * D/F conflict entry is a phony entry and does not record the
->   path being processed, so do not pick up the name from there.
+> [remote "origin"]
+> 	importer = svn
+> 	url = svn://ixion.tartarus.org/main
+> 	fetch = puzzles:refs/remotes/puzzles
+> [branch "master"]
+> 	remote = origin
+> 	merge = puzzles
 
-This bit is unnecessary, because the first bit means we treat D/F conflict 
-as missing in that conditional, and don't count it as an entry at all, let 
-alone one with a useful name.
+git-svn in 1.5.1 already allows you to define:
 
-> * D/F conflict entry is a marker to say "this stage does _not_
->   have the path", so do not send them to keep_entry().
-> 
-> There might be more glitches, but I am slowly digging this mess
-> through, which unfortunately was made even more work since
-> merge-recursive is a built-in now.
+[svn-remote "svn"]
+	url = svn://ixion.tartarus.org/main
+	fetch = puzzles:refs/remotes/puzzles
 
-Looks good, although it might be wise to add an "exists" function that 
-returns false for df_conflict_entry and for NULL, to make the tests 
-clearer, and to get a comment to point out the meaning of 
-df_conflict_entry. Also, I think df_conflict_entry can be static bss in 
-unpack-trees and not accessed through o->df_conflict_entry, since it's 
-always the same value (being now universally initialized to a static 
-pointer to heap...).
+And then "git svn rebase" should automatically be able to figure out to
+rebase against refs/remotes/puzzles without needing a [branch "master"]
+section.
 
-	-Daniel
-*This .sig left intentionally blank*
+I don't think having the "importer = svn" in [remote "..."] is a good
+idea since it would be incompatible with older versions of git and the
+documentation would confuse users who don't track the latest version.
+
+> Which would mean that it would use "git svn fetch" instead of "git fetch" 
+> for that remote, and "git svn fetch" would use that config section instead 
+> of its current config section.
+
+Here's what I'd like git-fetch to do someday[1]:
+
+When git-fetch is called without any remote arguments, it would look for
+[remote "origin"] as it does now.  However, if no [remote "..."]
+sections are found (as is common with importer-created repos), it would
+try other importers: [svn-remote "svn"], (and hopefully one day
+[cvs-remote "cvs"], [arch-remote "arch"], ...).
+
+Of course, git-fetch would also be able to handle --svn (and later
+--cvs/--arch/...) flags if the [*remote "..."] section names are
+ambiguous.
+
+I intentionally named the default svn-remote section "svn" instead of
+"origin" for this reason, too; I didn't want to confuse git-fetch.
+
+[1] - patches would be very much welcome (*nudge*nudge*wink*wink),
+      I have a lot on my plate and this isn't a high priority.
+
+-- 
+Eric Wong
