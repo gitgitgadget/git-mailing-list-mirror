@@ -1,65 +1,91 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC] git pull and importers
-Date: Sat, 07 Apr 2007 14:32:58 -0700
-Message-ID: <7vr6qvc1kl.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704062239420.27922@iabervon.org>
-	<20070407202409.GA5107@muzzle>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH 2/4] Don't use section 7 for main manpage.
+Date: Sat, 07 Apr 2007 23:36:58 +0200
+Message-ID: <20070407213658.13698.44552.stgit@gandelf.nowhere.earth>
+References: <20070407213557.13698.21486.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Apr 07 23:58:23 2007
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Apr 08 00:03:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaIX9-0002Hs-W6
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 23:33:20 +0200
+	id 1HaIb2-0002xI-GQ
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 23:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966354AbXDGVdA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Apr 2007 17:33:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966350AbXDGVdA
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 17:33:00 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:64558 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966354AbXDGVc7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2007 17:32:59 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070407213257.DRLO28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 7 Apr 2007 17:32:57 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id kMYy1W0041kojtg0000000; Sat, 07 Apr 2007 17:32:58 -0400
-In-Reply-To: <20070407202409.GA5107@muzzle> (Eric Wong's message of "Sat, 7
-	Apr 2007 13:24:09 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S966355AbXDGVhQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Apr 2007 17:37:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966357AbXDGVhQ
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 17:37:16 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:51821 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966355AbXDGVhO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Apr 2007 17:37:14 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 651AE5DF83;
+	Sat,  7 Apr 2007 23:37:13 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 4765F1F096;
+	Sat,  7 Apr 2007 23:36:58 +0200 (CEST)
+In-Reply-To: <20070407213557.13698.21486.stgit@gandelf.nowhere.earth>
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43987>
 
-Eric Wong <normalperson@yhbt.net> writes:
 
-> When git-fetch is called without any remote arguments, it would look for
-> [remote "origin"] as it does now.  However, if no [remote "..."]
-> sections are found (as is common with importer-created repos), it would
-> try other importers: [svn-remote "svn"], (and hopefully one day
-> [cvs-remote "cvs"], [arch-remote "arch"], ...).
 
-I wonder why wouldn't the alternative of noticing the URL scheme
-of '[remote "svn"] url' variable is "svn://".  That is...
 
-	[remote "gitrepo"]
-        	url = git://example.com/repo.git/
-		fetch = refs/heads/*:refs/remotes/gitrepo/*
-	[remote "svnrepo"]
-        	url = svn://example.com/repo.svn/
-                fetch = trunk:refs/remotes/svnrepo/trunk
-	[remote "cvsrepo"]
-        	url = cvs://example.com/repo.cvs/
-                fetch = HEAD:refs/remotes/cvsrepo/
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
 
-The sections would probably can have importer specific options
-besides usual url/fetch.
+ Documentation/COMMAND-TEMPLATE.txt |    2 +-
+ Documentation/stg-cp.txt           |    2 +-
+ Documentation/stg-new.txt          |    2 +-
+ Documentation/stg.txt              |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/COMMAND-TEMPLATE.txt b/Documentation/COMMAND-TEMPLATE.txt
+index 5d8a1a9..e49a44d 100644
+--- a/Documentation/COMMAND-TEMPLATE.txt
++++ b/Documentation/COMMAND-TEMPLATE.txt
+@@ -38,4 +38,4 @@ GIT CONFIGURATION VARIABLES
+ 
+ StGIT
+ -----
+-Part of the StGIT suite - see gitlink:stg[7].
++Part of the StGIT suite - see gitlink:stg[1].
+diff --git a/Documentation/stg-cp.txt b/Documentation/stg-cp.txt
+index 723d811..d28c619 100644
+--- a/Documentation/stg-cp.txt
++++ b/Documentation/stg-cp.txt
+@@ -57,4 +57,4 @@ FUTURE OPTIONS
+ 
+ StGIT
+ -----
+-Part of the StGIT suite - see gitlink:stg[7].
++Part of the StGIT suite - see gitlink:stg[1].
+diff --git a/Documentation/stg-new.txt b/Documentation/stg-new.txt
+index 698816b..5775559 100644
+--- a/Documentation/stg-new.txt
++++ b/Documentation/stg-new.txt
+@@ -112,4 +112,4 @@ GIT CONFIGURATION VARIABLES
+ 
+ StGIT
+ -----
+-Part of the StGIT suite - see gitlink:stg[7].
++Part of the StGIT suite - see gitlink:stg[1].
+diff --git a/Documentation/stg.txt b/Documentation/stg.txt
+index 7d92356..47934a5 100644
+--- a/Documentation/stg.txt
++++ b/Documentation/stg.txt
+@@ -1,4 +1,4 @@
+-stg(7)
++stg(1)
+ ======
+ Yann Dirson <ydirson@altern.org>
+ v0.12.1, February 2007
