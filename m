@@ -1,56 +1,161 @@
 From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH 0/3] cvsserver: small corrections and bring documentation up to speed
-Date: Sat,  7 Apr 2007 16:52:14 +0200
-Message-ID: <11759575342765-git-send-email-frank@lichtenheld.de>
-References: <11743197614111-git-send-email-frank@lichtenheld.de>
-Cc: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH 3/3] cvsserver: Add asciidoc documentation for new database backend configuration
+Date: Sat,  7 Apr 2007 16:58:10 +0200
+Message-ID: <11759578903791-git-send-email-frank@lichtenheld.de>
+References: <11759575342765-git-send-email-frank@lichtenheld.de> <11759578902278-git-send-email-frank@lichtenheld.de> <11759578901878-git-send-email-frank@lichtenheld.de>
+Cc: Junio C Hamano <junkio@cox.net>,
+	Frank Lichtenheld <frank@lichtenheld.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 07 16:54:35 2007
+X-From: git-owner@vger.kernel.org Sat Apr 07 17:00:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaCJE-0006aa-7S
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 16:54:32 +0200
+	id 1HaCP9-0007ux-F4
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 17:00:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965940AbXDGOyM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Apr 2007 10:54:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965949AbXDGOyM
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 10:54:12 -0400
-Received: from mail.lenk.info ([217.160.134.107]:64862 "EHLO mail.lenk.info"
+	id S965949AbXDGPAg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Apr 2007 11:00:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965953AbXDGPAP
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 11:00:15 -0400
+Received: from mail.lenk.info ([217.160.134.107]:65084 "EHLO mail.lenk.info"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965940AbXDGOyL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2007 10:54:11 -0400
+	id S965949AbXDGPAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Apr 2007 11:00:09 -0400
 Received: from herkules.lenk.info
 	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
 	by mail.lenk.info with esmtpsa 
 	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HaCJA-00033R-RD; Sat, 07 Apr 2007 16:54:28 +0200
+	id 1HaCOw-0003J9-C0; Sat, 07 Apr 2007 17:00:26 +0200
 Received: from p54b0f651.dip.t-dialin.net ([84.176.246.81] helo=goedel.djpig.de)
 	by smtp.lenk.info with esmtpsa 
 	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HaCIq-0005F6-Lx; Sat, 07 Apr 2007 16:54:08 +0200
+	id 1HaCOc-0005UE-6Q; Sat, 07 Apr 2007 17:00:06 +0200
 Received: from djpig by goedel.djpig.de with local (Exim 4.63)
 	(envelope-from <frank@lichtenheld.de>)
-	id 1HaCH0-00077V-Kh; Sat, 07 Apr 2007 16:52:14 +0200
+	id 1HaCMl-0007AK-7K; Sat, 07 Apr 2007 16:58:11 +0200
 X-Mailer: git-send-email 1.5.1
-In-Reply-To: <11743197614111-git-send-email-frank@lichtenheld.de>
+In-Reply-To: <11759578901878-git-send-email-frank@lichtenheld.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43973>
 
-This patch series consists mainly of documentation updates for the
-new features I introduced in my previous series. With all these
-patches applied I would consider this topic in a shape so that it
-could be included in an official release. It still contains
-some experimental stuff but since the user has to enable that himself
-and I put a "here be dragons" in the documentation I see no problem
-with that.
+Documents the new configuration variables and the variable
+substitution mechanism.
 
-Proofreading of patch 3 by someone that actually speaks English would
-be greatly appreciated.
+Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
+---
+ Documentation/git-cvsserver.txt |   87 +++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 83 insertions(+), 4 deletions(-)
 
- Documentation/git-cvsserver.txt |   97 +++++++++++++++++++++++++++++++++++-----
- git-cvsserver.perl              |    7 +-
- 2 files changed, 91 insertions(+), 13 deletions(-)
+ Proofreading would be greatly appreciated.
+
+diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
+index 2cf8153..efc7fa6 100644
+--- a/Documentation/git-cvsserver.txt
++++ b/Documentation/git-cvsserver.txt
+@@ -65,11 +65,12 @@ env variable, you can rename git-cvsserver to cvs.
+ 
+ ------
+ Note: you need to ensure each user that is going to invoke git-cvsserver has
+-write access to the log file and to the git repository. When offering anon
+-access via pserver, this means that the nobody user should have write access
+-to at least the sqlite database at the root of the repository.
++write access to the log file and to the database (see
++<<dbbackend,Database Backend>>. If you want to offer write access over
++SSH, the users of course also need write access to the git repository itself.
+ 
+-Both configuration variables can also be overriden for a specific method of
++[[configaccessmethod]]
++All configuration variables can also be overriden for a specific method of
+ access. Valid method names are "ext" (for SSH access) and "pserver". The
+ following example configuration would disable pserver access while still
+ allowing access over SSH.
+@@ -105,6 +106,84 @@ Example:
+      cvs co -d project-master master
+ ------
+ 
++[[dbbackend]]
++Database Backend
++----------------
++
++git-cvsserver uses one database per git head (i.e. CVS module) to
++store information about the repository for faster access. The
++database doesn't contain any persitent data and can be completly
++regenerated from the git repository at any time. The database
++needs to be updated (i.e. written to) after every commit. That
++means that even if you offer only read access (e.g. by using
++the pserver method), git-cvsserver should have write access to
++the database to work reliably (otherwise you need to make sure
++that the database if up-to-date all the time git-cvsserver is run).
++
++By default it uses SQLite databases in the git directory, named
++`gitcvs.<module_name>.sqlite`. Note that the SQLite backend creates
++temporary files in the same directory as the database file on
++write so it might not be enough to grant the users using
++git-cvsserver write access to the database file without granting
++them also write access to the directory.
++
++You can configure the database backend with the following
++configuration variables:
++
++Configuring database backend
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++git-cvsserver uses the Perl DBI module. Please also read
++its documentation if changing these variables, especially
++about `DBI->connect()`.
++
++gitcvs.dbname::
++	Database name. The exact meaning depends on the
++	used database driver, for SQLite this is a filename.
++	Supports variable substitution (see below). May
++	not contain semicolons (`;`).
++	Default: '%Ggitcvs.%m.sqlite'
++
++gitcvs.dbdriver::
++	Used DBI driver. You can specify any available driver
++	for this here, but it might not work. cvsserver is tested
++	with 'DBD::SQLite', reported to work with
++	'DBD::Pg', and reported *not* to work with 'DBD::mysql'.
++	Please regard this as an experimental feature. May not
++	contain double colons (`:`).
++	Default: 'SQLite'
++
++gitcvs.dbuser::
++	Database user. Only useful if setting `dbdriver`, since
++	SQLite has no concept of database users. Supports variable
++	substitution (see below).
++
++gitcvs.dbpass::
++	Database password.  Only useful if setting `dbdriver`, since
++	SQLite has no concept of database passwords.
++
++All variables can also be set per access method, see <<configaccessmethod,above>>.
++
++Variable substitution
++^^^^^^^^^^^^^^^^^^^^^
++In `dbdriver` and `dbuser` you can use the following variables:
++
++%G::
++	git directory name
++%g::
++	git directory name, where all characters except for
++	alpha-numeric ones, `.`, and `-` are replaced with
++	`_` (this should make it easier to use the directory
++	name in a filename if wanted)
++%m::
++	CVS module/git head name
++%a::
++	access method (one of "ext" or "pserver")
++%u::
++	Name of the user running git-cvsserver.
++	If no name can be determined, the
++	numeric uid is used.
++
+ Eclipse CVS Client Notes
+ ------------------------
+ 
+-- 
+1.5.1
