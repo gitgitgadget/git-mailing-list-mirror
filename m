@@ -1,64 +1,54 @@
-From: Kyle McMartin <kyle@mcmartin.ca>
-Subject: Re: [PATCH] Distinguish branches by more than case in tests.
-Date: Fri, 6 Apr 2007 20:18:52 -0400
-Message-ID: <20070407001852.GB24803@athena.road.mcmartin.ca>
-References: <20070406054204.GA13108@Hermes.local> <7v7ispjhtx.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704061502000.6730@woody.linux-foundation.org> <86mz1lt8bg.fsf@blue.stonehenge.com> <Pine.LNX.4.64.0704061637280.6730@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] rename_ref(): only print a warning when config-file update fails
+Date: Fri, 06 Apr 2007 17:14:57 -0700
+Message-ID: <7v6489hwfy.fsf@assigned-by-dhcp.cox.net>
+References: <11758483861506-git-send-email-hjemli@gmail.com>
+	<7v1wixkzpz.fsf@assigned-by-dhcp.cox.net>
+	<8c5c35580704061653x7e5fd149ud31a8289a4508b54@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>,
-	Junio C Hamano <junkio@cox.net>,
-	Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Apr 07 03:13:54 2007
+Cc: "Junio C Hamano" <junkio@cox.net>, "Geert Bosch" <bosch@gnat.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 07 03:24:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HZyf4-0000Eq-Fg
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 02:20:10 +0200
+	id 1HZyal-0007vz-UT
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 02:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933473AbXDGAUF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 6 Apr 2007 20:20:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933603AbXDGAUF
-	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 20:20:05 -0400
-Received: from stout.engsoc.carleton.ca ([134.117.69.22]:43393 "EHLO
-	stout.engsoc.carleton.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933473AbXDGAUC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Apr 2007 20:20:02 -0400
-Received: from localhost (stout [127.0.0.1])
-	by stout.engsoc.carleton.ca (Postfix) with ESMTP id 9DE375840D8;
-	Fri,  6 Apr 2007 20:20:00 -0400 (EDT)
-Received: from fattire.cabal.ca (cabal.ca [134.117.69.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by stout.engsoc.carleton.ca (Postfix) with ESMTP id F2BF25840D7;
-	Fri,  6 Apr 2007 20:19:59 -0400 (EDT)
-Received: from athena.road.mcmartin.ca (206-248-151-76.dsl.ncf.ca [206.248.151.76])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "roadwarrior.mcmartin.ca", Issuer "there.is.no.cabal.ca" (verified OK))
-	by fattire.cabal.ca (Postfix) with ESMTP id 9CF34837DD;
-	Fri,  6 Apr 2007 20:19:59 -0400 (EDT)
-Received: by athena.road.mcmartin.ca (Postfix, from userid 1000)
-	id 738153B06E; Fri,  6 Apr 2007 20:18:51 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0704061637280.6730@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at engsoc.carleton.ca
+	id S933583AbXDGAPE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 6 Apr 2007 20:15:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933575AbXDGAPB
+	(ORCPT <rfc822;git-outgoing>); Fri, 6 Apr 2007 20:15:01 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:48543 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933536AbXDGAO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Apr 2007 20:14:59 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070407001458.SSUN28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 6 Apr 2007 20:14:58 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id k0Ex1W00L1kojtg0000000; Fri, 06 Apr 2007 20:14:58 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43950>
 
-On Fri, Apr 06, 2007 at 04:41:08PM -0700, Linus Torvalds wrote:
-> And "polish" and "Polish" is the same word, right? AnD i cOuLD wRite 
-> THInGs LiKE thiS, aND it WouLd bE eaSiER tO REad, RiGHt?
-> 
+"Lars Hjemli" <hjemli@gmail.com> writes:
 
-Or for a more humorous case that bit me until I reformatted my MacOSX machine
-as case-sensitive HFS+, how xt_conntrack.h and xt_CONNTRACK.h are the same
-file...
+>> I wonder if rolling back the rename that was asked is an
+>> option.  We would want to keep these low-level things atomic
+>> whenever possible.
+>
+> I was wondering the same thing, i.e. "goto rollback" as an option for
+> "error()". But I ended up thinking that rename_ref() shouldn't bother
+> with the config file at all (thus my other patch).
 
-Really makes looking at git-diff output interesting.
-
-Cheers,
-	Kyle
+I agree that "other patch" is sensible regardless.
