@@ -1,83 +1,68 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH 2/3] cvsserver: Corrections to the database backend configuration
-Date: Sat,  7 Apr 2007 16:58:09 +0200
-Message-ID: <11759578901878-git-send-email-frank@lichtenheld.de>
-References: <11759575342765-git-send-email-frank@lichtenheld.de> <11759578902278-git-send-email-frank@lichtenheld.de>
-Cc: Junio C Hamano <junkio@cox.net>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 07 17:01:31 2007
+From: Jeff King <peff@peff.net>
+Subject: Re: How can git pull be up-to-date and git push fail?
+Date: Sat, 7 Apr 2007 12:16:08 -0400
+Message-ID: <20070407161607.GB18972@coredump.intra.peff.net>
+References: <17940.59514.150325.738141@lisa.zopyra.com> <20070405134954.GA18402@coredump.intra.peff.net> <17941.655.192938.792088@lisa.zopyra.com> <20070405204604.GA24779@coredump.intra.peff.net> <17941.25142.88657.766384@lisa.zopyra.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Sat Apr 07 18:25:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaCP8-0007ux-UM
-	for gcvg-git@gmane.org; Sat, 07 Apr 2007 17:00:39 +0200
+	id 1HaDaJ-0002Wa-CP
+	for gcvg-git@gmane.org; Sat, 07 Apr 2007 18:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965942AbXDGPAL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Apr 2007 11:00:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965953AbXDGPAL
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 11:00:11 -0400
-Received: from mail.lenk.info ([217.160.134.107]:65077 "EHLO mail.lenk.info"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965942AbXDGPAI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2007 11:00:08 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HaCOw-0003J2-3v; Sat, 07 Apr 2007 17:00:26 +0200
-Received: from p54b0f651.dip.t-dialin.net ([84.176.246.81] helo=goedel.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HaCOc-0005UD-0C; Sat, 07 Apr 2007 17:00:06 +0200
-Received: from djpig by goedel.djpig.de with local (Exim 4.63)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HaCMk-0007AI-V8; Sat, 07 Apr 2007 16:58:10 +0200
-X-Mailer: git-send-email 1.5.1
-In-Reply-To: <11759578902278-git-send-email-frank@lichtenheld.de>
+	id S966070AbXDGQQM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 7 Apr 2007 12:16:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966071AbXDGQQM
+	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 12:16:12 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4248 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966070AbXDGQQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Apr 2007 12:16:11 -0400
+Received: (qmail 10427 invoked from network); 7 Apr 2007 16:16:46 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 7 Apr 2007 16:16:46 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 07 Apr 2007 12:16:08 -0400
+Content-Disposition: inline
+In-Reply-To: <17941.25142.88657.766384@lisa.zopyra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43976>
 
-Don't include the scheme name in gitcvs.dbdriver, it is
-always 'dbi' anyway.
+On Thu, Apr 05, 2007 at 03:55:18PM -0500, Bill Lear wrote:
 
-Don't allow ':' in driver names nor ';' in database names for
-sanity reasons.
+> No, just plain ol' git push.  One possibility is that in mediating
+> between him and the list, there has been a loss of information.
+> Perhaps he omitted details in his account of how things progressed ---
+> who knows, perhaps he was on the wrong branch (though I doubt this, he
+> only works on the master branch, and the other branch in question was
+> someone else's entirely).
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- git-cvsserver.perl |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+No, I think you gave the correct information. See the other part of the
+thread between me and Junio. What's happening is that 'git-push' tries
+to push every ref that both you and the remote have. Because he's
+pushing into a non-bare repository, both sides have
+refs/remotes/origin/flexify. But they're not necessarily at the same
+point, since they're both fetched from whatever your origin is, thus the
+problem. In this case, his flexify tracking branch for origin is
+_behind_ the remote's, so the push doesn's work.
 
- I wasn't sure whether I should send this as a new patch or as a new version of my
- older one?
+> Regardless, does my assumption --- a 'git pull' should rectify
+> the 'you are not up to date' problem --- hold in general?
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index 5532ae7..7fe7949 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -2149,7 +2149,7 @@ sub new
-     die "Git repo '$self->{git_path}' doesn't exist" unless ( -d $self->{git_path} );
- 
-     $self->{dbdriver} = $cfg->{gitcvs}{$state->{method}}{dbdriver} ||
--        $cfg->{gitcvs}{dbdriver} || "dbi:SQLite";
-+        $cfg->{gitcvs}{dbdriver} || "SQLite";
-     $self->{dbname} = $cfg->{gitcvs}{$state->{method}}{dbname} ||
-         $cfg->{gitcvs}{dbname} || "%Ggitcvs.%m.sqlite";
-     $self->{dbuser} = $cfg->{gitcvs}{$state->{method}}{dbuser} ||
-@@ -2165,7 +2165,9 @@ sub new
-     $self->{dbname} =~ s/%([mauGg])/$mapping{$1}/eg;
-     $self->{dbuser} =~ s/%([mauGg])/$mapping{$1}/eg;
- 
--    $self->{dbh} = DBI->connect("$self->{dbdriver}:dbname=$self->{dbname}",
-+    die "Invalid char ':' in dbdriver" if $self->{dbdriver} =~ /:/;
-+    die "Invalid char ';' in dbname" if $self->{dbname} =~ /;/;
-+    $self->{dbh} = DBI->connect("dbi:$self->{dbdriver}:dbname=$self->{dbname}",
-                                 $self->{dbuser},
-                                 $self->{dbpass});
-     die "Error connecting to database\n" unless defined $self->{dbh};
--- 
-1.5.1
+Generally, yes. But the remotes/ hierarchy is not something you pull
+into. So in this case, it won't help. The real solution is that git-push
+should not be pushing remotes/ at all: it should be purely a local
+thing (the patch I posted elsewhere in the thread fixes this, but will
+not be the final behavior -- however, it's enough to fix this problem).
+
+As a temporary solution, fetching from origin should put him at the same
+place (or ahead of) the remote, which should allow the push to go
+through.
+
+-Peff
