@@ -1,84 +1,113 @@
-From: "Wink Saville" <wink@saville.com>
-Subject: Best practices for developing multiple related branches simultaneously
-Date: Sat, 7 Apr 2007 19:57:29 -0700
-Message-ID: <d4cf37a60704071957r7bb907eg84180097a4594f43@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Best practices for developing multiple related branches simultaneously
+Date: Sat, 07 Apr 2007 21:54:55 -0700
+Message-ID: <7v7isnbh40.fsf@assigned-by-dhcp.cox.net>
+References: <d4cf37a60704071957r7bb907eg84180097a4594f43@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 08 04:58:01 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Wink Saville" <wink@saville.com>
+X-From: git-owner@vger.kernel.org Sun Apr 08 06:55:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaNbJ-00080f-T3
-	for gcvg-git@gmane.org; Sun, 08 Apr 2007 04:57:58 +0200
+	id 1HaPQz-00076F-86
+	for gcvg-git@gmane.org; Sun, 08 Apr 2007 06:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933652AbXDHC5b (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 7 Apr 2007 22:57:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933636AbXDHC5b
-	(ORCPT <rfc822;git-outgoing>); Sat, 7 Apr 2007 22:57:31 -0400
-Received: from nz-out-0506.google.com ([64.233.162.237]:18786 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933660AbXDHC5a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Apr 2007 22:57:30 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so794452nze
-        for <git@vger.kernel.org>; Sat, 07 Apr 2007 19:57:29 -0700 (PDT)
-Received: by 10.114.14.1 with SMTP id 1mr1799286wan.1176001049520;
-        Sat, 07 Apr 2007 19:57:29 -0700 (PDT)
-Received: by 10.115.92.20 with HTTP; Sat, 7 Apr 2007 19:57:29 -0700 (PDT)
-Content-Disposition: inline
+	id S1751537AbXDHEy5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 8 Apr 2007 00:54:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751542AbXDHEy5
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Apr 2007 00:54:57 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:42438 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751537AbXDHEy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Apr 2007 00:54:56 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070408045457.IEGV28911.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
+          Sun, 8 Apr 2007 00:54:57 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id kUuv1W00J1kojtg0000000; Sun, 08 Apr 2007 00:54:56 -0400
+In-Reply-To: <d4cf37a60704071957r7bb907eg84180097a4594f43@mail.gmail.com>
+	(Wink Saville's message of "Sat, 7 Apr 2007 19:57:29 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/43996>
 
-Hello,
+"Wink Saville" <wink@saville.com> writes:
 
-A couple of questions on how to manage a series of
-hierarchically related branches.
+> A couple of questions on how to manage a series of
+> hierarchically related branches.
+>
+> I've created something like this:
+>
+> ----> master
+>    \----> branchA
+>         \----> branchB
+>              \----> branchC
+>
+> With the intent to be able to create three separate
+> patches that others can make to master and also continue
+> development on all three branches simultaneously.
+>
+> What I'm doing at the moment is to "git-checkout"
+> one of the three branches A, B or C and make changes.
+> Note; I don't make changes to master as it represents the
+> upstream code and will be pulling from it periodically.
+>
+> If the branch is a parent to a child and I want the
+> new changes in the parent to be seen by the children I
+> recursively check out the immediate child do a git-rebase.
 
-I've created something like this:
+This depends on how you plan to ultimately use the result of
+work done on the topic branches.  If you are feeding the
+completed series as a set of patches to upstream to be applied
+(and eventually contained when you pull into 'master'), this
+"master is always pristine, topics are constantly rebased on top
+of it" pattern is a reasonable thing to do.  With a few caveats:
 
-----> master
-    \----> branchA
-         \----> branchB
-              \----> branchC
+ * It is harder to share the topics across multiple people as
+   you are constantly rebasing.
 
-With the intent to be able to create three separate
-patches that others can make to master and also continue
-development on all three branches simultaneously.
+ * As you found out, you need to keep track of which ones come
+   directly on top of 'master', which ones are second generation
+   on top of which other branches, etc.
 
-What I'm doing at the moment is to "git-checkout"
-one of the three branches A, B or C and make changes.
-Note; I don't make changes to master as it represents the
-upstream code and will be pulling from it periodically.
+You do not necessarily have to be constantly rebasing on top of
+'master', though.  You can instead:
 
-If the branch is a parent to a child and I want the
-new changes in the parent to be seen by the children I
-recursively check out the immediate child do a git-rebase.
+ - Keep 'master' pristine (as your upstream does not 'pull' from
+   you);
 
-For example:
+ - When you start a topic, try to fork from the branch closest
+   to 'master' (preferrably 'master' itself);
 
-*) git-checkout branchA
-*) change some files on branchA
-*) git-commit -a
-*) git-checkout branchB
-*) git-rebase branchA
-*) git-checkout branchC
-*) git-rebase branchB
+ - When there are new changes on 'master' (or topic that is
+   closer to 'master') that affect the work you did on your
+   topic, merge 'master' into the topic, and keep going, never
+   rebasing the topic.  This 'merging from upstream as needed'
+   includes the case where your submission was applied to
+   'master'.
 
-This seems to work, but is somewhat arduous and I
-was wondering if there is a better way?
+As you go, when all the work you are done on a topic has been
+applied to 'master', your 'merge from master' would result in
+the tree of that topic exactly match the tree of 'master'.  At
+that point you can discard that topic branch.
 
-Also, I'd like to checkout and work on all three branches
-simultaneously. As is implied above, what I do at the moment is
-use one repository and to switch branches I use git-checkout, so
-as not to lose work when switching I need to commit before switching.
-Sometimes I'd rather not commit as I may just want to look at what was
-in another branch, possibly unrelated to this series. What is a good
-way of handling this situation?
+The set of changes you have on a topic that have not been
+applied to 'master' can be found using 'git-cherry'.
 
-Regards,
+> Also, I'd like to checkout and work on all three branches
+> simultaneously.
 
-Wink Saville
+Julian Phillips's git-new-workdir script in contrib/workdir may
+suit your needs.
+
+Having said all that, the first advice is to avoid second
+generation topic that depends on another topic when possible.
+Is your branchB absolutely need to depend on branchA?
