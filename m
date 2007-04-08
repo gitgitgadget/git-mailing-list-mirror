@@ -1,114 +1,93 @@
-From: Dana How <danahow@gmail.com>
-Subject: [PATCH 2/8] git-repack --max-pack-size: minor code restructuring
-Date: Sun, 08 Apr 2007 16:20:29 -0700
-Message-ID: <461978BD.4080201@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] git-archive: document CWD effect
+Date: Sun, 08 Apr 2007 16:21:02 -0700
+Message-ID: <7virc68nc1.fsf@assigned-by-dhcp.cox.net>
+References: <esc64d$d2u$1@sea.gmane.org> <4618DFEE.8080707@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, danahow@gmail.com
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 01:20:49 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nick Williams <njw@jarb.freeserve.co.uk>, git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Apr 09 01:21:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaggV-0006zW-JN
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 01:20:35 +0200
+	id 1Hagh3-00075x-Hn
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 01:21:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057AbXDHXUd (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 8 Apr 2007 19:20:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbXDHXUd
-	(ORCPT <rfc822;git-outgoing>); Sun, 8 Apr 2007 19:20:33 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:63717 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752057AbXDHXUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Apr 2007 19:20:32 -0400
-Received: by py-out-1112.google.com with SMTP id a29so896710pyi
-        for <git@vger.kernel.org>; Sun, 08 Apr 2007 16:20:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=aBKbCag7tnumYhWOGObLxzHEtkS7nsZz9hCc3PgVUJ5q1YbxWo4DjeWSmDe2VJbjkcFVphz68e71DNsbvS3XIa3i3nULEoF+4H+i9+eqJCP8u7j8MBXF0XzmQVNxsbGswcaIFn7Bm4djZFYTDG2VL6Kb+i2dbg8CPUzywNd+5Eo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:x-accept-language:mime-version:to:cc:subject:content-type:content-transfer-encoding;
-        b=COA6iQMHtEoVI4cYoZqG0Npbar4dqWF7SO1N57ne2erggYq6KW9VAYLXtGhLswxR5obgUSoF0J70aYQwrNFzAvtDUiYNy2ziNMvtDtmbuSrLIiqyx7kEs+9k04MGueDAccMmKv+owCVeHJucY035H3HZ8gTUEzG0EnIfLPw17LQ=
-Received: by 10.65.151.6 with SMTP id d6mr10530028qbo.1176074431799;
-        Sun, 08 Apr 2007 16:20:31 -0700 (PDT)
-Received: from ?192.168.1.30? ( [64.186.171.227])
-        by mx.google.com with ESMTP id e1sm8757395nzd.2007.04.08.16.20.30;
-        Sun, 08 Apr 2007 16:20:31 -0700 (PDT)
-User-Agent: Mozilla Thunderbird 1.0.7 (X11/20051006)
-X-Accept-Language: en-us, en
+	id S1752063AbXDHXVG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 8 Apr 2007 19:21:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbXDHXVG
+	(ORCPT <rfc822;git-outgoing>); Sun, 8 Apr 2007 19:21:06 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:57138 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752063AbXDHXVF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Apr 2007 19:21:05 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070408232102.HLTQ24385.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 8 Apr 2007 19:21:02 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id knM21W00i1kojtg0000000; Sun, 08 Apr 2007 19:21:03 -0400
+In-Reply-To: <4618DFEE.8080707@lsrfire.ath.cx> (=?utf-8?Q?Ren=C3=A9?=
+ Scharfe's message of
+	"Sun, 08 Apr 2007 14:28:30 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44012>
 
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-Move the call to write_index_file() from cmd_pack_objects()
-to write_pack_file() (since only the latter will know how
-many times to call write_index_file()),  and move or add
-forward declarations for later changes.
+> Nick Williams schrieb:
+>> git-archive only archives the current working dir (and sub dirs) eve=
+n
+>> when no paths are specified. For example, if I do
+>>=20
+>> git archive --format=3Dtar --prefix=3Dgit-1.5.0.2/ HEAD > ~/test/tes=
+t.tar
+>>=20
+>> from with in the Documentation dir, then I only get part of the tree=
+=2E
+>>=20
+>> Is this the intended behavior?
+>>=20
+>> The reason I ask is that from my (mis)reading of the man page I expe=
+ct
+>> to get all of the tree unless paths are specified.
+>
+> Sorry about the late reply.  Would these two additional manpage lines
+> clear things up for you?
 
-Signed-off-by: Dana How <how@deathvalley.cswitch.com>
----
- builtin-pack-objects.c |   22 ++++++++++++++--------
- 1 files changed, 14 insertions(+), 8 deletions(-)
+While the updated description reflects what the command does
+more accurately, I am not sure if it is a desired behaviour.
+=46or one thing, --format=3Dtar (by the way, maybe we would want to
+make this the default when none is specified?) adds the comment
+that is readable by get-tar-commit-id that claims the tarball
+contains the named commit, giving a false impression that it is
+the whole thing.  Since people who _really_ want a subtree can
+just say "git archive --format=3Dtar HEAD:Documentation", I
+suspect we may be better off not doing "current directory only"
+by default.  This changes the behaviour, but (1) it affects only
+people who run from a subdirectory, (2) it is counterintuitive
+that your location in the working tree matters when you say "I
+want a tarball of that commit", and (3) it is an undocumented
+behaviour anyway.
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 64318b3..8415549 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -518,6 +518,16 @@ static off_t write_one(struct sha1file *f,
- 	return offset + write_object(f, e);
- }
- 
-+typedef int (*entry_sort_t)(const struct object_entry *, const struct object_entry *);
-+
-+static entry_sort_t current_sort;
-+
-+/* forward declarations for write_pack_file */
-+/* (probably should move sorting stuff up here) */
-+static int sort_comparator(const void *_a, const void *_b);
-+static int sha1_sort(const struct object_entry *a, const struct object_entry *b);
-+static void write_index_file(void);
-+
- static void write_pack_file(void)
- {
- 	uint32_t i;
-@@ -562,6 +572,10 @@ static void write_pack_file(void)
- 	if (written != nr_result)
- 		die("wrote %u objects while expecting %u", written, nr_result);
- 	sha1close(f, pack_file_sha1, 1);
-+	if (!pack_to_stdout) {
-+		write_index_file();
-+		puts(sha1_to_hex(object_list_sha1));
-+	}
- }
- 
- static void write_index_file(void)
-@@ -1106,10 +1120,6 @@ static void get_object_details(void)
- 	}
- }
- 
--typedef int (*entry_sort_t)(const struct object_entry *, const struct object_entry *);
--
--static entry_sort_t current_sort;
--
- static int sort_comparator(const void *_a, const void *_b)
- {
- 	struct object_entry *a = *(struct object_entry **)_a;
-@@ -1698,10 +1708,6 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			progress_update = 0;
- 		}
- 		write_pack_file();
--		if (!pack_to_stdout) {
--			write_index_file();
--			puts(sha1_to_hex(object_list_sha1));
--		}
- 	}
- 	if (progress)
- 		fprintf(stderr, "Total %u (delta %u), reused %u (delta %u)\n",
--- 
-1.5.1.89.g8abf0
+So my suggestions are:
+
+ (1) When no pathspec is given, archive the whole tree, even
+     when you are in a subdirectory.
+
+ (2) When a pathspec is given, produce a partial tarball limited
+     to the named spec like we do now, but do not say it is a
+     tarball of the named commit (i.e. get-tar-commit-id would
+     say empty).
+
+An alternative to (2) would be to say "$commit:Documentation"
+instead, but that has a little issue of what to do when more
+than one pathspecs are given.
