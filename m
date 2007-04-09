@@ -1,82 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: support for large packs and 64-bit offsets
-Date: Mon, 9 Apr 2007 13:43:05 -0400
-Message-ID: <20070409174305.GU5436@spearce.org>
-References: <11760951973172-git-send-email-nico@cam.org> <20070409171925.GS5436@spearce.org> <alpine.LFD.0.98.0704091328130.28181@xanadu.home>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH 1/8] git-repack --max-pack-size: Add new file statics and struct fields
+Date: Mon, 9 Apr 2007 11:38:34 -0700
+Message-ID: <56b7f5510704091138r166d6caer7ea4b2497889a4c0@mail.gmail.com>
+References: <46197885.3060502@gmail.com>
+	 <7vabxi8lqv.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Apr 09 22:56:09 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 09 23:50:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Haxtb-00062a-UN
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 19:43:16 +0200
+	id 1HaylH-0006L1-0W
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:38:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753252AbXDIRnN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 13:43:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753253AbXDIRnN
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 13:43:13 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38817 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753252AbXDIRnM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 13:43:12 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HaxtM-00079S-CW; Mon, 09 Apr 2007 13:43:00 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 891FC20FBAE; Mon,  9 Apr 2007 13:43:05 -0400 (EDT)
+	id S1753198AbXDISif (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 14:38:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbXDISif
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:38:35 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:19187 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753198AbXDISif (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 14:38:35 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1107067pyi
+        for <git@vger.kernel.org>; Mon, 09 Apr 2007 11:38:34 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=SSuh2dh1gGt/cWVCvNMpunnC9ZuiuJWNAthqkVlocLxbcNhMi7Teg822UYlfi3KVY/KH0hG7QVdt+1wH0xsut3yu519hgd3ZdrYMgOFjnZMoR9b5h2fC6rKO9IOKELmot6xGoImr2ovMDcUyIOqgD2RMr6SeSPBjlxjgivPXL2c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CxCdDmjwq4UL2k9RphTZx+GG2GMVEIVVEmRTMEd/MybkJAPe/BWStxXLpjSsWpZHYvQyZnDlQIWIaeuDAdPo7b7n8iiFtYa7SNGJcdHrLwlleCcTiqImpCWqne2Tdnk+5ACSE1T/e4EYfzLCvbTkImPK3X8P8UlTfTPcntOao6U=
+Received: by 10.115.32.1 with SMTP id k1mr2428105waj.1176143914103;
+        Mon, 09 Apr 2007 11:38:34 -0700 (PDT)
+Received: by 10.114.46.4 with HTTP; Mon, 9 Apr 2007 11:38:34 -0700 (PDT)
+In-Reply-To: <7vabxi8lqv.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0704091328130.28181@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44068>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Mon, 9 Apr 2007, Shawn O. Pearce wrote:
-> 
-> > It is unfortunate that we are changing the index file format without
-> > also bringing in packv4 support at the same time.  I have just been
-> > too swamped in useless bulls**t in day-job work to spend time on
-> > Git lately.
-> 
-> Well... I still did index v2 with pack v4 in mind.  The diference 
-> between index v2 and v3 would be minimal.
-> 
-> Pack v4 is coming along.  Slowly but still coming.
+On 4/8/07, Junio C Hamano <junkio@cox.net> wrote:
+> Dana How <danahow@gmail.com> writes:
+>
+> > ... The fields
+> > in object_entry are re-arranged & shrunk to save memory.
+>
+> Is the driving principle "place fields with coarser alignment
+> requirements first in the struct"?  I noticed you have a handful
+> pointers and an off_t after two short fields.  Two shorts would
+> be likely to make the next field aligned suitable for an int,
+> but (1) if we ever add another short later that would not be
+> true anymore, and (2) I suspect a pointer and an off_t can be
+> longer than an int but int would never be longer than them.
+All true.  My objective was to save more memory than I had
+"wasted" by adding the prev_pack field.  Since it appears
+I'll be submitting the patchset yet again,  I'll make this
+re-arrangement complete next time.
 
-I take it you are working on it alone at this point?  I'd love
-to get back into it, but I don't think I've got the cycles for at
-least a couple of weeks.
-
-
-Here's something we didn't think about, but that occurred to me today
-when reading this series: If we move the SHA-1 table out of the index
-and into the packfile (like we are planning) dumb commit-walkers
-(http-fetch) will have problems.  Right now they download the
-indexes of every available packfile to determine if they need to
-download the corresponding packfile to obtain a needed object.
-
-Moving the SHA-1 table from the index into the packfile will mean
-the client cannot do this `optimization'.  Instead it will need to
-perform a byte-range request for part of the packfile to decide
-if it needs to fetch the remainder of that packfile; or it must
-download the entire packfile.  Since not all HTTP servers support
-byte-range requests the former may not always be viable and the
-latter is obviously not a good idea.
-
+Thanks,
 -- 
-Shawn.
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
