@@ -1,50 +1,76 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: [PATCH] git-tag: Document that -m/-F create tag objects, too
-Date: Mon, 09 Apr 2007 17:31:01 +0200
-Message-ID: <87y7l11s5m.fsf@mid.deneb.enyo.de>
-References: <E1Hash0-0004rN-Mu@mid.deneb.enyo.de>
-	<Pine.LNX.4.64.0704091554330.32490@beast.quantumfyre.co.uk>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] git-archive: document CWD effect
+Date: Mon, 09 Apr 2007 17:04:27 +0200
+Message-ID: <461A55FB.6070600@lsrfire.ath.cx>
+References: <esc64d$d2u$1@sea.gmane.org> <4618DFEE.8080707@lsrfire.ath.cx> <7virc68nc1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Mon Apr 09 18:52:37 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nick Williams <njw@jarb.freeserve.co.uk>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 09 18:54:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Havpt-0001uo-2v
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 17:31:17 +0200
+	id 1HavQM-0006DM-VC
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 17:04:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753441AbXDIPbG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 11:31:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753500AbXDIPbG
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 11:31:06 -0400
-Received: from mail.enyo.de ([212.9.189.167]:1085 "EHLO mail.enyo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753441AbXDIPbF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 11:31:05 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1Havpf-0007UG-88; Mon, 09 Apr 2007 17:31:03 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.63)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1Havpd-0006QN-Iu; Mon, 09 Apr 2007 17:31:01 +0200
-In-Reply-To: <Pine.LNX.4.64.0704091554330.32490@beast.quantumfyre.co.uk>
-	(Julian Phillips's message of "Mon, 9 Apr 2007 15:58:31 +0100 (BST)")
+	id S965336AbXDIPEq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Apr 2007 11:04:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965309AbXDIPEq
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 11:04:46 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:48043
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965109AbXDIPEn (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 11:04:43 -0400
+Received: from [10.0.1.201] (p508e4c97.dip.t-dialin.net [80.142.76.151])
+	by neapel230.server4you.de (Postfix) with ESMTP id 7BB7222006;
+	Mon,  9 Apr 2007 17:04:42 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <7virc68nc1.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44057>
 
-* Julian Phillips:
+Junio C Hamano schrieb:
+> While the updated description reflects what the command does
+> more accurately, I am not sure if it is a desired behaviour.
+> For one thing, --format=3Dtar (by the way, maybe we would want to
+> make this the default when none is specified?) adds the comment
+> that is readable by get-tar-commit-id that claims the tarball
+> contains the named commit, giving a false impression that it is
+> the whole thing.
 
-> On Mon, 9 Apr 2007, Florian Weimer wrote:
->
->> And warn about the fact that lightweight tags are not normally
->> transferred by clone/fetch.
->
-> Um ... yes, they are (in v1.5.1 at least).
+It marks the archive as being _created_ from this specific commit, not
+necessarily as containing all of it.  Perhaps this should be noted in
+the documentation..
 
-Hmm.  This has to be a fairly recent change, see:
+Making '--format=3Dtar' the default is a good idea.  I doubt we'll see =
+the
+addition of a new archive format -- that deserves to be the default one
+instead of tar -- soon.
 
-<http://article.gmane.org/gmane.linux.kernel/513438>
+> Since people who _really_ want a subtree can
+> just say "git archive --format=3Dtar HEAD:Documentation", I
+> suspect we may be better off not doing "current directory only"
+> by default.  This changes the behaviour, but (1) it affects only
+> people who run from a subdirectory, (2) it is counterintuitive
+> that your location in the working tree matters when you say "I
+> want a tarball of that commit", and (3) it is an undocumented
+> behaviour anyway.
+
+I agree with (1) and (3), meaning that we are free to change the
+behaviour.  I don't agree with (2), though.  I'd find it strange if
+changing the working directory wouldn't change the archive contents.
+
+We should keep consistency with the rest of git here.  Since git-archiv=
+e
+is just a fancy git-ls-tree, I think we should mirror its behaviour wit=
+h
+respect to the working directory.  (Which is what the current code does=
+=2E
+ Modulo bugs, of course.)
+
+Ren=C3=A9
