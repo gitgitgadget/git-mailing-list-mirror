@@ -1,147 +1,62 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: support for large packs and 64-bit offsets
-Date: Mon, 09 Apr 2007 15:46:38 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704091542400.28181@xanadu.home>
+Date: Mon, 09 Apr 2007 12:49:17 -0700
+Message-ID: <7vtzvpz5tu.fsf@assigned-by-dhcp.cox.net>
 References: <11760951973172-git-send-email-nico@cam.org>
- <20070409171925.GS5436@spearce.org>
- <Pine.LNX.4.64.0704091059240.6730@woody.linux-foundation.org>
- <alpine.LFD.0.98.0704091417490.28181@xanadu.home>
+	<20070409171925.GS5436@spearce.org>
+	<alpine.LFD.0.98.0704091328130.28181@xanadu.home>
+	<20070409174305.GU5436@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 02:27:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 02:31:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hazp7-0000WP-31
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 21:46:46 +0200
+	id 1Hazrf-0000xq-BJ
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 21:49:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753437AbXDITql (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 15:46:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753468AbXDITqk
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 15:46:40 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:59869 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753437AbXDITqj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 15:46:39 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JG8008S2XLQWBY0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 15:46:39 -0400 (EDT)
-In-reply-to: <alpine.LFD.0.98.0704091417490.28181@xanadu.home>
-X-X-Sender: nico@xanadu.home
+	id S1753468AbXDITtT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 15:49:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753469AbXDITtT
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 15:49:19 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:49507 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753468AbXDITtS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 15:49:18 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070409194917.SSEE792.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 9 Apr 2007 15:49:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id l7pH1W0151kojtg0000000; Mon, 09 Apr 2007 15:49:18 -0400
+In-Reply-To: <20070409174305.GU5436@spearce.org> (Shawn O. Pearce's message of
+	"Mon, 9 Apr 2007 13:43:05 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44092>
 
-On Mon, 9 Apr 2007, Nicolas Pitre wrote:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
-> >  - force a mode where a random smattering of index entries are done using 
-> >    64-bit notation (even if they obviously won't need the high 33 bits)
-> 
-> That could be achieved with an additional criteria, like the offset's 
-> LSB value which should be pretty random.
-> 
-> Once Junio merges the series in a branch of its own, we could have a 
-> separate patch not in that branch that simply forces those features on 
-> in branch 'next'.
+> Nicolas Pitre <nico@cam.org> wrote:
+> ...
+> Here's something we didn't think about, but that occurred to me today
+> when reading this series: If we move the SHA-1 table out of the index
+> and into the packfile (like we are planning) dumb commit-walkers
+> (http-fetch) will have problems.  Right now they download the
+> indexes of every available packfile to determine if they need to
+> download the corresponding packfile to obtain a needed object.
 
-Something like this, although I suppose this might require a more 
-permanent solution for the test suite:
-
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 8cf2871..8d20ea9 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -607,8 +607,12 @@ static void write_index_file(off_t last_obj_offset)
- 	uint32_t array[256];
- 	uint32_t index_version;
- 
-+#if 0
- 	/* if last object's offset is >= 2^31 we should use index V2 */
- 	index_version = (last_obj_offset >> 31) ? 2 : 1;
-+#else
-+	index_version = 2;
-+#endif
- 
- 	/* index versions 2 and above need a header */
- 	if (index_version >= 2) {
-@@ -664,8 +668,15 @@ static void write_index_file(off_t last_obj_offset)
- 		list = sorted_by_sha;
- 		for (i = 0; i < nr_objects; i++) {
- 			struct object_entry *entry = *list++;
-+#if 0
- 			uint32_t offset = (entry->offset <= 0x7fffffff) ?
- 				entry->offset : (0x80000000 | nr_large_offset++);
-+#else
-+			/* force some offsets to the 64-bit table for testing */
-+			uint32_t offset =
-+				(!(entry->offset & 1) && entry->offset <= 0x7fffffff) ?
-+				entry->offset : (0x80000000 | nr_large_offset++);
-+#endif
- 			offset = htonl(offset);
- 			sha1write(f, &offset, 4);
- 		}
-@@ -675,7 +686,11 @@ static void write_index_file(off_t last_obj_offset)
- 		while (nr_large_offset) {
- 			struct object_entry *entry = *list++;
- 			uint64_t offset = entry->offset;
-+#if 0
- 			if (offset > 0x7fffffff) {
-+#else
-+			if (offset & 1 || offset > 0x7fffffff) {
-+#endif
- 				uint32_t split[2];
- 				split[0]        = htonl(offset >> 32);
- 				split[1] = htonl(offset & 0xffffffff);
-diff --git a/index-pack.c b/index-pack.c
-index a833f64..1e6db2b 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -718,8 +718,13 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
- 		die("unable to create %s: %s", index_name, strerror(errno));
- 	f = sha1fd(fd, index_name);
- 
-+#if 0
- 	/* if last object's offset is >= 2^31 we should use index V2 */
- 	index_version = (objects[nr_objects-1].offset >> 31) ? 2 : 1;
-+#else
-+	/* force v2 always on for testing */
-+	index_version = 2;
-+#endif
- 
- 	/* index versions 2 and above need a header */
- 	if (index_version >= 2) {
-@@ -779,8 +784,15 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
- 		list = sorted_by_sha;
- 		for (i = 0; i < nr_objects; i++) {
- 			struct object_entry *obj = *list++;
-+#if 0
- 			uint32_t offset = (obj->offset <= 0x7fffffff) ?
- 				obj->offset : (0x80000000 | nr_large_offset++);
-+#else
-+			/* force some offsets to the 64-bit table for testing */
-+			uint32_t offset =
-+				(!(obj->offset & 1) && obj->offset <= 0x7fffffff) ?
-+				obj->offset : (0x80000000 | nr_large_offset++);
-+#endif
- 			offset = htonl(offset);
- 			sha1write(f, &offset, 4);
- 		}
-@@ -790,7 +802,11 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
- 		while (nr_large_offset) {
- 			struct object_entry *obj = *list++;
- 			uint64_t offset = obj->offset;
-+#if 0
- 			if (offset > 0x7fffffff) {
-+#else
-+			if (offset & 1 || offset > 0x7fffffff) {
-+#endif
- 				uint32_t split[2];
- 				split[0]	= htonl(offset >> 32);
- 				split[1] = htonl(offset & 0xffffffff);
+If we really care about older dumb clients, one option is to
+generate not .idx but .idx2, and have a corresponding .idx only
+to support them.  But at that point, it's probably cleaner to
+have an explicit option to produce .idx file of a particular
+version, and tell people to pack public repositories they expect
+older dumb clients to access with that option to keep things
+backward compatible.
