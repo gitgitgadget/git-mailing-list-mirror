@@ -1,101 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Mon, 9 Apr 2007 13:38:58 -0400
-Message-ID: <20070409173858.GT5436@spearce.org>
-References: <46197950.3080804@gmail.com> <7vwt0m76rv.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704082012220.28181@xanadu.home>
+From: =?iso-8859-1?Q?Thomas_H=FChn?= <newsgroups@thomas-huehn.de>
+Subject: incorporating the past
+Date: Mon, 09 Apr 2007 20:14:17 +0200
+Message-ID: <87d52d1kli.fsf@mid.thomas-huehn.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Dana How <danahow@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Apr 09 21:06:26 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 09 21:48:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Haxpn-0005H6-2e
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 19:39:20 +0200
+	id 1HayYG-0004GL-Vr
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:25:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753208AbXDIRjO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 13:39:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753234AbXDIRjO
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 13:39:14 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38666 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753228AbXDIRjN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 13:39:13 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HaxpN-0006cK-Jz; Mon, 09 Apr 2007 13:38:53 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CE0FF20FBAE; Mon,  9 Apr 2007 13:38:58 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0704082012220.28181@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1752700AbXDISZN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 14:25:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752880AbXDISZM
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:25:12 -0400
+Received: from main.gmane.org ([80.91.229.2]:34481 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752700AbXDISZK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 14:25:10 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1HayY2-0001vN-AC
+	for git@vger.kernel.org; Mon, 09 Apr 2007 20:25:02 +0200
+Received: from p54a0df24.dip.t-dialin.net ([84.160.223.36])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Apr 2007 20:25:02 +0200
+Received: from newsgroups by p54a0df24.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 09 Apr 2007 20:25:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: p54a0df24.dip.t-dialin.net
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Cancel-Lock: sha1:6+tc6nLiH7bWqJMA+oOK8tfcFKs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44063>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> On Sun, 8 Apr 2007, Junio C Hamano wrote:
-> 
-> > Dana How <danahow@gmail.com> writes:
-> > 
-> > > +/*
-> > > + * Move this, the version in fast-import.c,
-> > > + * and index_pack.c:readjust_pack_header_and_sha1 into sha1_file.c ?
-> > > + */
-> > > +static void fixup_header_footer(int pack_fd, unsigned char *pack_file_sha1,
-> > > +				char *pack_name, uint32_t object_count)
-> > > +{
-> > 
-> > Indeed that is a very good point.
-> > 
-> > I admit I did not notice we already had the duplication between
-> > fast-import.c and index-pack.c
-> > 
-> > Shawn, Nico, what do you think?  Wouldn't it be better to
-> > refactor them first, independent of Dana's series?
-> 
-> Probably, yes.  But probably not in sha1_file.c though.  This file is 
-> getting a bit large already, and it deals with pack reading only not 
-> pack writing.
-> 
-> I think another file with common pack writing functions could be 
-> created.  Pack index writing is another item that is currently 
-> duplicated in pack-objects and index-pack for example.
+Hi
 
-I agree entirely.  And I'd like to see that refactoring occur
-before this series, or as part of it.  At least for the nr_objects
-correction routine.  To be honest we should have done that when
-fast-import.c and index-pack.c both needed that logic, but we didn't.
-I don't remember whose version showed up first in Junio's tree
-(I think it was index-pack.c) but the other one (probably me with
-fast-import.c) should have done the refactoring then.
+I have looked through some git tutorials and the manual, and what is
+interesting me most right now is, how do I handle a situation like this
+with git? It's purely speculative, I don't have such a situation in
+reality, so my description might be a bit murky...
 
-We already have *waaay* too many functions that know packfile
-structure.  I'd like to see that decline, but unfortunately a number
-of them are using rather specialized data structures so it makes
-things somewhat difficult.
+I'll try to make an extremely simple example, just one file, no
+branching etc.
 
-For example, writing objects to a packfile: we have 3
-implementations.  fast-import.c doesn't use sha1write_compressed
-because that was a waste of time to compute the SHA_CTX when we
-know we have to go back and fixup nr_objects.  It also doesn't use
-it because fast-import.c's pack-splitting logic is based on the
-final object size, not the starting offset.  It does the deflate
-itself, decides if the end of the object will overflow, and if so,
-jumps to a new packfile.
+I have a file under version control, that I got at the point of file
+version 1.0. I start committing changes:
 
--- 
-Shawn.
+o--o--o--o--o--o--o
+^                 ^
+git init,         current,
+version 1.0       version 1.6
+
+Then I get the history up to my version 1.0 from somewhere else (former
+maintainer, whatever). In the form of plain text files, one for each
+version; say, versions 0.1 thru 0.9. I want to incorporate this past
+into my tree.
+
+Can I just do another git init for 0.1, commit the changes up to 1.0 and
+merge those two histories? Don't I need a common ancestor for both or
+something like that?
+
+Or can I do the same, only up to 0.9 instead of 1.0, and then "sew
+together" those histories?
+
+Is there some kind of "add-past", where the changed contents in the
+working directory are prepended, not appended to the history? So that I
+could "prepend" 0.9, then 0.8 and so on until 0.1?
+
+I guess, I just don't have a clear grasp of what "history" and "branch"
+and so on mean.
+
+Thomas
