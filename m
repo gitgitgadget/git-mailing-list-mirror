@@ -1,162 +1,251 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Mon, 09 Apr 2007 01:17:42 -0700
-Message-ID: <7vtzvq0xnd.fsf@assigned-by-dhcp.cox.net>
+Subject: [PATCH 1/2] git-log --cherry-pick
+Date: Mon, 09 Apr 2007 04:07:46 -0700
+Message-ID: <7virc524cd.fsf_-_@assigned-by-dhcp.cox.net>
+References: <1175686583.19898.68.camel@okra.transitives.com>
+	<Pine.LNX.4.64.0704040744160.6730@woody.linux-foundation.org>
+	<7vircbwfym.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 09 10:18:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Apr 09 13:07:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hap4o-0008Ir-71
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 10:18:14 +0200
+	id 1Harix-0002nB-Km
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 13:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753071AbXDIIRu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Apr 2007 04:17:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753072AbXDIIRu
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 04:17:50 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:56413 "EHLO
+	id S1751052AbXDILHs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 07:07:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752784AbXDILHs
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 07:07:48 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:37387 "EHLO
 	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753071AbXDIIRs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 04:17:48 -0400
+	with ESMTP id S1751052AbXDILHr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 07:07:47 -0400
 Received: from fed1rmimpo01.cox.net ([70.169.32.71])
           by fed1rmmtao105.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070409081748.OBCG25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 9 Apr 2007 04:17:48 -0400
+          id <20070409110747.OQQN25613.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Mon, 9 Apr 2007 07:07:47 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo01.cox.net with bizsmtp
-	id kwHn1W0061kojtg0000000; Mon, 09 Apr 2007 04:17:48 -0400
-X-maint-at: 24c64d6add05f1f4d2e277af2d44c961910c98d3
-X-master-at: 5bcbc7ff1014c58e7296713926206bf6a69e0f4c
+	id kz7m1W0041kojtg0000000; Mon, 09 Apr 2007 07:07:46 -0400
+In-Reply-To: <7vircbwfym.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 04 Apr 2007 22:25:05 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44048>
 
-Maybe will do 1.5.1.1 on Wednesday with the accumulated fixes on
-'maint'.
+This is meant to be a saner replacement for "git-cherry".
 
-The 'master' has a few topics merged from 'next':
+When used with "A...B", this filters out commits whose patch
+text has the same patch-id as a commit on the other side.
 
- - Christian Couder's "git bisect" improvements.
- - Fernando J Perada's parallel make fix.
- - Andy Parkins's "git diff --stat" for binary files.
- - Shawn Pearce's "git lost-found" that ignores reflog.
- - Switching between two branches that have D/F conflicts.
- - "git merge -s subtree".
+Signed-off-by: Junio C Hamano <junkio@cox.net>
+---
 
-----------------------------------------------------------------
+  Junio C Hamano <junkio@cox.net> writes:
 
-* The 'maint' branch has these fixes since the last announcement.
+  > Funny.
+  >
+  > Last night I was thinking about git-cherry, as it is one of the
+  > few commands that have "funny parameter semantics that do not
+  > mesh well with git-log family" (others are format-patch and
+  > rebase).
+  >
+  > I think we should be able to use --left-right and ... operator
+  > to express what the above cherry does with something like:
+  >
+  >     $ git log --left-right --ignore-common-patch cvs-upstream...my-branch
+  >
+  > The --ignore-common-patch option does not exist yet, but the
+  > basic code to implement it should already be accessible from the
+  > log family, as that is what format-patch needs to do.
 
- Arjen Laarhoven (4):
-  usermanual.txt: some capitalization nits
-  t3200-branch.sh: small language nit
-  t5300-pack-object.sh: portability issue using /usr/bin/stat
-  Makefile: iconv() on Darwin has the old interface
+ revision.c |  141 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ revision.h |    1 +
+ 2 files changed, 142 insertions(+), 0 deletions(-)
 
- Brian Gernhardt (2):
-  Document --left-right option to rev-list.
-  Distinguish branches by more than case in tests.
-
- Dana How (1):
-  Fix lseek(2) calls with args 2 and 3 swapped
-
- Eric Wong (3):
-  git-svn: bail out on incorrect command-line options
-  git-svn: dcommit/rebase confused by patches with git-svn-id: lines
-  git-svn: fix log command to avoid infinite loop on long commit messag=
-es
-
- Frank Lichtenheld (6):
-  cvsimport: sync usage lines with existing options
-  cvsimport: Improve documentation of CVSROOT and CVS module determinat=
-ion
-  cvsimport: Improve usage error reporting
-  cvsimport: Reorder options in documentation for better understanding
-  cvsimport: Improve formating consistency
-  cvsserver: small corrections to asciidoc documentation
-
- Geert Bosch (1):
-  Fix renaming branch without config file
-
- Jakub Narebski (1):
-  gitweb: Fix bug in "blobdiff" view for split (e.g. file to symlink) p=
-atches
-
- Junio C Hamano (3):
-  Fix dependency of common-cmds.h
-  Documentation: tighten dependency for git.{html,txt}
-  Add Documentation/cmd-list.made to .gitignore
-
- Lars Hjemli (2):
-  rename_ref(): only print a warning when config-file update fails
-  Make builtin-branch.c handle the git config file
-
- Ren=C3=A9 Scharfe (1):
-  Revert "builtin-archive: use RUN_SETUP"
-
- Shawn O. Pearce (1):
-  Honor -p<n> when applying git diffs
-
- Ville Skytt=C3=A4 (1):
-  DESTDIR support for git/contrib/emacs
-
- YOSHIFUJI Hideaki (1):
-  Avoid composing too long "References" header.
-
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
- Alex Riesen (1):
-  Fix passing of TCLTK_PATH to git-gui
-
- Andy Parkins (1):
-  Show binary file size change in diff --stat
-
- Christian Couder (2):
-  Bisect: teach "bisect start" to optionally use one bad and many good =
-revs.
-  Documentation: bisect: "start" accepts one bad and many good commits
-
- Fernando J. Pereda (1):
-  Makefile: Add '+' to QUIET_SUBDIR0 to fix parallel make.
-
- Junio C Hamano (21):
-  git-fetch: add --quiet
-  checkout: allow detaching to HEAD even when switching to the tip of a=
- branch
-  _GIT_INDEX_OUTPUT: allow plumbing to output to an alternative index f=
-ile.
-  git-read-tree --index-output=3D<file>
-  add_cache_entry(): removal of file foo does not conflict with foo/bar
-  unpack_trees.c: pass unpack_trees_options structure to keep_entry() a=
-s well.
-  unpack-trees: get rid of *indpos parameter.
-  Fix read-tree --prefix=3Ddir/.
-  Fix twoway_merge that passed d/f conflict marker to merged_entry().
-  Fix switching to a branch with D/F when current branch has file D.
-  Fix bogus error message from merge-recursive error path
-  Propagate cache error internal to refresh_cache() via parameter.
-  Rename internal function "add_file_to_cache" in builtin-update-index.=
-c
-  Rename static variable write_index to update_index in builtin-apply.c
-  Rename add_file_to_index() to add_file_to_cache()
-  git-bisect: modernization
-  t6030: add a bit more tests to git-bisect
-  git-bisect: allow bisecting with only one bad commit.
-  git-push reports the URL after failing.
-  git-push to multiple locations does not stop at the first failure
-  A new merge stragety 'subtree'.
-
- Nicolas Pitre (1):
-  clean up and optimize nth_packed_object_sha1() usage
-
- Shawn O. Pearce (1):
-  Fix lost-found to show commits only referenced by reflogs
+diff --git a/revision.c b/revision.c
+index 486393c..0903f19 100644
+--- a/revision.c
++++ b/revision.c
+@@ -422,6 +422,139 @@ static void add_parents_to_list(struct rev_info *revs, struct commit *commit, st
+ 	}
+ }
+ 
++/*
++ * This needs to be moved from builtin-log -- its get_patch_ids() implementation
++ * is horrible -- it pollutes the object array with non objects!
++ */
++static int get_patch_id(struct commit *commit, struct diff_options *options,
++		unsigned char *sha1)
++{
++	if (commit->parents)
++		diff_tree_sha1(commit->parents->item->object.sha1,
++		               commit->object.sha1, "", options);
++	else
++		diff_root_tree_sha1(commit->object.sha1, "", options);
++	diffcore_std(options);
++	return diff_flush_patch_id(options, sha1);
++}
++
++struct patch_id_ent {
++	unsigned char patch_id[20];
++	char seen;
++};
++
++static int compare_patch_id(const void *a_, const void *b_)
++{
++	struct patch_id_ent *a = *((struct patch_id_ent **)a_);
++	struct patch_id_ent *b = *((struct patch_id_ent **)b_);
++	return hashcmp(a->patch_id, b->patch_id);
++}
++
++static void cherry_pick_list(struct commit_list *list)
++{
++	struct commit_list *p;
++	int left_count = 0, right_count = 0, nr;
++	struct patch_id_ent *patches, **table;
++	int left_first, table_size;
++	struct diff_options opts;
++
++	/* First count the commits on the left and on the right */
++	for (p = list; p; p = p->next) {
++		struct commit *commit = p->item;
++		unsigned flags = commit->object.flags;
++		if (flags & BOUNDARY)
++			;
++		else if (flags & SYMMETRIC_LEFT)
++			left_count++;
++		else
++			right_count++;
++	}
++
++	left_first = left_count < right_count;
++	table_size = left_first ? left_count : right_count;
++
++	/* Allocate a look-up table to help matching up */
++	patches = xcalloc(table_size, sizeof(struct patch_id_ent));
++	table = xcalloc(table_size, sizeof(struct patch_id_ent *));
++	nr = 0;
++
++	diff_setup(&opts);
++	opts.recursive = 1;
++	if (diff_setup_done(&opts) < 0)
++		die("diff_setup_done failed");
++
++	/* Compute patch-ids for one side */
++	for (p = list; p; p = p->next) {
++		struct commit *commit = p->item;
++		unsigned flags = commit->object.flags;
++
++		if (flags & BOUNDARY)
++			continue;
++		/*
++		 * If we have fewer left, left_first is set and we omit
++		 * commits on the right branch in this loop.  If we have
++		 * fewer right, we skip the left ones.
++		 */
++		if (left_first != !!(flags & SYMMETRIC_LEFT))
++			continue;
++		if (get_patch_id(commit, &opts, patches[nr].patch_id))
++			continue;
++		/*
++		 * FIXME: this does not really work if the side
++		 * we are dealing with have two commits with the same
++		 * patch id, as we end up having two entries in the
++		 * patch table.
++		 */
++		table[nr] = &(patches[nr]);
++		commit->util = table[nr];
++		nr++;
++	}
++	qsort(table, nr, sizeof(table[0]), compare_patch_id);
++
++	/* Check the other side */
++	for (p = list; p; p = p->next) {
++		struct commit *commit = p->item;
++		unsigned flags = commit->object.flags;
++		struct patch_id_ent ent, *entp = &ent, **found;
++
++		if (flags & BOUNDARY)
++			continue;
++		/*
++		 * If we have fewer left, left_first is set and we omit
++		 * commits on the left branch in this loop.
++		 */
++		if (left_first == !!(flags & SYMMETRIC_LEFT))
++			continue;
++		if (get_patch_id(commit, &opts, ent.patch_id))
++			continue;
++		/*
++		 * Have we seen the same patch id?
++		 */
++		found = bsearch(&entp, table, nr, sizeof(table[0]),
++				compare_patch_id);
++		if (!found)
++			continue;
++		(*found)->seen = 1;
++		commit->object.flags |= SHOWN; /* exclude this from the output set */
++	}
++
++	/* Now check the original side for seen ones */
++	for (p = list; p; p = p->next) {
++		struct commit *commit = p->item;
++		struct patch_id_ent *ent;
++
++		ent = commit->util;
++		if (!ent)
++			continue;
++		if (ent->seen)
++			commit->object.flags |= SHOWN;
++		commit->util = NULL;
++	}
++
++	free(table);
++	free(patches);
++}
++
+ static void limit_list(struct rev_info *revs)
+ {
+ 	struct commit_list *list = revs->commits;
+@@ -449,6 +582,9 @@ static void limit_list(struct rev_info *revs)
+ 			continue;
+ 		p = &commit_list_insert(commit, p)->next;
+ 	}
++	if (revs->cherry_pick)
++		cherry_pick_list(newlist);
++
+ 	revs->commits = newlist;
+ }
+ 
+@@ -913,6 +1049,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 				revs->left_right = 1;
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--cherry-pick")) {
++				revs->cherry_pick = 1;
++				revs->left_right = 1;
++				continue;
++			}
+ 			if (!strcmp(arg, "--objects")) {
+ 				revs->tag_objects = 1;
+ 				revs->tree_objects = 1;
+diff --git a/revision.h b/revision.h
+index 55e6b53..b69624a 100644
+--- a/revision.h
++++ b/revision.h
+@@ -47,6 +47,7 @@ struct rev_info {
+ 			left_right:1,
+ 			parents:1,
+ 			reverse:1,
++			cherry_pick:1,
+ 			first_parent_only:1;
+ 
+ 	/* Diff flags */
