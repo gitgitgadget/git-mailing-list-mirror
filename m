@@ -1,166 +1,213 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 07/10] index-pack: learn about pack index version 2
-Date: Mon, 09 Apr 2007 01:06:34 -0400
-Message-ID: <117609520190-git-send-email-nico@cam.org>
+Subject: [PATCH 03/10] add overflow tests on pack offset variables
+Date: Mon, 09 Apr 2007 01:06:30 -0400
+Message-ID: <11760951993225-git-send-email-nico@cam.org>
 References: <11760951973172-git-send-email-nico@cam.org>
  <11760951973319-git-send-email-nico@cam.org>
  <11760951993458-git-send-email-nico@cam.org>
- <11760951993225-git-send-email-nico@cam.org>
- <11760951993409-git-send-email-nico@cam.org>
- <11760952002687-git-send-email-nico@cam.org>
- <11760952002410-git-send-email-nico@cam.org>
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:16 2007
+X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ham5w-00038I-Ao
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:12 +0200
+	id 1Ham5u-00038I-7z
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886AbXDIFG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 01:06:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbXDIFG4
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:06:56 -0400
+	id S1752879AbXDIFGu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 01:06:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752871AbXDIFGu
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:06:50 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:64601 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752897AbXDIFGo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 01:06:44 -0400
+	with ESMTP id S1752868AbXDIFGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 01:06:41 -0400
 Received: from localhost.localdomain ([74.56.106.175])
  by VL-MH-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
  with ESMTP id <0JG700EK9SV173A3@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 01:06:42 -0400 (EDT)
-In-reply-to: <11760952002410-git-send-email-nico@cam.org>
+ git@vger.kernel.org; Mon, 09 Apr 2007 01:06:39 -0400 (EDT)
+In-reply-to: <11760951993458-git-send-email-nico@cam.org>
 X-Mailer: git-send-email 1.5.1.31.ge421f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44036>
 
-Like previous patch but for index-pack.
+Change a few size and offset variables to more appropriate type, then
+add overflow tests on those offsets.  This prevents any bad data to be
+generated/processed if off_t happens to not be large enough to handle
+some big packs.
 
-[ There is quite some code duplication between pack-objects and index-pack
-  for generating a pack index (and fast-import as well I suppose).  This
-  should be reworked into a common function eventually. But not now. ]
+Better be safe than sorry.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- index-pack.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++--------
- 1 files changed, 57 insertions(+), 9 deletions(-)
+ builtin-pack-objects.c   |   19 +++++++++++++------
+ builtin-unpack-objects.c |   17 +++++++++++------
+ index-pack.c             |   14 ++++++++++----
+ 3 files changed, 34 insertions(+), 16 deletions(-)
 
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index ee607a0..d0be879 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -369,7 +369,7 @@ static int revalidate_loose_object(struct object_entry *entry,
+ 	return check_loose_inflate(map, mapsize, size);
+ }
+ 
+-static off_t write_object(struct sha1file *f,
++static unsigned long write_object(struct sha1file *f,
+ 				  struct object_entry *entry)
+ {
+ 	unsigned long size;
+@@ -503,16 +503,23 @@ static off_t write_one(struct sha1file *f,
+ 			       struct object_entry *e,
+ 			       off_t offset)
+ {
++	unsigned long size;
++
++	/* offset is non zero if object is written already. */
+ 	if (e->offset || e->preferred_base)
+-		/* offset starts from header size and cannot be zero
+-		 * if it is written already.
+-		 */
+ 		return offset;
+-	/* if we are deltified, write out its base object first. */
++
++	/* if we are deltified, write out base object first. */
+ 	if (e->delta)
+ 		offset = write_one(f, e->delta, offset);
++
+ 	e->offset = offset;
+-	return offset + write_object(f, e);
++	size = write_object(f, e);
++
++	/* make sure off_t is sufficiently large not to wrap */
++	if (offset > offset + size)
++		die("pack too large for current definition of off_t");
++	return offset + size;
+ }
+ 
+ static void write_pack_file(void)
+diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
+index 63f7db6..f821906 100644
+--- a/builtin-unpack-objects.c
++++ b/builtin-unpack-objects.c
+@@ -13,7 +13,8 @@ static const char unpack_usage[] = "git-unpack-objects [-n] [-q] [-r] < pack-fil
+ 
+ /* We always read in 4kB chunks. */
+ static unsigned char buffer[4096];
+-static unsigned long offset, len, consumed_bytes;
++static unsigned int offset, len;
++static off_t consumed_bytes;
+ static SHA_CTX ctx;
+ 
+ /*
+@@ -49,6 +50,10 @@ static void use(int bytes)
+ 		die("used more bytes than were available");
+ 	len -= bytes;
+ 	offset += bytes;
++
++	/* make sure off_t is sufficiently large not to wrap */
++	if (consumed_bytes > consumed_bytes + bytes)
++		die("pack too large for current definition of off_t");
+ 	consumed_bytes += bytes;
+ }
+ 
+@@ -88,17 +93,17 @@ static void *get_data(unsigned long size)
+ 
+ struct delta_info {
+ 	unsigned char base_sha1[20];
+-	unsigned long base_offset;
++	unsigned nr;
++	off_t base_offset;
+ 	unsigned long size;
+ 	void *delta;
+-	unsigned nr;
+ 	struct delta_info *next;
+ };
+ 
+ static struct delta_info *delta_list;
+ 
+ static void add_delta_to_list(unsigned nr, unsigned const char *base_sha1,
+-			      unsigned long base_offset,
++			      off_t base_offset,
+ 			      void *delta, unsigned long size)
+ {
+ 	struct delta_info *info = xmalloc(sizeof(*info));
+@@ -113,7 +118,7 @@ static void add_delta_to_list(unsigned nr, unsigned const char *base_sha1,
+ }
+ 
+ struct obj_info {
+-	unsigned long offset;
++	off_t offset;
+ 	unsigned char sha1[20];
+ };
+ 
+@@ -200,7 +205,7 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 	} else {
+ 		unsigned base_found = 0;
+ 		unsigned char *pack, c;
+-		unsigned long base_offset;
++		off_t base_offset;
+ 		unsigned lo, mid, hi;
+ 
+ 		pack = fill(1);
 diff --git a/index-pack.c b/index-pack.c
-index d33f723..a833f64 100644
+index 0e54aa6..66fb0bc 100644
 --- a/index-pack.c
 +++ b/index-pack.c
-@@ -686,9 +686,10 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
+@@ -12,7 +12,7 @@ static const char index_pack_usage[] =
+ 
+ struct object_entry
  {
- 	struct sha1file *f;
- 	struct object_entry **sorted_by_sha, **list, **last;
--	unsigned int array[256];
-+	uint32_t array[256];
- 	int i, fd;
- 	SHA_CTX ctx;
-+	uint32_t index_version;
+-	unsigned long offset;
++	off_t offset;
+ 	unsigned long size;
+ 	unsigned int hdr_size;
+ 	enum object_type type;
+@@ -22,7 +22,7 @@ struct object_entry
  
- 	if (nr_objects) {
- 		sorted_by_sha =
-@@ -699,7 +700,6 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
- 			sorted_by_sha[i] = &objects[i];
- 		qsort(sorted_by_sha, nr_objects, sizeof(sorted_by_sha[0]),
- 		      sha1_compare);
--
- 	}
- 	else
- 		sorted_by_sha = list = last = NULL;
-@@ -718,6 +718,17 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
- 		die("unable to create %s: %s", index_name, strerror(errno));
- 	f = sha1fd(fd, index_name);
+ union delta_base {
+ 	unsigned char sha1[20];
+-	unsigned long offset;
++	off_t offset;
+ };
  
-+	/* if last object's offset is >= 2^31 we should use index V2 */
-+	index_version = (objects[nr_objects-1].offset >> 31) ? 2 : 1;
-+
-+	/* index versions 2 and above need a header */
-+	if (index_version >= 2) {
-+		struct pack_idx_header hdr;
-+		hdr.idx_signature = htonl(PACK_IDX_SIGNATURE);
-+		hdr.idx_version = htonl(index_version);
-+		sha1write(f, &hdr, sizeof(hdr));
-+	}
-+
- 	/*
- 	 * Write the first-level table (the list is sorted,
- 	 * but we use a 256-entry lookup to be able to avoid
-@@ -734,24 +745,61 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
- 		array[i] = htonl(next - sorted_by_sha);
- 		list = next;
- 	}
--	sha1write(f, array, 256 * sizeof(int));
-+	sha1write(f, array, 256 * 4);
+ /*
+@@ -83,7 +83,8 @@ static unsigned display_progress(unsigned n, unsigned total, unsigned last_pc)
  
--	/* recompute the SHA1 hash of sorted object names.
--	 * currently pack-objects does not do this, but that
--	 * can be fixed.
--	 */
-+	/* compute the SHA1 hash of sorted object names. */
- 	SHA1_Init(&ctx);
+ /* We always read in 4kB chunks. */
+ static unsigned char input_buffer[4096];
+-static unsigned long input_offset, input_len, consumed_bytes;
++static unsigned int input_offset, input_len;
++static off_t consumed_bytes;
+ static SHA_CTX input_ctx;
+ static int input_fd, output_fd, pack_fd;
+ 
+@@ -129,6 +130,10 @@ static void use(int bytes)
+ 		die("used more bytes than were available");
+ 	input_len -= bytes;
+ 	input_offset += bytes;
 +
- 	/*
- 	 * Write the actual SHA1 entries..
- 	 */
- 	list = sorted_by_sha;
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = *list++;
--		unsigned int offset = htonl(obj->offset);
--		sha1write(f, &offset, 4);
-+		if (index_version < 2) {
-+			uint32_t offset = htonl(obj->offset);
-+			sha1write(f, &offset, 4);
-+		}
- 		sha1write(f, obj->sha1, 20);
- 		SHA1_Update(&ctx, obj->sha1, 20);
- 	}
-+
-+	if (index_version >= 2) {
-+		unsigned int nr_large_offset = 0;
-+
-+		/* write the crc32 table */
-+		list = sorted_by_sha;
-+		for (i = 0; i < nr_objects; i++) {
-+			struct object_entry *obj = *list++;
-+			uint32_t crc32_val = htonl(obj->crc32);
-+			sha1write(f, &crc32_val, 4);
-+		}
-+
-+		/* write the 32-bit offset table */
-+		list = sorted_by_sha;
-+		for (i = 0; i < nr_objects; i++) {
-+			struct object_entry *obj = *list++;
-+			uint32_t offset = (obj->offset <= 0x7fffffff) ?
-+				obj->offset : (0x80000000 | nr_large_offset++);
-+			offset = htonl(offset);
-+			sha1write(f, &offset, 4);
-+		}
-+
-+		/* write the large offset table */
-+		list = sorted_by_sha;
-+		while (nr_large_offset) {
-+			struct object_entry *obj = *list++;
-+			uint64_t offset = obj->offset;
-+			if (offset > 0x7fffffff) {
-+				uint32_t split[2];
-+				split[0]	= htonl(offset >> 32);
-+				split[1] = htonl(offset & 0xffffffff);
-+				sha1write(f, split, 8);
-+				nr_large_offset--;
-+			}
-+		}
-+	}
-+
- 	sha1write(f, sha1, 20);
- 	sha1close(f, NULL, 1);
- 	free(sorted_by_sha);
++	/* make sure off_t is sufficiently large not to wrap */
++	if (consumed_bytes > consumed_bytes + bytes)
++		die("pack too large for current definition of off_t");
+ 	consumed_bytes += bytes;
+ }
+ 
+@@ -216,7 +221,8 @@ static void *unpack_entry_data(unsigned long offset, unsigned long size)
+ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_base)
+ {
+ 	unsigned char *p, c;
+-	unsigned long size, base_offset;
++	unsigned long size;
++	off_t base_offset;
+ 	unsigned shift;
+ 
+ 	obj->offset = consumed_bytes;
 -- 
 1.5.1.696.g6d352-dirty
