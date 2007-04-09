@@ -1,61 +1,63 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 5/8] get-repack --max-pack-size: write_object() takes 'limit' arg
-Date: Mon, 09 Apr 2007 13:09:44 -0700
-Message-ID: <7v3b39z4vr.fsf@assigned-by-dhcp.cox.net>
-References: <46197994.70009@gmail.com>
-	<alpine.LFD.0.98.0704082034060.28181@xanadu.home>
-	<56b7f5510704091151l70cc74b1la82e0c5a67d6885f@mail.gmail.com>
-	<alpine.LFD.0.98.0704091455100.28181@xanadu.home>
-	<56b7f5510704091220w69529e72n2f982c097c4e26a0@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: support for large packs and 64-bit offsets
+Date: Mon, 9 Apr 2007 14:34:12 -0400
+Message-ID: <20070409183412.GY5436@spearce.org>
+References: <11760951973172-git-send-email-nico@cam.org> <20070409171925.GS5436@spearce.org> <Pine.LNX.4.64.0704091059240.6730@woody.linux-foundation.org> <alpine.LFD.0.98.0704091417490.28181@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Nicolas Pitre" <nico@cam.org>, "Junio C Hamano" <junkio@cox.net>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Dana How" <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 00:15:59 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 00:19:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hb0Bi-0004WM-40
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 22:10:06 +0200
+	id 1HayhB-0005fn-Vt
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:34:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965461AbXDIUJq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 16:09:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965485AbXDIUJq
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 16:09:46 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:57373 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965461AbXDIUJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 16:09:45 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070409200944.UULG373.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 9 Apr 2007 16:09:44 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id l89k1W00Z1kojtg0000000; Mon, 09 Apr 2007 16:09:45 -0400
-In-Reply-To: <56b7f5510704091220w69529e72n2f982c097c4e26a0@mail.gmail.com>
-	(Dana How's message of "Mon, 9 Apr 2007 12:20:26 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753349AbXDISe0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 14:34:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752261AbXDISe0
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:34:26 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:40819 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752097AbXDISe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 14:34:26 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1Haygo-0002ku-HO; Mon, 09 Apr 2007 14:34:06 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 39A9C20FBAE; Mon,  9 Apr 2007 14:34:12 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.98.0704091417490.28181@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44070>
 
-"Dana How" <danahow@gmail.com> writes:
+Nicolas Pitre <nico@cam.org> wrote:
+> Once Junio merges the series in a branch of its own, we could have a 
+> separate patch not in that branch that simply forces those features on 
+> in branch 'next'.  People would only need to remenber not publishing 
+> repos with that version using dumb protocols.
 
-> For testing, I've been using git-fsck/git-verify-pack/git-unpack-objects .
+Better to force features by config file option or command line
+option, then by code hacked into a branch.  This way we can enable
+the feature all of the time in a test case, and push it.  E.g. the
+sliding window controls; nobody really uses them in practice (I
+don't think anyway) but they are handy in the test cases to force
+particular conditions, without creating huge temporary packfiles.
 
-Among the above, verify-pack does not do much more than what the
-normal object reading path does already these days.  Also
-unpack-objects (especially with -n) omits a lot of object
-integrity checks, and not very appropriate test.
-
-We have some tests for packfiles in t/ (make test) but I would
-not be surprised if we do not have enough.  Most of the existing
-tests are done on loose objects the tests themselves produce
-without repacking, because their focus is not about packs and
-they test whatever they are interested in, assuming that the
-lowest level object layer is correctly functioning.
+-- 
+Shawn.
