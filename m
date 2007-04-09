@@ -1,76 +1,73 @@
-From: Geert Bosch <bosch@adacore.com>
-Subject: =?ISO-8859-1?Q?gitweb/test/M=E4rchen_has_an_identity_crisis?=
-Date: Mon, 9 Apr 2007 15:13:49 -0400
-Message-ID: <FBFBF002-4887-4216-9CF0-42407E93045C@adacore.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 01:16:26 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: support for large packs and 64-bit offsets
+Date: Mon, 09 Apr 2007 16:02:37 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704091601470.28181@xanadu.home>
+References: <11760951973172-git-send-email-nico@cam.org>
+ <20070409171925.GS5436@spearce.org>
+ <alpine.LFD.0.98.0704091328130.28181@xanadu.home>
+ <20070409174305.GU5436@spearce.org> <7vtzvpz5tu.fsf@assigned-by-dhcp.cox.net>
+ <20070409195322.GB5436@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 01:23:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HazJL-0003bC-P4
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 21:13:56 +0200
+	id 1Hb04f-0003L5-IB
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 22:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753294AbXDITNw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Apr 2007 15:13:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753418AbXDITNw
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 15:13:52 -0400
-Received: from nile.gnat.com ([205.232.38.5]:61923 "EHLO nile.gnat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753294AbXDITNv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 15:13:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by filtered-nile.gnat.com (Postfix) with ESMTP id 6EC5748CBEB
-	for <git@vger.kernel.org>; Mon,  9 Apr 2007 15:13:50 -0400 (EDT)
-Received: from nile.gnat.com ([127.0.0.1])
- by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
- id 04135-01-7 for <git@vger.kernel.org>;
- Mon,  9 Apr 2007 15:13:50 -0400 (EDT)
-Received: from [205.232.38.124] (potomac.gnat.com [205.232.38.124])
-	by nile.gnat.com (Postfix) with ESMTP id 3956148CBC0
-	for <git@vger.kernel.org>; Mon,  9 Apr 2007 15:13:50 -0400 (EDT)
-X-Mailer: Apple Mail (2.752.3)
+	id S965312AbXDIUCj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 16:02:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965345AbXDIUCj
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 16:02:39 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:17321 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965312AbXDIUCi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 16:02:38 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JG8008G5YCDYKQ0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 09 Apr 2007 16:02:37 -0400 (EDT)
+In-reply-to: <20070409195322.GB5436@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44079>
 
-In the git repository, after git checkout -f:
-potomac:~/git%git status
-# On branch master
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-=2E..
-#       gitweb/test/M=E4rchen
+On Mon, 9 Apr 2007, Shawn O. Pearce wrote:
 
-potomac:~/git%rm gitweb/test/Ma\314\210rchen
-potomac:~/git%git status
-# On branch master
-# Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
-#
-#       deleted:    gitweb/test/M=E4rchen
+> Junio C Hamano <junkio@cox.net> wrote:
+> > "Shawn O. Pearce" <spearce@spearce.org> writes:
+> > 
+> > > Nicolas Pitre <nico@cam.org> wrote:
+> > > ...
+> > > Here's something we didn't think about, but that occurred to me today
+> > > when reading this series: If we move the SHA-1 table out of the index
+> > > and into the packfile (like we are planning) dumb commit-walkers
+> > > (http-fetch) will have problems.  Right now they download the
+> > > indexes of every available packfile to determine if they need to
+> > > download the corresponding packfile to obtain a needed object.
+> > 
+> > If we really care about older dumb clients, one option is to
+> > generate not .idx but .idx2, and have a corresponding .idx only
+> > to support them.  But at that point, it's probably cleaner to
+> > have an explicit option to produce .idx file of a particular
+> > version, and tell people to pack public repositories they expect
+> > older dumb clients to access with that option to keep things
+> > backward compatible.
+> 
+> Sure, fine.  But I think you missed my point above - right now if
+> we move the SHA-1 table out of the .idx file I'm not sure we know
+> how to support the dumb clients *at all*.  Even if they understand
+> the latest-and-greatest file formats...
 
-Aaaarghh!! There seems something inconsistent in the encoding
-of the =E4 letter that confuses git on my Mac OS X system.
-My environment has LANG=3Den_US.UTF-8 set, in case that matters.
+The table could live in both the pack and the index for those repos 
+expected to be exportable through dumb protocols.
 
-=46ilename completion results in Ma\314\210rchen, but the index
-encodes it as M\303\244rchen:
-0107272   g   i   t   w   e   b   /   t   e   s   t   /   M   ?   ?   r
-         147 151 164 167 145 142 057 164 145 163 164 057 115 303 244 16=
-2
 
-The filesystem seems to be fine with either:
-potomac:~/git%ls -l gitweb/test/Ma\314\210rchen gitweb/test/M\303=20
-\244rchen
--rw-r--r-- 1 bosch staff 17 2007-04-09 14:51 gitweb/test/M=E4rchen
--rw-r--r-- 1 bosch staff 17 2007-04-09 14:51 gitweb/test/M=E4rchen
-
-Anybody has insights in what causes this? Thanks in advance!
-
-   -Geert
+Nicolas
