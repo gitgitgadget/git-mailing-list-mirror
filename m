@@ -1,198 +1,216 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 06/10] pack-objects: learn about pack index version 2
-Date: Mon, 09 Apr 2007 01:06:33 -0400
-Message-ID: <11760952002410-git-send-email-nico@cam.org>
+Subject: [PATCH 01/10] get rid of num_packed_objects()
+Date: Mon, 09 Apr 2007 01:06:28 -0400
+Message-ID: <11760951973319-git-send-email-nico@cam.org>
 References: <11760951973172-git-send-email-nico@cam.org>
- <11760951973319-git-send-email-nico@cam.org>
- <11760951993458-git-send-email-nico@cam.org>
- <11760951993225-git-send-email-nico@cam.org>
- <11760951993409-git-send-email-nico@cam.org>
- <11760952002687-git-send-email-nico@cam.org>
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:13 2007
+X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ham5w-00038I-Rd
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:13 +0200
+	id 1Ham5t-00038I-Hg
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752921AbXDIFG6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 01:06:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752900AbXDIFG6
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:06:58 -0400
+	id S1752864AbXDIFGt (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 01:06:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752871AbXDIFGl
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:06:41 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:64601 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752887AbXDIFGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 01:06:43 -0400
+	with ESMTP id S1752864AbXDIFGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 01:06:39 -0400
 Received: from localhost.localdomain ([74.56.106.175])
  by VL-MH-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
  with ESMTP id <0JG700EK9SV173A3@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 01:06:41 -0400 (EDT)
-In-reply-to: <11760952002687-git-send-email-nico@cam.org>
+ git@vger.kernel.org; Mon, 09 Apr 2007 01:06:39 -0400 (EDT)
+In-reply-to: <11760951973172-git-send-email-nico@cam.org>
 X-Mailer: git-send-email 1.5.1.31.ge421f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44033>
 
-Pack index version 2 goes as follows:
+The coming index format change doesn't allow for the number of objects
+to be determined from the size of the index file directly.  Instead, Let's
+initialize a field in the packed_git structure with the object count when
+the index is validated since the count is always known at that point.
 
- - 8 bytes of header with signature and version.
-
- - 256 entries of 4-byte first-level fan-out table.
-
- - Table of sorted 20-byte SHA1 records for each object in pack.
-
- - Table of 4-byte CRC32 entries for raw pack object data.
-
- - Table of 4-byte offset entries for objects in the pack if offset is
-   representable with 31 bits or less, otherwise it is an index in the next
-   table with top bit set.
-
- - Table of 8-byte offset entries indexed from previous table for offsets
-   which are 32 bits or more (optional).
-
- - 20-byte SHA1 checksum of sorted object names.
-
- - 20-byte SHA1 checksum of the above.
-
-The object SHA1 table is all contiguous so future pack format that would
-contain this table directly won't require big changes to the code. It is
-also tighter for slightly better cache locality when looking up entries.
-
-Support for large packs exceeding 31 bits in size won't impose an index
-size bloat for packs within that range that don't need a 64-bit offset.
-And because newer objects which are likely to be the most frequently used
-are located at the beginning of the pack, they won't pay the 64-bit offset
-lookup at run time either even if the pack is large.
-
-Right now an index version 2 is created only when the biggest offset in a
-pack reaches 31 bits.  It might be a good idea to always use index version
-2 eventually to benefit from the CRC32 it contains when reusing pack data
-while repacking.
+While at it let's reorder some struct packed_git fields to avoid padding
+due to needed 64-bit alignment for some of them.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-pack-objects.c |   85 ++++++++++++++++++++++++++++++++++++++++++++----
- 1 files changed, 78 insertions(+), 7 deletions(-)
+ builtin-count-objects.c |    2 +-
+ builtin-fsck.c          |    2 +-
+ builtin-pack-objects.c  |    4 ++--
+ cache.h                 |    8 ++++----
+ pack-check.c            |    4 ++--
+ sha1_file.c             |   17 ++++++-----------
+ sha1_name.c             |    2 +-
+ 7 files changed, 17 insertions(+), 22 deletions(-)
 
+diff --git a/builtin-count-objects.c b/builtin-count-objects.c
+index 6263d8a..ff90ebd 100644
+--- a/builtin-count-objects.c
++++ b/builtin-count-objects.c
+@@ -111,7 +111,7 @@ int cmd_count_objects(int ac, const char **av, const char *prefix)
+ 		for (p = packed_git; p; p = p->next) {
+ 			if (!p->pack_local)
+ 				continue;
+-			packed += num_packed_objects(p);
++			packed += p->num_objects;
+ 			num_pack++;
+ 		}
+ 		printf("count: %lu\n", loose);
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 4d8b66c..44a02d3 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -653,7 +653,7 @@ int cmd_fsck(int argc, char **argv, const char *prefix)
+ 			verify_pack(p, 0);
+ 
+ 		for (p = packed_git; p; p = p->next) {
+-			uint32_t i, num = num_packed_objects(p);
++			uint32_t i, num = p->num_objects;
+ 			for (i = 0; i < num; i++)
+ 				fsck_sha1(nth_packed_object_sha1(p, i));
+ 		}
 diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 03e36f0..c7e0a42 100644
+index 45ac3e4..6bff17b 100644
 --- a/builtin-pack-objects.c
 +++ b/builtin-pack-objects.c
-@@ -169,13 +169,33 @@ static void prepare_pack_revindex(struct pack_revindex *rix)
+@@ -164,7 +164,7 @@ static int cmp_offset(const void *a_, const void *b_)
+ static void prepare_pack_revindex(struct pack_revindex *rix)
+ {
+ 	struct packed_git *p = rix->p;
+-	int num_ent = num_packed_objects(p);
++	int num_ent = p->num_objects;
  	int i;
  	const char *index = p->index_data;
  
--	index += 4 * 256;
- 	rix->revindex = xmalloc(sizeof(*rix->revindex) * (num_ent + 1));
--	for (i = 0; i < num_ent; i++) {
--		uint32_t hl = *((uint32_t *)(index + 24 * i));
--		rix->revindex[i].offset = ntohl(hl);
--		rix->revindex[i].nr = i;
-+	index += 4 * 256;
-+
-+	if (p->index_version > 1) {
-+		const uint32_t *off_32 =
-+			(uint32_t *)(index + 8 + p->num_objects * (20 + 4));
-+		const uint32_t *off_64 = off_32 + p->num_objects;
-+		for (i = 0; i < num_ent; i++) {
-+			uint32_t off = ntohl(*off_32++);
-+			if (!(off & 0x80000000)) {
-+				rix->revindex[i].offset = off;
-+			} else {
-+				rix->revindex[i].offset =
-+					((uint64_t)ntohl(*off_64++)) << 32;
-+				rix->revindex[i].offset |=
-+					ntohl(*off_64++);
-+			}
-+			rix->revindex[i].nr = i;
-+		}
-+	} else {
-+		for (i = 0; i < num_ent; i++) {
-+			uint32_t hl = *((uint32_t *)(index + 24 * i));
-+			rix->revindex[i].offset = ntohl(hl);
-+			rix->revindex[i].nr = i;
-+		}
- 	}
-+
- 	/* This knows the pack format -- the 20-byte trailer
- 	 * follows immediately after the last object data.
+@@ -198,7 +198,7 @@ static struct revindex_entry * find_packed_object(struct packed_git *p,
+ 		prepare_pack_revindex(rix);
+ 	revindex = rix->revindex;
+ 	lo = 0;
+-	hi = num_packed_objects(p) + 1;
++	hi = p->num_objects + 1;
+ 	do {
+ 		int mi = (lo + hi) / 2;
+ 		if (revindex[mi].offset == ofs) {
+diff --git a/cache.h b/cache.h
+index c15daa8..73d8e63 100644
+--- a/cache.h
++++ b/cache.h
+@@ -378,11 +378,12 @@ struct pack_window {
+ extern struct packed_git {
+ 	struct packed_git *next;
+ 	struct pack_window *windows;
+-	const void *index_data;
+-	off_t index_size;
+ 	off_t pack_size;
+-	time_t mtime;
++	const void *index_data;
++	size_t index_size;
++	uint32_t num_objects;
+ 	int index_version;
++	time_t mtime;
+ 	int pack_fd;
+ 	int pack_local;
+ 	unsigned char sha1[20];
+@@ -433,7 +434,6 @@ extern void pack_report(void);
+ extern unsigned char* use_pack(struct packed_git *, struct pack_window **, off_t, unsigned int *);
+ extern void unuse_pack(struct pack_window **);
+ extern struct packed_git *add_packed_git(const char *, int, int);
+-extern uint32_t num_packed_objects(const struct packed_git *p);
+ extern const unsigned char *nth_packed_object_sha1(const struct packed_git *, uint32_t);
+ extern off_t find_pack_entry_one(const unsigned char *, struct packed_git *);
+ extern void *unpack_entry(struct packed_git *, off_t, enum object_type *, unsigned long *);
+diff --git a/pack-check.c b/pack-check.c
+index f58083d..d04536b 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -40,7 +40,7 @@ static int verify_packfile(struct packed_git *p,
+ 	 * have verified that nr_objects matches between idx and pack,
+ 	 * we do not do scan-streaming check on the pack file.
  	 */
-@@ -582,6 +602,18 @@ static void write_index_file(void)
- 	struct object_entry **list = sorted_by_sha;
- 	struct object_entry **last = list + nr_result;
- 	uint32_t array[256];
-+	uint32_t index_version;
-+
-+	/* if last object's offset is >= 2^31 we should use index V2 */
-+	index_version = (objects[nr_result-1].offset >> 31) ? 2 : 1;
-+
-+	/* index versions 2 and above need a header */
-+	if (index_version >= 2) {
-+		struct pack_idx_header hdr;
-+		hdr.idx_signature = htonl(PACK_IDX_SIGNATURE);
-+		hdr.idx_version = htonl(index_version);
-+		sha1write(f, &hdr, sizeof(hdr));
-+	}
+-	nr_objects = num_packed_objects(p);
++	nr_objects = p->num_objects;
+ 	for (i = 0, err = 0; i < nr_objects; i++) {
+ 		const unsigned char *sha1;
+ 		void *data;
+@@ -79,7 +79,7 @@ static void show_pack_info(struct packed_git *p)
+ {
+ 	uint32_t nr_objects, i, chain_histogram[MAX_CHAIN];
  
- 	/*
- 	 * Write the first-level table (the list is sorted,
-@@ -607,10 +639,49 @@ static void write_index_file(void)
- 	list = sorted_by_sha;
- 	for (i = 0; i < nr_result; i++) {
- 		struct object_entry *entry = *list++;
--		uint32_t offset = htonl(entry->offset);
--		sha1write(f, &offset, 4);
-+		if (index_version < 2) {
-+			uint32_t offset = htonl(entry->offset);
-+			sha1write(f, &offset, 4);
-+		}
- 		sha1write(f, entry->sha1, 20);
- 	}
-+
-+	if (index_version >= 2) {
-+		unsigned int nr_large_offset = 0;
-+
-+		/* write the crc32 table */
-+		list = sorted_by_sha;
-+		for (i = 0; i < nr_objects; i++) {
-+			struct object_entry *entry = *list++;
-+			uint32_t crc32_val = htonl(entry->crc32);
-+			sha1write(f, &crc32_val, 4);
-+		}
-+
-+		/* write the 32-bit offset table */
-+		list = sorted_by_sha;
-+		for (i = 0; i < nr_objects; i++) {
-+			struct object_entry *entry = *list++;
-+			uint32_t offset = (entry->offset <= 0x7fffffff) ?
-+				entry->offset : (0x80000000 | nr_large_offset++);
-+			offset = htonl(offset);
-+			sha1write(f, &offset, 4);
-+		}
-+
-+		/* write the large offset table */
-+		list = sorted_by_sha;
-+		while (nr_large_offset) {
-+			struct object_entry *entry = *list++;
-+			uint64_t offset = entry->offset;
-+			if (offset > 0x7fffffff) {
-+				uint32_t split[2];
-+				split[0]        = htonl(offset >> 32);
-+				split[1] = htonl(offset & 0xffffffff);
-+				sha1write(f, split, 8);
-+				nr_large_offset--;
-+			}
-+		}
-+	}
-+
- 	sha1write(f, pack_file_sha1, 20);
- 	sha1close(f, NULL, 1);
+-	nr_objects = num_packed_objects(p);
++	nr_objects = p->num_objects;
+ 	memset(chain_histogram, 0, sizeof(chain_histogram));
+ 
+ 	for (i = 0; i < nr_objects; i++) {
+diff --git a/sha1_file.c b/sha1_file.c
+index 4304fe9..d9ca69a 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -494,6 +494,7 @@ static int check_packed_git_idx(const char *path,  struct packed_git *p)
+ 	p->index_version = 1;
+ 	p->index_data = idx_map;
+ 	p->index_size = idx_size;
++	p->num_objects = nr;
+ 	return 0;
  }
+ 
+@@ -605,11 +606,11 @@ static int open_packed_git_1(struct packed_git *p)
+ 			p->pack_name, ntohl(hdr.hdr_version));
+ 
+ 	/* Verify the pack matches its index. */
+-	if (num_packed_objects(p) != ntohl(hdr.hdr_entries))
++	if (p->num_objects != ntohl(hdr.hdr_entries))
+ 		return error("packfile %s claims to have %u objects"
+-			" while index size indicates %u objects",
+-			p->pack_name, ntohl(hdr.hdr_entries),
+-			num_packed_objects(p));
++			     " while index indicates %u objects",
++			     p->pack_name, ntohl(hdr.hdr_entries),
++			     p->num_objects);
+ 	if (lseek(p->pack_fd, p->pack_size - sizeof(sha1), SEEK_SET) == -1)
+ 		return error("end of packfile %s is unavailable", p->pack_name);
+ 	if (read_in_full(p->pack_fd, sha1, sizeof(sha1)) != sizeof(sha1))
+@@ -1526,18 +1527,12 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
+ 	return data;
+ }
+ 
+-uint32_t num_packed_objects(const struct packed_git *p)
+-{
+-	/* See check_packed_git_idx() */
+-	return (uint32_t)((p->index_size - 20 - 20 - 4*256) / 24);
+-}
+-
+ const unsigned char *nth_packed_object_sha1(const struct packed_git *p,
+ 					    uint32_t n)
+ {
+ 	const unsigned char *index = p->index_data;
+ 	index += 4 * 256;
+-	if (num_packed_objects(p) <= n)
++	if (n >= p->num_objects)
+ 		return NULL;
+ 	return index + 24 * n + 4;
+ }
+diff --git a/sha1_name.c b/sha1_name.c
+index 267ea3f..b0b12bb 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -76,7 +76,7 @@ static int find_short_packed_object(int len, const unsigned char *match, unsigne
+ 
+ 	prepare_packed_git();
+ 	for (p = packed_git; p && found < 2; p = p->next) {
+-		uint32_t num = num_packed_objects(p);
++		uint32_t num = p->num_objects;
+ 		uint32_t first = 0, last = num;
+ 		while (first < last) {
+ 			uint32_t mid = (first + last) / 2;
 -- 
 1.5.1.696.g6d352-dirty
