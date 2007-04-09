@@ -1,128 +1,128 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 02/10] make overflow test on delta base offset work regardless
- of variable size
-Date: Mon, 09 Apr 2007 01:06:29 -0400
-Message-ID: <11760951993458-git-send-email-nico@cam.org>
+Subject: [PATCH 05/10] compute object CRC32 with index-pack
+Date: Mon, 09 Apr 2007 01:06:32 -0400
+Message-ID: <11760952002687-git-send-email-nico@cam.org>
 References: <11760951973172-git-send-email-nico@cam.org>
  <11760951973319-git-send-email-nico@cam.org>
+ <11760951993458-git-send-email-nico@cam.org>
+ <11760951993225-git-send-email-nico@cam.org>
+ <11760951993409-git-send-email-nico@cam.org>
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:16 2007
+X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ham5u-00038I-On
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:11 +0200
+	id 1Ham5v-00038I-QG
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752875AbXDIFGw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 01:06:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752868AbXDIFGv
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:06:51 -0400
+	id S1752920AbXDIFGz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 01:06:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752868AbXDIFGz
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:06:55 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:64601 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752858AbXDIFGk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 01:06:40 -0400
+	with ESMTP id S1752885AbXDIFGn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 01:06:43 -0400
 Received: from localhost.localdomain ([74.56.106.175])
  by VL-MH-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
  with ESMTP id <0JG700EK9SV173A3@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 01:06:39 -0400 (EDT)
-In-reply-to: <11760951973319-git-send-email-nico@cam.org>
+ git@vger.kernel.org; Mon, 09 Apr 2007 01:06:40 -0400 (EDT)
+In-reply-to: <11760951993409-git-send-email-nico@cam.org>
 X-Mailer: git-send-email 1.5.1.31.ge421f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44038>
 
-This patch introduces the MSB() macro to obtain the desired number of
-most significant bits from a given variable independently of the variable
-type.
-
-It is then used to better implement the overflow test on the OBJ_OFS_DELTA
-base offset variable with the property of always working correctly
-regardless of the type/size of that variable.
+Same as previous patch but for index-pack.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-pack-objects.c   |    2 +-
- builtin-unpack-objects.c |    2 +-
- git-compat-util.h        |    8 ++++++++
- index-pack.c             |    2 +-
- sha1_file.c              |    2 +-
- 5 files changed, 12 insertions(+), 4 deletions(-)
+ index-pack.c |   16 +++++++++++++---
+ 1 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 6bff17b..ee607a0 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -1014,7 +1014,7 @@ static void check_object(struct object_entry *entry)
- 				ofs = c & 127;
- 				while (c & 128) {
- 					ofs += 1;
--					if (!ofs || ofs & ~(~0UL >> 7))
-+					if (!ofs || MSB(ofs, 7))
- 						die("delta base offset overflow in pack for %s",
- 						    sha1_to_hex(entry->sha1));
- 					c = buf[used_0++];
-diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-index 3956c56..63f7db6 100644
---- a/builtin-unpack-objects.c
-+++ b/builtin-unpack-objects.c
-@@ -209,7 +209,7 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- 		base_offset = c & 127;
- 		while (c & 128) {
- 			base_offset += 1;
--			if (!base_offset || base_offset & ~(~0UL >> 7))
-+			if (!base_offset || MSB(base_offset, 7))
- 				die("offset value overflow for delta base object");
- 			pack = fill(1);
- 			c = *pack;
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 139fc19..bcfcb35 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -13,6 +13,14 @@
- 
- #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
- 
-+#ifdef __GNUC__
-+#define TYPEOF(x) (__typeof__(x))
-+#else
-+#define TYPEOF(x)
-+#endif
-+
-+#define MSB(x, bits) ((x) & TYPEOF(x)(~0ULL << (sizeof(x) * 8 - (bits))))
-+
- #if !defined(__APPLE__) && !defined(__FreeBSD__)
- #define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
 diff --git a/index-pack.c b/index-pack.c
-index 3c768fb..0e54aa6 100644
+index 66fb0bc..d33f723 100644
 --- a/index-pack.c
 +++ b/index-pack.c
-@@ -249,7 +249,7 @@ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_
- 		base_offset = c & 127;
- 		while (c & 128) {
- 			base_offset += 1;
--			if (!base_offset || base_offset & ~(~0UL >> 7))
-+			if (!base_offset || MSB(base_offset, 7))
- 				bad_object(obj->offset, "offset value overflow for delta base object");
- 			p = fill(1);
- 			c = *p;
-diff --git a/sha1_file.c b/sha1_file.c
-index d9ca69a..ebdd497 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1150,7 +1150,7 @@ static off_t get_delta_base(struct packed_git *p,
- 		base_offset = c & 127;
- 		while (c & 128) {
- 			base_offset += 1;
--			if (!base_offset || base_offset & ~(~0UL >> 7))
-+			if (!base_offset || MSB(base_offset, 7))
- 				die("offset value overflow for delta base object");
- 			c = base_info[used++];
- 			base_offset = (base_offset << 7) + (c & 127);
+@@ -15,6 +15,7 @@ struct object_entry
+ 	off_t offset;
+ 	unsigned long size;
+ 	unsigned int hdr_size;
++	uint32_t crc32;
+ 	enum object_type type;
+ 	enum object_type real_type;
+ 	unsigned char sha1[20];
+@@ -86,6 +87,7 @@ static unsigned char input_buffer[4096];
+ static unsigned int input_offset, input_len;
+ static off_t consumed_bytes;
+ static SHA_CTX input_ctx;
++static uint32_t input_crc32;
+ static int input_fd, output_fd, pack_fd;
+ 
+ /* Discard current buffer used content. */
+@@ -128,6 +130,7 @@ static void use(int bytes)
+ {
+ 	if (bytes > input_len)
+ 		die("used more bytes than were available");
++	input_crc32 = crc32(input_crc32, input_buffer + input_offset, bytes);
+ 	input_len -= bytes;
+ 	input_offset += bytes;
+ 
+@@ -224,8 +227,10 @@ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_
+ 	unsigned long size;
+ 	off_t base_offset;
+ 	unsigned shift;
++	void *data;
+ 
+ 	obj->offset = consumed_bytes;
++	input_crc32 = crc32(0, Z_NULL, 0);
+ 
+ 	p = fill(1);
+ 	c = *p;
+@@ -276,7 +281,9 @@ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_
+ 	}
+ 	obj->hdr_size = consumed_bytes - obj->offset;
+ 
+-	return unpack_entry_data(obj->offset, obj->size);
++	data = unpack_entry_data(obj->offset, obj->size);
++	obj->crc32 = input_crc32;
++	return data;
+ }
+ 
+ static void *get_data_from_pack(struct object_entry *obj)
+@@ -521,7 +528,7 @@ static void parse_pack_objects(unsigned char *sha1)
+ 		fputc('\n', stderr);
+ }
+ 
+-static int write_compressed(int fd, void *in, unsigned int size)
++static int write_compressed(int fd, void *in, unsigned int size, uint32_t *obj_crc)
+ {
+ 	z_stream stream;
+ 	unsigned long maxsize;
+@@ -542,6 +549,7 @@ static int write_compressed(int fd, void *in, unsigned int size)
+ 
+ 	size = stream.total_out;
+ 	write_or_die(fd, out, size);
++	*obj_crc = crc32(*obj_crc, out, size);
+ 	free(out);
+ 	return size;
+ }
+@@ -562,8 +570,10 @@ static void append_obj_to_pack(const unsigned char *sha1, void *buf,
+ 	}
+ 	header[n++] = c;
+ 	write_or_die(output_fd, header, n);
++	obj[0].crc32 = crc32(0, Z_NULL, 0);
++	obj[0].crc32 = crc32(obj[0].crc32, header, n);
+ 	obj[1].offset = obj[0].offset + n;
+-	obj[1].offset += write_compressed(output_fd, buf, size);
++	obj[1].offset += write_compressed(output_fd, buf, size, &obj[0].crc32);
+ 	hashcpy(obj->sha1, sha1);
+ }
+ 
 -- 
 1.5.1.696.g6d352-dirty
