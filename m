@@ -1,7 +1,7 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 10/10] pack-redundant.c: learn about index v2
-Date: Mon, 09 Apr 2007 01:06:37 -0400
-Message-ID: <11760952033684-git-send-email-nico@cam.org>
+Subject: [PATCH 07/10] index-pack: learn about pack index version 2
+Date: Mon, 09 Apr 2007 01:06:34 -0400
+Message-ID: <117609520190-git-send-email-nico@cam.org>
 References: <11760951973172-git-send-email-nico@cam.org>
  <11760951973319-git-send-email-nico@cam.org>
  <11760951993458-git-send-email-nico@cam.org>
@@ -9,162 +9,158 @@ References: <11760951973172-git-send-email-nico@cam.org>
  <11760951993409-git-send-email-nico@cam.org>
  <11760952002687-git-send-email-nico@cam.org>
  <11760952002410-git-send-email-nico@cam.org>
- <117609520190-git-send-email-nico@cam.org>
- <11760952023952-git-send-email-nico@cam.org>
- <11760952021074-git-send-email-nico@cam.org>
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:17 2007
+X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ham5y-00038I-Es
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:14 +0200
+	id 1Ham5w-00038I-Ao
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbXDIFHE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 01:07:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbXDIFHC
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:07:02 -0400
+	id S1752886AbXDIFG4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 01:06:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbXDIFG4
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:06:56 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:64601 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752914AbXDIFGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 01:06:46 -0400
+	with ESMTP id S1752897AbXDIFGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 01:06:44 -0400
 Received: from localhost.localdomain ([74.56.106.175])
  by VL-MH-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
  with ESMTP id <0JG700EK9SV173A3@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 01:06:43 -0400 (EDT)
-In-reply-to: <11760952021074-git-send-email-nico@cam.org>
+ git@vger.kernel.org; Mon, 09 Apr 2007 01:06:42 -0400 (EDT)
+In-reply-to: <11760952002410-git-send-email-nico@cam.org>
 X-Mailer: git-send-email 1.5.1.31.ge421f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44035>
 
-Initially the conversion was made using nth_packed_object_sha1() which
-made this file completely index version agnostic. Unfortunately the
-overhead was quite significant so I went back to raw index walking but
-with selectable base and step values which brought back similar
-performances as the original.
+Like previous patch but for index-pack.
+
+[ There is quite some code duplication between pack-objects and index-pack
+  for generating a pack index (and fast-import as well I suppose).  This
+  should be reworked into a common function eventually. But not now. ]
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- pack-redundant.c |   47 +++++++++++++++++++++++++++--------------------
- 1 files changed, 27 insertions(+), 20 deletions(-)
+ index-pack.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 files changed, 57 insertions(+), 9 deletions(-)
 
-diff --git a/pack-redundant.c b/pack-redundant.c
-index 40e579b..87077e1 100644
---- a/pack-redundant.c
-+++ b/pack-redundant.c
-@@ -247,16 +247,19 @@ static struct pack_list * pack_list_difference(const struct pack_list *A,
- 
- static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
+diff --git a/index-pack.c b/index-pack.c
+index d33f723..a833f64 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -686,9 +686,10 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
  {
--	int p1_off, p2_off;
-+	unsigned long p1_off = 0, p2_off = 0, p1_step, p2_step;
- 	const unsigned char *p1_base, *p2_base;
- 	struct llist_item *p1_hint = NULL, *p2_hint = NULL;
+ 	struct sha1file *f;
+ 	struct object_entry **sorted_by_sha, **list, **last;
+-	unsigned int array[256];
++	uint32_t array[256];
+ 	int i, fd;
+ 	SHA_CTX ctx;
++	uint32_t index_version;
  
--	p1_off = p2_off = 256 * 4 + 4;
- 	p1_base = p1->pack->index_data;
- 	p2_base = p2->pack->index_data;
-+	p1_base += 256 * 4 + ((p1->pack->index_version < 2) ? 4 : 8);
-+	p2_base += 256 * 4 + ((p2->pack->index_version < 2) ? 4 : 8);
-+	p1_step = (p1->pack->index_version < 2) ? 24 : 20;
-+	p2_step = (p2->pack->index_version < 2) ? 24 : 20;
- 
--	while (p1_off <= p1->pack->index_size - 3 * 20 &&
--	       p2_off <= p2->pack->index_size - 3 * 20)
-+	while (p1_off < p1->pack->num_objects * p1_step &&
-+	       p2_off < p2->pack->num_objects * p2_step)
- 	{
- 		int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
- 		/* cmp ~ p1 - p2 */
-@@ -265,14 +268,14 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- 					p1_base + p1_off, p1_hint);
- 			p2_hint = llist_sorted_remove(p2->unique_objects,
- 					p1_base + p1_off, p2_hint);
--			p1_off+=24;
--			p2_off+=24;
-+			p1_off += p1_step;
-+			p2_off += p2_step;
- 			continue;
- 		}
- 		if (cmp < 0) { /* p1 has the object, p2 doesn't */
--			p1_off+=24;
-+			p1_off += p1_step;
- 		} else { /* p2 has the object, p1 doesn't */
--			p2_off+=24;
-+			p2_off += p2_step;
- 		}
+ 	if (nr_objects) {
+ 		sorted_by_sha =
+@@ -699,7 +700,6 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
+ 			sorted_by_sha[i] = &objects[i];
+ 		qsort(sorted_by_sha, nr_objects, sizeof(sorted_by_sha[0]),
+ 		      sha1_compare);
+-
  	}
- }
-@@ -352,28 +355,31 @@ static int is_superset(struct pack_list *pl, struct llist *list)
- static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
- {
- 	size_t ret = 0;
--	int p1_off, p2_off;
-+	unsigned long p1_off = 0, p2_off = 0, p1_step, p2_step;
- 	const unsigned char *p1_base, *p2_base;
+ 	else
+ 		sorted_by_sha = list = last = NULL;
+@@ -718,6 +718,17 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
+ 		die("unable to create %s: %s", index_name, strerror(errno));
+ 	f = sha1fd(fd, index_name);
  
--	p1_off = p2_off = 256 * 4 + 4;
- 	p1_base = p1->index_data;
- 	p2_base = p2->index_data;
-+	p1_base += 256 * 4 + ((p1->index_version < 2) ? 4 : 8);
-+	p2_base += 256 * 4 + ((p2->index_version < 2) ? 4 : 8);
-+	p1_step = (p1->index_version < 2) ? 24 : 20;
-+	p2_step = (p2->index_version < 2) ? 24 : 20;
- 
--	while (p1_off <= p1->index_size - 3 * 20 &&
--	       p2_off <= p2->index_size - 3 * 20)
-+	while (p1_off < p1->num_objects * p1_step &&
-+	       p2_off < p2->num_objects * p2_step)
- 	{
- 		int cmp = hashcmp(p1_base + p1_off, p2_base + p2_off);
- 		/* cmp ~ p1 - p2 */
- 		if (cmp == 0) {
- 			ret++;
--			p1_off+=24;
--			p2_off+=24;
-+			p1_off += p1_step;
-+			p2_off += p2_step;
- 			continue;
- 		}
- 		if (cmp < 0) { /* p1 has the object, p2 doesn't */
--			p1_off+=24;
-+			p1_off += p1_step;
- 		} else { /* p2 has the object, p1 doesn't */
--			p2_off+=24;
-+			p2_off += p2_step;
- 		}
++	/* if last object's offset is >= 2^31 we should use index V2 */
++	index_version = (objects[nr_objects-1].offset >> 31) ? 2 : 1;
++
++	/* index versions 2 and above need a header */
++	if (index_version >= 2) {
++		struct pack_idx_header hdr;
++		hdr.idx_signature = htonl(PACK_IDX_SIGNATURE);
++		hdr.idx_version = htonl(index_version);
++		sha1write(f, &hdr, sizeof(hdr));
++	}
++
+ 	/*
+ 	 * Write the first-level table (the list is sorted,
+ 	 * but we use a 256-entry lookup to be able to avoid
+@@ -734,24 +745,61 @@ static const char *write_index_file(const char *index_name, unsigned char *sha1)
+ 		array[i] = htonl(next - sorted_by_sha);
+ 		list = next;
  	}
- 	return ret;
-@@ -535,7 +541,7 @@ static void scan_alt_odb_packs(void)
- static struct pack_list * add_pack(struct packed_git *p)
- {
- 	struct pack_list l;
--	size_t off;
-+	unsigned long off = 0, step;
- 	const unsigned char *base;
+-	sha1write(f, array, 256 * sizeof(int));
++	sha1write(f, array, 256 * 4);
  
- 	if (!p->pack_local && !(alt_odb || verbose))
-@@ -544,11 +550,12 @@ static struct pack_list * add_pack(struct packed_git *p)
- 	l.pack = p;
- 	llist_init(&l.all_objects);
- 
--	off = 256 * 4 + 4;
- 	base = p->index_data;
--	while (off <= p->index_size - 3 * 20) {
-+	base += 256 * 4 + ((p->index_version < 2) ? 4 : 8);
-+	step = (p->index_version < 2) ? 24 : 20;
-+	while (off < p->num_objects * step) {
- 		llist_insert_back(l.all_objects, base + off);
--		off += 24;
-+		off += step;
+-	/* recompute the SHA1 hash of sorted object names.
+-	 * currently pack-objects does not do this, but that
+-	 * can be fixed.
+-	 */
++	/* compute the SHA1 hash of sorted object names. */
+ 	SHA1_Init(&ctx);
++
+ 	/*
+ 	 * Write the actual SHA1 entries..
+ 	 */
+ 	list = sorted_by_sha;
+ 	for (i = 0; i < nr_objects; i++) {
+ 		struct object_entry *obj = *list++;
+-		unsigned int offset = htonl(obj->offset);
+-		sha1write(f, &offset, 4);
++		if (index_version < 2) {
++			uint32_t offset = htonl(obj->offset);
++			sha1write(f, &offset, 4);
++		}
+ 		sha1write(f, obj->sha1, 20);
+ 		SHA1_Update(&ctx, obj->sha1, 20);
  	}
- 	/* this list will be pruned in cmp_two_packs later */
- 	l.unique_objects = llist_copy(l.all_objects);
++
++	if (index_version >= 2) {
++		unsigned int nr_large_offset = 0;
++
++		/* write the crc32 table */
++		list = sorted_by_sha;
++		for (i = 0; i < nr_objects; i++) {
++			struct object_entry *obj = *list++;
++			uint32_t crc32_val = htonl(obj->crc32);
++			sha1write(f, &crc32_val, 4);
++		}
++
++		/* write the 32-bit offset table */
++		list = sorted_by_sha;
++		for (i = 0; i < nr_objects; i++) {
++			struct object_entry *obj = *list++;
++			uint32_t offset = (obj->offset <= 0x7fffffff) ?
++				obj->offset : (0x80000000 | nr_large_offset++);
++			offset = htonl(offset);
++			sha1write(f, &offset, 4);
++		}
++
++		/* write the large offset table */
++		list = sorted_by_sha;
++		while (nr_large_offset) {
++			struct object_entry *obj = *list++;
++			uint64_t offset = obj->offset;
++			if (offset > 0x7fffffff) {
++				uint32_t split[2];
++				split[0]	= htonl(offset >> 32);
++				split[1] = htonl(offset & 0xffffffff);
++				sha1write(f, split, 8);
++				nr_large_offset--;
++			}
++		}
++	}
++
+ 	sha1write(f, sha1, 20);
+ 	sha1close(f, NULL, 1);
+ 	free(sorted_by_sha);
 -- 
 1.5.1.696.g6d352-dirty
