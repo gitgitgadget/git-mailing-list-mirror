@@ -1,68 +1,61 @@
-From: "Dana How" <danahow@gmail.com>
-Subject: Re: [PATCH 1/8] git-repack --max-pack-size: Add new file statics and struct fields
-Date: Mon, 9 Apr 2007 11:38:34 -0700
-Message-ID: <56b7f5510704091138r166d6caer7ea4b2497889a4c0@mail.gmail.com>
-References: <46197885.3060502@gmail.com>
-	 <7vabxi8lqv.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 5/8] get-repack --max-pack-size: write_object() takes 'limit' arg
+Date: Mon, 09 Apr 2007 13:09:44 -0700
+Message-ID: <7v3b39z4vr.fsf@assigned-by-dhcp.cox.net>
+References: <46197994.70009@gmail.com>
+	<alpine.LFD.0.98.0704082034060.28181@xanadu.home>
+	<56b7f5510704091151l70cc74b1la82e0c5a67d6885f@mail.gmail.com>
+	<alpine.LFD.0.98.0704091455100.28181@xanadu.home>
+	<56b7f5510704091220w69529e72n2f982c097c4e26a0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 23:50:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Nicolas Pitre" <nico@cam.org>, "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Dana How" <danahow@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 10 00:15:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaylH-0006L1-0W
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:38:43 +0200
+	id 1Hb0Bi-0004WM-40
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 22:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753198AbXDISif (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 14:38:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbXDISif
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:38:35 -0400
-Received: from py-out-1112.google.com ([64.233.166.180]:19187 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753198AbXDISif (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 14:38:35 -0400
-Received: by py-out-1112.google.com with SMTP id a29so1107067pyi
-        for <git@vger.kernel.org>; Mon, 09 Apr 2007 11:38:34 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=SSuh2dh1gGt/cWVCvNMpunnC9ZuiuJWNAthqkVlocLxbcNhMi7Teg822UYlfi3KVY/KH0hG7QVdt+1wH0xsut3yu519hgd3ZdrYMgOFjnZMoR9b5h2fC6rKO9IOKELmot6xGoImr2ovMDcUyIOqgD2RMr6SeSPBjlxjgivPXL2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CxCdDmjwq4UL2k9RphTZx+GG2GMVEIVVEmRTMEd/MybkJAPe/BWStxXLpjSsWpZHYvQyZnDlQIWIaeuDAdPo7b7n8iiFtYa7SNGJcdHrLwlleCcTiqImpCWqne2Tdnk+5ACSE1T/e4EYfzLCvbTkImPK3X8P8UlTfTPcntOao6U=
-Received: by 10.115.32.1 with SMTP id k1mr2428105waj.1176143914103;
-        Mon, 09 Apr 2007 11:38:34 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Mon, 9 Apr 2007 11:38:34 -0700 (PDT)
-In-Reply-To: <7vabxi8lqv.fsf@assigned-by-dhcp.cox.net>
-Content-Disposition: inline
+	id S965461AbXDIUJq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 16:09:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965485AbXDIUJq
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 16:09:46 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:57373 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965461AbXDIUJp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 16:09:45 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070409200944.UULG373.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Mon, 9 Apr 2007 16:09:44 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id l89k1W00Z1kojtg0000000; Mon, 09 Apr 2007 16:09:45 -0400
+In-Reply-To: <56b7f5510704091220w69529e72n2f982c097c4e26a0@mail.gmail.com>
+	(Dana How's message of "Mon, 9 Apr 2007 12:20:26 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44069>
 
-On 4/8/07, Junio C Hamano <junkio@cox.net> wrote:
-> Dana How <danahow@gmail.com> writes:
->
-> > ... The fields
-> > in object_entry are re-arranged & shrunk to save memory.
->
-> Is the driving principle "place fields with coarser alignment
-> requirements first in the struct"?  I noticed you have a handful
-> pointers and an off_t after two short fields.  Two shorts would
-> be likely to make the next field aligned suitable for an int,
-> but (1) if we ever add another short later that would not be
-> true anymore, and (2) I suspect a pointer and an off_t can be
-> longer than an int but int would never be longer than them.
-All true.  My objective was to save more memory than I had
-"wasted" by adding the prev_pack field.  Since it appears
-I'll be submitting the patchset yet again,  I'll make this
-re-arrangement complete next time.
+"Dana How" <danahow@gmail.com> writes:
 
-Thanks,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+> For testing, I've been using git-fsck/git-verify-pack/git-unpack-objects .
+
+Among the above, verify-pack does not do much more than what the
+normal object reading path does already these days.  Also
+unpack-objects (especially with -n) omits a lot of object
+integrity checks, and not very appropriate test.
+
+We have some tests for packfiles in t/ (make test) but I would
+not be surprised if we do not have enough.  Most of the existing
+tests are done on loose objects the tests themselves produce
+without repacking, because their focus is not about packs and
+they test whatever they are interested in, assuming that the
+lowest level object layer is correctly functioning.
