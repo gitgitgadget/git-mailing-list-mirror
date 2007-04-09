@@ -1,69 +1,52 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 5/8] get-repack --max-pack-size: write_object() takes
- 'limit' arg
-Date: Mon, 09 Apr 2007 14:59:18 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704091455100.28181@xanadu.home>
-References: <46197994.70009@gmail.com>
- <alpine.LFD.0.98.0704082034060.28181@xanadu.home>
- <56b7f5510704091151l70cc74b1la82e0c5a67d6885f@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 4/5] merge-recursive: handle D/F conflict case more carefully.
+Date: Mon, 9 Apr 2007 20:58:09 +0200
+Message-ID: <20070409185809.GA13212@steel.home>
+References: <7v6488ckk0.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 01:00:07 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 10 01:00:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Haz5H-0001Jh-Jd
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:59:24 +0200
+	id 1Haz4C-00016w-DH
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932224AbXDIS7U (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 14:59:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932263AbXDIS7U
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:59:20 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:58159 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932224AbXDIS7T (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 14:59:19 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JG8006AAVEUTZH0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 14:59:18 -0400 (EDT)
-In-reply-to: <56b7f5510704091151l70cc74b1la82e0c5a67d6885f@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S932255AbXDIS6N (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 14:58:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932224AbXDIS6M
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:58:12 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:25911 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932255AbXDIS6L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 14:58:11 -0400
+Received: from tigra.home (Fc9f2.f.strato-dslnet.de [195.4.201.242])
+	by post.webmailer.de (klopstock mo57) (RZmta 5.5)
+	with ESMTP id I0739dj39HW2m9 ; Mon, 9 Apr 2007 20:58:08 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 52AD4277B6;
+	Mon,  9 Apr 2007 20:58:08 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 4BCC9D150; Mon,  9 Apr 2007 20:58:09 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v6488ckk0.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAcjYko=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44076>
 
-On Mon, 9 Apr 2007, Dana How wrote:
+Junio C Hamano, Sat, Apr 07, 2007 16:42:55 +0200:
+> +			if (unlink(path)) {
+> +				if (errno == EISDIR) {
+> +					/* something else exists */
+> +					error(msg, path, ": perhaps a D/F conflict?");
 
-> On 4/8/07, Nicolas Pitre <nico@cam.org> wrote:
-> > > @@ -448,6 +480,12 @@ static off_t write_object(struct sha1file *f,
-> > >                       header[pos] = ofs & 127;
-> > >                       while (ofs >>= 7)
-> > >                               header[--pos] = 128 | (--ofs & 127);
-> > > +                     if ( limit && hdrlen + sizeof(header) - pos +
-> > datalen + 20 >= limit ) {
-> > > +                             free(out);
-> > > +                             free(buf);
-> > > +                             return 0;
-> > > +                     }
-> > > +                     sha1write(f, header, hdrlen);
-> > >                       sha1write(f, header + pos, sizeof(header) - pos);
-> > 
-> > The above looks rather buggy to me.
-> 
-> OK, can you be more specific?
-
-You're writing the content of the array 'header' twice in a row.  Sure 
-the second time it is header + pos but it is still the result of an 
-operation that used to put data into 'header' after the first content 
-was already written out.  Right now it looks like the first write might 
-contain clobbered data.
-
-
-Nicolas
+isn't this one an F/D conflict?
