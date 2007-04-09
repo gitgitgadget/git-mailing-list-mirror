@@ -1,76 +1,104 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] git-archive: document CWD effect
-Date: Mon, 09 Apr 2007 17:04:27 +0200
-Message-ID: <461A55FB.6070600@lsrfire.ath.cx>
-References: <esc64d$d2u$1@sea.gmane.org> <4618DFEE.8080707@lsrfire.ath.cx> <7virc68nc1.fsf@assigned-by-dhcp.cox.net>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] git-archive: make tar the default format
+Date: Mon, 09 Apr 2007 17:12:53 +0200
+Message-ID: <461A57F5.7080403@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nick Williams <njw@jarb.freeserve.co.uk>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 18:54:22 2007
+X-From: git-owner@vger.kernel.org Mon Apr 09 18:59:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HavQM-0006DM-VC
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 17:04:55 +0200
+	id 1HavYZ-0007NJ-4p
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 17:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965336AbXDIPEq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Apr 2007 11:04:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965309AbXDIPEq
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 11:04:46 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:48043
+	id S1752140AbXDIPNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 11:13:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753407AbXDIPNK
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 11:13:10 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:35566
 	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965109AbXDIPEn (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 11:04:43 -0400
-Received: from [10.0.1.201] (p508e4c97.dip.t-dialin.net [80.142.76.151])
-	by neapel230.server4you.de (Postfix) with ESMTP id 7BB7222006;
-	Mon,  9 Apr 2007 17:04:42 +0200 (CEST)
+	by vger.kernel.org with ESMTP id S1752140AbXDIPNJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 11:13:09 -0400
+Received: from [10.0.1.201] (p508e4249.dip.t-dialin.net [80.142.66.73])
+	by neapel230.server4you.de (Postfix) with ESMTP id F0F5022006;
+	Mon,  9 Apr 2007 17:13:05 +0200 (CEST)
 User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <7virc68nc1.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44058>
 
-Junio C Hamano schrieb:
-> While the updated description reflects what the command does
-> more accurately, I am not sure if it is a desired behaviour.
-> For one thing, --format=3Dtar (by the way, maybe we would want to
-> make this the default when none is specified?) adds the comment
-> that is readable by get-tar-commit-id that claims the tarball
-> contains the named commit, giving a false impression that it is
-> the whole thing.
+As noted by Junio, --format=tar should be assumed if no format
+was specified.
 
-It marks the archive as being _created_ from this specific commit, not
-necessarily as containing all of it.  Perhaps this should be noted in
-the documentation..
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ Documentation/git-archive.txt |    3 ++-
+ builtin-archive.c             |    4 +---
+ t/t5000-tar-tree.sh           |   10 +++++++++-
+ 3 files changed, 12 insertions(+), 5 deletions(-)
 
-Making '--format=3Dtar' the default is a good idea.  I doubt we'll see =
-the
-addition of a new archive format -- that deserves to be the default one
-instead of tar -- soon.
-
-> Since people who _really_ want a subtree can
-> just say "git archive --format=3Dtar HEAD:Documentation", I
-> suspect we may be better off not doing "current directory only"
-> by default.  This changes the behaviour, but (1) it affects only
-> people who run from a subdirectory, (2) it is counterintuitive
-> that your location in the working tree matters when you say "I
-> want a tarball of that commit", and (3) it is an undocumented
-> behaviour anyway.
-
-I agree with (1) and (3), meaning that we are free to change the
-behaviour.  I don't agree with (2), though.  I'd find it strange if
-changing the working directory wouldn't change the archive contents.
-
-We should keep consistency with the rest of git here.  Since git-archiv=
-e
-is just a fancy git-ls-tree, I think we should mirror its behaviour wit=
-h
-respect to the working directory.  (Which is what the current code does=
-=2E
- Modulo bugs, of course.)
-
-Ren=C3=A9
+diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
+index 493474b..8d10415 100644
+--- a/Documentation/git-archive.txt
++++ b/Documentation/git-archive.txt
+@@ -30,7 +30,8 @@ OPTIONS
+ -------
+ 
+ --format=<fmt>::
+-	Format of the resulting archive: 'tar', 'zip'...
++	Format of the resulting archive: 'tar', 'zip'...  The default
++	is 'tar'.
+ 
+ --list::
+ 	Show all available formats.
+diff --git a/builtin-archive.c b/builtin-archive.c
+index 8ea6cb1..7f4e409 100644
+--- a/builtin-archive.c
++++ b/builtin-archive.c
+@@ -149,7 +149,7 @@ int parse_archive_args(int argc, const char **argv, struct archiver *ar)
+ {
+ 	const char *extra_argv[MAX_EXTRA_ARGS];
+ 	int extra_argc = 0;
+-	const char *format = NULL; /* might want to default to "tar" */
++	const char *format = "tar";
+ 	const char *base = "";
+ 	int verbose = 0;
+ 	int i;
+@@ -190,8 +190,6 @@ int parse_archive_args(int argc, const char **argv, struct archiver *ar)
+ 	/* We need at least one parameter -- tree-ish */
+ 	if (argc - 1 < i)
+ 		usage(archive_usage);
+-	if (!format)
+-		die("You must specify an archive format");
+ 	if (init_archiver(format, ar) < 0)
+ 		die("Unknown archive format '%s'", format);
+ 
+diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+index b4359df..e223c07 100755
+--- a/t/t5000-tar-tree.sh
++++ b/t/t5000-tar-tree.sh
+@@ -50,8 +50,16 @@ test_expect_success \
+      git-commit-tree $treeid </dev/null)'
+ 
+ test_expect_success \
++    'git-archive' \
++    'git-archive HEAD >b.tar'
++
++test_expect_success \
+     'git-tar-tree' \
+-    'git-tar-tree HEAD >b.tar'
++    'git-tar-tree HEAD >b2.tar'
++
++test_expect_success \
++    'git-archive vs. git-tar-tree' \
++    'diff b.tar b2.tar'
+ 
+ test_expect_success \
+     'validate file modification time' \
+-- 
+1.5.1.53.g77e6f
