@@ -1,192 +1,229 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 04/10] compute a CRC32 for each object as stored in a pack
-Date: Mon, 09 Apr 2007 01:06:31 -0400
-Message-ID: <11760951993409-git-send-email-nico@cam.org>
+Subject: [PATCH 08/10] sha1_file.c: learn about index version 2
+Date: Mon, 09 Apr 2007 01:06:35 -0400
+Message-ID: <11760952023952-git-send-email-nico@cam.org>
 References: <11760951973172-git-send-email-nico@cam.org>
  <11760951973319-git-send-email-nico@cam.org>
  <11760951993458-git-send-email-nico@cam.org>
  <11760951993225-git-send-email-nico@cam.org>
+ <11760951993409-git-send-email-nico@cam.org>
+ <11760952002687-git-send-email-nico@cam.org>
+ <11760952002410-git-send-email-nico@cam.org>
+ <117609520190-git-send-email-nico@cam.org>
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:13 2007
+X-From: git-owner@vger.kernel.org Mon Apr 09 07:07:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ham5v-00038I-9J
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:11 +0200
+	id 1Ham5x-00038I-UL
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 07:07:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752871AbXDIFGx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 01:06:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752920AbXDIFGx
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:06:53 -0400
+	id S1752887AbXDIFHB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 01:07:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752897AbXDIFHA
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 01:07:00 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:64601 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752880AbXDIFGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 01:06:42 -0400
+	with ESMTP id S1752902AbXDIFGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 01:06:45 -0400
 Received: from localhost.localdomain ([74.56.106.175])
  by VL-MH-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
  with ESMTP id <0JG700EK9SV173A3@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 01:06:40 -0400 (EDT)
-In-reply-to: <11760951993225-git-send-email-nico@cam.org>
+ git@vger.kernel.org; Mon, 09 Apr 2007 01:06:42 -0400 (EDT)
+In-reply-to: <117609520190-git-send-email-nico@cam.org>
 X-Mailer: git-send-email 1.5.1.31.ge421f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44030>
 
-The most important optimization for performance when repacking is the
-ability to reuse data from a previous pack as is and bypass any delta
-or even SHA1 computation by simply copying the raw data from one pack
-to another directly.
+With this patch, packs larger than 4GB are usable, even on a 32-bit machine
+(at least on Linux).  If off_t is not large enough to deal with a large
+pack then die() is called instead of attempting to use the pack and
+producing garbage.
 
-The problem with  this is that any data corruption within a copied object
-would go unnoticed and the new (repacked) pack would be self-consistent
-with its own checksum despite containing a corrupted object.  This is a
-real issue that already happened at least once in the past.
-
-In some attempt to prevent this, we validate the copied data by inflating
-it and making sure no error is signaled by zlib.  But this is still not
-perfect as a significant portion of a pack content is made of object
-headers and references to delta base objects which are not deflated and
-therefore not validated when repacking actually making the pack data reuse
-still not as safe as it could be.
-
-Of course a full SHA1 validation could be performed, but that implies
-full data inflating and delta replaying which is extremely costly, which
-cost the data reuse optimization was designed to avoid in the first place.
-
-So the best solution to this is simply to store a CRC32 of the raw pack
-data for each object in the pack index.  This way any object in a pack can
-be validated before being copied as is in another pack, including header
-and any other non deflated data.
-
-Why CRC32 instead of a faster checksum like Adler32?  Quoting Wikipedia:
-
-   Jonathan Stone discovered in 2001 that Adler-32 has a weakness for very
-   short messages. He wrote "Briefly, the problem is that, for very short
-   packets, Adler32 is guaranteed to give poor coverage of the available
-   bits. Don't take my word for it, ask Mark Adler. :-)" The problem is
-   that sum A does not wrap for short messages. The maximum value of A for
-   a 128-byte message is 32640, which is below the value 65521 used by the
-   modulo operation. An extended explanation can be found in RFC 3309,
-   which mandates the use of CRC32 instead of Adler-32 for SCTP, the
-   Stream Control Transmission Protocol.
-
-In the context of a GIT pack, we have lots of small objects, especially
-deltas, which are likely to be quite small and in a size range for which
-Adler32 is dimed not to be sufficient.  Another advantage of CRC32 is the
-possibility for recovery from certain types of small corruptions like
-single bit errors which are the most probable type of corruptions.
-
-OK what this patch does is to compute the CRC32 of each object written to
-a pack within pack-objects.  It is not written to the index yet and it is
-obviously not validated when reusing pack data yet either.
+This was tested with a 8GB pack specially created for the occasion on
+a 32-bit machine.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-pack-objects.c |    6 ++++++
- csum-file.c            |   14 ++++++++++++++
- csum-file.h            |    4 ++++
- 3 files changed, 24 insertions(+), 0 deletions(-)
+ sha1_file.c |  118 ++++++++++++++++++++++++++++++++++++++++++++--------------
+ 1 files changed, 89 insertions(+), 29 deletions(-)
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index d0be879..03e36f0 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -44,6 +44,7 @@ struct object_entry {
- 				 * be used as the base objectto delta huge
- 				 * objects against.
- 				 */
-+	uint32_t crc32;		/* crc of raw pack data for this object */
- };
+diff --git a/sha1_file.c b/sha1_file.c
+index ebdd497..5f3a15d 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -437,7 +437,7 @@ static int check_packed_git_idx(const char *path,  struct packed_git *p)
+ 	void *idx_map;
+ 	struct pack_idx_header *hdr;
+ 	size_t idx_size;
+-	uint32_t nr, i, *index;
++	uint32_t version, nr, i, *index;
+ 	int fd = open(path, O_RDONLY);
+ 	struct stat st;
  
- /*
-@@ -381,6 +382,9 @@ static unsigned long write_object(struct sha1file *f,
- 	enum object_type obj_type;
- 	int to_reuse = 0;
+@@ -455,21 +455,23 @@ static int check_packed_git_idx(const char *path,  struct packed_git *p)
+ 	idx_map = xmmap(NULL, idx_size, PROT_READ, MAP_PRIVATE, fd, 0);
+ 	close(fd);
  
-+	if (!pack_to_stdout)
-+		crc32_begin(f);
-+
- 	obj_type = entry->type;
- 	if (! entry->in_pack)
- 		to_reuse = 0;	/* can't reuse what we don't have */
-@@ -496,6 +500,8 @@ static unsigned long write_object(struct sha1file *f,
- 	if (entry->delta)
- 		written_delta++;
- 	written++;
-+	if (!pack_to_stdout)
-+		entry->crc32 = crc32_end(f);
- 	return hdrlen + datalen;
- }
+-	/* a future index format would start with this, as older git
+-	 * binaries would fail the non-monotonic index check below.
+-	 * give a nicer warning to the user if we can.
+-	 */
+ 	hdr = idx_map;
+ 	if (hdr->idx_signature == htonl(PACK_IDX_SIGNATURE)) {
+-		munmap(idx_map, idx_size);
+-		return error("index file %s is a newer version"
+-			" and is not supported by this binary"
+-			" (try upgrading GIT to a newer version)",
+-			path);
+-	}
++		version = ntohl(hdr->idx_version);
++		if (version < 2 || version > 2) {
++			munmap(idx_map, idx_size);
++			return error("index file %s is version %d"
++				     " and is not supported by this binary"
++				     " (try upgrading GIT to a newer version)",
++				     path, version);
++		}
++	} else
++		version = 1;
  
-diff --git a/csum-file.c b/csum-file.c
-index b7174c6..7c806ad 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -49,6 +49,8 @@ int sha1close(struct sha1file *f, unsigned char *result, int update)
+ 	nr = 0;
+ 	index = idx_map;
++	if (version > 1)
++		index += 2;  /* skip index header */
+ 	for (i = 0; i < 256; i++) {
+ 		uint32_t n = ntohl(index[i]);
+ 		if (n < nr) {
+@@ -479,19 +481,48 @@ static int check_packed_git_idx(const char *path,  struct packed_git *p)
+ 		nr = n;
+ 	}
  
- int sha1write(struct sha1file *f, void *buf, unsigned int count)
+-	/*
+-	 * Total size:
+-	 *  - 256 index entries 4 bytes each
+-	 *  - 24-byte entries * nr (20-byte sha1 + 4-byte offset)
+-	 *  - 20-byte SHA1 of the packfile
+-	 *  - 20-byte SHA1 file checksum
+-	 */
+-	if (idx_size != 4*256 + nr * 24 + 20 + 20) {
+-		munmap(idx_map, idx_size);
+-		return error("wrong index file size in %s", path);
++	if (version == 1) {
++		/*
++		 * Total size:
++		 *  - 256 index entries 4 bytes each
++		 *  - 24-byte entries * nr (20-byte sha1 + 4-byte offset)
++		 *  - 20-byte SHA1 of the packfile
++		 *  - 20-byte SHA1 file checksum
++		 */
++		if (idx_size != 4*256 + nr * 24 + 20 + 20) {
++			munmap(idx_map, idx_size);
++			return error("wrong index file size in %s", path);
++		}
++	} else if (version == 2) {
++		/*
++		 * Minimum size:
++		 *  - 8 bytes of header
++		 *  - 256 index entries 4 bytes each
++		 *  - 20-byte sha1 entry * nr
++		 *  - 4-byte crc entry * nr
++		 *  - 4-byte offset entry * nr
++		 *  - 20-byte SHA1 of the packfile
++		 *  - 20-byte SHA1 file checksum
++		 * And after the 4-byte offset table might be a 
++		 * variable sized table containing 8-byte entries
++		 * for offsets larger than 2^31.
++		 */
++		unsigned long min_size = 8 + 4*256 + nr*(20 + 4 + 4) + 20 + 20;
++		if (idx_size < min_size || idx_size > min_size + (nr - 1)*8) {
++			munmap(idx_map, idx_size);
++			return error("wrong index file size in %s", path);
++		}
++		if (idx_size != min_size) {
++			/* make sure we can deal with large pack offsets */
++			off_t x = 0x7fffffffUL, y = 0xffffffffUL;
++			if (x > (x + 1) || y > (y + 1)) {
++				munmap(idx_map, idx_size);
++				return error("pack too large for current definition of off_t in %s", path);
++			}
++		}
+ 	}
+ 
+-	p->index_version = 1;
++	p->index_version = version;
+ 	p->index_data = idx_map;
+ 	p->index_size = idx_size;
+ 	p->num_objects = nr;
+@@ -1531,27 +1562,56 @@ const unsigned char *nth_packed_object_sha1(const struct packed_git *p,
+ 					    uint32_t n)
  {
-+	if (f->do_crc)
-+		f->crc32 = crc32(f->crc32, buf, count);
- 	while (count) {
- 		unsigned offset = f->offset;
- 		unsigned left = sizeof(f->buffer) - offset;
-@@ -91,6 +93,7 @@ struct sha1file *sha1create(const char *fmt, ...)
- 	f->fd = fd;
- 	f->error = 0;
- 	f->offset = 0;
-+	f->do_crc = 0;
- 	SHA1_Init(&f->ctx);
- 	return f;
- }
-@@ -111,6 +114,7 @@ struct sha1file *sha1fd(int fd, const char *name)
- 	f->fd = fd;
- 	f->error = 0;
- 	f->offset = 0;
-+	f->do_crc = 0;
- 	SHA1_Init(&f->ctx);
- 	return f;
- }
-@@ -143,4 +147,14 @@ int sha1write_compressed(struct sha1file *f, void *in, unsigned int size)
- 	return size;
- }
- 
-+void crc32_begin(struct sha1file *f)
-+{
-+	f->crc32 = crc32(0, Z_NULL, 0);
-+	f->do_crc = 1;
+ 	const unsigned char *index = p->index_data;
+-	index += 4 * 256;
+ 	if (n >= p->num_objects)
+ 		return NULL;
+-	return index + 24 * n + 4;
++	index += 4 * 256;
++	if (p->index_version == 1) {
++		return index + 24 * n + 4;
++	} else {
++		index += 8;
++		return index + 20 * n;
++	}
 +}
- 
-+uint32_t crc32_end(struct sha1file *f)
++
++static off_t nth_packed_object_offset(const struct packed_git *p, uint32_t n)
 +{
-+	f->do_crc = 0;
-+	return f->crc32;
-+}
-diff --git a/csum-file.h b/csum-file.h
-index 3ad1a99..7e13391 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -7,6 +7,8 @@ struct sha1file {
- 	unsigned int offset, namelen;
- 	SHA_CTX ctx;
- 	char name[PATH_MAX];
-+	int do_crc;
-+	uint32_t crc32;
- 	unsigned char buffer[8192];
- };
++	const unsigned char *index = p->index_data;
++	index += 4 * 256;
++	if (p->index_version == 1) {
++		return ntohl(*((uint32_t *)(index + 24 * n)));
++	} else {
++		uint32_t off;
++		index += 8 + p->num_objects * (20 + 4);
++		off = ntohl(*((uint32_t *)(index + 4 * n)));
++		if (!(off & 0x80000000))
++			return off;
++		index += p->num_objects * 4 + (off & 0x7fffffff) * 8;
++		return (((uint64_t)ntohl(*((uint32_t *)(index + 0)))) << 32) |
++				   ntohl(*((uint32_t *)(index + 4)));
++	}
+ }
  
-@@ -15,5 +17,7 @@ extern struct sha1file *sha1create(const char *fmt, ...) __attribute__((format (
- extern int sha1close(struct sha1file *, unsigned char *, int);
- extern int sha1write(struct sha1file *, void *, unsigned int);
- extern int sha1write_compressed(struct sha1file *, void *, unsigned int);
-+extern void crc32_begin(struct sha1file *);
-+extern uint32_t crc32_end(struct sha1file *);
+ off_t find_pack_entry_one(const unsigned char *sha1,
+ 				  struct packed_git *p)
+ {
+ 	const uint32_t *level1_ofs = p->index_data;
+-	int hi = ntohl(level1_ofs[*sha1]);
+-	int lo = ((*sha1 == 0x0) ? 0 : ntohl(level1_ofs[*sha1 - 1]));
+ 	const unsigned char *index = p->index_data;
++	unsigned hi, lo;
  
- #endif
++	if (p->index_version > 1) {
++		level1_ofs += 2;
++		index += 8;
++	}
+ 	index += 4 * 256;
++	hi = ntohl(level1_ofs[*sha1]);
++	lo = ((*sha1 == 0x0) ? 0 : ntohl(level1_ofs[*sha1 - 1]));
+ 
+ 	do {
+-		int mi = (lo + hi) / 2;
+-		int cmp = hashcmp(index + 24 * mi + 4, sha1);
++		unsigned mi = (lo + hi) / 2;
++		unsigned x = (p->index_version > 1) ? (mi * 20) : (mi * 24 + 4);
++		int cmp = hashcmp(index + x, sha1);
+ 		if (!cmp)
+-			return ntohl(*((uint32_t *)((char *)index + (24 * mi))));
++			return nth_packed_object_offset(p, mi);
+ 		if (cmp > 0)
+ 			hi = mi;
+ 		else
 -- 
 1.5.1.696.g6d352-dirty
