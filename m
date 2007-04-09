@@ -1,81 +1,76 @@
-From: =?iso-8859-1?Q?Thomas_H=FChn?= <newsgroups@thomas-huehn.de>
-Subject: incorporating the past
-Date: Mon, 09 Apr 2007 20:14:17 +0200
-Message-ID: <87d52d1kli.fsf@mid.thomas-huehn.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
+Date: Mon, 09 Apr 2007 14:30:49 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704091404530.28181@xanadu.home>
+References: <46197950.3080804@gmail.com>
+ <7vwt0m76rv.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0704082012220.28181@xanadu.home>
+ <20070409173858.GT5436@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 09 21:48:15 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <junkio@cox.net>, Dana How <danahow@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Apr 09 22:07:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HayYG-0004GL-Vr
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:25:17 +0200
+	id 1Haydi-00056s-HX
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:30:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752700AbXDISZN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 14:25:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752880AbXDISZM
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:25:12 -0400
-Received: from main.gmane.org ([80.91.229.2]:34481 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752700AbXDISZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 14:25:10 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1HayY2-0001vN-AC
-	for git@vger.kernel.org; Mon, 09 Apr 2007 20:25:02 +0200
-Received: from p54a0df24.dip.t-dialin.net ([84.160.223.36])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Apr 2007 20:25:02 +0200
-Received: from newsgroups by p54a0df24.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Apr 2007 20:25:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: p54a0df24.dip.t-dialin.net
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Cancel-Lock: sha1:6+tc6nLiH7bWqJMA+oOK8tfcFKs=
+	id S1752076AbXDISav (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 14:30:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753349AbXDISav
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:30:51 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:11434 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752076AbXDISau (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 14:30:50 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JG8002L2U3D56R0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 09 Apr 2007 14:30:50 -0400 (EDT)
+In-reply-to: <20070409173858.GT5436@spearce.org>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44064>
 
-Hi
+On Mon, 9 Apr 2007, Shawn O. Pearce wrote:
 
-I have looked through some git tutorials and the manual, and what is
-interesting me most right now is, how do I handle a situation like this
-with git? It's purely speculative, I don't have such a situation in
-reality, so my description might be a bit murky...
+> Nicolas Pitre <nico@cam.org> wrote:
+> > I think another file with common pack writing functions could be 
+> > created.  Pack index writing is another item that is currently 
+> > duplicated in pack-objects and index-pack for example.
+> 
+> I agree entirely.  And I'd like to see that refactoring occur
+> before this series, or as part of it.  At least for the nr_objects
+> correction routine.
 
-I'll try to make an extremely simple example, just one file, no
-branching etc.
+That's easy enough for the nr_objects correction case.
 
-I have a file under version control, that I got at the point of file
-version 1.0. I start committing changes:
+The next obvious candidate would be index generation, but I'd wait a bit 
+for all features in progress to be merged and stabilize first.
 
-o--o--o--o--o--o--o
-^                 ^
-git init,         current,
-version 1.0       version 1.6
+> For example, writing objects to a packfile: we have 3
+> implementations.  fast-import.c doesn't use sha1write_compressed
+> because that was a waste of time to compute the SHA_CTX when we
+> know we have to go back and fixup nr_objects.  It also doesn't use
+> it because fast-import.c's pack-splitting logic is based on the
+> final object size, not the starting offset.  It does the deflate
+> itself, decides if the end of the object will overflow, and if so,
+> jumps to a new packfile.
 
-Then I get the history up to my version 1.0 from somewhere else (former
-maintainer, whatever). In the form of plain text files, one for each
-version; say, versions 0.1 thru 0.9. I want to incorporate this past
-into my tree.
+I'd be really tempted to create a pack v4 which only change is to still 
+have the pack header at the beginning of the pack like we do today, but 
+include the header in the pack SHA1 computation at the end of the stream 
+only.  This way the pack SHA1 could be computed as the pack is 
+generated, and the header fixed up without having to read the entire 
+pack back.  I think it was Geert Bosch who proposed this and it makes 
+tons of sense IMHO.
 
-Can I just do another git init for 0.1, commit the changes up to 1.0 and
-merge those two histories? Don't I need a common ancestor for both or
-something like that?
 
-Or can I do the same, only up to 0.9 instead of 1.0, and then "sew
-together" those histories?
-
-Is there some kind of "add-past", where the changed contents in the
-working directory are prepended, not appended to the history? So that I
-could "prepend" 0.9, then 0.8 and so on until 0.1?
-
-I guess, I just don't have a clear grasp of what "history" and "branch"
-and so on mean.
-
-Thomas
+Nicolas
