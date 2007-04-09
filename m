@@ -1,104 +1,61 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] git-archive: make tar the default format
-Date: Mon, 09 Apr 2007 17:12:53 +0200
-Message-ID: <461A57F5.7080403@lsrfire.ath.cx>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: support for large packs and 64-bit offsets
+Date: Mon, 9 Apr 2007 11:02:49 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704091059240.6730@woody.linux-foundation.org>
+References: <11760951973172-git-send-email-nico@cam.org> <20070409171925.GS5436@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 09 18:59:03 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <junkio@cox.net>,
+	git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Apr 09 20:34:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HavYZ-0007NJ-4p
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 17:13:23 +0200
+	id 1HayDB-00011O-M2
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:03:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbXDIPNK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 11:13:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753407AbXDIPNK
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 11:13:10 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:35566
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752140AbXDIPNJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 11:13:09 -0400
-Received: from [10.0.1.201] (p508e4249.dip.t-dialin.net [80.142.66.73])
-	by neapel230.server4you.de (Postfix) with ESMTP id F0F5022006;
-	Mon,  9 Apr 2007 17:13:05 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+	id S1753321AbXDISDW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 14:03:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbXDISDW
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:03:22 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:53495 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753321AbXDISDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 14:03:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l39I2pPD008673
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 9 Apr 2007 11:02:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l39I2oFT019441;
+	Mon, 9 Apr 2007 11:02:50 -0700
+In-Reply-To: <20070409171925.GS5436@spearce.org>
+X-Spam-Status: No, hits=-0.455 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44059>
 
-As noted by Junio, --format=tar should be assumed if no format
-was specified.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- Documentation/git-archive.txt |    3 ++-
- builtin-archive.c             |    4 +---
- t/t5000-tar-tree.sh           |   10 +++++++++-
- 3 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 493474b..8d10415 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -30,7 +30,8 @@ OPTIONS
- -------
- 
- --format=<fmt>::
--	Format of the resulting archive: 'tar', 'zip'...
-+	Format of the resulting archive: 'tar', 'zip'...  The default
-+	is 'tar'.
- 
- --list::
- 	Show all available formats.
-diff --git a/builtin-archive.c b/builtin-archive.c
-index 8ea6cb1..7f4e409 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -149,7 +149,7 @@ int parse_archive_args(int argc, const char **argv, struct archiver *ar)
- {
- 	const char *extra_argv[MAX_EXTRA_ARGS];
- 	int extra_argc = 0;
--	const char *format = NULL; /* might want to default to "tar" */
-+	const char *format = "tar";
- 	const char *base = "";
- 	int verbose = 0;
- 	int i;
-@@ -190,8 +190,6 @@ int parse_archive_args(int argc, const char **argv, struct archiver *ar)
- 	/* We need at least one parameter -- tree-ish */
- 	if (argc - 1 < i)
- 		usage(archive_usage);
--	if (!format)
--		die("You must specify an archive format");
- 	if (init_archiver(format, ar) < 0)
- 		die("Unknown archive format '%s'", format);
- 
-diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-index b4359df..e223c07 100755
---- a/t/t5000-tar-tree.sh
-+++ b/t/t5000-tar-tree.sh
-@@ -50,8 +50,16 @@ test_expect_success \
-      git-commit-tree $treeid </dev/null)'
- 
- test_expect_success \
-+    'git-archive' \
-+    'git-archive HEAD >b.tar'
-+
-+test_expect_success \
-     'git-tar-tree' \
--    'git-tar-tree HEAD >b.tar'
-+    'git-tar-tree HEAD >b2.tar'
-+
-+test_expect_success \
-+    'git-archive vs. git-tar-tree' \
-+    'diff b.tar b2.tar'
- 
- test_expect_success \
-     'validate file modification time' \
--- 
-1.5.1.53.g77e6f
+On Mon, 9 Apr 2007, Shawn O. Pearce wrote:
+> 
+> I like this series.  I haven't had time to test it myself yet,
+> and probably won't be able to do so before Junio merges it into a
+> pu or next release.  But it looks OK on a first read.
+
+Me too.. I just wonder whether it should have some more test coverage:
+ - force v2 index by default
+ - force a mode where a random smattering of index entries are done using 
+   64-bit notation (even if they obviously won't need the high 33 bits)
+
+As it is, nobody would normally even *use* the new format, much less the 
+new capabilities.. And if it's not used, it's not tested, and it's going 
+to have bugs.
+
+		Linus
