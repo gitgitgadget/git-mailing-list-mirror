@@ -1,76 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Mon, 9 Apr 2007 14:40:39 -0400
-Message-ID: <20070409184039.GZ5436@spearce.org>
-References: <46197950.3080804@gmail.com> <7vwt0m76rv.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704082012220.28181@xanadu.home> <20070409173858.GT5436@spearce.org> <alpine.LFD.0.98.0704091404530.28181@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>, Dana How <danahow@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 01:13:50 2007
+From: Geert Bosch <bosch@adacore.com>
+Subject: =?ISO-8859-1?Q?gitweb/test/M=E4rchen_has_an_identity_crisis?=
+Date: Mon, 9 Apr 2007 15:13:49 -0400
+Message-ID: <FBFBF002-4887-4216-9CF0-42407E93045C@adacore.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 01:16:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HaynK-0006fY-E5
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 20:40:50 +0200
+	id 1HazJL-0003bC-P4
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 21:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753368AbXDISkq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 14:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753371AbXDISkq
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 14:40:46 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41155 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753368AbXDISkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 14:40:45 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Hayn3-0003b2-Kj; Mon, 09 Apr 2007 14:40:33 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 6B89520FBAE; Mon,  9 Apr 2007 14:40:39 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.98.0704091404530.28181@xanadu.home>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1753294AbXDITNw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Apr 2007 15:13:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753418AbXDITNw
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 15:13:52 -0400
+Received: from nile.gnat.com ([205.232.38.5]:61923 "EHLO nile.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753294AbXDITNv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 15:13:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by filtered-nile.gnat.com (Postfix) with ESMTP id 6EC5748CBEB
+	for <git@vger.kernel.org>; Mon,  9 Apr 2007 15:13:50 -0400 (EDT)
+Received: from nile.gnat.com ([127.0.0.1])
+ by localhost (nile.gnat.com [127.0.0.1]) (amavisd-new, port 10024) with LMTP
+ id 04135-01-7 for <git@vger.kernel.org>;
+ Mon,  9 Apr 2007 15:13:50 -0400 (EDT)
+Received: from [205.232.38.124] (potomac.gnat.com [205.232.38.124])
+	by nile.gnat.com (Postfix) with ESMTP id 3956148CBC0
+	for <git@vger.kernel.org>; Mon,  9 Apr 2007 15:13:50 -0400 (EDT)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44078>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> I'd be really tempted to create a pack v4 which only change is to still 
-> have the pack header at the beginning of the pack like we do today, but 
-> include the header in the pack SHA1 computation at the end of the stream 
-> only.  This way the pack SHA1 could be computed as the pack is 
-> generated, and the header fixed up without having to read the entire 
-> pack back.  I think it was Geert Bosch who proposed this and it makes 
-> tons of sense IMHO.
+In the git repository, after git checkout -f:
+potomac:~/git%git status
+# On branch master
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+=2E..
+#       gitweb/test/M=E4rchen
 
-Yes.  If we really are heading in this direction of needing to
-correct object counts, we should make that change.  Its trivial
-to hang onto that header for the duration of the rest of the data
-processing, and tack it onto the end for final SHA-1 computation.
+potomac:~/git%rm gitweb/test/Ma\314\210rchen
+potomac:~/git%git status
+# On branch master
+# Changed but not updated:
+#   (use "git add/rm <file>..." to update what will be committed)
+#
+#       deleted:    gitweb/test/M=E4rchen
 
-Since pack v4 looks like it will be a dev cycle longer than these
-index format changes and pack-splitting changes, I have to say I
-agree with you.  Lets move "pack v4" back to "pack v5" and make v4
-just a shift of where the header is included in the SHA-1.
+Aaaarghh!! There seems something inconsistent in the encoding
+of the =E4 letter that confuses git on my Mac OS X system.
+My environment has LANG=3Den_US.UTF-8 set, in case that matters.
 
-We're heading where I said I didn't want to go, which is two
-file format changes in 2007.  But I think that ship has already
-sailed...  Folks need support for larger repositories now, and pack
-v4/v5 (whatever you call our dictionary work) just isn't ready.
-Nor does it solve the big packfile problems that this current work
-is addressing.
+=46ilename completion results in Ma\314\210rchen, but the index
+encodes it as M\303\244rchen:
+0107272   g   i   t   w   e   b   /   t   e   s   t   /   M   ?   ?   r
+         147 151 164 167 145 142 057 164 145 163 164 057 115 303 244 16=
+2
 
--- 
-Shawn.
+The filesystem seems to be fine with either:
+potomac:~/git%ls -l gitweb/test/Ma\314\210rchen gitweb/test/M\303=20
+\244rchen
+-rw-r--r-- 1 bosch staff 17 2007-04-09 14:51 gitweb/test/M=E4rchen
+-rw-r--r-- 1 bosch staff 17 2007-04-09 14:51 gitweb/test/M=E4rchen
+
+Anybody has insights in what causes this? Thanks in advance!
+
+   -Geert
