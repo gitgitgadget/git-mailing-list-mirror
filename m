@@ -1,99 +1,94 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] git-archive: document CWD effect
-Date: Mon, 9 Apr 2007 21:37:21 +0100
-Message-ID: <200704092137.22781.andyparkins@gmail.com>
-References: <esc64d$d2u$1@sea.gmane.org> <7virc68nc1.fsf@assigned-by-dhcp.cox.net> <461A55FB.6070600@lsrfire.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <junkio@cox.net>,
-	Nick Williams <njw@jarb.freeserve.co.uk>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: [PATCH v2] Documentation: show-ref: document --exclude-existing
+Date: Mon, 9 Apr 2007 21:57:36 +0100
+Message-ID: <20070409210721.21570.18686.julian@quantumfyre.co.uk>
+References: <20070409205754.21048.73087.julian@quantumfyre.co.uk>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 10 03:13:12 2007
+X-From: git-owner@vger.kernel.org Tue Apr 10 03:41:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hb0cK-00014o-CW
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 22:37:36 +0200
+	id 1Hb17c-0006jN-1l
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 23:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965095AbXDIUhd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 9 Apr 2007 16:37:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965338AbXDIUhd
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 16:37:33 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:31420 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965095AbXDIUhc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 16:37:32 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1603550uga
-        for <git@vger.kernel.org>; Mon, 09 Apr 2007 13:37:30 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=NUZQjKnGAw1X9lZCUmFTctRzvot51mUmXDybfYaa2+Bec0SIetVvyx6KVurLseS30TVxoxp/pq1ET7hLhKihnWI0HK0+K4C0IvHXNeZwUoHylO87QpmND29Ghu5pK1RB9D4i2k/ARBFTzpp3lTXYEb8CCVkVoaJ+VYO6t6Xca7Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=W0dambRm0Cyx6PsHt58pK6dlpU236ZyIJugCQCu8Zrtsz8iTElDKtdRJNngY8rMUYFYhNcg4DBhMCGnjUUQt+W4M1X9wlCRWmTjPMGBBfkE2yWqrLcFzCi0CNpqVFep0j6QK6vhLl+LQsbroSgmX5IrknVTcFyuAdktCt0SmgSs=
-Received: by 10.67.117.18 with SMTP id u18mr4246389ugm.1176151050890;
-        Mon, 09 Apr 2007 13:37:30 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id j1sm9304770ugf.2007.04.09.13.37.29;
-        Mon, 09 Apr 2007 13:37:30 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <461A55FB.6070600@lsrfire.ath.cx>
-Content-Disposition: inline
+	id S965774AbXDIVJw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 17:09:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965778AbXDIVJw
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 17:09:52 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:41386 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965774AbXDIVJv (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Apr 2007 17:09:51 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 5282AC6114
+	for <git@vger.kernel.org>; Mon,  9 Apr 2007 22:09:50 +0100 (BST)
+Received: (qmail 11036 invoked by uid 103); 9 Apr 2007 22:09:29 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90/3050. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.024658 secs); 09 Apr 2007 21:09:29 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 9 Apr 2007 22:09:29 +0100
+In-Reply-To: <20070409205754.21048.73087.julian@quantumfyre.co.uk>
+X-git-sha1: 155d908df649e0ca5d4450af2488ff42e79b6235 
+X-Mailer: git-mail-commits v0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44095>
 
-On Monday 2007, April 09, Ren=C3=A9 Scharfe wrote:
+Use the comment in the code to document the --exclude-existing
+function to git-show-ref.
 
-> I agree with (1) and (3), meaning that we are free to change the
-> behaviour.  I don't agree with (2), though.  I'd find it strange if
-> changing the working directory wouldn't change the archive contents.
->
-> We should keep consistency with the rest of git here.  Since
-> git-archive is just a fancy git-ls-tree, I think we should mirror its
-> behaviour with respect to the working directory.  (Which is what the
-> current code does. Modulo bugs, of course.)
+Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+---
 
-I don't agree with the supposition that git-archive is a fancy=20
-git-ls-tree.  If it were, then you'd be right.  It's not though.  It's=20
-more like a git-read-tree or git-checkout-index; those both don't care=20
-where you are in the working tree.
+This fixes an embarrassing copy/paste error with the previous version ...
 
-Argument 1)
-git-archive should have nothing to do with a working tree in fact; it's=
-=20
-perfectly reasonable to expect that it would work in a bare repository=20
-in fact - that's almost the definition of a command that shouldn't be=20
-working directory aware.
+ Documentation/git-show-ref.txt |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-Argument 2)
-Consider the --remote option.  What "working path" should be relevant=20
-when "--remote" is passed?  For consistency, git-archive should always=20
-refer to the repository root.
-
-Argument 3)
-git-archive is similar to other VCS's "export" command; and for those=20
-the export command in it's default form will work without a local=20
-checkout and they export from the repository root.
-
-Argument 4)
-What if the repository has multiple root commits, similar to git's html=
-=20
-and todo branches.  Now, use git-archive and reference one of those=20
-commits.  The working directory you're in now has no relevance at all=20
-to the commit your targeting - it need not even exist.  The same=20
-problem exists of course if you are now in a directory that didn't=20
-exist in the past.
-
-
-
-Andy
---=20
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
+index 5973a82..2355aa5 100644
+--- a/Documentation/git-show-ref.txt
++++ b/Documentation/git-show-ref.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ [verse]
+ 'git-show-ref' [-q|--quiet] [--verify] [-h|--head] [-d|--dereference]
+ 	     [-s|--hash] [--abbrev] [--tags] [--heads] [--] <pattern>...
++'git-show-ref' --exclude-existing[=pattern]
+ 
+ DESCRIPTION
+ -----------
+@@ -19,6 +20,9 @@ commit IDs. Results can be filtered using a pattern and tags can be
+ dereferenced into object IDs. Additionally, it can be used to test whether a
+ particular ref exists.
+ 
++The --exclude-existing form is a filter that does the inverse, it shows the
++refs from stdin that don't exist in the local repository.
++
+ Use of this utility is encouraged in favor of directly accessing files under
+ in the `.git` directory.
+ 
+@@ -61,6 +65,18 @@ OPTIONS
+ 	Do not print any results to stdout. When combined with '--verify' this
+ 	can be used to silently check if a reference exists.
+ 
++--exclude-existing, --exclude-existing=pattern::
++
++	Make git-show-ref act as a filter that reads refs from stdin of the
++	form "^(?:<anything>\s)?<refname>(?:\^\{\})?$" and performs the
++	following actions on each:
++	(1) strip "^{}" at the end of line if any;
++	(2) ignore if pattern is provided and does not head-match refname;
++	(3) warn if refname is not a well-formed refname and skip;
++	(4) ignore if refname is a ref that exists in the local repository;
++	(5) otherwise output the line.
++
++
+ <pattern>::
+ 
+ 	Show references matching one or more patterns.
+-- 
+1.5.1
