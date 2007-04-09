@@ -1,55 +1,76 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 5/8] get-repack --max-pack-size: write_object() takes
- 'limit' arg
-Date: Mon, 09 Apr 2007 15:25:06 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704091523410.28181@xanadu.home>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH 5/8] get-repack --max-pack-size: write_object() takes 'limit' arg
+Date: Mon, 9 Apr 2007 12:20:26 -0700
+Message-ID: <56b7f5510704091220w69529e72n2f982c097c4e26a0@mail.gmail.com>
 References: <46197994.70009@gmail.com>
- <alpine.LFD.0.98.0704082034060.28181@xanadu.home>
- <56b7f5510704091151l70cc74b1la82e0c5a67d6885f@mail.gmail.com>
- <alpine.LFD.0.98.0704091455100.28181@xanadu.home>
- <56b7f5510704091220w69529e72n2f982c097c4e26a0@mail.gmail.com>
+	 <alpine.LFD.0.98.0704082034060.28181@xanadu.home>
+	 <56b7f5510704091151l70cc74b1la82e0c5a67d6885f@mail.gmail.com>
+	 <alpine.LFD.0.98.0704091455100.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 00:41:01 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Nicolas Pitre" <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 00:43:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HazUH-0005R1-K8
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 21:25:18 +0200
+	id 1HazQ3-0004jo-SF
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 21:20:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752389AbXDITZI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 15:25:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752858AbXDITZI
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 15:25:08 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35182 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752389AbXDITZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 15:25:07 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JG80048PWLUSOG0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 15:25:06 -0400 (EDT)
-In-reply-to: <56b7f5510704091220w69529e72n2f982c097c4e26a0@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S965153AbXDITU2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 15:20:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965309AbXDITU2
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 15:20:28 -0400
+Received: from wr-out-0506.google.com ([64.233.184.239]:41044 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965153AbXDITU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 15:20:27 -0400
+Received: by wr-out-0506.google.com with SMTP id 71so960333wri
+        for <git@vger.kernel.org>; Mon, 09 Apr 2007 12:20:26 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=C/6UgilCK0Op4CLfinooZrVckeiiw9BSplOdJVDWGbME7h8rqeqWimJp+ABmOqP0v4c/VUTRIbA/jarqCM5tomfOaaDByNY5g0yqmxf8u3ppLCTEGup3KN7BavABGfezwa1V/pV4rAgTu04BXxj0PAmzbJs5ckSL5MtqA7EhetM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TAhylY+hiLRVBDPM9yjgm7rDZITtFMgu/tUvNlIildx8shJ5C6nTiKlqt+A9DRaA5xWVtuOi2fKazdkkAx8li4qBF1cMvxb/0taTIOzIxGfuwrLNfZbxWmNCOJDNxVEIghon1KdpuYmOkM/X3ryGYapn2eK3z+T2pfWIdf8Yi60=
+Received: by 10.115.76.1 with SMTP id d1mr2433303wal.1176146426057;
+        Mon, 09 Apr 2007 12:20:26 -0700 (PDT)
+Received: by 10.114.46.4 with HTTP; Mon, 9 Apr 2007 12:20:26 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.98.0704091455100.28181@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44073>
 
-On Mon, 9 Apr 2007, Dana How wrote:
+On 4/9/07, Nicolas Pitre <nico@cam.org> wrote:
+> On Mon, 9 Apr 2007, Dana How wrote:
+> > On 4/8/07, Nicolas Pitre <nico@cam.org> wrote:
+> > > > +                     sha1write(f, header, hdrlen);
+> > > >                       sha1write(f, header + pos, sizeof(header) - pos);
+> > >
+> > > The above looks rather buggy to me.
+> >
+> > OK, can you be more specific?
+>
+> You're writing the content of the array 'header' twice in a row.  Sure
+> the second time it is header + pos but it is still the result of an
+> operation that used to put data into 'header' after the first content
+> was already written out.  Right now it looks like the first write might
+> contain clobbered data.
+Thanks,  I'll take care of that.
 
-> For testing, I've been using git-fsck/git-verify-pack/git-unpack-objects .
-> The only bugs they ever caught were (1) offset wraparound in .idx
-> before I started this patchset (with a very bad error message) and
-> (2) I failed to flush out the buffer before changing packs.
-> Everything else has been detected manually (not always by me).  Hmm.
+For testing, I've been using git-fsck/git-verify-pack/git-unpack-objects .
+The only bugs they ever caught were (1) offset wraparound in .idx
+before I started this patchset (with a very bad error message) and
+(2) I failed to flush out the buffer before changing packs.
+Everything else has been detected manually (not always by me).  Hmm.
 
-Make sure you always run 'make test' as well when you're done.
-
-
-Nicolas
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
