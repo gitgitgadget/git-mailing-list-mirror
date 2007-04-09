@@ -1,116 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] Add %m to '--pretty=format:'
-Date: Mon, 09 Apr 2007 04:11:13 -0700
-Message-ID: <7vbqhx246m.fsf_-_@assigned-by-dhcp.cox.net>
-References: <1175686583.19898.68.camel@okra.transitives.com>
-	<Pine.LNX.4.64.0704040744160.6730@woody.linux-foundation.org>
-	<7vircbwfym.fsf@assigned-by-dhcp.cox.net>
+From: Tomash Brechko <tomash.brechko@gmail.com>
+Subject: [PATCH (resend)] cvsexportcommit -p : fix the usage of git-apply -C.
+Date: Mon, 9 Apr 2007 15:24:02 +0400
+Message-ID: <20070409112402.GD11593@moonlight.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Bennee <kernel-hacker@bennee.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 09 13:12:01 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 09 13:24:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HarmI-0003Rt-Is
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 13:11:18 +0200
+	id 1Harz5-0005e5-1K
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 13:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752784AbXDILLP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 07:11:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752812AbXDILLP
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 07:11:15 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:50605 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752784AbXDILLO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 07:11:14 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070409111115.MFPN373.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Mon, 9 Apr 2007 07:11:15 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id kzBD1W0061kojtg0000000; Mon, 09 Apr 2007 07:11:14 -0400
-In-Reply-To: <7vircbwfym.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 04 Apr 2007 22:25:05 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753100AbXDILYL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 07:24:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753094AbXDILYL
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 07:24:11 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:56455 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751240AbXDILYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 07:24:10 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so1520288uga
+        for <git@vger.kernel.org>; Mon, 09 Apr 2007 04:24:08 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
+        b=jwb8T4Da+we0quGii9qL4xxXA0eMrkjalSC/c83BGVyb0sL1eIlsFNKxyLqslAHNMnCPBzEcHPUu8nyeH3vvI++dI5LEH253VOTjb7SI+rR1rWR/QHV+lZ3pMjCp/T4I+AYXx/AkAQwblxXrNDPNzmTRbyy5cRgBt2YXanNjuxk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mail-followup-to:mime-version:content-type:content-disposition:user-agent;
+        b=E3ULdQ8lWbT0v6CVHuD58dNggKaiPeAri11uvS2DM3wuRBMj5aFfln4EoaNeyY11ui2GotiHLgwC1McOAycjbjgKlFQfjqa8UTYehwnkLXuuvvxyACaqQAlqpketXjQzC772su3V/hhytNU0gNxoWLF0tJmZhwpOc53QtviEToc=
+Received: by 10.66.224.19 with SMTP id w19mr5192768ugg.1176117848623;
+        Mon, 09 Apr 2007 04:24:08 -0700 (PDT)
+Received: from moonlight.home ( [80.246.71.156])
+        by mx.google.com with ESMTP id b23sm8675494ugd.2007.04.09.04.24.07;
+        Mon, 09 Apr 2007 04:24:08 -0700 (PDT)
+Received: from moonlight.home (localhost.localdomain [127.0.0.1])
+	by moonlight.home (Postfix) with ESMTP id A9C123A7C2;
+	Mon,  9 Apr 2007 15:24:02 +0400 (MSD)
+Received: (from tomash@localhost)
+	by moonlight.home (8.13.1/8.13.1/Submit) id l39BO2iJ018546;
+	Mon, 9 Apr 2007 15:24:02 +0400
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44050>
 
-When used with '--boundary A...B', this shows the -/</> marker you
-would get with --left-right option to 'git-log' family.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Unlike 'patch --fuzz=NUM', which specifies the number of lines allowed
+to mismatch, 'git-apply -CNUM' requests the match of NUM lines of
+context.  Omitting -C requests full context match, and that's what
+should be used for cvsexportcommit -p.
 ---
+ git-cvsexportcommit.perl |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
 
- * This can be used like this:
-
-	$ git log --cherry-pick --pretty='format:%m%h %s' origin...master
-	<e712d0c upstream side commit
-        <deadbee upstream side commit
-        >cafedee commit on my side
-
-   to identify commits yet to be sent, probably easier to read
-   than git-cherry.
-
- commit.c |   16 +++++++++++++---
- 1 files changed, 13 insertions(+), 3 deletions(-)
-
-diff --git a/commit.c b/commit.c
-index 754d1b8..952095f 100644
---- a/commit.c
-+++ b/commit.c
-@@ -4,6 +4,8 @@
- #include "pkt-line.h"
- #include "utf8.h"
- #include "interpolate.h"
-+#include "diff.h"
-+#include "revision.h"
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index 67224b4..6ed4719 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -124,12 +124,17 @@ close MSG;
+ `git-diff-tree --binary -p $parent $commit >.cvsexportcommit.diff`;# || die "Cannot diff";
  
- int save_commit_buffer = 1;
+ ## apply non-binary changes
+-my $fuzz = $opt_p ? 0 : 2;
++
++# In pedantic mode require all lines of context to match.  In normal
++# mode, be compatible with diff/patch: assume 3 lines of context and
++# require at least one line match, i.e. ignore at most 2 lines of
++# context, like diff/patch do by default.
++my $context = $opt_p ? '' : '-C1';
  
-@@ -808,7 +810,8 @@ static long format_commit_message(const struct commit *commit,
- 		{ "%Cgreen" },	/* green */
- 		{ "%Cblue" },	/* blue */
- 		{ "%Creset" },	/* reset color */
--		{ "%n" }	/* newline */
-+		{ "%n" },	/* newline */
-+		{ "%m" },	/* left/right/bottom */
- 	};
- 	enum interp_index {
- 		IHASH = 0, IHASH_ABBREV,
-@@ -824,14 +827,15 @@ static long format_commit_message(const struct commit *commit,
- 		ISUBJECT,
- 		IBODY,
- 		IRED, IGREEN, IBLUE, IRESET_COLOR,
--		INEWLINE
-+		INEWLINE,
-+		ILEFT_RIGHT,
- 	};
- 	struct commit_list *p;
- 	char parents[1024];
- 	int i;
- 	enum { HEADER, SUBJECT, BODY } state;
+ print "Checking if patch will apply\n";
  
--	if (INEWLINE + 1 != ARRAY_SIZE(table))
-+	if (ILEFT_RIGHT + 1 != ARRAY_SIZE(table))
- 		die("invalid interp table!");
+ my @stat;
+-open APPLY, "GIT_DIR= git-apply -C$fuzz --binary --summary --numstat<.cvsexportcommit.diff|" || die "cannot patch";
++open APPLY, "GIT_DIR= git-apply $context --binary --summary --numstat<.cvsexportcommit.diff|" || die "cannot patch";
+ @stat=<APPLY>;
+ close APPLY || die "Cannot patch";
+ my (@bfiles,@files,@afiles,@dfiles);
+@@ -196,7 +201,7 @@ if ($dirty) {
+ }
  
- 	/* these are independent of the commit */
-@@ -852,6 +856,12 @@ static long format_commit_message(const struct commit *commit,
- 	interp_set_entry(table, ITREE_ABBREV,
- 			find_unique_abbrev(commit->tree->object.sha1,
- 				DEFAULT_ABBREV));
-+	interp_set_entry(table, ILEFT_RIGHT,
-+			 (commit->object.flags & BOUNDARY)
-+			 ? "-"
-+			 : (commit->object.flags & SYMMETRIC_LEFT)
-+			 ? "<"
-+			 : ">");
+ print "Applying\n";
+-`GIT_DIR= git-apply -C$fuzz --binary --summary --numstat --apply <.cvsexportcommit.diff` || die "cannot patch";
++`GIT_DIR= git-apply $context --binary --summary --numstat --apply <.cvsexportcommit.diff` || die "cannot patch";
  
- 	parents[1] = 0;
- 	for (i = 0, p = commit->parents;
+ print "Patch applied successfully. Adding new files and directories to CVS\n";
+ my $dirtypatch = 0;
+-- 
+1.5.1.82.g46af1-dirty
