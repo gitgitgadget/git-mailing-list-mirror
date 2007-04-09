@@ -1,71 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 4/8] git-repack --max-pack-size: add fixup_header_footer()
-Date: Mon, 09 Apr 2007 15:33:50 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704091525260.28181@xanadu.home>
-References: <46197950.3080804@gmail.com>
- <7vwt0m76rv.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.98.0704082012220.28181@xanadu.home>
- <20070409173858.GT5436@spearce.org>
- <alpine.LFD.0.98.0704091404530.28181@xanadu.home>
- <20070409184039.GZ5436@spearce.org>
- <56b7f5510704091211i3d101cafq371fbb96ca27238b@mail.gmail.com>
+From: "Dana How" <danahow@gmail.com>
+Subject: Re: [PATCH 0/8] git-repack --max-pack-size
+Date: Mon, 9 Apr 2007 12:43:52 -0700
+Message-ID: <56b7f5510704091243w2ef54809m339663b3fbf72ad6@mail.gmail.com>
+References: <46197814.5010909@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Dana How <danahow@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 02:14:58 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>, danahow@gmail.com
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 10 02:25:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hazcg-0006ur-OU
-	for gcvg-git@gmane.org; Mon, 09 Apr 2007 21:33:55 +0200
+	id 1HazmY-0008WP-69
+	for gcvg-git@gmane.org; Mon, 09 Apr 2007 21:44:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752906AbXDITdv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 9 Apr 2007 15:33:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbXDITdv
-	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 15:33:51 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:44023 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752906AbXDITdu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Apr 2007 15:33:50 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JG8006YNX0EGSI0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 09 Apr 2007 15:33:50 -0400 (EDT)
-In-reply-to: <56b7f5510704091211i3d101cafq371fbb96ca27238b@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S964844AbXDITny (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 9 Apr 2007 15:43:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753468AbXDITny
+	(ORCPT <rfc822;git-outgoing>); Mon, 9 Apr 2007 15:43:54 -0400
+Received: from wr-out-0506.google.com ([64.233.184.237]:51148 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753428AbXDITny (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Apr 2007 15:43:54 -0400
+Received: by wr-out-0506.google.com with SMTP id 71so966900wri
+        for <git@vger.kernel.org>; Mon, 09 Apr 2007 12:43:53 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qXKtP00Xj0C0Za6sdwGuaVfiJEQTm6dp4lJOSE8qv1U1vnUonccrh4hQGZe2sWAoPZ6gHIJKuXMfZTYUYKGF2E4F/gRMzB44nMBOTM3Ao/xAhtrw579aP2K0mYev+rzKQPcRyxXzhHStDcX6tNTlCIQL4UaHXeVfLC/UJt6Sb9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Vh3tkUnlCg/4Ub8OrVsaiuY0wOydnRCycnCc+5dM2ehPzdRGMittbBEuUoVNdYK7/9fYnSufN3elfj1X3OrHI9FR9y7CuEWnHt1uCzoSdjfVSQPW9BDXsF5rQjySyAFp900qg8SsHtvd1+pyGi9pMjaxtm+3Fdb3wP2qyEpxxV4=
+Received: by 10.114.111.1 with SMTP id j1mr2479493wac.1176147832892;
+        Mon, 09 Apr 2007 12:43:52 -0700 (PDT)
+Received: by 10.114.46.4 with HTTP; Mon, 9 Apr 2007 12:43:52 -0700 (PDT)
+In-Reply-To: <46197814.5010909@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44090>
 
-On Mon, 9 Apr 2007, Dana How wrote:
+On 4/8/07, Dana How <danahow@gmail.com> wrote:
+> The three most common ways of making large packfiles
+> are git-fast-import, the first git-repack, or git-repack -a.
+> The first already supports a "--max-pack-size=N" option,
+> which limits the resulting packfiles to N megabytes.
+> This patchset adds the same option, with the same
+> behavior, to git-repack to handle the other two cases.
+>
+> After reviewing others' comments,  this latest patchset
+> touches 2/3 fewer files and 1/6 fewer lines,  and
+> introduces no behavior not seen elsewhere in git.
 
-> Wouldn't the following address the "object count unknown
-> at the start of sequential pack writing" problem:
->  Write 0 for object count in the header. This is a flag to look for
->  another header of same format just before the final SHA-1 which
->  has the correct count. The SHA-1 is still a checksum of everything
->  before it and no seeking/rewriting is needed on generation.
+At the moment,  I plan the following changes to this patchset:
+* Redo after 64b index applied (Nicolas)
+* Bad re-use of header around sha1write (Nicolas)
+* Set object_entry.offset before write_object (Dana)
+* Finish reducing struct object_entry (Junio)
+* Remove spaces from inside () (Junio)
 
-No.  You really wants to know up front how many objects a pack contains 
-when streaming it.  And this is not only for packs written to stdout.
+Concerning refactorings,
+I'd prefer to keep those in a separate (follow-on?) patchset.
 
-> Finally, when I generate several 2GB split packfiles,  I do notice
-> the slight delay for fixup_header_footer(), and I do think it's a bit
-> ugly, but in quantitative terms it's an insignificant part of a long
-> operation that's infrequently performed.  Does this need to be
-> optimized at all?
-
-Maybe, maybe not.  That depends how much data we think GIT could be used 
-to manage in the future.  With a 1TB pack file you definitely want to 
-optimize that case.
-
-OTOH this could wait for the real pack v4 too.
-
-
-Nicolas
+Thanks,
+-- 
+Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
