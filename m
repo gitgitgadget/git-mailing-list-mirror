@@ -1,128 +1,238 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5/6] Teach "fsck" not to follow subproject links
-Date: Mon, 9 Apr 2007 21:15:29 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704092115020.6730@woody.linux-foundation.org>
+Subject: [PATCH 6/6] Teach core object handling functions about gitlinks
+Date: Mon, 9 Apr 2007 21:20:29 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org>
 References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 10 09:06:31 2007
+X-From: git-owner@vger.kernel.org Tue Apr 10 09:08:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hb7ld-0006oj-L5
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 06:15:42 +0200
+	id 1Hb7qQ-0007eB-KN
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 06:20:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964974AbXDJEPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 00:15:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965336AbXDJEPi
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 00:15:38 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:42998 "EHLO smtp.osdl.org"
+	id S965336AbXDJEUf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 00:20:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966056AbXDJEUf
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 00:20:35 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:43101 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964974AbXDJEPh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 00:15:37 -0400
+	id S965336AbXDJEUe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 00:20:34 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3A4FWPD025650
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3A4KUPD025749
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 9 Apr 2007 21:15:32 -0700
+	Mon, 9 Apr 2007 21:20:30 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3A4FTaG031077;
-	Mon, 9 Apr 2007 21:15:30 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3A4KT26031159;
+	Mon, 9 Apr 2007 21:20:30 -0700
 In-Reply-To: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.956 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Status: No, hits=-3.956 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_UNIFIED_DIFF_OSDL
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
 X-MIMEDefang-Filter: osdl$Revision: 1.177 $
 X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44111>
 
 
-Since the subprojects don't necessarily even exist in the current tree,
-much less in the current git repository (they are totally independent
-repositories), we do not want to try to follow the chain from one git
-repository to another through a gitlink.
+This teaches the really fundamental core SHA1 object handling routines
+about gitlinks.  We can compare trees with gitlinks in them (although we
+can not actually generate patches for them yet - just raw git diffs),
+and they show up as commits in "git ls-tree".
 
-This involves teaching fsck to ignore references to gitlink objects from
-a tree and from the current index.
+We also know to compare gitlinks as if they were directories (ie the
+normal "sort as trees" rules apply).
 
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
- builtin-fsck.c |    9 ++++++++-
- tree.c         |   15 ++++++++++++++-
- 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/builtin-fsck.c b/builtin-fsck.c
-index 4d8b66c..f22de8d 100644
---- a/builtin-fsck.c
-+++ b/builtin-fsck.c
-@@ -253,6 +253,7 @@ static int fsck_tree(struct tree *item)
- 		case S_IFREG | 0644:
- 		case S_IFLNK:
- 		case S_IFDIR:
-+		case S_IFDIRLNK:
- 			break;
- 		/*
- 		 * This is nonstandard, but we had a few of these
-@@ -695,8 +696,14 @@ int cmd_fsck(int argc, char **argv, const char *prefix)
- 		int i;
- 		read_cache();
- 		for (i = 0; i < active_nr; i++) {
--			struct blob *blob = lookup_blob(active_cache[i]->sha1);
-+			unsigned int mode;
-+			struct blob *blob;
- 			struct object *obj;
-+
-+			mode = ntohl(active_cache[i]->ce_mode);
-+			if (S_ISDIRLNK(mode))
-+				continue;
-+			blob = lookup_blob(active_cache[i]->sha1);
- 			if (!blob)
- 				continue;
- 			obj = &blob->object;
-diff --git a/tree.c b/tree.c
-index d188c0f..dbb63fc 100644
---- a/tree.c
-+++ b/tree.c
-@@ -143,6 +143,14 @@ struct tree *lookup_tree(const unsigned char *sha1)
- 	return (struct tree *) obj;
+Ok, that's it for now.
+
+NOTE NOTE NOTE! I'd like to note once more that this doesn't actually get 
+you working subproject support. Not only do I need to connect up a few 
+more low-level helper functions (things like "git diff" don't know how to 
+generate even rudimentary "subproject X changed" patches, nor can you 
+actually yet *add* subprojects), but quite apart from that low-level 
+stuff, anything more high-level (like "git fetch" and friends) will need 
+to know about subprojects.
+
+In general, think of this like the early git plumbing: it's the early
+"content-addressable filesystem" part. The actual SCM parts going on top 
+of it are yet to be done.
+
+I'm hoping/expecting that there are more people who have the ability and 
+the interest to work on the higher-level interfaces once the core plumbing 
+support is there. There's still some plumbing to be done, but after that, 
+maybe more people (and maybe the SoC people) can start filling out the 
+higher-level details..
+
+Comments on the patches/approach so far?
+
+ builtin-ls-tree.c |   20 +++++++++++++++++++-
+ cache-tree.c      |    2 +-
+ read-cache.c      |   35 +++++++++++++++++++++++++++++++----
+ sha1_file.c       |    3 +++
+ 4 files changed, 54 insertions(+), 6 deletions(-)
+
+diff --git a/builtin-ls-tree.c b/builtin-ls-tree.c
+index 6472610..1cb4dca 100644
+--- a/builtin-ls-tree.c
++++ b/builtin-ls-tree.c
+@@ -6,6 +6,7 @@
+ #include "cache.h"
+ #include "blob.h"
+ #include "tree.h"
++#include "commit.h"
+ #include "quote.h"
+ #include "builtin.h"
+ 
+@@ -59,7 +60,24 @@ static int show_tree(const unsigned char *sha1, const char *base, int baselen,
+ 	int retval = 0;
+ 	const char *type = blob_type;
+ 
+-	if (S_ISDIR(mode)) {
++	if (S_ISDIRLNK(mode)) {
++		/*
++		 * Maybe we want to have some recursive version here?
++		 *
++		 * Something like:
++		 *
++		if (show_subprojects(base, baselen, pathname)) {
++			if (fork()) {
++				chdir(base);
++				exec ls-tree;
++			}
++			waitpid();
++		}
++		 *
++		 * ..or similar..
++		 */
++		type = commit_type;
++	} else if (S_ISDIR(mode)) {
+ 		if (show_recursive(base, baselen, pathname)) {
+ 			retval = READ_TREE_RECURSIVE;
+ 			if (!(ls_options & LS_SHOW_TREES))
+diff --git a/cache-tree.c b/cache-tree.c
+index 9b73c86..6369cc7 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -326,7 +326,7 @@ static int update_one(struct cache_tree *it,
+ 			mode = ntohl(ce->ce_mode);
+ 			entlen = pathlen - baselen;
+ 		}
+-		if (!missing_ok && !has_sha1_file(sha1))
++		if (mode != S_IFDIRLNK && !missing_ok && !has_sha1_file(sha1))
+ 			return error("invalid object %s", sha1_to_hex(sha1));
+ 
+ 		if (!ce->ce_mode)
+diff --git a/read-cache.c b/read-cache.c
+index 54573ce..8fe94cd 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -5,6 +5,7 @@
+  */
+ #include "cache.h"
+ #include "cache-tree.h"
++#include "refs.h"
+ 
+ /* Index extensions.
+  *
+@@ -91,6 +92,23 @@ static int ce_compare_link(struct cache_entry *ce, size_t expected_size)
+ 	return match;
  }
  
-+/*
-+ * NOTE! Tree refs to external git repositories
-+ * (ie gitlinks) do not count as real references.
-+ *
-+ * You don't have to have those repositories
-+ * available at all, much less have the objects
-+ * accessible from the current repository.
-+ */
- static void track_tree_refs(struct tree *item)
++static int ce_compare_gitlink(struct cache_entry *ce)
++{
++	unsigned char sha1[20];
++
++	/*
++	 * We don't actually require that the .git directory
++	 * under DIRLNK directory be a valid git directory. It
++	 * might even be missing (in case nobody populated that
++	 * sub-project).
++	 *
++	 * If so, we consider it always to match.
++	 */
++	if (resolve_gitlink_ref(ce->name, "HEAD", sha1) < 0)
++		return 0;
++	return hashcmp(sha1, ce->sha1);
++}
++
+ static int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
  {
- 	int n_refs = 0, i;
-@@ -152,8 +160,11 @@ static void track_tree_refs(struct tree *item)
+ 	switch (st->st_mode & S_IFMT) {
+@@ -102,6 +120,9 @@ static int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
+ 		if (ce_compare_link(ce, xsize_t(st->st_size)))
+ 			return DATA_CHANGED;
+ 		break;
++	case S_IFDIRLNK:
++		/* No need to do anything, we did the exact compare in "match_stat_basic" */
++		break;
+ 	default:
+ 		return TYPE_CHANGED;
+ 	}
+@@ -127,6 +148,12 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
+ 		    (has_symlinks || !S_ISREG(st->st_mode)))
+ 			changed |= TYPE_CHANGED;
+ 		break;
++	case S_IFDIRLNK:
++		if (!S_ISDIR(st->st_mode))
++			changed |= TYPE_CHANGED;
++		else if (ce_compare_gitlink(ce))
++			changed |= DATA_CHANGED;
++		break;
+ 	default:
+ 		die("internal error: ce_mode is %o", ntohl(ce->ce_mode));
+ 	}
+@@ -250,9 +277,9 @@ int base_name_compare(const char *name1, int len1, int mode1,
+ 		return cmp;
+ 	c1 = name1[len];
+ 	c2 = name2[len];
+-	if (!c1 && S_ISDIR(mode1))
++	if (!c1 && (S_ISDIR(mode1) || S_ISDIRLNK(mode1)))
+ 		c1 = '/';
+-	if (!c2 && S_ISDIR(mode2))
++	if (!c2 && (S_ISDIR(mode2) || S_ISDIRLNK(mode1)))
+ 		c2 = '/';
+ 	return (c1 < c2) ? -1 : (c1 > c2) ? 1 : 0;
+ }
+@@ -334,8 +361,8 @@ int add_file_to_cache(const char *path, int verbose)
+ 	if (lstat(path, &st))
+ 		die("%s: unable to stat (%s)", path, strerror(errno));
  
- 	/* Count how many entries there are.. */
- 	init_tree_desc(&desc, item->buffer, item->size);
--	while (tree_entry(&desc, &entry))
-+	while (tree_entry(&desc, &entry)) {
-+		if (S_ISDIRLNK(entry.mode))
-+			continue;
- 		n_refs++;
-+	}
+-	if (!S_ISREG(st.st_mode) && !S_ISLNK(st.st_mode))
+-		die("%s: can only add regular files or symbolic links", path);
++	if (!S_ISREG(st.st_mode) && !S_ISLNK(st.st_mode) && !S_ISDIR(st.st_mode))
++		die("%s: can only add regular files, symbolic links or git-directories", path);
  
- 	/* Allocate object refs and walk it again.. */
- 	i = 0;
-@@ -162,6 +173,8 @@ static void track_tree_refs(struct tree *item)
- 	while (tree_entry(&desc, &entry)) {
- 		struct object *obj;
+ 	namelen = strlen(path);
+ 	size = cache_entry_size(namelen);
+diff --git a/sha1_file.c b/sha1_file.c
+index 4304fe9..ab915fa 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -13,6 +13,7 @@
+ #include "commit.h"
+ #include "tag.h"
+ #include "tree.h"
++#include "refs.h"
  
-+		if (S_ISDIRLNK(entry.mode))
-+			continue;
- 		if (S_ISDIR(entry.mode))
- 			obj = &lookup_tree(entry.sha1)->object;
- 		else
+ #ifndef O_NOATIME
+ #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
+@@ -2332,6 +2333,8 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, int write
+ 				     path);
+ 		free(target);
+ 		break;
++	case S_IFDIR:
++		return resolve_gitlink_ref(path, "HEAD", sha1);
+ 	default:
+ 		return error("%s: unsupported file type", path);
+ 	}
 -- 
 1.5.1.110.g1e4c
