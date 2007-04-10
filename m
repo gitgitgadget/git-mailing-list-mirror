@@ -1,91 +1,63 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 3/6] Add 'resolve_gitlink_ref()' helper function
-Date: Tue, 10 Apr 2007 09:16:07 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704100909160.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> 
- <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org> 
- <81b0412b0704100238l38ad3765w6c06878e2db654a7@mail.gmail.com> 
- <Pine.LNX.4.64.0704100756060.6730@woody.linux-foundation.org> 
- <81b0412b0704100835vbbfe8e7o2df2f121ce088589@mail.gmail.com> 
- <Pine.LNX.4.64.0704100849170.6730@woody.linux-foundation.org>
- <81b0412b0704100857h7550b3f9r1772dc5789c80426@mail.gmail.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
+Date: Tue, 10 Apr 2007 18:28:37 +0200
+Message-ID: <200704101828.37453.Josef.Weidendorfer@gmx.de>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 02:00:07 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 11 02:10:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbJ0y-00053x-1e
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 18:16:16 +0200
+	id 1HbJDF-0006su-3p
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 18:28:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031012AbXDJQQN (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 12:16:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031013AbXDJQQN
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 12:16:13 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:34235 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031012AbXDJQQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 12:16:12 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3AGG8VZ002383
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Apr 2007 09:16:08 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3AGG7ju011676;
-	Tue, 10 Apr 2007 09:16:07 -0700
-In-Reply-To: <81b0412b0704100857h7550b3f9r1772dc5789c80426@mail.gmail.com>
-X-Spam-Status: No, hits=-0.958 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1031055AbXDJQ2o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 12:28:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031056AbXDJQ2o
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 12:28:44 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:47682 "EHLO
+	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1031055AbXDJQ2n (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2007 12:28:43 -0400
+Received: from dhcp-3s-51.lrr.in.tum.de (dhcp-3s-51.lrr.in.tum.de [131.159.35.51])
+	by mail.in.tum.de (Postfix) with ESMTP id C23CF28DB;
+	Tue, 10 Apr 2007 18:28:41 +0200 (MEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44152>
 
+On Tuesday 10 April 2007, Linus Torvalds wrote:
+> ...
+> +	if (resolve_gitlink_ref(ce->name, "HEAD", sha1) < 0)
+> +		return 0;
+> +	return hashcmp(sha1, ce->sha1);
 
+So this does mean that the SHA1 of a gitlink entry corresponds
+to the commit in the subproject?
 
-On Tue, 10 Apr 2007, Alex Riesen wrote:
->
-> On 4/10/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> > That said, it's definitely designed so that if you want to automate
-> > tracking other peoples bare repositories, you can do so: you'd just have
-> > to *really* script it with something like
-> > 
-> >         git update-index --cacheinfo 0160000 <sha1> <dirname>
-> > 
-> > (which is how you could create those commits to a bare repo too, so it's
-> > not like this is really even any different)
-> 
-> Nice :)
+I wonder if it is not useful to be able to add some attribute(s)
+to a gitlink, i.e. first reference a gitlink object in the superproject,
+which then references the submodule commit, and also holds some
+further attributes. These attributes can not be put into the subproject,
+as it should be independent.
 
-Well, the *really* nice thing about doing it like this is that you can 
-actually update subprojects without even having them even be *local* to 
-where you do the superproject.
+An example for such an attribute would be a subproject name/ID.
+An argument for this: The user should be able to specify some policies
+for submodules, like "do not clone/checkout this submodule". But the
+path where the submodule resides in a given commit is not useful here,
+as a submodule can reside at different paths in the history of the
+supermodule.
 
-IOW, you could literally build up the superproject by saying that you want 
-to track "all git projects I care about" somewhere else, and do a series 
-of automated
-
-	git ls-remote sub-project-xyzzy tracking-branch-xyzzy | ...
-
-and basically create the "superproject" without ever actually downloading 
-or populating the subprojects at all.
-
-Then, if everything is set up correctly, you can basically use the 
-superproject as an "auto-mirror" - whenever you want to get all the 
-projects you care about, you just clone that superproject, and (once 
-you've taught "git clone" to fetch the subprojects, of course ;^) you'd 
-basically fetch them all from their appropriate locations - without ever 
-having the actual superproject have to even *really* care about it.
-
-So basically, a superproject could be used as just a "gathering point", 
-without having to actually *contain* any of the subprojects. The actual 
-sources for subprojects may be on totally different servers. That's what 
-real distribution is all about.
-
-		Linus
+Josef
