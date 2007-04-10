@@ -1,61 +1,83 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Oddities cloning over http
-Date: Wed, 11 Apr 2007 11:28:35 +1200
-Message-ID: <46a038f90704101628o12d966e6je6e5cfd5a5ee576d@mail.gmail.com>
-References: <46a038f90704100540y33c64a9au762fd927fb906f3d@mail.gmail.com>
-	 <598D5675D34BE349929AF5EDE9B03E27E536AE@az33exm24.fsl.freescale.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Feature request - Subtree checkouts
+Date: Tue, 10 Apr 2007 19:41:07 -0400
+Message-ID: <20070410234107.GI5436@spearce.org>
+References: <20070410074444.GA18541@curie-int.orbis-terrarum.net> <20070410132011.GH5436@spearce.org> <7vslb8ug7y.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 08:36:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 11 08:44:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbPlS-0002FV-Bq
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 01:28:42 +0200
+	id 1HbPxe-0004oW-Vz
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 01:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430AbXDJX2i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 19:28:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753435AbXDJX2h
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 19:28:37 -0400
-Received: from wx-out-0506.google.com ([66.249.82.233]:27418 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753430AbXDJX2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 19:28:36 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so2059891wxd
-        for <git@vger.kernel.org>; Tue, 10 Apr 2007 16:28:36 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=t4Xid9uPbdYqUdA0Ib9UVoUBUTsY5zhH7c0I8Rwy0D6WHmQjBx8lv683vGYDHDB976A+dQ/nR0qe99EhSuKcFjNGYbJ1trLSC6oWcZN2bch/lgZWEHAeePtG/eKahoh6K+AZw3ax4kqOkZ7iqIBYwQ3cAeSSQt83+Vov9pgtJm4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=aetRBsE/JJ7R+Y6eV05RJYbGITvW7fq1XN6pTGiTJBUq6xsb146NddlzXgFr09igbceqwfGvFbXIIbloB98FNkNUoBrlYvyNkZ0DeAUXtVB1LsTRwfWl7RBZTveG/XfXqCm6PAcCigtdFfsQ0T1ELoRcKo8oXk7/pPxJ4r9gJxU=
-Received: by 10.90.92.7 with SMTP id p7mr6166969agb.1176247715968;
-        Tue, 10 Apr 2007 16:28:35 -0700 (PDT)
-Received: by 10.90.120.11 with HTTP; Tue, 10 Apr 2007 16:28:35 -0700 (PDT)
-In-Reply-To: <598D5675D34BE349929AF5EDE9B03E27E536AE@az33exm24.fsl.freescale.net>
+	id S1161108AbXDJXlO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 19:41:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161110AbXDJXlO
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 19:41:14 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33817 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161108AbXDJXlN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 19:41:13 -0400
+Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.63)
+	(envelope-from <spearce@spearce.org>)
+	id 1HbPxL-00075i-QJ; Tue, 10 Apr 2007 19:40:59 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0F69420FBAE; Tue, 10 Apr 2007 19:41:08 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <7vslb8ug7y.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44200>
 
-On 4/11/07, Medve Emilian-EMMEDVE1 <Emilian.Medve@freescale.com> wrote:
-> I've seen this behavior when the server repo files don't have the same
-> owner/group as the one you're running the server with. That happened to
-> me after I edited the config files.
+Junio C Hamano <junkio@cox.net> wrote:
+> One thing that people need to be careful about is which SMTP
+> server they use.  I had an impression (I do not use send-email
+> myself) that it defaulted to local MTA, so the mail trail would
+> look like your local MTA receives from the MUA (which is
+> send-email), which forwards it to whereever destination (or
+> intermediaries).  On the other hand, I suspect many people use
+> their ISP's SMTP server when using their usual MUA, so the mail
+> trail would look different.  I do not know what filtering vger
+> does, but if it is filtering based on the MTA address
+> (dul.dnsbl.sorbs filtering comes to mind), that would make a
+> difference.
 
-Ok - at least in my case, this seems to be related to problems
-fetching HEAD on the server, probably because apache doesn't allow
-symlinks. What I don't quite follow is where is the best place to
-check for this. The logic is a bit muddy.
+I'm pretty sure the last time I tried git-send-email I had the
+MTA path exactly the same.  My mutt sends to `localhost`, which
+forwards over an SSL channel to my colo'd spearce.org mail server,
+and that relays to the final destination.  Hence spearce.org mail
+always originates from spearce.org.
 
-cheers,
+Now I ran git-send-email on a different system, but had it connect
+over SMTP to port 25 of the same system mutt runs on, so the
+initial Received line was different, but othewrise the mail path
+was the same.
 
+I also have a few other addresses that I can send to that will go
+out the spearce.org colo'd box to another SMTP system, then bounce
+back, and the round-trip was the same for anything from mutt and
+from git-send-email.
 
-martin
+I marked the whole mess up to some mail header difference that
+git-send-email wasn't sending the same way mutt was, and that vger
+cared about. I didn't see the difference easily.  I just gave up.
+;-)
+
+-- 
+Shawn.
