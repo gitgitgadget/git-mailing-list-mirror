@@ -1,102 +1,160 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4/6] Add "S_IFDIRLNK" file mode infrastructure for git links
-Date: Mon, 9 Apr 2007 21:14:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704092114300.6730@woody.linux-foundation.org>
+Subject: [PATCH 3/6] Add 'resolve_gitlink_ref()' helper function
+Date: Mon, 9 Apr 2007 21:14:26 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org>
 References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 10 09:09:57 2007
+X-From: git-owner@vger.kernel.org Tue Apr 10 09:17:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hb7l8-0006iL-Qk
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 06:15:11 +0200
+	id 1Hb7kY-0006cl-Qc
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 06:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933082AbXDJEPG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 00:15:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933075AbXDJEPG
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 00:15:06 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:42959 "EHLO smtp.osdl.org"
+	id S933058AbXDJEOb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 00:14:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933075AbXDJEOb
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 00:14:31 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:42950 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933082AbXDJEPE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 00:15:04 -0400
+	id S933058AbXDJEOa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 00:14:30 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3A4ExPD025592
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3A4ERPD025572
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 9 Apr 2007 21:14:59 -0700
+	Mon, 9 Apr 2007 21:14:27 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3A4Ewm5031030;
-	Mon, 9 Apr 2007 21:14:58 -0700
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3A4ER0v031016;
+	Mon, 9 Apr 2007 21:14:27 -0700
 In-Reply-To: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-3.953 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_UNIFIED_DIFF_OSDL
+X-Spam-Status: No, hits=-0.953 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
 X-MIMEDefang-Filter: osdl$Revision: 1.177 $
 X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44113>
 
 
-This just adds the basic helper functions to recognize and work with git
-tree entries that are links to other git repositories ("subprojects").
-They still aren't actually connected up to any of the code-paths, but
-now all the infrastructure is in place.
+This new function resolves a ref in *another* git repository.  It's
+named for its intended use: to look up the git link to a subproject.
 
-The next commit will start actually adding actual subproject support.
+It's not actually wired up to anything yet, but we're getting closer to
+having fundamental plumbing support for "links" from one git directory
+to another, which is the basis of subproject support.
 
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
- cache.h |   20 +++++++++++++++++++-
- 1 files changed, 19 insertions(+), 1 deletions(-)
+ refs.c |   79 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.h |    3 ++
+ 2 files changed, 82 insertions(+), 0 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index eb57507..1b3d00e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -25,6 +25,22 @@
- #endif
+diff --git a/refs.c b/refs.c
+index d2b7b7f..229da74 100644
+--- a/refs.c
++++ b/refs.c
+@@ -215,6 +215,85 @@ static struct ref_list *get_loose_refs(void)
  
- /*
-+ * A "directory link" is a link to another git directory.
-+ *
-+ * The value 0160000 is not normally a valid mode, and
-+ * also just happens to be S_IFDIR + S_IFLNK
-+ *
-+ * NOTE! We *really* shouldn't depend on the S_IFxxx macros
-+ * always having the same values everywhere. We should use
-+ * our internal git values for these things, and then we can
-+ * translate that to the OS-specific value. It just so
-+ * happens that everybody shares the same bit representation
-+ * in the UNIX world (and apparently wider too..)
-+ */
-+#define S_IFDIRLNK	0160000
-+#define S_ISDIRLNK(m)	(((m) & S_IFMT) == S_IFDIRLNK)
+ /* We allow "recursive" symbolic refs. Only within reason, though */
+ #define MAXDEPTH 5
++#define MAXREFLEN (1024)
 +
-+/*
-  * Intensive research over the course of many years has shown that
-  * port 9418 is totally unused by anything else. Or
-  *
-@@ -104,6 +120,8 @@ static inline unsigned int create_ce_mode(unsigned int mode)
++static int resolve_gitlink_packed_ref(char *name, int pathlen, const char *refname, unsigned char *result)
++{
++	FILE *f;
++	struct cached_refs refs;
++	struct ref_list *ref;
++	int retval;
++
++	strcpy(name + pathlen, "packed-refs");
++	f = fopen(name, "r");
++	if (!f)
++		return -1;
++	read_packed_refs(f, &refs);
++	ref = refs.packed;
++	retval = -1;
++	while (ref) {
++		if (!strcmp(ref->name, refname)) {
++			retval = 0;
++			memcpy(result, ref->sha1, 20);
++			break;
++		}
++		ref = ref->next;
++	}
++	free_ref_list(refs.packed);
++	return retval;
++}
++
++static int resolve_gitlink_ref_recursive(char *name, int pathlen, const char *refname, unsigned char *result, int recursion)
++{
++	int fd, len = strlen(refname);
++	char buffer[128], *p;
++
++	if (recursion > MAXDEPTH || len > MAXREFLEN)
++		return -1;
++	memcpy(name + pathlen, refname, len+1);
++	fd = open(name, O_RDONLY);
++	if (fd < 0)
++		return resolve_gitlink_packed_ref(name, pathlen, refname, result);
++
++	len = read(fd, buffer, sizeof(buffer)-1);
++	close(fd);
++	if (len < 0)
++		return -1;
++	while (len && isspace(buffer[len-1]))
++		len--;
++	buffer[len] = 0;
++
++	/* Was it a detached head or an old-fashioned symlink? */
++	if (!get_sha1_hex(buffer, result))
++		return 0;
++
++	/* Symref? */
++	if (strncmp(buffer, "ref:", 4))
++		return -1;
++	p = buffer + 4;
++	while (isspace(*p))
++		p++;
++
++	return resolve_gitlink_ref_recursive(name, pathlen, p, result, recursion+1);
++}
++
++int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *result)
++{
++	int len = strlen(path), retval;
++	char *gitdir;
++
++	while (len && path[len-1] == '/')
++		len--;
++	if (!len)
++		return -1;
++	gitdir = xmalloc(len + MAXREFLEN + 8);
++	memcpy(gitdir, path, len);
++	memcpy(gitdir + len, "/.git/", 7);
++
++	retval = resolve_gitlink_ref_recursive(gitdir, len+6, refname, result, 0);
++	free(gitdir);
++	return retval;
++}
+ 
+ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *flag)
  {
- 	if (S_ISLNK(mode))
- 		return htonl(S_IFLNK);
-+	if (S_ISDIR(mode) || S_ISDIRLNK(mode))
-+		return htonl(S_IFDIRLNK);
- 	return htonl(S_IFREG | ce_permissions(mode));
- }
- static inline unsigned int ce_mode_from_stat(struct cache_entry *ce, unsigned int mode)
-@@ -121,7 +139,7 @@ static inline unsigned int ce_mode_from_stat(struct cache_entry *ce, unsigned in
- }
- #define canon_mode(mode) \
- 	(S_ISREG(mode) ? (S_IFREG | ce_permissions(mode)) : \
--	S_ISLNK(mode) ? S_IFLNK : S_IFDIR)
-+	S_ISLNK(mode) ? S_IFLNK : S_ISDIR(mode) ? S_IFDIR : S_IFDIRLNK)
+diff --git a/refs.h b/refs.h
+index acedffc..f61f6d9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -60,4 +60,7 @@ extern int check_ref_format(const char *target);
+ /** rename ref, return 0 on success **/
+ extern int rename_ref(const char *oldref, const char *newref, const char *logmsg);
  
- #define cache_entry_size(len) ((offsetof(struct cache_entry,name) + (len) + 8) & ~7)
- 
++/** resolve ref in nested "gitlink" repository */
++extern int resolve_gitlink_ref(const char *name, const char *refname, unsigned char *result);
++
+ #endif /* REFS_H */
 -- 
 1.5.1.110.g1e4c
