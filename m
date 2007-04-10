@@ -1,68 +1,125 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 2/6] Avoid overflowing name buffer in deep directory structures
-Date: Mon, 9 Apr 2007 21:13:58 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704092113320.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH 12/10] validate reused pack data with CRC when possible
+Date: Tue, 10 Apr 2007 00:15:41 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704100004200.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 10 09:01:30 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 10 09:03:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hb7k8-0006WV-Dh
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 06:14:08 +0200
+	id 1Hb7lk-0006pg-MO
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 06:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933040AbXDJEOF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 00:14:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933058AbXDJEOF
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 00:14:05 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:42932 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933040AbXDJEOC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 00:14:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3A4DxPD025560
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 9 Apr 2007 21:13:59 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3A4DwXO031010;
-	Mon, 9 Apr 2007 21:13:59 -0700
-In-Reply-To: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.953 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S965044AbXDJEPp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 00:15:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965084AbXDJEPp
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 00:15:45 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:17208 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965044AbXDJEPn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 00:15:43 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JG900JXAL6541Q0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 10 Apr 2007 00:15:42 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44109>
 
+This replaces the inflate validation with a CRC validation when reusing
+data from a pack which uses index version 2.  That makes repacking much 
+safer against corruptions, and it should be a bit faster too.
 
-This just makes sure that when we do a read_directory(), we check
-that the filename fits in the buffer we allocated (with a bit of
-slop)
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- dir.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index 7426fde..4f5a224 100644
---- a/dir.c
-+++ b/dir.c
-@@ -353,6 +353,9 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
- 			     !strcmp(de->d_name + 1, "git")))
- 				continue;
- 			len = strlen(de->d_name);
-+			/* Ignore overly long pathnames! */
-+			if (len + baselen + 8 > sizeof(fullname))
-+				continue;
- 			memcpy(fullname + baselen, de->d_name, len+1);
- 			if (simplify_away(fullname, baselen + len, simplify))
- 				continue;
--- 
-1.5.1.110.g1e4c
+This completes the development for this patch series.  I tested that 
+this works as expected by manually corrupting a pack, etc.
+I intend to write real tests for this stuff of course, but at least the
+way should be completely clear for the pack spliting series now.
+
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 099dea0..533dd99 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -233,12 +233,6 @@ static struct revindex_entry * find_packed_object(struct packed_git *p,
+ 	die("internal error: pack revindex corrupt");
+ }
+ 
+-static off_t find_packed_object_size(struct packed_git *p, off_t ofs)
+-{
+-	struct revindex_entry *entry = find_packed_object(p, ofs);
+-	return entry[1].offset - ofs;
+-}
+-
+ static const unsigned char *find_packed_object_name(struct packed_git *p,
+ 						    off_t ofs)
+ {
+@@ -321,6 +315,28 @@ static int check_pack_inflate(struct packed_git *p,
+ 		stream.total_in == len) ? 0 : -1;
+ }
+ 
++static int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
++			  off_t offset, off_t len, unsigned int nr)
++{
++	const uint32_t *index_crc;
++	uint32_t data_crc = crc32(0, Z_NULL, 0);
++
++	do {
++		unsigned int avail;
++		void *data = use_pack(p, w_curs, offset, &avail);
++		if (avail > len)
++			avail = len;
++		data_crc = crc32(data_crc, data, avail);
++		offset += avail;
++		len -= avail;
++	} while (len);
++
++	index_crc = p->index_data;
++	index_crc += 2 + 256 + p->num_objects * (20/4) + nr;
++
++	return data_crc != ntohl(*index_crc);
++}
++
+ static void copy_pack_data(struct sha1file *f,
+ 		struct packed_git *p,
+ 		struct pack_window **w_curs,
+@@ -485,6 +501,7 @@ static unsigned long write_object(struct sha1file *f,
+ 	else {
+ 		struct packed_git *p = entry->in_pack;
+ 		struct pack_window *w_curs = NULL;
++		struct revindex_entry *revidx;
+ 		off_t offset;
+ 
+ 		if (entry->delta) {
+@@ -507,12 +524,17 @@ static unsigned long write_object(struct sha1file *f,
+ 			hdrlen += 20;
+ 		}
+ 
+-		offset = entry->in_pack_offset + entry->in_pack_header_size;
+-		datalen = find_packed_object_size(p, entry->in_pack_offset)
+-				- entry->in_pack_header_size;
+-		if (!pack_to_stdout && check_pack_inflate(p, &w_curs,
+-				offset, datalen, entry->size))
+-			die("corrupt delta in pack %s", sha1_to_hex(entry->sha1));
++		offset = entry->in_pack_offset;
++		revidx = find_packed_object(p, offset);
++		datalen = revidx[1].offset - offset;
++		if (!pack_to_stdout && p->index_version > 1 &&
++		    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr))
++			die("bad packed object CRC for %s", sha1_to_hex(entry->sha1));
++		offset += entry->in_pack_header_size;
++		datalen -= entry->in_pack_header_size;
++		if (!pack_to_stdout && p->index_version == 1 &&
++		    check_pack_inflate(p, &w_curs, offset, datalen, entry->size))
++			die("corrupt packed object for %s", sha1_to_hex(entry->sha1));
+ 		copy_pack_data(f, p, &w_curs, offset, datalen);
+ 		unuse_pack(&w_curs);
+ 		reused++;
