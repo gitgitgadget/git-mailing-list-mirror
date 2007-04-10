@@ -1,56 +1,55 @@
-From: "=?ISO-8859-1?Q?Santi_B=E9jar?=" <sbejar@gmail.com>
-Subject: Re: cogito selftests failures with git 1.5.1
-Date: Tue, 10 Apr 2007 12:39:27 +0200
-Message-ID: <8aa486160704100339w76608a73md10b2da0fcee7e8f@mail.gmail.com>
-References: <20070410101626.10047.qmail@0be9eada36064d.315fe32.mid.smarden.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [RFC/PATCH] Optimized PowerPC SHA1 generation for Darwin (OS X)
+Date: Tue, 10 Apr 2007 11:48:01 +0200
+Message-ID: <20070410094801.GA6148@diana.vm.bytemark.co.uk>
+References: <20070406234826.GG3854@regex.yaph.org> <Pine.LNX.4.64.0704061830350.6730@woody.linux-foundation.org> <20070408200939.GL3854@regex.yaph.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 10 13:40:42 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Arjen Laarhoven <arjen@yaph.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 14:38:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbDlC-0003G0-9G
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 12:39:38 +0200
+	id 1HbCxh-00037U-56
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 11:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753371AbXDJKjf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 06:39:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753358AbXDJKjf
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 06:39:35 -0400
-Received: from wr-out-0506.google.com ([64.233.184.237]:54319 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753371AbXDJKje (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 06:39:34 -0400
-Received: by wr-out-0506.google.com with SMTP id 71so1140917wri
-        for <git@vger.kernel.org>; Tue, 10 Apr 2007 03:39:33 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=asPS+TUfAqZRz3u10qX7rkQEw+VNHx8Wm0y76dhvmKKcWvaI1BhE/+Xaa1cXeEzgE4PxVn3hFLTodzZyMzSKrAOmVtvPLu7ILEQRXAlZlFnnjDHf6m2mhUZoukokfBJdtf00OGmku4GcgHzqQS5yn/wVuVpnsGoim6VvB/BeCZA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=FJJqKO00wzQeUDuUpmMFmsQtgalglXBKK+6SQCtXkqK4ZoC1GX8/JA6Mb+IaKzZSrVRGpLgvlLOmJ9lF+eFOA7TjmUOWb2yw140V5XpgiEJ9iC4MYeHiOnLzRlieBlDAgGIOTAiEOMsIJupCLDDZdhooD/jTRSRdDHziqZxbvB8=
-Received: by 10.78.203.13 with SMTP id a13mr1017227hug.1176201572315;
-        Tue, 10 Apr 2007 03:39:32 -0700 (PDT)
-Received: by 10.78.131.7 with HTTP; Tue, 10 Apr 2007 03:39:27 -0700 (PDT)
-In-Reply-To: <20070410101626.10047.qmail@0be9eada36064d.315fe32.mid.smarden.org>
+	id S1753281AbXDJJsZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Apr 2007 05:48:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753314AbXDJJsZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 05:48:25 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1611 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753281AbXDJJsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 05:48:24 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HbCxF-0001sN-00; Tue, 10 Apr 2007 10:48:01 +0100
+Mail-Followup-To: Arjen Laarhoven <arjen@yaph.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <20070408200939.GL3854@regex.yaph.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44121>
 
-On 4/10/07, Gerrit Pape <pape@smarden.org> wrote:
-> Hi, while cogito 0.18.2 builds and selftests fine with git 1.4.4.4, the
-> following selftests fail with 1.5.1 on Debian: t9105-fetch-local.sh:20,
-> t9204-merge-weird-conflicts.sh:8,20.
->
-> Is there still work done on cogito?
+On 2007-04-08 22:09:39 +0200, Arjen Laarhoven wrote:
 
-They are already fixed in the master branch. At least the t9105 was a
-fix in the test suite.
+>  ppc/{sha1ppc.S =3D> sha1ppc.in.S} |  110 +++++++++++++++++++--------=
+-----------
 
-Santi
+Wouldn't it be prettier if this filename was .S.in instead of .in.S?
+Additional file suffixes are usually added at the end (e.g. .tar.gz),
+and it makes more sense too.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
