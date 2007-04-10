@@ -1,73 +1,68 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH] Add sendmail -f support to git-send-email.
-Date: Tue, 10 Apr 2007 15:42:14 -0700
-Message-ID: <20070410224213.GF18541@curie-int.orbis-terrarum.net>
-References: <11762425341841-git-send-email-robbat2@gentoo.org> <20070410223826.GH2813@planck.djpig.de>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Cygwin and git 1.5.1
+Date: Tue, 10 Apr 2007 15:44:29 -0700
+Message-ID: <461C134D.8020803@zytor.com>
+References: <461BCBC0.2000705@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="hUH5gZbnpyIv7Mn4"
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Apr 11 07:56:23 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Apr 11 07:57:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbP3H-0001ob-Jl
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 00:43:04 +0200
+	id 1HbP4t-00028z-E9
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 00:44:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030726AbXDJWmB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 18:42:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030732AbXDJWmB
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 18:42:01 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:51993 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1030726AbXDJWl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 18:41:59 -0400
-Received: (qmail 29097 invoked from network); 10 Apr 2007 22:41:57 -0000
-Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Tue, 10 Apr 2007 22:41:57 +0000
-Received: (qmail 29065 invoked by uid 10000); 10 Apr 2007 15:42:14 -0700
-Mail-Followup-To: git@vger.kernel.org, junkio@cox.net
-Content-Disposition: inline
-In-Reply-To: <20070410223826.GH2813@planck.djpig.de>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S965724AbXDJWoh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 18:44:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965765AbXDJWoh
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 18:44:37 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:38271 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965724AbXDJWog (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 18:44:36 -0400
+Received: from [172.27.0.16] (c-67-180-238-171.hsd1.ca.comcast.net [67.180.238.171])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l3AMiTi1027409
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 10 Apr 2007 15:44:30 -0700
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+In-Reply-To: <461BCBC0.2000705@ramsay1.demon.co.uk>
+X-Virus-Scanned: ClamAV 0.88.7/3064/Tue Apr 10 09:25:23 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.9 required=5.0 tests=AWL,BAYES_00,RCVD_IN_NJABL_DUL,
+	RCVD_IN_SORBS_DUL autolearn=no version=3.1.8
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44193>
 
+Ramsay Jones wrote:
+> Hi Junio,
+> 
+> I recently upgraded to 1.5.1, via tarball as usual, without much problem.
+> The only problem being the "printf format warnings" issue, which prevents
+> me building with -Werror.
+> 
+> I have included, below, an updated version of my patch from the 1.5.0 
+> series.
+> We agreed last time that this patch is not the correct solution to this
+> problem in general (but it works on cygwin!), so this is *not* intended
+> for submission. I just wanted to document the problem. As before, I don't
+> really have a solution; I suppose I will just have to carry this patch
+> forward with each release - no big deal.
+> 
+> Note that the patch has grown larger. This is due to the increased use of
+> uint32_t (in combination with printf/die/error etc).
+> I guess not many others use -Werror to build on cygwin! ;-)
 
---hUH5gZbnpyIv7Mn4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The excruciatingly correct way to do this is to use the macros defined 
+in <inttypes.h>, so for uint32_t one should use %"PRNu32" instead of %u, 
+for example.
 
-On Wed, Apr 11, 2007 at 12:38:27AM +0200, Frank Lichtenheld wrote:
-> At least some MTAs (exim is the one I know for sure) can restrict -f
-> usage to some users and deny it for others. Don't know how much this
-> would really be a problem, but using -f unconditionally might be a bad
-> idea none-the-less.
-In those cases, the sendmail binary should fail gracefully, and then you
-know that at least your email isn't lost into the ether.
-
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Council Member
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---hUH5gZbnpyIv7Mn4
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iD8DBQFGHBLFPpIsIjIzwiwRApZfAJ9zbEjeDxgODRnPER5vyosSvqOLqwCbBAHP
-YdyS148HZjBUvNY/ukUtnZ0=
-=3C/A
------END PGP SIGNATURE-----
-
---hUH5gZbnpyIv7Mn4--
+	-hpa
