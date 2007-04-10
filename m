@@ -1,85 +1,63 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Feature request - Subtree checkouts
-Date: Tue, 10 Apr 2007 00:44:44 -0700
-Message-ID: <20070410074444.GA18541@curie-int.orbis-terrarum.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH 3/6] Add 'resolve_gitlink_ref()' helper function
+Date: Tue, 10 Apr 2007 11:38:29 +0200
+Message-ID: <81b0412b0704100238l38ad3765w6c06878e2db654a7@mail.gmail.com>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
+	 <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="huq684BweRXVnRxX"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 10 12:12:56 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 12:42:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbB1t-0008Bn-7m
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 09:44:41 +0200
+	id 1HbCo8-0001L3-Aq
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 11:38:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752145AbXDJHo0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 03:44:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbXDJHo0
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 03:44:26 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:52377 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752145AbXDJHoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 03:44:25 -0400
-Received: (qmail 15428 invoked from network); 10 Apr 2007 07:44:23 -0000
-Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Tue, 10 Apr 2007 07:44:23 +0000
-Received: (qmail 32117 invoked by uid 10000); 10 Apr 2007 00:44:44 -0700
+	id S1753276AbXDJJib (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 05:38:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbXDJJib
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 05:38:31 -0400
+Received: from an-out-0708.google.com ([209.85.132.242]:20274 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753276AbXDJJia (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 05:38:30 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1882944ana
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 02:38:30 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=TThMRHML5b3W8xoc3YUAO8tM6zE2RIqwVB6EKIU9fdKu5fm5Aj0M57YSujg1YO+vvEUfRgAGNIacsY05qrjdytjslRTI8TDsJK4GmwjE3XU65UWoCyVbBGdQroTTSRe2YzJCklZWxV3jobNVydG5Y6MBSHtw81mEtdlBXlw/djk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=cvYbDP+Ap8vK9gfumAbXBd5pybD6GkoVrXZy4ptSJ9a42TLpCMmpoe1YZcWej7QaF0llz+0DaX/5tXNOM94o6zh0FXMGf/yiCOrMD686/ewYMbT1v+bXwCzQfFp17idsslADkSnRrwkyiOsiU6E0XDn0wfOXfx93RuV4BzPTW8Q=
+Received: by 10.100.47.6 with SMTP id u6mr4695772anu.1176197910023;
+        Tue, 10 Apr 2007 02:38:30 -0700 (PDT)
+Received: by 10.100.86.14 with HTTP; Tue, 10 Apr 2007 02:38:29 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44117>
 
+On 4/10/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> +int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *result)
+> +{
+> +       int len = strlen(path), retval;
+> +       char *gitdir;
+> +
+> +       while (len && path[len-1] == '/')
+> +               len--;
+> +       if (!len)
+> +               return -1;
+> +       gitdir = xmalloc(len + MAXREFLEN + 8);
+> +       memcpy(gitdir, path, len);
+> +       memcpy(gitdir + len, "/.git/", 7);
 
---huq684BweRXVnRxX
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Heya,
-
-I'm trying to dig at various issues that are potential holdups for
-migrating the Gentoo CVS tree into Git.
-
-Since shallow checkouts are now available, there's just one more thing
-that's missing: subtree checkouts. Not to be confused with sub-projects.
-
-If the master tree has this as some example contents:
-/foo
-/abc/...
-/bar/example
-/bar/baz/some-content
-
-We need to be able to check out arbitrary subtrees. So I might want to
-check out everything (as the CVS administrator), while one of the more
-focused developers just wants to check out /bar/baz/.
-
-P.S. Does this list do some weird spam-blocking? I've tried 3 times now
-to use git-send-email to send an unrelated minor patch set
-(--subject-prefix for git-format-patch), and it has never shown up on
-the list :-(.
-
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Council Member
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---huq684BweRXVnRxX
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iD8DBQFGG0BsPpIsIjIzwiwRAm2FAKCj5q0wEt/yX7ql7GHPHf+5Bsbo2ACfen5J
-3lr+Dcq5x5Y8VqBPycLudrQ=
-=M5zm
------END PGP SIGNATURE-----
-
---huq684BweRXVnRxX--
+Can't a subproject be bare?
