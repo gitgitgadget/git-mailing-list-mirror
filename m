@@ -1,72 +1,88 @@
-From: "Robin H. Johnson" <robbat2@orbis-terrarum.net>
-Subject: Re: Feature request - Subtree checkouts
-Date: Tue, 10 Apr 2007 15:04:38 -0700
-Message-ID: <20070410220438.GD18541@curie-int.orbis-terrarum.net>
-References: <20070410074444.GA18541@curie-int.orbis-terrarum.net> <20070410132011.GH5436@spearce.org> <7vslb8ug7y.fsf@assigned-by-dhcp.cox.net> <20070410211040.GC18541@curie-int.orbis-terrarum.net>
+From: Sergio Callegari <scallegari@arces.unibo.it>
+Subject: git fsck and new repos / backup repos
+Date: Tue, 10 Apr 2007 18:27:05 +0000 (UTC)
+Message-ID: <loom.20070410T200901-466@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uxuisgdDHaNETlh8"
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 11 03:45:26 2007
+X-From: git-owner@vger.kernel.org Wed Apr 11 03:46:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbOTD-0002oJ-4J
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 00:05:47 +0200
+	id 1HbL3x-0008R8-4O
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 20:27:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753960AbXDJWEy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 18:04:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753954AbXDJWEx
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 18:04:53 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:44234 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753952AbXDJWEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 18:04:39 -0400
-Received: (qmail 9916 invoked from network); 10 Apr 2007 22:04:38 -0000
-Received: from Unknown (HELO orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Tue, 10 Apr 2007 22:04:38 +0000
-Received: (qmail 23369 invoked by uid 10000); 10 Apr 2007 15:04:38 -0700
-Content-Disposition: inline
-In-Reply-To: <20070410211040.GC18541@curie-int.orbis-terrarum.net>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1031397AbXDJS1Z (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 14:27:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031398AbXDJS1Z
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 14:27:25 -0400
+Received: from main.gmane.org ([80.91.229.2]:59128 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031397AbXDJS1Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 14:27:24 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HbL3h-0003qX-FL
+	for git@vger.kernel.org; Tue, 10 Apr 2007 20:27:13 +0200
+Received: from mars-fw.arces.unibo.it ([137.204.143.2])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 20:27:13 +0200
+Received: from scallegari by mars-fw.arces.unibo.it with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 20:27:13 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 137.204.143.2 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.3) Gecko/20060601 Firefox/2.0.0.3 (Ubuntu-edgy))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44161>
+
+Hi, 
+just posting a very very minor thing, that anyway might be easy to improve...
+
+consider the following cases:
+
+1) Empty repo
+
+mkdir Foo
+cd Foo
+git --bare init
+git --bare fsck
+
+error: HEAD is not a symbolic ref
+error: No default references
+
+Should this be an error...?  Of course fsck is not happy: HEAD points to master,
+but master does not exist.  However, the newbie might find it weird that git
+complains over a brand new repo it has just made.
+
+BTW also gitk dies badly in this case.
+
+2) Backup repo
+
+mkdir Foo-Backup
+cd Foo-Backup
+git --bare init
+
+cd <path>/Foo-Workingtree
+git config --add remote.foobackup.url <url pointing to Foo Backup>
+git config --add remote.foobackup.push +refs/heads/*:refs/remotes/workplace1/*
+git push foobackup
+
+cd <path>/Foo-Backup
+git --bare fsck
+error: HEAD is not a symbolic ref
+
+Of course... again head points to master, but master does not exist.
 
 
---uxuisgdDHaNETlh8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 10, 2007 at 02:10:41PM -0700, Robin H. Johnson wrote:
-> The only weirdness I saw in that, is that the envelope sender did not
-> appear to be set correct from git-send-email. Give me a moment to
-> explore down that path.
-Ok, see my patch series for envelope sender, that is the source of the
-problem.
-
---=20
-Robin Hugh Johnson
-E-Mail     : robbat2@orbis-terrarum.net
-Home Page  : http://www.orbis-terrarum.net/?l=3Dpeople.robbat2
-ICQ#       : 30269588 or 41961639
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---uxuisgdDHaNETlh8
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iD8DBQFGHAn2PpIsIjIzwiwRAssmAJ4sWOf9Amfa+3ChyPZWuIwG5SPd9gCffLRV
-qxsoDrgfiVsPe8IiKJGsjI8=
-=Qga4
------END PGP SIGNATURE-----
-
---uxuisgdDHaNETlh8--
+Should maybe git init not just set up HEAD pointing to master, but also master
+pointing to 000000000000000000000000000 and then fsck recognize that
+000000000000000000000000000 is a valid pointer to nothing, namely the starting
+point of a new branch?
