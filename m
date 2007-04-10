@@ -1,63 +1,76 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH 3/6] Add 'resolve_gitlink_ref()' helper function
-Date: Tue, 10 Apr 2007 11:38:29 +0200
-Message-ID: <81b0412b0704100238l38ad3765w6c06878e2db654a7@mail.gmail.com>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
+Date: Tue, 10 Apr 2007 10:40:23 +0200
+Message-ID: <20070410084022.GB2813@planck.djpig.de>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 12:42:20 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 13:06:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbCo8-0001L3-Aq
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 11:38:36 +0200
+	id 1HbBuN-00005f-Q7
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 10:41:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276AbXDJJib (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 05:38:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbXDJJib
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 05:38:31 -0400
-Received: from an-out-0708.google.com ([209.85.132.242]:20274 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753276AbXDJJia (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 05:38:30 -0400
-Received: by an-out-0708.google.com with SMTP id b33so1882944ana
-        for <git@vger.kernel.org>; Tue, 10 Apr 2007 02:38:30 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TThMRHML5b3W8xoc3YUAO8tM6zE2RIqwVB6EKIU9fdKu5fm5Aj0M57YSujg1YO+vvEUfRgAGNIacsY05qrjdytjslRTI8TDsJK4GmwjE3XU65UWoCyVbBGdQroTTSRe2YzJCklZWxV3jobNVydG5Y6MBSHtw81mEtdlBXlw/djk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=cvYbDP+Ap8vK9gfumAbXBd5pybD6GkoVrXZy4ptSJ9a42TLpCMmpoe1YZcWej7QaF0llz+0DaX/5tXNOM94o6zh0FXMGf/yiCOrMD686/ewYMbT1v+bXwCzQfFp17idsslADkSnRrwkyiOsiU6E0XDn0wfOXfx93RuV4BzPTW8Q=
-Received: by 10.100.47.6 with SMTP id u6mr4695772anu.1176197910023;
-        Tue, 10 Apr 2007 02:38:30 -0700 (PDT)
-Received: by 10.100.86.14 with HTTP; Tue, 10 Apr 2007 02:38:29 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org>
+	id S966115AbXDJIk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 04:40:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966120AbXDJIk5
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 04:40:57 -0400
+Received: from planck.djpig.de ([85.10.192.180]:3235 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S966115AbXDJIkz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 04:40:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 963C988003;
+	Tue, 10 Apr 2007 10:40:49 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3KZF0l5370m2; Tue, 10 Apr 2007 10:40:46 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id DFD918803D; Tue, 10 Apr 2007 10:40:24 +0200 (CEST)
+Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44118>
 
-On 4/10/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> +int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *result)
-> +{
-> +       int len = strlen(path), retval;
-> +       char *gitdir;
-> +
-> +       while (len && path[len-1] == '/')
-> +               len--;
-> +       if (!len)
-> +               return -1;
-> +       gitdir = xmalloc(len + MAXREFLEN + 8);
-> +       memcpy(gitdir, path, len);
-> +       memcpy(gitdir + len, "/.git/", 7);
+On Mon, Apr 09, 2007 at 09:20:29PM -0700, Linus Torvalds wrote:
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 4304fe9..ab915fa 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -13,6 +13,7 @@
+>  #include "commit.h"
+>  #include "tag.h"
+>  #include "tree.h"
+> +#include "refs.h"
+>  
+>  #ifndef O_NOATIME
+>  #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
+> @@ -2332,6 +2333,8 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, int write
+>  				     path);
+>  		free(target);
+>  		break;
+> +	case S_IFDIR:
+> +		return resolve_gitlink_ref(path, "HEAD", sha1);
+>  	default:
+>  		return error("%s: unsupported file type", path);
+>  	}
 
-Can't a subproject be bare?
+Not that I have time right now to look up the exact context (only read
+the patch), but I would've expected a "case S_IFDIRLNK:" here?
+
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
