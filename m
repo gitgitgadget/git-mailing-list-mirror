@@ -1,69 +1,73 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 3/6] Add 'resolve_gitlink_ref()' helper function
-Date: Tue, 10 Apr 2007 08:52:02 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704100849170.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> 
- <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org> 
- <81b0412b0704100238l38ad3765w6c06878e2db654a7@mail.gmail.com> 
- <Pine.LNX.4.64.0704100756060.6730@woody.linux-foundation.org>
- <81b0412b0704100835vbbfe8e7o2df2f121ce088589@mail.gmail.com>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
+Date: Tue, 10 Apr 2007 19:23:31 +0200
+Message-ID: <200704101923.31404.Josef.Weidendorfer@gmx.de>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <200704101828.37453.Josef.Weidendorfer@gmx.de> <81b0412b0704100950s32645423r439d04197ee8cd78@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 01:43:33 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 01:55:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbIe8-0001di-8Y
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 17:52:40 +0200
+	id 1HbK4H-0006rm-7G
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 19:23:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030899AbXDJPwM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 11:52:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030922AbXDJPwM
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 11:52:12 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:33144 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030899AbXDJPwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 11:52:10 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3AFq4VZ001614
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Apr 2007 08:52:04 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3AFq20F011124;
-	Tue, 10 Apr 2007 08:52:03 -0700
-In-Reply-To: <81b0412b0704100835vbbfe8e7o2df2f121ce088589@mail.gmail.com>
-X-Spam-Status: No, hits=-0.958 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753186AbXDJRXl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 13:23:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753174AbXDJRXj
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 13:23:39 -0400
+Received: from tuminfo2.informatik.tu-muenchen.de ([131.159.0.81]:37364 "EHLO
+	tuminfo2.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753186AbXDJRXi (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2007 13:23:38 -0400
+Received: from dhcp-3s-51.lrr.in.tum.de (dhcp-3s-51.lrr.in.tum.de [131.159.35.51])
+	by mail.in.tum.de (Postfix) with ESMTP id D54CF28DB;
+	Tue, 10 Apr 2007 19:23:36 +0200 (MEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <81b0412b0704100950s32645423r439d04197ee8cd78@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay2.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44150>
 
-
-
-On Tue, 10 Apr 2007, Alex Riesen wrote:
+On Tuesday 10 April 2007, Alex Riesen wrote:
+> On 4/10/07, Josef Weidendorfer <Josef.Weidendorfer@gmx.de> wrote:
+> > On Tuesday 10 April 2007, Linus Torvalds wrote:
+> > > ...
+> > > +     if (resolve_gitlink_ref(ce->name, "HEAD", sha1) < 0)
+> > > +             return 0;
+> > > +     return hashcmp(sha1, ce->sha1);
+> >
+> > So this does mean that the SHA1 of a gitlink entry corresponds
+> > to the commit in the subproject?
 > 
-> After a bit of thinking I could imagine a repo which is
-> used for integration exclusively (no compilation or looking
-> at the files at all).
+> Right.
+> 
+> > I wonder if it is not useful to be able to add some attribute(s)
+> > to a gitlink, i.e. first reference a gitlink object in the superproject,
+> > which then references the submodule commit, and also holds some
+> > further attributes. These attributes can not be put into the subproject,
+> > as it should be independent.
+> 
+> These attributes can be put into a file in superproject tree and
+> checked in at the same as the gitlink. No real need for introducing
+> another object type (right now there is no gitlink object type, just
+> an entry in tree with special mode).
 
-Well, you also cannot *commit* to a bare repository, so it's a bit 
-pointless for integration reasons. You'd still have to commit all changes 
-somewhere else.
+Like... .gitattributes ? ;-)
+Ok, this could work; however, there of course is the possibility of
+inconsistencies when e.g. manually moving subprojects around.
 
-That said, it's definitely designed so that if you want to automate 
-tracking other peoples bare repositories, you can do so: you'd just have 
-to *really* script it with something like
+How is consistency ensured for .gitattributes ?
+I see that for .gitignore consistency, the user is responsible.
 
-	git update-index --cacheinfo 0160000 <sha1> <dirname>
-
-(which is how you could create those commits to a bare repo too, so it's 
-not like this is really even any different)
-
-		Linus
+Josef
