@@ -1,69 +1,61 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: [OT] Re: Feature request - Subtree checkouts
-Date: Tue, 10 Apr 2007 15:56:10 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0704101554500.27318@qynat.qvtvafvgr.pbz>
-References: <20070410074444.GA18541@curie-int.orbis-terrarum.net><2007041013
- 2011.GH5436@spearce.org>  <7vslb8ug7y.fsf@assigned-by-dhcp.cox.net><Pine.LNX.4.64.0704101338060.6730@
- woody.linux-foundation.org><Pine.LNX.4.64.0704101414330.15823@blackbox.fnor
- dora.org><Pine.LNX.4.64.0704101501590.6730@woody.linux-foundation.org><m3wt
- 0j7sm6.fsf@zoo.weinigel.se> <Pine.LNX.4.64.0704101614370.17260@blackbox.fnordora.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Oddities cloning over http
+Date: Wed, 11 Apr 2007 11:28:35 +1200
+Message-ID: <46a038f90704101628o12d966e6je6e5cfd5a5ee576d@mail.gmail.com>
+References: <46a038f90704100540y33c64a9au762fd927fb906f3d@mail.gmail.com>
+	 <598D5675D34BE349929AF5EDE9B03E27E536AE@az33exm24.fsl.freescale.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Christer Weinigel <christer@weinigel.se>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
-To: alan <alan@clueserver.org>
-X-From: git-owner@vger.kernel.org Wed Apr 11 08:35:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 08:36:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbPjp-0001vJ-FM
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 01:27:01 +0200
+	id 1HbPlS-0002FV-Bq
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 01:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753674AbXDJX06 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 19:26:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbXDJX06
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 19:26:58 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:41465 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1753674AbXDJX04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 19:26:56 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Tue, 10 Apr 2007 16:26:56 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 10 Apr 2007 16:26:24 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <Pine.LNX.4.64.0704101614370.17260@blackbox.fnordora.org>
+	id S1753430AbXDJX2i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 19:28:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753435AbXDJX2h
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 19:28:37 -0400
+Received: from wx-out-0506.google.com ([66.249.82.233]:27418 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753430AbXDJX2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 19:28:36 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so2059891wxd
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 16:28:36 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=t4Xid9uPbdYqUdA0Ib9UVoUBUTsY5zhH7c0I8Rwy0D6WHmQjBx8lv683vGYDHDB976A+dQ/nR0qe99EhSuKcFjNGYbJ1trLSC6oWcZN2bch/lgZWEHAeePtG/eKahoh6K+AZw3ax4kqOkZ7iqIBYwQ3cAeSSQt83+Vov9pgtJm4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=aetRBsE/JJ7R+Y6eV05RJYbGITvW7fq1XN6pTGiTJBUq6xsb146NddlzXgFr09igbceqwfGvFbXIIbloB98FNkNUoBrlYvyNkZ0DeAUXtVB1LsTRwfWl7RBZTveG/XfXqCm6PAcCigtdFfsQ0T1ELoRcKo8oXk7/pPxJ4r9gJxU=
+Received: by 10.90.92.7 with SMTP id p7mr6166969agb.1176247715968;
+        Tue, 10 Apr 2007 16:28:35 -0700 (PDT)
+Received: by 10.90.120.11 with HTTP; Tue, 10 Apr 2007 16:28:35 -0700 (PDT)
+In-Reply-To: <598D5675D34BE349929AF5EDE9B03E27E536AE@az33exm24.fsl.freescale.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44199>
 
-On Tue, 10 Apr 2007, alan wrote:
+On 4/11/07, Medve Emilian-EMMEDVE1 <Emilian.Medve@freescale.com> wrote:
+> I've seen this behavior when the server repo files don't have the same
+> owner/group as the one you're running the server with. That happened to
+> me after I edited the config files.
 
-> 
-> On Tue, 11 Apr 2007, Christer Weinigel wrote:
->
->> Linus Torvalds <torvalds@linux-foundation.org> writes:
->> 
->>> It's also possible to just not accept mail if the reverse lookup indicates
->>> that the sending IP address is a dynamic address, which you can sometimes
->>> see from the hostname. I would suggest you *not* name your hosts to
->>> contain a lot of numbers and the string "dhcp", for example ;)
->> 
->> That would be a very bad idea I think.  Doing that would lose quite a
->> lot of small companies and individuals such as me that run a mail
->> server but are unable to get the ISP to change the reverse DNS.  For
->> example I do have a fixed IP, but have an reverse DNS pointer which
->> looks like 1-2-3-4-5a.foo.bar.bostream.se.
->
-> I am in the same situation.  I also have three domains.  Which one do I pick? 
-> I can't afford to get an individual ip address for each.  Virtual servers on 
-> a single ip also will have similar problems.
+Ok - at least in my case, this seems to be related to problems
+fetching HEAD on the server, probably because apache doesn't allow
+symlinks. What I don't quite follow is where is the best place to
+check for this. The logic is a bit muddy.
 
-this isn't a problem. as long as you can lookup 1-2-3-4-5a.foo.bar.bostream.se. 
-and get your IP address you pass this test.
+cheers,
 
-David Lang
+
+martin
