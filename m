@@ -1,68 +1,69 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git-branch and git-remotes confusion
-Date: Wed, 11 Apr 2007 00:33:43 +1200
-Message-ID: <46a038f90704100533l7d795e79vd6245445c7e74c67@mail.gmail.com>
-References: <46a038f90704100505i7bdd88a8q52186f7ce7ff0cdf@mail.gmail.com>
-	 <20070410122516.GA27388@coredump.intra.peff.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [RFC/PATCH] Optimized PowerPC SHA1 generation for Darwin (OS X)
+Date: Tue, 10 Apr 2007 15:00:50 +0200
+Message-ID: <20070410130050.GA10104@diana.vm.bytemark.co.uk>
+References: <20070406234826.GG3854@regex.yaph.org> <Pine.LNX.4.64.0704061830350.6730@woody.linux-foundation.org> <20070408200939.GL3854@regex.yaph.org> <20070410094801.GA6148@diana.vm.bytemark.co.uk> <20070410114507.GA28728@regex.yaph.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Apr 10 19:13:34 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Arjen Laarhoven <arjen@yaph.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 19:41:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbFY2-0004qs-45
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 14:34:10 +0200
+	id 1HbFy5-0000uJ-Ro
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 15:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386AbXDJMdp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 08:33:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753730AbXDJMdp
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 08:33:45 -0400
-Received: from wx-out-0506.google.com ([66.249.82.235]:64809 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753386AbXDJMdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 08:33:44 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1863806wxd
-        for <git@vger.kernel.org>; Tue, 10 Apr 2007 05:33:43 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=um1Ht8BVgdiNDeuFzzyWSgfi9nyP5txgsuHTOsY1Ms9oF63LeronePG351CGxiKw16SJG0hhOiblRTBQ79NHHZvgCjwogILyi2om+Y9mCGO9rk1XuEKRiKK2JIlF4VHvibPitx9+3OwLI3sAz9ulaibdPf6fUXjMgVfw89vI6CI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WOXlddLzpdsD7AJEgFtZfc3sxDcYZrF86ZtDL/nEWl9UjHbfhlh4mlGMXI4fewdLNHplpcx/8jbHfnEtkDkQYtMyBJDUINUfSJvHsgBncM8V60oSRzVbutg6KPgnTX9jdTOm/yK7Hcx0T2ChF2vQMzNLs5nixzrm+KYvZrSqWtA=
-Received: by 10.90.100.2 with SMTP id x2mr5092566agb.1176208423541;
-        Tue, 10 Apr 2007 05:33:43 -0700 (PDT)
-Received: by 10.90.120.11 with HTTP; Tue, 10 Apr 2007 05:33:43 -0700 (PDT)
-In-Reply-To: <20070410122516.GA27388@coredump.intra.peff.net>
+	id S1753745AbXDJNBB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Apr 2007 09:01:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753740AbXDJNBB
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 09:01:01 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1957 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753742AbXDJNBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 09:01:00 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HbFxq-0002fO-00; Tue, 10 Apr 2007 14:00:50 +0100
+Mail-Followup-To: Arjen Laarhoven <arjen@yaph.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <20070410114507.GA28728@regex.yaph.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44134>
 
-On 4/11/07, Jeff King <peff@peff.net> wrote:
-> Your arguments to git-branch are backwards. It should be:
+On 2007-04-10 13:45:07 +0200, Arjen Laarhoven wrote:
+
+> On Tue, Apr 10, 2007 at 11:48:01AM +0200, Karl Hasselstr=F6m wrote:
 >
->   git-branch --track my18-olpc origin/mdl18-olpc
+> > On 2007-04-08 22:09:39 +0200, Arjen Laarhoven wrote:
+> >
+> > >  ppc/{sha1ppc.S =3D> sha1ppc.in.S} |  110 +++++++++++++++++++----=
+---------------
+> >
+> > Wouldn't it be prettier if this filename was .S.in instead of
+> > .in.S? Additional file suffixes are usually added at the end (e.g.
+> > .tar.gz), and it makes more sense too.
 >
-> Also note that --track didn't show up until 1.5.1.  Other than that, it
-> should do what you expect (check out your .git/config before and after
-> to see the impact of --track).
+> Using the .S suffix makes gcc automatically do the right thing.
+> .S.in requires an extra '-x assembler-with-cpp' option to gcc. Of
+> course, it's trivial fix.
 
-thanks. And I'm reading the doco for 1.5.latest and it turns out I'm
-using 1.5.0.5 so that won't work either.
+I just read the Makefile changes again, a bit slower this time, and
+noticed that you _first_ feed the .in.S file to gcc, and _then_ to the
+perl script, instead of the other way around like I was expecting.
+With that arrangement, your naming makes sense, since it reflects
+which file format is contained in which. Sorry for the noise.
 
-hmmm. actually, I'm having another problem that is a bit more serious:
-cloning via http doesn't create a remotes/origin and doesn't perform
-the initial checkout.
-
-will post separately about this...
-
-
-
-martin
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
