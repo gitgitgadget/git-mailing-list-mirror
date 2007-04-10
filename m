@@ -1,69 +1,80 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [RFC/PATCH] Optimized PowerPC SHA1 generation for Darwin (OS X)
-Date: Tue, 10 Apr 2007 15:00:50 +0200
-Message-ID: <20070410130050.GA10104@diana.vm.bytemark.co.uk>
-References: <20070406234826.GG3854@regex.yaph.org> <Pine.LNX.4.64.0704061830350.6730@woody.linux-foundation.org> <20070408200939.GL3854@regex.yaph.org> <20070410094801.GA6148@diana.vm.bytemark.co.uk> <20070410114507.GA28728@regex.yaph.org>
+From: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
+Subject: RE: Oddities cloning over http
+Date: Tue, 10 Apr 2007 06:12:21 -0700
+Message-ID: <598D5675D34BE349929AF5EDE9B03E27E536AE@az33exm24.fsl.freescale.net>
+References: <46a038f90704100540y33c64a9au762fd927fb906f3d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Arjen Laarhoven <arjen@yaph.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 19:41:56 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 19:50:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbFy5-0000uJ-Ro
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 15:01:06 +0200
+	id 1HbG9D-0002ZK-SU
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 15:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753745AbXDJNBB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Tue, 10 Apr 2007 09:01:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753740AbXDJNBB
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 09:01:01 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1957 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753742AbXDJNBA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 09:01:00 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1HbFxq-0002fO-00; Tue, 10 Apr 2007 14:00:50 +0100
-Mail-Followup-To: Arjen Laarhoven <arjen@yaph.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <20070410114507.GA28728@regex.yaph.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1030477AbXDJNMc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 09:12:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030490AbXDJNMc
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 09:12:32 -0400
+Received: from de01egw02.freescale.net ([192.88.165.103]:43548 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030477AbXDJNMb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2007 09:12:31 -0400
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id l3ADCMpD028633
+	for <git@vger.kernel.org>; Tue, 10 Apr 2007 06:12:23 -0700 (MST)
+Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l3ADCMix020544
+	for <git@vger.kernel.org>; Tue, 10 Apr 2007 08:12:22 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <46a038f90704100540y33c64a9au762fd927fb906f3d@mail.gmail.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Oddities cloning over http
+Thread-Index: Acd7bX4tJpMS9104TfK2Cz38cp+bKgAA4sbg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44135>
 
-On 2007-04-10 13:45:07 +0200, Arjen Laarhoven wrote:
+Hi Martin,
 
-> On Tue, Apr 10, 2007 at 11:48:01AM +0200, Karl Hasselstr=F6m wrote:
->
-> > On 2007-04-08 22:09:39 +0200, Arjen Laarhoven wrote:
-> >
-> > >  ppc/{sha1ppc.S =3D> sha1ppc.in.S} |  110 +++++++++++++++++++----=
----------------
-> >
-> > Wouldn't it be prettier if this filename was .S.in instead of
-> > .in.S? Additional file suffixes are usually added at the end (e.g.
-> > .tar.gz), and it makes more sense too.
->
-> Using the .S suffix makes gcc automatically do the right thing.
-> .S.in requires an extra '-x assembler-with-cpp' option to gcc. Of
-> course, it's trivial fix.
 
-I just read the Makefile changes again, a bit slower this time, and
-noticed that you _first_ feed the .in.S file to gcc, and _then_ to the
-perl script, instead of the other way around like I was expecting.
-With that arrangement, your naming makes sense, since it reflects
-which file format is contained in which. Sorry for the noise.
+I've seen this behavior when the server repo files don't have the same
+owner/group as the one you're running the server with. That happened to
+me after I edited the config files.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+
+Cheers,
+Emil.
+
+
+-----Original Message-----
+From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+Behalf Of Martin Langhoff
+Sent: Tuesday, April 10, 2007 7:41 AM
+To: Git Mailing List
+Subject: Oddities cloning over http
+
+Cloning over http this repo, using git v1.5.0.5 and v1.5.1.106.ga32037
+
+  http://git.catalyst.net.nz/git/moodle-r2.git
+
+The clone doesn't complete successfully.
+
+ - I don't get a checkout
+ - It never creates .git/branches/origin
+ - It never creates .git/refs/heads/master
+
+OTOH, it does fetch all the packfiles, and creates all the refs for
+the remote branches under .git/refs/remotes/origin/
+
+hmmm...? I did run git-update-server-info on the server...
+
+
+martin
