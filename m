@@ -1,75 +1,276 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH 3/6] Add 'resolve_gitlink_ref()' helper function
-Date: Tue, 10 Apr 2007 17:57:03 +0200
-Message-ID: <81b0412b0704100857h7550b3f9r1772dc5789c80426@mail.gmail.com>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org>
-	 <81b0412b0704100238l38ad3765w6c06878e2db654a7@mail.gmail.com>
-	 <Pine.LNX.4.64.0704100756060.6730@woody.linux-foundation.org>
-	 <81b0412b0704100835vbbfe8e7o2df2f121ce088589@mail.gmail.com>
-	 <Pine.LNX.4.64.0704100849170.6730@woody.linux-foundation.org>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH] Add "stg bury" command,
+	with the functionnality of contrib/stg-sink.
+Date: Tue, 10 Apr 2007 20:27:02 +0200
+Message-ID: <20070410182701.9362.68038.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 21:43:52 2007
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 10 21:51:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbIiU-0002Jl-98
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 17:57:10 +0200
+	id 1HbL47-0008Sb-Mp
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 20:27:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030943AbXDJP5H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 11:57:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030946AbXDJP5H
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 11:57:07 -0400
-Received: from an-out-0708.google.com ([209.85.132.244]:20524 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030943AbXDJP5E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 11:57:04 -0400
-Received: by an-out-0708.google.com with SMTP id b33so1998927ana
-        for <git@vger.kernel.org>; Tue, 10 Apr 2007 08:57:03 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IPFB+wgBNiIxdsJkRZj0pXKPFXMWu5PKA+CeERSft7TYJBUfoDm49Knly7rsAo2njtOLNTJYB+pblHtDJnFx3leWlvVZDV1A7W6NyKLQVe/8e+z/Md6y7V9pW/P23tUBtPCt8GS5DOq88XbT+ZIpI4J5iGbT3N5QQ+KUf0K47+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ajDBdUR26Iv9TROyPNHMHfp0S/hwUFZLl0lZ7BS9MIzSIabRLNnG0FM+uub4uYmTkHw84AwIizEz1vYxd9mo8jBbMp8i5UD+pWzrddvJrLmMVQXD5sG32LvSAsf2ksd1PrO6iiQFSnM8lPNB+nSToyUlj7+XAUf9I94qh1PrgYk=
-Received: by 10.100.35.17 with SMTP id i17mr5013050ani.1176220623585;
-        Tue, 10 Apr 2007 08:57:03 -0700 (PDT)
-Received: by 10.100.86.14 with HTTP; Tue, 10 Apr 2007 08:57:03 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704100849170.6730@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1031394AbXDJS1e (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 14:27:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031398AbXDJS1e
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 14:27:34 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:39599 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031394AbXDJS1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 14:27:33 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 72F715E04B;
+	Tue, 10 Apr 2007 20:27:31 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 549C61F0A5;
+	Tue, 10 Apr 2007 20:27:02 +0200 (CEST)
+User-Agent: StGIT/0.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44140>
 
-On 4/10/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> >
-> > After a bit of thinking I could imagine a repo which is
-> > used for integration exclusively (no compilation or looking
-> > at the files at all).
->
-> Well, you also cannot *commit* to a bare repository, so it's a bit
-> pointless for integration reasons. You'd still have to commit all changes
-> somewhere else.
 
-Yes. Subprojects are push-only for storing and reference purposes.
-Superproject can have integrated data checks in Makefiles.
+This is the rewrite in python of by stg-sink written in perl.
 
-> That said, it's definitely designed so that if you want to automate
-> tracking other peoples bare repositories, you can do so: you'd just have
-> to *really* script it with something like
->
->         git update-index --cacheinfo 0160000 <sha1> <dirname>
->
-> (which is how you could create those commits to a bare repo too, so it's
-> not like this is really even any different)
+I changed the name to "bury" since it seems more descriptive of what
+it does, despite being less of an opposite to "float" than "sink" was.
 
-Nice :)
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
+
+ Documentation/stg-bury.txt    |   49 +++++++++++++++++++++++++++++++
+ Documentation/stg.txt         |    2 +
+ contrib/stg-sink              |   44 ----------------------------
+ contrib/stgit-completion.bash |    1 +
+ stgit/commands/bury.py        |   65 +++++++++++++++++++++++++++++++++++++++++
+ stgit/main.py                 |    2 +
+ 6 files changed, 119 insertions(+), 44 deletions(-)
+
+diff --git a/Documentation/stg-bury.txt b/Documentation/stg-bury.txt
+new file mode 100644
+index 0000000..22ab548
+--- /dev/null
++++ b/Documentation/stg-bury.txt
+@@ -0,0 +1,49 @@
++stg-bury(1)
++===========
++Yann Dirson <ydirson@altern.org>
++v0.13, April 2007
++
++NAME
++----
++stg-bury - stgdesc:bury[]
++
++SYNOPSIS
++--------
++[verse]
++'stg' bury [--to=<target>] [--nopush] [<patches>]
++
++DESCRIPTION
++-----------
++
++This is the opposite operation of stglink:float[]: move the specified
++patches down the stack.  It is for example useful to group stable
++patches near the bottom of the stack, where they are less likely to be
++impacted by the push of another patch, and from where they can be more
++easily committed or pushed.
++
++If no patch is specified on command-line, the current patch is buried.
++By default patches are buried at the bottom of the stack, but the
++'--to' option allows to bury under any applied patch.
++
++Buring internally involves popping all patches (or all patches
++including <target patch>), then pushing the patches to bury, and then
++(unless '--nopush' is also given) pushing back into place the
++formerly-applied patches.
++
++
++OPTIONS
++-------
++
++--to=<TARGET>::
++-t <TARGET>::
++	Specify a target patch to bury the patches below, instead of
++	buring at the bottom of the stack.
++
++--nopush::
++-n::
++	Do not push back on the stack the formerly-applied patches.
++	Only the patches to bury are pushed.
++
++StGIT
++-----
++Part of the StGIT suite - see gitlink:stg[1].
+diff --git a/Documentation/stg.txt b/Documentation/stg.txt
+index a91b600..cf28b02 100644
+--- a/Documentation/stg.txt
++++ b/Documentation/stg.txt
+@@ -137,6 +137,8 @@ stglink:goto[]::
+ 	stgdesc:goto[]
+ stglink:float[]::
+ 	stgdesc:float[]
++stglink:bury[]::
++	stgdesc:bury[]
+ stglink:applied[]::
+ 	stgdesc:applied[]
+ stglink:unapplied[]::
+diff --git a/contrib/stg-sink b/contrib/stg-sink
+deleted file mode 100755
+index cb6e25d..0000000
+--- a/contrib/stg-sink
++++ /dev/null
+@@ -1,44 +0,0 @@
+-#!/usr/bin/perl
+-use strict;
+-use warnings;
+-
+-sub _run {
+-  #print(' >> ', @_, "\n");# and 0;
+-  system(@_);
+-}
+-
+-my $dopush=1;
+-my $pop='pop -a';
+-while (@ARGV and $ARGV[0] =~ m/^-/) {
+-  if ($ARGV[0] eq '-n') {
+-    $dopush=0;
+-    shift @ARGV;
+-  }
+-  if ($ARGV[0] eq '-t') {
+-    shift @ARGV;
+-    $pop = 'goto '.shift @ARGV;
+-  }
+-}
+-
+-# default: sink current patch
+-if (@ARGV == 0) {
+-  $ARGV[0] = `stg top`;
+-}
+-
+-my @oldapplied=`stg applied`;
+-chomp (@oldapplied);
+-
+-_run('stg '.$pop) &&
+-  die "cannot pop all patches";
+-_run('stg push ' . join (' ', @ARGV)) &&
+-  die "error pushing patches";
+-
+-if ($dopush) {
+-  my @newapplied=`stg applied`;
+-  chomp (@newapplied);
+-  my @remaining=grep { my $check=$_;
+-		       not grep { $check eq $_ } @newapplied;
+-		     } @oldapplied;
+-  _run('stg push ' . join (' ', @remaining)) &&
+-    die "error pushing remaining patches";
+-}
+diff --git a/contrib/stgit-completion.bash b/contrib/stgit-completion.bash
+index 09614dc..b6e1306 100644
+--- a/contrib/stgit-completion.bash
++++ b/contrib/stgit-completion.bash
+@@ -15,6 +15,7 @@ _stg_commands="
+     applied
+     assimilate
+     branch
++    bury
+     delete
+     diff
+     clean
+diff --git a/stgit/commands/bury.py b/stgit/commands/bury.py
+new file mode 100644
+index 0000000..b14f09e
+--- /dev/null
++++ b/stgit/commands/bury.py
+@@ -0,0 +1,65 @@
++
++__copyright__ = """
++Copyright (C) 2007, Yann Dirson <ydirson@altern.org>
++
++This program is free software; you can redistribute it and/or modify
++it under the terms of the GNU General Public License version 2 as
++published by the Free Software Foundation.
++
++This program is distributed in the hope that it will be useful,
++but WITHOUT ANY WARRANTY; without even the implied warranty of
++MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++GNU General Public License for more details.
++
++You should have received a copy of the GNU General Public License
++along with this program; if not, write to the Free Software
++Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
++"""
++
++import sys, os
++from optparse import OptionParser, make_option
++
++from stgit.commands.common import *
++from stgit.utils import *
++from stgit import stack, git
++
++
++help = 'bury patches down the stack'
++usage = """%prog [-t <target patch>] [-n] [<patches>]
++
++Pop all patches (or all patches including <target patch>), then
++push the specified <patches> (the current patch by default), and
++then push back into place the formerly-applied patches (unless -n
++is also given)."""
++
++options = [make_option('-n', '--nopush',
++                       help = 'do not push the patches back after sinking',
++                       action = 'store_true'),
++           make_option('-t', '--to', metavar = 'TARGET',
++                       help = 'bury patches below TARGET patch')]
++
++def func(parser, options, args):
++    """Bury patches
++    """
++
++    check_local_changes()
++    check_conflicts()
++    check_head_top_equal()
++
++    oldapplied = crt_series.get_applied()
++    unapplied = crt_series.get_unapplied()
++    all = unapplied + oldapplied
++
++    if len(args) > 0:
++        patches = parse_patches(args, all)
++    else:
++        patches = [ crt_series.get_current() ]
++
++    crt_series.pop_patch(options.to or oldapplied[0])
++    push_patches(patches)
++
++    if not options.nopush:
++        newapplied = crt_series.get_applied()
++        def not_reapplied_yet(p):
++            return not p in newapplied
++        push_patches(filter(not_reapplied_yet, oldapplied))
+diff --git a/stgit/main.py b/stgit/main.py
+index 856b868..9c319c6 100644
+--- a/stgit/main.py
++++ b/stgit/main.py
+@@ -63,6 +63,7 @@ commands = Commands({
+     'applied':          'applied',
+     'assimilate':       'assimilate',
+     'branch':           'branch',
++    'bury':             'bury',
+     'delete':           'delete',
+     'diff':             'diff',
+     'clean':            'clean',
+@@ -110,6 +111,7 @@ stackcommands = (
+     'applied',
+     'assimilate',
+     'branch',
++    'bury',
+     'clean',
+     'commit',
+     'float',
