@@ -1,86 +1,73 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 4/4] Documentation: --cherry-pick
-Date: Tue, 10 Apr 2007 15:41:16 -0700
-Message-ID: <7vabxfua2b.fsf_-_@assigned-by-dhcp.cox.net>
-References: <1175686583.19898.68.camel@okra.transitives.com>
-	<Pine.LNX.4.64.0704040744160.6730@woody.linux-foundation.org>
-	<7vircbwfym.fsf@assigned-by-dhcp.cox.net>
-	<7virc524cd.fsf_-_@assigned-by-dhcp.cox.net>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: [PATCH] Add sendmail -f support to git-send-email.
+Date: Tue, 10 Apr 2007 15:42:14 -0700
+Message-ID: <20070410224213.GF18541@curie-int.orbis-terrarum.net>
+References: <11762425341841-git-send-email-robbat2@gentoo.org> <20070410223826.GH2813@planck.djpig.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Apr 11 07:55:11 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="hUH5gZbnpyIv7Mn4"
+To: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Wed Apr 11 07:56:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbP2J-0001Y5-41
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 00:42:03 +0200
+	id 1HbP3H-0001ob-Jl
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 00:43:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030616AbXDJWlU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 18:41:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030723AbXDJWlT
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 18:41:19 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:54484 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030616AbXDJWlR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 18:41:17 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070410224117.MDVN1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Apr 2007 18:41:17 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id lahG1W00V1kojtg0000000; Tue, 10 Apr 2007 18:41:17 -0400
-In-Reply-To: <7virc524cd.fsf_-_@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 09 Apr 2007 04:07:46 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030726AbXDJWmB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 18:42:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030732AbXDJWmB
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 18:42:01 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:51993 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030726AbXDJWl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 18:41:59 -0400
+Received: (qmail 29097 invoked from network); 10 Apr 2007 22:41:57 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Tue, 10 Apr 2007 22:41:57 +0000
+Received: (qmail 29065 invoked by uid 10000); 10 Apr 2007 15:42:14 -0700
+Mail-Followup-To: git@vger.kernel.org, junkio@cox.net
+Content-Disposition: inline
+In-Reply-To: <20070410223826.GH2813@planck.djpig.de>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44192>
 
-Document how to use --cherry-pick, using earlier documentation
-update that adds an example to --left-right.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- Documentation/git-rev-list.txt |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
+--hUH5gZbnpyIv7Mn4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-list.txt
-index 12b71ed..77e068b 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -22,6 +22,7 @@ SYNOPSIS
- 	     [ \--topo-order ]
- 	     [ \--parents ]
- 	     [ \--left-right ]
-+	     [ \--cherry-pick ]
- 	     [ \--encoding[=<encoding>] ]
- 	     [ \--(author|committer|grep)=<pattern> ]
- 	     [ [\--objects | \--objects-edge] [ \--unpacked ] ]
-@@ -224,6 +225,20 @@ limiting may be applied.
- 	In addition to the '<commit>' listed on the command
- 	line, read them from the standard input.
- 
-+--cherry-pick::
-+
-+	Omit any commit that introduces the same change as
-+	another commit on the "other side" when the set of
-+	commits are limited with symmetric difference.
-++
-+For example, if you have two branches, `A` and `B`, a usual way
-+to list all commits on only one side of them is with
-+`--left-right`, like the example above in the description of
-+that option.  It however shows the commits that were cherry-picked
-+from the other branch (for example, "3rd on b" may be cherry-picked
-+from branch A).  With this option, such pairs of commits are
-+excluded from the output.
-+
- -g, --walk-reflogs::
- 
- 	Instead of walking the commit ancestry chain, walk
--- 
-1.5.1.777.gd14d3
+On Wed, Apr 11, 2007 at 12:38:27AM +0200, Frank Lichtenheld wrote:
+> At least some MTAs (exim is the one I know for sure) can restrict -f
+> usage to some users and deny it for others. Don't know how much this
+> would really be a problem, but using -f unconditionally might be a bad
+> idea none-the-less.
+In those cases, the sendmail binary should fail gracefully, and then you
+know that at least your email isn't lost into the ether.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--hUH5gZbnpyIv7Mn4
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iD8DBQFGHBLFPpIsIjIzwiwRApZfAJ9zbEjeDxgODRnPER5vyosSvqOLqwCbBAHP
+YdyS148HZjBUvNY/ukUtnZ0=
+=3C/A
+-----END PGP SIGNATURE-----
+
+--hUH5gZbnpyIv7Mn4--
