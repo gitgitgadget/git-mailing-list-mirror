@@ -1,76 +1,71 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
-Date: Tue, 10 Apr 2007 10:40:23 +0200
-Message-ID: <20070410084022.GB2813@planck.djpig.de>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH 4/5] merge-recursive: handle D/F conflict case more carefully.
+Date: Tue, 10 Apr 2007 10:40:51 +0200
+Message-ID: <81b0412b0704100140g7684e128g75c986c213ac9d0f@mail.gmail.com>
+References: <7v6488ckk0.fsf@assigned-by-dhcp.cox.net>
+	 <20070409185809.GA13212@steel.home>
+	 <7vk5wlz5mg.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 13:06:43 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Daniel Barkalow" <barkalow@iabervon.org>,
+	"Johannes Schindelin" <johannes.schindelin@gmx.de>
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 10 13:09:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbBuN-00005f-Q7
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 10:41:00 +0200
+	id 1HbBuN-00005f-4U
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 10:40:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966115AbXDJIk5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 04:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966120AbXDJIk5
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 04:40:57 -0400
-Received: from planck.djpig.de ([85.10.192.180]:3235 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966115AbXDJIkz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 04:40:55 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 963C988003;
-	Tue, 10 Apr 2007 10:40:49 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3KZF0l5370m2; Tue, 10 Apr 2007 10:40:46 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id DFD918803D; Tue, 10 Apr 2007 10:40:24 +0200 (CEST)
-Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
+	id S966109AbXDJIky (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 04:40:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966115AbXDJIkx
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 04:40:53 -0400
+Received: from an-out-0708.google.com ([209.85.132.250]:36210 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966109AbXDJIkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 04:40:52 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1870805ana
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 01:40:52 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eXsjkdFNmnhiT2rdgBRYq1YTf/zVW5EgQPjT4BiskB5W3CVJgUm50X/po6dzjnhZIYNNhmUxzLbs1GYCTDaiIE1yk1BtQ6GKmRHBr+oWliOM72CfKJXUOJksQnU42b1Wij9Hfk+iSGETDeetKLsgWSMBx4NYXn+o5j1Tcim5BTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=kjfSqU5wNIMduMKBXbzDVIIqj7IsDn0S6Elnind4Ng+LgezcMRoPj+OOTbQjNAxFaWMdsl/Q1ho0ifbzohkCmnr1st2g3H1NHuZjT6AR+EBVI9eupD5EQMqE2ZFaQzx3sykJFEIYrj2R23OX80jd+/SZmL4z0dQicdsvNRk4rCk=
+Received: by 10.100.112.19 with SMTP id k19mr4682996anc.1176194451915;
+        Tue, 10 Apr 2007 01:40:51 -0700 (PDT)
+Received: by 10.100.86.14 with HTTP; Tue, 10 Apr 2007 01:40:51 -0700 (PDT)
+In-Reply-To: <7vk5wlz5mg.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44119>
 
-On Mon, Apr 09, 2007 at 09:20:29PM -0700, Linus Torvalds wrote:
-> diff --git a/sha1_file.c b/sha1_file.c
-> index 4304fe9..ab915fa 100644
-> --- a/sha1_file.c
-> +++ b/sha1_file.c
-> @@ -13,6 +13,7 @@
->  #include "commit.h"
->  #include "tag.h"
->  #include "tree.h"
-> +#include "refs.h"
->  
->  #ifndef O_NOATIME
->  #if defined(__linux__) && (defined(__i386__) || defined(__PPC__))
-> @@ -2332,6 +2333,8 @@ int index_path(unsigned char *sha1, const char *path, struct stat *st, int write
->  				     path);
->  		free(target);
->  		break;
-> +	case S_IFDIR:
-> +		return resolve_gitlink_ref(path, "HEAD", sha1);
->  	default:
->  		return error("%s: unsupported file type", path);
->  	}
+On 4/9/07, Junio C Hamano <junkio@cox.net> wrote:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+>
+> > Junio C Hamano, Sat, Apr 07, 2007 16:42:55 +0200:
+> >> +                    if (unlink(path)) {
+> >> +                            if (errno == EISDIR) {
+> >> +                                    /* something else exists */
+> >> +                                    error(msg, path, ": perhaps a D/F conflict?");
+> >
+> > isn't this one an F/D conflict?
+>
+> Yes, as I said in a separate message, the current D/F detector
+> code in merge-recursive does not catch this case in t3030 test
+> and comes to this codepath to write it out:
+>
 
-Not that I have time right now to look up the exact context (only read
-the patch), but I would've expected a "case S_IFDIRLNK:" here?
-
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+I mean, maybe the error could be spelled differently:
+": perhaps an F/D conflict?"
+Right now we have two exactly the same errors,
+as seen on the output. The messages refer to different
+conflicts, though. It is usually useful to know what is really
+going on.
