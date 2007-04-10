@@ -1,115 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/6] Initial subproject support (RFC?)
-Date: Tue, 10 Apr 2007 09:07:49 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704100852550.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> 
- <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org> 
- <81b0412b0704100604x2841d96aq194d3dedd303c588@mail.gmail.com> 
- <Pine.LNX.4.64.0704100758430.6730@woody.linux-foundation.org>
- <81b0412b0704100848n69c99f55xa7cc96087cad7e31@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
+Date: Tue, 10 Apr 2007 20:04:04 +0100
+Message-ID: <200704102004.08329.andyparkins@gmail.com>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <200704101828.37453.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0704101122510.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
 	Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 10 20:44:31 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 10 21:08:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbIt5-0003ro-Tn
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 18:08:08 +0200
+	id 1HbLdb-0005Xw-IH
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 21:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030991AbXDJQIF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 12:08:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030997AbXDJQIE
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 12:08:04 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:34019 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030991AbXDJQIC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 12:08:02 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3AG7oVZ002151
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 10 Apr 2007 09:07:50 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3AG7nsG011463;
-	Tue, 10 Apr 2007 09:07:50 -0700
-In-Reply-To: <81b0412b0704100848n69c99f55xa7cc96087cad7e31@mail.gmail.com>
-X-Spam-Status: No, hits=-0.958 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752689AbXDJTEQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 15:04:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751610AbXDJTEQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 15:04:16 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:31653 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930AbXDJTEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 15:04:15 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so132522uga
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 12:04:14 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=uOzbcXq98uwpqnHfHrapNMjf5jWvfzs7MeJ5WDxICovJR9ZkUWkjOD/cEallrOWtAHlQFcc50H6hcuh1JOhDMp5iOew6XUbkEXANVN4sjxlN8HzaL6Zu3Z/GfZPCUaB74GaDSKbCI9T4pwc4MCghhxSuMCWbljy08JLEhhlTJBM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=S+TPJ5Wyn6Z6IsGUED5RVVpFQEkSZ9RE1bpBQ9wVR1DYe5bNEtFRteWOWzqyaa4x/NwJlDXbsXA/nbYBqce6J3lR6Ox7nYLInJ1X1nEqk0TsHMyFJI9clZfTiHNOUjcE3NoX3TpkCJXFZXVANKwHY1lgIdWpgW3147qEDfK8cKM=
+Received: by 10.66.252.18 with SMTP id z18mr468929ugh.1176231854182;
+        Tue, 10 Apr 2007 12:04:14 -0700 (PDT)
+Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
+        by mx.google.com with ESMTP id e33sm1089445ugd.2007.04.10.12.04.12;
+        Tue, 10 Apr 2007 12:04:12 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0704101122510.6730@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44138>
+
+On Tuesday 2007, April 10, Linus Torvalds wrote:
+
+> (But there's nothing that says that the ".gitmodules" file couldn't
+> just use the same parser as the git config file, so I don't really
+> strongly care either way. I just think it would be nice to be able to
+> say
+>
+> 	[module "kdelibs"]
+> 		dir = kdelibs
+> 		url = git://git.kde.org/kdelibs
+> 		description = "Basic KDE libraries module"
+>
+> 	[module "base"]
+> 		alias = "kdelibs", "kdebase", "kdenetwork"
+>
+> or whatever. You get the idea..)
+
+Would it be nicer if .gitmodules were line-based to aid in merging?
 
 
-
-On Tue, 10 Apr 2007, Alex Riesen wrote:
-> 
-> It is already "merged somewhere": as soon as the patches left landed
-> on vger, it is not possible to loose (and even destroy) them.
-> The feature is just too much sought after.
-
-Well, unless it hits something like Junios 'pu' (or 'next') branch, or 
-somebody (like you?) ends up maintaining a repo with this, it's just 
-unnecessarily hard to have lots of people working together on it..
-
-I'm obviously interested in working on it, but at the same time, I don't 
-expect to be a primary *user* of it, so I'm hoping others will come in and 
-start looking at it.
-
-It looks promising that you're getting involved, but I suspect you may be 
-a bit too optimistic when you say "just too much sought after". We've been 
-*talking* about subprojects for a long long time, and we've had other 
-patches fail. So...
-
-> > For example, with just two smallish updates:
-> >  - teach "git upload-pack" not to try to follow gitlinks
-> >  - teach "git read-tree" to check out a git-link as just an empty
-> >    subdirectory
-> 
-> which also should fix switching between the branches with subprojects.
-
-Yes. It would require either git-read-tree or the git-checkout script 
-around it knowing to then also check out the subproject branches.
-
-It's actually not *entirely* obvious what you should do when you switch 
-branches (or even just do a "git reset --hard") in the superproject. The 
-branches in the subprojects are likely to be totally different from the 
-superproject, so as far as I can see, you end up having two choices when 
-you reset a subproject:
-
- - either basically create a "disconnected HEAD" in the subproject(s) when 
-   you switch them around as a consequence of resetting/switching the 
-   branch in the superproject.
-
- - or you'd stay on the same branch in the subproject, and just reset that 
-   branch..
-
- - or you describe the branch name in the ".gitmodules" file in the
-   superproject, and use whatever branch in the submodule that is 
-   described in the supermodule that you reset/check-out.
-
- - or possibly other policies.
-
-So there is bound to be various "policy" issues like this worth sorting 
-out. I don't think they matter that deeply.
-
-I would _personally_ tend to like the notion of using ".gitmodules" in the 
-supermodule to describe things like this, exactly because it's a policy 
-decision - not something that git itself should really decide about, but 
-that the supermodule maintainers can just decide to agree on.
-
-But I haven't really even thought about all the things I'd want to have in 
-the .gitmodules. We'd obviously need to list the default URL's for the 
-submodules some way etc, but I haven't really sat down and thought about 
-what all the higher-level porcelain really would need to know.
-
-I suspect that somebody who has used and set up CVS "modules" setups 
-should be thinking about that. I've been a "stupid user" for CVS modules 
-setups, but I've never actually needed to really know how they *work*.
-
-		Linus
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
