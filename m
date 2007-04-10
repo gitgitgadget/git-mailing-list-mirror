@@ -1,76 +1,75 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
-Date: Tue, 10 Apr 2007 20:04:04 +0100
-Message-ID: <200704102004.08329.andyparkins@gmail.com>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <200704101828.37453.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0704101122510.6730@woody.linux-foundation.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH 3/6] Add 'resolve_gitlink_ref()' helper function
+Date: Tue, 10 Apr 2007 17:57:03 +0200
+Message-ID: <81b0412b0704100857h7550b3f9r1772dc5789c80426@mail.gmail.com>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
+	 <Pine.LNX.4.64.0704092114010.6730@woody.linux-foundation.org>
+	 <81b0412b0704100238l38ad3765w6c06878e2db654a7@mail.gmail.com>
+	 <Pine.LNX.4.64.0704100756060.6730@woody.linux-foundation.org>
+	 <81b0412b0704100835vbbfe8e7o2df2f121ce088589@mail.gmail.com>
+	 <Pine.LNX.4.64.0704100849170.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 10 21:08:51 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 21:43:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbLdb-0005Xw-IH
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 21:04:19 +0200
+	id 1HbIiU-0002Jl-98
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 17:57:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752689AbXDJTEQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 15:04:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751610AbXDJTEQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 15:04:16 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:31653 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750930AbXDJTEP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 15:04:15 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so132522uga
-        for <git@vger.kernel.org>; Tue, 10 Apr 2007 12:04:14 -0700 (PDT)
+	id S1030943AbXDJP5H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 11:57:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030946AbXDJP5H
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 11:57:07 -0400
+Received: from an-out-0708.google.com ([209.85.132.244]:20524 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030943AbXDJP5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 11:57:04 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1998927ana
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 08:57:03 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=uOzbcXq98uwpqnHfHrapNMjf5jWvfzs7MeJ5WDxICovJR9ZkUWkjOD/cEallrOWtAHlQFcc50H6hcuh1JOhDMp5iOew6XUbkEXANVN4sjxlN8HzaL6Zu3Z/GfZPCUaB74GaDSKbCI9T4pwc4MCghhxSuMCWbljy08JLEhhlTJBM=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=IPFB+wgBNiIxdsJkRZj0pXKPFXMWu5PKA+CeERSft7TYJBUfoDm49Knly7rsAo2njtOLNTJYB+pblHtDJnFx3leWlvVZDV1A7W6NyKLQVe/8e+z/Md6y7V9pW/P23tUBtPCt8GS5DOq88XbT+ZIpI4J5iGbT3N5QQ+KUf0K47+o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=S+TPJ5Wyn6Z6IsGUED5RVVpFQEkSZ9RE1bpBQ9wVR1DYe5bNEtFRteWOWzqyaa4x/NwJlDXbsXA/nbYBqce6J3lR6Ox7nYLInJ1X1nEqk0TsHMyFJI9clZfTiHNOUjcE3NoX3TpkCJXFZXVANKwHY1lgIdWpgW3147qEDfK8cKM=
-Received: by 10.66.252.18 with SMTP id z18mr468929ugh.1176231854182;
-        Tue, 10 Apr 2007 12:04:14 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id e33sm1089445ugd.2007.04.10.12.04.12;
-        Tue, 10 Apr 2007 12:04:12 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <Pine.LNX.4.64.0704101122510.6730@woody.linux-foundation.org>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ajDBdUR26Iv9TROyPNHMHfp0S/hwUFZLl0lZ7BS9MIzSIabRLNnG0FM+uub4uYmTkHw84AwIizEz1vYxd9mo8jBbMp8i5UD+pWzrddvJrLmMVQXD5sG32LvSAsf2ksd1PrO6iiQFSnM8lPNB+nSToyUlj7+XAUf9I94qh1PrgYk=
+Received: by 10.100.35.17 with SMTP id i17mr5013050ani.1176220623585;
+        Tue, 10 Apr 2007 08:57:03 -0700 (PDT)
+Received: by 10.100.86.14 with HTTP; Tue, 10 Apr 2007 08:57:03 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0704100849170.6730@woody.linux-foundation.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44139>
 
-On Tuesday 2007, April 10, Linus Torvalds wrote:
-
-> (But there's nothing that says that the ".gitmodules" file couldn't
-> just use the same parser as the git config file, so I don't really
-> strongly care either way. I just think it would be nice to be able to
-> say
+On 4/10/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> >
+> > After a bit of thinking I could imagine a repo which is
+> > used for integration exclusively (no compilation or looking
+> > at the files at all).
 >
-> 	[module "kdelibs"]
-> 		dir = kdelibs
-> 		url = git://git.kde.org/kdelibs
-> 		description = "Basic KDE libraries module"
+> Well, you also cannot *commit* to a bare repository, so it's a bit
+> pointless for integration reasons. You'd still have to commit all changes
+> somewhere else.
+
+Yes. Subprojects are push-only for storing and reference purposes.
+Superproject can have integrated data checks in Makefiles.
+
+> That said, it's definitely designed so that if you want to automate
+> tracking other peoples bare repositories, you can do so: you'd just have
+> to *really* script it with something like
 >
-> 	[module "base"]
-> 		alias = "kdelibs", "kdebase", "kdenetwork"
+>         git update-index --cacheinfo 0160000 <sha1> <dirname>
 >
-> or whatever. You get the idea..)
+> (which is how you could create those commits to a bare repo too, so it's
+> not like this is really even any different)
 
-Would it be nicer if .gitmodules were line-based to aid in merging?
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Nice :)
