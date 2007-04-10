@@ -1,59 +1,87 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 0/6] Initial subproject support (RFC?)
-Date: Tue, 10 Apr 2007 17:03:13 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704101701030.28181@xanadu.home>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org>
- <81b0412b0704100604x2841d96aq194d3dedd303c588@mail.gmail.com>
- <Pine.LNX.4.64.0704100758430.6730@woody.linux-foundation.org>
- <81b0412b0704100848n69c99f55xa7cc96087cad7e31@mail.gmail.com>
- <Pine.LNX.4.64.0704100852550.6730@woody.linux-foundation.org>
- <7v6484vxd5.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0704101302480.6730@woody.linux-foundation.org>
- <7vk5wkuf35.fsf@assigned-by-dhcp.cox.net>
+From: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
+Subject: Re: [PATCH 3/6] Add 'resolve_gitlink_ref()' helper function
+Date: Tue, 10 Apr 2007 17:54:17 +0200
+Message-ID: <200704101754.17480.Josef.Weidendorfer@gmx.de>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <81b0412b0704100238l38ad3765w6c06878e2db654a7@mail.gmail.com> <Pine.LNX.4.64.0704100756060.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 10 23:31:04 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 23:51:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbNUp-0008AL-3I
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 23:03:23 +0200
+	id 1HbIg5-0001wF-9r
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 17:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753806AbXDJVDU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 17:03:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753849AbXDJVDU
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 17:03:20 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:28244 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753806AbXDJVDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 17:03:19 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGA00MBSVTDVOB0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 10 Apr 2007 17:03:13 -0400 (EDT)
-In-reply-to: <7vk5wkuf35.fsf@assigned-by-dhcp.cox.net>
-X-X-Sender: nico@xanadu.home
+	id S1030923AbXDJPyZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 11:54:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030933AbXDJPyY
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 11:54:24 -0400
+Received: from mailout1.informatik.tu-muenchen.de ([131.159.0.18]:47468 "EHLO
+	mailout1.informatik.tu-muenchen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1030923AbXDJPyX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Apr 2007 11:54:23 -0400
+Received: from dhcp-3s-51.lrr.in.tum.de (dhcp-3s-51.lrr.in.tum.de [131.159.35.51])
+	by mail.in.tum.de (Postfix) with ESMTP id AFE3B28DB;
+	Tue, 10 Apr 2007 17:54:21 +0200 (MEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0704100756060.6730@woody.linux-foundation.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new/sophie/sophos at mailrelay1.informatik.tu-muenchen.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44143>
 
-On Tue, 10 Apr 2007, Junio C Hamano wrote:
-
-> By the way,...
+On Tuesday 10 April 2007, Linus Torvalds wrote:
 > 
-> People occasionally ask "how would I make a small fix to a
-> commit that is buried in the history", so let me take a moment
-> to give them a recipe.
+> On Tue, 10 Apr 2007, Alex Riesen wrote:
+> >
+> > On 4/10/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> > > +int resolve_gitlink_ref(const char *path, const char *refname, unsigned
+> > > char *result)
+> > > +{
+> > > +       int len = strlen(path), retval;
+> > > +       char *gitdir;
+> > > +
+> > > +       while (len && path[len-1] == '/')
+> > > +               len--;
+> > > +       if (!len)
+> > > +               return -1;
+> > > +       gitdir = xmalloc(len + MAXREFLEN + 8);
+> > > +       memcpy(gitdir, path, len);
+> > > +       memcpy(gitdir + len, "/.git/", 7);
+> > 
+> > Can't a subproject be bare?
+> 
+> Not when it is checked out, no. That's what "checked out" means ;)
+> 
+> If a subproject is bare, it never gets resolved, because it's never 
+> checked out in a superproject.
+> 
+> So a subproject *can* be bare, but when it's bare it is just a totally 
+> regular independent git project, simply by *definition* of not being 
+> checked out inside a superproject.
+> 
+> But hey, that was just a design decision of mine, and if people can argue 
+> for it being wrong, I don't think I'm married to it ;)
 
-This is definitively good Documentation/howto/ material.
+It would be nice if a redirection via a "gitdir = ..." line
+in .git/link of the subproject (when existing) would be possible.
+This was part of the light-weight checkout proposal.
 
+In contrast to contrib/workdir/git-new-workdir, this would allow
+for (to be implemented) magic symlinks to stay intact when
+moving the submodule directory around.
 
-Nicolas
+However, this can be added later.
+
+Josef
+
+PS: I wonder how long it takes to move the official KDE repository over to git ;-)
