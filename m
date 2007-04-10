@@ -1,85 +1,85 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 11/10] allow forcing index v2 and 64-bit offset treshold
-Date: Tue, 10 Apr 2007 00:31:24 -0700
-Message-ID: <7vlkh0wur7.fsf@assigned-by-dhcp.cox.net>
-References: <alpine.LFD.0.98.0704091727300.28181@xanadu.home>
-	<7vps6dxjvb.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0704091901290.28181@xanadu.home>
-	<7vejmtxekj.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0704092046080.28181@xanadu.home>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Feature request - Subtree checkouts
+Date: Tue, 10 Apr 2007 00:44:44 -0700
+Message-ID: <20070410074444.GA18541@curie-int.orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Apr 10 11:53:08 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="huq684BweRXVnRxX"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 10 12:12:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbAp7-00066f-Et
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 09:31:29 +0200
+	id 1HbB1t-0008Bn-7m
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 09:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752057AbXDJHb0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 03:31:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbXDJHb0
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 03:31:26 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:39293 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752057AbXDJHbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 03:31:25 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070410073123.SYNY1606.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 10 Apr 2007 03:31:23 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id lKXQ1W00G1kojtg0000000; Tue, 10 Apr 2007 03:31:24 -0400
-In-Reply-To: <alpine.LFD.0.98.0704092046080.28181@xanadu.home> (Nicolas
-	Pitre's message of "Mon, 09 Apr 2007 21:03:35 -0400 (EDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752145AbXDJHo0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 03:44:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbXDJHo0
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 03:44:26 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:52377 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752145AbXDJHoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 03:44:25 -0400
+Received: (qmail 15428 invoked from network); 10 Apr 2007 07:44:23 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Tue, 10 Apr 2007 07:44:23 +0000
+Received: (qmail 32117 invoked by uid 10000); 10 Apr 2007 00:44:44 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44116>
 
-Nicolas Pitre <nico@cam.org> writes:
 
->> They are _not_ even in 'pu'.  I am talking about things that
->> have been cooking.
->
-> Remember that positive comments are by default much less verbose than 
-> negative ones. In other words, no news is probably good news.
+--huq684BweRXVnRxX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-No news means one or more of the following:
+Heya,
 
- - Immediately before 1.5.1, people were asked to test 'master'
-   rigorously, and they did, and they are still on 'master'.
-   Nobody noticed breakages in 'next'.
+I'm trying to dig at various issues that are potential holdups for
+migrating the Gentoo CVS tree into Git.
 
- - Some people use 'next' but the new features, fixes or
-   enhancements the topics introduce are totally irrelevant to
-   how they use git, so problems are not noticed.  This would
-   indicate that some of the topics may not even deserve to
-   be in 'next'.
+Since shallow checkouts are now available, there's just one more thing
+that's missing: subtree checkouts. Not to be confused with sub-projects.
 
- - Most people are generally 'wait and see' and even when warned
-   that some new features cooking in 'next' may change the user
-   experience (even in good ways), they do not try to see if the
-   change may adversely affect them to voice their objection
-   early, to catch the changes they do not like before they
-   graduate to 'master', and then complain.  This would indicate
-   that it is futile to have 'next' as a holding area.  It would
-   be more effective to push out unproven stuff on 'master' to
-   make sure people complain.
+If the master tree has this as some example contents:
+/foo
+/abc/...
+/bar/example
+/bar/baz/some-content
 
-None of the above does not sound a good news at all to me.
+We need to be able to check out arbitrary subtrees. So I might want to
+check out everything (as the CVS administrator), while one of the more
+focused developers just wants to check out /bar/baz/.
 
->> >> > ddiff --git a/t/Makefile b/t/Makefile
->> >> 
->> >> ???
->
-> $ touch t/Makefile
-> $ git diff
+P.S. Does this list do some weird spam-blocking? I've tried 3 times now
+to use git-send-email to send an unrelated minor patch set
+(--subject-prefix for git-format-patch), and it has never shown up on
+the list :-(.
 
-This still does not give me doubled d in diff.
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--huq684BweRXVnRxX
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iD8DBQFGG0BsPpIsIjIzwiwRAm2FAKCj5q0wEt/yX7ql7GHPHf+5Bsbo2ACfen5J
+3lr+Dcq5x5Y8VqBPycLudrQ=
+=M5zm
+-----END PGP SIGNATURE-----
+
+--huq684BweRXVnRxX--
