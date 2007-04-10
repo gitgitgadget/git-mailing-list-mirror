@@ -1,144 +1,85 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/6] Initial subproject support (RFC?)
-Date: Mon, 9 Apr 2007 21:46:12 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 11/10] allow forcing index v2 and 64-bit offset treshold
+Date: Tue, 10 Apr 2007 00:31:24 -0700
+Message-ID: <7vlkh0wur7.fsf@assigned-by-dhcp.cox.net>
+References: <alpine.LFD.0.98.0704091727300.28181@xanadu.home>
+	<7vps6dxjvb.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.98.0704091901290.28181@xanadu.home>
+	<7vejmtxekj.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.98.0704092046080.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 10 09:28:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Apr 10 11:53:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hb8FY-0003iO-9n
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 06:46:36 +0200
+	id 1HbAp7-00066f-Et
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 09:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140AbXDJEqS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 00:46:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752169AbXDJEqR
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 00:46:17 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:43630 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752140AbXDJEqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 00:46:17 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3A4kDPD026657
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 9 Apr 2007 21:46:13 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3A4kCRo031547;
-	Mon, 9 Apr 2007 21:46:12 -0700
-In-Reply-To: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.958 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1752057AbXDJHb0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 03:31:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbXDJHb0
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 03:31:26 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:39293 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752057AbXDJHbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 03:31:25 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070410073123.SYNY1606.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 10 Apr 2007 03:31:23 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id lKXQ1W00G1kojtg0000000; Tue, 10 Apr 2007 03:31:24 -0400
+In-Reply-To: <alpine.LFD.0.98.0704092046080.28181@xanadu.home> (Nicolas
+	Pitre's message of "Mon, 09 Apr 2007 21:03:35 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44115>
 
+Nicolas Pitre <nico@cam.org> writes:
 
+>> They are _not_ even in 'pu'.  I am talking about things that
+>> have been cooking.
+>
+> Remember that positive comments are by default much less verbose than 
+> negative ones. In other words, no news is probably good news.
 
-On Mon, 9 Apr 2007, Linus Torvalds wrote:
-> 
-> NOTE! This series of six patches does not actually contain everything you 
-> need to do that - in particular, this series will not actually connect up 
-> the magic to make "git add" (and thus "git commit") actually create the 
-> gitlink entries for subprojects. That's another (quite small) patch, but I 
-> haven't cleaned it up enough to be submittable yet.
+No news means one or more of the following:
 
-Here is, for your enjoyment, the last patch I used to actually test this 
-all. I do *not* submit it as a patch for actual inclusion - the other 
-patches in the series are, I think, ready to actually be merged. This one 
-is not.
+ - Immediately before 1.5.1, people were asked to test 'master'
+   rigorously, and they did, and they are still on 'master'.
+   Nobody noticed breakages in 'next'.
 
-It's broken for a few reasons:
+ - Some people use 'next' but the new features, fixes or
+   enhancements the topics introduce are totally irrelevant to
+   how they use git, so problems are not noticed.  This would
+   indicate that some of the topics may not even deserve to
+   be in 'next'.
 
- - it allows you to do "git add subproject" to add the subproject to the 
-   index (and then use "git commit" to commit it), but even something as 
-   simple as "git commit -a" doesn't work right, because the sequence that 
-   "git commit -a" uses to update the index doesn't work with the current 
-   state of the plumbing (ie the
+ - Most people are generally 'wait and see' and even when warned
+   that some new features cooking in 'next' may change the user
+   experience (even in good ways), they do not try to see if the
+   change may adversely affect them to voice their objection
+   early, to catch the changes they do not like before they
+   graduate to 'master', and then complain.  This would indicate
+   that it is futile to have 'next' as a holding area.  It would
+   be more effective to push out unproven stuff on 'master' to
+   make sure people complain.
 
-	git-diff-files --name-only -z |
-		git-update-index --remove -z --stdin
+None of the above does not sound a good news at all to me.
 
-   thing doesn't work right.
+>> >> > ddiff --git a/t/Makefile b/t/Makefile
+>> >> 
+>> >> ???
+>
+> $ touch t/Makefile
+> $ git diff
 
- - even for "git add", the logic isn't really right. It should take the 
-   old index state into account to decide if it wants to add it as a 
-   subproject. 
-
-so this patch really isn't very good, but it allows people who are 
-interested to perhaps actually test something. For example, my test repo 
-was actually created with this:
-
-	[torvalds@woody superproject]$ git log --raw
-	commit 649ad968bdd79cb3b0f50feb819b7e9b134d3a1a
-	Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
-	Date:   Mon Apr 9 21:36:53 2007 -0700
-	
-	    This commits the modification to sub-project B
-	
-	:160000 160000 5813084832d3c680a3436b0253639c94ed55445d 17d246a35f27a46762328281eb6e9d4558f91e9d M      sub-B
-
-	commit f3c55ffcc000a8c0fecc6801e8909d084e3d419e
-	Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
-	Date:   Mon Apr 9 16:12:29 2007 -0700
-	
-	    Superproject with two subprojects
-	
-	:000000 160000 0000000... c0daf4c85d48879ab450a6a887bbb241eb0de00a A    sub-A
-	:000000 160000 0000000... 5813084832d3c680a3436b0253639c94ed55445d A    sub-B
-
-	commit 45eb14edb43b10e3d3ac7a495a1ec861e85dc36f
-	Author: Linus Torvalds <torvalds@woody.linux-foundation.org>
-	Date:   Mon Apr 9 15:36:24 2007 -0700
-	
-	    Add top-level Makefile for super-project
-	
-	:000000 100644 0000000... 57e8394... A  Makefile
-
-so you can see how things look at a low level (ie a "gitlink" is just a 
-tree entry with mode 0160000, and the SHA1 is just the SHA1 of the HEAD 
-commit in the subproject)
-
-		Linus
-
----
-diff --git a/dir.c b/dir.c
-index 4f5a224..ef284a2 100644
---- a/dir.c
-+++ b/dir.c
-@@ -378,6 +378,14 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
- 					continue;
- 				/* fallthrough */
- 			case DT_DIR:
-+				/* Does it have a git directory? If so, it's a DIRLNK */
-+				if (!dir->no_dirlinks) {
-+					memcpy(fullname + baselen + len, "/.git/", 7);
-+					if (!stat(fullname, &st)) {
-+						if (S_ISDIR(st.st_mode))
-+							break;
-+					}
-+				}
- 				memcpy(fullname + baselen + len, "/", 2);
- 				len++;
- 				if (dir->show_other_directories &&
-diff --git a/dir.h b/dir.h
-index 33c31f2..1931609 100644
---- a/dir.h
-+++ b/dir.h
-@@ -33,7 +33,8 @@ struct dir_struct {
- 	int nr, alloc;
- 	unsigned int show_ignored:1,
- 		     show_other_directories:1,
--		     hide_empty_directories:1;
-+		     hide_empty_directories:1,
-+		     no_dirlinks;
- 	struct dir_entry **entries;
- 
- 	/* Exclude info */
+This still does not give me doubled d in diff.
