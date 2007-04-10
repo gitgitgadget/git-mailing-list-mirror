@@ -1,81 +1,69 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH 0/6] Initial subproject support (RFC?)
-Date: Tue, 10 Apr 2007 18:43:59 +0200
-Message-ID: <81b0412b0704100943k44a0e0b3vf39000bf1eb20e8f@mail.gmail.com>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org>
-	 <81b0412b0704100604x2841d96aq194d3dedd303c588@mail.gmail.com>
-	 <Pine.LNX.4.64.0704100758430.6730@woody.linux-foundation.org>
-	 <81b0412b0704100848n69c99f55xa7cc96087cad7e31@mail.gmail.com>
-	 <Pine.LNX.4.64.0704100852550.6730@woody.linux-foundation.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH (resend)] Pass -C1 to git-apply in StGIT's apply_diff() and apply_patch().
+Date: Tue, 10 Apr 2007 17:48:29 +0100
+Message-ID: <b0943d9e0704100948k2b505916w5485b99e72d36c10@mail.gmail.com>
+References: <20070409112422.GE11593@moonlight.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 11 02:31:17 2007
+To: catalin.marinas@gmail.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 11 02:37:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbJRv-0000lO-Rn
-	for gcvg-git@gmane.org; Tue, 10 Apr 2007 18:44:08 +0200
+	id 1HbJWF-0001Tn-EI
+	for gcvg-git@gmane.org; Tue, 10 Apr 2007 18:48:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031105AbXDJQoD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 12:44:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031106AbXDJQoD
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 12:44:03 -0400
-Received: from an-out-0708.google.com ([209.85.132.242]:6631 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031105AbXDJQoB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 12:44:01 -0400
-Received: by an-out-0708.google.com with SMTP id b33so2015578ana
-        for <git@vger.kernel.org>; Tue, 10 Apr 2007 09:44:00 -0700 (PDT)
+	id S1031120AbXDJQsc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 12:48:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031122AbXDJQsb
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 12:48:31 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:4589 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031120AbXDJQsa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 12:48:30 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so107207uga
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 09:48:29 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MEVwNVWmpAkcAH27rWfIV4ex0zWXrXQX9Y+/8zNkPPWHH0IxUpzzhBf9NkNmHAU6jGlJcGL15ZevUq+y7isfCb0EFso8qjO0sNVPxMD2Yg3wByW5ogGaJVwr3PHpxmfnceKu5WJZHoxOIZRf/ywruvRb2++Ivl/MX8XDH9dXrNE=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=evX8ruiB9uGJ5S1i6NOrXanxeVOPHe+wXQK0pdndobYzx5GZqaWuogdTYSta8QxoRU9U/AHpM9wprss0D3s9bbfG/msXJY82xVFUmjidDFObBrnYbf4/8W9jVTc23x7ihyW6RS3oZevL5LdxS/TEK2P/3SneqMUvcd8uq2UKGZU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=de+1PrC6hG8Ht1mWbnBRcbNhiTiKKyvTFUGZaKNMNdNetfA8Xodsm3hSok2DSYFP6XgbDv5/CluvJV09YplJ33wQmeFuGaTOg2iCniQpcUCJ1lB3dUy0XQTHV+x4/63pdgPESEhnamPMlGc6tPnyWecG2iG+sHZuUsVXmg8ZiiE=
-Received: by 10.100.178.7 with SMTP id a7mr5048091anf.1176223439929;
-        Tue, 10 Apr 2007 09:43:59 -0700 (PDT)
-Received: by 10.100.86.14 with HTTP; Tue, 10 Apr 2007 09:43:59 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704100852550.6730@woody.linux-foundation.org>
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qDLAy14f8HR/5/oHPSJN/Wn8/+rM/kR4AWy2NaNDDlYsURwE6H/qQCVi89Pc5SeGgB0sfGsUcDvCxrTNbkyYyR7c6h+AAkl1llmaanqD1h5nNJR9m7FgmLNK3EvqAq0llls6Kon/ZWXYExEx7mFx/B8uQ1qzppQKk+IQazwkRNs=
+Received: by 10.67.97.18 with SMTP id z18mr121139ugl.1176223709481;
+        Tue, 10 Apr 2007 09:48:29 -0700 (PDT)
+Received: by 10.66.255.11 with HTTP; Tue, 10 Apr 2007 09:48:29 -0700 (PDT)
+In-Reply-To: <20070409112422.GE11593@moonlight.home>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44155>
 
-On 4/10/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> >
-> > It is already "merged somewhere": as soon as the patches left landed
-> > on vger, it is not possible to loose (and even destroy) them.
-> > The feature is just too much sought after.
+On 09/04/07, Tomash Brechko <tomash.brechko@gmail.com> wrote:
+> Running git-apply without -C is too restrictive: when the patch has
+> some fuzz (it could have been applied upstream with the fuzz, or
+> different local branches have slightly different context), StGIT would
+> start manual merge because of the conflict in the context.  Passing
+> -C1 makes git-apply behave close to default mode of diff/patch: 'diff'
+> generates 3 lines of context, and 'patch' allows 2 line mismatch,
+> i.e. it requires the match of at least one context line.
 >
-> Well, unless it hits something like Junios 'pu' (or 'next') branch, or
-> somebody (like you?) ends up maintaining a repo with this, it's just
-> unnecessarily hard to have lots of people working together on it..
->
-> I'm obviously interested in working on it, but at the same time, I don't
-> expect to be a primary *user* of it, so I'm hoping others will come in and
-> start looking at it.
->
-> It looks promising that you're getting involved, but I suspect you may be
-> a bit too optimistic when you say "just too much sought after". We've been
-> *talking* about subprojects for a long long time, and we've had other
-> patches fail. So...
+> Fix in apply_diff() relaxes the restriction in 'push --merged' and
+> 'rebase --merged' for detection of upstream merges, fix in
+> apply_patch() does relaxation 'import', 'fold' and 'sync' commands.
 
-The people who need the feature are still using other VCS.
-Some do not even know about git, the others are more interested
-in their own projects than in hacking on git (like KDE or Ubuntu
-people). And then there are commercial projects with thirdparty
-libraries, components or data. The other VCS' provide the feature,
-even if they do it wrong and badly (I never could go back in time in my
-day-work project, always asked myself what was the point of using
-Perforce at all).
-So, I suspect it is the people who are unable or unwilling
-to contribute to git (to anything, really) who need the feature most.
+Thanks for the patch. I'm OK with -C1 in apply_patch() but I'm a bit
+concerned with the 'push/rebase --merged' logic being relaxed. There
+is also the reporting of patches being modified during 'push', i.e.
+the push succeeded only after a three-way merge.
+
+I think I could add separate config options for both apply_diff and
+apply_patch, only that it might confuse users not knowing the StGIT
+internals.
+
+-- 
+Catalin
