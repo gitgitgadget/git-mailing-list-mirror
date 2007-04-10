@@ -1,100 +1,81 @@
-From: alan <alan@clueserver.org>
-Subject: Re: [OT] Re: Feature request - Subtree checkouts
-Date: Tue, 10 Apr 2007 15:30:16 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704101513480.17260@blackbox.fnordora.org>
-References: <20070410074444.GA18541@curie-int.orbis-terrarum.net>
- <20070410132011.GH5436@spearce.org> <7vslb8ug7y.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0704101338060.6730@woody.linux-foundation.org>
- <Pine.LNX.4.64.0704101414330.15823@blackbox.fnordora.org>
- <Pine.LNX.4.64.0704101501590.6730@woody.linux-foundation.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH (resend)] Pass -C1 to git-apply in StGIT's apply_diff() and apply_patch().
+Date: Tue, 10 Apr 2007 23:38:55 +0100
+Message-ID: <b0943d9e0704101538p3de0bf56m7906cfe2f5fc157e@mail.gmail.com>
+References: <20070409112422.GE11593@moonlight.home>
+	 <b0943d9e0704100948k2b505916w5485b99e72d36c10@mail.gmail.com>
+	 <20070410192130.GE4946@moonlight.home>
+	 <20070410193214.GF4946@moonlight.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Junio C Hamano <junkio@cox.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 11 07:45:29 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 11 07:50:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbOrb-0007em-Ey
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 00:30:59 +0200
+	id 1HbOzY-0000uQ-9I
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 00:39:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030588AbXDJWaV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 18:30:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030591AbXDJWaU
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 18:30:20 -0400
-Received: from 216-99-213-120.dsl.aracnet.com ([216.99.213.120]:56382 "EHLO
-	clueserver.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030588AbXDJWaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 18:30:18 -0400
-Received: by clueserver.org (Postfix, from userid 500)
-	id CB0ACE78002; Tue, 10 Apr 2007 15:30:16 -0700 (PDT)
-Received: from localhost (localhost [127.0.0.1])
-	by clueserver.org (Postfix) with ESMTP id C64C1F505CC;
-	Tue, 10 Apr 2007 15:30:16 -0700 (PDT)
-X-X-Sender: alan@blackbox.fnordora.org
-In-Reply-To: <Pine.LNX.4.64.0704101501590.6730@woody.linux-foundation.org>
+	id S1030690AbXDJWi6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 18:38:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030688AbXDJWi6
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 18:38:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:51748 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030653AbXDJWi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 18:38:56 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so166316uga
+        for <git@vger.kernel.org>; Tue, 10 Apr 2007 15:38:55 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=CZdjSr7ZjGajEkxqM+V2f0qKm9AeRtvOSfafhJCiw4TbEoN1qWRymYAKYifsXkyIzr9osEMnlSeGNPNS9nJyi60r6bWwNKbHct4SD42GA2w2juiiQcM0iBJ29hvRsllAOEa3rwEd5HsCGoAU5r2bxsomBrffNxDzjC9N+IYhFRI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=sAMh09xWT47JcEYUAzPOS8lcWZzdJRyDQcb+0riqkBhkLSvbLMBi3IWx5ub0elVlvhP7ok0TLXPSUrwZ8dxXcIEPtgZVICyx6M78OhwFCA2LGOhKFOr+31hJuLn913M0jbnV6/npksE7XKBKk9gjlQOtBj0V8k9g5QMhian/cj0=
+Received: by 10.67.101.10 with SMTP id d10mr601600ugm.1176244735064;
+        Tue, 10 Apr 2007 15:38:55 -0700 (PDT)
+Received: by 10.66.255.11 with HTTP; Tue, 10 Apr 2007 15:38:55 -0700 (PDT)
+In-Reply-To: <20070410193214.GF4946@moonlight.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44187>
 
-On Tue, 10 Apr 2007, Linus Torvalds wrote:
+On 10/04/07, Tomash Brechko <tomash.brechko@gmail.com> wrote:
+> Once we are talking about StGIT's push (push of
+> the patch back to the stack), why would we want to start tree-way
+> merge when the context has changed?  My point was exactly that since I
+> want to keep my patches up-to-date with the main branch, I do rebase
+> from time to time, and I'm not interested in doing the merge every
+> time just because something has changed upstream in surrounding code.
 
->
->
-> On Tue, 10 Apr 2007, alan wrote:
->>>
->>> For example, I will personally never see email that comes directly to my
->>> email address though an open mail relay *or* from something that appears
->>> to be just a random botnet PC (I forget the exact rule, since I'm hapily
->>> ignorant of MIS, but I think it boils down to requiring a good reverse DNS
->>> lookup).
->>
->> Depending on your definition of "good".
->
-> Well, the most common case (and the thing I *think* our spam software does
-> here) is to just confirm that the reverse DNS lookup (that you want to do
-> *anyway* for the "Received" headers for the email) will resolve back to
-> the same IP (aka "FCrDNS").
->
-> It's also possible to just not accept mail if the reverse lookup indicates
-> that the sending IP address is a dynamic address, which you can sometimes
-> see from the hostname. I would suggest you *not* name your hosts to
-> contain a lot of numbers and the string "dhcp", for example ;)
+When something has changed in the surrounding code (not touched by
+your patch), the automatic three-way merge should, in general, be able
+to solve the issue as it uses the ancestor information. Is the
+automatic three-way merge failing as well in your case?
 
-I actually have a fixed IP address.
+> The same goes for patches that were already applied upstream.
+> Whatever the current context around the code of my applied patch is, I
+> have to accept it, because the patch was applied.  I'm going to throw
+> it away locally, but currently I have to do the merge first.
 
->> Sometimes I think the anti-spam methods are as obnoxious as the
->> spammers. Almost.)
->
-> I'll take strict anti-spam methods any day. I get about 10 pieces of spam
-> a day, that I can handle easily without worrying about it. I shudder to
-> even just think about what it used to be like before aggressive spam
-> filtering.
+I think -C1 should be OK for merge detection (in most situations) and
+importing patch files (via import, fold) but I personally don't like
+it when rebasing a patch. I still prefer a more precise context
+checking, rather than the fuzzy one similar to the "patch" tool (as
+the line numbers are usually volatile).
 
-Greylisting dropped my spam level by at least 90%.  RBLs have, for the 
-most part, had far too many false positives to be useful.  (If it was just 
-me, it would not be so bad, but my wife gets mail on this server as well. 
-She is not so forgiving.)
+I'm OK with the idea of this patch but I would prefer a config option
+and/or command line option rather than hard-coding it for people with
+different views. A command line option could make sense for commands
+like import/fold and a config option for the rest.
 
-> So I'm personally *solidly* in the camp that says "if you want to send me
-> email, it's worth making a conscious effort to not look like spam".
-
-I try pretty hard. However, some anti-spam methods share some of the same 
-methods with dowsing and other witchcraft. What "looks like spam" seems 
-pretty subjective at times.
-
-I do have a reason for being a bit negative about it.  I once ran a very 
-large development list back in the last century.  A piece of spam got past 
-my spam filters and onto the list.  Some idiot got offended and reported 
-me as a spammer (because my ip was the first thing he saw) and reported me 
-to my isp and to my isp's upstream feed.  Took me a couple days to get 
-everyone calmed down.  Excessive anti-spammers still get on my nerves 
-after that incident.
+Thanks.
 
 -- 
-"Invoking the supernatural can explain anything, and hence explains nothing."
-                   - University of Utah bioengineering professor Gregory Clark
+Catalin
