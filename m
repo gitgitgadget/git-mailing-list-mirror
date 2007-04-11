@@ -1,83 +1,100 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Feature request - Subtree checkouts
-Date: Tue, 10 Apr 2007 19:41:07 -0400
-Message-ID: <20070410234107.GI5436@spearce.org>
-References: <20070410074444.GA18541@curie-int.orbis-terrarum.net> <20070410132011.GH5436@spearce.org> <7vslb8ug7y.fsf@assigned-by-dhcp.cox.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Allow git-update-index work on subprojects
+Date: Tue, 10 Apr 2007 19:55:51 -0700
+Message-ID: <7vveg3r554.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org>
+	<81b0412b0704100639y331864f9ne0306aa4bf8de663@mail.gmail.com>
+	<20070410231900.GA4243@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 11 08:44:30 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 09:47:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbPxe-0004oW-Vz
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 01:41:19 +0200
+	id 1HbT00-0001YC-6V
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 04:55:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161108AbXDJXlO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 19:41:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161110AbXDJXlO
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 19:41:14 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33817 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161108AbXDJXlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 19:41:13 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HbPxL-00075i-QJ; Tue, 10 Apr 2007 19:40:59 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0F69420FBAE; Tue, 10 Apr 2007 19:41:08 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7vslb8ug7y.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S966101AbXDKCzx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 22:55:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161135AbXDKCzx
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 22:55:53 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:45958 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966101AbXDKCzw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 22:55:52 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070411025552.RTJH1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 10 Apr 2007 22:55:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id levr1W00Z1kojtg0000000; Tue, 10 Apr 2007 22:55:52 -0400
+In-Reply-To: <20070410231900.GA4243@steel.home> (Alex Riesen's message of
+	"Wed, 11 Apr 2007 01:19:00 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44201>
 
-Junio C Hamano <junkio@cox.net> wrote:
-> One thing that people need to be careful about is which SMTP
-> server they use.  I had an impression (I do not use send-email
-> myself) that it defaulted to local MTA, so the mail trail would
-> look like your local MTA receives from the MUA (which is
-> send-email), which forwards it to whereever destination (or
-> intermediaries).  On the other hand, I suspect many people use
-> their ISP's SMTP server when using their usual MUA, so the mail
-> trail would look different.  I do not know what filtering vger
-> does, but if it is filtering based on the MTA address
-> (dul.dnsbl.sorbs filtering comes to mind), that would make a
-> difference.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-I'm pretty sure the last time I tried git-send-email I had the
-MTA path exactly the same.  My mutt sends to `localhost`, which
-forwards over an SSL channel to my colo'd spearce.org mail server,
-and that relays to the final destination.  Hence spearce.org mail
-always originates from spearce.org.
+> Also, make "git commit -a" work with modifications of subproject HEADs.
+>
+> ---
+>
+> This one works with update-index --remove (which is what git-commit -a
+> uses). It is ugly. I tried to keep the "F -> D/F" behaviour of
+> update-index. Still have to check if "F -> Subproject" works.
+>
+>  builtin-update-index.c |   45 +++++++++++++++++++++++++--------------------
+>  1 files changed, 25 insertions(+), 20 deletions(-)
+>
+> diff --git a/builtin-update-index.c b/builtin-update-index.c
+> index eba756d..d075d50 100644
+> --- a/builtin-update-index.c
+> +++ b/builtin-update-index.c
+> @@ -62,7 +62,7 @@ static int mark_valid(const char *path)
+>  
+>  static int process_file(const char *path)
+>  {
+> -	int size, namelen, option, status;
+> +	int size, namelen = -1, option, status;
+>  	struct cache_entry *ce;
+>  	struct stat st;
+>  
+> @@ -73,7 +73,7 @@ static int process_file(const char *path)
+>  	 */
+>  	cache_tree_invalidate_path(active_cache_tree, path);
+>  
+> +	if (!status && S_ISDIR(st.st_mode)) {
+>  		/* When we used to have "path" and now we want to add
+>  		 * "path/file", we need a way to remove "path" before
+>  		 * being able to add "path/file".  However,
+> @@ -82,27 +82,32 @@ static int process_file(const char *path)
+>  		 * friendly, especially since we can do the opposite
+>  		 * case just fine without --force-remove.
+>  		 */
+> +		namelen = strlen(path);
+> +		int pos = cache_name_pos(path, namelen);
+> +		if (0 <= pos && S_ISREG(ntohl(active_cache[pos]->ce_mode)) &&
+> +		    allow_remove) {
+> +			if (remove_file_from_cache(path))
+> +				return error("%s: cannot remove from the index", path);
+> +			else
+> +				return 0;
+> +		}
+> +	}
 
-Now I ran git-send-email on a different system, but had it connect
-over SMTP to port 25 of the same system mutt runs on, so the
-initial Received line was different, but othewrise the mail path
-was the same.
+If I used to have a symlink S and now the filesystem has a file
+S/F which I am running "update-index --add --remove" on, what
+happens?
 
-I also have a few other addresses that I can send to that will go
-out the spearce.org colo'd box to another SMTP system, then bounce
-back, and the round-trip was the same for anything from mutt and
-from git-send-email.
-
-I marked the whole mess up to some mail header difference that
-git-send-email wasn't sending the same way mutt was, and that vger
-cared about. I didn't see the difference easily.  I just gave up.
-;-)
-
--- 
-Shawn.
+If I have a subproject at path P, and mistakenly try to add path
+P/F with "update-index --add --remove P/F", it should be
+refused, shouldn't it?
