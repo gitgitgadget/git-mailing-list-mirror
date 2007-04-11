@@ -1,62 +1,83 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [PATCH 2/4] Don't use section 7 for main manpage.
-Date: Wed, 11 Apr 2007 10:34:03 +0100
-Message-ID: <b0943d9e0704110234qc23ef41ma0bb4eaac714c320@mail.gmail.com>
-References: <20070407213557.13698.21486.stgit@gandelf.nowhere.earth>
-	 <20070407213658.13698.44552.stgit@gandelf.nowhere.earth>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 13/10] tests for various pack index features
+Date: Tue, 10 Apr 2007 19:57:52 -0700
+Message-ID: <7vr6qrr51r.fsf@assigned-by-dhcp.cox.net>
+References: <alpine.LFD.0.98.0704101607390.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Yann Dirson" <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Wed Apr 11 13:56:56 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Apr 11 14:08:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbZDR-0007Bw-1k
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 11:34:13 +0200
+	id 1HbT1x-0001zM-8v
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 04:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbXDKJeG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 05:34:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbXDKJeG
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 05:34:06 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:61919 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751727AbXDKJeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 05:34:04 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so77340uga
-        for <git@vger.kernel.org>; Wed, 11 Apr 2007 02:34:03 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ueK9FejgtF5Tll77GSCKWPgeoImSBIOJFol3uGnTqitEu28lT9CqplrQG1Z9bh7InAgRmU0hY3NnWqBKwfVMA2kW/60Oa6sGZdsAqnNxEX9XVy453AzLEQyLfEmGtFnzi0edea/vDliHeHeID4NH+KJxveJ8GONkS3/kNaAB+ww=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=DHElICKm1ktEU/0wOIFH3c/LWuu87NMybHhpdHmk0Xel+8VekknHyQstic833BB1aNv5cVUC0wSd8lt3ZCkIPDqpNMHvUCnXLL3ZiLr5IYVaZ7A1zlTUDUq1mzVPVTXdd0XzNoR8CGocVErzlmyg2no/rvm21BC3EJeSsfQOZZg=
-Received: by 10.67.11.15 with SMTP id o15mr323177ugi.1176284043262;
-        Wed, 11 Apr 2007 02:34:03 -0700 (PDT)
-Received: by 10.66.255.11 with HTTP; Wed, 11 Apr 2007 02:34:03 -0700 (PDT)
-In-Reply-To: <20070407213658.13698.44552.stgit@gandelf.nowhere.earth>
-Content-Disposition: inline
+	id S1161135AbXDKC5y (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 22:57:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966128AbXDKC5y
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 22:57:54 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:45639 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966102AbXDKC5y (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 22:57:54 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070411025753.RGWM1226.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 10 Apr 2007 22:57:53 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id lexs1W00q1kojtg0000000; Tue, 10 Apr 2007 22:57:53 -0400
+In-Reply-To: <alpine.LFD.0.98.0704101607390.28181@xanadu.home> (Nicolas
+	Pitre's message of "Tue, 10 Apr 2007 16:26:10 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44210>
 
-On 07/04/07, Yann Dirson <ydirson@altern.org> wrote:
-> --- a/Documentation/stg.txt
-> +++ b/Documentation/stg.txt
-> @@ -1,4 +1,4 @@
-> -stg(7)
-> +stg(1)
->  ======
+Nicolas Pitre <nico@cam.org> writes:
 
-In error, I added commit 5906924135f886527c1e947d100073067783eaa2 that
-was reverting this hunk. My reason was to be able to install the man
-pages and the Makefile was still looking for stg.7. I'll revert my
-commit tonight and change the Makefile.
+> This is a fairly complete list of tests for various aspects of pack 
+> index versions 1 and  2.
+>
+> Tests on index v2 include 32-bit and 64-bit offsets, as well as a nice 
+> demonstration of the flawed repacking integrity checks that index 
+> version 2 intend to solve over index version 1 with the per object CRC.
+>
+> Signed-off-by: Nicolas Pitre <nico@cam.org>
+> ---
+>
+> OK this should really be the last patch for this topic.
+>
+> diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
+> new file mode 100755
+> index 0000000..3371964
+> --- /dev/null
+> +++ b/t/t5302-pack-index.sh
+> @@ -0,0 +1,147 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2007 Nicolas Pitre
+> +#
+> +
+> +test_description='pack index with 64-bit offsets and object CRC'
+> +. ./test-lib.sh
+> +
+> +test_expect_success \
+> +    'setup' \
+> +    'rm -rf .git
+> +     git-init &&
+> +     for i in `seq -w 100`
+> +     do
+> +         echo $i >file_$i &&
+> +         dd if=/dev/urandom bs=8k count=1 >>file_$i &&
+> +         git-update-index --add file_$i || return 1
+> +     done &&
 
--- 
-Catalin
+Is there a way for our tests to be a bit more stable than
+urandom?  I saw on the first run fsck was OOM-killed, but the
+second and subsequent run did not.  It's a bit hard to diagnose.
