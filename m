@@ -1,127 +1,165 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] clean up add_object_entry()
-Date: Tue, 10 Apr 2007 22:54:36 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704102248270.28181@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH(amend)] introduce GIT_WORK_TREE environment variable
+Date: Tue, 10 Apr 2007 18:29:27 -0700
+Message-ID: <7vzm5fr954.fsf@assigned-by-dhcp.cox.net>
+References: <20070328141505.GA16600@moooo.ath.cx>
+	<20070404201313.GB22782@moooo.ath.cx>
+	<7vslbfydiv.fsf@assigned-by-dhcp.cox.net>
+	<20070406132109.GA5682@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 11 09:50:59 2007
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Wed Apr 11 10:13:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbSz8-0001KT-DQ
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 04:55:02 +0200
+	id 1HbReO-0001is-VN
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 03:29:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964974AbXDKCyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 22:54:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966059AbXDKCyl
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 22:54:41 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:18781 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964974AbXDKCyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 22:54:41 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGB00HLOC33L4B0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 10 Apr 2007 22:54:39 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S964792AbXDKB33 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 21:29:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965860AbXDKB33
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 21:29:29 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:33529 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964792AbXDKB32 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 21:29:28 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070411012929.OYNV1271.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 10 Apr 2007 21:29:29 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ldVT1W00b1kojtg0000000; Tue, 10 Apr 2007 21:29:28 -0400
+In-Reply-To: <20070406132109.GA5682@moooo.ath.cx> (Matthias Lederhofer's
+	message of "Fri, 6 Apr 2007 15:21:09 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44204>
 
-This function used to call locate_object_entry_hash() _twice_ per added 
-object while only once should suffice. Let's reorganize that code a bit.
+Matthias Lederhofer <matled@gmx.net> writes:
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
----
+> With splitting is_bare_repository() it is no longer abused to check
+> for a working tree.  This raises the question what 'bare' is actually
+> supposed to mean:
+> (1) git may do operations on the repository which have strange effects
+>     if I'm using the repository with a working tree (e.g. update HEAD
+>     during a fetch)
+> (2) git may do (1) but also disallows to use the repository with a
+> working tree
+>
+> With (1) it would be ok to let a user work with a repository that has
+> core.bare = true if she really wants to (e.g. by setting GIT_WORK_TREE
+> explicitly, details to be figured out later).
+> With (2) git should disallow the use of a working tree if core.bare = true.
 
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 687b4b5..bc5f232 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -781,12 +781,19 @@ static unsigned name_hash(const char *name)
- 
- static int add_object_entry(const unsigned char *sha1, unsigned hash, int exclude)
- {
--	uint32_t idx = nr_objects;
- 	struct object_entry *entry;
--	struct packed_git *p;
-+	struct packed_git *p, *found_pack = NULL;
- 	off_t found_offset = 0;
--	struct packed_git *found_pack = NULL;
--	int ix, status = 0;
-+	int ix;
-+
-+	ix = nr_objects ? locate_object_entry_hash(sha1) : -1;
-+	if (ix >= 0) {
-+		if (exclude) {
-+			entry = objects + object_ix[ix] - 1;
-+			entry->preferred_base = 1;
-+		}
-+		return 0;
-+	}
- 
- 	if (!exclude) {
- 		for (p = packed_git; p; p = p->next) {
-@@ -803,43 +810,34 @@ static int add_object_entry(const unsigned char *sha1, unsigned hash, int exclud
- 			}
- 		}
- 	}
--	if ((entry = locate_object_entry(sha1)) != NULL)
--		goto already_added;
- 
--	if (idx >= nr_alloc) {
--		nr_alloc = (idx + 1024) * 3 / 2;
-+	if (nr_objects >= nr_alloc) {
-+		nr_alloc = (nr_alloc  + 1024) * 3 / 2;
- 		objects = xrealloc(objects, nr_alloc * sizeof(*entry));
- 	}
--	entry = objects + idx;
--	nr_objects = idx + 1;
-+
-+	entry = objects + nr_objects++;
- 	memset(entry, 0, sizeof(*entry));
- 	hashcpy(entry->sha1, sha1);
- 	entry->hash = hash;
-+	if (exclude)
-+		entry->preferred_base = 1;
-+	if (found_pack) {
-+		entry->in_pack = found_pack;
-+		entry->in_pack_offset = found_offset;
-+	}
- 
- 	if (object_ix_hashsz * 3 <= nr_objects * 4)
- 		rehash_objects();
--	else {
--		ix = locate_object_entry_hash(entry->sha1);
--		if (0 <= ix)
--			die("internal error in object hashing.");
--		object_ix[-1 - ix] = idx + 1;
--	}
--	status = 1;
-+	else
-+		object_ix[-1 - ix] = nr_objects;
- 
-- already_added:
- 	if (progress_update) {
- 		fprintf(stderr, "Counting objects...%u\r", nr_objects);
- 		progress_update = 0;
- 	}
--	if (exclude)
--		entry->preferred_base = 1;
--	else {
--		if (found_pack) {
--			entry->in_pack = found_pack;
--			entry->in_pack_offset = found_offset;
--		}
--	}
--	return status;
-+
-+	return 1;
- }
- 
- struct pbase_tree_cache {
+Well, core.bare was designed without any support for something
+like GIT_WORK_TREE in mind, so I do not think we should be tied
+too much to whatever the current implementation happens to do.
+
+If you are using GIT_WORK_TREE and GIT_DIR to name two
+directories that are not connected in the usual way
+(i.e. $GIT_DIR != $GIT_WORK_TREE/.git) to work in, I *think*
+your intention is "I want to checkout, diff, commit and all the
+usual git operations in GIT_WORK_TREE to grow branches in
+GIT_DIR".  I do not think core.bare should even be looked at in
+this case.
+
+A quick "git grep is_bare" reveals that:
+
+ - "git-branch foo $commit" refuses if the repository is not
+   bare and foo is the current branch.  The intention here is if
+   we allow it then it makes the HEAD and index+working tree out
+   of sync, so this clearly is about "does it have a working
+   tree, and is it used with one"?
+
+ - "git gc" runs pack-refs only if the repository is not bare.
+   This is to prevent public repositories from getting
+   pack-ref-pruned (which would make older dumb clients not to
+   be able to fetch from it).  This _is_ about is_bare; it does
+   not matter if somebody else happens to use it with a working
+   tree.
+
+ - reflog update code in refs.c defaults log_all_ref_updates
+   value to true when !is-bare; the intent is if the repository
+   is used to actively build history with working tree we would
+   want the reflog, otherwise if it is primarily used to track
+   other repositories (either pushing into it, or fetching from
+   elsewhere) reflog is often clutter.  So this is not about
+   bare, but "does it have a working tree?".
+
+ - "git ls-files" refuses if "is-bare" or "is-inside-git-dir" is
+   true.  The intention is we want ls-files to be run inside the
+   working tree.
+
+ - Any other commands that says NOT_BARE does the same as
+   ls-files, and the error message is "must be run in a work
+   tree".
+
+> One option to solve this is to make core.bare have three possible
+> values, so the user can decide if he wants (1) or (2).
+>     core.bare = true: no working tree allowed
+>     core.bare = false: don't allow git-fetch to update HEAD etc.
+>     core.bare = mixed: allow both
+> In the third case is_bare_repository() would be true and
+> inside_work_tree() would change depending on cwd and GIT_WORK_TREE
+> setting.  This would allow git fetch to update the current branch even
+> while inside the working tree.
+
+I am not sure if you even want the "no working tree allowed"
+case. Doesn't it directly contradict with the purpose of the
+whole GIT_WORK_TREE idea?
+
+I did not look at the Porcelain-ish scripts, but for example in
+the case of git-fetch, the reason it does not allow updating the
+current branch is the same as "git-branch" above.
+
+So I suspect that most of the existing use of is_bare is just an
+implementation detail of "do we have a working tree?", and it
+has been a good implementation primarily because we did not even
+allow doing something like GIT_WORK_TREE to begin with.  They
+need to be adjusted to work well with GIT_WORK_TREE.
+
+>> I think the only thing you care about in your "where is the repo
+>> and where is the worktree" codepath are get_git_dir() and
+>> is_bare_repository().  As a side effect of calling these
+>> functions for your own purpose, you later have to call
+>> setup_git_env() again to clean up, which is fine.  I would feel
+>> better if there is an assert in setup_git_env that catches the
+>> case where it is called for the second time even though the
+>> first caller was something other than this repository/worktree
+>> discovery code.
+>
+> You mean for the third time (first: git_get_dir() from git_config(),
+> second: setup_gdg, third: someone who should not call setup_git_env)?
+
+I am more worried about a case where
+
+ (1) a program calls some function A (perhaps in environment.c);
+
+ (2) both of us are forgetting right now that A ends up calling
+    setup_git_env();
+
+ (3) the result from A is used to make decision by the calling
+     program, and...
+
+ (4) then the program calls setup_git_directory().
+
+Currently the damange is limited as A cannot be outside
+environment.c because setup_git_env() is static there, but
+whatever the program decides in step (3) may need to be rolled
+back and recomputed if setup_git_directory() ends up moving
+GIT_DIR and friends around.
+
+> You mean something like assert(inside_work_tree >= 0); to check if
+> setup_gdg was called yet?  I didn't see such checks in the git source
+> yet but I like it, it is better to have an error message pointing at
+> the bug instead of strange behaviour which may result in a bug.
+
+Yes, but I would rather have something stroner than assert()
+that cannot be compiled away.  An explicit if (...) die("Gaah").
