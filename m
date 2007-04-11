@@ -1,75 +1,71 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
-Date: Wed, 11 Apr 2007 02:15:36 -0700
-Message-ID: <7virc3p8zr.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org>
-	<20070411080641.GF21701@admingilde.org>
-	<81b0412b0704110129q56ee0628jafe8fca808ef9ef8@mail.gmail.com>
-	<20070411083642.GH21701@admingilde.org>
+Subject: Re: Rebase, please help
+Date: Wed, 11 Apr 2007 00:38:41 -0700
+Message-ID: <7v8xczqs1q.fsf@assigned-by-dhcp.cox.net>
+References: <200704110852.00540.litvinov2004@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Wed Apr 11 14:51:16 2007
+Cc: git@vger.kernel.org
+To: Alexander Litvinov <litvinov2004@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 14:57:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbYvd-0003TM-4f
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 11:15:49 +0200
+	id 1HbXPj-0001vM-3C
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 09:38:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751623AbXDKJPi (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 05:15:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751626AbXDKJPi
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 05:15:38 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:46569 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751615AbXDKJPh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 05:15:37 -0400
+	id S1750982AbXDKHin (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 03:38:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750992AbXDKHin
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 03:38:43 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:36417 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750982AbXDKHim (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 03:38:42 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao103.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070411091537.VKKE1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Apr 2007 05:15:37 -0400
+          id <20070411073841.VDWF1226.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 11 Apr 2007 03:38:41 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id llFc1W0091kojtg0000000; Wed, 11 Apr 2007 05:15:36 -0400
-In-Reply-To: <20070411083642.GH21701@admingilde.org> (Martin Waitz's message
-	of "Wed, 11 Apr 2007 10:36:42 +0200")
+	id ljeh1W00F1kojtg0000000; Wed, 11 Apr 2007 03:38:41 -0400
+In-Reply-To: <200704110852.00540.litvinov2004@gmail.com> (Alexander Litvinov's
+	message of "Wed, 11 Apr 2007 08:52:00 +0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44213>
 
-Martin Waitz <tali@admingilde.org> writes:
+Alexander Litvinov <litvinov2004@gmail.com> writes:
 
-> Your working tree now contains a complete git repository which has
-> features which are not available for normal files.  Notable, you
-> have the possibility to create branches in the submodule.
-> If you insist in using HEAD you throw away those submodule capabilities.
+> I have found that rebase have (new) option : --merge
+> Looking at the code show me that regular rebase is a simply format-patch and 
+> am but --merge (or -s) use some merge stratyegy to merge changes between two 
+> commits into current head.
+>
+> What is --merge for ? Will the result be the same ?
 
-Why?  If you are working in the parent module (e.g integration)
-and notice breakage due to a bug in a submodule, it is very
-plausible that you would want to cd into the directory you have
-the submodule checked out, which has its own .git/ as its
-repository, and perform a fix-up there, with the goal of coming
-up with a commit usable by the parent project pointed at by the
-HEAD of the submodule repository.  And while working toward that
-goal, you will use branches, rebase, rewind or use StGIT there
-in that submodule repository.  It does not forbid you from using
-any of these things -- as long as you end up with a good commit
-at HEAD that the supermodule can use.
+Regular "rebase" uses "format-patch" piped to "am -3", so if you
+do not have renames the file-level patch conflict can be
+resolved using the 3-way merge logic.  However, because we do
+not give -M to format-patch, it does not deal with case where
+you have renames in the series of commits you are rebasing, nor
+where you have renames between the current base commit and the
+commit you are rebasing onto (the latter won't be solved with
+giving -M to format-patch anyway, so we do not even try).
 
-Once you come up with a suitable commit sitting at HEAD of the
-submodule repository, you cd up to the parent module.  Top-level
-git-diff would notice that the commit recorded at the submodule
-path has been updated (because you now have a good commit at
-HEAD of the submodule repository, while earlier the one in your
-index was a dud).
+In cases involving such renames, giving --merge option would
+probably be nicer to work with.  It invokes merge-recursive
+logic to deal with the renames.
 
-So it is not clear to me what your argument about throwing away
-capabilities is.
+I find that the regular rebase without --merge is faster (at
+least it feels to me that it is, and I kind of understand why;
+patch application to write out a tree is optimized to take
+advantage of cache-tree extension, as opposed to merging three
+trees which clobbers it), when there is no patch conflict.
+Since most rebases do not involve patch conflict for me and
+seldom involve rebases, I almost never use --merge myself, but
+this would depend highly on personal taste and project.
