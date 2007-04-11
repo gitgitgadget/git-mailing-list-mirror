@@ -1,100 +1,69 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Allow git-update-index work on subprojects
-Date: Tue, 10 Apr 2007 19:55:51 -0700
-Message-ID: <7vveg3r554.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org>
-	<81b0412b0704100639y331864f9ne0306aa4bf8de663@mail.gmail.com>
-	<20070410231900.GA4243@steel.home>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH] Add sendmail -f support to git-send-email.
+Date: Wed, 11 Apr 2007 02:38:18 +0200
+Message-ID: <20070411003818.GI2813@planck.djpig.de>
+References: <11762425341841-git-send-email-robbat2@gentoo.org> <20070410223826.GH2813@planck.djpig.de> <7v6483u95i.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 09:47:16 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 11 09:47:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbT00-0001YC-6V
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 04:55:56 +0200
+	id 1HbQqv-00080Y-K2
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 02:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966101AbXDKCzx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 22:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161135AbXDKCzx
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 22:55:53 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:45958 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966101AbXDKCzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 22:55:52 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070411025552.RTJH1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 10 Apr 2007 22:55:52 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id levr1W00Z1kojtg0000000; Tue, 10 Apr 2007 22:55:52 -0400
-In-Reply-To: <20070410231900.GA4243@steel.home> (Alex Riesen's message of
-	"Wed, 11 Apr 2007 01:19:00 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1030274AbXDKAiW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 20:38:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932411AbXDKAiW
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 20:38:22 -0400
+Received: from planck.djpig.de ([85.10.192.180]:2559 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932359AbXDKAiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 20:38:21 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 9118F88003;
+	Wed, 11 Apr 2007 02:38:20 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CZ5nEI75T96m; Wed, 11 Apr 2007 02:38:18 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 694B38801B; Wed, 11 Apr 2007 02:38:18 +0200 (CEST)
+Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v6483u95i.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44202>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+On Tue, Apr 10, 2007 at 04:00:57PM -0700, Junio C Hamano wrote:
+> Frank Lichtenheld <frank@lichtenheld.de> writes:
+> 
+> > On Tue, Apr 10, 2007 at 03:02:13PM -0700, Robin H. Johnson wrote:
+> >> Some mailing lists use the envelope sender instead of the actual from address,
+> >> and this can be broken in git-send-email. This patch sets the -f argument to
+> >> the sendmail binary, using the address of the patch author.
+> >
+> > At least some MTAs (exim is the one I know for sure) can restrict -f
+> > usage to some users and deny it for others. Don't know how much this
+> > would really be a problem, but using -f unconditionally might be a bad
+> > idea none-the-less.
+> 
+> I thought I saw the '-f' patch somewhere on the list in the last
+> several weeks and there was a discussion on this topic that
+> followed the patch.  Am I hallucinating, or was it not applied
+> because there were some issues?
 
-> Also, make "git commit -a" work with modifications of subproject HEADs.
->
-> ---
->
-> This one works with update-index --remove (which is what git-commit -a
-> uses). It is ugly. I tried to keep the "F -> D/F" behaviour of
-> update-index. Still have to check if "F -> Subproject" works.
->
->  builtin-update-index.c |   45 +++++++++++++++++++++++++--------------------
->  1 files changed, 25 insertions(+), 20 deletions(-)
->
-> diff --git a/builtin-update-index.c b/builtin-update-index.c
-> index eba756d..d075d50 100644
-> --- a/builtin-update-index.c
-> +++ b/builtin-update-index.c
-> @@ -62,7 +62,7 @@ static int mark_valid(const char *path)
->  
->  static int process_file(const char *path)
->  {
-> -	int size, namelen, option, status;
-> +	int size, namelen = -1, option, status;
->  	struct cache_entry *ce;
->  	struct stat st;
->  
-> @@ -73,7 +73,7 @@ static int process_file(const char *path)
->  	 */
->  	cache_tree_invalidate_path(active_cache_tree, path);
->  
-> +	if (!status && S_ISDIR(st.st_mode)) {
->  		/* When we used to have "path" and now we want to add
->  		 * "path/file", we need a way to remove "path" before
->  		 * being able to add "path/file".  However,
-> @@ -82,27 +82,32 @@ static int process_file(const char *path)
->  		 * friendly, especially since we can do the opposite
->  		 * case just fine without --force-remove.
->  		 */
-> +		namelen = strlen(path);
-> +		int pos = cache_name_pos(path, namelen);
-> +		if (0 <= pos && S_ISREG(ntohl(active_cache[pos]->ce_mode)) &&
-> +		    allow_remove) {
-> +			if (remove_file_from_cache(path))
-> +				return error("%s: cannot remove from the index", path);
-> +			else
-> +				return 0;
-> +		}
-> +	}
+Can't find anything in the archives. So either I completly suck
+at searching, or it is at least several months old, or you
+are hallucinating :)
 
-If I used to have a symlink S and now the filesystem has a file
-S/F which I am running "update-index --add --remove" on, what
-happens?
-
-If I have a subproject at path P, and mistakenly try to add path
-P/F with "update-index --add --remove P/F", it should be
-refused, shouldn't it?
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
