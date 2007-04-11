@@ -1,83 +1,69 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
-Date: Wed, 11 Apr 2007 10:36:42 +0200
-Message-ID: <20070411083642.GH21701@admingilde.org>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org> <20070411080641.GF21701@admingilde.org> <81b0412b0704110129q56ee0628jafe8fca808ef9ef8@mail.gmail.com>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: [PATCH 0/6] Initial subproject support (RFC?)
+Date: Wed, 11 Apr 2007 10:42:57 +0200
+Message-ID: <81b0412b0704110142l377231d7j85285a87ef73ce41@mail.gmail.com>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
+	 <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org>
+	 <81b0412b0704100604x2841d96aq194d3dedd303c588@mail.gmail.com>
+	 <20070411083236.GG21701@admingilde.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HWvPVVuAAfuRc6SZ"
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 15:11:54 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Martin Waitz" <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Wed Apr 11 15:13:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbYJr-0004iX-TY
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 10:36:48 +0200
+	id 1HbYPu-00060R-2x
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 10:43:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbXDKIgp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 04:36:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751325AbXDKIgp
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 04:36:45 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:32836 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751306AbXDKIgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 04:36:44 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HbYJm-0007RX-GL; Wed, 11 Apr 2007 10:36:42 +0200
+	id S1751325AbXDKIm7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 04:42:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751326AbXDKIm7
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 04:42:59 -0400
+Received: from an-out-0708.google.com ([209.85.132.244]:35413 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751325AbXDKIm6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 04:42:58 -0400
+Received: by an-out-0708.google.com with SMTP id b33so116328ana
+        for <git@vger.kernel.org>; Wed, 11 Apr 2007 01:42:57 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fsIpnP6uuv46zMWF5FYDEdFjXLBHnUo0C2OkYHKnHMol5kEY0saaUoAbSbfLh1oTb1VhRnrM2YVbvUiKCoogBOnx/p0miWwAW8FjxR5G3Ds3AhlrirD5dlFrwxIyngvVyjSjXvR24uKAsuR3Y8byjpStvYu+OaEi7ceVocwwqVw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rg49PeoxvIw8FMOkg8vIzkoF9Xvjxzs1ztS3nWY7EVJy9p51DRzEM5OBBbTyQ/tCZ8aN21V68unsZvqxu2XAUZo/hB6QMaTB2A5pI5bLpdRNYSoN27mhQKqFbWoch/qbZWfKiK0eQ81XCWXkNAt7g8v/4xeaagLRmV8Ks/KFrVk=
+Received: by 10.100.10.20 with SMTP id 20mr245339anj.1176280977242;
+        Wed, 11 Apr 2007 01:42:57 -0700 (PDT)
+Received: by 10.100.86.14 with HTTP; Wed, 11 Apr 2007 01:42:57 -0700 (PDT)
+In-Reply-To: <20070411083236.GG21701@admingilde.org>
 Content-Disposition: inline
-In-Reply-To: <81b0412b0704110129q56ee0628jafe8fca808ef9ef8@mail.gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44224>
 
+On 4/11/07, Martin Waitz <tali@admingilde.org> wrote:
+> > The other thing which will be missed a lot (I miss it that much)
+> > is a subproject-recursive git-commit and git-status.
+>
+> git-status should really point out if a subproject has any changes,
 
---HWvPVVuAAfuRc6SZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Only if I want it to. HEAD change check (which is cheap enough
+to be done unconditionally) can be done always.
 
-hoi :)
+> But for commit it really does not make any sense.  The commit in the
+> submodule is totally independent to the commit in the supermodule.
 
-On Wed, Apr 11, 2007 at 10:29:24AM +0200, Alex Riesen wrote:
-> On 4/11/07, Martin Waitz <tali@admingilde.org> wrote:
-> >So my advice is:
-> >Always read and write one dedicated branch (hardcoded "master" or
-> >configurable) when the supermodule wants to access a submodule.
->=20
-> In this case it does not correspond to the working tree anymore.
-> HEAD is the "closest" to working tree of submodule.
+Right. Perhaps not a commit in submodule but a recursive check
+for working directory changes in submodules. So that you can
+make that you don't make a superproject commit which cannot
+be resolved to what you had in all the working directories:
 
-yes.
-
-This has been discussed in length already.
-Please have a look at the archives.
-
-Your working tree now contains a complete git repository which has
-features which are not available for normal files.  Notable, you
-have the possibility to create branches in the submodule.
-If you insist in using HEAD you throw away those submodule capabilities.
-
---=20
-Martin Waitz
-
---HWvPVVuAAfuRc6SZ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGHJ4aj/Eaxd/oD7IRAnyLAJ4wdjT4PX7OO35iPmMaI3roOSOkmwCeOhpa
-1NZ2YO/QY/qqgi46oql3UnQ=
-=4lzX
------END PGP SIGNATURE-----
-
---HWvPVVuAAfuRc6SZ--
+  git commit -a --check-clean-subprojects
