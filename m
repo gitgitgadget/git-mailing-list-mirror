@@ -1,72 +1,158 @@
-From: Tomash Brechko <tomash.brechko@gmail.com>
-Subject: Re: [PATCH (resend)] Pass -C1 to git-apply in StGIT's apply_diff() and apply_patch().
-Date: Wed, 11 Apr 2007 11:51:33 +0400
-Message-ID: <20070411075133.GA5329@moonlight.home>
-References: <20070409112422.GE11593@moonlight.home> <b0943d9e0704100948k2b505916w5485b99e72d36c10@mail.gmail.com> <20070410192130.GE4946@moonlight.home> <20070410193214.GF4946@moonlight.home> <b0943d9e0704101538p3de0bf56m7906cfe2f5fc157e@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git fsck and new repos / backup repos
+Date: Wed, 11 Apr 2007 01:25:43 -0700
+Message-ID: <7vr6qrpbaw.fsf@assigned-by-dhcp.cox.net>
+References: <loom.20070410T200901-466@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 14:59:57 2007
+Cc: git@vger.kernel.org
+To: Sergio Callegari <scallegari@arces.unibo.it>
+X-From: git-owner@vger.kernel.org Wed Apr 11 15:00:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbXcJ-0004bn-Hu
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 09:51:47 +0200
+	id 1HbY9F-0002eE-DN
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 10:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751023AbXDKHvo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 03:51:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbXDKHvo
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 03:51:44 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:31530 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023AbXDKHvn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 03:51:43 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so62489uga
-        for <git@vger.kernel.org>; Wed, 11 Apr 2007 00:51:42 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:date:from:to:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=Wb//6ISKaR78OCTXbQT1rJDju1CdD0GEPClPlGkDJ/pCZ4IDH64HfVIdR7aJZxUdT4cCSfblwj3zHZXREDIcH1idUGg6kv3JGwssoK5j5wVrdIXTKrA5/M/Pn3Z5mYj+gwEOjRwcEnh7tic+/GYTEZUsdeguNV3JWaP1T+ItJyw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=sxhI/HlgKVHpwEofzdsOd5qVC86K49ulpul7F/WErL2xtuM+eFyvd1I+Us+PZLj0HRgtu3Y7Sk4qE472pjNK9mYIP/1gy6XNit4hrOx5jzzgyLZ8mOXZmjndih6OhiDfbvvvwz30r3tVuQ7NzXSzcOkdKUerZSSP928fqgwjC68=
-Received: by 10.67.88.17 with SMTP id q17mr262174ugl.1176277902154;
-        Wed, 11 Apr 2007 00:51:42 -0700 (PDT)
-Received: from moonlight.home ( [80.246.71.156])
-        by mx.google.com with ESMTP id 32sm1759467ugf.2007.04.11.00.51.39;
-        Wed, 11 Apr 2007 00:51:41 -0700 (PDT)
-Received: from moonlight.home (localhost.localdomain [127.0.0.1])
-	by moonlight.home (Postfix) with ESMTP id 0C5BC3A7C2;
-	Wed, 11 Apr 2007 11:51:34 +0400 (MSD)
-Received: (from tomash@localhost)
-	by moonlight.home (8.13.1/8.13.1/Submit) id l3B7pXU3005725;
-	Wed, 11 Apr 2007 11:51:33 +0400
-Mail-Followup-To: git@vger.kernel.org,
-	Catalin Marinas <catalin.marinas@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0704101538p3de0bf56m7906cfe2f5fc157e@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
+	id S1751110AbXDKIZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 04:25:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbXDKIZp
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 04:25:45 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41012 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751110AbXDKIZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 04:25:44 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070411082543.VCDQ1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 11 Apr 2007 04:25:43 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id lkRj1W00N1kojtg0000000; Wed, 11 Apr 2007 04:25:44 -0400
+In-Reply-To: <loom.20070410T200901-466@post.gmane.org> (Sergio Callegari's
+	message of "Tue, 10 Apr 2007 18:27:05 +0000 (UTC)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44216>
 
-On Tue, Apr 10, 2007 at 23:38:55 +0100, Catalin Marinas wrote:
-> When something has changed in the surrounding code (not touched by
-> your patch), the automatic three-way merge should, in general, be able
-> to solve the issue as it uses the ancestor information. Is the
-> automatic three-way merge failing as well in your case?
+Sergio Callegari <scallegari@arces.unibo.it> writes:
 
-OK, maybe I was pushing too much.  Indeed, three-way merge will solve
-it, I just don't have a setup where it runs automatically, and I
-thought the mege could be avoided alltogether.  But I agree the
-problem is easily managable.
+> Hi, 
+> just posting a very very minor thing, that anyway might be easy to improve...
+>
+> consider the following cases:
+>
+> 1) Empty repo
+>
+> mkdir Foo
+> cd Foo
+> git --bare init
+> git --bare fsck
+>
+> error: HEAD is not a symbolic ref
+> error: No default references
+>
+> Should this be an error...?  Of course fsck is not happy: HEAD points to master,
+> but master does not exist.  However, the newbie might find it weird that git
+> complains over a brand new repo it has just made.
+>
+> BTW also gitk dies badly in this case.
+>
+> 2) Backup repo
+>
+> mkdir Foo-Backup
+> cd Foo-Backup
+> git --bare init
+>
+> cd <path>/Foo-Workingtree
+> git config --add remote.foobackup.url <url pointing to Foo Backup>
+> git config --add remote.foobackup.push +refs/heads/*:refs/remotes/workplace1/*
+> git push foobackup
+>
+> cd <path>/Foo-Backup
+> git --bare fsck
+> error: HEAD is not a symbolic ref
+>
+> Of course... again head points to master, but master does not exist.
 
-And as you agree that the option would be nice we are on the same
-page.  Thanks you!
+I personally do not care too much about empty repository case.
+Either we say error, or we say everything is cruft (if you did
+"git add; rm -f .git/index").  So I do not think it matters too
+much if the second error from (1) says "No default references"
+or did not trigger.  That "error" is not about your repository
+being corrupt, but is about your use of fsck when you know you
+do not have anything is, eh, suboptimal ;-).  If you look at the
+comment before the line that emits that error message you would
+know.
 
+"HEAD is not a symbolic ref" should not even be an error, as we
+support detached HEAD, which is another case fsck does not yet
+know about.  The error message you got should be at least worded
+as an informational message that says it is pointing at a
+yet-to-be-born branch.
 
--- 
-   Tomash Brechko
+I think it *is* an error if:
+
+ (1) $GIT_DIR/HEAD does _not_ exist;
+ (2) $GIT_DIR/HEAD is a symref, but points outside refs/heads;
+ (3) $GIT_DIR/HEAD is _not_ a symref, but does not contain a
+     40-byte object name.
+
+but (1) or (3) are covered by not even considering such $GIT_DIR
+as a valid repository, and we already check (2).  So I think
+something like the following patch to loosen restriction is good
+enough.
+
+---
+
+ builtin-fsck.c |   24 ++++++++++++++++--------
+ 1 files changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/builtin-fsck.c b/builtin-fsck.c
+index 21f1f9e..7c3b0a5 100644
+--- a/builtin-fsck.c
++++ b/builtin-fsck.c
+@@ -532,7 +532,7 @@ static void get_default_heads(void)
+ 	 * "show_unreachable" flag.
+ 	 */
+ 	if (!default_refs) {
+-		error("No default references");
++		fprintf(stderr, "notice: No default references\n");
+ 		show_unreachable = 0;
+ 	}
+ }
+@@ -552,15 +552,23 @@ static int fsck_head_link(void)
+ {
+ 	unsigned char sha1[20];
+ 	int flag;
+-	const char *head_points_at = resolve_ref("HEAD", sha1, 1, &flag);
+-
+-	if (!head_points_at || !(flag & REF_ISSYMREF))
+-		return error("HEAD is not a symbolic ref");
+-	if (prefixcmp(head_points_at, "refs/heads/"))
++	int null_is_error = 0;
++	const char *head_points_at = resolve_ref("HEAD", sha1, 0, &flag);
++
++	if (!head_points_at)
++		return error("Invalid HEAD");
++	if (!strcmp(head_points_at, "HEAD"))
++		/* detached HEAD */
++		null_is_error = 1;
++	else if (prefixcmp(head_points_at, "refs/heads/"))
+ 		return error("HEAD points to something strange (%s)",
+ 			     head_points_at);
+-	if (is_null_sha1(sha1))
+-		return error("HEAD: not a valid git pointer");
++	if (is_null_sha1(sha1)) {
++		if (null_is_error)
++			return error("HEAD: detached HEAD points at nothing");
++		fprintf(stderr, "notice: HEAD points to an unborn branch (%s)\n",
++			head_points_at + 11);
++	}
+ 	return 0;
+ }
+ 
