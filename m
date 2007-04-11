@@ -1,79 +1,124 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 13/10] tests for various pack index features
-Date: Wed, 11 Apr 2007 13:29:39 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704111316290.28181@xanadu.home>
-References: <alpine.LFD.0.98.0704101607390.28181@xanadu.home>
- <7vr6qrr51r.fsf@assigned-by-dhcp.cox.net>
- <alpine.LFD.0.98.0704110850010.28181@xanadu.home>
- <20070411130932.GA17094@dspnet.fr.eu.org> <20070411145103.GP5436@spearce.org>
+Subject: [PATCH 1/2] simple random data generator for tests
+Date: Wed, 11 Apr 2007 13:33:50 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704111330120.28181@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
-Cc: Olivier Galibert <galibert@pobox.com>,
-	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Apr 11 19:30:01 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 11 19:34:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hbgdr-0002nb-OJ
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 19:30:00 +0200
+	id 1Hbghf-0004df-Os
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 19:33:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbXDKR3l (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 13:29:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753186AbXDKR3l
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 13:29:41 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35318 "EHLO
+	id S1753418AbXDKRdx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 13:33:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753428AbXDKRdx
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 13:33:53 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:37914 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753135AbXDKR3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 13:29:40 -0400
+	with ESMTP id S1753418AbXDKRdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 13:33:52 -0400
 Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGC00GCSGLFJ890@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 11 Apr 2007 13:29:40 -0400 (EDT)
-In-reply-to: <20070411145103.GP5436@spearce.org>
+ with ESMTP id <0JGC00GP9GSEJGA0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 11 Apr 2007 13:33:51 -0400 (EDT)
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44246>
 
-On Wed, 11 Apr 2007, Shawn O. Pearce wrote:
+Reliance on /dev/urandom produces test vectors that are, well, random. 
+This can create problems impossible to track down when the data is 
+different from one test invokation to another.
 
-> Olivier Galibert <galibert@pobox.com> wrote:
-> > On Wed, Apr 11, 2007 at 08:57:09AM -0400, Nicolas Pitre wrote:
-> > > Hmmm what we need is a random data generator that always produces the 
-> > > same thing.  I'll hack something to replace urandom.
-> > 
-> > Don't hack something, ues the standard reference, the Mersenne Twister.
-> > 
-> >   http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
-> > 
-> > PRNGs are the same as cryptosystems, it's very easy to hack up
-> > something and get it very, very wrong.  And it's unnecessary, since
-> > there are very good ones available.
-> 
-> Indeed.
+The goal is not to have random data to test, but rather to have a 
+convenient way to create sets of large files with non compressible and 
+non deltifiable data in a reproducible way.
 
-Please don't get too excited.
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+ Makefile         |    7 +++++--
+ test-genrandom.c |   34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+), 2 deletions(-)
+ create mode 100644 test-genrandom.c
 
-We don't want a full fledged random number generator with a period of 
-2^30000 that is faster than light and impossible to predict, etc, etc.
-
-The _only_ thing we want is a convenient way to produce large files with 
-garbage that is neither compressible nor deltifiable, but still 
-reproducible.  And for that matter the Mersenne Twister algo is _way_ 
-too heavy for our needs.
-
-The one that I just implemented basically boils down to:
-
-	while (count--) {
-		next = next * 1103515245 + 12345;
-		putchar((next >> 16) & 0xff);
-	}
-
-and that does the job perfectly well.
-
-
-Nicolas
+diff --git a/Makefile b/Makefile
+index a77d31d..bd0ba95 100644
+--- a/Makefile
++++ b/Makefile
+@@ -932,7 +932,7 @@ endif
+ 
+ export NO_SVN_TESTS
+ 
+-test: all test-chmtime$X
++test: all test-chmtime$X test-genrandom$X
+ 	$(MAKE) -C t/ all
+ 
+ test-date$X: test-date.c date.o ctype.o
+@@ -953,6 +953,9 @@ test-match-trees$X: test-match-trees.o $(GITLIBS)
+ test-chmtime$X: test-chmtime.c
+ 	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $<
+ 
++test-genrandom$X: test-genrandom.c
++	$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $<
++
+ check-sha1:: test-sha1$X
+ 	./test-sha1.sh
+ 
+@@ -1041,7 +1044,7 @@ dist-doc:
+ 
+ clean:
+ 	rm -f *.o mozilla-sha1/*.o arm/*.o ppc/*.o compat/*.o xdiff/*.o \
+-		test-chmtime$X $(LIB_FILE) $(XDIFF_LIB)
++		test-chmtime$X test-genrandom$X $(LIB_FILE) $(XDIFF_LIB)
+ 	rm -f $(ALL_PROGRAMS) $(BUILT_INS) git$X
+ 	rm -f *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
+ 	rm -rf autom4te.cache
+diff --git a/test-genrandom.c b/test-genrandom.c
+new file mode 100644
+index 0000000..6cc4650
+--- /dev/null
++++ b/test-genrandom.c
+@@ -0,0 +1,34 @@
++/*
++ * Simple random data generator used to create reproducible test files.
++ * This is inspired from POSIX.1-2001 implementation example for rand().
++ * Copyright (C) 2007 by Nicolas Pitre, licensed under the GPL version 2.
++ */
++
++#include <stdio.h>
++#include <stdlib.h>
++
++int main(int argc, char *argv[])
++{
++	unsigned long count, next = 0;
++	unsigned char *c;
++
++	if (argc < 2 || argc > 3) {
++		fprintf( stderr, "Usage: %s <seed_string> [<size>]", argv[0]);
++		return 1;
++	}
++
++	c = (unsigned char *) argv[1];
++	do {
++		next = next * 11 + *c;
++	} while (*c++);
++	
++	count = (argc == 3) ? strtoul(argv[2], NULL, 0) : -1L;
++
++	while (count--) {
++		next = next * 1103515245 + 12345;
++		if (putchar((next >> 16) & 0xff) == EOF)
++			return -1;
++	}
++
++	return 0;
++}
+-- 
+1.5.1.777.gd14d3-dirty
