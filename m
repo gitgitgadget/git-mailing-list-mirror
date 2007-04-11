@@ -1,68 +1,92 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add sendmail -f support to git-send-email.
-Date: Tue, 10 Apr 2007 22:18:37 -0700
-Message-ID: <7vejmrqyj6.fsf@assigned-by-dhcp.cox.net>
-References: <11762425341841-git-send-email-robbat2@gentoo.org>
-	<20070410223826.GH2813@planck.djpig.de>
-	<7v6483u95i.fsf@assigned-by-dhcp.cox.net>
-	<20070411003818.GI2813@planck.djpig.de>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH 0/6] Initial subproject support (RFC?)
+Date: Wed, 11 Apr 2007 10:57:55 +0200
+Message-ID: <20070411085755.GI21701@admingilde.org>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org> <81b0412b0704100604x2841d96aq194d3dedd303c588@mail.gmail.com> <20070411083236.GG21701@admingilde.org> <81b0412b0704110142l377231d7j85285a87ef73ce41@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Wed Apr 11 12:03:54 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WBsA/oQW3eTA3LlM"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 12:49:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbVEO-0006nx-Gz
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 07:18:56 +0200
+	id 1HbYeQ-0000Hh-V4
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 10:58:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161194AbXDKFSk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 01:18:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161196AbXDKFSj
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 01:18:39 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:62908 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161194AbXDKFSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 01:18:39 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070411051837.UGJU1266.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Apr 2007 01:18:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id lhJd1W00r1kojtg0000000; Wed, 11 Apr 2007 01:18:38 -0400
-In-Reply-To: <20070411003818.GI2813@planck.djpig.de> (Frank Lichtenheld's
-	message of "Wed, 11 Apr 2007 02:38:18 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751483AbXDKI57 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 04:57:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbXDKI57
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 04:57:59 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:37152 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751517AbXDKI56 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 04:57:58 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
+	id 1HbYeJ-0007cb-QT; Wed, 11 Apr 2007 10:57:55 +0200
+Content-Disposition: inline
+In-Reply-To: <81b0412b0704110142l377231d7j85285a87ef73ce41@mail.gmail.com>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44208>
 
-Frank Lichtenheld <frank@lichtenheld.de> writes:
 
->> I thought I saw the '-f' patch somewhere on the list in the last
->> several weeks and there was a discussion on this topic that
->> followed the patch.  Am I hallucinating, or was it not applied
->> because there were some issues?
->
-> Can't find anything in the archives. So either I completly suck
-> at searching, or it is at least several months old, or you
-> are hallucinating :)
+--WBsA/oQW3eTA3LlM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It was the thread about update-hook that sends e-mail; the
-discussion ends here:
+hoi :)
 
-http://thread.gmane.org/gmane.comp.version-control.git/42927/focus=42996
+On Wed, Apr 11, 2007 at 10:42:57AM +0200, Alex Riesen wrote:
+> On 4/11/07, Martin Waitz <tali@admingilde.org> wrote:
+> >> The other thing which will be missed a lot (I miss it that much)
+> >> is a subproject-recursive git-commit and git-status.
+> >
+> >git-status should really point out if a subproject has any changes,
+>=20
+> Only if I want it to. HEAD change check (which is cheap enough
+> to be done unconditionally) can be done always.
 
-The patch was from Jim Meyering that made the script to
-unconditionally pass -f '$envelope_sender'; it was not applied
-because the whole e-mail sending business was removed from the
-update hook.
+Yes, that's the equivalent of checking normal files.
+The recursive check for dirty files/index should be configurable.
 
-We seem to do a "-f '$envelope_sender'" in the example 'post-receive'
-hook only when the configuration tells it to, so probably it is
-a good idea to follow suit in this program.
+> >But for commit it really does not make any sense.  The commit in the
+> >submodule is totally independent to the commit in the supermodule.
+>=20
+> Right. Perhaps not a commit in submodule but a recursive check
+> for working directory changes in submodules. So that you can
+> make that you don't make a superproject commit which cannot
+> be resolved to what you had in all the working directories:
+>=20
+>  git commit -a --check-clean-subprojects
+
+For -a such a check may even make sense unconditionally.
+And without -a I don't see any value in such a check.
+So we can just add that check to -a if we see that dirty submodules
+are a problem for users.
+
+--=20
+Martin Waitz
+
+--WBsA/oQW3eTA3LlM
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.1 (GNU/Linux)
+
+iD8DBQFGHKMTj/Eaxd/oD7IRAj6WAJ4vElliDRnuZt3wGBmjDKOF+UBXLwCeJo+M
+W9iZxEiCbs6uMlAbTazswqw=
+=R/iD
+-----END PGP SIGNATURE-----
+
+--WBsA/oQW3eTA3LlM--
