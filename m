@@ -1,69 +1,127 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH] Add sendmail -f support to git-send-email.
-Date: Wed, 11 Apr 2007 02:38:18 +0200
-Message-ID: <20070411003818.GI2813@planck.djpig.de>
-References: <11762425341841-git-send-email-robbat2@gentoo.org> <20070410223826.GH2813@planck.djpig.de> <7v6483u95i.fsf@assigned-by-dhcp.cox.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] clean up add_object_entry()
+Date: Tue, 10 Apr 2007 22:54:36 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704102248270.28181@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 11 09:47:25 2007
+X-From: git-owner@vger.kernel.org Wed Apr 11 09:50:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbQqv-00080Y-K2
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 02:38:25 +0200
+	id 1HbSz8-0001KT-DQ
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 04:55:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030274AbXDKAiW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 10 Apr 2007 20:38:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932411AbXDKAiW
-	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 20:38:22 -0400
-Received: from planck.djpig.de ([85.10.192.180]:2559 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932359AbXDKAiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Apr 2007 20:38:21 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 9118F88003;
-	Wed, 11 Apr 2007 02:38:20 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CZ5nEI75T96m; Wed, 11 Apr 2007 02:38:18 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 694B38801B; Wed, 11 Apr 2007 02:38:18 +0200 (CEST)
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v6483u95i.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S964974AbXDKCyl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 10 Apr 2007 22:54:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966059AbXDKCyl
+	(ORCPT <rfc822;git-outgoing>); Tue, 10 Apr 2007 22:54:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18781 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964974AbXDKCyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Apr 2007 22:54:41 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JGB00HLOC33L4B0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 10 Apr 2007 22:54:39 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44203>
 
-On Tue, Apr 10, 2007 at 04:00:57PM -0700, Junio C Hamano wrote:
-> Frank Lichtenheld <frank@lichtenheld.de> writes:
-> 
-> > On Tue, Apr 10, 2007 at 03:02:13PM -0700, Robin H. Johnson wrote:
-> >> Some mailing lists use the envelope sender instead of the actual from address,
-> >> and this can be broken in git-send-email. This patch sets the -f argument to
-> >> the sendmail binary, using the address of the patch author.
-> >
-> > At least some MTAs (exim is the one I know for sure) can restrict -f
-> > usage to some users and deny it for others. Don't know how much this
-> > would really be a problem, but using -f unconditionally might be a bad
-> > idea none-the-less.
-> 
-> I thought I saw the '-f' patch somewhere on the list in the last
-> several weeks and there was a discussion on this topic that
-> followed the patch.  Am I hallucinating, or was it not applied
-> because there were some issues?
+This function used to call locate_object_entry_hash() _twice_ per added 
+object while only once should suffice. Let's reorganize that code a bit.
 
-Can't find anything in the archives. So either I completly suck
-at searching, or it is at least several months old, or you
-are hallucinating :)
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 687b4b5..bc5f232 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -781,12 +781,19 @@ static unsigned name_hash(const char *name)
+ 
+ static int add_object_entry(const unsigned char *sha1, unsigned hash, int exclude)
+ {
+-	uint32_t idx = nr_objects;
+ 	struct object_entry *entry;
+-	struct packed_git *p;
++	struct packed_git *p, *found_pack = NULL;
+ 	off_t found_offset = 0;
+-	struct packed_git *found_pack = NULL;
+-	int ix, status = 0;
++	int ix;
++
++	ix = nr_objects ? locate_object_entry_hash(sha1) : -1;
++	if (ix >= 0) {
++		if (exclude) {
++			entry = objects + object_ix[ix] - 1;
++			entry->preferred_base = 1;
++		}
++		return 0;
++	}
+ 
+ 	if (!exclude) {
+ 		for (p = packed_git; p; p = p->next) {
+@@ -803,43 +810,34 @@ static int add_object_entry(const unsigned char *sha1, unsigned hash, int exclud
+ 			}
+ 		}
+ 	}
+-	if ((entry = locate_object_entry(sha1)) != NULL)
+-		goto already_added;
+ 
+-	if (idx >= nr_alloc) {
+-		nr_alloc = (idx + 1024) * 3 / 2;
++	if (nr_objects >= nr_alloc) {
++		nr_alloc = (nr_alloc  + 1024) * 3 / 2;
+ 		objects = xrealloc(objects, nr_alloc * sizeof(*entry));
+ 	}
+-	entry = objects + idx;
+-	nr_objects = idx + 1;
++
++	entry = objects + nr_objects++;
+ 	memset(entry, 0, sizeof(*entry));
+ 	hashcpy(entry->sha1, sha1);
+ 	entry->hash = hash;
++	if (exclude)
++		entry->preferred_base = 1;
++	if (found_pack) {
++		entry->in_pack = found_pack;
++		entry->in_pack_offset = found_offset;
++	}
+ 
+ 	if (object_ix_hashsz * 3 <= nr_objects * 4)
+ 		rehash_objects();
+-	else {
+-		ix = locate_object_entry_hash(entry->sha1);
+-		if (0 <= ix)
+-			die("internal error in object hashing.");
+-		object_ix[-1 - ix] = idx + 1;
+-	}
+-	status = 1;
++	else
++		object_ix[-1 - ix] = nr_objects;
+ 
+- already_added:
+ 	if (progress_update) {
+ 		fprintf(stderr, "Counting objects...%u\r", nr_objects);
+ 		progress_update = 0;
+ 	}
+-	if (exclude)
+-		entry->preferred_base = 1;
+-	else {
+-		if (found_pack) {
+-			entry->in_pack = found_pack;
+-			entry->in_pack_offset = found_offset;
+-		}
+-	}
+-	return status;
++
++	return 1;
+ }
+ 
+ struct pbase_tree_cache {
