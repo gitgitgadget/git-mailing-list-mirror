@@ -1,67 +1,80 @@
-From: "Dana How" <danahow@gmail.com>
+From: David Lang <david.lang@digitalinsight.com>
 Subject: Re: [PATCH 5/6] Teach "fsck" not to follow subproject links
-Date: Wed, 11 Apr 2007 17:00:52 -0700
-Message-ID: <56b7f5510704111700r1cb6923ehbfb742512014aebc@mail.gmail.com>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0704111545040.6730@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0704111605210.6730@woody.linux-foundation.org>
-	 <Pine.LNX.4.63.0704111600390.28394@qynat.qvtvafvgr.pbz>
-	 <Pine.LNX.4.64.0704111646000.6730@woody.linux-foundation.org>
+Date: Wed, 11 Apr 2007 16:30:19 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0704111628240.28394@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org><Pi
+ ne.LNX.4.64.0704092115020.6730@woody.linux-foundation.org><461D6432.90205@v
+ ilain.net>   <Pine.LNX.4.64.0704111545040.6730@woody.linux-foundation.org><461D6858.4090
+ 007@vilain.net>  <Pine.LNX.4.64.0704111605210.6730@woody.linux-foundation.org><Pine.LNX.4.63
+ .0704111600390.28394@qynat.qvtvafvgr.pbz> <Pine.LNX.4.64.0704111646000.6730@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "David Lang" <david.lang@digitalinsight.com>,
-	"Sam Vilain" <sam@vilain.net>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <junkio@cox.net>, danahow@gmail.com
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 02:01:01 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 12 02:01:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbmkE-0000Wk-AJ
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 02:00:58 +0200
+	id 1HbmkM-0000aO-BD
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 02:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161383AbXDLAAz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 20:00:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161412AbXDLAAy
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 20:00:54 -0400
-Received: from nz-out-0506.google.com ([64.233.162.239]:23084 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161383AbXDLAAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 20:00:53 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so272670nze
-        for <git@vger.kernel.org>; Wed, 11 Apr 2007 17:00:53 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=umFqI/b5UW1887KFtK/+I7pS+yZeJ0Mt10lOdDkmTtuG3QNIUMOPWhNsW8OA7TGZxa5Q5MrKMbBvCAqLfL5arQMGOvKKGxSqUAKv2PSiaQm/SuIhnBzdpIPOPdAtZMwhb0oM8/uNEZiRlgcVCp7ybpEzYGO1eAmslkhsoW4lxc8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GNrB4ISqvf7m9NP6AA0pvpqlilAXgZyXa7xWL1C/a1eddAtFuQ2bKTyb6WuwO07WEhNPQLq0YyyA9lRcoGxN10YGP1ejgJ3E0PuG/rBS3iLJA8fyBpmINtIpb7WBS9JUWhSsu7a0dIaqYv4y7AfeOoHBiIUQPlPy93NVzCUuDZs=
-Received: by 10.114.185.8 with SMTP id i8mr511264waf.1176336052715;
-        Wed, 11 Apr 2007 17:00:52 -0700 (PDT)
-Received: by 10.114.46.4 with HTTP; Wed, 11 Apr 2007 17:00:52 -0700 (PDT)
+	id S1161410AbXDLABB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 20:01:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161412AbXDLABB
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 20:01:01 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:38582 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1161410AbXDLABA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 20:01:00 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Wed, 11 Apr 2007 17:01:00 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Wed, 11 Apr 2007 17:00:55 -0700
+X-X-Sender: dlang@dlang.diginsite.com
 In-Reply-To: <Pine.LNX.4.64.0704111646000.6730@woody.linux-foundation.org>
-Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44285>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44286>
 
-On 4/11/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+On Wed, 11 Apr 2007, Linus Torvalds wrote:
+
+> On Wed, 11 Apr 2007, David Lang wrote:
+>>
+>> would it make sense to have a --multiple-project option for fsck that would
+>> let you specify multiple 'projects' that share a object set and have the
+>> default checking not do the reachability checks that cause problems in this
+>> case?
+>
+> Well, the thing is, sharing object directories actually makes things
+> *harder* to check, rather than easier.
+>
+> It can be a nice space optimization, and yes, if there really is a lot of
+> shared state, it can make it much cheaper to do some of the checks, but
+> right now we have absolutely *no* way for fsck to then do the reachability
+> check, because there is no way to tell fsck where all the refs are (since
+> now the refs come in from multiple repositories!)
+
+this is why I was suggesting a --multiple-project option to let you tell fsck 
+about all of the repositories that it needs to look for refs in.
+
+> So the individual objects get cheaper to fsck (no need to fsck shared
+> objects over and over again), but the reachability gets much harder to
+> fsck.
+
+agreed.
+
 > It's not an insurmountable problem, or even necessarily a very large one,
 > but it boils down to one very basic issue:
 >
->  - nobody seems to actually *use* the shared object directory model!
+> - nobody seems to actually *use* the shared object directory model!
+>
+> The thing is, with pack-files and alternates directories, a lot of the
+> original reasons for shared object directories simply don't exist..
 
-Cool -- my previous email makes me either a git idiot or a git pioneer!
+I suspect that if it coudl be checked it would be used more, especially with the 
+subproject support.
 
-So I'll think through my usage model some more and
-look over the fsck source.
-
-Until then,
--- 
-Dana L. How  danahow@gmail.com  +1 650 804 5991 cell
+David Lang
