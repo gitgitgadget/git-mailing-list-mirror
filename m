@@ -1,8 +1,8 @@
 From: "Robin H\. Johnson" <robbat2@gentoo.org>
-Subject: [PATCH 1/2] Add custom subject prefix support to format-patch (take 3)
-Date: Wed, 11 Apr 2007 16:58:07 -0700
-Message-ID: <1176335888349-git-send-email-robbat2@gentoo.org>
-References: <11763358884124-git-send-email-robbat2@gentoo.org>
+Subject: [PATCH 2/2] Add testcase for format-patch --subject-prefix (take 3)
+Date: Wed, 11 Apr 2007 16:58:08 -0700
+Message-ID: <11763358881541-git-send-email-robbat2@gentoo.org>
+References: <11763358884124-git-send-email-robbat2@gentoo.org> <1176335888349-git-send-email-robbat2@gentoo.org>
 Cc: junkio@cox.net, Robin@orbis-terrarum.net,
 	H.Johnson@orbis-terrarum.net, <robbat2@gentoo.org>
 To: git@vger.kernel.org
@@ -11,166 +11,225 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hbmhi-0007j8-7e
+	id 1Hbmhh-0007j8-Fl
 	for gcvg-git@gmane.org; Thu, 12 Apr 2007 01:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932263AbXDKX6P (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 19:58:15 -0400
+	id S932247AbXDKX6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 19:58:14 -0400
 Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932266AbXDKX6O
 	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 19:58:14 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:40828 "EHLO
+Received: from b01.ext.isohunt.com ([208.71.112.51]:40819 "EHLO
 	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S932263AbXDKX6M (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S932247AbXDKX6M (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 11 Apr 2007 19:58:12 -0400
-Received: (qmail 26203 invoked from network); 11 Apr 2007 23:58:11 -0000
+Received: (qmail 26199 invoked from network); 11 Apr 2007 23:58:11 -0000
 Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
   (smtp-auth username robbat2@isohunt.com, mechanism login)
   by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 11 Apr 2007 23:58:11 +0000
-Received: (qmail 15425 invoked from network); 11 Apr 2007 16:58:35 -0700
+Received: (qmail 15432 invoked from network); 11 Apr 2007 16:58:35 -0700
 Received: from buck-int.local.orbis-terrarum.net (HELO buck-int.orbis-terrarum.net) (172.16.9.3)
   by curie-int-1.local.orbis-terrarum.net with SMTP; 11 Apr 2007 16:58:35 -0700
-Received: (nullmailer pid 26911 invoked by uid 0);
+Received: (nullmailer pid 26915 invoked by uid 0);
 	Wed, 11 Apr 2007 23:58:08 -0000
 X-Mailer: git-send-email 1.5.1
-In-Reply-To: <11763358884124-git-send-email-robbat2@gentoo.org>
+In-Reply-To: <1176335888349-git-send-email-robbat2@gentoo.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44283>
 
 From: Robin H. Johnson <robbat2@gentoo.org>
 
-Add a new option to git-format-patch, entitled --subject-prefix that allows
-control of the subject prefix '[PATCH]'. Using this option, the text 'PATCH' is
-replaced with whatever input is provided to the option. This allows easily
-generating patches like '[PATCH 2.6.21-rc3]' or properly numbered series like
-'[-mm3 PATCH N/M]'. This patch provides the implementation and documentation.
+Add testcase for format-patch --subject-prefix support.
 
 Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
 ---
- Documentation/git-format-patch.txt |   17 ++++++++++++-----
- builtin-log.c                      |   10 ++++++++--
- log-tree.c                         |   14 ++++++++++----
- revision.h                         |    1 +
- 4 files changed, 31 insertions(+), 11 deletions(-)
+ t/t4013-diff-various.sh                            |    1 +
+ ...tdout_--subject-prefix=TESTCASE_initial..master |  164 ++++++++++++++++++++
+ 2 files changed, 165 insertions(+), 0 deletions(-)
+ create mode 100644 t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 111d7c6..9965745 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -10,11 +10,12 @@ SYNOPSIS
- --------
- [verse]
- 'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--thread]
--	           [--attach[=<boundary>] | --inline[=<boundary>]]
--	           [-s | --signoff] [<common diff options>] [--start-number <n>]
--		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
--		   [--ignore-if-in-upstream]
--		   <since>[..<until>]
-+                 [--attach[=<boundary>] | --inline[=<boundary>]]
-+                 [-s | --signoff] [<common diff options>]
-+                 [--start-number <n>] [--in-reply-to=Message-Id]
-+                 [--suffix=.<sfx>] [--ignore-if-in-upstream]
-+                 [--subject-prefix=Subject-Prefix]
-+                 <since>[..<until>]
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 488e075..8f4c29a 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -241,6 +241,7 @@ format-patch --attach --stdout initial..master
+ format-patch --inline --stdout initial..side
+ format-patch --inline --stdout initial..master^
+ format-patch --inline --stdout initial..master
++format-patch --inline --stdout --subject-prefix=TESTCASE initial..master
  
- DESCRIPTION
- -----------
-@@ -98,6 +99,12 @@ include::diff-options.txt[]
- 	patches being generated, and any patch that matches is
- 	ignored.
- 
-+--subject-prefix=<Subject-Prefix>::
-+	Instead of the standard '[PATCH]' prefix in the subject
-+	line, instead use '[<Subject-Prefix>]'. This
-+	allows for useful naming of a patch series, and can be
-+	combined with the --numbered option.
+ diff --abbrev initial..side
+ diff -r initial..side
+diff --git a/t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master b/t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master
+new file mode 100644
+index 0000000..a8093be
+--- /dev/null
++++ b/t/t4013/diff.format-patch_--inline_--stdout_--subject-prefix=TESTCASE_initial..master
+@@ -0,0 +1,164 @@
++$ git format-patch --inline --stdout --subject-prefix=TESTCASE initial..master
++From 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44 Mon Sep 17 00:00:00 2001
++From: A U Thor <author@example.com>
++Date: Mon, 26 Jun 2006 00:01:00 +0000
++Subject: [TESTCASE] Second
++MIME-Version: 1.0
++Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
 +
- --suffix=.<sfx>::
- 	Instead of using `.patch` as the suffix for generated
- 	filenames, use specifed suffix.  A common alternative is
-diff --git a/builtin-log.c b/builtin-log.c
-index 71df957..4a4890a 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -417,6 +417,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	int numbered = 0;
- 	int start_number = -1;
- 	int keep_subject = 0;
-+	int subject_prefix = 0;
- 	int ignore_if_in_upstream = 0;
- 	int thread = 0;
- 	const char *in_reply_to = NULL;
-@@ -434,6 +435,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	rev.ignore_merges = 1;
- 	rev.diffopt.msg_sep = "";
- 	rev.diffopt.recursive = 1;
-+	rev.subject_prefix = "PATCH";
- 
- 	rev.extra_headers = extra_headers;
- 
-@@ -509,8 +511,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			if (i == argc)
- 				die("Need a Message-Id for --in-reply-to");
- 			in_reply_to = argv[i];
--		}
--		else if (!prefixcmp(argv[i], "--suffix="))
-+		} else if (!prefixcmp(argv[i], "--subject-prefix=")) {
-+			subject_prefix = 1;
-+			rev.subject_prefix = argv[i] + 17;
-+		} else if (!prefixcmp(argv[i], "--suffix="))
- 			fmt_patch_suffix = argv[i] + 9;
- 		else
- 			argv[j++] = argv[i];
-@@ -521,6 +525,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		start_number = 1;
- 	if (numbered && keep_subject)
- 		die ("-n and -k are mutually exclusive.");
-+	if (keep_subject && subject_prefix)
-+		die ("--subject-prefix and -k are mutually exclusive.");
- 
- 	argc = setup_revisions(argc, argv, &rev, "HEAD");
- 	if (argc > 1)
-diff --git a/log-tree.c b/log-tree.c
-index 8797aa1..dad5513 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -165,14 +165,20 @@ void show_log(struct rev_info *opt, const char *sep)
- 		if (opt->total > 0) {
- 			static char buffer[64];
- 			snprintf(buffer, sizeof(buffer),
--					"Subject: [PATCH %0*d/%d] ",
-+					"Subject: [%s %0*d/%d] ",
-+					opt->subject_prefix,
- 					digits_in_number(opt->total),
- 					opt->nr, opt->total);
- 			subject = buffer;
--		} else if (opt->total == 0)
--			subject = "Subject: [PATCH] ";
--		else
-+		} else if (opt->total == 0) {
-+			static char buffer[256];
-+			snprintf(buffer, sizeof(buffer),
-+					"Subject: [%s] ",
-+					opt->subject_prefix);
-+			subject = buffer;
-+		} else {
- 			subject = "Subject: ";
-+		}
- 
- 		printf("From %s Mon Sep 17 00:00:00 2001\n", sha1);
- 		if (opt->message_id)
-diff --git a/revision.h b/revision.h
-index 55e6b53..5f3f628 100644
---- a/revision.h
-+++ b/revision.h
-@@ -78,6 +78,7 @@ struct rev_info {
- 	const char	*add_signoff;
- 	const char	*extra_headers;
- 	const char	*log_reencode;
-+	const char	*subject_prefix;
- 	int		no_inline;
- 
- 	/* Filter by commit log message */
++This is a multi-part message in MIME format.
++--------------g-i-t--v-e-r-s-i-o-n
++Content-Type: text/plain; charset=UTF-8; format=fixed
++Content-Transfer-Encoding: 8bit
++
++
++This is the second commit.
++---
++ dir/sub |    2 ++
++ file0   |    3 +++
++ file2   |    3 ---
++ 3 files changed, 5 insertions(+), 3 deletions(-)
++ delete mode 100644 file2
++--------------g-i-t--v-e-r-s-i-o-n
++Content-Type: text/x-patch; name="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
++Content-Transfer-Encoding: 8bit
++Content-Disposition: inline; filename="1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44.diff"
++
++diff --git a/dir/sub b/dir/sub
++index 35d242b..8422d40 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++C
+++D
++diff --git a/file0 b/file0
++index 01e79c3..b414108 100644
++--- a/file0
+++++ b/file0
++@@ -1,3 +1,6 @@
++ 1
++ 2
++ 3
+++4
+++5
+++6
++diff --git a/file2 b/file2
++deleted file mode 100644
++index 01e79c3..0000000
++--- a/file2
+++++ /dev/null
++@@ -1,3 +0,0 @@
++-1
++-2
++-3
++
++--------------g-i-t--v-e-r-s-i-o-n--
++
++
++
++From 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0 Mon Sep 17 00:00:00 2001
++From: A U Thor <author@example.com>
++Date: Mon, 26 Jun 2006 00:02:00 +0000
++Subject: [TESTCASE] Third
++MIME-Version: 1.0
++Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
++
++This is a multi-part message in MIME format.
++--------------g-i-t--v-e-r-s-i-o-n
++Content-Type: text/plain; charset=UTF-8; format=fixed
++Content-Transfer-Encoding: 8bit
++
++---
++ dir/sub |    2 ++
++ file1   |    3 +++
++ 2 files changed, 5 insertions(+), 0 deletions(-)
++ create mode 100644 file1
++--------------g-i-t--v-e-r-s-i-o-n
++Content-Type: text/x-patch; name="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
++Content-Transfer-Encoding: 8bit
++Content-Disposition: inline; filename="9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0.diff"
++
++diff --git a/dir/sub b/dir/sub
++index 8422d40..cead32e 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -2,3 +2,5 @@ A
++ B
++ C
++ D
+++E
+++F
++diff --git a/file1 b/file1
++new file mode 100644
++index 0000000..b1e6722
++--- /dev/null
+++++ b/file1
++@@ -0,0 +1,3 @@
+++A
+++B
+++C
++
++--------------g-i-t--v-e-r-s-i-o-n--
++
++
++
++From c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a Mon Sep 17 00:00:00 2001
++From: A U Thor <author@example.com>
++Date: Mon, 26 Jun 2006 00:03:00 +0000
++Subject: [TESTCASE] Side
++MIME-Version: 1.0
++Content-Type: multipart/mixed; boundary="------------g-i-t--v-e-r-s-i-o-n"
++
++This is a multi-part message in MIME format.
++--------------g-i-t--v-e-r-s-i-o-n
++Content-Type: text/plain; charset=UTF-8; format=fixed
++Content-Transfer-Encoding: 8bit
++
++---
++ dir/sub |    2 ++
++ file0   |    3 +++
++ file3   |    4 ++++
++ 3 files changed, 9 insertions(+), 0 deletions(-)
++ create mode 100644 file3
++--------------g-i-t--v-e-r-s-i-o-n
++Content-Type: text/x-patch; name="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
++Content-Transfer-Encoding: 8bit
++Content-Disposition: inline; filename="c7a2ab9e8eac7b117442a607d5a9b3950ae34d5a.diff"
++
++diff --git a/dir/sub b/dir/sub
++index 35d242b..7289e35 100644
++--- a/dir/sub
+++++ b/dir/sub
++@@ -1,2 +1,4 @@
++ A
++ B
+++1
+++2
++diff --git a/file0 b/file0
++index 01e79c3..f4615da 100644
++--- a/file0
+++++ b/file0
++@@ -1,3 +1,6 @@
++ 1
++ 2
++ 3
+++A
+++B
+++C
++diff --git a/file3 b/file3
++new file mode 100644
++index 0000000..7289e35
++--- /dev/null
+++++ b/file3
++@@ -0,0 +1,4 @@
+++A
+++B
+++1
+++2
++
++--------------g-i-t--v-e-r-s-i-o-n--
++
++
++$
 -- 
 1.5.1
