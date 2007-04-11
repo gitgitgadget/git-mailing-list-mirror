@@ -1,53 +1,72 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: Rebase, please help
-Date: Wed, 11 Apr 2007 09:48:01 +0200
-Message-ID: <81b0412b0704110048j30193650r6a7e7417a9afeaf8@mail.gmail.com>
-References: <200704110852.00540.litvinov2004@gmail.com>
+From: Tomash Brechko <tomash.brechko@gmail.com>
+Subject: Re: [PATCH (resend)] Pass -C1 to git-apply in StGIT's apply_diff() and apply_patch().
+Date: Wed, 11 Apr 2007 11:51:33 +0400
+Message-ID: <20070411075133.GA5329@moonlight.home>
+References: <20070409112422.GE11593@moonlight.home> <b0943d9e0704100948k2b505916w5485b99e72d36c10@mail.gmail.com> <20070410192130.GE4946@moonlight.home> <20070410193214.GF4946@moonlight.home> <b0943d9e0704101538p3de0bf56m7906cfe2f5fc157e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Alexander Litvinov" <litvinov2004@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 14:59:14 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 11 14:59:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbXYl-0003su-Ea
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 09:48:07 +0200
+	id 1HbXcJ-0004bn-Hu
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 09:51:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751006AbXDKHsE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 03:48:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbXDKHsE
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 03:48:04 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:55263 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751006AbXDKHsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 03:48:01 -0400
-Received: by an-out-0708.google.com with SMTP id b33so103947ana
-        for <git@vger.kernel.org>; Wed, 11 Apr 2007 00:48:01 -0700 (PDT)
+	id S1751023AbXDKHvo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 03:51:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751042AbXDKHvo
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 03:51:44 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:31530 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023AbXDKHvn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 03:51:43 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so62489uga
+        for <git@vger.kernel.org>; Wed, 11 Apr 2007 00:51:42 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kkC5R0LQNz6MwNUqnPD+WA8tpc4a1EsD+sk+k/N3an3rsFMojlAe+RbZTxb4j68RDfnci0paV2XfCehuxc3qXh62q2qbH+sJJTVHw7L1febllONsu+fbuie+qUr9k9yYmhAADrTBNv4weCVyPNtaE1VJPj9JzEZSHX4Gqxf58e0=
+        h=domainkey-signature:received:received:received:received:date:from:to:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=Wb//6ISKaR78OCTXbQT1rJDju1CdD0GEPClPlGkDJ/pCZ4IDH64HfVIdR7aJZxUdT4cCSfblwj3zHZXREDIcH1idUGg6kv3JGwssoK5j5wVrdIXTKrA5/M/Pn3Z5mYj+gwEOjRwcEnh7tic+/GYTEZUsdeguNV3JWaP1T+ItJyw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=P1/XRQkKBaUSwAdPyeZw6VXoCexzssXA2Jq1iO/nbRsKdSzEemnb/szhR9vCSOPDGqv0Z/obw+MZB3hSMVZ3pbt4RM/k67iu5XVjFzQ1HmqmR6EOO4xRQhIUCF+fYOqlpajjxF7UNI46W2d3sLYwFRbyjFd97WZBfjarHjgLUWk=
-Received: by 10.100.140.6 with SMTP id n6mr219240and.1176277681056;
-        Wed, 11 Apr 2007 00:48:01 -0700 (PDT)
-Received: by 10.100.86.14 with HTTP; Wed, 11 Apr 2007 00:48:01 -0700 (PDT)
-In-Reply-To: <200704110852.00540.litvinov2004@gmail.com>
+        h=received:date:from:to:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=sxhI/HlgKVHpwEofzdsOd5qVC86K49ulpul7F/WErL2xtuM+eFyvd1I+Us+PZLj0HRgtu3Y7Sk4qE472pjNK9mYIP/1gy6XNit4hrOx5jzzgyLZ8mOXZmjndih6OhiDfbvvvwz30r3tVuQ7NzXSzcOkdKUerZSSP928fqgwjC68=
+Received: by 10.67.88.17 with SMTP id q17mr262174ugl.1176277902154;
+        Wed, 11 Apr 2007 00:51:42 -0700 (PDT)
+Received: from moonlight.home ( [80.246.71.156])
+        by mx.google.com with ESMTP id 32sm1759467ugf.2007.04.11.00.51.39;
+        Wed, 11 Apr 2007 00:51:41 -0700 (PDT)
+Received: from moonlight.home (localhost.localdomain [127.0.0.1])
+	by moonlight.home (Postfix) with ESMTP id 0C5BC3A7C2;
+	Wed, 11 Apr 2007 11:51:34 +0400 (MSD)
+Received: (from tomash@localhost)
+	by moonlight.home (8.13.1/8.13.1/Submit) id l3B7pXU3005725;
+	Wed, 11 Apr 2007 11:51:33 +0400
+Mail-Followup-To: git@vger.kernel.org,
+	Catalin Marinas <catalin.marinas@gmail.com>
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0704101538p3de0bf56m7906cfe2f5fc157e@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44215>
 
-On 4/11/07, Alexander Litvinov <litvinov2004@gmail.com> wrote:
->
-> What is --merge for ? Will the result be the same ?
+On Tue, Apr 10, 2007 at 23:38:55 +0100, Catalin Marinas wrote:
+> When something has changed in the surrounding code (not touched by
+> your patch), the automatic three-way merge should, in general, be able
+> to solve the issue as it uses the ancestor information. Is the
+> automatic three-way merge failing as well in your case?
 
-Maybe, maybe not. It uses merge strategies instead of git-am
-and has advantages over blindly applying the patches (it can
-know how a change got in, and it uses resolved conflict cache).
+OK, maybe I was pushing too much.  Indeed, three-way merge will solve
+it, I just don't have a setup where it runs automatically, and I
+thought the mege could be avoided alltogether.  But I agree the
+problem is easily managable.
+
+And as you agree that the option would be nice we are on the same
+page.  Thanks you!
+
+
+-- 
+   Tomash Brechko
