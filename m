@@ -1,92 +1,62 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH 0/6] Initial subproject support (RFC?)
-Date: Wed, 11 Apr 2007 10:57:55 +0200
-Message-ID: <20070411085755.GI21701@admingilde.org>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0704092133550.6730@woody.linux-foundation.org> <81b0412b0704100604x2841d96aq194d3dedd303c588@mail.gmail.com> <20070411083236.GG21701@admingilde.org> <81b0412b0704110142l377231d7j85285a87ef73ce41@mail.gmail.com>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH 2/4] Don't use section 7 for main manpage.
+Date: Wed, 11 Apr 2007 10:34:03 +0100
+Message-ID: <b0943d9e0704110234qc23ef41ma0bb4eaac714c320@mail.gmail.com>
+References: <20070407213557.13698.21486.stgit@gandelf.nowhere.earth>
+	 <20070407213658.13698.44552.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="WBsA/oQW3eTA3LlM"
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 11 12:49:26 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Wed Apr 11 13:56:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbYeQ-0000Hh-V4
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 10:58:03 +0200
+	id 1HbZDR-0007Bw-1k
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 11:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751483AbXDKI57 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 04:57:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751451AbXDKI57
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 04:57:59 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:37152 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517AbXDKI56 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 04:57:58 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HbYeJ-0007cb-QT; Wed, 11 Apr 2007 10:57:55 +0200
+	id S1751727AbXDKJeG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 05:34:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751738AbXDKJeG
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 05:34:06 -0400
+Received: from ug-out-1314.google.com ([66.249.92.168]:61919 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751727AbXDKJeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 05:34:04 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so77340uga
+        for <git@vger.kernel.org>; Wed, 11 Apr 2007 02:34:03 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ueK9FejgtF5Tll77GSCKWPgeoImSBIOJFol3uGnTqitEu28lT9CqplrQG1Z9bh7InAgRmU0hY3NnWqBKwfVMA2kW/60Oa6sGZdsAqnNxEX9XVy453AzLEQyLfEmGtFnzi0edea/vDliHeHeID4NH+KJxveJ8GONkS3/kNaAB+ww=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DHElICKm1ktEU/0wOIFH3c/LWuu87NMybHhpdHmk0Xel+8VekknHyQstic833BB1aNv5cVUC0wSd8lt3ZCkIPDqpNMHvUCnXLL3ZiLr5IYVaZ7A1zlTUDUq1mzVPVTXdd0XzNoR8CGocVErzlmyg2no/rvm21BC3EJeSsfQOZZg=
+Received: by 10.67.11.15 with SMTP id o15mr323177ugi.1176284043262;
+        Wed, 11 Apr 2007 02:34:03 -0700 (PDT)
+Received: by 10.66.255.11 with HTTP; Wed, 11 Apr 2007 02:34:03 -0700 (PDT)
+In-Reply-To: <20070407213658.13698.44552.stgit@gandelf.nowhere.earth>
 Content-Disposition: inline
-In-Reply-To: <81b0412b0704110142l377231d7j85285a87ef73ce41@mail.gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44209>
 
+On 07/04/07, Yann Dirson <ydirson@altern.org> wrote:
+> --- a/Documentation/stg.txt
+> +++ b/Documentation/stg.txt
+> @@ -1,4 +1,4 @@
+> -stg(7)
+> +stg(1)
+>  ======
 
---WBsA/oQW3eTA3LlM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In error, I added commit 5906924135f886527c1e947d100073067783eaa2 that
+was reverting this hunk. My reason was to be able to install the man
+pages and the Makefile was still looking for stg.7. I'll revert my
+commit tonight and change the Makefile.
 
-hoi :)
-
-On Wed, Apr 11, 2007 at 10:42:57AM +0200, Alex Riesen wrote:
-> On 4/11/07, Martin Waitz <tali@admingilde.org> wrote:
-> >> The other thing which will be missed a lot (I miss it that much)
-> >> is a subproject-recursive git-commit and git-status.
-> >
-> >git-status should really point out if a subproject has any changes,
->=20
-> Only if I want it to. HEAD change check (which is cheap enough
-> to be done unconditionally) can be done always.
-
-Yes, that's the equivalent of checking normal files.
-The recursive check for dirty files/index should be configurable.
-
-> >But for commit it really does not make any sense.  The commit in the
-> >submodule is totally independent to the commit in the supermodule.
->=20
-> Right. Perhaps not a commit in submodule but a recursive check
-> for working directory changes in submodules. So that you can
-> make that you don't make a superproject commit which cannot
-> be resolved to what you had in all the working directories:
->=20
->  git commit -a --check-clean-subprojects
-
-For -a such a check may even make sense unconditionally.
-And without -a I don't see any value in such a check.
-So we can just add that check to -a if we see that dirty submodules
-are a problem for users.
-
---=20
-Martin Waitz
-
---WBsA/oQW3eTA3LlM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
-
-iD8DBQFGHKMTj/Eaxd/oD7IRAj6WAJ4vElliDRnuZt3wGBmjDKOF+UBXLwCeJo+M
-W9iZxEiCbs6uMlAbTazswqw=
-=R/iD
------END PGP SIGNATURE-----
-
---WBsA/oQW3eTA3LlM--
+-- 
+Catalin
