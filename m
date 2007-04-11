@@ -1,69 +1,87 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: Re: sscanf/strtoul: parse integers robustly
-Date: Wed, 11 Apr 2007 15:52:01 +0200
-Message-ID: <87fy77t3we.fsf@rho.meyering.net>
-References: <871witxicn.fsf@rho.meyering.net>
-	<7v4pnnqr9q.fsf@assigned-by-dhcp.cox.net>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH 3/3] cvsserver: Add asciidoc documentation for new database backend configuration
+Date: Wed, 11 Apr 2007 16:34:03 +0200
+Message-ID: <20070411143402.GB2309@planck.djpig.de>
+References: <11759575342765-git-send-email-frank@lichtenheld.de> <11759578902278-git-send-email-frank@lichtenheld.de> <11759578901878-git-send-email-frank@lichtenheld.de> <11759578903791-git-send-email-frank@lichtenheld.de> <7v64879rwd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 11 16:12:06 2007
+X-From: git-owner@vger.kernel.org Wed Apr 11 16:37:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbdF2-00066C-12
-	for gcvg-git@gmane.org; Wed, 11 Apr 2007 15:52:08 +0200
+	id 1Hbdtl-0003EN-1Q
+	for gcvg-git@gmane.org; Wed, 11 Apr 2007 16:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770AbXDKNwE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 09:52:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752715AbXDKNwE
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 09:52:04 -0400
-Received: from mx.meyering.net ([82.230.74.64]:58537 "EHLO mx.meyering.net"
+	id S1752856AbXDKOeI (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 10:34:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752863AbXDKOeI
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 10:34:08 -0400
+Received: from planck.djpig.de ([85.10.192.180]:1083 "EHLO planck.djpig.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752770AbXDKNwD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 09:52:03 -0400
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 4B9BA6BFD; Wed, 11 Apr 2007 15:52:01 +0200 (CEST)
-In-Reply-To: <7v4pnnqr9q.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's message of "Wed\, 11 Apr 2007 00\:55\:29 -0700")
+	id S1752856AbXDKOeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 10:34:07 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 968B088003;
+	Wed, 11 Apr 2007 16:34:05 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lnid8rxwvjvv; Wed, 11 Apr 2007 16:34:03 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 529678801B; Wed, 11 Apr 2007 16:34:03 +0200 (CEST)
+Mail-Followup-To: Frank Lichtenheld <frank@lichtenheld.de>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v64879rwd.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44239>
 
-Junio C Hamano <junkio@cox.net> wrote:
+On Sun, Apr 08, 2007 at 01:44:50AM -0700, Junio C Hamano wrote:
+> Frank Lichtenheld <frank@lichtenheld.de> writes:
+> 
+> > +[[dbbackend]]
+> > +Database Backend
+> > +----------------
+> > +
+> > +git-cvsserver uses one database per git head (i.e. CVS module) to
+> 
+> Probably "git branch" is easier to understand than "git head".
 
-> Jim Meyering <jim@meyering.net> writes:
->
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index 139fc19..5f6a281 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -301,4 +301,17 @@ static inline int prefixcmp(const char *str, const char *prefix)
->>  	return strncmp(str, prefix, strlen(prefix));
->>  }
->>
->> +static inline int strtoul_ui(char const *s, int base, unsigned int *result)
->> +{
->> +	unsigned long ul;
->> +	char *p;
->> +
->> +	errno = 0;
->> +	ul = strtoul(s, &p, base);
->> +	if (errno || *p || p == s || (unsigned int) ul != ul)
->> +		return -1;
->> +	*result = ul;
->> +	return 0;
->> +}
->> +
->>  #endif
->
-> War on sscanf is fine, but I wonder if this is small enough to
-> be a good candidate for inlining.
+Hmm, should I replace "git head" with "git branch" everywhere
+in the document or does it make sense sometimes to use "head"?
+Because there are already several places in the current documentation
+where head is used.
 
-I don't care if it is actually inlined.
-I used "inline" because this function seems small enough that
-duplicating its code won't hurt, and because then I didn't need
-to bother with a separate prototype.  On the size front, it looks
-no larger than most of the other inline functions in that file.
+> > +store information about the repository for faster access. The
+> > +database doesn't contain any persitent data and can be completly
+> > +regenerated from the git repository at any time. The database
+> > +needs to be updated (i.e. written to) after every commit. That
+> > +means that even if you offer only read access (e.g. by using
+> > +the pserver method), git-cvsserver should have write access to
+> > +the database to work reliably (otherwise you need to make sure
+> > +that the database if up-to-date all the time git-cvsserver is run).
+> 
+> This rationale for db update is a bit hard to understand.
+> Immediately saying that you need a database update "after every
+> commit", you say that read-only access still need it.
+> 
+> I think the situation where database update is needed is when a
+> commit on the branch that has not been given to any cvs client
+> is given out for the first time, and when somebody adds new
+> commits from git side, the cvsserver session that serves the
+> commit for the first time needs to record the branch
+> information.
+
+That's what I meant, yes ;)
+Will try to reword it to actually say it, too.
+
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
