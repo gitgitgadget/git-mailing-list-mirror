@@ -1,93 +1,75 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: One more shallow tree weirdness - tag not pulled?
-Date: Wed, 11 Apr 2007 18:32:36 -0700
-Message-ID: <7vbqhuml6z.fsf@assigned-by-dhcp.cox.net>
-References: <20070412011616.GB18378@curie-int.orbis-terrarum.net>
+Subject: Re: git-format-patch --subject-prefix support.
+Date: Wed, 11 Apr 2007 18:52:38 -0700
+Message-ID: <7v4pnmmk9l.fsf@assigned-by-dhcp.cox.net>
+References: <11763358884124-git-send-email-robbat2@gentoo.org>
+	<7vodlumntw.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0704120150320.22924@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 03:32:58 2007
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Thu Apr 12 03:53:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HboBF-0000vZ-AS
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 03:32:57 +0200
+	id 1HboUa-0001sH-Rp
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 03:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161441AbXDLBci (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 21:32:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161442AbXDLBci
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 21:32:38 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:64126 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161441AbXDLBci (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 21:32:38 -0400
+	id S1161444AbXDLBwk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 21:52:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161459AbXDLBwk
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 21:52:40 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:56324 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161444AbXDLBwj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 21:52:39 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070412013238.MKXI1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Apr 2007 21:32:38 -0400
+          id <20070412015240.NNSR1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 11 Apr 2007 21:52:40 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id m1Yd1W00H1kojtg0000000; Wed, 11 Apr 2007 21:32:37 -0400
-In-Reply-To: <20070412011616.GB18378@curie-int.orbis-terrarum.net> (Robin
-	H. Johnson's message of "Wed, 11 Apr 2007 18:16:16 -0700")
+	id m1se1W00g1kojtg0000000; Wed, 11 Apr 2007 21:52:39 -0400
+In-Reply-To: <Pine.LNX.4.64.0704120150320.22924@beast.quantumfyre.co.uk>
+	(Julian Phillips's message of "Thu, 12 Apr 2007 01:54:20 +0100 (BST)")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44303>
 
-"Robin H. Johnson" <robbat2@gentoo.org> writes:
+Julian Phillips <julian@quantumfyre.co.uk> writes:
 
-> One other bit of weirdness I ran into.  On a shallow clone that is extended to
-> full depth, there is a tag missing (that was in the non-shallow clone).
+> On Wed, 11 Apr 2007, Junio C Hamano wrote:
 >
-> Testcase
->> git clone git://git.kernel.org/pub/scm/git/git.git git-0
->> git clone --depth 1 git://git.kernel.org/pub/scm/git/git.git git-1
->> cd git-1 && git pull --depth 10000000
-
-This is easily explained, and I do not think it has anything to
-do with shallow clones.
-
-The initial clone gets all tags, regardless of reachability.
-Subsequent fetches however only _follows_ tags that point at
-something you have in the repository.  The blob that holds my
-GPG public key is not part of any commit, so you would not have
-that object in your repository, and subsequent "tag following"
-will not see it.
-
-	$ git fetch --tags
-
-is always your friend.
-
-> I created 'git-$N.list' with:
-> find git-$N ! -type d  | sort |egrep -v '\.git/(objects/pack/|index$|logs/)' \
->  | tr '\n' '\0' | xargs -0 md5sum | sed 's,git-$N/,,g' >git-$N.list
-
-I do not know what you wanted to do, but I suspect you
-reinvented a rather expensive
-
-	git ls-remote git-$N
-
-perhaps?
-
+>> "Robin H\. Johnson" <robbat2@gentoo.org> writes:
+>>
+>>> Add a new option to git-format-patch, entitled --subject-prefix that allows
+>>> control of the subject prefix '[PATCH]'. Using this option, the text 'PATCH' is
+>>> replaced with whatever input is provided to the option. This allows easily
+>>> generating patches like '[PATCH 2.6.21-rc3]' or properly numbered series like
+>>> '[-mm3 PATCH N/M]'.
+>>>
+>>> 1/2 - Implementation and documentation
+>>> 2/2 - Test case
+>>
+>> I suspect this is a job for send-email, not format-patch.  List?
 >
-> --- git-0.list	2007-04-11 18:12:25.000000000 -0700
-> +++ git-1.list	2007-04-11 18:12:32.000000000 -0700
-> @@ -28,7 +28,6 @@
->  bc94cbd02df32d07b7fd230d7aba42e8  .git/refs/tags/gitgui-0.6.3
->  91521cca8d3f177e2f0cb4a586dac6be  .git/refs/tags/gitgui-0.6.4
->  c56d1ac72d959f87ba0dd92721de36de  .git/refs/tags/gitgui-0.6.5
-> -b9c7a4533d41dfedd0a0d23bbfb3fed8  .git/refs/tags/junio-gpg-pub
->  43ceb81bf4c131a8a882025a676aa22e  .git/refs/tags/v0.99
->  072e3055bf33ff1ba5aa4697f2b539fb  .git/refs/tags/v0.99.1
->  85916310d7d0a86818033ac95f32b234  .git/refs/tags/v0.99.2
+> Surely though, send-email is simply a helper for sending patches
+> generated by format-patch?  Is there any reason to deny the ability to
+> set the prefix to those who don't use send-email but do use
+> format-patch? (Personally I found send-email to be cumbersome and
+> confusing, so I've stopped using it ...)
 >
-> -- 
-> Robin Hugh Johnson
-> Gentoo Linux Developer & Council Member
-> E-Mail     : robbat2@gentoo.org
-> GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+> It's format-patch that applies the current "[PATCH]" prefix anyway ...
+
+I was more worried about people's scripts who postprocess
+format-patch output, relying on the '[PATCH]' to be there.  But
+they should be using -k to suppress it anyway, so this addition
+should be Ok.
+
+Somebody needs to verify that mailinfo groks e-mails correctly
+even when they have "Subject: [random garbage] title" though.
