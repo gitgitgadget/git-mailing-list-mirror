@@ -1,91 +1,93 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: One more shallow tree weirdness - tag not pulled?
-Date: Wed, 11 Apr 2007 18:16:16 -0700
-Message-ID: <20070412011616.GB18378@curie-int.orbis-terrarum.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: One more shallow tree weirdness - tag not pulled?
+Date: Wed, 11 Apr 2007 18:32:36 -0700
+Message-ID: <7vbqhuml6z.fsf@assigned-by-dhcp.cox.net>
+References: <20070412011616.GB18378@curie-int.orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="qcHopEYAB45HaUaB"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 03:16:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Thu Apr 12 03:32:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hbnv6-0001iC-OH
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 03:16:17 +0200
+	id 1HboBF-0000vZ-AS
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 03:32:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161434AbXDLBQO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 21:16:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161435AbXDLBQN
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 21:16:13 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:43177 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1161434AbXDLBQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 21:16:13 -0400
-Received: (qmail 28648 invoked from network); 12 Apr 2007 01:16:12 -0000
-Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Thu, 12 Apr 2007 01:16:12 +0000
-Received: (qmail 25921 invoked by uid 10000); 11 Apr 2007 18:16:16 -0700
-Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1161441AbXDLBci (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 21:32:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161442AbXDLBci
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 21:32:38 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:64126 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161441AbXDLBci (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 21:32:38 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070412013238.MKXI1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 11 Apr 2007 21:32:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id m1Yd1W00H1kojtg0000000; Wed, 11 Apr 2007 21:32:37 -0400
+In-Reply-To: <20070412011616.GB18378@curie-int.orbis-terrarum.net> (Robin
+	H. Johnson's message of "Wed, 11 Apr 2007 18:16:16 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44302>
 
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
---qcHopEYAB45HaUaB
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> One other bit of weirdness I ran into.  On a shallow clone that is extended to
+> full depth, there is a tag missing (that was in the non-shallow clone).
+>
+> Testcase
+>> git clone git://git.kernel.org/pub/scm/git/git.git git-0
+>> git clone --depth 1 git://git.kernel.org/pub/scm/git/git.git git-1
+>> cd git-1 && git pull --depth 10000000
 
-One other bit of weirdness I ran into.  On a shallow clone that is extended=
- to
-full depth, there is a tag missing (that was in the non-shallow clone).
+This is easily explained, and I do not think it has anything to
+do with shallow clones.
 
-Testcase
-> git clone git://git.kernel.org/pub/scm/git/git.git git-0
-> git clone --depth 1 git://git.kernel.org/pub/scm/git/git.git git-1
-> cd git-1 && git pull --depth 10000000
+The initial clone gets all tags, regardless of reachability.
+Subsequent fetches however only _follows_ tags that point at
+something you have in the repository.  The blob that holds my
+GPG public key is not part of any commit, so you would not have
+that object in your repository, and subsequent "tag following"
+will not see it.
 
-Now the content of git-0 and git-1 should be functionally identical, but
-it's not.
+	$ git fetch --tags
 
-I created 'git-$N.list' with:
-find git-$N ! -type d  | sort |egrep -v '\.git/(objects/pack/|index$|logs/)=
-' \
- | tr '\n' '\0' | xargs -0 md5sum | sed 's,git-$N/,,g' >git-$N.list
+is always your friend.
 
---- git-0.list	2007-04-11 18:12:25.000000000 -0700
-+++ git-1.list	2007-04-11 18:12:32.000000000 -0700
-@@ -28,7 +28,6 @@
- bc94cbd02df32d07b7fd230d7aba42e8  .git/refs/tags/gitgui-0.6.3
- 91521cca8d3f177e2f0cb4a586dac6be  .git/refs/tags/gitgui-0.6.4
- c56d1ac72d959f87ba0dd92721de36de  .git/refs/tags/gitgui-0.6.5
--b9c7a4533d41dfedd0a0d23bbfb3fed8  .git/refs/tags/junio-gpg-pub
- 43ceb81bf4c131a8a882025a676aa22e  .git/refs/tags/v0.99
- 072e3055bf33ff1ba5aa4697f2b539fb  .git/refs/tags/v0.99.1
- 85916310d7d0a86818033ac95f32b234  .git/refs/tags/v0.99.2
+> I created 'git-$N.list' with:
+> find git-$N ! -type d  | sort |egrep -v '\.git/(objects/pack/|index$|logs/)' \
+>  | tr '\n' '\0' | xargs -0 md5sum | sed 's,git-$N/,,g' >git-$N.list
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Council Member
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+I do not know what you wanted to do, but I suspect you
+reinvented a rather expensive
 
---qcHopEYAB45HaUaB
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+	git ls-remote git-$N
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+perhaps?
 
-iD8DBQFGHYhgPpIsIjIzwiwRAtFKAJ46ecU5E+lNkGYUGkvwR3AVLCzLgQCeIq8X
-0LBdeYWrac/vQixjVQpQKVI=
-=4/Uz
------END PGP SIGNATURE-----
-
---qcHopEYAB45HaUaB--
+>
+> --- git-0.list	2007-04-11 18:12:25.000000000 -0700
+> +++ git-1.list	2007-04-11 18:12:32.000000000 -0700
+> @@ -28,7 +28,6 @@
+>  bc94cbd02df32d07b7fd230d7aba42e8  .git/refs/tags/gitgui-0.6.3
+>  91521cca8d3f177e2f0cb4a586dac6be  .git/refs/tags/gitgui-0.6.4
+>  c56d1ac72d959f87ba0dd92721de36de  .git/refs/tags/gitgui-0.6.5
+> -b9c7a4533d41dfedd0a0d23bbfb3fed8  .git/refs/tags/junio-gpg-pub
+>  43ceb81bf4c131a8a882025a676aa22e  .git/refs/tags/v0.99
+>  072e3055bf33ff1ba5aa4697f2b539fb  .git/refs/tags/v0.99.1
+>  85916310d7d0a86818033ac95f32b234  .git/refs/tags/v0.99.2
+>
+> -- 
+> Robin Hugh Johnson
+> Gentoo Linux Developer & Council Member
+> E-Mail     : robbat2@gentoo.org
+> GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
