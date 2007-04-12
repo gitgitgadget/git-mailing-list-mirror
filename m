@@ -1,75 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Some index-base bug in "next" branch ("git-applymbox"-related?)..
-Date: Thu, 12 Apr 2007 15:43:23 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704121533560.4061@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Teach git-update-index about gitlinks
+Date: Thu, 12 Apr 2007 15:45:57 -0700
+Message-ID: <7vtzvli53u.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0704121218130.4061@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <junkio@cox.net>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 13 00:43:47 2007
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Apr 13 00:46:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hc813-0006ws-FE
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 00:43:45 +0200
+	id 1Hc83G-0007vm-IB
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 00:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750700AbXDLWna (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Apr 2007 18:43:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbXDLWna
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 18:43:30 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:35365 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750700AbXDLWn3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2007 18:43:29 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3CMhNIs026828
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 12 Apr 2007 15:43:24 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3CMhNJm018601;
-	Thu, 12 Apr 2007 15:43:23 -0700
-X-Spam-Status: No, hits=-0.458 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1750911AbXDLWp7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Apr 2007 18:45:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbXDLWp7
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 18:45:59 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:51369 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750911AbXDLWp7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 18:45:59 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070412224559.ITGU1226.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 12 Apr 2007 18:45:59 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id mNlx1W00m1kojtg0000000; Thu, 12 Apr 2007 18:45:58 -0400
+In-Reply-To: <Pine.LNX.4.64.0704121218130.4061@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Thu, 12 Apr 2007 12:29:40 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44361>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Junio, I've been running "next", because of working on the submodule 
-stuff.
+> Junio - if you prefer Alex' patch instead, I won't be upset. This is 
+> definitely a bigger re-org, and while I think it makes sense as a patch 
+> even *aside* from the gitlink support, it's probably largely a matter of 
+> taste.
 
-I  just did some trivial kernel stuff: applied seven patches, and tried to 
-do a "pull". And whoa, that failed. I get this:
+I find the result of applying this patch much easier to read
+than the original.
 
-	[torvalds@woody linux]$ dotest ~/doit
-	7 patch(es) to process.
+> +/*
+> + * Process a regular file
+> + */
+> +static int process_file(const char *path, int len, struct stat *st)
+> +{
+> +	int pos = cache_name_pos(path, len);
+> +	struct cache_entry *ce = pos < 0 ? NULL : active_cache[pos];
+> +
+> +	if (ce && S_ISDIRLNK(ntohl(ce->ce_mode)))
+> +		return error("%s is already a gitlink, not replacing", path);
+> +
+> +	return add_one_path(ce, path, len, st);	
+> +}
 
-	.. all apply fine ..
-
-	[torvalds@woody linux]$ git pull master.kernel.org:/pub/scm/linux/kernel/git/galak/powerpc.git for_linus
-	remote: Generating pack...
-	...
-	Unpacking 22 objects
-	 100% (22/22) done
-	Your index is based on '80584ff3b99c36ead7e130e453b3a48b18072d18' commit, but the branch tip you are on is at '6a04de6dbe1772d98fddf5099738d6f508e86e21'
-
-That "80584ff.." commit is the commit *before* the "dotest", and HEAD is 
-(correctly) 6a04de.. that is the end result of the "dotest". That "dotest" 
-thing is just because "git-applymbox" isn't in my brain stem:
-
-	[torvalds@woody linux]$ alias dotest
-	alias dotest='git-applymbox -u'
-
-so it's not actually anything strange.
-
-Doing a "git reset" obviously fixed it, but if I didn't know that you had 
-been working on that "index BASE" thing, I would have been very worried.
-
-That index base thing is definitely *not* ready for merging into master 
-yet!
-
-		Linus
+I may be missing the obvious but if I have a subproject at
+"path/S" and I say "update-index path/S/Makefile", what should
+happen?  There is ISDIRLNK entry at path/S and add_one_path()
+would allow removal of "path/S" to make room for
+path/S/Makefile, when --replace is given.
