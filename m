@@ -1,79 +1,63 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: SoC git projects announced
-Date: Thu, 12 Apr 2007 12:43:57 -0400
-Message-ID: <20070412164357.GD12979@spearce.org>
-References: <200704120845.56793.andyparkins@gmail.com>
+From: David Lang <david.lang@digitalinsight.com>
+Subject: Re: [PATCH 5/6] Teach "fsck" not to follow subproject links
+Date: Thu, 12 Apr 2007 10:18:40 -0700 (PDT)
+Message-ID: <Pine.LNX.4.63.0704121016240.29621@qynat.qvtvafvgr.pbz>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org><Pi
+ ne.LNX.4.64.0704092115020.6730@woody.linux-foundation.org><461D6432.90205@v
+ ilain.net>    <Pine.LNX.4.64.0704111545040.6730@woody.linux-foundation.org><461D6858.4090
+ 007@vilain.net>   <Pine.LNX.4.64.0704111605210.6730@woody.linux-foundation.org><Pine.LNX.4.63
+ .0704111600390.28394@qynat.qvtvafvgr.pbz> 
+ <Pine.LNX.4.64.0704111646000.6730@woody.linux-foundation.org><Pine.LNX.4.63
+ .0704111628240.28394@qynat.qvtvafvgr.pbz> <Pine.LNX.4.64.0704111903060.4061@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 18:44:18 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Apr 12 19:49:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hc2P7-00077O-OM
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 18:44:14 +0200
+	id 1Hc3QQ-0005dW-KS
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 19:49:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932344AbXDLQoE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Apr 2007 12:44:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964934AbXDLQoC
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 12:44:02 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:44939 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932359AbXDLQoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2007 12:44:00 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1Hc2Om-0003tX-30; Thu, 12 Apr 2007 12:43:52 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5F0A020FBAE; Thu, 12 Apr 2007 12:43:57 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200704120845.56793.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1030524AbXDLRte (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Apr 2007 13:49:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030603AbXDLRte
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 13:49:34 -0400
+Received: from warden-p.diginsite.com ([208.29.163.248]:45306 "HELO
+	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1030524AbXDLRtd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 13:49:33 -0400
+Received: from wlvims02.diginsite.com by warden.diginsite.com
+          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Thu, 12 Apr 2007 10:49:32 -0700
+Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Thu, 12 Apr 2007 10:49:23 -0700
+X-X-Sender: dlang@dlang.diginsite.com
+In-Reply-To: <Pine.LNX.4.64.0704111903060.4061@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44345>
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> I'm sure those involved already know, but for the rest of us - it looks 
-> like we have three projects in the SoC (assuming I'm reading it right):
-> 
-> http://code.google.com/soc/git/about.html
+On Wed, 11 Apr 2007, Linus Torvalds wrote:
 
-Google granted us 3 student projects this summer.  We had 18
-applications this year, and at least 8 of them were really
-quite good.  Our summer of code mentoring 'team' (Sam Vilain,
-Johannes Schindelin, Petr Baudis, Martin Langhoff, Martin Waitz,
-Brian Gernhardt, and I) were really hoping that Google would grant
-us more projects, as we really wanted to accept them.
+> So I tend to think that alternates and shared object directories are
+> really for "temporary" stuff, or for *managed* repositories that are at
+> git *hosting* sites (eg repo.or.cz), and where there is some other safety
+> involved, ie users don't actually access the object directories directly
+> in any way.
+>
+> So I've at least personally come to the conclusion that for a *developer*
+> (as opposed to a hosting site!), shared object directories just never make
+> sense. The downsides are just too big. Even alternates is something where
+> you just need to be fairly careful!
 
-Google accepted over 900 students this year, from a pool of over
-6000 applications.  Competition for slots was definately fierce.
-Organizations received about 15% of their total applications
-as slots; Those orgs that were more popular (and received more
-applications) were given more slots than those that were less
-popular.  I guess Git isn't very popular.  :-)
+I was actually thinking that hosting sites (and things like gitorrent) would be 
+the ones that would get the most benifit from shareing objects. the amount saved 
+for any individual developer is probably fairly minor (and the individual 
+developer could run a script to look across their objects and hard-link them 
+togeather if they care about the space)
 
-I'd like to thank our mentors for their efforts during the
-application review process, and all 18 of our students for applying.
-It really was a very difficult decision for us to pick just 3.
-
-So with all that said, I'd like to welcome our students, and
-encourage them to get in touch with their mentors.  Though I
-think Dscho might be in the process of moving between countries
-right now... so he might not be too responsive to email for a few
-more days.
-
--- 
-Shawn.
+David Lang
