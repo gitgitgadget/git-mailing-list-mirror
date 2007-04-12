@@ -1,74 +1,68 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: git-branch, older repos and more confusion
-Date: Thu, 12 Apr 2007 16:14:06 +1200
-Message-ID: <46a038f90704112114t520374b2qea4f860575c21bce@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git-branch, older repos and more confusion
+Date: Thu, 12 Apr 2007 00:23:08 -0400
+Message-ID: <20070412042308.GA22539@coredump.intra.peff.net>
+References: <46a038f90704112114t520374b2qea4f860575c21bce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 06:14:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 06:23:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbqhZ-0003Tr-9l
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 06:14:29 +0200
+	id 1Hbqq3-0007gw-Pu
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 06:23:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422627AbXDLEOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Apr 2007 00:14:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422636AbXDLEOJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 00:14:09 -0400
-Received: from wx-out-0506.google.com ([66.249.82.238]:25955 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422627AbXDLEOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2007 00:14:07 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so433084wxd
-        for <git@vger.kernel.org>; Wed, 11 Apr 2007 21:14:06 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=ETYFTTzQDY+8Tvszfo9m96kyUnF3KpVXs6P/FPAjhlrXh15CKsHqTq1pTgIZQxDQzDExLXCAmPHOag8O8DrrQ8tTYs5xAjMDla/btDuf4PaNs+vKZDrMicrNOXLKWZkrOi1k3O9XxPJDDFqpQEnYrfcD6dzQiaOyMKEZC8pldFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=KjTwxRJh8L83L5H0YuFAJIH3eNBgwbeL1KJB3oVodvn4N7KgRyHTv4wjT64PfXY9Tro0h6GIReVG47iELZEUpiNP+uq2JsmunyefJkZl+Vh2Ou0DSTkiEe9a3sci8oFgGTAKKMWGFDaXsHgx0+4CmujbMcxHvvtyE8coxZVFsDw=
-Received: by 10.90.34.3 with SMTP id h3mr1333054agh.1176351246297;
-        Wed, 11 Apr 2007 21:14:06 -0700 (PDT)
-Received: by 10.90.120.11 with HTTP; Wed, 11 Apr 2007 21:14:06 -0700 (PDT)
+	id S1422642AbXDLEXM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Apr 2007 00:23:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422650AbXDLEXM
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 00:23:12 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3831 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1422642AbXDLEXL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 00:23:11 -0400
+Received: (qmail 3279 invoked from network); 12 Apr 2007 04:23:49 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 12 Apr 2007 04:23:49 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2007 00:23:08 -0400
 Content-Disposition: inline
+In-Reply-To: <46a038f90704112114t520374b2qea4f860575c21bce@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44318>
 
-Thanks to Peff for helping me out earlier with my git-branch usage.
-Alas, I seem to be in trouble again.
+On Thu, Apr 12, 2007 at 04:14:06PM +1200, Martin Langhoff wrote:
 
-My git tracking repo is still using the .git/remotes/origin
-infrastructure, and now it turns out I can't seem to do a git-pull and
-then a git-format-patch of my local 'master' for patches to go on top
-of junio's master. I am using 1.5.1.106.ga32037
+> My git tracking repo is still using the .git/remotes/origin
+> infrastructure, and now it turns out I can't seem to do a git-pull and
+> then a git-format-patch of my local 'master' for patches to go on top
+> of junio's master. I am using 1.5.1.106.ga32037
 
-I'll get a new checkout, but I'm a bit miffed that this is broken -- I
-wanted to use git-format-patch to migrate unmerged patches to the new
-checkout.
+What doesn't work? IIRC, you might have some problems with doing a
+'pull' with no parameters, since you don't have the right magic in
+.git/config. Have you tried an explicit "git-pull origin master"?
 
-<rant>
-This is all a bit confusing, and "the right way to do it" is changing
-too fast. And with the changes, all the little things that make it
-easy to manage it are lost, and all the wiki pages and documentation
-bits are old and wrong. The simple master/origin scheme works well, is
-dead easy to teach, and has worked well for my team of ~14 developers
-working on maybe ~40 custom branches. It's pretty safe from errors too
-;-)
+> Alas - I think support for it seems to be going the away... what I am
+> missing is a clear way to say git-clone <repo>#branch that has the
+> same properties that `cg-clone <repo>#branch` has. Namely, once you
+> are done, there are clear names for your "local tip" and "remote tip",
+> and push and pull do the right thing without extra params.
 
-Alas - I think support for it seems to be going the away... what I am
-missing is a clear way to say git-clone <repo>#branch that has the
-same properties that `cg-clone <repo>#branch` has. Namely, once you
-are done, there are clear names for your "local tip" and "remote tip",
-and push and pull do the right thing without extra params.
+I don't think there is a way to clone _just_ that branch, but if you're
+OK with fetching all of the branches, then you should be able to do
+just:
 
-cheers,
+git-clone <repo>
+git-branch --track branch origin/branch
+git-checkout branch
 
+Yours is 'branch' and remote is 'origin/branch'. If that branch is
+master, then I believe git-clone should set you up already (and you can
+even still refer to 'origin', which is a synonym for origin/HEAD).
 
-martin
+Or am I not understanding your problem?
+
+-Peff
