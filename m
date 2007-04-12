@@ -1,61 +1,59 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: SoC git projects announced
-Date: Thu, 12 Apr 2007 08:45:47 +0100
-Message-ID: <200704120845.56793.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: SoC git projects announced
+Date: Thu, 12 Apr 2007 01:14:50 -0700
+Message-ID: <7v3b36ko05.fsf@assigned-by-dhcp.cox.net>
+References: <200704120845.56793.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: Andy Parkins <andyparkins@gmail.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 09:46:27 2007
+X-From: git-owner@vger.kernel.org Thu Apr 12 10:15:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hbu0g-0000oC-6A
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 09:46:26 +0200
+	id 1HbuSl-0005mY-Pv
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 10:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161386AbXDLHqM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Apr 2007 03:46:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161114AbXDLHqL
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 03:46:11 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:10526 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161110AbXDLHqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2007 03:46:03 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so284041uga
-        for <git@vger.kernel.org>; Thu, 12 Apr 2007 00:46:01 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Nkx0/iVQCJbIfptdlDlTW0aajDuW98ofzV60qTtAwxWHPbD9lSEzKjH5HvliniiosJAQ+KVOlbgraY+EXFnnuIPRTLagkmqXAyBj3cMYRvJUBuD5VRgLaodbqw2jyyNQqCmigXGdRyYnrsaEbb8X6KmJzugZ5EdWc9HBaoY6ggA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=iZBxWxuaB9FYjURznN0+3aJOk7sjBfG4lZdXR+BcvMWshWsiDfVK0okiYqh6g85b3sn7/9ViKcUGljg6Mr2ZOBF1IguyK36qUyMvxZQ8PsUdh5sj0zZP6ln1KoCFeCXSfDp4v1gz35gB3H/MR/4a1DqTyiViquzbyDvgmonnaW0=
-Received: by 10.67.10.12 with SMTP id n12mr1042108ugi.1176363961555;
-        Thu, 12 Apr 2007 00:46:01 -0700 (PDT)
-Received: from grissom.internal.parkins.org.uk ( [84.201.153.164])
-        by mx.google.com with ESMTP id 55sm1749225ugq.2007.04.12.00.46.00;
-        Thu, 12 Apr 2007 00:46:00 -0700 (PDT)
-User-Agent: KMail/1.9.6
-Content-Disposition: inline
+	id S1945939AbXDLIOy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Apr 2007 04:14:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1945934AbXDLIOy
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 04:14:54 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:42058 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945939AbXDLIOv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 04:14:51 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070412081450.TDDD1271.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 12 Apr 2007 04:14:50 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id m8Eq1W0081kojtg0000000; Thu, 12 Apr 2007 04:14:50 -0400
+In-Reply-To: <200704120845.56793.andyparkins@gmail.com> (Andy Parkins's
+	message of "Thu, 12 Apr 2007 08:45:47 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44330>
 
-Hello,
+Andy Parkins <andyparkins@gmail.com> writes:
 
-I'm sure those involved already know, but for the rest of us - it looks 
-like we have three projects in the SoC (assuming I'm reading it right):
+> I'm sure those involved already know, but for the rest of us - it looks 
+> like we have three projects in the SoC (assuming I'm reading it right):
+>
+> http://code.google.com/soc/git/about.html
+>
+> Good news eh?
 
-http://code.google.com/soc/git/about.html
+Congratulations to people involved.
 
-Good news eh?
+After recently noticing a few horrors in the existing code that
+were slipped in the codebase a long time ago, I have been
+thinking about a bit tighter patch application criteria for
+everybody (not just student projects).  Both mentors and
+students, please work hard ;-)
 
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+And always, have fun!
