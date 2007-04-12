@@ -1,57 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git-branch, older repos and more confusion
-Date: Thu, 12 Apr 2007 02:22:00 -0400
-Message-ID: <20070412062200.GA31788@coredump.intra.peff.net>
-References: <20070412042308.GA22539@coredump.intra.peff.net> <46a038f90704112205g53ab4750s673f449ee40165b4@mail.gmail.com> <20070412052118.GA30459@coredump.intra.peff.net> <46a038f90704112300k3abd66d0nc4372962dbee8616@mail.gmail.com> <46a038f90704112316v4aaa6246s9e07a3af8262b119@mail.gmail.com> <46a038f90704112114t520374b2qea4f860575c21bce@mail.gmail.com> <20070412042308.GA22539@coredump.intra.peff.net> <46a038f90704112205g53ab4750s673f449ee40165b4@mail.gmail.com> <20070412052118.GA30459@coredump.intra.peff.net> <46a038f90704112300k3abd66d0nc4372962dbee8616@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [BUG] 'stg add FILE' when FILE is a symlink to dir adds dir contents
+Date: Thu, 12 Apr 2007 08:58:10 +0200
+Message-ID: <20070412065810.GA22949@diana.vm.bytemark.co.uk>
+References: <20070411155452.GL5329@moonlight.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 08:22:10 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 08:58:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hbsh6-0001Ah-J3
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 08:22:08 +0200
+	id 1HbtGC-0001qY-QH
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 08:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161561AbXDLGWF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Apr 2007 02:22:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161563AbXDLGWF
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 02:22:05 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2351 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161561AbXDLGWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2007 02:22:04 -0400
-Received: (qmail 6216 invoked from network); 12 Apr 2007 06:22:41 -0000
-Received: from coredump.intra.peff.net (10.0.0.2)
-  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 12 Apr 2007 06:22:41 -0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Apr 2007 02:22:00 -0400
+	id S1161053AbXDLG6O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Thu, 12 Apr 2007 02:58:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161304AbXDLG6O
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 02:58:14 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3710 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161053AbXDLG6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 02:58:13 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1HbtFz-0005zJ-00; Thu, 12 Apr 2007 07:58:11 +0100
 Content-Disposition: inline
-In-Reply-To: <46a038f90704112316v4aaa6246s9e07a3af8262b119@mail.gmail.com> <46a038f90704112300k3abd66d0nc4372962dbee8616@mail.gmail.com>
+In-Reply-To: <20070411155452.GL5329@moonlight.home>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44328>
 
-On Thu, Apr 12, 2007 at 06:16:20PM +1200, Martin Langhoff wrote:
+On 2007-04-11 19:54:52 +0400, Tomash Brechko wrote:
 
-> And I think I got it sussed out with:
-> 
->   git-clone <repo> mydir
->   cd mydir
->   git-push origin origin/v1.9-maint:refs/heads/v1.9-clientname
->   git-checkout --track -b v1.9-clientname origin/v1.9-clientname
+> I have no knowledge of Python, so I can't fix it myself, but perhaps
+> one should check for symlink before 'if os.path.isdir(i):'.
 
-OK, I had misunderstood what you wanted. Yes, that should work, though I
-think you will need to do a 'git-fetch' between your push and checkout.
+Correct. From the Python library reference:
 
-> And then git-pull / git-push will "do the right thing". And `git-pull
-> origin/v1.9-maint` will trigger a fetch & merge.
+  isdir(path)
+    Return True if path is an existing directory. This follows
+    symbolic links, so both islink() and isdir() can be true for the
+    same path.
 
-Actually, it should be "git-pull origin v1.9-maint". Of course, you've
-been fetching origin/v1.9-maint all along when you pull your other
-branch, so you can do it without touching the network at all: "git-merge
-origin/v1.9-maint".
+So, os.path.islink() would be the function to use.
 
--Peff
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
