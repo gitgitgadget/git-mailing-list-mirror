@@ -1,75 +1,67 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-format-patch --subject-prefix support.
-Date: Wed, 11 Apr 2007 18:52:38 -0700
-Message-ID: <7v4pnmmk9l.fsf@assigned-by-dhcp.cox.net>
-References: <11763358884124-git-send-email-robbat2@gentoo.org>
-	<7vodlumntw.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704120150320.22924@beast.quantumfyre.co.uk>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 5/6] Teach "fsck" not to follow subproject links
+Date: Wed, 11 Apr 2007 18:52:46 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704111850240.4061@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0704092115020.6730@woody.linux-foundation.org>
+ <461D6432.90205@vilain.net> <Pine.LNX.4.64.0704111545040.6730@woody.linux-foundation.org>
+ <461D6858.4090007@vilain.net> <Pine.LNX.4.64.0704111605210.6730@woody.linux-foundation.org>
+ <7vslb6mnva.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
 X-From: git-owner@vger.kernel.org Thu Apr 12 03:53:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HboUa-0001sH-Rp
+	id 1HboUb-0001sH-D4
 	for gcvg-git@gmane.org; Thu, 12 Apr 2007 03:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161444AbXDLBwk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 21:52:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161459AbXDLBwk
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 21:52:40 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:56324 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161444AbXDLBwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 21:52:39 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070412015240.NNSR1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Apr 2007 21:52:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id m1se1W00g1kojtg0000000; Wed, 11 Apr 2007 21:52:39 -0400
-In-Reply-To: <Pine.LNX.4.64.0704120150320.22924@beast.quantumfyre.co.uk>
-	(Julian Phillips's message of "Thu, 12 Apr 2007 01:54:20 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161460AbXDLBww (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 21:52:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161462AbXDLBww
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 21:52:52 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:41654 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161460AbXDLBwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 21:52:51 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3C1qmVZ030191
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 11 Apr 2007 18:52:48 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3C1qlYn020215;
+	Wed, 11 Apr 2007 18:52:47 -0700
+In-Reply-To: <7vslb6mnva.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.957 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44304>
 
-Julian Phillips <julian@quantumfyre.co.uk> writes:
 
-> On Wed, 11 Apr 2007, Junio C Hamano wrote:
+
+On Wed, 11 Apr 2007, Junio C Hamano wrote:
 >
->> "Robin H\. Johnson" <robbat2@gentoo.org> writes:
->>
->>> Add a new option to git-format-patch, entitled --subject-prefix that allows
->>> control of the subject prefix '[PATCH]'. Using this option, the text 'PATCH' is
->>> replaced with whatever input is provided to the option. This allows easily
->>> generating patches like '[PATCH 2.6.21-rc3]' or properly numbered series like
->>> '[-mm3 PATCH N/M]'.
->>>
->>> 1/2 - Implementation and documentation
->>> 2/2 - Test case
->>
->> I suspect this is a job for send-email, not format-patch.  List?
->
-> Surely though, send-email is simply a helper for sending patches
-> generated by format-patch?  Is there any reason to deny the ability to
-> set the prefix to those who don't use send-email but do use
-> format-patch? (Personally I found send-email to be cumbersome and
-> confusing, so I've stopped using it ...)
->
-> It's format-patch that applies the current "[PATCH]" prefix anyway ...
+> The small detail in the last step is wrong, though.  Even if
+> they EXIST, they may be isolated commits that are note connected
+> to refs, and fsck in the repository would not have warned about
+> unreachable trees from such unconnected commits.
 
-I was more worried about people's scripts who postprocess
-format-patch output, relying on the '[PATCH]' to be there.  But
-they should be using -k to suppress it anyway, so this addition
-should be Ok.
+The superproject *is* a ref.
 
-Somebody needs to verify that mailinfo groks e-mails correctly
-even when they have "Subject: [random garbage] title" though.
+You cannot prune the subprojects on their own. That's the *only* real 
+special rule about subprojects. Exactly because pruning them on their own 
+is not a valid op to do.
+
+It's the same way with an source of "alternate" objects (or a shared 
+object directory) - you'd better not prune them, because other projects 
+may have refs to them that you don't know about locally. So this isn't 
+somethign new to subprojects.
+
+		Linus
