@@ -1,91 +1,91 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
-Date: Thu, 12 Apr 2007 02:56:54 +0200
-Message-ID: <20070412005654.GQ21701@admingilde.org>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <Pine.LNX.4.64.0704092115350.6730@woody.linux-foundation.org> <200704101828.37453.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0704101122510.6730@woody.linux-foundation.org> <e7bda7770704111742i2ac12cbas50fd7a3ba5c21cd8@mail.gmail.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: One more shallow tree weirdness - tag not pulled?
+Date: Wed, 11 Apr 2007 18:16:16 -0700
+Message-ID: <20070412011616.GB18378@curie-int.orbis-terrarum.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="sWvRP97dwRHm9fX+"
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Torgil Svensson <torgil.svensson@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Apr 12 02:56:59 2007
+	protocol="application/pgp-signature"; boundary="qcHopEYAB45HaUaB"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 12 03:16:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbncR-0001ff-8k
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 02:56:59 +0200
+	id 1Hbnv6-0001iC-OH
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 03:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774AbXDLA44 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 20:56:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753764AbXDLA44
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 20:56:56 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:36203 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753774AbXDLA44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 20:56:56 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.50 #1)
-	id 1HbncM-0002Co-Fg; Thu, 12 Apr 2007 02:56:54 +0200
+	id S1161434AbXDLBQO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 21:16:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161435AbXDLBQN
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 21:16:13 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:43177 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1161434AbXDLBQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 21:16:13 -0400
+Received: (qmail 28648 invoked from network); 12 Apr 2007 01:16:12 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Thu, 12 Apr 2007 01:16:12 +0000
+Received: (qmail 25921 invoked by uid 10000); 11 Apr 2007 18:16:16 -0700
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <e7bda7770704111742i2ac12cbas50fd7a3ba5c21cd8@mail.gmail.com>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.9i
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44301>
 
 
---sWvRP97dwRHm9fX+
+--qcHopEYAB45HaUaB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-hoi :)
+One other bit of weirdness I ran into.  On a shallow clone that is extended=
+ to
+full depth, there is a tag missing (that was in the non-shallow clone).
 
-On Thu, Apr 12, 2007 at 02:42:43AM +0200, Torgil Svensson wrote:
-> I guess this file could also cover the case where the superproject is
-> only interested in a small subset of the subproject. For example if I
-> only uses some header-files in a library and want
-> "/lib1/src/interface" in the subproject end up as "/includes/lib1" in
-> the superproject. Could single files be handled in a similar way?
+Testcase
+> git clone git://git.kernel.org/pub/scm/git/git.git git-0
+> git clone --depth 1 git://git.kernel.org/pub/scm/git/git.git git-1
+> cd git-1 && git pull --depth 10000000
 
-Conceptionally this information would have to be part of the
-supermodule tree (after all it changes how your tree is set up).
+Now the content of git-0 and git-1 should be functionally identical, but
+it's not.
 
-I think it makes more sense to make users think about which part
-of their tree can be reused and make them choose submodule boundaries
-wisely so that the above partial-checkout is not needed.
+I created 'git-$N.list' with:
+find git-$N ! -type d  | sort |egrep -v '\.git/(objects/pack/|index$|logs/)=
+' \
+ | tr '\n' '\0' | xargs -0 md5sum | sed 's,git-$N/,,g' >git-$N.list
 
-> Although this is just an example, external links shouldn't be
-> specified in the same configuration file as project internal things
-> (which should be version-controlled). If the url configuration gets
-> overwritten with checkouts there will be problems bisecting if the url
-> changes over time.
-
-Most of the time we may not need to add any per-submodule URL
-information anyway.  If you fetch a new supermodule version, you
-can get the new submodule from the same source (or from a per-submodule
-source which can be determined by looking at and munching the supermodule U=
-RL).
+--- git-0.list	2007-04-11 18:12:25.000000000 -0700
++++ git-1.list	2007-04-11 18:12:32.000000000 -0700
+@@ -28,7 +28,6 @@
+ bc94cbd02df32d07b7fd230d7aba42e8  .git/refs/tags/gitgui-0.6.3
+ 91521cca8d3f177e2f0cb4a586dac6be  .git/refs/tags/gitgui-0.6.4
+ c56d1ac72d959f87ba0dd92721de36de  .git/refs/tags/gitgui-0.6.5
+-b9c7a4533d41dfedd0a0d23bbfb3fed8  .git/refs/tags/junio-gpg-pub
+ 43ceb81bf4c131a8a882025a676aa22e  .git/refs/tags/v0.99
+ 072e3055bf33ff1ba5aa4697f2b539fb  .git/refs/tags/v0.99.1
+ 85916310d7d0a86818033ac95f32b234  .git/refs/tags/v0.99.2
 
 --=20
-Martin Waitz
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
 
---sWvRP97dwRHm9fX+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+--qcHopEYAB45HaUaB
+Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.1 (GNU/Linux)
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
 
-iD8DBQFGHYPWj/Eaxd/oD7IRAh8oAJ9XYJrWagJGoTYWRv/NZ8YSzGkTnwCfat7R
-m5veyzDqt113FgtNbmXd2k0=
-=X8TJ
+iD8DBQFGHYhgPpIsIjIzwiwRAtFKAJ46ecU5E+lNkGYUGkvwR3AVLCzLgQCeIq8X
+0LBdeYWrac/vQixjVQpQKVI=
+=4/Uz
 -----END PGP SIGNATURE-----
 
---sWvRP97dwRHm9fX+--
+--qcHopEYAB45HaUaB--
