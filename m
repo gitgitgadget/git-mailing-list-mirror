@@ -1,106 +1,150 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: git-format-patch --subject-prefix support.
-Date: Thu, 12 Apr 2007 03:04:05 -0700
-Message-ID: <7vslb5kiy2.fsf@assigned-by-dhcp.cox.net>
-References: <11763358884124-git-send-email-robbat2@gentoo.org>
-	<7vodlumntw.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704120150320.22924@beast.quantumfyre.co.uk>
-	<7v4pnmmk9l.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 12:04:15 2007
+From: Martin Langhoff <martin@catalyst.net.nz>
+Subject: [RFC] git-clone: add --track <headname> support
+Date: Thu, 12 Apr 2007 22:08:59 +1200
+Message-ID: <1176372539871-git-send-email-martin@catalyst.net.nz>
+Cc: Martin Langhoff <martin@catalyst.net.nz>
+To: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Apr 12 12:09:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbwA3-0008R0-Ed
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 12:04:15 +0200
+	id 1HbwEw-0002IP-J0
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 12:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946043AbXDLKEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Apr 2007 06:04:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992424AbXDLKEL
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 06:04:11 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38992 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1945980AbXDLKEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2007 06:04:08 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070412100406.VEQY1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 12 Apr 2007 06:04:06 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id mA451W00a1kojtg0000000; Thu, 12 Apr 2007 06:04:06 -0400
-In-Reply-To: <7v4pnmmk9l.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Wed, 11 Apr 2007 18:52:38 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1946103AbXDLKJO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Apr 2007 06:09:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946116AbXDLKJO
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 06:09:14 -0400
+Received: from smtp5.clear.net.nz ([203.97.33.68]:34392 "EHLO
+	smtp5.clear.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1946103AbXDLKJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 06:09:10 -0400
+Received: from localhost.localdomain
+ (121-73-4-156.cable.telstraclear.net [121.73.4.156])
+ by smtp5.clear.net.nz (CLEAR Net Mail)
+ with ESMTP id <0JGD00KFNQV85320@smtp5.clear.net.nz> for git@vger.kernel.org;
+ Thu, 12 Apr 2007 22:09:08 +1200 (NZST)
+X-Mailer: git-send-email 1.5.1.106.ga32037
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44333>
 
-Junio C Hamano <junkio@cox.net> writes:
+Add support for a simplified workflow where users
+want to clone and start working on a head that is
+different from the HEAD of the repository.
 
-> Julian Phillips <julian@quantumfyre.co.uk> writes:
->
->> On Wed, 11 Apr 2007, Junio C Hamano wrote:
->>
->>> "Robin H\. Johnson" <robbat2@gentoo.org> writes:
->>>
->>>> Add a new option to git-format-patch, entitled --subject-prefix that allows
->>>> control of the subject prefix '[PATCH]'. Using this option, the text 'PATCH' is
->>>> replaced with whatever input is provided to the option. This allows easily
->>>> generating patches like '[PATCH 2.6.21-rc3]' or properly numbered series like
->>>> '[-mm3 PATCH N/M]'.
->>>>
->>>> 1/2 - Implementation and documentation
->>>> 2/2 - Test case
+Calling
 
-Gaah.
+   git-clone --track maint <repo>
 
-I applied it, pushed the results out and then found breakage.
-How much I hate these random and non-essential "mean well to
-enhance usability" patches X-<...
+Is equivalent to
 
-In the meantime, I think this should fix it.  Please test well.
+   git-clone <repo> mydir
+   cd mydir
+   git-checkout --track -b maint origin/maint
 
--- >8 --
-Fix git {log,show,...} --pretty=email
+--
 
-An earlier --subject-prefix forgot that format-patch is not the
-only codepath that added the  "[PATCH]" prefix, breaking
-everybody else in the log family.
+Not sure if Junio wants this, but if I am going to migrate
+away from cogito, I'd like these common operations to be
+dead simple. 
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+This is something cogito supports using the <repo>#branchname
+syntax. I am pretty sure git supports it when fetching
+but alas, no longer for cloning. 
+
+And if we want it, there are 2 things I'd ask review for
+
+ - The --track parameter handling - I merely copied the 
+   handling for other parameters. Clearly shell doesn't
+   do this very elegantly, or at least we don't. 
+
+ - The block that defines head_points_at (@360-370) looks 
+   very brittle so I didn't want to mess with it. 
+
 ---
- builtin-log.c |    1 -
- revision.c    |    1 +
- 2 files changed, 1 insertions(+), 1 deletions(-)
+ git-clone.sh |   39 +++++++++++++++++++++++++++------------
+ 1 files changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/builtin-log.c b/builtin-log.c
-index 4a4890a..ffc269a 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -435,7 +435,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	rev.ignore_merges = 1;
- 	rev.diffopt.msg_sep = "";
- 	rev.diffopt.recursive = 1;
--	rev.subject_prefix = "PATCH";
+diff --git a/git-clone.sh b/git-clone.sh
+index e98e064..c7b3e99 100755
+--- a/git-clone.sh
++++ b/git-clone.sh
+@@ -14,7 +14,7 @@ die() {
+ }
  
- 	rev.extra_headers = extra_headers;
+ usage() {
+-	die "Usage: $0 [--template=<template_directory>] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [--depth <n>] [-n] <repo> [<dir>]"
++	die "Usage: $0 [--template=<template_directory>] [--reference <reference-repo>] [--bare] [-l [-s]] [-q] [-u <upload-pack>] [--origin <name>] [--track <head>] [--depth <n>] [-n] <repo> [<dir>]"
+ }
  
-diff --git a/revision.c b/revision.c
-index 486393c..37f1eab 100644
---- a/revision.c
-+++ b/revision.c
-@@ -567,6 +567,7 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 	revs->min_age = -1;
- 	revs->skip_count = -1;
- 	revs->max_count = -1;
-+	revs->subject_prefix = "PATCH";
+ get_repo_base() {
+@@ -85,6 +85,7 @@ bare=
+ reference=
+ origin=
+ origin_override=
++track=
+ use_separate_remote=t
+ depth=
+ no_progress=
+@@ -105,6 +106,11 @@ while
+ 		shift; template="--template=$1" ;;
+ 	*,--template=*)
+ 	  template="$1" ;;
++	1,--track) usage ;;
++	*,--track)
++		shift; track="$1" ;;
++	*,--track=*)
++	  track="$1" ;;
+ 	*,-q|*,--quiet) quiet=-q ;;
+ 	*,--use-separate-remote) ;;
+ 	*,--no-separate-remote)
+@@ -344,17 +350,22 @@ if test -z "$bare" && test -f "$GIT_DIR/REMOTE_HEAD"
+ then
+ 	# a non-bare repository is always in separate-remote layout
+ 	remote_top="refs/remotes/$origin"
+-	head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
+-	case "$head_sha1" in
+-	'ref: refs/'*)
+-		# Uh-oh, the remote told us (http transport done against
+-		# new style repository with a symref HEAD).
+-		# Ideally we should skip the guesswork but for now
+-		# opt for minimum change.
+-		head_sha1=`expr "z$head_sha1" : 'zref: refs/heads/\(.*\)'`
+-		head_sha1=`cat "$GIT_DIR/$remote_top/$head_sha1"`
+-		;;
+-	esac
++	if test ! -z "$track" && test -f "refs/remotes/$origin/$track"
++	then
++		head_sha1=`cat "refs/remotes/$origin/$track"`
++	else
++		head_sha1=`cat "$GIT_DIR/REMOTE_HEAD"`
++		case "$head_sha1" in
++		'ref: refs/'*)
++			# Uh-oh, the remote told us (http transport done against
++			# new style repository with a symref HEAD).
++			# Ideally we should skip the guesswork but for now
++			# opt for minimum change.
++			head_sha1=`expr "z$head_sha1" : 'zref: refs/heads/\(.*\)'`
++			head_sha1=`cat "$GIT_DIR/$remote_top/$head_sha1"`
++			;;
++		esac
++	fi
  
- 	revs->prune_fn = NULL;
- 	revs->prune_data = NULL;
+ 	# The name under $remote_top the remote HEAD seems to point at.
+ 	head_points_at=$(
+@@ -376,6 +387,10 @@ then
+ 		done
+ 		)
+ 	)
++	if test -n "$track" && test -f "$GIT_DIR/$remote_top/$track"
++	then
++		head_points_at="$track"
++	fi
+ 
+ 	# Write out remote.$origin config, and update our "$head_points_at".
+ 	case "$head_points_at" in
+-- 
+1.5.1.106.ga32037
