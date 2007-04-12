@@ -1,94 +1,74 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH 6/6] Teach core object handling functions about gitlinks
-Date: Thu, 12 Apr 2007 15:56:37 +1200
-Message-ID: <461DADF5.2010902@vilain.net>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <200704101828.37453.Josef.Weidendorfer@gmx.de> <Pine.LNX.4.64.0704101122510.6730@woody.linux-foundation.org> <200704102004.08329.andyparkins@gmail.com> <Pine.LNX.4.64.0704101219280.6730@woody.linux-foundation.org> <7vwt0kugmy.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704101325580.6730@woody.linux-foundation.org> <461D798B.3040008@vilain.net> <Pine.LNX.4.64.0704111854160.4061@woody.linux-foundation.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: git-branch, older repos and more confusion
+Date: Thu, 12 Apr 2007 16:14:06 +1200
+Message-ID: <46a038f90704112114t520374b2qea4f860575c21bce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Josef Weidendorfer <Josef.Weidendorfer@gmx.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 05:56:48 2007
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 12 06:14:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HbqQR-0003zn-PR
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 05:56:48 +0200
+	id 1HbqhZ-0003Tr-9l
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 06:14:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030521AbXDLD4o (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 23:56:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030614AbXDLD4o
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 23:56:44 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:37749 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030521AbXDLD4o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 23:56:44 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 7BCE413A403; Thu, 12 Apr 2007 15:56:41 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 6F99913A3E1;
-	Thu, 12 Apr 2007 15:56:37 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.10 (X11/20070307)
-In-Reply-To: <Pine.LNX.4.64.0704111854160.4061@woody.linux-foundation.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=failed 
-	version=3.0.2
+	id S1422627AbXDLEOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Apr 2007 00:14:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422636AbXDLEOJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 00:14:09 -0400
+Received: from wx-out-0506.google.com ([66.249.82.238]:25955 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1422627AbXDLEOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 00:14:07 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so433084wxd
+        for <git@vger.kernel.org>; Wed, 11 Apr 2007 21:14:06 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ETYFTTzQDY+8Tvszfo9m96kyUnF3KpVXs6P/FPAjhlrXh15CKsHqTq1pTgIZQxDQzDExLXCAmPHOag8O8DrrQ8tTYs5xAjMDla/btDuf4PaNs+vKZDrMicrNOXLKWZkrOi1k3O9XxPJDDFqpQEnYrfcD6dzQiaOyMKEZC8pldFU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=KjTwxRJh8L83L5H0YuFAJIH3eNBgwbeL1KJB3oVodvn4N7KgRyHTv4wjT64PfXY9Tro0h6GIReVG47iELZEUpiNP+uq2JsmunyefJkZl+Vh2Ou0DSTkiEe9a3sci8oFgGTAKKMWGFDaXsHgx0+4CmujbMcxHvvtyE8coxZVFsDw=
+Received: by 10.90.34.3 with SMTP id h3mr1333054agh.1176351246297;
+        Wed, 11 Apr 2007 21:14:06 -0700 (PDT)
+Received: by 10.90.120.11 with HTTP; Wed, 11 Apr 2007 21:14:06 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44317>
 
-Linus Torvalds wrote:
->> Whoa... "missing" subproject data?
->>     
-> Absolutely. Not just subproject data. The whole subproject is often 
-> missing.
->
-> If I fetch the KDE superproject, I generally do *not* want every single 
-> subproject. In fact, I'd likely just want one or two subprojects.
->   
+Thanks to Peff for helping me out earlier with my git-branch usage.
+Alas, I seem to be in trouble again.
 
-Ok, but couldn't this be considered a variation of a lightweight checkout?
+My git tracking repo is still using the .git/remotes/origin
+infrastructure, and now it turns out I can't seem to do a git-pull and
+then a git-format-patch of my local 'master' for patches to go on top
+of junio's master. I am using 1.5.1.106.ga32037
 
-The only reason I'm worried about this is the case where the
-superproject contains *thousands* of subprojects. Eg, a superproject for
-all repo.or.cz projects. Say in a day 200 projects get updated with a
-few commits - do you have to do 200 pulls or just one? But maybe that
-problem can be solved in another way, or maybe it won't really hurt so
-much in practice and still be faster/more efficient than rsync mirroring.
+I'll get a new checkout, but I'm a bit miffed that this is broken -- I
+wanted to use git-format-patch to migrate unmerged patches to the new
+checkout.
 
-This is especially the case in concert with gittorrent, which will need
-modifications to support sharing multiple repositories (not that that's
-a huge issue, given there's no implementation yet).
+<rant>
+This is all a bit confusing, and "the right way to do it" is changing
+too fast. And with the changes, all the little things that make it
+easy to manage it are lost, and all the wiki pages and documentation
+bits are old and wrong. The simple master/origin scheme works well, is
+dead easy to teach, and has worked well for my team of ~14 developers
+working on maybe ~40 custom branches. It's pretty safe from errors too
+;-)
 
->> Surely, unless you're doing lightweight/shallow clones, if you have a
->> gitlink you've also got the dependent repository? Otherwise the
->> reachability rule will be broken.
->>     
->
-> The reachability rule *must* be breakable. That's why fsck currently 
-> doesn't care AT ALL.
->
-> It's much better to break that rule than to even check it! I'd rather 
-> leave fsck like it is now, than to *ever* fix it, if the "fix" involves 
-> "you have to always fetch all submodules to shut fsck up".
->   
+Alas - I think support for it seems to be going the away... what I am
+missing is a clear way to say git-clone <repo>#branch that has the
+same properties that `cg-clone <repo>#branch` has. Namely, once you
+are done, there are clear names for your "local tip" and "remote tip",
+and push and pull do the right thing without extra params.
 
-Well fsck can be fixed easily enough to not descend, like lightweight
-checkouts.
+cheers,
 
-What I really want to avoid is the situation where you can't checkout,
-even though you didn't indicate a shallow/lightweight clone.
 
-What else might this decision impact? Obviously with a smaller base you
-have fewer delta targets, though that's probably not a real issue.
-
-Sam.
+martin
