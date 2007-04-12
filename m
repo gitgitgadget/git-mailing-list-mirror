@@ -1,192 +1,97 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [ANNOUNCE] GIT 1.5.1.1
-Date: Wed, 11 Apr 2007 19:09:34 -0700
-Message-ID: <7vhcrml4wx.fsf@assigned-by-dhcp.cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 5/6] Teach "fsck" not to follow subproject links
+Date: Wed, 11 Apr 2007 19:14:31 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704111903060.4061@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org><Pi
+ ne.LNX.4.64.0704092115020.6730@woody.linux-foundation.org><461D6432.90205@v
+ ilain.net>   <Pine.LNX.4.64.0704111545040.6730@woody.linux-foundation.org><461D6858.4090
+ 007@vilain.net>  <Pine.LNX.4.64.0704111605210.6730@woody.linux-foundation.org><Pine.LNX.4.63
+ .0704111600390.28394@qynat.qvtvafvgr.pbz> <Pine.LNX.4.64.0704111646000.6730@woody.linux-foundation.org>
+ <Pine.LNX.4.63.0704111628240.28394@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Apr 12 04:09:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: David Lang <david.lang@digitalinsight.com>
+X-From: git-owner@vger.kernel.org Thu Apr 12 04:14:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hboko-0001mX-Bg
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 04:09:42 +0200
+	id 1Hbope-00046g-E2
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 04:14:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161466AbXDLCJi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Wed, 11 Apr 2007 22:09:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161472AbXDLCJi
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 22:09:38 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:46940 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161466AbXDLCJg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Apr 2007 22:09:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070412020935.OCCO1257.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Apr 2007 22:09:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id m29b1W00p1kojtg0000000; Wed, 11 Apr 2007 22:09:36 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161473AbXDLCOj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 22:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161475AbXDLCOj
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 22:14:39 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:41948 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161473AbXDLCOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 22:14:38 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3C2EWVZ030693
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 11 Apr 2007 19:14:32 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3C2EVPm020556;
+	Wed, 11 Apr 2007 19:14:32 -0700
+In-Reply-To: <Pine.LNX.4.63.0704111628240.28394@qynat.qvtvafvgr.pbz>
+X-Spam-Status: No, hits=-0.957 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44312>
 
-The latest maintenance release GIT 1.5.1.1 is available at the
-usual places:
 
-  http://www.kernel.org/pub/software/scm/git/
 
-  git-1.5.1.1.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.5.1.1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.5.1.1.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.5.1.1-1.$arch.rpm	(RPM)
+On Wed, 11 Apr 2007, David Lang wrote:
+>
+> On Wed, 11 Apr 2007, Linus Torvalds wrote:
+> > 
+> > It can be a nice space optimization, and yes, if there really is a lot of
+> > shared state, it can make it much cheaper to do some of the checks, but
+> > right now we have absolutely *no* way for fsck to then do the reachability
+> > check, because there is no way to tell fsck where all the refs are (since
+> > now the refs come in from multiple repositories!)
+> 
+> this is why I was suggesting a --multiple-project option to let you tell fsck
+> about all of the repositories that it needs to look for refs in.
 
-GIT v1.5.1.1 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+Well, just from a personal observation:
+ - I would *personally* actually refuse to share objects with anybody 
+   else.
 
-=46ixes since v1.5.1
-------------------
+I just find the idea too scary. Somebody doing something bad to their 
+object store by mistake (running "git prune" without realizing that there 
+are *my* objects there too, or just deciding that they want to play with 
+the object directory by hand, or running a new fancy experimental importer 
+that has a subtle bug wrt object handling or anything like that).
 
-* Documentation updates
+I'll endorse use "alternates" files, but partly because I know the main 
+project is safe (any alternates usage is in the "satellite" clones anyway, 
+and they will never write to the alternate object directory), and partly 
+because at least for the kernel, we don't have branches that get reset in 
+the main project, so there's no reason to fear that a "git repack -a -d" 
+will ever screw up any of the satellite repositories even by mistake.
 
-  - The --left-right option of rev-list and friends is documented.
+But for git projects, even alternates isn't safe, in case somebody bases 
+their own work on a version of "pu" that eventually goes away (even with 
+reflogs, pruning *eventually* takes place).
 
-  - The documentation for cvsimport has been majorly improved.
+So I tend to think that alternates and shared object directories are 
+really for "temporary" stuff, or for *managed* repositories that are at 
+git *hosting* sites (eg repo.or.cz), and where there is some other safety 
+involved, ie users don't actually access the object directories directly 
+in any way.
 
-  - "git-show-ref --exclude-existing" was documented.
+So I've at least personally come to the conclusion that for a *developer* 
+(as opposed to a hosting site!), shared object directories just never make 
+sense. The downsides are just too big. Even alternates is something where 
+you just need to be fairly careful!
 
-* Bugfixes
-
-  - The implementation of -p option in "git cvsexportcommit" had
-    the meaning of -C (context reduction) option wrong, and
-    loosened the context requirements when it was told to be
-    strict.
-
-  - "git cvsserver" did not behave like the real cvsserver when
-    client side removed a file from the working tree without
-    doing anything else on the path.  In such a case, it should
-    restore it from the checked out revision.
-
-  - "git fsck" issued an alarming error message on detached
-    HEAD.  It is not an error since at least 1.5.0.
-
-  - "git send-email" produced of References header of unbounded length;
-    fixed this with line-folding.
-
-  - "git archive" to download from remote site should not
-    require you to be in a git repository, but it incorrectly
-    did.
-
-  - "git apply" ignored -p<n> for "diff --git" formatted
-    patches.
-
-  - "git rerere" recorded a conflict that had one side empty
-    (the other side adds) incorrectly; this made merging in the
-    other direction fail to use previously recorded resolution.
-
-  - t4200 test was broken where "wc -l" pads its output with
-    spaces.
-
-  - "git branch -m old new" to rename branch did not work
-    without a configuration file in ".git/config".
-
-  - The sample hook for notification e-mail was misnamed.
-
-  - gitweb did not show type-changing patch correctly in the
-    blobdiff view.
-
-  - git-svn did not error out with incorrect command line options.
-
-  - git-svn fell into an infinite loop when insanely long commit
-    message was found.
-
-  - git-svn dcommit and rebase was confused by patches that were
-    merged from another branch that is managed by git-svn.
-
-----------------------------------------------------------------
-
-Changes since v1.5.1 are as follows:
-
-Arjen Laarhoven (4):
-      usermanual.txt: some capitalization nits
-      t3200-branch.sh: small language nit
-      t5300-pack-object.sh: portability issue using /usr/bin/stat
-      Makefile: iconv() on Darwin has the old interface
-
-Brian Gernhardt (3):
-      Fix t4200-rerere for white-space from "wc -l"
-      Document --left-right option to rev-list.
-      Distinguish branches by more than case in tests.
-
-Dana How (1):
-      Fix lseek(2) calls with args 2 and 3 swapped
-
-Eric Wong (3):
-      git-svn: bail out on incorrect command-line options
-      git-svn: dcommit/rebase confused by patches with git-svn-id: line=
-s
-      git-svn: fix log command to avoid infinite loop on long commit me=
-ssages
-
-=46rank Lichtenheld (7):
-      cvsimport: sync usage lines with existing options
-      cvsimport: Improve documentation of CVSROOT and CVS module determ=
-ination
-      cvsimport: Improve usage error reporting
-      cvsimport: Reorder options in documentation for better understand=
-ing
-      cvsimport: Improve formating consistency
-      cvsserver: small corrections to asciidoc documentation
-      cvsserver: Fix handling of diappeared files on update
-
-Geert Bosch (1):
-      Fix renaming branch without config file
-
-Gerrit Pape (1):
-      rename contrib/hooks/post-receieve-email to contrib/hooks/post-re=
-ceive-email.
-
-Jakub Narebski (1):
-      gitweb: Fix bug in "blobdiff" view for split (e.g. file to symlin=
-k) patches
-
-Jim Meyering (1):
-      (encode_85, decode_85): Mark source buffer pointer as "const".
-
-Julian Phillips (1):
-      Documentation: show-ref: document --exclude-existing
-
-Junio C Hamano (7):
-      rerere: make sorting really stable.
-      Fix dependency of common-cmds.h
-      Documentation: tighten dependency for git.{html,txt}
-      Prepare for 1.5.1.1
-      Add Documentation/cmd-list.made to .gitignore
-      fsck: do not complain on detached HEAD.
-      GIT 1.5.1.1
-
-Lars Hjemli (2):
-      rename_ref(): only print a warning when config-file update fails
-      Make builtin-branch.c handle the git config file
-
-Ren=C3=A9 Scharfe (1):
-      Revert "builtin-archive: use RUN_SETUP"
-
-Shawn O. Pearce (1):
-      Honor -p<n> when applying git diffs
-
-Tomash Brechko (1):
-      cvsexportcommit -p : fix the usage of git-apply -C.
-
-Ville Skytt=C3=A4 (1):
-      DESTDIR support for git/contrib/emacs
-
-YOSHIFUJI Hideaki (1):
-      Avoid composing too long "References" header.
+		Linus
