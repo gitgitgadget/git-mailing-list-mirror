@@ -1,71 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 5/6] Teach "fsck" not to follow subproject links
-Date: Wed, 11 Apr 2007 19:30:11 -0700
-Message-ID: <7vbqhul3yk.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704092100110.6730@woody.linux-foundation.org> <Pi
-	ne.LNX.4.64.0704092115020.6730@woody.linux-foundation.org>
-	<461D6432.90205@v ilain.net>
-	<Pine.LNX.4.64.0704111545040.6730@woody.linux-foundation.org>
-	<461D6858.4090 007@vilain.net>
-	<Pine.LNX.4.64.0704111605210.6730@woody.linux-foundation.org>
-	<Pine.LNX.4.63 .0704111600390.28394@qynat.qvtvafvgr.pbz>
-	<Pine.LNX.4.64.0704111646000.6730@woody.linux-foundation.org>
-	<Pine.LNX.4.63.0704111628240.28394@qynat.qvtvafvgr.pbz>
-	<Pine.LNX.4.64.0704111903060.4061@woody.linux-foundation.org>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: One more shallow tree weirdness - tag not pulled?
+Date: Wed, 11 Apr 2007 20:37:59 -0700
+Message-ID: <20070412033759.GD18378@curie-int.orbis-terrarum.net>
+References: <20070412011616.GB18378@curie-int.orbis-terrarum.net> <7vbqhuml6z.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Lang <david.lang@digitalinsight.com>,
-	Sam Vilain <sam@vilain.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Apr 12 04:30:21 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="C+ts3FVlLX8+P6JN"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Apr 12 05:38:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hbp4l-0003Ry-CS
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 04:30:19 +0200
+	id 1Hbq8P-0003F7-EO
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 05:38:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161480AbXDLCaP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 11 Apr 2007 22:30:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161483AbXDLCaP
-	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 22:30:15 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:61756 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161480AbXDLCaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Apr 2007 22:30:13 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070412023012.NERW1271.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Wed, 11 Apr 2007 22:30:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id m2WB1W00l1kojtg0000000; Wed, 11 Apr 2007 22:30:12 -0400
-In-Reply-To: <Pine.LNX.4.64.0704111903060.4061@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Wed, 11 Apr 2007 19:14:31 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161559AbXDLDhv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 11 Apr 2007 23:37:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161560AbXDLDhv
+	(ORCPT <rfc822;git-outgoing>); Wed, 11 Apr 2007 23:37:51 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:35948 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1161559AbXDLDhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Apr 2007 23:37:50 -0400
+Received: (qmail 14990 invoked from network); 12 Apr 2007 03:37:49 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Thu, 12 Apr 2007 03:37:48 +0000
+Received: (qmail 10482 invoked by uid 10000); 11 Apr 2007 20:37:59 -0700
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <7vbqhuml6z.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44315>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> But for git projects, even alternates isn't safe, in case somebody bases 
-> their own work on a version of "pu" that eventually goes away (even with 
-> reflogs, pruning *eventually* takes place).
->
-> So I tend to think that alternates and shared object directories are 
-> really for "temporary" stuff, or for *managed* repositories that are at 
-> git *hosting* sites (eg repo.or.cz), and where there is some other safety 
-> involved, ie users don't actually access the object directories directly 
-> in any way.
+--C+ts3FVlLX8+P6JN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Actually that is not even true for repo.or.cz -- the site lets
-people to create *forks* of the main project, and I recall it is
-implemented in terms of alternates.
+On Wed, Apr 11, 2007 at 06:32:36PM -0700, Junio C Hamano wrote:
+> The initial clone gets all tags, regardless of reachability.
+> Subsequent fetches however only _follows_ tags that point at
+> something you have in the repository.  The blob that holds my
+> GPG public key is not part of any commit, so you would not have
+> that object in your repository, and subsequent "tag following"
+> will not see it.
+Ah, that explains it. I didn't dig into what the blob contain, just
+noticed that it wasn't on the side that I was checking for extending.
 
-That's one of the reasons I never asked to take over git.git
-repository there.  I have alt-git.git instead, which does not
-allow forks.
+> > I created 'git-$N.list' with:
+> > find git-$N ! -type d  | sort |egrep -v '\.git/(objects/pack/|index$|lo=
+gs/)' \
+> >  | tr '\n' '\0' | xargs -0 md5sum | sed 's,git-$N/,,g' >git-$N.list
+>=20
+> I do not know what you wanted to do, but I suspect you
+> reinvented a rather expensive
+> 	git ls-remote git-$N
+No, the purpose of this command was to check that the checkouts were
+functionally equivalent.
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--C+ts3FVlLX8+P6JN
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iD8DBQFGHamXPpIsIjIzwiwRAgcJAKDC17E0q0JFC5xRa1YHLyaSfPA0CwCg4HOa
+hRN24HOSDPNsVh5nbzKfYhA=
+=ffvR
+-----END PGP SIGNATURE-----
+
+--C+ts3FVlLX8+P6JN--
