@@ -1,72 +1,106 @@
-From: Martin Langhoff <martin@catalyst.net.nz>
-Subject: [PATCH] git-clone: Better handling of failed fetches of HEAD over HTTP
-Date: Thu, 12 Apr 2007 21:25:33 +1200
-Message-ID: <11763699332101-git-send-email-martin@catalyst.net.nz>
-Cc: Martin Langhoff <martin@catalyst.net.nz>
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Thu Apr 12 11:44:12 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: git-format-patch --subject-prefix support.
+Date: Thu, 12 Apr 2007 03:04:05 -0700
+Message-ID: <7vslb5kiy2.fsf@assigned-by-dhcp.cox.net>
+References: <11763358884124-git-send-email-robbat2@gentoo.org>
+	<7vodlumntw.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0704120150320.22924@beast.quantumfyre.co.uk>
+	<7v4pnmmk9l.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Thu Apr 12 12:04:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hbvqb-0006x4-Rb
-	for gcvg-git@gmane.org; Thu, 12 Apr 2007 11:44:10 +0200
+	id 1HbwA3-0008R0-Ed
+	for gcvg-git@gmane.org; Thu, 12 Apr 2007 12:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946034AbXDLJng (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Apr 2007 05:43:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1946035AbXDLJnf
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 05:43:35 -0400
-Received: from smtp3.clear.net.nz ([203.97.33.64]:34924 "EHLO
-	smtp3.clear.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1946040AbXDLJlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2007 05:41:04 -0400
-X-Greylist: delayed 921 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Apr 2007 05:41:04 EDT
-Received: from localhost.localdomain
- (121-73-4-156.cable.telstraclear.net [121.73.4.156])
- by smtp3.clear.net.nz (CLEAR Net Mail)
- with ESMTP id <0JGD000AAOUT3Z20@smtp3.clear.net.nz> for git@vger.kernel.org;
- Thu, 12 Apr 2007 21:25:41 +1200 (NZST)
-X-Mailer: git-send-email 1.5.1.106.ga32037
+	id S1946043AbXDLKEL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Apr 2007 06:04:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992424AbXDLKEL
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 06:04:11 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:38992 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1945980AbXDLKEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 06:04:08 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070412100406.VEQY1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>;
+          Thu, 12 Apr 2007 06:04:06 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id mA451W00a1kojtg0000000; Thu, 12 Apr 2007 06:04:06 -0400
+In-Reply-To: <7v4pnmmk9l.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Wed, 11 Apr 2007 18:52:38 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44332>
 
-Junio said:
-> Why not default to 'master' (if found) and issue a warning?
+Junio C Hamano <junkio@cox.net> writes:
 
-A common problem when cloning over http is that the repo has
-a symlink for HEAD, and apache refuses to serve symlinks by
-default.
+> Julian Phillips <julian@quantumfyre.co.uk> writes:
+>
+>> On Wed, 11 Apr 2007, Junio C Hamano wrote:
+>>
+>>> "Robin H\. Johnson" <robbat2@gentoo.org> writes:
+>>>
+>>>> Add a new option to git-format-patch, entitled --subject-prefix that allows
+>>>> control of the subject prefix '[PATCH]'. Using this option, the text 'PATCH' is
+>>>> replaced with whatever input is provided to the option. This allows easily
+>>>> generating patches like '[PATCH 2.6.21-rc3]' or properly numbered series like
+>>>> '[-mm3 PATCH N/M]'.
+>>>>
+>>>> 1/2 - Implementation and documentation
+>>>> 2/2 - Test case
 
-With this patch, the clone will fallback to trying to get
-refs/heads/master -- which often works. If it cannot get
-HEAD or refs/heads/master, then it will die, aborting the clone.
+Gaah.
 
-Signed-off-by: Martin Langhoff <martin@catalyst.net.nz>
+I applied it, pushed the results out and then found breakage.
+How much I hate these random and non-essential "mean well to
+enhance usability" patches X-<...
+
+In the meantime, I think this should fix it.  Please test well.
+
+-- >8 --
+Fix git {log,show,...} --pretty=email
+
+An earlier --subject-prefix forgot that format-patch is not the
+only codepath that added the  "[PATCH]" prefix, breaking
+everybody else in the log family.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
- git-clone.sh |    9 ++++++++-
- 1 files changed, 8 insertions(+), 1 deletions(-)
+ builtin-log.c |    1 -
+ revision.c    |    1 +
+ 2 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-clone.sh b/git-clone.sh
-index 513b574..e98e064 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -64,7 +64,14 @@ Perhaps git-update-server-info needs to be run there?"
- 	done <"$clone_tmp/refs"
- 	rm -fr "$clone_tmp"
- 	http_fetch "$1/HEAD" "$GIT_DIR/REMOTE_HEAD" ||
--	rm -f "$GIT_DIR/REMOTE_HEAD"
-+		(echo "Could not get "$1/HEAD", perhaps it is a symlink: trying with refs/heads/master" &&
-+		http_fetch "$1/refs/heads/master" "$GIT_DIR/REMOTE_HEAD") ||
-+		rm -f "$GIT_DIR/REMOTE_HEAD"
-+
-+	if test ! -f "$GIT_DIR/REMOTE_HEAD"
-+	then
-+		die "Could not retrieve $1/HEAD nor $1/refs/heads/master ."
-+	fi
- }
+diff --git a/builtin-log.c b/builtin-log.c
+index 4a4890a..ffc269a 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -435,7 +435,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	rev.ignore_merges = 1;
+ 	rev.diffopt.msg_sep = "";
+ 	rev.diffopt.recursive = 1;
+-	rev.subject_prefix = "PATCH";
  
- quiet=
--- 
-1.5.1.106.ga32037
+ 	rev.extra_headers = extra_headers;
+ 
+diff --git a/revision.c b/revision.c
+index 486393c..37f1eab 100644
+--- a/revision.c
++++ b/revision.c
+@@ -567,6 +567,7 @@ void init_revisions(struct rev_info *revs, const char *prefix)
+ 	revs->min_age = -1;
+ 	revs->skip_count = -1;
+ 	revs->max_count = -1;
++	revs->subject_prefix = "PATCH";
+ 
+ 	revs->prune_fn = NULL;
+ 	revs->prune_data = NULL;
