@@ -1,71 +1,53 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Teach git-update-index about gitlinks
-Date: Thu, 12 Apr 2007 15:45:57 -0700
-Message-ID: <7vtzvli53u.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704121218130.4061@woody.linux-foundation.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: cvsserver and wincvs (cvsgui)
+Date: Thu, 12 Apr 2007 18:54:22 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0704121821150.27922@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Apr 13 00:46:03 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 13 00:54:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hc83G-0007vm-IB
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 00:46:03 +0200
+	id 1Hc8BT-00034y-FW
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 00:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750911AbXDLWp7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 12 Apr 2007 18:45:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbXDLWp7
-	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 18:45:59 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:51369 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750911AbXDLWp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Apr 2007 18:45:59 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070412224559.ITGU1226.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Thu, 12 Apr 2007 18:45:59 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id mNlx1W00m1kojtg0000000; Thu, 12 Apr 2007 18:45:58 -0400
-In-Reply-To: <Pine.LNX.4.64.0704121218130.4061@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Thu, 12 Apr 2007 12:29:40 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750773AbXDLWyZ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Thu, 12 Apr 2007 18:54:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750882AbXDLWyY
+	(ORCPT <rfc822;git-outgoing>); Thu, 12 Apr 2007 18:54:24 -0400
+Received: from iabervon.org ([66.92.72.58]:2537 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750773AbXDLWyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Apr 2007 18:54:24 -0400
+Received: (qmail 31531 invoked by uid 1000); 12 Apr 2007 22:54:22 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 12 Apr 2007 22:54:22 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44362>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+I'm having problems using git-cvsserver to support a wincvs user. It seems 
+to be truncating binary files in both directions (e.g., we have a PNG that 
+starts, in hex, 89 50 4e 47 0d 0a ..., and it gets truncated between the 
+0d and 0a), and it seems to fail up-to-date checks when checking in files 
+that are, in fact, up-to-date (and, so far as I can see, haven't been 
+modified anywhere else). I haven't tried much with this repository, but at 
+least the binary file commit and update worked for me with real cvs.
 
-> Junio - if you prefer Alex' patch instead, I won't be upset. This is 
-> definitely a bigger re-org, and while I think it makes sense as a patch 
-> even *aside* from the gitlink support, it's probably largely a matter of 
-> taste.
+The user is using WinCvs 1.3.13.2 Beta 13 (Build 2), which seems to be the 
+version he could find at the time that would talk to both their local CVS 
+server and sourceforge.
 
-I find the result of applying this patch much easier to read
-than the original.
+The user doesn't have any of these problems talking to a real cvs server.
 
-> +/*
-> + * Process a regular file
-> + */
-> +static int process_file(const char *path, int len, struct stat *st)
-> +{
-> +	int pos = cache_name_pos(path, len);
-> +	struct cache_entry *ce = pos < 0 ? NULL : active_cache[pos];
-> +
-> +	if (ce && S_ISDIRLNK(ntohl(ce->ce_mode)))
-> +		return error("%s is already a gitlink, not replacing", path);
-> +
-> +	return add_one_path(ce, path, len, st);	
-> +}
+Anybody got any experience with wincvs and cvsserver, or any idea how 
+things could be different between git-cvsserver and real cvs? He's 
+presently going to use his own version control and just send us results, 
+but it would be nice if this could be magically worked out before we 
+started working together closely again in a couple of weeks.
 
-I may be missing the obvious but if I have a subproject at
-"path/S" and I say "update-index path/S/Makefile", what should
-happen?  There is ISDIRLNK entry at path/S and add_one_path()
-would allow removal of "path/S" to make room for
-path/S/Makefile, when --replace is given.
+	-Daniel
+*This .sig left intentionally blank*
