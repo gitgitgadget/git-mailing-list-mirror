@@ -1,65 +1,71 @@
 From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH 4/4] config.txt: Fix grammatical error in description of http.noEPSV
-Date: Fri, 13 Apr 2007 18:02:33 +0200
-Message-ID: <11764801732969-git-send-email-frank@lichtenheld.de>
+Subject: [PATCH 3/4] config.txt: Change pserver to server in description of gitcvs.*
+Date: Fri, 13 Apr 2007 18:02:32 +0200
+Message-ID: <11764801632775-git-send-email-frank@lichtenheld.de>
 References: <11764801533023-git-send-email-frank@lichtenheld.de>
 Cc: Junio C Hamano <junkio@cox.net>,
 	Frank Lichtenheld <frank@lichtenheld.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 13 18:04:32 2007
+X-From: git-owner@vger.kernel.org Fri Apr 13 18:04:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcOGF-0000T6-6q
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 18:04:31 +0200
+	id 1HcOGG-0000T6-Ha
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 18:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754069AbXDMQD2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Apr 2007 12:03:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754068AbXDMQD2
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 12:03:28 -0400
-Received: from mail.lenk.info ([217.160.134.107]:2017 "EHLO mail.lenk.info"
+	id S1754064AbXDMQDx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Apr 2007 12:03:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754073AbXDMQDx
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 12:03:53 -0400
+Received: from mail.lenk.info ([217.160.134.107]:3681 "EHLO mail.lenk.info"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754069AbXDMQDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2007 12:03:18 -0400
+	id S1754064AbXDMQDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2007 12:03:52 -0400
 Received: from herkules.lenk.info
 	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
 	by mail.lenk.info with esmtpsa 
 	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1HcOEs-0008Qb-9U; Fri, 13 Apr 2007 18:03:06 +0200
+	id 1HcOFQ-0008RI-Sb; Fri, 13 Apr 2007 18:03:40 +0200
 Received: from p3ee3f548.dip.t-dialin.net ([62.227.245.72] helo=goedel.djpig.de)
 	by smtp.lenk.info with esmtpsa 
 	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HcOF1-0000xj-TH; Fri, 13 Apr 2007 18:03:16 +0200
+	id 1HcOFa-0000ya-JH; Fri, 13 Apr 2007 18:03:50 +0200
 Received: from djpig by goedel.djpig.de with local (Exim 4.63)
 	(envelope-from <frank@lichtenheld.de>)
-	id 1HcOEg-0001ne-4s; Fri, 13 Apr 2007 18:02:54 +0200
+	id 1HcOEf-0001nY-TZ; Fri, 13 Apr 2007 18:02:53 +0200
 X-Mailer: git-send-email 1.5.1.1
 In-Reply-To: <11764801533023-git-send-email-frank@lichtenheld.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44417>
 
-s/doesn't/don't/ since "ftp servers" is plural
+These variables apply to the SSH access as well, so don't use
+pserver here which might confuse users.
 
 Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
 ---
- Documentation/config.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ Documentation/config.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b6e6513..62168e6 100644
+index 09c355b..b6e6513 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -462,7 +462,7 @@ http.lowSpeedLimit, http.lowSpeedTime::
+@@ -411,11 +411,11 @@ gc.rerereunresolved::
+ 	The default is 15 days.  See gitlink:git-rerere[1].
  
- http.noEPSV::
- 	A boolean which disables using of EPSV ftp command by curl.
--	This can helpful with some "poor" ftp servers which doesn't
-+	This can helpful with some "poor" ftp servers which don't
- 	support EPSV mode. Can be overridden by the 'GIT_CURL_FTP_NO_EPSV'
- 	environment variable. Default is false (curl will use EPSV).
+ gitcvs.enabled::
+-	Whether the cvs pserver interface is enabled for this repository.
++	Whether the cvs server interface is enabled for this repository.
+ 	See gitlink:git-cvsserver[1].
  
+ gitcvs.logfile::
+-	Path to a log file where the cvs pserver interface well... logs
++	Path to a log file where the cvs server interface well... logs
+ 	various stuff. See gitlink:git-cvsserver[1].
+ 
+ gitcvs.allbinary::
 -- 
 1.5.1.1
