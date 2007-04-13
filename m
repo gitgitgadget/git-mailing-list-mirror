@@ -1,75 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: fatal: Out of memory, malloc failed
-Date: Fri, 13 Apr 2007 11:53:43 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704131143130.28042@woody.linux-foundation.org>
-References: <461FBD02.6050105@eircom.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Ignore BASE extension
+Date: Fri, 13 Apr 2007 12:43:20 -0700
+Message-ID: <7vslb4awmf.fsf@assigned-by-dhcp.cox.net>
+References: <200704131233.13979.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Alan Larkin <nobrow@eircom.net>
-X-From: git-owner@vger.kernel.org Fri Apr 13 20:54:04 2007
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Apr 13 21:43:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcQuJ-0004Vj-JH
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 20:54:04 +0200
+	id 1HcRgL-0000ZR-Qo
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 21:43:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754129AbXDMSxu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Apr 2007 14:53:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754132AbXDMSxu
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 14:53:50 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:46093 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754129AbXDMSxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2007 14:53:49 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3DIrjIs029484
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 13 Apr 2007 11:53:46 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3DIri88006872;
-	Fri, 13 Apr 2007 11:53:44 -0700
-In-Reply-To: <461FBD02.6050105@eircom.net>
-X-Spam-Status: No, hits=-0.457 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S932493AbXDMTna (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Apr 2007 15:43:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932478AbXDMTn3
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 15:43:29 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:60216 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932184AbXDMTnW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2007 15:43:22 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070413194320.CONX1257.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Fri, 13 Apr 2007 15:43:20 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id mjjL1W00l1kojtg0000000; Fri, 13 Apr 2007 15:43:21 -0400
+In-Reply-To: <200704131233.13979.andyparkins@gmail.com> (Andy Parkins's
+	message of "Fri, 13 Apr 2007 12:33:12 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44425>
 
+Andy Parkins <andyparkins@gmail.com> writes:
 
+> Hello,
+>
+> $ git --version
+> git version 1.5.1.1.83.g2bfe3
+>
+> I've just compiled the latest version from master; and started getting 
+> this message
+>
+> $ git add foo.c
+> Ignore BASE extension
+>
+> What does that mean?  Should I be concerned?
 
-On Fri, 13 Apr 2007, Alan Larkin wrote:
-> 
-> Its not a huge push Im trying to do here (<about 150Mb) but always malloc fails!
+The message would have said "ignoring BASE extension", but this
+means you used git from 'next' to update your index and HEAD and
+then are now running 'git add' from 'master' or older that does
+not have the support for BASE extension.
 
-Any huge objects?
+For description of what BASE extension does, look at log
+messages between master..a640e62, especially 0679f9ac.
 
-Also, it might be interesting to run it under gdb, and put a breakpoint on 
-the "die" function, so that it stops where it runs out of memory. Then. at 
-that point, you can:
+The notice is harmless.  Any extension data section that the
+index file can have, whose name begins with a capital letter
+(like 'B'), is meant to be ignorable.  They enhance
+functionality or improve performance if understood, but an older
+tool that does not understand them can safely ignore and
+correctly operate.
 
- - do a "where" in gdb to see what allocation it is (and ask it how big 
-   it was by printing out the value of "size").
-
-   It may be something totally uninteresting (just some random object that 
-   happened to push things over the limit), but statistically, malloc 
-   failures tend to happen to big objects, and sometimes just because 
-   somebody needed a huge area that won't fit in the virtual address 
-   space.
-
- - check with "ps" what the size of the process is. Maybe you even just 
-   have some process limit set that causes brk/mmap to return failure 
-   earlier than necessary..
-
-   (It can also be interesting to look at /proc/<pid>/maps, in case
-   there are big mmaps that fill up the VM etc)
-
-Sometimes it's also a good idea to have a swap file.  You may not even
-*need* to actually page, but it gives thew VM layer much more freedom,
-especially if your distro has set the flags to disable memory "overcommit".
-
-		Linus
+Another extension, by the way, is TREE extension, which holds
+the cache-tree to speed up write-tree operation.  I think
+everybody's git would understand them by now.
