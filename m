@@ -1,76 +1,61 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
+From: Paul Mackerras <paulus@samba.org>
 Subject: Re: [RFD] Strange patch formats (aka tricks with unified diffs)..
-Date: Fri, 13 Apr 2007 07:38:31 +0200
-Message-ID: <e5bfff550704122238l4a453cb7g38834c7da3432d5a@mail.gmail.com>
+Date: Fri, 13 Apr 2007 15:43:08 +1000
+Message-ID: <17951.6252.457936.428919@cargo.ozlabs.ibm.com>
 References: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Paul Mackerras" <paulus@samba.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Apr 13 07:38:56 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Apr 13 07:44:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcEUp-0008NU-FJ
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 07:38:55 +0200
+	id 1HcEZp-0001uL-Sx
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 07:44:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750964AbXDMFid (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Apr 2007 01:38:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751934AbXDMFid
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 01:38:33 -0400
-Received: from wr-out-0506.google.com ([64.233.184.238]:56650 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750964AbXDMFic (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2007 01:38:32 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so729116wra
-        for <git@vger.kernel.org>; Thu, 12 Apr 2007 22:38:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=E5bG4FAvHmp7LdrN6c3wqORgXOegO8MIFwxJ/TAmQv0xXOOFeENOVnmLZWOJC4zpZm/Hjs0054qurgzdaMCWsRvu/expnkz3tooEAxCmGrNZdTseaQRJP2sR+XBtd9arx+VyI2xPOL/53YQUhxNhhBMPoNHgUtD2R3B05CFydcg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eu/9+WWPlOLL98hSdsdY5uf2mGxhx6VbOMRDVEldYq3DYI113jYwtBrCoEcWGqKPaHKW5PpRUwvZF/ZqtV9CrWPKAqw1Za/1IspR7jwu86dsJKGdzfRUEVHVVIRTbr9nKGbotrsLQVkoiv+mbruLlRTwAT48YkxYXfrCYdUI6CI=
-Received: by 10.114.157.1 with SMTP id f1mr907537wae.1176442711215;
-        Thu, 12 Apr 2007 22:38:31 -0700 (PDT)
-Received: by 10.114.61.6 with HTTP; Thu, 12 Apr 2007 22:38:31 -0700 (PDT)
+	id S1751878AbXDMFnv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Apr 2007 01:43:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751943AbXDMFnv
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 01:43:51 -0400
+Received: from ozlabs.org ([203.10.76.45]:47798 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751878AbXDMFnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2007 01:43:50 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 483DBDDF41; Fri, 13 Apr 2007 15:43:49 +1000 (EST)
 In-Reply-To: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org>
-Content-Disposition: inline
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44388>
 
-On 4/12/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> So I can see two ways to fix this:
->  - bug Paul about alternate diff viewing capabilities in gitk. He's cc'd
->    here. A way to make the "diff" pane show just the new one, the old one,
+Linus Torvalds writes:
+
+>  - bug Paul about alternate diff viewing capabilities in gitk. He's cc'd 
+>    here. A way to make the "diff" pane show just the new one, the old one, 
 >    or even both side-by-side with some mousy interface?
->  - add some actual switch to git diff generation to hide the negative side
->    of a unified diff, and add some way to just make gitk pass that switch
->    in.
->
-> I dunno. I realize that it's not just gitk - gitweb, qgit etc don't allow
-> the tricks *either*, but gitk was the one I just hit this with.
 
-Currently in qgit you can select a revision + a file and call an
-external diff viewer, as example Kompare (tweakable from
-'Edir->settings->External diff viewer' menu) to view the diff
-side-by-side, or in any other way the viewer allows, for the selected
-file.
+Showing just the old lines, or just the new lines, would be dead easy,
+since the Tk text widget has an "elide" option on tagged ranges of
+text that effectively removes them from the display.  So I don't even
+have to change the contents of the text widget, merely the display
+options associated with the tags that I already have attached to the
+old and new lines (that's how they get their color).
 
-I like also the idea to hide the negative side but I would rather
-prefer a togglable command/button instead of a command line argument
-or a setting, so to allow easy and quick hide/unhide on the same
-patch.
+Side-by-side would be more challenging.
 
-I will work on it..... ;-)
+Alternatively I could provide a field where you can put in a filter
+command to be put between the diff generator and the display parser.
 
-Thanks for idea
-Marco
+Have you seen what dirdiff can do with displaying diffs?  You can
+expose more context, move old and new lines up and down (but not in a
+manner which changes the meaning of the diff), and split context lines
+into old/new pairs, all with the mouse.  This lets me rearrange a diff
+to make it more visually meaningful and understandable.  I could
+import that stuff into gitk, since dirdiff is also written in Tcl/Tk.
+
+Paul.
