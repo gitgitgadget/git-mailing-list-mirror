@@ -1,47 +1,65 @@
-From: Matthias Lederhofer <matled@gmx.net>
-Subject: Re: [RFD] Strange patch formats (aka tricks with unified diffs)..
-Date: Fri, 13 Apr 2007 10:10:50 +0200
-Message-ID: <20070413081049.GA26649@moooo.ath.cx>
-References: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org>
+From: "Alex Riesen" <raa.lkml@gmail.com>
+Subject: Re: Teach git-update-index about gitlinks
+Date: Fri, 13 Apr 2007 10:14:24 +0200
+Message-ID: <81b0412b0704130114u2a7217cep6cd77b902e92bbd8@mail.gmail.com>
+References: <Pine.LNX.4.64.0704121218130.4061@woody.linux-foundation.org>
+	 <81b0412b0704130042k1f5be3bay30cbbb6b70259f6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Apr 13 10:11:00 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Apr 13 10:14:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcGrz-0001oL-Fv
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 10:10:59 +0200
+	id 1HcGvp-0003WL-ON
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 10:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752712AbXDMIKy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Apr 2007 04:10:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752770AbXDMIKy
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 04:10:54 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59091 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752712AbXDMIKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2007 04:10:53 -0400
-Received: (qmail invoked by alias); 13 Apr 2007 08:10:52 -0000
-Received: from pD9EBB9A8.dip0.t-ipconnect.de (EHLO moooo.ath.cx) [217.235.185.168]
-  by mail.gmx.net (mp032) with SMTP; 13 Apr 2007 10:10:52 +0200
-X-Authenticated: #5358227
-X-Provags-ID: V01U2FsdGVkX19RIxdpW7dR/12AgJrEqHO57gxtNs7dlGuAEBwoYK
-	I3Kl+sJyz00qns
+	id S1752875AbXDMIO2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Apr 2007 04:14:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbXDMIO2
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 04:14:28 -0400
+Received: from an-out-0708.google.com ([209.85.132.250]:57866 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752670AbXDMIO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2007 04:14:26 -0400
+Received: by an-out-0708.google.com with SMTP id b33so837567ana
+        for <git@vger.kernel.org>; Fri, 13 Apr 2007 01:14:25 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QE493lgZAvAuF+d8fHU53yRexzSPY/kVxitVTPOscIZqGxN3SdNtyqyoSN8PEmeoSw5WhOo8wW0WJiEAzmzwroczOW8ebiWQ5oV9T8dS7sq8Du06PBaMyXdAnU4U98V1XKz1PGbS27KG9fwxqOBCiV3NhcMvykBdOSqJ6oAkEPQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=MJXOnNPQj9ddOZyeQB4ade8XjrZfAevIPqf3/254CRZxtuA/SeiDUQIPM0rU1fZwt1xOseOT5GQjBXe/OMvMJP+C/4ggtgWF7tC1cUlazYPLzYL9mNQZeYOZb/FdAANtkW4lGDpF7JnE58M9U42xfBIIIwifMstV68EbHfAVXD4=
+Received: by 10.100.133.9 with SMTP id g9mr2274933and.1176452065441;
+        Fri, 13 Apr 2007 01:14:25 -0700 (PDT)
+Received: by 10.100.86.14 with HTTP; Fri, 13 Apr 2007 01:14:24 -0700 (PDT)
+In-Reply-To: <81b0412b0704130042k1f5be3bay30cbbb6b70259f6@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44394>
 
-Linus Torvalds <torvalds@linux-foundation.org> wrote:
->  - add some actual switch to git diff generation to hide the negative side 
->    of a unified diff, and add some way to just make gitk pass that switch 
->    in.
+On 4/13/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> > + *    (NOTE! This is old and arguably fairly strange behaviour.
+> > + *    We might want to make this an error unconditionally, and
+> > + *    use "--force-remove" if you actually want to force removal).
+> ...
+> > +               /* Should this be an unconditional error? */
+> > +               return remove_one_path(path);
+>
+> Makes me uncomfortable too. Is it be possible anyone is depending
+> on it? Maybe it still can be changed?
+>
 
-This one would still allow to show the added lines still colored in
-green.  Or do I miss a way to do this?  git show --color is not very
-grep friendly because lines begin with an escape sequence.
+Maybe not. It actually makes sense: the old file (now a directory)
+is actually removed, so a plain --remove in its old meaning still
+_is_ correct: remove the file from index if it is removed from
+working directory.
+And it breaks t1001.
