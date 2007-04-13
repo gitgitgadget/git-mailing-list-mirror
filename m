@@ -1,74 +1,80 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH 3/3] Teach 'diff' about 'nodiff' attribute.
-Date: Fri, 13 Apr 2007 15:26:30 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704131525260.12853@reaper.quantumfyre.co.uk>
-References: <7vodlsd4wc.fsf@assigned-by-dhcp.cox.net> <200704131230.41594.andyparkins@gmail.com>
- <461F6D74.63EF2769@eudaptics.com> <200704131354.57056.andyparkins@gmail.com>
- <alpine.LFD.0.98.0704131007140.28181@xanadu.home>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [RFD] Strange patch formats (aka tricks with unified diffs)..
+Date: Fri, 13 Apr 2007 08:00:18 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704130751560.28042@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org>
+ <20070413081049.GA26649@moooo.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <J.Sixt@eudaptics.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Apr 13 16:26:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Matthias Lederhofer <matled@gmx.net>
+X-From: git-owner@vger.kernel.org Fri Apr 13 17:00:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcMjV-0001wZ-N2
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 16:26:38 +0200
+	id 1HcNGH-0007Yq-12
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 17:00:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753572AbXDMO0d (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Apr 2007 10:26:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753605AbXDMO0d
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 10:26:33 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:45118 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753549AbXDMO0d (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Apr 2007 10:26:33 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 87720C2E08
-	for <git@vger.kernel.org>; Fri, 13 Apr 2007 15:26:31 +0100 (BST)
-Received: (qmail 30316 invoked by uid 103); 13 Apr 2007 15:26:00 +0100
-Received: from 192.168.0.2 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90/3087. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.2):. 
- Processed in 0.03276 secs); 13 Apr 2007 14:26:00 -0000
-Received: from reaper.quantumfyre.co.uk (192.168.0.2)
-  by neutron.datavampyre.co.uk with SMTP; 13 Apr 2007 15:26:00 +0100
-X-X-Sender: jp3@reaper.quantumfyre.co.uk
-In-Reply-To: <alpine.LFD.0.98.0704131007140.28181@xanadu.home>
+	id S1754028AbXDMPA0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Apr 2007 11:00:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754030AbXDMPA0
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 11:00:26 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:36063 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754028AbXDMPAZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2007 11:00:25 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3DF0IIs021832
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 13 Apr 2007 08:00:18 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3DF0I8n002343;
+	Fri, 13 Apr 2007 08:00:18 -0700
+In-Reply-To: <20070413081049.GA26649@moooo.ath.cx>
+X-Spam-Status: No, hits=-0.956 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44408>
 
-On Fri, 13 Apr 2007, Nicolas Pitre wrote:
 
-> On Fri, 13 Apr 2007, Andy Parkins wrote:
->
->> If I've understood the attributes system correctly, it's worth bearing
->> in mind that "!diff" is not the same as "nodiff".  The not in "!diff"
->> means "supress the attribute diff", not as you would traditionally
->> imagine "not-diff".  In this case it doesn't matter because there are
->> only two possibilities for the diff engine - show the diff or don't.
->> However, more attributes might get added that aren't so simple.
->>
->> Junio - This makes me think that perhaps "!" is not the right symbol for
->> this - that's going to get read by programmers everywhere as NOT,
->> rather than suppress.  Perhaps it doesn't matter, I might be
->> over-thinking this.
->
-> Maybe "-" then?  That better convey the notion of suppression while "!"
-> is more about negation.
 
-"-flag" will certainly be a more familiar way to say "disable flag" to 
-gentoo users ... ;)
+On Fri, 13 Apr 2007, Matthias Lederhofer wrote:
 
--- 
-Julian
+> Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> >  - add some actual switch to git diff generation to hide the negative side 
+> >    of a unified diff, and add some way to just make gitk pass that switch 
+> >    in.
+> 
+> This one would still allow to show the added lines still colored in
+> green.  Or do I miss a way to do this?  git show --color is not very
+> grep friendly because lines begin with an escape sequence.
 
-  ---
-Lie, n.:
- 	A very poor substitute for the truth, but the only one
- 	discovered to date.
+Heh. I'm not much for color, so I've never done it. But if you want it, 
+you should be able to just do
+
+	git show --color <commit> |
+		grep -v '^[^ ]*-' |
+		less -RS
+
+because every line of a diff (and even the explanations, thanks to the 
+indent-by-four rule of git log printing) should either start with a "+/-" 
+*or* they will have a space before they will show up, so using the "no 
+spaces before the -" rule instead of "beginning of line" should work..
+
+So the above will *literally* just remove the "---" line and the actual 
+removal lines of the diff, even in the presense of color coding. 
+
+The exception, of course, is:
+ - maybe I didn't think it through and I missed some case, and it removes 
+   lines it shouldn't.
+ - if you make the color coding itself have spaces or something in it 
+   you break my assumption (but the vt100 codes should be fine)
+
+Hmm?
+
+		Linus
