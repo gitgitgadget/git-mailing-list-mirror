@@ -1,98 +1,62 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH] config.txt: Add gitcvs.db* variables
-Date: Fri, 13 Apr 2007 18:13:42 +0200
-Message-ID: <11764808223731-git-send-email-frank@lichtenheld.de>
-References: <evmhot$p0l$2@sea.gmane.org>
-Cc: Junio C Hamano <junkio@cox.net>, Jakub Narebski <jnareb@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Apr 13 18:14:23 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 0/3] resend/cleanup: Fix up subproject support
+Date: Fri, 13 Apr 2007 09:23:39 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704130919070.28042@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Apr 13 18:23:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcOPk-0004bA-27
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 18:14:20 +0200
+	id 1HcOYt-0008SD-U0
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 18:23:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754068AbXDMQOO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Apr 2007 12:14:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754073AbXDMQON
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 12:14:13 -0400
-Received: from mail.lenk.info ([217.160.134.107]:4928 "EHLO mail.lenk.info"
+	id S1754061AbXDMQXp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Apr 2007 12:23:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754077AbXDMQXp
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 12:23:45 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:40181 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754068AbXDMQOL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2007 12:14:11 -0400
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1HcOPM-0000L3-KI; Fri, 13 Apr 2007 18:13:58 +0200
-Received: from p3ee3f548.dip.t-dialin.net ([62.227.245.72] helo=goedel.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA:32) (Exim 4.63 1)
-	id 1HcOPV-0001LY-UK; Fri, 13 Apr 2007 18:14:06 +0200
-Received: from djpig by goedel.djpig.de with local (Exim 4.63)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1HcOP8-0001tP-8g; Fri, 13 Apr 2007 18:13:42 +0200
-X-Mailer: git-send-email 1.5.1.1
-In-Reply-To: <evmhot$p0l$2@sea.gmane.org>
+	id S1754061AbXDMQXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Apr 2007 12:23:44 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3DGNeIs024595
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Fri, 13 Apr 2007 09:23:41 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3DGNdCs004008;
+	Fri, 13 Apr 2007 09:23:40 -0700
+X-Spam-Status: No, hits=-0.957 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44419>
 
-Adds documentation for gitcvs.{dbname,dbdriver,dbuser,dbpass}
-Texts are mostly taken from git-cvsserver.txt whith some
-adaptions so that they make more sense out of the context
-of the original man page.
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- Documentation/config.txt |   27 +++++++++++++++++++++++++++
- 1 files changed, 27 insertions(+), 0 deletions(-)
+This series of three patches is a *replacement* for the patch series of 
+two patches (plus one-liner fixup) I sent yesterday.
 
- Note that this one is made on top of the cvsserver topic
- branch and my fixes to config.txt (i.e. the description
- for gitcvs.allbinary is in the context of the patch).
- Just saying.
+It fixes the issue I noted with "git status" incorrectly claiming that a 
+non-checked out subproject wasn't clean - that was just a total thinko in 
+the code (we were checking the filesystem mode against S_IFDIRLNK, which 
+obviously cannot work, since S_IFDIRLINK is a git-internal state, not a 
+filesystem state).
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 62168e6..ad2c1f5 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -425,6 +425,33 @@ gitcvs.allbinary::
- 	fact that there is no way yet to set single files to mode '-kb'.
- 	See gitlink:git-cvsserver[1].
- 
-+gitcvs.dbname::
-+	Database used by git-cvsserver to cache revision information
-+	derived from the git repository. The exact meaning depends on the
-+	used database driver, for SQLite (which is the default driver) this
-+	is a filename. Supports variable substitution (see
-+	gitlink:git-cvsserver[1] for details). May not contain semicolons (`;`).
-+	Default: '%Ggitcvs.%m.sqlite'
-+
-+gitcvs.dbdriver::
-+	Used Perl DBI driver. You can specify any available driver	
-+        for this here, but it might not work. git-cvsserver is tested
-+	with 'DBD::SQLite', reported to work with 'DBD::Pg', and
-+	reported *not* to work with 'DBD::mysql'. Experimental feature.
-+	May not contain double colons (`:`). Default: 'SQLite'.
-+	See gitlink:git-cvsserver[1].
-+
-+gitcvs.dbuser, gitcvs.dbpass::
-+	Database user and password. Only useful if setting 'gitcvs.dbdriver',
-+	since SQLite has no concept of database users and/or passwords.
-+	'gitcvs.dbuser' supports variable substitution (see
-+	gitlink:git-cvsserver[1] for details).
-+
-+All gitcvs variables except for 'gitcvs.allbinary' can also specifed
-+as 'gitcvs.<access_method>.<varname>' (where 'access_method' is one
-+of "ext" and "pserver") to make them apply only for the given access
-+method.
-+
- http.sslVerify::
- 	Whether to verify the SSL certificate when fetching or pushing
- 	over HTTPS. Can be overridden by the 'GIT_SSL_NO_VERIFY' environment
--- 
-1.5.1.1
+It then re-sends the two patches on top of that, with the fix for checking 
+out superprojects (we should *not* mess up any existing subproject 
+directories, certainly not remove them - if we already have a directory in 
+the place where we now want a subproject, we should leave it well alone!)
+
+If you already applied the patches from yesterday (and my small fix), you 
+already have the two latter ones - the only reason I added 1/3 to the 
+front of the patch-queue is that it really is a fix, and it makes the 
+commit commentary about a remaining bug in the patch I sent out yesterday 
+go away.
+
+		Linus
