@@ -1,144 +1,50 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 3/3] Teach "git-read-tree -u" to check out submodules as a
- directory
-Date: Fri, 13 Apr 2007 09:26:04 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704130925040.28042@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704130919070.28042@woody.linux-foundation.org>
+From: Alan Larkin <nobrow@eircom.net>
+Subject: fatal: Out of memory, malloc failed
+Date: Fri, 13 Apr 2007 18:25:22 +0100
+Message-ID: <461FBD02.6050105@eircom.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Apr 13 18:26:13 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Apr 13 19:32:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcObF-00014g-1l
-	for gcvg-git@gmane.org; Fri, 13 Apr 2007 18:26:13 +0200
+	id 1HcPdF-00046Y-G0
+	for gcvg-git@gmane.org; Fri, 13 Apr 2007 19:32:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754083AbXDMQ0J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Fri, 13 Apr 2007 12:26:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754081AbXDMQ0J
-	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 12:26:09 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:40330 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754080AbXDMQ0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Apr 2007 12:26:08 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3DGQ5Is024671
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Fri, 13 Apr 2007 09:26:05 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3DGQ4oh004085;
-	Fri, 13 Apr 2007 09:26:04 -0700
-In-Reply-To: <Pine.LNX.4.64.0704130919070.28042@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-0.957 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1749667AbXDMRcF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Fri, 13 Apr 2007 13:32:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750837AbXDMRcF
+	(ORCPT <rfc822;git-outgoing>); Fri, 13 Apr 2007 13:32:05 -0400
+Received: from mail09.svc.cra.dublin.eircom.net ([159.134.118.25]:6421 "HELO
+	mail09.svc.cra.dublin.eircom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1749667AbXDMRcE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Apr 2007 13:32:04 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Apr 2007 13:32:03 EDT
+Received: (qmail 1257 messnum 2875127 invoked from network[193.1.133.115/affront.ucd.ie]); 13 Apr 2007 17:25:22 -0000
+Received: from affront.ucd.ie (HELO ?193.1.133.115?) (193.1.133.115)
+  by mail09.svc.cra.dublin.eircom.net (qp 1257) with SMTP; 13 Apr 2007 17:25:22 -0000
+User-Agent: Thunderbird 1.5.0.10 (X11/20070330)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44423>
 
+Hello,
 
-This actually allows us to check out a supermodule after cloning, although 
-the submodules themselves will obviously not be checked out, and will just 
-be empty directories.
+Its not a huge push Im trying to do here (<about 150Mb) but always malloc fails!
 
-Checking out the submodules will be up to higher levels - we may not even 
-want to!
+$ git push upload master
+Fetching remote heads...
+  refs/
+  refs/heads/
+  refs/tags/
+updating 'refs/heads/master'
+  from 0000000000000000000000000000000000000000
+  to   4dc5525d0cc8ca24883c3fa1d5c29b3a105b4610
+    sending 1024 objects
+fatal: Out of memory, malloc failed
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
- entry.c |   45 ++++++++++++++++++++++++++++++++-------------
- 1 files changed, 32 insertions(+), 13 deletions(-)
-
-diff --git a/entry.c b/entry.c
-index d72f811..50ffae4 100644
---- a/entry.c
-+++ b/entry.c
-@@ -62,26 +62,33 @@ static int create_file(const char *path, unsigned int mode)
- 	return open(path, O_WRONLY | O_CREAT | O_EXCL, mode);
- }
- 
-+static void *read_blob_entry(struct cache_entry *ce, const char *path, unsigned long *size)
-+{
-+	enum object_type type;
-+	void *new = read_sha1_file(ce->sha1, &type, size);
-+
-+	if (new) {
-+		if (type == OBJ_BLOB)
-+			return new;
-+		free(new);
-+	}
-+	return NULL;
-+}
-+
- static int write_entry(struct cache_entry *ce, char *path, struct checkout *state, int to_tempfile)
- {
- 	int fd;
--	void *new;
--	unsigned long size;
- 	long wrote;
--	enum object_type type;
- 
--	new = read_sha1_file(ce->sha1, &type, &size);
--	if (!new || type != OBJ_BLOB) {
--		if (new)
--			free(new);
--		return error("git-checkout-index: unable to read sha1 file of %s (%s)",
--			path, sha1_to_hex(ce->sha1));
--	}
- 	switch (ntohl(ce->ce_mode) & S_IFMT) {
--		char *buf;
--		unsigned long nsize;
-+		char *buf, *new;
-+		unsigned long size, nsize;
- 
- 	case S_IFREG:
-+		new = read_blob_entry(ce, path, &size);
-+		if (!new)
-+			return error("git-checkout-index: unable to read sha1 file of %s (%s)",
-+				path, sha1_to_hex(ce->sha1));
- 		if (to_tempfile) {
- 			strcpy(path, ".merge_file_XXXXXX");
- 			fd = mkstemp(path);
-@@ -111,6 +118,10 @@ static int write_entry(struct cache_entry *ce, char *path, struct checkout *stat
- 			return error("git-checkout-index: unable to write file %s", path);
- 		break;
- 	case S_IFLNK:
-+		new = read_blob_entry(ce, path, &size);
-+		if (!new)
-+			return error("git-checkout-index: unable to read sha1 file of %s (%s)",
-+				path, sha1_to_hex(ce->sha1));
- 		if (to_tempfile || !has_symlinks) {
- 			if (to_tempfile) {
- 				strcpy(path, ".merge_link_XXXXXX");
-@@ -136,8 +147,13 @@ static int write_entry(struct cache_entry *ce, char *path, struct checkout *stat
- 						 "symlink %s (%s)", path, strerror(errno));
- 		}
- 		break;
-+	case S_IFDIRLNK:
-+		if (to_tempfile)
-+			return error("git-checkout-index: cannot create temporary subproject %s", path);
-+		if (mkdir(path, 0777) < 0)
-+			return error("git-checkout-index: cannot create subproject directory %s", path);
-+		break;
- 	default:
--		free(new);
- 		return error("git-checkout-index: unknown file mode for %s", path);
- 	}
- 
-@@ -179,6 +195,9 @@ int checkout_entry(struct cache_entry *ce, struct checkout *state, char *topath)
- 		 */
- 		unlink(path);
- 		if (S_ISDIR(st.st_mode)) {
-+			/* If it is a gitlink, leave it alone! */
-+			if (S_ISDIRLNK(ntohl(ce->ce_mode)))
-+				return 0;
- 			if (!state->force)
- 				return error("%s is a directory", path);
- 			remove_subtree(path);
--- 
-1.5.1.1.786.gdc49a-dirty
+Any ideas? Thanks.
