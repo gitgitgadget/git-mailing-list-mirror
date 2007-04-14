@@ -1,53 +1,52 @@
-From: Rene Herman <rene.herman@gmail.com>
-Subject: Re: GIT and the current -stable
-Date: Sat, 14 Apr 2007 10:54:02 +0200
-Message-ID: <462096AA.3080003@gmail.com>
-References: <46206842.80203@gmail.com> <20070414083410.GU6602@sequoia.sous-sol.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: SoC git projects announced
+Date: Sat, 14 Apr 2007 10:55:46 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704141016020.18655@racer.site>
+References: <200704120845.56793.andyparkins@gmail.com> <20070412164357.GD12979@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-	Greg KH <greg@kroah.com>, git@vger.kernel.org
-To: Chris Wright <chrisw@sous-sol.org>
-X-From: git-owner@vger.kernel.org Sat Apr 14 10:55:35 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Apr 14 10:56:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hce2f-0002uy-O2
-	for gcvg-git@gmane.org; Sat, 14 Apr 2007 10:55:34 +0200
+	id 1Hce40-0003JV-T8
+	for gcvg-git@gmane.org; Sat, 14 Apr 2007 10:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750961AbXDNIz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 04:55:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753058AbXDNIz3
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 04:55:29 -0400
-Received: from smtpq1.tilbu1.nb.home.nl ([213.51.146.200]:46267 "EHLO
-	smtpq1.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750961AbXDNIz2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 04:55:28 -0400
-Received: from [213.51.146.190] (port=43289 helo=smtp1.tilbu1.nb.home.nl)
-	by smtpq1.tilbu1.nb.home.nl with esmtp (Exim 4.30)
-	id 1Hce2Z-0005DW-B1; Sat, 14 Apr 2007 10:55:27 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:40097 helo=[192.168.0.3])
-	by smtp1.tilbu1.nb.home.nl with esmtp (Exim 4.30)
-	id 1Hce2V-0004DN-9Z; Sat, 14 Apr 2007 10:55:23 +0200
-User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
-In-Reply-To: <20070414083410.GU6602@sequoia.sous-sol.org>
-X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
-X-AtHome-MailScanner: Found to be clean
+	id S1753575AbXDNI4x (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 04:56:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753570AbXDNI4w
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 04:56:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59540 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753575AbXDNI4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2007 04:56:52 -0400
+Received: (qmail invoked by alias); 14 Apr 2007 08:56:49 -0000
+Received: from mail.superfast.com (EHLO [10.0.0.38]) [194.30.223.1]
+  by mail.gmx.net (mp047) with SMTP; 14 Apr 2007 10:56:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+7CRY6JKC7jVsjLm/o2bk6Je5VYL8/lMMIbFCzt9
+	oup4Cg9OMu5YRv
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070412164357.GD12979@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44450>
 
-On 04/14/2007 10:34 AM, Chris Wright wrote:
+Hi,
 
-> I've already put a tree like this up on kernel.org.  The master branch
-> is Linus' tree, and there's branches for each of the stable releases
-> called linux-2.6.[12-20].y (I didn't add 2.6.11.y).
-> 
-> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6-stable.git;a=summary
+On Thu, 12 Apr 2007, Shawn O. Pearce wrote:
 
-I see, thank you; that sounds like a good "master" repo to clone then.
+> Though I think Dscho might be in the process of moving between countries 
+> right now... so he might not be too responsive to email for a few more 
+> days.
 
-Rene.
+Right. I am at sea at the moment, but expect to be feet-dry tomorrow. I
+hope to get settled by Sunday, and a regular Git list reader by Monday.
+
+Ciao,
+Dscho
