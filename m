@@ -1,77 +1,53 @@
-From: Chris Wright <chrisw@sous-sol.org>
+From: Rene Herman <rene.herman@gmail.com>
 Subject: Re: GIT and the current -stable
-Date: Sat, 14 Apr 2007 01:34:10 -0700
-Message-ID: <20070414083410.GU6602@sequoia.sous-sol.org>
-References: <46206842.80203@gmail.com>
+Date: Sat, 14 Apr 2007 10:54:02 +0200
+Message-ID: <462096AA.3080003@gmail.com>
+References: <46206842.80203@gmail.com> <20070414083410.GU6602@sequoia.sous-sol.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
 	Greg KH <greg@kroah.com>, git@vger.kernel.org
-To: Rene Herman <rene.herman@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Apr 14 10:35:14 2007
+To: Chris Wright <chrisw@sous-sol.org>
+X-From: git-owner@vger.kernel.org Sat Apr 14 10:55:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hcdiz-0004qx-5i
-	for gcvg-git@gmane.org; Sat, 14 Apr 2007 10:35:13 +0200
+	id 1Hce2f-0002uy-O2
+	for gcvg-git@gmane.org; Sat, 14 Apr 2007 10:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932185AbXDNIeo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 04:34:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965426AbXDNIeo
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 04:34:44 -0400
-Received: from 216-99-217-87.dsl.aracnet.com ([216.99.217.87]:55984 "EHLO
-	sous-sol.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932185AbXDNIen (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 04:34:43 -0400
-Received: from sous-sol.org (localhost.localdomain [127.0.0.1])
-	by sous-sol.org (8.13.8/8.13.7) with ESMTP id l3E8YAsD032467;
-	Sat, 14 Apr 2007 01:34:10 -0700
-Received: (from chrisw@localhost)
-	by sous-sol.org (8.13.8/8.13.7/Submit) id l3E8YAre032466;
-	Sat, 14 Apr 2007 01:34:10 -0700
-Content-Disposition: inline
-In-Reply-To: <46206842.80203@gmail.com>
-User-Agent: Mutt/1.4.2.2i
-X-Spam-Status: No, score=-2.4 required=5.0 tests=AWL,BAYES_00,
-	UNPARSEABLE_RELAY autolearn=ham version=3.1.4
-X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
-	sequoia.sous-sol.org
+	id S1750961AbXDNIz3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 04:55:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753058AbXDNIz3
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 04:55:29 -0400
+Received: from smtpq1.tilbu1.nb.home.nl ([213.51.146.200]:46267 "EHLO
+	smtpq1.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750961AbXDNIz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2007 04:55:28 -0400
+Received: from [213.51.146.190] (port=43289 helo=smtp1.tilbu1.nb.home.nl)
+	by smtpq1.tilbu1.nb.home.nl with esmtp (Exim 4.30)
+	id 1Hce2Z-0005DW-B1; Sat, 14 Apr 2007 10:55:27 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:40097 helo=[192.168.0.3])
+	by smtp1.tilbu1.nb.home.nl with esmtp (Exim 4.30)
+	id 1Hce2V-0004DN-9Z; Sat, 14 Apr 2007 10:55:23 +0200
+User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
+In-Reply-To: <20070414083410.GU6602@sequoia.sous-sol.org>
+X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
+X-AtHome-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44449>
 
-* Rene Herman (rene.herman@gmail.com) wrote:
-> Stumbling around with git here. I'd like to use git to efficiently track 
-> the current -stable as well as -current. Say, my local tree is a clone of 
-> Linus current:
+On 04/14/2007 10:34 AM, Chris Wright wrote:
+
+> I've already put a tree like this up on kernel.org.  The master branch
+> is Linus' tree, and there's branches for each of the stable releases
+> called linux-2.6.[12-20].y (I didn't add 2.6.11.y).
 > 
-> git clone \ 
-> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git local
-> 
-> I then branch off a 2.6.20 branch:
-> 
-> cd local
-> git checkout -b v2.6.20 v2.6.20
-> 
-> to now update to the current -stable I could do:
-> 
-> git pull \ 
-> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.20.y.git
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6-stable.git;a=summary
 
-I've already put a tree like this up on kernel.org.  The master branch
-is Linus' tree, and there's branches for each of the stable releases
-called linux-2.6.[12-20].y (I didn't add 2.6.11.y).
+I see, thank you; that sounds like a good "master" repo to clone then.
 
-http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6-stable.git;a=summary
-
-> each time that a new -stable is released. Rather though, I'd like a simple 
-> "git pull" to do this while on this branch while a "git pull" while back on 
-> the master branch pulls from the originally cloned Linus repo again.
-
-You have to be careful with pull.  It will always want to merge onto your
-current branch.
-
-thanks,
--chris
+Rene.
