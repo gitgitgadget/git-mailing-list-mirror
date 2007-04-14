@@ -1,95 +1,90 @@
-From: Seth Falcon <sethfalcon@gmail.com>
-Subject: git-svn failure when symlink added in svn
-Date: Fri, 13 Apr 2007 23:41:43 -0700
-Message-ID: <m2647zh2zc.fsf@gmail.com>
+From: Rene Herman <rene.herman@gmail.com>
+Subject: Re: GIT and the current -stable
+Date: Sat, 14 Apr 2007 09:13:33 +0200
+Message-ID: <46207F1D.3010302@gmail.com>
+References: <46206842.80203@gmail.com> <7vfy73bhik.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Apr 14 08:41:41 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+	Greg KH <greg@kroah.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1161137AbXDNHPA@vger.kernel.org Sat Apr 14 09:15:42 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1161137AbXDNHPA@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hcbx6-0004ei-Gv
-	for gcvg-git@gmane.org; Sat, 14 Apr 2007 08:41:40 +0200
+	id 1HccU0-0000vz-1h
+	for glk-linux-kernel-3@gmane.org; Sat, 14 Apr 2007 09:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030812AbXDNGlY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 02:41:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965407AbXDNGlY
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 02:41:24 -0400
-Received: from nz-out-0506.google.com ([64.233.162.231]:55598 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965356AbXDNGlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 02:41:23 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so924811nze
-        for <git@vger.kernel.org>; Fri, 13 Apr 2007 23:41:23 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:to:cc:subject:from:date:message-id:user-agent:mime-version:content-type;
-        b=ANgBvAKVaqfXd1ZyGM/g2F4tnw95ddO+mCYedlN4bdqXNfH0S3ZRMOpUutrrBAguU/VOoDIjCXOHjPxS/hdV2zbueWmt/4hTBM60ouPEkxCxU6vcGNwTa/kwz/xzQRyykjfStmfnyF/PTF1pCOxiaTL6G6NrIB55HgAe3srE+1E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:to:cc:subject:from:date:message-id:user-agent:mime-version:content-type;
-        b=WimKLgn8MDOxnZymhpgUxaUKEPUfDQWJwsuh5mbYmysajeOU520i/6im/LQCFR+FEgvALymAN2waKPN+6qVlh72BMByQBcul5kR6y0Ef0mMQf9mPx3Pwf/c0TggoQok07SRDMitDsFY1R4z+i6YobCJWRo4PD0nQBssuJF8khgQ=
-Received: by 10.114.181.1 with SMTP id d1mr1259017waf.1176532882757;
-        Fri, 13 Apr 2007 23:41:22 -0700 (PDT)
-Received: from ziti ( [24.19.44.95])
-        by mx.google.com with ESMTP id z15sm2799847pod.2007.04.13.23.41.21;
-        Fri, 13 Apr 2007 23:41:22 -0700 (PDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
-Sender: git-owner@vger.kernel.org
+	id S1161137AbXDNHPA (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sat, 14 Apr 2007 03:15:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161139AbXDNHPA
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Sat, 14 Apr 2007 03:15:00 -0400
+Received: from smtpq2.tilbu1.nb.home.nl ([213.51.146.201]:33044 "EHLO
+	smtpq2.tilbu1.nb.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161137AbXDNHO7 (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Sat, 14 Apr 2007 03:14:59 -0400
+Received: from [213.51.146.189] (port=45055 helo=smtp2.tilbu1.nb.home.nl)
+	by smtpq2.tilbu1.nb.home.nl with esmtp (Exim 4.30)
+	id 1HccTJ-0004y8-JC; Sat, 14 Apr 2007 09:14:57 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:47736 helo=[192.168.0.3])
+	by smtp2.tilbu1.nb.home.nl with esmtp (Exim 4.30)
+	id 1HccTG-0005C2-Oh; Sat, 14 Apr 2007 09:14:54 +0200
+User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
+In-Reply-To: <7vfy73bhik.fsf@assigned-by-dhcp.cox.net>
+X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
+X-AtHome-MailScanner: Found to be clean
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44445>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44446>
 
-Hi,
+On 04/14/2007 08:24 AM, Junio C Hamano wrote:
 
-A few weeks ago I reported a symlink related error with git-svn and
-I've now had a chance to track down a few more details.  The trigger
-seems to be if a file is removed from svn and then later added as a
-symlink.  The error I get is:
+> I think adding these lines to .git/config would do the trick,
+> after you have done the "checkout -b v2.6.20 v2.6.20" step:
+> 
+> [branch "v2.6.20"]
+> 	remote = stable
+> 	merge = refs/heads/master
+> [remote "stable"]
+> 	url = git://git.kernel.org/.../stable/linux-2.6.20.y.git
+> 	fetch = refs/heads/master
+> 
+> provided if stable team forks v2.6.20.y history off of Linus's
+> v2.6.20.
+> 
+> With the above configuration, anytime you say "git pull" while
+> on your v2.6.20 branch will fetch from "stable" and merge their
+> 'master' branch in your current branch (i.e. v2.6.20 branch).
 
-  error: git-checkout-index: unable to create symlink foo.txt (Invalid argument)
+Yes, this does seem to work, thanks. Was thrown of a bit by having named the 
+branch "v2.6.20". GIT and I disagree what it is that I want to happen when I 
+say "git checkout v2.6.20" if v2.6.20 is also a tag on master.
 
-This is from the call to symlink(new, path) in entry.c and it seems
-that new is ''.
+The pull behaviour does not follow further branches:
 
-Here is a recipe to reproduce:
+rene@7ixe4:~/src/linux/local$ git branch
+* 2.6.20
+   master
+rene@7ixe4:~/src/linux/local$ git checkout -b 7ixe4
+Switched to a new branch "7ixe4"
+rene@7ixe4:~/src/linux/local$ git pull
+Warning: No merge candidate found because value of config option
+          "branch.7ixe4.merge" does not match any remote branch fetched.
+No changes.
 
-## First create an svn repository
-  svnadmin create SVN123-repos
-  svn co file:///Users/seth/temp/SVN123-repos SVN123
-  cd SVN123
-  echo 123 > foo.txt
-  svn add foo.txt 
-  svn ci -m "add a file"
+This might in practice not be all bad in fact, and I suppose I understand 
+how to "fix" it along the same lines as above.
 
-## Now mirror using git-svn
-  cd ..
-  mkdir GIT123
-  cd GIT123/
-  git svn init file:///Users/seth/temp/SVN123-repos
-  git svn fetch
+But as happens very frequently with GIT, I get the feeling that I just don't 
+understand how it's all intended to be used. It seems that what I wanted 
+above is not standard? What would be expected use of the stable GIT repo? 
+Just cloning that outright into another repo?
 
-## Next remove and add a file as a symlink
-  cd ..
-  cd SVN123
-  echo 123 > bar.txt
-  svn add bar.txt 
-  svn ci -m"add bar"
-  svn rm foo.txt 
-  svn ci -m "remove foo"
-  ln -s bar.txt foo.txt
-  svn add foo.txt 
-  svn ci -m"add foo as symlink"
+A "GIT WHYTO" from someone with the oversight would be very useful...
 
-## Finally, try to rebase
-  cd ../GIT123/
-  git svn rebase
-
-git version 1.5.1.53.g77e6f
-svn 1.4.0
-
-
-+ seth
+Rene.
