@@ -1,70 +1,56 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: GIT and the current -stable
-Date: Sat, 14 Apr 2007 10:34:20 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704141028460.5473@woody.linux-foundation.org>
-References: <46206842.80203@gmail.com> <7vfy73bhik.fsf@assigned-by-dhcp.cox.net>
+From: "H. Peter Anvin" <hpa@zytor.com>
+Subject: Re: Cygwin and git 1.5.1
+Date: Sat, 14 Apr 2007 10:53:34 -0700
+Message-ID: <4621151E.9070707@zytor.com>
+References: <461BCBC0.2000705@ramsay1.demon.co.uk> <461C134D.8020803@zytor.com> <46210DA4.1090600@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Rene Herman <rene.herman@gmail.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	Greg KH <greg@kroah.com>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 14 19:34:32 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sat Apr 14 19:53:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hcm8u-0008Tx-2O
-	for gcvg-git@gmane.org; Sat, 14 Apr 2007 19:34:32 +0200
+	id 1HcmRe-0006p6-PQ
+	for gcvg-git@gmane.org; Sat, 14 Apr 2007 19:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751635AbXDNRe0 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 13:34:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751922AbXDNRe0
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 13:34:26 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:58267 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751635AbXDNReZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 13:34:25 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3EHYLIs002115
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sat, 14 Apr 2007 10:34:21 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3EHYKuL029416;
-	Sat, 14 Apr 2007 10:34:20 -0700
-In-Reply-To: <7vfy73bhik.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.455 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753232AbXDNRxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 13:53:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbXDNRxv
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 13:53:51 -0400
+Received: from terminus.zytor.com ([192.83.249.54]:42671 "EHLO
+	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753232AbXDNRxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2007 13:53:50 -0400
+Received: from [172.27.0.16] (c-67-180-238-171.hsd1.ca.comcast.net [67.180.238.171])
+	(authenticated bits=0)
+	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l3EHrY5t004747
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 14 Apr 2007 10:53:35 -0700
+User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
+In-Reply-To: <46210DA4.1090600@ramsay1.demon.co.uk>
+X-Virus-Scanned: ClamAV 0.88.7/3091/Sat Apr 14 09:53:57 2007 on terminus.zytor.com
+X-Virus-Status: Clean
+X-Spam-Status: No, score=0.9 required=5.0 tests=AWL,BAYES_00,
+	DATE_IN_FUTURE_48_96,RCVD_IN_NJABL_DUL autolearn=no version=3.1.8
+X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44466>
 
-
-
-On Fri, 13 Apr 2007, Junio C Hamano wrote:
+Ramsay Jones wrote:
 > 
-> I think adding these lines to .git/config would do the trick,
-> after you have done the "checkout -b v2.6.20 v2.6.20" step:
+> Yes, that would work. However, I rejected this solution last time, because
+> I did not want to add a dependency on the C99 header files.
+> Having said that, that ship has probably sailed ... ;-)
 > 
-> [branch "v2.6.20"]
-> 	remote = stable
-> 	merge = refs/heads/master
 
-Please don't do this. Using the same name for a branch as for a tag is 
-madness. Call it "v2.6.20-stable" or anything else, but don't re-use the 
-same naming as for tags.
+If you're using uint32_t and similar types, well, then, you're using 
+<inttypes.h>.  Now, <inttypes.h> can be written up for an old compiler 
+fairly easily.
 
-Sure, git will have some random well-defined order of parsing which one 
-"v2.6.20" actually means in any particular context (usually the tag-name 
-will take precedence, except for contexts where the branchname is 
-required!), and yeah, you can always make things unambiguous by specifying 
-the full name (ie say "[refs/]tags/v2.6.20" when you want to make sure 
-it's unambiguously the tag, not the branch) but it's still guaranteed to 
-cause confusion at *some* level, if only for the user.
-
-So just don't do it. 
-
-		Linus
+	-hpa
