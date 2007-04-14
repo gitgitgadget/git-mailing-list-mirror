@@ -1,91 +1,77 @@
-From: Greg KH <greg@kroah.com>
+From: Chris Wright <chrisw@sous-sol.org>
 Subject: Re: GIT and the current -stable
-Date: Sat, 14 Apr 2007 00:21:06 -0700
-Message-ID: <20070414072106.GA6344@kroah.com>
-References: <46206842.80203@gmail.com> <7vfy73bhik.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 14 Apr 2007 01:34:10 -0700
+Message-ID: <20070414083410.GU6602@sequoia.sous-sol.org>
+References: <46206842.80203@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Rene Herman <rene.herman@gmail.com>,
-	Linux Kernel <linux-kernel@vger.kernel.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 14 09:20:46 2007
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+	Greg KH <greg@kroah.com>, git@vger.kernel.org
+To: Rene Herman <rene.herman@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 10:35:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HccYv-0002oV-AK
-	for gcvg-git@gmane.org; Sat, 14 Apr 2007 09:20:45 +0200
+	id 1Hcdiz-0004qx-5i
+	for gcvg-git@gmane.org; Sat, 14 Apr 2007 10:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161139AbXDNHUl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 03:20:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161140AbXDNHUl
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 03:20:41 -0400
-Received: from canuck.infradead.org ([209.217.80.40]:50936 "EHLO
-	canuck.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161139AbXDNHUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 03:20:40 -0400
-Received: from dsl093-040-174.pdx1.dsl.speakeasy.net ([66.93.40.174] helo=localhost)
-	by canuck.infradead.org with esmtpsa (Exim 4.63 #1 (Red Hat Linux))
-	id 1HccYn-00048t-98; Sat, 14 Apr 2007 03:20:37 -0400
+	id S932185AbXDNIeo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 04:34:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965426AbXDNIeo
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 04:34:44 -0400
+Received: from 216-99-217-87.dsl.aracnet.com ([216.99.217.87]:55984 "EHLO
+	sous-sol.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932185AbXDNIen (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2007 04:34:43 -0400
+Received: from sous-sol.org (localhost.localdomain [127.0.0.1])
+	by sous-sol.org (8.13.8/8.13.7) with ESMTP id l3E8YAsD032467;
+	Sat, 14 Apr 2007 01:34:10 -0700
+Received: (from chrisw@localhost)
+	by sous-sol.org (8.13.8/8.13.7/Submit) id l3E8YAre032466;
+	Sat, 14 Apr 2007 01:34:10 -0700
 Content-Disposition: inline
-In-Reply-To: <7vfy73bhik.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.14 (2007-02-12)
+In-Reply-To: <46206842.80203@gmail.com>
+User-Agent: Mutt/1.4.2.2i
+X-Spam-Status: No, score=-2.4 required=5.0 tests=AWL,BAYES_00,
+	UNPARSEABLE_RELAY autolearn=ham version=3.1.4
+X-Spam-Checker-Version: SpamAssassin 3.1.4 (2006-07-25) on 
+	sequoia.sous-sol.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44448>
 
-On Fri, Apr 13, 2007 at 11:24:19PM -0700, Junio C Hamano wrote:
-> Rene Herman <rene.herman@gmail.com> writes:
+* Rene Herman (rene.herman@gmail.com) wrote:
+> Stumbling around with git here. I'd like to use git to efficiently track 
+> the current -stable as well as -current. Say, my local tree is a clone of 
+> Linus current:
 > 
-> > Stumbling around with git here. I'd like to use git to efficiently
-> > track the current -stable as well as -current. Say, my local tree is a
-> > clone of Linus current:
-> >
-> > git clone \
-> > git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-> > local
-> >
-> > I then branch off a 2.6.20 branch:
-> >
-> > cd local
-> > git checkout -b v2.6.20 v2.6.20
-> >
-> > to now update to the current -stable I could do:
-> >
-> > git pull \
-> > git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.20.y.git
+> git clone \ 
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git local
 > 
-> I think adding these lines to .git/config would do the trick,
-> after you have done the "checkout -b v2.6.20 v2.6.20" step:
+> I then branch off a 2.6.20 branch:
 > 
-> [branch "v2.6.20"]
-> 	remote = stable
-> 	merge = refs/heads/master
-> [remote "stable"]
-> 	url = git://git.kernel.org/.../stable/linux-2.6.20.y.git
-> 	fetch = refs/heads/master
+> cd local
+> git checkout -b v2.6.20 v2.6.20
 > 
-> provided if stable team forks v2.6.20.y history off of Linus's
-> v2.6.20.
+> to now update to the current -stable I could do:
+> 
+> git pull \ 
+> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.20.y.git
 
-Yes, we do branch off Linus's tree for each of the different .y
-releases.
+I've already put a tree like this up on kernel.org.  The master branch
+is Linus' tree, and there's branches for each of the stable releases
+called linux-2.6.[12-20].y (I didn't add 2.6.11.y).
 
-Some people have asked us to keep all of the different .y branches in
-the same git tree, but for now we have been using different repositories
-on kernel.org to keep things simpler for the majority of people who do
-not fully understand how to use the branching features of git (myself
-included in that category at times, I've messed up merging to different
-branches too many times...)
+http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6-stable.git;a=summary
 
-> With the above configuration, anytime you say "git pull" while
-> on your v2.6.20 branch will fetch from "stable" and merge their
-> 'master' branch in your current branch (i.e. v2.6.20 branch).
+> each time that a new -stable is released. Rather though, I'd like a simple 
+> "git pull" to do this while on this branch while a "git pull" while back on 
+> the master branch pulls from the originally cloned Linus repo again.
 
-That's really cool, thanks for pointing out how to do it.
+You have to be careful with pull.  It will always want to merge onto your
+current branch.
 
 thanks,
-
-greg k-h
+-chris
