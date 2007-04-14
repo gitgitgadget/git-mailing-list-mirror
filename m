@@ -1,71 +1,149 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFD] Strange patch formats (aka tricks with unified diffs)..
-Date: Sat, 14 Apr 2007 06:09:23 -0400
-Message-ID: <20070414100923.GA6546@sigill.intra.peff.net>
-References: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org> <17951.6252.457936.428919@cargo.ozlabs.ibm.com> <46a038f90704122307i76f96029n75425410bc40ad82@mail.gmail.com> <7v3b34hjdh.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.64.0704141051350.18846@racer.site> <7vbqhrb7r2.fsf@assigned-by-dhcp.cox.net>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: GIT and the current -stable
+Date: Sat, 14 Apr 2007 13:56:00 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070414115600.GA10995@informatik.uni-freiburg.de>
+References: <46206842.80203@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sat Apr 14 12:09:38 2007
+Content-Type: multipart/mixed; boundary="UugvWAfsgieZRqgk"
+Content-Transfer-Encoding: 8bit
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
+	Greg KH <greg@kroah.com>, git@vger.kernel.org
+To: Rene Herman <rene.herman@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Apr 14 13:56:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcfCM-0000rM-1o
-	for gcvg-git@gmane.org; Sat, 14 Apr 2007 12:09:38 +0200
+	id 1Hcgrc-0001xp-PK
+	for gcvg-git@gmane.org; Sat, 14 Apr 2007 13:56:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754206AbXDNKJ2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 06:09:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754207AbXDNKJ2
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 06:09:28 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4863 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754206AbXDNKJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 06:09:28 -0400
-Received: (qmail 5169 invoked from network); 14 Apr 2007 10:10:09 -0000
-Received: from sigill.intra.peff.net (10.0.0.7)
-  by peff.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 14 Apr 2007 10:10:09 -0000
-Received: (qmail 6611 invoked by uid 1000); 14 Apr 2007 10:09:23 -0000
+	id S1161187AbXDNL4H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 07:56:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965522AbXDNL4G
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 07:56:06 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:48315 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S964792AbXDNL4F (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2007 07:56:05 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.66)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1HcgrL-0003Ot-PX; Sat, 14 Apr 2007 13:56:03 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l3EBu1rZ011650;
+	Sat, 14 Apr 2007 13:56:01 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l3EBu08d011649;
+	Sat, 14 Apr 2007 13:56:00 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Rene Herman <rene.herman@gmail.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Greg KH <greg@kroah.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vbqhrb7r2.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <46206842.80203@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44457>
-
-On Sat, Apr 14, 2007 at 02:55:13AM -0700, Junio C Hamano wrote:
-
-> One sensible behaviour would be to show exactly the same output
-> lines as the regular output, but color-code only the words that
-> changed.  E.g (the words are capitalized to illustrate instead
-> of colored here):
-
-That works great for highlighting a small change between two very
-similar lines (and I think that is one use of --color-words). However,
-it's terrible for the other use of color words, which is showing changes
-which are not well-adapted to line oriented diffs (such as flowed text).
-
-Try this:
-
-cat >orig <<EOF
-this is a paragraph that has
-some text in it and is wrapped
-at 30 characters
-EOF
-
-cat >rewrapped <<EOF
-this is yet another paragraph
-that has some text in it and
-is wrapped at 30 characters
-EOF
-
-git-diff --color orig rewrapped
-git-diff --color-words orig rewrapped
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44458>
 
 
-I think one behavior is best for one situation, and the other behavior
-for another situation. Perhaps there is room for two modes?
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
--Peff
+Hello Rene,
+
+Rene Herman wrote:
+> each time that a new -stable is released. Rather though, I'd like a simple 
+> "git pull" to do this while on this branch while a "git pull" while back on 
+> the master branch pulls from the originally cloned Linus repo again.
+> 
+> Is this possible? Do I want it to be? Comments like "work like this 
+> instead" welcome as well; figuring out what the heck it is that I want from 
+> git seems to be one of the most difficult questions to answer...
+Chris' mail made that somehow superfluous but anyhow.  I have a Python
+script to update my Linux tree.  It's attached.
+
+It automatically adds
+git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.x.y as a
+remote as soon as v2.6.x is seen in Linus' repo and then fetches 2.6.16,
+2.6.(last - 1) and 2.6.last.  If you want to fetch all, change 
+
+	for stable in (16, last_stable - 1, last_stable):
+
+in
+
+	for stable in xrange(16, last_stable + 1):
+
+The location of the repo is hardcoded to $HOME/gsrc/linux-2.6, but I
+think everyone with a bit of intuition should be able to change that ...
+
+So it's not a "git pull" for me, but "update-linux".
+
+Best regards
+Uwe
+
+-- 
+Uwe Kleine-König
+
+main(){char*a="main(){char*a=%c%s%c;printf(a,34,a,34%c";printf(a,34,a,34
+,10);a=",10);a=%c%s%c;printf(a,34,a,34,10);}%c";printf(a,34,a,34,10);}
+
+--UugvWAfsgieZRqgk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=update-linux
+
+#! /usr/bin/env python
+
+import os, re, subprocess, sys
+
+silent = False
+
+git_dir = os.path.join(os.getenv('HOME'), 'gsrc', 'linux-2.6', '.git')
+os.putenv('GIT_DIR', git_dir)
+
+devnull = open('/dev/null', 'w', 0)
+if silent:
+  subprocess_stdout = devnull
+else:
+  subprocess_stdout = None
+
+if not silent:
+  print 'fetch origin'
+subprocess.call(['git-fetch', 'origin'], stdout=subprocess_stdout)
+
+sp_describe = subprocess.Popen(['git-describe', 'origin'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+sp_describe_stdin, sp_describe_stderr = sp_describe.communicate()
+
+re_linuxver = re.compile('v2\.6\.(?P<minor>\d+)(?P<stable>\.\d+)?(?P<rc>-rc\d+)?(?P<git>-g[0-9a-fA-F]+)?')
+mo = re_linuxver.match(sp_describe_stdin)
+
+if not mo:
+  print 'cannot parse version of origin\'s HEAD'
+  sys.exit(1)
+
+modict = mo.groupdict()
+
+if modict['rc'] and not modict['stable']:
+  last_stable = int(modict['minor']) - 1
+else:
+  last_stable = int(modict['minor'])
+
+for stable in (16, last_stable - 1, last_stable):
+  if subprocess.call(['git', 'repo-config', 'remote.v2.6.%d.y.url' % stable], stdout=devnull) != 0:
+    subprocess.call(['git', 'repo-config', 'remote.v2.6.%d.y.url' % stable, 'git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.%d.y.git' % stable])
+    subprocess.call(['git', 'repo-config', 'remote.v2.6.%d.y.fetch' % stable, 'refs/heads/master:refs/remotes/stable/v2.6.%d.y' % stable])
+    subprocess.call(['git', 'repo-config', 'branch.v2.6.%d.y.remote' % stable, 'v2.6.%d.y' % stable])
+    subprocess.call(['git', 'repo-config', 'branch.v2.6.%d.y.remote' % stable, 'v2.6.%d.y' % stable])
+    subprocess.call(['git', 'repo-config', 'branch.v2.6.%d.y.merge' % stable, 'refs/heads/master'])
+
+  if not silent:
+    print 'fetch v2.6.%d.y' % stable
+  subprocess.call(['git-fetch', 'v2.6.%d.y' % stable], stdout=subprocess_stdout)
+
+--UugvWAfsgieZRqgk--
