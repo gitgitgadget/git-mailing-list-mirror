@@ -1,56 +1,59 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Cygwin and git 1.5.1
-Date: Sat, 14 Apr 2007 10:53:34 -0700
-Message-ID: <4621151E.9070707@zytor.com>
-References: <461BCBC0.2000705@ramsay1.demon.co.uk> <461C134D.8020803@zytor.com> <46210DA4.1090600@ramsay1.demon.co.uk>
+From: "Gerb Stralko" <gerb.stralko@gmail.com>
+Subject: Re: GIT and the current -stable
+Date: Sat, 14 Apr 2007 14:45:53 -0400
+Message-ID: <75b57c110704141145r2b371d5dpbcf915973b83789a@mail.gmail.com>
+References: <46206842.80203@gmail.com>
+	 <7vfy73bhik.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0704141028460.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <junkio@cox.net>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sat Apr 14 19:53:57 2007
+Cc: "Junio C Hamano" <junkio@cox.net>,
+	"Rene Herman" <rene.herman@gmail.com>,
+	"Linux Kernel" <linux-kernel@vger.kernel.org>,
+	"Greg KH" <greg@kroah.com>, git@vger.kernel.org
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Apr 14 20:46:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcmRe-0006p6-PQ
-	for gcvg-git@gmane.org; Sat, 14 Apr 2007 19:53:55 +0200
+	id 1HcnG3-0007f5-NV
+	for gcvg-git@gmane.org; Sat, 14 Apr 2007 20:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753232AbXDNRxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 13:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbXDNRxv
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 13:53:51 -0400
-Received: from terminus.zytor.com ([192.83.249.54]:42671 "EHLO
-	terminus.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232AbXDNRxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 13:53:50 -0400
-Received: from [172.27.0.16] (c-67-180-238-171.hsd1.ca.comcast.net [67.180.238.171])
-	(authenticated bits=0)
-	by terminus.zytor.com (8.13.8/8.13.7) with ESMTP id l3EHrY5t004747
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 14 Apr 2007 10:53:35 -0700
-User-Agent: Thunderbird 1.5.0.10 (X11/20070302)
-In-Reply-To: <46210DA4.1090600@ramsay1.demon.co.uk>
-X-Virus-Scanned: ClamAV 0.88.7/3091/Sat Apr 14 09:53:57 2007 on terminus.zytor.com
-X-Virus-Status: Clean
-X-Spam-Status: No, score=0.9 required=5.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_48_96,RCVD_IN_NJABL_DUL autolearn=no version=3.1.8
-X-Spam-Checker-Version: SpamAssassin 3.1.8 (2007-02-13) on terminus.zytor.com
+	id S965105AbXDNSpz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 14:45:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965528AbXDNSpz
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 14:45:55 -0400
+Received: from nz-out-0506.google.com ([64.233.162.224]:22815 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965105AbXDNSpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2007 14:45:54 -0400
+Received: by nz-out-0506.google.com with SMTP id s1so989517nze
+        for <git@vger.kernel.org>; Sat, 14 Apr 2007 11:45:54 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=anBM/P//ZZ6+QUPlvkQciwo5Cc6fBJB+1imWUsKySIjDgKgH/oR4AL8TQCj/rffNtr8lpLjWKjyGLww7NMPdeBSj0XFvXXYJucLj+aws3gtQUxnLttek1xWo3XaV3bN+X2ak9WtfkpMr/S8lda40TSz1HFYMeRmREO0YdC5Ritk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=DRkfFKke3HtvSih4ntWkemf/SaLGV3206VdL/BAKukm/ApflwehVfWK2G/Ifoj2REAP7T22EMpRJL/AxB28cgeYHgohax42N1Kgivfr1IifN38F4D443Y7aO/a5en7JPtDH+TBt1LxdToB4RZPQx5GBkaz5VdWagvy8wL5ou0cg=
+Received: by 10.114.168.1 with SMTP id q1mr1445403wae.1176576353691;
+        Sat, 14 Apr 2007 11:45:53 -0700 (PDT)
+Received: by 10.114.127.11 with HTTP; Sat, 14 Apr 2007 11:45:53 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0704141028460.5473@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44467>
 
-Ramsay Jones wrote:
-> 
-> Yes, that would work. However, I rejected this solution last time, because
-> I did not want to add a dependency on the C99 header files.
-> Having said that, that ship has probably sailed ... ;-)
-> 
+> Please don't do this. Using the same name for a branch as for a tag is
+> madness. Call it "v2.6.20-stable" or anything else, but don't re-use the
+> same naming as for tags.
+>
 
-If you're using uint32_t and similar types, well, then, you're using 
-<inttypes.h>.  Now, <inttypes.h> can be written up for an old compiler 
-fairly easily.
-
-	-hpa
+Yes I have done this before, and it took me awhile to realize what was
+going on.  It caused me some grief, and a few hours of lost time...Of
+course this was back in my earlier days ;)
