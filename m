@@ -1,67 +1,61 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] create_directories: simplify and avoid repeated copying
-Date: Sat, 14 Apr 2007 07:11:14 -0700
-Message-ID: <7vlkgv9hbx.fsf@assigned-by-dhcp.cox.net>
-References: <20070414013003.B0B4C2F1DC3@geert-boschs-computer.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Geert Bosch <bosch@gnat.com>
-X-From: git-owner@vger.kernel.org Sat Apr 14 16:11:24 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: GIT and the current -stable
+Date: Sat, 14 Apr 2007 11:15:00 -0400
+Message-ID: <5A4D6434-3DF2-4CC7-B363-260E5F945F72@silverinsanity.com>
+References: <46206842.80203@gmail.com> <20070414083410.GU6602@sequoia.sous-sol.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Rene Herman <rene.herman@gmail.com>,
+	Linux Kernel <linux-kernel@vger.kernel.org>,
+	Greg KH <greg@kroah.com>, git@vger.kernel.org
+To: Chris Wright <chrisw@sous-sol.org>
+X-From: git-owner@vger.kernel.org Sat Apr 14 17:15:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HciyK-0005s4-6g
-	for gcvg-git@gmane.org; Sat, 14 Apr 2007 16:11:24 +0200
+	id 1Hcjy9-0002RY-F9
+	for gcvg-git@gmane.org; Sat, 14 Apr 2007 17:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030524AbXDNOLP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 10:11:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030584AbXDNOLP
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 10:11:15 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:57856 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030524AbXDNOLP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 10:11:15 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070414141114.NBZD1271.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Sat, 14 Apr 2007 10:11:14 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id n2BE1W00A1kojtg0000000; Sat, 14 Apr 2007 10:11:14 -0400
-In-Reply-To: <20070414013003.B0B4C2F1DC3@geert-boschs-computer.local> (Geert
-	Bosch's message of "Thu, 12 Apr 2007 16:29:10 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752667AbXDNPPM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 11:15:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753137AbXDNPPM
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 11:15:12 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:42014 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752667AbXDNPPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2007 11:15:11 -0400
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id C6CEE1FFC003;
+	Sat, 14 Apr 2007 15:15:06 +0000 (UTC)
+In-Reply-To: <20070414083410.GU6602@sequoia.sous-sol.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44460>
 
-Geert Bosch <bosch@gnat.com> writes:
 
-> Signed-off-by: Geert Bosch <bosch@gnat.com>
-> ---
-> I needed to change the logic of this function a bit for
-> doing some local hacks^Wmodifications and thought it might
-> be a slight improvement/simplification.
-> No change in functionality and passed 'make test'.
+On Apr 14, 2007, at 4:34 AM, Chris Wright wrote:
 
-I like the removal of repeated copying, but I wonder if the
-denser condition is really easier to read.
+> I've already put a tree like this up on kernel.org.  The master branch
+> is Linus' tree, and there's branches for each of the stable releases
+> called linux-2.6.[12-20].y (I didn't add 2.6.11.y).
+>
+> http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6- 
+> stable.git;a=summary
 
-I tried to like it, but I needed to reindent it first, and then
-I needed to read it three times to convince myself that they are
-equivalent.
+Is HEAD for that repo the most recent stable branch, or (as gitweb  
+makes it look) Linus's head.  I'd expect a "-stable" repo to point at  
+the most recent stable commit, not the most recent development  
+commit.  And I'd also expect gitweb's summary page to show the  
+shortlog for HEAd.  One of my assumptions are being broken and I  
+don't like it.  It leaves me all confused...
 
-        if (errno != EEXIST
-            || ((!force || unlink(buf) || mkdir(buf, 0777))
-                && (stat(buf, &st) || !S_ISDIR(st.st_mode))) )
-                die("cannot create directory at %s", buf);
+(I'd just clone your repo and look for myself, but I'm still pulling  
+Linus's tree for the first time and I don't have a fast connection.)
 
-In the end, I managed to convince myself that this denser
-version is doing the same thing as the original, and it is nicer
-to see it in only three lines, I am not sure if it is easier to
-read anymore, judging from the time it took me to reach that
-conclusion...
+~~ Brian
