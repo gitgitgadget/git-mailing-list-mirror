@@ -1,69 +1,84 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Fix 'crlf' attribute semantics.
-Date: Sun, 15 Apr 2007 16:44:00 -0700
-Message-ID: <7vd52519vj.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6qod4wh.fsf@assigned-by-dhcp.cox.net>
-	<200704131033.15751.andyparkins@gmail.com>
-	<7vejmm78qp.fsf@assigned-by-dhcp.cox.net>
-	<7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704141839030.5473@woody.linux-foundation.org>
-	<7vr6qm5r73.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704142103210.5473@woody.linux-foundation.org>
-	<7vr6ql1ben.fsf@assigned-by-dhcp.cox.net>
-	<20070415233722.GA20222@hermes>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: Re: [PATCH] entry.c: Use strerror() to print error info when
+ possible
+Date: Sun, 15 Apr 2007 20:54:33 -0300
+Organization: Mandriva
+Message-ID: <20070415205433.3b475f60@gnut>
+References: <20070415185619.3fa90f3a@gnut>
+	<7v7isd2qq0.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: Tom Prince <tom.prince@ualberta.net>
-X-From: git-owner@vger.kernel.org Mon Apr 16 01:44:10 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 01:55:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdEO8-0007oh-7h
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 01:44:08 +0200
+	id 1HdEZ1-00030p-Vn
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 01:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754091AbXDOXoE (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 19:44:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754094AbXDOXoE
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 19:44:04 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:39618 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754091AbXDOXoB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 19:44:01 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070415234400.LYQC1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 15 Apr 2007 19:44:00 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id nbk01W00o1kojtg0000000; Sun, 15 Apr 2007 19:44:01 -0400
-In-Reply-To: <20070415233722.GA20222@hermes> (Tom Prince's message of "Mon, 16
-	Apr 2007 03:37:22 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754105AbXDOXym (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 19:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754107AbXDOXym
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 19:54:42 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:60589 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754105AbXDOXyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 19:54:40 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 81ED218B6B;
+	Sun, 15 Apr 2007 20:54:39 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at conectiva.com.br
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id WRgI8LzM15iC; Sun, 15 Apr 2007 20:54:37 -0300 (BRT)
+Received: from gnut (unknown [201.21.180.171])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 7072218B67;
+	Sun, 15 Apr 2007 20:54:36 -0300 (BRT)
+In-Reply-To: <7v7isd2qq0.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Claws Mail 2.7.2 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44551>
 
-Tom Prince <tom.prince@ualberta.net> writes:
+Em Sun, 15 Apr 2007 15:54:47 -0700
+Junio C Hamano <junkio@cox.net> escreveu:
 
-<offtopic>Please do not rudely point other people with
-mail-followup-to; I did not want to address this message to
-Linus but wanted to talk to YOU specifically, and you stole a
-few seconds of my time, forcing me to rewrite my To: line
-</offtopic>
+| "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+| writes:
+| 
+| > Signed-off-by: Luiz Fernando N. Capitulino <lcapitulino@mandriva.com.br>
+| > ---
+| >  entry.c |   11 ++++++-----
+| >  1 files changed, 6 insertions(+), 5 deletions(-)
+| >
+| > diff --git a/entry.c b/entry.c
+| > index d72f811..c36c09d 100644
+| > --- a/entry.c
+| > +++ b/entry.c
+| > @@ -19,7 +19,8 @@ static void create_directories(const char *path, struct checkout *state)
+| >  				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
+| >  					continue; /* ok */
+| >  			}
+| > -			die("cannot create directory at %s", buf);
+| > +			die("cannot create directory at %s (%s)", buf,
+| > +			    strerror(errno));
+| >  		}
+| >  	}
+| >  	free(buf);
+| 
+| This hunk is wrong; stat() you see in the context could have
+| been what failed the last before this die().
 
-> On Sun, Apr 15, 2007 at 04:10:56PM -0700, Junio C Hamano wrote:
->> Earlier we said 'crlf lets the path go through core.autocrlf
->> process while !crlf disables it altogether'.  This fixes the
->> semantics to:
->
-> This change means there is no way to enable the automatic heuristics for a
-> specific pattern once it has been disable for a more generic pattern. Would it
-> make sense to make the attributes more than simply boolean?
+ You right, will try to read the code more carefully before
+patching.
 
-I do not think that is a problem in practice.  Do not set
-something to "false" explicitly with a generic pattern, if you
-might want to override it.
+| I do not think other places you patched do not share the issue.
+
+ Other places seems ok, I'll review and re-send along with other
+patches I'm working on.
+
+ Thanks a lot for the feedback.
