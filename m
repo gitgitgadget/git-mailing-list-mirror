@@ -1,71 +1,73 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] entry.c: Use strerror() to print error info when possible
-Date: Mon, 16 Apr 2007 01:00:20 +0200
-Message-ID: <20070415230020.GC4417@steel.home>
-References: <20070415185619.3fa90f3a@gnut>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Document -g (--walk-reflogs) option of git-log
+Date: Sun, 15 Apr 2007 16:04:39 -0700
+Message-ID: <7v3b312q9k.fsf@assigned-by-dhcp.cox.net>
+References: <20070415223606.GB4417@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-X-From: git-owner@vger.kernel.org Mon Apr 16 01:00:37 2007
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 01:04:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdDi0-0001Xh-Ju
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 01:00:36 +0200
+	id 1HdDm0-0002yO-Fw
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 01:04:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754037AbXDOXAX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 19:00:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754045AbXDOXAX
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 19:00:23 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:57572 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754037AbXDOXAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 19:00:22 -0400
-Received: from tigra.home (Fcb1d.f.strato-dslnet.de [195.4.203.29])
-	by post.webmailer.de (klopstock mo46) (RZmta 5.5)
-	with ESMTP id G022c2j3FJLgB1 ; Mon, 16 Apr 2007 01:00:21 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id BDA8B277BD;
-	Mon, 16 Apr 2007 01:00:20 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 25DDBD439; Mon, 16 Apr 2007 01:00:20 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070415185619.3fa90f3a@gnut>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg2oA==
-X-RZG-CLASS-ID: mo07
+	id S1754045AbXDOXEm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 19:04:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754052AbXDOXEl
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 19:04:41 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:59483 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754045AbXDOXEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 19:04:41 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070415230441.LIGX1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 15 Apr 2007 19:04:41 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id nb4f1W00p1kojtg0000000; Sun, 15 Apr 2007 19:04:40 -0400
+In-Reply-To: <20070415223606.GB4417@steel.home> (Alex Riesen's message of
+	"Mon, 16 Apr 2007 00:36:06 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44539>
 
-Luiz Fernando N. Capitulino, Sun, Apr 15, 2007 23:56:19 +0200:
-> 
-> Signed-off-by: Luiz Fernando N. Capitulino <lcapitulino@mandriva.com.br>
+Alex Riesen <raa.lkml@gmail.com> writes:
+
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 > ---
->  entry.c |   11 ++++++-----
->  1 files changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/entry.c b/entry.c
-> index d72f811..c36c09d 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -19,7 +19,8 @@ static void create_directories(const char *path, struct checkout *state)
->  				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
->  					continue; /* ok */
->  			}
-> -			die("cannot create directory at %s", buf);
-> +			die("cannot create directory at %s (%s)", buf,
-> +			    strerror(errno));
+>
+> Complained about on IRC. Thanks DrNick for proofreading and Gitster
+> for patience.
+>
+>  Documentation/git-log.txt |    5 +++++
+>  1 files changed, 5 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+> index 030edaf..96e8a3f 100644
+> --- a/Documentation/git-log.txt
+> +++ b/Documentation/git-log.txt
+> @@ -46,6 +46,11 @@ include::pretty-formats.txt[]
+>  -p::
+>  	Show the change the commit introduces in a patch form.
+>  
+> +-g, \--walk-reflogs::
+> +	Show commits as they were recorded in the reflog. The log contains
+> +	a record about how the tip of a reference was changed.
+> +	See also gitlink:git-ref-log[1].
+> +
+>
+>  <paths>...::
+>  	Show only commits that affect the specified paths.
+>  
+> -- 
+> 1.5.1.1.819.gcfdd2
 
-This errno is not very useful, as it may come from the stat above, and
-you provided no way to figure out what was the syscall (the mkdir or
-the stat) which failed. Also, the errnos of unlink or mkdir just above
-the stat are just lost.
-
-It is not worse than before, but not very much better either, and
-probably confusing. I suggest you just leave this one as it is.
+Thanks.  I'll fix this up with s/ref-log/reflog/.
