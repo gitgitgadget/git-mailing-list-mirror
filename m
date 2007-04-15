@@ -1,76 +1,60 @@
-From: Alan Larkin <nobrow@eircom.net>
-Subject: Re: fatal: Out of memory, malloc failed
-Date: Sun, 15 Apr 2007 20:06:53 +0100
-Message-ID: <462277CD.5020609@eircom.net>
-References: <461FBD02.6050105@eircom.net> <Pine.LNX.4.64.0704131143130.28042@woody.linux-foundation.org>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: Expose subprojects as special files to "git diff" machinery
+Date: Sun, 15 Apr 2007 21:20:35 +0200
+Message-ID: <20070415192035.GA21934@uranus.ravnborg.org>
+References: <Pine.LNX.4.64.0704151100550.5473@woody.linux-foundation.org> <20070415190119.GA21786@uranus.ravnborg.org> <Pine.LNX.4.64.0704151204320.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Apr 15 21:07:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Apr 15 21:19:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdA4E-0001zu-El
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 21:07:18 +0200
+	id 1HdAGN-0006dg-7Q
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 21:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753376AbXDOTGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 15:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753381AbXDOTGr
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 15:06:47 -0400
-Received: from mail02.svc.cra.dublin.eircom.net ([159.134.118.18]:12629 "HELO
-	mail02.svc.cra.dublin.eircom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753376AbXDOTGr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Apr 2007 15:06:47 -0400
-Received: (qmail 89464 messnum 5242090 invoked from network[86.42.230.88/unknown]); 15 Apr 2007 19:06:45 -0000
-Received: from unknown (HELO ?192.168.1.6?) (86.42.230.88)
-  by mail02.svc.cra.dublin.eircom.net (qp 89464) with SMTP; 15 Apr 2007 19:06:45 -0000
-User-Agent: Thunderbird 1.5.0.10 (X11/20070330)
-In-Reply-To: <Pine.LNX.4.64.0704131143130.28042@woody.linux-foundation.org>
+	id S1753377AbXDOTTr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 15:19:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753394AbXDOTTr
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 15:19:47 -0400
+Received: from pasmtpb.tele.dk ([80.160.77.98]:45769 "EHLO pasmtpB.tele.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753377AbXDOTTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 15:19:46 -0400
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpB.tele.dk (Postfix) with ESMTP id 7C58EE30871;
+	Sun, 15 Apr 2007 21:19:45 +0200 (CEST)
+Received: by ravnborg.org (Postfix, from userid 1000)
+	id 58E8F580D2; Sun, 15 Apr 2007 21:20:35 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0704151204320.5473@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44506>
 
-Linus Torvalds wrote:
-> 
-> On Fri, 13 Apr 2007, Alan Larkin wrote:
->> Its not a huge push Im trying to do here (<about 150Mb) but always malloc fails!
-> 
-> Any huge objects?
-> 
-> Also, it might be interesting to run it under gdb, and put a breakpoint on 
-> the "die" function, so that it stops where it runs out of memory. Then. at 
-> that point, you can:
-> 
->  - do a "where" in gdb to see what allocation it is (and ask it how big 
->    it was by printing out the value of "size").
-> 
->    It may be something totally uninteresting (just some random object that 
->    happened to push things over the limit), but statistically, malloc 
->    failures tend to happen to big objects, and sometimes just because 
->    somebody needed a huge area that won't fit in the virtual address 
->    space.
-> 
->  - check with "ps" what the size of the process is. Maybe you even just 
->    have some process limit set that causes brk/mmap to return failure 
->    earlier than necessary..
-> 
->    (It can also be interesting to look at /proc/<pid>/maps, in case
->    there are big mmaps that fill up the VM etc)
-> 
-> Sometimes it's also a good idea to have a swap file.  You may not even
-> *need* to actually page, but it gives thew VM layer much more freedom,
-> especially if your distro has set the flags to disable memory "overcommit".
-> 
-> 		Linus
+On Sun, Apr 15, 2007 at 12:05:44PM -0700, Linus Torvalds wrote:
 > 
 > 
-
-There were a couple of big files. I removed a 72Mb one (making 47Mb the biggest one left in the
-project) and made the push and it worked. I later pulled the project down to a different machine,
-added the 72Mb file back in, and pushed to the server and it worked. So apparently it's a platform
-specific problem. If anybody's particularly interested I could replicate it under gdb and pass on
-any info, but if not I wont ... job's done, Im happy.
+> On Sun, 15 Apr 2007, Sam Ravnborg wrote:
+> 
+> > >  
+> > > +static int diff_populate_gitlink(struct diff_filespec *s, int size_only)
+> > > +{
+> > > +	int len;
+> > > +	char *data = xmalloc(100);
+> > > +	len = snprintf(data, 100,
+> > > +		"Subproject commit %s\n", sha1_to_hex(s->sha1));
+> > 
+> > In userland I would use a local variable for an array of the size of 100.
+> > I would normally only allocate when we are say 5x bigger.
+> 
+> We're _returning_ the pointer to the caller, so no, we cannot use an 
+> automatic array.
+Do not know how I missed that...
+Thanks,
+	Sam
