@@ -1,95 +1,72 @@
-From: James Bowes <jbowes@dangerouslyinc.com>
-Subject: [PATCH] Document git-check-attr
-Date: Sat, 14 Apr 2007 21:27:20 -0400
-Message-ID: <117660044024-git-send-email-jbowes@dangerouslyinc.com>
-To: git@vger.kernel.org, junkio@cox.net
-X-From: git-owner@vger.kernel.org Sun Apr 15 03:31:33 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] Define a few built-in attribute rules.
+Date: Sat, 14 Apr 2007 18:41:59 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704141839030.5473@woody.linux-foundation.org>
+References: <7vr6qod4wh.fsf@assigned-by-dhcp.cox.net> <200704131033.15751.andyparkins@gmail.com>
+ <7vejmm78qp.fsf@assigned-by-dhcp.cox.net> <7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Apr 15 03:42:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HctaW-0004we-GW
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 03:31:32 +0200
+	id 1Hctkn-0008Fa-Ju
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 03:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751951AbXDOBbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 21:31:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbXDOBbK
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 21:31:10 -0400
-Received: from ms-smtp-01.southeast.rr.com ([24.25.9.100]:51576 "EHLO
-	ms-smtp-01.southeast.rr.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751951AbXDOBbJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2007 21:31:09 -0400
-Received: from localhost (cpe-066-057-086-146.nc.res.rr.com [66.57.86.146])
-	by ms-smtp-01.southeast.rr.com (8.13.6/8.13.6) with ESMTP id l3F1V71T025134;
-	Sat, 14 Apr 2007 21:31:07 -0400 (EDT)
-X-Mailer: git-send-email 1.5.1.1.824.gcdc9-dirty
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
+	id S1752030AbXDOBmF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 21:42:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752225AbXDOBmF
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 21:42:05 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:42882 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752250AbXDOBmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Apr 2007 21:42:04 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3F1g0Is014833
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 14 Apr 2007 18:42:00 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3F1fxd3004146;
+	Sat, 14 Apr 2007 18:41:59 -0700
+In-Reply-To: <7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.955 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44480>
 
-Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
----
- Documentation/cmd-list.perl      |    1 +
- Documentation/git-check-attr.txt |   37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-check-attr.txt
 
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 0381590..443802a 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -84,6 +84,7 @@ git-bundle                              mainporcelain
- git-cat-file                            plumbinginterrogators
- git-checkout-index                      plumbingmanipulators
- git-checkout                            mainporcelain
-+git-check-attr                          purehelpers
- git-check-ref-format                    purehelpers
- git-cherry                              ancillaryinterrogators
- git-cherry-pick                         mainporcelain
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-new file mode 100644
-index 0000000..ceb5195
---- /dev/null
-+++ b/Documentation/git-check-attr.txt
-@@ -0,0 +1,37 @@
-+git-check-attr(1)
-+=================
-+
-+NAME
-+----
-+git-check-attr - Display gitattributes information.
-+
-+
-+SYNOPSIS
-+--------
-+'git-check-attr' attr... [--] pathname...
-+
-+DESCRIPTION
-+-----------
-+For every pathname, this command will list if each attr is 'unspecified',
-+'set', or 'unset' as a gitattribute on that pathname.
-+
-+OPTIONS
-+-------
-+\--::
-+	Interpret all preceding arguments as attributes, and all following
-+	arguments as path names. If not supplied, only the first argument will
-+	be treated as an attribute.
-+
-+
-+Author
-+------
-+Written by Junio C Hamano <junkio@cox.net>
-+
-+Documentation
-+--------------
-+Documentation by James Bowes.
-+
-+GIT
-+---
-+Part of the gitlink:git[7] suite
-+
--- 
-1.5.1.1.824.gcdc9-dirty
+
+On Sat, 14 Apr 2007, Junio C Hamano wrote:
+>
+> This adds an obviously sane pair of default attribute rules as built-ins.
+
+I'm not sure.
+
+> +	"[attr]binary !diff !crlf",
+> +	"* diff crlf",
+
+Why would 
+
+	* diff crlf
+
+be "obviously sane"?
+
+In fact, I'd call it obviously insane.
+
+We do *not* want to default crlf to all files. We want the default to be 
+"automatic crlf depending on content". 
+
+Then, on top of that, you can *explicitly* specify crlf or !crlf on some 
+particular filename pattern bases.
+
+(Side thought - I have to concur with whoever suggested "-" instead of 
+"!". It just reads better, I think)
+
+		Linus
