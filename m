@@ -1,57 +1,87 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Define a few built-in attribute rules.
-Date: Sun, 15 Apr 2007 18:21:05 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704151819390.18846@racer.site>
-References: <7vr6qod4wh.fsf@assigned-by-dhcp.cox.net> <200704131033.15751.andyparkins@gmail.com>
- <7vejmm78qp.fsf@assigned-by-dhcp.cox.net> <7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.64.0704141839030.5473@woody.linux-foundation.org>
- <7vr6qm5r73.fsf@assigned-by-dhcp.cox.net> <7v8xcu5ps7.fsf@assigned-by-dhcp.cox.net>
+Subject: Re: [PATCH] Correct dir.c to compile on Solaris 9
+Date: Sun, 15 Apr 2007 18:25:48 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704151824240.18846@racer.site>
+References: <20070415043328.GA17285@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 15 18:22:43 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Apr 15 18:27:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hd7Uv-0008QI-SA
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 18:22:42 +0200
+	id 1Hd7Zl-0001kn-7x
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 18:27:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753007AbXDOQWX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 12:22:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753066AbXDOQWX
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 12:22:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54412 "HELO mail.gmx.net"
+	id S1753083AbXDOQ1J (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 12:27:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753103AbXDOQ1I
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 12:27:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52888 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752995AbXDOQWW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 12:22:22 -0400
-Received: (qmail invoked by alias); 15 Apr 2007 16:22:20 -0000
+	id S1753083AbXDOQ1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 12:27:04 -0400
+Received: (qmail invoked by alias); 15 Apr 2007 16:27:02 -0000
 Received: from 88-110-140-199.dynamic.dsl.as9105.com (EHLO 88-110-140-199.dynamic.dsl.as9105.com) [88.110.140.199]
-  by mail.gmx.net (mp048) with SMTP; 15 Apr 2007 18:22:20 +0200
+  by mail.gmx.net (mp029) with SMTP; 15 Apr 2007 18:27:02 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX187F1McS6c7G1e5Vv4rMQ/7LaMSugSjpbC4SxvdWg
-	SxaaMj8nbXyKVP
+X-Provags-ID: V01U2FsdGVkX1+9jX9jrYa9pdol7PuBF+pvuX9YtLITy3GnH5ZKhW
+	k9Gbx7q/Pe5kp/
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7v8xcu5ps7.fsf@assigned-by-dhcp.cox.net>
+In-Reply-To: <20070415043328.GA17285@spearce.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44498>
 
 Hi,
 
-On Sat, 14 Apr 2007, Junio C Hamano wrote:
+On Sun, 15 Apr 2007, Shawn O. Pearce wrote:
 
-> [...] if we really wanted to, we could introduce a way to explicitly say 
-> "Even if the contents do not look like text, apply line ending 
-> conversion, always", by redefining the meaning of 'crlf' attribute.
+> The compiler on my Solaris 9 system doesn't understand
+> the array initialization syntax used here in dir.c.
+> 
+> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> ---
+>  dir.c |   11 +++++------
+>  1 files changed, 5 insertions(+), 6 deletions(-)
+> 
+> diff --git a/dir.c b/dir.c
+> index 7426fde..038fd82 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -423,18 +423,17 @@ static int cmp_name(const void *p1, const void *p2)
+>   */
+>  static int simple_length(const char *match)
+>  {
+> -	const char special[256] = {
+> -		[0] = 1, ['?'] = 1,
+> -		['\\'] = 1, ['*'] = 1,
+> -		['['] = 1
+> -	};
+>  	int len = -1;
+>  
+>  	for (;;) {
+>  		unsigned char c = *match++;
+>  		len++;
+> -		if (special[c])
+> +		switch (c) {
+> +		case 0: case '?':
+> +		case '\\': case '*':
+> +		case '[':
+>  			return len;
+> +		}
+>  	}
+>  }
 
-I think it might make more sense to introduce a way to say "do not even 
-check; I _know_ that I want crlf on these".
+You are replacing a table-based check with a switch based, which might be 
+substantially slower (depends on how often cmp_name() is called).
 
-It might show performance improvements on large repos, for example.
+Maybe there is another way to initialize the table (and make it static to 
+begin with)?
 
 Ciao,
 Dscho
