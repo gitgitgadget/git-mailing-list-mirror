@@ -1,63 +1,96 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Expose subprojects as special files to "git diff" machinery
-Date: Sun, 15 Apr 2007 14:03:26 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704151402130.5473@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704151100550.5473@woody.linux-foundation.org>
- <200704152116.26773.andyparkins@gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: Reverting the whole index-base series
+Date: Sun, 15 Apr 2007 14:25:13 -0700
+Message-ID: <7vfy712uva.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0704121533560.4061@woody.linux-foundation.org>
+	<7vbqhp4diw.fsf@assigned-by-dhcp.cox.net>
+	<Pine.LNX.4.64.0704151356450.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 15 23:03:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Apr 15 23:25:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdBsp-0002OA-K7
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 23:03:40 +0200
+	id 1HdCE7-0002Nh-OL
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 23:25:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753958AbXDOVDf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 17:03:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753959AbXDOVDf
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 17:03:35 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:36105 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753958AbXDOVDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 17:03:34 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3FL3RIs025587
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 15 Apr 2007 14:03:27 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3FL3Qaa020330;
-	Sun, 15 Apr 2007 14:03:27 -0700
-In-Reply-To: <200704152116.26773.andyparkins@gmail.com>
-X-Spam-Status: No, hits=-0.453 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753968AbXDOVZQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 17:25:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753970AbXDOVZQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 17:25:16 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:51714 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753968AbXDOVZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 17:25:14 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070415212513.KDFH1257.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 15 Apr 2007 17:25:13 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id nZRD1W00h1kojtg0000000; Sun, 15 Apr 2007 17:25:14 -0400
+In-Reply-To: <Pine.LNX.4.64.0704151356450.5473@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sun, 15 Apr 2007 14:01:28 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44528>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> If "next" and "pu" are the same, and you have "next" checked out, and you 
+> push into "pu", what happens? Since the two branches were the same, the 
+> SHA1 was the same before, so the BASE commit in the index will be the one 
+> that is updated.
 
-On Sun, 15 Apr 2007, Andy Parkins wrote:
-> > 	+++ b/sub-A
-> > 	@@ -1 +1 @@
-> > 	-Subproject commit 2de597b5ad348b7db04bd10cdd38cd81cbc93ab5
-> > 	+Subproject commit e8f11a45c5c6b9e2fec6d136d3fb5aff75393d42
-> 
-> Isn't this dangerous because it looks just like a normal diff with a 
-> file being rewritten, when in truth it is a tree entry record being 
-> rewritten.
+But it does not matter if "pu" was not checked out.  You will be
+building on top of "next" which was not changed.
 
-Well, that's exactly what symlinks do too.
+> The only thing that matters is that if you update the branch that HEAD 
+> points to, and then you'd always need to do something special, but I don't 
+> see that it has anything to do with what the "BASE" commit was.. It's 
+> purely a matter of "what does HEAD point to", independently of the index.
+>
+> But no, I wasn't following that series, so I probably totally 
+> misunderstood what you were going after..
 
-You have to look at the mode to know what the rewriting *means*.
+Could be.
 
-But yeah, I wouldn't object at all to making it an "extended git header" 
-instead (possibly just for subprojects, possibly for symlinks too)
+The issue in short was about:
 
-		Linus
+	$ git checkout $branch
+
+At this point you think your HEAD is at $branch head, and you
+are working towards building a commit that has that commit as
+one of the parents.
+
+Then a gremlin updates the commit HEAD points at.  Maybe
+somebody else pushed into $branch.  Or you had another working
+tree that shares refs (but not index nor HEAD -- perhaps set up
+with contrib/workdir/git-new-workdir) with this repository and
+made a commit there by mistake on the branch.
+
+And you try to make a commit.
+
+	$ git commit
+
+The work you did in your repository were mostly based on the
+contents of the commit you checked out but this "git commit"
+will create a commit on top of something else (i.e. the one the
+gremlin updated to).
+
+To detect this case, we needed to record "which commit are we
+expecting to base the next commit on".  The place to record that
+information does not have to be in the index (I could have
+picked a separate file .git/current-head-commit and stored the
+information there), but the index was a convenient place to do
+so.
+
+So it does not have anything to do with the index, but very much
+about the HEAD.  The problem was about keeping it in sync with
+what really was going on in the repository / working tree.
