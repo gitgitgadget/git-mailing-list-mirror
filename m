@@ -1,100 +1,55 @@
-From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-Subject: [PATCH 02/02] ident.c: Use size_t (instead of int) to store sizes
-Date: Sun, 15 Apr 2007 15:51:29 -0300
-Organization: Mandriva
-Message-ID: <20070415155129.162caa17@gnut>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: Expose subprojects as special files to "git diff" machinery
+Date: Sun, 15 Apr 2007 21:01:19 +0200
+Message-ID: <20070415190119.GA21786@uranus.ravnborg.org>
+References: <Pine.LNX.4.64.0704151100550.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 15 20:51:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Apr 15 21:00:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hd9p9-00055o-4w
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 20:51:43 +0200
+	id 1Hd9xi-0008Cg-KE
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 21:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753296AbXDOSvk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 14:51:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753309AbXDOSvk
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 14:51:40 -0400
-Received: from perninha.conectiva.com.br ([200.140.247.100]:47179 "EHLO
-	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753296AbXDOSvh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 14:51:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 5169018AA6;
-	Sun, 15 Apr 2007 15:51:36 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at conectiva.com.br
-Received: from perninha.conectiva.com.br ([127.0.0.1])
-	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id VK9qh6k78Q8m; Sun, 15 Apr 2007 15:51:32 -0300 (BRT)
-Received: from gnut (unknown [201.21.180.171])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id E9E2318A94;
-	Sun, 15 Apr 2007 15:51:31 -0300 (BRT)
-X-Mailer: Claws Mail 2.7.2 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
+	id S1753370AbXDOTAb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 15:00:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753371AbXDOTAb
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 15:00:31 -0400
+Received: from pasmtpa.tele.dk ([80.160.77.114]:51599 "EHLO pasmtpA.tele.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753370AbXDOTAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 15:00:30 -0400
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpA.tele.dk (Postfix) with ESMTP id 635E1800AC3;
+	Sun, 15 Apr 2007 21:00:29 +0200 (CEST)
+Received: by ravnborg.org (Postfix, from userid 1000)
+	id 28392580D2; Sun, 15 Apr 2007 21:01:19 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0704151100550.5473@woody.linux-foundation.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44503>
 
+>  
+> +static int diff_populate_gitlink(struct diff_filespec *s, int size_only)
+> +{
+> +	int len;
+> +	char *data = xmalloc(100);
+> +	len = snprintf(data, 100,
+> +		"Subproject commit %s\n", sha1_to_hex(s->sha1));
 
-Signed-off-by: Luiz Fernando N. Capitulino <lcapitulino@mandriva.com.br>
----
- ident.c |   14 +++++++-------
- 1 files changed, 7 insertions(+), 7 deletions(-)
+In userland I would use a local variable for an array of the size of 100.
+I would normally only allocate when we are say 5x bigger.
 
-diff --git a/ident.c b/ident.c
-index 454aace..fa267ef 100644
---- a/ident.c
-+++ b/ident.c
-@@ -9,10 +9,10 @@
- 
- static char git_default_date[50];
- 
--static void copy_gecos(const struct passwd *w, char *name, int sz)
-+static void copy_gecos(const struct passwd *w, char *name, size_t sz)
- {
- 	char *src, *dst;
--	int len, nlen;
-+	size_t len, nlen;
- 
- 	nlen = strlen(w->pw_name);
- 
-@@ -49,7 +49,7 @@ static void copy_email(const struct passwd *pw)
- 	 * Make up a fake email address
- 	 * (name + '@' + hostname [+ '.' + domainname])
- 	 */
--	int len = strlen(pw->pw_name);
-+	size_t len = strlen(pw->pw_name);
- 	if (len > sizeof(git_default_email)/2)
- 		die("Your sysadmin must hate you!");
- 	memcpy(git_default_email, pw->pw_name, len);
-@@ -95,9 +95,9 @@ static void setup_ident(void)
- 		datestamp(git_default_date, sizeof(git_default_date));
- }
- 
--static int add_raw(char *buf, int size, int offset, const char *str)
-+static int add_raw(char *buf, size_t size, int offset, const char *str)
- {
--	int len = strlen(str);
-+	size_t len = strlen(str);
- 	if (offset + len > size)
- 		return size;
- 	memcpy(buf + offset, str, len);
-@@ -131,9 +131,9 @@ static int crud(unsigned char c)
-  * Copy over a string to the destination, but avoid special
-  * characters ('\n', '<' and '>') and remove crud at the end
-  */
--static int copy(char *buf, int size, int offset, const char *src)
-+static int copy(char *buf, size_t size, int offset, const char *src)
- {
--	int i, len;
-+	size_t i, len;
- 	unsigned char c;
- 
- 	/* Remove crud from the beginning.. */
--- 
-1.5.1.1.86.gfd56-dirty
+I wonder if there is a specific reason why you decided upon xmalloc here?
+I see no problem in using xmalloc but wonder if there is something I
+should start to do differently??
+
+	Sam
