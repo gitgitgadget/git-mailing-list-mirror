@@ -1,62 +1,95 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 2/2] Define a few built-in attribute rules.
-Date: Sat, 14 Apr 2007 18:03:39 -0700
-Message-ID: <7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6qod4wh.fsf@assigned-by-dhcp.cox.net>
-	<200704131033.15751.andyparkins@gmail.com>
-	<7vejmm78qp.fsf@assigned-by-dhcp.cox.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 15 03:03:45 2007
+From: James Bowes <jbowes@dangerouslyinc.com>
+Subject: [PATCH] Document git-check-attr
+Date: Sat, 14 Apr 2007 21:27:20 -0400
+Message-ID: <117660044024-git-send-email-jbowes@dangerouslyinc.com>
+To: git@vger.kernel.org, junkio@cox.net
+X-From: git-owner@vger.kernel.org Sun Apr 15 03:31:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hct9b-0004r1-OQ
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 03:03:44 +0200
+	id 1HctaW-0004we-GW
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 03:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751934AbXDOBDl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 21:03:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751951AbXDOBDl
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 21:03:41 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:59383 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751934AbXDOBDk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 21:03:40 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070415010340.YLBS1266.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 14 Apr 2007 21:03:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id nD3f1W00H1kojtg0000000; Sat, 14 Apr 2007 21:03:39 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751951AbXDOBbK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sat, 14 Apr 2007 21:31:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751999AbXDOBbK
+	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 21:31:10 -0400
+Received: from ms-smtp-01.southeast.rr.com ([24.25.9.100]:51576 "EHLO
+	ms-smtp-01.southeast.rr.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751951AbXDOBbJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Apr 2007 21:31:09 -0400
+Received: from localhost (cpe-066-057-086-146.nc.res.rr.com [66.57.86.146])
+	by ms-smtp-01.southeast.rr.com (8.13.6/8.13.6) with ESMTP id l3F1V71T025134;
+	Sat, 14 Apr 2007 21:31:07 -0400 (EDT)
+X-Mailer: git-send-email 1.5.1.1.824.gcdc9-dirty
+X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44479>
 
-This adds an obviously sane pair of default attribute rules as built-ins.
-
-Signed-off-by: Junio C Hamano <junkio@cox.net>
+Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
 ---
- attr.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ Documentation/cmd-list.perl      |    1 +
+ Documentation/git-check-attr.txt |   37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-check-attr.txt
 
-diff --git a/attr.c b/attr.c
-index 3a14df1..9068c2e 100644
---- a/attr.c
-+++ b/attr.c
-@@ -194,6 +194,8 @@ static void free_attr_elem(struct attr_stack *e)
- }
- 
- static const char *builtin_attr[] = {
-+	"[attr]binary !diff !crlf",
-+	"* diff crlf",
- 	NULL,
- };
- 
+diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
+index 0381590..443802a 100755
+--- a/Documentation/cmd-list.perl
++++ b/Documentation/cmd-list.perl
+@@ -84,6 +84,7 @@ git-bundle                              mainporcelain
+ git-cat-file                            plumbinginterrogators
+ git-checkout-index                      plumbingmanipulators
+ git-checkout                            mainporcelain
++git-check-attr                          purehelpers
+ git-check-ref-format                    purehelpers
+ git-cherry                              ancillaryinterrogators
+ git-cherry-pick                         mainporcelain
+diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
+new file mode 100644
+index 0000000..ceb5195
+--- /dev/null
++++ b/Documentation/git-check-attr.txt
+@@ -0,0 +1,37 @@
++git-check-attr(1)
++=================
++
++NAME
++----
++git-check-attr - Display gitattributes information.
++
++
++SYNOPSIS
++--------
++'git-check-attr' attr... [--] pathname...
++
++DESCRIPTION
++-----------
++For every pathname, this command will list if each attr is 'unspecified',
++'set', or 'unset' as a gitattribute on that pathname.
++
++OPTIONS
++-------
++\--::
++	Interpret all preceding arguments as attributes, and all following
++	arguments as path names. If not supplied, only the first argument will
++	be treated as an attribute.
++
++
++Author
++------
++Written by Junio C Hamano <junkio@cox.net>
++
++Documentation
++--------------
++Documentation by James Bowes.
++
++GIT
++---
++Part of the gitlink:git[7] suite
++
 -- 
-1.5.1.1.810.gac3a
+1.5.1.1.824.gcdc9-dirty
