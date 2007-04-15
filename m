@@ -1,134 +1,86 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 2/2] Define a few built-in attribute rules.
-Date: Sat, 14 Apr 2007 19:34:32 -0700
-Message-ID: <7v8xcu5ps7.fsf@assigned-by-dhcp.cox.net>
-References: <7vr6qod4wh.fsf@assigned-by-dhcp.cox.net>
-	<200704131033.15751.andyparkins@gmail.com>
-	<7vejmm78qp.fsf@assigned-by-dhcp.cox.net>
-	<7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704141839030.5473@woody.linux-foundation.org>
-	<7vr6qm5r73.fsf@assigned-by-dhcp.cox.net>
+Date: Sat, 14 Apr 2007 21:30:37 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704142103210.5473@woody.linux-foundation.org>
+References: <7vr6qod4wh.fsf@assigned-by-dhcp.cox.net> <200704131033.15751.andyparkins@gmail.com>
+ <7vejmm78qp.fsf@assigned-by-dhcp.cox.net> <7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.64.0704141839030.5473@woody.linux-foundation.org>
+ <7vr6qm5r73.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Apr 15 04:34:54 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Apr 15 06:31:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HcuZq-0007i1-6v
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 04:34:54 +0200
+	id 1HcwOC-0001Bu-WB
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 06:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752259AbXDOCee (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sat, 14 Apr 2007 22:34:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752361AbXDOCee
-	(ORCPT <rfc822;git-outgoing>); Sat, 14 Apr 2007 22:34:34 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:54822 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752259AbXDOCee (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Apr 2007 22:34:34 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070415023433.ZILJ1268.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 14 Apr 2007 22:34:33 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id nEaY1W00b1kojtg0000000; Sat, 14 Apr 2007 22:34:33 -0400
-In-Reply-To: <7vr6qm5r73.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sat, 14 Apr 2007 19:04:00 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751068AbXDOEal (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 00:30:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751648AbXDOEal
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 00:30:41 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:46102 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750894AbXDOEal (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 00:30:41 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3F4UcIs018561
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Sat, 14 Apr 2007 21:30:38 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3F4UbC9006263;
+	Sat, 14 Apr 2007 21:30:37 -0700
+In-Reply-To: <7vr6qm5r73.fsf@assigned-by-dhcp.cox.net>
+X-Spam-Status: No, hits=-0.955 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44485>
 
-Junio C Hamano <junkio@cox.net> writes:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
->
->> Why would 
->>
->> 	* diff crlf
->>
->> be "obviously sane"?
->>
->> In fact, I'd call it obviously insane.
->>
->> We do *not* want to default crlf to all files. We want the default to be 
->> "automatic crlf depending on content". 
->
+
+On Sat, 14 Apr 2007, Junio C Hamano wrote:
+> 
 > You do not have to worry.
->
+
+I do.
+
 > That's how "crlf" is defined.  Paths you explicitly say !crlf
 > will _not_ go through the existing core.autocrlf mechanism.
->
-> "* crlf" just says, by default everybody is subject to core.autocrlf,
-> and on sane platforms, core.autocrlf is by default off, hence you will
-> not get LF <-> CRLF applied.
 
-Having said that, if we really wanted to, we could introduce a
-way to explicitly say "Even if the contents do not look like
-text, apply line ending conversion, always", by redefining the
-meaning of 'crlf' attribute.
+That's broken.
 
-But I do not know if that makes much sense.  Being able to turn
-_off_ would be a good thing because a particular file that looks
-like CRLF terminated text might not be text.  But the other way
-around?  IOW, I do not think of a case where a file that does
-not even look like a text wants CRLF conversion.
+It should be:
 
----
+ - "crlf": always do crlf.
+ - "!crlf": never do crlf.
+ - no attrbute: guess.
 
-diff --git a/convert.c b/convert.c
-index 20c744a..f9e5d63 100644
---- a/convert.c
-+++ b/convert.c
-@@ -191,7 +191,7 @@ static void setup_crlf_check(struct git_attr_check *check)
- 	check->attr = attr_crlf;
- }
- 
--static int git_path_is_binary(const char *path)
-+static int git_path_check_crlf(const char *path)
- {
- 	struct git_attr_check attr_crlf_check;
- 
-@@ -202,20 +202,31 @@ static int git_path_is_binary(const char *path)
- 	 * disable autocrlf only when crlf attribute is explicitly
- 	 * unset.
- 	 */
--	return (!git_checkattr(path, 1, &attr_crlf_check) &&
--		(0 == attr_crlf_check.isset));
-+	if (!git_checkattr(path, 1, &attr_crlf_check))
-+		return -1;
-+	return attr_crlf_check.isset;
- }
- 
- int convert_to_git(const char *path, char **bufp, unsigned long *sizep)
- {
--	if (git_path_is_binary(path))
-+	switch (git_path_check_crlf(path)) {
-+	case 0:
- 		return 0;
--	return autocrlf_to_git(path, bufp, sizep);
-+	case 1:
-+		return forcecrlf_to_git(path, bufp, sizep);
-+	default:
-+		return autocrlf_to_git(path, bufp, sizep);
-+	}
- }
- 
- int convert_to_working_tree(const char *path, char **bufp, unsigned long *sizep)
- {
--	if (git_path_is_binary(path))
-+	switch (git_path_check_crlf(path)) {
-+	case 0:
- 		return 0;
--	return autocrlf_to_working_tree(path, bufp, sizep);
-+	case 1:
-+		return forcecrlf_to_working_tree(path, bufp, sizep);
-+	default:
-+		return autocrlf_to_working_tree(path, bufp, sizep);
-+	}
- }
+Why? Because quite frankly, it's quite possible that some file really *is* 
+text, even if the content-based guessing doesn't catch it. 
+
+It boils down to a simple truth: if our content-based guessing is so 
+perfect that it never makes mistakes, there's no *point* to having a 
+'crlf' attribute in the first place!
+
+Here's a simple example:
+
+	echo -e '\007Bell!' > bell
+
+and just because we consider the BEL character to be binary, we'll think 
+the file is binary.
+
+Could we add the BEL character? Sure. But that's not the point. The 
+*point* is that the whole and only reason for attributes in the first 
+place is to _override_ guessing.
+
+The guesses should be good enough that hopefully nobody really will ever 
+need attributes. But people do strange things.
+
+			Linus
