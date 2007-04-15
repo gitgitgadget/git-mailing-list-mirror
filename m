@@ -1,140 +1,129 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Weird shallow-tree conversion state, and branches of shallow trees
-Date: Sun, 15 Apr 2007 20:51:31 +0100
-Message-ID: <200704152051.35639.andyparkins@gmail.com>
-References: <20070412005336.GA18378@curie-int.orbis-terrarum.net> <fcaeb9bf0704142257x3761ef2cie3996420b3bcd24a@mail.gmail.com> <Pine.LNX.4.64.0704151115270.5473@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Reverting the whole index-base series
+Date: Sun, 15 Apr 2007 12:56:55 -0700
+Message-ID: <7vbqhp4diw.fsf@assigned-by-dhcp.cox.net>
+References: <Pine.LNX.4.64.0704121533560.4061@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Apr 15 21:52:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Apr 15 21:57:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdAlW-0001We-A0
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 21:52:02 +0200
+	id 1HdAqK-0003NH-Qo
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 21:57:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507AbXDOTvz (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 15:51:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753519AbXDOTvz
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 15:51:55 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:27384 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753507AbXDOTvy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 15:51:54 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so949698uga
-        for <git@vger.kernel.org>; Sun, 15 Apr 2007 12:51:53 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=px82PKqBSO/tr1KG+sf7aLcAt/WKpFcpizBl2jMcC4IaMDwhzwEap8UPeDTy+RdE+kjzf/bEYnw+8dFtTVpqkHvM3rL7lfPF1Q05JIwP3VheSV3AxOUsYe2XnRsCkPDDiyZ/PTxCHFkZKBEaQDkLY8aZa7MsoDFlKRDoPhiCysk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=MVRhe2ZrMbXAE4DfZ7SMTP7/Kwi7j5FZFIgvUhcGw1FkgHXgZlr90F+tkBMy44vUg3DgLMIS2thbqwwz0mOBI+hSWQ4pW8/f87TA3v9qLtxDxBXmZ8RlkQnNcS9W45A9ht75SS8g2zSSB6HZCuseEy4PFkuMgjUDQvMY4SFEAfQ=
-Received: by 10.82.136.4 with SMTP id j4mr7090428bud.1176666712868;
-        Sun, 15 Apr 2007 12:51:52 -0700 (PDT)
-Received: from grissom.local ( [82.0.29.64])
-        by mx.google.com with ESMTP id c25sm10642886ika.2007.04.15.12.51.47;
-        Sun, 15 Apr 2007 12:51:48 -0700 (PDT)
-User-Agent: KMail/1.9.6
-In-Reply-To: <Pine.LNX.4.64.0704151115270.5473@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1753519AbXDOT45 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 15:56:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753521AbXDOT45
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 15:56:57 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:41063 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753519AbXDOT44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 15:56:56 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao101.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070415195655.HKRD1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 15 Apr 2007 15:56:55 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id nXwv1W00H1kojtg0000000; Sun, 15 Apr 2007 15:56:56 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44508>
 
-On Sunday 2007, April 15, Linus Torvalds wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Keyword substitution is just *stupid*. It's an inexcusable
-> braindamage. Don't do it. It leads to all kinds of idiotic problems
-> downstream, and it really doesn't help *anything* except for "but I'm
-> used to it". There are absolutely no valid uses for it.
+> That index base thing is definitely *not* ready for merging into master 
+> yet!
 
-You're right that it can cause problems, but it is certainly not the 
-case that there are no valid uses for it.  I've mentioned it before but 
-I'll say it again, because it is the only feature I miss from 
-subversion and I can't see why it is invalid.
+I have been thinking about the approach using index-base to
+guard against somebody else updating the tip of branch you are
+currently on (let's call that "gremlin updates (to the HEAD)"
+for lack of better wording).  Unlike the earlier cache-tree
+based write-tree optimization, it turns out to be an uphill
+battle to make it an "opt-in" enhancement [*1*].
 
-I keep diagrams for a project in SVG format in the repository, this 
-works very well because SVG is so nicely ASCII.  In the title block of 
-the diagram I put "$Id$", then in subversion, after checking in and 
-updating it got expanded to
+This is primarily because updating the branch tip is not tied
+closely to writing out a commit, and writing out a commit is not
+tied closely to writing out a tree (to be contained in that
+commit) out of the index.
 
- $Id: diagram.svg 148 2002-07-28 21:30:43Z andyp $
+If a command creates a commit that has HEAD as a parent, treats
+what is in the index as derived from HEAD, and/or modifies the
+index and/or HEAD and leaves the index in a state suitable to
+create the next commit out of that has the HEAD commit as a
+parent, in order to make such a command aware of the index-base
+based guard, the rules are:
 
-Now, I print out that diagram and pin it to my wall - sometimes copies 
-of it are given to others.  I do this on a regular basis.  The diagram 
-is big and complicated and all versions of it look very similar.  In 
-short it is very convenient to have the version of the file actually 
-printed on the piece of paper.  This is a piece of paper remember, 
-there is no way to hash the daigram, or even look at the underlying 
-source.  When someone comes to me with a random version of the diagram, 
-I can use that ID to checkout exactly the revision that that diagram 
-refers to.
+ (1) You are relying on the index to be actually based on the
+     HEAD you are going to record as one of the parents of the
+     resulting commit.  Hence, you need to make sure the HEAD
+     agrees with the commit the current index is based on.  The
+     former can be read with 'rev-parse --verify HEAD', and the
+     latter can be read from the BASE extension ('update-index
+     --get-base').
 
-Please explain to me why that is not a valid use.
+     The design goal is not to require everybody to be
+     index-base aware.  So if the index does not record BASE,
+     the check should succeed, assuming the HEAD has not been
+     moved.
 
-> If you want to tag your files somehow, do it in "git archive" when
-> exporting it, but not in the working tree. And realize that once you
-> export it with the stupid keyword expansion, diffs etc will all be
-> corrupted, and will not - AND MUST NOT - apply to the uncorrupted
-> working tree.
+ (2) In order to leave the index in a state suitable to create
+     the next commit out of that has the updated HEAD commit as
+     a parent, you need to tell the next command that performs
+     the check (1) which commit the index is based on.  Use
+     'update-index --set-base' to record the commit you think
+     the index is based on.
 
-All of the problems you describe apply equally to CRLF conversion, and 
-yet there seems to be no problem with implementing that.  In fact the 
-problem there is significantly worse, as it changes every line of the 
-file.
+     The design goal again is not to require everybody to be
+     index-base aware.  Because most basic operations would not
+     usually move HEAD when they update index, read_cache()
+     followed by write_cache() can just keep the base if one is
+     already recorded in the index, but read-tree by default
+     invalidates the base, as any command that makes the index
+     based on a different commit needs to lose the base by
+     default (if the command is updated to be index-base aware,
+     instead of losing the base, it would record the right base,
+     of course).
 
-Now, solving the keyword problem is not simple, obviously, but it's 
-certainly not impossible.  On git-add the expanded tags get unexpanded 
-so $Tag: blah blah blah$ becomes $Tag$; on checkout they get expanded. 
-Similarly while calculating diffs - the diff engine unexpands as it 
-goes so the lines with the keywords in them are not seen as different 
-regardless of the expanded part.
+Updating HEAD commit without changing the index can be done in
+two ways.  Building on top of HEAD (write-tree then commit-tree
+then update-ref), or changing the HEAD commit (using
+symbolic-ref to switch branches).  I do not think there is a
+sane way to make this "opt-in", and that is where recently
+triggered problems come from (applymbox problem was noticed by
+Linus; I have a small patch for contrib/emacs/git.el, git-gui,
+quiltimport, and git-svn).  If we make symbolic-ref and
+update-ref invalidate the base recorded in the index by default
+to avoid false positives, that would make the feature "opt-in",
+but that would defeat the whole point of detecting gremlin
+update, which would update the ref using these exact commands.
 
-Applying diffs from some external source doesn't corrupt anything - 
-because the diff engine is, by definition, going to unexpand the 
-keywords when it compares.
-
-So, someone sends you a diff that has this:
-
-- /* $Id: diagram.svg 148 2002-07-28 21:30:43Z andyp $ */
-+ /* $Id: diagram.svg 149 2002-07-29 20:32:47Z andyp $ */
-
-And you apply it to the working tree - well, that line will be seen as 
-this by the diff engine:
-
-- /* $Id$ */
-+ /* $Id$ */
-
-No change.  Obviously this is entirely optional and would be activated 
-on a per-file basis.  For git it would be even more useful because of 
-all the information actually available.  I'd love to have git-keywords 
-like these:
-
- $Commit: 2bfe3cec92be4f5e3bfc0e71ed560df4a726c07b$
- $Object: b1bd9e46c2bd64e00b671ff5ed512d9c12b53309$
- $Describe: v1.5.1.1-83-g2bfe3ce$
- $Id: cache.h v1.5.1.1-83-g2bfe3ce $
-
-Feelings seem very strong about this; I've seen comments again and again 
-about how braindamaged it is and I just can't see it - please, help me 
-see - what is it that is so utterly broken about it?  I can see that it 
-adds a complication to many parts, but I can't see why it is seen as so 
-evil.
+Which leads me to conclude that the current approach based on
+index-base needs to be rethought.  For now, I'll revert the
+whole index base series from 'next'; git will remember it if we
+need it later ;-).
 
 
+[Footnote]
 
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+*1* Making it an "opt-in" enhancement to optimize write-tree
+    using cache-tree was simpler, as there was only one place
+    that actually writes out the contents of the index.  When
+    the command updates paths with well-defined API implemented
+    in read-cache.c, we can incrementally invalidate the
+    cache-tree we originally read from the index and write the
+    modified cache-tree out to keep write-tree optimized.  When
+    keeping track of cache-tree entries and incrementally
+    invalidating affected paths is more trouble than its worth,
+    on the other hand, we can just invalidate the cache-tree
+    upfront.  So the commands that do not want to bother
+    spending cycles to keep cache-tree up-to-date can easily be
+    prevented from writing out an out-of-sync cache-tree to
+    confuse later write-tree.
