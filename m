@@ -1,77 +1,133 @@
 From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 4/7] gitweb: Add treediff view
-Date: Sun, 15 Apr 2007 22:46:07 +0200
-Message-ID: <1176669971694-git-send-email-mkoegler@auto.tuwien.ac.at>
-References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699713715-git-send-email-mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 2/7] gitweb: Support comparing blobs with different names
+Date: Sun, 15 Apr 2007 22:46:05 +0200
+Message-ID: <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at>
+References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at>
 Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 15 22:46:19 2007
+X-From: git-owner@vger.kernel.org Sun Apr 15 22:46:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdBc2-0003ud-PS
+	id 1HdBc3-0003ud-HV
 	for gcvg-git@gmane.org; Sun, 15 Apr 2007 22:46:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905AbXDOUqP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 16:46:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753907AbXDOUqP
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 16:46:15 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:58491 "EHLO
+	id S1753639AbXDOUqR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 16:46:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753907AbXDOUqR
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 16:46:17 -0400
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:58483 "EHLO
 	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753905AbXDOUqN (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1753803AbXDOUqN (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 15 Apr 2007 16:46:13 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 58D657A4D1A8;
-	Sun, 15 Apr 2007 22:46:12 +0200 (CEST)
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id A0F4A7A4D18F;
+	Sun, 15 Apr 2007 22:46:11 +0200 (CEST)
 X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
 Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
 	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1BLT2bMU3njQ; Sun, 15 Apr 2007 22:46:11 +0200 (CEST)
+	with ESMTP id Ubzds3OZRncK; Sun, 15 Apr 2007 22:46:11 +0200 (CEST)
 Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 14D7E7A4D1A3; Sun, 15 Apr 2007 22:46:11 +0200 (CEST)
+	id 0350E7A4D19F; Sun, 15 Apr 2007 22:46:10 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.5
-In-Reply-To: <11766699713715-git-send-email-mkoegler@auto.tuwien.ac.at>
-Message-Id: <85de402216e82cc0f220df9d27370a33538a232a.1176659094.git.mkoegler@auto.tuwien.ac.at>
+In-Reply-To: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at>
+Message-Id: <a209e0308fc80ef0623baef8dca49e61b7bafaab.1176659094.git.mkoegler@auto.tuwien.ac.at>
 In-Reply-To: <437446e84f3aea71f74fea7ea66db4c1c326fb6b.1176659094.git.mkoegler@auto.tuwien.ac.at>
 References: <437446e84f3aea71f74fea7ea66db4c1c326fb6b.1176659094.git.mkoegler@auto.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-git_treediff supports comparing different trees. A tree can be specified
-either as hash or as base hash and filename.
+Currently, blobdiff can only compare blobs with different file
+names, if no hb/hpb parameters are present.
+
+This patch adds support for comparing two blobs specified by any
+combination of hb/f/h and hpb/fp/hp.
+
+Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 ---
 
-I removed the parent links for now, as they require more discussion.
+I unified all blobdiff variants and added support for comparing blobs
+with different names.
 
-This patch uses empty fp/f for the root directory and does not propagte f to fp.
-Patch 6 adds this.
+If h/hp parameter are missing, I need to generate them with
+git_get_hash_by_path, as the are needed for the html header, which is
+generated before parsing the git-diff output.
 
- gitweb/gitweb.perl |  116 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 116 insertions(+), 0 deletions(-)
+I currently ignore all mode changed, as they are part of the tree. I
+don't think that displaying a mode change message justifes two call to
+git-ls-tree for each blob diff (Currently it only calls git-ls-tree
+for each missing h/hp parameter).
+
+ gitweb/gitweb.perl |  136 ++++++++++++++++------------------------------------
+ 1 files changed, 41 insertions(+), 95 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1551d95..c2dc82d 100755
+index cbd8d03..790041c 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -450,6 +450,8 @@ my %actions = (
- 	"tag" => \&git_tag,
- 	"tags" => \&git_tags,
- 	"tree" => \&git_tree,
-+	"treediff" => \&git_treediff,
-+	"treediff_plain" => \&git_treediff_plain,
- 	"snapshot" => \&git_snapshot,
- 	"object" => \&git_object,
- 	# those below don't need $project
-@@ -4174,6 +4176,120 @@ sub git_commitdiff_plain {
- 	git_commitdiff('plain');
- }
- 
-+sub git_treediff {
-+	my $format = shift || 'html';
+@@ -3902,109 +3902,54 @@ sub git_blobdiff {
+ 	my $fd;
+ 	my @difftree;
+ 	my %diffinfo;
+-	my $expires;
+-
+-	# preparing $fd and %diffinfo for git_patchset_body
+-	# new style URI
+-	if (defined $hash_base && defined $hash_parent_base) {
+-		if (defined $file_name) {
+-			# read raw output
+-			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-				$hash_parent_base, $hash_base,
+-				"--", (defined $file_parent ? $file_parent : ()), $file_name
+-				or die_error(undef, "Open git-diff-tree failed");
+-			@difftree = map { chomp; $_ } <$fd>;
+-			close $fd
+-				or die_error(undef, "Reading git-diff-tree failed");
+-			@difftree
+-				or die_error('404 Not Found', "Blob diff not found");
+-
+-		} elsif (defined $hash &&
+-		         $hash =~ /[0-9a-fA-F]{40}/) {
+-			# try to find filename from $hash
+-
+-			# read filtered raw output
+-			open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-				$hash_parent_base, $hash_base, "--"
+-				or die_error(undef, "Open git-diff-tree failed");
+-			@difftree =
+-				# ':100644 100644 03b21826... 3b93d5e7... M	ls-files.c'
+-				# $hash == to_id
+-				grep { /^:[0-7]{6} [0-7]{6} [0-9a-fA-F]{40} $hash/ }
+-				map { chomp; $_ } <$fd>;
+-			close $fd
+-				or die_error(undef, "Reading git-diff-tree failed");
+-			@difftree
+-				or die_error('404 Not Found', "Blob diff not found");
+-
+-		} else {
+-			die_error('404 Not Found', "Missing one of the blob diff parameters");
+-		}
 +	my $expires = '+1d';
-+
+ 
+-		if (@difftree > 1) {
+-			die_error('404 Not Found', "Ambiguous blob diff specification");
+-		}
+-
+-		%diffinfo = parse_difftree_raw_line($difftree[0]);
+-		$file_parent ||= $diffinfo{'from_file'} || $file_name || $diffinfo{'file'};
+-		$file_name   ||= $diffinfo{'to_file'}   || $diffinfo{'file'};
+-
+-		$hash_parent ||= $diffinfo{'from_id'};
+-		$hash        ||= $diffinfo{'to_id'};
++	$file_parent ||= $file_name;
+ 
+-		# non-textual hash id's can be cached
+-		if ($hash_base =~ m/^[0-9a-fA-F]{40}$/ &&
+-		    $hash_parent_base =~ m/^[0-9a-fA-F]{40}$/) {
+-			$expires = '+1d';
+-		}
 +	# non-textual hash id's can be cached
 +	if (defined $hash && $hash !=~ m/^[0-9a-fA-F]{40}$/) {
 +		$expires = undef;
@@ -82,108 +138,97 @@ index 1551d95..c2dc82d 100755
 +	} elsif (defined $hash_parent_base && $hash_parent_base !=~ m/^[0-9a-fA-F]{40}$/) {
 +		$expires = undef;
 +	}
-+
-+	# we need to prepare $formats_nav before any parameter munging
-+	my $formats_nav;
-+	if ($format eq 'html') {
-+		$formats_nav =
-+			$cgi->a({-href => href(action=>"treediff_plain",
-+								   hash=>$hash, hash_parent=>$hash_parent,
-+								   hash_base=>$hash_base, hash_parent_base=>$hash_parent_base,
-+								   file_name=>$file_name, file_parent=>$file_parent)},
-+					"raw");
-+	}
-+
-+	if (!defined $hash) {
-+		if (!defined $hash_base) {
-+			die_error(undef,'tree parameter missing');
-+		}
-+		$hash = $hash_base;
-+		$hash .= ":".$file_name if (defined $file_name);
-+	}
-+	
-+	if (!defined $hash_parent) {
-+		if (!defined $hash_parent_base) {
-+			die_error(undef,'tree parameter missing');
-+		}
-+		$hash_parent = $hash_parent_base;
-+		$hash_parent .= ":".$file_parent if (defined $file_parent);
-+	}
-+
-+	# read treediff
-+	my $fd;
-+	my @difftree;
-+	if ($format eq 'html') {
-+		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
-+		"--no-commit-id", "--patch-with-raw", "--full-index",
-+		$hash_parent, $hash, "--"
-+			or die_error(undef, "Open git-diff-tree failed");
-+		
-+		while (my $line = <$fd>) {
-+			chomp $line;
-+			# empty line ends raw part of diff-tree output
-+			last unless $line;
-+			push @difftree, $line;
-+		}
-+		
-+	} elsif ($format eq 'plain') {
-+		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
-+		'-p', $hash_parent, $hash, "--"
-+			or die_error(undef, "Open git-diff-tree failed");
-+		
-+	} else {
-+		die_error(undef, "Unknown treediff format");
-+	}
-+
-+	# write header
-+	if ($format eq 'html') {
-+		git_header_html(undef, $expires);
-+		if (defined $hash_base && (my %co = parse_commit($hash_base))) {
-+			git_print_page_nav('','', $hash_base,$co{'tree'},$hash_base, $formats_nav);
-+			git_print_header_div('commit', esc_html($co{'title'}), $hash_base);
-+		} else {
-+			print "<div class=\"page_nav\"><br/>$formats_nav<br/></div>\n";
-+			print "<div class=\"title\">$hash vs $hash_parent</div>\n";
-+		}
-+		print "<div class=\"page_body\">\n";
-+		
-+	} elsif ($format eq 'plain') {
-+		my $filename = basename($project) . "-$hash-$hash_parent.patch";
-+		
-+		print $cgi->header(
-+						   -type => 'text/plain',
-+						   -charset => 'utf-8',
-+						   -expires => $expires,
-+						   -content_disposition => 'inline; filename="' . "$filename" . '"');
-+		
-+		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
-+		print "---\n\n";
+ 
+-		# open patch output
+-		open $fd, "-|", git_cmd(), "diff-tree", '-r', @diff_opts,
+-			'-p', ($format eq 'html' ? "--full-index" : ()),
+-			$hash_parent_base, $hash_base,
+-			"--", (defined $file_parent ? $file_parent : ()), $file_name
+-			or die_error(undef, "Open git-diff-tree failed");
++	# if hash parameter is missing, read it from the commit.
++	if (defined $hash_base && defined $file_name && !defined $hash) {
++		$hash = git_get_hash_by_path($hash_base, $file_name);
+ 	}
+ 
+-	# old/legacy style URI
+-	if (!%diffinfo && # if new style URI failed
+-	    defined $hash && defined $hash_parent) {
+-		# fake git-diff-tree raw output
+-		$diffinfo{'from_mode'} = $diffinfo{'to_mode'} = "blob";
+-		$diffinfo{'from_id'} = $hash_parent;
+-		$diffinfo{'to_id'}   = $hash;
+-		if (defined $file_name) {
+-			if (defined $file_parent) {
+-				$diffinfo{'status'} = '2';
+-				$diffinfo{'from_file'} = $file_parent;
+-				$diffinfo{'to_file'}   = $file_name;
+-			} else { # assume not renamed
+-				$diffinfo{'status'} = '1';
+-				$diffinfo{'from_file'} = $file_name;
+-				$diffinfo{'to_file'}   = $file_name;
+-			}
+-		} else { # no filename given
+-			$diffinfo{'status'} = '2';
+-			$diffinfo{'from_file'} = $hash_parent;
+-			$diffinfo{'to_file'}   = $hash;
+-		}
++	if (defined $hash_parent_base && defined $file_parent && !defined $hash_parent) {
++	    $hash_parent = git_get_hash_by_path($hash_parent_base, $file_parent);
 +	}
 +	
-+	# write patch
-+	if ($format eq 'html') {
-+		git_difftree_body(\@difftree, $hash_base, $hash_parent_base, $file_name, $file_parent);
-+		print "<br/>\n";
-+
-+		git_patchset_body($fd, \@difftree, $hash_base, $hash_parent_base, $file_name, $file_parent);
-+		close $fd;
-+		print "</div>\n"; # class="page_body"
-+		git_footer_html();
-+
-+	} elsif ($format eq 'plain') {
-+		local $/ = undef;
-+		print <$fd>;
-+		close $fd
-+			or print "Reading git-diff-tree failed\n";
++	if (!defined $hash || ! defined $hash_parent) {
++		die_error('404 Not Found', "Missing one of the blob diff parameters");
 +	}
-+}
+ 
+-		# non-textual hash id's can be cached
+-		if ($hash =~ m/^[0-9a-fA-F]{40}$/ &&
+-		    $hash_parent =~ m/^[0-9a-fA-F]{40}$/) {
+-			$expires = '+1d';
+-		}
+ 
+-		# open patch output
+-		open $fd, "-|", git_cmd(), "diff", @diff_opts,
+-			'-p', ($format eq 'html' ? "--full-index" : ()),
+-			$hash_parent, $hash, "--"
+-			or die_error(undef, "Open git-diff failed");
+-	} else  {
+-		die_error('404 Not Found', "Missing one of the blob diff parameters")
+-			unless %diffinfo;
++	# fake git-diff-tree raw output
++	$diffinfo{'from_mode'} = $diffinfo{'to_mode'} = "blob";
++	$diffinfo{'from_id'} = $hash_parent;
++	$diffinfo{'to_id'}   = $hash;
++	if (defined $file_name) {
++		$diffinfo{'status'} = '2';
++		$diffinfo{'from_file'} = $file_parent;
++		$diffinfo{'to_file'}   = $file_name;
++	} else { # no filename given
++		$diffinfo{'status'} = '2';
++		$diffinfo{'from_file'} = $hash_parent;
++		$diffinfo{'to_file'}   = $hash;
+ 	}
+ 
++	# open patch output
++	open $fd, "-|", git_cmd(), "diff", @diff_opts,
++	$hash_parent, $hash, "--"
++		or die_error(undef, "Open git-diff failed");
 +
-+sub git_treediff_plain {
-+	git_treediff('plain');
-+}
-+
- sub git_history {
- 	if (!defined $hash_base) {
- 		$hash_base = git_get_head_hash($project);
+ 	# header
+ 	if ($format eq 'html') {
+ 		my $formats_nav =
+@@ -4028,11 +3973,12 @@ sub git_blobdiff {
+ 		}
+ 
+ 	} elsif ($format eq 'plain') {
++		my $patch_file_name = $file_name || $hash;
+ 		print $cgi->header(
+ 			-type => 'text/plain',
+ 			-charset => 'utf-8',
+ 			-expires => $expires,
+-			-content_disposition => 'inline; filename="' . "$file_name" . '.patch"');
++			-content_disposition => 'inline; filename="' . "$patch_file_name" . '.patch"');
+ 
+ 		print "X-Git-Url: " . $cgi->self_url() . "\n\n";
+ 
 -- 
 1.5.1.1.85.gf1888
