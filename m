@@ -1,72 +1,81 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Weird shallow-tree conversion state, and branches of shallow
- trees
-Date: Sun, 15 Apr 2007 11:18:28 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704151115270.5473@woody.linux-foundation.org>
-References: <20070412005336.GA18378@curie-int.orbis-terrarum.net> 
- <Pine.LNX.4.64.0704141019290.18655@racer.site>  <20070415000330.GG3778@curie-int.orbis-terrarum.net>
-  <Pine.LNX.4.63.0704141655390.31807@qynat.qvtvafvgr.pbz> 
- <20070415020139.GB2689@curie-int.orbis-terrarum.net>  <20070415043146.GB2229@spearce.org>
- <fcaeb9bf0704142257x3761ef2cie3996420b3bcd24a@mail.gmail.com>
+From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
+Subject: [PATCH 01/02] ident.c: Use const qualifier when possible
+Date: Sun, 15 Apr 2007 15:51:10 -0300
+Organization: Mandriva
+Message-ID: <20070415155110.365070d8@gnut>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Apr 15 20:18:41 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Apr 15 20:51:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hd9J8-0001dX-JI
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 20:18:39 +0200
+	id 1Hd9p8-00055o-G2
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 20:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276AbXDOSSf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 14:18:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753285AbXDOSSf
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 14:18:35 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:60302 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753276AbXDOSSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 14:18:34 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3FIITIs021183
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Sun, 15 Apr 2007 11:18:29 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3FIISST017738;
-	Sun, 15 Apr 2007 11:18:28 -0700
-In-Reply-To: <fcaeb9bf0704142257x3761ef2cie3996420b3bcd24a@mail.gmail.com>
-X-Spam-Status: No, hits=-0.455 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1753278AbXDOSvW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 14:51:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753296AbXDOSvW
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 14:51:22 -0400
+Received: from perninha.conectiva.com.br ([200.140.247.100]:47173 "EHLO
+	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753278AbXDOSvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 14:51:21 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id EB35918AA6;
+	Sun, 15 Apr 2007 15:51:19 -0300 (BRT)
+X-Virus-Scanned: amavisd-new at conectiva.com.br
+Received: from perninha.conectiva.com.br ([127.0.0.1])
+	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
+	with LMTP id zjOTDISZ9BK7; Sun, 15 Apr 2007 15:51:15 -0300 (BRT)
+Received: from gnut (unknown [201.21.180.171])
+	by perninha.conectiva.com.br (Postfix) with ESMTP id 4645318A94;
+	Sun, 15 Apr 2007 15:51:14 -0300 (BRT)
+X-Mailer: Claws Mail 2.7.2 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44501>
 
 
+Signed-off-by: Luiz Fernando N. Capitulino <lcapitulino@mandriva.com.br>
+---
+ ident.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-On Sun, 15 Apr 2007, Nguyen Thai Ngoc Duy wrote:
-> 
-> Can we add an attribute like Subversion's svn:keywords? If the
-> attribute is set, we expand keywords when checkout and remove
-> expansion in memory before doing any git operations. It's some kind of
-> I/O filter for working directory access.
-
-NNOOo-oooo...
-
-Keyword substitution is just *stupid*. It's an inexcusable braindamage. 
-Don't do it. It leads to all kinds of idiotic problems downstream, and it 
-really doesn't help *anything* except for "but I'm used to it". There are 
-absolutely no valid uses for it.
-
-If you want to tag your files somehow, do it in "git archive" when 
-exporting it, but not in the working tree. And realize that once you 
-export it with the stupid keyword expansion, diffs etc will all be 
-corrupted, and will not - AND MUST NOT - apply to the uncorrupted working 
-tree.
-
-			Linus
+diff --git a/ident.c b/ident.c
+index bb03bdd..454aace 100644
+--- a/ident.c
++++ b/ident.c
+@@ -9,7 +9,7 @@
+ 
+ static char git_default_date[50];
+ 
+-static void copy_gecos(struct passwd *w, char *name, int sz)
++static void copy_gecos(const struct passwd *w, char *name, int sz)
+ {
+ 	char *src, *dst;
+ 	int len, nlen;
+@@ -43,7 +43,7 @@ static void copy_gecos(struct passwd *w, char *name, int sz)
+ 
+ }
+ 
+-static void copy_email(struct passwd *pw)
++static void copy_email(const struct passwd *pw)
+ {
+ 	/*
+ 	 * Make up a fake email address
+@@ -172,7 +172,7 @@ static int copy(char *buf, int size, int offset, const char *src)
+ 
+ static const char au_env[] = "GIT_AUTHOR_NAME";
+ static const char co_env[] = "GIT_COMMITTER_NAME";
+-static const char *env_hint =
++static const char const *env_hint =
+ "\n"
+ "*** Your name cannot be determined from your system services (gecos).\n"
+ "\n"
+-- 
+1.5.1.1.86.gfd56-dirty
