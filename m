@@ -1,74 +1,59 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Reverting the whole index-base series
-Date: Sun, 15 Apr 2007 16:39:35 -0700
-Message-ID: <7vhcrh1a2w.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704121533560.4061@woody.linux-foundation.org>
-	<7vbqhp4diw.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704151356450.5473@woody.linux-foundation.org>
-	<7vfy712uva.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704151632140.5473@woody.linux-foundation.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: [bug] gitk: wide patches and commit messages break display
+Date: Mon, 16 Apr 2007 11:40:39 +1200
+Message-ID: <46a038f90704151640s773c8989x9aa0990099b06d80@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 16 01:39:41 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 16 01:40:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdEJn-0006He-KS
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 01:39:40 +0200
+	id 1HdEL1-0006jg-NL
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 01:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754076AbXDOXjg (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 19:39:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754085AbXDOXjg
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 19:39:36 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:58688 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754076AbXDOXjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 19:39:36 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070415233937.MDRB1257.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 15 Apr 2007 19:39:37 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id nbfb1W00M1kojtg0000000; Sun, 15 Apr 2007 19:39:35 -0400
-In-Reply-To: <Pine.LNX.4.64.0704151632140.5473@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sun, 15 Apr 2007 16:33:46 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754088AbXDOXkl (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 19:40:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754090AbXDOXkk
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 19:40:40 -0400
+Received: from wx-out-0506.google.com ([66.249.82.229]:3376 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754088AbXDOXkk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 19:40:40 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1425798wxd
+        for <git@vger.kernel.org>; Sun, 15 Apr 2007 16:40:39 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=n7sxKYB96wNGzFJ9yY7Fmseq4kJ9vHSnH6NSqrJsPxZ6SN0AKy1Cc3bcQLIQVcN6Scpd2QzdXcO1qP1wcJ0WVy0kJscb790Z1RhemtyM1tCsPKrIy43vEzs9L9KbdzhAs9AdBNYpXD6r68fOyMMxWbxRHKi8fC1ba1zIDSUoJ68=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=fy6p3Zy5BHJqJnojyTnZVv7JRogGZ8HMJEzqpf2XqzZ/PZXKqrcOWYD5Bxv8mNIwvKDU/YtmuHxZvVLe1NVz5Cp23waUeV0/Ig0qahVN4kkZ+E07fx7L/vrssFnGun+3uX1KvEyml9UF3Y37jB1ipV0MBEIzOj1qeMmY2zvKh5Y=
+Received: by 10.90.105.20 with SMTP id d20mr4466062agc.1176680439539;
+        Sun, 15 Apr 2007 16:40:39 -0700 (PDT)
+Received: by 10.90.52.17 with HTTP; Sun, 15 Apr 2007 16:40:39 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44549>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+I am having 2 different problems with gitk and "wide" patches
 
-> On Sun, 15 Apr 2007, Junio C Hamano wrote:
->> >
->> > But no, I wasn't following that series, so I probably totally 
->> > misunderstood what you were going after..
->> 
->> Could be.
->> 
->> The issue in short was about:
->> 
->> 	$ git checkout $branch
->> 
->> At this point you think your HEAD is at $branch head, and you
->> are working towards building a commit that has that commit as
->> one of the parents.
->> 
->> Then a gremlin updates the commit HEAD points at.
->
-> Ahh, ok. I was kind of expecting that you'd actually do something at 
-> "receive-pack" time instead, not at the next commit. That would also solve 
-> it - just have an option saying "update the working tree when receiving". 
+ - the commit list appears garbled if the first line of the commit
+message is wider than the display window, as it gets wrapped and
+doesn't quite fit in the 1-line-height allowed by the commit listing
 
-I specifically did not want to do that, as it would break
-existing workflow of pushing into a live repository, knowing the
-branch might be checked out at the remote.
+ - the patch view never gets horiz scroll bars, even if the width of
+the commit message and/or patch itself is wider than the canvas
 
-Also, the case of multiple working trees sharing the same refs/
-namespace cannot be solved by trapping receive-pack alone.
+If I find some time to wade through tk source and understand it, I'll
+try to post a patch for the first one. I suspect the second one is a
+bit harder. In any case, someone with a more adept hand at tk might
+find it easier ;-)
+
+
+martin
