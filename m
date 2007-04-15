@@ -1,79 +1,49 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH] Fix 'diff' attribute semantics.
-Date: Sun, 15 Apr 2007 16:12:11 -0700
-Message-ID: <7vlkgt1bck.fsf_-_@assigned-by-dhcp.cox.net>
-References: <7vr6qod4wh.fsf@assigned-by-dhcp.cox.net>
-	<200704131033.15751.andyparkins@gmail.com>
-	<7vejmm78qp.fsf@assigned-by-dhcp.cox.net>
-	<7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704141839030.5473@woody.linux-foundation.org>
-	<7vr6qm5r73.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704142103210.5473@woody.linux-foundation.org>
-	<7vr6ql1ben.fsf@assigned-by-dhcp.cox.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Document -g (--walk-reflogs) option of git-log
+Date: Mon, 16 Apr 2007 01:12:12 +0200
+Message-ID: <20070415231212.GD4417@steel.home>
+References: <20070415223606.GB4417@steel.home> <7v3b312q9k.fsf@assigned-by-dhcp.cox.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <junkio@cox.net>
 X-From: git-owner@vger.kernel.org Mon Apr 16 01:12:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdDtJ-0005Su-Sk
+	id 1HdDtK-0005Su-HM
 	for gcvg-git@gmane.org; Mon, 16 Apr 2007 01:12:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754062AbXDOXMO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	id S1754063AbXDOXMQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 19:12:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754064AbXDOXMP
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 19:12:15 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:57151 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754063AbXDOXMO (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 15 Apr 2007 19:12:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754064AbXDOXMO
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 19:12:14 -0400
-Received: from fed1rmmtao103.cox.net ([68.230.241.43]:53748 "EHLO
-	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754062AbXDOXMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 19:12:12 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao103.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070415231212.KMLI1226.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 15 Apr 2007 19:12:12 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id nbCB1W00l1kojtg0000000; Sun, 15 Apr 2007 19:12:12 -0400
-In-Reply-To: <7vr6ql1ben.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Sun, 15 Apr 2007 16:10:56 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+Received: from tigra.home (Fcb1d.f.strato-dslnet.de [195.4.203.29])
+	by post.webmailer.de (mrclete mo64) (RZmta 5.5)
+	with ESMTP id G058a7j3FMQHeM ; Mon, 16 Apr 2007 01:12:12 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 9406D277BD;
+	Mon, 16 Apr 2007 01:12:12 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 6E99FD439; Mon, 16 Apr 2007 01:12:12 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v3b312q9k.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg2oA==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44543>
 
-This is in the same spirit as the previous one.  Earlier 'diff'
-meant 'do the built-in binary heuristics and disable patch text
-generation based on it' while '!diff' meant 'do not guess, do
-not generate patch text'.  There was no way to say 'do generate
-patch text even when the heuristics says it has NUL in it'.
+Junio C Hamano, Mon, Apr 16, 2007 01:04:39 +0200:
+> > +	See also gitlink:git-ref-log[1].
+> Thanks.  I'll fix this up with s/ref-log/reflog/.
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- * And this is a companion patch to 'crlf' one.
-
- diff.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index e4efb65..dcea405 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1069,8 +1069,9 @@ static int file_is_binary(struct diff_filespec *one)
- 
- 	setup_diff_attr_check(&attr_diff_check);
- 	if (!git_checkattr(one->path, 1, &attr_diff_check) &&
--	    (0 == attr_diff_check.isset))
--		return 1;
-+	    (0 <= attr_diff_check.isset))
-+		return !attr_diff_check.isset;
-+
- 	if (!one->data) {
- 		if (!DIFF_FILE_VALID(one))
- 			return 0;
--- 
-1.5.1.1.815.g3e763
+Oh, thanks.
