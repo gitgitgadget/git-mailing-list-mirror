@@ -1,8 +1,8 @@
 From: Martin Koegler <mkoegler@auto.tuwien.ac.at>
-Subject: [PATCH 3/7] gitweb: support filename prefix in git_patchset_body/git_difftree_body
-Date: Sun, 15 Apr 2007 22:46:06 +0200
-Message-ID: <11766699713715-git-send-email-mkoegler@auto.tuwien.ac.at>
-References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at>
+Subject: [PATCH 6/7] gitweb: pass root directory as empty file parameter
+Date: Sun, 15 Apr 2007 22:46:09 +0200
+Message-ID: <11766699714077-git-send-email-mkoegler@auto.tuwien.ac.at>
+References: <11766699702663-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at> <11766699713715-git-send-email-mkoegler@auto.tuwien.ac.at> <1176669971694-git-send-email-mkoegler@auto.tuwien.ac.at> <1176669971921-git-send-email-mkoegler@auto.tuwien.ac.at>
 Cc: git@vger.kernel.org, Martin Koegler <mkoegler@auto.tuwien.ac.at>
 To: Jakub Narebski <jnareb@gmail.com>
 X-From: git-owner@vger.kernel.org Sun Apr 15 22:46:41 2007
@@ -10,230 +10,102 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdBcO-00044c-5f
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 22:46:40 +0200
+	id 1HdBcP-00044c-2Y
+	for gcvg-git@gmane.org; Sun, 15 Apr 2007 22:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753903AbXDOUqT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 16:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753803AbXDOUqT
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 16:46:19 -0400
-Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:58488 "EHLO
+	id S1753906AbXDOUqU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 16:46:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753803AbXDOUqU
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 16:46:20 -0400
+Received: from thor.auto.tuwien.ac.at ([128.130.60.15]:58496 "EHLO
 	thor.auto.tuwien.ac.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753903AbXDOUqN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 16:46:13 -0400
+	with ESMTP id S1753906AbXDOUqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 16:46:14 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id 3BB517A4D1AA;
+	by thor.auto.tuwien.ac.at (Postfix) with ESMTP id D016A7A4D1A3;
 	Sun, 15 Apr 2007 22:46:12 +0200 (CEST)
 X-Virus-Scanned: Debian amavisd-new at auto.tuwien.ac.at
 Received: from thor.auto.tuwien.ac.at ([127.0.0.1])
 	by localhost (thor.auto.tuwien.ac.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gVOdjdqEihhe; Sun, 15 Apr 2007 22:46:11 +0200 (CEST)
+	with ESMTP id mkZznMt5kQ-x; Sun, 15 Apr 2007 22:46:12 +0200 (CEST)
 Received: by thor.auto.tuwien.ac.at (Postfix, from userid 3001)
-	id 101F67A4D1A1; Sun, 15 Apr 2007 22:46:11 +0200 (CEST)
+	id 2F3AC7A4D1A6; Sun, 15 Apr 2007 22:46:11 +0200 (CEST)
 X-Mailer: git-send-email 1.5.0.5
-In-Reply-To: <11766699701308-git-send-email-mkoegler@auto.tuwien.ac.at>
-Message-Id: <201e30b3f69b40aec4f52ca16a22206f7db1c17d.1176659094.git.mkoegler@auto.tuwien.ac.at>
+In-Reply-To: <1176669971921-git-send-email-mkoegler@auto.tuwien.ac.at>
+Message-Id: <083c27614411a8fd7edafef8f5cba91625c88453.1176659095.git.mkoegler@auto.tuwien.ac.at>
 In-Reply-To: <437446e84f3aea71f74fea7ea66db4c1c326fb6b.1176659094.git.mkoegler@auto.tuwien.ac.at>
 References: <437446e84f3aea71f74fea7ea66db4c1c326fb6b.1176659094.git.mkoegler@auto.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-git_treediff supports comparing subdirectories. As the output of
-git-difftree is missing the path to the compared directories,
-the links in the output would be wrong.
-
-The patch adds two new parameters to add the missing path prefix.
+This patch add the automatic propagation of the file name from f to fp
+for git_treeview, if fp is undefined. To distinguish it from the root
+directory, allow an empty string for this in f/fp.
 
 Signed-off-by: Martin Koegler <mkoegler@auto.tuwien.ac.at>
 ---
 
-I renamed the parameters to to/from_prefix.
+It was requested, that git_treediff should propagate f to fp, if the fp
+parameter is missing. So I created this patch.
 
-Modfifing the file name in $diff would require bigger changes and cause new problems:
-* new output rewriter for plain view needed
-* for modfied files only one file name, but possibly two prefixes
+As any other path could be a valid blob, I use the empty string for
+the root directory.
 
- gitweb/gitweb.perl |   51 ++++++++++++++++++++++++++++++---------------------
- 1 files changed, 30 insertions(+), 21 deletions(-)
+As I personally don't like this, I have split this change into a
+seperate patch:
+
+* As git_treediff is new code, not propagating f->fp would not break any
+  existing urls. 
+
+* The f->fp propagation currently only happens in blobdiff (The only
+  place, where fp is used). Is this enough to make it the standard
+  gitweb parameter convention?
+
+* The root tree is specified in git_tree with an missing f parameter.
+
+* I don't know all security implication, if an empty file name is
+  passed to all existing git function.
+
+So I would like to drop this patch and pass the root directory as
+missing f/fp parameter, which does not allow propagating f to fp.
+
+Comments from other on this topic?
+
+ gitweb/gitweb.perl |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 790041c..1551d95 100755
+index 769e755..e4d3f8f 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -2205,8 +2205,12 @@ sub git_print_tree_entry {
- ## functions printing large fragments of HTML
- 
- sub git_difftree_body {
--	my ($difftree, $hash, $parent) = @_;
-+	my ($difftree, $hash, $parent, $from_prefix, $to_prefix) = @_;
- 	my ($have_blame) = gitweb_check_feature('blame');
-+
-+	$from_prefix = !defined $from_prefix ? '' : $from_prefix.'/';
-+	$to_prefix   = !defined $to_prefix   ? '' : $to_prefix . '/';
-+
- 	print "<div class=\"list_head\">\n";
- 	if ($#{$difftree} > 10) {
- 		print(($#{$difftree} + 1) . " files changed:\n");
-@@ -2249,7 +2253,7 @@ sub git_difftree_body {
- 			$mode_chng   .= "]</span>";
- 			print "<td>";
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--			                             hash_base=>$hash, file_name=>$diff{'file'}),
-+			                             hash_base=>$hash, file_name=>$to_prefix.$diff{'file'}),
- 			              -class => "list"}, esc_path($diff{'file'}));
- 			print "</td>\n";
- 			print "<td>$mode_chng</td>\n";
-@@ -2261,7 +2265,7 @@ sub git_difftree_body {
- 				print " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--			                             hash_base=>$hash, file_name=>$diff{'file'})},
-+			                             hash_base=>$hash, file_name=>$to_prefix.$diff{'file'})},
- 			              "blob");
- 			print "</td>\n";
- 
-@@ -2269,7 +2273,7 @@ sub git_difftree_body {
- 			my $mode_chng = "<span class=\"file_status deleted\">[deleted $from_file_type]</span>";
- 			print "<td>";
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
--			                             hash_base=>$parent, file_name=>$diff{'file'}),
-+			                             hash_base=>$parent, file_name=>$from_prefix.$diff{'file'}),
- 			               -class => "list"}, esc_path($diff{'file'}));
- 			print "</td>\n";
- 			print "<td>$mode_chng</td>\n";
-@@ -2281,15 +2285,15 @@ sub git_difftree_body {
- 				print " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'from_id'},
--			                             hash_base=>$parent, file_name=>$diff{'file'})},
-+			                             hash_base=>$parent, file_name=>$from_prefix.$diff{'file'})},
- 			              "blob") . " | ";
- 			if ($have_blame) {
- 				print $cgi->a({-href => href(action=>"blame", hash_base=>$parent,
--				                             file_name=>$diff{'file'})},
-+				                             file_name=>$from_prefix.$diff{'file'})},
- 				              "blame") . " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"history", hash_base=>$parent,
--			                             file_name=>$diff{'file'})},
-+			                             file_name=>$from_prefix.$diff{'file'})},
- 			              "history");
- 			print "</td>\n";
- 
-@@ -2311,7 +2315,7 @@ sub git_difftree_body {
- 			}
- 			print "<td>";
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--			                             hash_base=>$hash, file_name=>$diff{'file'}),
-+			                             hash_base=>$hash, file_name=>$to_prefix.$diff{'file'}),
- 			              -class => "list"}, esc_path($diff{'file'}));
- 			print "</td>\n";
- 			print "<td>$mode_chnge</td>\n";
-@@ -2326,20 +2330,21 @@ sub git_difftree_body {
- 				print $cgi->a({-href => href(action=>"blobdiff",
- 				                             hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
- 				                             hash_base=>$hash, hash_parent_base=>$parent,
--				                             file_name=>$diff{'file'})},
-+				                             file_name=>$to_prefix.$diff{'file'},
-+				                             file_parent=>$from_prefix.$diff{'file'})},
- 				              "diff") .
- 				      " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--			                             hash_base=>$hash, file_name=>$diff{'file'})},
-+			                             hash_base=>$hash, file_name=>$to_prefix.$diff{'file'})},
- 			               "blob") . " | ";
- 			if ($have_blame) {
- 				print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
--				                             file_name=>$diff{'file'})},
-+				                             file_name=>$to_prefix.$diff{'file'})},
- 				              "blame") . " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"history", hash_base=>$hash,
--			                             file_name=>$diff{'file'})},
-+			                             file_name=>$to_prefix.$diff{'file'})},
- 			              "history");
- 			print "</td>\n";
- 
-@@ -2353,11 +2358,11 @@ sub git_difftree_body {
- 			}
- 			print "<td>" .
- 			      $cgi->a({-href => href(action=>"blob", hash_base=>$hash,
--			                             hash=>$diff{'to_id'}, file_name=>$diff{'to_file'}),
-+			                             hash=>$diff{'to_id'}, file_name=>$to_prefix.$diff{'to_file'}),
- 			              -class => "list"}, esc_path($diff{'to_file'})) . "</td>\n" .
- 			      "<td><span class=\"file_status $nstatus\">[$nstatus from " .
- 			      $cgi->a({-href => href(action=>"blob", hash_base=>$parent,
--			                             hash=>$diff{'from_id'}, file_name=>$diff{'from_file'}),
-+			                             hash=>$diff{'from_id'}, file_name=>$from_prefix.$diff{'from_file'}),
- 			              -class => "list"}, esc_path($diff{'from_file'})) .
- 			      " with " . (int $diff{'similarity'}) . "% similarity$mode_chng]</span></td>\n" .
- 			      "<td class=\"link\">";
-@@ -2371,20 +2376,20 @@ sub git_difftree_body {
- 				print $cgi->a({-href => href(action=>"blobdiff",
- 				                             hash=>$diff{'to_id'}, hash_parent=>$diff{'from_id'},
- 				                             hash_base=>$hash, hash_parent_base=>$parent,
--				                             file_name=>$diff{'to_file'}, file_parent=>$diff{'from_file'})},
-+				                             file_name=>$to_prefix.$diff{'to_file'}, file_parent=>$from_prefix.$diff{'from_file'})},
- 				              "diff") .
- 				      " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"blob", hash=>$diff{'to_id'},
--			                             hash_base=>$parent, file_name=>$diff{'to_file'})},
-+			                             hash_base=>$hash, file_name=>$to_prefix.$diff{'to_file'})},
- 			              "blob") . " | ";
- 			if ($have_blame) {
- 				print $cgi->a({-href => href(action=>"blame", hash_base=>$hash,
--				                             file_name=>$diff{'to_file'})},
-+				                             file_name=>$to_prefix.$diff{'to_file'})},
- 				              "blame") . " | ";
- 			}
- 			print $cgi->a({-href => href(action=>"history", hash_base=>$hash,
--			                            file_name=>$diff{'to_file'})},
-+			                            file_name=>$to_prefix.$diff{'to_file'})},
- 			              "history");
- 			print "</td>\n";
- 
-@@ -2395,7 +2400,7 @@ sub git_difftree_body {
+@@ -310,14 +310,14 @@ if (defined $project) {
  }
  
- sub git_patchset_body {
--	my ($fd, $difftree, $hash, $hash_parent) = @_;
-+	my ($fd, $difftree, $hash, $hash_parent, $from_prefix, $to_prefix) = @_;
+ our $file_name = $cgi->param('f');
+-if (defined $file_name) {
++if (defined $file_name && $file_name ne '') {
+ 	if (!validate_pathname($file_name)) {
+ 		die_error(undef, "Invalid file parameter");
+ 	}
+ }
  
- 	my $patch_idx = 0;
- 	my $patch_number = 0;
-@@ -2403,6 +2408,9 @@ sub git_patchset_body {
- 	my $diffinfo;
- 	my (%from, %to);
+ our $file_parent = $cgi->param('fp');
+-if (defined $file_parent) {
++if (defined $file_parent && $file_parent ne '') {
+ 	if (!validate_pathname($file_parent)) {
+ 		die_error(undef, "Invalid file parent parameter");
+ 	}
+@@ -4203,6 +4203,10 @@ sub git_treediff {
+ 					"raw");
+ 	}
  
-+	$from_prefix = !defined $from_prefix ? '' : $from_prefix.'/';
-+	$to_prefix   = !defined $to_prefix   ? '' : $to_prefix . '/';
++	$file_parent = $file_name if (!defined $file_parent);
++	$file_name = undef if(defined $file_name && $file_name eq '');
++	$file_parent = undef if(defined $file_parent && $file_parent eq '');
 +
- 	print "<div class=\"patchset\">\n";
- 
- 	# skip to first patch
-@@ -2459,17 +2467,18 @@ sub git_patchset_body {
- 			}
- 			$from{'file'} = $diffinfo->{'from_file'} || $diffinfo->{'file'};
- 			$to{'file'}   = $diffinfo->{'to_file'}   || $diffinfo->{'file'};
-+
- 			if ($diffinfo->{'status'} ne "A") { # not new (added) file
- 				$from{'href'} = href(action=>"blob", hash_base=>$hash_parent,
- 				                     hash=>$diffinfo->{'from_id'},
--				                     file_name=>$from{'file'});
-+				                     file_name=>$from_prefix.$from{'file'});
- 			} else {
- 				delete $from{'href'};
- 			}
- 			if ($diffinfo->{'status'} ne "D") { # not deleted file
- 				$to{'href'} = href(action=>"blob", hash_base=>$hash,
- 				                   hash=>$diffinfo->{'to_id'},
--				                   file_name=>$to{'file'});
-+				                   file_name=>$to_prefix.$to{'file'});
- 			} else {
- 				delete $to{'href'};
- 			}
+ 	if (!defined $hash) {
+ 		if (!defined $hash_base) {
+ 			die_error(undef,'tree parameter missing');
 -- 
 1.5.1.1.85.gf1888
