@@ -1,92 +1,69 @@
-From: "Luiz Fernando N. Capitulino" <lcapitulino@mandriva.com.br>
-Subject: [PATCH] entry.c: Use strerror() to print error info when possible
-Date: Sun, 15 Apr 2007 18:56:19 -0300
-Organization: Mandriva
-Message-ID: <20070415185619.3fa90f3a@gnut>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Document -g (--walk-reflogs) option of git-log
+Date: Mon, 16 Apr 2007 00:36:06 +0200
+Message-ID: <20070415223606.GB4417@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Apr 15 23:56:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 16 00:36:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdCi4-00056k-PY
-	for gcvg-git@gmane.org; Sun, 15 Apr 2007 23:56:37 +0200
+	id 1HdDKj-0001vn-5S
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 00:36:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753689AbXDOV41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 17:56:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754000AbXDOV41
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 17:56:27 -0400
-Received: from perninha.conectiva.com.br ([200.140.247.100]:42788 "EHLO
-	perninha.conectiva.com.br" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753689AbXDOV40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 17:56:26 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id 345FE18B25;
-	Sun, 15 Apr 2007 18:56:25 -0300 (BRT)
-X-Virus-Scanned: amavisd-new at conectiva.com.br
-Received: from perninha.conectiva.com.br ([127.0.0.1])
-	by localhost (perninha.conectiva.com.br [127.0.0.1]) (amavisd-new, port 10025)
-	with LMTP id 8MFvrX1WWSdB; Sun, 15 Apr 2007 18:56:22 -0300 (BRT)
-Received: from gnut (unknown [201.21.180.171])
-	by perninha.conectiva.com.br (Postfix) with ESMTP id DDB9018B22;
-	Sun, 15 Apr 2007 18:56:21 -0300 (BRT)
-X-Mailer: Claws Mail 2.7.2 (GTK+ 2.10.3; i586-mandriva-linux-gnu)
+	id S1754023AbXDOWgK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 18:36:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754026AbXDOWgK
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 18:36:10 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:53075 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754023AbXDOWgJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 18:36:09 -0400
+Received: from tigra.home (Fcb1d.f.strato-dslnet.de [195.4.203.29])
+	by post.webmailer.de (klopstock mo8) (RZmta 5.5)
+	with ESMTP id S022ffj3FJEvi5 ; Mon, 16 Apr 2007 00:36:06 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id D221A277BD;
+	Mon, 16 Apr 2007 00:36:06 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id AB7A4D439; Mon, 16 Apr 2007 00:36:06 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg2oA==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44534>
 
-
-Signed-off-by: Luiz Fernando N. Capitulino <lcapitulino@mandriva.com.br>
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- entry.c |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index d72f811..c36c09d 100644
---- a/entry.c
-+++ b/entry.c
-@@ -19,7 +19,8 @@ static void create_directories(const char *path, struct checkout *state)
- 				if (!stat(buf, &st) && S_ISDIR(st.st_mode))
- 					continue; /* ok */
- 			}
--			die("cannot create directory at %s", buf);
-+			die("cannot create directory at %s (%s)", buf,
-+			    strerror(errno));
- 		}
- 	}
- 	free(buf);
-@@ -33,7 +34,7 @@ static void remove_subtree(const char *path)
- 	char *name;
- 	
- 	if (!dir)
--		die("cannot opendir %s", path);
-+		die("cannot opendir %s (%s)", path, strerror(errno));
- 	strcpy(pathbuf, path);
- 	name = pathbuf + strlen(path);
- 	*name++ = '/';
-@@ -45,15 +46,15 @@ static void remove_subtree(const char *path)
- 			continue;
- 		strcpy(name, de->d_name);
- 		if (lstat(pathbuf, &st))
--			die("cannot lstat %s", pathbuf);
-+			die("cannot lstat %s (%s)", pathbuf, strerror(errno));
- 		if (S_ISDIR(st.st_mode))
- 			remove_subtree(pathbuf);
- 		else if (unlink(pathbuf))
--			die("cannot unlink %s", pathbuf);
-+			die("cannot unlink %s (%s)", pathbuf, strerror(errno));
- 	}
- 	closedir(dir);
- 	if (rmdir(path))
--		die("cannot rmdir %s", path);
-+		die("cannot rmdir %s (%s)", path, strerror(errno));
- }
+Complained about on IRC. Thanks DrNick for proofreading and Gitster
+for patience.
+
+ Documentation/git-log.txt |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 030edaf..96e8a3f 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -46,6 +46,11 @@ include::pretty-formats.txt[]
+ -p::
+ 	Show the change the commit introduces in a patch form.
  
- static int create_file(const char *path, unsigned int mode)
++-g, \--walk-reflogs::
++	Show commits as they were recorded in the reflog. The log contains
++	a record about how the tip of a reference was changed.
++	See also gitlink:git-ref-log[1].
++
+ <paths>...::
+ 	Show only commits that affect the specified paths.
+ 
 -- 
-1.5.1.1.85.geed2-dirty
+1.5.1.1.819.gcfdd2
