@@ -1,69 +1,82 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Document -g (--walk-reflogs) option of git-log
-Date: Mon, 16 Apr 2007 00:36:06 +0200
-Message-ID: <20070415223606.GB4417@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+Subject: [PATCH] display shortlog after git-commit
+Date: Mon, 16 Apr 2007 01:39:09 +0300
+Message-ID: <20070415223909.GG15208@mellanox.co.il>
+References: <20070322104021.GJ29341@mellanox.co.il>
+	<7v7it7kkl9.fsf@assigned-by-dhcp.cox.net>
+	<20070404060213.GB31984@mellanox.co.il>
+	<7v7iss8xo6.fsf@assigned-by-dhcp.cox.net>
+	<20070404070135.GF31984@mellanox.co.il>
+	<7vps6k7gez.fsf@assigned-by-dhcp.cox.net>
+Reply-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 00:36:33 2007
+Cc: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 00:39:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdDKj-0001vn-5S
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 00:36:33 +0200
+	id 1HdDNJ-0002oK-4n
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 00:39:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754023AbXDOWgK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 18:36:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754026AbXDOWgK
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 18:36:10 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:53075 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754023AbXDOWgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 18:36:09 -0400
-Received: from tigra.home (Fcb1d.f.strato-dslnet.de [195.4.203.29])
-	by post.webmailer.de (klopstock mo8) (RZmta 5.5)
-	with ESMTP id S022ffj3FJEvi5 ; Mon, 16 Apr 2007 00:36:06 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id D221A277BD;
-	Mon, 16 Apr 2007 00:36:06 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id AB7A4D439; Mon, 16 Apr 2007 00:36:06 +0200 (CEST)
+	id S1754031AbXDOWjJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 18:39:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754032AbXDOWjJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 18:39:09 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:37923 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754031AbXDOWjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 18:39:08 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so973134uga
+        for <git@vger.kernel.org>; Sun, 15 Apr 2007 15:39:06 -0700 (PDT)
+Received: by 10.67.95.3 with SMTP id x3mr3142888ugl.1176676746510;
+        Sun, 15 Apr 2007 15:39:06 -0700 (PDT)
+Received: from ?127.0.0.1? ( [89.138.119.177])
+        by mx.google.com with ESMTP id j2sm5845179ugf.2007.04.15.15.39.04;
+        Sun, 15 Apr 2007 15:39:05 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg2oA==
-X-RZG-CLASS-ID: mo07
+In-Reply-To: <7vps6k7gez.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44535>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Display the subject of the commit just made.
+
+Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
+
 ---
 
-Complained about on IRC. Thanks DrNick for proofreading and Gitster
-for patience.
+> Quoting Junio C Hamano <junkio@cox.net>:
+> Subject: Re: [PATCH] display shortlog after git-commit
+> 
+> Too noisy for a default.
 
- Documentation/git-log.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+So maybe the following isn't too bad?
+This results in:
+$ ./git-commit.sh --amend
+Created commit 5633ddde0e35210f607bde063bcbf709e4d20a8d
+Display the subject of the commit just made.
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 030edaf..96e8a3f 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -46,6 +46,11 @@ include::pretty-formats.txt[]
- -p::
- 	Show the change the commit introduces in a patch form.
+diff --git a/git-commit.sh b/git-commit.sh
+index 9e0959a..b2b90f0 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -650,7 +650,7 @@ then
+ 	if test -z "$quiet"
+ 	then
+ 		echo "Created${initial_commit:+ initial} commit $commit"
+-		git-diff-tree --shortstat --summary --root --no-commit-id HEAD --
++		git-diff-tree --shortstat --pretty="format:%s" --summary --root --no-commit-id HEAD --
+ 	fi
+ fi
  
-+-g, \--walk-reflogs::
-+	Show commits as they were recorded in the reflog. The log contains
-+	a record about how the tip of a reference was changed.
-+	See also gitlink:git-ref-log[1].
-+
- <paths>...::
- 	Show only commits that affect the specified paths.
- 
+
+
 -- 
-1.5.1.1.819.gcfdd2
+MST
