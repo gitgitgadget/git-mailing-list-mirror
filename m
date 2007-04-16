@@ -1,65 +1,144 @@
-From: Alan Larkin <nobrow@eircom.net>
-Subject: Re: fatal: Out of memory, malloc failed
-Date: Mon, 16 Apr 2007 08:46:32 +0100
-Message-ID: <462329D8.4020302@eircom.net>
-References: <461FBD02.6050105@eircom.net> <Pine.LNX.4.64.0704131143130.28042@woody.linux-foundation.org> <462277CD.5020609@eircom.net> <20070415214050.GA4417@steel.home>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: [PATCH 1/2] Add --quiet option to suppress output of "rm" commands for removed files.
+Date: Mon, 16 Apr 2007 00:46:48 -0700
+Message-ID: <20070416074648.GA18719@midwinter.com>
+References: <20070416000408.GA19107@midwinter.com> <7v4pnh18hr.fsf@assigned-by-dhcp.cox.net> <4622C0AC.8090904@midwinter.com> <7vps65yvc1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 09:46:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 09:46:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdLuu-0004wL-3s
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 09:46:28 +0200
+	id 1HdLvJ-00055y-BQ
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 09:46:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932382AbXDPHqX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 03:46:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932386AbXDPHqX
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 03:46:23 -0400
-Received: from mail16.svc.cra.dublin.eircom.net ([159.134.118.215]:24730 "HELO
-	mail16.svc.cra.dublin.eircom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S932382AbXDPHqX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2007 03:46:23 -0400
-Received: (qmail 30629 messnum 3618224 invoked from network[86.42.230.88/unknown]); 16 Apr 2007 07:46:20 -0000
-Received: from unknown (HELO ?192.168.1.6?) (86.42.230.88)
-  by mail16.svc.cra.dublin.eircom.net (qp 30629) with SMTP; 16 Apr 2007 07:46:20 -0000
-User-Agent: Thunderbird 1.5.0.10 (X11/20070330)
-In-Reply-To: <20070415214050.GA4417@steel.home>
+	id S932386AbXDPHqu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 03:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932409AbXDPHqu
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 03:46:50 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:53091 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932386AbXDPHqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 03:46:49 -0400
+Received: (qmail 18919 invoked by uid 1001); 16 Apr 2007 07:46:48 -0000
+Content-Disposition: inline
+In-Reply-To: <7vps65yvc1.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44606>
 
-Alex Riesen wrote:
-> Alan Larkin, Sun, Apr 15, 2007 21:06:53 +0200:
->>>> Its not a huge push Im trying to do here (<about 150Mb) but
->>>> always malloc fails!
->>> Any huge objects?
->>>
->> There were a couple of big files. I removed a 72Mb one (making 47Mb
->> the biggest one left in the project) and made the push and it
->> worked. I later pulled the project down to a different machine,
->> added the 72Mb file back in, and pushed to the server and it worked.
->> So apparently it's a platform specific problem. If anybody's
->> particularly interested I could replicate it under gdb and pass on
->> any info, but if not I wont ... job's done, Im happy.
-> 
-> 72Mb is nothing. Is it Windows/cygwin, by any chance? (I see the
-> problem there sometimes. Tried debugging it, got into some ugly
-> cygwin-windows interactions, threw up, did the same you did and tried
-> to forget it all).
-> 
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
-> 
+Signed-off-by: Steven Grimm <koreth@midwinter.com>
+---
 
-Thats what I thought, but malloc continued to fail until the 72Mb file was removed.
+Splitting this into two different options (and two patches) per Junio's
+comments.
 
-No, my server is running Debian. I had the push problem when logged in on that. It worked when I
-pushed it from a Gentoo box.
+ Documentation/git-rm.txt |    4 ++++
+ builtin-rm.c             |   10 +++++++---
+ t/t3600-rm.sh            |   24 ++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 6feebc0..b051ccb 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -47,6 +47,10 @@ OPTIONS
+ 	the paths only from the index, leaving working tree
+ 	files.
+ 
++\--quiet::
++	git-rm normally outputs one line (in the form of an "rm" command)
++	for each file removed. This option suppresses that output.
++
+ 
+ DISCUSSION
+ ----------
+diff --git a/builtin-rm.c b/builtin-rm.c
+index 8a0738f..7eb9a42 100644
+--- a/builtin-rm.c
++++ b/builtin-rm.c
+@@ -10,7 +10,7 @@
+ #include "tree-walk.h"
+ 
+ static const char builtin_rm_usage[] =
+-"git-rm [-f] [-n] [-r] [--cached] [--] <file>...";
++"git-rm [-f] [-n] [-r] [--cached] [--quiet] [--] <file>...";
+ 
+ static struct {
+ 	int nr, alloc;
+@@ -104,7 +104,7 @@ static struct lock_file lock_file;
+ int cmd_rm(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, newfd;
+-	int show_only = 0, force = 0, index_only = 0, recursive = 0;
++	int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
+ 	const char **pathspec;
+ 	char *seen;
+ 
+@@ -132,6 +132,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 			force = 1;
+ 		else if (!strcmp(arg, "-r"))
+ 			recursive = 1;
++		else if (!strcmp(arg, "--quiet"))
++			quiet = 1;
+ 		else
+ 			usage(builtin_rm_usage);
+ 	}
+@@ -187,7 +189,9 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	for (i = 0; i < list.nr; i++) {
+ 		const char *path = list.name[i];
+-		printf("rm '%s'\n", path);
++		if (!quiet) {
++			printf("rm '%s'\n", path);
++		}
+ 
+ 		if (remove_file_from_cache(path))
+ 			die("git-rm: unable to remove %s", path);
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index e31cf93..da9da92 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -84,6 +84,26 @@ test_expect_success \
+     'When the rm in "git-rm -f" fails, it should not remove the file from the index' \
+     'git-ls-files --error-unmatch baz'
+ 
++test_expect_success '"rm" command printed' '
++	echo frotz > test-file &&
++	git add test-file &&
++	git commit -m "add file for rm test" &&
++	git rm test-file > rm-output &&
++	test `egrep "^rm " rm-output | wc -l` = 1 &&
++	rm -f test-file rm-output &&
++	git commit -m "remove file from rm test"
++'
++
++test_expect_success '"rm" command suppressed with --quiet' '
++	echo frotz > test-file &&
++	git add test-file &&
++	git commit -m "add file for rm --quiet test" &&
++	git rm --quiet test-file > rm-output &&
++	test `wc -l < rm-output` = 0 &&
++	rm -f test-file rm-output &&
++	git commit -m "remove file from rm --quiet test"
++'
++
+ # Now, failure cases.
+ test_expect_success 'Re-add foo and baz' '
+ 	git add foo baz &&
+@@ -154,4 +174,8 @@ test_expect_success 'Recursive with -r -f' '
+ 	! test -d frotz
+ '
+ 
++test_expect_failure 'Remove nonexistent file returns nonzero exit status' '
++	git rm nonexistent
++'
++
+ test_done
+-- 
+1.5.1.1.99.g0ea98
