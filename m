@@ -1,80 +1,94 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git push over http is very dangerous
-Date: Mon, 16 Apr 2007 13:20:46 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704161303580.5473@woody.linux-foundation.org>
-References: <462394AC.303@beronet.com> <Pine.LNX.4.64.0704161212140.5473@woody.linux-foundation.org>
- <7vk5wcrt5m.fsf@assigned-by-dhcp.cox.net>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: [PATCH] remove shortlog from git-commit output
+Date: Mon, 16 Apr 2007 21:21:25 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0704162119130.13400@beast.quantumfyre.co.uk>
+References: <20070404060213.GB31984@mellanox.co.il> <7v7iss8xo6.fsf@assigned-by-dhcp.cox.net>
+ <20070404070135.GF31984@mellanox.co.il> <7vps6k7gez.fsf@assigned-by-dhcp.cox.net>
+ <20070415223909.GG15208@mellanox.co.il> <7vy7kt1bij.fsf@assigned-by-dhcp.cox.net>
+ <20070416053435.GA23255@mellanox.co.il> <7vk5wcx3cd.fsf@assigned-by-dhcp.cox.net>
+ <20070416144038.GA32515@mellanox.co.il> <Pine.LNX.4.64.0704161554540.5400@reaper.quantumfyre.co.uk>
+ <20070416182323.GC32515@mellanox.co.il>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Christian <crich-ml@beronet.com>, git@vger.kernel.org,
-	Nick Hengeveld <nickh@reactrix.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 16 22:21:31 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
+X-From: git-owner@vger.kernel.org Mon Apr 16 22:22:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdXhY-0004Xp-LK
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 22:21:29 +0200
+	id 1HdXiB-0004m9-Ld
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 22:22:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030957AbXDPUU6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 16:20:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030958AbXDPUU5
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 16:20:57 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:48889 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030957AbXDPUU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 16:20:56 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3GKKlIs002215
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 16 Apr 2007 13:20:48 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3GKKkEV011069;
-	Mon, 16 Apr 2007 13:20:47 -0700
-In-Reply-To: <7vk5wcrt5m.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.448 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1030960AbXDPUV3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 16:21:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030939AbXDPUV3
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 16:21:29 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:36460 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1030960AbXDPUV1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2007 16:21:27 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 4940FC62A6
+	for <git@vger.kernel.org>; Mon, 16 Apr 2007 21:21:26 +0100 (BST)
+Received: (qmail 1611 invoked by uid 103); 16 Apr 2007 21:20:47 +0100
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.90.2/3087. spamassassin: 3.1.8. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.036261 secs); 16 Apr 2007 20:20:47 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 16 Apr 2007 21:20:47 +0100
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <20070416182323.GC32515@mellanox.co.il>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44695>
 
+On Mon, 16 Apr 2007, Michael S. Tsirkin wrote:
 
+>> Quoting Julian Phillips <julian@quantumfyre.co.uk>:
+>> Subject: Re: [PATCH] remove shortlog from git-commit output
+>>
+>> On Mon, 16 Apr 2007, Michael S. Tsirkin wrote:
+>>
+>>> Make git-commit only display --summary since addition/deletion
+>>> are notable events that do not happen with every commit.
+>>>
+>>> Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
+>>>
+>>> ---
+>>>
+>>>>> BTW, Junio, why does git-commit need to display the diffstat?
+>>>>> You just made the commit ...
+>>>>
+>>>> Don't ask me.  It was not my idea.
+>>>>
+>>>> We only had --summary per popular list request, and it made
+>>>> certain amount of sense since addition/deletion are notable
+>>>> events that do not happen with _every_ commit.
+>>>
+>>> So how about this?
+>>>
+>>
+>> Personally I quite like the shortstat ... and certainly is/will be more
+>> useful to me than having the commit subject - despite normally having more
+>> terminals lying around than is good for my sanity.
+>>
+>> Can't we keep it? It's not like it takes up much space ...
+>
+> What's it used for? Would it make more sense to have it show
+> up in the commit log editor, with the list of files being checked in?
+>
 
-On Mon, 16 Apr 2007, Junio C Hamano wrote:
-> 
-> Just for the record, I do not think anybody during that #git
-> discussion actually proved that http-push was the culprit.  It
-> is a very plausible working conjecture, though.
+I use git add -i quite a lot, so often the same file shows up in both the 
+files that are being committed and in the list of files that have 
+uncomitted changes.  The shortstat gives me confidence that the commit was 
+about the right size.
 
-I looked at http-push.c once more, and there is a very marked lack of any 
-error testing. It actually tries to be pretty careful, ie it seems that 
-every PUT request is always to a temp-file, and then it does a MOVE 
-request after that, and things seem to properly abort on most errors, but 
-the actual data integrity is obviously impossible to check on the remote, 
-and a quick grep showed that not all errors even set "aborted", which 
-would seem to imply that certain error conditions can happen without the 
-http-push then aborting the ref update.
+-- 
+Julian
 
-For example, if "start_active_slot()" fails, aborted isn't generally set. 
-I don't know if that is ever a problem (it can only trigger with 
-USE_CURL_MULTI), but it's an example of what looks pretty fragile.
-
-So we can fix up some of these kinds of things, but considering that we 
-can't really validate the end result on the remote, I'd still personally 
-be quite leery of pushing by http..
-
-> I think the fetch side does the right thing, more or less, by
-> downloading to a temporary file and using move_temp_to_file()
-> after validating the SHA-1 matches.
-
-Yeah, on the pulling side we are simply much better off, because we can 
-validate things after the operation has finished. On the pushing side, we 
-could obviously try to re-download the objects or something, but basically 
-validation would literally have to involve doubling the network usage, and 
-even then we might get screwed by some caching layer!
-
-		Linus
+  ---
+Uh-oh!!  I forgot to submit to COMPULSORY URINALYSIS!
