@@ -1,180 +1,113 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: What's cooking in git.git (topics)
-Date: Sun, 15 Apr 2007 18:53:49 -0700
-Message-ID: <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>
-References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: Weird shallow-tree conversion state, and branches of shallow
+	trees
+Date: Sun, 15 Apr 2007 19:17:29 -0700
+Message-ID: <20070416021729.GH2689@curie-int.orbis-terrarum.net>
+References: <20070412005336.GA18378@curie-int.orbis-terrarum.net> <fcaeb9bf0704142257x3761ef2cie3996420b3bcd24a@mail.gmail.com> <Pine.LNX.4.64.0704151115270.5473@woody.linux-foundation.org> <200704152051.35639.andyparkins@gmail.com> <Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 03:53:56 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="SUk9VBj82R8Xhb8H"
+Cc: Andy Parkins <andyparkins@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 16 04:17:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdGPi-0006tu-Sv
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 03:53:55 +0200
+	id 1HdGmp-0005w3-0T
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 04:17:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754282AbXDPBxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 21:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbXDPBxv
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 21:53:51 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:50074 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754279AbXDPBxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 21:53:50 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070416015349.OBJJ1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 15 Apr 2007 21:53:49 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ndtp1W00m1kojtg0000000; Sun, 15 Apr 2007 21:53:50 -0400
-X-master-at: 7a1593972c19df26aee7d14c7d7c8c4fce24fb26
-X-next-at: 88bdbb881e223ae39039be804e87094505f6d998
-In-Reply-To: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Mon, 09 Apr 2007 01:17:48 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751090AbXDPCR1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 22:17:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753570AbXDPCR1
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 22:17:27 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:51039 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750961AbXDPCR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 22:17:26 -0400
+Received: (qmail 32004 invoked from network); 16 Apr 2007 02:17:25 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Mon, 16 Apr 2007 02:17:25 +0000
+Received: (qmail 26905 invoked by uid 10000); 15 Apr 2007 19:17:29 -0700
+Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44562>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
 
-* lt/gitlink (Sun Apr 15 11:14:28 2007 -0700) 17 commits
- + Expose subprojects as special files to "git diff" machinery
- + Fix some "git ls-files -o" fallout from gitlinks
- + Teach "git-read-tree -u" to check out submodules as a directory
- + Teach git list-objects logic to not follow gitlinks
- + Fix gitlink index entry filesystem matching
- + Teach "git-read-tree -u" to check out submodules as a directory
- + Teach git list-objects logic not to follow gitlinks
- + Don't show gitlink directories when we want "other" files
- + Teach git-update-index about gitlinks
- + Teach directory traversal about subprojects
- + Fix thinko in subproject entry sorting
- + Teach core object handling functions about gitlinks
- + Teach "fsck" not to follow subproject links
- + Add "S_IFDIRLNK" file mode infrastructure for git links
- + Add 'resolve_gitlink_ref()' helper function
- + Avoid overflowing name buffer in deep directory structures
- + diff-lib: use ce_mode_from_stat() rather than messing with modes
-   manually
+--SUk9VBj82R8Xhb8H
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Everybody loves when Linus jumps in and gets the ball rolling
-for a topic that has been only an idle-talk wishlist with a
-minimum set of patches.  Let's see where this goes.
+On Sun, Apr 15, 2007 at 01:51:42PM -0700, Linus Torvalds wrote:
+> There are valid uses to tag sources with some revision information WHEN I=
+T=20
+> LEAVES THE REVISION CONTROLLED ENVIRONMENT, but not one second before=20
+> that.
+Nobody has addressed the single problem that I have with adding it when
+it's leaving the environment, and that's still of paramount concern to
+me. Simply put, there is a conflict between being able to add revision
+information of stuff leaving the environment, and those additions
+breaking previous checksums (which may be digitally signed, and thus
+breaking the signatures).
 
-* jc/attr (Sat Apr 14 21:27:20 2007 -0400) 10 commits
- - Document git-check-attr
- - Change attribute negation marker from '!' to '-'.
- - Define a built-in attribute macro "binary".
- - attribute macro support
- + Makefile: add patch-ids.h back in.
- + Fix 'diff' attribute semantics.
- + Fix 'crlf' attribute semantics.
- + Teach 'diff' about 'diff' attribute.
- + Define 'crlf' attribute.
- + Add basic infrastructure to assign attributes to paths
+I'll reduce it further from my previous example.
 
-... and I tried to learn from that.  I do not know how
-successful I was, though.
+1. Developer commits some change to file A.
+2. The checksum file is updated because A changed (the checksum file
+   explicitly does not contain keywords).
+3. Developer signs the checksum file, and commits it.
 
-But I earlier said that one of the focus of 1.5.2 should be the
-gitattributes support.
+If during the export process (which is undertaken elsewhere, by a
+different person or script), file A now has an expansion applied to it,
+you break the checksum file, which you CANNOT redo, because you lose the
+developer's digital signature on the checksum file!
 
-* fl/cvsserver (Fri Apr 13 18:13:42 2007 +0200) 12 commits
- + config.txt: Add gitcvs.db* variables
- + cvsserver: Document the GIT branches -> CVS modules mapping more
-   prominently
- + cvsserver: Reword documentation on necessity of write access
- + cvsserver: Allow to "add" a removed file
- + cvsserver: Add asciidoc documentation for new database backend
-   configuration
- + cvsserver: Corrections to the database backend configuration
- + cvsserver: Use DBI->table_info instead of DBI->tables
- + cvsserver: Abort if connect to database fails
- + cvsserver: Make the database backend configurable
- + cvsserver: Allow to override the configuration per access method
- + cvsserver: Handle three part keys in git config correctly
- + cvsserver: Introduce new state variable 'method'
+Using the existing git-verify-tag mechanisms are not suitable, because
+it is the exported information that must be verifiable.
 
-Waiting for Ack's from the field, which unfortunately I haven't
-seen any yet.
+There's FOUR possible solutions here:
+1. The commit to file A does the keywords - Which Linus is against.
+2. An ADDITIONAL commit to file A, after the initial commit, as a
+   scripted addition of the keywords, but before the checksum is
+   updated. I think this is messy myself, as you'd have to insert the
+   data from the N-1 commit always.
+3. Lose the ability to tag the files leaving the environment.
+4. Stop digitally signing the checksum file (which then leaves the
+   possibility for other attacks).
 
-* np/pack (Tue Apr 10 22:54:36 2007 -0400) 16 commits
- + clean up add_object_entry()
- + tests for various pack index features
- + use test-genrandom in tests instead of /dev/urandom
- + simple random data generator for tests
- + validate reused pack data with CRC when possible
- + allow forcing index v2 and 64-bit offset treshold
- + pack-redundant.c: learn about index v2
- + show-index.c: learn about index v2
- + sha1_file.c: learn about index version 2
- + index-pack: learn about pack index version 2
- + pack-objects: learn about pack index version 2
- + compute object CRC32 with index-pack
- + compute a CRC32 for each object as stored in a pack
- + add overflow tests on pack offset variables
- + make overflow test on delta base offset work regardless of
-   variable size
- + get rid of num_packed_objects()
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
 
-Haven't seen any breakage report so far.  After giving them a
-final look, let's push this out to 'master' soonish.
+--SUk9VBj82R8Xhb8H
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-* js/wrap-log (Sun Apr 8 01:28:00 2007 -0700) 2 commits
- + shortlog -w: make wrap-line behaviour optional.
- + Use print_wrapped_text() in shortlog
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
 
-I do not think it breaks anything but I do not think we are in a
-hurry, either.
+iD8DBQFGIty5PpIsIjIzwiwRArUEAKDL6YvaHvcjhdMjMdGSJaFRAARXNQCfe/EQ
+CyAn5d472QScay8gBSJNuqk=
+=CusJ
+-----END PGP SIGNATURE-----
 
-* jc/read-tree-df (Sat Apr 7 07:17:35 2007 -0700) 5 commits
- + t3030: merge-recursive backend test.
- + merge-recursive: handle D/F conflict case more carefully.
- + merge-recursive: do not barf on "to be removed" entries.
- + Treat D/F conflict entry more carefully in unpack-
-   trees.c::threeway_merge()
- + t1000: fix case table.
-
-This series should not matter in practice as I do not think any
-project that changes between directory and file is sane, but
-people are known to do insane things, and this would help them.
-
-Any comments for or against their graduation to 'master'?
-
-* jc/quickfetch (Thu Apr 5 03:22:55 2007 -0700) 2 commits
- + git-fetch: use fetch--tool pick-rref to avoid local fetch from
-   alternate
- + git-fetch--tool pick-rref
-
-This would make fetching from your alternate more efficient by
-not fetching any objects (because by definition it is not
-necessary).  It doubly matters in this case performance-wise as
-the recent code verifies fetched objects that were already in
-the repository, which tends to be expensive.
-
-* jc/the-index (Sun Apr 1 23:26:07 2007 -0700) 2 commits
- - Make read-cache.c "the_index" free.
- - Move index-related variables into a structure.
-
-Sort of "libification", which nobody seems to need right now,
-but I did it already and there is no reason to throw away.
-
-* jc/blame (Tue Mar 27 01:58:01 2007 -0700) 4 commits
- - git-blame: optimize get_origin() from linear search to hash-
-   lookup.
- - git-blame: pass "struct scoreboard *" pointers around.
- - blame: lift structure definitions up
- - blame -s: suppress author name and time.
-* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
- - test-para: combined diff between HEAD, index and working tree.
- - para-walk: walk n trees, index and working tree in parallel
-
-Stalled.
+--SUk9VBj82R8Xhb8H--
