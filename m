@@ -1,94 +1,180 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH] remove shortlog from git-commit output
-Date: Mon, 16 Apr 2007 21:21:25 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704162119130.13400@beast.quantumfyre.co.uk>
-References: <20070404060213.GB31984@mellanox.co.il> <7v7iss8xo6.fsf@assigned-by-dhcp.cox.net>
- <20070404070135.GF31984@mellanox.co.il> <7vps6k7gez.fsf@assigned-by-dhcp.cox.net>
- <20070415223909.GG15208@mellanox.co.il> <7vy7kt1bij.fsf@assigned-by-dhcp.cox.net>
- <20070416053435.GA23255@mellanox.co.il> <7vk5wcx3cd.fsf@assigned-by-dhcp.cox.net>
- <20070416144038.GA32515@mellanox.co.il> <Pine.LNX.4.64.0704161554540.5400@reaper.quantumfyre.co.uk>
- <20070416182323.GC32515@mellanox.co.il>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Tests for core subproject support
+Date: Mon, 16 Apr 2007 22:39:47 +0200
+Message-ID: <20070416203947.GA22872@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Michael S. Tsirkin" <mst@dev.mellanox.co.il>
-X-From: git-owner@vger.kernel.org Mon Apr 16 22:22:08 2007
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 16 22:39:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdXiB-0004m9-Ld
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 22:22:08 +0200
+	id 1HdXzP-000309-5U
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 22:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030960AbXDPUV3 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 16:21:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030939AbXDPUV3
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 16:21:29 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:36460 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1030960AbXDPUV1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2007 16:21:27 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 4940FC62A6
-	for <git@vger.kernel.org>; Mon, 16 Apr 2007 21:21:26 +0100 (BST)
-Received: (qmail 1611 invoked by uid 103); 16 Apr 2007 21:20:47 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3087. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.036261 secs); 16 Apr 2007 20:20:47 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 16 Apr 2007 21:20:47 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <20070416182323.GC32515@mellanox.co.il>
+	id S1753544AbXDPUjv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 16:39:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753586AbXDPUjv
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 16:39:51 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:43520 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753554AbXDPUju (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 16:39:50 -0400
+Received: from tigra.home (Fca36.f.strato-dslnet.de [195.4.202.54])
+	by post.webmailer.de (mrclete mo48) (RZmta 5.5)
+	with ESMTP id I0015cj3GI43w4 ; Mon, 16 Apr 2007 22:39:48 +0200 (MEST)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 73992277BD;
+	Mon, 16 Apr 2007 22:39:48 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id E332CD439; Mon, 16 Apr 2007 22:39:47 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCT8nXg==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44696>
 
-On Mon, 16 Apr 2007, Michael S. Tsirkin wrote:
+The following tests available:
 
->> Quoting Julian Phillips <julian@quantumfyre.co.uk>:
->> Subject: Re: [PATCH] remove shortlog from git-commit output
->>
->> On Mon, 16 Apr 2007, Michael S. Tsirkin wrote:
->>
->>> Make git-commit only display --summary since addition/deletion
->>> are notable events that do not happen with every commit.
->>>
->>> Signed-off-by: Michael S. Tsirkin <mst@dev.mellanox.co.il>
->>>
->>> ---
->>>
->>>>> BTW, Junio, why does git-commit need to display the diffstat?
->>>>> You just made the commit ...
->>>>
->>>> Don't ask me.  It was not my idea.
->>>>
->>>> We only had --summary per popular list request, and it made
->>>> certain amount of sense since addition/deletion are notable
->>>> events that do not happen with _every_ commit.
->>>
->>> So how about this?
->>>
->>
->> Personally I quite like the shortstat ... and certainly is/will be more
->> useful to me than having the commit subject - despite normally having more
->> terminals lying around than is good for my sanity.
->>
->> Can't we keep it? It's not like it takes up much space ...
->
-> What's it used for? Would it make more sense to have it show
-> up in the commit log editor, with the list of files being checked in?
->
+- create subprojects: create a directory in the superproject,
+  initialize a git repo in it, and try adding it in super project.
+  Make a commit in superproject
 
-I use git add -i quite a lot, so often the same file shows up in both the 
-files that are being committed and in the list of files that have 
-uncomitted changes.  The shortstat gives me confidence that the commit was 
-about the right size.
+- check if fsck ignores the subprojects: it just should give no errors
 
+- check if commit in a subproject detected: make a commit in
+  subproject, git-diff-files in superproject should detect it
+
+- check if a changed subproject HEAD can be committed: try
+  "git-commit -a" in superproject. It should commit changed
+  HEAD of a subproject
+
+- check if diff-index works for subproject elements: compare the index
+  (changed by previuos tests) with the initial commit (which created
+  two subprojects). Should show a change for the recently changed subproject
+
+- check if diff-tree works for subproject elements: do the same, just use
+  git-diff-tree. This test is somewhat redundant, I just added it for
+  completeness (diff, diff-files, and diff-index are already used)
+
+- check if git diff works for subproject elements: try to limit
+  the diff for the name of a subproject in superproject:
+     git diff HEAD^ HEAD -- subproject
+
+- check if clone works: try a clone of superproject and compare
+  "git ls-files -s" output in superproject and cloned repo
+
+- removing and adding subproject: rename test. Currently implemented
+  as "git-update-index --force-remove", "mv" and "git-add".
+
+- checkout in superproject: try to checkout the initial commit
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+
+I should have missed something, I have that feeling...
+
+ t/t3040-subprojects-basic.sh |   85 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 85 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3040-subprojects-basic.sh
+
+diff --git a/t/t3040-subprojects-basic.sh b/t/t3040-subprojects-basic.sh
+new file mode 100755
+index 0000000..79b9f23
+--- /dev/null
++++ b/t/t3040-subprojects-basic.sh
+@@ -0,0 +1,85 @@
++#!/bin/sh
++
++test_description='Basic subproject functionality'
++. ./test-lib.sh
++
++test_expect_success 'Super project creation' \
++    ': >Makefile &&
++    git add Makefile &&
++    git commit -m "Superproject created"'
++
++
++cat >expected <<EOF
++:000000 160000 00000... A	sub1
++:000000 160000 00000... A	sub2
++EOF
++test_expect_success 'create subprojects' \
++    'mkdir sub1 &&
++    ( cd sub1 && git init && : >Makefile && git add * &&
++    git commit -q -m "subproject 1" ) &&
++    mkdir sub2 &&
++    ( cd sub2 && git init && : >Makefile && git add * &&
++    git commit -q -m "subproject 2" ) &&
++    git update-index --add sub1 &&
++    git add sub2 &&
++    git commit -q -m "subprojects added" &&
++    git diff-tree --abbrev=5 HEAD^ HEAD |cut -d" " -f-3,5- >current &&
++    git diff expected current'
++
++git branch save HEAD
++
++test_expect_success 'check if fsck ignores the subprojects' \
++    'git fsck --full'
++
++test_expect_success 'check if commit in a subproject detected' \
++    '( cd sub1 &&
++    echo "all:" >>Makefile &&
++    echo "	true" >>Makefile &&
++    git commit -q -a -m "make all" ) && {
++        git diff-files --exit-code
++	test $? = 1
++    }'
++
++test_expect_success 'check if a changed subproject HEAD can be committed' \
++    'git commit -q -a -m "sub1 changed" && {
++	git diff-tree --exit-code HEAD^ HEAD
++	test $? = 1
++    }'
++
++test_expect_success 'check if diff-index works for subproject elements' \
++    'git diff-index --exit-code --cached save -- sub1
++    test $? = 1'
++
++test_expect_success 'check if diff-tree works for subproject elements' \
++    'git diff-tree --exit-code HEAD^ HEAD -- sub1
++    test $? = 1'
++
++test_expect_success 'check if git diff works for subproject elements' \
++    'git diff --exit-code HEAD^ HEAD
++    test $? = 1'
++
++test_expect_success 'check if clone works' \
++    'git ls-files -s >expected &&
++    git clone -l -s . cloned &&
++    ( cd cloned && git ls-files -s ) >current &&
++    git diff expected current'
++
++test_expect_success 'removing and adding subproject' \
++    'git update-index --force-remove -- sub2 &&
++    mv sub2 sub3 &&
++    git add sub3 &&
++    git commit -q -m "renaming a subproject" && {
++	git diff -M --name-status --exit-code HEAD^ HEAD
++	test $? = 1
++    }'
++
++# the index must contain the object name the HEAD of the
++# subproject sub1 was at the point "save"
++test_expect_success 'checkout in superproject' \
++    'git checkout save &&
++    git diff-index --exit-code --raw --cached save -- sub1'
++
++# just interesting what happened...
++# git diff --name-status -M save master
++
++test_done
 -- 
-Julian
-
-  ---
-Uh-oh!!  I forgot to submit to COMPULSORY URINALYSIS!
+1.5.1.1.819.gcfdd2
