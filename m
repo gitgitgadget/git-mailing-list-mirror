@@ -1,80 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: Reverting the whole index-base series
-Date: Sun, 15 Apr 2007 17:11:19 -0700
-Message-ID: <7v8xct18m0.fsf@assigned-by-dhcp.cox.net>
-References: <Pine.LNX.4.64.0704121533560.4061@woody.linux-foundation.org>
-	<7vbqhp4diw.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704151356450.5473@woody.linux-foundation.org>
-	<7vfy712uva.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704151632140.5473@woody.linux-foundation.org>
-	<7vhcrh1a2w.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704151652420.5473@woody.linux-foundation.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Weird shallow-tree conversion state, and branches of shallow
+ trees
+Date: Sun, 15 Apr 2007 19:11:17 -0500
+Message-ID: <17954.48933.484379.593657@lisa.zopyra.com>
+References: <20070412005336.GA18378@curie-int.orbis-terrarum.net>
+	<fcaeb9bf0704142257x3761ef2cie3996420b3bcd24a@mail.gmail.com>
+	<Pine.LNX.4.64.0704151115270.5473@woody.linux-foundation.org>
+	<200704152051.35639.andyparkins@gmail.com>
+	<Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 16 02:11:25 2007
+X-From: git-owner@vger.kernel.org Mon Apr 16 02:11:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdEoV-00086t-ND
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 02:11:24 +0200
+	id 1HdEoj-0008BL-TS
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 02:11:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133AbXDPALV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 20:11:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754141AbXDPALV
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 20:11:21 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:48637 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754133AbXDPALU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 20:11:20 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070416001119.MJOZ1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 15 Apr 2007 20:11:19 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id ncBK1W00P1kojtg0000000; Sun, 15 Apr 2007 20:11:20 -0400
-In-Reply-To: <Pine.LNX.4.64.0704151652420.5473@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Sun, 15 Apr 2007 16:58:24 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754141AbXDPALf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 20:11:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754147AbXDPALf
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 20:11:35 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:60288 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754141AbXDPALe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 20:11:34 -0400
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l3G0BIr25450;
+	Sun, 15 Apr 2007 18:11:18 -0600
+In-Reply-To: <Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44556>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Sunday, April 15, 2007 at 13:51:42 (-0700) Linus Torvalds writes:
+>On Sun, 15 Apr 2007, Andy Parkins wrote:
+>> 
+>> You're right that it can cause problems, but it is certainly not the 
+>> case that there are no valid uses for it.
+>
+>I'm sorry, but you're just wrong.
+>
+>There are no valid uses for it in the working tree. Full stop.
+>
+>There are valid uses to tag sources with some revision information WHEN IT 
+>LEAVES THE REVISION CONTROLLED ENVIRONMENT, but not one second before 
+>that. ...
 
-> ... That said, maybe we could make it an option. There's really a few 
-> different things we could do:
->
->  (a) what we do now - the working tree and index is totally unaffected
->  (b) do a "git-read-tree -m old new" and if that fails, fail the push.
->      This would at least ensure the *index* matches
->  (b') same as (b), but with "-u" to actually check it out
->  (c) do a "git-read-tree --reset new"
->  (c') same as (c), but with "-u"
->
-> and we could just keep the *default* the same, but allow the receiving 
-> side to say what it wants to happen.
+Not that Linus needs any back-up from me, but I second this, very
+strongly.  Decorating source code with release information is a proper
+function of release management tools, not the SCM system.  We had a
+similar argument in our company about this, sparked by a criticism of
+git for not having keyword (version number) substitution, and I argued
+that having such substitution functions in the SCM was out-of-place
+and a crutch for weak release procedures.  It's easy with a proper
+make system to put whatever information you want from the SCM into the
+release product.
 
-Yeah, throw another one in:
+This would probably be as crazy as asking for saving and restoring
+timestamps in the working tree on checkout of branches, and we know
+how insane that is...
 
- (d) what we do now, but detach HEAD.
 
-> So if somebody does
->
-> 	git push remote:my-git-tree/.git/
->
-> then we'd *always* do (a), since we pushed into the "bare" part, but if 
-> somebody did
->
-> 	git push remote:my-git-tree
->
-> and the receiver ended up doing a "cd .git", it would remember what the 
-> checked-out tree was and update that one (and no other).
-
-I suspect that this would make the pending "GIT_WORK_TREE"
-series more interesting.
+Bill
