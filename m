@@ -1,135 +1,127 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: Weird shallow-tree conversion state, and branches of shallow
-	trees
-Date: Sun, 15 Apr 2007 20:32:09 -0700
-Message-ID: <20070416033209.GI2689@curie-int.orbis-terrarum.net>
-References: <20070412005336.GA18378@curie-int.orbis-terrarum.net> <fcaeb9bf0704142257x3761ef2cie3996420b3bcd24a@mail.gmail.com> <Pine.LNX.4.64.0704151115270.5473@woody.linux-foundation.org> <200704152051.35639.andyparkins@gmail.com> <Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org> <20070416021729.GH2689@curie-int.orbis-terrarum.net> <20070416030103.GB27533@thunk.org>
+From: Seth Falcon <sethfalcon@gmail.com>
+Subject: Re: git-svn failure when symlink added in svn
+Date: Sun, 15 Apr 2007 20:13:35 -0700
+Message-ID: <m2slb1c8ps.fsf@fhcrc.org>
+References: <m2647zh2zc.fsf@gmail.com> <20070414201003.GA28389@muzzle>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="9s922KAXlWjPfK/Q"
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Andy Parkins <andyparkins@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-To: Theodore Tso <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 16 05:32:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 05:40:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdHwr-000557-BE
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 05:32:13 +0200
+	id 1HdI4e-0007dn-7y
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 05:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754400AbXDPDcH (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 23:32:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbXDPDcG
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 23:32:06 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:53505 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754400AbXDPDcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 23:32:05 -0400
-Received: (qmail 31783 invoked from network); 16 Apr 2007 03:32:02 -0000
-Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Mon, 16 Apr 2007 03:32:02 +0000
-Received: (qmail 3390 invoked by uid 10000); 15 Apr 2007 20:32:09 -0700
-Mail-Followup-To: Theodore Tso <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andy Parkins <andyparkins@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-Content-Disposition: inline
-In-Reply-To: <20070416030103.GB27533@thunk.org>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1751526AbXDPDkL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 23:40:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbXDPDkL
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 23:40:11 -0400
+Received: from MAZZITE.FHCRC.ORG ([140.107.152.11]:39275 "EHLO
+	mazzite.fhcrc.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751526AbXDPDkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 23:40:09 -0400
+X-Greylist: delayed 1610 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Apr 2007 23:40:09 EDT
+Received: from mica.fhcrc.org (MICA.FHCRC.ORG [140.107.152.12])
+	by mazzite.fhcrc.org (8.12.11.20060308/8.12.11/SuSE Linux 0.7) with ESMTP id l3G3Dx0l011235
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL)
+	for <git@vger.kernel.org>; Sun, 15 Apr 2007 20:14:00 -0700
+Received: from jade.fhcrc.org (JADE.FHCRC.ORG [140.107.42.223])
+	by mica.fhcrc.org (8.12.11.20060308/8.12.11/SuSE Linux 0.7) with ESMTP id l3G3D921017698
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 15 Apr 2007 20:13:14 -0700
+Received: from ziti (DORMOUSE.FHCRC.ORG [140.107.170.158])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jade.fhcrc.org (Postfix) with ESMTP id BE8D6E7EA;
+	Sun, 15 Apr 2007 20:13:09 -0700 (PDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.50 (darwin)
+X-PMX-Version: 5.3.1.294258, Antispam-Engine: 2.5.1.298604, Antispam-Data: 2007.4.15.200434
+X-PMX-Version: 5.3.1.294258, Antispam-Engine: 2.5.1.298604, Antispam-Data: 2007.4.15.200035
+X-FHCRC-SCANNED: Sun Apr 15 20:13:18 2007
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44566>
 
+Eric Wong <normalperson@yhbt.net> writes:
+> I can't reproduce it on Linux with ext3.  I translated your recipe into
+> a test script in the patch below.  Anybody familiar with OSX and/or HFS
+> know if there's a workaround or fix for this?
 
---9s922KAXlWjPfK/Q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for sending the test case.  It doesn't properly fail for me on
+OSX, but if I run it with -v then I do see the error (so it is failing
+on OSX and, as you found, not on Linux).
 
-On Sun, Apr 15, 2007 at 11:01:03PM -0400, Theodore Tso wrote:
-> On Sun, Apr 15, 2007 at 07:17:29PM -0700, Robin H. Johnson wrote:
-> > Nobody has addressed the single problem that I have with adding it when
-> > it's leaving the environment, and that's still of paramount concern to
-> > me. Simply put, there is a conflict between being able to add revision
-> > information of stuff leaving the environment, and those additions
-> > breaking previous checksums (which may be digitally signed, and thus
-> > breaking the signatures).
-> >=20
-> > I'll reduce it further from my previous example.
-> >=20
-> > 1. Developer commits some change to file A.
-> > 2. The checksum file is updated because A changed (the checksum file
-> >    explicitly does not contain keywords).
-> > 3. Developer signs the checksum file, and commits it.
-> >=20
-> > If during the export process (which is undertaken elsewhere, by a
-> > different person or script), file A now has an expansion applied to it,
-> > you break the checksum file, which you CANNOT redo, because you lose the
-> > developer's digital signature on the checksum file!
->=20
-> Simple, the release engineer runs a script which exports the tree,
-> expanding any keywords and updating the checksum file as necessary,
-> and then the release engineer signs the checksum file!  As has already
-> been stated, if this doesn't work, you probably don't have a well
-> defined and formal release process.=20
-The checksum file (named Manifest) we are talking about is for a single
-subdirectory, and is signed as proof that it was not modified between
-the developer and submission to the tree.=20
+I added a silly print statement to see the symlink args:
 
-As I wrote originally, this is the Gentoo distribution tree, it's NOT
-delineated by well-defined releases in the conventional sense.
+diff --git a/entry.c b/entry.c
+index d72f811..70f6402 100644
+--- a/entry.c
++++ b/entry.c
+@@ -129,6 +129,7 @@ static int write_entry(struct cache_entry *ce, char *path, struct checkout *stat
+                                return error("git-checkout-index: unable to write file %s",
+                                        path);
+                } else {
++                        fprintf(stderr, "symlink: '%s' => '%s'\n", path, new);
+                        wrote = symlink(new, path);
+                        free(new);
+                        if (wrote)
 
-There are presently 11571 Manifest files in the tree. Our tools will
-not allow commits to each package of things that radically break the
-package (semantic correctness and some automatic validation, but thinkos
-can still get through the checks).
+And so then on Linux with -v I get (after snipping most of the
+output):
 
-The 'release' process for the tree runs automatically every 30 minutes,
-and consists of more validation checks, updating a cache directory,
-producing a signed master Manifest [1] and publishing everything to the
-rsync servers.
+   * expecting success: 
+           cd git &&
+                   git svn rebase
+                   cd ..
+   
+           A       bar.txt
+   r2 = 31e734669e3fe4dbbd375e5a9f5af828a5b7ba92 (git-svn)
+           D       foo.txt
+   r3 = bd3b318730e8efc77235976abb18d04bc927bf9e (git-svn)
+           A       foo.txt
+   r4 = 2376eedcfec1de7cbe69b2bbad1c5de231a0ed0d (git-svn)
+   First, rewinding head to replay your work on top of it...
+   symlink: 'foo.txt' => 'bar.txt'
+   HEAD is now at 2376eed... add foo as symlink
+   Fast-forwarded master to refs/remotes/git-svn.
+   *   ok 4: rebase in git-svn
+   
+   * passed all 4 test(s)
 
-> Just because a developer has signed a checksum doesn't mean that the
-> tree is suitable for release; that's the job of the release engineer
-> to confirm, probably after running a set of regression test suites.
-> And in fact, with git, it's pointless for the developer to sign a
-> checksum file and then commit it, since git is already maintaining
-> checksums as an integral part of how revisions are named. =20
-The entire point of the checksums is to allow end users to validate
-content that has been exported, with only minimal tools.
+On my OSX laptop I get:
 
-[1] The master Manifest stage is only in production for the tree
-tarballs, and NOT in the rsync production at the moment, but will be
-within the next month. It exists solely to allow the detection of
-compromised mirrors.
+   * expecting success: 
+           cd git &&
+                   git svn rebase
+                   cd ..
+   
+           A       bar.txt
+   r2 = 4964f302b94ede0301b33faf5f4242c4bab3108b (git-svn)
+           D       foo.txt
+   r3 = 178a9ff3c7013d4ad8ec7defa93b91a1080c1e53 (git-svn)
+           A       foo.txt
+   r4 = 9f0bc38df8113fe1e11e47b708589d82bfa035a0 (git-svn)
+   First, rewinding head to replay your work on top of it...
+   symlink: 'foo.txt' => ''
+   error: git-checkout-index: unable to create symlink foo.txt (Invalid argument)
+   HEAD is now at 9f0bc38... add foo as symlink
+   Fast-forwarded master to refs/remotes/git-svn.
+   *   ok 4: rebase in git-svn
+   
+   * passed all 4 test(s)
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Council Member
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+If you're still with me, the curious part is what the symlink call is
+trying to do.
 
---9s922KAXlWjPfK/Q
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+  Linux:    symlink: 'foo.txt' => 'bar.txt'
+    OSX:    symlink: 'foo.txt' => ''
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+So it looks like the problem is some sort of off-by-one that happens
+well before the symlink call.  Perhaps this is enough for someone more
+knowledgable than me to have a clue where to look next?
 
-iD8DBQFGIu44PpIsIjIzwiwRAglQAKDnacdJ4H1wbiuWwSkqZBaJMeLU2QCfXiPY
-25ccsc7Zrc6onooYZclUAKU=
-=1Jim
------END PGP SIGNATURE-----
-
---9s922KAXlWjPfK/Q--
++ seth
