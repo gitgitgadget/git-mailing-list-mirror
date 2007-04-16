@@ -1,74 +1,51 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Weird shallow-tree conversion state, and branches of shallow
- trees
-Date: Sun, 15 Apr 2007 19:11:17 -0500
-Message-ID: <17954.48933.484379.593657@lisa.zopyra.com>
-References: <20070412005336.GA18378@curie-int.orbis-terrarum.net>
-	<fcaeb9bf0704142257x3761ef2cie3996420b3bcd24a@mail.gmail.com>
-	<Pine.LNX.4.64.0704151115270.5473@woody.linux-foundation.org>
-	<200704152051.35639.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] Add -q option to "git rm" to suppress output when there aren't errors.
+Date: Sun, 15 Apr 2007 17:13:52 -0700
+Message-ID: <7v4pnh18hr.fsf@assigned-by-dhcp.cox.net>
+References: <20070416000408.GA19107@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 16 02:11:38 2007
+Cc: git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Mon Apr 16 02:13:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdEoj-0008BL-TS
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 02:11:38 +0200
+	id 1HdEqy-0000Qo-F6
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 02:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141AbXDPALf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 20:11:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754147AbXDPALf
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 20:11:35 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60288 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754141AbXDPALe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 20:11:34 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l3G0BIr25450;
-	Sun, 15 Apr 2007 18:11:18 -0600
-In-Reply-To: <Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1754136AbXDPANx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 20:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754147AbXDPANx
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 20:13:53 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:34565 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754136AbXDPANx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 20:13:53 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070416001352.JLAB1271.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 15 Apr 2007 20:13:52 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ncDs1W00R1kojtg0000000; Sun, 15 Apr 2007 20:13:52 -0400
+In-Reply-To: <20070416000408.GA19107@midwinter.com> (Steven Grimm's message of
+	"Sun, 15 Apr 2007 17:04:08 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44557>
 
-On Sunday, April 15, 2007 at 13:51:42 (-0700) Linus Torvalds writes:
->On Sun, 15 Apr 2007, Andy Parkins wrote:
->> 
->> You're right that it can cause problems, but it is certainly not the 
->> case that there are no valid uses for it.
->
->I'm sorry, but you're just wrong.
->
->There are no valid uses for it in the working tree. Full stop.
->
->There are valid uses to tag sources with some revision information WHEN IT 
->LEAVES THE REVISION CONTROLLED ENVIRONMENT, but not one second before 
->that. ...
+Steven Grimm <koreth@midwinter.com> writes:
 
-Not that Linus needs any back-up from me, but I second this, very
-strongly.  Decorating source code with release information is a proper
-function of release management tools, not the SCM system.  We had a
-similar argument in our company about this, sparked by a criticism of
-git for not having keyword (version number) substitution, and I argued
-that having such substitution functions in the SCM was out-of-place
-and a crutch for weak release procedures.  It's easy with a proper
-make system to put whatever information you want from the SCM into the
-release product.
+> +-q::
+> +	Don't output the names of the files being removed, and exit
+> +	with a zero status even if no files matched.
+> +
 
-This would probably be as crazy as asking for saving and restoring
-timestamps in the working tree on checkout of branches, and we know
-how insane that is...
-
-
-Bill
+Suppressing output is understandable and probably is a useful
+thing to do, but I do not see a justification to tie that
+quietness to making the status unuable...
