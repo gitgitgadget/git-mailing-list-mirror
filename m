@@ -1,180 +1,88 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Tests for core subproject support
-Date: Mon, 16 Apr 2007 22:39:47 +0200
-Message-ID: <20070416203947.GA22872@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Any objectsions to enhancing git-log to show tags/branch heads?
+Date: Mon, 16 Apr 2007 16:46:59 -0400
+Message-ID: <20070416204659.GI27533@thunk.org>
+References: <E1HdQah-0008Q2-7E@candygram.thunk.org> <7vy7kstdom.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <junkio@cox.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 22:39:57 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 22:47:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdXzP-000309-5U
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 22:39:55 +0200
+	id 1HdY6U-0005ib-IU
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 22:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753544AbXDPUjv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 16:39:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753586AbXDPUjv
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 16:39:51 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:43520 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753554AbXDPUju (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 16:39:50 -0400
-Received: from tigra.home (Fca36.f.strato-dslnet.de [195.4.202.54])
-	by post.webmailer.de (mrclete mo48) (RZmta 5.5)
-	with ESMTP id I0015cj3GI43w4 ; Mon, 16 Apr 2007 22:39:48 +0200 (MEST)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 73992277BD;
-	Mon, 16 Apr 2007 22:39:48 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id E332CD439; Mon, 16 Apr 2007 22:39:47 +0200 (CEST)
+	id S1753654AbXDPUrL (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 16:47:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754252AbXDPUrL
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 16:47:11 -0400
+Received: from thunk.org ([69.25.196.29]:40342 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753654AbXDPUrK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 16:47:10 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1HdYCm-0001QV-MS; Mon, 16 Apr 2007 16:53:45 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1HdY6F-0004zY-Gc; Mon, 16 Apr 2007 16:46:59 -0400
 Content-Disposition: inline
+In-Reply-To: <7vy7kstdom.fsf@assigned-by-dhcp.cox.net>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCT8nXg==
-X-RZG-CLASS-ID: mo07
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44697>
 
-The following tests available:
+On Mon, Apr 16, 2007 at 10:46:33AM -0700, Junio C Hamano wrote:
+> I cannot comment on performance impact without knowing exactly
+> what semantics is being proposed.
+> 
+>  (1) If a commit is not directly pointed by any ref, would it
+>      get HEAD: or TAG: line, perhaps ala 'git-describe'?
 
-- create subprojects: create a directory in the superproject,
-  initialize a git repo in it, and try adding it in super project.
-  Make a commit in superproject
+No.
 
-- check if fsck ignores the subprojects: it just should give no errors
+>  (2) If a commit is at the tip of two branches, what happens?
+>      Would it get two HEAD: lines?
 
-- check if commit in a subproject detected: make a commit in
-  subproject, git-diff-files in superproject should detect it
+Yup, I was assuming it would get two Head: lines, one for each head.
 
-- check if a changed subproject HEAD can be committed: try
-  "git-commit -a" in superproject. It should commit changed
-  HEAD of a subproject
+>  (3) Same question as (2) when a commit is tagged with two tags,
+>      or at the tip of a branch and pointed by a tag.
 
-- check if diff-index works for subproject elements: compare the index
-  (changed by previuos tests) with the initial commit (which created
-  two subprojects). Should show a change for the recently changed subproject
+Two tag: lines, one for each tag.  Mercurial's "hg log" does this
+today, by the way, and I've found it to be very handy since it makes
+it easier to find various tagged releases when browsing the revision
+history.
 
-- check if diff-tree works for subproject elements: do the same, just use
-  git-diff-tree. This test is somewhat redundant, I just added it for
-  completeness (diff, diff-files, and diff-index are already used)
+> As to the impact on people's existing scripts that read git-log,
+> I think changing --pretty=anything would cause breakage for
+> somebody.  A new --pretty=format: tag would be the least
+> destabilizing, but I dunno.
 
-- check if git diff works for subproject elements: try to limit
-  the diff for the name of a subproject in superproject:
-     git diff HEAD^ HEAD -- subproject
+When I write my shell scripts and parse "Foo: " headers I always
+explicitly grep out the headers I want, and assumin a blank line after
+the headers, because I expect that future versions might add new
+headers, and I want my code to be robust; but I can imagine there
+might be some less-than-robust scripts out there....
 
-- check if clone works: try a clone of superproject and compare
-  "git ls-files -s" output in superproject and cloned repo
+> But the fact that you kill gitk before it stops drawing suggests
+> that you are interested in recent commits only?  What is exactly the
+> use case?
 
-- removing and adding subproject: rename test. Currently implemented
-  as "git-update-index --force-remove", "mv" and "git-add".
+Well, usually what I'm interested in is near the tip, but not always.
+In general, seeing the anchor points is part of the problem, and so
+"git log | git -p name-rev --stdin" is useful, although it isn't as
+useful as "gitk" when a revision has multiple HEAD or TAG's associated
+with it, and git-name-rev doesn't know which one(s) would be of
+greatest interest.
 
-- checkout in superproject: try to checkout the initial commit
-
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
-
-I should have missed something, I have that feeling...
-
- t/t3040-subprojects-basic.sh |   85 ++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 85 insertions(+), 0 deletions(-)
- create mode 100755 t/t3040-subprojects-basic.sh
-
-diff --git a/t/t3040-subprojects-basic.sh b/t/t3040-subprojects-basic.sh
-new file mode 100755
-index 0000000..79b9f23
---- /dev/null
-+++ b/t/t3040-subprojects-basic.sh
-@@ -0,0 +1,85 @@
-+#!/bin/sh
-+
-+test_description='Basic subproject functionality'
-+. ./test-lib.sh
-+
-+test_expect_success 'Super project creation' \
-+    ': >Makefile &&
-+    git add Makefile &&
-+    git commit -m "Superproject created"'
-+
-+
-+cat >expected <<EOF
-+:000000 160000 00000... A	sub1
-+:000000 160000 00000... A	sub2
-+EOF
-+test_expect_success 'create subprojects' \
-+    'mkdir sub1 &&
-+    ( cd sub1 && git init && : >Makefile && git add * &&
-+    git commit -q -m "subproject 1" ) &&
-+    mkdir sub2 &&
-+    ( cd sub2 && git init && : >Makefile && git add * &&
-+    git commit -q -m "subproject 2" ) &&
-+    git update-index --add sub1 &&
-+    git add sub2 &&
-+    git commit -q -m "subprojects added" &&
-+    git diff-tree --abbrev=5 HEAD^ HEAD |cut -d" " -f-3,5- >current &&
-+    git diff expected current'
-+
-+git branch save HEAD
-+
-+test_expect_success 'check if fsck ignores the subprojects' \
-+    'git fsck --full'
-+
-+test_expect_success 'check if commit in a subproject detected' \
-+    '( cd sub1 &&
-+    echo "all:" >>Makefile &&
-+    echo "	true" >>Makefile &&
-+    git commit -q -a -m "make all" ) && {
-+        git diff-files --exit-code
-+	test $? = 1
-+    }'
-+
-+test_expect_success 'check if a changed subproject HEAD can be committed' \
-+    'git commit -q -a -m "sub1 changed" && {
-+	git diff-tree --exit-code HEAD^ HEAD
-+	test $? = 1
-+    }'
-+
-+test_expect_success 'check if diff-index works for subproject elements' \
-+    'git diff-index --exit-code --cached save -- sub1
-+    test $? = 1'
-+
-+test_expect_success 'check if diff-tree works for subproject elements' \
-+    'git diff-tree --exit-code HEAD^ HEAD -- sub1
-+    test $? = 1'
-+
-+test_expect_success 'check if git diff works for subproject elements' \
-+    'git diff --exit-code HEAD^ HEAD
-+    test $? = 1'
-+
-+test_expect_success 'check if clone works' \
-+    'git ls-files -s >expected &&
-+    git clone -l -s . cloned &&
-+    ( cd cloned && git ls-files -s ) >current &&
-+    git diff expected current'
-+
-+test_expect_success 'removing and adding subproject' \
-+    'git update-index --force-remove -- sub2 &&
-+    mv sub2 sub3 &&
-+    git add sub3 &&
-+    git commit -q -m "renaming a subproject" && {
-+	git diff -M --name-status --exit-code HEAD^ HEAD
-+	test $? = 1
-+    }'
-+
-+# the index must contain the object name the HEAD of the
-+# subproject sub1 was at the point "save"
-+test_expect_success 'checkout in superproject' \
-+    'git checkout save &&
-+    git diff-index --exit-code --raw --cached save -- sub1'
-+
-+# just interesting what happened...
-+# git diff --name-status -M save master
-+
-+test_done
--- 
-1.5.1.1.819.gcfdd2
+						- Ted
