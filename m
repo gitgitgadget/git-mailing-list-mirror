@@ -1,80 +1,101 @@
-From: James Cloos <cloos@jhcloos.com>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
 Subject: Re: parsecvs repository moved...
-Date: Mon, 16 Apr 2007 07:21:30 -0400
-Message-ID: <m3abx8womm.fsf@lugabout.jhcloos.org>
-References: <46a038f90704160032m9cfee8ai9830c81dd4a64cd6@mail.gmail.com>
+Date: Mon, 16 Apr 2007 04:48:40 -0700
+Message-ID: <20070416114840.GA1562@curie-int.orbis-terrarum.net>
+References: <46a038f90704160032m9cfee8ai9830c81dd4a64cd6@mail.gmail.com> <20070416075829.GK2689@curie-int.orbis-terrarum.net> <46a038f90704160139o4a474876qfd5b3a6e21df279f@mail.gmail.com> <20070416084238.GL2689@curie-int.orbis-terrarum.net> <46a038f90704160151q2121086bx1b224804d93ba481@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Keith Packard" <keithp@keithp.com>
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 13:22:20 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="FCuugMFkClbJLl1L"
+To: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 16 13:48:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdPHo-0007nm-97
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 13:22:20 +0200
+	id 1HdPh6-0001hk-7V
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 13:48:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030357AbXDPLWQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 07:22:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030419AbXDPLWQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 07:22:16 -0400
-Received: from eagle.jhcloos.com ([207.210.242.212]:3512 "EHLO
-	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030357AbXDPLWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 07:22:15 -0400
-Received: by eagle.jhcloos.com (Postfix, from userid 10)
-	id 54F9340073; Mon, 16 Apr 2007 11:22:14 +0000 (UTC)
-Received: by lugabout.jhcloos.org (Postfix, from userid 500)
-	id 19570259AD7; Mon, 16 Apr 2007 11:21:54 +0000 (UTC)
-In-Reply-To: <46a038f90704160032m9cfee8ai9830c81dd4a64cd6@mail.gmail.com>
-	(Martin Langhoff's message of "Mon\, 16 Apr 2007 19\:32\:58 +1200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/23.0.0 (gnu/linux)
-Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMnRFWHRUaXRsZQAvbWF4dG9y
- L2Nsb29zL2luY29taW5nLzIwMDQvMDIvUFdHL0pIQzE2LnBuZyJMlEwAAAAadEVYdFNvZnR3YXJl
- AEdOT01FIEljb24gRWRpdG9ynioKbAAAAHFJREFUeJzFk8EKwCAMQ1/ED9cvzw6iuM0N9WIvDTWE
- 1KjAxmKnLBEBjLcEIBCeI2nccy5YKrjxwbbvAvZ37zlo4GB9iRMC/cq/AppItwmMyJ5I98wd9G7P
- xxgrSKlYS2lMrOcV13o95aVSKA7E5ndGXG+IIzcl4BNfAAAAAElFTkSuQmCC
-Copyright: Copyright 2007 James Cloos
-OpenPGP-Key: 1024D/ED7DAEA6
-OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
-X-Hashcash: 1:23:070416:git@vger.kernel.org::BKSSDcPyM2ZGy4bv:0000000000000000000000000000000000000000000xgO
-X-Hashcash: 1:23:070416:martin.langhoff@gmail.com::yi5FwRphKWfhIIOF:000000000000000000000000000000000000Eg84
-X-Hashcash: 1:23:070416:keithp@keithp.com::k/egIgGnapu2WYys:00000000000000000000000000000000000000000000ROpl
+	id S1030484AbXDPLsX (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 07:48:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030495AbXDPLsX
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 07:48:23 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:33689 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1030484AbXDPLsX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 07:48:23 -0400
+Received: (qmail 22845 invoked from network); 16 Apr 2007 11:48:21 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Mon, 16 Apr 2007 11:48:21 +0000
+Received: (qmail 5106 invoked by uid 10000); 16 Apr 2007 04:48:40 -0700
+Content-Disposition: inline
+In-Reply-To: <46a038f90704160151q2121086bx1b224804d93ba481@mail.gmail.com>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44640>
 
->>>>> "Martin" == Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-Martin> I've just found that parsecvs.git repo has moved again... to
-Martin> http://anongit.freedesktop.org/git/users/keithp/repos/parsecvs.git
+--FCuugMFkClbJLl1L
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Martin> Used to be at
-Martin> - git://git.freedesktop.org/~keithp/parsecvs
-Martin> - git://anongit.freedesktop.org/git/users/keithp/parsecvs
+The entirety of the subject is not worth further discussion. Beyond this
+email, let's get back to the point of this list guys: Git development!
+The keyword expansion flame-war is more on topic :-P
 
-The version at /git/users/keithp/repos/parsecvs.git shows its most
-recent commit at Sat Sep 9 15:07:11 2006 -0700.
+On Mon, Apr 16, 2007 at 08:51:13PM +1200, Martin Langhoff wrote:
+>  On 4/16/07, Robin H. Johnson <robbat2@gentoo.org> wrote:
+> > No, it's correct in this case. I have it configured to collapse any
+> > occurrence of my address into the list address, because I'm subscribed
+> > to the list, and prefer to not receive duplicates.
+>  OTOH you _are_ breaking the reply / reply-all convention that most
+>  people use and (almost) all MUAs handle correctly.
+I turned off Mutt's followup_to for this list now.
 
-The version at ~keithp/parsecvs.git shows its most recent commit
-at Wed Apr 4 21:35:23 2007 -0700.
+Simply put, MUAs have been getting it wrong for so long, that the entire
+thing is a minefield. The Procmail-Tips documentation
+(http://pm-doc.sourceforge.net/pm-tips-body.html#replyto_header)
+has perhaps one of the best summaries of it:
+] The way to solve most reply problems is to encourage the responder to
+] actually think about where the message needs to go, and make it easy for
+] him to get the behavior he wants.
+It's the entirely of do what I mean, not what I say. Is my mail a reply
+or a followup? Is it brash enough that I should make sure it goes only
+to the right person?
 
-(In each case for the master branch.  Both have master, master-old,
-merge-flat and rcs-builtin branches.)
+>  If you'd rather not receive duplicates, you can probably filter out
+>  for duplicates in by message-id at your MUA/procmail.
+If it weren't for broken MUAs, then yes, this would solve it. The best
+implementations of this so far have been for uniques on the tuple of
+(From, Message-ID, Subject[prefixes removed], Fuzzy body).
 
-So it looks like git://people.freedesktop.org/~keithp/parsecvs is
-the current version.
+> > Gentoo Linux Developer & Council Member
+>  Oh, well. And I thought reply-to flamewars were exclusive to
+>  debian-devel. They are silly enough there.
+I'm not trying to start a flamewar, I get enough of those on gentoo-dev
+already ;-).
 
-I don't see any way to access that repo over http, though.  Only
-via git-daemon.
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
 
-The gitweb URL is:
+--FCuugMFkClbJLl1L
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-http://gitweb.freedesktop.org/?p=users/keithp/parsecvs.git
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
 
--JimC
--- 
-James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
+iD8DBQFGI2KYPpIsIjIzwiwRAgkWAJ4hXToH6o9pu7bQhtO+s7E+D7/+zQCfa0mF
+hMWcIW9l25mEUOerr8I336E=
+=38T3
+-----END PGP SIGNATURE-----
+
+--FCuugMFkClbJLl1L--
