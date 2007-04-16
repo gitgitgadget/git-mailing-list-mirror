@@ -1,68 +1,80 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add -q option to "git rm" to suppress output when there aren't errors.
-Date: Mon, 16 Apr 2007 09:54:43 +0200
-Message-ID: <81b0412b0704160054gd31f5aak961de15dbcba3956@mail.gmail.com>
-References: <20070416000408.GA19107@midwinter.com>
-	 <7v4pnh18hr.fsf@assigned-by-dhcp.cox.net>
-	 <4622C0AC.8090904@midwinter.com>
-	 <7vps65yvc1.fsf@assigned-by-dhcp.cox.net>
+From: "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: parsecvs repository moved...
+Date: Mon, 16 Apr 2007 00:58:29 -0700
+Message-ID: <20070416075829.GK2689@curie-int.orbis-terrarum.net>
+References: <46a038f90704160032m9cfee8ai9830c81dd4a64cd6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Steven Grimm" <koreth@midwinter.com>, git@vger.kernel.org
-To: "Junio C Hamano" <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 16 09:54:49 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="HcXnUX77nabWBLF4"
+Cc: Keith Packard <keithp@keithp.com>
+To: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Apr 16 09:58:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdM2y-0008Fi-Qw
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 09:54:49 +0200
+	id 1HdM6U-0001G5-Lf
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 09:58:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932526AbXDPHyp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 03:54:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932431AbXDPHyp
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 03:54:45 -0400
-Received: from an-out-0708.google.com ([209.85.132.248]:58082 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932526AbXDPHyp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 03:54:45 -0400
-Received: by an-out-0708.google.com with SMTP id b33so1639677ana
-        for <git@vger.kernel.org>; Mon, 16 Apr 2007 00:54:44 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tHJzPNvrbnU4FmWGQslWwczHwCHFfe1z3C59rp12z2FvOFQf24tDeWt/0mCJCiUdfA0uTSofKm1qUqaeeV+wEK1/UfnoFPAEl75lPl9/n3oFwsycGi2SE3ZjLDZw+IP0K4y4WKekZWqeDXcMck/FvYzvzLiri47JphDHM7gjp3E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hrFy2BSRiyt2VfqI3Rm3kgT/p4DwZDgs0+EclrtDmQHVL8XvWxlX0c83cMwymVfAdsyTPLD8FJiyWBwnIKSEPNh+LQan7XmeCIQu+b8EmTpUhgMyYt26MI5F4Uu1/XDL6WvV3wNn8rSx9edYflc9/Tj3ln6BShvmlPiPAUc+gnM=
-Received: by 10.100.31.2 with SMTP id e2mr4280054ane.1176710083732;
-        Mon, 16 Apr 2007 00:54:43 -0700 (PDT)
-Received: by 10.100.86.14 with HTTP; Mon, 16 Apr 2007 00:54:43 -0700 (PDT)
-In-Reply-To: <7vps65yvc1.fsf@assigned-by-dhcp.cox.net>
+	id S964796AbXDPH6H (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 03:58:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964792AbXDPH6H
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 03:58:07 -0400
+Received: from b01.ext.isohunt.com ([208.71.112.51]:42804 "EHLO
+	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S964834AbXDPH6F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 03:58:05 -0400
+Received: (qmail 16119 invoked from network); 16 Apr 2007 07:58:04 -0000
+Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
+  (smtp-auth username robbat2@isohunt.com, mechanism login)
+  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Mon, 16 Apr 2007 07:58:04 +0000
+Received: (qmail 8313 invoked by uid 10000); 16 Apr 2007 00:58:29 -0700
+Mail-Followup-To: Martin Langhoff <martin.langhoff@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Keith Packard <keithp@keithp.com>
 Content-Disposition: inline
+In-Reply-To: <46a038f90704160032m9cfee8ai9830c81dd4a64cd6@mail.gmail.com>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44612>
 
-On 4/16/07, Junio C Hamano <junkio@cox.net> wrote:
-> What does it have to do with anything?
->
-> Saying "git rm --quiet foo" from the command line, wishing to
-> supress the output, is very understandable.
->
-> Saying "git rm --ignore-unmatch foo bar baz", wishing to remove
-> bar (which exists) even when foo does not exist, is also very
-> understandable.
 
-How about doing what rm(1) does? Something like "rm -f"?
-It returns 0 even if nothing given in command-line, but any
-error (like permissions) is reported and the status is not 0.
+--HcXnUX77nabWBLF4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-It is often that it is not the commands output which is
-annoying, but the _unwanted_ output. No one wants
-to see "rm 'file'". No one besides people debugging
-git-rm (you can't even use it for copy and paste of the filenames:
-it has "rm"'s in the text).
+On Mon, Apr 16, 2007 at 07:32:58PM +1200, Martin Langhoff wrote:
+>  I've just found that parsecvs.git repo has moved again... to
+>  http://anongit.freedesktop.org/git/users/keithp/repos/parsecvs.git
+It seems to be broken on there?
+
+$ git clone http://anongit.freedesktop.org/git/users/keithp/repos/parsecvs.=
+git
+Initialized empty Git repository in /code/vcs/parsecvs/.git/
+Cannot get remote repository information.
+Perhaps git-update-server-info needs to be run there?
+
+--=20
+Robin Hugh Johnson
+Gentoo Linux Developer & Council Member
+E-Mail     : robbat2@gentoo.org
+GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+
+--HcXnUX77nabWBLF4
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.2 (GNU/Linux)
+Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+
+iD8DBQFGIyylPpIsIjIzwiwRAmn/AKDaqr60bgWOoUEHseeq1K0XRfmJ1wCeL3Ov
+l5kxmrkXmgSbSMVBk8nUp9I=
+=7no8
+-----END PGP SIGNATURE-----
+
+--HcXnUX77nabWBLF4--
