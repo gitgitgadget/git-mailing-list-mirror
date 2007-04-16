@@ -1,108 +1,180 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: What's in git.git (stable)
-Date: Sun, 15 Apr 2007 18:27:42 -0700
-Message-ID: <7vfy71yupd.fsf@assigned-by-dhcp.cox.net>
+Subject: What's cooking in git.git (topics)
+Date: Sun, 15 Apr 2007 18:53:49 -0700
+Message-ID: <7vr6qlxexe.fsf@assigned-by-dhcp.cox.net>
+References: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 03:27:50 2007
+X-From: git-owner@vger.kernel.org Mon Apr 16 03:53:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdG0R-00078a-5e
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 03:27:47 +0200
+	id 1HdGPi-0006tu-Sv
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 03:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754235AbXDPB1o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Sun, 15 Apr 2007 21:27:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754268AbXDPB1o
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 21:27:44 -0400
-Received: from fed1rmmtao101.cox.net ([68.230.241.45]:42984 "EHLO
-	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754235AbXDPB1n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Apr 2007 21:27:43 -0400
+	id S1754282AbXDPBxv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 15 Apr 2007 21:53:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754283AbXDPBxv
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 21:53:51 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:50074 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754279AbXDPBxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Apr 2007 21:53:50 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao101.cox.net
+          by fed1rmmtao106.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070416012744.LXLV1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 15 Apr 2007 21:27:44 -0400
+          id <20070416015349.OBJJ1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 15 Apr 2007 21:53:49 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id ndTi1W00l1kojtg0000000; Sun, 15 Apr 2007 21:27:43 -0400
-X-maint-at: 5f2e1df5c9fa7856e5d7dda7d6c618ed08822b82
+	id ndtp1W00m1kojtg0000000; Sun, 15 Apr 2007 21:53:50 -0400
 X-master-at: 7a1593972c19df26aee7d14c7d7c8c4fce24fb26
+X-next-at: 88bdbb881e223ae39039be804e87094505f6d998
+In-Reply-To: <7vodly0xn7.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Mon, 09 Apr 2007 01:17:48 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44561>
 
-Perhaps we would need 1.5.1.2 to push out a few accumulated
-small fixes on 'maint'.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-----------------------------------------------------------------
+* lt/gitlink (Sun Apr 15 11:14:28 2007 -0700) 17 commits
+ + Expose subprojects as special files to "git diff" machinery
+ + Fix some "git ls-files -o" fallout from gitlinks
+ + Teach "git-read-tree -u" to check out submodules as a directory
+ + Teach git list-objects logic to not follow gitlinks
+ + Fix gitlink index entry filesystem matching
+ + Teach "git-read-tree -u" to check out submodules as a directory
+ + Teach git list-objects logic not to follow gitlinks
+ + Don't show gitlink directories when we want "other" files
+ + Teach git-update-index about gitlinks
+ + Teach directory traversal about subprojects
+ + Fix thinko in subproject entry sorting
+ + Teach core object handling functions about gitlinks
+ + Teach "fsck" not to follow subproject links
+ + Add "S_IFDIRLNK" file mode infrastructure for git links
+ + Add 'resolve_gitlink_ref()' helper function
+ + Avoid overflowing name buffer in deep directory structures
+ + diff-lib: use ce_mode_from_stat() rather than messing with modes
+   manually
 
-* The 'maint' branch has these fixes since v1.5.1.1.
+Everybody loves when Linus jumps in and gets the ball rolling
+for a topic that has been only an idle-talk wishlist with a
+minimum set of patches.  Let's see where this goes.
 
- Alex Riesen (2):
-  Use rev-list --reverse in git-rebase.sh
-  Document -g (--walk-reflogs) option of git-log
+* jc/attr (Sat Apr 14 21:27:20 2007 -0400) 10 commits
+ - Document git-check-attr
+ - Change attribute negation marker from '!' to '-'.
+ - Define a built-in attribute macro "binary".
+ - attribute macro support
+ + Makefile: add patch-ids.h back in.
+ + Fix 'diff' attribute semantics.
+ + Fix 'crlf' attribute semantics.
+ + Teach 'diff' about 'diff' attribute.
+ + Define 'crlf' attribute.
+ + Add basic infrastructure to assign attributes to paths
 
- Eygene Ryabinkin (2):
-  Teach gitk to use the user-defined UI font everywhere.
-  Improve look-and-feel of the gitk tool.
+... and I tried to learn from that.  I do not know how
+successful I was, though.
 
- Frank Lichtenheld (4):
-  config.txt: Document gitcvs.allbinary
-  config.txt: Document core.autocrlf
-  config.txt: Change pserver to server in description of gitcvs.*
-  config.txt: Fix grammatical error in description of http.noEPSV
+But I earlier said that one of the focus of 1.5.2 should be the
+gitattributes support.
 
- Jim Meyering (1):
-  sscanf/strtoul: parse integers robustly
+* fl/cvsserver (Fri Apr 13 18:13:42 2007 +0200) 12 commits
+ + config.txt: Add gitcvs.db* variables
+ + cvsserver: Document the GIT branches -> CVS modules mapping more
+   prominently
+ + cvsserver: Reword documentation on necessity of write access
+ + cvsserver: Allow to "add" a removed file
+ + cvsserver: Add asciidoc documentation for new database backend
+   configuration
+ + cvsserver: Corrections to the database backend configuration
+ + cvsserver: Use DBI->table_info instead of DBI->tables
+ + cvsserver: Abort if connect to database fails
+ + cvsserver: Make the database backend configurable
+ + cvsserver: Allow to override the configuration per access method
+ + cvsserver: Handle three part keys in git config correctly
+ + cvsserver: Introduce new state variable 'method'
 
- Junio C Hamano (1):
-  Do not default to --no-index when given two directories.
+Waiting for Ack's from the field, which unfortunately I haven't
+seen any yet.
 
- Linus Torvalds (1):
-  git-quiltimport complaining yet still working
+* np/pack (Tue Apr 10 22:54:36 2007 -0400) 16 commits
+ + clean up add_object_entry()
+ + tests for various pack index features
+ + use test-genrandom in tests instead of /dev/urandom
+ + simple random data generator for tests
+ + validate reused pack data with CRC when possible
+ + allow forcing index v2 and 64-bit offset treshold
+ + pack-redundant.c: learn about index v2
+ + show-index.c: learn about index v2
+ + sha1_file.c: learn about index version 2
+ + index-pack: learn about pack index version 2
+ + pack-objects: learn about pack index version 2
+ + compute object CRC32 with index-pack
+ + compute a CRC32 for each object as stored in a pack
+ + add overflow tests on pack offset variables
+ + make overflow test on delta base offset work regardless of
+   variable size
+ + get rid of num_packed_objects()
 
- Matthias Lederhofer (1):
-  handle_options in git wrapper miscounts the options it handled.
+Haven't seen any breakage report so far.  After giving them a
+final look, let's push this out to 'master' soonish.
 
- Michael Spang (1):
-  git-blame: Fix overrun in fake_working_tree_commit()
+* js/wrap-log (Sun Apr 8 01:28:00 2007 -0700) 2 commits
+ + shortlog -w: make wrap-line behaviour optional.
+ + Use print_wrapped_text() in shortlog
 
+I do not think it breaks anything but I do not think we are in a
+hurry, either.
 
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+* jc/read-tree-df (Sat Apr 7 07:17:35 2007 -0700) 5 commits
+ + t3030: merge-recursive backend test.
+ + merge-recursive: handle D/F conflict case more carefully.
+ + merge-recursive: do not barf on "to be removed" entries.
+ + Treat D/F conflict entry more carefully in unpack-
+   trees.c::threeway_merge()
+ + t1000: fix case table.
 
- Frank Lichtenheld (2):
-  gitweb: Allow forks with project list file
-  gitweb: Allow configuring the default projects order and add order 'n=
-one'
+This series should not matter in practice as I do not think any
+project that changes between directory and file is sane, but
+people are known to do insane things, and this would help them.
 
- Jim Meyering (1):
-  sscanf/strtoul: parse integers robustly
+Any comments for or against their graduation to 'master'?
 
- Junio C Hamano (5):
-  Add %m to '--pretty=3Dformat:'
-  Refactor patch-id filtering out of git-cherry and git-format-patch.
-  git-log --cherry-pick A...B
-  Documentation: --cherry-pick
-  Fix git {log,show,...} --pretty=3Demail
+* jc/quickfetch (Thu Apr 5 03:22:55 2007 -0700) 2 commits
+ + git-fetch: use fetch--tool pick-rref to avoid local fetch from
+   alternate
+ + git-fetch--tool pick-rref
 
- Luiz Fernando N. Capitulino (2):
-  ident.c: Use const qualifier for 'struct passwd' parameters
-  ident.c: Use size_t (instead of int) to store sizes
+This would make fetching from your alternate more efficient by
+not fetching any objects (because by definition it is not
+necessary).  It doubly matters in this case performance-wise as
+the recent code verifies fetched objects that were already in
+the repository, which tends to be expensive.
 
- Ren=C3=A9 Scharfe (1):
-  git-archive: make tar the default format
+* jc/the-index (Sun Apr 1 23:26:07 2007 -0700) 2 commits
+ - Make read-cache.c "the_index" free.
+ - Move index-related variables into a structure.
 
- Robin H. Johnson (2):
-  Add custom subject prefix support to format-patch (take 3)
-  Add testcase for format-patch --subject-prefix (take 3)
+Sort of "libification", which nobody seems to need right now,
+but I did it already and there is no reason to throw away.
 
- Shawn O. Pearce (1):
-  Don't yap about merge-subtree during make
+* jc/blame (Tue Mar 27 01:58:01 2007 -0700) 4 commits
+ - git-blame: optimize get_origin() from linear search to hash-
+   lookup.
+ - git-blame: pass "struct scoreboard *" pointers around.
+ - blame: lift structure definitions up
+ - blame -s: suppress author name and time.
+* jc/diff (Mon Dec 25 01:08:50 2006 -0800) 2 commits
+ - test-para: combined diff between HEAD, index and working tree.
+ - para-walk: walk n trees, index and working tree in parallel
+
+Stalled.
