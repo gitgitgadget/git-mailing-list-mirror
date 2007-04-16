@@ -1,78 +1,73 @@
-From: Andrew Ruder <andy@aeruder.net>
-Subject: [PATCH] Update git-apply documentation
-Date: Mon, 16 Apr 2007 01:20:40 -0500
-Message-ID: <20070416062040.GD19759@localdomain>
-References: <20070416053525.GA18821@localdomain>
+From: Raimund Bauer <ray007@gmx.net>
+Subject: Re: [PATCH] Fix 'crlf' attribute semantics.
+Date: Mon, 16 Apr 2007 08:21:10 +0200
+Message-ID: <1176704470.5966.16.camel@localhost>
+References: <7vr6qod4wh.fsf@assigned-by-dhcp.cox.net>
+	 <200704131033.15751.andyparkins@gmail.com>
+	 <7vejmm78qp.fsf@assigned-by-dhcp.cox.net>
+	 <7vvefy5tzo.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0704141839030.5473@woody.linux-foundation.org>
+	 <7vr6qm5r73.fsf@assigned-by-dhcp.cox.net>
+	 <Pine.LNX.4.64.0704142103210.5473@woody.linux-foundation.org>
+	 <7vr6ql1ben.fsf@assigned-by-dhcp.cox.net> <20070415233722.GA20222@hermes>
+	 <7vd52519vj.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Tom Prince <tom.prince@ualberta.net>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 16 08:20:50 2007
+X-From: git-owner@vger.kernel.org Mon Apr 16 08:21:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdKa1-0008Ff-69
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 08:20:49 +0200
+	id 1HdKaT-0008R8-VZ
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 08:21:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753974AbXDPGUm (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 02:20:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752274AbXDPGUm
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 02:20:42 -0400
-Received: from www.aeruder.net ([65.254.53.245]:4084 "EHLO aeruder.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753974AbXDPGUl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 02:20:41 -0400
-Received: from aeruder.net (localhost [127.0.0.1])
-	by aeruder.net (Postfix) with ESMTP id D1F1140183;
-	Mon, 16 Apr 2007 01:20:40 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <20070416053525.GA18821@localdomain>
-User-Agent: Mutt/1.5.11
+	id S1752274AbXDPGVP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 02:21:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753644AbXDPGVO
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 02:21:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42121 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752274AbXDPGVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 02:21:14 -0400
+Received: (qmail invoked by alias); 16 Apr 2007 06:21:12 -0000
+Received: from p54988CFB.dip0.t-ipconnect.de (EHLO [192.168.178.21]) [84.152.140.251]
+  by mail.gmx.net (mp019) with SMTP; 16 Apr 2007 08:21:12 +0200
+X-Authenticated: #20693823
+X-Provags-ID: V01U2FsdGVkX19VTIgqlzlVrNCqbXTT6ofICIwaGHDXjPUsTgWNlv
+	QlGH2Q0LcItoDB
+In-Reply-To: <7vd52519vj.fsf@assigned-by-dhcp.cox.net>
+X-Mailer: Evolution 2.8.1 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44593>
 
-Document -v (short form of --verbose).  Redo usage
-to not wrap on 80 column terminal with typical
-settings.
+On Sun, 2007-04-15 at 16:44 -0700, Junio C Hamano wrote:
 
-Signed-off-by: Andrew Ruder <andy@aeruder.net>
----
- Documentation/git-apply.txt |   13 +++++++------
- 1 files changed, 7 insertions(+), 6 deletions(-)
+> > This change means there is no way to enable the automatic heuristics for a
+> > specific pattern once it has been disable for a more generic pattern. Would it
+> > make sense to make the attributes more than simply boolean?
+> 
+> I do not think that is a problem in practice.  Do not set
+> something to "false" explicitly with a generic pattern, if you
+> might want to override it.
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 065ba1b..3bd2c99 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -9,11 +9,12 @@ git-apply - Apply a patch on a git index file and a working tree
- SYNOPSIS
- --------
- [verse]
--'git-apply' [--stat] [--numstat] [--summary] [--check] [--index] [--apply]
--	  [--no-add] [--index-info] [--allow-binary-replacement | --binary]
--	  [-R | --reverse] [--reject] [-z] [-pNUM] [-CNUM] [--inaccurate-eof]
--	  [--whitespace=<nowarn|warn|error|error-all|strip>] [--exclude=PATH]
--	  [--cached] [--verbose] [<patch>...]
-+'git-apply' [--stat] [--numstat] [--summary] [--check] [--index]
-+	  [--apply] [--no-add] [--index-info] [-R | --reverse]
-+	  [--allow-binary-replacement | --binary] [--reject] [-z]
-+	  [-pNUM] [-CNUM] [--inaccurate-eof] [--cached]
-+	  [--whitespace=<nowarn|warn|error|error-all|strip>]
-+	  [--exclude=PATH] [--verbose] [<patch>...]
- 
- DESCRIPTION
- -----------
-@@ -158,7 +159,7 @@ discouraged.
- 	correctly. This option adds support for applying such patches by
- 	working around this bug.
- 
----verbose::
-+-v, --verbose::
- 	Report progress to stderr. By default, only a message about the
- 	current patch being applied will be printed. This option will cause
- 	additional information to be reported.
+I also don't think it's a problem, but I think it would generally be a
+good idea to have values for attributes. So you can say
+
+crlf=yes|no|auto
+diff=yes|no|my-xml-diff|...
+merge=3way|...
+
+In the yes/no case we could keep the existing syntax on just add the
+attribute=othervalue for those that need more than a boolean decision.
+
 -- 
-1.5.1.1.98.gedb4f-dirty
+best regards
+
+  Ray
