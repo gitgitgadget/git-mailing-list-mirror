@@ -1,75 +1,62 @@
-From: Alan Larkin <nobrow@eircom.net>
+From: "Alex Riesen" <raa.lkml@gmail.com>
 Subject: Re: fatal: Out of memory, malloc failed
-Date: Mon, 16 Apr 2007 09:02:56 +0100
-Message-ID: <46232DB0.3010303@eircom.net>
-References: <461FBD02.6050105@eircom.net> <Pine.LNX.4.64.0704131143130.28042@woody.linux-foundation.org> <462277CD.5020609@eircom.net> <20070415214050.GA4417@steel.home> <462329D8.4020302@eircom.net> <Pine.LNX.4.64.0704160853050.7680@beast.quantumfyre.co.uk>
+Date: Mon, 16 Apr 2007 10:03:48 +0200
+Message-ID: <81b0412b0704160103p15924e94idfaa445a30fe8e81@mail.gmail.com>
+References: <461FBD02.6050105@eircom.net>
+	 <Pine.LNX.4.64.0704131143130.28042@woody.linux-foundation.org>
+	 <462277CD.5020609@eircom.net> <20070415214050.GA4417@steel.home>
+	 <462329D8.4020302@eircom.net>
+	 <Pine.LNX.4.64.0704160853050.7680@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 10:03:14 2007
+Cc: "Alan Larkin" <nobrow@eircom.net>, git@vger.kernel.org
+To: "Julian Phillips" <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Apr 16 10:04:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdMB1-000354-6d
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 10:03:07 +0200
+	id 1HdMCK-0003fM-5e
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 10:04:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964988AbXDPIC6 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 04:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964974AbXDPICz
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 04:02:55 -0400
-Received: from mail05.svc.cra.dublin.eircom.net ([159.134.118.21]:8247 "HELO
-	mail05.svc.cra.dublin.eircom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S964959AbXDPICq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Apr 2007 04:02:46 -0400
-Received: (qmail 41549 messnum 3332698 invoked from network[86.42.230.88/unknown]); 16 Apr 2007 08:02:45 -0000
-Received: from unknown (HELO ?192.168.1.6?) (86.42.230.88)
-  by mail05.svc.cra.dublin.eircom.net (qp 41549) with SMTP; 16 Apr 2007 08:02:45 -0000
-User-Agent: Thunderbird 1.5.0.10 (X11/20070330)
+	id S964959AbXDPIDu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 04:03:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964976AbXDPIDu
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 04:03:50 -0400
+Received: from an-out-0708.google.com ([209.85.132.241]:1766 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964959AbXDPIDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 04:03:48 -0400
+Received: by an-out-0708.google.com with SMTP id b33so1641761ana
+        for <git@vger.kernel.org>; Mon, 16 Apr 2007 01:03:48 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fM0qFZhBKcomFreTersSPuD1H0MTZMcIoQwj4x+0X0gSL85gGRBjOvID9qf3QbgWxUx6Q2oldFFChpvS8ZfEzqQ/fAccoZp2cn97xra0bVNQEQ64ClzVpdoKBQisCFwNBy2NOLCqOlGvHR49lcwfCQeaVGsTVS4bzx9jAVL4Hvc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Lwoaqnumzzkx/Kx4tMU756icdqTmpVRG19t7nc/BeF4jKbNodiOzftkCJwqyRfUCgZthGGVvY8rHj3OJH3wwl+jEarEZcaC7Qoq3Bc9KBqxgvosEEOqGd49a6W6cD/S6JeC+1Z3l+8O0G0HEKCnPWqR8lwP5vB0PtuezUKx2Gmc=
+Received: by 10.100.177.16 with SMTP id z16mr4278490ane.1176710628093;
+        Mon, 16 Apr 2007 01:03:48 -0700 (PDT)
+Received: by 10.100.86.14 with HTTP; Mon, 16 Apr 2007 01:03:48 -0700 (PDT)
 In-Reply-To: <Pine.LNX.4.64.0704160853050.7680@beast.quantumfyre.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44617>
 
-Julian Phillips wrote:
-> On Mon, 16 Apr 2007, Alan Larkin wrote:
-> 
->> Alex Riesen wrote:
->>> Alan Larkin, Sun, Apr 15, 2007 21:06:53 +0200:
->>>>>> Its not a huge push Im trying to do here (<about 150Mb) but
->>>>>> always malloc fails!
->>>>> Any huge objects?
->>>>>
->>>> There were a couple of big files. I removed a 72Mb one (making 47Mb
->>>> the biggest one left in the project) and made the push and it
->>>> worked. I later pulled the project down to a different machine,
->>>> added the 72Mb file back in, and pushed to the server and it worked.
->>>> So apparently it's a platform specific problem. If anybody's
->>>> particularly interested I could replicate it under gdb and pass on
->>>> any info, but if not I wont ... job's done, Im happy.
->>>
->>> 72Mb is nothing. Is it Windows/cygwin, by any chance? (I see the
->>> problem there sometimes. Tried debugging it, got into some ugly
->>> cygwin-windows interactions, threw up, did the same you did and tried
->>> to forget it all).
->>>
->>> -
->>> To unsubscribe from this list: send the line "unsubscribe git" in
->>> the body of a message to majordomo@vger.kernel.org
->>> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->>>
->>>
->>
->> Thats what I thought, but malloc continued to fail until the 72Mb file
->> was removed.
->>
->> No, my server is running Debian. I had the push problem when logged in
->> on that. It worked when I
->> pushed it from a Gentoo box.
-> 
+On 4/16/07, Julian Phillips <julian@quantumfyre.co.uk> wrote:
+> >
+> > Thats what I thought, but malloc continued to fail until the 72Mb file was removed.
+> >
+> > No, my server is running Debian. I had the push problem when logged in on that.
+> > It worked when I pushed it from a Gentoo box.
+>
 > a problem with ulimit -m on the server?
-> 
+>
 
-Unlimited ...
+Nah, a process gets killed in case of a limit hit.
+He gets malloc returning NULL.
