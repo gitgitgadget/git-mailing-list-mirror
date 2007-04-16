@@ -1,7 +1,7 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 5/9] pack-objects: get rid of reuse_cached_pack
-Date: Mon, 16 Apr 2007 12:14:52 -0400 (EDT)
-Message-ID: <S1030829AbXDPQO7/20070416161459Z+65@vger.kernel.org>
+Subject: [PATCH 3/9] pack-objects: rework check_delta_limit usage
+Date: Mon, 16 Apr 2007 12:14:51 -0400 (EDT)
+Message-ID: <S1030820AbXDPQOz/20070416161455Z+63@vger.kernel.org>
 Content-Transfer-Encoding: 7BIT
 To: unlisted-recipients:; (no To-header on input)
 X-From: git-owner@vger.kernel.org Mon Apr 16 18:15:38 2007
@@ -9,156 +9,206 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdTrT-0002jZ-JE
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 18:15:28 +0200
+	id 1HdTrS-0002jZ-8V
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 18:15:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030818AbXDPQO7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 12:14:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030829AbXDPQO7
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 12:14:59 -0400
+	id S1030826AbXDPQO4 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 12:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030820AbXDPQOz
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 12:14:55 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:39242 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030825AbXDPQOz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 12:14:55 -0400
+	with ESMTP id S1030818AbXDPQOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 12:14:53 -0400
 Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGL0002KMGSOMU0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 16 Apr 2007 12:14:53 -0400 (EDT)
+ with ESMTP id <0JGL00CITMGR58E0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 16 Apr 2007 12:14:52 -0400 (EDT)
 Date-warning: Date header was inserted by VL-MH-MR001.ip.videotron.ca
 Apparently-To: <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44665>
 
-This capability is practically never useful, and therefore never tested,
-because it is fairly unlikely that the requested pack will be already
-available.  Furthermore it is of little gain over the ability to reuse
-existing pack data.
+Objects that have delta "children" from pack data reuse must consider the
+depth of their deepest child when they try to deltify themselves for those
+children not to become too deep.
 
-In fact the ability to change delta type on the fly when reusing delta
-data is a nice thing that has almost no cost and allows greater backward
-compatibility with a client's capabilities than if the client is blindly
-sent a whole pack without any discrimination.
+However, in the context of a "thin" pack, the delta children depth was
+skipped entirely on the presumption that the pack was always going to be
+exploded on the receiving end, hence the delta length wasn't an issue.
 
-And this "feature" is simply in the way of other cleanups.
-Let's get rid of it.
+Now that we keep received packs as is and reuse pack data when repacking,
+those packs do contain delta chains that are longer than expected. Worse,
+those delta chain may even grow longer when the pack is further repacked
+into another thin pack for a subsequent transmission.
+
+So this patch restores strict delta length even for thin packs, and it
+moves check_delta_limit() usage directly in the delta loop where it is
+needed.  This way the delta_limit can be removed from struct object_entry
+as well.  Oh and the initial value was wrong too.
+
+The  progress_interval() function was moved to a more logical location in
+the process.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-pack-objects.c |   86 ++++++++----------------------------------------
- 1 files changed, 14 insertions(+), 72 deletions(-)
+ builtin-pack-objects.c |   76 ++++++++++++++++++++---------------------------
+ 1 files changed, 32 insertions(+), 44 deletions(-)
 
 diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 15119d6..c2f7c30 100644
+index 869ca1a..d44b8f4 100644
 --- a/builtin-pack-objects.c
 +++ b/builtin-pack-objects.c
-@@ -1445,60 +1445,6 @@ static void prepare_pack(int window, int depth)
- 	free(delta_list);
+@@ -27,7 +27,6 @@ struct object_entry {
+ 				 * nonzero if already written.
+ 				 */
+ 	unsigned int depth;	/* delta depth */
+-	unsigned int delta_limit;	/* base adjustment for in-pack delta */
+ 	unsigned int hash;	/* name hint hash */
+ 	enum object_type type;
+ 	enum object_type in_pack_type;	/* could be delta */
+@@ -1172,19 +1171,6 @@ static void check_object(struct object_entry *entry)
+ 		    sha1_to_hex(entry->sha1));
  }
  
--static int reuse_cached_pack(unsigned char *sha1)
+-static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
 -{
--	static const char cache[] = "pack-cache/pack-%s.%s";
--	char *cached_pack, *cached_idx;
--	int ifd, ofd, ifd_ix = -1;
--
--	cached_pack = git_path(cache, sha1_to_hex(sha1), "pack");
--	ifd = open(cached_pack, O_RDONLY);
--	if (ifd < 0)
--		return 0;
--
--	if (!pack_to_stdout) {
--		cached_idx = git_path(cache, sha1_to_hex(sha1), "idx");
--		ifd_ix = open(cached_idx, O_RDONLY);
--		if (ifd_ix < 0) {
--			close(ifd);
--			return 0;
--		}
+-	struct object_entry *child = me->delta_child;
+-	unsigned int m = n;
+-	while (child) {
+-		unsigned int c = check_delta_limit(child, n + 1);
+-		if (m < c)
+-			m = c;
+-		child = child->delta_sibling;
 -	}
--
--	if (progress)
--		fprintf(stderr, "Reusing %u objects pack %s\n", nr_objects,
--			sha1_to_hex(sha1));
--
--	if (pack_to_stdout) {
--		if (copy_fd(ifd, 1))
--			exit(1);
--		close(ifd);
--	}
--	else {
--		char name[PATH_MAX];
--		snprintf(name, sizeof(name),
--			 "%s-%s.%s", base_name, sha1_to_hex(sha1), "pack");
--		ofd = open(name, O_CREAT | O_EXCL | O_WRONLY, 0666);
--		if (ofd < 0)
--			die("unable to open %s (%s)", name, strerror(errno));
--		if (copy_fd(ifd, ofd))
--			exit(1);
--		close(ifd);
--
--		snprintf(name, sizeof(name),
--			 "%s-%s.%s", base_name, sha1_to_hex(sha1), "idx");
--		ofd = open(name, O_CREAT | O_EXCL | O_WRONLY, 0666);
--		if (ofd < 0)
--			die("unable to open %s (%s)", name, strerror(errno));
--		if (copy_fd(ifd_ix, ofd))
--			exit(1);
--		close(ifd_ix);
--		puts(sha1_to_hex(sha1));
--	}
--
--	return 1;
+-	return m;
 -}
 -
- static void progress_interval(int signum)
+ static void get_object_details(void)
  {
- 	progress_update = 1;
-@@ -1618,6 +1564,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	SHA_CTX ctx;
- 	int depth = 10;
- 	struct object_entry **list;
-+	off_t last_obj_offset;
- 	int use_internal_rev_list = 0;
- 	int thin = 0;
  	uint32_t i;
-@@ -1779,24 +1726,19 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (progress && (nr_objects != nr_result))
- 		fprintf(stderr, "Result has %u objects.\n", nr_result);
+@@ -1193,23 +1179,6 @@ static void get_object_details(void)
+ 	prepare_pack_ix();
+ 	for (i = 0, entry = objects; i < nr_objects; i++, entry++)
+ 		check_object(entry);
+-
+-	if (nr_objects == nr_result) {
+-		/*
+-		 * Depth of objects that depend on the entry -- this
+-		 * is subtracted from depth-max to break too deep
+-		 * delta chain because of delta data reusing.
+-		 * However, we loosen this restriction when we know we
+-		 * are creating a thin pack -- it will have to be
+-		 * expanded on the other end anyway, so do not
+-		 * artificially cut the delta chain and let it go as
+-		 * deep as it wants.
+-		 */
+-		for (i = 0, entry = objects; i < nr_objects; i++, entry++)
+-			if (!entry->delta && entry->delta_child)
+-				entry->delta_limit =
+-					check_delta_limit(entry, 1);
+-	}
+ }
  
--	if (reuse_cached_pack(object_list_sha1))
--		;
--	else {
--		off_t last_obj_offset;
--		if (nr_result)
--			prepare_pack(window, depth);
--		if (progress == 1 && pack_to_stdout) {
--			/* the other end usually displays progress itself */
--			struct itimerval v = {{0,},};
--			setitimer(ITIMER_REAL, &v, NULL);
--			signal(SIGALRM, SIG_IGN );
--			progress_update = 0;
--		}
--		last_obj_offset = write_pack_file();
--		if (!pack_to_stdout) {
--			write_index_file(last_obj_offset);
--			puts(sha1_to_hex(object_list_sha1));
--		}
-+	if (nr_result)
-+		prepare_pack(window, depth);
-+	if (progress == 1 && pack_to_stdout) {
-+		/* the other end usually displays progress itself */
-+		struct itimerval v = {{0,},};
-+		setitimer(ITIMER_REAL, &v, NULL);
-+		signal(SIGALRM, SIG_IGN );
-+		progress_update = 0;
+ typedef int (*entry_sort_t)(const struct object_entry *, const struct object_entry *);
+@@ -1322,16 +1291,7 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 	    trg_entry->in_pack_type != OBJ_OFS_DELTA)
+ 		return 0;
+ 
+-	/*
+-	 * If the current object is at pack edge, take the depth the
+-	 * objects that depend on the current object into account --
+-	 * otherwise they would become too deep.
+-	 */
+-	if (trg_entry->delta_child) {
+-		if (max_depth <= trg_entry->delta_limit)
+-			return 0;
+-		max_depth -= trg_entry->delta_limit;
+-	}
++	/* Let's not bust the allowed depth. */
+ 	if (src_entry->depth >= max_depth)
+ 		return 0;
+ 
+@@ -1378,9 +1338,17 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 	return 1;
+ }
+ 
+-static void progress_interval(int signum)
++static unsigned int check_delta_limit(struct object_entry *me, unsigned int n)
+ {
+-	progress_update = 1;
++	struct object_entry *child = me->delta_child;
++	unsigned int m = n;
++	while (child) {
++		unsigned int c = check_delta_limit(child, n + 1);
++		if (m < c)
++			m = c;
++		child = child->delta_sibling;
 +	}
-+	last_obj_offset = write_pack_file();
-+	if (!pack_to_stdout) {
-+		write_index_file(last_obj_offset);
-+		puts(sha1_to_hex(object_list_sha1));
- 	}
- 	if (progress)
- 		fprintf(stderr, "Total %u (delta %u), reused %u (delta %u)\n",
++	return m;
+ }
+ 
+ static void find_deltas(struct object_entry **list, int window, int depth)
+@@ -1389,6 +1357,7 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 	unsigned int array_size = window * sizeof(struct unpacked);
+ 	struct unpacked *array;
+ 	unsigned last_percent = 999;
++	int max_depth;
+ 
+ 	if (!nr_objects)
+ 		return;
+@@ -1429,6 +1398,18 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 		n->data = NULL;
+ 		n->entry = entry;
+ 
++		/*
++		 * If the current object is at pack edge, take the depth the
++		 * objects that depend on the current object into account
++		 * otherwise they would become too deep.
++		 */
++		max_depth = depth;
++		if (entry->delta_child) {
++			max_depth -= check_delta_limit(entry, 0);
++			if (max_depth <= 0)
++				goto next;
++		}
++
+ 		j = window;
+ 		while (--j > 0) {
+ 			uint32_t other_idx = idx + j;
+@@ -1438,9 +1419,10 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 			m = array + other_idx;
+ 			if (!m->entry)
+ 				break;
+-			if (try_delta(n, m, depth) < 0)
++			if (try_delta(n, m, max_depth) < 0)
+ 				break;
+ 		}
++
+ 		/* if we made n a delta, and if n is already at max
+ 		 * depth, leaving it in the window is pointless.  we
+ 		 * should evict it first.
+@@ -1448,6 +1430,7 @@ static void find_deltas(struct object_entry **list, int window, int depth)
+ 		if (entry->delta && depth <= entry->depth)
+ 			continue;
+ 
++		next:
+ 		idx++;
+ 		if (idx >= window)
+ 			idx = 0;
+@@ -1525,6 +1508,11 @@ static int reuse_cached_pack(unsigned char *sha1)
+ 	return 1;
+ }
+ 
++static void progress_interval(int signum)
++{
++	progress_update = 1;
++}
++
+ static void setup_progress_signal(void)
+ {
+ 	struct sigaction sa;
 -- 
 1.5.1.1.781.g65e8
