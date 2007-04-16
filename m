@@ -1,140 +1,166 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 4/9] pack-objects: clean up list sorting
-Date: Mon, 16 Apr 2007 12:29:54 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704161229200.4504@xanadu.home>
+Subject: [PATCH 5/9] pack-objects: get rid of reuse_cached_pack
+Date: Mon, 16 Apr 2007 12:30:15 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704161229590.4504@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
 Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:30:35 2007
+X-From: git-owner@vger.kernel.org Mon Apr 16 18:30:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdU5z-0000T6-TL
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 18:30:28 +0200
+	id 1HdU60-0000T6-IV
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 18:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030864AbXDPQ34 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 12:29:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030865AbXDPQ34
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 12:29:56 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:56978 "EHLO
+	id S1030844AbXDPQaS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 12:30:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030866AbXDPQaS
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 12:30:18 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:61433 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030864AbXDPQ3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 12:29:55 -0400
+	with ESMTP id S1030844AbXDPQaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 12:30:16 -0400
 Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGL00H9HN5U01H0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 16 Apr 2007 12:29:55 -0400 (EDT)
+ with ESMTP id <0JGL00HMXN6F00G0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 16 Apr 2007 12:30:15 -0400 (EDT)
 X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44670>
 
-Get rid of sort_comparator() as it impose a run time double indirect
-function call for little compile time type checking gain.
+This capability is practically never useful, and therefore never tested,
+because it is fairly unlikely that the requested pack will be already
+available.  Furthermore it is of little gain over the ability to reuse
+existing pack data.
 
-Also get rid of create_sorted_list() as it only has one user which would
-as well be just fine doing its sorting locally.  Eventually the list of
-deltifiable objects might be shorter than the whole object list.
+In fact the ability to change delta type on the fly when reusing delta
+data is a nice thing that has almost no cost and allows greater backward
+compatibility with a client's capabilities than if the client is blindly
+sent a whole pack without any discrimination.
+
+And this "feature" is simply in the way of other cleanups.
+Let's get rid of it.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-pack-objects.c |   53 +++++++++++++++++++----------------------------
- 1 files changed, 22 insertions(+), 31 deletions(-)
+ builtin-pack-objects.c |   86 ++++++++----------------------------------------
+ 1 files changed, 14 insertions(+), 72 deletions(-)
 
 diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index d44b8f4..15119d6 100644
+index 15119d6..c2f7c30 100644
 --- a/builtin-pack-objects.c
 +++ b/builtin-pack-objects.c
-@@ -66,7 +66,7 @@ static int local;
- static int incremental;
- static int allow_ofs_delta;
- 
--static struct object_entry **sorted_by_sha, **sorted_by_type;
-+static struct object_entry **sorted_by_sha;
- static struct object_entry *objects;
- static uint32_t nr_objects, nr_alloc, nr_result;
- static const char *base_name;
-@@ -1181,31 +1181,10 @@ static void get_object_details(void)
- 		check_object(entry);
+@@ -1445,60 +1445,6 @@ static void prepare_pack(int window, int depth)
+ 	free(delta_list);
  }
  
--typedef int (*entry_sort_t)(const struct object_entry *, const struct object_entry *);
--
--static entry_sort_t current_sort;
--
--static int sort_comparator(const void *_a, const void *_b)
+-static int reuse_cached_pack(unsigned char *sha1)
 -{
--	struct object_entry *a = *(struct object_entry **)_a;
--	struct object_entry *b = *(struct object_entry **)_b;
--	return current_sort(a,b);
+-	static const char cache[] = "pack-cache/pack-%s.%s";
+-	char *cached_pack, *cached_idx;
+-	int ifd, ofd, ifd_ix = -1;
+-
+-	cached_pack = git_path(cache, sha1_to_hex(sha1), "pack");
+-	ifd = open(cached_pack, O_RDONLY);
+-	if (ifd < 0)
+-		return 0;
+-
+-	if (!pack_to_stdout) {
+-		cached_idx = git_path(cache, sha1_to_hex(sha1), "idx");
+-		ifd_ix = open(cached_idx, O_RDONLY);
+-		if (ifd_ix < 0) {
+-			close(ifd);
+-			return 0;
+-		}
+-	}
+-
+-	if (progress)
+-		fprintf(stderr, "Reusing %u objects pack %s\n", nr_objects,
+-			sha1_to_hex(sha1));
+-
+-	if (pack_to_stdout) {
+-		if (copy_fd(ifd, 1))
+-			exit(1);
+-		close(ifd);
+-	}
+-	else {
+-		char name[PATH_MAX];
+-		snprintf(name, sizeof(name),
+-			 "%s-%s.%s", base_name, sha1_to_hex(sha1), "pack");
+-		ofd = open(name, O_CREAT | O_EXCL | O_WRONLY, 0666);
+-		if (ofd < 0)
+-			die("unable to open %s (%s)", name, strerror(errno));
+-		if (copy_fd(ifd, ofd))
+-			exit(1);
+-		close(ifd);
+-
+-		snprintf(name, sizeof(name),
+-			 "%s-%s.%s", base_name, sha1_to_hex(sha1), "idx");
+-		ofd = open(name, O_CREAT | O_EXCL | O_WRONLY, 0666);
+-		if (ofd < 0)
+-			die("unable to open %s (%s)", name, strerror(errno));
+-		if (copy_fd(ifd_ix, ofd))
+-			exit(1);
+-		close(ifd_ix);
+-		puts(sha1_to_hex(sha1));
+-	}
+-
+-	return 1;
 -}
 -
--static struct object_entry **create_sorted_list(entry_sort_t sort)
--{
--	struct object_entry **list = xmalloc(nr_objects * sizeof(struct object_entry *));
--	uint32_t i;
--
--	for (i = 0; i < nr_objects; i++)
--		list[i] = objects + i;
--	current_sort = sort;
--	qsort(list, nr_objects, sizeof(struct object_entry *), sort_comparator);
--	return list;
--}
--
--static int sha1_sort(const struct object_entry *a, const struct object_entry *b)
-+static int sha1_sort(const void *_a, const void *_b)
+ static void progress_interval(int signum)
  {
-+	const struct object_entry *a = *(struct object_entry **)_a;
-+	const struct object_entry *b = *(struct object_entry **)_b;
- 	return hashcmp(a->sha1, b->sha1);
- }
+ 	progress_update = 1;
+@@ -1618,6 +1564,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	SHA_CTX ctx;
+ 	int depth = 10;
+ 	struct object_entry **list;
++	off_t last_obj_offset;
+ 	int use_internal_rev_list = 0;
+ 	int thin = 0;
+ 	uint32_t i;
+@@ -1779,24 +1726,19 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 	if (progress && (nr_objects != nr_result))
+ 		fprintf(stderr, "Result has %u objects.\n", nr_result);
  
-@@ -1222,13 +1201,15 @@ static struct object_entry **create_final_object_list(void)
- 		if (!objects[i].preferred_base)
- 			list[j++] = objects + i;
+-	if (reuse_cached_pack(object_list_sha1))
+-		;
+-	else {
+-		off_t last_obj_offset;
+-		if (nr_result)
+-			prepare_pack(window, depth);
+-		if (progress == 1 && pack_to_stdout) {
+-			/* the other end usually displays progress itself */
+-			struct itimerval v = {{0,},};
+-			setitimer(ITIMER_REAL, &v, NULL);
+-			signal(SIGALRM, SIG_IGN );
+-			progress_update = 0;
+-		}
+-		last_obj_offset = write_pack_file();
+-		if (!pack_to_stdout) {
+-			write_index_file(last_obj_offset);
+-			puts(sha1_to_hex(object_list_sha1));
+-		}
++	if (nr_result)
++		prepare_pack(window, depth);
++	if (progress == 1 && pack_to_stdout) {
++		/* the other end usually displays progress itself */
++		struct itimerval v = {{0,},};
++		setitimer(ITIMER_REAL, &v, NULL);
++		signal(SIGALRM, SIG_IGN );
++		progress_update = 0;
++	}
++	last_obj_offset = write_pack_file();
++	if (!pack_to_stdout) {
++		write_index_file(last_obj_offset);
++		puts(sha1_to_hex(object_list_sha1));
  	}
--	current_sort = sha1_sort;
--	qsort(list, nr_result, sizeof(struct object_entry *), sort_comparator);
-+	qsort(list, nr_result, sizeof(struct object_entry *), sha1_sort);
- 	return list;
- }
- 
--static int type_size_sort(const struct object_entry *a, const struct object_entry *b)
-+static int type_size_sort(const void *_a, const void *_b)
- {
-+	const struct object_entry *a = *(struct object_entry **)_a;
-+	const struct object_entry *b = *(struct object_entry **)_b;
-+
- 	if (a->type < b->type)
- 		return -1;
- 	if (a->type > b->type)
-@@ -1448,10 +1429,20 @@ static void find_deltas(struct object_entry **list, int window, int depth)
- 
- static void prepare_pack(int window, int depth)
- {
-+	struct object_entry **delta_list;
-+	uint32_t i;
-+
- 	get_object_details();
--	sorted_by_type = create_sorted_list(type_size_sort);
--	if (window && depth)
--		find_deltas(sorted_by_type, window+1, depth);
-+
-+	if (!window || !depth)
-+		return;
-+
-+	delta_list = xmalloc(nr_objects * sizeof(*delta_list));
-+	for (i = 0; i < nr_objects; i++)
-+		delta_list[i] = objects + i;
-+	qsort(delta_list, nr_objects, sizeof(*delta_list), type_size_sort);
-+	find_deltas(delta_list, window+1, depth);
-+	free(delta_list);
- }
- 
- static int reuse_cached_pack(unsigned char *sha1)
+ 	if (progress)
+ 		fprintf(stderr, "Total %u (delta %u), reused %u (delta %u)\n",
 -- 
 1.5.1.1.781.g65e8
