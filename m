@@ -1,72 +1,108 @@
 From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH] Add -q option to "git rm" to suppress output when there aren't errors.
-Date: Sun, 15 Apr 2007 18:14:06 -0700
-Message-ID: <7vps65yvc1.fsf@assigned-by-dhcp.cox.net>
-References: <20070416000408.GA19107@midwinter.com>
-	<7v4pnh18hr.fsf@assigned-by-dhcp.cox.net>
-	<4622C0AC.8090904@midwinter.com>
+Subject: What's in git.git (stable)
+Date: Sun, 15 Apr 2007 18:27:42 -0700
+Message-ID: <7vfy71yupd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 03:14:14 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 16 03:27:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdFnI-0002ds-M5
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 03:14:13 +0200
+	id 1HdG0R-00078a-5e
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 03:27:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647AbXDPBOJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Sun, 15 Apr 2007 21:14:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754254AbXDPBOJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 21:14:09 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42915 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753647AbXDPBOI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Apr 2007 21:14:08 -0400
+	id S1754235AbXDPB1o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git@m.gmane.org>); Sun, 15 Apr 2007 21:27:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754268AbXDPB1o
+	(ORCPT <rfc822;git-outgoing>); Sun, 15 Apr 2007 21:27:44 -0400
+Received: from fed1rmmtao101.cox.net ([68.230.241.45]:42984 "EHLO
+	fed1rmmtao101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754235AbXDPB1n convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Apr 2007 21:27:43 -0400
 Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
+          by fed1rmmtao101.cox.net
           (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070416011407.NJFV1266.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 15 Apr 2007 21:14:07 -0400
+          id <20070416012744.LXLV1235.fed1rmmtao101.cox.net@fed1rmimpo02.cox.net>;
+          Sun, 15 Apr 2007 21:27:44 -0400
 Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
 	by fed1rmimpo02.cox.net with bizsmtp
-	id ndE61W00g1kojtg0000000; Sun, 15 Apr 2007 21:14:07 -0400
-In-Reply-To: <4622C0AC.8090904@midwinter.com> (Steven Grimm's message of "Sun,
-	15 Apr 2007 17:17:48 -0700")
+	id ndTi1W00l1kojtg0000000; Sun, 15 Apr 2007 21:27:43 -0400
+X-maint-at: 5f2e1df5c9fa7856e5d7dda7d6c618ed08822b82
+X-master-at: 7a1593972c19df26aee7d14c7d7c8c4fce24fb26
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44560>
 
-Steven Grimm <koreth@midwinter.com> writes:
+Perhaps we would need 1.5.1.2 to push out a few accumulated
+small fixes on 'maint'.
 
-> Junio C Hamano wrote:
->
->> Suppressing output is understandable and probably is a useful
->> thing to do, but I do not see a justification to tie that
->> quietness to making the status unuable...
->
-> The status is unusable as is, actually, for the particular use case of
-> cg-admin-rewritehist. If you try to use git-rm as an index filter,
-> cg-admin-rewritehist will stop running as soon as you hit a revision
-> that doesn't contain the file you're looking to filter out. (If the
-> file doesn't exist in the first revision in your repo, that means it
-> will do no work at all.)
+----------------------------------------------------------------
 
-Probably "git-grep foo" wouldn't be suitable as the index filter
-for admin-rewritehist, either, nor "git-fsck", nor many other
-things.
+* The 'maint' branch has these fixes since v1.5.1.1.
 
-What does it have to do with anything?
+ Alex Riesen (2):
+  Use rev-list --reverse in git-rebase.sh
+  Document -g (--walk-reflogs) option of git-log
 
-Saying "git rm --quiet foo" from the command line, wishing to
-supress the output, is very understandable.
+ Eygene Ryabinkin (2):
+  Teach gitk to use the user-defined UI font everywhere.
+  Improve look-and-feel of the gitk tool.
 
-Saying "git rm --ignore-unmatch foo bar baz", wishing to remove
-bar (which exists) even when foo does not exist, is also very
-understandable.
+ Frank Lichtenheld (4):
+  config.txt: Document gitcvs.allbinary
+  config.txt: Document core.autocrlf
+  config.txt: Change pserver to server in description of gitcvs.*
+  config.txt: Fix grammatical error in description of http.noEPSV
 
-I think they are pretty much independent options.
+ Jim Meyering (1):
+  sscanf/strtoul: parse integers robustly
+
+ Junio C Hamano (1):
+  Do not default to --no-index when given two directories.
+
+ Linus Torvalds (1):
+  git-quiltimport complaining yet still working
+
+ Matthias Lederhofer (1):
+  handle_options in git wrapper miscounts the options it handled.
+
+ Michael Spang (1):
+  git-blame: Fix overrun in fake_working_tree_commit()
+
+
+* The 'master' branch has these since the last announcement
+  in addition to the above.
+
+ Frank Lichtenheld (2):
+  gitweb: Allow forks with project list file
+  gitweb: Allow configuring the default projects order and add order 'n=
+one'
+
+ Jim Meyering (1):
+  sscanf/strtoul: parse integers robustly
+
+ Junio C Hamano (5):
+  Add %m to '--pretty=3Dformat:'
+  Refactor patch-id filtering out of git-cherry and git-format-patch.
+  git-log --cherry-pick A...B
+  Documentation: --cherry-pick
+  Fix git {log,show,...} --pretty=3Demail
+
+ Luiz Fernando N. Capitulino (2):
+  ident.c: Use const qualifier for 'struct passwd' parameters
+  ident.c: Use size_t (instead of int) to store sizes
+
+ Ren=C3=A9 Scharfe (1):
+  git-archive: make tar the default format
+
+ Robin H. Johnson (2):
+  Add custom subject prefix support to format-patch (take 3)
+  Add testcase for format-patch --subject-prefix (take 3)
+
+ Shawn O. Pearce (1):
+  Don't yap about merge-subtree during make
