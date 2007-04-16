@@ -1,100 +1,68 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Weird shallow-tree conversion state, and branches of shallow trees
-Date: Mon, 16 Apr 2007 23:06:45 +0700
-Message-ID: <fcaeb9bf0704160906m3a2ffe60gf28570be1014403e@mail.gmail.com>
-References: <20070412005336.GA18378@curie-int.orbis-terrarum.net>
-	 <fcaeb9bf0704142257x3761ef2cie3996420b3bcd24a@mail.gmail.com>
-	 <Pine.LNX.4.64.0704151115270.5473@woody.linux-foundation.org>
-	 <200704152051.35639.andyparkins@gmail.com>
-	 <Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
-	 <20070416021729.GH2689@curie-int.orbis-terrarum.net>
-	 <20070416030103.GB27533@thunk.org>
-	 <fcaeb9bf0704152023xaa119a4s8590452ff03befcf@mail.gmail.com>
-	 <Pine.LNX.4.64.0704160805280.5473@woody.linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 0/9] a couple cleanups and fixes to pack-objects
+Date: Mon, 16 Apr 2007 12:14:18 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704161202320.4504@xanadu.home>
+References: <11767005762964-git-send-email-nico@cam.org>
+ <7vslb0x4ww.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Theodore Tso" <tytso@mit.edu>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Andy Parkins" <andyparkins@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:06:57 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 18:15:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdTj9-0007mU-41
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 18:06:51 +0200
+	id 1HdTrP-0002jZ-KP
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 18:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030803AbXDPQGr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 12:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030810AbXDPQGr
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 12:06:47 -0400
-Received: from nz-out-0506.google.com ([64.233.162.228]:64041 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030811AbXDPQGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 12:06:46 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so1247400nze
-        for <git@vger.kernel.org>; Mon, 16 Apr 2007 09:06:46 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Wl0y7TJPxSXnmyaKMK9hN2CGd8+iQigJ5ssFkMQkr5b2rsmc2fQ36ldfwZC4ap3K8d6PlfeJSl5W66zS8w+WsYvE2cEYfDFidAsUtR8B9lvJ7gw8yXtAxTKEdII1QKob4t8rS3edyAAOBmfzPXOT9mIBTXMHwZ02XUdF1mEsV9Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VrnXjuvk5NYUMuIil+8RGY5Ja8GPVKpMlK23mP/Zh4vLKPiEkdqfOgmwAzG/kIO88d374lQVzLseop9qv/CBIBPABLbToTh1ckQzXyOewKmKastTgCFFwSFHmnaZHRycw3cApyL+hfNRbJTCZ3U6tSFViCK93VCchwLYJy6Yzl4=
-Received: by 10.115.32.1 with SMTP id k1mr1963868waj.1176739605596;
-        Mon, 16 Apr 2007 09:06:45 -0700 (PDT)
-Received: by 10.114.66.6 with HTTP; Mon, 16 Apr 2007 09:06:45 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704160805280.5473@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1030819AbXDPQOW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 12:14:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030822AbXDPQOV
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 12:14:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:41237 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030818AbXDPQOT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 12:14:19 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JGL00CG0MFU58E0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 16 Apr 2007 12:14:18 -0400 (EDT)
+In-reply-to: <7vslb0x4ww.fsf@assigned-by-dhcp.cox.net>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44656>
 
-On 4/16/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Mon, 16 Apr 2007, Nguyen Thai Ngoc Duy wrote:
-> >
-> > Changing Gentoo release process won't make Git the best choice while
-> > other SCM candidates can provide the same functionalities that Gentoo
-> > needs without changing the process.
->
-> Ahh, the old "argument by blackmail" approach.
->
-> You know what? Nobody really cares. Arguing by blackmail ("we'll use
-> something else then") just means that you should go somewhere else. If you
-> cannot respond intelligently to intelligent arguments, you really *are*
-> better off using SVN.
+On Sun, 15 Apr 2007, Junio C Hamano wrote:
 
-All right. I didn't mean to blackmail you or any Git developer. What I
-wanted to say is that Gentoo is currently using an old, brain-damaged
-SCM called CVS. I would like it to use Git but Git in its current
-state can not fully replace CVS regarding to Gentoo usage. To do that
-Gentoo needs some changes itself but Gentoo repositories are big ones
-and it's just hard to change such beast s from bottom up. So I would
-like to see a compromise from Git (which, I think, does not harm other
-projects from using Git) to ease the migration.
+> We probably found a bug in send-email.
+> 
+>    Date: Mon, 16 Apr 2007 01:16:07 -0400
+>    From: Nicolas Pitre <nico@cam.org>
+>    Subject: [PATCH 0/9] a couple cleanups and fixes to pack-objects
+>    To: Junio C Hamano <junkio@cox.net>, "--cc git"@vger.kernel.org
+>    Cc: 
+>    Message-id: <11767005762964-git-send-email-nico@cam.org>
+>    X-Mailer: git-send-email 1.5.1.1.781.g65e8
+>    Content-transfer-encoding: 7BIT
+>    Xref: gitster.siamese.dyndns.org git-mail:23396
+>    Lines: 6
+> 
+>    Here's a couple patches to clean up pack-objects which should also provide
+>    small performance gains, probably more visible on really large repositories.
+> 
+>    Nicolas
+> 
+> Your patches did not reach the list.
 
->
-> A billion flies aren't exactly wrong: crap really *is* good. If you're a
-> fly or a maggot.
->
-> But if you ever actually want to be something *more* than a crap eater,
-> come back then.
->
+Well... I guess I, too, should avoid git-send-email from now. I don't 
+have enough knowledge of the mail/anti-spam protocol/pitfalls to fix it 
+myself.
 
-I would want to _slowly_ evolve from a crap eater to something better
-because I couldn't become a non-crap eater in a flash :)
-
->                         Linus
->
+Here are those patches again, manualy posted.
 
 
--- 
-Duy
+Nicolas
