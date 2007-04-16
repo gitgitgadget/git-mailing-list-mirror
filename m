@@ -1,64 +1,84 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: git-receive-pack doesn't understand objects/info/alternates?
-Date: Mon, 16 Apr 2007 11:30:40 -0400
-Message-ID: <20070416153040.GG27533@thunk.org>
-References: <E1HdQDl-0005ia-Bn@candygram.thunk.org> <8aa486160704160613t3ac17e4co9177ad91fda8eb36@mail.gmail.com>
+From: Christian <crich-ml@beronet.com>
+Subject: git push over http is very dangerous
+Date: Mon, 16 Apr 2007 17:22:20 +0200
+Message-ID: <462394AC.303@beronet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Apr 16 17:31:23 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Apr 16 17:50:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdTAM-00015K-27
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 17:30:54 +0200
+	id 1HdTTA-0000sK-8v
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 17:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030757AbXDPPat convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git@m.gmane.org>); Mon, 16 Apr 2007 11:30:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030763AbXDPPat
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 11:30:49 -0400
-Received: from thunk.org ([69.25.196.29]:49149 "EHLO thunker.thunk.org"
+	id S1030775AbXDPPuP (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 11:50:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030766AbXDPPuP
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 11:50:15 -0400
+Received: from beronet.com ([80.244.243.34]:4843 "EHLO mail.beronet.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1030757AbXDPPat (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 11:30:49 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HdTGc-00082i-Td; Mon, 16 Apr 2007 11:37:23 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1HdTA8-0001UZ-5D; Mon, 16 Apr 2007 11:30:40 -0400
-Content-Disposition: inline
-In-Reply-To: <8aa486160704160613t3ac17e4co9177ad91fda8eb36@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1030775AbXDPPuN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 11:50:13 -0400
+X-Greylist: delayed 1621 seconds by postgrey-1.27 at vger.kernel.org; Mon, 16 Apr 2007 11:50:13 EDT
+Received: from mail.beronet.com (localhost [127.0.0.1])
+	by mail.beronet.com (Postfix) with ESMTP id 19E40510DA2
+	for <git@vger.kernel.org>; Mon, 16 Apr 2007 17:31:30 +0200 (CEST)
+Received: from [172.20.5.5] (pd956852e.dip0.t-ipconnect.de [217.86.133.46])
+	by mail.beronet.com (Postfix) with ESMTP id D7B88510CA0
+	for <git@vger.kernel.org>; Mon, 16 Apr 2007 17:31:29 +0200 (CEST)
+User-Agent: Icedove 1.5.0.7 (X11/20061013)
+X-Spam-Checker-Version: SpamAssassin 3.0.3 (2005-04-27) on m24s12.beronet.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44652>
 
-On Mon, Apr 16, 2007 at 03:13:25PM +0200, Santi B=E9jar wrote:
-> On 4/16/07, Theodore Ts'o <tytso@mit.edu> wrote:
-> >
-> >When I push a kernel repository to master.kernel.org, where the
-> >repository only has at most a dozen changes on top of 2.6.21-rc7, I
-> >noticed that it tried to push a *lot* of objects over ssh.  As in:
->=20
-> This is because git only trusts the the commits in $GIT_DIR/refs.
-> Since commit v1.5.1-107-ge3c6f24 (in next) git-fetch first checks if
-> we have all the objects that we are going to fetch available locally.
-> This could be added for the push. But for now you could add a branch
-> in your repo in master.kernel.org to track linus' master branch.
+Hi Git developers,
 
-Thanks for the explanation! =20
+first of all thanks for the great toolkit :)
 
-So if I add a symlink from .git/refs/heads/kludge to
-<linus'-tree-on-master>/.git/refs/heads/master this should work as a
-workaround now, right?
+We are using git for the mISDN Open Source ISDN Stack (www.misdn.org / 
+git.misdn.org).  We are using webdav to push up data from users with 
+write access. Readonly access is granted via the git daemon.
 
-						- Ted
+We have moved from CVS to git in the beginning of last week, all went 
+well until this weekend. This weekend one developer wanted to push some 
+of his local modifications, unfortunately during the push his http 
+connection seemed to have broken or so. Unfortunately git does not prove 
+if the push went well. Therefore our repository was broken this morning.
+
+We found out that it was broken, because we could not do a pull or clone 
+from the central repository anymore, but we got an error message.
+
+Then i did a "git log" which worked well. then i wanted to "show" the 
+last 2 commits, so i did: "git show":
+
+error: corrupt loose object 'cd1aac1a43cfdac07118240f75c0ba7662eb8140'
+<crich1999> error: cd1aac1a43cfdac07118240f75c0ba7662eb8140: object 
+corrupt or missing
+
+
+i found that i could "git show" all commits, but only the last 2 
+produced the above error message.
+
+gitster from IRC helped me out and showed me that i could do
+
+git branch -f master master~2 
+
+to remove the 2 commits. i did that and all worked well again!
+
+
+I wonder if it would be possible to delay a central push until all data 
+was uploaded, then after the upload finished a checksum is transmitted, 
+if the checksum is correct, the push can be done centrally..
+
+
+cheers,
+
+christian
