@@ -1,108 +1,105 @@
 From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 1/9] pack-objects: optimize preferred base handling a bit
-Date: Mon, 16 Apr 2007 12:14:50 -0400 (EDT)
-Message-ID: <S1030820AbXDPQOx/20070416161453Z+1494@vger.kernel.org>
+Subject: [PATCH 7/9] pack-objects: make in_pack_header_size a variable of its
+ own
+Date: Mon, 16 Apr 2007 12:14:54 -0400 (EDT)
+Message-ID: <S1030829AbXDPQPD/20070416161503Z+66@vger.kernel.org>
 Content-Transfer-Encoding: 7BIT
 To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Apr 16 18:15:25 2007
+X-From: git-owner@vger.kernel.org Mon Apr 16 18:15:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdTrQ-0002jZ-Ua
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 18:15:25 +0200
+	id 1HdTrU-0002jZ-TS
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 18:15:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030823AbXDPQOx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 12:14:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030820AbXDPQOx
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 12:14:53 -0400
+	id S1030812AbXDPQPD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 12:15:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030829AbXDPQPD
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 12:15:03 -0400
 Received: from relais.videotron.ca ([24.201.245.36]:39242 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030818AbXDPQOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 12:14:51 -0400
+	with ESMTP id S1030812AbXDPQO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 12:14:58 -0400
 Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
  (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGL00049MGQOKS0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 16 Apr 2007 12:14:51 -0400 (EDT)
+ with ESMTP id <0JGL0002OMGTOMU0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 16 Apr 2007 12:14:54 -0400 (EDT)
 Date-warning: Date header was inserted by VL-MH-MR001.ip.videotron.ca
 Apparently-To: <nico@cam.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44658>
 
-Let's avoid some cycles when there is no base to test against, and avoid
-unnecessary object lookups.
+It currently aliases delta_size on the principle that reused deltas won't
+go through the whole delta matching loop hence delta_size was unused.
+This is not true if given delta doesn't find its base in the pack though.
+But we need that information even for whole object data reuse.
+
+Well in short the current state looks awful and is prone to bugs.  It just
+works fine now because try_delta() tests trg_entry->delta before using
+trg_entry->delta_size, but that is a bit subtle and I was wondering for a
+while why things just worked fine... even if I'm guilty of having
+introduced this abomination myself in the first place.
+
+Let's do the sensible thing instead with no ambiguity, which is to have
+a separate variable for in_pack_header_size.  This might even help future
+optimizations.
+
+While at it, let's reorder some struct object_entry members so they all
+align well with their own width, regardless of the architecture or the
+size of off_t.  Some memory saving is to be expected with this alone.
 
 Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- builtin-pack-objects.c |   27 ++++++++++++---------------
- 1 files changed, 12 insertions(+), 15 deletions(-)
+ builtin-pack-objects.c |   26 ++++++++++++--------------
+ 1 files changed, 12 insertions(+), 14 deletions(-)
 
 diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index bc5f232..62a011e 100644
+index 7af1776..7100a76 100644
 --- a/builtin-pack-objects.c
 +++ b/builtin-pack-objects.c
-@@ -959,22 +959,21 @@ static void add_pbase_object(struct tree_desc *tree,
- 			     const char *fullname)
- {
- 	struct name_entry entry;
-+	int cmp;
+@@ -22,28 +22,26 @@ git-pack-objects [{ -q | --progress | --all-progress }] \n\
  
- 	while (tree_entry(tree,&entry)) {
--		unsigned long size;
--		enum object_type type;
--
--		if (tree_entry_len(entry.path, entry.sha1) != cmplen ||
--		    memcmp(entry.path, name, cmplen) ||
--		    !has_sha1_file(entry.sha1) ||
--		    (type = sha1_object_info(entry.sha1, &size)) < 0)
-+		cmp = tree_entry_len(entry.path, entry.sha1) != cmplen ? 1 :
-+		      memcmp(name, entry.path, cmplen);
-+		if (cmp > 0)
- 			continue;
-+		if (cmp < 0)
-+			return;
- 		if (name[cmplen] != '/') {
- 			unsigned hash = name_hash(fullname);
- 			add_object_entry(entry.sha1, hash, 1);
- 			return;
- 		}
--		if (type == OBJ_TREE) {
-+		if (S_ISDIR(entry.mode)) {
- 			struct tree_desc sub;
- 			struct pbase_tree_cache *tree;
- 			const char *down = name+cmplen+1;
-@@ -1034,15 +1033,15 @@ static int check_pbase_path(unsigned hash)
- static void add_preferred_base_object(const char *name, unsigned hash)
- {
- 	struct pbase_tree *it;
--	int cmplen = name_cmp_len(name);
-+	int cmplen;
+ struct object_entry {
+ 	unsigned char sha1[20];
++	uint32_t crc32;		/* crc of raw pack data for this object */
++	off_t offset;		/* offset into the final pack file */
+ 	unsigned long size;	/* uncompressed size */
+-	off_t offset;	/* offset into the final pack file;
+-				 * nonzero if already written.
+-				 */
+-	unsigned int depth;	/* delta depth */
+ 	unsigned int hash;	/* name hint hash */
+-	enum object_type type;
+-	enum object_type in_pack_type;	/* could be delta */
+-	unsigned long delta_size;	/* delta data size (uncompressed) */
+-#define in_pack_header_size delta_size	/* only when reusing pack data */
+-	struct object_entry *delta;	/* delta base object */
++	unsigned int depth;	/* delta depth */
+ 	struct packed_git *in_pack; 	/* already in pack */
+ 	off_t in_pack_offset;
++	struct object_entry *delta;	/* delta base object */
+ 	struct object_entry *delta_child; /* deltified objects who bases me */
+ 	struct object_entry *delta_sibling; /* other deltified objects who
+ 					     * uses the same base as me
+ 					     */
+-	int preferred_base;	/* we do not pack this, but is encouraged to
+-				 * be used as the base objectto delta huge
+-				 * objects against.
+-				 */
+-	uint32_t crc32;		/* crc of raw pack data for this object */
++	unsigned long delta_size;	/* delta data size (uncompressed) */
++	enum object_type type;
++	enum object_type in_pack_type;	/* could be delta */
++	unsigned char in_pack_header_size;
++	unsigned char preferred_base; /* we do not pack this, but is available
++				       * to be used as the base objectto delta
++				       * objects against.
++				       */
+ };
  
--	if (check_pbase_path(hash))
-+	if (!num_preferred_base || check_pbase_path(hash))
- 		return;
- 
-+	cmplen = name_cmp_len(name);
- 	for (it = pbase_tree; it; it = it->next) {
- 		if (cmplen == 0) {
--			hash = name_hash("");
--			add_object_entry(it->pcache.sha1, hash, 1);
-+			add_object_entry(it->pcache.sha1, 0, 1);
- 		}
- 		else {
- 			struct tree_desc tree;
-@@ -1587,9 +1586,7 @@ static void read_object_list_from_stdin(void)
- 
- static void show_commit(struct commit *commit)
- {
--	unsigned hash = name_hash("");
--	add_preferred_base_object("", hash);
--	add_object_entry(commit->object.sha1, hash, 0);
-+	add_object_entry(commit->object.sha1, 0, 0);
- }
- 
- static void show_object(struct object_array_entry *p)
+ /*
 -- 
 1.5.1.1.781.g65e8
