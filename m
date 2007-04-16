@@ -1,67 +1,73 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: parsecvs repository moved...
-Date: Mon, 16 Apr 2007 20:55:12 +1200
-Message-ID: <46a038f90704160155x12072530k6436512922f4c8c1@mail.gmail.com>
+Date: Mon, 16 Apr 2007 20:59:48 +1200
+Message-ID: <46a038f90704160159j64c6c694xc24b365078ae709a@mail.gmail.com>
 References: <46a038f90704160032m9cfee8ai9830c81dd4a64cd6@mail.gmail.com>
 	 <20070416075829.GK2689@curie-int.orbis-terrarum.net>
 	 <46a038f90704160139o4a474876qfd5b3a6e21df279f@mail.gmail.com>
-	 <20070416084238.GL2689@curie-int.orbis-terrarum.net>
-	 <46a038f90704160151q2121086bx1b224804d93ba481@mail.gmail.com>
+	 <7vbqhovhbk.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "Robin H. Johnson" <robbat2@gentoo.org>,
+Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
 	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Apr 16 10:55:24 2007
+To: "Junio C Hamano" <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 11:00:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdMzW-0007I0-NC
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 10:55:19 +0200
+	id 1HdN4C-0000Zx-GG
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 11:00:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030224AbXDPIzO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 04:55:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030241AbXDPIzO
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 04:55:14 -0400
-Received: from wx-out-0506.google.com ([66.249.82.225]:19122 "EHLO
+	id S1751652AbXDPI7u (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 04:59:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbXDPI7u
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 04:59:50 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:21197 "EHLO
 	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030224AbXDPIzM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 04:55:12 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1536866wxd
-        for <git@vger.kernel.org>; Mon, 16 Apr 2007 01:55:12 -0700 (PDT)
+	with ESMTP id S1751652AbXDPI7t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 04:59:49 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1538071wxd
+        for <git@vger.kernel.org>; Mon, 16 Apr 2007 01:59:48 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=TLI6ZeREPkQoqkMOI/O9R8brLaEfEA8GdWv65KBkElvFhRKtGpFQKBQs4x46JAtaxhu8OOB/oT/ggleXzbnsP57N925Q+9WrfIKf652HExMHhrSfuqc9kV5GZmPt6gyRN3IjazgLUMwRc+ExlKl0WT2BGBrNMi5iPCkO9lPqwDY=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WNAeYjgzY1pgJA6I+YbU1V6+oa+jRWP8JBrAN08pRN+Hgmcee6HnsKahFJ5cBeUu1hRNNwVO0V/tMXRDu6Oacnclx3P1Rt7AfjdKR4sav4jHUDAJxDMse/qMZjusm3Y3yEba5dvjHj5VeaSr3DnGrPZ5HGzd5OaOHkscjnR9tf4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lIYA5IinT33jP0I7wM2eeOWaVzxrqUNOrJSSX/0fe5f2jd0ihb+7gLja0mppUnS0u+yiOa5rK0Td3ljNgsflKwTDrRZsNqUB/xnYCUGeoMgEmMm3dpEoxUcf5+0CiU5jSL7tBVHPaYcLqp/J3OzCcAyWe2yAQNAfBOqtRrHFGnI=
-Received: by 10.90.115.4 with SMTP id n4mr794706agc.1176713712289;
-        Mon, 16 Apr 2007 01:55:12 -0700 (PDT)
-Received: by 10.90.52.17 with HTTP; Mon, 16 Apr 2007 01:55:12 -0700 (PDT)
-In-Reply-To: <46a038f90704160151q2121086bx1b224804d93ba481@mail.gmail.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jr2zzKOvYOvnAJyecfgbJ6BVlfBKuoRW+slS8s7kD5qEiCj2X854COr46nwkNXZn99l4RIMj6qdoTj7Kr46j2AVAaYw6ffmtkDby8IarxtQZbxx8jWzabsiQnE2EV0dGQbUTSqUGoum62j2IJeUa4rKf9jLoTZWVKLg5PBLE2hQ=
+Received: by 10.90.90.3 with SMTP id n3mr4589958agb.1176713988851;
+        Mon, 16 Apr 2007 01:59:48 -0700 (PDT)
+Received: by 10.90.52.17 with HTTP; Mon, 16 Apr 2007 01:59:48 -0700 (PDT)
+In-Reply-To: <7vbqhovhbk.fsf@assigned-by-dhcp.cox.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44633>
 
-On 4/16/07, Martin Langhoff <martin.langhoff@gmail.com> wrote:
-> If you'd rather not receive duplicates, you can probably filter out
-> for duplicates in by message-id at your MUA/procmail.
+On 4/16/07, Junio C Hamano <junkio@cox.net> wrote:
+> Look at Robin's header again.  It is pointing other people with
+> Mail-followup-to: header.
 
-Actually - it's not a "probably" but a fact of life - look for
-'duplicate' in the procmail quick-start guide:
+Don't worry -- I did ;-) and I did remember your complaint a few hs ago.
 
-     http://www.ii.com/internet/robots/procmail/qs/
+> People do that to avoid getting duplicates from mailing list,
+> without realizing how rude that practice is.  It forces people
+> who want to address THEM specifically (as opposed to "other
+> people") spend extra seconds correcting the e-mail header.
 
-And a quick google tells me there are similar recipes for Exim and a
-few other mail-related tools.
+Yeah -- and the fun thing is that you can get caught with a nasty
+gaffe if you hit reply and send of what you think is a private
+reply... and ends up going to the list.
+
+Mbwa-ha-ha, watch those flamewars start. Not.
+
+Let's use the reply-to as it's meant to be ;-)
 
 cheers,
-
 
 
 martin
