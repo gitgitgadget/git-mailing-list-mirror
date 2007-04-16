@@ -1,110 +1,59 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Weird shallow-tree conversion state, and branches of shallow trees
-Date: Mon, 16 Apr 2007 10:03:05 +0100
-Message-ID: <200704161003.07679.andyparkins@gmail.com>
-References: <20070412005336.GA18378@curie-int.orbis-terrarum.net> <200704152051.35639.andyparkins@gmail.com> <Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] Add --ignore-notfound option to exit with zero status when no files are removed.
+Date: Mon, 16 Apr 2007 05:04:26 -0400
+Message-ID: <20070416090426.GA2549@coredump.intra.peff.net>
+References: <20070416000408.GA19107@midwinter.com> <7v4pnh18hr.fsf@assigned-by-dhcp.cox.net> <4622C0AC.8090904@midwinter.com> <7vps65yvc1.fsf@assigned-by-dhcp.cox.net> <20070416074648.GA18719@midwinter.com> <20070416075324.GA18961@midwinter.com> <7vps64vjfc.fsf@assigned-by-dhcp.cox.net> <20070416085011.GA2387@coredump.intra.peff.net> <7v7iscvgx1.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Robin H. Johnson" <robbat2@gentoo.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Apr 16 11:03:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Josef Weidendorfer <Josef.Weidendorfer@gmx.de>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Apr 16 11:04:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdN7K-0001u7-16
-	for gcvg-git@gmane.org; Mon, 16 Apr 2007 11:03:22 +0200
+	id 1HdN8R-0002Mm-L9
+	for gcvg-git@gmane.org; Mon, 16 Apr 2007 11:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751693AbXDPJDS (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 05:03:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751821AbXDPJDS
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 05:03:18 -0400
-Received: from ug-out-1314.google.com ([66.249.92.172]:19820 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751749AbXDPJDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 05:03:17 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so1057738uga
-        for <git@vger.kernel.org>; Mon, 16 Apr 2007 02:03:15 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=KHEUz98hMQDkKL8s4vCutPOfG1NotY9tORRfKPP+KE9Sb8/3/zGSpFMirEWemFEfIahYTojS25VKRbUT4NaohUPMjICOBnntNHsZAfB5rE+Up3XOV7sb2PnJy4Gvv/VNVDZ6PJ1wM2OyB1XQw3oDi9lgAZ6nulN6YePbvNQMARQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Kn1wV8HFPIUXH5VV3JEN5BihYTLJNejc+IyViujGPLCeyLIX2DKaHNMXV7rJ2G1yaZug/HKhwZqA4TDCFLNasNA4yYPCOS6fGW16itZd8pQHb/LzpGC49KE1Eo92pg19rH1+XtBvFtgC3I9CHiczGtbRCwJcyUi0l6jydt4fCgI=
-Received: by 10.66.255.7 with SMTP id c7mr4185525ugi.1176714195260;
-        Mon, 16 Apr 2007 02:03:15 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTP id c22sm12026191ika.2007.04.16.02.03.11;
-        Mon, 16 Apr 2007 02:03:12 -0700 (PDT)
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0704151317180.5473@woody.linux-foundation.org>
+	id S1751749AbXDPJE2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 05:04:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752076AbXDPJE2
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 05:04:28 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2635 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751749AbXDPJE2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 05:04:28 -0400
+Received: (qmail 12837 invoked from network); 16 Apr 2007 09:04:22 -0000
+Received: from coredump.intra.peff.net (10.0.0.2)
+  by peff.net with (DHE-RSA-AES128-SHA encrypted) SMTP; 16 Apr 2007 09:04:22 -0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Apr 2007 05:04:26 -0400
 Content-Disposition: inline
+In-Reply-To: <7v7iscvgx1.fsf@assigned-by-dhcp.cox.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44635>
 
-On Sunday 2007 April 15 21:51, Linus Torvalds wrote:
+On Mon, Apr 16, 2007 at 01:53:46AM -0700, Junio C Hamano wrote:
 
-> > Now, I print out that diagram and pin it to my wall - sometimes copies
-> > of it are given to others.  I do this on a regular basis.
->
-> And is there *any* reason why you don't just do that as an "export"
-> option, when it's very clear that people won't send diffs that include it
+> >> > +\--ignore-notfound::
+> >> > +	Exit with a zero status even if no files matched.
+> >> > +
+> >> ls-files has --error-unmatch so we may want to make the name
+> >> consistent by saying --ignore-unmatch?  I particularly do not
+> >> care about the minute naming issues _right_ _now_, but we might
+> >> regret it in the long run.
+> >
+> > Isn't this quite similar to the '-k' option to git-mv?
+> 
+> Heh, I never use 'git-mv' and 'git-rm' myself, so I did not know
+> about that option, but from the Documentation/git-mv.txt, it
+> sounds similar.  What does it stand for, I wonder?
 
-Of course there is a reason - the file I edit is the SVG itself, in inkscape 
-while editing that file I press "print" to get a print out.  Why on earth 
-would I want to jump through hoops by closing the file I'm editing, running 
-some export script to a temporary file that I don't want, then open up 
-Inkscape again, check the export looks okay and then print - on what planet 
-is /that/ simpler?  Worse, there is more chance that I'll lose changes once 
-there are two copies of the same file floating around.  Which one am I 
-editing and which one am I printing?  Have I run the script yet?  When I 
-accidentally make changes to the wrong one, I've now got to merge those 
-changes by hand back to the file they should have been in in the first place.
+As you are so fond of telling everyone else, use git-blame to find out. :)
 
-> It's not a valid use because there are many SO MUCH BETTER WAYS to get the
-> same thing, that have none of the downsides of keyword expansion?
+Looks like '-k' got added in the move from git-rename to git-mv. Josef,
+can you shed any light on the choice of '-k'?
 
-I'm sorry, but we have different definitions of SO MUCH BETTER; it is _more_ 
-trouble for me the user to have to run scripts just to print the file that is 
-already on my screen, than not.
-
-> Your argument is akin to saying that "Why isn't it a valid use to replace
-> the steering wheel in my car with a mouth-operated joystick under the
-> passenger side seat?"
-
-I'd actually say that that is your argument - you want me to add steps to a 
-process to get the same result.  I just want the steering wheel, you want the 
-steering wheel plus script that I run first to install the steering wheel and 
-correctly adapt it for the current car.  In my version the process is "I 
-press print"; the fact that is hard for the version control system is 
-irrelevant - the whole point of tools like git is to do work for me, not the 
-other way around.
-
-> The fact that you *can* do something is not a valid argument for it being
-> a valid use. You *can* do stupid things, but if you can get to the same
-> end result by not doing stupid things, wouldn't you prefer that instead?
-
-It's not an accurate analogy at all.  Your conclusion is your supposition - 
-it's stupid because it's stupid.  I don't understand what the huge problems 
-are - all you've done is say again that it's a problem to have keyword 
-expansion.  Why?  What problem does it actually cause?
-
-I'm not just being argumentative - I still have not understood what terrible 
-evil it is that keyword expansion causes but crlf conversion does not.
-
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+-Peff
