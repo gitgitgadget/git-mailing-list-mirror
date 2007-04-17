@@ -1,64 +1,53 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: Any objectsions to enhancing git-log to show tags/branch heads?
-Date: Tue, 17 Apr 2007 09:36:52 -0400
-Message-ID: <20070417133652.GC11907@fieldses.org>
-References: <E1HdQah-0008Q2-7E@candygram.thunk.org> <20070416181352.GB29569@xp.machine.xx> <20070416182749.GG23764@fieldses.org> <20070417050704.GA19925@xp.machine.xx>
+From: Rene Herman <rene.herman@gmail.com>
+Subject: git branch --switch?
+Date: Tue, 17 Apr 2007 15:36:24 +0200
+Message-ID: <4624CD58.90103@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 15:37:05 2007
+X-From: git-owner@vger.kernel.org Tue Apr 17 15:38:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hdnrd-0003xm-J7
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 15:36:57 +0200
+	id 1Hdnt8-0004Ux-8n
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 15:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750888AbXDQNgy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 09:36:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754313AbXDQNgy
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 09:36:54 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:54805 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750888AbXDQNgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 09:36:53 -0400
-Received: from bfields by fieldses.org with local (Exim 4.63)
-	(envelope-from <bfields@fieldses.org>)
-	id 1HdnrY-0003iH-8l
-	for git@vger.kernel.org; Tue, 17 Apr 2007 09:36:52 -0400
-Content-Disposition: inline
-In-Reply-To: <20070417050704.GA19925@xp.machine.xx>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754320AbXDQNi1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 09:38:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754315AbXDQNi1
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 09:38:27 -0400
+Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:53722 "EHLO
+	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754320AbXDQNi0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 09:38:26 -0400
+Received: from [213.51.130.190] (port=45325 helo=smtp1.groni1.gr.home.nl)
+	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1Hdnt3-0001mA-13
+	for git@vger.kernel.org; Tue, 17 Apr 2007 15:38:25 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:51245 helo=[192.168.0.3])
+	by smtp1.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1Hdnsz-00058W-10
+	for git@vger.kernel.org; Tue, 17 Apr 2007 15:38:21 +0200
+User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
+X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
+X-AtHome-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44766>
 
-On Tue, Apr 17, 2007 at 07:07:04AM +0200, Peter Baumann wrote:
-> On Mon, Apr 16, 2007 at 02:27:49PM -0400, J. Bruce Fields wrote:
-> > On Mon, Apr 16, 2007 at 08:13:52PM +0200, Peter Baumann wrote:
-> > > I'll do this gitk jump very often, too. Just to get the big picture where my
-> > > branches are (inside the commit graph). As they stay normaly on the tip, I
-> > > exit gitk long before it reached the root commit. What I'd like to have is
-> > > something which shows me _visually_ the the branches, e.g.
-> > > 
-> > > master
-> > > | next			commit comment for next
-> > > o  |		commit comment for master~1
-> > > |  o			commit comment for next~1
-> > > o  |	[ ... guess whats next :-)		you get the idea ...]
-> > > |  o
-> > > |  |
-> > > o /
-> > > |
-> > 
-> > git show-branch?
-> > 
-> > --b.
-> 
-> No. git-show-branch produces output like the snippet below, which is totally
-> non obious to me. Yes, I could figure out what it means, but why the hell
-> _should_ I if there are tools for which you have to look just for a second
-> on the ouput to _fully_ understand whats happening?
+Good day.
 
-Yeah, I find it pretty opaque too.--b.
+Is it possible to switch the current branch without checking it out? Not 
+really essential, but I'm happily flaundering around with git and still 
+start from scratch fairly regularly; to speed this up I've found the -n 
+switch to git clone useful and would like something similar when 
+reconstructing my "branch hierarchies".
+
+Upto now I only know about "git checkout" (with or without -b) to switch the 
+current branch. As said it's not really essential, but I was expecting there 
+would be something like a "branch --switch". Did I overlook it?
+
+Rene.
