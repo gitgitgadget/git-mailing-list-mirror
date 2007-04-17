@@ -1,56 +1,67 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [BUG] git-new-workdir doesn't understand packed refs
-Date: Tue, 17 Apr 2007 22:55:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704172253140.14155@beast.quantumfyre.co.uk>
-References: <20070417161720.GA3930@xp.machine.xx>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH] refs.c: add a function to sort a ref list, rather then sorting on add
+Date: Tue, 17 Apr 2007 15:00:28 -0700
+Message-ID: <7vslaymzk3.fsf@assigned-by-dhcp.cox.net>
+References: <20070417014307.12486.28930.julian@quantumfyre.co.uk>
+	<Pine.LNX.4.64.0704170901170.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Apr 17 23:55:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 00:00:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hdvdz-0001D2-RZ
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 23:55:24 +0200
+	id 1Hdvj1-0002iH-Sd
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 00:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031264AbXDQVzU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 17:55:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031266AbXDQVzU
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 17:55:20 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:43598 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1031264AbXDQVzT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2007 17:55:19 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id CF6F4C629F
-	for <git@vger.kernel.org>; Tue, 17 Apr 2007 22:55:17 +0100 (BST)
-Received: (qmail 9843 invoked by uid 103); 17 Apr 2007 22:54:36 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3104. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.037966 secs); 17 Apr 2007 21:54:36 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 17 Apr 2007 22:54:36 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <20070417161720.GA3930@xp.machine.xx>
+	id S1031267AbXDQWAa (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 18:00:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031269AbXDQWAa
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 18:00:30 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:56505 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031267AbXDQWA3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 18:00:29 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070417220028.IIDC1266.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Tue, 17 Apr 2007 18:00:28 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id oN0U1W00e1kojtg0000000; Tue, 17 Apr 2007 18:00:29 -0400
+In-Reply-To: <Pine.LNX.4.64.0704170901170.5473@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 17 Apr 2007 09:03:44 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44836>
 
-On Tue, 17 Apr 2007, Peter Baumann wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> running git-gc or git-gc --prune isn't save because e.g. all the tags
-> are packed and .git/packed-refs isn't shared on the several workdirs.
+> On Tue, 17 Apr 2007, Julian Phillips wrote:
+>>
+>> Rather than sorting the refs list while building it, sort in one go
+>> after it is built using a merge sort.  This has a large performance
+>> boost with large numbers of refs.
+>> 
+>> Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+>
+> Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+>
+> Looks fine. I think that even your new times are a bit high (over two 
+> seconds?) but things are clearly better. Have you looked at what takes so 
+> long now? 
 
-Do you mean that the link wasn't created?  Or that the link was removed 
-and replaced with a file when you ran gc from a workdir?
+I wonder why the loss of "we are replacing the same one" case in
+the original add_ref() was not compensated for in the new
+sort_ref_list().
 
--- 
-Julian
-
-  ---
-My mother is a fish.
-- William Faulkner
+I think we would not call add_ref() to the same list with
+duplicate names, unless (1) filesystem is grossly corrupt, (2)
+somebody added a new ref while we are walking (how does
+readdir() behave in such a case???), or (3) packed-refs file is
+corrupt.
