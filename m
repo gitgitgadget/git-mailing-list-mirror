@@ -1,61 +1,100 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: Any objectsions to enhancing git-log to show tags/branch heads?
-Date: Mon, 16 Apr 2007 23:15:52 -0400
-Message-ID: <20070417031552.GA18373@thunk.org>
-References: <E1HdQah-0008Q2-7E@candygram.thunk.org> <Pine.LNX.4.64.0704161552160.5473@woody.linux-foundation.org> <20070417022154.GC30340@thunk.org> <f01b9g$qqc$1@sea.gmane.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [RFD PATCH 0/3] Use "object index" rather than pointers in the object
+ hashing
+Date: Mon, 16 Apr 2007 21:12:50 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704162041290.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 05:16:09 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 17 06:13:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdeAq-0002Xt-3w
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 05:16:08 +0200
+	id 1Hdf3t-0007eu-0v
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 06:13:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031065AbXDQDQD (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 23:16:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031069AbXDQDQD
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 23:16:03 -0400
-Received: from thunk.org ([69.25.196.29]:44741 "EHLO thunker.thunk.org"
+	id S932081AbXDQEM5 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 00:12:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932097AbXDQEM5
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 00:12:57 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:34420 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031065AbXDQDQB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 23:16:01 -0400
-Received: from root (helo=candygram.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1HdeH5-0002Zr-MB; Mon, 16 Apr 2007 23:22:36 -0400
-Received: from tytso by candygram.thunk.org with local (Exim 4.63)
-	(envelope-from <tytso@thunk.org>)
-	id 1HdeAa-0007GY-RP; Mon, 16 Apr 2007 23:15:52 -0400
-Content-Disposition: inline
-In-Reply-To: <f01b9g$qqc$1@sea.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S932081AbXDQEM4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 00:12:56 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3H4CpIs016516
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 16 Apr 2007 21:12:51 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3H4Cojs019783;
+	Mon, 16 Apr 2007 21:12:50 -0700
+X-Spam-Status: No, hits=-0.952 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44715>
 
-On Tue, Apr 17, 2007 at 04:30:47AM +0200, Jakub Narebski wrote:
-> You have to use --abbrev-commit (--abbrev is opassed to log machinery, and
-> covers object ids), which is undocumented option (mentioned only in passing
-> in git-reflog(1)).
 
-Sigh, I found --abbrev first from deferencing the following paragraph
-from the git-log man page:
+This is a series of three patches that changes the low-level object 
+hashing to use a "object index" rather than the pointer to a "struct 
+object" in the hash-tables. It's something I've been thinking about for a 
+long time, so I just decided to do it.
 
-   The [git-log] command takes options applicable to the
-   git-rev-list(1) command to control what is shown and how, and
-   options applicable to the git-diff-tree(1) commands to control how
-   the changes each commit introduces are shown.
+The reason to do it is that on 64-bit architectures the object hash table 
+is actually a fairly sizeable entity, and not for a very good reason. It 
+has a ton of pointers to the objects we have allocated, so each hash-table 
+entry is 64-bits, even though obviously we aren't likely to ever have that 
+many objects.
 
-In any case, --abrev is mentioned in git-rev-list(1)'s man page, and
-specifying it doesn't cause git-log to bomb out with an illegal option
-name.  It just apparently ignores it as far as I can tell.
+So instead, we could use a 32-bit index into an object table - and in 
+fact, since we already do all normal object allocations using a special 
+dense allocatory that allocates 1024 objects in one go, we already kind of 
+were set up for this, with the low 10 bits of the object index being a 
+very natural index into each allocation block.
 
-						- Ted
+Could we ever want more than 4 billion objects? Unlikely, since you'd 
+actually need 80GB of memory just to keep track of the object names in 
+such a hash table, but hey, if that day ever comes, we can certainly 
+trivially make the index be 64-bit instead (or more likely, make it be 
+48-bit and use 16 bits of the hash table entry as an extended hash value 
+or something).
+
+Anyway, the before-and-after numbers are somewhat debatable, so this is 
+purely a request for discussion..
+
+Before:
+
+	[torvalds@woody linux]$ /usr/bin/time git-rev-list --all --objects | wc -l
+	5.66user 0.46system 0:06.12elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+44389minor)pagefaults 0swaps
+	445065
+
+After:
+
+	[torvalds@woody linux]$ /usr/bin/time ~/git/git-rev-list --all --objects | wc -l
+	6.96user 0.36system 0:07.36elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+	0inputs+0outputs (0major+40240minor)pagefaults 0swaps
+	445065
+
+ie it's actually slightly slower, but it uses almost 10% less memory 
+(minor page faults). Is it worth it? Probably not, but since I made the 
+patches, I thought I'd post them anyway. And the two first patches are 
+probably worth applying regardless - it's only the third patch that 
+actually changes things to use a hash index.
+
+Anyway, the three patches are:
+
+	0001-Use-proper-object-allocators-for-unknown-object-node.patch
+	0002-Clean-up-object-creation-to-use-more-common-code.patch
+	0003-Make-the-object-lookup-hash-use-a-object-index-ins.patch
+
+where 1-2 are pretty much just cleanups.
+
+Comments?
+
+		Linus
