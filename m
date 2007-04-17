@@ -1,92 +1,85 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [RFD] Strange patch formats (aka tricks with unified diffs)..
-Date: Tue, 17 Apr 2007 20:02:30 +0200
-Message-ID: <e5bfff550704171102j61234553qb388a4be67592a07@mail.gmail.com>
-References: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org>
-	 <e5bfff550704122238l4a453cb7g38834c7da3432d5a@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
+Date: Tue, 17 Apr 2007 11:12:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704171107510.5473@woody.linux-foundation.org>
+References: <200704171041.46176.andyparkins@gmail.com>
+ <200704171235.34793.andyparkins@gmail.com> <Pine.LNX.4.64.0704170847380.5473@woody.linux-foundation.org>
+ <200704171803.58940.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Paul Mackerras" <paulus@samba.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 17 20:03:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 20:12:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hds10-0005gp-6V
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 20:02:54 +0200
+	id 1HdsAV-00019O-KW
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 20:12:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161264AbXDQSCf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 14:02:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161276AbXDQSCe
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 14:02:34 -0400
-Received: from nz-out-0506.google.com ([64.233.162.236]:41172 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161264AbXDQSCd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 14:02:33 -0400
-Received: by nz-out-0506.google.com with SMTP id s1so1555094nze
-        for <git@vger.kernel.org>; Tue, 17 Apr 2007 11:02:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=N+xY4PttkVmeR49UrGCf/mQYz8Tuak72+vhsNvaVNj7KXLLdc5GHiNbBeDndgmgxH/Des9UG7DJ6HxZC2wQPPKWt/8XiJukEb4xmRBMDZz9e0zECUIF6jKOwbJ42O01F4pCkKUItuXjxcS1UDyjLIPwsUVOPQuYC9v+MhotPNtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AQX0ABOpAaCaPnXvciGQ0Bq/fHsD6+vohkw/Rrn4aVJn8YlXkt6BaihhmhCHcPhLNTOeOn+9gMJB9freiUmLVZFZ7b7N/4e/hmaNIkBlWQ0utXwbCbbA9L10MPbFXSKGGUVhFUEB9pRXp2qLTQdjguTjVSR45rrHsELaEw6OZfI=
-Received: by 10.115.75.1 with SMTP id c1mr2543177wal.1176832950952;
-        Tue, 17 Apr 2007 11:02:30 -0700 (PDT)
-Received: by 10.114.61.6 with HTTP; Tue, 17 Apr 2007 11:02:30 -0700 (PDT)
-In-Reply-To: <e5bfff550704122238l4a453cb7g38834c7da3432d5a@mail.gmail.com>
-Content-Disposition: inline
+	id S1161326AbXDQSMk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 14:12:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161335AbXDQSMk
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 14:12:40 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:56290 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161326AbXDQSMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 14:12:39 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3HICZ6q011776
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 Apr 2007 11:12:35 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3HICYGq003845;
+	Tue, 17 Apr 2007 11:12:35 -0700
+In-Reply-To: <200704171803.58940.andyparkins@gmail.com>
+X-Spam-Status: No, hits=-0.964 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44807>
-
-On 4/13/07, Marco Costalba <mcostalba@gmail.com> wrote:
-> On 4/12/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
-> >
-> >
-> > So I can see two ways to fix this:
-> >  - bug Paul about alternate diff viewing capabilities in gitk. He's cc'd
-> >    here. A way to make the "diff" pane show just the new one, the old one,
-> >    or even both side-by-side with some mousy interface?
-> >  - add some actual switch to git diff generation to hide the negative side
-> >    of a unified diff, and add some way to just make gitk pass that switch
-> >    in.
-> >
-> > I dunno. I realize that it's not just gitk - gitweb, qgit etc don't allow
-> > the tricks *either*, but gitk was the one I just hit this with.
->
-> Currently in qgit you can select a revision + a file and call an
-> external diff viewer, as example Kompare (tweakable from
-> 'Edir->settings->External diff viewer' menu) to view the diff
-> side-by-side, or in any other way the viewer allows, for the selected
-> file.
->
-> I like also the idea to hide the negative side but I would rather
-> prefer a togglable command/button instead of a command line argument
-> or a setting, so to allow easy and quick hide/unhide on the same
-> patch.
->
-> I will work on it..... ;-)
->
-
-I have pushed a patch with support for toggling view of the negative
-side of an unified diff (right most 'filter' button in patch viewer
-tab or CTRL+H shortcut).
-
-In case someone is interested repo is, as usual,
-
-                git://git.kernel.org/pub/scm/qgit/qgit.git
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44808>
 
 
-  Marco
 
-P.S: Another two useful shortcuts are the hide/unhide of revision
-description header ('h' key or from 'View' menu) and hide/unhide of
-secondary panes ('s' key or from 'View' menu) they work in all the
-different tabs.
+On Tue, 17 Apr 2007, Andy Parkins wrote:
+> 
+> Why on earth would it not apply?  It's being applied using git-apply, 
+> which will unexpand the keywords as it goes - as I keep saying.
+
+So you will never work with anybody outside of git?
+
+What about tar-files when you export the tree? Should they have the 
+expanded version? 
+
+> You keep saying these sweepingly general things.  It can be made to 
+> work.
+
+No, it CANNOT.
+
+Trust me. There's NO WAY IN HELL it will "work" in any other sense than 
+"limp along and not be usable".
+
+Yes, you can make it "work" if you:
+
+ - make sure that you never _ever_ leave the git environment
+
+   But why do you want keyword expansion then? The whole point is if you 
+   have other tools than the git tools that look at a file. Even your svg 
+   example was literally about having non-git tools work with the data. 
+   What if you ever email the file to somebody else? 
+
+ - you make all git tools explicitly always strip them.
+
+   Again, what's the point again? You add keyword expansion, and then the 
+   only tools that you really allow to touch it (except your "print it 
+   out" example) will have to remove the keyword expansion just to work.
+
+That's not "work". That's just stupid. Yes, you can make your "print it 
+out" example work, but as alreadyt mentioned, you could have done that 
+some other way, with a simple makefile rule, quite independently (and much 
+better) than the SCM ever did.
+
+		Linus
