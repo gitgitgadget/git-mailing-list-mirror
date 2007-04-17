@@ -1,57 +1,67 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Bisect: simplify "bisect start" logging.
-Date: Tue, 17 Apr 2007 06:40:50 +0200
-Message-ID: <20070417064050.fd9dfc99.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Tue Apr 17 06:32:55 2007
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] send-email: do not leave an empty CC: line if no cc is present.
+Date: Mon, 16 Apr 2007 21:43:21 -0700
+Message-ID: <11767850012084-git-send-email-junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 17 06:43:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdfN9-0003tX-1d
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 06:32:55 +0200
+	id 1HdfXJ-0006I5-Au
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 06:43:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031083AbXDQEck (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 00:32:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031085AbXDQEck
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 00:32:40 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:54603 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031083AbXDQEcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 00:32:39 -0400
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 00ED8B929A;
-	Tue, 17 Apr 2007 06:32:36 +0200 (CEST)
-X-Mailer: Sylpheed version 2.3.0beta5 (GTK+ 2.8.20; i486-pc-linux-gnu)
+	id S1031069AbXDQEnW (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 00:43:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031070AbXDQEnW
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 00:43:22 -0400
+Received: from fed1rmmtao102.cox.net ([68.230.241.44]:59930 "EHLO
+	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031069AbXDQEnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 00:43:21 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao102.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070417044322.QUOA1268.fed1rmmtao102.cox.net@fed1rmimpo02.cox.net>
+          for <git@vger.kernel.org>; Tue, 17 Apr 2007 00:43:22 -0400
+Received: from localhost.localdomain ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id o4jM1W0091kojtg0000000; Tue, 17 Apr 2007 00:43:21 -0400
+X-Mailer: git-send-email 1.5.1.1.125.g402f-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44722>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
- git-bisect.sh |    5 +----
- 1 files changed, 1 insertions(+), 4 deletions(-)
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 85c374e..1cd4561 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -116,10 +116,7 @@ bisect_start() {
-         done
- 
- 	sq "$@" >"$GIT_DIR/BISECT_NAMES"
--	{
--	    printf "git-bisect start"
--	    echo "$orig_args"
--	} >>"$GIT_DIR/BISECT_LOG"
-+	echo "git-bisect start$orig_args" >>"$GIT_DIR/BISECT_LOG"
- 	bisect_auto_next
- }
- 
+ * I've almost never used send-email myself, but I decided that
+   I should eat somebody's dog food I inherited.  Once I got
+   annoyed enough, I may end up rewriting large portions of it,
+   perhaps.
+
+ git-send-email.perl |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 1278fcb..d6b1548 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -446,9 +446,12 @@ sub send_message
+ 		my ($name, $addr) = ($from =~ /^(.*?)(\s+<.*)/);
+ 		$from = "\"$name\"$addr";
+ 	}
++	my $ccline = "";
++	if ($cc ne '') {
++		$ccline = "\nCc: $cc";
++	}
+ 	my $header = "From: $from
+-To: $to
+-Cc: $cc
++To: $to${ccline}
+ Subject: $subject
+ Date: $date
+ Message-Id: $message_id
 -- 
-1.5.1.1.821.g88bdb-dirty
+1.5.1.1.821.g88bdb
