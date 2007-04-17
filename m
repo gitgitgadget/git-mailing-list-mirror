@@ -1,85 +1,61 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 11:12:34 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704171107510.5473@woody.linux-foundation.org>
+Date: Tue, 17 Apr 2007 11:23:03 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org>
 References: <200704171041.46176.andyparkins@gmail.com>
- <200704171235.34793.andyparkins@gmail.com> <Pine.LNX.4.64.0704170847380.5473@woody.linux-foundation.org>
- <200704171803.58940.andyparkins@gmail.com>
+ <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org>
+ <46250175.4020300@dawes.za.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 20:12:44 2007
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Rogan Dawes <lists@dawes.za.net>
+X-From: git-owner@vger.kernel.org Tue Apr 17 20:23:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdsAV-00019O-KW
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 20:12:44 +0200
+	id 1HdsKf-0005NO-Df
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 20:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161326AbXDQSMk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 14:12:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161335AbXDQSMk
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 14:12:40 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:56290 "EHLO smtp.osdl.org"
+	id S1161359AbXDQSXJ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 14:23:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161360AbXDQSXJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 14:23:09 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:56754 "EHLO smtp.osdl.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1161326AbXDQSMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 14:12:39 -0400
+	id S1161359AbXDQSXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 14:23:08 -0400
 Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3HICZ6q011776
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3HIN46q012172
 	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 17 Apr 2007 11:12:35 -0700
+	Tue, 17 Apr 2007 11:23:04 -0700
 Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3HICYGq003845;
-	Tue, 17 Apr 2007 11:12:35 -0700
-In-Reply-To: <200704171803.58940.andyparkins@gmail.com>
-X-Spam-Status: No, hits=-0.964 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3HIN3nG004096;
+	Tue, 17 Apr 2007 11:23:03 -0700
+In-Reply-To: <46250175.4020300@dawes.za.net>
+X-Spam-Status: No, hits=-0.963 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
 X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
 X-MIMEDefang-Filter: osdl$Revision: 1.177 $
 X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44809>
 
 
 
-On Tue, 17 Apr 2007, Andy Parkins wrote:
+On Tue, 17 Apr 2007, Rogan Dawes wrote:
 > 
-> Why on earth would it not apply?  It's being applied using git-apply, 
-> which will unexpand the keywords as it goes - as I keep saying.
+> Well, if the only keyword we support is $BlobId:$, then if the tree/object
+> hasn't changed, then we still don't need to touch the object.
+> 
+> Not so?
 
-So you will never work with anybody outside of git?
+Correct. However, is that actually a useful expansion?
 
-What about tar-files when you export the tree? Should they have the 
-expanded version? 
+Most of the time, I'd expect people to want things like "last committer, 
+time, story of their life" etc.. I don't think the SHA1 ID's are pretty 
+enough that anybody would ever want to see them. But yes, they are 
+certainly stable.
 
-> You keep saying these sweepingly general things.  It can be made to 
-> work.
-
-No, it CANNOT.
-
-Trust me. There's NO WAY IN HELL it will "work" in any other sense than 
-"limp along and not be usable".
-
-Yes, you can make it "work" if you:
-
- - make sure that you never _ever_ leave the git environment
-
-   But why do you want keyword expansion then? The whole point is if you 
-   have other tools than the git tools that look at a file. Even your svg 
-   example was literally about having non-git tools work with the data. 
-   What if you ever email the file to somebody else? 
-
- - you make all git tools explicitly always strip them.
-
-   Again, what's the point again? You add keyword expansion, and then the 
-   only tools that you really allow to touch it (except your "print it 
-   out" example) will have to remove the keyword expansion just to work.
-
-That's not "work". That's just stupid. Yes, you can make your "print it 
-out" example work, but as alreadyt mentioned, you could have done that 
-some other way, with a simple makefile rule, quite independently (and much 
-better) than the SCM ever did.
-
-		Linus
+			Linus
