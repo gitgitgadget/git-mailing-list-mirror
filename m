@@ -1,78 +1,80 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 18:10:30 +0100
-Message-ID: <200704171810.31797.andyparkins@gmail.com>
-References: <200704171041.46176.andyparkins@gmail.com> <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org>
+Subject: Re: GIT vs Other: Need argument
+Date: Tue, 17 Apr 2007 18:18:26 +0100
+Message-ID: <200704171818.28256.andyparkins@gmail.com>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="ansi_x3.4-1968"
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>,
+	"Tomash Brechko" <tomash.brechko@gmail.com>,
+	"Pietro Mascagni" <pietromas@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 19:11:42 2007
+X-From: git-owner@vger.kernel.org Tue Apr 17 19:19:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdrDG-0002BP-Dg
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 19:11:30 +0200
+	id 1HdrKS-0004sS-6Q
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 19:18:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161010AbXDQRKs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 13:10:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161001AbXDQRKs
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 13:10:48 -0400
-Received: from wx-out-0506.google.com ([66.249.82.234]:36963 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1160999AbXDQRKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 13:10:47 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so2111623wxd
-        for <git@vger.kernel.org>; Tue, 17 Apr 2007 10:10:46 -0700 (PDT)
+	id S1161071AbXDQRSo (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 13:18:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161042AbXDQRSo
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 13:18:44 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:31886 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161095AbXDQRSm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 13:18:42 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so222364uga
+        for <git@vger.kernel.org>; Tue, 17 Apr 2007 10:18:41 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=du8zpABM/ezgW8DqMlmXNNECTPU0KHTnTx2V4Q+dLSVbmfojMxnmKSrHzYnq7Z9oltPk7O6eb15dsi+BOSmVQgiZ3pKsNSdCdYBJnw9k6dpGPfuFSeS/hjPZoHi4TX3H/sjXRnEPTVjXPbe+xctyACtABrk9V6ZbjGFHB6aXTdo=
+        b=mw9X9hA7oraPF9b2FUwzO8klSHHQ6R8nMTSXq3AnIpWc1gQEJPD4S4dlxYCOTeLuihcna1sU65NCJ5g0yqNWf0uqtyN048vvUyNBUzDtCHWXKu+NBb56YsRyot2yA6Lfsp5TcfzK5ZHH+9xIfiZ42K9p5qy2r/M6q24cpKCsvAQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=dxHd8pGRkTmBhaU3j3TMazleHpX9wScTZbIb9UWYumbFU81BQI23s8KpIPtrntTpB4aMzapJ1/+CA2r9PtkCgLjREcECUFjws9fZRKjOj6U2Zl5Yy7pEk3yeTJ9qW2kBorXp4dBcwdvI8oPH/OTU3KAz8CeMyQrq41yIxu7u5UE=
-Received: by 10.66.242.5 with SMTP id p5mr597979ugh.1176829844735;
-        Tue, 17 Apr 2007 10:10:44 -0700 (PDT)
+        b=cISesvfyi+FjpeiTK/fR7uOepl6yuhiz0zldQv7oo3fxXaYkwzpk2t0Jp3QmTJ1namps7JtAzb7fGKhTGjqf2qgGquqpbJ1yiyJUkErCkiL8A9kOWrp/bzZjoxlsU0VfbLOQkkuKLmKrAEL4QDGKH42gk4ZG1ixU2WagqnV7qL0=
+Received: by 10.67.106.3 with SMTP id i3mr625832ugm.1176830321216;
+        Tue, 17 Apr 2007 10:18:41 -0700 (PDT)
 Received: from grissom.local ( [84.201.153.164])
-        by mx.google.com with ESMTP id 32sm1385330ugf.2007.04.17.10.10.43;
-        Tue, 17 Apr 2007 10:10:43 -0700 (PDT)
+        by mx.google.com with ESMTP id b23sm1421370ugd.2007.04.17.10.18.39;
+        Tue, 17 Apr 2007 10:18:40 -0700 (PDT)
 User-Agent: KMail/1.9.6
-In-Reply-To: <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org>
+In-Reply-To: <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44803>
 
-On Tuesday 2007, April 17, Linus Torvalds wrote:
-
-> And think what we do about files (and whole subdirectories!) that
-> haven't even changed. And finally, think about how important that
-> optimization is in an SCM like git that supports branches.
+On Tuesday 2007, April 17, Guilhem Bonnefille wrote:
+> I'm new to Git, but completly crazy of it.
 >
-> I think you'll find that keyword expansion simply isn't acceptable.
+> In my point of view, in corporate team, lot of people does not
+> want/need the power offered by Git.
+> So, my conclusion is the better model in a corporate is a centralyzed
+> repo with some users using Git as "frontend". Other people will
+> simply use the native tools for accessing the repo.
 
-As I said in my reply to Junio; other VCSs only expand keywords when the 
-file itself is checked out - when git's uber-fast switching decides 
-that fileA is the same in the source and target checkouts, then the 
-keywords won't be updated - fine.
+Git has you covered there - it works better than other version control 
+systems for that model too.  I do it all the time; the only difference 
+is that with git it's not the tool doesn't force the choice on you.
 
-In this one respect git would be "as good as" instead of "infinitely 
-better".  I can live with that.
+If you want a central repo, just make one - designate one repository as 
+central, put it in the .git/config file for each of the others and away 
+you go.  Pretend it's centralised if you want; you and your colleagues 
+need never know otherwise.
 
-> But hey, you didn't believe me, so I'm happy you are trying to write
-> the patches. Either you'll prove me wrong, or you'll realize just
-> *how* broken the feature is.
-
-Could be - I'm happy to disagree.  I'm even happy to accept that I might 
-fail miserably.
+What's even better is that everything will also work faster, take less 
+diskspace and be heavily backed up just by everyone doing their normal 
+work.
 
 
 Andy
+
 -- 
 Dr Andy Parkins, M Eng (hons), MIET
 andyparkins@gmail.com
