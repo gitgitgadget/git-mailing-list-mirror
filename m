@@ -1,65 +1,89 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [RFC/PATCH 1/2] Add a useful return value to git-check-attr
-Date: Tue, 17 Apr 2007 02:28:34 -0700
-Message-ID: <7vzm57pcxp.fsf@assigned-by-dhcp.cox.net>
-References: <200704171010.49168.andyparkins@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Segmentation fault in git-svn
+Date: Tue, 17 Apr 2007 02:37:43 -0700
+Message-ID: <20070417093743.GA9222@muzzle>
+References: <4623F613.5010108@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 11:29:04 2007
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 11:37:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hdjzk-0007hh-4i
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 11:29:04 +0200
+	id 1Hdk8D-0001nD-BZ
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 11:37:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753096AbXDQJ2g (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 05:28:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753100AbXDQJ2g
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 05:28:36 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:47769 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753096AbXDQJ2f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 05:28:35 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070417092835.VPLN1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
-          Tue, 17 Apr 2007 05:28:35 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id o9Ua1W00E1kojtg0000000; Tue, 17 Apr 2007 05:28:34 -0400
-In-Reply-To: <200704171010.49168.andyparkins@gmail.com> (Andy Parkins's
-	message of "Tue, 17 Apr 2007 10:10:48 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753086AbXDQJhq (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 05:37:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753105AbXDQJhq
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 05:37:46 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:54779 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753086AbXDQJhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 05:37:45 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id ACF757DC09F;
+	Tue, 17 Apr 2007 02:37:43 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Tue, 17 Apr 2007 02:37:43 -0700
+Content-Disposition: inline
+In-Reply-To: <4623F613.5010108@midwinter.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44747>
 
-Andy Parkins <andyparkins@gmail.com> writes:
+Steven Grimm <koreth@midwinter.com> wrote:
+> I expect this is really a libsvn bug, but git-svn triggers it, so I'm 
+> hoping someone else has run into and solved it, or at least that someone 
+> can reproduce it.
 
-> git-check-attr previously always returned success.  With this patch it
-> returns success when the requested attribute is found for all supplied
-> paths.
->
-> This lets you check in a script whether a file has an attribute:
->
->  $ git-check-attr attribute -- file && echo "file has attribute"
+I've also been working with another user off-list the past few
+days on tracking down on a segmentation fault in git-svn.
 
-I wrote check-attr primarily to have a quick way to make sure
-the attribute stack is working properly, but I agree making
-gitattributes available to scripts is important to make it
-useful in general.
+> If I try to clone the "memcached" public repository with the command line
+> 
+>  git-svn clone --branches=branches --trunk=trunk 
+> http://code.sixapart.com/svn/memcached
 
-And your patch was a step in the right direction based on my
-previous patch.
+I just ran this several (6?) times got a segmentation fault once
+with Junio's master @ f948792990f82a35bf0c98510e7511ef8acb9cd3.
 
-But sorry, you were shooting at a target that is still moving
-too fast, and you missed.  It's not your fault, as even I did
-not know where it was heading to, but my plan has been to have
-the scripts parse the text output, as we would need more than
-true/false values, as I did in the four patch series I sent out
-tonight.
+Trying it again with the same file that segfaulted earlier, it was
+successful, spooky...
+
+I also tried some other patches (see replies) which I've been testing to
+fix the other user's problem.
+
+> it cranks along fine until revision 299, then dies with SIGSEGV. If I 
+> run it again, it appears to pick up where it left off, then dies again 
+> at revision 399, then again at revision 499. (There are fewer than 600 
+> revisions in that repo so it's anyone's guess if it'd die at 599 given 
+> the chance.)
+
+I have definitely not seen this pattern before.
+
+However, the following clone has been problematic at times
+
+git svn clone svn://svn.debian.org/svn/pkg-glibc/glibc-package \
+  -T trunk -b branches -t tags
+
+> This happens on both a Linux box (amd64, FC4, svn version 1.4.3) and my 
+> Mac (Intel OS 10.4, svn version 1.2.3 from Fink), so at the very least 
+> it's not platform-specific. It also happens periodically on the private 
+> svn repository at my company, though not as predictably. On my Mac, I'm 
+> using the very latest git code from "master".
+
+I'm running x86, Debian Etch, SVN 1.4.2 from Debian Etch or
+1.4.3 from Debian experimental + do_switch patch[1]
+
+Thanks for the stack trace.  This is segfaulting at
+a different place (expected, being an http:// repo while
+the other is svn://)
+
+[1] - http://svn.haxx.se/dev/archive-2007-01/0936.shtml
+
+-- 
+Eric Wong
