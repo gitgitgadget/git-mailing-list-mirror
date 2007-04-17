@@ -1,53 +1,67 @@
-From: Rene Herman <rene.herman@gmail.com>
-Subject: Re: git branch --switch?
-Date: Tue, 17 Apr 2007 19:03:46 +0200
-Message-ID: <4624FDF2.6020003@gmail.com>
-References: <4624CD58.90103@gmail.com>	<C940520E-732A-4F6E-A7F2-0215FD534455@silverinsanity.com>	<4624EAAA.6040000@gmail.com>	<8c5c35580704170855ke426d86vac6e9b3b67fea5ea@mail.gmail.com>	<4624F18F.6070906@gmail.com> <86y7kr0wst.fsf@blue.stonehenge.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: GIT vs Other: Need argument
+Date: Tue, 17 Apr 2007 19:07:46 +0200
+Message-ID: <vpqodlnapzx.fsf@bauges.imag.fr>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+	<vpqejmjjrdp.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0704170816390.5473@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 19:06:55 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 17 19:08:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hdr8a-0000LI-C7
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 19:06:40 +0200
+	id 1HdrAF-00011t-Gk
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 19:08:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031216AbXDQRFw (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 13:05:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031219AbXDQRFw
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 13:05:52 -0400
-Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:33085 "EHLO
-	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031216AbXDQRFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 13:05:51 -0400
-Received: from [213.51.130.190] (port=53975 helo=smtp1.groni1.gr.home.nl)
-	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1Hdr7l-0008PD-1V; Tue, 17 Apr 2007 19:05:49 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:44441 helo=[192.168.0.3])
-	by smtp1.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1Hdr7g-0006J0-29; Tue, 17 Apr 2007 19:05:44 +0200
-User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
-In-Reply-To: <86y7kr0wst.fsf@blue.stonehenge.com>
-X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
-X-AtHome-MailScanner: Found to be clean
+	id S1031234AbXDQRIG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 13:08:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031230AbXDQRID
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 13:08:03 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64939 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031228AbXDQRH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 13:07:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l3HH7k2S015283
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 17 Apr 2007 19:07:47 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Hdr9e-0007Qn-Pn; Tue, 17 Apr 2007 19:07:46 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Hdr9e-0006GY-NJ; Tue, 17 Apr 2007 19:07:46 +0200
+Mail-Followup-To: git@vger.kernel.org
+In-Reply-To: <Pine.LNX.4.64.0704170816390.5473@woody.linux-foundation.org> (Linus Torvalds's message of "Tue\, 17 Apr 2007 08\:28\:22 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 17 Apr 2007 19:07:47 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44801>
 
-On 04/17/2007 06:50 PM, Randal L. Schwartz wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Rene> directly then (right?) but I do want that "v20" branch in the middle.
-> 
-> What does "in the middle" mean here?
+> On Tue, 17 Apr 2007, Matthieu Moy wrote:
+>> 
+>> * Perhaps your boss will be interested in the "data integrity" (i.e.
+>>   git fsck) problem too.
+>
+> The data integrity thing is a lot more than just fsck.
 
-In the middle of my mental model if nothing else :-) But never mind, I was 
-confused; ignored Lars' info about branch starting points (and even myself 
-stating it before) but given them, I have all I want.
+I have to revise my latin ;-). I meant _e. g._ git fsck, and the fact
+that just given the full revision ID, you can make sure that both the
+data and the history are uncorrupted is obviously a strong point for
+data integrity, but not the only one (things like "add, don't replace"
+policy is another).
 
-Rene.
+-- 
+Matthieu
