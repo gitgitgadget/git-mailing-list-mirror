@@ -1,59 +1,77 @@
 From: Rene Herman <rene.herman@gmail.com>
 Subject: Re: git branch --switch?
-Date: Tue, 17 Apr 2007 17:44:54 +0200
-Message-ID: <4624EB76.2030700@gmail.com>
-References: <4624CD58.90103@gmail.com>	 <81b0412b0704170721i2b64999aqbd0d7489074454d6@mail.gmail.com>	 <F47212AE-B31D-4025-9859-6794E7405DF2@silverinsanity.com> <81b0412b0704170811h510ce0afn1b2277b752bdf422@mail.gmail.com>
+Date: Tue, 17 Apr 2007 17:47:36 +0200
+Message-ID: <4624EC18.4000500@gmail.com>
+References: <4624CD58.90103@gmail.com> <C940520E-732A-4F6E-A7F2-0215FD534455@silverinsanity.com> <4624EAAA.6040000@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 17:47:21 2007
+Cc: git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 17:49:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hdptn-000428-1j
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 17:47:19 +0200
+	id 1HdpwG-0004pr-SP
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 17:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030890AbXDQPq7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 11:46:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030887AbXDQPq7
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 11:46:59 -0400
-Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:35436 "EHLO
-	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030879AbXDQPq6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 11:46:58 -0400
-Received: from [213.51.130.190] (port=52469 helo=smtp1.groni1.gr.home.nl)
-	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1HdptQ-00048b-P0; Tue, 17 Apr 2007 17:46:56 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:47092 helo=[192.168.0.3])
+	id S1031045AbXDQPto (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 11:49:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031040AbXDQPto
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 11:49:44 -0400
+Received: from smtpq2.groni1.gr.home.nl ([213.51.130.201]:52474 "EHLO
+	smtpq2.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031045AbXDQPtl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 11:49:41 -0400
+Received: from [213.51.130.190] (port=52812 helo=smtp1.groni1.gr.home.nl)
+	by smtpq2.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1Hdpw4-0004DO-7m; Tue, 17 Apr 2007 17:49:40 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:33712 helo=[192.168.0.3])
 	by smtp1.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1HdptJ-0004qR-QN; Tue, 17 Apr 2007 17:46:49 +0200
+	id 1Hdpvw-0005q1-6M; Tue, 17 Apr 2007 17:49:32 +0200
 User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
-In-Reply-To: <81b0412b0704170811h510ce0afn1b2277b752bdf422@mail.gmail.com>
+In-Reply-To: <4624EAAA.6040000@gmail.com>
 X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
 X-AtHome-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44785>
 
-On 04/17/2007 05:11 PM, Alex Riesen wrote:
+On 04/17/2007 05:41 PM, Rene Herman wrote:
 
-> ach, right. Dangerous: it can change the ref HEAD points to. Very sorry!
-> Better just:
+> On 04/17/2007 04:31 PM, Brian Gernhardt wrote:
+
+>> However, I'm somewhat confused as to why you'd want HEAD and the 
+>> working directory to get out of sync.
 > 
-> $ rm .git/HEAD && git symbolic-ref HEAD "refs/heads/<branch-name>"
+> Thank you for the answer. Well, as said, it's not essential, but I was 
+> just now rebuilding a repo and have a few branches that I all want to be 
+> based on the same revision. Say, branch a, b and c, based on v2.6.20.
+> 
+> git clone -l -s -n <a local linux repo> local
+> git checkout -b v20 v2.6.20
+> git branch a
+> git branch b
+> git branch c
+> 
+> Step 1, 3, 4 and 5 of this are nearly instantaneous but 2 isn't -- this 
+> repo sits on a P1 with 64M of memory and a disk doing 8 M/s which is 
+> probably the only reason I thought asking about it was a good idea in 
+> the first place...
+> 
+> You'd be quite right in saying that there isn't much point; if I want to 
+> now start populating branch a, I have to "git checkout a" anyway, and 
+> that action _will_ now be instantaneous. If I'd replaced 2 with:
+> 
+> git branch --create-and-set-as-current v20 v2.6.20
+> 
+> then I will not have won any time until that 6th "git checkout a" step.
 
-Thanks.
+s/until/after/
 
-> In the end, you just have git-checkout minus git-checkout-index. Maybe
-> a "git-checkout -n" can be useful. Even though I can't imagine what for.
-
-Thought about that as well, to keep with clone, but giving "checkout" an 
-option to not checkout seems somewhat odd.
-
-"git branch -s" for "not only create but Set current to it as well" maybe?
+> The checkout of v20 was superfluous in this though, and I just expected 
+> I should be able to skip that. It fitted my mental model...
 
 Rene.
