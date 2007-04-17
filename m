@@ -1,71 +1,76 @@
-From: Rogan Dawes <lists@dawes.za.net>
+From: Nicolas Pitre <nico@cam.org>
 Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 22:27:26 +0200
-Message-ID: <46252DAE.4020604@dawes.za.net>
-References: <200704171041.46176.andyparkins@gmail.com> <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org> <46250175.4020300@dawes.za.net> <Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org>
+Date: Tue, 17 Apr 2007 16:29:49 -0400 (EDT)
+Message-ID: <alpine.LFD.0.98.0704171624190.4504@xanadu.home>
+References: <200704171041.46176.andyparkins@gmail.com>
+ <"200704171803.58940.an dyparkins"@gmail.com>
+ <200704172012.31280.andyparkins@gmail.com>
+ <alpine.LFD.0.98.0704171530220.4504@xanadu.home>
+ <Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Apr 17 22:28:17 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Transfer-Encoding: 7BIT
+Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <junkio@cox.net>
+To: David Lang <david.lang@digitalinsight.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 22:29:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HduHf-0007PC-7Y
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 22:28:15 +0200
+	id 1HduJG-0007tB-MM
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 22:29:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161306AbXDQU1r (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 16:27:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161331AbXDQU1r
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 16:27:47 -0400
-Received: from sd-green-bigip-202.dreamhost.com ([208.97.132.202]:35599 "EHLO
-	spunkymail-a16.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1161306AbXDQU1q (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2007 16:27:46 -0400
-Received: from [192.168.201.100] (dsl-146-26-121.telkomadsl.co.za [165.146.26.121])
-	by spunkymail-a16.dreamhost.com (Postfix) with ESMTP id 1069C7CC51;
-	Tue, 17 Apr 2007 13:27:43 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org>
+	id S1161331AbXDQU3v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 16:29:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161334AbXDQU3v
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 16:29:51 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:61115 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161331AbXDQU3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 16:29:50 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
+ with ESMTP id <0JGN00BA3SXPG930@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 17 Apr 2007 16:29:50 -0400 (EDT)
+In-reply-to: <Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz>
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44818>
 
-Linus Torvalds wrote:
+On Tue, 17 Apr 2007, David Lang wrote:
+
+> On Tue, 17 Apr 2007, Nicolas Pitre wrote:
 > 
-> On Tue, 17 Apr 2007, Rogan Dawes wrote:
->> Well, if the only keyword we support is $BlobId:$, then if the tree/object
->> hasn't changed, then we still don't need to touch the object.
->>
->> Not so?
+> > I cannot do otherwise than ask at this point in the debate: why isn't
+> > the makefile rule sufficient for your needs?  Why going through a
+> > complicated path that no one else will support due to its numerous
+> > pitfalls?
 > 
-> Correct. However, is that actually a useful expansion?
+> not all uses of VCS's involve useing make
+
+Use perl then.  Or a shell script.  Or even a command.com batch script.  
+Or your own tool.
+
+> > > That's just being obtuse - no other tool cares in the slightest about
+> > > the keywords, there are more "tools" in the world than just the VCS.
+> > 
+> > ... which reinforces my question: why force a task on the VCS if it
+> > doesn't fit well with its fundamental design?
 > 
-> Most of the time, I'd expect people to want things like "last committer, 
-> time, story of their life" etc.. I don't think the SHA1 ID's are pretty 
-> enough that anybody would ever want to see them. But yes, they are 
-> certainly stable.
-> 
-> 			Linus
+> becouse the VCS can do the job better then anything else?
 
-Well, one example for wanting a keyword expansion option was where 
-people modify the entire file, and just email it back to the maintainer. 
-It surely helps to have the SHA1 of the original object when applying 
-the changes.
+On what basis?
 
-You also stated in another email that doing keyword expansion prevents 
-people from using non-git tools. I agree that you'd probably end up with 
-diffs that may include the keyword (object id) being mailed to you if 
-the submitter is not using git. But when a git maintainer applies those 
-diffs using git-apply, the keyword unexpansion could still take place, 
-making the diffs usable in practice.
+> even if there are
+> limits to what the VCS can do.
 
-None of what I said necessarily supports the view that it is a good idea 
-from the perspective of trusting the results, of course.
+In the context of keyword expansion I don't agree at all with this 
+statement.  Git can *not* do better than an external tool and it has 
+been demonstrated a few times already.
 
-Regards,
 
-Rogan
+Nicolas
