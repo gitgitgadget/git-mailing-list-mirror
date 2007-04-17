@@ -1,53 +1,68 @@
-From: Rene Herman <rene.herman@gmail.com>
-Subject: git branch --switch?
-Date: Tue, 17 Apr 2007 15:36:24 +0200
-Message-ID: <4624CD58.90103@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH 2/7] Documentation: clarify git-checkout -f, minor editing
+Date: Tue, 17 Apr 2007 09:58:12 -0400
+Message-ID: <20070417135812.GE11907@fieldses.org>
+References: <9733.45415336571$1176698256@news.gmane.org> <7v4pngyk9n.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 15:38:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 17 15:58:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hdnt8-0004Ux-8n
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 15:38:30 +0200
+	id 1HdoCJ-0002vs-Jq
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 15:58:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754320AbXDQNi1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 09:38:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754315AbXDQNi1
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 09:38:27 -0400
-Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:53722 "EHLO
-	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754320AbXDQNi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 09:38:26 -0400
-Received: from [213.51.130.190] (port=45325 helo=smtp1.groni1.gr.home.nl)
-	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1Hdnt3-0001mA-13
-	for git@vger.kernel.org; Tue, 17 Apr 2007 15:38:25 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:51245 helo=[192.168.0.3])
-	by smtp1.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1Hdnsz-00058W-10
-	for git@vger.kernel.org; Tue, 17 Apr 2007 15:38:21 +0200
-User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
-X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
-X-AtHome-MailScanner: Found to be clean
+	id S1754378AbXDQN6O (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 09:58:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754379AbXDQN6O
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 09:58:14 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:39457 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754377AbXDQN6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 09:58:13 -0400
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HdoCC-00044U-AZ; Tue, 17 Apr 2007 09:58:12 -0400
+Content-Disposition: inline
+In-Reply-To: <7v4pngyk9n.fsf@assigned-by-dhcp.cox.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44767>
 
-Good day.
+On Sun, Apr 15, 2007 at 10:13:08PM -0700, Junio C Hamano wrote:
+> "J. Bruce Fields" <bfields@citi.umich.edu> writes:
+> 
+> > "Force a re-read of everything" doesn't mean much to me.
+> >
+> > @@ -38,7 +38,8 @@ OPTIONS
+> >  	Quiet, supress feedback messages.
+> >  
+> >  -f::
+> > -	Force a re-read of everything.
+> > +	Proceed even if the index or the working tree differs
+> > +	from HEAD.
+> >  
+> 
+> While this is definitely better, I think it still is not clear
+> why the command needs an option to proceed.
+>
+> Not proceeding is about preventing local changes from getting
+> lost, and the option is a way to allow it to overwrite and lose
+> any local change.
 
-Is it possible to switch the current branch without checking it out? Not 
-really essential, but I'm happily flaundering around with git and still 
-start from scratch fairly regularly; to speed this up I've found the -n 
-switch to git clone useful and would like something similar when 
-reconstructing my "branch hierarchies".
+OK, I agree; does the patch in the following message look like an
+improvement?
 
-Upto now I only know about "git checkout" (with or without -b) to switch the 
-current branch. As said it's not really essential, but I was expecting there 
-would be something like a "branch --switch". Did I overlook it?
+> Other than that, and your "From: " line (did you change your
+> config or switch machines?)
 
-Rene.
+Whoops, yes, I was sloppy about setting up a new laptop--apologies.
+
+> on the first three commits, I find all the changes very sensible.
+
+Thanks.--b.
