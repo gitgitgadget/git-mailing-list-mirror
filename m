@@ -1,82 +1,79 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 15:41:29 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704171530220.4504@xanadu.home>
-References: <200704171041.46176.andyparkins@gmail.com>
- <200704171803.58940.andyparkins@gmail.com>
- <Pine.LNX.4.64.0704171107510.5473@woody.linux-foundation.org>
- <200704172012.31280.andyparkins@gmail.com>
+From: Marcin Kasperski <Marcin.Kasperski@softax.com.pl>
+Subject: Re: GIT vs Other: Need argument
+Date: Tue, 17 Apr 2007 21:36:39 +0200
+Message-ID: <462521C7.2050103@softax.com.pl>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com> <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 21:42:20 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Apr 17 21:54:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdtYc-0007z4-KJ
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 21:41:43 +0200
+	id 1Hdtkx-0004Xq-BG
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 21:54:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031188AbXDQTld (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 15:41:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031186AbXDQTld
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 15:41:33 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:10943 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031184AbXDQTlc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 15:41:32 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGN00FCKQP5L5D0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 17 Apr 2007 15:41:31 -0400 (EDT)
-In-reply-to: <200704172012.31280.andyparkins@gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1161140AbXDQTyT (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 15:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161035AbXDQTyT
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 15:54:19 -0400
+Received: from bozon2.softax.com.pl ([83.238.10.48]:47970 "EHLO
+	bozon2.softax.com.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161140AbXDQTyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 15:54:18 -0400
+X-Greylist: delayed 1141 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Apr 2007 15:54:18 EDT
+Received: from bozon2.softax.pl (localhost.localdomain [127.0.0.1])
+	by bozon2.softax.com.pl (Postfix) with ESMTP id 78791DC00A
+	for <git@vger.kernel.org>; Tue, 17 Apr 2007 21:35:16 +0200 (CEST)
+Received: from 127.0.0.1 (127.0.0.1)
+ by bozon2.softax.pl (F-Secure/fsigk_smtp/488/bozon2.softax.pl);
+ Tue, 17 Apr 2007 21:35:16 +0100 (CET)
+X-Virus-Status: clean(F-Secure/fsigk_smtp/488/bozon2.softax.pl)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by bozon2.softax.com.pl (Postfix) with ESMTP id 5FC8BDC00E
+	for <git@vger.kernel.org>; Tue, 17 Apr 2007 21:35:16 +0200 (CEST)
+Received: from bozon2.softax.com.pl ([127.0.0.1])
+ by localhost (bozon2.softax.pl [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id 17630-06 for <git@vger.kernel.org>;
+ Tue, 17 Apr 2007 21:35:15 +0200 (CEST)
+Received: from [192.168.1.100] (195-tar-2.acn.waw.pl [212.76.49.195])
+	by bozon2.softax.com.pl (Postfix) with ESMTP id 3AAD7DC00A
+	for <git@vger.kernel.org>; Tue, 17 Apr 2007 21:35:15 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
+In-Reply-To: <20070417173007.GV2229@spearce.org>
+X-Virus-Scanned: amavisd-new at softax.pl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44812>
 
-On Tue, 17 Apr 2007, Andy Parkins wrote:
+Let me add some salt. At the moment, there are at least two immediate 
+show-stoppers
+for using git in many organizations:
 
-> On Tuesday 2007, April 17, Linus Torvalds wrote:
-> 
-> > Trust me. There's NO WAY IN HELL it will "work" in any other sense
-> > than "limp along and not be usable".
-> 
-> Well I'm making progress, "limp along" is a significant step up from 
-> impossible.  :-)
-> 
-> Look, my primary objection to this is the SHOUTING about how impossible 
-> it is even though I've tried to address every problem you've thrown at 
-> me - I'm finding it really difficult to figure out why you're trying so 
-> hard to dissuade me from even _trying_.  If it all goes wrong (as I 
-> fully accept it might), so be it, I can live with that; I'll even be 
-> happy to tell you you're right and I'm wrong.  Why is this such a 
-> problem?
-> 
-> Keywords are so hated by everyone that I doubt they would ever be 
-> accepted into git - it's an intellectual exercise for me at this stage 
-> really. 
+a) Windows are unsupported
+b) Learning curve is too steep. Unclear relationship git-vs-cogito makes 
+it even worse.
 
-I cannot do otherwise than ask at this point in the debate: why isn't 
-the makefile rule sufficient for your needs?  Why going through a 
-complicated path that no one else will support due to its numerous 
-pitfalls?
+Third is also very likely:
 
-> > Yes, you can make your "print it out" example work, but as alreadyt 
-> > mentioned, you could have done that some other way, with a simple 
-> > makefile rule, quite independently (and much better) than the SCM 
-> > ever did.
-> 
-> That's just being obtuse - no other tool cares in the slightest about 
-> the keywords, there are more "tools" in the world than just the VCS.
+c) Lack of reasonable subproject support (plus detailed permission model).
 
-... which reinforces my question: why force a task on the VCS if it 
-doesn't fit well with its fundamental design?
+ From tools similar to git, Mercurial performs significantly better (at 
+least it works
+on Win and is easy to learn, although some GUI would be needed in most cases
+before it could be truly implemented).
 
+PS I am in related pos, long years ago I introduced CVS to my org - 
+replacing
+CMS on VMS, RCS on Unix and manual copies on Win, now I am sensing 
+possibilities, but...
 
-Nicolas
+PS2 I am not sure whether git aims to handle corporate cases, or even 
+whether it should,
+those remarks are addressed rather to those who consider using it in 
+such situation, than
+to those who wrote it.
