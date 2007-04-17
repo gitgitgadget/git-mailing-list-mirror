@@ -1,127 +1,51 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: [PATCH 4/4] Add a demonstration/test of customized merge.
-Date: Tue, 17 Apr 2007 01:08:38 -0700
-Message-ID: <11767973192181-git-send-email-junkio@cox.net>
-References: <11767973183627-git-send-email-junkio@cox.net>
+From: "Pietro Mascagni" <pietromas@gmail.com>
+Subject: GIT vs Other: Need argument
+Date: Tue, 17 Apr 2007 10:02:18 +0100
+Message-ID: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 10:09:05 2007
+X-From: git-owner@vger.kernel.org Tue Apr 17 11:02:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdikK-0001eI-Lo
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 10:09:05 +0200
+	id 1HdjZw-0008PN-K8
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 11:02:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752549AbXDQIIr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 04:08:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752590AbXDQIIr
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 04:08:47 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:44605 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549AbXDQIIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 04:08:40 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070417080839.TZNZ1266.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>
-          for <git@vger.kernel.org>; Tue, 17 Apr 2007 04:08:39 -0400
-Received: from localhost.localdomain ([68.5.247.80])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id o88e1W01q1kojtg0000300; Tue, 17 Apr 2007 04:08:39 -0400
-X-Mailer: git-send-email 1.5.1.1.125.g402f-dirty
-In-Reply-To: <11767973183627-git-send-email-junkio@cox.net>
+	id S1752984AbXDQJCV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 05:02:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752986AbXDQJCV
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 05:02:21 -0400
+Received: from py-out-1112.google.com ([64.233.166.179]:50469 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752979AbXDQJCU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 05:02:20 -0400
+Received: by py-out-1112.google.com with SMTP id a29so1345158pyi
+        for <git@vger.kernel.org>; Tue, 17 Apr 2007 02:02:20 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=aYu5jm7sfJtSI9rV5yZDD3frtuQ7bylr6YH47OuzrlaAJoiRbRi4Oqu9k0h4sA5IHSZf5aAYRPa4+pwEszdl5yuUTVKoJl1HTS+rVoM6mDtgEka0Ozt4adQudi9wfcwsRnHKdpAYF+o9traaUpclVRRlVvdrsO68JeZ5xQMAWpc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=TiOrnbPKIrZ4CB2OaCb4s0wCq/OlQDTmW+mvVslqFo7x0y/jDsfCCwl7ZyOzBfo/06BxMpqiqclI5hjO0BWSzL39iHdY6CLQloZX0pJqT9dXHG4rDmFqPJh0dPakJBRY4dZy9idKXSQGm2Efvwfe7U9B1acUzu/i8Ola4LpiWpM=
+Received: by 10.35.90.11 with SMTP id s11mr12950933pyl.1176800538088;
+        Tue, 17 Apr 2007 02:02:18 -0700 (PDT)
+Received: by 10.35.34.9 with HTTP; Tue, 17 Apr 2007 02:02:18 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44742>
 
-This demonstrates how the new low-level per-path merge backends,
-union and ours, and shows how they are controlled by the
-gitattribute mechanism.
+I am dealing with idiots. I'd rather not argue with them, but sadly I
+cannot ignore them as they are my "seniors".
 
-Signed-off-by: Junio C Hamano <junkio@cox.net>
----
- t/t6026-merge-attr.sh |   72 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 72 insertions(+), 0 deletions(-)
- create mode 100755 t/t6026-merge-attr.sh
+So, in 15 seconds, how does one argue that GIT is vastly superior to
+other version control software, especially CVS.
 
-diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
-new file mode 100755
-index 0000000..5daa223
---- /dev/null
-+++ b/t/t6026-merge-attr.sh
-@@ -0,0 +1,72 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Junio C Hamano
-+#
-+
-+test_description='per path merge controlled by merge attribute'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	for f in text binary union
-+	do
-+		echo Initial >$f && git add $f || break
-+	done &&
-+	test_tick &&
-+	git commit -m Initial &&
-+
-+	git branch side &&
-+	for f in text binary union
-+	do
-+		echo Master >>$f && git add $f || break
-+	done &&
-+	test_tick &&
-+	git commit -m Master &&
-+
-+	git checkout side &&
-+	for f in text binary union
-+	do
-+		echo Side >>$f && git add $f || break
-+	done &&
-+	test_tick &&
-+	git commit -m Side
-+
-+'
-+
-+test_expect_success merge '
-+
-+	{
-+		echo "binary -merge"
-+		echo "union merge=union"
-+	} >.gitattributes &&
-+
-+	if git merge master
-+	then
-+		echo Gaah, should have conflicted
-+		false
-+	else
-+		echo Ok, conflicted.
-+	fi
-+'
-+
-+test_expect_success 'check merge result in index' '
-+
-+	git ls-files -u | grep binary &&
-+	git ls-files -u | grep text &&
-+	! (git ls-files -u | grep union)
-+
-+'
-+
-+test_expect_success 'check merge result in working tree' '
-+
-+	git cat-file -p HEAD:binary >binary-orig &&
-+	grep "<<<<<<<" text &&
-+	cmp binary-orig binary &&
-+	! grep "<<<<<<<" union &&
-+	grep Master union &&
-+	grep Side union
-+
-+'
-+
-+test_done
--- 
-1.5.1.1.821.g88bdb
+Thanks,
+P.
