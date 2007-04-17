@@ -1,60 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] refs.c: add a function to sort a ref list, rather then
- sorting on add
-Date: Tue, 17 Apr 2007 09:03:44 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0704170901170.5473@woody.linux-foundation.org>
-References: <20070417014307.12486.28930.julian@quantumfyre.co.uk>
+From: Johannes Sixt <J.Sixt@eudaptics.com>
+Subject: fetch: Auto-following tags should check connectivity, not existence
+Date: Tue, 17 Apr 2007 18:10:43 +0200
+Organization: eudaptics software gmbh
+Message-ID: <4624F183.D4B6BBB1@eudaptics.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Tue Apr 17 18:04:23 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 17 18:11:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdqAB-0001DG-QE
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 18:04:16 +0200
+	id 1HdqH5-0003oj-3d
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 18:11:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031101AbXDQQDv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 12:03:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031107AbXDQQDv
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 12:03:51 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:52852 "EHLO smtp.osdl.org"
+	id S1031123AbXDQQKu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 12:10:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031127AbXDQQKu
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 12:10:50 -0400
+Received: from main.gmane.org ([80.91.229.2]:53192 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031101AbXDQQDu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 12:03:50 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3HG3jTW007351
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 17 Apr 2007 09:03:45 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3HG3iIl000932;
-	Tue, 17 Apr 2007 09:03:45 -0700
-In-Reply-To: <20070417014307.12486.28930.julian@quantumfyre.co.uk>
-X-Spam-Status: No, hits=-2.464 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1031123AbXDQQKt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 12:10:49 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1HdqGH-0000DS-0L
+	for git@vger.kernel.org; Tue, 17 Apr 2007 18:10:33 +0200
+Received: from cm56-163-160.liwest.at ([86.56.163.160])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Apr 2007 18:10:32 +0200
+Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Apr 2007 18:10:32 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
+X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
+X-Accept-Language: en
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44790>
 
+git-fetch's auto-following of tags fetches all tags for which it finds
+objects in the local repository. I feel it were better if not object
+existence, but connectivity to the existing refs was checked, like this:
 
+diff --git a/git-fetch.sh b/git-fetch.sh
+index fd70696..1b3c459 100755
+--- a/git-fetch.sh
++++ b/git-fetch.sh
+@@ -314,11 +314,12 @@ case "$no_tags$tags" in
+        taglist=$(IFS=' ' &&
+        echo "$ls_remote_result" |
+        git-show-ref --exclude-existing=refs/tags/ |
+        while read sha1 name
+        do
+-           git-cat-file -t "$sha1" >/dev/null 2>&1 || continue
++           t=$(git-rev-list --max-count=1 "$sha1" --not --all 2>
+/dev/null) &&
++           test -z "$t" || continue
+            echo >&2 "Auto-following $name"
+            echo ".${name}:${name}"
+        done)
+    esac
+    case "$taglist" in
 
-On Tue, 17 Apr 2007, Julian Phillips wrote:
->
-> Rather than sorting the refs list while building it, sort in one go
-> after it is built using a merge sort.  This has a large performance
-> boost with large numbers of refs.
-> 
-> Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
+Is this considered in the shell-to-C rewrite that's currently going on?
 
-Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+The background is that I sometimes fetch a branch with tags, but then
+decide to remove it (and the tags as well). git-gc and git-prune do not
+guarantee that the objects go away because they could be reachable from
+reflogs. Now the next git-fetch will fetch the tags again even though I
+do not have any refs from which they would be reachable.
 
-Looks fine. I think that even your new times are a bit high (over two 
-seconds?) but things are clearly better. Have you looked at what takes so 
-long now? 
-
-		Linus
+-- Hannes
