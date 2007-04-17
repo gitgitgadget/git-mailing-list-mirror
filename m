@@ -1,86 +1,58 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 13:05:03 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0704171302200.1696@qynat.qvtvafvgr.pbz>
-References: <200704171041.46176.andyparkins@gmail.com><"200704171803.58940.a
- n  dyparkins"@gmail.com><200704172012.31280.andyparkins@gmail.com><alpine.LFD.
- 0.98.0704171530220.4504@xanadu.home><Pine.LNX.4.63.0704171244450.1696@qynat
- .qvtvafvgr.pbz> <alpine.LFD.0.98.0704171624190.4504@xanadu.home>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] Add "stg bury" command,	with the functionnality of contrib/stg-sink.
+Date: Wed, 18 Apr 2007 08:42:54 +1200
+Message-ID: <4625314E.2050103@vilain.net>
+References: <20070410182701.9362.68038.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Apr 17 22:37:35 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Tue Apr 17 22:43:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HduQe-0001tN-ES
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 22:37:32 +0200
+	id 1HduWZ-0003dw-1n
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 22:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277AbXDQUh2 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 16:37:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752997AbXDQUh2
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 16:37:28 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:42692 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1752277AbXDQUh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 16:37:27 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Tue, 17 Apr 2007 13:37:26 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 17 Apr 2007 13:37:08 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <alpine.LFD.0.98.0704171624190.4504@xanadu.home>
+	id S1753042AbXDQUng (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 16:43:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753150AbXDQUnf
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 16:43:35 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:53731 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753042AbXDQUnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 16:43:35 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id A48D413A400; Wed, 18 Apr 2007 08:43:29 +1200 (NZST)
+Received: from [192.168.1.5] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id 47EB513A382;
+	Wed, 18 Apr 2007 08:43:26 +1200 (NZST)
+User-Agent: Thunderbird 1.5.0.4 (X11/20060615)
+In-Reply-To: <20070410182701.9362.68038.stgit@gandelf.nowhere.earth>
+X-Enigmail-Version: 0.94.0.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44820>
 
-On Tue, 17 Apr 2007, Nicolas Pitre wrote:
-
-> On Tue, 17 Apr 2007, David Lang wrote:
+Yann Dirson wrote:
+> This is the rewrite in python of by stg-sink written in perl.
 >
->> On Tue, 17 Apr 2007, Nicolas Pitre wrote:
->>
->>> I cannot do otherwise than ask at this point in the debate: why isn't
->>> the makefile rule sufficient for your needs?  Why going through a
->>> complicated path that no one else will support due to its numerous
->>> pitfalls?
->>
->> not all uses of VCS's involve useing make
->
-> Use perl then.  Or a shell script.  Or even a command.com batch script.
-> Or your own tool.
+> I changed the name to "bury" since it seems more descriptive of what
+> it does, despite being less of an opposite to "float" than "sink" was.
+>   
 
-I would like to, however this doesn't currently integrate well with git. I've 
-been told in the past that once .gitattributes is in place then the hooks for 
-the crlf stuff can be generalized to allow for calls out to custom code to do 
-this sort of thing.
+But 'bury' means to hide or even kill.
 
-however now it sounds as if people are saying that doing this is so evil that it 
-shouldn't ever be allowed.
+How about "raise" and "lower" ?
 
->>>> That's just being obtuse - no other tool cares in the slightest about
->>>> the keywords, there are more "tools" in the world than just the VCS.
->>>
->>> ... which reinforces my question: why force a task on the VCS if it
->>> doesn't fit well with its fundamental design?
->>
->> becouse the VCS can do the job better then anything else?
->
-> On what basis?
->
->> even if there are
->> limits to what the VCS can do.
->
-> In the context of keyword expansion I don't agree at all with this
-> statement.  Git can *not* do better than an external tool and it has
-> been demonstrated a few times already.
-
-the VCS can make sure that the appropriate external code is always run when 
-things are checked in/out. external tools (unless they are a complete set of 
-wrappers for git) can't do that.
-
-David Lang
+Sam.
