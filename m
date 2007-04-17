@@ -1,75 +1,124 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: GIT vs Other: Need argument
-Date: Tue, 17 Apr 2007 11:13:06 +0200
-Message-ID: <vpqejmjjrdp.fsf@bauges.imag.fr>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 3/4] Allow specifying specialized merge-backend per path.
+Date: Tue, 17 Apr 2007 02:20:30 -0700
+Message-ID: <7vabx7qrvl.fsf@assigned-by-dhcp.cox.net>
+References: <11767973183627-git-send-email-junkio@cox.net>
+	<11767973191314-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 11:13:22 2007
+X-From: git-owner@vger.kernel.org Tue Apr 17 11:20:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdjkV-00032v-M4
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 11:13:20 +0200
+	id 1Hdjrm-0005LR-5T
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 11:20:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752996AbXDQJNQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 05:13:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753047AbXDQJNQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 05:13:16 -0400
-Received: from imag.imag.fr ([129.88.30.1]:52508 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753029AbXDQJNP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 05:13:15 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l3H9D6oN021467
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 17 Apr 2007 11:13:06 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1HdjkI-0005l0-5K; Tue, 17 Apr 2007 11:13:06 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1HdjkI-0004J0-35; Tue, 17 Apr 2007 11:13:06 +0200
-Mail-Followup-To: git@vger.kernel.org
-In-Reply-To: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> (Pietro Mascagni's message of "Tue\, 17 Apr 2007 10\:02\:18 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.0.97 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 17 Apr 2007 11:13:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753047AbXDQJUc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 05:20:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753049AbXDQJUc
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 05:20:32 -0400
+Received: from fed1rmmtao103.cox.net ([68.230.241.43]:42335 "EHLO
+	fed1rmmtao103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752915AbXDQJUb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 05:20:31 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao103.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070417092031.SYYO1226.fed1rmmtao103.cox.net@fed1rmimpo02.cox.net>;
+          Tue, 17 Apr 2007 05:20:31 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id o9LW1W00K1kojtg0000000; Tue, 17 Apr 2007 05:20:30 -0400
+In-Reply-To: <11767973191314-git-send-email-junkio@cox.net> (Junio C. Hamano's
+	message of "Tue, 17 Apr 2007 01:08:37 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44745>
 
-"Pietro Mascagni" <pietromas@gmail.com> writes:
+Junio C Hamano <junkio@cox.net> writes:
 
-> So, in 15 seconds, how does one argue that GIT is vastly superior to
-> other version control software, especially CVS.
+I hate to nitpick my own patches, but...
 
-Vs CVS, in 15 seconds, I'd say:
+> There is one caveat, though.  ll_merge() is called for both
+> internal ancestor merge and the outer "final" merge.  I think an
+> interactive custom per-path merge backend should refrain from
+> going interactive when performing an internal merge (you can
+> tell it by checking call_depth) and instead just call either
+> ll_xdl_merge() if the content is text, or call ll_ours_merge()
+> otherwise.
 
-* Atomic commits. CVS makes it hard to get back to a consistant state
-  in the past. What does it mean, for example to checkout revision 1.5
-  of a project in CVS (hint: nothing, it's meaningfull for a file
-  only).
+After having thought about this a bit more, I think a conflict
+in *internal* merge for a binary file should probably take the
+ancestor's, instead of ours.
 
-* Rename management.
+A conflict during the internal merge happens when there are
+multiple common ancestors, and the development lines continuing
+from these ancestores may have disagreed on the result of this
+conflicting merge earlier.
 
-* Performance.
+             o---A---C---o---Y
+            /     \ /         \
+          GP       .           M
+            \     / \         /
+             o---B---D---o---Z
 
-* Perhaps your boss will be interested in the "data integrity" (i.e.
-  git fsck) problem too.
+When we are trying to do the merge M between Y and Z, we find
+two closest common ancestors, A and B.  An internal merge to
+merge them, using the grandparent ancestor, GP, is attempted,
+and we will use the result as the virtual common ancestor to
+create a merge between Y and Z.
 
-You have also the joker argument "Linus Torvalds is very intelligent,
-and he gave up with CVS looong ago", but it might or might not work.
+The fact the internal merge between A and B conflicted means
+that the development lines leading to Y and Z already saw that
+same conflict before reaching Y and Z (in the above picture, at
+C and D, respectively), and they might have resolved it
+differently.
 
-If you have to argue against SVN, you'll need more than 15
-seconds ;-).
+When it is a text file, Fredrik's clever "recursive merge"
+leaves conflicted merge as the common ancestor, which is
+different from either C or D's resolution (perhaps we can think
+of it being somewhere areound sign X in the above picture), and
+merge between Y and Z using that as the common ancestor cancels
+the conflict out if C and D resolved it the same way.
 
--- 
-Matthieu
+However, when the file is a binary guck, the result of such a
+half-merge with conflict markers is simply a corrupt binary
+data, and is unusable even for inspection.  That was the reason
+why I initially suggested to use 'ours'.  But that means, when
+we are on the branch that leads to Y, we essentially favor C's
+resolution, defeating the "accidental revert avoidance" the
+recursive merge strategy offers.  If instead we take the version
+from GP as the common ancestor, we have a usable binary guck as
+an ancestor as well, and also we are being neutral between the
+branches, giving the end user a chance to make an unbiased
+decision on his own.
+
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index 4eb62cf..a6c08a1 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -659,6 +660,124 @@ static void fill_mm(const unsigned char *sha1, mmfile_t *mm)
+>  	mm->size = size;
+>  }
+>  
+> +/* Low-level merge functions */
+> +typedef int (*ll_merge_fn)(mmfile_t *orig,
+> +			   mmfile_t *src1, const char *name1,
+> +			   mmfile_t *src2, const char *name2,
+> +			   mmbuffer_t *result);
+> +
+> +static int ll_xdl_merge(mmfile_t *orig,
+> +			mmfile_t *src1, const char *name1,
+> +			mmfile_t *src2, const char *name2,
+> +			mmbuffer_t *result)
+> +{
+> +	xpparam_t xpp;
+> +	memset(&xpp, 0, sizeof(xpp));
+> +	memset(&xpp, 0, sizeof(xpp));
+
+I caught this after sending this message, and already fixed it
+in the version I pushed out on 'pu'.
