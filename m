@@ -1,79 +1,102 @@
-From: David Lang <david.lang@digitalinsight.com>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 13:53:09 -0700 (PDT)
-Message-ID: <Pine.LNX.4.63.0704171352280.1696@qynat.qvtvafvgr.pbz>
-References: <200704171041.46176.andyparkins@gmail.com><"200704171803.58940.a
-  n   dyparkins"@gmail.com><200704172012.31280.andyparkins@gmail.com><alpine.LFD.
- 0.98.0704171530220.4504@xanadu.home><Pine.LNX.4.63.0704171244450.1696@qynat
- .qvtvafvgr.pbz><alpine.LFD.0.98.0704171624190.4504@xanadu.home><Pine.LNX.4.
- 63.0704171302200.1696@qynat.qvtvafvgr.pbz> <alpine.LFD.0.98.0704171708360.4504@xanadu.home>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: Weird shallow-tree conversion state, and branches of shallow trees
+Date: Tue, 17 Apr 2007 22:51:18 +0100
+Message-ID: <200704172251.20831.andyparkins@gmail.com>
+References: <20070412005336.GA18378@curie-int.orbis-terrarum.net> <200704162155.25114.andyparkins@gmail.com> <7v8xcqofru.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain;
+  charset="ansi_x3.4-1968"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <junkio@cox.net>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Tue Apr 17 23:25:54 2007
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Robin H. Johnson" <robbat2@gentoo.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Apr 17 23:51:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdvBN-0000n8-FN
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 23:25:49 +0200
+	id 1HdvaS-0008TK-TN
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 23:51:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751704AbXDQVZp (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 17:25:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751722AbXDQVZp
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 17:25:45 -0400
-Received: from warden-p.diginsite.com ([208.29.163.248]:41879 "HELO
-	warden.diginsite.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1751576AbXDQVZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 17:25:44 -0400
-Received: from wlvims02.diginsite.com by warden.diginsite.com
-          via smtpd (for vger.kernel.org [209.132.176.167]) with SMTP; Tue, 17 Apr 2007 14:25:44 -0700
-Received: from dlang.diginsite.com ([10.201.10.67]) by wlvims02.corp.ad.diginsite.com with InterScan Message Security Suite; Tue, 17 Apr 2007 14:25:16 -0700
-X-X-Sender: dlang@dlang.diginsite.com
-In-Reply-To: <alpine.LFD.0.98.0704171708360.4504@xanadu.home>
+	id S1031258AbXDQVvh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 17:51:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031257AbXDQVvh
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 17:51:37 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:23802 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031258AbXDQVvg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 17:51:36 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so278675uga
+        for <git@vger.kernel.org>; Tue, 17 Apr 2007 14:51:35 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=CZrM9h5XnwuvJn5tobu0F7StkPUmhwYMR8msvNcgEdq2PZ7ESFvXJ+FfE09FsmyOXJ/oRJfTcFjQegX3UzruY4VOtQXTd8XHhrlNhk70UnFuH1noJlyMDZIXOoWJeeaFE0pwjM4JMjKNgu0uFV4CB1XA//7M0pR/jqBqAxhrWNI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=kplv0m6SE8dP03e1FfJhAHucy1cVDg6vI0pZjmanrBd8Xd6n4LyOM2k8oi+2uFCzPbi+RnioOzsjuo++oTCflCgPM6saiUTE3YJlRu5TJu3mX0IlMNlRTwmFlmLYDbEh65iWRzpDH130dihz1H3JlRuC5QEzp6lD753AZSnGrso=
+Received: by 10.67.116.18 with SMTP id t18mr569004ugm.1176846694958;
+        Tue, 17 Apr 2007 14:51:34 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTP id y7sm1797445ugc.2007.04.17.14.51.32;
+        Tue, 17 Apr 2007 14:51:33 -0700 (PDT)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7v8xcqofru.fsf@assigned-by-dhcp.cox.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44833>
 
-On Tue, 17 Apr 2007, Nicolas Pitre wrote:
-
-> Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-> 
-> On Tue, 17 Apr 2007, David Lang wrote:
+On Tuesday 2007, April 17, Junio C Hamano wrote:
+> Andy Parkins <andyparkins@gmail.com> writes:
+> > However, it's missing the point to take my example as an unsolved
+> > problem - there are plenty of ways I can get what I want; I brought
+> > it up merely as a counter to the statement that there were no valid
+> > situations for wanting keyword expansion.
 >
->> On Tue, 17 Apr 2007, Nicolas Pitre wrote:
->>
->>> On Tue, 17 Apr 2007, David Lang wrote:
->>>
->>>> On Tue, 17 Apr 2007, Nicolas Pitre wrote:
->>>>
->>>>> I cannot do otherwise than ask at this point in the debate: why isn't
->>>>> the makefile rule sufficient for your needs?  Why going through a
->>>>> complicated path that no one else will support due to its numerous
->>>>> pitfalls?
->>>>
->>>> not all uses of VCS's involve useing make
->>>
->>> Use perl then.  Or a shell script.  Or even a command.com batch script.
->>> Or your own tool.
->>
->> I would like to, however this doesn't currently integrate well with git. I've
->> been told in the past that once .gitattributes is in place then the hooks for
->> the crlf stuff can be generalized to allow for calls out to custom code to do
->> this sort of thing.
->
-> And I agree that this is a perfectly sensible thing to do.  The facility
-> should be there for you to apply any kind of transformation with
-> external tools on data going in or out from Git.  There are good and bad
-> things you can do with such a facility, but at least it becomes your
-> responsibility to screw^H^H^H^Hfilter your data and not something that
-> is enforced by Git itself.
+> That's actually quite different from what you said.
 
-I'm pretty sure that hooks for an external helper would satisfy Andy with his 
-keyword expanstion as well.
+Sorry; I didn't express it very well - the thing that started all this 
+was the statement that there was no valid use case for keywords.  I 
+just gave an example.  I felt that the thread was moving away from 
+keywords and towards solving my particular problem - which is all 
+appreciated, but wasn't the point.  Running makefile recipes or extra 
+scripts are all valid methods and pragmatic 
+working-with-what-git-does-now solutions.  I wanted to distinguish 
+between what I could do now and what I could do with keyword support.
 
-David Lang
+> You were claiming that with built-in keyword expansion what you
+> want becomes /simpler/.  I questioned that.
+
+Well it does from the point of view of pressing "print".
+
+> Maybe it's just me, who is not a GUI person [*1*], but to me,
+> having to start inkscape, mouse around to find the "Print"
+> button and print feels much more cumbersome than simply typing
+> "make print".
+
+Again, that was addressing my particular problem - good stuff.  However, 
+it's just luck that inkscape has a batch mode - there's no guarantee 
+for that.
+
+I could just swap the example around a bit, what about if it was an 
+OpenOffice document that I want to have transparent 
+compression/decompression and I've set the properties tag to 
+contain "$Id$".  There is no amount of scripting that will enable batch 
+printing of that.
+
+Anyway - I've wasted enough of your time with this foolishness now.  
+It's dropped, consider me silenced on this subject ;-)
+
+
+
+Andy
+
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
