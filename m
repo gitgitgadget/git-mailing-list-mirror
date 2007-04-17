@@ -1,81 +1,70 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: GIT vs Other: Need argument
-Date: Tue, 17 Apr 2007 13:30:07 -0400
-Message-ID: <20070417173007.GV2229@spearce.org>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com> <200704171818.28256.andyparkins@gmail.com>
+From: Rene Herman <rene.herman@gmail.com>
+Subject: Re: git branch --switch?
+Date: Tue, 17 Apr 2007 19:27:59 +0200
+Message-ID: <4625039F.7000804@gmail.com>
+References: <4624CD58.90103@gmail.com>	 <C940520E-732A-4F6E-A7F2-0215FD534455@silverinsanity.com>	 <4624EAAA.6040000@gmail.com>	 <8c5c35580704170855ke426d86vac6e9b3b67fea5ea@mail.gmail.com>	 <4624F18F.6070906@gmail.com> <8c5c35580704171000g74d8944w7c7b3d07228cac2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
-	Tomash Brechko <tomash.brechko@gmail.com>,
-	Pietro Mascagni <pietromas@gmail.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 19:30:23 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 19:30:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdrVX-00013w-0w
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 19:30:23 +0200
+	id 1HdrVV-00013w-Sy
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 19:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161179AbXDQRaQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 13:30:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161178AbXDQRaP
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 13:30:15 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:58475 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161179AbXDQRaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 13:30:13 -0400
-Received: from cpe-74-70-48-173.nycap.res.rr.com ([74.70.48.173] helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.63)
-	(envelope-from <spearce@spearce.org>)
-	id 1HdrVC-0000Ab-Op; Tue, 17 Apr 2007 13:30:02 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9F2B820FBAE; Tue, 17 Apr 2007 13:30:07 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200704171818.28256.andyparkins@gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1161175AbXDQRaF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 13:30:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161178AbXDQRaF
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 13:30:05 -0400
+Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:52196 "EHLO
+	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161162AbXDQRaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 13:30:03 -0400
+Received: from [213.51.130.190] (port=54758 helo=smtp1.groni1.gr.home.nl)
+	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1HdrVB-00042o-Ha; Tue, 17 Apr 2007 19:30:01 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:34793 helo=[192.168.0.3])
+	by smtp1.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1HdrV5-0006zA-JV; Tue, 17 Apr 2007 19:29:55 +0200
+User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
+In-Reply-To: <8c5c35580704171000g74d8944w7c7b3d07228cac2@mail.gmail.com>
+X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
+X-AtHome-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44806>
 
-Andy Parkins <andyparkins@gmail.com> wrote:
-> On Tuesday 2007, April 17, Guilhem Bonnefille wrote:
-> > So, my conclusion is the better model in a corporate is a centralyzed
-> > repo with some users using Git as "frontend". Other people will
-> > simply use the native tools for accessing the repo.
+On 04/17/2007 07:00 PM, Lars Hjemli wrote:
+
+> Ok. Then maybe you want to try something like this:
 > 
-> Git has you covered there - it works better than other version control 
-> systems for that model too.  I do it all the time; the only difference 
-> is that with git it's not the tool doesn't force the choice on you.
+> $ git clone -l -s -n ../linux-2.6 rene
+> $ cd rene
+> $ git remote add v20
+> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.20.y
+> $ git fetch v20
+> 
+> This gives you a tracking branch for 2.6.20.y, named as "v20/master".
+> That branch can then be used as a starting point for your a, b and c
+> branches, like:
+> 
+> $ git checkout -b a v20/master    # this _will_ take some time...
+> 
+> After applying some changes on branch a, you can then merge the latest
+> changes on the v20-branch like this
+> 
+> $ git fetch v20
+> $ git merge v20/master
+> 
+> If you want the merge to occur on a separate branch, do this first:
+> 
+> $ git checkout -b tmp a
 
-Actually my day-job corporate repo is probably more secured in
-Git than in PVCS Version Manager, even though every developer
-has the entire history on their laptop.
+Thanks much! This is very useful.
 
-Basically with PVCS users cannot save their work-in-progress very
-well, so they copy files onto random network shares to make backups.
-Our checked out tree is only about 120 MiB or so, but we have (and
-I'm not kidding) over 3 GiB worth of various copies of the source
-on an open network drive that anyone in the company can access, even
-if they aren't authorized to view the source code of the product...
-
-Now that developers have switched to Git, they have stopped making
-those copies onto the network drive.  Why?  Simple, the network drive
-copy takes longer (and more effort) than `git commit; git push`!
-Users are all pushing to private branch spaces on the server, so
-their work isn't merged until they really are ready for it, and
-that server is backed up to secure tapes nightly, so all-in-all
-its a much better situation.
-
--- 
-Shawn.
+Rene.
