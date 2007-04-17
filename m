@@ -1,60 +1,64 @@
-From: "Joan Ripoll Balaguer" <joan.ripsa@gmail.com>
-Subject: Re: checkout Error on cygwin
-Date: Tue, 17 Apr 2007 15:11:04 +0200
-Message-ID: <5c08a49c0704170611p74f4cb68ja7287bac63ee1a27@mail.gmail.com>
-References: <5c08a49c0704170608s4f643bf6ubc53d521149f2d55@mail.gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Any objectsions to enhancing git-log to show tags/branch heads?
+Date: Tue, 17 Apr 2007 09:36:52 -0400
+Message-ID: <20070417133652.GC11907@fieldses.org>
+References: <E1HdQah-0008Q2-7E@candygram.thunk.org> <20070416181352.GB29569@xp.machine.xx> <20070416182749.GG23764@fieldses.org> <20070417050704.GA19925@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 15:11:58 2007
+X-From: git-owner@vger.kernel.org Tue Apr 17 15:37:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdnTN-0004iU-GQ
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 15:11:53 +0200
+	id 1Hdnrd-0003xm-J7
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 15:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753948AbXDQNLK (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 09:11:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754015AbXDQNLK
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 09:11:10 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:14784 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753948AbXDQNLF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 09:11:05 -0400
-Received: by ug-out-1314.google.com with SMTP id 44so163329uga
-        for <git@vger.kernel.org>; Tue, 17 Apr 2007 06:11:04 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=CmZT5fAQsjbBgNg1cMLliBXbdBlcDQSU2biGTmL47O4ZjphZ2JzJ7IJOLUFIErQxEY4HYKxzk9jG6YJPjqk+k4Jh/pDiYuTJKCpOzLvHlQNNkWjWgvmgGWmwbBoe8XJRZ4kK49liljmd/cy3k93vPUk6xNB36k+f95xutgSWQSk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZQwWF56XGaRGcF7J6nbvYJfoxu8V8H9rHPOxUQZLKFOsresfJoemwVRRkr+1QYFGahlUwRTT7hWsPCOMckAv3sS23T9bRWNuFiYZx8giQiHzSlbFTWFkDtIXxpyuMMST85Hg1Jn8g42ltWCaOIErf7i6GS8LclI8d58MKRqFph8=
-Received: by 10.82.107.15 with SMTP id f15mr10363124buc.1176815464301;
-        Tue, 17 Apr 2007 06:11:04 -0700 (PDT)
-Received: by 10.82.191.9 with HTTP; Tue, 17 Apr 2007 06:11:04 -0700 (PDT)
-In-Reply-To: <5c08a49c0704170608s4f643bf6ubc53d521149f2d55@mail.gmail.com>
+	id S1750888AbXDQNgy (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 09:36:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754313AbXDQNgy
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 09:36:54 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:54805 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750888AbXDQNgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 09:36:53 -0400
+Received: from bfields by fieldses.org with local (Exim 4.63)
+	(envelope-from <bfields@fieldses.org>)
+	id 1HdnrY-0003iH-8l
+	for git@vger.kernel.org; Tue, 17 Apr 2007 09:36:52 -0400
 Content-Disposition: inline
+In-Reply-To: <20070417050704.GA19925@xp.machine.xx>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44765>
 
-2007/4/17, Joan Ripoll Balaguer <joan.ripsa@gmail.com>:
->
-> $ git clean -x
-> Removing ... (a lot of files)
->
+On Tue, Apr 17, 2007 at 07:07:04AM +0200, Peter Baumann wrote:
+> On Mon, Apr 16, 2007 at 02:27:49PM -0400, J. Bruce Fields wrote:
+> > On Mon, Apr 16, 2007 at 08:13:52PM +0200, Peter Baumann wrote:
+> > > I'll do this gitk jump very often, too. Just to get the big picture where my
+> > > branches are (inside the commit graph). As they stay normaly on the tip, I
+> > > exit gitk long before it reached the root commit. What I'd like to have is
+> > > something which shows me _visually_ the the branches, e.g.
+> > > 
+> > > master
+> > > | next			commit comment for next
+> > > o  |		commit comment for master~1
+> > > |  o			commit comment for next~1
+> > > o  |	[ ... guess whats next :-)		you get the idea ...]
+> > > |  o
+> > > |  |
+> > > o /
+> > > |
+> > 
+> > git show-branch?
+> > 
+> > --b.
+> 
+> No. git-show-branch produces output like the snippet below, which is totally
+> non obious to me. Yes, I could figure out what it means, but why the hell
+> _should_ I if there are tools for which you have to look just for a second
+> on the ouput to _fully_ understand whats happening?
 
-And then
-
-$ git status
-# On branch cajal/20070201
-nothing to commit (working directory clean)
-
--- 
-Joan Ripoll
-joan.ripsa@gmail.com
+Yeah, I find it pretty opaque too.--b.
