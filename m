@@ -1,78 +1,79 @@
-From: Johannes Sixt <J.Sixt@eudaptics.com>
-Subject: fetch: Auto-following tags should check connectivity, not existence
-Date: Tue, 17 Apr 2007 18:10:43 +0200
-Organization: eudaptics software gmbh
-Message-ID: <4624F183.D4B6BBB1@eudaptics.com>
+From: Rene Herman <rene.herman@gmail.com>
+Subject: Re: git branch --switch?
+Date: Tue, 17 Apr 2007 18:10:55 +0200
+Message-ID: <4624F18F.6070906@gmail.com>
+References: <4624CD58.90103@gmail.com>	 <C940520E-732A-4F6E-A7F2-0215FD534455@silverinsanity.com>	 <4624EAAA.6040000@gmail.com> <8c5c35580704170855ke426d86vac6e9b3b67fea5ea@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Apr 17 18:11:40 2007
+Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 18:13:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdqH5-0003oj-3d
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 18:11:23 +0200
+	id 1HdqIi-0004R9-55
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 18:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031123AbXDQQKu (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 12:10:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031127AbXDQQKu
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 12:10:50 -0400
-Received: from main.gmane.org ([80.91.229.2]:53192 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1031123AbXDQQKt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 12:10:49 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1HdqGH-0000DS-0L
-	for git@vger.kernel.org; Tue, 17 Apr 2007 18:10:33 +0200
-Received: from cm56-163-160.liwest.at ([86.56.163.160])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Apr 2007 18:10:32 +0200
-Received: from J.Sixt by cm56-163-160.liwest.at with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 17 Apr 2007 18:10:32 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: cm56-163-160.liwest.at
-X-Mailer: Mozilla 4.73 [en] (Windows NT 5.0; U)
-X-Accept-Language: en
+	id S1031122AbXDQQNA (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 12:13:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031125AbXDQQNA
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 12:13:00 -0400
+Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:38880 "EHLO
+	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1031122AbXDQQNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 12:13:00 -0400
+Received: from [213.51.130.188] (port=52732 helo=smtp3.groni1.gr.home.nl)
+	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1HdqIc-0008LB-Dy; Tue, 17 Apr 2007 18:12:58 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:60558 helo=[192.168.0.3])
+	by smtp3.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1HdqIW-0006Wn-Eb; Tue, 17 Apr 2007 18:12:52 +0200
+User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
+In-Reply-To: <8c5c35580704170855ke426d86vac6e9b3b67fea5ea@mail.gmail.com>
+X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
+X-AtHome-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44791>
 
-git-fetch's auto-following of tags fetches all tags for which it finds
-objects in the local repository. I feel it were better if not object
-existence, but connectivity to the existing refs was checked, like this:
+On 04/17/2007 05:55 PM, Lars Hjemli wrote:
 
-diff --git a/git-fetch.sh b/git-fetch.sh
-index fd70696..1b3c459 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -314,11 +314,12 @@ case "$no_tags$tags" in
-        taglist=$(IFS=' ' &&
-        echo "$ls_remote_result" |
-        git-show-ref --exclude-existing=refs/tags/ |
-        while read sha1 name
-        do
--           git-cat-file -t "$sha1" >/dev/null 2>&1 || continue
-+           t=$(git-rev-list --max-count=1 "$sha1" --not --all 2>
-/dev/null) &&
-+           test -z "$t" || continue
-            echo >&2 "Auto-following $name"
-            echo ".${name}:${name}"
-        done)
-    esac
-    case "$taglist" in
+> On 4/17/07, Rene Herman <rene.herman@gmail.com> wrote:
 
-Is this considered in the shell-to-C rewrite that's currently going on?
+>> git clone -l -s -n <a local linux repo> local
+>> git checkout -b v20 v2.6.20
+>> git branch a
+>> git branch b
+>> git branch c
+>>
+>> Step 1, 3, 4 and 5 of this are nearly instantaneous but 2 isn't
+> 
+> I might have misunderstood your goal, but have you tried
+> 
+> git clone -l -s -n <a local linux repo> local
+> git branch a v2.6.20
+> git branch b a
+> git branch c a
+> 
+> Now a, b and c all point at v2.6.20, while HEAD points as master.
 
-The background is that I sometimes fetch a branch with tags, but then
-decide to remove it (and the tags as well). git-gc and git-prune do not
-guarantee that the objects go away because they could be reachable from
-reflogs. Now the next git-fetch will fetch the tags again even though I
-do not have any refs from which they would be reachable.
+Well, yes, they do, and I could also do
 
--- Hannes
+git branch b v2.6.20
+git branch c v2.6.20
+
+directly then (right?) but I do want that "v20" branch in the middle. The 
+cloned repo is a linus repo, and that v20 is where I'll be pulling 2.6.20.y 
+updates into; a merge branch will then merge v20, a, b and c into what I 
+will be compiling.
+
+As said, given that I need to checkout things anyway to do something with 
+them it'a all not essential but as a newbie, I just thought that a "branch 
+--and-set-as-current new_branch" made sense. My sense of sense may be crap; 
+I've largely avoided dealing with souce code management, regarding CVS and 
+SVN as unfortunate facts of life to work around and forget, mostly.
+
+Rene.
