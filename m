@@ -1,70 +1,92 @@
-From: Rene Herman <rene.herman@gmail.com>
-Subject: Re: git branch --switch?
-Date: Tue, 17 Apr 2007 19:27:59 +0200
-Message-ID: <4625039F.7000804@gmail.com>
-References: <4624CD58.90103@gmail.com>	 <C940520E-732A-4F6E-A7F2-0215FD534455@silverinsanity.com>	 <4624EAAA.6040000@gmail.com>	 <8c5c35580704170855ke426d86vac6e9b3b67fea5ea@mail.gmail.com>	 <4624F18F.6070906@gmail.com> <8c5c35580704171000g74d8944w7c7b3d07228cac2@mail.gmail.com>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [RFD] Strange patch formats (aka tricks with unified diffs)..
+Date: Tue, 17 Apr 2007 20:02:30 +0200
+Message-ID: <e5bfff550704171102j61234553qb388a4be67592a07@mail.gmail.com>
+References: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org>
+	 <e5bfff550704122238l4a453cb7g38834c7da3432d5a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 19:30:37 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Paul Mackerras" <paulus@samba.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Apr 17 20:03:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdrVV-00013w-Sy
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 19:30:22 +0200
+	id 1Hds10-0005gp-6V
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 20:02:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161175AbXDQRaF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 13:30:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161178AbXDQRaF
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 13:30:05 -0400
-Received: from smtpq1.groni1.gr.home.nl ([213.51.130.200]:52196 "EHLO
-	smtpq1.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161162AbXDQRaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 13:30:03 -0400
-Received: from [213.51.130.190] (port=54758 helo=smtp1.groni1.gr.home.nl)
-	by smtpq1.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1HdrVB-00042o-Ha; Tue, 17 Apr 2007 19:30:01 +0200
-Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:34793 helo=[192.168.0.3])
-	by smtp1.groni1.gr.home.nl with esmtp (Exim 4.30)
-	id 1HdrV5-0006zA-JV; Tue, 17 Apr 2007 19:29:55 +0200
-User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
-In-Reply-To: <8c5c35580704171000g74d8944w7c7b3d07228cac2@mail.gmail.com>
-X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
-X-AtHome-MailScanner: Found to be clean
+	id S1161264AbXDQSCf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 14:02:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161276AbXDQSCe
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 14:02:34 -0400
+Received: from nz-out-0506.google.com ([64.233.162.236]:41172 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1161264AbXDQSCd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 14:02:33 -0400
+Received: by nz-out-0506.google.com with SMTP id s1so1555094nze
+        for <git@vger.kernel.org>; Tue, 17 Apr 2007 11:02:31 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=N+xY4PttkVmeR49UrGCf/mQYz8Tuak72+vhsNvaVNj7KXLLdc5GHiNbBeDndgmgxH/Des9UG7DJ6HxZC2wQPPKWt/8XiJukEb4xmRBMDZz9e0zECUIF6jKOwbJ42O01F4pCkKUItuXjxcS1UDyjLIPwsUVOPQuYC9v+MhotPNtY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=AQX0ABOpAaCaPnXvciGQ0Bq/fHsD6+vohkw/Rrn4aVJn8YlXkt6BaihhmhCHcPhLNTOeOn+9gMJB9freiUmLVZFZ7b7N/4e/hmaNIkBlWQ0utXwbCbbA9L10MPbFXSKGGUVhFUEB9pRXp2qLTQdjguTjVSR45rrHsELaEw6OZfI=
+Received: by 10.115.75.1 with SMTP id c1mr2543177wal.1176832950952;
+        Tue, 17 Apr 2007 11:02:30 -0700 (PDT)
+Received: by 10.114.61.6 with HTTP; Tue, 17 Apr 2007 11:02:30 -0700 (PDT)
+In-Reply-To: <e5bfff550704122238l4a453cb7g38834c7da3432d5a@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44807>
 
-On 04/17/2007 07:00 PM, Lars Hjemli wrote:
+On 4/13/07, Marco Costalba <mcostalba@gmail.com> wrote:
+> On 4/12/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> >
+> >
+> > So I can see two ways to fix this:
+> >  - bug Paul about alternate diff viewing capabilities in gitk. He's cc'd
+> >    here. A way to make the "diff" pane show just the new one, the old one,
+> >    or even both side-by-side with some mousy interface?
+> >  - add some actual switch to git diff generation to hide the negative side
+> >    of a unified diff, and add some way to just make gitk pass that switch
+> >    in.
+> >
+> > I dunno. I realize that it's not just gitk - gitweb, qgit etc don't allow
+> > the tricks *either*, but gitk was the one I just hit this with.
+>
+> Currently in qgit you can select a revision + a file and call an
+> external diff viewer, as example Kompare (tweakable from
+> 'Edir->settings->External diff viewer' menu) to view the diff
+> side-by-side, or in any other way the viewer allows, for the selected
+> file.
+>
+> I like also the idea to hide the negative side but I would rather
+> prefer a togglable command/button instead of a command line argument
+> or a setting, so to allow easy and quick hide/unhide on the same
+> patch.
+>
+> I will work on it..... ;-)
+>
 
-> Ok. Then maybe you want to try something like this:
-> 
-> $ git clone -l -s -n ../linux-2.6 rene
-> $ cd rene
-> $ git remote add v20
-> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.20.y
-> $ git fetch v20
-> 
-> This gives you a tracking branch for 2.6.20.y, named as "v20/master".
-> That branch can then be used as a starting point for your a, b and c
-> branches, like:
-> 
-> $ git checkout -b a v20/master    # this _will_ take some time...
-> 
-> After applying some changes on branch a, you can then merge the latest
-> changes on the v20-branch like this
-> 
-> $ git fetch v20
-> $ git merge v20/master
-> 
-> If you want the merge to occur on a separate branch, do this first:
-> 
-> $ git checkout -b tmp a
+I have pushed a patch with support for toggling view of the negative
+side of an unified diff (right most 'filter' button in patch viewer
+tab or CTRL+H shortcut).
 
-Thanks much! This is very useful.
+In case someone is interested repo is, as usual,
 
-Rene.
+                git://git.kernel.org/pub/scm/qgit/qgit.git
+
+
+  Marco
+
+P.S: Another two useful shortcuts are the hide/unhide of revision
+description header ('h' key or from 'View' menu) and hide/unhide of
+secondary panes ('s' key or from 'View' menu) they work in all the
+different tabs.
