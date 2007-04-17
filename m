@@ -1,57 +1,53 @@
-From: "Alex Riesen" <raa.lkml@gmail.com>
-Subject: Re: checkout Error on cygwin
-Date: Tue, 17 Apr 2007 17:15:46 +0200
-Message-ID: <81b0412b0704170815g77b0a7cdj7dd45d53396660f8@mail.gmail.com>
-References: <5c08a49c0704170608s4f643bf6ubc53d521149f2d55@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 3/4] Allow specifying specialized merge-backend per path.
+Date: Tue, 17 Apr 2007 08:16:13 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704170815500.5473@woody.linux-foundation.org>
+References: <11767973183627-git-send-email-junkio@cox.net>
+ <11767973191314-git-send-email-junkio@cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "Joan Ripoll Balaguer" <joan.ripsa@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 17:16:08 2007
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Tue Apr 17 17:16:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdpPb-0002JL-Ge
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 17:16:07 +0200
+	id 1HdpPv-0002QM-Hg
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 17:16:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965095AbXDQPPs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 11:15:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965104AbXDQPPr
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 11:15:47 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:53598 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965095AbXDQPPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 11:15:46 -0400
-Received: by an-out-0708.google.com with SMTP id b33so2255454ana
-        for <git@vger.kernel.org>; Tue, 17 Apr 2007 08:15:46 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qmvLMmkP3677yoaWqW7lcZYjPlwWideBfS2dQdAKd/dbow67P6JpXD8jSVIy6i3RBhRXeGTvQiKtdtbINgDqGWUokC3oAz6GHF7MhNuILBErEOOSm4xoQxhHxcSEnZZNEO/3oZJV9nM0dS283eQAUCVshPpx6l3s9K70pTDFE2A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=B8gjKRcfdG+ZL5uVWlzSmdwcTBtln66slwVyhEuiFnVPp3Oms3oUT5ARDUXlCFWm04WdjR96lqBkLfPker2cTr5ld1g1T6A6QlIpcvFvV3l2EtGp+hTPYSMR17G5KWdyHSf7oT5oLIh9h3wYy1jaBxGHrbXyuO6OokCvPGzTuic=
-Received: by 10.100.7.18 with SMTP id 18mr5526518ang.1176822946160;
-        Tue, 17 Apr 2007 08:15:46 -0700 (PDT)
-Received: by 10.100.86.19 with HTTP; Tue, 17 Apr 2007 08:15:46 -0700 (PDT)
-In-Reply-To: <5c08a49c0704170608s4f643bf6ubc53d521149f2d55@mail.gmail.com>
-Content-Disposition: inline
+	id S1754460AbXDQPQV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 11:16:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754461AbXDQPQV
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 11:16:21 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:51848 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754460AbXDQPQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 11:16:20 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3HFGFTW005796
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 Apr 2007 08:16:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3HFGEEu031945;
+	Tue, 17 Apr 2007 08:16:14 -0700
+In-Reply-To: <11767973191314-git-send-email-junkio@cox.net>
+X-Spam-Status: No, hits=-0.965 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44778>
 
-On 4/17/07, Joan Ripoll Balaguer <joan.ripsa@gmail.com> wrote:
->
-> $ git checkout master
->       6 [main] git-read-tree 2640
-> C:\cygwin\usr\local\bin\git-read-tree.exe: *** fatal error - could not
-> load shell32, Win32 error 487
->
 
-haven't seen this one yet. Cygwin bug, I'm sure.
-Try "strace -o cygwin.bug --mask=all git-read-tree master" and send
-the output to cygwin maintainers. And a copy to Bill Gates, just for fun.
+
+On Tue, 17 Apr 2007, Junio C Hamano wrote:
+>
+> This allows 'merge' attribute to control how the file-level
+> three-way merge is done per path.
+
+Cool. Good job. The whole attribute thing seems to be really working out.
+
+		Linus
