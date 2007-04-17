@@ -1,115 +1,88 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
-Subject: Re: GIT vs Other: Need argument
-Date: Tue, 17 Apr 2007 17:41:27 +0200
-Message-ID: <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
-	 <20070417104520.GB4946@moonlight.home>
+From: Rene Herman <rene.herman@gmail.com>
+Subject: Re: git branch --switch?
+Date: Tue, 17 Apr 2007 17:41:30 +0200
+Message-ID: <4624EAAA.6040000@gmail.com>
+References: <4624CD58.90103@gmail.com> <C940520E-732A-4F6E-A7F2-0215FD534455@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Pietro Mascagni" <pietromas@gmail.com>
-To: "Tomash Brechko" <tomash.brechko@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 17:41:35 2007
+Cc: git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 17:43:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdpoE-0001vH-Mz
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 17:41:35 +0200
+	id 1HdpqA-0002ar-NO
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 17:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030672AbXDQPla (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 11:41:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030678AbXDQPla
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 11:41:30 -0400
-Received: from an-out-0708.google.com ([209.85.132.250]:21101 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030672AbXDQPl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 11:41:28 -0400
-Received: by an-out-0708.google.com with SMTP id b33so2266956ana
-        for <git@vger.kernel.org>; Tue, 17 Apr 2007 08:41:27 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YTbn/XmYmENcen6F6pisfJHda8GJ5sW8pM/uUxp8C4lUxfi4Dq7SYuNdKpYcV0NoeLDa3IFo+UxtnYHkTaKAmJOC+8rWLQdPENKDlMVfQfzaxFduTxyeg0mgszg/hXirRsNGBR70DxoFIrkxR3V3/bjGUbBOc4eOOLtJljttWBY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Pv5GXcngcMkFuYlbyvRkhlbwJM3Puviyp5JOHOpe5oIKl8eOZhyNgv0OboF2bAyJTTo8R0S6qxvZZhbRCQtsN79Kc8VGc4z9xlGGIL5r4v5xTDV+M3ke0vWgvY2zvHcVSlQzK6YFPxr11Oc3W9n7YbnQ3nZJsf8C72bEW9xUiQo=
-Received: by 10.100.137.18 with SMTP id k18mr5563314and.1176824487565;
-        Tue, 17 Apr 2007 08:41:27 -0700 (PDT)
-Received: by 10.100.44.7 with HTTP; Tue, 17 Apr 2007 08:41:27 -0700 (PDT)
-In-Reply-To: <20070417104520.GB4946@moonlight.home>
-Content-Disposition: inline
+	id S1030678AbXDQPnb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 11:43:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030684AbXDQPnb
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 11:43:31 -0400
+Received: from smtpq2.groni1.gr.home.nl ([213.51.130.201]:36344 "EHLO
+	smtpq2.groni1.gr.home.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030678AbXDQPna (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 11:43:30 -0400
+Received: from [213.51.130.189] (port=48436 helo=smtp2.groni1.gr.home.nl)
+	by smtpq2.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1Hdpq5-000378-GQ; Tue, 17 Apr 2007 17:43:29 +0200
+Received: from cc334381-b.groni1.gr.home.nl ([82.73.12.33]:34776 helo=[192.168.0.3])
+	by smtp2.groni1.gr.home.nl with esmtp (Exim 4.30)
+	id 1Hdpq3-0003sF-Cd; Tue, 17 Apr 2007 17:43:27 +0200
+User-Agent: Thunderbird 1.5.0.10 (X11/20070221)
+In-Reply-To: <C940520E-732A-4F6E-A7F2-0215FD534455@silverinsanity.com>
+X-AtHome-MailScanner-Information: Please contact support@home.nl for more information
+X-AtHome-MailScanner: Found to be clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44782>
 
-I'm new to Git, but completly crazy of it.
+On 04/17/2007 04:31 PM, Brian Gernhardt wrote:
 
-In my point of view, in corporate team, lot of people does not
-want/need the power offered by Git.
-So, my conclusion is the better model in a corporate is a centralyzed
-repo with some users using Git as "frontend". Other people will simply
-use the native tools for accessing the repo.
+>> Is it possible to switch the current branch without checking it out? 
+>> Not really essential, but I'm happily flaundering around with git and 
+>> still start from scratch fairly regularly; to speed this up I've found 
+>> the -n switch to git clone useful and would like something similar 
+>> when reconstructing my "branch hierarchies".
+>>
+>> Upto now I only know about "git checkout" (with or without -b) to 
+>> switch the current branch. As said it's not really essential, but I 
+>> was expecting there would be something like a "branch --switch". Did I 
+>> overlook it?
+> 
+> Perusing git-checkout points me to git-symbolic-ref to update the HEAD 
+> ref to a new branch:
+> 
+> git symbolic-ref HEAD refs/heads/<branch>
+> 
+> However, I'm somewhat confused as to why you'd want HEAD and the working 
+> directory to get out of sync.
 
-I didn't try Git with CVS repo but seems less usable in day to day
-work than a SVN repo with git-svn FANTASTIC tool.
+Thank you for the answer. Well, as said, it's not essential, but I was just 
+now rebuilding a repo and have a few branches that I all want to be based on 
+the same revision. Say, branch a, b and c, based on v2.6.20.
 
-So the problem is simply now: how to convince people to migrate from
-CVS to SVN. This will be really less difficult as CVS and SVN are
-quite similar.
+git clone -l -s -n <a local linux repo> local
+git checkout -b v20 v2.6.20
+git branch a
+git branch b
+git branch c
 
-On 4/17/07, Tomash Brechko <tomash.brechko@gmail.com> wrote:
-> On Tue, Apr 17, 2007 at 10:02:18 +0100, Pietro Mascagni wrote:
-> > So, in 15 seconds, how does one argue that GIT is vastly superior to
-> > other version control software, especially CVS.
->
-> I think you are not talking about choosing SCM for a new project, as
-> it is even _hard to imagine_ that one would consider CVS nowadays :).
-> And if you are trying to convince people to do the migration from CVS
-> to GIT, then technical points alone won't probably help you.  GIT, and
-> actually most modern SCMs, are superior to CVS not simply because they
-> have some CVS's features improved, and some nice features added.
-> Modern SCMs implement completely different workflow model.  GIT's own
-> power in its rich toolset, but until people learn (or at least are
-> willing to learn) what the workflow is, and how it is supported by
-> these tools, there's little advantage in migration.  You can't really
-> explain why 'git commit; git push' into some central repository is
-> better than 'cvs commit', and pushing after every commit is what
-> people will be doing at first ;).  You should also realize that the
-> whole process is probably already built around CVS (CVS-specific
-> hooks, scripts that access CVS, say, for nightly testing, etc), that
-> would also have to be reimplemented.
->
-> You may consider another route: create a GIT mirror of CVS repository,
-> and update it, say, daily, with git-cvsimport.  Clone from this
-> mirror, and work with your own GIT tree, pushing back to CVS with
-> git-cvsexportcommit.  Yes, you will be dealing with problems that
-> wouldn't be there in the first place if everyone would use GIT, and
-> you will basically use CVS workflow, but still, this way is quite
-> manageable.  Then approach the most promising guy in the company, and
-> explain to him how you benefit from using GIT (gitk/qgit, git-bisect,
-> StGIT are among your friends here :)).  As the saying goes, "Better to
-> see once, then to hear about a hundred of times".  You are not
-> interested in instant migration, and then being blamed if anything
-> would go wrong.  When you will grow sufficient number of GIT experts
-> in your company, then you will raise the migration question again.
->
->
-> Good luck!
->
-> --
->    Tomash Brechko
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Step 1, 3, 4 and 5 of this are nearly instantaneous but 2 isn't -- this repo 
+sits on a P1 with 64M of memory and a disk doing 8 M/s which is probably the 
+only reason I thought asking about it was a good idea in the first place...
 
+You'd be quite right in saying that there isn't much point; if I want to now 
+start populating branch a, I have to "git checkout a" anyway, and that 
+action _will_ now be instantaneous. If I'd replaced 2 with:
 
--- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+git branch --create-and-set-as-current v20 v2.6.20
+
+then I will not have won any time until that 6th "git checkout a" step.
+
+The checkout of v20 was superfluous in this though, and I just expected I 
+should be able to skip that. It fitted my mental model...
+
+Rene.
