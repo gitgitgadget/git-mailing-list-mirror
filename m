@@ -1,78 +1,60 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: [PATCH] refs.c: add a function to sort a ref list, rather then
- sorting on add
-Date: Tue, 17 Apr 2007 23:43:30 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0704172304380.16435@beast.quantumfyre.co.uk>
-References: <20070417014307.12486.28930.julian@quantumfyre.co.uk>
- <Pine.LNX.4.64.0704170901170.5473@woody.linux-foundation.org>
- <7vslaymzk3.fsf@assigned-by-dhcp.cox.net>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: git pickaxe - more confusion
+Date: Wed, 18 Apr 2007 11:31:14 +1200
+Message-ID: <46a038f90704171631k3f8acb5aoc4337ab8a8639aaf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 00:43:36 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 01:31:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdwOd-0006Lc-Hk
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 00:43:35 +0200
+	id 1Hdx8q-0001vT-R0
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 01:31:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161388AbXDQWnc (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 18:43:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161406AbXDQWnc
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 18:43:32 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:34668 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1161388AbXDQWnb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Apr 2007 18:43:31 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id A0AE5C645D
-	for <git@vger.kernel.org>; Tue, 17 Apr 2007 23:43:30 +0100 (BST)
-Received: (qmail 11332 invoked by uid 103); 17 Apr 2007 23:42:49 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3104. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.039985 secs); 17 Apr 2007 22:42:49 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 17 Apr 2007 23:42:49 +0100
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <7vslaymzk3.fsf@assigned-by-dhcp.cox.net>
+	id S1752689AbXDQXbQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 19:31:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752784AbXDQXbQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 19:31:16 -0400
+Received: from wx-out-0506.google.com ([66.249.82.233]:58236 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752689AbXDQXbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 19:31:14 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so2227113wxd
+        for <git@vger.kernel.org>; Tue, 17 Apr 2007 16:31:14 -0700 (PDT)
+DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=KUHH2D/hcaLCaOedNmZa4eZzVIVk9EuWCwVv0lrsDNo6d+3GFvuCRhlcKVIqOSyHR9p/vE5GSGhzRbkLFpV/v6AgqgiXVtmdy3+0MNJf2iF9/lZfoyBV/l20aW/1dZrtdBRkpf6jqWOX8HyxIUUZ24TBq1vJRRjMvFH2VyC8EPg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=nl9XnL360ag3wLIIpVwRko87uQFXQzbHySM7DNVy1mJmikBbCG4OjX1UI434dPoZF1zRcTeO3VqEgs4K4Vpk5pON/k6hWXzhY2173n8crQ75u7YXfdw8saQSAOBDNNGVFknOdwkVdgpHRjOgdICwQH4sW0byMMgQkEOt5B6U0Lk=
+Received: by 10.90.65.11 with SMTP id n11mr1132748aga.1176852674155;
+        Tue, 17 Apr 2007 16:31:14 -0700 (PDT)
+Received: by 10.90.52.17 with HTTP; Tue, 17 Apr 2007 16:31:14 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44840>
 
-On Tue, 17 Apr 2007, Junio C Hamano wrote:
+Call me blunt, I cannot figure out how to use git pickaxe on a subdir.
+As it's aliased to blame it really wants a file, but I have a couple
+of top-level directories I want it to scan for a constant.
 
-> I wonder why the loss of "we are replacing the same one" case in
-> the original add_ref() was not compensated for in the new
-> sort_ref_list().
+In short,
 
-That would be because it didn't bite me during testing, and I forgot to 
-double check the code I was removing after I was happy that the sort was 
-producing sane output (it was getting rather late).
+     git pickaxe -L '/CURLOPT_SSL/' origin/cvshead -- mnet lib/mnet
 
-Thing is, I'm not sure what to do about it anyway.  You could drop the 
-duplicate in the sort, but since add_ref returns a pointer to the added 
-entry (and used to simply return a pointer to the one already in the list) 
-it's possible that you would be dropping something that someone had a 
-pointer to.
+doesn't want to play with me. I initially tried with -S but the new
+way of doing it is -L, it seems -- passing the regex where the line
+numbers should be ;-)
 
-> I think we would not call add_ref() to the same list with
-> duplicate names, unless (1) filesystem is grossly corrupt, (2)
-> somebody added a new ref while we are walking (how does
-> readdir() behave in such a case???), or (3) packed-refs file is
-> corrupt.
+cheers,
 
-This combined with the fact that the old code didn't check that the sha1 
-was the same suggests to me that this behaviour may actually have been a 
-subtle bug?  Perhaps the best thing to do is die if we find two entries 
-with the same name when sorting?
 
--- 
-Julian
 
-  ---
-What passes for optimism is most often the effect of an intellectual error.
- 		-- Raymond Aron, "The Opium of the Intellectuals"
+martin
