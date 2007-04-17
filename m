@@ -1,64 +1,56 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Initial push of a fully packed repo - why repack?
-Date: Mon, 16 Apr 2007 22:49:10 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704162235350.4504@xanadu.home>
-References: <46a038f90704161812r143b6d27scbcc401ee77c4597@mail.gmail.com>
- <alpine.LFD.0.98.0704162215520.4504@xanadu.home>
- <46a038f90704161928q4597c97ajd33106f119516328@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Any objectsions to enhancing git-log to show tags/branch heads?
+Date: Mon, 16 Apr 2007 20:00:24 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704161959230.5473@woody.linux-foundation.org>
+References: <E1HdQah-0008Q2-7E@candygram.thunk.org>
+ <Pine.LNX.4.64.0704161552160.5473@woody.linux-foundation.org>
+ <20070417022154.GC30340@thunk.org> <f01b9g$qqc$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Apr 17 04:49:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Apr 17 05:00:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hddkp-0004aU-Jw
-	for gcvg-git@gmane.org; Tue, 17 Apr 2007 04:49:15 +0200
+	id 1Hddvm-0007Fm-9P
+	for gcvg-git@gmane.org; Tue, 17 Apr 2007 05:00:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1031056AbXDQCtM (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Mon, 16 Apr 2007 22:49:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031057AbXDQCtM
-	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 22:49:12 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:64406 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1031056AbXDQCtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Apr 2007 22:49:11 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGM00AE7FTYNCG0@VL-MO-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 16 Apr 2007 22:49:11 -0400 (EDT)
-In-reply-to: <46a038f90704161928q4597c97ajd33106f119516328@mail.gmail.com>
-X-X-Sender: nico@xanadu.home
+	id S1031058AbXDQDAb (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Mon, 16 Apr 2007 23:00:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1031061AbXDQDAb
+	(ORCPT <rfc822;git-outgoing>); Mon, 16 Apr 2007 23:00:31 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:33322 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1031058AbXDQDAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Apr 2007 23:00:30 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3H30PIs014784
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 16 Apr 2007 20:00:25 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3H30Oum018735;
+	Mon, 16 Apr 2007 20:00:24 -0700
+In-Reply-To: <f01b9g$qqc$1@sea.gmane.org>
+X-Spam-Status: No, hits=-0.451 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44713>
 
-On Tue, 17 Apr 2007, Martin Langhoff wrote:
 
-> On 4/17/07, Nicolas Pitre <nico@cam.org> wrote:
-> > On Tue, 17 Apr 2007, Martin Langhoff wrote:
-> > > Does it make sense to detect and optimise for this case?
-> > Maybe...  Although the second repack during the push should be much much
-> > faster than the first one.
+
+On Tue, 17 Apr 2007, Jakub Narebski wrote:
 > 
-> It is - but it still burns through perhaps 1 minute of CPU and IO
-> rewriting the exact same pack as you can see:
+> You have to use --abbrev-commit (--abbrev is opassed to log machinery, and
+> covers object ids), which is undocumented option (mentioned only in passing
+> in git-reflog(1)).
 
-Sure.  On the IO you can't save.  You'll have to copy the packanyway and 
-with all objects being "reused" the pack-objects code is basically not 
-doing much more than a straight cp would do.
+Yeah, it's irritated me often enough that I think we should just make 
+"--abbrev" set "--abbrev-commit" too.
 
-What is costly is figuring out if the single pack you have actually
-contains all the objects you wish to push, and _only_ the objects you 
-wish to push.  That is the real cost.  By the time all those objects are 
-listed and accounted then repacking is basically copying the data 
-over with almost no CPU usage.  In other words, the cost to determine if 
-it is OK to simply send the pack you already have and actually 
-sending it would be sensibly the same.
-
-
-Nicolas
+		Linus
