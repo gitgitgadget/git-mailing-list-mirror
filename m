@@ -1,725 +1,423 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH] common progress display support
-Date: Wed, 18 Apr 2007 14:27:45 -0400 (EDT)
-Message-ID: <alpine.LFD.0.98.0704181422050.4504@xanadu.home>
+From: Junio C Hamano <junkio@cox.net>
+Subject: [PATCH] Custom low-level merge driver: change the configuration scheme.
+Date: Wed, 18 Apr 2007 11:28:36 -0700
+Message-ID: <7vbqhlh6zv.fsf_-_@assigned-by-dhcp.cox.net>
+References: <11768880622402-git-send-email-junkio@cox.net>
+	<Pine.LNX.4.64.0704181247410.12094@racer.site>
+	<20070418153445.GC12888@admingilde.org>
+	<alpine.LFD.0.98.0704180910120.2828@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 20:28:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Waitz <tali@admingilde.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 20:28:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeEt1-0007AM-Jp
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 20:28:12 +0200
+	id 1HeEtW-0007Ku-IP
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 20:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754154AbXDRS1v (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 14:27:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754165AbXDRS1v
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 14:27:51 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:13696 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754154AbXDRS1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 14:27:50 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java System Messaging Server 6.2-2.05 (built Apr 28 2005))
- with ESMTP id <0JGP00E5JHY99IS0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 18 Apr 2007 14:27:46 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
+	id S1754167AbXDRS2j (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 14:28:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbXDRS2j
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 14:28:39 -0400
+Received: from fed1rmmtao106.cox.net ([68.230.241.40]:52104 "EHLO
+	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754167AbXDRS2i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 14:28:38 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao106.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070418182837.KDWQ1218.fed1rmmtao106.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 18 Apr 2007 14:28:37 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id oiUc1W00h1kojtg0000000; Wed, 18 Apr 2007 14:28:37 -0400
+In-Reply-To: <alpine.LFD.0.98.0704180910120.2828@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 18 Apr 2007 09:16:31 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44925>
 
-Instead of having this code duplicated in multiple places, let's have
-a common interface for progress display.  If someday someone wishes to
-display a cheezy progress bar instead then only one file will have to
-be changed.
+This changes the configuration syntax for defining a low-level
+merge driver to be:
 
-Note: I left merge-recursive.c out since it has a strange notion of
-progress as it apparently increase the expected total number as it goes.
-Someone with more intimate knowledge of what that is supposed to mean
-might look at converting it to the common progress interface.
+	[merge "<<drivername>>"]
+		driver = "<<command line>>"
+		name = "<<driver description>>"
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+which is much nicer to read and is extensible.  Credit goes to
+Martin Waitz and Linus.
+
+In addition, when we use an external low-level merge driver, it
+is reported as an extra output from merge-recursive, using the
+value of merge.<<drivername>.name variable.
+
+The demonstration in t6026 has also been updated.
+
+Signed-off-by: Junio C Hamano <junkio@cox.net>
 ---
- Makefile                 |    4 +-
- builtin-pack-objects.c   |   83 +++++++++++----------------------------------
- builtin-unpack-objects.c |   38 +++++++++-----------
- index-pack.c             |   78 +++++++++++++------------------------------
- progress.c               |   68 +++++++++++++++++++++++++++++++++++++
- progress.h               |   14 ++++++++
- unpack-trees.c           |   54 +++++-------------------------
- 7 files changed, 154 insertions(+), 185 deletions(-)
- create mode 100644 progress.c
- create mode 100644 progress.h
 
-diff --git a/Makefile b/Makefile
-index 596089e..f463149 100644
---- a/Makefile
-+++ b/Makefile
-@@ -283,7 +283,7 @@ LIB_H = \
- 	diff.h object.h pack.h pkt-line.h quote.h refs.h list-objects.h sideband.h \
- 	run-command.h strbuf.h tag.h tree.h git-compat-util.h revision.h \
- 	tree-walk.h log-tree.h dir.h path-list.h unpack-trees.h builtin.h \
--	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h
-+	utf8.h reflog-walk.h patch-ids.h attr.h decorate.h progress.h
- 
- DIFF_OBJS = \
- 	diff.o diff-lib.o diffcore-break.o diffcore-order.o \
-@@ -305,7 +305,7 @@ LIB_OBJS = \
- 	write_or_die.o trace.o list-objects.o grep.o match-trees.o \
- 	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS) \
- 	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
--	convert.o attr.o decorate.o
-+	convert.o attr.o decorate.o progress.o
- 
- BUILTIN_OBJS = \
- 	builtin-add.o \
-diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
-index 19fae4c..150f56c 100644
---- a/builtin-pack-objects.c
-+++ b/builtin-pack-objects.c
-@@ -12,6 +12,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "list-objects.h"
-+#include "progress.h"
- 
- static const char pack_usage[] = "\
- git-pack-objects [{ -q | --progress | --all-progress }] \n\
-@@ -69,10 +70,10 @@ static const char *pack_tmp_name, *idx_tmp_name;
- static char tmpname[PATH_MAX];
- static unsigned char pack_file_sha1[20];
- static int progress = 1;
--static volatile sig_atomic_t progress_update;
- static int window = 10;
- static int pack_to_stdout;
- static int num_preferred_base;
-+static struct progress progress_state;
- 
- /*
-  * The object names in objects array are hashed with this hashtable,
-@@ -572,7 +573,6 @@ static off_t write_pack_file(void)
- 	struct sha1file *f;
- 	off_t offset, last_obj_offset = 0;
- 	struct pack_header hdr;
--	unsigned last_percent = 999;
- 	int do_progress = progress;
- 
- 	if (pack_to_stdout) {
-@@ -588,8 +588,10 @@ static off_t write_pack_file(void)
- 		f = sha1fd(fd, pack_tmp_name);
- 	}
- 
--	if (do_progress)
-+	if (do_progress) {
- 		fprintf(stderr, "Writing %u objects.\n", nr_result);
-+		start_progress(&progress_state, "", nr_result);
-+	}
- 
- 	hdr.hdr_signature = htonl(PACK_SIGNATURE);
- 	hdr.hdr_version = htonl(PACK_VERSION);
-@@ -601,18 +603,11 @@ static off_t write_pack_file(void)
- 	for (i = 0; i < nr_objects; i++) {
- 		last_obj_offset = offset;
- 		offset = write_one(f, objects + i, offset);
--		if (do_progress) {
--			unsigned percent = written * 100 / nr_result;
--			if (progress_update || percent != last_percent) {
--				fprintf(stderr, "%4u%% (%u/%u) done\r",
--					percent, written, nr_result);
--				progress_update = 0;
--				last_percent = percent;
--			}
--		}
-+		if (do_progress)
-+			display_progress(&progress_state, written);
- 	}
- 	if (do_progress)
--		fputc('\n', stderr);
-+		stop_progress(&progress_state);
-  done:
- 	if (written != nr_result)
- 		die("wrote %u objects while expecting %u", written, nr_result);
-@@ -873,10 +868,8 @@ static int add_object_entry(const unsigned char *sha1, enum object_type type,
- 	else
- 		object_ix[-1 - ix] = nr_objects;
- 
--	if (progress_update) {
--		fprintf(stderr, "Counting objects...%u\r", nr_objects);
--		progress_update = 0;
--	}
-+	if (progress)
-+		display_progress(&progress_state, nr_objects);
- 
- 	return 1;
- }
-@@ -1398,15 +1391,16 @@ static void find_deltas(struct object_entry **list, int window, int depth)
- 	uint32_t i = nr_objects, idx = 0, processed = 0;
- 	unsigned int array_size = window * sizeof(struct unpacked);
- 	struct unpacked *array;
--	unsigned last_percent = 999;
- 	int max_depth;
- 
- 	if (!nr_objects)
- 		return;
- 	array = xmalloc(array_size);
- 	memset(array, 0, array_size);
--	if (progress)
-+	if (progress) {
- 		fprintf(stderr, "Deltifying %u objects.\n", nr_result);
-+		start_progress(&progress_state, "", nr_result);
-+	}
- 
- 	do {
- 		struct object_entry *entry = list[--i];
-@@ -1416,15 +1410,8 @@ static void find_deltas(struct object_entry **list, int window, int depth)
- 		if (!entry->preferred_base)
- 			processed++;
- 
--		if (progress) {
--			unsigned percent = processed * 100 / nr_result;
--			if (percent != last_percent || progress_update) {
--				fprintf(stderr, "%4u%% (%u/%u) done\r",
--					percent, processed, nr_result);
--				progress_update = 0;
--				last_percent = percent;
--			}
--		}
-+		if (progress)
-+			display_progress(&progress_state, processed);
- 
- 		if (entry->delta)
- 			/* This happens if we decided to reuse existing
-@@ -1479,7 +1466,7 @@ static void find_deltas(struct object_entry **list, int window, int depth)
- 	} while (i > 0);
- 
- 	if (progress)
--		fputc('\n', stderr);
-+		stop_progress(&progress_state);
- 
- 	for (i = 0; i < window; ++i) {
- 		free_delta_index(array[i].index);
-@@ -1506,28 +1493,6 @@ static void prepare_pack(int window, int depth)
- 	free(delta_list);
+ * This is on top of what I pushed out on 'pu' last night.  This
+   being my git day, I am hoping I can push this out in 'next'
+   today.
+
+ merge-recursive.c     |  202 ++++++++++++++++++++++++++++++-------------------
+ t/t6026-merge-attr.sh |    8 ++-
+ 2 files changed, 131 insertions(+), 79 deletions(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 5983000..4af69d7 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -661,14 +661,31 @@ static void fill_mm(const unsigned char *sha1, mmfile_t *mm)
+ 	mm->size = size;
  }
  
--static void progress_interval(int signum)
--{
--	progress_update = 1;
--}
--
--static void setup_progress_signal(void)
--{
--	struct sigaction sa;
--	struct itimerval v;
--
--	memset(&sa, 0, sizeof(sa));
--	sa.sa_handler = progress_interval;
--	sigemptyset(&sa.sa_mask);
--	sa.sa_flags = SA_RESTART;
--	sigaction(SIGALRM, &sa, NULL);
--
--	v.it_interval.tv_sec = 1;
--	v.it_interval.tv_usec = 0;
--	v.it_value = v.it_interval;
--	setitimer(ITIMER_REAL, &v, NULL);
--}
--
- static int git_pack_config(const char *k, const char *v)
- {
- 	if(!strcmp(k, "pack.window")) {
-@@ -1760,31 +1725,25 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 
- 	if (progress) {
- 		fprintf(stderr, "Generating pack...\n");
--		setup_progress_signal();
-+		start_progress(&progress_state, "Counting objects: ", 0);
- 	}
--
- 	if (!use_internal_rev_list)
- 		read_object_list_from_stdin();
- 	else {
- 		rp_av[rp_ac] = NULL;
- 		get_object_list(rp_ac, rp_av);
- 	}
--
--	if (progress)
-+	if (progress) {
-+		stop_progress(&progress_state);
- 		fprintf(stderr, "Done counting %u objects.\n", nr_objects);
-+	}
+-/* Low-level merge functions */
+-typedef int (*ll_merge_fn)(const char *cmd,
++/*
++ * Customizable low-level merge drivers support.
++ */
 +
- 	if (non_empty && !nr_result)
- 		return 0;
- 	if (progress && (nr_objects != nr_result))
- 		fprintf(stderr, "Result has %u objects.\n", nr_result);
- 	if (nr_result)
- 		prepare_pack(window, depth);
--	if (progress == 1 && pack_to_stdout) {
--		/* the other end usually displays progress itself */
--		struct itimerval v = {{0,},};
--		setitimer(ITIMER_REAL, &v, NULL);
--		signal(SIGALRM, SIG_IGN );
--		progress_update = 0;
--	}
- 	last_obj_offset = write_pack_file();
- 	if (!pack_to_stdout) {
- 		unsigned char object_list_sha1[20];
-diff --git a/builtin-unpack-objects.c b/builtin-unpack-objects.c
-index f821906..c370c7f 100644
---- a/builtin-unpack-objects.c
-+++ b/builtin-unpack-objects.c
-@@ -7,6 +7,7 @@
- #include "commit.h"
- #include "tag.h"
- #include "tree.h"
-+#include "progress.h"
++struct ll_merge_driver;
++typedef int (*ll_merge_fn)(const struct ll_merge_driver *,
++			   const char *path,
+ 			   mmfile_t *orig,
+ 			   mmfile_t *src1, const char *name1,
+ 			   mmfile_t *src2, const char *name2,
+ 			   mmbuffer_t *result);
  
- static int dry_run, quiet, recover, has_errors;
- static const char unpack_usage[] = "git-unpack-objects [-n] [-q] [-r] < pack-file";
-@@ -264,7 +265,7 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- 	free(base);
- }
- 
--static void unpack_one(unsigned nr, unsigned total)
-+static void unpack_one(unsigned nr)
- {
- 	unsigned shift;
- 	unsigned char *pack, c;
-@@ -286,20 +287,7 @@ static void unpack_one(unsigned nr, unsigned total)
- 		size += (c & 0x7f) << shift;
- 		shift += 7;
- 	}
--	if (!quiet) {
--		static unsigned long last_sec;
--		static unsigned last_percent;
--		struct timeval now;
--		unsigned percentage = ((nr+1) * 100) / total;
--
--		gettimeofday(&now, NULL);
--		if (percentage != last_percent || now.tv_sec != last_sec) {
--			last_sec = now.tv_sec;
--			last_percent = percentage;
--			fprintf(stderr, "%4u%% (%u/%u) done\r",
--					percentage, (nr+1), total);
--		}
--	}
-+
- 	switch (type) {
- 	case OBJ_COMMIT:
- 	case OBJ_TREE:
-@@ -323,6 +311,7 @@ static void unpack_one(unsigned nr, unsigned total)
- static void unpack_all(void)
- {
- 	int i;
-+	struct progress progress;
- 	struct pack_header *hdr = fill(sizeof(struct pack_header));
- 	unsigned nr_objects = ntohl(hdr->hdr_entries);
- 
-@@ -330,12 +319,21 @@ static void unpack_all(void)
- 		die("bad pack file");
- 	if (!pack_version_ok(hdr->hdr_version))
- 		die("unknown pack file version %d", ntohl(hdr->hdr_version));
--	fprintf(stderr, "Unpacking %d objects\n", nr_objects);
-+	use(sizeof(struct pack_header));
- 
-+	if (!quiet) {
-+		fprintf(stderr, "Unpacking %d objects\n", nr_objects);
-+		start_progress(&progress, "", nr_objects);
-+	}
- 	obj_list = xmalloc(nr_objects * sizeof(*obj_list));
--	use(sizeof(struct pack_header));
--	for (i = 0; i < nr_objects; i++)
--		unpack_one(i, nr_objects);
-+	for (i = 0; i < nr_objects; i++) {
-+		unpack_one(i);
-+		if (!quiet)
-+			display_progress(&progress, i + 1);
-+	}
-+	if (!quiet)
-+		stop_progress(&progress);
-+
- 	if (delta_list)
- 		die("unresolved deltas left after unpacking");
- }
-@@ -404,7 +402,5 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	/* All done */
--	if (!quiet)
--		fprintf(stderr, "\n");
- 	return has_errors;
- }
-diff --git a/index-pack.c b/index-pack.c
-index 7aad261..a49d03d 100644
---- a/index-pack.c
-+++ b/index-pack.c
-@@ -6,6 +6,7 @@
- #include "commit.h"
- #include "tag.h"
- #include "tree.h"
-+#include "progress.h"
- 
- static const char index_pack_usage[] =
- "git-index-pack [-v] [-o <index-file>] [{ ---keep | --keep=<msg> }] { <pack-file> | --stdin [--fix-thin] [<pack-file>] }";
-@@ -47,40 +48,7 @@ static int nr_resolved_deltas;
- static int from_stdin;
- static int verbose;
- 
--static volatile sig_atomic_t progress_update;
--
--static void progress_interval(int signum)
--{
--	progress_update = 1;
--}
--
--static void setup_progress_signal(void)
--{
--	struct sigaction sa;
--	struct itimerval v;
--
--	memset(&sa, 0, sizeof(sa));
--	sa.sa_handler = progress_interval;
--	sigemptyset(&sa.sa_mask);
--	sa.sa_flags = SA_RESTART;
--	sigaction(SIGALRM, &sa, NULL);
--
--	v.it_interval.tv_sec = 1;
--	v.it_interval.tv_usec = 0;
--	v.it_value = v.it_interval;
--	setitimer(ITIMER_REAL, &v, NULL);
--
--}
--
--static unsigned display_progress(unsigned n, unsigned total, unsigned last_pc)
--{
--	unsigned percent = n * 100 / total;
--	if (percent != last_pc || progress_update) {
--		fprintf(stderr, "%4u%% (%u/%u) done\r", percent, n, total);
--		progress_update = 0;
--	}
--	return percent;
--}
-+static struct progress progress;
- 
- /* We always read in 4kB chunks. */
- static unsigned char input_buffer[4096];
-@@ -428,7 +396,7 @@ static int compare_delta_entry(const void *a, const void *b)
- /* Parse all objects and return the pack content SHA1 hash */
- static void parse_pack_objects(unsigned char *sha1)
- {
--	int i, percent = -1;
-+	int i;
- 	struct delta_entry *delta = deltas;
- 	void *data;
- 	struct stat st;
-@@ -439,8 +407,10 @@ static void parse_pack_objects(unsigned char *sha1)
- 	 * - calculate SHA1 of all non-delta objects;
- 	 * - remember base (SHA1 or offset) for all deltas.
- 	 */
--	if (verbose)
-+	if (verbose) {
- 		fprintf(stderr, "Indexing %d objects.\n", nr_objects);
-+		start_progress(&progress, "", nr_objects);
-+	}
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = &objects[i];
- 		data = unpack_raw_entry(obj, &delta->base);
-@@ -453,11 +423,11 @@ static void parse_pack_objects(unsigned char *sha1)
- 			sha1_object(data, obj->size, obj->type, obj->sha1);
- 		free(data);
- 		if (verbose)
--			percent = display_progress(i+1, nr_objects, percent);
-+			display_progress(&progress, i+1);
- 	}
- 	objects[i].offset = consumed_bytes;
- 	if (verbose)
--		fputc('\n', stderr);
-+		stop_progress(&progress);
- 
- 	/* Check pack integrity */
- 	flush();
-@@ -488,8 +458,10 @@ static void parse_pack_objects(unsigned char *sha1)
- 	 *   recursively checking if the resulting object is used as a base
- 	 *   for some more deltas.
- 	 */
--	if (verbose)
-+	if (verbose) {
- 		fprintf(stderr, "Resolving %d deltas.\n", nr_deltas);
-+		start_progress(&progress, "", nr_deltas);
-+	}
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = &objects[i];
- 		union delta_base base;
-@@ -521,11 +493,8 @@ static void parse_pack_objects(unsigned char *sha1)
- 			}
- 		free(data);
- 		if (verbose)
--			percent = display_progress(nr_resolved_deltas,
--						   nr_deltas, percent);
-+			display_progress(&progress, nr_resolved_deltas);
- 	}
--	if (verbose && nr_resolved_deltas == nr_deltas)
--		fputc('\n', stderr);
- }
- 
- static int write_compressed(int fd, void *in, unsigned int size, uint32_t *obj_crc)
-@@ -587,7 +556,7 @@ static int delta_pos_compare(const void *_a, const void *_b)
- static void fix_unresolved_deltas(int nr_unresolved)
- {
- 	struct delta_entry **sorted_by_pos;
--	int i, n = 0, percent = -1;
-+	int i, n = 0;
- 
- 	/*
- 	 * Since many unresolved deltas may well be themselves base objects
-@@ -632,12 +601,9 @@ static void fix_unresolved_deltas(int nr_unresolved)
- 		append_obj_to_pack(d->base.sha1, data, size, type);
- 		free(data);
- 		if (verbose)
--			percent = display_progress(nr_resolved_deltas,
--						   nr_deltas, percent);
-+			display_progress(&progress, nr_resolved_deltas);
- 	}
- 	free(sorted_by_pos);
--	if (verbose)
--		fputc('\n', stderr);
- }
- 
- static void readjust_pack_header_and_sha1(unsigned char *sha1)
-@@ -980,10 +946,13 @@ int main(int argc, char **argv)
- 	parse_pack_header();
- 	objects = xmalloc((nr_objects + 1) * sizeof(struct object_entry));
- 	deltas = xmalloc(nr_objects * sizeof(struct delta_entry));
--	if (verbose)
--		setup_progress_signal();
- 	parse_pack_objects(sha1);
--	if (nr_deltas != nr_resolved_deltas) {
-+	if (nr_deltas == nr_resolved_deltas) {
-+		if (verbose)
-+			stop_progress(&progress);
-+		/* Flush remaining pack final 20-byte SHA1. */
-+		flush();
-+	} else {
- 		if (fix_thin_pack) {
- 			int nr_unresolved = nr_deltas - nr_resolved_deltas;
- 			int nr_objects_initial = nr_objects;
-@@ -993,17 +962,16 @@ int main(int argc, char **argv)
- 					   (nr_objects + nr_unresolved + 1)
- 					   * sizeof(*objects));
- 			fix_unresolved_deltas(nr_unresolved);
--			if (verbose)
-+			if (verbose) {
-+				stop_progress(&progress);
- 				fprintf(stderr, "%d objects were added to complete this thin pack.\n",
- 					nr_objects - nr_objects_initial);
-+			}
- 			readjust_pack_header_and_sha1(sha1);
- 		}
- 		if (nr_deltas != nr_resolved_deltas)
- 			die("pack has %d unresolved deltas",
- 			    nr_deltas - nr_resolved_deltas);
--	} else {
--		/* Flush remaining pack final 20-byte SHA1. */
--		flush();
- 	}
- 	free(deltas);
- 	curr_index = write_index_file(index_name, sha1);
-diff --git a/progress.c b/progress.c
-new file mode 100644
-index 0000000..702e116
---- /dev/null
-+++ b/progress.c
-@@ -0,0 +1,68 @@
-+#include "git-compat-util.h"
-+#include "progress.h"
-+
-+static volatile sig_atomic_t progress_update;
-+
-+static void progress_interval(int signum)
-+{
-+	progress_update = 1;
-+}
-+
-+static void set_progress_signal(void)
-+{
-+	struct sigaction sa;
-+	struct itimerval v;
-+
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_handler = progress_interval;
-+	sigemptyset(&sa.sa_mask);
-+	sa.sa_flags = SA_RESTART;
-+	sigaction(SIGALRM, &sa, NULL);
-+
-+	v.it_interval.tv_sec = 1;
-+	v.it_interval.tv_usec = 0;
-+	v.it_value = v.it_interval;
-+	setitimer(ITIMER_REAL, &v, NULL);
-+}
-+
-+static void clear_progress_signal(void)
-+{
-+	struct itimerval v = {{0,},};
-+	setitimer(ITIMER_REAL, &v, NULL);
-+	signal(SIGALRM, SIG_IGN);
-+	progress_update = 0;
-+}
-+
-+int display_progress(struct progress *progress, unsigned n)
-+{
-+	if (progress->total) {
-+		unsigned percent = n * 100 / progress->total;
-+		if (percent != progress->last_percent || progress_update) {
-+			progress->last_percent = percent;
-+			fprintf(stderr, "%s%4u%% (%u/%u) done\r",
-+				progress->msg, percent, n, progress->total);
-+			progress_update = 0;
-+			return 1;
-+		}
-+	} else if (progress_update) {
-+		fprintf(stderr, "%s%u\r", progress->msg, n);
-+		progress_update = 0;
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+void start_progress(struct progress *progress, const char *msg, unsigned total)
-+{
-+	progress->msg = msg;
-+	progress->total = total;
-+	progress->last_percent = -1;
-+	set_progress_signal();
-+}
-+
-+void stop_progress(struct progress *progress)
-+{
-+	clear_progress_signal();
-+	if (progress->total)
-+		fputc('\n', stderr);
-+}
-diff --git a/progress.h b/progress.h
-new file mode 100644
-index 0000000..5fa4948
---- /dev/null
-+++ b/progress.h
-@@ -0,0 +1,14 @@
-+#ifndef __progress_h__
-+#define __progress_h__
-+
-+struct progress {
-+	const char *msg;
-+	unsigned total;
-+	unsigned last_percent;
+-static int ll_xdl_merge(const char *cmd__unused,
++struct ll_merge_driver {
++	const char *name;
++	const char *description;
++	ll_merge_fn fn;
++	struct ll_merge_driver *next;
++	char *cmdline;
 +};
 +
-+int display_progress(struct progress *progress, unsigned n);
-+void start_progress(struct progress *progress, const char *msg, unsigned total);
-+void stop_progress(struct progress *progress);
++/*
++ * Built-in low-levels
++ */
++static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
++			const char *path_unused,
+ 			mmfile_t *orig,
+ 			mmfile_t *src1, const char *name1,
+ 			mmfile_t *src2, const char *name2,
+@@ -684,7 +701,8 @@ static int ll_xdl_merge(const char *cmd__unused,
+ 			 result);
+ }
+ 
+-static int ll_union_merge(const char *cmd__unused,
++static int ll_union_merge(const struct ll_merge_driver *drv_unused,
++			  const char *path_unused,
+ 			  mmfile_t *orig,
+ 			  mmfile_t *src1, const char *name1,
+ 			  mmfile_t *src2, const char *name2,
+@@ -694,8 +712,8 @@ static int ll_union_merge(const char *cmd__unused,
+ 	long size;
+ 	const int marker_size = 7;
+ 
+-	int status = ll_xdl_merge(cmd__unused, orig,
+-				  src1, NULL, src2, NULL, result);
++	int status = ll_xdl_merge(drv_unused, path_unused,
++				  orig, src1, NULL, src2, NULL, result);
+ 	if (status <= 0)
+ 		return status;
+ 	size = result->size;
+@@ -726,7 +744,8 @@ static int ll_union_merge(const char *cmd__unused,
+ 	return 0;
+ }
+ 
+-static int ll_binary_merge(const char *cmd__unused,
++static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
++			   const char *path_unused,
+ 			   mmfile_t *orig,
+ 			   mmfile_t *src1, const char *name1,
+ 			   mmfile_t *src2, const char *name2,
+@@ -745,14 +764,13 @@ static int ll_binary_merge(const char *cmd__unused,
+ 	return 1;
+ }
+ 
+-static struct {
+-	const char *name;
+-	ll_merge_fn fn;
+-} ll_merge_fns[] = {
+-	{ "binary", ll_binary_merge },
+-	{ "text", ll_xdl_merge },
+-	{ "union", ll_union_merge },
+-	{ NULL, NULL },
++#define LL_BINARY_MERGE 0
++#define LL_TEXT_MERGE 1
++#define LL_UNION_MERGE 2
++static struct ll_merge_driver ll_merge_drv[] = {
++	{ "binary", "built-in binary merge", ll_binary_merge },
++	{ "text", "built-in 3-way text merge", ll_xdl_merge },
++	{ "union", "built-in union merge", ll_union_merge },
+ };
+ 
+ static void create_temp(mmfile_t *src, char *path)
+@@ -768,7 +786,11 @@ static void create_temp(mmfile_t *src, char *path)
+ 	close(fd);
+ }
+ 
+-static int ll_ext_merge(const char *cmd,
++/*
++ * User defined low-level merge driver support.
++ */
++static int ll_ext_merge(const struct ll_merge_driver *fn,
++			const char *path,
+ 			mmfile_t *orig,
+ 			mmfile_t *src1, const char *name1,
+ 			mmfile_t *src2, const char *name2,
+@@ -796,7 +818,10 @@ static int ll_ext_merge(const char *cmd,
+ 	interp_set_entry(table, 1, temp[1]);
+ 	interp_set_entry(table, 2, temp[2]);
+ 
+-	interpolate(cmdbuf, sizeof(cmdbuf), cmd, table, 3);
++	output(1, "merging %s using %s", path,
++	       fn->description ? fn->description : fn->name);
 +
-+#endif
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 5139481..8a11622 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -4,6 +4,7 @@
- #include "tree-walk.h"
- #include "cache-tree.h"
- #include "unpack-trees.h"
-+#include "progress.h"
++	interpolate(cmdbuf, sizeof(cmdbuf), fn->cmdline, table, 3);
  
- #define DBRT_DEBUG 1
+ 	memset(&child, 0, sizeof(child));
+ 	child.argv = args;
+@@ -833,101 +858,124 @@ static int ll_ext_merge(const char *cmd,
+ /*
+  * merge.default and merge.driver configuration items
+  */
+-static struct user_merge_fn {
+-	struct user_merge_fn *next;
+-	const char *name;
+-	char *cmdline;
+-	char b_[1];
+-} *ll_user_merge_fns, **ll_user_merge_fns_tail;
++static struct ll_merge_driver *ll_user_merge, **ll_user_merge_tail;
+ static const char *default_ll_merge;
  
-@@ -288,36 +289,13 @@ static void unlink_entry(char *name)
- 	}
- }
- 
--static volatile sig_atomic_t progress_update;
--
--static void progress_interval(int signum)
--{
--	progress_update = 1;
--}
--
--static void setup_progress_signal(void)
--{
--	struct sigaction sa;
--	struct itimerval v;
--
--	memset(&sa, 0, sizeof(sa));
--	sa.sa_handler = progress_interval;
--	sigemptyset(&sa.sa_mask);
--	sa.sa_flags = SA_RESTART;
--	sigaction(SIGALRM, &sa, NULL);
--
--	v.it_interval.tv_sec = 1;
--	v.it_interval.tv_usec = 0;
--	v.it_value = v.it_interval;
--	setitimer(ITIMER_REAL, &v, NULL);
--}
--
- static struct checkout state;
- static void check_updates(struct cache_entry **src, int nr,
- 		struct unpack_trees_options *o)
+ static int read_merge_config(const char *var, const char *value)
  {
- 	unsigned short mask = htons(CE_UPDATE);
--	unsigned last_percent = 200, cnt = 0, total = 0;
-+	unsigned cnt = 0, total = 0;
-+	struct progress progress;
+-	struct user_merge_fn *fn;
+-	int blen, nlen;
++	struct ll_merge_driver *fn;
++	const char *ep, *name;
++	int namelen;
  
- 	if (o->update && o->verbose_update) {
- 		for (total = cnt = 0; cnt < nr; cnt++) {
-@@ -332,8 +310,7 @@ static void check_updates(struct cache_entry **src, int nr,
- 
- 		if (total) {
- 			fprintf(stderr, "Checking files out...\n");
--			setup_progress_signal();
--			progress_update = 1;
-+			start_progress(&progress, "", total);
- 		}
- 		cnt = 0;
+ 	if (!strcmp(var, "merge.default")) {
+-		default_ll_merge = strdup(value);
++		if (value)
++			default_ll_merge = strdup(value);
+ 		return 0;
  	}
-@@ -341,20 +318,9 @@ static void check_updates(struct cache_entry **src, int nr,
- 	while (nr--) {
- 		struct cache_entry *ce = *src++;
  
--		if (total) {
--			if (!ce->ce_mode || ce->ce_flags & mask) {
--				unsigned percent;
--				cnt++;
--				percent = (cnt * 100) / total;
--				if (percent != last_percent ||
--				    progress_update) {
--					fprintf(stderr, "%4u%% (%u/%u) done\r",
--						percent, cnt, total);
--					last_percent = percent;
--					progress_update = 0;
--				}
--			}
--		}
-+		if (total)
-+			if (!ce->ce_mode || ce->ce_flags & mask)
-+				display_progress(&progress, ++cnt);
- 		if (!ce->ce_mode) {
- 			if (o->update)
- 				unlink_entry(ce->name);
-@@ -366,10 +332,8 @@ static void check_updates(struct cache_entry **src, int nr,
- 				checkout_entry(ce, &state, NULL);
- 		}
- 	}
--	if (total) {
--		signal(SIGALRM, SIG_IGN);
--		fputc('\n', stderr);
--	}
-+	if (total)
-+		stop_progress(&progress);;
+-	if (strcmp(var, "merge.driver"))
++	/*
++	 * We are not interested in anything but "merge.<name>.variable";
++	 * especially, we do not want to look at variables such as
++	 * "merge.summary", "merge.tool", and "merge.verbosity".
++	 */
++	if (prefixcmp(var, "merge.") || (ep = strchr(var + 6, '.')) == NULL)
+ 		return 0;
+-	if (!value)
+-		return error("%s: lacks value", var);
++
+ 	/*
+-	 * merge.driver is a multi-valued configuration, whose value is
+-	 * of form:
+-	 *
+-	 *	name command-line
+-	 *
+-	 * The command-line will be interpolated with the following
+-	 * tokens and is given to the shell:
+-	 *
+-	 *    %O - temporary file name for the merge base.
+-	 *    %A - temporary file name for our version.
+-	 *    %B - temporary file name for the other branches' version.
+-	 *
+-	 * The external merge driver should write the results in the file
+-	 * named by %A, and signal that it has done with exit status 0.
++	 * Find existing one as we might be processing merge.<name>.var2
++	 * after seeing merge.<name>.var1.
+ 	 */
+-	for (nlen = -1, blen = 0; value[blen]; blen++)
+-		if (nlen < 0 && isspace(value[blen]))
+-			nlen = blen;
+-	if (nlen < 0)
+-		return error("%s '%s': lacks command line", var, value);
+-	fn = xcalloc(1, sizeof(struct user_merge_fn) + blen + 1);
+-	memcpy(fn->b_, value, blen + 1);
+-	fn->name = fn->b_;
+-	fn->b_[nlen] = 0;
+-	fn->cmdline = fn->b_ + nlen + 1;
+-	fn->next = *ll_user_merge_fns_tail;
+-	*ll_user_merge_fns_tail = fn;
++	name = var + 6;
++	namelen = ep - name;
++	for (fn = ll_user_merge; fn; fn = fn->next)
++		if (!strncmp(fn->name, name, namelen) && !fn->name[namelen])
++			break;
++	if (!fn) {
++		char *namebuf;
++		fn = xcalloc(1, sizeof(struct ll_merge_driver));
++		namebuf = xmalloc(namelen + 1);
++		memcpy(namebuf, name, namelen);
++		namebuf[namelen] = 0;
++		fn->name = namebuf;
++		fn->fn = ll_ext_merge;
++		fn->next = *ll_user_merge_tail;
++		*ll_user_merge_tail = fn;
++	}
++
++	ep++;
++
++	if (!strcmp("name", ep)) {
++		if (!value)
++			return error("%s: lacks value", var);
++		fn->description = strdup(value);
++		return 0;
++	}
++
++	if (!strcmp("driver", ep)) {
++		if (!value)
++			return error("%s: lacks value", var);
++		/*
++		 * merge.<name>.driver specifies the command line:
++		 *
++		 *	command-line
++		 *
++		 * The command-line will be interpolated with the following
++		 * tokens and is given to the shell:
++		 *
++		 *    %O - temporary file name for the merge base.
++		 *    %A - temporary file name for our version.
++		 *    %B - temporary file name for the other branches' version.
++		 *
++		 * The external merge driver should write the results in the
++		 * file named by %A, and signal that it has done with zero exit
++		 * status.
++		 */
++		fn->cmdline = strdup(value);
++		return 0;
++	}
++
+ 	return 0;
  }
  
- int unpack_trees(struct object_list *trees, struct unpack_trees_options *o)
+ static void initialize_ll_merge(void)
+ {
+-	if (ll_user_merge_fns_tail)
++	if (ll_user_merge_tail)
+ 		return;
+-	ll_user_merge_fns_tail = &ll_user_merge_fns;
++	ll_user_merge_tail = &ll_user_merge;
+ 	git_config(read_merge_config);
+ }
+ 
+-static ll_merge_fn find_ll_merge_fn(void *merge_attr, const char **cmdline)
++static const struct ll_merge_driver *find_ll_merge_driver(void *merge_attr)
+ {
+-	struct user_merge_fn *fn;
++	struct ll_merge_driver *fn;
+ 	const char *name;
+ 	int i;
+ 
+ 	initialize_ll_merge();
+ 
+ 	if (ATTR_TRUE(merge_attr))
+-		return ll_xdl_merge;
++		return &ll_merge_drv[LL_TEXT_MERGE];
+ 	else if (ATTR_FALSE(merge_attr))
+-		return ll_binary_merge;
++		return &ll_merge_drv[LL_BINARY_MERGE];
+ 	else if (ATTR_UNSET(merge_attr)) {
+ 		if (!default_ll_merge)
+-			return ll_xdl_merge;
++			return &ll_merge_drv[LL_TEXT_MERGE];
+ 		else
+ 			name = default_ll_merge;
+ 	}
+ 	else
+ 		name = merge_attr;
+ 
+-	for (fn = ll_user_merge_fns; fn; fn = fn->next) {
+-		if (!strcmp(fn->name, name)) {
+-			*cmdline = fn->cmdline;
+-			return ll_ext_merge;
+-		}
+-	}
++	for (fn = ll_user_merge; fn; fn = fn->next)
++		if (!strcmp(fn->name, name))
++			return fn;
+ 
+-	for (i = 0; ll_merge_fns[i].name; i++)
+-		if (!strcmp(ll_merge_fns[i].name, name))
+-			return ll_merge_fns[i].fn;
++	for (i = 0; i < ARRAY_SIZE(ll_merge_drv); i++)
++		if (!strcmp(ll_merge_drv[i].name, name))
++			return &ll_merge_drv[i];
+ 
+ 	/* default to the 3-way */
+-	return ll_xdl_merge;
++	return &ll_merge_drv[LL_TEXT_MERGE];
+ }
+ 
+ static void *git_path_check_merge(const char *path)
+@@ -953,8 +1001,7 @@ static int ll_merge(mmbuffer_t *result_buf,
+ 	char *name1, *name2;
+ 	int merge_status;
+ 	void *merge_attr;
+-	ll_merge_fn fn;
+-	const char *driver = NULL;
++	const struct ll_merge_driver *driver;
+ 
+ 	name1 = xstrdup(mkpath("%s:%s", branch1, a->path));
+ 	name2 = xstrdup(mkpath("%s:%s", branch2, b->path));
+@@ -964,10 +1011,11 @@ static int ll_merge(mmbuffer_t *result_buf,
+ 	fill_mm(b->sha1, &src2);
+ 
+ 	merge_attr = git_path_check_merge(a->path);
+-	fn = find_ll_merge_fn(merge_attr, &driver);
++	driver = find_ll_merge_driver(merge_attr);
+ 
+-	merge_status = fn(driver, &orig,
+-			  &src1, name1, &src2, name2, result_buf);
++	merge_status = driver->fn(driver, a->path,
++				  &orig, &src1, name1, &src2, name2,
++				  result_buf);
+ 
+ 	free(name1);
+ 	free(name2);
+diff --git a/t/t6026-merge-attr.sh b/t/t6026-merge-attr.sh
+index 1732b60..56fc341 100755
+--- a/t/t6026-merge-attr.sh
++++ b/t/t6026-merge-attr.sh
+@@ -98,7 +98,9 @@ test_expect_success 'custom merge backend' '
+ 
+ 	git reset --hard anchor &&
+ 	git config --replace-all \
+-	merge.driver "custom ./custom-merge %O %A %B 0" &&
++	merge.custom.driver "./custom-merge %O %A %B 0" &&
++	git config --replace-all \
++	merge.custom.name "custom merge driver for testing" &&
+ 
+ 	git merge master &&
+ 
+@@ -117,7 +119,9 @@ test_expect_success 'custom merge backend' '
+ 
+ 	git reset --hard anchor &&
+ 	git config --replace-all \
+-	merge.driver "custom ./custom-merge %O %A %B 1" &&
++	merge.custom.driver "./custom-merge %O %A %B 1" &&
++	git config --replace-all \
++	merge.custom.name "custom merge driver for testing" &&
+ 
+ 	if git merge master
+ 	then
 -- 
-1.5.1.1.873.g1ddf-dirty
+1.5.1.1.901.g25ba
