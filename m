@@ -1,138 +1,77 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: [PATCH] refs.c: drop duplicate entries in sort_ref_list
-Date: Wed, 18 Apr 2007 22:27:28 +0100
-Message-ID: <20070418212749.4842.62822.julian@quantumfyre.co.uk>
-References: <20070417014307.12486.28930.julian@quantumfyre.co.uk>
-	<Pine.LNX.4.64.0704170901170.5473@woody.linux-foundation.org>
-	<7vslaymzk3.fsf@assigned-by-dhcp.cox.net>
-	<Pine.LNX.4.64.0704172304380.16435@beast.quantumfyre.co.uk>
-	<7vodllfpaj.fsf@assigned-by-dhcp.cox.net>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 23:31:56 2007
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: GIT vs Other: Need argument
+Date: Wed, 18 Apr 2007 17:45:37 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0704181657190.27922@iabervon.org>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> 
+ <20070417104520.GB4946@moonlight.home>  <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
+  <200704171818.28256.andyparkins@gmail.com>  <20070417173007.GV2229@spearce.org>
+ <462521C7.2050103@softax.com.pl>  <Pine.LNX.4.64.0704181130150.12094@racer.site>
+  <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+ <8b65902a0704181308i41c878ebi88c03a929769ba39@mail.gmail.com>
+ <alpine.LFD.0.98.0704181312060.2828@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 23:45:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeHkq-0007iy-Cf
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 23:31:56 +0200
+	id 1HeHyD-0003Oj-GT
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 23:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992792AbXDRVbv (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 17:31:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992793AbXDRVbv
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 17:31:51 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:45670 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S2992792AbXDRVbu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2007 17:31:50 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 511C8C6475
-	for <git@vger.kernel.org>; Wed, 18 Apr 2007 22:31:48 +0100 (BST)
-Received: (qmail 15879 invoked by uid 103); 18 Apr 2007 22:31:04 +0100
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.90.2/3112. spamassassin: 3.1.8. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.025761 secs); 18 Apr 2007 21:31:04 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 18 Apr 2007 22:31:04 +0100
-In-Reply-To: <7vodllfpaj.fsf@assigned-by-dhcp.cox.net>
-X-git-sha1: 860bc50c267005da3f13114c87a21ce97cc3ca79 
-X-Mailer: git-mail-commits v0.1
+	id S1753898AbXDRVpj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 17:45:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753983AbXDRVpj
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 17:45:39 -0400
+Received: from iabervon.org ([66.92.72.58]:4689 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753979AbXDRVpi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 17:45:38 -0400
+Received: (qmail 30974 invoked by uid 1000); 18 Apr 2007 21:45:37 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 18 Apr 2007 21:45:37 -0000
+In-Reply-To: <alpine.LFD.0.98.0704181312060.2828@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44954>
 
-It shouldn't happen that we read duplicate entries into the same list,
-but just in case make sort_ref_list drop them.  If the SHA1s don't
-match then die instead, as we have no way of knowing which one is the
-correct one.
+On Wed, 18 Apr 2007, Linus Torvalds wrote:
 
-Signed-off-by: Julian Phillips <julian@quantumfyre.co.uk>
----
+> On Wed, 18 Apr 2007, Guilhem Bonnefille wrote:
+> > 
+> > Yes, but I think that, as Git has ton more capabilities, user has to
+> > understand more things than with CVS.
+> 
+> I do agree.
+> 
+> The whole "branch" thing is something you can ignore in CVS, but it's 
+> simply very hard to ignore in git, because even *if* you just follow 
+> another repository, git kind of forces you to be aware of the difference 
+> between "local branch" and "remote tracking branch".
+> 
+> I think that's fairly fundamental to being distributed, though. 
 
-On Wed, 18 Apr 2007, Junio C Hamano wrote:
+I actually disagree here. CVS users are obviously familiar with "how far 
+have I updated from the server". With CVS the "local branch" and "remote 
+tracking branch" are qualitatively different, and with git they're 
+qualitatively the same, but the user doesn't have to care. Particularly 
+with the new refs layout, it's pretty easy to ignore, as long as the 
+upstream repository isn't using branches for anything this particular user 
+cares about.
 
-> Julian Phillips <julian@quantumfyre.co.uk> writes:
->
->> On Tue, 17 Apr 2007, Junio C Hamano wrote:
->> ...
->>> I think we would not call add_ref() to the same list with
->>> duplicate names, unless (1) filesystem is grossly corrupt, (2)
->>> somebody added a new ref while we are walking (how does
->>> readdir() behave in such a case???), or (3) packed-refs file is
->>> corrupt.
->>
->> This combined with the fact that the old code didn't check that the
->> sha1 was the same suggests to me that this behaviour may actually have
->> been a subtle bug?  Perhaps the best thing to do is die if we find two
->> entries with the same name when sorting?
->
-> I am not sure what readdir() does if somebody adds a new ref
-> while we are walking the directory; I am hoping we would not get
-> the same thing in duplicates, but I dunno.
->
-> I think the most sensible thing to do is to check for
-> duplicates, discarding if the SHA-1 match and otherwise dying.
->
+You can just tell people, "Before you merge upstream changes, you have to 
+commit, so that if the merge gets screwed up you don't lose your work." 
+And they say, "Oh. That's useful." And they don't need to know the 
+technical reasons this is both possible and necessary.
 
-Something like this (on top of my previous patch)?
+(Of course, branches are really helpful once you have a need for them, but 
+there's no reason to learn about them before that point.)
 
- refs.c |   34 ++++++++++++++++++++++++++--------
- 1 files changed, 26 insertions(+), 8 deletions(-)
-
-diff --git a/refs.c b/refs.c
-index 23982fc..5736a0e 100644
---- a/refs.c
-+++ b/refs.c
-@@ -65,7 +65,7 @@ static struct ref_list *add_ref(const char *name, const unsigned char *sha1,
- /* merge sort the ref list */
- static struct ref_list *sort_ref_list(struct ref_list *list)
- {
--	int psize, qsize, last_merge_count;
-+	int psize, qsize, last_merge_count, cmp;
- 	struct ref_list *p, *q, *l, *e;
- 	struct ref_list *new_list = list;
- 	int k = 1;
-@@ -103,14 +103,32 @@ static struct ref_list *sort_ref_list(struct ref_list *list)
- 					e = q;
- 					q = q->next;
- 					qsize--;
--				} else if (strcmp(q->name, p->name) < 0) {
--					e = q;
--					q = q->next;
--					qsize--;
- 				} else {
--					e = p;
--					p = p->next;
--					psize--;
-+					cmp = strcmp(q->name, p->name);
-+					if (cmp < 0) {
-+						e = q;
-+						q = q->next;
-+						qsize--;
-+					} else if (cmp > 0) {
-+						e = p;
-+						p = p->next;
-+						psize--;
-+					} else {
-+						if (hashcmp(q->sha1, p->sha1))
-+							die("Duplicated ref, "
-+							    "and SHA1s don't "
-+							    "match: %s",
-+							    q->name);
-+						warning("Duplicated ref: %s",
-+							q->name);
-+						e = q;
-+						q = q->next;
-+						qsize--;
-+						free(e);
-+						e = p;
-+						p = p->next;
-+						psize--;
-+					}
- 				}
- 
- 				e->next = NULL;
--- 
-1.5.1.1
+	-Daniel
+*This .sig left intentionally blank*
