@@ -1,94 +1,82 @@
-From: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
 Subject: Re: GIT vs Other: Need argument
-Date: Wed, 18 Apr 2007 14:40:18 +0200
-Message-ID: <8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>
-References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
-	 <20070417104520.GB4946@moonlight.home>
-	 <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
-	 <200704171818.28256.andyparkins@gmail.com>
+Date: Wed, 18 Apr 2007 14:26:17 +0100
+Message-ID: <200704181426.29969.andyparkins@gmail.com>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> <200704171818.28256.andyparkins@gmail.com> <8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Tomash Brechko" <tomash.brechko@gmail.com>,
+Cc: "Guilhem Bonnefille" <guilhem.bonnefille@gmail.com>,
+	"Tomash Brechko" <tomash.brechko@gmail.com>,
 	"Pietro Mascagni" <pietromas@gmail.com>
-To: "Andy Parkins" <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Apr 18 14:40:33 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Apr 18 15:26:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He9ST-00034D-BH
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 14:40:25 +0200
+	id 1HeABG-0008JF-0m
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 15:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422967AbXDRMkV (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 08:40:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422969AbXDRMkU
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 08:40:20 -0400
-Received: from an-out-0708.google.com ([209.85.132.243]:11568 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1422967AbXDRMkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 08:40:18 -0400
-Received: by an-out-0708.google.com with SMTP id b33so164782ana
-        for <git@vger.kernel.org>; Wed, 18 Apr 2007 05:40:18 -0700 (PDT)
+	id S2992448AbXDRN0i (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 09:26:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992456AbXDRN0h
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 09:26:37 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:7135 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992448AbXDRN0h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 09:26:37 -0400
+Received: by ug-out-1314.google.com with SMTP id 44so406930uga
+        for <git@vger.kernel.org>; Wed, 18 Apr 2007 06:26:35 -0700 (PDT)
 DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Q1E03j9DVRGcjVgQDJL5iQ+iU27W80DR4qbCMiWHs0hgaNRl2UT6Ch6HCGFlnnPKGPGkbhW2Lae40yW1AkBR8GVYr5jTdrQSQyJNvGaMA+2FKwzgmtFaWmGb3nR4Ez5yiu6mk1YiD7BBvAWWAqSMTt9xD2fm34l+qKcKyEPhKb8=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=dovtJNij5Px3sM2hQQ5MuY52veNZzHT9Anoh2IBK5ZBGsIfxkQyL7KDWvcWqsNF403N639Br/tN1fijxwRo/whC6jq432JwrHMkUe7v6sB8gCKOJOvqSR24E4pUv6zA2daPGbTajjiifERhcJ8Af3USep15dFz2GbAMZ5NgdYIo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NOqYOT+eKQuhXFuJuldm/AqB1PHPKFa8pA1qDdXqAKXIp03JOdRQhmn0JS2LNitSQXDA2xHX5ewwuB9096kPNyHrpR80kYn9FwjhMEGsTWTC+tJPry7w0Aa9pHox1I9StRW5+Wwp/6vKL8Hj//4gqWBOYQAJD34wZpnPe2OmYqY=
-Received: by 10.100.33.14 with SMTP id g14mr308327ang.1176900018193;
-        Wed, 18 Apr 2007 05:40:18 -0700 (PDT)
-Received: by 10.100.44.7 with HTTP; Wed, 18 Apr 2007 05:40:18 -0700 (PDT)
-In-Reply-To: <200704171818.28256.andyparkins@gmail.com>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=JHWjBz70SKPIthB8oyEOKKNRBBiGh5T1mZvPtyogx+VzkFcrC8lh5YLg82F9UlCvyLboJzXIqIUYo8vOIM64CD/e/exurpgNF2Ui76G4kYN3SPVON+mxOFkpbQRk+SBSOV4p5JHlbEeyqFzDXEvYJxOPLtD0EE6rWN53sWB+qZA=
+Received: by 10.82.175.2 with SMTP id x2mr766792bue.1176902795377;
+        Wed, 18 Apr 2007 06:26:35 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTP id y37sm624600iky.2007.04.18.06.26.33;
+        Wed, 18 Apr 2007 06:26:34 -0700 (PDT)
+User-Agent: KMail/1.9.5
+In-Reply-To: <8b65902a0704180540l721b9b1dj6f6e068f0d7e5119@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44894>
 
-On 4/17/07, Andy Parkins <andyparkins@gmail.com> wrote:
-> On Tuesday 2007, April 17, Guilhem Bonnefille wrote:
-> > I'm new to Git, but completly crazy of it.
-> >
-> > In my point of view, in corporate team, lot of people does not
-> > want/need the power offered by Git.
-> > So, my conclusion is the better model in a corporate is a centralyzed
-> > repo with some users using Git as "frontend". Other people will
-> > simply use the native tools for accessing the repo.
->
-> Git has you covered there - it works better than other version control
-> systems for that model too.  I do it all the time; the only difference
-> is that with git it's not the tool doesn't force the choice on you.
->
-> If you want a central repo, just make one - designate one repository as
-> central, put it in the .git/config file for each of the others and away
-> you go.  Pretend it's centralised if you want; you and your colleagues
-> need never know otherwise.
+On Wednesday 2007 April 18 13:40, Guilhem Bonnefille wrote:
 
-In fact, the most important problem (in my case) is that there are
-people that really don't want/need Git features. These people consider
-that CVS/SVN are constraints and not usefull tools. They are not
-interested in what a VCS can offer. I have success with CVS/SVN
-because we now use Eclipse which offers an easy to use GUI for CVS/SVN
-actions.
-An other point is that CVS/SVN actions for our developers are
-"trivial": update or commit, nothing more (even tags are made by
-"power" users, so working with branches...). With Git, you have to
-ALWAYS remember that you have a repo locally which is different than
-the central repo. I think this point is quite confusing for people not
-interested in the features offered by having a "private" repo.
+> An other point is that CVS/SVN actions for our developers are
+> "trivial": update or commit, nothing more (even tags are made by
 
-This is why I think my corporate friends will brake if I try to
-propose Git for everybody.
+> In my mind, git-svn or even git-svnserve, are THE tools to introduce
+> Git in teams not convinced by the power of DVCS. Or perhaps someone
+> will create a porcelain that offers the same simple interface of
+> CVS/SVN and will integrate it in all the fantastic IDE ;-)
 
-In my mind, git-svn or even git-svnserve, are THE tools to introduce
-Git in teams not convinced by the power of DVCS. Or perhaps someone
-will create a porcelain that offers the same simple interface of
-CVS/SVN and will integrate it in all the fantastic IDE ;-)
+It's already there.  The git porcelain can do almost anything.  If you were so 
+inclined you could write a fake svn command that translated all those calls 
+to git.
+
+svn add = git add
+svn update = git pull
+svn commit = git commit -a && git push
+
+I'm fairly convinced that the reason everyone thinks git is hard is because 
+they're introduced to too much of it too quickly.
+
+git /is/ easy.  It's more powerful, so there are more knobs, but if you don't 
+want to use those knobs - don't.
+
+
+
+Andy
 -- 
-Guilhem BONNEFILLE
--=- #UIN: 15146515 JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
