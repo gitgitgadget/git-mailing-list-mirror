@@ -1,78 +1,82 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Cloning of git-svn repos?
-Date: Wed, 18 Apr 2007 02:29:16 -0700
-Message-ID: <20070418092916.GI31488@curie-int.orbis-terrarum.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: GIT vs Other: Need argument
+Date: Wed, 18 Apr 2007 12:05:27 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704181130150.12094@racer.site>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com>
+ <20070417104520.GB4946@moonlight.home> <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
+ <200704171818.28256.andyparkins@gmail.com> <20070417173007.GV2229@spearce.org>
+ <462521C7.2050103@softax.com.pl>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="imjhCm/Pyz7Rq5F2"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 11:29:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Marcin Kasperski <Marcin.Kasperski@softax.com.pl>
+X-From: git-owner@vger.kernel.org Wed Apr 18 12:06:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He6TX-0001Jz-Lt
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 11:29:20 +0200
+	id 1He733-00053f-61
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 12:06:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422717AbXDRJ3L (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 05:29:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422716AbXDRJ3L
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 05:29:11 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:43892 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1422720AbXDRJ3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 05:29:09 -0400
-Received: (qmail 20133 invoked from network); 18 Apr 2007 09:29:06 -0000
-Received: from Unknown (HELO curie.orbis-terrarum.net) (24.81.201.182)
-  (smtp-auth username robbat2@isohunt.com, mechanism login)
-  by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPSA; Wed, 18 Apr 2007 09:29:06 +0000
-Received: (qmail 23946 invoked by uid 10000); 18 Apr 2007 02:29:16 -0700
-Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1422768AbXDRKFj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 06:05:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422777AbXDRKFi
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 06:05:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46612 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1422772AbXDRKFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 06:05:36 -0400
+Received: (qmail invoked by alias); 18 Apr 2007 10:05:35 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp028) with SMTP; 18 Apr 2007 12:05:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19l9YF1WotliZ6hU6WVe3yJNzuoKGdUAh68WLTFaR
+	3lYlrep57w6oWg
+X-X-Sender: gene099@racer.site
+In-Reply-To: <462521C7.2050103@softax.com.pl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44879>
 
+Hi,
 
---imjhCm/Pyz7Rq5F2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, 17 Apr 2007, Marcin Kasperski wrote:
 
-(This is completely unrelated to my previous posts about using git for
-Gentoo, it's not the only placing I'm looking at implementing Git).
+> a) Windows are unsupported
 
-Is there a sane and git-recommended way to clone repos created with
-git-svn?
+Wrong.
 
-If I do: 'git-svn clone ....', and then git-clone of that directory, the
-second clone cannot use git-svn to follow the original SVN or feed stuff
-back to the original SVN.
+> b) Learning curve is too steep. Unclear relationship git-vs-cogito makes it
+> even worse.
 
-If I create them separately (or by plain copying the first one to create
-the second), then pulling between them works fine.
+Not so wrong. But then, it is clear that git is git is git. If you find it 
+too complicated, soon enough somebody says "use cogito instead" and you'll 
+find out about that.
 
-The copying just feels messy compared to the initial git-clone
-functionality.
+> c) Lack of reasonable subproject support (plus detailed permission 
+> model).
 
---=20
-Robin Hugh Johnson
-Gentoo Linux Developer & Council Member
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+It is just being introduced into Git.
 
---imjhCm/Pyz7Rq5F2
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+And we're back to Alex' point: if you want to make a feature a first class 
+citizen, you have to invest a little energy in it. But experience shows 
+that it _is_ possible to get something completely new into Git quite fast.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.2 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
+BTW the most striking argument pro Git I can think of is showing people 
+how fast you can find out things. Like who wrote it, or more importantly 
+_where_ the code is for a certain feature. Searching through `git log -p` 
+is really fast, and it becomes even faster when you use "-Sblub".
 
-iD8DBQFGJeTsPpIsIjIzwiwRAk1TAKC5+3heQK4OEqlmyEhCFbKZ0KmkIgCffDVR
-vrLCXK2seoaCxBB9HNf139k=
-=Lasc
------END PGP SIGNATURE-----
+And I really blew my audience away when I imported some CVS tracked 
+project into Git, and showed all the features on that repository, 
+_without_ much work.
 
---imjhCm/Pyz7Rq5F2--
+I mean, you can do with CVS, SVN, HG, etc. almost the same as with Git. 
+But with Git, I find it faster and easier. BTW much of that does come from 
+the scriptable nature of Git. It _is_ much easier to write a short and 
+simple script than to work on a plugin.
+
+Ciao,
+Dscho
