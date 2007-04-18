@@ -1,152 +1,81 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [BUG] git-new-workdir doesn't understand packed refs
-Date: Wed, 18 Apr 2007 23:08:20 +0200
-Message-ID: <20070418210819.GG5913@xp.machine.xx>
-References: <Pine.LNX.4.64.0704172253140.14155@beast.quantumfyre.co.uk> <20070418055215.GA32634@xp.machine.xx> <7v7isajfl1.fsf@assigned-by-dhcp.cox.net> <20070418081122.GB32634@xp.machine.xx> <Pine.LNX.4.64.0704181251040.19261@reaper.quantumfyre.co.uk> <7vfy6xird9.fsf@assigned-by-dhcp.cox.net> <20070418174350.GB5913@xp.machine.xx> <7vlkgph7i0.fsf@assigned-by-dhcp.cox.net> <20070418183156.GF5913@xp.machine.xx> <7v647th6cv.fsf@assigned-by-dhcp.cox.net>
+From: Steve =?ISO-8859-1?Q?Fr=E9cinaux?= <nudrema@gmail.com>
+Subject: Re: Things that surprise naive users
+Date: Wed, 18 Apr 2007 23:16:10 +0200
+Message-ID: <1176930970.7733.9.camel@mejai>
+References: <Pine.LNX.4.64.0704181503080.27922@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 23:08:28 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 23:16:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeHO4-0000E9-Dc
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 23:08:24 +0200
+	id 1HeHVh-0002iH-Jf
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 23:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964976AbXDRVIU (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 17:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S964959AbXDRVIU
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 17:08:20 -0400
-Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34]:54311 "HELO
-	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with SMTP id S964935AbXDRVIT (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2007 17:08:19 -0400
-Received: (qmail 11605 invoked by uid 0); 18 Apr 2007 21:08:17 -0000
-Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 18 Apr 2007 21:08:17 -0000
-Mail-Followup-To: Junio C Hamano <junkio@cox.net>,
-	Julian Phillips <julian@quantumfyre.co.uk>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v647th6cv.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
+	id S2992739AbXDRVQO (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 17:16:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992744AbXDRVQO
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 17:16:14 -0400
+Received: from serv108.segi.ulg.ac.be ([139.165.32.111]:36002 "EHLO
+	serv108.segi.ulg.ac.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S2992739AbXDRVQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 17:16:13 -0400
+Received: (qmail 7571 invoked by uid 510); 18 Apr 2007 23:16:11 +0200
+Received: from 82.212.191.161 by serv108.segi.ulg.ac.be (envelope-from <nudrema@gmail.com>, uid 501) with qmail-scanner-1.25 
+ (clamdscan: 0.90.1/3110.  
+ Clear:RC:1(82.212.191.161):. 
+ Processed in 0.147675 secs); 18 Apr 2007 21:16:11 -0000
+Received: from unknown (HELO [192.168.1.103]) (s020908@[82.212.191.161])
+          (envelope-sender <nudrema@gmail.com>)
+          by serv108.segi.ulg.ac.be (qmail-ldap-1.03) with SMTP
+          for <barkalow@iabervon.org>; 18 Apr 2007 23:16:11 +0200
+In-Reply-To: <Pine.LNX.4.64.0704181503080.27922@iabervon.org>
+X-Mailer: Evolution 2.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44950>
 
-On Wed, Apr 18, 2007 at 11:42:24AM -0700, Junio C Hamano wrote:
-> Peter Baumann <waste.manager@gmx.de> writes:
+On Wed, 2007-04-18 at 16:55 -0400, Daniel Barkalow wrote:
+
+> 1. If your organization has a bunch of different projects, and there's 
+>    some central location holding the upstream that people regularly pull 
+>    from, there's no way to abbreviate this parent directory. (Equivalent 
+>    of CVSROOT environment variable)
 > 
-> <ot>
-> 
-> Getting more and more annoyed by your stupid Mail-Followup-To...
-> I do *not* want to bother Julian with a message that points out
-> a flaw (in my opinion) in YOUR reasoning but you are forcing me
-> to send my message that way, which I have to waste time
-> correcting every time.  Grumble.
-> 
-> </ot>
+>    I.e., we've got file-server:/var/git/<project>.git at my work, with 
+>    dozens of projects, and you have to give the whole thing to git clone 
+>    each time. 
 
-Hm. Sorry. I don't understand. I'm just pressing 'g' for group reply in
-mutt which should do the right thing; even your mail has a CC to Julian
-set so I _really_ don't understand the problem. I addressed him in the
-begining because he was the author of git-new-workdir. But please
-forgive me if I'm breaking some netiquette rules but I just started to
-hang out activly on mailinglists ...
+export GITROOT=file-server:/var/git
+git-clone $GITROOT/project.git
 
-> 
-> > On Wed, Apr 18, 2007 at 11:17:43AM -0700, Junio C Hamano wrote:
-> >> Peter Baumann <waste.manager@gmx.de> writes:
-> >> ...
-> >> > I thought about the case where packed-refs is a symlink to another symlink
-> >> > and then decided that it's not worth to implement this because a workdir
-> >> > should be linked to a _repo_ and not another workdir.
-> >> 
-> >> That's incredibly weak, as the initial motivation of this patch
-> >> is that you did not want to say "you should run gc only in the
-> >> _repo_ not in workdir".
-> >
-> > Yes. That's my motivation and it works right now
-> >
-> > 	git init a
-> > 	<hack, hack, hack,>
-> > 	git commit -a
-> >
-> > 	git-new-workdir a b 	# allowed
-> > 	git-new-workdir a c	# allowed
-> >
-> > 	git-new-workdir b d	# NOT ALLOWED
-> 
-> But I do not think you are disallowing it; instead you are
-> making the same problem appear without telling the user.
-> 
-> Also, how is the above different from this?
-> 
-> 	git init a
->         cd a ; git gc ; cd ..	# allowed
-> 	git new-workdir a b
-> 	cd b ; git gc ; cd ..	# NOT ALLOWED
-> 
+git doesn't enforce that but you can still do it with some shell karma.
 
-Sorry, you lost me here. Your above sequence _is_ allowed and that was
-just the point of the patch. I lightly tested it that it does the right
-thing, so perhaps I'm missing something?
+BTW as far as I know no other scm than CVS provides this kind of thing,
+and it's more often seen as a defect than an advantage. For instance, a
+novice which had to checkout a CVS project from sourceforge and another
+from cvs.gnome.org and another from... wasn't helped at all. SVN has it
+much simpler (understandable) by just providing a URL for checkouts.
 
-What isn't allowed is the following:
+>    It'd be nice to have a global config option such that, if 
+>    the argument to git-clone doesn't have any /, it prepends the standard 
+>    default. (Also an environment variable for the same purpose on a shell
+>    session scope.)
 
-	mkdir a; cd a; git-init; cd ..
-	git new-workdir a b
-	cd b; git gc ; cd .. # IS ALLOWED
-	git new-workdir b c
-	cd b; git gc ; cd .. # NOT ALLOWED
+But this is also a good idea ;-)
 
-Because now you created a new workdir c which doesn't point to a repo,
-but only to another _workdir_ b. And only in this case you get a symlink
-chain like this:
+> 2. There's no easy way to tell that you've made commits that you haven't 
+>    pushed upstream. In fact, it's impossible to tell when disconnected 
+>    whether you've pushed everything. This needs some command to report it,
+>    and also for push to update the fetch sides of remote heads it updates.
 
-c/.git/packed-refs -> b/.git/packed-refs -> a/.git/packed-refs
-
-This is even dissallowed by the code in git-new-workdir (Sorry, I just
-saw it now; otherwise I wouldn't spend so much time in arguing this)):
-
-# don't link to a workdir
-if test -L "$orig_git/.git/config"
-then
-        die "\"$orig_git\" is a working directory only, please specify" \
-                "a complete repository."
-fi
-
-> You are saying "you should run workdir only in the _repo_ not in
-> workdir".
-> 
-
-This sentence doesn't make any sense to me. Did you mean "you should run
-gc only ..." ?
-
-> As I already said, certain things work differently between a
-> proper repository and a worktree that borrows .git/refs from a
-> proper repository, and you always have to know what you are
-> doing when you use such a setup.  If your goal is to minimize
-> the difference, I do not think it makes much sense to allow gc
-> and not allow new-workdir.
-> 
-
-I think you missunderstud me. Hopefully the above explanation clears this
-missunderstanding. The case I feared (symlink chain of workdirs) is not
-allowed in git-new-workdir from the very begining of this script, so
-there shouldn't be any problem with the symlink handling in my patch.
-
-> On the other hand, if we admit that things work differently, I
-> think erroring out gc or pack-refs when we see .git/packed-refs
-> is a symbolic link is much simpler, less error prone and easier
-> to explain.
-> 
-
-But with my patch it just works! I really tested it again. The link
-in b/.git/packed-refs -> a/.git/packed-refs (using the example from above)
-isn't broken up and in the new generated packed-refs are stored inside
-the repo a (as they should).
-
--Peter
+I surprised myself doing so:
+  git-push $remote
+  git-fetch $remote
+given that the remote in question pushes master, and pulls into $remote.
+Maybe such a thing (in the idea) should be done implicitely.
