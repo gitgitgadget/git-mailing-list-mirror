@@ -1,76 +1,74 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 22:04:37 -0700
-Message-ID: <7vlkgqjmsa.fsf@assigned-by-dhcp.cox.net>
-References: <200704171041.46176.andyparkins@gmail.com> <"200704171803.58940.a
-	n dyparkins"@gmail.com> <200704172012.31280.andyparkins@gmail.com>
-	<alpine.LFD.0.98.0704171530220.4504@xanadu.home>
-	<Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz>
-	<alpine.LFD.0.98.0704171624190.4504@xanadu.home>
-	<Pine.LNX.4.63.0704171302200.1696@qynat.qvtvafvgr.pbz>
-	<alpine.LFD.0.98.0704171708360.4504@xanadu.home>
-	<7vy7kqlj5r.fsf@assigned-by-dhcp.cox.net>
-	<alpine.LFD.0.98.0704172154160.4504@xanadu.home>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [BUG] git-new-workdir doesn't understand packed refs
+Date: Wed, 18 Apr 2007 07:52:15 +0200
+Message-ID: <20070418055215.GA32634@xp.machine.xx>
+References: <20070417161720.GA3930@xp.machine.xx> <Pine.LNX.4.64.0704172253140.14155@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Lang <david.lang@digitalinsight.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 07:04:43 2007
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Wed Apr 18 07:52:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He2LS-0001os-DV
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 07:04:42 +0200
+	id 1He35n-00050K-5m
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 07:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932212AbXDRFEj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 01:04:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932280AbXDRFEj
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 01:04:39 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:37041 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932212AbXDRFEi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 01:04:38 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070418050438.SRIS1257.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Wed, 18 Apr 2007 01:04:38 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id oV4d1W00C1kojtg0000000; Wed, 18 Apr 2007 01:04:37 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753810AbXDRFwR (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 01:52:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753884AbXDRFwR
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 01:52:17 -0400
+Received: from magnum.hofmann.stw.uni-erlangen.de ([131.188.23.34]:54153 "HELO
+	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with SMTP id S1753810AbXDRFwQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2007 01:52:16 -0400
+Received: (qmail 5744 invoked by uid 0); 18 Apr 2007 05:52:13 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 18 Apr 2007 05:52:13 -0000
+Mail-Followup-To: Julian Phillips <julian@quantumfyre.co.uk>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0704172253140.14155@beast.quantumfyre.co.uk>
+User-Agent: Mutt/1.5.14+cvs20070403 (2007-04-02)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44863>
 
-Nicolas Pitre <nico@cam.org> writes:
+On Tue, Apr 17, 2007 at 10:55:17PM +0100, Julian Phillips wrote:
+>  On Tue, 17 Apr 2007, Peter Baumann wrote:
+> 
+> > running git-gc or git-gc --prune isn't save because e.g. all the tags
+> > are packed and .git/packed-refs isn't shared on the several workdirs.
+> 
+>  Do you mean that the link wasn't created?  Or that the link was removed and
+>  replaced with a file when you ran gc from a workdir?
+> 
 
-> On Tue, 17 Apr 2007, Junio C Hamano wrote:
->
->> You have to be careful, though.  Depending on what kind of
->> transformation you implement with the external tools, you would
->> end up having to slow down everything we would do.
->
-> So what?  
->
-> We provide a rope with proper caveat emptor.  Up to others to hang 
-> themselves with it if they so desire.  It is not our problem anymore.
+The problem is, when I created the new workdir, I don't have a file
+.git/packed-refs, so a new workdir was created with a dangling symlink,
+e.g.  workdir/.git/packed-refs -> repo/.git/packed-refs (but the last one
+doesn't exist). As it seems, git gc removes the dangling symlink and
+replaces it with a file.
 
-I sort-of find it hard to believe hearing this from somebody who
-muttered something about importance of perception a few days ago.
+Steps to reproduce (written in this mail; after /usr/bin/script gave me an
+output whith color coded text *GRR* in ASCII squences):
 
->> I suspect that you would have to play safe and say "when
->> external tools are involved, we need to disable the existing
->> content SHA-1 based optimization for all paths that ask for
->> them" to keep your sanity.
->
-> Maybe.  If that is what's really needed then so be it.  People who 
-> really want to do strange things will have the flexibility to do so, but 
-> they'll have to pay the price in loss of performance.
+	mkdir a && cd a && git init
+	echo 1 > file.txt
+	git add file.txt
+	git commit -m "file added"
+	git tag v0
+	cd ..
 
-Not just that.  We end up having to pay the price of maintaining
-hooks to let them do crazy things.
+	git-new-workdir a b
+	cd b && git-gc
+
+
+Oh. Wait. Just forget that theorie about dangling symlink. git-gc replaces
+the symlink in a new workdir with a file. Just confirmed that.
+
+So it isn't save to run git-gc in a workdir.
+
+-Peter
