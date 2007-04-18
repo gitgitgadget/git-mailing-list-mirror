@@ -1,104 +1,77 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-format-patch for binary files / merges [Re: Expose subprojects
- as special files to "git diff" machinery]
-Date: Wed, 18 Apr 2007 08:47:39 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0704180831330.2828@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0704151100550.5473@woody.linux-foundation.org>
- <200704152116.26773.andyparkins@gmail.com> <Pine.LNX.4.64.0704151402130.5473@woody.linux-foundation.org>
- <4625DAEE.3090702@vilain.net>
+From: Junio C Hamano <junkio@cox.net>
+Subject: Re: [PATCH 0/2] Custom low-level merge driver support.
+Date: Wed, 18 Apr 2007 08:56:25 -0700
+Message-ID: <7vps61isly.fsf@assigned-by-dhcp.cox.net>
+References: <11768880622402-git-send-email-junkio@cox.net>
+	<Pine.LNX.4.64.0704181247410.12094@racer.site>
+	<20070418153445.GC12888@admingilde.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 17:47:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 17:56:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeCNr-0003iN-4q
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 17:47:51 +0200
+	id 1HeCWT-0006kU-SS
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 17:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754033AbXDRPrr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 11:47:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754037AbXDRPrr
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 11:47:47 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:36449 "EHLO smtp.osdl.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754033AbXDRPrq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 11:47:46 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3IFleYC018517
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 18 Apr 2007 08:47:40 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3IFldOH028263;
-	Wed, 18 Apr 2007 08:47:40 -0700
-In-Reply-To: <4625DAEE.3090702@vilain.net>
-X-Spam-Status: No, hits=-0.464 required=5 tests=AWL
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S1754046AbXDRP41 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 11:56:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754030AbXDRP41
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 11:56:27 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:61186 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754046AbXDRP40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 11:56:26 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070418155627.DUWY1257.fed1rmmtao107.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 18 Apr 2007 11:56:27 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id ofwR1W0151kojtg0000000; Wed, 18 Apr 2007 11:56:26 -0400
+In-Reply-To: <20070418153445.GC12888@admingilde.org> (Martin Waitz's message
+	of "Wed, 18 Apr 2007 17:34:45 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44902>
 
+Martin Waitz <tali@admingilde.org> writes:
 
+> On Wed, Apr 18, 2007 at 12:48:48PM +0200, Johannes Schindelin wrote:
+>> On Wed, 18 Apr 2007, Junio C Hamano wrote:
+>> 
+>> > 	[merge]
+>> > 		driver = ancient merge %A %O %B
+>> 
+>> Why not do something like
+>> 
+>> 	[merge.driver]
+>> 		ancient = merge %A %O %B
+>
+> or
+>
+> [merge "ancient"]
+> 	driver = merge %A %O %B
 
-On Wed, 18 Apr 2007, Sam Vilain wrote:
-> 
-> Speaking of 'custom' patch file formats, anyone put any thought to a
-> format for the commits which can't be represented with patch, like
-> binary files and merges?
+Actually, I've considered the latter.
 
-We do already support binary patches, so those can be represented well in 
-a patch (but you need "git-apply" to apply them, so they are disabled by 
-default.. And while we have tests for them, I suspect not a lot of people 
-really use them widely, so who knows how complete the coverage is. For 
-example, will "git rebase" really work? Probably. Do I know for sure? No).
+Johannes's goes against the usual three-level configuration
+variable naming rules.  If you have 'user definable' part in the
+name, that should be at the second level.
 
-As to merges, they are certainly something that *can* be represented as a 
-patch (just tell what all the parents were, and desribe the end result as 
-a patch against _one_ of them: that already really encodes all the 
-information). So we *could* support it with some trivial extension (and I 
-don't think the extension is necessarily even an expansion of the diff 
-format itself - I think the parents information is a "higher-level" 
-information, and independent of the actual patch).
+Which yours does.
 
-However, representing merges as a patch doesn't really make much sense. 
-You really have two separate cases, and neither of them really makes sense 
-to have a patch with:
+The only reason I did not do it your way was because we would
+need to have three lines per driver (one [merge "foo"] section
+per driver, a "driver" line, and a blank line for readability
+after that), which at the time I wrote it felt a bit wasteful,
+and it was late.  But I think I like yours much better.
 
- - you want to "rebase" the history, including merges. Quite frankly, I 
-   don't think a patch makes sense: you'd really need to re-do the merge 
-   with the old parents "remapped" to the new rebased parents, and what 
-   you might want to have is the "rerere" information from the previous 
-   merge. Maybe that's a patch, maybe it's not, but regardless, I don't
-   think it really makes sense to describe it as a "patch" even if the 
-   implementation would do that: you don't do "remote rebases", so 
-   whatever it is would really be totally an internal thing to git-rebase.
-
-   We currently simply don't support rebasing history with merges. Rebase 
-   is a linear history operation. If somebody wants to try to rebase 
-   complex history, I'd applaud the effort, but I think the problems are 
-   elsewhere than the actual "patch" part. 
-
- - you want to send raw git commits to somebody else. Use the native git 
-   protocol. We already support that over email, it's called "bundles".
-
-   I used "bundles" once or twice under BK (it was called "bk send" and 
-   "bk receive + bk resolve" or something like that), and I hated them. It 
-   wasn't BK's fault: I just found the workflow annoying. So I haven't 
-   even tested the git bundles, but if what you were looking for was to do 
-   a "git push/pull" by email, they are what you'd be using.
-
-(The reason I don't like bundles is that if I use email, I want to see the 
-individual patches _in_ the email. And once I see them, I think it's 
-better to take advantage of the flexibility that individual patches gives 
-me, ie I can re-order them, decide to skip one, edit the messages or 
-whatever before applying them. If I were to use bundles, I might as well 
-just not blow up my mailbox, and just ask people to tell me where to 
-pull from).
-
-			Linus
+It probably is trivial to change the rule before it hits 'next'.
