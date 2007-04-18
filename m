@@ -1,101 +1,76 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
 Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Wed, 18 Apr 2007 00:15:02 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0704172346190.27922@iabervon.org>
-References: <200704171041.46176.andyparkins@gmail.com>
- <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org>
- <46250175.4020300@dawes.za.net> <Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org>
- <20070417235649.GE31488@curie-int.orbis-terrarum.net>
- <7vps62lfbw.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 17 Apr 2007 22:04:37 -0700
+Message-ID: <7vlkgqjmsa.fsf@assigned-by-dhcp.cox.net>
+References: <200704171041.46176.andyparkins@gmail.com> <"200704171803.58940.a
+	n dyparkins"@gmail.com> <200704172012.31280.andyparkins@gmail.com>
+	<alpine.LFD.0.98.0704171530220.4504@xanadu.home>
+	<Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz>
+	<alpine.LFD.0.98.0704171624190.4504@xanadu.home>
+	<Pine.LNX.4.63.0704171302200.1696@qynat.qvtvafvgr.pbz>
+	<alpine.LFD.0.98.0704171708360.4504@xanadu.home>
+	<7vy7kqlj5r.fsf@assigned-by-dhcp.cox.net>
+	<alpine.LFD.0.98.0704172154160.4504@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Rogan Dawes <lists@dawes.za.net>,
-	Andy Parkins <andyparkins@gmail.com>
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 06:15:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Lang <david.lang@digitalinsight.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 07:04:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He1Zt-0005Vu-Vt
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 06:15:34 +0200
+	id 1He2LS-0001os-DV
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 07:04:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751892AbXDREPG (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 00:15:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752667AbXDREPF
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 00:15:05 -0400
-Received: from iabervon.org ([66.92.72.58]:2880 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751892AbXDREPE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 00:15:04 -0400
-Received: (qmail 15811 invoked by uid 1000); 18 Apr 2007 04:15:02 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Apr 2007 04:15:02 -0000
-In-Reply-To: <7vps62lfbw.fsf@assigned-by-dhcp.cox.net>
+	id S932212AbXDRFEj (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 01:04:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932280AbXDRFEj
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 01:04:39 -0400
+Received: from fed1rmmtao107.cox.net ([68.230.241.39]:37041 "EHLO
+	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932212AbXDRFEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 01:04:38 -0400
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao107.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070418050438.SRIS1257.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
+          Wed, 18 Apr 2007 01:04:38 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id oV4d1W00C1kojtg0000000; Wed, 18 Apr 2007 01:04:37 -0400
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44862>
 
-On Tue, 17 Apr 2007, Junio C Hamano wrote:
+Nicolas Pitre <nico@cam.org> writes:
 
-> "Robin H. Johnson" <robbat2@gentoo.org> writes:
-> 
-> > As for a usage case:
-> > - J.PEBKAC.User gets a a tree (from a tarball or GIT, we should gain the
-> >   same output)
-> > - Copies some file outside of the tree (the user is NOT smart enough,
-> >   and resists all reasonable attempts at edumacation)
-> > - Modifies said file outside of tree.
-> > - Contacts maintainer with entire changed file.
-> > - User vanishes off the internet.
-> >
-> > The entire file he sent if it's CVS, contains a $Header$ that uniquely
-> > identifies the file (path and revision), and the maintainer can simply
-> > drop the file in, and 'cvs diff -r$OLDREV $FILE'.
-> > If it's git, the maintainer drops the file in, and does 'git diff
-> > $OLDSHA1 $FILE'.
-> 
-> I personally hope that the maintainer drops such a non-patch
-> that originates from a PEBKAC.  At least I hope the tools that I
-> personally use are not maintained by such a maintainer ;-)
+> On Tue, 17 Apr 2007, Junio C Hamano wrote:
+>
+>> You have to be careful, though.  Depending on what kind of
+>> transformation you implement with the external tools, you would
+>> end up having to slow down everything we would do.
+>
+> So what?  
+>
+> We provide a rope with proper caveat emptor.  Up to others to hang 
+> themselves with it if they so desire.  It is not our problem anymore.
 
-As a concrete example, say I'm not a Gentoo developer at all, but I'm 
-trying to get some package to install in a slightly odd situation. (E.g., 
-I want to build a version of gcc for ARM microcontrollers, which requires 
-flags to be set that aren't normally available for the ARM architecture.) 
-In order to do this, I need to make some changes to the gcc ebuild to pass 
-those USE flags through to configure. Since I'm not a Gentoo developer, I 
-don't have the version-controlled tree, just: (1) the tree that gets 
-reverted to the official state every time I sync and (2) my tree of local 
-overlays. (2) also contains other packages I've made modifications to 
-(adding patches to packages where those patches are only in unreleased 
-version, but solve my problems, e.g.), so it's clearly the place to put 
-the gcc change.
+I sort-of find it hard to believe hearing this from somebody who
+muttered something about importance of perception a few days ago.
 
-Now, if I figure out how to get the ebuild working, I'll be happy just to 
-have a working compiler for this weird target, and I don't care too much 
-further. But then if word gets out that I managed this, or if I notice a 
-bug report that other people are failing to get it to build, I may want to 
-post my working ebuild. And maybe the maintainer decides that my method 
-was good, and wants to use it. But then it could be a lot of work to 
-figure out what differences are from me beating on this ebuild, what are 
-important, and what are reverts of changes make upstream after I made my 
-copy (particularly because the same ebuild for gcc also gets a lot more 
-development making it better as the system native compiler).
+>> I suspect that you would have to play safe and say "when
+>> external tools are involved, we need to disable the existing
+>> content SHA-1 based optimization for all paths that ask for
+>> them" to keep your sanity.
+>
+> Maybe.  If that is what's really needed then so be it.  People who 
+> really want to do strange things will have the flexibility to do so, but 
+> they'll have to pay the price in loss of performance.
 
-If the ebuild has the blob ID that the file had when it left Gentoo 
-version control and went out into local hack land, it would be relatively 
-easy to figure out what patch should be applies to get the useful changes.
-
-(In case you're wondering, I actually eventually gave up and installed a 
-gnu-arm binary distribution, because I was in a hurry to get the project 
-going, and building from source kept failing to get configured properly; 
-but if my first line of attack had worked, I would have ended up with the 
-described hacked ebuild.)
-
-	-Daniel
-*This .sig left intentionally blank*
+Not just that.  We end up having to pay the price of maintaining
+hooks to let them do crazy things.
