@@ -1,62 +1,104 @@
-From: Junio C Hamano <junkio@cox.net>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 18:42:38 -0700
-Message-ID: <7vy7kqjw4x.fsf@assigned-by-dhcp.cox.net>
-References: <200704171041.46176.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org>
-	<46250175.4020300@dawes.za.net>
-	<Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org>
-	<20070417235649.GE31488@curie-int.orbis-terrarum.net>
-	<7vps62lfbw.fsf@assigned-by-dhcp.cox.net>
-	<20070418010637.GF31488@curie-int.orbis-terrarum.net>
-	<7vejmilbyt.fsf@assigned-by-dhcp.cox.net>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [RFD] Strange patch formats (aka tricks with unified diffs)..
+Date: Wed, 18 Apr 2007 11:44:18 +1000
+Message-ID: <17957.30706.398078.689096@cargo.ozlabs.ibm.com>
+References: <Pine.LNX.4.64.0704121436050.4061@woody.linux-foundation.org>
+	<17951.6252.457936.428919@cargo.ozlabs.ibm.com>
+	<Pine.LNX.4.64.0704130812390.28042@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Rogan Dawes <lists@dawes.za.net>,
-	Andy Parkins <andyparkins@gmail.com>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 03:42:46 2007
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 03:45:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HdzBz-0001Yg-Ho
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 03:42:43 +0200
+	id 1HdzEI-00024L-GQ
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 03:45:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1161417AbXDRBmk (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 21:42:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161428AbXDRBmk
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 21:42:40 -0400
-Received: from fed1rmmtao102.cox.net ([68.230.241.44]:56376 "EHLO
-	fed1rmmtao102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1161417AbXDRBmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 21:42:39 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao102.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070418014240.NJZZ1268.fed1rmmtao102.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 17 Apr 2007 21:42:40 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id oRid1W00v1kojtg0000000; Tue, 17 Apr 2007 21:42:38 -0400
-In-Reply-To: <7vejmilbyt.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
-	message of "Tue, 17 Apr 2007 18:15:22 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1161428AbXDRBpB (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 21:45:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1161429AbXDRBpB
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 21:45:01 -0400
+Received: from ozlabs.org ([203.10.76.45]:58180 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1161428AbXDRBpA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 21:45:00 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id E8F20DDE2F; Wed, 18 Apr 2007 11:44:58 +1000 (EST)
+In-Reply-To: <Pine.LNX.4.64.0704130812390.28042@woody.linux-foundation.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44853>
 
-Junio C Hamano <junkio@cox.net> writes:
+Linus Torvalds writes:
 
-> I do not have much against an optional "only blob id" expansion
-> myself, as I do not see any more downside than CRLF expansion in
-> it...
+> Ok, just a radio button for the patch case for "show patch" vs "show 
+> result" would certainly be sufficient for what I normally do. Adding the 
+> case "show origin" for completeness (ie filter out the new lines, rather 
+> than filtering out the old lines) is probably a good idea, even if I've 
+> never used it.
 
-Actually, there is one.  Somebody makes a patch against a file
-with $id$ expanded.  Gives it to somebody else who is git
-challenged and does not have git-apply.  The patch is useless.
+Try this patch, let me know what you think...
 
-So it is not without more downsides than CRLF.
+Paul.
+
+diff --git a/gitk b/gitk
+index b1c65d7..a57e84c 100755
+--- a/gitk
++++ b/gitk
+@@ -593,6 +593,7 @@ proc makewindow {} {
+         frame .bleft -width $geometry(botwidth) -height $geometry(botheight)
+     }
+     frame .bleft.top
++    frame .bleft.mid
+ 
+     button .bleft.top.search -text "Search" -command dosearch \
+ 	-font $uifont
+@@ -602,12 +603,20 @@ proc makewindow {} {
+     lappend entries $sstring
+     trace add variable searchstring write incrsearch
+     pack $sstring -side left -expand 1 -fill x
++    radiobutton .bleft.mid.diff -text "Diff" \
++	-command changediffdisp -variable diffelide -value {0 0}
++    radiobutton .bleft.mid.old -text "Old version" \
++	-command changediffdisp -variable diffelide -value {0 1}
++    radiobutton .bleft.mid.new -text "New version" \
++	-command changediffdisp -variable diffelide -value {1 0}
++    pack .bleft.mid.diff .bleft.mid.old .bleft.mid.new -side left
+     set ctext .bleft.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-state disabled -font $textfont \
+ 	-yscrollcommand scrolltext -wrap none
+     scrollbar .bleft.sb -command "$ctext yview"
+     pack .bleft.top -side top -fill x
++    pack .bleft.mid -side top -fill x
+     pack .bleft.sb -side right -fill y
+     pack $ctext -side left -fill both -expand 1
+     lappend bglist $ctext
+@@ -4486,6 +4495,13 @@ proc getblobdiffline {bdf ids} {
+     }
+ }
+ 
++proc changediffdisp {} {
++    global ctext diffelide
++
++    $ctext tag conf d0 -elide [lindex $diffelide 0]
++    $ctext tag conf d1 -elide [lindex $diffelide 1]
++}
++
+ proc prevfile {} {
+     global difffilestart ctext
+     set prev [lindex $difffilestart 0]
+@@ -6330,6 +6346,7 @@ set highlight_paths {}
+ set searchdirn -forwards
+ set boldrows {}
+ set boldnamerows {}
++set diffelide {0 0}
+ 
+ set optim_delay 16
+ 
