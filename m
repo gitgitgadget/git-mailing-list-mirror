@@ -1,77 +1,67 @@
-From: Rogan Dawes <lists@dawes.za.net>
-Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Wed, 18 Apr 2007 08:24:29 +0200
-Message-ID: <4625B99D.9090409@dawes.za.net>
-References: <200704171041.46176.andyparkins@gmail.com> <"200704171803.58940.a n  dyparkins"@gmail.com> <200704172012.31280.andyparkins@gmail.com> <alpine.LFD.0.98.0704171530220.4504@xanadu.home> <Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz> <alpine.LFD.0.98.0704171624190.4504@xanadu.home> <Pine.LNX.4.63.0704171302200.1696@qynat.qvtvafvgr.pbz> <alpine.LFD.0.98.0704171708360.4504@xanadu.home>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH] git-svn: don't allow globs to match regular files
+Date: Wed, 18 Apr 2007 00:17:33 -0700
+Message-ID: <20070418071733.GA10627@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: David Lang <david.lang@digitalinsight.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <junkio@cox.net>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 08:24:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Wed Apr 18 09:17:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He3ay-0004lK-C9
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 08:24:48 +0200
+	id 1He4Q6-0002wN-J5
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 09:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbXDRGYn (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 02:24:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932097AbXDRGYn
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 02:24:43 -0400
-Received: from sd-green-bigip-119.dreamhost.com ([208.97.132.119]:49730 "EHLO
-	spunkymail-a11.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932493AbXDRGYm (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Apr 2007 02:24:42 -0400
-Received: from [192.168.201.100] (dsl-146-27-151.telkomadsl.co.za [165.146.27.151])
-	by spunkymail-a11.g.dreamhost.com (Postfix) with ESMTP id A8232B6C24;
-	Tue, 17 Apr 2007 23:24:36 -0700 (PDT)
-User-Agent: Thunderbird 1.5.0.10 (Windows/20070221)
-In-Reply-To: <alpine.LFD.0.98.0704171708360.4504@xanadu.home>
+	id S932771AbXDRHRf (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 03:17:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932778AbXDRHRf
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 03:17:35 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:55300 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932771AbXDRHRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 03:17:34 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 3160C7DC09F;
+	Wed, 18 Apr 2007 00:17:33 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 18 Apr 2007 00:17:33 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44865>
 
-Nicolas Pitre wrote:
-> On Tue, 17 Apr 2007, David Lang wrote:
-> 
+git only tracks the histories of full directories, not
+that of individual files.  Sometimes, SVN users will
+place[1] a regular file in the directory designated
+for subdirectories of branches or tags.
 
->> I've
->> been told in the past that once .gitattributes is in place then the hooks for
->> the crlf stuff can be generalized to allow for calls out to custom code to do
->> this sort of thing.
-> 
-> And I agree that this is a perfectly sensible thing to do.  The facility 
-> should be there for you to apply any kind of transformation with 
-> external tools on data going in or out from Git.  There are good and bad 
-> things you can do with such a facility, but at least it becomes your 
-> responsibility to screw^H^H^H^Hfilter your data and not something that 
-> is enforced by Git itself.
-> 
-> 
-> Nicolas
+Thanks to jrockway on #git for pointing this out.
 
-One of the examples that has been given in the past has been taking a 
-zipped OpenDocumentFormat file, unzipping it to its component parts, and 
-then committing the individual files rather than the aggregate.
+[1] mistakenly or otherwise, such as a README
 
-But I can't figure out how this might work.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
 
-One idea is to store the binary ODF file in the index (and in the packs, 
-etc) as a directory with the individual text (and other) files as 
-entries within that directory. Then, when various git operations want to 
-use the directory, the operation is redirected via an attribute match to 
-an external script that knows how to checkout an ODF "directory", or 
-diff an ODF "directory", etc.
+ Junio: this can go in maint
 
-Or similarly, when checking an "ODF" file in, the attribute would lead 
-to an appropriate script creating the "tree" of individual files.
+ git-svn.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-Does this sound workable?
-
-Rogan
+diff --git a/git-svn.perl b/git-svn.perl
+index 4d3c453..efc4c88 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -3162,6 +3162,8 @@ sub match_globs {
+ 			my $p = $1;
+ 			my $pathname = $g->{path}->full_path($p);
+ 			next if $exists->{$pathname};
++			next if ($self->check_path($pathname, $r) !=
++			         $SVN::Node::dir);
+ 			$exists->{$pathname} = Git::SVN->init(
+ 			                      $self->{url}, $pathname, undef,
+ 			                      $g->{ref}->full_path($p), 1);
+-- 
+Eric Wong
