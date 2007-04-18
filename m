@@ -1,83 +1,93 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH] Add "stg bury" command, with the functionnality of contrib/stg-sink.
-Date: Wed, 18 Apr 2007 22:19:26 +0200
-Organization: Dewire
-Message-ID: <200704182219.26410.robin.rosenberg.lists@dewire.com>
-References: <20070410182701.9362.68038.stgit@gandelf.nowhere.earth> <4625DDA5.60503@vilain.net> <Pine.LNX.4.64.0704181130330.30721@reaper.quantumfyre.co.uk>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: GIT vs Other: Need argument
+Date: Wed, 18 Apr 2007 13:19:07 -0700 (PDT)
+Message-ID: <alpine.LFD.0.98.0704181312060.2828@woody.linux-foundation.org>
+References: <aa69c80b0704170202r3f35acc7ydb81708e747c69ff@mail.gmail.com> 
+ <20070417104520.GB4946@moonlight.home>  <8b65902a0704170841q64fe0828mdefe78963394a616@mail.gmail.com>
+  <200704171818.28256.andyparkins@gmail.com>  <20070417173007.GV2229@spearce.org>
+ <462521C7.2050103@softax.com.pl>  <Pine.LNX.4.64.0704181130150.12094@racer.site>
+  <alpine.LFD.0.98.0704180851060.2828@woody.linux-foundation.org>
+ <8b65902a0704181308i41c878ebi88c03a929769ba39@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Sam Vilain <sam@vilain.net>, Junio C Hamano <junkio@cox.net>,
-	Catalin Marinas <catalin.marinas@gmail.com>,
-	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Wed Apr 18 22:16:16 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Marcin Kasperski <Marcin.Kasperski@softax.com.pl>,
+	git@vger.kernel.org
+To: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 22:19:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeGZV-00088A-69
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 22:16:09 +0200
+	id 1HeGco-0000vC-Pc
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 22:19:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992549AbXDRUQF (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 16:16:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992550AbXDRUQF
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 16:16:05 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:12146 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S2992549AbXDRUQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 16:16:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C94F0802881;
-	Wed, 18 Apr 2007 22:10:12 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 08102-08; Wed, 18 Apr 2007 22:10:12 +0200 (CEST)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 6C8AB80265E;
-	Wed, 18 Apr 2007 22:10:12 +0200 (CEST)
-User-Agent: KMail/1.9.4
-In-Reply-To: <Pine.LNX.4.64.0704181130330.30721@reaper.quantumfyre.co.uk>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S2992565AbXDRUT1 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 16:19:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992567AbXDRUT1
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 16:19:27 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:45223 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S2992565AbXDRUT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 16:19:26 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3IKJEYC027033
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 18 Apr 2007 13:19:15 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3IKJ7UP001965;
+	Wed, 18 Apr 2007 13:19:11 -0700
+In-Reply-To: <8b65902a0704181308i41c878ebi88c03a929769ba39@mail.gmail.com>
+X-Spam-Status: No, hits=-0.469 required=5 tests=AWL
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44940>
 
-onsdag 18 april 2007 12:33 skrev Julian Phillips:
-> On Wed, 18 Apr 2007, Sam Vilain wrote:
+
+
+On Wed, 18 Apr 2007, Guilhem Bonnefille wrote:
 > 
-> > Julian Phillips wrote:
-> >>> Sure... and from my own perspective as a user, I didn't even realise
-> >>> what float did until now, and was surprised that "bury" would mean that.
-> >>> The metaphor is a stack, not a pool or a sandpit. I don't think those
-> >>> terms really assist in understanding, however cute they are.
-> >>>
-> >>
-> >> I find that bury is more natural than float (thinking of a stack of
-> >> documents on a desk ...).  But then I don't use stg ...
-> >>
-> >
-> > You demonstrate my point :) by apparently missing that "bury" and
-> > "float" are supposed to be the *opposite* of each other.
-> 
-> I didn't mean to give that impression.  I was aware that they were 
-> opposites, but was only commenting on my view of the intuitivness of each.
-> 
-> I can't really think of a single metaphor where float and bury are both 
-> appropriate though.
+> Yes, but I think that, as Git has ton more capabilities, user has to
+> understand more things than with CVS.
 
-The stack is transparent, so the "float" comes from thinking of the stack as a 
-column (glass pillar) of water with things in it. So I wanted to float patches. I
-didn't think too much about the name, it just popped out. At least that is what
-I *think* I was thinking at the time.
+I do agree.
 
-The logical opposide thing is to "sink" things you don't work to work on.  "bury" 
-implies  you don't see things, which just isn't true.
+The whole "branch" thing is something you can ignore in CVS, but it's 
+simply very hard to ignore in git, because even *if* you just follow 
+another repository, git kind of forces you to be aware of the difference 
+between "local branch" and "remote tracking branch".
 
-I did consider raise, but then you can raise things only a little. Floating a patch
-makes it move all the way to the top.
+I think that's fairly fundamental to being distributed, though. 
 
--- robin
+> I don't know lot of corporate teams, but here, our developers are
+> REALLY not motivated by VCS. It's only a way to share work. And I'm
+> not talking about concurrent modification: lot of people in my office
+> really think that the better model is the locked one.
+
+Sure. At one level they may even be right. It's just that the locked model 
+obviously doesn't work past a certain scenario. But explaining that to 
+somebody who doesn't even think outside his own scenario is pointless.
+
+So no question: git has a level of abstraction and perhaps requires a 
+higher-level view than RCS and CVS do. And I can well imagine that it is 
+seen as more "difficult" because of that.
+
+I just haev to say that I worked with CVS at a commercial company for 
+seven years, and I *did* do things like branches and merges etc, and 
+despite workign with it at that level (not that I was the expert by any 
+means: we had a person who came in with the main job literally being the 
+tools around CVS to make branching more convenient etc), I seriously feel 
+that CVS was a *lot* harder to get into than it is to get into git.
+
+> So for such people, I really think raw Git is much more complicated
+> than CVS/SVN.
+
+I do wonder what we could do about that. I think you can use git in the 
+"SVN tracker only" model, and I really thought it was pretty damn simple, 
+but ...
+
+		Linus
