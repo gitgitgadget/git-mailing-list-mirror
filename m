@@ -1,80 +1,116 @@
-From: Junio C Hamano <junkio@cox.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Tue, 17 Apr 2007 18:15:22 -0700
-Message-ID: <7vejmilbyt.fsf@assigned-by-dhcp.cox.net>
+Date: Tue, 17 Apr 2007 18:19:34 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0704171800290.5473@woody.linux-foundation.org>
 References: <200704171041.46176.andyparkins@gmail.com>
-	<Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org>
-	<46250175.4020300@dawes.za.net>
-	<Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org>
-	<20070417235649.GE31488@curie-int.orbis-terrarum.net>
-	<7vps62lfbw.fsf@assigned-by-dhcp.cox.net>
-	<20070418010637.GF31488@curie-int.orbis-terrarum.net>
+ <Pine.LNX.4.64.0704170829500.5473@woody.linux-foundation.org>
+ <46250175.4020300@dawes.za.net> <Pine.LNX.4.64.0704171121090.5473@woody.linux-foundation.org>
+ <20070417235649.GE31488@curie-int.orbis-terrarum.net>
+ <7vps62lfbw.fsf@assigned-by-dhcp.cox.net> <20070418002658.GA18683@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	Git Mailing List <git@vger.kernel.org>,
 	Rogan Dawes <lists@dawes.za.net>,
 	Andy Parkins <andyparkins@gmail.com>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 03:15:44 2007
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 03:19:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Hdylq-0003Z7-Oi
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 03:15:43 +0200
+	id 1Hdypr-0004cz-Ur
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 03:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753418AbXDRBPY (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Tue, 17 Apr 2007 21:15:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753423AbXDRBPY
-	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 21:15:24 -0400
-Received: from fed1rmmtao106.cox.net ([68.230.241.40]:36618 "EHLO
-	fed1rmmtao106.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753418AbXDRBPY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Apr 2007 21:15:24 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao106.cox.net
-          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
-          id <20070418011524.OKFF1218.fed1rmmtao106.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 17 Apr 2007 21:15:24 -0400
-Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id oRFM1W00e1kojtg0000000; Tue, 17 Apr 2007 21:15:23 -0400
-In-Reply-To: <20070418010637.GF31488@curie-int.orbis-terrarum.net> (Robin
-	H. Johnson's message of "Tue, 17 Apr 2007 18:06:37 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753554AbXDRBTs (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Tue, 17 Apr 2007 21:19:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030650AbXDRBTs
+	(ORCPT <rfc822;git-outgoing>); Tue, 17 Apr 2007 21:19:48 -0400
+Received: from smtp.osdl.org ([65.172.181.24]:43218 "EHLO smtp.osdl.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753554AbXDRBTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Apr 2007 21:19:47 -0400
+Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
+	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3I1JZYC025155
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 17 Apr 2007 18:19:35 -0700
+Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
+	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3I1JYiG012950;
+	Tue, 17 Apr 2007 18:19:34 -0700
+In-Reply-To: <20070418002658.GA18683@fieldses.org>
+X-Spam-Status: No, hits=-0.964 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
+X-MIMEDefang-Filter: osdl$Revision: 1.177 $
+X-Scanned-By: MIMEDefang 2.36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44849>
 
-"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
-> Glancing at the Gentoo bugs I've dealt with over the last 2 months as a
-> quick survey, there are a few levels: 
-> A - Able to submit a good diff
-> B - Able to do a good implementation
-> C - Able to come up with a good idea for improvement
->
-> B are in short supply, and even of those, the number that can do A are
-> smaller :-(. Category C is vastly bigger than B, and those that don't
-> make B throw up a lot of chaff of bad implementations.
->
-> Being able to extract the good ideas is what's important.
 
-True, to a certain degree.  Maybe you and your fellow Gentoo
-people are very much more accomodating, but my fear is that a
-maintainer that goes length to sift through chaff himself
-quickly runs out of time, becomes exhausted, and ends up being
-careless.
+On Tue, 17 Apr 2007, J. Bruce Fields wrote:
+> 
+> I've occasionally wondered before whether git could offer any help in
+> the case where, say, somebody hands me a file, I know it's based on
+> src/widget/widget.c from somewhere in v0.5..v0.7, and I'd like a guess
+> at the most likely candidates.
 
-Maybe I am spoiled by having only the best people around me, and
-on git list.
+It's actually fairly easy to do.
 
-But we are straying to a tangent.
+Get the git hash of the blob: use "git hash-object" to do so (although 
+you can do it without git too, see later), then just do
 
-I do not have much against an optional "only blob id" expansion
-myself, as I do not see any more downside than CRLF expansion in
-it.  But I suspect that once people see the $id$ expanded to
-blob, they would not stop, because simply they do not understand
-why blob-id and CRLF are much less evil than other things.
+	git whatchanged v0.5..v0.7 -- src/widget/widget.c
+
+and just look for the hash. If it's an exact match, you'd find it there, 
+and it will tell you when it changed.
+
+If it's *not* an exact match, you have to come up with some "measure of 
+minimality" for the thing (the size of the diff might be a good one), and 
+you can do
+
+	git rev-list --no-merges --full-history v0.5..v0.7 -- src/widget/widget.c > rev-list
+
+which will get you a full set of commits that changed that file. Then you 
+can just do something like
+
+	best_commit=none
+	best=1000000
+	while read commit
+	do 
+		git cat-file blob "$commit:src/widget/widget.c" > tmpfile
+		lines=$(diff reference-file tmpfile | wc -l)
+		if [ "$lines" -lt "$best" ]
+		then
+			echo Best so far: $commit $lines
+			best=$lines
+		fi
+	done < rev-list
+
+and you're done!
+
+(Yeah, I'm sure that script could be improved, but it's probably really 
+not that bad even as-is! The initial "git rev-list" will have done all 
+the heavy lifting, and picked out the commits that matter)
+
+> I haven't wondered that often enough that I'd consider it worth
+> embedding the blob SHA1 in every checked-out file, though!
+
+It really doesn't pay.
+
+Besides, if you actually have the file, you can trivially get the SHA1 
+_without_ embedding it into the file. Just do
+
+	(echo -e -n "blob <size>\0" ; cat file) | sha1sum
+
+where "size" is just the size in bytes of the file.
+
+So embedding the SHA1 doesn't actually buy you anything: every blob BY 
+DEFINITION has their SHA1 embedded into them.
+
+In fact, embedding the SHA1 (or doing any other modifications) just makes 
+it harder to do this, since then you have to filter it out again.
+
+		Linus
