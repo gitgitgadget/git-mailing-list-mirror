@@ -1,82 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/2] Custom low-level merge driver support.
-Date: Wed, 18 Apr 2007 13:35:05 -0700 (PDT)
-Message-ID: <alpine.LFD.0.98.0704181330050.2828@woody.linux-foundation.org>
-References: <11768880622402-git-send-email-junkio@cox.net>
- <Pine.LNX.4.64.0704181247410.12094@racer.site> <20070418153445.GC12888@admingilde.org>
- <alpine.LFD.0.98.0704180910120.2828@woody.linux-foundation.org>
- <7vslaxhamd.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704181136360.2828@woody.linux-foundation.org>
- <7vzm55fqyv.fsf@assigned-by-dhcp.cox.net> <alpine.LFD.0.98.0704181246160.2828@woody.linux-foundation.org>
- <7vk5w9fnjx.fsf@assigned-by-dhcp.cox.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH] Add "stg bury" command, with the functionnality of contrib/stg-sink.
+Date: Wed, 18 Apr 2007 22:35:02 +0200
+Message-ID: <20070418203502.GA8524@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20070410182701.9362.68038.stgit@gandelf.nowhere.earth> <4625DDA5.60503@vilain.net> <Pine.LNX.4.64.0704181130330.30721@reaper.quantumfyre.co.uk> <200704182219.26410.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Martin Waitz <tali@admingilde.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Julian Phillips <julian@quantumfyre.co.uk>,
+	Sam Vilain <sam@vilain.net>, Junio C Hamano <junkio@cox.net>,
+	Catalin Marinas <catalin.marinas@gmail.com>,
 	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Wed Apr 18 22:35:56 2007
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Apr 18 22:36:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeGsc-0006Tt-Jn
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 22:35:55 +0200
+	id 1HeGt1-0006cF-Ng
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 22:36:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992588AbXDRUfh (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 16:35:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992592AbXDRUfh
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 16:35:37 -0400
-Received: from smtp.osdl.org ([65.172.181.24]:45768 "EHLO smtp.osdl.org"
+	id S2992592AbXDRUgQ (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 16:36:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S2992618AbXDRUgQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 16:36:16 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:38809 "EHLO smtp3-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992588AbXDRUfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 16:35:36 -0400
-Received: from shell0.pdx.osdl.net (fw.osdl.org [65.172.181.6])
-	by smtp.osdl.org (8.12.8/8.12.8) with ESMTP id l3IKZ9YC027776
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 18 Apr 2007 13:35:10 -0700
-Received: from localhost (shell0.pdx.osdl.net [10.9.0.31])
-	by shell0.pdx.osdl.net (8.13.1/8.11.6) with ESMTP id l3IKZ5xo002287;
-	Wed, 18 Apr 2007 13:35:07 -0700
-In-Reply-To: <7vk5w9fnjx.fsf@assigned-by-dhcp.cox.net>
-X-Spam-Status: No, hits=-0.969 required=5 tests=AWL,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 2.63-osdl_revision__1.119__
-X-MIMEDefang-Filter: osdl$Revision: 1.177 $
-X-Scanned-By: MIMEDefang 2.36
+	id S2992592AbXDRUgQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 16:36:16 -0400
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id DB2A85DFE2;
+	Wed, 18 Apr 2007 22:36:13 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id 8E9031F06B; Wed, 18 Apr 2007 22:35:03 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <200704182219.26410.robin.rosenberg.lists@dewire.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44942>
 
-
-
-On Wed, 18 Apr 2007, Junio C Hamano wrote:
+On Wed, Apr 18, 2007 at 10:19:26PM +0200, Robin Rosenberg wrote:
+> > I can't really think of a single metaphor where float and bury are both 
+> > appropriate though.
 > 
-> Yes, but in the case I had trouble with, I know what I want to
-> see happen when we DO hit file-level conflict on RelNotes
-> symlink.  The ancestor says Documentation/RelNotes-1.5.0.txt,
-> the maint branch says Documentation/RelNotes-1.5.0.1.txt, while
-> the current branch says Documentation/RelNotes-1.5.1.txt.  The
-> logic in merge_file() simply says "we would punt on file-level
-> conflicts for symlinks" without giving a chance for low-level
-> drivers to interfere.
+> The stack is transparent, so the "float" comes from thinking of the stack as a 
+> column (glass pillar) of water with things in it. So I wanted to float patches. I
+> didn't think too much about the name, it just popped out. At least that is what
+> I *think* I was thinking at the time.
+> 
+> The logical opposide thing is to "sink" things you don't work to work on.  "bury" 
+> implies  you don't see things, which just isn't true.
 
-Ahh, ok. So it really is a file-level conflict, it's just that our 
-traditional merger didn't handle them at all, so we said "nobody can do 
-it". Fair enough. That does sound like a misfeature, although I would also 
-claim that expecting merge strategies to handle symlinks is likely to fail 
-horribly.
+Indeed, I originally planned to name it "sink", as the prototype
+script.  It is when starting to write the documentation, that I
+started to feel like writing "sink: bury patches down the stack", and
+felt there was something wrong.  Since I could not find a plausible
+description involving "sink", I finally went for "stg bury", although
+I was not very pleased with it.
 
-So maybe each strategy could have "sub-strategies" for other file types.
+But if the consensus is that "sink" or something else sounds better, I
+have myself no objection to bury "bury" :)
 
-Ie something like
-
-	[merge "ours"]
-		name = pick our own version
-		driver = /bin/true
-		symlinks = /bin/true
-
-ie we'd use tyhe "driver" name for regular files, and the "symlinks" name 
-for symlinks and if no "symlinks" entry exists, we error it out as a 
-conflict?
-
-		Linus
+Best regards,
+-- 
+Yann.
