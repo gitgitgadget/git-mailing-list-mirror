@@ -1,66 +1,64 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [PATCH 2/2] Add keyword unexpansion support to convert.c
-Date: Wed, 18 Apr 2007 13:11:36 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0704181310170.12094@racer.site>
-References: <200704171041.46176.andyparkins@gmail.com>
- <200704172012.31280.andyparkins@gmail.com> <Pine.LNX.4.64.0704171229360.5473@woody.linux-foundation.org>
- <200704172146.33665.andyparkins@gmail.com> <Pine.LNX.4.64.0704171405060.5473@woody.linux-foundation.org>
- <Pine.LNX.4.64.0704171412020.5473@woody.linux-foundation.org>
+Date: Wed, 18 Apr 2007 13:14:47 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0704181313060.12094@racer.site>
+References: <200704171041.46176.andyparkins@gmail.com> <"200704171803.58940.a
+ n dyparkins"@gmail.com> <200704172012.31280.andyparkins@gmail.com>
+ <alpine.LFD.0.98.0704171530220.4504@xanadu.home>
+ <Pine.LNX.4.63.0704171244450.1696@qynat.qvtvafvgr.pbz>
+ <alpine.LFD.0.98.0704171624190.4504@xanadu.home>
+ <Pine.LNX.4.63.0704171302200.1696@qynat.qvtvafvgr.pbz>
+ <alpine.LFD.0.98.0704171708360.4504@xanadu.home> <7vy7kqlj5r.fsf@assigned-by-dhcp.cox.net>
+ <alpine.LFD.0.98.0704172154160.4504@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Apr 18 13:12:08 2007
+Cc: Junio C Hamano <junkio@cox.net>,
+	David Lang <david.lang@digitalinsight.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Wed Apr 18 13:15:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1He84z-0008S2-MX
-	for gcvg-git@gmane.org; Wed, 18 Apr 2007 13:12:06 +0200
+	id 1He87s-0000uY-Mq
+	for gcvg-git@gmane.org; Wed, 18 Apr 2007 13:15:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422745AbXDRLLr (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 07:11:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422844AbXDRLLr
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 07:11:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40556 "HELO mail.gmx.net"
+	id S1422856AbXDRLO7 (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 07:14:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1422857AbXDRLO7
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 07:14:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60408 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1422745AbXDRLLq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 07:11:46 -0400
-Received: (qmail invoked by alias); 18 Apr 2007 11:11:45 -0000
+	id S1422856AbXDRLO6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 07:14:58 -0400
+Received: (qmail invoked by alias); 18 Apr 2007 11:14:57 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp033) with SMTP; 18 Apr 2007 13:11:45 +0200
+  by mail.gmx.net (mp021) with SMTP; 18 Apr 2007 13:14:57 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19Nb0hKRPpNJ2UNEaFoYhr10pHG5yVLR/6jPH5s9b
-	TbsaRKH8zY3oo1
+X-Provags-ID: V01U2FsdGVkX1+bPfAVBIKbhfp9OHCAYfD70VF2uUJEhIo2sY/qt3
+	0zvk1QmRnh9am4
 X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0704171412020.5473@woody.linux-foundation.org>
+In-Reply-To: <alpine.LFD.0.98.0704172154160.4504@xanadu.home>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44888>
 
 Hi,
 
-On Tue, 17 Apr 2007, Linus Torvalds wrote:
+On Tue, 17 Apr 2007, Nicolas Pitre wrote:
 
-> On Tue, 17 Apr 2007, Linus Torvalds wrote:
-> > 
-> > Windows we cannot change. CVS users we can try to help. 
+> So what?
 > 
-> .. and if it wasn't clear, "helping" CVS users is not in my opinion to 
-> try to make git act like CVS, and lettign them do stupid things, but to 
-> try to help them become *more* than CVS users.
+> We provide a rope with proper caveat emptor.  Up to others to hang 
+> themselves with it if they so desire.  It is not our problem anymore.
 
-I am quite certain that we also can help Windows users see the light. Once 
-we have them not only complaining, but actually doing something about it.
-
-> Because they too can become upstanding members of society, and leave their 
-> dark past behind them. I firmly believe that nobody is past saving.
-
-Well, it depends. If you clicked on that File Menu button, and then 
-clicked on the "Save" item, you are past saving.
+The people will complain. On this list. And I have to check the mails 
+before deleting, because the Subject: does not say "I just took the rope, 
+ignored your caveat emptor, and now I am dead. What should I do now?".
 
 Ciao,
 Dscho
