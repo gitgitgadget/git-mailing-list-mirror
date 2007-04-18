@@ -1,82 +1,166 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Things that surprise naive users
-Date: Thu, 19 Apr 2007 11:57:46 +1200
-Message-ID: <46a038f90704181657i540e8468xf2809e81e5cf7ac5@mail.gmail.com>
-References: <Pine.LNX.4.64.0704181503080.27922@iabervon.org>
+From: Junio C Hamano <junkio@cox.net>
+Subject: What's in git.git (stable)
+Date: Wed, 18 Apr 2007 16:58:17 -0700
+Message-ID: <7virbtck12.fsf@assigned-by-dhcp.cox.net>
+References: <7vfy71yupd.fsf@assigned-by-dhcp.cox.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Apr 19 01:57:53 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Apr 19 01:58:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1HeK24-000713-GF
-	for gcvg-git@gmane.org; Thu, 19 Apr 2007 01:57:52 +0200
+	id 1HeK2Y-00079C-QI
+	for gcvg-git@gmane.org; Thu, 19 Apr 2007 01:58:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030332AbXDRX5t (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Wed, 18 Apr 2007 19:57:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030357AbXDRX5t
-	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 19:57:49 -0400
-Received: from wr-out-0506.google.com ([64.233.184.229]:48963 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030332AbXDRX5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Apr 2007 19:57:48 -0400
-Received: by wr-out-0506.google.com with SMTP id 76so329943wra
-        for <git@vger.kernel.org>; Wed, 18 Apr 2007 16:57:47 -0700 (PDT)
-DKIM-Signature: a=rsa-sha1; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=deKjfkKDQnNsMHW0vWHZzl/g+8JM789w3rkPWMmk0Fucrr6ApZmnGAiL9xVrDbsszZ5BvcWMBLZDyeK9zdy9ammbjBcdBrjnxf4w3/BL1SDHTMD/OKsfORmRqVRD5umixv9MECANvtFJ7zHV0CswXnMP/+k93niRsDTALKjBn5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PUSCwmt5Ib6jn81R7EQ1KAHKPHDONgwJP4liEjIse33LSqx1u8gKfcmYefdH00oK/lLot2X9akNdDFxxeljHgAvJgZN/H9v26DMnhqfiM2zivjtsRNrT77vv8U8eVOURc3mGMShlsxfcJO1EaDo6cEY9xXHIWoLtb/QiyBHRooY=
-Received: by 10.90.79.6 with SMTP id c6mr1273214agb.1176940666952;
-        Wed, 18 Apr 2007 16:57:46 -0700 (PDT)
-Received: by 10.90.52.17 with HTTP; Wed, 18 Apr 2007 16:57:46 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0704181503080.27922@iabervon.org>
-Content-Disposition: inline
+	id S2993015AbXDRX6T (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Wed, 18 Apr 2007 19:58:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1030370AbXDRX6T
+	(ORCPT <rfc822;git-outgoing>); Wed, 18 Apr 2007 19:58:19 -0400
+Received: from fed1rmmtao105.cox.net ([68.230.241.41]:41104 "EHLO
+	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1030360AbXDRX6S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Apr 2007 19:58:18 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.7.05.02.00 201-2174-114-20060621) with ESMTP
+          id <20070418235817.PSQS1266.fed1rmmtao105.cox.net@fed1rmimpo02.cox.net>;
+          Wed, 18 Apr 2007 19:58:17 -0400
+Received: from assigned-by-dhcp.cox.net ([68.5.247.80])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id onyH1W00d1kojtg0000000; Wed, 18 Apr 2007 19:58:18 -0400
+X-maint-at: 0ad64fd0b8d073e0c73836858a54f693c9191918
+X-master-at: 6fb8e8f401a065bdffe379764871551e37a041a0
+In-Reply-To: <7vfy71yupd.fsf@assigned-by-dhcp.cox.net> (Junio C. Hamano's
+	message of "Sun, 15 Apr 2007 18:27:42 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/44967>
 
-On 4/19/07, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> 2. There's no easy way to tell that you've made commits that you haven't
->    pushed upstream. In fact, it's impossible to tell when disconnected
->    whether you've pushed everything. This needs some command to report it,
->    and also for push to update the fetch sides of remote heads it updates.
+Accumulated fixes on 'maint' are mostly documentation updates.
+I will do a 1.5.1.2 probably this weekend, when I find time.
 
-Cogito does this (push updating the refs), and I like it. I think it's
-worth doing. Then git-branch -v could flag pending-to-push local
-branches.
+On 'master' are Frank's cvsserver updates to use DBI to allow
+backends other than sqlite.  There also is an update to
+merge-recursive to make it saner for merges that involves a
+directory changing to a file (or vice versa).
 
-> 3. You can't create a new repository by pushing, even if you could
->    actually create the repository. Obviously, this will be blocked by
->    policy more often than pushing in general would be, but it's not
->    always blocked. It's also harder than it should be to turn a repository
->    created locally into a repository identical in configuration to a clone
->    of a newly-created remote repository.
+I did not hear anything positive nor negative while they were on
+'next', so if you have been using cvsserver or merge and this
+breaks them for you, you had it coming.  At least you can keep
+both pieces ;-).
 
-It's not too hard to do a
+But more seriously, hopefully no news was a good news.  There
+are also other minor new features and enhancements on 'master'.
 
-      git-publish git+ssh://host/path/to/repo.git
+----------------------------------------------------------------
 
-that just does a git init or maybe rsyncs out.
+* The 'maint' branch has these fixes since the last announcement.
 
-> 4. Creating new branches off of existing branches/remotes doesn't
->    configure the new branches in the obvious way (i.e., such that the
->    default update action matches the create action).
+ Alex Riesen (1):
+  Fix overwriting of files when applying contextually independent diffs
 
-Junio was pointing out recently that there's an option for that -
-pull.automerge I think - that you can set in your /etc/gitconfig. Or
-you can say --track
+ Andrew Ruder (4):
+  Update git-am documentation
+  Update git-applymbox documentation
+  Update git-apply documentation
+  Update git-annotate/git-blame documentation
 
-cheers,
+ Carlos Rica (1):
+  Use const qualifier for 'sha1' parameter in delete_ref function
+
+ Eric Wong (3):
+  git-svn: respect lower bound of -r/--revision when following parent
+  git-svn: quiet some warnings when run only with --version/--help
+  git-svn: don't allow globs to match regular files
+
+ Frank Lichtenheld (1):
+  git-shortlog: Fix two formatting errors in asciidoc documentation
+
+ Gerrit Pape (2):
+  variable $projectdesc needs to be set before checking against unchanged default.
+  Have sample update hook not refuse deleting a branch through push.
+
+ J. Bruce Fields (7):
+  Documentation: minor edits of git-lost-found manpage
+  Documentation: clarify git-checkout -f, minor editing
+  Documentation: clarify track/no-track option.
+  user-manual: fix discussion of default clone
+  user-manual: detached HEAD
+  user-manual: start revising "internals" chapter
+  user-manual: use detached head when rewriting history
+
+ Junio C Hamano (1):
+  Start preparing for 1.5.1.2
+
+ Shawn O. Pearce (1):
+  git-gui: Brown paper bag fix division by 0 in blame
 
 
+* The 'master' branch has these since the last announcement
+  in addition to the above.
 
-martin
+ Alex Riesen (2):
+  Fix t4201: accidental arithmetic expansion
+  Fix permissions on test scripts
+
+ Andrew Ruder (1):
+  Add policy on user-interface changes
+
+ Christian Couder (2):
+  Bisect: simplify "bisect start" logging.
+  Bisect: rename "t/t6030-bisect-run.sh" to "t/t6030-bisect-porcelain.sh".
+
+ Eygene Ryabinkin (4):
+  Allow wish interpreter to be defined with TCLTK_PATH
+  Teach git-gui to use the user-defined UI font everywhere.
+  Improve look-and-feel of the git-gui tool.
+  Do not break git-gui messages into multiple lines.
+
+ Frank Lichtenheld (12):
+  cvsserver: Introduce new state variable 'method'
+  cvsserver: Handle three part keys in git config correctly
+  cvsserver: Allow to override the configuration per access method
+  cvsserver: Make the database backend configurable
+  cvsserver: Abort if connect to database fails
+  cvsserver: Use DBI->table_info instead of DBI->tables
+  cvsserver: Corrections to the database backend configuration
+  cvsserver: Add asciidoc documentation for new database backend configuration
+  cvsserver: Allow to "add" a removed file
+  cvsserver: Reword documentation on necessity of write access
+  cvsserver: Document the GIT branches -> CVS modules mapping more prominently
+  config.txt: Add gitcvs.db* variables
+
+ Johannes Schindelin (1):
+  Use print_wrapped_text() in shortlog
+
+ Junio C Hamano (9):
+  shortlog -w: make wrap-line behaviour optional.
+  t1000: fix case table.
+  Treat D/F conflict entry more carefully in unpack-trees.c::threeway_merge()
+  merge-recursive: do not barf on "to be removed" entries.
+  merge-recursive: handle D/F conflict case more carefully.
+  t3030: merge-recursive backend test.
+  send-email: do not leave an empty CC: line if no cc is present.
+  git-gui: Honor TCLTK_PATH if supplied
+  Update draft release notes for 1.5.2 with accumulated changes.
+
+ Linus Torvalds (2):
+  Add a generic "object decorator" interface, and make object refs use it
+  Add support for "commit name decorations" to log family of commands
+
+ Michael S. Tsirkin (1):
+  Display the subject of the commit just made.
+
+ Shawn O. Pearce (3):
+  Always bind the return key to the default button
+  git-gui: Display the directory basename in the title
+  Revert "Allow wish interpreter to be defined with TCLTK_PATH"
+
+ Steven Grimm (3):
+  Add --quiet option to suppress output of "rm" commands for removed files.
+  git-rm: Trivial fix for a comment typo.
+  Add --ignore-unmatch option to exit with zero status when no files are removed.
